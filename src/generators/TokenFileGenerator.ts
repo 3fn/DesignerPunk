@@ -36,7 +36,29 @@ export interface GenerationOptions extends BaseGenerationOptions {
   /** Pre-resolved semantic tokens (dark-wcag context). Used with wcagSemanticTokens for mode-aware WCAG output. */
   darkWcagSemanticTokens?: Array<Omit<SemanticToken, 'primitiveTokens'>>;
   /** Token names that have WCAG semantic overrides (Level 2). Only these appear in the WCAG override block. */
-  wcagOverrideKeys?: Set<string>;}
+  wcagOverrideKeys?: Set<string>;
+  /** Registered theme override sets for generalized theme block generation (Spec 094). */
+  themeOverrides?: ThemeOverrideSet[];
+}
+
+/**
+ * A resolved theme override set for generation.
+ * Generalizes the WCAG-specific fields to support any registered theme.
+ *
+ * @see Spec 094 design.md § "Platform Generators (Modified)"
+ */
+export interface ThemeOverrideSet {
+  /** Theme name used in CSS `data-theme` attribute and generated type names. */
+  name: string;
+  /** Theme mode: 'dark' = dark-only, 'light' = light-only, 'both' = light-dark(). */
+  mode: 'dark' | 'light' | 'both';
+  /** Resolved light tokens for this theme (or the only tokens if mode is 'light'). */
+  lightTokens: Array<Omit<SemanticToken, 'primitiveTokens'>>;
+  /** Resolved dark tokens for this theme (or the only tokens if mode is 'dark'). */
+  darkTokens: Array<Omit<SemanticToken, 'primitiveTokens'>>;
+  /** Token names that have overrides in this theme. Only these appear in the override block. */
+  overrideKeys: Set<string>;
+}
 
 export interface GenerationResult {
   platform: 'web' | 'ios' | 'android';
@@ -970,7 +992,103 @@ export class TokenFileGenerator {
   }
 
   /**
-   * Generate icon size token with calculated value
+   * Generate theme override blocks for any registered theme (Spec 094).
+   * Generalizes the WCAG-specific block to work with any ThemeOverrideSet.
+   *
+   * Web: produces `[data-theme="name"] { ... }` blocks after `:root` footer.
+   * iOS/Android: stub — full implementation in subtasks 2.3/2.4.
+   */
+  generateThemeOverrideBlocks(
+    platform: 'web' | 'ios' | 'android',
+    baseLight: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    baseDark: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    themeOverrides: ThemeOverrideSet[]
+  ): string[] {
+    const lines: string[] = [];
+    for (const theme of themeOverrides) {
+      switch (platform) {
+        case 'web':
+          lines.push(...this.generateWebThemeBlock(baseLight, baseDark, theme));
+          break;
+        case 'ios':
+          // Stub — Task 2.3 implements Swift protocol + structs + EnvironmentKey
+          break;
+        case 'android':
+          // Stub — Task 2.4 implements Kotlin data class + instances + CompositionLocal
+          break;
+      }
+    }
+    return lines;
+  }
+
+  /**
+   * Generate a single web CSS theme override block.
+   * Produces `:root[data-theme="name"] { ... }` with overridden tokens.
+   * Dark-only themes include `color-scheme: dark` and use static values (no light-dark()).
+   */
+  private generateWebThemeBlock(
+    baseLight: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    baseDark: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    theme: ThemeOverrideSet
+  ): string[] {
+    const lines: string[] = [];
+
+    const lbMap = new Map(baseLight.map(t => [t.name, t]));
+    const dbMap = new Map(baseDark.map(t => [t.name, t]));
+    const ltMap = new Map(theme.lightTokens.map(t => [t.name, t]));
+    const dtMap = new Map(theme.darkTokens.map(t => [t.name, t]));
+
+    const overrides: Array<{ token: Omit<SemanticToken, 'primitiveTokens'>; lightVal: string; darkVal: string }> = [];
+
+    for (const [name] of lbMap) {
+      const lbToken = lbMap.get(name)!;
+      if (lbToken.category !== SemanticCategory.COLOR) continue;
+      if (!theme.overrideKeys.has(name)) continue;
+
+      const ltToken = ltMap.get(name);
+      const dtToken = dtMap.get(name);
+      if (!ltToken || !dtToken) continue;
+
+      const getVal = (t: Omit<SemanticToken, 'primitiveTokens'>) =>
+        t.primitiveReferences?.value ?? t.primitiveReferences?.default ?? Object.values(t.primitiveReferences || {})[0] ?? '';
+
+      overrides.push({ token: lbToken, lightVal: getVal(ltToken), darkVal: getVal(dtToken) });
+    }
+
+    if (overrides.length === 0) return lines;
+
+    lines.push('');
+    lines.push(`/* ${theme.name.charAt(0).toUpperCase() + theme.name.slice(1)} Theme: Semantic token overrides (Spec 094) */`);
+    lines.push(`:root[data-theme="${theme.name}"] {`);
+
+    if (theme.mode === 'dark') {
+      lines.push('  color-scheme: dark;');
+    }
+
+    for (const o of overrides) {
+      const name = this.webGenerator.getTokenName(o.token.name, o.token.category);
+      const cssName = name.startsWith('--') ? name : `--${name}`;
+
+      if (theme.mode === 'dark') {
+        // Dark-only: static value, no light-dark()
+        lines.push(`  ${cssName}: ${o.darkVal};`);
+      } else if (theme.mode === 'light') {
+        // Light-only: static value
+        lines.push(`  ${cssName}: ${o.lightVal};`);
+      } else {
+        // Both modes: light-dark() wrapping when values differ
+        const value = o.lightVal !== o.darkVal
+          ? `light-dark(${o.lightVal}, ${o.darkVal})`
+          : o.lightVal;
+        lines.push(`  ${cssName}: ${value};`);
+      }
+    }
+
+    lines.push('}');
+    return lines;
+  }
+
+  /**
    * Resolves fontSize and lineHeight primitives and applies formula: fontSize × lineHeight
    * 
    * @param semantic - Icon size semantic token
