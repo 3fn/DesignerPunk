@@ -1017,7 +1017,7 @@ export class TokenFileGenerator {
         lines.push(...this.generateSwiftThemeTypes(baseLight, baseDark, themeOverrides, name, abbreviation));
         break;
       case 'android':
-        // Stub — Task 2.4 implements Kotlin data class + instances + CompositionLocal
+        lines.push(...this.generateKotlinThemeTypes(baseLight, baseDark, themeOverrides, name, abbreviation));
         break;
     }
     return lines;
@@ -1244,6 +1244,131 @@ export class TokenFileGenerator {
     const b = (+m[3] / 255).toFixed(2);
     const a = (+m[4]).toFixed(2);
     return `Color(red: ${r}, green: ${g}, blue: ${b}, opacity: ${a})`;
+  }
+
+  /**
+   * Generate Kotlin theme types: data class, named instances, and CompositionLocal.
+   * Uses Compose `Color` directly for clean consumption.
+   *
+   * Output structure:
+   * - `{Name}Theme` data class with theme-varying color properties
+   * - `{Name}Themes` object with named instances per theme context
+   * - `Local{Abbreviation}Theme` CompositionLocal with base light default
+   */
+  private generateKotlinThemeTypes(
+    baseLight: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    baseDark: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    themeOverrides: ThemeOverrideSet[],
+    name: string,
+    abbreviation: string
+  ): string[] {
+    // Collect theme-varying token names (same logic as Swift)
+    const varyingNames = new Set<string>();
+    for (const theme of themeOverrides) {
+      for (const key of theme.overrideKeys) {
+        varyingNames.add(key);
+      }
+    }
+    const baseDarkMap = new Map(baseDark.map(t => [t.name, t]));
+    for (const lt of baseLight) {
+      if (lt.category !== SemanticCategory.COLOR) continue;
+      const dt = baseDarkMap.get(lt.name);
+      if (!dt) continue;
+      if (this.getResolvedValue(lt) !== this.getResolvedValue(dt)) varyingNames.add(lt.name);
+    }
+
+    if (varyingNames.size === 0) return [];
+
+    const lines: string[] = [];
+    const sortedNames = Array.from(varyingNames).sort();
+
+    // --- Imports ---
+    lines.push('');
+    lines.push(`// ${name} Theme System (Spec 094)`);
+    lines.push('');
+    lines.push('import androidx.compose.runtime.compositionLocalOf');
+    lines.push('import androidx.compose.ui.graphics.Color');
+
+    // --- Data class ---
+    lines.push('');
+    lines.push(`data class ${name}Theme(`);
+    for (let i = 0; i < sortedNames.length; i++) {
+      const propName = this.androidGenerator.getTokenName(sortedNames[i], SemanticCategory.COLOR);
+      const comma = i < sortedNames.length - 1 ? ',' : '';
+      lines.push(`    val ${propName}: Color${comma}`);
+    }
+    lines.push(')');
+
+    // --- Themes object with instances ---
+    lines.push('');
+    lines.push(`object ${name}Themes {`);
+
+    // Base light
+    lines.push(`    val BaseLight = ${name}Theme(`);
+    for (let i = 0; i < sortedNames.length; i++) {
+      const token = baseLight.find(t => t.name === sortedNames[i]);
+      const value = token ? this.rgbaToComposeColor(this.getResolvedValue(token)) : 'Color.Unspecified';
+      const comma = i < sortedNames.length - 1 ? ',' : '';
+      lines.push(`        ${this.androidGenerator.getTokenName(sortedNames[i], SemanticCategory.COLOR)} = ${value}${comma}`);
+    }
+    lines.push('    )');
+
+    // Base dark
+    lines.push(`    val BaseDark = ${name}Theme(`);
+    for (let i = 0; i < sortedNames.length; i++) {
+      const dt = baseDark.find(t => t.name === sortedNames[i]);
+      const value = dt ? this.rgbaToComposeColor(this.getResolvedValue(dt)) : 'Color.Unspecified';
+      const comma = i < sortedNames.length - 1 ? ',' : '';
+      lines.push(`        ${this.androidGenerator.getTokenName(sortedNames[i], SemanticCategory.COLOR)} = ${value}${comma}`);
+    }
+    lines.push('    )');
+
+    // Theme override instances
+    for (const theme of themeOverrides) {
+      const themeName = theme.name.charAt(0).toUpperCase() + theme.name.slice(1);
+      if (theme.mode === 'both') {
+        for (const variant of ['Light', 'Dark'] as const) {
+          const tokens = variant === 'Light' ? theme.lightTokens : theme.darkTokens;
+          const fallback = variant === 'Light' ? baseLight : baseDark;
+          lines.push(`    val ${themeName}${variant} = ${name}Theme(`);
+          for (let i = 0; i < sortedNames.length; i++) {
+            const token = tokens.find(t => t.name === sortedNames[i])
+              || fallback.find(t => t.name === sortedNames[i]);
+            const value = token ? this.rgbaToComposeColor(this.getResolvedValue(token)) : 'Color.Unspecified';
+            const comma = i < sortedNames.length - 1 ? ',' : '';
+            lines.push(`        ${this.androidGenerator.getTokenName(sortedNames[i], SemanticCategory.COLOR)} = ${value}${comma}`);
+          }
+          lines.push('    )');
+        }
+      } else {
+        const tokens = theme.mode === 'dark' ? theme.darkTokens : theme.lightTokens;
+        const fallback = theme.mode === 'dark' ? baseDark : baseLight;
+        lines.push(`    val ${themeName} = ${name}Theme(`);
+        for (let i = 0; i < sortedNames.length; i++) {
+          const token = tokens.find(t => t.name === sortedNames[i])
+            || fallback.find(t => t.name === sortedNames[i]);
+          const value = token ? this.rgbaToComposeColor(this.getResolvedValue(token)) : 'Color.Unspecified';
+          const comma = i < sortedNames.length - 1 ? ',' : '';
+          lines.push(`        ${this.androidGenerator.getTokenName(sortedNames[i], SemanticCategory.COLOR)} = ${value}${comma}`);
+        }
+        lines.push('    )');
+      }
+    }
+
+    lines.push('}');
+
+    // --- CompositionLocal ---
+    lines.push('');
+    lines.push(`val Local${abbreviation}Theme = compositionLocalOf { ${name}Themes.BaseLight }`);
+
+    return lines;
+  }
+
+  /** Convert an rgba() string to Compose Color initializer. */
+  private rgbaToComposeColor(rgba: string): string {
+    const m = rgba.match(/rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
+    if (!m) return `Color.Unspecified /* unresolved: ${rgba} */`;
+    return `Color(${m[1]}, ${m[2]}, ${m[3]}, ${Math.round(+m[4] * 255)})`;
   }
 
   /**

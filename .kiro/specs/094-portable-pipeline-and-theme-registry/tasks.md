@@ -144,7 +144,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Use `{Name}` and `{Abbreviation}` from config for generated type names
     - _Requirements: R3 AC 1-17, R4 AC 7-9_
 
-  - [ ] 2.2 CSS generator: theme scoping
+  - [x] 2.2 CSS generator: theme scoping
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -155,7 +155,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Verify existing base/wcag/dark output unchanged (snapshot comparison)
     - _Requirements: R3 AC 1-5_
 
-  - [ ] 2.3 Swift generator: theme types
+  - [x] 2.3 Swift generator: theme types
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
