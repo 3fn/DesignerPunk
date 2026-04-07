@@ -97,27 +97,41 @@ M0a is two phases: first, package DesignerPunk as a consumable ecosystem (`@desi
 
 #### Phase 1: Package the Ecosystem (~4-6 weeks)
 
-Six workstreams, partially parallelizable:
+Eight workstreams, partially parallelizable:
 
-**1. Portable token pipeline** (~1-2 weeks)
+**1. Portable token pipeline**
 Make the token generation pipeline runnable from a product repo. Abstract hardcoded paths, accept configurable root directories, support product-defined themes via registry pattern. Product repos can create their own `SemanticOverrides.ts` and run the pipeline to generate themed outputs.
 
-**2. Component library package** (~1-2 days)
+**2. Component library package**
 Clean up `files` and `exports` in package.json. ESM bundle (fix 4 missing components per Lina R1), CSS tokens, blend utilities, responsive grid, fonts. Full bundle for M0a, tree-shaking deferred.
 
-**3. Configurable MCP servers** (~2-3 days)
+**3. Configurable MCP servers**
 Application MCP and Docs MCP accept configurable data directories instead of hardcoded paths. Runnable from a product repo context pointing at the package's data.
 
-**4. Theme infrastructure — registry pattern** (~3-5 days)
-Replace hardcoded `ThemeContext` union with theme registry. Products register themes, resolver iterates over whatever's registered. Ada builds this. Marketing theme created in the product repo using this infrastructure.
+**4. Theme infrastructure — registry pattern**
+Replace hardcoded `ThemeContext` union with theme registry. Products register themes, resolver iterates over whatever's registered. Must support themes defined outside the core repo (configurable theme discovery). Ada builds this. Ada's sequencing: WS4 first, then WS1 builds on it.
 
-**5. Product MCP foundation** (~1-2 weeks)
-Starter scaffold that ships with the package. Already connects to Application MCP, provides hooks for product-specific data (screen specs, product patterns, custom tokens). Products extend it. This is Spec 081 scoped to the foundation.
+**5. Product MCP foundation**
+Minimal starter scaffold that ships with the package. Connects to Application MCP and proxies design system queries (single endpoint for product agents). Accepts a product configuration file declaring product name, active platforms, and theme. Provides extension points for product-specific data. Products extend it — features grow from real usage, not speculation. This is Spec 081 scoped to the foundation.
 
-**6. Agent configurations for product context** (~2-3 days)
+**6. Agent configurations for product context**
 Agent configurations that work when DesignerPunk is a dependency, not the working directory. Product agents know where to find pipeline, components, MCP servers in the package structure.
 
+**7. Token data in Application MCP**
+Add structured, queryable token data to the Application MCP — token names, values, families, platform outputs (web/iOS/Android), and consumer relationships (which components reference which tokens). Purpose-built index generated at build time (walks token sources + component schemas). Application MCP loads at startup alongside component index. Enables product agents to query tokens the same way they query components. Ada's sequencing: WS7 after WS1, can overlap with WS1's tail.
+
+**8. Agent resource and /knowledge updates**
+Update agent prompts, resources, and knowledge bases to reflect new capabilities from workstreams 1-7. Examples: Leo updated for token data queries in Application MCP, Ada updated for theme registry, product agents updated for Product MCP foundation and package consumption patterns. Must happen before publish — agents need to know what they can query before Phase 2 starts.
+
 **Publish**: `@designerpunk/core` to GitHub Packages. Includes pipeline, components, MCP servers, Product MCP foundation, agent configs, starter kit.
+
+#### Phase 1 → Phase 2 Transition
+
+Before Phase 2 starts:
+- Leo + Ada session on theme registry API — Leo needs to understand the "create a marketing theme in the product repo" workflow before speccing screens
+- Leo + Ada token index walkthrough — 30 min, so Leo knows what token queries are available in the Application MCP
+- Lina: Shadow DOM + CSS custom property smoke test with Nav-Header-App under the marketing theme — verify nested shadow boundaries inherit themed custom properties correctly
+- Sparky: Build tooling input — project scaffolding preferences for the marketing site repo
 
 #### Phase 2: Marketing Site (~2-3 weeks)
 
@@ -187,3 +201,11 @@ Build the `create-designerpunk` (or equivalent) experience — guided setup, bra
 | 2026-04-06 | Theme registry pattern, not hardcoded | Products register themes, resolver iterates. Avoids refactoring for M0b. Marketing theme created in product repo, not in DesignerPunk core. |
 | 2026-04-06 | Milestones M1-M3 collapsed into M0a Phase 1 | Packaging, Product MCP, and portable infrastructure are prerequisites for the first product, not separate milestones. Onboarding experience (create-designerpunk) remains as M1. |
 | 2026-04-06 | System and product are bidirectional | Products add their own tokens, themes, and potentially components. The package provides infrastructure to participate in the ecosystem, not just consume outputs. |
+| 2026-04-06 | Product MCP foundation ships in Phase 1 | Minimal scaffold: connect to Application MCP, proxy design system queries, accept product config (name, platforms, theme). Extension points for product-specific data. Features grow from real usage during Phase 2 and M0b. (Leonardo R2 recommendation) |
+| 2026-04-06 | Token data added to Application MCP | Structured, queryable token index (names, values, families, platform outputs, consumer relationships) across all three platforms. Required for Product MCP screen→token lookup and theme creation workflows. |
+| 2026-04-06 | Token index: purpose-built YAML at build time | DTCG JSON lacks component tokens and consumer relationships. Build-time script walks token sources + component schemas, produces structured index. Three files by tier: primitives.yaml, semantics.yaml, components.yaml. Application MCP loads at startup. YAML for consistency with metadata layer convention. (Ada R2, R3, R4) |
+| 2026-04-06 | Blend utilities: same version, ship together | Coupling is inherent — same base values, same color space math. Single version for `@designerpunk/core`. (Ada R2) |
+| 2026-04-06 | Ada's workstream sequencing: WS4 → WS1 → WS7 | Theme registry first (changes resolver), portable pipeline second (builds on registry), token index third (needs stable pipeline). WS4→WS1 hard dependency. (Ada R2) |
+| 2026-04-06 | Token namespace collision noted for future | Products adding their own tokens could create collisions. Not a Phase 1 problem (isolated repos). Note for when Product MCP aggregates across products. (Ada R2) |
+| 2026-04-06 | Theme registry must support external themes | Marketing theme lives in product repo, not core. Pipeline needs configurable theme discovery beyond `src/tokens/themes/`. (Ada R2) |
+| 2026-04-06 | Add token index walkthrough to Phase 1→2 transition | Leo + Ada, 30 min. Leo needs to know available token queries before speccing screens. (Ada R2) |

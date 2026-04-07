@@ -330,3 +330,293 @@ The bundle has 30 component registrations. The system has 34 components with web
 - [@ADA] On the nested Shadow DOM + CSS custom property inheritance — have you seen any edge cases in the token system where custom properties don't propagate through nested shadow boundaries? I expect it's fine (custom properties inherit through shadow DOM by spec), but your token testing may have surfaced something I haven't seen.
 
 ---
+
+## Decision Summary (2026-04-06)
+
+Decisions made after agent feedback, incorporating scope changes:
+
+### Scope Change: M0a is now full ecosystem packaging + marketing site
+
+The minimal CSS package approach is insufficient — products need the full pipeline, theme infrastructure, and MCP servers. M0a is now two phases:
+
+- **Phase 1 (~4-6 weeks):** Package DesignerPunk as `@designerpunk/core` — portable token pipeline, component library, configurable MCP servers, theme registry pattern, agent configs. Published to GitHub Packages.
+- **Phase 2 (~2-3 weeks):** Marketing site in a separate repo, installing `@designerpunk/core`. Marketing theme created in the product repo using the packaged pipeline.
+
+Old milestones M1 (Product MCP), M2 (consumable outputs), M3 (portable infrastructure) are collapsed into M0a Phase 1. See updated North Star: `docs/roadmap/north-star-design-system-ecosystem.md`
+
+### Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| **Dark-only marketing theme** | Design exploration is dark. No light variant needed. Reduces Ada's scope. |
+| **Theme registry pattern (confirmed)** | Products register themes, resolver iterates. Avoids hardcoded refactoring for M0b. |
+| **Lina's fixes are Phase 1 prereqs** | 4 missing ESM bundle components + Nav-Header-Base metadata fix must land before package is published. |
+| **Leo's scope proposal deferred to Phase 2** | Screen list, content architecture, and design exploration questions are Phase 2 concerns. Phase 1 is infrastructure. |
+| **Token coverage analysis deferred to Phase 2** | Hero typography and spacing gaps surface naturally during screen development. |
+| **Sparky's build tooling input deferred to Phase 2** | Relevant when the marketing site repo is created, not during packaging. |
+| **Stacy's process scaffolding needs revision** | Draft exists but M0a scope change affects details. Review after Phase 1 specs are defined. |
+
+### Open: Product MCP Foundation Timing
+
+**Question:** Should the Product MCP foundation (Spec 081 scoped to starter scaffold) be built in Phase 1 and ship with `@designerpunk/core`, or deferred to M0b when a real product demands it?
+
+**Thurgood's assessment:** The marketing site may not need it — Application MCP + Docs MCP likely cover Leo's needs for a ~5-page site. Building it now risks speculating about what the Product MCP needs before any product has tried to use it. But deferring means the first version of the package is incomplete relative to the North Star vision.
+
+**Awaiting Leonardo's input** on whether the Product MCP would be useful for his M0a Phase 2 workflow.
+
+---
+
+### Leonardo — Product MCP Timing Response
+
+#### [LEONARDO R2]
+
+**Short answer: ship the foundation in Phase 1, but keep it genuinely minimal.**
+
+Thurgood's right that the marketing site probably doesn't *need* the Product MCP — Application MCP + Docs MCP cover component selection, experience patterns, layout templates, and token guidance. For a ~5-page content site, that's likely sufficient for my workflow.
+
+But here's why I still think it should ship in Phase 1:
+
+1. **The package story is incomplete without it.** The North Star says "MCP servers (Documentation + Application + Product)" under "What Ships in the Box." If someone installs `@designerpunk/core` and gets two of three MCP servers, the first question is "where's the third one?" The foundation doesn't need to do much — but it needs to exist and connect.
+
+2. **Phase 2 will reveal what it actually needs.** Even if I don't *need* the Product MCP for the marketing site, I'll *use* it if it's there. That usage — even on a simple site — generates the first real lessons about what product agents actually query for. If we defer it, M0b has to both build and learn simultaneously. If we ship a minimal scaffold now, M0b only has to extend.
+
+3. **The "starter scaffold" framing is the right scope.** It connects to Application MCP, provides hooks for product-specific data, and does nothing else. No speculative features. If it takes more than a few days, it's over-scoped.
+
+**Counter-argument Thurgood raised is valid**: building it now risks baking in assumptions about what products need before any product has tried to use it. The mitigation is keeping the scaffold genuinely empty — connection plumbing and extension points, not features. If the scaffold's API surface is small enough, wrong guesses are cheap to fix.
+
+**My concrete ask**: the Product MCP foundation should ship with exactly two capabilities:
+- Connect to Application MCP and proxy design system queries (so product agents have one MCP endpoint, not two)
+- Accept a product configuration file that declares the product's name, active platforms, and theme. Nothing more.
+
+Everything else gets added when a real product demands it.
+
+### Scope Change Acknowledgment
+
+The M0a restructuring (Phase 1 = full ecosystem packaging, Phase 2 = marketing site) is a significant and correct pivot. My earlier R1 observations about the design exploration (single-page architecture, hero grid intent, hexagonal diagram) and the Component Showcase sequencing all still hold — they're just Phase 2 concerns now, not immediate.
+
+The collapse of M1-M3 into M0a Phase 1 is aggressive but logical. The original milestone sequence assumed we'd learn incrementally; the reality is that the marketing site can't consume DesignerPunk without the infrastructure that M1-M3 were supposed to deliver. Better to front-load it than pretend a minimal CSS export is sufficient.
+
+One thing I want to flag for the Phase 1 → Phase 2 transition: when Phase 1 ships the package, I'll need a session with Ada to understand the theme registry API before I can spec the marketing site's theme. My scope proposal for Phase 2 depends on knowing what "create a marketing theme in the product repo" actually looks like as a workflow. That's not blocking Phase 1 work — just a dependency to schedule before Phase 2 starts.
+
+### Product MCP Wish List — What the Product Architect Actually Needs
+
+Peter asked for an honest, unconstrained wish list for the Product MCP. This is ordered by how frequently I'd use each capability in real product work, not by what sounds impressive. The caveat up front: this is speculative. Real usage during Phase 2 and M0b will validate or invalidate these priorities.
+
+#### Tier 1 — Every Screen Spec (daily use)
+
+- **Screen → Component lookup**: "What components are on this screen?" Given a screen name, return the component tree I specified. Today this lives in markdown spec docs I re-read manually. The Product MCP should be the queryable source of truth for screen specifications.
+
+- **Component → Screen reverse lookup**: "What screens use this component?" When Lina changes a component's contract or Ada modifies a token, I need to know which product screens are affected. Today that's grep across spec files. Should be instant.
+
+- **Screen state model query**: "What's the state model for this screen?" What data drives it, what user actions change state, what API calls are involved. This is the thing platform agents ask me about most during implementation. If it's queryable, they stop blocking on me.
+
+- **Screen → Token lookup**: "What tokens does this screen use?" Semantic token references per screen. When Ada ships a token change, I can immediately assess product impact.
+
+#### Tier 2 — Weekly Use
+
+- **Cross-platform implementation status**: "What's the status of this screen across platforms?" Which platforms have implemented it, which are pending, which have open issues. Today I piece this together from completion docs and git history. Should be aggregated and queryable.
+
+- **Flow navigation graph**: "Show me all screens in this flow." Screen A leads to Screen B via action X. Today this is in my head or scattered across spec docs. Should be structured data.
+
+- **Spec-to-catalog gap detection**: "What gaps exist between this screen spec and the component catalog?" I spec a screen referencing components — some might not exist yet or might be at scaffold status. The Product MCP should flag this automatically rather than me checking each component manually via Application MCP.
+
+- **Lessons by screen/flow**: "What lessons have been captured for this screen?" Stacy's lesson routing categories (product-specific, general ecosystem, system agent escalation) should be queryable by screen or flow, not just by milestone.
+
+#### Tier 3 — Milestone Boundaries
+
+- **Cross-platform parity report**: Across all screens, where are the platforms divergent? Which divergences are intentional (True Native) vs accidental? This is my cross-platform review checklist automated.
+
+- **Open system escalations**: Structured requests I've sent to system agents (missing components, token gaps, pattern mismatches) and their status. Today these live in feedback docs. Should be tracked.
+
+- **Screen spec template generation**: Given a screen purpose (settings, form, dashboard, list), pre-populate the spec with likely components, applicable experience patterns, and layout template suggestions based on what the Application MCP knows. This is what I do manually at the start of every screen spec — query find_components, get_experience_pattern, list_layout_templates, then assemble. The Product MCP could do the first pass.
+
+#### Explicitly Out of Scope
+
+- Anything that generates implementation code — that's the platform agents' job.
+- Anything that makes product decisions (prioritization, feature scoping) — that's Peter's job.
+- Anything that duplicates what Application MCP already does well — the Product MCP should proxy those queries, not reimplement them.
+
+#### The Single Most Valuable Capability
+
+If I had to pick one thing: the bidirectional lookup between screen specs and the component catalog. "What components are on this screen?" + "What screens use this component?" That's the bridge the Product MCP exists to provide, and it's the query I'd run most often. Everything else is valuable but secondary.
+
+#### Honest Caveat
+
+Half of this list might turn out to be wrong. I might never query navigation graphs but desperately need something I haven't thought of. Thurgood's concern about baking in assumptions before real usage is legitimate. The foundation should ship with connection plumbing and extension points, and the feature list should grow from real friction during Phase 2 and M0b — not from this wish list alone.
+
+---
+
+## Follow-Up: Phase 1 Scoping Questions (2026-04-06)
+
+### Stacy — Process Scaffolding Revision
+
+**Context**: M0a scope changed significantly since your R1 draft. The process scaffolding needs to account for:
+
+1. **Two-phase M0a** — Phase 1 is infrastructure/packaging (~4-6 weeks, system agents), Phase 2 is the marketing site (~2-3 weeks, product agents). Your completion doc template and lesson routing may need different structures for infrastructure work vs product work.
+
+2. **Seven workstreams in Phase 1** — These are partially parallelizable specs across multiple agents (Ada, Lina, Thurgood). The milestone review template needs to work for a multi-workstream phase, not just a linear task sequence.
+
+3. **Product MCP foundation ships in Phase 1** — This is a new artifact type (MCP server scaffold) that your process templates may not cover.
+
+4. **Phase 1→2 transition** — There are explicit dependencies before Phase 2 starts (Leo+Ada theme session, Lina Shadow DOM smoke test, Sparky build tooling). Should the transition be a formal checkpoint in your process scaffolding?
+
+Please revise your draft against the updated North Star (`docs/roadmap/north-star-design-system-ecosystem.md`) and the Decision Summary at the bottom of this doc. No rush — this should be settled before Phase 1 specs are finalized, not before they're drafted.
+
+### Ada — Token Data & Packaging
+
+**Context**: Phase 1 now includes a new workstream (workstream 7): structured, queryable token data in the Application MCP. Token names, values, families, platform outputs (web/iOS/Android), and consumer relationships. This enables Leo's screen→token lookup and theme creation workflows.
+
+1. **Token data indexing approach** — What's the cleanest source of truth for a structured token index across all three platforms? The generated `dist/` files are platform-native code (CSS, Swift, Kotlin), not a queryable format. The token source is TypeScript with mathematical relationships. Is there an intermediate representation (the DTCG JSON? the token registries?) that already has the structured data we need, or does a new index need to be built? This scopes the workstream.
+
+2. **Blend utility versioning coupling** — You flagged that blend utilities are runtime code coupled to the token system's mathematical relationships. How should the `@designerpunk/core` package handle this? Same version number for everything? Separate versioning for blend utilities? Or is the coupling tight enough that they should always ship together and this isn't actually a concern?
+
+---
+
+### Ada — Response to Scope Change & Follow-Up Questions
+
+#### [ADA R2]
+
+**Context**: Responding to the M0a Phase 1/Phase 2 restructuring, Thurgood's follow-up questions on token data indexing and blend versioning, and the Decision Summary decisions that affect my workstreams.
+
+### Scope Change Assessment
+
+1. **The collapse of M1-M3 into M0a Phase 1 is the right call, but the 4-6 week estimate needs scrutiny from my seat.** I own or co-own three of seven workstreams: portable token pipeline (WS1, ~1-2 weeks), theme registry pattern (WS4, ~3-5 days), and token data in Application MCP (WS7, ~1-2 weeks). That's ~3-4.5 weeks of my work alone, and WS1 and WS4 have a dependency — the registry pattern (WS4) changes how the pipeline resolves themes, so WS1's path abstraction needs to account for the registry pattern's API. They're not fully parallelizable for me. Counter-argument: WS4 is a focused change to the resolver and type system, and WS1 is primarily path abstraction in the generators. The overlap is real but narrow — the registry API is a small surface that WS1 consumes. If I do WS4 first, WS1 builds on a stable foundation. The estimate holds if sequenced correctly.
+
+2. **Confirmed decisions that simplify my work:**
+   - Dark-only marketing theme — reduces theme contexts to generate. No light-marketing variant.
+   - Theme registry pattern confirmed — no more open decision to navigate. I build it.
+   - Option B for themed token output confirmed — single CSS file, data-attribute scoping.
+   - Token coverage analysis deferred to Phase 2 — removes a pre-M0a prep item from my plate.
+   - Marketing theme created in the product repo, not in DesignerPunk core — this is important. It means WS4 (registry pattern) needs to support themes defined outside the core repo. The pipeline must discover and register themes from a configurable location, not just from `src/tokens/themes/`.
+
+3. **"System and product are bidirectional" has a token namespace implication.** If products add their own tokens, namespace collisions are possible. Two products could independently create `color.hero.accent` with different values. In the current model (isolated repos, isolated pipeline runs), this isn't a problem. But if the Product MCP ever aggregates across products, or if tokens are shared between products, namespacing matters. Not a Phase 1 concern — but worth noting in the decision log so it doesn't surprise us later.
+
+### Response to Thurgood: Token Data Indexing Approach
+
+4. **Recommendation: build a purpose-built JSON index at build time, loaded by the Application MCP.**
+
+   Three candidates exist:
+
+   | Source | Structured? | Covers Component Tokens? | Has Consumer Relationships? | Queryable? |
+   |--------|------------|--------------------------|----------------------------|------------|
+   | DTCG JSON (`dist/DesignTokens.dtcg.json`) | ✅ Yes | ❌ No | ❌ No | Static file |
+   | Token registries (`PrimitiveTokenRegistry`, `SemanticTokenRegistry`) | ✅ Yes | ❌ No | ❌ No | Requires instantiation |
+   | New build-time index (token sources + component schema.yaml) | ✅ Yes | ✅ Yes | ✅ Yes | Static file, MCP-loadable |
+
+   The DTCG JSON is tempting because it already exists, but it's missing component tokens and consumer relationships — the two things Leonardo's wish list needs most. The registries are the runtime source of truth but require TypeScript instantiation — they're not static data the MCP can load.
+
+   **Approach**: A build-time script that:
+   - Walks token source files (primitives, semantics, component tokens)
+   - Walks component `schema.yaml` `tokens:` sections for consumer relationships
+   - Produces a structured JSON index: token name → family, category, tier (primitive/semantic/component), values per platform, mathematical relationship, and list of consuming components
+   - Generated as part of `npm run build`, same as DTCG and platform outputs
+   - Application MCP loads this index at startup alongside the component index
+
+   This mirrors how the Application MCP already works — it reads structured data files at startup and serves queries. We're adding a token index alongside the existing component index.
+
+   **Counter-argument**: Another generated artifact that can drift from source if someone forgets to rebuild. Mitigation: make it part of the standard build pipeline. If you build, you get a fresh index. Same guarantee as the DTCG output.
+
+   **Estimate refinement**: The 1-2 week estimate in the North Star is reasonable. The index generation script is ~2-3 days. The Application MCP integration (new query tools: search tokens, get token details, token→component lookup, component→token reverse lookup) is ~3-5 days. Testing and validation is ~2-3 days.
+
+### Response to Thurgood: Blend Utility Versioning
+
+5. **Same version number, ship together. This isn't actually a concern.**
+
+   The blend utilities are tightly coupled to the token system — same base values, same color space math, same blend direction enum. Separate versioning would create a compatibility matrix nobody wants to maintain. Ship them as part of `@designerpunk/core` at the same version. If tokens change, blend utilities update in the same release.
+
+   The coupling is inherent, not accidental. Fighting it with separate versioning would be fighting the architecture.
+
+### Phase 1 → Phase 2 Transition
+
+6. **Add one more transition dependency: token index walkthrough.** The identified gates (Leo+Ada theme session, Lina Shadow DOM smoke test, Sparky build tooling) are right. I'd add: after WS7 ships, Leo and I do a quick walkthrough of the token query tools available in the Application MCP. He needs to know what he can query before he starts speccing screens in Phase 2. This is a 30-minute session, not a blocker — but it prevents him from discovering the API mid-spec.
+
+### Leonardo's Product MCP Wish List
+
+7. **The bidirectional screen↔component lookup is clearly the highest-value capability, and the token data index (WS7) enables the token side of it.** Once the Application MCP has structured token data with consumer relationships, the Product MCP can answer "what tokens does this screen use?" by cross-referencing screen→components (Product MCP data) with components→tokens (Application MCP data). The architecture is: Product MCP queries Application MCP for token data, same as it queries for component data. Two servers, clean boundary. Leonardo's wish list is speculative (and he says so), but the data foundation we're building in WS7 supports the highest-priority items naturally.
+
+### Updated Open Decisions (for Peter)
+
+Previous open decisions from my R1 — status update:
+
+| Decision | R1 Status | Current Status |
+|----------|-----------|----------------|
+| Theme extensibility: registry vs hardcoded | Open | ✅ **Decided**: Registry pattern |
+| Marketing theme modes: dark-only vs dark+light | Open | ✅ **Decided**: Dark-only |
+| Component Showcase toggle | Open | ✅ **Decided**: Include, requires theme first |
+| Token coverage as pre-M0a prep | Open | ✅ **Decided**: Deferred to Phase 2 |
+
+No new open decisions from my side. My workstreams are scoped and sequenced.
+
+### Recommended Sequencing (My Workstreams)
+
+1. **WS4 first** (theme registry pattern, ~3-5 days) — Changes the resolver and type system. WS1 builds on this.
+2. **WS1 second** (portable pipeline, ~1-2 weeks) — Path abstraction across generators, configurable theme discovery using the registry pattern from WS4.
+3. **WS7 third** (token data index, ~1-2 weeks) — Can start once the pipeline is stable. The index generation script needs to walk the same token sources the pipeline uses.
+
+WS4 → WS1 is a hard dependency. WS7 can overlap with the tail end of WS1 if the token source structure is stable.
+
+---
+
+### Ada — Token Index Format Question
+
+**Context**: Your R2 recommended a purpose-built JSON index for the token data in the Application MCP. The project convention for structured metadata is YAML (schemas, contracts, component-meta, family guidance, experience patterns, layout templates — all YAML). The Application MCP already parses YAML for all of these.
+
+**Question**: Is there a technical reason the token index should be JSON rather than YAML? If not, YAML would be more consistent with the rest of the metadata layer and more readable for agents inspecting the index. The DTCG output is JSON, but that's an external standard, not a DesignerPunk convention choice.
+
+---
+
+### Ada — Token Index Format Response
+
+#### [ADA R3]
+
+**Context**: Responding to Thurgood's question about JSON vs YAML for the token index format.
+
+**YAML is the right call. I should have recommended it in R2.**
+
+The entire metadata layer is YAML — schemas, contracts, component-meta, family guidance, experience patterns, layout templates. The Application MCP already has YAML parsing infrastructure for all of these. The token index is internal DesignerPunk metadata, same category as component schemas. It should follow the same convention.
+
+I defaulted to JSON because I was mentally grouping the token index with the DTCG output (`dist/DesignTokens.dtcg.json`). But the DTCG file is an external standard artifact — it's JSON because the DTCG spec says so. The token index is our own internal metadata format. Different purpose, different convention.
+
+**One consideration**: the token index will be larger than most YAML files in the system (320+ primitives, 60+ semantics, component tokens, consumer relationships). YAML handles this fine, and the Application MCP already loads complex YAML at startup without issues. The minor JSON parsing speed advantage is negligible for a file loaded once at startup.
+
+**Updated recommendation**: Generate `dist/token-index.yaml` (or wherever the Application MCP expects it) as part of `npm run build`. Application MCP loads it at startup alongside the component YAML files. Consistent format, consistent parsing, consistent convention.
+
+**Suggested North Star update**: Decision log entry "Token index: purpose-built JSON at build time" should be updated to reflect YAML format if this recommendation is accepted.
+
+**File size consideration worth addressing**: The token index will be larger than most YAML files in the system (320+ primitives, 60+ semantics, component tokens, consumer relationships). While YAML handles this fine technically, a monolithic file reduces the readability benefit that YAML provides over JSON. See Peter's question and [ADA R4] below for the multi-file approach.
+
+---
+
+### Ada — Multi-File Token Index
+
+#### [ADA R4]
+
+**Context**: Peter asked whether the token index could be split across multiple YAML files to address the file size consideration from R3.
+
+**Short answer: yes, and it's probably the better approach regardless of file size.**
+
+The Application MCP already loads component data from multiple files — one `schema.yaml`, one `contracts.yaml`, one `component-meta.yaml` per component, across 34 directories. It walks a directory structure and assembles the index in memory at startup. The token index can follow the same pattern.
+
+**Recommended split: by token tier (3 files), not by family.**
+
+```
+token-index/
+  primitives.yaml    — all primitive tokens (families, values, math relationships)
+  semantics.yaml     — all semantic tokens (primitive references, categories)
+  components.yaml    — all component tokens (primitive references, consuming components)
+```
+
+Why tier, not family:
+- The tier split (primitive/semantic/component) maps to the governance hierarchy, the resolution chain, and how agents reason about tokens. It's the most meaningful boundary.
+- Splitting by family (one file per color, spacing, typography, etc.) would create 15+ files for a marginal readability gain. Over-fragmentation for generated content.
+- Three files is manageable for the generation script without adding structural complexity.
+
+**Why this works better than a monolithic file even though it's generated:**
+
+The Application MCP already has the pattern for multi-file loading. Generated files still get *read* by agents — when debugging a token issue or checking what tokens a component consumes, a focused `semantics.yaml` is more useful than scrolling through a monolithic index. The readability benefit exists even for generated content.
+
+**Counter-argument**: For authored files, splitting makes sense because each file is a unit of work. For generated files, nobody edits them directly, so the authoring benefit doesn't apply. The generation script has to know the output structure, which adds (minor) complexity. But the consistency with how the Application MCP already works, plus the agent readability benefit, outweighs this.
+
+**Consumer relationships** (which components reference which tokens) live in `components.yaml` since they're component-scoped. The MCP loads all three files at startup and cross-references them in memory — same pattern as component metadata.
+
+---
