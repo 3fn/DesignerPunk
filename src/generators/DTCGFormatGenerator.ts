@@ -69,6 +69,7 @@ import { progressColorTokens } from '../tokens/semantic/ColorTokens';
 import { shadowTokens as semanticShadowTokens } from '../tokens/semantic/ShadowTokens';
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
+import type { ThemeOverrideSet } from './TokenFileGenerator';
 
 /** Set of valid DTCG types for validation (Format Module 2025.10) */
 const VALID_DTCG_TYPES: ReadonlySet<string> = new Set([
@@ -219,7 +220,7 @@ export class DTCGFormatGenerator {
    * Includes generator version, generation timestamp, and Rosetta system version
    * for traceability and debugging.
    */
-  private generateRootExtensions(): { version: string; generatedAt: string; rosettaVersion: string } {
+  private generateRootExtensions(): NonNullable<NonNullable<DTCGTokenFile['$extensions']>['designerpunk']> {
     // Read version from package.json at runtime
     let rosettaVersion = 'unknown';
     try {
@@ -230,11 +231,18 @@ export class DTCGFormatGenerator {
       // Fallback — package.json not found or unreadable
     }
 
-    return {
+    const extensions: NonNullable<NonNullable<DTCGTokenFile['$extensions']>['designerpunk']> = {
       version: '1.0.0',
       generatedAt: new Date().toISOString(),
       rosettaVersion,
     };
+
+    // Include registered theme metadata when themes are configured (Spec 094)
+    if (this.config.registeredThemes.length > 0) {
+      extensions.themes = this.config.registeredThemes;
+    }
+
+    return extensions;
   }
 
   /**

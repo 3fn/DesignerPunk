@@ -167,7 +167,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Tests: protocol generated, structs correct, EnvironmentKey default correct
     - _Requirements: R3 AC 6-11_
 
-  - [ ] 2.4 Kotlin generator: theme types
+  - [x] 2.4 Kotlin generator: theme types
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada

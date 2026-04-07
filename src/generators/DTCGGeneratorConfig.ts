@@ -23,6 +23,8 @@ export interface DTCGGeneratorConfig {
   schemaUrl: string;
   /** Resolve alias references to final values (breaks hierarchy). Default: false */
   resolveAliases: boolean;
+  /** Registered themes to include in $extensions metadata. Default: [] (Spec 094) */
+  registeredThemes: Array<{ name: string; mode: string }>;
 }
 
 /**
@@ -40,4 +42,5 @@ export const DEFAULT_DTCG_GENERATOR_CONFIG: Readonly<DTCGGeneratorConfig> = {
   prettyPrint: true,
   schemaUrl: 'https://tr.designtokens.org/format/',
   resolveAliases: false,
+  registeredThemes: [],
 };

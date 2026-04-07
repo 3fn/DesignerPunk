@@ -93,6 +93,8 @@ export interface DTCGTokenFile {
       version: string;
       generatedAt: string;
       rosettaVersion: string;
+      /** Registered themes metadata (Spec 094). Present when themes are configured. */
+      themes?: Array<{ name: string; mode: string }>;
     };
   };
   [key: string]: DTCGGroup | string | object | undefined;
