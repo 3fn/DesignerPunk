@@ -33,6 +33,7 @@ Goal: Publish `@designerpunk/core` to GitHub Packages — a product repo can ins
 **Block D — Publish & Agent Updates**
 8. **WS8: Agent resource and /knowledge updates** — Update agent prompts, resources, and knowledge bases to reflect new capabilities from WS1-7. Leo updated for token data queries, Ada for theme registry, product agents for Product MCP foundation and package consumption patterns.
 9. **Publish `@designerpunk/core`** to GitHub Packages. Validate install in a fresh repo.
+10. **Formalize Integration Guide** — Finalize `docs/roadmap/integration-guide-draft.md` with actual commands, configuration, and troubleshooting from Phase 1 implementation. Move to `.kiro/steering/DesignerPunk-Integration-Guide.md` for Docs MCP serving. Each Phase 1 spec contributes its section — Block A (pipeline config, theme setup), Block B (package install, imports), Block C (MCP server startup, Product MCP config).
 
 ### Dependencies
 ```

@@ -35,12 +35,34 @@ These are parent-child: the relationship model (parent) must be stable before pr
 
 ## Activation Trigger
 
-This spec becomes active when DesignerPunk is packageable — when a product repository can attach DesignerPunk's Docs MCP and Application MCP as dependencies. Until then, this design outline captures the thinking so the design work is ready when the time comes.
+**Updated 2026-04-07**: The packaging trigger is being resolved by M0a Phase 1. The Product MCP foundation (minimal scaffold) ships with `@designerpunk/core` as part of the Block C spec. The full spec (081) activates for M0b when a real product demands the complete Product MCP vision.
 
-Specific triggers:
-- DesignerPunk is available as a Kiro Power, plugin, or equivalent packaging vehicle
-- A real product is ready to consume DesignerPunk through the packaged interface
-- The MCP Relationship Model (Spec 070) has been validated through at least one product application attempt
+Remaining triggers for full spec activation:
+- M0a Phase 2 (marketing site) generates real usage data about what product agents actually query
+- M0b (WrKing Class) requires product primitives, cross-MCP references, and wish list capabilities
+- The MCP Relationship Model (Spec 070) has been validated through M0a product application
+
+---
+
+## North Star Context (2026-04-07)
+
+This spec exists within the DesignerPunk ecosystem vision defined in `docs/roadmap/north-star-design-system-ecosystem.md`. Key context:
+
+- **DesignerPunk is an ecosystem, not a library.** Products install `@designerpunk/core` and get the pipeline, components, MCP servers, and governance framework. Products participate in the ecosystem (adding tokens, themes, potentially components) — they don't just consume outputs.
+- **System and product are bidirectional.** Products create their own tokens and themes using the packaged pipeline. The Product MCP bridges product-specific data with design system data served by the Application MCP.
+- **The Product MCP foundation ships with the package.** M0a Phase 1 (Block C spec) delivers a minimal scaffold: connect to Application MCP, proxy design system queries, accept a product config file (name, platforms, theme). Extension points only — no features from the wish list.
+- **This spec (081) owns the full Product MCP vision.** The Block C foundation is a slice. The full scope — product primitives, cross-MCP references, Leo's wish list (screen↔component lookup, state models, gap detection) — lives here and gets formalized when M0b demands it.
+- **Leonardo's discovery wish list** is captured in `discovery-leonardo-wish-list.md` alongside this outline. Bidirectional screen↔component lookup is the highest-value capability. The wish list informs extension points but is explicitly speculative — real usage during M0a Phase 2 and M0b validates priorities.
+
+### M0a Phase 1 Foundation Scope (Block C)
+
+The Block C spec takes a minimal slice of this design:
+- Connect to Application MCP and proxy design system queries (single endpoint for product agents)
+- Accept a product configuration file declaring product name, active platforms, and theme
+- Extension points for product-specific data
+- No product primitives schema, no cross-MCP reference patterns, no wish list features
+
+Everything else in this design outline remains deferred until M0b activation.
 
 ---
 

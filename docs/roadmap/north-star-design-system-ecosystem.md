@@ -125,6 +125,18 @@ Update agent prompts, resources, and knowledge bases to reflect new capabilities
 
 **Publish**: `@designerpunk/core` to GitHub Packages. Includes pipeline, components, MCP servers, Product MCP foundation, agent configs, starter kit.
 
+#### Phase 1 Spec Breakdown
+
+Three specs, organized by block. Each block is one spec with clear task ownership per workstream.
+
+| Spec | Block | Workstreams | Primary Owner | Scope |
+|------|-------|-------------|---------------|-------|
+| Portable Pipeline & Theme Registry | A | WS4 + WS1 | Ada | Token system portability and extensibility. Critical path — all other blocks depend on this. |
+| Ecosystem Package Assembly | B | WS2 + WS6 | Lina (WS2) + Thurgood (WS6) | What ships in the package and how it's consumed. Can run in parallel with Block A. |
+| MCP Infrastructure for Products | C | WS3 + WS5 + WS7 | Cross-agent | All MCP servers working in product context — configurable servers, Product MCP foundation, token data index. Starts when Block A stabilizes. |
+
+Block D (Publish & Agent Updates) is not a spec — publishing is the final task of Phase 1, and agent resource updates (WS8) are distributed as tasks within each spec above. The Integration Guide (`docs/roadmap/integration-guide-draft.md`) is formalized during Block D — each spec contributes its section, then the guide moves to `.kiro/steering/` for Docs MCP serving.
+
 #### Phase 1 → Phase 2 Transition
 
 Before Phase 2 starts:
