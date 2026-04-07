@@ -1,0 +1,4771 @@
+{
+  "collections": [
+    {
+      "name": "Primitives",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "variables": [
+        {
+          "name": "space/000",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0,
+            "dark": 0,
+            "wcag": 0
+          },
+          "description": "Zero spacing - explicit no spacing value | Formula: base × 0 = 8 × 0 = 0"
+        },
+        {
+          "name": "space/025",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 2,
+            "dark": 2,
+            "wcag": 2
+          },
+          "description": "Extra tight spacing - 0.25x base value | Formula: base × 0.25 = 8 × 0.25 = 2"
+        },
+        {
+          "name": "space/050",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 4,
+            "dark": 4,
+            "wcag": 4
+          },
+          "description": "Tight spacing - 0.5x base value | Formula: base × 0.5 = 8 × 0.5 = 4"
+        },
+        {
+          "name": "space/075",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 6,
+            "dark": 6,
+            "wcag": 6
+          },
+          "description": "Strategic flexibility spacing - 0.75x base value | Formula: space100 × 0.75"
+        },
+        {
+          "name": "space/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 8,
+            "dark": 8,
+            "wcag": 8
+          },
+          "description": "Base spacing - 1x base value | Formula: base × 1 = 8 × 1 = 8"
+        },
+        {
+          "name": "space/125",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 10,
+            "dark": 10,
+            "wcag": 10
+          },
+          "description": "Strategic flexibility spacing - 1.25x base value | Formula: space100 × 1.25"
+        },
+        {
+          "name": "space/150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 12,
+            "dark": 12,
+            "wcag": 12
+          },
+          "description": "Loose spacing - 1.5x base value | Formula: base × 1.5 = 8 × 1.5 = 12"
+        },
+        {
+          "name": "space/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 16,
+            "dark": 16,
+            "wcag": 16
+          },
+          "description": "Wide spacing - 2x base value | Formula: base × 2 = 8 × 2 = 16"
+        },
+        {
+          "name": "space/250",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 20,
+            "dark": 20,
+            "wcag": 20
+          },
+          "description": "Strategic flexibility spacing - 2.5x base value | Formula: space100 × 2.5"
+        },
+        {
+          "name": "space/300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 24,
+            "dark": 24,
+            "wcag": 24
+          },
+          "description": "Extra wide spacing - 3x base value | Formula: base × 3 = 8 × 3 = 24"
+        },
+        {
+          "name": "space/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 32,
+            "dark": 32,
+            "wcag": 32
+          },
+          "description": "Large spacing - 4x base value | Formula: base × 4 = 8 × 4 = 32"
+        },
+        {
+          "name": "space/500",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 40,
+            "dark": 40,
+            "wcag": 40
+          },
+          "description": "Extra large spacing - 5x base value | Formula: base × 5 = 8 × 5 = 40"
+        },
+        {
+          "name": "space/600",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 48,
+            "dark": 48,
+            "wcag": 48
+          },
+          "description": "Huge spacing - 6x base value | Formula: base × 6 = 8 × 6 = 48"
+        },
+        {
+          "name": "color/gray/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#B2BCC4",
+            "dark": "#B2BCC4",
+            "wcag": "#B2BCC4"
+          },
+          "description": "Light gray for subtle backgrounds and muted text | Formula: Systematic gray scale progression - lightest"
+        },
+        {
+          "name": "color/gray/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#5E707C",
+            "dark": "#5E707C",
+            "wcag": "#5E707C"
+          },
+          "description": "Medium-light gray for secondary text and borders | Formula: Systematic gray scale progression - medium-light"
+        },
+        {
+          "name": "color/gray/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#26323A",
+            "dark": "#26323A",
+            "wcag": "#26323A"
+          },
+          "description": "Medium gray for primary text and prominent borders | Formula: Systematic gray scale progression - medium"
+        },
+        {
+          "name": "color/gray/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#182228",
+            "dark": "#182228",
+            "wcag": "#182228"
+          },
+          "description": "Dark gray for strong text and container backgrounds | Formula: Systematic gray scale progression - dark"
+        },
+        {
+          "name": "color/gray/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#10161A",
+            "dark": "#10161A",
+            "wcag": "#10161A"
+          },
+          "description": "Darkest gray for deep backgrounds and high contrast text | Formula: Systematic gray scale progression - darkest"
+        },
+        {
+          "name": "color/black/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#3A3A45",
+            "dark": "#3A3A45",
+            "wcag": "#3A3A45"
+          },
+          "description": "Light black for subtle container backgrounds | Formula: Systematic black scale progression - lightest"
+        },
+        {
+          "name": "color/black/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#22222A",
+            "dark": "#22222A",
+            "wcag": "#22222A"
+          },
+          "description": "Medium black for container backgrounds and surfaces | Formula: Systematic black scale progression - medium"
+        },
+        {
+          "name": "color/black/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#0A0A0F",
+            "dark": "#0A0A0F",
+            "wcag": "#0A0A0F"
+          },
+          "description": "Dark black for primary backgrounds and deep containers | Formula: Systematic black scale progression - dark"
+        },
+        {
+          "name": "color/black/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#06060A",
+            "dark": "#06060A",
+            "wcag": "#06060A"
+          },
+          "description": "Very dark black for deep system backgrounds | Formula: Systematic black scale progression - very dark"
+        },
+        {
+          "name": "color/black/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#000000",
+            "dark": "#000000",
+            "wcag": "#000000"
+          },
+          "description": "Pure black for maximum contrast and system elements | Formula: Systematic black scale progression - pure black"
+        },
+        {
+          "name": "color/white/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FFFFFF",
+            "dark": "#FFFFFF",
+            "wcag": "#FFFFFF"
+          },
+          "description": "Pure white for maximum contrast and primary surfaces | Formula: Systematic white scale progression - pure white"
+        },
+        {
+          "name": "color/white/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#F5F5FA",
+            "dark": "#F5F5FA",
+            "wcag": "#F5F5FA"
+          },
+          "description": "Near-white for subtle surface variations | Formula: Systematic white scale progression - near white"
+        },
+        {
+          "name": "color/white/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#E8E8F0",
+            "dark": "#E8E8F0",
+            "wcag": "#E8E8F0"
+          },
+          "description": "Light gray-white for secondary surfaces and backgrounds | Formula: Systematic white scale progression - light gray-white"
+        },
+        {
+          "name": "color/white/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#C5C5D5",
+            "dark": "#C5C5D5",
+            "wcag": "#C5C5D5"
+          },
+          "description": "Medium gray-white for borders and dividers | Formula: Systematic white scale progression - medium gray-white"
+        },
+        {
+          "name": "color/white/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#9999AB",
+            "dark": "#9999AB",
+            "wcag": "#9999AB"
+          },
+          "description": "Dark gray-white for muted text and subtle elements | Formula: Systematic white scale progression - dark gray-white"
+        },
+        {
+          "name": "color/yellow/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FEFBCC",
+            "dark": "#FEFBCC",
+            "wcag": "#FEFBCC"
+          },
+          "description": "Light yellow for subtle warning backgrounds and highlights | Formula: Systematic yellow scale progression - lightest"
+        },
+        {
+          "name": "color/yellow/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FCF680",
+            "dark": "#FCF680",
+            "wcag": "#FCF680"
+          },
+          "description": "Medium-light yellow for warning highlights and attention | Formula: Systematic yellow scale progression - medium-light"
+        },
+        {
+          "name": "color/yellow/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#F9F002",
+            "dark": "#F9F002",
+            "wcag": "#F9F002"
+          },
+          "description": "Bright yellow for high-energy CTAs and urgent warnings | Formula: Systematic yellow scale progression - bright"
+        },
+        {
+          "name": "color/yellow/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#C7C002",
+            "dark": "#C7C002",
+            "wcag": "#C7C002"
+          },
+          "description": "Dark yellow for warning text and secondary warning elements | Formula: Systematic yellow scale progression - dark"
+        },
+        {
+          "name": "color/yellow/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#8F8B01",
+            "dark": "#8F8B01",
+            "wcag": "#8F8B01"
+          },
+          "description": "Darkest yellow for warning text on light backgrounds | Formula: Systematic yellow scale progression - darkest"
+        },
+        {
+          "name": "color/orange/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FFE5DC",
+            "dark": "#FFE5DC",
+            "wcag": "#FFE5DC"
+          },
+          "description": "Light orange for subtle error backgrounds and warm highlights | Formula: Systematic orange scale progression - lightest"
+        },
+        {
+          "name": "color/orange/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FFB8A0",
+            "dark": "#FFB8A0",
+            "wcag": "#FFB8A0"
+          },
+          "description": "Medium-light orange for warm accents and secondary CTAs (Cyberpunk WCAG - AA Large ~3:1 for headings) | Formula: Systematic orange scale progression - medium-light"
+        },
+        {
+          "name": "color/orange/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FF6B35",
+            "dark": "#FF6B35",
+            "wcag": "#FF6B35"
+          },
+          "description": "Bright orange for approachable error states and warm CTAs (Cyberpunk WCAG - AA ~4.5:1 for body text) | Formula: Systematic orange scale progression - bright"
+        },
+        {
+          "name": "color/orange/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#CC5529",
+            "dark": "#CC5529",
+            "wcag": "#CC5529"
+          },
+          "description": "Dark orange for error text and secondary error elements | Formula: Systematic orange scale progression - dark"
+        },
+        {
+          "name": "color/orange/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#8F3C1D",
+            "dark": "#8F3C1D",
+            "wcag": "#8F3C1D"
+          },
+          "description": "Darkest orange for error text on light backgrounds | Formula: Systematic orange scale progression - darkest"
+        },
+        {
+          "name": "color/purple/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#F3E0FF",
+            "dark": "#F3E0FF",
+            "wcag": "#F3E0FF"
+          },
+          "description": "Light purple for subtle brand backgrounds and highlights | Formula: Systematic purple scale progression - lightest"
+        },
+        {
+          "name": "color/purple/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#D98AFF",
+            "dark": "#D98AFF",
+            "wcag": "#D98AFF"
+          },
+          "description": "Medium-light purple for brand accents and secondary elements | Formula: Systematic purple scale progression - medium-light"
+        },
+        {
+          "name": "color/purple/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#B026FF",
+            "dark": "#B026FF",
+            "wcag": "#B026FF"
+          },
+          "description": "Bright purple for primary brand color and focus states | Formula: Systematic purple scale progression - primary brand"
+        },
+        {
+          "name": "color/purple/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#8D1ECC",
+            "dark": "#8D1ECC",
+            "wcag": "#8D1ECC"
+          },
+          "description": "Dark purple for brand text and secondary brand elements | Formula: Systematic purple scale progression - dark"
+        },
+        {
+          "name": "color/purple/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#63158F",
+            "dark": "#63158F",
+            "wcag": "#63158F"
+          },
+          "description": "Darkest purple for brand text on light backgrounds | Formula: Systematic purple scale progression - darkest"
+        },
+        {
+          "name": "color/pink/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FFDAE8",
+            "dark": "#FFDAE8",
+            "wcag": "#FFDAE8"
+          },
+          "description": "Lightest hot pink - subtle error backgrounds | Formula: Systematic pink scale progression - lightest"
+        },
+        {
+          "name": "color/pink/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FF82B4",
+            "dark": "#FF82B4",
+            "wcag": "#FF82B4"
+          },
+          "description": "Medium-light hot pink - error highlights (Cyberpunk WCAG - AA Large ~3:1 for headings) | Formula: Systematic pink scale progression - medium-light"
+        },
+        {
+          "name": "color/pink/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#FF2A6D",
+            "dark": "#FF2A6D",
+            "wcag": "#FF2A6D"
+          },
+          "description": "Bright hot pink - base pink color (Cyberpunk WCAG - AA ~4.5:1 for body text) | Formula: Systematic pink scale progression - base"
+        },
+        {
+          "name": "color/pink/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#CC2257",
+            "dark": "#CC2257",
+            "wcag": "#CC2257"
+          },
+          "description": "Dark hot pink - primary error color | Formula: Systematic pink scale progression - dark"
+        },
+        {
+          "name": "color/pink/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#801537",
+            "dark": "#801537",
+            "wcag": "#801537"
+          },
+          "description": "Darkest hot pink - strong error color | Formula: Systematic pink scale progression - darkest"
+        },
+        {
+          "name": "color/green/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#E6FFF5",
+            "dark": "#E6FFF5",
+            "wcag": "#E6FFF5"
+          },
+          "description": "Lightest electric green - subtle success backgrounds | Formula: Systematic green scale progression - lightest"
+        },
+        {
+          "name": "color/green/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#80FFBB",
+            "dark": "#80FFBB",
+            "wcag": "#80FFBB"
+          },
+          "description": "Medium-light electric green - success highlights (Cyberpunk WCAG - AA Large ~3:1 for headings) | Formula: Systematic green scale progression - medium-light"
+        },
+        {
+          "name": "color/green/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#33FF99",
+            "dark": "#33FF99",
+            "wcag": "#33FF99"
+          },
+          "description": "Bright electric green - success accents (Cyberpunk WCAG - AA ~4.5:1 for body text) | Formula: Systematic green scale progression - bright"
+        },
+        {
+          "name": "color/green/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#00FF88",
+            "dark": "#00FF88",
+            "wcag": "#00FF88"
+          },
+          "description": "Strong electric green - primary success color | Formula: Systematic green scale progression - strong"
+        },
+        {
+          "name": "color/green/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#00CC6E",
+            "dark": "#00CC6E",
+            "wcag": "#00CC6E"
+          },
+          "description": "Darkest electric green - neon glow effect | Formula: Systematic green scale progression - darkest/glow"
+        },
+        {
+          "name": "color/cyan/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#CCFBFF",
+            "dark": "#CCFBFF",
+            "wcag": "#CCFBFF"
+          },
+          "description": "Light cyan for subtle tech backgrounds and success highlights | Formula: Systematic cyan scale progression - lightest"
+        },
+        {
+          "name": "color/cyan/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#80F6FF",
+            "dark": "#80F6FF",
+            "wcag": "#80F6FF"
+          },
+          "description": "Medium-light cyan for tech accents and link highlights | Formula: Systematic cyan scale progression - medium-light"
+        },
+        {
+          "name": "color/cyan/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#00F0FF",
+            "dark": "#00F0FF",
+            "wcag": "#00F0FF"
+          },
+          "description": "Bright cyan for tech elements, links, and success states | Formula: Systematic cyan scale progression - tech primary"
+        },
+        {
+          "name": "color/cyan/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#00C0CC",
+            "dark": "#00C0CC",
+            "wcag": "#00C0CC"
+          },
+          "description": "Dark cyan for tech text and secondary success elements | Formula: Systematic cyan scale progression - dark"
+        },
+        {
+          "name": "color/cyan/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#00888F",
+            "dark": "#00888F",
+            "wcag": "#00888F"
+          },
+          "description": "Darkest cyan for tech text on light backgrounds | Formula: Systematic cyan scale progression - darkest"
+        },
+        {
+          "name": "color/teal/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#D9E8EA",
+            "dark": "#D9E8EA",
+            "wcag": "#D9E8EA"
+          },
+          "description": "Light teal for subtle secondary backgrounds and highlights | Formula: Systematic teal scale progression - lightest"
+        },
+        {
+          "name": "color/teal/200",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#4D9BA5",
+            "dark": "#4D9BA5",
+            "wcag": "#4D9BA5"
+          },
+          "description": "Medium-light teal for secondary UI elements and accents | Formula: Systematic teal scale progression - medium-light"
+        },
+        {
+          "name": "color/teal/300",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#1A535C",
+            "dark": "#1A535C",
+            "wcag": "#1A535C"
+          },
+          "description": "Medium teal for secondary UI elements and alternative success states | Formula: Systematic teal scale progression - secondary UI"
+        },
+        {
+          "name": "color/teal/400",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#15424A",
+            "dark": "#15424A",
+            "wcag": "#15424A"
+          },
+          "description": "Dark teal for secondary text and UI elements | Formula: Systematic teal scale progression - dark"
+        },
+        {
+          "name": "color/teal/500",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#0F2E33",
+            "dark": "#0F2E33",
+            "wcag": "#0F2E33"
+          },
+          "description": "Darkest teal for secondary text on light backgrounds | Formula: Systematic teal scale progression - darkest"
+        },
+        {
+          "name": "color/shadowBlack/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#000000",
+            "dark": "#000000",
+            "wcag": "#000000"
+          },
+          "description": "Shadow black 100 - pure black for neutral lighting (noon) | Formula: Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic"
+        },
+        {
+          "name": "color/shadowBlue/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#141928",
+            "dark": "#141928",
+            "wcag": "#141928"
+          },
+          "description": "Shadow blue 100 - cool blue-gray tint (warm light creates cool shadows) | Formula: Systematic shadow color family - blue-tinted gray for sunrise/sunset lighting - mode-agnostic"
+        },
+        {
+          "name": "color/shadowOrange/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#19140F",
+            "dark": "#19140F",
+            "wcag": "#19140F"
+          },
+          "description": "Shadow orange 100 - warm gray tint (cool light creates warm shadows) | Formula: Systematic shadow color family - warm-tinted gray for cool lighting environments - mode-agnostic"
+        },
+        {
+          "name": "color/shadowGray/100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": "#0F141E",
+            "dark": "#0F141E",
+            "wcag": "#0F141E"
+          },
+          "description": "Shadow gray 100 - blue-gray tint for overcast/ambient lighting | Formula: Systematic shadow color family - blue-gray for ambient/overcast conditions - mode-agnostic"
+        },
+        {
+          "name": "fontSize/050",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 13,
+            "dark": 13,
+            "wcag": 13
+          },
+          "description": "Small font size - 0.5x relative scale | Formula: base ÷ (1.125²) = 16 ÷ 1.266 ≈ 13"
+        },
+        {
+          "name": "fontSize/075",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 14,
+            "dark": 14,
+            "wcag": 14
+          },
+          "description": "Small-medium font size - 0.75x relative scale | Formula: base ÷ 1.125 = 16 ÷ 1.125 ≈ 14"
+        },
+        {
+          "name": "fontSize/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 16,
+            "dark": 16,
+            "wcag": 16
+          },
+          "description": "Base font size - 1x scale | Formula: base × 1 = 16 × 1 = 16"
+        },
+        {
+          "name": "fontSize/125",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 18,
+            "dark": 18,
+            "wcag": 18
+          },
+          "description": "Medium font size - 1.25x relative scale | Formula: base × 1.125 = 16 × 1.125 = 18"
+        },
+        {
+          "name": "fontSize/150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 20,
+            "dark": 20,
+            "wcag": 20
+          },
+          "description": "Large font size - 1.5x relative scale | Formula: base × (1.125²) = 16 × 1.266 ≈ 20"
+        },
+        {
+          "name": "fontSize/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 23,
+            "dark": 23,
+            "wcag": 23
+          },
+          "description": "Extra large font size - 2x relative scale | Formula: base × (1.125³) = 16 × 1.424 ≈ 23"
+        },
+        {
+          "name": "fontSize/300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 26,
+            "dark": 26,
+            "wcag": 26
+          },
+          "description": "Heading font size - 3x relative scale | Formula: base × (1.125⁴) = 16 × 1.602 ≈ 26"
+        },
+        {
+          "name": "fontSize/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 29,
+            "dark": 29,
+            "wcag": 29
+          },
+          "description": "Large heading font size - 4x relative scale | Formula: base × (1.125⁵) = 16 × 1.802 ≈ 29"
+        },
+        {
+          "name": "fontSize/500",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 33,
+            "dark": 33,
+            "wcag": 33
+          },
+          "description": "Display heading font size - 5x relative scale | Formula: base × (1.125⁶) = 16 × 2.027 ≈ 32.4 → 33 (adjusted for 4pt subgrid)"
+        },
+        {
+          "name": "fontSize/600",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 37,
+            "dark": 37,
+            "wcag": 37
+          },
+          "description": "Large display font size - 6x relative scale | Formula: base × (1.125⁷) = 16 × 2.281 ≈ 36.5 → 37 (adjusted for 4pt subgrid)"
+        },
+        {
+          "name": "fontSize/700",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 42,
+            "dark": 42,
+            "wcag": 42
+          },
+          "description": "Extra large display font size - 7x relative scale | Formula: base × (1.125⁸) = 16 × 2.566 ≈ 41.1 → 42 (adjusted for 4pt subgrid)"
+        },
+        {
+          "name": "fontWeight/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 100,
+            "dark": 100,
+            "wcag": 100
+          },
+          "description": "Thin font weight | Formula: base × 0.25 = 400 × 0.25 = 100"
+        },
+        {
+          "name": "fontWeight/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 200,
+            "dark": 200,
+            "wcag": 200
+          },
+          "description": "Extra light font weight | Formula: base × 0.5 = 400 × 0.5 = 200"
+        },
+        {
+          "name": "fontWeight/300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 300,
+            "dark": 300,
+            "wcag": 300
+          },
+          "description": "Light font weight | Formula: base × 0.75 = 400 × 0.75 = 300"
+        },
+        {
+          "name": "fontWeight/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 400,
+            "dark": 400,
+            "wcag": 400
+          },
+          "description": "Normal font weight - base unit | Formula: base × 1 = 400 × 1 = 400"
+        },
+        {
+          "name": "fontWeight/500",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 500,
+            "dark": 500,
+            "wcag": 500
+          },
+          "description": "Medium font weight | Formula: base × 1.25 = 400 × 1.25 = 500"
+        },
+        {
+          "name": "fontWeight/600",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 600,
+            "dark": 600,
+            "wcag": 600
+          },
+          "description": "Semi-bold font weight | Formula: base × 1.5 = 400 × 1.5 = 600"
+        },
+        {
+          "name": "fontWeight/700",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 700,
+            "dark": 700,
+            "wcag": 700
+          },
+          "description": "Bold font weight | Formula: base × 1.75 = 400 × 1.75 = 700"
+        },
+        {
+          "name": "fontWeight/800",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 800,
+            "dark": 800,
+            "wcag": 800
+          },
+          "description": "Extra bold font weight | Formula: base × 2 = 400 × 2 = 800"
+        },
+        {
+          "name": "fontWeight/900",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 900,
+            "dark": 900,
+            "wcag": 900
+          },
+          "description": "Black font weight | Formula: base × 2.25 = 400 × 2.25 = 900"
+        },
+        {
+          "name": "fontFamily/System",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+            "dark": "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+            "wcag": "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+          },
+          "description": "Platform default font stack for system UI | Formula: N/A - Categorical value"
+        },
+        {
+          "name": "fontFamily/Mono",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "SF Mono, Monaco, Inconsolata, Roboto Mono, Consolas, Courier New, monospace",
+            "dark": "SF Mono, Monaco, Inconsolata, Roboto Mono, Consolas, Courier New, monospace",
+            "wcag": "SF Mono, Monaco, Inconsolata, Roboto Mono, Consolas, Courier New, monospace"
+          },
+          "description": "Monospace font stack for code and technical content | Formula: N/A - Categorical value"
+        },
+        {
+          "name": "fontFamily/Display",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+            "dark": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+            "wcag": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+          },
+          "description": "Display font stack for headings and prominent text | Formula: N/A - Categorical value"
+        },
+        {
+          "name": "fontFamily/Body",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+            "dark": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+            "wcag": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+          },
+          "description": "Body font stack for general text content | Formula: N/A - Categorical value"
+        },
+        {
+          "name": "lineHeight/050",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.538,
+            "dark": 1.538,
+            "wcag": 1.538
+          },
+          "description": "Line height paired with fontSize050 | Formula: fontSize050 × baseValue ≈ 20"
+        },
+        {
+          "name": "lineHeight/075",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.429,
+            "dark": 1.429,
+            "wcag": 1.429
+          },
+          "description": "Line height paired with fontSize075 | Formula: fontSize075 × baseValue ≈ 20"
+        },
+        {
+          "name": "lineHeight/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.5,
+            "dark": 1.5,
+            "wcag": 1.5
+          },
+          "description": "Line height paired with fontSize100 | Formula: fontSize100 × baseValue = 24"
+        },
+        {
+          "name": "lineHeight/125",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.556,
+            "dark": 1.556,
+            "wcag": 1.556
+          },
+          "description": "Line height paired with fontSize125 | Formula: fontSize125 × baseValue ≈ 28"
+        },
+        {
+          "name": "lineHeight/150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.4,
+            "dark": 1.4,
+            "wcag": 1.4
+          },
+          "description": "Line height paired with fontSize150 | Formula: fontSize150 × baseValue = 28"
+        },
+        {
+          "name": "lineHeight/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.391,
+            "dark": 1.391,
+            "wcag": 1.391
+          },
+          "description": "Line height paired with fontSize200 | Formula: fontSize200 × baseValue ≈ 32"
+        },
+        {
+          "name": "lineHeight/300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.231,
+            "dark": 1.231,
+            "wcag": 1.231
+          },
+          "description": "Line height paired with fontSize300 | Formula: fontSize300 × baseValue ≈ 32"
+        },
+        {
+          "name": "lineHeight/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.241,
+            "dark": 1.241,
+            "wcag": 1.241
+          },
+          "description": "Line height paired with fontSize400 | Formula: fontSize400 × baseValue ≈ 36"
+        },
+        {
+          "name": "lineHeight/500",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.212,
+            "dark": 1.212,
+            "wcag": 1.212
+          },
+          "description": "Line height paired with fontSize500 | Formula: fontSize500 × baseValue ≈ 40"
+        },
+        {
+          "name": "lineHeight/600",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.19,
+            "dark": 1.19,
+            "wcag": 1.19
+          },
+          "description": "Line height paired with fontSize600 | Formula: fontSize600 × baseValue ≈ 44"
+        },
+        {
+          "name": "lineHeight/700",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.143,
+            "dark": 1.143,
+            "wcag": 1.143
+          },
+          "description": "Line height paired with fontSize700 | Formula: fontSize700 × baseValue ≈ 48"
+        },
+        {
+          "name": "letterSpacing/025",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": -0.025,
+            "dark": -0.025,
+            "wcag": -0.025
+          },
+          "description": "Tight letter spacing for large text | Formula: base - 0.025 = 0 - 0.025 = -0.025"
+        },
+        {
+          "name": "letterSpacing/050",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": -0.05,
+            "dark": -0.05,
+            "wcag": -0.05
+          },
+          "description": "Very tight letter spacing for display text | Formula: base - 0.05 = 0 - 0.05 = -0.05"
+        },
+        {
+          "name": "letterSpacing/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0,
+            "dark": 0,
+            "wcag": 0
+          },
+          "description": "Normal letter spacing - base unit | Formula: base × 1 = 0 × 1 = 0"
+        },
+        {
+          "name": "letterSpacing/125",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.025,
+            "dark": 0.025,
+            "wcag": 0.025
+          },
+          "description": "Loose letter spacing for small text | Formula: base + 0.025 = 0 + 0.025 = 0.025"
+        },
+        {
+          "name": "letterSpacing/150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.05,
+            "dark": 0.05,
+            "wcag": 0.05
+          },
+          "description": "Very loose letter spacing for emphasis | Formula: base + 0.05 = 0 + 0.05 = 0.05"
+        },
+        {
+          "name": "radius/000",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0,
+            "dark": 0,
+            "wcag": 0
+          },
+          "description": "No radius - sharp corners | Formula: base × 0 = 8 × 0 = 0"
+        },
+        {
+          "name": "radius/025",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 2,
+            "dark": 2,
+            "wcag": 2
+          },
+          "description": "Subtle radius - 0.25x base value | Formula: base × 0.25 = 8 × 0.25 = 2"
+        },
+        {
+          "name": "radius/050",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 4,
+            "dark": 4,
+            "wcag": 4
+          },
+          "description": "Small radius - 0.5x base value | Formula: base × 0.5 = 8 × 0.5 = 4"
+        },
+        {
+          "name": "radius/075",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 6,
+            "dark": 6,
+            "wcag": 6
+          },
+          "description": "Medium-small radius - 0.75x base value (strategic flexibility) | Formula: base × 0.75 = 8 × 0.75 = 6"
+        },
+        {
+          "name": "radius/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 8,
+            "dark": 8,
+            "wcag": 8
+          },
+          "description": "Base radius - 1x base value | Formula: base × 1 = 8 × 1 = 8"
+        },
+        {
+          "name": "radius/125",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 10,
+            "dark": 10,
+            "wcag": 10
+          },
+          "description": "Medium radius - 1.25x base value (strategic flexibility) | Formula: base × 1.25 = 8 × 1.25 = 10"
+        },
+        {
+          "name": "radius/150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 12,
+            "dark": 12,
+            "wcag": 12
+          },
+          "description": "Medium-large radius - 1.5x base value | Formula: base × 1.5 = 8 × 1.5 = 12"
+        },
+        {
+          "name": "radius/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 16,
+            "dark": 16,
+            "wcag": 16
+          },
+          "description": "Large radius - 2x base value | Formula: base × 2 = 8 × 2 = 16"
+        },
+        {
+          "name": "radius/250",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 20,
+            "dark": 20,
+            "wcag": 20
+          },
+          "description": "Extra large radius - 2.5x base value (strategic flexibility) | Formula: base × 2.5 = 8 × 2.5 = 20"
+        },
+        {
+          "name": "radius/300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 24,
+            "dark": 24,
+            "wcag": 24
+          },
+          "description": "Huge radius - 3x base value | Formula: base × 3 = 8 × 3 = 24"
+        },
+        {
+          "name": "radius/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 32,
+            "dark": 32,
+            "wcag": 32
+          },
+          "description": "Maximum radius - 4x base value | Formula: base × 4 = 8 × 4 = 32"
+        },
+        {
+          "name": "radius/Max",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 9999,
+            "dark": 9999,
+            "wcag": 9999
+          },
+          "description": "Maximum radius - creates perfect circles/pills | Formula: special case = 9999 (effectively infinite)"
+        },
+        {
+          "name": "radius/Half",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 50,
+            "dark": 50,
+            "wcag": 50
+          },
+          "description": "Half radius (50%) - creates perfect circles when applied to square elements. Used for circular buttons, avatars, badges, and other circular UI elements. | Formula: percentage = 50% (creates circle from square)"
+        },
+        {
+          "name": "borderWidth/000",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0,
+            "dark": 0,
+            "wcag": 0
+          },
+          "description": "No border width - 0x base value. Used for borderless elements, removing borders. | Formula: base × 0 = 1 × 0 = 0"
+        },
+        {
+          "name": "borderWidth/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1,
+            "dark": 1,
+            "wcag": 1
+          },
+          "description": "Base border width - 1x base value. Used for standard borders, default state. | Formula: base × 1 = 1 × 1 = 1"
+        },
+        {
+          "name": "borderWidth/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 2,
+            "dark": 2,
+            "wcag": 2
+          },
+          "description": "Emphasized border width - 2x base value. Used for emphasized borders, active/focus states. | Formula: base × 2 = 1 × 2 = 2"
+        },
+        {
+          "name": "borderWidth/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 4,
+            "dark": 4,
+            "wcag": 4
+          },
+          "description": "Heavy border width - 4x base value. Used for heavy emphasis, strong visual weight (rare). | Formula: base × 4 = 1 × 4 = 4"
+        },
+        {
+          "name": "tapArea/Minimum",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 44,
+            "dark": 44,
+            "wcag": 44
+          },
+          "description": "Minimum tap area - WCAG 2.1 AA compliance (44pt) | Formula: base × 1 = 44 × 1 = 44"
+        },
+        {
+          "name": "tapArea/Recommended",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 48,
+            "dark": 48,
+            "wcag": 48
+          },
+          "description": "Recommended tap area - enhanced usability (48pt) | Formula: base × 1.09 = 44 × 1.09 ≈ 48"
+        },
+        {
+          "name": "tapArea/Comfortable",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 56,
+            "dark": 56,
+            "wcag": 56
+          },
+          "description": "Comfortable tap area - spacious interaction (56pt) | Formula: base × 1.27 = 44 × 1.27 ≈ 56"
+        },
+        {
+          "name": "tapArea/Generous",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 64,
+            "dark": 64,
+            "wcag": 64
+          },
+          "description": "Generous tap area - extra spacious interaction (64pt) | Formula: base × 1.45 = 44 × 1.45 ≈ 64"
+        },
+        {
+          "name": "density/Compact",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.75,
+            "dark": 0.75,
+            "wcag": 0.75
+          },
+          "description": "Compact density - reduces functional token values by 25% | Formula: base × 0.75 = 1.0 × 0.75 = 0.75"
+        },
+        {
+          "name": "density/Default",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1,
+            "dark": 1,
+            "wcag": 1
+          },
+          "description": "Default density - no scaling applied | Formula: base × 1 = 1.0 × 1 = 1.0"
+        },
+        {
+          "name": "density/Comfortable",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.25,
+            "dark": 1.25,
+            "wcag": 1.25
+          },
+          "description": "Comfortable density - increases functional token values by 25% | Formula: base × 1.25 = 1.0 × 1.25 = 1.25"
+        },
+        {
+          "name": "density/Spacious",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.5,
+            "dark": 1.5,
+            "wcag": 1.5
+          },
+          "description": "Spacious density - increases functional token values by 50% | Formula: base × 1.5 = 1.0 × 1.5 = 1.5"
+        },
+        {
+          "name": "breakpoint/Xs",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 320,
+            "dark": 320,
+            "wcag": 320
+          },
+          "description": "Small mobile viewport baseline | Formula: Practical device-based value"
+        },
+        {
+          "name": "breakpoint/Sm",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 375,
+            "dark": 375,
+            "wcag": 375
+          },
+          "description": "iPhone standard width and large mobile | Formula: Practical device-based value"
+        },
+        {
+          "name": "breakpoint/Md",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1024,
+            "dark": 1024,
+            "wcag": 1024
+          },
+          "description": "Desktop and tablet landscape transition | Formula: Practical device-based value"
+        },
+        {
+          "name": "breakpoint/Lg",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1440,
+            "dark": 1440,
+            "wcag": 1440
+          },
+          "description": "Large desktop and wide screen displays | Formula: Practical device-based value"
+        },
+        {
+          "name": "opacity/000",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0,
+            "dark": 0,
+            "wcag": 0
+          },
+          "description": "Fully transparent - invisible | Formula: base × 0 = 0.08 × 0 = 0.0"
+        },
+        {
+          "name": "opacity/008",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.08,
+            "dark": 0.08,
+            "wcag": 0.08
+          },
+          "description": "Subtle transparency - very light overlay, gentle hover feedback | Formula: base × 1 = 0.08 × 1 = 0.08"
+        },
+        {
+          "name": "opacity/016",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.16,
+            "dark": 0.16,
+            "wcag": 0.16
+          },
+          "description": "Light transparency - light overlay, pressed state | Formula: base × 2 = 0.08 × 2 = 0.16"
+        },
+        {
+          "name": "opacity/024",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.24,
+            "dark": 0.24,
+            "wcag": 0.24
+          },
+          "description": "Medium-light transparency - medium-light overlay | Formula: base × 3 = 0.08 × 3 = 0.24"
+        },
+        {
+          "name": "opacity/032",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.32,
+            "dark": 0.32,
+            "wcag": 0.32
+          },
+          "description": "Medium transparency - modal scrim, medium overlay | Formula: base × 4 = 0.08 × 4 = 0.32"
+        },
+        {
+          "name": "opacity/040",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.4,
+            "dark": 0.4,
+            "wcag": 0.4
+          },
+          "description": "Strong transparency - strong overlay | Formula: base × 5 = 0.08 × 5 = 0.40"
+        },
+        {
+          "name": "opacity/048",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.48,
+            "dark": 0.48,
+            "wcag": 0.48
+          },
+          "description": "Disabled state - faded, very strong overlay | Formula: base × 6 = 0.08 × 6 = 0.48"
+        },
+        {
+          "name": "opacity/056",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.56,
+            "dark": 0.56,
+            "wcag": 0.56
+          },
+          "description": "Nearly opaque - subtle transparency | Formula: base × 7 = 0.08 × 7 = 0.56"
+        },
+        {
+          "name": "opacity/064",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.64,
+            "dark": 0.64,
+            "wcag": 0.64
+          },
+          "description": "Very opaque - minimal transparency | Formula: base × 8 = 0.08 × 8 = 0.64"
+        },
+        {
+          "name": "opacity/072",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.72,
+            "dark": 0.72,
+            "wcag": 0.72
+          },
+          "description": "Extremely opaque - very minimal transparency | Formula: base × 9 = 0.08 × 9 = 0.72"
+        },
+        {
+          "name": "opacity/080",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.8,
+            "dark": 0.8,
+            "wcag": 0.8
+          },
+          "description": "Nearly full opacity - barely visible transparency | Formula: base × 10 = 0.08 × 10 = 0.80"
+        },
+        {
+          "name": "opacity/088",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.88,
+            "dark": 0.88,
+            "wcag": 0.88
+          },
+          "description": "Subtle transparency - almost fully opaque | Formula: base × 11 = 0.08 × 11 = 0.88"
+        },
+        {
+          "name": "opacity/096",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.96,
+            "dark": 0.96,
+            "wcag": 0.96
+          },
+          "description": "Almost fully opaque - imperceptible transparency | Formula: base × 12 = 0.08 × 12 = 0.96"
+        },
+        {
+          "name": "opacity/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1,
+            "dark": 1,
+            "wcag": 1
+          },
+          "description": "Fully opaque - no transparency | Formula: Special case: full opacity = 1.0"
+        },
+        {
+          "name": "duration/150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 150,
+            "dark": 150,
+            "wcag": 150
+          },
+          "description": "Fast interactions - 150ms duration for hover, focus states, and micro-interactions | Formula: base - 100 = 250 - 100 = 150"
+        },
+        {
+          "name": "duration/250",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 250,
+            "dark": 250,
+            "wcag": 250
+          },
+          "description": "Standard transitions - 250ms duration for float labels, state changes, and most animations | Formula: base × 1 = 250 × 1 = 250"
+        },
+        {
+          "name": "duration/350",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 350,
+            "dark": 350,
+            "wcag": 350
+          },
+          "description": "Deliberate animations - 350ms duration for modals, drawers, and complex transitions | Formula: base + 100 = 250 + 100 = 350"
+        },
+        {
+          "name": "easing/Standard",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "dark": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "wcag": "cubic-bezier(0.4, 0, 0.2, 1)"
+          },
+          "description": "Standard easing - Balanced acceleration and deceleration for general transitions. Material Design standard curve. | Formula: Material Design standard curve: cubic-bezier(0.4, 0.0, 0.2, 1)"
+        },
+        {
+          "name": "easing/Decelerate",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "cubic-bezier(0, 0, 0.2, 1)",
+            "dark": "cubic-bezier(0, 0, 0.2, 1)",
+            "wcag": "cubic-bezier(0, 0, 0.2, 1)"
+          },
+          "description": "Decelerate easing - Quick start with gradual slowdown for entering elements. Material Design deceleration curve. | Formula: Material Design deceleration curve: cubic-bezier(0.0, 0.0, 0.2, 1)"
+        },
+        {
+          "name": "easing/Accelerate",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "cubic-bezier(0.4, 0, 1, 1)",
+            "dark": "cubic-bezier(0.4, 0, 1, 1)",
+            "wcag": "cubic-bezier(0.4, 0, 1, 1)"
+          },
+          "description": "Accelerate easing - Gradual start with quick finish for exiting elements. Material Design acceleration curve. | Formula: Material Design acceleration curve: cubic-bezier(0.4, 0.0, 1, 1)"
+        },
+        {
+          "name": "easing/GlideDecelerate",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "light": "linear(0, 0.012 0.9%, 0.05 2.0%, 0.411 9.2%, 0.517 11.8%, 0.611 14.6%, 0.694 17.7%, 0.765 21.1%, 0.824 24.8%, 0.872 28.9%, 0.91 33.4%, 0.939 38.4%, 0.977 50.9%, 0.994 68.4%, 1)",
+            "dark": "linear(0, 0.012 0.9%, 0.05 2.0%, 0.411 9.2%, 0.517 11.8%, 0.611 14.6%, 0.694 17.7%, 0.765 21.1%, 0.824 24.8%, 0.872 28.9%, 0.91 33.4%, 0.939 38.4%, 0.977 50.9%, 0.994 68.4%, 1)",
+            "wcag": "linear(0, 0.012 0.9%, 0.05 2.0%, 0.411 9.2%, 0.517 11.8%, 0.611 14.6%, 0.694 17.7%, 0.765 21.1%, 0.824 24.8%, 0.872 28.9%, 0.91 33.4%, 0.939 38.4%, 0.977 50.9%, 0.994 68.4%, 1)"
+          },
+          "description": "Glide decelerate easing - Aggressive deceleration with long settling tail. 41% of movement in first 10% of time. No overshoot. Weighted slide-to-stop feel. | Formula: Piecewise linear: 15 stops, aggressive deceleration curve. Paired with duration350 (350ms)."
+        },
+        {
+          "name": "scale/088",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.88,
+            "dark": 0.88,
+            "wcag": 0.88
+          },
+          "description": "Float label scale - 88% scale for text input label transitions. Example: 16px × 0.88 = 14.08px → rounds to 14px | Formula: base - 0.12 = 1.00 - 0.12 = 0.88 (8-interval progression: 3 × 0.04)"
+        },
+        {
+          "name": "scale/092",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.92,
+            "dark": 0.92,
+            "wcag": 0.92
+          },
+          "description": "Subtle scale down - 92% scale for pressed states and subtle emphasis reduction. Example: 16px × 0.92 = 14.72px → rounds to 15px | Formula: base - 0.08 = 1.00 - 0.08 = 0.92 (8-interval progression: 2 × 0.04)"
+        },
+        {
+          "name": "scale/096",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.96,
+            "dark": 0.96,
+            "wcag": 0.96
+          },
+          "description": "Button press feedback - 96% scale for button press states and subtle emphasis reduction. Example: 16px × 0.96 = 15.36px → rounds to 15px | Formula: base - 0.04 = 1.00 - 0.04 = 0.96 (8-interval progression: 1 × 0.04)"
+        },
+        {
+          "name": "scale/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1,
+            "dark": 1,
+            "wcag": 1
+          },
+          "description": "Default state - 100% scale, no transformation. Example: 16px × 1.00 = 16px | Formula: base × 1 = 1.00 × 1 = 1.00 (baseline, no transformation)"
+        },
+        {
+          "name": "scale/104",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.04,
+            "dark": 1.04,
+            "wcag": 1.04
+          },
+          "description": "Hover emphasis - 104% scale for hover states and subtle emphasis. Example: 16px × 1.04 = 16.64px → rounds to 17px | Formula: base + 0.04 = 1.00 + 0.04 = 1.04 (8-interval progression: 1 × 0.04)"
+        },
+        {
+          "name": "scale/108",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 1.08,
+            "dark": 1.08,
+            "wcag": 1.08
+          },
+          "description": "Strong emphasis - 108% scale for strong hover emphasis and significant scale up. Example: 16px × 1.08 = 17.28px → rounds to 17px | Formula: base + 0.08 = 1.00 + 0.08 = 1.08 (8-interval progression: 2 × 0.04)"
+        },
+        {
+          "name": "blend/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.04,
+            "dark": 0.04,
+            "wcag": 0.04
+          },
+          "description": "Subtle modification - gentle feedback, container hover | Formula: base × 1 = 0.04 × 1 = 0.04"
+        },
+        {
+          "name": "blend/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.08,
+            "dark": 0.08,
+            "wcag": 0.08
+          },
+          "description": "Standard modification - noticeable feedback, button hover | Formula: base × 2 = 0.04 × 2 = 0.08"
+        },
+        {
+          "name": "blend/300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.12,
+            "dark": 0.12,
+            "wcag": 0.12
+          },
+          "description": "Strong modification - clear feedback, pressed state | Formula: base × 3 = 0.04 × 3 = 0.12"
+        },
+        {
+          "name": "blend/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.16,
+            "dark": 0.16,
+            "wcag": 0.16
+          },
+          "description": "Very strong modification - emphasized feedback | Formula: base × 4 = 0.04 × 4 = 0.16"
+        },
+        {
+          "name": "blend/500",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0.2,
+            "dark": 0.2,
+            "wcag": 0.2
+          },
+          "description": "Maximum modification - dramatic feedback | Formula: base × 5 = 0.04 × 5 = 0.20"
+        }
+      ]
+    },
+    {
+      "name": "Semantics",
+      "modes": [
+        "light",
+        "dark",
+        "wcag"
+      ],
+      "variables": [
+        {
+          "name": "color/feedback/success/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/400"
+            },
+            "dark": {
+              "aliasOf": "color/green/400"
+            },
+            "wcag": {
+              "aliasOf": "color/green/400"
+            }
+          },
+          "description": "Green text color for success states - form validation, confirmation messages, positive feedback"
+        },
+        {
+          "name": "color/feedback/success/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/100"
+            },
+            "dark": {
+              "aliasOf": "color/green/100"
+            },
+            "wcag": {
+              "aliasOf": "color/green/100"
+            }
+          },
+          "description": "Light green background for success states - alert backgrounds, success banners, positive indicators"
+        },
+        {
+          "name": "color/feedback/success/border",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/400"
+            },
+            "dark": {
+              "aliasOf": "color/green/400"
+            },
+            "wcag": {
+              "aliasOf": "color/green/400"
+            }
+          },
+          "description": "Green border for success states - input validation borders, success card outlines"
+        },
+        {
+          "name": "color/feedback/error/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/400"
+            },
+            "dark": {
+              "aliasOf": "color/pink/400"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/400"
+            }
+          },
+          "description": "Pink text color for error states - form validation errors, error messages, destructive action warnings"
+        },
+        {
+          "name": "color/feedback/error/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/100"
+            },
+            "dark": {
+              "aliasOf": "color/pink/100"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/100"
+            }
+          },
+          "description": "Light pink background for error states - alert backgrounds, error banners, destructive indicators"
+        },
+        {
+          "name": "color/feedback/error/border",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/400"
+            },
+            "dark": {
+              "aliasOf": "color/pink/400"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/400"
+            }
+          },
+          "description": "Pink border for error states - input validation borders, error card outlines"
+        },
+        {
+          "name": "color/feedback/warning/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/orange/400"
+            },
+            "dark": {
+              "aliasOf": "color/orange/400"
+            },
+            "wcag": {
+              "aliasOf": "color/orange/400"
+            }
+          },
+          "description": "Orange text color for warning states - caution messages, attention-required indicators"
+        },
+        {
+          "name": "color/feedback/warning/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/orange/100"
+            },
+            "dark": {
+              "aliasOf": "color/orange/100"
+            },
+            "wcag": {
+              "aliasOf": "color/orange/100"
+            }
+          },
+          "description": "Light orange background for warning states - alert backgrounds, caution banners"
+        },
+        {
+          "name": "color/feedback/warning/border",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/orange/400"
+            },
+            "dark": {
+              "aliasOf": "color/orange/400"
+            },
+            "wcag": {
+              "aliasOf": "color/orange/400"
+            }
+          },
+          "description": "Orange border for warning states - input validation borders, warning card outlines"
+        },
+        {
+          "name": "color/feedback/info/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/teal/400"
+            },
+            "dark": {
+              "aliasOf": "color/teal/400"
+            },
+            "wcag": {
+              "aliasOf": "color/purple/500"
+            }
+          },
+          "description": "Teal text color for informational states - help text, informational messages, neutral feedback"
+        },
+        {
+          "name": "color/feedback/info/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/teal/100"
+            },
+            "dark": {
+              "aliasOf": "color/teal/100"
+            },
+            "wcag": {
+              "aliasOf": "color/purple/100"
+            }
+          },
+          "description": "Light teal background for informational states - info banners, help sections"
+        },
+        {
+          "name": "color/feedback/info/border",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/teal/400"
+            },
+            "dark": {
+              "aliasOf": "color/teal/400"
+            },
+            "wcag": {
+              "aliasOf": "color/purple/500"
+            }
+          },
+          "description": "Teal border for informational states - info card outlines, help section borders"
+        },
+        {
+          "name": "color/feedback/select/text/rest",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/400"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/400"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/400"
+            }
+          },
+          "description": "Cyan text for selected state - label text in Select/Multi-Select modes when item is selected"
+        },
+        {
+          "name": "color/feedback/select/text/default",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/200"
+            },
+            "dark": {
+              "aliasOf": "color/gray/200"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/200"
+            }
+          },
+          "description": "Gray text for not-selected state - label text in Select mode when item is available but not selected"
+        },
+        {
+          "name": "color/feedback/select/background/rest",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/100"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/100"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/100"
+            }
+          },
+          "description": "Light cyan background for selected state in Select and Multi-Select modes"
+        },
+        {
+          "name": "color/feedback/select/background/default",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/100"
+            },
+            "dark": {
+              "aliasOf": "color/gray/100"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/100"
+            }
+          },
+          "description": "Light gray background for not-selected state in Select mode"
+        },
+        {
+          "name": "color/feedback/select/border/rest",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/400"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/400"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/400"
+            }
+          },
+          "description": "Cyan border for selected state - checkmark base, item border in Select/Multi-Select modes"
+        },
+        {
+          "name": "color/feedback/select/border/default",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/200"
+            },
+            "dark": {
+              "aliasOf": "color/gray/200"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/200"
+            }
+          },
+          "description": "Gray border for not-selected state in Select mode"
+        },
+        {
+          "name": "color/feedback/notification/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/400"
+            },
+            "dark": {
+              "aliasOf": "color/pink/400"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/400"
+            }
+          },
+          "description": "High-visibility pink background for notification badges - provides 6.33:1 contrast ratio with white text, exceeds WCAG AA requirements"
+        },
+        {
+          "name": "color/feedback/notification/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/100"
+            },
+            "dark": {
+              "aliasOf": "color/white/100"
+            },
+            "wcag": {
+              "aliasOf": "color/white/100"
+            }
+          },
+          "description": "White text on notification backgrounds - ensures WCAG AA contrast compliance (6.33:1 ratio) for maximum readability"
+        },
+        {
+          "name": "color/identity/human",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/orange/300"
+            },
+            "dark": {
+              "aliasOf": "color/orange/300"
+            },
+            "wcag": {
+              "aliasOf": "color/orange/300"
+            }
+          },
+          "description": "Orange identity color for human entities - warm, approachable visual identity used by Avatar and other human-representing components"
+        },
+        {
+          "name": "color/identity/agent",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/teal/200"
+            },
+            "dark": {
+              "aliasOf": "color/teal/200"
+            },
+            "wcag": {
+              "aliasOf": "color/teal/200"
+            }
+          },
+          "description": "Teal identity color for AI agent entities - distinct, technical visual identity used by Avatar and other agent-representing components"
+        },
+        {
+          "name": "color/action/primary",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/300"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/300"
+            },
+            "wcag": {
+              "aliasOf": "color/teal/300"
+            }
+          },
+          "description": "Cyan color for emphasized actions - hero CTAs, main buttons, primary interactive elements. Use for single, focused instances where visual prominence is desired."
+        },
+        {
+          "name": "color/action/secondary",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/400"
+            },
+            "dark": {
+              "aliasOf": "color/gray/400"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/400"
+            }
+          },
+          "description": "Dark neutral color for de-emphasized actions - list item buttons, secondary CTAs, repetitive action elements. Use for supporting instances to avoid UI over-saturation."
+        },
+        {
+          "name": "color/action/navigation",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/500"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/500"
+            },
+            "wcag": {
+              "aliasOf": "color/teal/500"
+            }
+          },
+          "description": "Cyan color for navigation actions - inline text links, breadcrumbs, and navigation-specific interactive elements."
+        },
+        {
+          "name": "color/attention",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/yellow/400"
+            },
+            "dark": {
+              "aliasOf": "color/yellow/400"
+            },
+            "wcag": {
+              "aliasOf": "color/yellow/400"
+            }
+          },
+          "description": "Yellow for attention-grabbing elements and notifications"
+        },
+        {
+          "name": "color/highlight",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/yellow/300"
+            },
+            "dark": {
+              "aliasOf": "color/yellow/300"
+            },
+            "wcag": {
+              "aliasOf": "color/yellow/300"
+            }
+          },
+          "description": "Yellow for highlighted text and emphasized content"
+        },
+        {
+          "name": "color/tech",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/purple/400"
+            },
+            "dark": {
+              "aliasOf": "color/purple/400"
+            },
+            "wcag": {
+              "aliasOf": "color/purple/400"
+            }
+          },
+          "description": "Purple for technical elements, code snippets, and tech-related UI"
+        },
+        {
+          "name": "color/data",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/purple/300"
+            },
+            "dark": {
+              "aliasOf": "color/purple/300"
+            },
+            "wcag": {
+              "aliasOf": "color/purple/300"
+            }
+          },
+          "description": "Purple for data visualization, metrics, and data-related elements"
+        },
+        {
+          "name": "color/text/default",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/300"
+            },
+            "dark": {
+              "aliasOf": "color/gray/300"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/300"
+            }
+          },
+          "description": "Primary gray for main text content"
+        },
+        {
+          "name": "color/text/muted",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/200"
+            },
+            "dark": {
+              "aliasOf": "color/gray/200"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/200"
+            }
+          },
+          "description": "Muted gray for secondary and less prominent text"
+        },
+        {
+          "name": "color/text/subtle",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/100"
+            },
+            "dark": {
+              "aliasOf": "color/gray/100"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/100"
+            }
+          },
+          "description": "Subtle gray for tertiary and very subtle text elements"
+        },
+        {
+          "name": "color/contrast/onLight",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/black/500"
+            },
+            "dark": {
+              "aliasOf": "color/black/500"
+            },
+            "wcag": {
+              "aliasOf": "color/black/500"
+            }
+          },
+          "description": "Black color for content (text, icons) on light backgrounds - ensures WCAG AA contrast compliance for readability"
+        },
+        {
+          "name": "color/contrast/onDark",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/100"
+            },
+            "dark": {
+              "aliasOf": "color/white/100"
+            },
+            "wcag": {
+              "aliasOf": "color/white/100"
+            }
+          },
+          "description": "White color for content (text, icons) on dark backgrounds - ensures WCAG AA contrast compliance for readability"
+        },
+        {
+          "name": "color/contrast/onAction",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/black/500"
+            },
+            "dark": {
+              "aliasOf": "color/black/500"
+            },
+            "wcag": {
+              "aliasOf": "color/white/100"
+            }
+          },
+          "description": "Content color for text and icons on primary action backgrounds. Black on cyan (base), white on teal (WCAG) to maintain contrast compliance."
+        },
+        {
+          "name": "color/structure/canvas",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/100"
+            },
+            "dark": {
+              "aliasOf": "color/white/100"
+            },
+            "wcag": {
+              "aliasOf": "color/white/100"
+            }
+          },
+          "description": "Canvas background color - default surface for all pages, provides the foundational layer for UI structure"
+        },
+        {
+          "name": "color/structure/surface",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/200"
+            },
+            "dark": {
+              "aliasOf": "color/white/200"
+            },
+            "wcag": {
+              "aliasOf": "color/white/200"
+            }
+          },
+          "description": "Surface near-white for cards, containers, and elevated surfaces - provides visual hierarchy above canvas. Alias for color.structure.surface.primary."
+        },
+        {
+          "name": "color/structure/surface/primary",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/200"
+            },
+            "dark": {
+              "aliasOf": "color/white/200"
+            },
+            "wcag": {
+              "aliasOf": "color/white/200"
+            }
+          },
+          "description": "Primary surface near-white for cards - default elevation level, provides visual hierarchy above canvas"
+        },
+        {
+          "name": "color/structure/surface/secondary",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/300"
+            },
+            "dark": {
+              "aliasOf": "color/white/300"
+            },
+            "wcag": {
+              "aliasOf": "color/white/300"
+            }
+          },
+          "description": "Secondary surface light gray-white for nested cards - secondary elevation level, provides subtle visual distinction from primary surface"
+        },
+        {
+          "name": "color/structure/surface/tertiary",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/400"
+            },
+            "dark": {
+              "aliasOf": "color/white/400"
+            },
+            "wcag": {
+              "aliasOf": "color/white/400"
+            }
+          },
+          "description": "Tertiary surface medium gray-white for deeply nested cards - tertiary elevation level, provides clear visual distinction for deep nesting"
+        },
+        {
+          "name": "color/structure/border",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/100"
+            },
+            "dark": {
+              "aliasOf": "color/gray/100"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/100"
+            }
+          },
+          "description": "Border gray for standard UI element borders and dividers - provides clear visual separation"
+        },
+        {
+          "name": "color/structure/border/subtle",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/100"
+            },
+            "dark": {
+              "aliasOf": "color/gray/100"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/100"
+            }
+          },
+          "description": "Semi-transparent border (gray100 at opacity048/48%) for subtle visual separation - used by Container-Base, Container-Card-Base, and other components needing soft borders"
+        },
+        {
+          "name": "color/background/primary/subtle",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/100"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/100"
+            },
+            "wcag": {
+              "aliasOf": "color/teal/100"
+            }
+          },
+          "description": "Subtle cyan tint background for secondary button hover states, selected list items, and hover states on cards/containers"
+        },
+        {
+          "name": "color/icon/default",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/200"
+            },
+            "dark": {
+              "aliasOf": "color/gray/200"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/200"
+            }
+          },
+          "description": "Default icon color using gray200 for optical balance - slightly lighter than text (gray300) for proper visual weight"
+        },
+        {
+          "name": "color/print/default",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/black/100"
+            },
+            "dark": {
+              "aliasOf": "color/black/100"
+            },
+            "wcag": {
+              "aliasOf": "color/black/100"
+            }
+          },
+          "description": "Pure black (#000000) for optimal printing quality in print media queries"
+        },
+        {
+          "name": "glow/neonPurple",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/purple/500"
+            },
+            "dark": {
+              "aliasOf": "color/purple/500"
+            },
+            "wcag": {
+              "aliasOf": "color/purple/500"
+            }
+          },
+          "description": "Vibrant purple glow referencing purple500"
+        },
+        {
+          "name": "glow/neonCyan",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/500"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/500"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/500"
+            }
+          },
+          "description": "Vibrant cyan glow referencing cyan500"
+        },
+        {
+          "name": "glow/neonYellow",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/yellow/500"
+            },
+            "dark": {
+              "aliasOf": "color/yellow/500"
+            },
+            "wcag": {
+              "aliasOf": "color/yellow/500"
+            }
+          },
+          "description": "Vibrant yellow glow referencing yellow500"
+        },
+        {
+          "name": "glow/neonGreen",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/500"
+            },
+            "dark": {
+              "aliasOf": "color/green/500"
+            },
+            "wcag": {
+              "aliasOf": "color/green/500"
+            }
+          },
+          "description": "Vibrant green glow referencing green500"
+        },
+        {
+          "name": "glow/neonPink",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/500"
+            },
+            "dark": {
+              "aliasOf": "color/pink/500"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/500"
+            }
+          },
+          "description": "Vibrant pink glow referencing pink500"
+        },
+        {
+          "name": "color/progress/current/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/300"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/300"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/300"
+            }
+          },
+          "description": "Background color for the currently active progress node — the \"you are here\" indicator in pagination dots and stepper nodes."
+        },
+        {
+          "name": "color/progress/current/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/400"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/400"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/400"
+            }
+          },
+          "description": "Text/icon color for content inside the currently active progress node — checkmarks, step numbers, or icons within the active indicator."
+        },
+        {
+          "name": "color/progress/pending/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/300"
+            },
+            "dark": {
+              "aliasOf": "color/white/300"
+            },
+            "wcag": {
+              "aliasOf": "color/white/300"
+            }
+          },
+          "description": "Background color for incomplete/pending progress nodes — upcoming steps that have not been reached yet."
+        },
+        {
+          "name": "color/progress/pending/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/300"
+            },
+            "dark": {
+              "aliasOf": "color/gray/300"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/300"
+            }
+          },
+          "description": "Text/icon color for content inside pending progress nodes — step numbers or icons in upcoming/incomplete steps."
+        },
+        {
+          "name": "color/progress/pending/connector",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/200"
+            },
+            "dark": {
+              "aliasOf": "color/white/200"
+            },
+            "wcag": {
+              "aliasOf": "color/white/200"
+            }
+          },
+          "description": "Color for connector lines between incomplete/pending progress nodes — the inactive path segments in steppers."
+        },
+        {
+          "name": "color/progress/completed/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/100"
+            },
+            "dark": {
+              "aliasOf": "color/green/100"
+            },
+            "wcag": {
+              "aliasOf": "color/green/100"
+            }
+          },
+          "description": "Background color for completed progress nodes — steps that have been successfully finished."
+        },
+        {
+          "name": "color/progress/completed/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/400"
+            },
+            "dark": {
+              "aliasOf": "color/green/400"
+            },
+            "wcag": {
+              "aliasOf": "color/green/400"
+            }
+          },
+          "description": "Text/icon color for content inside completed progress nodes — primarily the checkmark icon that signals step completion."
+        },
+        {
+          "name": "color/progress/completed/connector",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/100"
+            },
+            "dark": {
+              "aliasOf": "color/green/100"
+            },
+            "wcag": {
+              "aliasOf": "color/green/100"
+            }
+          },
+          "description": "Color for connector lines between completed progress nodes — the active path segments showing progress already made."
+        },
+        {
+          "name": "color/progress/error/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/100"
+            },
+            "dark": {
+              "aliasOf": "color/pink/100"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/100"
+            }
+          },
+          "description": "Background color for error progress nodes — steps that have encountered a problem requiring attention."
+        },
+        {
+          "name": "color/progress/error/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/400"
+            },
+            "dark": {
+              "aliasOf": "color/pink/400"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/400"
+            }
+          },
+          "description": "Text/icon color for content inside error progress nodes — error icons or indicators within problematic steps."
+        },
+        {
+          "name": "color/scrim/standard",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/black/500"
+            },
+            "dark": {
+              "aliasOf": "color/black/500"
+            },
+            "wcag": {
+              "aliasOf": "color/black/500"
+            }
+          },
+          "description": "Standard scrim for floating surfaces over content — pagination pills, dense overlays, floating toolbars."
+        },
+        {
+          "name": "semanticSpace/grouped/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/000"
+            },
+            "dark": {
+              "aliasOf": "space/000"
+            },
+            "wcag": {
+              "aliasOf": "space/000"
+            }
+          },
+          "description": "Semantic spacing: grouped.none"
+        },
+        {
+          "name": "semanticSpace/grouped/minimal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/025"
+            },
+            "dark": {
+              "aliasOf": "space/025"
+            },
+            "wcag": {
+              "aliasOf": "space/025"
+            }
+          },
+          "description": "Semantic spacing: grouped.minimal"
+        },
+        {
+          "name": "semanticSpace/grouped/tight",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/050"
+            },
+            "dark": {
+              "aliasOf": "space/050"
+            },
+            "wcag": {
+              "aliasOf": "space/050"
+            }
+          },
+          "description": "Semantic spacing: grouped.tight"
+        },
+        {
+          "name": "semanticSpace/grouped/normal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/100"
+            },
+            "dark": {
+              "aliasOf": "space/100"
+            },
+            "wcag": {
+              "aliasOf": "space/100"
+            }
+          },
+          "description": "Semantic spacing: grouped.normal"
+        },
+        {
+          "name": "semanticSpace/grouped/loose",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/150"
+            },
+            "dark": {
+              "aliasOf": "space/150"
+            },
+            "wcag": {
+              "aliasOf": "space/150"
+            }
+          },
+          "description": "Semantic spacing: grouped.loose"
+        },
+        {
+          "name": "semanticSpace/related/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/000"
+            },
+            "dark": {
+              "aliasOf": "space/000"
+            },
+            "wcag": {
+              "aliasOf": "space/000"
+            }
+          },
+          "description": "Semantic spacing: related.none"
+        },
+        {
+          "name": "semanticSpace/related/tight",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/100"
+            },
+            "dark": {
+              "aliasOf": "space/100"
+            },
+            "wcag": {
+              "aliasOf": "space/100"
+            }
+          },
+          "description": "Semantic spacing: related.tight"
+        },
+        {
+          "name": "semanticSpace/related/normal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/200"
+            },
+            "dark": {
+              "aliasOf": "space/200"
+            },
+            "wcag": {
+              "aliasOf": "space/200"
+            }
+          },
+          "description": "Semantic spacing: related.normal"
+        },
+        {
+          "name": "semanticSpace/related/loose",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/300"
+            },
+            "dark": {
+              "aliasOf": "space/300"
+            },
+            "wcag": {
+              "aliasOf": "space/300"
+            }
+          },
+          "description": "Semantic spacing: related.loose"
+        },
+        {
+          "name": "semanticSpace/separated/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/000"
+            },
+            "dark": {
+              "aliasOf": "space/000"
+            },
+            "wcag": {
+              "aliasOf": "space/000"
+            }
+          },
+          "description": "Semantic spacing: separated.none"
+        },
+        {
+          "name": "semanticSpace/separated/tight",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/200"
+            },
+            "dark": {
+              "aliasOf": "space/200"
+            },
+            "wcag": {
+              "aliasOf": "space/200"
+            }
+          },
+          "description": "Semantic spacing: separated.tight"
+        },
+        {
+          "name": "semanticSpace/separated/normal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/300"
+            },
+            "dark": {
+              "aliasOf": "space/300"
+            },
+            "wcag": {
+              "aliasOf": "space/300"
+            }
+          },
+          "description": "Semantic spacing: separated.normal"
+        },
+        {
+          "name": "semanticSpace/separated/loose",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/400"
+            },
+            "dark": {
+              "aliasOf": "space/400"
+            },
+            "wcag": {
+              "aliasOf": "space/400"
+            }
+          },
+          "description": "Semantic spacing: separated.loose"
+        },
+        {
+          "name": "semanticSpace/sectioned/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/000"
+            },
+            "dark": {
+              "aliasOf": "space/000"
+            },
+            "wcag": {
+              "aliasOf": "space/000"
+            }
+          },
+          "description": "Semantic spacing: sectioned.none"
+        },
+        {
+          "name": "semanticSpace/sectioned/tight",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/400"
+            },
+            "dark": {
+              "aliasOf": "space/400"
+            },
+            "wcag": {
+              "aliasOf": "space/400"
+            }
+          },
+          "description": "Semantic spacing: sectioned.tight"
+        },
+        {
+          "name": "semanticSpace/sectioned/normal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/500"
+            },
+            "dark": {
+              "aliasOf": "space/500"
+            },
+            "wcag": {
+              "aliasOf": "space/500"
+            }
+          },
+          "description": "Semantic spacing: sectioned.normal"
+        },
+        {
+          "name": "semanticSpace/sectioned/loose",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/600"
+            },
+            "dark": {
+              "aliasOf": "space/600"
+            },
+            "wcag": {
+              "aliasOf": "space/600"
+            }
+          },
+          "description": "Semantic spacing: sectioned.loose"
+        },
+        {
+          "name": "semanticSpace/inset/100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/100"
+            },
+            "dark": {
+              "aliasOf": "space/100"
+            },
+            "wcag": {
+              "aliasOf": "space/100"
+            }
+          },
+          "description": "Semantic spacing: inset.100"
+        },
+        {
+          "name": "semanticSpace/inset/150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/150"
+            },
+            "dark": {
+              "aliasOf": "space/150"
+            },
+            "wcag": {
+              "aliasOf": "space/150"
+            }
+          },
+          "description": "Semantic spacing: inset.150"
+        },
+        {
+          "name": "semanticSpace/inset/200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/200"
+            },
+            "dark": {
+              "aliasOf": "space/200"
+            },
+            "wcag": {
+              "aliasOf": "space/200"
+            }
+          },
+          "description": "Semantic spacing: inset.200"
+        },
+        {
+          "name": "semanticSpace/inset/300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/300"
+            },
+            "dark": {
+              "aliasOf": "space/300"
+            },
+            "wcag": {
+              "aliasOf": "space/300"
+            }
+          },
+          "description": "Semantic spacing: inset.300"
+        },
+        {
+          "name": "semanticSpace/inset/400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/400"
+            },
+            "dark": {
+              "aliasOf": "space/400"
+            },
+            "wcag": {
+              "aliasOf": "space/400"
+            }
+          },
+          "description": "Semantic spacing: inset.400"
+        },
+        {
+          "name": "semanticSpace/inset/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/000"
+            },
+            "dark": {
+              "aliasOf": "space/000"
+            },
+            "wcag": {
+              "aliasOf": "space/000"
+            }
+          },
+          "description": "Semantic spacing: inset.none"
+        },
+        {
+          "name": "semanticSpace/inset/050",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/050"
+            },
+            "dark": {
+              "aliasOf": "space/050"
+            },
+            "wcag": {
+              "aliasOf": "space/050"
+            }
+          },
+          "description": "Semantic spacing: inset.050"
+        },
+        {
+          "name": "semanticSpace/inset/075",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/075"
+            },
+            "dark": {
+              "aliasOf": "space/075"
+            },
+            "wcag": {
+              "aliasOf": "space/075"
+            }
+          },
+          "description": "Semantic spacing: inset.075"
+        },
+        {
+          "name": "semanticBorderWidth/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "borderWidth/000"
+            },
+            "dark": {
+              "aliasOf": "borderWidth/000"
+            },
+            "wcag": {
+              "aliasOf": "borderWidth/000"
+            }
+          },
+          "description": "Semantic border width: none"
+        },
+        {
+          "name": "semanticBorderWidth/default",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "borderWidth/100"
+            },
+            "dark": {
+              "aliasOf": "borderWidth/100"
+            },
+            "wcag": {
+              "aliasOf": "borderWidth/100"
+            }
+          },
+          "description": "Semantic border width: default"
+        },
+        {
+          "name": "semanticBorderWidth/emphasis",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "borderWidth/200"
+            },
+            "dark": {
+              "aliasOf": "borderWidth/200"
+            },
+            "wcag": {
+              "aliasOf": "borderWidth/200"
+            }
+          },
+          "description": "Semantic border width: emphasis"
+        },
+        {
+          "name": "semanticBorderWidth/heavy",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "borderWidth/400"
+            },
+            "dark": {
+              "aliasOf": "borderWidth/400"
+            },
+            "wcag": {
+              "aliasOf": "borderWidth/400"
+            }
+          },
+          "description": "Semantic border width: heavy"
+        },
+        {
+          "name": "semanticRadius/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "radius/000"
+            },
+            "dark": {
+              "aliasOf": "radius/000"
+            },
+            "wcag": {
+              "aliasOf": "radius/000"
+            }
+          },
+          "description": "Semantic radius: none"
+        },
+        {
+          "name": "semanticRadius/subtle",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "radius/025"
+            },
+            "dark": {
+              "aliasOf": "radius/025"
+            },
+            "wcag": {
+              "aliasOf": "radius/025"
+            }
+          },
+          "description": "Semantic radius: subtle"
+        },
+        {
+          "name": "semanticRadius/small",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "radius/050"
+            },
+            "dark": {
+              "aliasOf": "radius/050"
+            },
+            "wcag": {
+              "aliasOf": "radius/050"
+            }
+          },
+          "description": "Semantic radius: small"
+        },
+        {
+          "name": "semanticRadius/normal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "radius/100"
+            },
+            "dark": {
+              "aliasOf": "radius/100"
+            },
+            "wcag": {
+              "aliasOf": "radius/100"
+            }
+          },
+          "description": "Semantic radius: normal"
+        },
+        {
+          "name": "semanticRadius/large",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "radius/200"
+            },
+            "dark": {
+              "aliasOf": "radius/200"
+            },
+            "wcag": {
+              "aliasOf": "radius/200"
+            }
+          },
+          "description": "Semantic radius: large"
+        },
+        {
+          "name": "semanticRadius/full",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "radius/Max"
+            },
+            "dark": {
+              "aliasOf": "radius/Max"
+            },
+            "wcag": {
+              "aliasOf": "radius/Max"
+            }
+          },
+          "description": "Semantic radius: full"
+        },
+        {
+          "name": "semanticRadius/circle",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "radius/Half"
+            },
+            "dark": {
+              "aliasOf": "radius/Half"
+            },
+            "wcag": {
+              "aliasOf": "radius/Half"
+            }
+          },
+          "description": "Semantic radius: circle"
+        },
+        {
+          "name": "opacity/subtle",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "opacity/088"
+            },
+            "dark": {
+              "aliasOf": "opacity/088"
+            },
+            "wcag": {
+              "aliasOf": "opacity/088"
+            }
+          },
+          "description": "Subtle opacity (88%) for minimal transparency effects and subtle overlays"
+        },
+        {
+          "name": "opacity/medium",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "opacity/072"
+            },
+            "dark": {
+              "aliasOf": "opacity/072"
+            },
+            "wcag": {
+              "aliasOf": "opacity/072"
+            }
+          },
+          "description": "Medium opacity (72%) for moderate transparency in overlays and visual effects"
+        },
+        {
+          "name": "opacity/heavy",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "opacity/048"
+            },
+            "dark": {
+              "aliasOf": "opacity/048"
+            },
+            "wcag": {
+              "aliasOf": "opacity/048"
+            }
+          },
+          "description": "Heavy opacity (48%) for strong transparency in backgrounds and modal overlays"
+        },
+        {
+          "name": "opacity/ghost",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "opacity/032"
+            },
+            "dark": {
+              "aliasOf": "opacity/032"
+            },
+            "wcag": {
+              "aliasOf": "opacity/032"
+            }
+          },
+          "description": "Ghost opacity (32%) for maximum transparency and ghost button effects"
+        },
+        {
+          "name": "blend/hoverDarker",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "blend/200"
+            },
+            "dark": {
+              "aliasOf": "blend/200"
+            },
+            "wcag": {
+              "aliasOf": "blend/200"
+            }
+          },
+          "description": "Blend for hover states with darkening (8% darker) - provides noticeable feedback on light-colored buttons, cards, and interactive elements"
+        },
+        {
+          "name": "blend/hoverLighter",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "blend/200"
+            },
+            "dark": {
+              "aliasOf": "blend/200"
+            },
+            "wcag": {
+              "aliasOf": "blend/200"
+            }
+          },
+          "description": "Blend for hover states with lightening (8% lighter) - provides noticeable feedback on dark-colored buttons, cards, and interactive elements"
+        },
+        {
+          "name": "blend/pressedDarker",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "blend/300"
+            },
+            "dark": {
+              "aliasOf": "blend/300"
+            },
+            "wcag": {
+              "aliasOf": "blend/300"
+            }
+          },
+          "description": "Blend for pressed states with darkening (12% darker) - provides clear visual feedback when buttons or interactive elements are actively pressed"
+        },
+        {
+          "name": "blend/focusSaturate",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "blend/200"
+            },
+            "dark": {
+              "aliasOf": "blend/200"
+            },
+            "wcag": {
+              "aliasOf": "blend/200"
+            }
+          },
+          "description": "Blend for focus states with saturation increase (8% more saturated) - creates energized, attention-drawing appearance for focused interactive elements"
+        },
+        {
+          "name": "blend/disabledDesaturate",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "blend/300"
+            },
+            "dark": {
+              "aliasOf": "blend/300"
+            },
+            "wcag": {
+              "aliasOf": "blend/300"
+            }
+          },
+          "description": "Blend for disabled states with desaturation (12% less saturated) - creates muted, inactive appearance indicating non-interactive state"
+        },
+        {
+          "name": "blend/containerHoverDarker",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "blend/100"
+            },
+            "dark": {
+              "aliasOf": "blend/100"
+            },
+            "wcag": {
+              "aliasOf": "blend/100"
+            }
+          },
+          "description": "Blend for container/surface hover with subtle darkening (4% darker) - provides gentle feedback for large interactive surfaces like cards, tiles, and list items"
+        },
+        {
+          "name": "color/icon/opticalBalance",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "blend/200"
+            },
+            "dark": {
+              "aliasOf": "blend/200"
+            },
+            "wcag": {
+              "aliasOf": "blend/200"
+            }
+          },
+          "description": "Blend for icon-text pairing with lightening (8% lighter) - compensates for icons appearing heavier than text at same color due to stroke density and fill area"
+        },
+        {
+          "name": "gridSpacing/gridGutterXs",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/200"
+            },
+            "dark": {
+              "aliasOf": "space/200"
+            },
+            "wcag": {
+              "aliasOf": "space/200"
+            }
+          },
+          "description": "Compact gutter spacing for mobile layouts with limited screen space"
+        },
+        {
+          "name": "gridSpacing/gridGutterSm",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/250"
+            },
+            "dark": {
+              "aliasOf": "space/250"
+            },
+            "wcag": {
+              "aliasOf": "space/250"
+            }
+          },
+          "description": "Standard gutter spacing for large mobile and small tablet layouts"
+        },
+        {
+          "name": "gridSpacing/gridGutterMd",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/300"
+            },
+            "dark": {
+              "aliasOf": "space/300"
+            },
+            "wcag": {
+              "aliasOf": "space/300"
+            }
+          },
+          "description": "Comfortable gutter spacing for desktop and tablet layouts"
+        },
+        {
+          "name": "gridSpacing/gridGutterLg",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/400"
+            },
+            "dark": {
+              "aliasOf": "space/400"
+            },
+            "wcag": {
+              "aliasOf": "space/400"
+            }
+          },
+          "description": "Generous gutter spacing for large desktop and wide screen layouts"
+        },
+        {
+          "name": "gridSpacing/gridMarginXs",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/300"
+            },
+            "dark": {
+              "aliasOf": "space/300"
+            },
+            "wcag": {
+              "aliasOf": "space/300"
+            }
+          },
+          "description": "Compact container margins for mobile layouts"
+        },
+        {
+          "name": "gridSpacing/gridMarginSm",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/300"
+            },
+            "dark": {
+              "aliasOf": "space/300"
+            },
+            "wcag": {
+              "aliasOf": "space/300"
+            }
+          },
+          "description": "Standard container margins for large mobile layouts"
+        },
+        {
+          "name": "gridSpacing/gridMarginMd",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/400"
+            },
+            "dark": {
+              "aliasOf": "space/400"
+            },
+            "wcag": {
+              "aliasOf": "space/400"
+            }
+          },
+          "description": "Comfortable container margins for desktop layouts"
+        },
+        {
+          "name": "gridSpacing/gridMarginLg",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/500"
+            },
+            "dark": {
+              "aliasOf": "space/500"
+            },
+            "wcag": {
+              "aliasOf": "space/500"
+            }
+          },
+          "description": "Generous container margins for large desktop layouts"
+        },
+        {
+          "name": "gridSpacing/gridGutterNative",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/250"
+            },
+            "dark": {
+              "aliasOf": "space/250"
+            },
+            "wcag": {
+              "aliasOf": "space/250"
+            }
+          },
+          "description": "Standard gutter spacing for native adaptive layouts, equivalent to Sm-level web spacing"
+        },
+        {
+          "name": "gridSpacing/gridMarginNative",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/300"
+            },
+            "dark": {
+              "aliasOf": "space/300"
+            },
+            "wcag": {
+              "aliasOf": "space/300"
+            }
+          },
+          "description": "Standard container margins for native adaptive layouts, equivalent to Sm-level web spacing"
+        },
+        {
+          "name": "icon/strokeWidth",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "borderWidth/200"
+            },
+            "dark": {
+              "aliasOf": "borderWidth/200"
+            },
+            "wcag": {
+              "aliasOf": "borderWidth/200"
+            }
+          },
+          "description": "Standard stroke width for icon outlines, references borderWidth200 (2px) for consistency with Feather Icons design"
+        },
+        {
+          "name": "icon/size050",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/050"
+            },
+            "dark": {
+              "aliasOf": "fontSize/050"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/050"
+            }
+          },
+          "description": "Icon size calculated from fontSize050 × custom multiplier = 13 × 1.231 = 16px (rounded from 16.003). Uses optical correction multiplier instead of lineHeight050 (1.538) for better balance with small text."
+        },
+        {
+          "name": "icon/size075",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/075"
+            },
+            "dark": {
+              "aliasOf": "fontSize/075"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/075"
+            }
+          },
+          "description": "Icon size calculated from fontSize075 × lineHeight075 = 14 × 1.429 = 20px (rounded from 20.006)"
+        },
+        {
+          "name": "icon/size100",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/100"
+            },
+            "dark": {
+              "aliasOf": "fontSize/100"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/100"
+            }
+          },
+          "description": "Icon size calculated from fontSize100 × lineHeight100 = 16 × 1.5 = 24px"
+        },
+        {
+          "name": "icon/size125",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/125"
+            },
+            "dark": {
+              "aliasOf": "fontSize/125"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/125"
+            }
+          },
+          "description": "Icon size calculated from fontSize125 × lineHeight125 = 18 × 1.556 = 28px (rounded from 28.008)"
+        },
+        {
+          "name": "icon/size150",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/150"
+            },
+            "dark": {
+              "aliasOf": "fontSize/150"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/150"
+            }
+          },
+          "description": "Icon size calculated from fontSize150 × lineHeight150 = 20 × 1.4 = 28px"
+        },
+        {
+          "name": "icon/size200",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/200"
+            },
+            "dark": {
+              "aliasOf": "fontSize/200"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/200"
+            }
+          },
+          "description": "Icon size calculated from fontSize200 × lineHeight200 = 23 × 1.391 = 32px (rounded from 31.993)"
+        },
+        {
+          "name": "icon/size300",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/300"
+            },
+            "dark": {
+              "aliasOf": "fontSize/300"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/300"
+            }
+          },
+          "description": "Icon size calculated from fontSize300 × lineHeight300 = 26 × 1.231 = 32px (rounded from 32.006)"
+        },
+        {
+          "name": "icon/size400",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/400"
+            },
+            "dark": {
+              "aliasOf": "fontSize/400"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/400"
+            }
+          },
+          "description": "Icon size calculated from fontSize400 × lineHeight400 = 29 × 1.241 = 36px (rounded from 35.989)"
+        },
+        {
+          "name": "icon/size500",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/500"
+            },
+            "dark": {
+              "aliasOf": "fontSize/500"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/500"
+            }
+          },
+          "description": "Icon size calculated from fontSize500 × lineHeight500 = 33 × 1.212 = 40px (rounded from 39.996)"
+        },
+        {
+          "name": "icon/size600",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/600"
+            },
+            "dark": {
+              "aliasOf": "fontSize/600"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/600"
+            }
+          },
+          "description": "Icon size calculated from fontSize600 × lineHeight600 = 37 × 1.19 = 44px (rounded from 44.03)"
+        },
+        {
+          "name": "icon/size700",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "fontSize/700"
+            },
+            "dark": {
+              "aliasOf": "fontSize/700"
+            },
+            "wcag": {
+              "aliasOf": "fontSize/700"
+            }
+          },
+          "description": "Icon size calculated from fontSize700 × lineHeight700 = 42 × 1.143 = 48px (rounded from 48.006)"
+        },
+        {
+          "name": "accessibility/focus/offset",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "space/025"
+            },
+            "dark": {
+              "aliasOf": "space/025"
+            },
+            "wcag": {
+              "aliasOf": "space/025"
+            }
+          },
+          "description": "WCAG 2.4.7 Focus Visible - positions outline outside element bounds (2px)"
+        },
+        {
+          "name": "accessibility/focus/width",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "borderWidth/200"
+            },
+            "dark": {
+              "aliasOf": "borderWidth/200"
+            },
+            "wcag": {
+              "aliasOf": "borderWidth/200"
+            }
+          },
+          "description": "WCAG 2.4.7 Focus Visible - visible indicator thickness (2px)"
+        },
+        {
+          "name": "accessibility/focus/color",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/300"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/300"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/300"
+            }
+          },
+          "description": "WCAG 2.4.7 Focus Visible + 1.4.11 Non-text Contrast - 3:1 contrast minimum"
+        },
+        {
+          "name": "color/progress/current/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/300"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/300"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/300"
+            }
+          },
+          "description": "Background color for the currently active progress node — the \"you are here\" indicator in pagination dots and stepper nodes."
+        },
+        {
+          "name": "color/progress/current/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/cyan/400"
+            },
+            "dark": {
+              "aliasOf": "color/cyan/400"
+            },
+            "wcag": {
+              "aliasOf": "color/cyan/400"
+            }
+          },
+          "description": "Text/icon color for content inside the currently active progress node — checkmarks, step numbers, or icons within the active indicator."
+        },
+        {
+          "name": "color/progress/pending/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/300"
+            },
+            "dark": {
+              "aliasOf": "color/white/300"
+            },
+            "wcag": {
+              "aliasOf": "color/white/300"
+            }
+          },
+          "description": "Background color for incomplete/pending progress nodes — upcoming steps that have not been reached yet."
+        },
+        {
+          "name": "color/progress/pending/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/gray/300"
+            },
+            "dark": {
+              "aliasOf": "color/gray/300"
+            },
+            "wcag": {
+              "aliasOf": "color/gray/300"
+            }
+          },
+          "description": "Text/icon color for content inside pending progress nodes — step numbers or icons in upcoming/incomplete steps."
+        },
+        {
+          "name": "color/progress/pending/connector",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/white/200"
+            },
+            "dark": {
+              "aliasOf": "color/white/200"
+            },
+            "wcag": {
+              "aliasOf": "color/white/200"
+            }
+          },
+          "description": "Color for connector lines between incomplete/pending progress nodes — the inactive path segments in steppers."
+        },
+        {
+          "name": "color/progress/completed/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/100"
+            },
+            "dark": {
+              "aliasOf": "color/green/100"
+            },
+            "wcag": {
+              "aliasOf": "color/green/100"
+            }
+          },
+          "description": "Background color for completed progress nodes — steps that have been successfully finished."
+        },
+        {
+          "name": "color/progress/completed/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/400"
+            },
+            "dark": {
+              "aliasOf": "color/green/400"
+            },
+            "wcag": {
+              "aliasOf": "color/green/400"
+            }
+          },
+          "description": "Text/icon color for content inside completed progress nodes — primarily the checkmark icon that signals step completion."
+        },
+        {
+          "name": "color/progress/completed/connector",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/green/100"
+            },
+            "dark": {
+              "aliasOf": "color/green/100"
+            },
+            "wcag": {
+              "aliasOf": "color/green/100"
+            }
+          },
+          "description": "Color for connector lines between completed progress nodes — the active path segments showing progress already made."
+        },
+        {
+          "name": "color/progress/error/background",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/100"
+            },
+            "dark": {
+              "aliasOf": "color/pink/100"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/100"
+            }
+          },
+          "description": "Background color for error progress nodes — steps that have encountered a problem requiring attention."
+        },
+        {
+          "name": "color/progress/error/text",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "light": {
+              "aliasOf": "color/pink/400"
+            },
+            "dark": {
+              "aliasOf": "color/pink/400"
+            },
+            "wcag": {
+              "aliasOf": "color/pink/400"
+            }
+          },
+          "description": "Text/icon color for content inside error progress nodes — error icons or indicators within problematic steps."
+        },
+        {
+          "name": "zIndex/container",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 100,
+            "dark": 100,
+            "wcag": 100
+          },
+          "description": "Base z-index for container components (cards, panels, surfaces) | Platform notes: android: Use elevation tokens instead"
+        },
+        {
+          "name": "zIndex/navigation",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 200,
+            "dark": 200,
+            "wcag": 200
+          },
+          "description": "Z-index for persistent navigation (headers, sidebars, sticky elements) | Platform notes: android: Use elevation tokens instead"
+        },
+        {
+          "name": "zIndex/dropdown",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 300,
+            "dark": 300,
+            "wcag": 300
+          },
+          "description": "Z-index for temporary overlay content (dropdowns, popovers, menus) | Platform notes: android: Use elevation tokens instead"
+        },
+        {
+          "name": "zIndex/modal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 400,
+            "dark": 400,
+            "wcag": 400
+          },
+          "description": "Z-index for modal overlay content (dialogs, sheets, overlays) | Platform notes: android: Use elevation tokens instead"
+        },
+        {
+          "name": "zIndex/toast",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 500,
+            "dark": 500,
+            "wcag": 500
+          },
+          "description": "Z-index for notification elements (toasts, snackbars, alerts) | Platform notes: android: Use elevation tokens instead"
+        },
+        {
+          "name": "zIndex/tooltip",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 600,
+            "dark": 600,
+            "wcag": 600
+          },
+          "description": "Highest z-index for always-visible elements (tooltips, critical overlays) | Platform notes: android: Use elevation tokens instead"
+        },
+        {
+          "name": "elevation/none",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 0,
+            "dark": 0,
+            "wcag": 0
+          },
+          "description": "No elevation - flat surface with no shadow (handles z-order and shadow removal). Rationale: Explicit \"none\" token improves search/discoverability, communicates intent (flat surface vs. forgetting elevation), and provides consistent maintenance pattern | Platform notes: web: Use z-index + shadow tokens instead; ios: Use z-index + shadow tokens instead"
+        },
+        {
+          "name": "elevation/container",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 8,
+            "dark": 8,
+            "wcag": 8
+          },
+          "description": "Container elevation (handles z-order and shadow) - aligns with shadow.container | Platform notes: web: Use z-index + shadow tokens instead; ios: Use z-index + shadow tokens instead"
+        },
+        {
+          "name": "elevation/navigation",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 4,
+            "dark": 4,
+            "wcag": 4
+          },
+          "description": "Navigation elevation (handles z-order and shadow) - aligns with shadow.navigation | Platform notes: web: Use z-index + shadow tokens instead; ios: Use z-index + shadow tokens instead"
+        },
+        {
+          "name": "elevation/dropdown",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 8,
+            "dark": 8,
+            "wcag": 8
+          },
+          "description": "Dropdown elevation (handles z-order and shadow) - aligns with shadow.dropdown | Platform notes: web: Use z-index + shadow tokens instead; ios: Use z-index + shadow tokens instead"
+        },
+        {
+          "name": "elevation/modal",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 16,
+            "dark": 16,
+            "wcag": 16
+          },
+          "description": "Modal elevation (handles z-order and shadow) - aligns with shadow.modal | Platform notes: web: Use z-index + shadow tokens instead; ios: Use z-index + shadow tokens instead"
+        },
+        {
+          "name": "elevation/toast",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 24,
+            "dark": 24,
+            "wcag": 24
+          },
+          "description": "Toast elevation (handles z-order and shadow) - aligns with shadow.toast | Platform notes: web: Use z-index + shadow tokens instead; ios: Use z-index + shadow tokens instead"
+        },
+        {
+          "name": "elevation/tooltip",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "light": 24,
+            "dark": 24,
+            "wcag": 24
+          },
+          "description": "Tooltip elevation (handles z-order and shadow) - aligns with shadow.tooltip | Platform notes: web: Use z-index + shadow tokens instead; ios: Use z-index + shadow tokens instead"
+        }
+      ]
+    }
+  ],
+  "styles": [
+    {
+      "type": "EFFECT",
+      "name": "shadow.none",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 0
+            },
+            "radius": 0,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.none — No shadow - flat surface with no depth. Rationale: Explicit \"none\" token improves search/discoverability, communicates intent (flat surface vs. forgetting shadow), and provides consistent maintenance pattern"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.container",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "radius": 12,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.container — Container shadow with no horizontal offset, 4px vertical offset, 12px blur, moderate opacity"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.navigation",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "radius": 20,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.2
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.navigation — Navigation shadow with no horizontal offset, 2px vertical offset, 20px blur, lighter opacity"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.dropdown",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "radius": 12,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.dropdown — Dropdown shadow with no horizontal offset, 4px vertical offset, 12px blur, moderate opacity"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.modal",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "radius": 16,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.35
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.modal — Modal shadow with no horizontal offset, 8px vertical offset, 16px blur, slightly darker opacity"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.toast",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 12
+            },
+            "radius": 24,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.toast — Toast shadow with no horizontal offset, 12px vertical offset, 24px blur, darker opacity"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.tooltip",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 12
+            },
+            "radius": 24,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.tooltip — Tooltip shadow with no horizontal offset, 12px vertical offset, 24px blur, darker opacity"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.fab",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 12,
+              "y": 16
+            },
+            "radius": 4,
+            "spread": 0,
+            "color": {
+              "r": 0.0784313725490196,
+              "g": 0.09803921568627451,
+              "b": 0.1568627450980392,
+              "a": 0.4
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.fab — Dramatic shadow with 12px right offset, 16px down offset, 4px blur, darker opacity, warm (blue-gray) tint"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.hover",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "radius": 20,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.2
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.hover — Subtle shadow with no horizontal offset, 4px vertical offset, 20px blur, lighter opacity"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.navigation.indicator",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 0
+            },
+            "radius": 4,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.2
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.navigation.indicator — Omnidirectional shadow with no offset, 4px blur, 20% opacity — tight but gentle edge definition for indicators sitting inside a container surface"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.sunrise",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": -12,
+              "y": 8
+            },
+            "radius": 12,
+            "spread": 0,
+            "color": {
+              "r": 0.0784313725490196,
+              "g": 0.09803921568627451,
+              "b": 0.1568627450980392,
+              "a": 0.3
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.sunrise — Shadow with -12px left offset, 8px vertical offset, 12px blur, moderate opacity, warm (blue-gray) tint for sunrise lighting"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.morning",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": -6,
+              "y": 8
+            },
+            "radius": 12,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.morning — Shadow with -6px left offset, 8px vertical offset, 12px blur, moderate opacity, default color for morning lighting"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.noon",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "radius": 12,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.noon — Shadow with no horizontal offset, 8px vertical offset, 12px blur, moderate opacity, default color for noon lighting"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.dusk",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 6,
+              "y": 8
+            },
+            "radius": 12,
+            "spread": 0,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.dusk — Shadow with 6px right offset, 8px vertical offset, 12px blur, moderate opacity, default color for dusk lighting"
+    },
+    {
+      "type": "EFFECT",
+      "name": "shadow.sunset",
+      "properties": {
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "offset": {
+              "x": 12,
+              "y": 8
+            },
+            "radius": 12,
+            "spread": 0,
+            "color": {
+              "r": 0.0784313725490196,
+              "g": 0.09803921568627451,
+              "b": 0.1568627450980392,
+              "a": 0.3
+            }
+          }
+        ]
+      },
+      "description": "Source: shadow.sunset — Shadow with 12px right offset, 8px vertical offset, 12px blur, moderate opacity, warm (blue-gray) tint for sunset lighting"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.bodySm",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 14,
+        "fontWeight": 400,
+        "lineHeight": 1.429,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.bodySm — Small body typography with 14px font size, 1.25 line height, body font family, normal weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.bodyMd",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "lineHeight": 1.5,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.bodyMd — Medium body typography with 16px font size, 1.5 line height, body font family, normal weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.bodyLg",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "lineHeight": 1.556,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.bodyLg — Large body typography with 18px font size, 1.75 line height, body font family, normal weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.h1",
+      "properties": {
+        "fontFamily": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 37,
+        "fontWeight": 700,
+        "lineHeight": 1.19,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.h1 — H1 typography style with large font size (37), tight line height (1.19), display font family, bold weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.h2",
+      "properties": {
+        "fontFamily": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 33,
+        "fontWeight": 700,
+        "lineHeight": 1.212,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.h2 — H2 typography style with medium-large font size (33), tight line height (1.212), display font family, bold weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.h3",
+      "properties": {
+        "fontFamily": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 29,
+        "fontWeight": 600,
+        "lineHeight": 1.241,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.h3 — H3 typography style with medium font size (29), moderate line height (1.241), display font family, semi-bold weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.h4",
+      "properties": {
+        "fontFamily": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 26,
+        "fontWeight": 600,
+        "lineHeight": 1.231,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.h4 — H4 typography style with small-medium font size (26), moderate line height (1.231), display font family, semi-bold weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.h5",
+      "properties": {
+        "fontFamily": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 23,
+        "fontWeight": 600,
+        "lineHeight": 1.391,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.h5 — H5 typography style with small font size (23), moderate line height (1.391), display font family, semi-bold weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.h6",
+      "properties": {
+        "fontFamily": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 20,
+        "fontWeight": 700,
+        "lineHeight": 1.4,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.h6 — H6 typography style with smallest heading font size (20), moderate line height (1.4), display font family, bold weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.caption",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 13,
+        "fontWeight": 300,
+        "lineHeight": 1.538,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.caption — Caption typography style with small font size (13), paired line height (1.538), body font family, light weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.legal",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 13,
+        "fontWeight": 400,
+        "lineHeight": 1.538,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.legal — Legal typography style with small font size (13), paired line height (1.538), body font family, normal weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.display",
+      "properties": {
+        "fontFamily": "Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 42,
+        "fontWeight": 700,
+        "lineHeight": 1.143,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.display — Display typography style with largest font size (42), tightest line height (1.143), display font family, bold weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.buttonSm",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 14,
+        "fontWeight": 500,
+        "lineHeight": 1.429,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.buttonSm — Small button typography with 14px font size, 1.25 line height, body font family, medium weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.buttonMd",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 16,
+        "fontWeight": 500,
+        "lineHeight": 1.5,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.buttonMd — Medium button typography with 16px font size, 1.5 line height, body font family, medium weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.buttonLg",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 18,
+        "fontWeight": 500,
+        "lineHeight": 1.556,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.buttonLg — Large button typography with 18px font size, 1.75 line height, body font family, medium weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.input",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "lineHeight": 1.5,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.input — Input typography style with base font size (16), optimal line height (1.5), body font family, normal weight, and default letter spacing"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.labelXs",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 13,
+        "fontWeight": 500,
+        "lineHeight": 1.538,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.labelXs — Extra small label typography with 13px font size, 1.0 line height, body font family, medium weight for floating labels"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.labelSm",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 14,
+        "fontWeight": 500,
+        "lineHeight": 1.429,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.labelSm — Small label typography with 14px font size, 1.25 line height, body font family, medium weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.labelMd",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 16,
+        "fontWeight": 500,
+        "lineHeight": 1.5,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.labelMd — Medium label typography with 16px font size, 1.5 line height, body font family, medium weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.labelMdFloat",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 14,
+        "fontWeight": 500,
+        "lineHeight": 1.429,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.labelMdFloat — Medium label typography scaled to 14px (fontSize100 × scale088) for floated label state, maintains same lineHeight, fontFamily, fontWeight, and letterSpacing as labelMd to prevent layout shift during animation"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.labelLg",
+      "properties": {
+        "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        "fontSize": 18,
+        "fontWeight": 500,
+        "lineHeight": 1.556,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.labelLg — Large label typography with 18px font size, 1.75 line height, body font family, medium weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.codeSm",
+      "properties": {
+        "fontFamily": "SF Mono, Monaco, Inconsolata, Roboto Mono, Consolas, Courier New, monospace",
+        "fontSize": 14,
+        "fontWeight": 400,
+        "lineHeight": 1.429,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.codeSm — Small code typography with 14px font size, 1.25 line height, monospace font family, normal weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.codeMd",
+      "properties": {
+        "fontFamily": "SF Mono, Monaco, Inconsolata, Roboto Mono, Consolas, Courier New, monospace",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "lineHeight": 1.5,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.codeMd — Medium code typography with 16px font size, 1.5 line height, monospace font family, normal weight"
+    },
+    {
+      "type": "TEXT",
+      "name": "typography.codeLg",
+      "properties": {
+        "fontFamily": "SF Mono, Monaco, Inconsolata, Roboto Mono, Consolas, Courier New, monospace",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "lineHeight": 1.556,
+        "letterSpacing": 0
+      },
+      "description": "Source: typography.codeLg — Large code typography with 18px font size, 1.75 line height, monospace font family, normal weight"
+    }
+  ]
+}

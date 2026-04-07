@@ -1,0 +1,76 @@
+/**
+ * DesignerPunk Design System - Component Tokens
+ * Generated: 2026-04-04T00:41:33.709Z
+ * Version: 1.0.0
+ * Platform: Web (CSS Custom Properties)
+ *
+ * Component-specific tokens that reference primitive tokens.
+ * Use these for component-level styling consistency.
+ */
+
+:root {
+
+  /* Avatar Component Tokens */
+  /* Extra small avatar (24px = 3× base) for inline mentions and compact UI contexts where minimal visual footprint is needed */
+  --avatar-size-xs: var(--size-300);
+  /* Small avatar (32px = 4× base) for list items and secondary UI contexts with moderate visual presence */
+  --avatar-size-sm: var(--size-400);
+  /* Medium avatar (40px = 5× base) as the default size, providing balanced visual weight for most UI contexts */
+  --avatar-size-md: var(--size-500);
+  /* Large avatar (48px = 6× base) for profile headers and primary UI contexts requiring prominent visual presence */
+  --avatar-size-lg: var(--size-600);
+  /* Extra large avatar (80px = 10× base) for profile pages and hero sections where avatar is a focal point */
+  --avatar-size-xl: var(--size-1000);
+  /* Extra extra large avatar (128px = 16× base) for hero profiles and full-page profile views requiring maximum visual impact */
+  --avatar-size-xxl: var(--size-1600);
+  /* Icon size for xs avatar (12px = 1.5× base) maintains 50% ratio (12/24). No existing icon token at this size, so component token fills the gap. */
+  --avatar-icon-size-xs: 12;
+  /* Icon size for xxl avatar (64px = 8× base) maintains 50% ratio (64/128). No existing icon token at this size, so component token fills the gap. */
+  --avatar-icon-size-xxl: 64;
+
+  /* BadgeLabelBase Component Tokens */
+  /* Maximum width for truncated badges; allows ~12-15 characters before ellipsis while maintaining compact badge appearance. Value follows spacing family pattern (8 × 15 = 120px) but exceeds standard spacing scale, requiring component-level definition. */
+  --badgelabelbase-max-width: 120;
+
+  /* ButtonIcon Component Tokens */
+  /* Large button variant requires 12px padding (1.5× base) for comfortable touch target and visual balance with larger icon sizes */
+  --buttonicon-inset-large: var(--space-150);
+  /* Medium button variant uses 10px padding (1.25× base strategic flexibility token) for compact appearance while maintaining adequate touch area */
+  --buttonicon-inset-medium: var(--space-125);
+  /* Small button variant uses 8px padding (1× base) for minimal footprint in dense UI layouts while meeting minimum touch target requirements */
+  --buttonicon-inset-small: var(--space-100);
+  /* Large button size (48px = 6× base) provides generous touch target exceeding tapAreaRecommended, calculated as icon (24px) + padding (12px × 2) */
+  --buttonicon-size-large: var(--size-600);
+  /* Medium button size (40px = 5× base) provides standard touch target, calculated as icon (18px) + padding (10px × 2) rounded to grid */
+  --buttonicon-size-medium: var(--size-500);
+  /* Small button size (32px = 4× base) provides compact visual footprint, calculated as icon (13px) + padding (8px × 2) rounded to grid */
+  --buttonicon-size-small: var(--size-400);
+
+  /* Progress Component Tokens */
+  /* Small node base size (12px). Inactive dots in compact mobile contexts. */
+  --progress-node-size-sm: var(--size-150);
+  /* Medium node base size (16px). Default inactive dot size. */
+  --progress-node-size-md: var(--size-200);
+  /* Large node base size (20px). Inactive dots in desktop contexts. */
+  --progress-node-size-lg: var(--size-250);
+  /* Current node emphasis for sm (16px). +4px over base 12px for non-color visual differentiation. */
+  --progress-node-size-sm-current: var(--size-200);
+  /* Current node emphasis for md (20px). +4px over base 16px for non-color visual differentiation. */
+  --progress-node-size-md-current: var(--size-250);
+  /* Current node emphasis for lg (24px). +4px over base 20px for non-color visual differentiation. */
+  --progress-node-size-lg-current: var(--size-300);
+  /* Small gap between nodes (6px = 0.75× base). Tight spacing for compact pagination dots in mobile contexts. */
+  --progress-node-gap-sm: var(--space-075);
+  /* Medium gap between nodes (8px = 1× base). Default spacing for stepper nodes, providing clear separation without excessive whitespace. */
+  --progress-node-gap-md: var(--space-100);
+  /* Large gap between nodes (12px = 1.5× base). Generous spacing for detailed steppers with labels in desktop contexts. */
+  --progress-node-gap-lg: var(--space-150);
+  /* Connector line thickness (1px). References borderDefault primitive for consistent border treatment across the design system. */
+  --progress-connector-thickness: var(--border-width-100);
+
+  /* VerticalListItem Component Tokens */
+  /* Block padding at rest state (1px border). 11px padding + 1px border = 12px per side, achieving 48px total with 24px content. Uses TokenWithValue pattern as no primitive token exists for 11px. */
+  --verticallistitem-padding-block-rest: 11;
+  /* Block padding when selected (2px border). 10px padding + 2px border = 12px per side, maintaining 48px total with 24px content. References space125 strategic flexibility token. */
+  --verticallistitem-padding-block-selected: var(--space-125);
+}

@@ -1,0 +1,5758 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$extensions": {
+    "designerpunk": {
+      "version": "1.0.0",
+      "generatedAt": "2026-04-04T00:41:33.711Z",
+      "rosettaVersion": "10.1.0"
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "space000": {
+      "$value": "0px",
+      "$type": "dimension",
+      "$description": "Zero spacing - explicit no spacing value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0 = 8 × 0 = 0",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space025": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "Extra tight spacing - 0.25x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.25 = 8 × 0.25 = 2",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space050": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Tight spacing - 0.5x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.5 = 8 × 0.5 = 4",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space075": {
+      "$value": "6px",
+      "$type": "dimension",
+      "$description": "Strategic flexibility spacing - 0.75x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "space100 × 0.75",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space100": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Base spacing - 1x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 8 × 1 = 8",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space125": {
+      "$value": "10px",
+      "$type": "dimension",
+      "$description": "Strategic flexibility spacing - 1.25x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "space100 × 1.25",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space150": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "Loose spacing - 1.5x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.5 = 8 × 1.5 = 12",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space200": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Wide spacing - 2x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 8 × 2 = 16",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space250": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "Strategic flexibility spacing - 2.5x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "space100 × 2.5",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space300": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Extra wide spacing - 3x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 3 = 8 × 3 = 24",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space400": {
+      "$value": "32px",
+      "$type": "dimension",
+      "$description": "Large spacing - 4x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 4 = 8 × 4 = 32",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space500": {
+      "$value": "40px",
+      "$type": "dimension",
+      "$description": "Extra large spacing - 5x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 5 = 8 × 5 = 40",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space600": {
+      "$value": "48px",
+      "$type": "dimension",
+      "$description": "Huge spacing - 6x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 6 = 8 × 6 = 48",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space700": {
+      "$value": "56px",
+      "$type": "dimension",
+      "$description": "Extra huge spacing - 7x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 7 = 8 × 7 = 56",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    },
+    "space800": {
+      "$value": "64px",
+      "$type": "dimension",
+      "$description": "Maximum spacing - 8x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 8 = 8 × 8 = 64",
+          "family": "spacing",
+          "baseValue": 8
+        }
+      }
+    }
+  },
+  "color": {
+    "$type": "color",
+    "gray100": {
+      "$value": "rgba(178, 188, 196, 1)",
+      "$type": "color",
+      "$description": "Light gray for subtle backgrounds and muted text",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic gray scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "gray200": {
+      "$value": "rgba(94, 112, 124, 1)",
+      "$type": "color",
+      "$description": "Medium-light gray for secondary text and borders",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic gray scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "gray300": {
+      "$value": "rgba(38, 50, 58, 1)",
+      "$type": "color",
+      "$description": "Medium gray for primary text and prominent borders",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic gray scale progression - medium",
+          "family": "color"
+        }
+      }
+    },
+    "gray400": {
+      "$value": "rgba(24, 34, 40, 1)",
+      "$type": "color",
+      "$description": "Dark gray for strong text and container backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic gray scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "gray500": {
+      "$value": "rgba(16, 22, 26, 1)",
+      "$type": "color",
+      "$description": "Darkest gray for deep backgrounds and high contrast text",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic gray scale progression - darkest",
+          "family": "color"
+        }
+      }
+    },
+    "black100": {
+      "$value": "rgba(58, 58, 69, 1)",
+      "$type": "color",
+      "$description": "Light black for subtle container backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic black scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "black200": {
+      "$value": "rgba(34, 34, 42, 1)",
+      "$type": "color",
+      "$description": "Medium black for container backgrounds and surfaces",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic black scale progression - medium",
+          "family": "color"
+        }
+      }
+    },
+    "black300": {
+      "$value": "rgba(10, 10, 15, 1)",
+      "$type": "color",
+      "$description": "Dark black for primary backgrounds and deep containers",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic black scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "black400": {
+      "$value": "rgba(6, 6, 10, 1)",
+      "$type": "color",
+      "$description": "Very dark black for deep system backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic black scale progression - very dark",
+          "family": "color"
+        }
+      }
+    },
+    "black500": {
+      "$value": "rgba(0, 0, 0, 1)",
+      "$type": "color",
+      "$description": "Pure black for maximum contrast and system elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic black scale progression - pure black",
+          "family": "color"
+        }
+      }
+    },
+    "white100": {
+      "$value": "rgba(255, 255, 255, 1)",
+      "$type": "color",
+      "$description": "Pure white for maximum contrast and primary surfaces",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic white scale progression - pure white",
+          "family": "color"
+        }
+      }
+    },
+    "white200": {
+      "$value": "rgba(245, 245, 250, 1)",
+      "$type": "color",
+      "$description": "Near-white for subtle surface variations",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic white scale progression - near white",
+          "family": "color"
+        }
+      }
+    },
+    "white300": {
+      "$value": "rgba(232, 232, 240, 1)",
+      "$type": "color",
+      "$description": "Light gray-white for secondary surfaces and backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic white scale progression - light gray-white",
+          "family": "color"
+        }
+      }
+    },
+    "white400": {
+      "$value": "rgba(197, 197, 213, 1)",
+      "$type": "color",
+      "$description": "Medium gray-white for borders and dividers",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic white scale progression - medium gray-white",
+          "family": "color"
+        }
+      }
+    },
+    "white500": {
+      "$value": "rgba(153, 153, 171, 1)",
+      "$type": "color",
+      "$description": "Dark gray-white for muted text and subtle elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic white scale progression - dark gray-white",
+          "family": "color"
+        }
+      }
+    },
+    "yellow100": {
+      "$value": "rgba(254, 251, 204, 1)",
+      "$type": "color",
+      "$description": "Light yellow for subtle warning backgrounds and highlights",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic yellow scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "yellow200": {
+      "$value": "rgba(252, 246, 128, 1)",
+      "$type": "color",
+      "$description": "Medium-light yellow for warning highlights and attention",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic yellow scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "yellow300": {
+      "$value": "rgba(249, 240, 2, 1)",
+      "$type": "color",
+      "$description": "Bright yellow for high-energy CTAs and urgent warnings",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic yellow scale progression - bright",
+          "family": "color"
+        }
+      }
+    },
+    "yellow400": {
+      "$value": "rgba(199, 192, 2, 1)",
+      "$type": "color",
+      "$description": "Dark yellow for warning text and secondary warning elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic yellow scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "yellow500": {
+      "$value": "rgba(143, 139, 1, 1)",
+      "$type": "color",
+      "$description": "Darkest yellow for warning text on light backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic yellow scale progression - darkest",
+          "family": "color"
+        }
+      }
+    },
+    "orange100": {
+      "$value": "rgba(255, 229, 220, 1)",
+      "$type": "color",
+      "$description": "Light orange for subtle error backgrounds and warm highlights",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic orange scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "orange200": {
+      "$value": "rgba(255, 184, 160, 1)",
+      "$type": "color",
+      "$description": "Medium-light orange for warm accents and secondary CTAs (Cyberpunk WCAG - AA Large ~3:1 for headings)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic orange scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "orange300": {
+      "$value": "rgba(255, 107, 53, 1)",
+      "$type": "color",
+      "$description": "Bright orange for approachable error states and warm CTAs (Cyberpunk WCAG - AA ~4.5:1 for body text)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic orange scale progression - bright",
+          "family": "color"
+        }
+      }
+    },
+    "orange400": {
+      "$value": "rgba(204, 85, 41, 1)",
+      "$type": "color",
+      "$description": "Dark orange for error text and secondary error elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic orange scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "orange500": {
+      "$value": "rgba(143, 60, 29, 1)",
+      "$type": "color",
+      "$description": "Darkest orange for error text on light backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic orange scale progression - darkest",
+          "family": "color"
+        }
+      }
+    },
+    "purple100": {
+      "$value": "rgba(243, 224, 255, 1)",
+      "$type": "color",
+      "$description": "Light purple for subtle brand backgrounds and highlights",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic purple scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "purple200": {
+      "$value": "rgba(217, 138, 255, 1)",
+      "$type": "color",
+      "$description": "Medium-light purple for brand accents and secondary elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic purple scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "purple300": {
+      "$value": "rgba(176, 38, 255, 1)",
+      "$type": "color",
+      "$description": "Bright purple for primary brand color and focus states",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic purple scale progression - primary brand",
+          "family": "color"
+        }
+      }
+    },
+    "purple400": {
+      "$value": "rgba(141, 30, 204, 1)",
+      "$type": "color",
+      "$description": "Dark purple for brand text and secondary brand elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic purple scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "purple500": {
+      "$value": "rgba(99, 21, 143, 1)",
+      "$type": "color",
+      "$description": "Darkest purple for brand text on light backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic purple scale progression - darkest",
+          "family": "color"
+        }
+      }
+    },
+    "pink100": {
+      "$value": "rgba(255, 218, 232, 1)",
+      "$type": "color",
+      "$description": "Lightest hot pink - subtle error backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic pink scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "pink200": {
+      "$value": "rgba(255, 130, 180, 1)",
+      "$type": "color",
+      "$description": "Medium-light hot pink - error highlights (Cyberpunk WCAG - AA Large ~3:1 for headings)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic pink scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "pink300": {
+      "$value": "rgba(255, 42, 109, 1)",
+      "$type": "color",
+      "$description": "Bright hot pink - base pink color (Cyberpunk WCAG - AA ~4.5:1 for body text)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic pink scale progression - base",
+          "family": "color"
+        }
+      }
+    },
+    "pink400": {
+      "$value": "rgba(204, 34, 87, 1)",
+      "$type": "color",
+      "$description": "Dark hot pink - primary error color",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic pink scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "pink500": {
+      "$value": "rgba(128, 21, 55, 1)",
+      "$type": "color",
+      "$description": "Darkest hot pink - strong error color",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic pink scale progression - darkest",
+          "family": "color"
+        }
+      }
+    },
+    "green100": {
+      "$value": "rgba(230, 255, 245, 1)",
+      "$type": "color",
+      "$description": "Lightest electric green - subtle success backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic green scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "green200": {
+      "$value": "rgba(128, 255, 187, 1)",
+      "$type": "color",
+      "$description": "Medium-light electric green - success highlights (Cyberpunk WCAG - AA Large ~3:1 for headings)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic green scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "green300": {
+      "$value": "rgba(51, 255, 153, 1)",
+      "$type": "color",
+      "$description": "Bright electric green - success accents (Cyberpunk WCAG - AA ~4.5:1 for body text)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic green scale progression - bright",
+          "family": "color"
+        }
+      }
+    },
+    "green400": {
+      "$value": "rgba(0, 255, 136, 1)",
+      "$type": "color",
+      "$description": "Strong electric green - primary success color",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic green scale progression - strong",
+          "family": "color"
+        }
+      }
+    },
+    "green500": {
+      "$value": "rgba(0, 204, 110, 1)",
+      "$type": "color",
+      "$description": "Darkest electric green - neon glow effect",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic green scale progression - darkest/glow",
+          "family": "color"
+        }
+      }
+    },
+    "cyan100": {
+      "$value": "rgba(204, 251, 255, 1)",
+      "$type": "color",
+      "$description": "Light cyan for subtle tech backgrounds and success highlights",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic cyan scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "cyan200": {
+      "$value": "rgba(128, 246, 255, 1)",
+      "$type": "color",
+      "$description": "Medium-light cyan for tech accents and link highlights",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic cyan scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "cyan300": {
+      "$value": "rgba(0, 240, 255, 1)",
+      "$type": "color",
+      "$description": "Bright cyan for tech elements, links, and success states",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic cyan scale progression - tech primary",
+          "family": "color"
+        }
+      }
+    },
+    "cyan400": {
+      "$value": "rgba(0, 192, 204, 1)",
+      "$type": "color",
+      "$description": "Dark cyan for tech text and secondary success elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic cyan scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "cyan500": {
+      "$value": "rgba(0, 136, 143, 1)",
+      "$type": "color",
+      "$description": "Darkest cyan for tech text on light backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic cyan scale progression - darkest",
+          "family": "color"
+        }
+      }
+    },
+    "teal100": {
+      "$value": "rgba(217, 232, 234, 1)",
+      "$type": "color",
+      "$description": "Light teal for subtle secondary backgrounds and highlights",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic teal scale progression - lightest",
+          "family": "color"
+        }
+      }
+    },
+    "teal200": {
+      "$value": "rgba(77, 155, 165, 1)",
+      "$type": "color",
+      "$description": "Medium-light teal for secondary UI elements and accents",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic teal scale progression - medium-light",
+          "family": "color"
+        }
+      }
+    },
+    "teal300": {
+      "$value": "rgba(26, 83, 92, 1)",
+      "$type": "color",
+      "$description": "Medium teal for secondary UI elements and alternative success states",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic teal scale progression - secondary UI",
+          "family": "color"
+        }
+      }
+    },
+    "teal400": {
+      "$value": "rgba(21, 66, 74, 1)",
+      "$type": "color",
+      "$description": "Dark teal for secondary text and UI elements",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic teal scale progression - dark",
+          "family": "color"
+        }
+      }
+    },
+    "teal500": {
+      "$value": "rgba(15, 46, 51, 1)",
+      "$type": "color",
+      "$description": "Darkest teal for secondary text on light backgrounds",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic teal scale progression - darkest",
+          "family": "color"
+        }
+      }
+    },
+    "shadowBlack100": {
+      "$value": "rgba(0, 0, 0, 1)",
+      "$type": "color",
+      "$description": "Shadow black 100 - pure black for neutral lighting (noon)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic",
+          "family": "color"
+        }
+      }
+    },
+    "shadowBlue100": {
+      "$value": "rgba(20, 25, 40, 1)",
+      "$type": "color",
+      "$description": "Shadow blue 100 - cool blue-gray tint (warm light creates cool shadows)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic shadow color family - blue-tinted gray for sunrise/sunset lighting - mode-agnostic",
+          "family": "color"
+        }
+      }
+    },
+    "shadowOrange100": {
+      "$value": "rgba(25, 20, 15, 1)",
+      "$type": "color",
+      "$description": "Shadow orange 100 - warm gray tint (cool light creates warm shadows)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic shadow color family - warm-tinted gray for cool lighting environments - mode-agnostic",
+          "family": "color"
+        }
+      }
+    },
+    "shadowGray100": {
+      "$value": "rgba(15, 20, 30, 1)",
+      "$type": "color",
+      "$description": "Shadow gray 100 - blue-gray tint for overcast/ambient lighting",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Systematic shadow color family - blue-gray for ambient/overcast conditions - mode-agnostic",
+          "family": "color"
+        }
+      }
+    }
+  },
+  "fontSize": {
+    "$type": "dimension",
+    "fontSize050": {
+      "$value": "13px",
+      "$type": "dimension",
+      "$description": "Small font size - 0.5x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base ÷ (1.125²) = 16 ÷ 1.266 ≈ 13",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize075": {
+      "$value": "14px",
+      "$type": "dimension",
+      "$description": "Small-medium font size - 0.75x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base ÷ 1.125 = 16 ÷ 1.125 ≈ 14",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize100": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Base font size - 1x scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 16 × 1 = 16",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize125": {
+      "$value": "18px",
+      "$type": "dimension",
+      "$description": "Medium font size - 1.25x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.125 = 16 × 1.125 = 18",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize150": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "Large font size - 1.5x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × (1.125²) = 16 × 1.266 ≈ 20",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize200": {
+      "$value": "23px",
+      "$type": "dimension",
+      "$description": "Extra large font size - 2x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × (1.125³) = 16 × 1.424 ≈ 23",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize300": {
+      "$value": "26px",
+      "$type": "dimension",
+      "$description": "Heading font size - 3x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × (1.125⁴) = 16 × 1.602 ≈ 26",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize400": {
+      "$value": "29px",
+      "$type": "dimension",
+      "$description": "Large heading font size - 4x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × (1.125⁵) = 16 × 1.802 ≈ 29",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize500": {
+      "$value": "33px",
+      "$type": "dimension",
+      "$description": "Display heading font size - 5x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × (1.125⁶) = 16 × 2.027 ≈ 32.4 → 33 (adjusted for 4pt subgrid)",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize600": {
+      "$value": "37px",
+      "$type": "dimension",
+      "$description": "Large display font size - 6x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × (1.125⁷) = 16 × 2.281 ≈ 36.5 → 37 (adjusted for 4pt subgrid)",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    },
+    "fontSize700": {
+      "$value": "42px",
+      "$type": "dimension",
+      "$description": "Extra large display font size - 7x relative scale",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × (1.125⁸) = 16 × 2.566 ≈ 41.1 → 42 (adjusted for 4pt subgrid)",
+          "family": "fontSize",
+          "baseValue": 16
+        }
+      }
+    }
+  },
+  "fontWeight": {
+    "$type": "fontWeight",
+    "fontWeight100": {
+      "$value": 100,
+      "$type": "fontWeight",
+      "$description": "Thin font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.25 = 400 × 0.25 = 100",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight200": {
+      "$value": 200,
+      "$type": "fontWeight",
+      "$description": "Extra light font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.5 = 400 × 0.5 = 200",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight300": {
+      "$value": 300,
+      "$type": "fontWeight",
+      "$description": "Light font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.75 = 400 × 0.75 = 300",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight400": {
+      "$value": 400,
+      "$type": "fontWeight",
+      "$description": "Normal font weight - base unit",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 400 × 1 = 400",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight500": {
+      "$value": 500,
+      "$type": "fontWeight",
+      "$description": "Medium font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.25 = 400 × 1.25 = 500",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight600": {
+      "$value": 600,
+      "$type": "fontWeight",
+      "$description": "Semi-bold font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.5 = 400 × 1.5 = 600",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight700": {
+      "$value": 700,
+      "$type": "fontWeight",
+      "$description": "Bold font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.75 = 400 × 1.75 = 700",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight800": {
+      "$value": 800,
+      "$type": "fontWeight",
+      "$description": "Extra bold font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 400 × 2 = 800",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    },
+    "fontWeight900": {
+      "$value": 900,
+      "$type": "fontWeight",
+      "$description": "Black font weight",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2.25 = 400 × 2.25 = 900",
+          "family": "fontWeight",
+          "baseValue": 400
+        }
+      }
+    }
+  },
+  "fontFamily": {
+    "$type": "fontFamily",
+    "fontFamilySystem": {
+      "$value": [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Roboto",
+        "sans-serif"
+      ],
+      "$type": "fontFamily",
+      "$description": "Platform default font stack for system UI",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "N/A - Categorical value",
+          "family": "fontFamily"
+        }
+      }
+    },
+    "fontFamilyMono": {
+      "$value": [
+        "SF Mono",
+        "Monaco",
+        "Inconsolata",
+        "Roboto Mono",
+        "Consolas",
+        "Courier New",
+        "monospace"
+      ],
+      "$type": "fontFamily",
+      "$description": "Monospace font stack for code and technical content",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "N/A - Categorical value",
+          "family": "fontFamily"
+        }
+      }
+    },
+    "fontFamilyDisplay": {
+      "$value": [
+        "Rajdhani",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Roboto",
+        "sans-serif"
+      ],
+      "$type": "fontFamily",
+      "$description": "Display font stack for headings and prominent text",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "N/A - Categorical value",
+          "family": "fontFamily"
+        }
+      }
+    },
+    "fontFamilyBody": {
+      "$value": [
+        "Inter",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Roboto",
+        "sans-serif"
+      ],
+      "$type": "fontFamily",
+      "$description": "Body font stack for general text content",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "N/A - Categorical value",
+          "family": "fontFamily"
+        }
+      }
+    }
+  },
+  "lineHeight": {
+    "$type": "number",
+    "lineHeight050": {
+      "$value": 1.538,
+      "$type": "number",
+      "$description": "Line height paired with fontSize050",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize050 × baseValue ≈ 20",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight075": {
+      "$value": 1.429,
+      "$type": "number",
+      "$description": "Line height paired with fontSize075",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize075 × baseValue ≈ 20",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight100": {
+      "$value": 1.5,
+      "$type": "number",
+      "$description": "Line height paired with fontSize100",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize100 × baseValue = 24",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight125": {
+      "$value": 1.556,
+      "$type": "number",
+      "$description": "Line height paired with fontSize125",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize125 × baseValue ≈ 28",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight150": {
+      "$value": 1.4,
+      "$type": "number",
+      "$description": "Line height paired with fontSize150",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize150 × baseValue = 28",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight200": {
+      "$value": 1.391,
+      "$type": "number",
+      "$description": "Line height paired with fontSize200",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize200 × baseValue ≈ 32",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight300": {
+      "$value": 1.231,
+      "$type": "number",
+      "$description": "Line height paired with fontSize300",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize300 × baseValue ≈ 32",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight400": {
+      "$value": 1.241,
+      "$type": "number",
+      "$description": "Line height paired with fontSize400",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize400 × baseValue ≈ 36",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight500": {
+      "$value": 1.212,
+      "$type": "number",
+      "$description": "Line height paired with fontSize500",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize500 × baseValue ≈ 40",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight600": {
+      "$value": 1.19,
+      "$type": "number",
+      "$description": "Line height paired with fontSize600",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize600 × baseValue ≈ 44",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    },
+    "lineHeight700": {
+      "$value": 1.143,
+      "$type": "number",
+      "$description": "Line height paired with fontSize700",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "fontSize700 × baseValue ≈ 48",
+          "family": "lineHeight",
+          "baseValue": 1.5
+        }
+      }
+    }
+  },
+  "letterSpacing": {
+    "$type": "dimension",
+    "letterSpacing025": {
+      "$value": "-0.025em",
+      "$type": "dimension",
+      "$description": "Tight letter spacing for large text",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base - 0.025 = 0 - 0.025 = -0.025",
+          "family": "letterSpacing"
+        }
+      }
+    },
+    "letterSpacing050": {
+      "$value": "-0.05em",
+      "$type": "dimension",
+      "$description": "Very tight letter spacing for display text",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base - 0.05 = 0 - 0.05 = -0.05",
+          "family": "letterSpacing"
+        }
+      }
+    },
+    "letterSpacing100": {
+      "$value": "0em",
+      "$type": "dimension",
+      "$description": "Normal letter spacing - base unit",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 0 × 1 = 0",
+          "family": "letterSpacing"
+        }
+      }
+    },
+    "letterSpacing125": {
+      "$value": "0.025em",
+      "$type": "dimension",
+      "$description": "Loose letter spacing for small text",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base + 0.025 = 0 + 0.025 = 0.025",
+          "family": "letterSpacing"
+        }
+      }
+    },
+    "letterSpacing150": {
+      "$value": "0.05em",
+      "$type": "dimension",
+      "$description": "Very loose letter spacing for emphasis",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base + 0.05 = 0 + 0.05 = 0.05",
+          "family": "letterSpacing"
+        }
+      }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "radius000": {
+      "$value": "0px",
+      "$type": "dimension",
+      "$description": "No radius - sharp corners",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0 = 8 × 0 = 0",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius025": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "Subtle radius - 0.25x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.25 = 8 × 0.25 = 2",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius050": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Small radius - 0.5x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.5 = 8 × 0.5 = 4",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius075": {
+      "$value": "6px",
+      "$type": "dimension",
+      "$description": "Medium-small radius - 0.75x base value (strategic flexibility)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.75 = 8 × 0.75 = 6",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius100": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Base radius - 1x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 8 × 1 = 8",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius125": {
+      "$value": "10px",
+      "$type": "dimension",
+      "$description": "Medium radius - 1.25x base value (strategic flexibility)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.25 = 8 × 1.25 = 10",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius150": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "Medium-large radius - 1.5x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.5 = 8 × 1.5 = 12",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius200": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Large radius - 2x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 8 × 2 = 16",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius250": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "Extra large radius - 2.5x base value (strategic flexibility)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2.5 = 8 × 2.5 = 20",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius300": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Huge radius - 3x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 3 = 8 × 3 = 24",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radius400": {
+      "$value": "32px",
+      "$type": "dimension",
+      "$description": "Maximum radius - 4x base value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 4 = 8 × 4 = 32",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radiusMax": {
+      "$value": "9999px",
+      "$type": "dimension",
+      "$description": "Maximum radius - creates perfect circles/pills",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "special case = 9999 (effectively infinite)",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    },
+    "radiusHalf": {
+      "$value": "50%",
+      "$type": "dimension",
+      "$description": "Half radius (50%) - creates perfect circles when applied to square elements. Used for circular buttons, avatars, badges, and other circular UI elements.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "percentage = 50% (creates circle from square)",
+          "family": "radius",
+          "baseValue": 8
+        }
+      }
+    }
+  },
+  "borderWidth": {
+    "$type": "dimension",
+    "borderWidth000": {
+      "$value": "0px",
+      "$type": "dimension",
+      "$description": "No border width - 0x base value. Used for borderless elements, removing borders.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0 = 1 × 0 = 0",
+          "family": "borderWidth",
+          "baseValue": 1
+        }
+      }
+    },
+    "borderWidth100": {
+      "$value": "1px",
+      "$type": "dimension",
+      "$description": "Base border width - 1x base value. Used for standard borders, default state.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 1 × 1 = 1",
+          "family": "borderWidth",
+          "baseValue": 1
+        }
+      }
+    },
+    "borderWidth200": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "Emphasized border width - 2x base value. Used for emphasized borders, active/focus states.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 1 × 2 = 2",
+          "family": "borderWidth",
+          "baseValue": 1
+        }
+      }
+    },
+    "borderWidth400": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Heavy border width - 4x base value. Used for heavy emphasis, strong visual weight (rare).",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 4 = 1 × 4 = 4",
+          "family": "borderWidth",
+          "baseValue": 1
+        }
+      }
+    }
+  },
+  "tapArea": {
+    "$type": "dimension",
+    "tapAreaMinimum": {
+      "$value": "44px",
+      "$type": "dimension",
+      "$description": "Minimum tap area - WCAG 2.1 AA compliance (44pt)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 44 × 1 = 44",
+          "family": "tapArea",
+          "baseValue": 44
+        }
+      }
+    },
+    "tapAreaRecommended": {
+      "$value": "48px",
+      "$type": "dimension",
+      "$description": "Recommended tap area - enhanced usability (48pt)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.09 = 44 × 1.09 ≈ 48",
+          "family": "tapArea",
+          "baseValue": 44
+        }
+      }
+    },
+    "tapAreaComfortable": {
+      "$value": "56px",
+      "$type": "dimension",
+      "$description": "Comfortable tap area - spacious interaction (56pt)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.27 = 44 × 1.27 ≈ 56",
+          "family": "tapArea",
+          "baseValue": 44
+        }
+      }
+    },
+    "tapAreaGenerous": {
+      "$value": "64px",
+      "$type": "dimension",
+      "$description": "Generous tap area - extra spacious interaction (64pt)",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.45 = 44 × 1.45 ≈ 64",
+          "family": "tapArea",
+          "baseValue": 44
+        }
+      }
+    }
+  },
+  "density": {
+    "$type": "number",
+    "densityCompact": {
+      "$value": 0.75,
+      "$type": "number",
+      "$description": "Compact density - reduces functional token values by 25%",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.75 = 1.0 × 0.75 = 0.75",
+          "family": "density",
+          "baseValue": 1
+        }
+      }
+    },
+    "densityDefault": {
+      "$value": 1,
+      "$type": "number",
+      "$description": "Default density - no scaling applied",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 1.0 × 1 = 1.0",
+          "family": "density",
+          "baseValue": 1
+        }
+      }
+    },
+    "densityComfortable": {
+      "$value": 1.25,
+      "$type": "number",
+      "$description": "Comfortable density - increases functional token values by 25%",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.25 = 1.0 × 1.25 = 1.25",
+          "family": "density",
+          "baseValue": 1
+        }
+      }
+    },
+    "densitySpacious": {
+      "$value": 1.5,
+      "$type": "number",
+      "$description": "Spacious density - increases functional token values by 50%",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.5 = 1.0 × 1.5 = 1.5",
+          "family": "density",
+          "baseValue": 1
+        }
+      }
+    }
+  },
+  "breakpoint": {
+    "$type": "dimension",
+    "breakpointXs": {
+      "$value": "320px",
+      "$type": "dimension",
+      "$description": "Small mobile viewport baseline",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Practical device-based value",
+          "family": "breakpoint",
+          "baseValue": 320
+        }
+      }
+    },
+    "breakpointSm": {
+      "$value": "375px",
+      "$type": "dimension",
+      "$description": "iPhone standard width and large mobile",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Practical device-based value",
+          "family": "breakpoint",
+          "baseValue": 320
+        }
+      }
+    },
+    "breakpointMd": {
+      "$value": "1024px",
+      "$type": "dimension",
+      "$description": "Desktop and tablet landscape transition",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Practical device-based value",
+          "family": "breakpoint",
+          "baseValue": 320
+        }
+      }
+    },
+    "breakpointLg": {
+      "$value": "1440px",
+      "$type": "dimension",
+      "$description": "Large desktop and wide screen displays",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Practical device-based value",
+          "family": "breakpoint",
+          "baseValue": 320
+        }
+      }
+    }
+  },
+  "opacity": {
+    "$type": "number",
+    "opacity000": {
+      "$value": 0,
+      "$type": "number",
+      "$description": "Fully transparent - invisible",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0 = 0.08 × 0 = 0.0",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity008": {
+      "$value": 0.08,
+      "$type": "number",
+      "$description": "Subtle transparency - very light overlay, gentle hover feedback",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 0.08 × 1 = 0.08",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity016": {
+      "$value": 0.16,
+      "$type": "number",
+      "$description": "Light transparency - light overlay, pressed state",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 0.08 × 2 = 0.16",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity024": {
+      "$value": 0.24,
+      "$type": "number",
+      "$description": "Medium-light transparency - medium-light overlay",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 3 = 0.08 × 3 = 0.24",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity032": {
+      "$value": 0.32,
+      "$type": "number",
+      "$description": "Medium transparency - modal scrim, medium overlay",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 4 = 0.08 × 4 = 0.32",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity040": {
+      "$value": 0.4,
+      "$type": "number",
+      "$description": "Strong transparency - strong overlay",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 5 = 0.08 × 5 = 0.40",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity048": {
+      "$value": 0.48,
+      "$type": "number",
+      "$description": "Disabled state - faded, very strong overlay",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 6 = 0.08 × 6 = 0.48",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity056": {
+      "$value": 0.56,
+      "$type": "number",
+      "$description": "Nearly opaque - subtle transparency",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 7 = 0.08 × 7 = 0.56",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity064": {
+      "$value": 0.64,
+      "$type": "number",
+      "$description": "Very opaque - minimal transparency",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 8 = 0.08 × 8 = 0.64",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity072": {
+      "$value": 0.72,
+      "$type": "number",
+      "$description": "Extremely opaque - very minimal transparency",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 9 = 0.08 × 9 = 0.72",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity080": {
+      "$value": 0.8,
+      "$type": "number",
+      "$description": "Nearly full opacity - barely visible transparency",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 10 = 0.08 × 10 = 0.80",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity088": {
+      "$value": 0.88,
+      "$type": "number",
+      "$description": "Subtle transparency - almost fully opaque",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 11 = 0.08 × 11 = 0.88",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity096": {
+      "$value": 0.96,
+      "$type": "number",
+      "$description": "Almost fully opaque - imperceptible transparency",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 12 = 0.08 × 12 = 0.96",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    },
+    "opacity100": {
+      "$value": 1,
+      "$type": "number",
+      "$description": "Fully opaque - no transparency",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Special case: full opacity = 1.0",
+          "family": "opacity",
+          "baseValue": 0.08
+        }
+      }
+    }
+  },
+  "duration": {
+    "$type": "duration",
+    "duration150": {
+      "$value": "150ms",
+      "$type": "duration",
+      "$description": "Fast interactions - 150ms duration for hover, focus states, and micro-interactions",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base - 100 = 250 - 100 = 150",
+          "family": "duration",
+          "baseValue": 250
+        }
+      }
+    },
+    "duration250": {
+      "$value": "250ms",
+      "$type": "duration",
+      "$description": "Standard transitions - 250ms duration for float labels, state changes, and most animations",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 250 × 1 = 250",
+          "family": "duration",
+          "baseValue": 250
+        }
+      }
+    },
+    "duration350": {
+      "$value": "350ms",
+      "$type": "duration",
+      "$description": "Deliberate animations - 350ms duration for modals, drawers, and complex transitions",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base + 100 = 250 + 100 = 350",
+          "family": "duration",
+          "baseValue": 250
+        }
+      }
+    }
+  },
+  "easing": {
+    "easingStandard": {
+      "$value": [
+        0.4,
+        0,
+        0.2,
+        1
+      ],
+      "$type": "cubicBezier",
+      "$description": "Standard easing - Balanced acceleration and deceleration for general transitions. Material Design standard curve.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Material Design standard curve: cubic-bezier(0.4, 0.0, 0.2, 1)",
+          "family": "easing"
+        }
+      }
+    },
+    "easingDecelerate": {
+      "$value": [
+        0,
+        0,
+        0.2,
+        1
+      ],
+      "$type": "cubicBezier",
+      "$description": "Decelerate easing - Quick start with gradual slowdown for entering elements. Material Design deceleration curve.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Material Design deceleration curve: cubic-bezier(0.0, 0.0, 0.2, 1)",
+          "family": "easing"
+        }
+      }
+    },
+    "easingAccelerate": {
+      "$value": [
+        0.4,
+        0,
+        1,
+        1
+      ],
+      "$type": "cubicBezier",
+      "$description": "Accelerate easing - Gradual start with quick finish for exiting elements. Material Design acceleration curve.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Material Design acceleration curve: cubic-bezier(0.4, 0.0, 1, 1)",
+          "family": "easing"
+        }
+      }
+    },
+    "easingGlideDecelerate": {
+      "$value": [
+        [
+          0,
+          0
+        ],
+        [
+          0.009,
+          0.012
+        ],
+        [
+          0.02,
+          0.05
+        ],
+        [
+          0.092,
+          0.411
+        ],
+        [
+          0.118,
+          0.517
+        ],
+        [
+          0.146,
+          0.611
+        ],
+        [
+          0.177,
+          0.694
+        ],
+        [
+          0.211,
+          0.765
+        ],
+        [
+          0.248,
+          0.824
+        ],
+        [
+          0.289,
+          0.872
+        ],
+        [
+          0.334,
+          0.91
+        ],
+        [
+          0.384,
+          0.939
+        ],
+        [
+          0.509,
+          0.977
+        ],
+        [
+          0.684,
+          0.994
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "$type": "linearEasing",
+      "$description": "Glide decelerate easing - Aggressive deceleration with long settling tail. 41% of movement in first 10% of time. No overshoot. Weighted slide-to-stop feel.",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "Piecewise linear: 15 stops, aggressive deceleration curve. Paired with duration350 (350ms).",
+          "family": "easing"
+        }
+      }
+    }
+  },
+  "scale": {
+    "$type": "number",
+    "scale088": {
+      "$value": 0.88,
+      "$type": "number",
+      "$description": "Float label scale - 88% scale for text input label transitions. Example: 16px × 0.88 = 14.08px → rounds to 14px",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base - 0.12 = 1.00 - 0.12 = 0.88 (8-interval progression: 3 × 0.04)",
+          "family": "scale",
+          "baseValue": 1
+        }
+      }
+    },
+    "scale092": {
+      "$value": 0.92,
+      "$type": "number",
+      "$description": "Subtle scale down - 92% scale for pressed states and subtle emphasis reduction. Example: 16px × 0.92 = 14.72px → rounds to 15px",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base - 0.08 = 1.00 - 0.08 = 0.92 (8-interval progression: 2 × 0.04)",
+          "family": "scale",
+          "baseValue": 1
+        }
+      }
+    },
+    "scale096": {
+      "$value": 0.96,
+      "$type": "number",
+      "$description": "Button press feedback - 96% scale for button press states and subtle emphasis reduction. Example: 16px × 0.96 = 15.36px → rounds to 15px",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base - 0.04 = 1.00 - 0.04 = 0.96 (8-interval progression: 1 × 0.04)",
+          "family": "scale",
+          "baseValue": 1
+        }
+      }
+    },
+    "scale100": {
+      "$value": 1,
+      "$type": "number",
+      "$description": "Default state - 100% scale, no transformation. Example: 16px × 1.00 = 16px",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 1.00 × 1 = 1.00 (baseline, no transformation)",
+          "family": "scale",
+          "baseValue": 1
+        }
+      }
+    },
+    "scale104": {
+      "$value": 1.04,
+      "$type": "number",
+      "$description": "Hover emphasis - 104% scale for hover states and subtle emphasis. Example: 16px × 1.04 = 16.64px → rounds to 17px",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base + 0.04 = 1.00 + 0.04 = 1.04 (8-interval progression: 1 × 0.04)",
+          "family": "scale",
+          "baseValue": 1
+        }
+      }
+    },
+    "scale108": {
+      "$value": 1.08,
+      "$type": "number",
+      "$description": "Strong emphasis - 108% scale for strong hover emphasis and significant scale up. Example: 16px × 1.08 = 17.28px → rounds to 17px",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base + 0.08 = 1.00 + 0.08 = 1.08 (8-interval progression: 2 × 0.04)",
+          "family": "scale",
+          "baseValue": 1
+        }
+      }
+    }
+  },
+  "blend": {
+    "$type": "number",
+    "blend100": {
+      "$value": 0.04,
+      "$type": "number",
+      "$description": "Subtle modification - gentle feedback, container hover",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 0.04 × 1 = 0.04",
+          "family": "blend",
+          "baseValue": 0.04
+        }
+      }
+    },
+    "blend200": {
+      "$value": 0.08,
+      "$type": "number",
+      "$description": "Standard modification - noticeable feedback, button hover",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 0.04 × 2 = 0.08",
+          "family": "blend",
+          "baseValue": 0.04
+        }
+      }
+    },
+    "blend300": {
+      "$value": 0.12,
+      "$type": "number",
+      "$description": "Strong modification - clear feedback, pressed state",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 3 = 0.04 × 3 = 0.12",
+          "family": "blend",
+          "baseValue": 0.04
+        }
+      }
+    },
+    "blend400": {
+      "$value": 0.16,
+      "$type": "number",
+      "$description": "Very strong modification - emphasized feedback",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 4 = 0.04 × 4 = 0.16",
+          "family": "blend",
+          "baseValue": 0.04
+        }
+      }
+    },
+    "blend500": {
+      "$value": 0.2,
+      "$type": "number",
+      "$description": "Maximum modification - dramatic feedback",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 5 = 0.04 × 5 = 0.20",
+          "family": "blend",
+          "baseValue": 0.04
+        }
+      }
+    }
+  },
+  "blur": {
+    "$type": "dimension",
+    "blur000": {
+      "$value": "0px",
+      "$type": "dimension",
+      "$description": "No blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "0",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur025": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Blur 025 - minimal blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.25 = 16 × 0.25 = 4",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur050": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Blur 050 - light blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.5 = 16 × 0.5 = 8",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur075": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "Blur 075 - moderate blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.75 = 16 × 0.75 = 12",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur100": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Blur 100 - base blur value",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 16 × 1 = 16",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur125": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "Blur 125 - strong blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.25 = 16 × 1.25 = 20",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur150": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Blur 150 - heavy blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.5 = 16 × 1.5 = 24",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur200": {
+      "$value": "32px",
+      "$type": "dimension",
+      "$description": "Blur 200 - intense blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 16 × 2 = 32",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    },
+    "blur250": {
+      "$value": "40px",
+      "$type": "dimension",
+      "$description": "Blur 250 - maximum blur",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2.5 = 16 × 2.5 = 40",
+          "family": "blur",
+          "baseValue": 16
+        }
+      }
+    }
+  },
+  "sizing": {
+    "$type": "dimension",
+    "size050": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Size 050 - smallest component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 0.5 = 8 × 0.5 = 4",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size100": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Size 100 - base component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1 = 8 × 1 = 8",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size150": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "Size 150 - small component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 1.5 = 8 × 1.5 = 12",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size200": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Size 200 - medium-small component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2 = 8 × 2 = 16",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size250": {
+      "$value": "20px",
+      "$type": "dimension",
+      "$description": "Size 250 - medium component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 2.5 = 8 × 2.5 = 20",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size300": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Size 300 - standard component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 3 = 8 × 3 = 24",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size400": {
+      "$value": "32px",
+      "$type": "dimension",
+      "$description": "Size 400 - large component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 4 = 8 × 4 = 32",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size500": {
+      "$value": "40px",
+      "$type": "dimension",
+      "$description": "Size 500 - extra-large component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 5 = 8 × 5 = 40",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size600": {
+      "$value": "48px",
+      "$type": "dimension",
+      "$description": "Size 600 - prominent component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 6 = 8 × 6 = 48",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size700": {
+      "$value": "56px",
+      "$type": "dimension",
+      "$description": "Size 700 - large prominent component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 7 = 8 × 7 = 56",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size800": {
+      "$value": "64px",
+      "$type": "dimension",
+      "$description": "Size 800 - extra-large prominent component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 8 = 8 × 8 = 64",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size900": {
+      "$value": "72px",
+      "$type": "dimension",
+      "$description": "Size 900 - large prominent component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 9 = 8 × 9 = 72",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size1000": {
+      "$value": "80px",
+      "$type": "dimension",
+      "$description": "Size 1000 - hero component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 10 = 8 × 10 = 80",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    },
+    "size1600": {
+      "$value": "128px",
+      "$type": "dimension",
+      "$description": "Size 1600 - maximum component dimension",
+      "$extensions": {
+        "designerpunk": {
+          "formula": "base × 16 = 8 × 16 = 128",
+          "family": "sizing",
+          "baseValue": 8
+        }
+      }
+    }
+  },
+  "semanticColor": {
+    "$type": "color",
+    "color.feedback.success.text": {
+      "$value": "{color.green400}",
+      "$type": "color",
+      "$description": "Green text color for success states - form validation, confirmation messages, positive feedback",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.success.background": {
+      "$value": "{color.green100}",
+      "$type": "color",
+      "$description": "Light green background for success states - alert backgrounds, success banners, positive indicators",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.success.border": {
+      "$value": "{color.green400}",
+      "$type": "color",
+      "$description": "Green border for success states - input validation borders, success card outlines",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.error.text": {
+      "$value": "{color.pink400}",
+      "$type": "color",
+      "$description": "Pink text color for error states - form validation errors, error messages, destructive action warnings",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.error.background": {
+      "$value": "{color.pink100}",
+      "$type": "color",
+      "$description": "Light pink background for error states - alert backgrounds, error banners, destructive indicators",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.error.border": {
+      "$value": "{color.pink400}",
+      "$type": "color",
+      "$description": "Pink border for error states - input validation borders, error card outlines",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.warning.text": {
+      "$value": "{color.orange400}",
+      "$type": "color",
+      "$description": "Orange text color for warning states - caution messages, attention-required indicators",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.warning.background": {
+      "$value": "{color.orange100}",
+      "$type": "color",
+      "$description": "Light orange background for warning states - alert backgrounds, caution banners",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.warning.border": {
+      "$value": "{color.orange400}",
+      "$type": "color",
+      "$description": "Orange border for warning states - input validation borders, warning card outlines",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.info.text": {
+      "$value": "{color.teal400}",
+      "$type": "color",
+      "$description": "Teal text color for informational states - help text, informational messages, neutral feedback",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.info.background": {
+      "$value": "{color.teal100}",
+      "$type": "color",
+      "$description": "Light teal background for informational states - info banners, help sections",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.info.border": {
+      "$value": "{color.teal400}",
+      "$type": "color",
+      "$description": "Teal border for informational states - info card outlines, help section borders",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.select.text.rest": {
+      "$value": "{color.cyan400}",
+      "$type": "color",
+      "$description": "Cyan text for selected state - label text in Select/Multi-Select modes when item is selected",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.select.text.default": {
+      "$value": "{color.gray200}",
+      "$type": "color",
+      "$description": "Gray text for not-selected state - label text in Select mode when item is available but not selected",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.select.background.rest": {
+      "$value": "{color.cyan100}",
+      "$type": "color",
+      "$description": "Light cyan background for selected state in Select and Multi-Select modes",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.select.background.default": {
+      "$value": "{color.gray100}",
+      "$type": "color",
+      "$description": "Light gray background for not-selected state in Select mode",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.select.border.rest": {
+      "$value": "{color.cyan400}",
+      "$type": "color",
+      "$description": "Cyan border for selected state - checkmark base, item border in Select/Multi-Select modes",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.select.border.default": {
+      "$value": "{color.gray200}",
+      "$type": "color",
+      "$description": "Gray border for not-selected state in Select mode",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.notification.background": {
+      "$value": "{color.pink400}",
+      "$type": "color",
+      "$description": "High-visibility pink background for notification badges - provides 6.33:1 contrast ratio with white text, exceeds WCAG AA requirements",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.feedback.notification.text": {
+      "$value": "{color.white100}",
+      "$type": "color",
+      "$description": "White text on notification backgrounds - ensures WCAG AA contrast compliance (6.33:1 ratio) for maximum readability",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.identity.human": {
+      "$value": "{color.orange300}",
+      "$type": "color",
+      "$description": "Orange identity color for human entities - warm, approachable visual identity used by Avatar and other human-representing components",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.identity.agent": {
+      "$value": "{color.teal200}",
+      "$type": "color",
+      "$description": "Teal identity color for AI agent entities - distinct, technical visual identity used by Avatar and other agent-representing components",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.action.primary": {
+      "$value": "{color.cyan300}",
+      "$type": "color",
+      "$description": "Cyan color for emphasized actions - hero CTAs, main buttons, primary interactive elements. Use for single, focused instances where visual prominence is desired.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.action.secondary": {
+      "$value": "{color.gray400}",
+      "$type": "color",
+      "$description": "Dark neutral color for de-emphasized actions - list item buttons, secondary CTAs, repetitive action elements. Use for supporting instances to avoid UI over-saturation.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.action.navigation": {
+      "$value": "{color.cyan500}",
+      "$type": "color",
+      "$description": "Cyan color for navigation actions - inline text links, breadcrumbs, and navigation-specific interactive elements.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "modes": {
+            "light": "rgba(0, 136, 143, 1)",
+            "dark": "rgba(204, 251, 255, 1)"
+          }
+        }
+      }
+    },
+    "color.attention": {
+      "$value": "{color.yellow400}",
+      "$type": "color",
+      "$description": "Yellow for attention-grabbing elements and notifications",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.highlight": {
+      "$value": "{color.yellow300}",
+      "$type": "color",
+      "$description": "Yellow for highlighted text and emphasized content",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.tech": {
+      "$value": "{color.purple400}",
+      "$type": "color",
+      "$description": "Purple for technical elements, code snippets, and tech-related UI",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.data": {
+      "$value": "{color.purple300}",
+      "$type": "color",
+      "$description": "Purple for data visualization, metrics, and data-related elements",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.text.default": {
+      "$value": "{color.gray300}",
+      "$type": "color",
+      "$description": "Primary gray for main text content",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.text.muted": {
+      "$value": "{color.gray200}",
+      "$type": "color",
+      "$description": "Muted gray for secondary and less prominent text",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.text.subtle": {
+      "$value": "{color.gray100}",
+      "$type": "color",
+      "$description": "Subtle gray for tertiary and very subtle text elements",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.contrast.onLight": {
+      "$value": "{color.black500}",
+      "$type": "color",
+      "$description": "Black color for content (text, icons) on light backgrounds - ensures WCAG AA contrast compliance for readability",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.contrast.onDark": {
+      "$value": "{color.white100}",
+      "$type": "color",
+      "$description": "White color for content (text, icons) on dark backgrounds - ensures WCAG AA contrast compliance for readability",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.contrast.onAction": {
+      "$value": "{color.black500}",
+      "$type": "color",
+      "$description": "Content color for text and icons on primary action backgrounds. Black on cyan (base), white on teal (WCAG) to maintain contrast compliance.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.structure.canvas": {
+      "$value": "{color.white100}",
+      "$type": "color",
+      "$description": "Canvas background color - default surface for all pages, provides the foundational layer for UI structure",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "modes": {
+            "light": "rgba(255, 255, 255, 1)",
+            "dark": "rgba(24, 34, 40, 1)"
+          }
+        }
+      }
+    },
+    "color.structure.surface": {
+      "$value": "{color.white200}",
+      "$type": "color",
+      "$description": "Surface near-white for cards, containers, and elevated surfaces - provides visual hierarchy above canvas. Alias for color.structure.surface.primary.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.structure.surface.primary": {
+      "$value": "{color.white200}",
+      "$type": "color",
+      "$description": "Primary surface near-white for cards - default elevation level, provides visual hierarchy above canvas",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.structure.surface.secondary": {
+      "$value": "{color.white300}",
+      "$type": "color",
+      "$description": "Secondary surface light gray-white for nested cards - secondary elevation level, provides subtle visual distinction from primary surface",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.structure.surface.tertiary": {
+      "$value": "{color.white400}",
+      "$type": "color",
+      "$description": "Tertiary surface medium gray-white for deeply nested cards - tertiary elevation level, provides clear visual distinction for deep nesting",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.structure.border": {
+      "$value": "{color.gray100}",
+      "$type": "color",
+      "$description": "Border gray for standard UI element borders and dividers - provides clear visual separation",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.structure.border.subtle": {
+      "$value": "{color.gray100}",
+      "$type": "color",
+      "$description": "Semi-transparent border (gray100 at opacity048/48%) for subtle visual separation - used by Container-Base, Container-Card-Base, and other components needing soft borders",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "modes": {
+            "light": "rgba(178, 188, 196, 0.48)",
+            "dark": "rgba(16, 22, 26, 0.48)"
+          },
+          "primitiveRefs": {
+            "color": "gray100",
+            "opacity": "opacity048"
+          }
+        }
+      }
+    },
+    "color.background.primary.subtle": {
+      "$value": "{color.cyan100}",
+      "$type": "color",
+      "$description": "Subtle cyan tint background for secondary button hover states, selected list items, and hover states on cards/containers",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "modes": {
+            "light": "rgba(204, 251, 255, 1)",
+            "dark": "rgba(0, 136, 143, 1)"
+          }
+        }
+      }
+    },
+    "color.icon.default": {
+      "$value": "{color.gray200}",
+      "$type": "color",
+      "$description": "Default icon color using gray200 for optical balance - slightly lighter than text (gray300) for proper visual weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.icon.navigation.inactive": {
+      "$value": "{color.gray300}",
+      "$type": "color",
+      "$description": "Inactive icon fill for navigation components (Nav-TabBar, Nav-Header). Neutral gray distinct from active cyan. Dark override swaps to gray100. Scoped to navigation contexts — not a universal inactive icon token.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "modes": {
+            "light": "rgba(38, 50, 58, 1)",
+            "dark": "rgba(178, 188, 196, 1)"
+          }
+        }
+      }
+    },
+    "color.print.default": {
+      "$value": "{color.black100}",
+      "$type": "color",
+      "$description": "Pure black (#000000) for optimal printing quality in print media queries",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "glow.neonPurple": {
+      "$value": "{color.purple500}",
+      "$type": "color",
+      "$description": "Vibrant purple glow referencing purple500",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "glow.neonCyan": {
+      "$value": "{color.cyan500}",
+      "$type": "color",
+      "$description": "Vibrant cyan glow referencing cyan500",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "glow.neonYellow": {
+      "$value": "{color.yellow500}",
+      "$type": "color",
+      "$description": "Vibrant yellow glow referencing yellow500",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "glow.neonGreen": {
+      "$value": "{color.green500}",
+      "$type": "color",
+      "$description": "Vibrant green glow referencing green500",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "glow.neonPink": {
+      "$value": "{color.pink500}",
+      "$type": "color",
+      "$description": "Vibrant pink glow referencing pink500",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.current.background": {
+      "$value": "{color.cyan300}",
+      "$type": "color",
+      "$description": "Background color for the currently active progress node — the \"you are here\" indicator in pagination dots and stepper nodes.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.current.text": {
+      "$value": "{color.cyan400}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside the currently active progress node — checkmarks, step numbers, or icons within the active indicator.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.pending.background": {
+      "$value": "{color.white300}",
+      "$type": "color",
+      "$description": "Background color for incomplete/pending progress nodes — upcoming steps that have not been reached yet.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.pending.text": {
+      "$value": "{color.gray300}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside pending progress nodes — step numbers or icons in upcoming/incomplete steps.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.pending.connector": {
+      "$value": "{color.white200}",
+      "$type": "color",
+      "$description": "Color for connector lines between incomplete/pending progress nodes — the inactive path segments in steppers.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.completed.background": {
+      "$value": "{color.green100}",
+      "$type": "color",
+      "$description": "Background color for completed progress nodes — steps that have been successfully finished.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.completed.text": {
+      "$value": "{color.green400}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside completed progress nodes — primarily the checkmark icon that signals step completion.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.completed.connector": {
+      "$value": "{color.green100}",
+      "$type": "color",
+      "$description": "Color for connector lines between completed progress nodes — the active path segments showing progress already made.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.error.background": {
+      "$value": "{color.pink100}",
+      "$type": "color",
+      "$description": "Background color for error progress nodes — steps that have encountered a problem requiring attention.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.progress.error.text": {
+      "$value": "{color.pink400}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside error progress nodes — error icons or indicators within problematic steps.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color"
+        }
+      }
+    },
+    "color.scrim.standard": {
+      "$value": "{color.black500}",
+      "$type": "color",
+      "$description": "Standard scrim for floating surfaces over content — pagination pills, dense overlays, floating toolbars.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "color": "black500",
+            "opacity": "opacity080"
+          },
+          "modifiers": [
+            {
+              "type": "opacity",
+              "reference": "opacity080"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "semanticSpace": {
+    "$type": "dimension",
+    "grouped": {
+      "$type": "dimension",
+      "none": {
+        "$value": "{space.space000}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: grouped.none",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space000"
+            }
+          }
+        }
+      },
+      "minimal": {
+        "$value": "{space.space025}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: grouped.minimal",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space025"
+            }
+          }
+        }
+      },
+      "tight": {
+        "$value": "{space.space050}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: grouped.tight",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space050"
+            }
+          }
+        }
+      },
+      "normal": {
+        "$value": "{space.space100}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: grouped.normal",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space100"
+            }
+          }
+        }
+      },
+      "loose": {
+        "$value": "{space.space150}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: grouped.loose",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space150"
+            }
+          }
+        }
+      }
+    },
+    "related": {
+      "$type": "dimension",
+      "none": {
+        "$value": "{space.space000}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: related.none",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space000"
+            }
+          }
+        }
+      },
+      "tight": {
+        "$value": "{space.space100}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: related.tight",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space100"
+            }
+          }
+        }
+      },
+      "normal": {
+        "$value": "{space.space200}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: related.normal",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space200"
+            }
+          }
+        }
+      },
+      "loose": {
+        "$value": "{space.space300}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: related.loose",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space300"
+            }
+          }
+        }
+      }
+    },
+    "separated": {
+      "$type": "dimension",
+      "none": {
+        "$value": "{space.space000}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: separated.none",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space000"
+            }
+          }
+        }
+      },
+      "tight": {
+        "$value": "{space.space200}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: separated.tight",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space200"
+            }
+          }
+        }
+      },
+      "normal": {
+        "$value": "{space.space300}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: separated.normal",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space300"
+            }
+          }
+        }
+      },
+      "loose": {
+        "$value": "{space.space400}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: separated.loose",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space400"
+            }
+          }
+        }
+      }
+    },
+    "sectioned": {
+      "$type": "dimension",
+      "none": {
+        "$value": "{space.space000}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: sectioned.none",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space000"
+            }
+          }
+        }
+      },
+      "tight": {
+        "$value": "{space.space400}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: sectioned.tight",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space400"
+            }
+          }
+        }
+      },
+      "normal": {
+        "$value": "{space.space500}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: sectioned.normal",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space500"
+            }
+          }
+        }
+      },
+      "loose": {
+        "$value": "{space.space600}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: sectioned.loose",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space600"
+            }
+          }
+        }
+      }
+    },
+    "inset": {
+      "100": {
+        "$value": "{space.space100}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.100",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space100"
+            }
+          }
+        }
+      },
+      "150": {
+        "$value": "{space.space150}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.150",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space150"
+            }
+          }
+        }
+      },
+      "200": {
+        "$value": "{space.space200}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.200",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space200"
+            }
+          }
+        }
+      },
+      "300": {
+        "$value": "{space.space300}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.300",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space300"
+            }
+          }
+        }
+      },
+      "400": {
+        "$value": "{space.space400}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.400",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space400"
+            }
+          }
+        }
+      },
+      "$type": "dimension",
+      "none": {
+        "$value": "{space.space000}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.none",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space000"
+            }
+          }
+        }
+      },
+      "050": {
+        "$value": "{space.space050}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.050",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space050"
+            }
+          }
+        }
+      },
+      "075": {
+        "$value": "{space.space075}",
+        "$type": "dimension",
+        "$description": "Semantic spacing: inset.075",
+        "$extensions": {
+          "designerpunk": {
+            "family": "spacing",
+            "primitiveRefs": {
+              "value": "space075"
+            }
+          }
+        }
+      }
+    }
+  },
+  "semanticBorderWidth": {
+    "$type": "dimension",
+    "none": {
+      "$value": "{borderWidth.borderWidth000}",
+      "$type": "dimension",
+      "$description": "Semantic border width: none",
+      "$extensions": {
+        "designerpunk": {
+          "family": "borderWidth",
+          "primitiveRefs": {
+            "value": "borderWidth000"
+          }
+        }
+      }
+    },
+    "default": {
+      "$value": "{borderWidth.borderWidth100}",
+      "$type": "dimension",
+      "$description": "Semantic border width: default",
+      "$extensions": {
+        "designerpunk": {
+          "family": "borderWidth",
+          "primitiveRefs": {
+            "value": "borderWidth100"
+          }
+        }
+      }
+    },
+    "emphasis": {
+      "$value": "{borderWidth.borderWidth200}",
+      "$type": "dimension",
+      "$description": "Semantic border width: emphasis",
+      "$extensions": {
+        "designerpunk": {
+          "family": "borderWidth",
+          "primitiveRefs": {
+            "value": "borderWidth200"
+          }
+        }
+      }
+    },
+    "heavy": {
+      "$value": "{borderWidth.borderWidth400}",
+      "$type": "dimension",
+      "$description": "Semantic border width: heavy",
+      "$extensions": {
+        "designerpunk": {
+          "family": "borderWidth",
+          "primitiveRefs": {
+            "value": "borderWidth400"
+          }
+        }
+      }
+    }
+  },
+  "semanticRadius": {
+    "$type": "dimension",
+    "none": {
+      "$value": "{radius.radius000}",
+      "$type": "dimension",
+      "$description": "Semantic radius: none",
+      "$extensions": {
+        "designerpunk": {
+          "family": "radius",
+          "primitiveRefs": {
+            "value": "radius000"
+          }
+        }
+      }
+    },
+    "subtle": {
+      "$value": "{radius.radius025}",
+      "$type": "dimension",
+      "$description": "Semantic radius: subtle",
+      "$extensions": {
+        "designerpunk": {
+          "family": "radius",
+          "primitiveRefs": {
+            "value": "radius025"
+          }
+        }
+      }
+    },
+    "small": {
+      "$value": "{radius.radius050}",
+      "$type": "dimension",
+      "$description": "Semantic radius: small",
+      "$extensions": {
+        "designerpunk": {
+          "family": "radius",
+          "primitiveRefs": {
+            "value": "radius050"
+          }
+        }
+      }
+    },
+    "normal": {
+      "$value": "{radius.radius100}",
+      "$type": "dimension",
+      "$description": "Semantic radius: normal",
+      "$extensions": {
+        "designerpunk": {
+          "family": "radius",
+          "primitiveRefs": {
+            "value": "radius100"
+          }
+        }
+      }
+    },
+    "large": {
+      "$value": "{radius.radius200}",
+      "$type": "dimension",
+      "$description": "Semantic radius: large",
+      "$extensions": {
+        "designerpunk": {
+          "family": "radius",
+          "primitiveRefs": {
+            "value": "radius200"
+          }
+        }
+      }
+    },
+    "full": {
+      "$value": "{radius.radiusMax}",
+      "$type": "dimension",
+      "$description": "Semantic radius: full",
+      "$extensions": {
+        "designerpunk": {
+          "family": "radius",
+          "primitiveRefs": {
+            "value": "radiusMax"
+          }
+        }
+      }
+    },
+    "circle": {
+      "$value": "{radius.radiusHalf}",
+      "$type": "dimension",
+      "$description": "Semantic radius: circle",
+      "$extensions": {
+        "designerpunk": {
+          "family": "radius",
+          "primitiveRefs": {
+            "value": "radiusHalf"
+          }
+        }
+      }
+    }
+  },
+  "semanticOpacity": {
+    "$type": "number",
+    "opacity.subtle": {
+      "$value": "{opacity.opacity088}",
+      "$type": "number",
+      "$description": "Subtle opacity (88%) for minimal transparency effects and subtle overlays",
+      "$extensions": {
+        "designerpunk": {
+          "family": "opacity",
+          "primitiveRefs": {
+            "value": "opacity088"
+          }
+        }
+      }
+    },
+    "opacity.medium": {
+      "$value": "{opacity.opacity072}",
+      "$type": "number",
+      "$description": "Medium opacity (72%) for moderate transparency in overlays and visual effects",
+      "$extensions": {
+        "designerpunk": {
+          "family": "opacity",
+          "primitiveRefs": {
+            "value": "opacity072"
+          }
+        }
+      }
+    },
+    "opacity.heavy": {
+      "$value": "{opacity.opacity048}",
+      "$type": "number",
+      "$description": "Heavy opacity (48%) for strong transparency in backgrounds and modal overlays",
+      "$extensions": {
+        "designerpunk": {
+          "family": "opacity",
+          "primitiveRefs": {
+            "value": "opacity048"
+          }
+        }
+      }
+    },
+    "opacity.ghost": {
+      "$value": "{opacity.opacity032}",
+      "$type": "number",
+      "$description": "Ghost opacity (32%) for maximum transparency and ghost button effects",
+      "$extensions": {
+        "designerpunk": {
+          "family": "opacity",
+          "primitiveRefs": {
+            "value": "opacity032"
+          }
+        }
+      }
+    }
+  },
+  "semanticBlend": {
+    "$type": "number",
+    "blend.hoverDarker": {
+      "$value": "{blend.blend200}",
+      "$type": "number",
+      "$description": "Blend for hover states with darkening (8% darker) - provides noticeable feedback on light-colored buttons, cards, and interactive elements",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend200"
+          },
+          "blendType": "darkerBlend"
+        }
+      }
+    },
+    "blend.hoverLighter": {
+      "$value": "{blend.blend200}",
+      "$type": "number",
+      "$description": "Blend for hover states with lightening (8% lighter) - provides noticeable feedback on dark-colored buttons, cards, and interactive elements",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend200"
+          },
+          "blendType": "lighterBlend"
+        }
+      }
+    },
+    "blend.pressedDarker": {
+      "$value": "{blend.blend300}",
+      "$type": "number",
+      "$description": "Blend for pressed states with darkening (12% darker) - provides clear visual feedback when buttons or interactive elements are actively pressed",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend300"
+          },
+          "blendType": "darkerBlend"
+        }
+      }
+    },
+    "blend.pressedLighter": {
+      "$value": "{blend.blend300}",
+      "$type": "number",
+      "$description": "Blend for pressed states with lightening (12% lighter) - provides clear visual feedback when interactive elements on dark surfaces are actively pressed",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend300"
+          },
+          "blendType": "lighterBlend"
+        }
+      }
+    },
+    "blend.focusSaturate": {
+      "$value": "{blend.blend200}",
+      "$type": "number",
+      "$description": "Blend for focus states with saturation increase (8% more saturated) - creates energized, attention-drawing appearance for focused interactive elements",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend200"
+          }
+        }
+      }
+    },
+    "blend.disabledDesaturate": {
+      "$value": "{blend.blend300}",
+      "$type": "number",
+      "$description": "Blend for disabled states with desaturation (12% less saturated) - creates muted, inactive appearance indicating non-interactive state",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend300"
+          }
+        }
+      }
+    },
+    "blend.containerHoverDarker": {
+      "$value": "{blend.blend100}",
+      "$type": "number",
+      "$description": "Blend for container/surface hover with subtle darkening (4% darker) - provides gentle feedback for large interactive surfaces like cards, tiles, and list items",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend100"
+          },
+          "blendType": "darkerBlend"
+        }
+      }
+    },
+    "color.icon.opticalBalance": {
+      "$value": "{blend.blend200}",
+      "$type": "number",
+      "$description": "Blend for icon-text pairing with lightening (8% lighter) - compensates for icons appearing heavier than text at same color due to stroke density and fill area",
+      "$extensions": {
+        "designerpunk": {
+          "family": "blend",
+          "primitiveRefs": {
+            "value": "blend200"
+          },
+          "blendType": "lighterBlend"
+        }
+      }
+    }
+  },
+  "gridSpacing": {
+    "$type": "dimension",
+    "gridGutterXs": {
+      "$value": "{space.space200}",
+      "$type": "dimension",
+      "$description": "Compact gutter spacing for mobile layouts with limited screen space",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space200"
+          }
+        }
+      }
+    },
+    "gridGutterSm": {
+      "$value": "{space.space250}",
+      "$type": "dimension",
+      "$description": "Standard gutter spacing for large mobile and small tablet layouts",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space250"
+          }
+        }
+      }
+    },
+    "gridGutterMd": {
+      "$value": "{space.space300}",
+      "$type": "dimension",
+      "$description": "Comfortable gutter spacing for desktop and tablet layouts",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space300"
+          }
+        }
+      }
+    },
+    "gridGutterLg": {
+      "$value": "{space.space400}",
+      "$type": "dimension",
+      "$description": "Generous gutter spacing for large desktop and wide screen layouts",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space400"
+          }
+        }
+      }
+    },
+    "gridMarginXs": {
+      "$value": "{space.space300}",
+      "$type": "dimension",
+      "$description": "Compact container margins for mobile layouts",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space300"
+          }
+        }
+      }
+    },
+    "gridMarginSm": {
+      "$value": "{space.space300}",
+      "$type": "dimension",
+      "$description": "Standard container margins for large mobile layouts",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space300"
+          }
+        }
+      }
+    },
+    "gridMarginMd": {
+      "$value": "{space.space400}",
+      "$type": "dimension",
+      "$description": "Comfortable container margins for desktop layouts",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space400"
+          }
+        }
+      }
+    },
+    "gridMarginLg": {
+      "$value": "{space.space500}",
+      "$type": "dimension",
+      "$description": "Generous container margins for large desktop layouts",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space500"
+          }
+        }
+      }
+    },
+    "gridGutterNative": {
+      "$value": "{space.space250}",
+      "$type": "dimension",
+      "$description": "Standard gutter spacing for native adaptive layouts, equivalent to Sm-level web spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space250"
+          }
+        }
+      }
+    },
+    "gridMarginNative": {
+      "$value": "{space.space300}",
+      "$type": "dimension",
+      "$description": "Standard container margins for native adaptive layouts, equivalent to Sm-level web spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "gridSpacing",
+          "primitiveRefs": {
+            "spacing": "space300"
+          }
+        }
+      }
+    }
+  },
+  "icon": {
+    "$type": "dimension",
+    "icon.strokeWidth": {
+      "$value": "{borderWidth.borderWidth200}",
+      "$type": "dimension",
+      "$description": "Standard stroke width for icon outlines, references borderWidth200 (2px) for consistency with Feather Icons design",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "value": "borderWidth200"
+          }
+        }
+      }
+    },
+    "icon.size050": {
+      "$value": "{fontSize.fontSize050}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize050 × custom multiplier = 13 × 1.231 = 16px (rounded from 16.003). Uses optical correction multiplier instead of lineHeight050 (1.538) for better balance with small text.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize050",
+            "multiplier": "custom:1.231"
+          }
+        }
+      }
+    },
+    "icon.size075": {
+      "$value": "{fontSize.fontSize075}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize075 × lineHeight075 = 14 × 1.429 = 20px (rounded from 20.006)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize075",
+            "multiplier": "lineHeight075"
+          }
+        }
+      }
+    },
+    "icon.size100": {
+      "$value": "{fontSize.fontSize100}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize100 × lineHeight100 = 16 × 1.5 = 24px",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize100",
+            "multiplier": "lineHeight100"
+          }
+        }
+      }
+    },
+    "icon.size125": {
+      "$value": "{fontSize.fontSize125}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize125 × lineHeight125 = 18 × 1.556 = 28px (rounded from 28.008)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize125",
+            "multiplier": "lineHeight125"
+          }
+        }
+      }
+    },
+    "icon.size150": {
+      "$value": "{fontSize.fontSize150}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize150 × lineHeight150 = 20 × 1.4 = 28px",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize150",
+            "multiplier": "lineHeight150"
+          }
+        }
+      }
+    },
+    "icon.size200": {
+      "$value": "{fontSize.fontSize200}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize200 × lineHeight200 = 23 × 1.391 = 32px (rounded from 31.993)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize200",
+            "multiplier": "lineHeight200"
+          }
+        }
+      }
+    },
+    "icon.size300": {
+      "$value": "{fontSize.fontSize300}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize300 × lineHeight300 = 26 × 1.231 = 32px (rounded from 32.006)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize300",
+            "multiplier": "lineHeight300"
+          }
+        }
+      }
+    },
+    "icon.size400": {
+      "$value": "{fontSize.fontSize400}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize400 × lineHeight400 = 29 × 1.241 = 36px (rounded from 35.989)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize400",
+            "multiplier": "lineHeight400"
+          }
+        }
+      }
+    },
+    "icon.size500": {
+      "$value": "{fontSize.fontSize500}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize500 × lineHeight500 = 33 × 1.212 = 40px (rounded from 39.996)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize500",
+            "multiplier": "lineHeight500"
+          }
+        }
+      }
+    },
+    "icon.size600": {
+      "$value": "{fontSize.fontSize600}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize600 × lineHeight600 = 37 × 1.19 = 44px (rounded from 44.03)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize600",
+            "multiplier": "lineHeight600"
+          }
+        }
+      }
+    },
+    "icon.size700": {
+      "$value": "{fontSize.fontSize700}",
+      "$type": "dimension",
+      "$description": "Icon size calculated from fontSize700 × lineHeight700 = 42 × 1.143 = 48px (rounded from 48.006)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "icon",
+          "primitiveRefs": {
+            "fontSize": "fontSize700",
+            "multiplier": "lineHeight700"
+          }
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "accessibility.focus.offset": {
+      "$value": "{space.space025}",
+      "$type": "dimension",
+      "$description": "WCAG 2.4.7 Focus Visible - positions outline outside element bounds (2px)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "accessibility",
+          "primitiveRefs": {
+            "value": "space025"
+          }
+        }
+      }
+    },
+    "accessibility.focus.width": {
+      "$value": "{borderWidth.borderWidth200}",
+      "$type": "dimension",
+      "$description": "WCAG 2.4.7 Focus Visible - visible indicator thickness (2px)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "accessibility",
+          "primitiveRefs": {
+            "value": "borderWidth200"
+          }
+        }
+      }
+    },
+    "accessibility.focus.color": {
+      "$value": "{color.cyan300}",
+      "$type": "color",
+      "$description": "WCAG 2.4.7 Focus Visible + 1.4.11 Non-text Contrast - 3:1 contrast minimum",
+      "$extensions": {
+        "designerpunk": {
+          "family": "accessibility",
+          "primitiveRefs": {
+            "value": "cyan300"
+          }
+        }
+      }
+    }
+  },
+  "progressColor": {
+    "$type": "color",
+    "color.progress.current.background": {
+      "$value": "{color.cyan300}",
+      "$type": "color",
+      "$description": "Background color for the currently active progress node — the \"you are here\" indicator in pagination dots and stepper nodes.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "cyan300"
+          }
+        }
+      }
+    },
+    "color.progress.current.text": {
+      "$value": "{color.cyan400}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside the currently active progress node — checkmarks, step numbers, or icons within the active indicator.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "cyan400"
+          }
+        }
+      }
+    },
+    "color.progress.pending.background": {
+      "$value": "{color.white300}",
+      "$type": "color",
+      "$description": "Background color for incomplete/pending progress nodes — upcoming steps that have not been reached yet.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "white300"
+          }
+        }
+      }
+    },
+    "color.progress.pending.text": {
+      "$value": "{color.gray300}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside pending progress nodes — step numbers or icons in upcoming/incomplete steps.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "gray300"
+          }
+        }
+      }
+    },
+    "color.progress.pending.connector": {
+      "$value": "{color.white200}",
+      "$type": "color",
+      "$description": "Color for connector lines between incomplete/pending progress nodes — the inactive path segments in steppers.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "white200"
+          }
+        }
+      }
+    },
+    "color.progress.completed.background": {
+      "$value": "{color.green100}",
+      "$type": "color",
+      "$description": "Background color for completed progress nodes — steps that have been successfully finished.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "green100"
+          }
+        }
+      }
+    },
+    "color.progress.completed.text": {
+      "$value": "{color.green400}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside completed progress nodes — primarily the checkmark icon that signals step completion.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "green400"
+          }
+        }
+      }
+    },
+    "color.progress.completed.connector": {
+      "$value": "{color.green100}",
+      "$type": "color",
+      "$description": "Color for connector lines between completed progress nodes — the active path segments showing progress already made.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "green100"
+          }
+        }
+      }
+    },
+    "color.progress.error.background": {
+      "$value": "{color.pink100}",
+      "$type": "color",
+      "$description": "Background color for error progress nodes — steps that have encountered a problem requiring attention.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "pink100"
+          }
+        }
+      }
+    },
+    "color.progress.error.text": {
+      "$value": "{color.pink400}",
+      "$type": "color",
+      "$description": "Text/icon color for content inside error progress nodes — error icons or indicators within problematic steps.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "color",
+          "primitiveRefs": {
+            "value": "pink400"
+          }
+        }
+      }
+    }
+  },
+  "zIndex": {
+    "$type": "number",
+    "zIndex.container": {
+      "$value": 100,
+      "$type": "number",
+      "$description": "Base z-index for container components (cards, panels, surfaces)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "zIndex",
+          "platforms": {
+            "web": {
+              "supported": true
+            },
+            "ios": {
+              "supported": true
+            },
+            "android": {
+              "supported": false,
+              "note": "Use elevation tokens instead"
+            }
+          }
+        }
+      }
+    },
+    "zIndex.navigation": {
+      "$value": 200,
+      "$type": "number",
+      "$description": "Z-index for persistent navigation (headers, sidebars, sticky elements)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "zIndex",
+          "platforms": {
+            "web": {
+              "supported": true
+            },
+            "ios": {
+              "supported": true
+            },
+            "android": {
+              "supported": false,
+              "note": "Use elevation tokens instead"
+            }
+          }
+        }
+      }
+    },
+    "zIndex.dropdown": {
+      "$value": 300,
+      "$type": "number",
+      "$description": "Z-index for temporary overlay content (dropdowns, popovers, menus)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "zIndex",
+          "platforms": {
+            "web": {
+              "supported": true
+            },
+            "ios": {
+              "supported": true
+            },
+            "android": {
+              "supported": false,
+              "note": "Use elevation tokens instead"
+            }
+          }
+        }
+      }
+    },
+    "zIndex.modal": {
+      "$value": 400,
+      "$type": "number",
+      "$description": "Z-index for modal overlay content (dialogs, sheets, overlays)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "zIndex",
+          "platforms": {
+            "web": {
+              "supported": true
+            },
+            "ios": {
+              "supported": true
+            },
+            "android": {
+              "supported": false,
+              "note": "Use elevation tokens instead"
+            }
+          }
+        }
+      }
+    },
+    "zIndex.toast": {
+      "$value": 500,
+      "$type": "number",
+      "$description": "Z-index for notification elements (toasts, snackbars, alerts)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "zIndex",
+          "platforms": {
+            "web": {
+              "supported": true
+            },
+            "ios": {
+              "supported": true
+            },
+            "android": {
+              "supported": false,
+              "note": "Use elevation tokens instead"
+            }
+          }
+        }
+      }
+    },
+    "zIndex.tooltip": {
+      "$value": 600,
+      "$type": "number",
+      "$description": "Highest z-index for always-visible elements (tooltips, critical overlays)",
+      "$extensions": {
+        "designerpunk": {
+          "family": "zIndex",
+          "platforms": {
+            "web": {
+              "supported": true
+            },
+            "ios": {
+              "supported": true
+            },
+            "android": {
+              "supported": false,
+              "note": "Use elevation tokens instead"
+            }
+          }
+        }
+      }
+    }
+  },
+  "elevation": {
+    "$type": "number",
+    "elevation.none": {
+      "$value": 0,
+      "$type": "number",
+      "$description": "No elevation - flat surface with no shadow (handles z-order and shadow removal). Rationale: Explicit \"none\" token improves search/discoverability, communicates intent (flat surface vs. forgetting elevation), and provides consistent maintenance pattern",
+      "$extensions": {
+        "designerpunk": {
+          "family": "elevation",
+          "platforms": {
+            "web": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "ios": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "android": {
+              "supported": true,
+              "elevation": 0
+            }
+          }
+        }
+      }
+    },
+    "elevation.container": {
+      "$value": 8,
+      "$type": "number",
+      "$description": "Container elevation (handles z-order and shadow) - aligns with shadow.container",
+      "$extensions": {
+        "designerpunk": {
+          "family": "elevation",
+          "platforms": {
+            "web": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "ios": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "elevation.navigation": {
+      "$value": 4,
+      "$type": "number",
+      "$description": "Navigation elevation (handles z-order and shadow) - aligns with shadow.navigation",
+      "$extensions": {
+        "designerpunk": {
+          "family": "elevation",
+          "platforms": {
+            "web": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "ios": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "android": {
+              "supported": true,
+              "elevation": 4
+            }
+          }
+        }
+      }
+    },
+    "elevation.dropdown": {
+      "$value": 8,
+      "$type": "number",
+      "$description": "Dropdown elevation (handles z-order and shadow) - aligns with shadow.dropdown",
+      "$extensions": {
+        "designerpunk": {
+          "family": "elevation",
+          "platforms": {
+            "web": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "ios": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "elevation.modal": {
+      "$value": 16,
+      "$type": "number",
+      "$description": "Modal elevation (handles z-order and shadow) - aligns with shadow.modal",
+      "$extensions": {
+        "designerpunk": {
+          "family": "elevation",
+          "platforms": {
+            "web": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "ios": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "android": {
+              "supported": true,
+              "elevation": 16
+            }
+          }
+        }
+      }
+    },
+    "elevation.toast": {
+      "$value": 24,
+      "$type": "number",
+      "$description": "Toast elevation (handles z-order and shadow) - aligns with shadow.toast",
+      "$extensions": {
+        "designerpunk": {
+          "family": "elevation",
+          "platforms": {
+            "web": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "ios": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "android": {
+              "supported": true,
+              "elevation": 24
+            }
+          }
+        }
+      }
+    },
+    "elevation.tooltip": {
+      "$value": 24,
+      "$type": "number",
+      "$description": "Tooltip elevation (handles z-order and shadow) - aligns with shadow.tooltip",
+      "$extensions": {
+        "designerpunk": {
+          "family": "elevation",
+          "platforms": {
+            "web": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "ios": {
+              "supported": false,
+              "note": "Use z-index + shadow tokens instead"
+            },
+            "android": {
+              "supported": true,
+              "elevation": 24
+            }
+          }
+        }
+      }
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "none": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "0px",
+        "blur": "0px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0)"
+      },
+      "$type": "shadow",
+      "$description": "No shadow - flat surface with no depth. Rationale: Explicit \"none\" token improves search/discoverability, communicates intent (flat surface vs. forgetting shadow), and provides consistent maintenance pattern",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.000",
+            "blur": "blur000",
+            "opacity": "shadowOpacityNone",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 0
+            }
+          }
+        }
+      }
+    },
+    "container": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "12px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.3)"
+      },
+      "$type": "shadow",
+      "$description": "Container shadow with no horizontal offset, 4px vertical offset, 12px blur, moderate opacity",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.100",
+            "blur": "blur075",
+            "opacity": "shadowOpacityModerate",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "navigation": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "20px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.2)"
+      },
+      "$type": "shadow",
+      "$description": "Navigation shadow with no horizontal offset, 2px vertical offset, 20px blur, lighter opacity",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.100",
+            "blur": "blur125",
+            "opacity": "shadowOpacitySoft",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 4
+            }
+          }
+        }
+      }
+    },
+    "dropdown": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "12px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.3)"
+      },
+      "$type": "shadow",
+      "$description": "Dropdown shadow with no horizontal offset, 4px vertical offset, 12px blur, moderate opacity",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.100",
+            "blur": "blur075",
+            "opacity": "shadowOpacityModerate",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "modal": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "8px",
+        "blur": "16px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.35)"
+      },
+      "$type": "shadow",
+      "$description": "Modal shadow with no horizontal offset, 8px vertical offset, 16px blur, slightly darker opacity",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.200",
+            "blur": "blur100",
+            "opacity": "shadowOpacityDepth200",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 16
+            }
+          }
+        }
+      }
+    },
+    "toast": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "12px",
+        "blur": "24px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.4)"
+      },
+      "$type": "shadow",
+      "$description": "Toast shadow with no horizontal offset, 12px vertical offset, 24px blur, darker opacity",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.300",
+            "blur": "blur150",
+            "opacity": "shadowOpacityDepth300",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 24
+            }
+          }
+        }
+      }
+    },
+    "tooltip": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "12px",
+        "blur": "24px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.4)"
+      },
+      "$type": "shadow",
+      "$description": "Tooltip shadow with no horizontal offset, 12px vertical offset, 24px blur, darker opacity",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.300",
+            "blur": "blur150",
+            "opacity": "shadowOpacityDepth300",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 24
+            }
+          }
+        }
+      }
+    },
+    "fab": {
+      "$value": {
+        "offsetX": "12px",
+        "offsetY": "16px",
+        "blur": "4px",
+        "spread": "0px",
+        "color": "rgba(20, 25, 40, 0.4)"
+      },
+      "$type": "shadow",
+      "$description": "Dramatic shadow with 12px right offset, 16px down offset, 4px blur, darker opacity, warm (blue-gray) tint",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.300",
+            "offsetY": "shadowOffsetY.400",
+            "blur": "blur025",
+            "opacity": "shadowOpacityHard",
+            "color": "shadowBlue100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 6
+            }
+          }
+        }
+      }
+    },
+    "hover": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "20px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.2)"
+      },
+      "$type": "shadow",
+      "$description": "Subtle shadow with no horizontal offset, 4px vertical offset, 20px blur, lighter opacity",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.100",
+            "blur": "blur125",
+            "opacity": "shadowOpacitySoft",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 4
+            }
+          }
+        }
+      }
+    },
+    "navigation.indicator": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "0px",
+        "blur": "4px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.2)"
+      },
+      "$type": "shadow",
+      "$description": "Omnidirectional shadow with no offset, 4px blur, 20% opacity — tight but gentle edge definition for indicators sitting inside a container surface",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.000",
+            "blur": "blur025",
+            "opacity": "shadowOpacitySoft",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 2
+            }
+          }
+        }
+      }
+    },
+    "sunrise": {
+      "$value": {
+        "offsetX": "-12px",
+        "offsetY": "8px",
+        "blur": "12px",
+        "spread": "0px",
+        "color": "rgba(20, 25, 40, 0.3)"
+      },
+      "$type": "shadow",
+      "$description": "Shadow with -12px left offset, 8px vertical offset, 12px blur, moderate opacity, warm (blue-gray) tint for sunrise lighting",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.n300",
+            "offsetY": "shadowOffsetY.200",
+            "blur": "blur075",
+            "opacity": "shadowOpacityModerate",
+            "color": "shadowBlue100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "morning": {
+      "$value": {
+        "offsetX": "-6px",
+        "offsetY": "8px",
+        "blur": "12px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.3)"
+      },
+      "$type": "shadow",
+      "$description": "Shadow with -6px left offset, 8px vertical offset, 12px blur, moderate opacity, default color for morning lighting",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.n150",
+            "offsetY": "shadowOffsetY.200",
+            "blur": "blur075",
+            "opacity": "shadowOpacityModerate",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "noon": {
+      "$value": {
+        "offsetX": "0px",
+        "offsetY": "8px",
+        "blur": "12px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.3)"
+      },
+      "$type": "shadow",
+      "$description": "Shadow with no horizontal offset, 8px vertical offset, 12px blur, moderate opacity, default color for noon lighting",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.000",
+            "offsetY": "shadowOffsetY.200",
+            "blur": "blur075",
+            "opacity": "shadowOpacityModerate",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "dusk": {
+      "$value": {
+        "offsetX": "6px",
+        "offsetY": "8px",
+        "blur": "12px",
+        "spread": "0px",
+        "color": "rgba(0, 0, 0, 0.3)"
+      },
+      "$type": "shadow",
+      "$description": "Shadow with 6px right offset, 8px vertical offset, 12px blur, moderate opacity, default color for dusk lighting",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.150",
+            "offsetY": "shadowOffsetY.200",
+            "blur": "blur075",
+            "opacity": "shadowOpacityModerate",
+            "color": "shadowBlack100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    },
+    "sunset": {
+      "$value": {
+        "offsetX": "12px",
+        "offsetY": "8px",
+        "blur": "12px",
+        "spread": "0px",
+        "color": "rgba(20, 25, 40, 0.3)"
+      },
+      "$type": "shadow",
+      "$description": "Shadow with 12px right offset, 8px vertical offset, 12px blur, moderate opacity, warm (blue-gray) tint for sunset lighting",
+      "$extensions": {
+        "designerpunk": {
+          "family": "shadow",
+          "primitiveRefs": {
+            "offsetX": "shadowOffsetX.300",
+            "offsetY": "shadowOffsetY.200",
+            "blur": "blur075",
+            "opacity": "shadowOpacityModerate",
+            "color": "shadowBlue100"
+          },
+          "platforms": {
+            "android": {
+              "supported": true,
+              "elevation": 8
+            }
+          }
+        }
+      }
+    }
+  },
+  "glow": {
+    "$description": "Glow effect primitives. Composed glows not yet implemented — glows share offset primitives with shadows (shadowOffsetX, shadowOffsetY).",
+    "blur": {
+      "$type": "dimension",
+      "blur050": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Blur 050 - light blur",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 0.5 = 16 × 0.5 = 8",
+            "family": "glow",
+            "baseValue": 16,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      },
+      "blur100": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "Blur 100 - base blur value",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 1 = 16 × 1 = 16",
+            "family": "glow",
+            "baseValue": 16,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      },
+      "blur150": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "Blur 150 - heavy blur",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 1.5 = 16 × 1.5 = 24",
+            "family": "glow",
+            "baseValue": 16,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      },
+      "blur200": {
+        "$value": "32px",
+        "$type": "dimension",
+        "$description": "Blur 200 - intense blur",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 2 = 16 × 2 = 32",
+            "family": "glow",
+            "baseValue": 16,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      },
+      "blur250": {
+        "$value": "40px",
+        "$type": "dimension",
+        "$description": "Blur 250 - maximum blur",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 2.5 = 16 × 2.5 = 40",
+            "family": "glow",
+            "baseValue": 16,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      }
+    },
+    "opacity": {
+      "$type": "number",
+      "glowOpacity100": {
+        "$value": 0.8,
+        "$type": "number",
+        "$description": "Glow opacity 100 - most opaque (inner layer)",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 1 = 0.8 × 1 = 0.8",
+            "family": "glow",
+            "baseValue": 0.8,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      },
+      "glowOpacity200": {
+        "$value": 0.6,
+        "$type": "number",
+        "$description": "Glow opacity 200 - moderate opacity",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 0.75 = 0.8 × 0.75 = 0.6",
+            "family": "glow",
+            "baseValue": 0.8,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      },
+      "glowOpacity300": {
+        "$value": 0.4,
+        "$type": "number",
+        "$description": "Glow opacity 300 - lighter opacity",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 0.5 = 0.8 × 0.5 = 0.4",
+            "family": "glow",
+            "baseValue": 0.8,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      },
+      "glowOpacity400": {
+        "$value": 0.2,
+        "$type": "number",
+        "$description": "Glow opacity 400 - most transparent (outer layer)",
+        "$extensions": {
+          "designerpunk": {
+            "formula": "base × 0.25 = 0.8 × 0.25 = 0.2",
+            "family": "glow",
+            "baseValue": 0.8,
+            "glowType": "emission",
+            "status": "partial"
+          }
+        }
+      }
+    }
+  },
+  "typography": {
+    "$type": "typography",
+    "bodySm": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize075}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight075}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Small body typography with 14px font size, 1.25 line height, body font family, normal weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize075",
+            "lineHeight": "lineHeight075",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "bodyMd": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize100}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight100}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Medium body typography with 16px font size, 1.5 line height, body font family, normal weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize100",
+            "lineHeight": "lineHeight100",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "bodyLg": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize125}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight125}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Large body typography with 18px font size, 1.75 line height, body font family, normal weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize125",
+            "lineHeight": "lineHeight125",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "h1": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyDisplay}",
+        "fontSize": "{fontSize.fontSize600}",
+        "fontWeight": "{fontWeight.fontWeight700}",
+        "lineHeight": "{lineHeight.lineHeight600}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "H1 typography style with large font size (37), tight line height (1.19), display font family, bold weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize600",
+            "lineHeight": "lineHeight600",
+            "fontFamily": "fontFamilyDisplay",
+            "fontWeight": "fontWeight700",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "h2": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyDisplay}",
+        "fontSize": "{fontSize.fontSize500}",
+        "fontWeight": "{fontWeight.fontWeight700}",
+        "lineHeight": "{lineHeight.lineHeight500}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "H2 typography style with medium-large font size (33), tight line height (1.212), display font family, bold weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize500",
+            "lineHeight": "lineHeight500",
+            "fontFamily": "fontFamilyDisplay",
+            "fontWeight": "fontWeight700",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "h3": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyDisplay}",
+        "fontSize": "{fontSize.fontSize400}",
+        "fontWeight": "{fontWeight.fontWeight600}",
+        "lineHeight": "{lineHeight.lineHeight400}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "H3 typography style with medium font size (29), moderate line height (1.241), display font family, semi-bold weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize400",
+            "lineHeight": "lineHeight400",
+            "fontFamily": "fontFamilyDisplay",
+            "fontWeight": "fontWeight600",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "h4": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyDisplay}",
+        "fontSize": "{fontSize.fontSize300}",
+        "fontWeight": "{fontWeight.fontWeight600}",
+        "lineHeight": "{lineHeight.lineHeight300}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "H4 typography style with small-medium font size (26), moderate line height (1.231), display font family, semi-bold weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize300",
+            "lineHeight": "lineHeight300",
+            "fontFamily": "fontFamilyDisplay",
+            "fontWeight": "fontWeight600",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "h5": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyDisplay}",
+        "fontSize": "{fontSize.fontSize200}",
+        "fontWeight": "{fontWeight.fontWeight600}",
+        "lineHeight": "{lineHeight.lineHeight200}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "H5 typography style with small font size (23), moderate line height (1.391), display font family, semi-bold weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize200",
+            "lineHeight": "lineHeight200",
+            "fontFamily": "fontFamilyDisplay",
+            "fontWeight": "fontWeight600",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "h6": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyDisplay}",
+        "fontSize": "{fontSize.fontSize150}",
+        "fontWeight": "{fontWeight.fontWeight700}",
+        "lineHeight": "{lineHeight.lineHeight150}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "H6 typography style with smallest heading font size (20), moderate line height (1.4), display font family, bold weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize150",
+            "lineHeight": "lineHeight150",
+            "fontFamily": "fontFamilyDisplay",
+            "fontWeight": "fontWeight700",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "caption": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize050}",
+        "fontWeight": "{fontWeight.fontWeight300}",
+        "lineHeight": "{lineHeight.lineHeight050}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Caption typography style with small font size (13), paired line height (1.538), body font family, light weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize050",
+            "lineHeight": "lineHeight050",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight300",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "legal": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize050}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight050}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Legal typography style with small font size (13), paired line height (1.538), body font family, normal weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize050",
+            "lineHeight": "lineHeight050",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "display": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyDisplay}",
+        "fontSize": "{fontSize.fontSize700}",
+        "fontWeight": "{fontWeight.fontWeight700}",
+        "lineHeight": "{lineHeight.lineHeight700}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Display typography style with largest font size (42), tightest line height (1.143), display font family, bold weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize700",
+            "lineHeight": "lineHeight700",
+            "fontFamily": "fontFamilyDisplay",
+            "fontWeight": "fontWeight700",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "buttonSm": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize075}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight075}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Small button typography with 14px font size, 1.25 line height, body font family, medium weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize075",
+            "lineHeight": "lineHeight075",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "buttonMd": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize100}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight100}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Medium button typography with 16px font size, 1.5 line height, body font family, medium weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize100",
+            "lineHeight": "lineHeight100",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "buttonLg": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize125}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight125}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Large button typography with 18px font size, 1.75 line height, body font family, medium weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize125",
+            "lineHeight": "lineHeight125",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "input": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize100}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight100}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Input typography style with base font size (16), optimal line height (1.5), body font family, normal weight, and default letter spacing",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize100",
+            "lineHeight": "lineHeight100",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "labelXs": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize050}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight050}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Extra small label typography with 13px font size, 1.0 line height, body font family, medium weight for floating labels",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize050",
+            "lineHeight": "lineHeight050",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "labelSm": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize075}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight075}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Small label typography with 14px font size, 1.25 line height, body font family, medium weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize075",
+            "lineHeight": "lineHeight075",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "labelMd": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize100}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight100}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Medium label typography with 16px font size, 1.5 line height, body font family, medium weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize100",
+            "lineHeight": "lineHeight100",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "labelMdFloat": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize075}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight075}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Medium label typography scaled to 14px (fontSize100 × scale088) for floated label state, maintains same lineHeight, fontFamily, fontWeight, and letterSpacing as labelMd to prevent layout shift during animation",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize075",
+            "lineHeight": "lineHeight075",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "labelLg": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyBody}",
+        "fontSize": "{fontSize.fontSize125}",
+        "fontWeight": "{fontWeight.fontWeight500}",
+        "lineHeight": "{lineHeight.lineHeight125}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Large label typography with 18px font size, 1.75 line height, body font family, medium weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize125",
+            "lineHeight": "lineHeight125",
+            "fontFamily": "fontFamilyBody",
+            "fontWeight": "fontWeight500",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "codeSm": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyMono}",
+        "fontSize": "{fontSize.fontSize075}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight075}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Small code typography with 14px font size, 1.25 line height, monospace font family, normal weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize075",
+            "lineHeight": "lineHeight075",
+            "fontFamily": "fontFamilyMono",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "codeMd": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyMono}",
+        "fontSize": "{fontSize.fontSize100}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight100}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Medium code typography with 16px font size, 1.5 line height, monospace font family, normal weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize100",
+            "lineHeight": "lineHeight100",
+            "fontFamily": "fontFamilyMono",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    },
+    "codeLg": {
+      "$value": {
+        "fontFamily": "{fontFamily.fontFamilyMono}",
+        "fontSize": "{fontSize.fontSize125}",
+        "fontWeight": "{fontWeight.fontWeight400}",
+        "lineHeight": "{lineHeight.lineHeight125}",
+        "letterSpacing": "{letterSpacing.letterSpacing100}"
+      },
+      "$type": "typography",
+      "$description": "Large code typography with 18px font size, 1.75 line height, monospace font family, normal weight",
+      "$extensions": {
+        "designerpunk": {
+          "family": "typography",
+          "primitiveRefs": {
+            "fontSize": "fontSize125",
+            "lineHeight": "lineHeight125",
+            "fontFamily": "fontFamilyMono",
+            "fontWeight": "fontWeight400",
+            "letterSpacing": "letterSpacing100"
+          }
+        }
+      }
+    }
+  },
+  "motion": {
+    "$type": "transition",
+    "floatLabel": {
+      "$value": {
+        "duration": "{duration.duration250}",
+        "timingFunction": "{easing.easingStandard}",
+        "delay": "0ms"
+      },
+      "$type": "transition",
+      "$description": "Standard motion for label floating up with balanced easing (250ms, standard curve). Used when text input receives focus and label transitions from placeholder to floating position.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "motion",
+          "primitiveRefs": {
+            "duration": "duration250",
+            "easing": "easingStandard"
+          }
+        }
+      }
+    },
+    "focusTransition": {
+      "$value": {
+        "duration": "{duration.duration150}",
+        "timingFunction": "{easing.easingStandard}",
+        "delay": "0ms"
+      },
+      "$type": "transition",
+      "$description": "Fast motion for focus state changes with balanced easing (150ms, standard curve). Used when elements receive or lose focus, providing quick visual feedback for user interactions.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "motion",
+          "primitiveRefs": {
+            "duration": "duration150",
+            "easing": "easingStandard"
+          }
+        }
+      }
+    },
+    "buttonPress": {
+      "$value": {
+        "duration": "{duration.duration150}",
+        "timingFunction": "{easing.easingAccelerate}",
+        "delay": "0ms"
+      },
+      "$type": "transition",
+      "$description": "Fast motion for button press feedback with accelerate easing (150ms, accelerate curve). Used for scale transforms during button press, providing immediate tactile response to user input.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "motion",
+          "primitiveRefs": {
+            "duration": "duration150",
+            "easing": "easingAccelerate"
+          }
+        }
+      }
+    },
+    "modalSlide": {
+      "$value": {
+        "duration": "{duration.duration350}",
+        "timingFunction": "{easing.easingDecelerate}",
+        "delay": "0ms"
+      },
+      "$type": "transition",
+      "$description": "Deliberate motion for modal entry with decelerate easing (350ms, decelerate curve). Used when modals, drawers, or overlays slide into view, creating a natural entrance effect that settles into place.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "motion",
+          "primitiveRefs": {
+            "duration": "duration350",
+            "easing": "easingDecelerate"
+          }
+        }
+      }
+    },
+    "selectionTransition": {
+      "$value": {
+        "duration": "{duration.duration250}",
+        "timingFunction": "{easing.easingStandard}",
+        "delay": "0ms"
+      },
+      "$type": "transition",
+      "$description": "Standard motion for selection state changes with balanced easing (250ms, standard curve). Used when selectable elements (buttons, list items, checkboxes) transition between selected/unselected states, providing smooth visual feedback for user selections.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "motion",
+          "primitiveRefs": {
+            "duration": "duration250",
+            "easing": "easingStandard"
+          }
+        }
+      }
+    },
+    "settleTransition": {
+      "$value": {
+        "duration": "{duration.duration350}",
+        "timingFunction": "{easing.easingDecelerate}",
+        "delay": "0ms"
+      },
+      "$type": "transition",
+      "$description": "Deliberate follow-through motion with decelerate easing (350ms, decelerate curve). Used for color fades and positional slides that accompany a faster state-change snap, creating a natural settling effect.",
+      "$extensions": {
+        "designerpunk": {
+          "family": "motion",
+          "primitiveRefs": {
+            "duration": "duration350",
+            "easing": "easingDecelerate"
+          }
+        }
+      }
+    }
+  }
+}

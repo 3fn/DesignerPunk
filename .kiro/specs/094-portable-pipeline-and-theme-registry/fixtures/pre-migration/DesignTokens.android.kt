@@ -1,0 +1,770 @@
+/**
+ * DesignerPunk Design System - Android Tokens
+ * Generated: 2026-04-04T00:41:33.704Z
+ * Version: 1.0.0
+ * Platform: Android (Kotlin Constants)
+ */
+
+package com.designerpunk.tokens
+
+object DesignTokens {
+
+    // ============================================
+    // PRIMITIVE TOKENS
+    Mathematical foundation
+    // ============================================
+
+
+    // BLEND TOKENS
+    // base × 1 = 0.04 × 1 = 0.04
+    const val blend_100: Float = 0.04f
+    // base × 2 = 0.04 × 2 = 0.08
+    const val blend_200: Float = 0.08f
+    // base × 3 = 0.04 × 3 = 0.12
+    const val blend_300: Float = 0.12f
+    // base × 4 = 0.04 × 4 = 0.16
+    const val blend_400: Float = 0.16f
+    // base × 5 = 0.04 × 5 = 0.20
+    const val blend_500: Float = 0.2f
+
+    // BLUR TOKENS
+    // 0
+    const val blur_000: Float = 0f
+    // base × 0.25 = 16 × 0.25 = 4
+    const val blur_025: Float = 4f
+    // base × 0.5 = 16 × 0.5 = 8
+    const val blur_050: Float = 8f
+    // base × 0.75 = 16 × 0.75 = 12
+    const val blur_075: Float = 12f
+    // base × 1 = 16 × 1 = 16
+    const val blur_100: Float = 16f
+    // base × 1.25 = 16 × 1.25 = 20
+    const val blur_125: Float = 20f
+    // base × 1.5 = 16 × 1.5 = 24
+    const val blur_150: Float = 24f
+    // base × 2 = 16 × 2 = 32
+    const val blur_200: Float = 32f
+    // base × 2.5 = 16 × 2.5 = 40
+    const val blur_250: Float = 40f
+
+    // BORDERWIDTH TOKENS
+    // base × 0 = 1 × 0 = 0
+    val border_width_000 = 0.dp
+    // base × 1 = 1 × 1 = 1
+    val border_width_100 = 1.dp
+    // base × 2 = 1 × 2 = 2
+    val border_width_200 = 2.dp
+    // base × 4 = 1 × 4 = 4
+    val border_width_400 = 4.dp
+
+    // BREAKPOINT TOKENS
+    // Practical device-based value
+    const val breakpoint_xs: Float = 320f
+    // Practical device-based value
+    const val breakpoint_sm: Float = 375f
+    // Practical device-based value
+    const val breakpoint_md: Float = 1024f
+    // Practical device-based value
+    const val breakpoint_lg: Float = 1440f
+
+    // COLOR TOKENS
+    // Systematic gray scale progression - lightest
+    const val gray_100: Int = Color.argb(255, 178, 188, 196)
+    // Systematic gray scale progression - medium-light
+    const val gray_200: Int = Color.argb(255, 94, 112, 124)
+    // Systematic gray scale progression - medium
+    const val gray_300: Int = Color.argb(255, 38, 50, 58)
+    // Systematic gray scale progression - dark
+    const val gray_400: Int = Color.argb(255, 24, 34, 40)
+    // Systematic gray scale progression - darkest
+    const val gray_500: Int = Color.argb(255, 16, 22, 26)
+    // Systematic black scale progression - lightest
+    const val black_100: Int = Color.argb(255, 58, 58, 69)
+    // Systematic black scale progression - medium
+    const val black_200: Int = Color.argb(255, 34, 34, 42)
+    // Systematic black scale progression - dark
+    const val black_300: Int = Color.argb(255, 10, 10, 15)
+    // Systematic black scale progression - very dark
+    const val black_400: Int = Color.argb(255, 6, 6, 10)
+    // Systematic black scale progression - pure black
+    const val black_500: Int = Color.argb(255, 0, 0, 0)
+    // Systematic white scale progression - pure white
+    const val white_100: Int = Color.argb(255, 255, 255, 255)
+    // Systematic white scale progression - near white
+    const val white_200: Int = Color.argb(255, 245, 245, 250)
+    // Systematic white scale progression - light gray-white
+    const val white_300: Int = Color.argb(255, 232, 232, 240)
+    // Systematic white scale progression - medium gray-white
+    const val white_400: Int = Color.argb(255, 197, 197, 213)
+    // Systematic white scale progression - dark gray-white
+    const val white_500: Int = Color.argb(255, 153, 153, 171)
+    // Systematic yellow scale progression - lightest
+    const val yellow_100: Int = Color.argb(255, 254, 251, 204)
+    // Systematic yellow scale progression - medium-light
+    const val yellow_200: Int = Color.argb(255, 252, 246, 128)
+    // Systematic yellow scale progression - bright
+    const val yellow_300: Int = Color.argb(255, 249, 240, 2)
+    // Systematic yellow scale progression - dark
+    const val yellow_400: Int = Color.argb(255, 199, 192, 2)
+    // Systematic yellow scale progression - darkest
+    const val yellow_500: Int = Color.argb(255, 143, 139, 1)
+    // Systematic orange scale progression - lightest
+    const val orange_100: Int = Color.argb(255, 255, 229, 220)
+    // Systematic orange scale progression - medium-light
+    const val orange_200: Int = Color.argb(255, 255, 184, 160)
+    // Systematic orange scale progression - bright
+    const val orange_300: Int = Color.argb(255, 255, 107, 53)
+    // Systematic orange scale progression - dark
+    const val orange_400: Int = Color.argb(255, 204, 85, 41)
+    // Systematic orange scale progression - darkest
+    const val orange_500: Int = Color.argb(255, 143, 60, 29)
+    // Systematic purple scale progression - lightest
+    const val purple_100: Int = Color.argb(255, 243, 224, 255)
+    // Systematic purple scale progression - medium-light
+    const val purple_200: Int = Color.argb(255, 217, 138, 255)
+    // Systematic purple scale progression - primary brand
+    const val purple_300: Int = Color.argb(255, 176, 38, 255)
+    // Systematic purple scale progression - dark
+    const val purple_400: Int = Color.argb(255, 141, 30, 204)
+    // Systematic purple scale progression - darkest
+    const val purple_500: Int = Color.argb(255, 99, 21, 143)
+    // Systematic pink scale progression - lightest
+    const val pink_100: Int = Color.argb(255, 255, 218, 232)
+    // Systematic pink scale progression - medium-light
+    const val pink_200: Int = Color.argb(255, 255, 130, 180)
+    // Systematic pink scale progression - base
+    const val pink_300: Int = Color.argb(255, 255, 42, 109)
+    // Systematic pink scale progression - dark
+    const val pink_400: Int = Color.argb(255, 204, 34, 87)
+    // Systematic pink scale progression - darkest
+    const val pink_500: Int = Color.argb(255, 128, 21, 55)
+    // Systematic green scale progression - lightest
+    const val green_100: Int = Color.argb(255, 230, 255, 245)
+    // Systematic green scale progression - medium-light
+    const val green_200: Int = Color.argb(255, 128, 255, 187)
+    // Systematic green scale progression - bright
+    const val green_300: Int = Color.argb(255, 51, 255, 153)
+    // Systematic green scale progression - strong
+    const val green_400: Int = Color.argb(255, 0, 255, 136)
+    // Systematic green scale progression - darkest/glow
+    const val green_500: Int = Color.argb(255, 0, 204, 110)
+    // Systematic cyan scale progression - lightest
+    const val cyan_100: Int = Color.argb(255, 204, 251, 255)
+    // Systematic cyan scale progression - medium-light
+    const val cyan_200: Int = Color.argb(255, 128, 246, 255)
+    // Systematic cyan scale progression - tech primary
+    const val cyan_300: Int = Color.argb(255, 0, 240, 255)
+    // Systematic cyan scale progression - dark
+    const val cyan_400: Int = Color.argb(255, 0, 192, 204)
+    // Systematic cyan scale progression - darkest
+    const val cyan_500: Int = Color.argb(255, 0, 136, 143)
+    // Systematic teal scale progression - lightest
+    const val teal_100: Int = Color.argb(255, 217, 232, 234)
+    // Systematic teal scale progression - medium-light
+    const val teal_200: Int = Color.argb(255, 77, 155, 165)
+    // Systematic teal scale progression - secondary UI
+    const val teal_300: Int = Color.argb(255, 26, 83, 92)
+    // Systematic teal scale progression - dark
+    const val teal_400: Int = Color.argb(255, 21, 66, 74)
+    // Systematic teal scale progression - darkest
+    const val teal_500: Int = Color.argb(255, 15, 46, 51)
+    // Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic
+    const val shadow_black_100: Int = Color.argb(255, 0, 0, 0)
+    // Systematic shadow color family - blue-tinted gray for sunrise/sunset lighting - mode-agnostic
+    const val shadow_blue_100: Int = Color.argb(255, 20, 25, 40)
+    // Systematic shadow color family - warm-tinted gray for cool lighting environments - mode-agnostic
+    const val shadow_orange_100: Int = Color.argb(255, 25, 20, 15)
+    // Systematic shadow color family - blue-gray for ambient/overcast conditions - mode-agnostic
+    const val shadow_gray_100: Int = Color.argb(255, 15, 20, 30)
+
+    // DENSITY TOKENS
+    // base × 0.75 = 1.0 × 0.75 = 0.75
+    const val density_compact: Float = 0.75f
+    // base × 1 = 1.0 × 1 = 1.0
+    const val density_default: Float = 1f
+    // base × 1.25 = 1.0 × 1.25 = 1.25
+    const val density_comfortable: Float = 1.25f
+    // base × 1.5 = 1.0 × 1.5 = 1.5
+    const val density_spacious: Float = 1.5f
+
+    // FONTFAMILY TOKENS
+    // N/A - Categorical value
+    const val font_family_system: String = "-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+    // N/A - Categorical value
+    const val font_family_mono: String = "SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace"
+    // N/A - Categorical value
+    const val font_family_display: String = "Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+    // N/A - Categorical value
+    const val font_family_body: String = "Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+
+    // FONTSIZE TOKENS
+    // base ÷ (1.125²) = 16 ÷ 1.266 ≈ 13
+    val font_size_050 = 13.dp
+    // base ÷ 1.125 = 16 ÷ 1.125 ≈ 14
+    val font_size_075 = 14.dp
+    // base × 1 = 16 × 1 = 16
+    val font_size_100 = 16.dp
+    // base × 1.125 = 16 × 1.125 = 18
+    val font_size_125 = 18.dp
+    // base × (1.125²) = 16 × 1.266 ≈ 20
+    val font_size_150 = 20.dp
+    // base × (1.125³) = 16 × 1.424 ≈ 23
+    val font_size_200 = 23.dp
+    // base × (1.125⁴) = 16 × 1.602 ≈ 26
+    val font_size_300 = 26.dp
+    // base × (1.125⁵) = 16 × 1.802 ≈ 29
+    val font_size_400 = 29.dp
+    // base × (1.125⁶) = 16 × 2.027 ≈ 32.4 → 33 (adjusted for 4pt subgrid)
+    val font_size_500 = 33.dp
+    // base × (1.125⁷) = 16 × 2.281 ≈ 36.5 → 37 (adjusted for 4pt subgrid)
+    val font_size_600 = 37.dp
+    // base × (1.125⁸) = 16 × 2.566 ≈ 41.1 → 42 (adjusted for 4pt subgrid)
+    val font_size_700 = 42.dp
+
+    // FONTWEIGHT TOKENS
+    // base × 0.25 = 400 × 0.25 = 100
+    const val font_weight_100: Int = 100
+    // base × 0.5 = 400 × 0.5 = 200
+    const val font_weight_200: Int = 200
+    // base × 0.75 = 400 × 0.75 = 300
+    const val font_weight_300: Int = 300
+    // base × 1 = 400 × 1 = 400
+    const val font_weight_400: Int = 400
+    // base × 1.25 = 400 × 1.25 = 500
+    const val font_weight_500: Int = 500
+    // base × 1.5 = 400 × 1.5 = 600
+    const val font_weight_600: Int = 600
+    // base × 1.75 = 400 × 1.75 = 700
+    const val font_weight_700: Int = 700
+    // base × 2 = 400 × 2 = 800
+    const val font_weight_800: Int = 800
+    // base × 2.25 = 400 × 2.25 = 900
+    const val font_weight_900: Int = 900
+
+    // GLOW TOKENS
+    // base × 1 = 0.8 × 1 = 0.8
+    const val glow_opacity_100: Float = 0.8f
+    // base × 0.75 = 0.8 × 0.75 = 0.6
+    const val glow_opacity_200: Float = 0.6f
+    // base × 0.5 = 0.8 × 0.5 = 0.4
+    const val glow_opacity_300: Float = 0.4f
+    // base × 0.25 = 0.8 × 0.25 = 0.2
+    const val glow_opacity_400: Float = 0.2f
+
+    // LETTERSPACING TOKENS
+    // base - 0.025 = 0 - 0.025 = -0.025
+    const val letter_spacing_025: Float = -0.025f
+    // base - 0.05 = 0 - 0.05 = -0.05
+    const val letter_spacing_050: Float = -0.05f
+    // base × 1 = 0 × 1 = 0
+    const val letter_spacing_100: Float = 0f
+    // base + 0.025 = 0 + 0.025 = 0.025
+    const val letter_spacing_125: Float = 0.025f
+    // base + 0.05 = 0 + 0.05 = 0.05
+    const val letter_spacing_150: Float = 0.05f
+
+    // LINEHEIGHT TOKENS
+    // fontSize050 × baseValue ≈ 20
+    const val line_height_050: Float = 1.538f
+    // fontSize075 × baseValue ≈ 20
+    const val line_height_075: Float = 1.429f
+    // fontSize100 × baseValue = 24
+    const val line_height_100: Float = 1.5f
+    // fontSize125 × baseValue ≈ 28
+    const val line_height_125: Float = 1.556f
+    // fontSize150 × baseValue = 28
+    const val line_height_150: Float = 1.4f
+    // fontSize200 × baseValue ≈ 32
+    const val line_height_200: Float = 1.391f
+    // fontSize300 × baseValue ≈ 32
+    const val line_height_300: Float = 1.231f
+    // fontSize400 × baseValue ≈ 36
+    const val line_height_400: Float = 1.241f
+    // fontSize500 × baseValue ≈ 40
+    const val line_height_500: Float = 1.212f
+    // fontSize600 × baseValue ≈ 44
+    const val line_height_600: Float = 1.19f
+    // fontSize700 × baseValue ≈ 48
+    const val line_height_700: Float = 1.143f
+
+    // OPACITY TOKENS
+    // base × 0 = 0.08 × 0 = 0.0
+    const val opacity_000: Float = 0f
+    // base × 1 = 0.08 × 1 = 0.08
+    const val opacity_008: Float = 0.08f
+    // base × 2 = 0.08 × 2 = 0.16
+    const val opacity_016: Float = 0.16f
+    // base × 3 = 0.08 × 3 = 0.24
+    const val opacity_024: Float = 0.24f
+    // base × 4 = 0.08 × 4 = 0.32
+    const val opacity_032: Float = 0.32f
+    // base × 5 = 0.08 × 5 = 0.40
+    const val opacity_040: Float = 0.4f
+    // base × 6 = 0.08 × 6 = 0.48
+    const val opacity_048: Float = 0.48f
+    // base × 7 = 0.08 × 7 = 0.56
+    const val opacity_056: Float = 0.56f
+    // base × 8 = 0.08 × 8 = 0.64
+    const val opacity_064: Float = 0.64f
+    // base × 9 = 0.08 × 9 = 0.72
+    const val opacity_072: Float = 0.72f
+    // base × 10 = 0.08 × 10 = 0.80
+    const val opacity_080: Float = 0.8f
+    // base × 11 = 0.08 × 11 = 0.88
+    const val opacity_088: Float = 0.88f
+    // base × 12 = 0.08 × 12 = 0.96
+    const val opacity_096: Float = 0.96f
+    // Special case: full opacity = 1.0
+    const val opacity_100: Float = 1f
+
+    // RADIUS TOKENS
+    // base × 0 = 8 × 0 = 0
+    val radius_000 = 0.dp
+    // base × 0.25 = 8 × 0.25 = 2
+    val radius_025 = 2.dp
+    // base × 0.5 = 8 × 0.5 = 4
+    val radius_050 = 4.dp
+    // base × 0.75 = 8 × 0.75 = 6
+    val radius_075 = 6.dp
+    // base × 1 = 8 × 1 = 8
+    val radius_100 = 8.dp
+    // base × 1.25 = 8 × 1.25 = 10
+    val radius_125 = 10.dp
+    // base × 1.5 = 8 × 1.5 = 12
+    val radius_150 = 12.dp
+    // base × 2 = 8 × 2 = 16
+    val radius_200 = 16.dp
+    // base × 2.5 = 8 × 2.5 = 20
+    val radius_250 = 20.dp
+    // base × 3 = 8 × 3 = 24
+    val radius_300 = 24.dp
+    // base × 4 = 8 × 4 = 32
+    val radius_400 = 32.dp
+    // special case = 9999 (effectively infinite)
+    val radius_max = 9999.dp
+    // percentage = 50% (creates circle from square)
+    val radius_half = 50.dp
+
+    // SHADOW TOKENS
+    // base × 1 = 4 × 1 = 4
+    const val shadow_offset_x_100: Float = 4f
+    // base × 1.5 = 4 × 1.5 = 6
+    const val shadow_offset_x_150: Float = 6f
+    // base × 2 = 4 × 2 = 8
+    const val shadow_offset_x_200: Float = 8f
+    // base × 3 = 4 × 3 = 12
+    const val shadow_offset_x_300: Float = 12f
+    // base × -3 = 4 × -3 = -12
+    const val shadow_offset_x_n_300: Float = -12f
+    // base × -2 = 4 × -2 = -8
+    const val shadow_offset_x_n_200: Float = -8f
+    // base × -1.5 = 4 × -1.5 = -6
+    const val shadow_offset_x_n_150: Float = -6f
+    // base × -1 = 4 × -1 = -4
+    const val shadow_offset_x_n_100: Float = -4f
+    // base × 0 = 4 × 0 = 0
+    const val shadow_offset_x_000: Float = 0f
+    // base × 1 = 4 × 1 = 4
+    const val shadow_offset_y_100: Float = 4f
+    // base × 2 = 4 × 2 = 8
+    const val shadow_offset_y_200: Float = 8f
+    // base × 3 = 4 × 3 = 12
+    const val shadow_offset_y_300: Float = 12f
+    // base × 4 = 4 × 4 = 16
+    const val shadow_offset_y_400: Float = 16f
+    // base × 0 = 4 × 0 = 0
+    const val shadow_offset_y_000: Float = 0f
+    // base × 0 = 0.3 × 0 = 0
+    const val shadow_opacity_none: Float = 0f
+    // base × 1.33 = 0.3 × 1.33 ≈ 0.4
+    const val shadow_opacity_hard: Float = 0.4f
+    // base × 1 = 0.3 × 1 = 0.3
+    const val shadow_opacity_moderate: Float = 0.3f
+    // base × 0.67 = 0.3 × 0.67 ≈ 0.2
+    const val shadow_opacity_soft: Float = 0.2f
+    // base × 1.17 = 0.3 × 1.17 ≈ 0.35
+    const val shadow_opacity_depth_200: Float = 0.35f
+    // base × 1.33 = 0.3 × 1.33 ≈ 0.4
+    const val shadow_opacity_depth_300: Float = 0.4f
+
+    // SIZING TOKENS
+    // base × 0.5 = 8 × 0.5 = 4
+    const val size_050: Float = 4f
+    // base × 1 = 8 × 1 = 8
+    const val size_100: Float = 8f
+    // base × 1.5 = 8 × 1.5 = 12
+    const val size_150: Float = 12f
+    // base × 2 = 8 × 2 = 16
+    const val size_200: Float = 16f
+    // base × 2.5 = 8 × 2.5 = 20
+    const val size_250: Float = 20f
+    // base × 3 = 8 × 3 = 24
+    const val size_300: Float = 24f
+    // base × 4 = 8 × 4 = 32
+    const val size_400: Float = 32f
+    // base × 5 = 8 × 5 = 40
+    const val size_500: Float = 40f
+    // base × 6 = 8 × 6 = 48
+    const val size_600: Float = 48f
+    // base × 7 = 8 × 7 = 56
+    const val size_700: Float = 56f
+    // base × 8 = 8 × 8 = 64
+    const val size_800: Float = 64f
+    // base × 9 = 8 × 9 = 72
+    const val size_900: Float = 72f
+    // base × 10 = 8 × 10 = 80
+    const val size_1000: Float = 80f
+    // base × 16 = 8 × 16 = 128
+    const val size_1600: Float = 128f
+
+    // SPACING TOKENS
+    // base × 0 = 8 × 0 = 0
+    val space_000 = 0.dp
+    // base × 0.25 = 8 × 0.25 = 2
+    val space_025 = 2.dp
+    // base × 0.5 = 8 × 0.5 = 4
+    val space_050 = 4.dp
+    // space100 × 0.75
+    val space_075 = 6.dp
+    // base × 1 = 8 × 1 = 8
+    val space_100 = 8.dp
+    // space100 × 1.25
+    val space_125 = 10.dp
+    // base × 1.5 = 8 × 1.5 = 12
+    val space_150 = 12.dp
+    // base × 2 = 8 × 2 = 16
+    val space_200 = 16.dp
+    // space100 × 2.5
+    val space_250 = 20.dp
+    // base × 3 = 8 × 3 = 24
+    val space_300 = 24.dp
+    // base × 4 = 8 × 4 = 32
+    val space_400 = 32.dp
+    // base × 5 = 8 × 5 = 40
+    val space_500 = 40.dp
+    // base × 6 = 8 × 6 = 48
+    val space_600 = 48.dp
+    // base × 7 = 8 × 7 = 56
+    val space_700 = 56.dp
+    // base × 8 = 8 × 8 = 64
+    val space_800 = 64.dp
+
+    // TAPAREA TOKENS
+    // base × 1 = 44 × 1 = 44
+    val tap_area_minimum = 44.dp
+    // base × 1.09 = 44 × 1.09 ≈ 48
+    val tap_area_recommended = 48.dp
+    // base × 1.27 = 44 × 1.27 ≈ 56
+    val tap_area_comfortable = 56.dp
+    // base × 1.45 = 44 × 1.45 ≈ 64
+    val tap_area_generous = 64.dp
+
+    // ============================================
+    // SEMANTIC TOKENS
+    Use these for UI development
+    // ============================================
+
+    val color_feedback_success_text = Color.argb(255, 0, 255, 136)
+    val color_feedback_success_background = Color.argb(255, 230, 255, 245)
+    val color_feedback_success_border = Color.argb(255, 0, 255, 136)
+    val color_feedback_error_text = Color.argb(255, 204, 34, 87)
+    val color_feedback_error_background = Color.argb(255, 255, 218, 232)
+    val color_feedback_error_border = Color.argb(255, 204, 34, 87)
+    val color_feedback_warning_text = Color.argb(255, 204, 85, 41)
+    val color_feedback_warning_background = Color.argb(255, 255, 229, 220)
+    val color_feedback_warning_border = Color.argb(255, 204, 85, 41)
+    val color_feedback_info_text = Color.argb(255, 21, 66, 74)
+    val color_feedback_info_background = Color.argb(255, 217, 232, 234)
+    val color_feedback_info_border = Color.argb(255, 21, 66, 74)
+    val color_feedback_select_text_rest = Color.argb(255, 0, 192, 204)
+    val color_feedback_select_text_default = Color.argb(255, 94, 112, 124)
+    val color_feedback_select_background_rest = Color.argb(255, 204, 251, 255)
+    val color_feedback_select_background_default = Color.argb(255, 178, 188, 196)
+    val color_feedback_select_border_rest = Color.argb(255, 0, 192, 204)
+    val color_feedback_select_border_default = Color.argb(255, 94, 112, 124)
+    val color_feedback_notification_background = Color.argb(255, 204, 34, 87)
+    val color_feedback_notification_text = Color.argb(255, 255, 255, 255)
+    val color_identity_human = Color.argb(255, 255, 107, 53)
+    val color_identity_agent = Color.argb(255, 77, 155, 165)
+    val color_action_primary = Color.argb(255, 0, 240, 255)
+    val color_action_secondary = Color.argb(255, 24, 34, 40)
+    val color_action_navigation_light = Color.argb(255, 0, 136, 143)
+    val color_action_navigation_dark = Color.argb(255, 204, 251, 255)
+    val color_attention = Color.argb(255, 199, 192, 2)
+    val color_highlight = Color.argb(255, 249, 240, 2)
+    val color_tech = Color.argb(255, 141, 30, 204)
+    val color_data = Color.argb(255, 176, 38, 255)
+    val color_text_default = Color.argb(255, 38, 50, 58)
+    val color_text_muted = Color.argb(255, 94, 112, 124)
+    val color_text_subtle = Color.argb(255, 178, 188, 196)
+    val color_contrast_on_light = Color.argb(255, 0, 0, 0)
+    val color_contrast_on_dark = Color.argb(255, 255, 255, 255)
+    val color_contrast_on_action = Color.argb(255, 0, 0, 0)
+    val color_structure_canvas_light = Color.argb(255, 255, 255, 255)
+    val color_structure_canvas_dark = Color.argb(255, 24, 34, 40)
+    val color_structure_surface = Color.argb(255, 245, 245, 250)
+    val color_structure_surface_primary = Color.argb(255, 245, 245, 250)
+    val color_structure_surface_secondary = Color.argb(255, 232, 232, 240)
+    val color_structure_surface_tertiary = Color.argb(255, 197, 197, 213)
+    val color_structure_border = Color.argb(255, 178, 188, 196)
+    val color_structure_border_subtle_light = Color.argb(122, 178, 188, 196)
+    val color_structure_border_subtle_dark = Color.argb(122, 16, 22, 26)
+    val color_background_primary_subtle_light = Color.argb(255, 204, 251, 255)
+    val color_background_primary_subtle_dark = Color.argb(255, 0, 136, 143)
+    val color_icon_default = Color.argb(255, 94, 112, 124)
+    val color_icon_navigation_inactive_light = Color.argb(255, 38, 50, 58)
+    val color_icon_navigation_inactive_dark = Color.argb(255, 178, 188, 196)
+    val color_print_default = Color.argb(255, 58, 58, 69)
+    val glow_neon_purple = Color.argb(255, 99, 21, 143)
+    val glow_neon_cyan = Color.argb(255, 0, 136, 143)
+    val glow_neon_yellow = Color.argb(255, 143, 139, 1)
+    val glow_neon_green = Color.argb(255, 0, 204, 110)
+    val glow_neon_pink = Color.argb(255, 128, 21, 55)
+    val color_progress_current_background = Color.argb(255, 0, 240, 255)
+    val color_progress_current_text = Color.argb(255, 0, 192, 204)
+    val color_progress_pending_background = Color.argb(255, 232, 232, 240)
+    val color_progress_pending_text = Color.argb(255, 38, 50, 58)
+    val color_progress_pending_connector = Color.argb(255, 245, 245, 250)
+    val color_progress_completed_background = Color.argb(255, 230, 255, 245)
+    val color_progress_completed_text = Color.argb(255, 0, 255, 136)
+    val color_progress_completed_connector = Color.argb(255, 230, 255, 245)
+    val color_progress_error_background = Color.argb(255, 255, 218, 232)
+    val color_progress_error_text = Color.argb(255, 204, 34, 87)
+    val color_scrim_standard = Color.argb(204, 0, 0, 0)
+    val typography_body_sm = Typography(fontSize = font_size_075, lineHeight = line_height_075, fontFamily = font_family_body, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val typography_body_md = Typography(fontSize = font_size_100, lineHeight = line_height_100, fontFamily = font_family_body, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val typography_body_lg = Typography(fontSize = font_size_125, lineHeight = line_height_125, fontFamily = font_family_body, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val typography_h_1 = Typography(fontSize = font_size_600, lineHeight = line_height_600, fontFamily = font_family_display, fontWeight = font_weight_700, letterSpacing = letter_spacing_100)
+    val typography_h_2 = Typography(fontSize = font_size_500, lineHeight = line_height_500, fontFamily = font_family_display, fontWeight = font_weight_700, letterSpacing = letter_spacing_100)
+    val typography_h_3 = Typography(fontSize = font_size_400, lineHeight = line_height_400, fontFamily = font_family_display, fontWeight = font_weight_600, letterSpacing = letter_spacing_100)
+    val typography_h_4 = Typography(fontSize = font_size_300, lineHeight = line_height_300, fontFamily = font_family_display, fontWeight = font_weight_600, letterSpacing = letter_spacing_100)
+    val typography_h_5 = Typography(fontSize = font_size_200, lineHeight = line_height_200, fontFamily = font_family_display, fontWeight = font_weight_600, letterSpacing = letter_spacing_100)
+    val typography_h_6 = Typography(fontSize = font_size_150, lineHeight = line_height_150, fontFamily = font_family_display, fontWeight = font_weight_700, letterSpacing = letter_spacing_100)
+    val typography_caption = Typography(fontSize = font_size_050, lineHeight = line_height_050, fontFamily = font_family_body, fontWeight = font_weight_300, letterSpacing = letter_spacing_100)
+    val typography_legal = Typography(fontSize = font_size_050, lineHeight = line_height_050, fontFamily = font_family_body, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val typography_display = Typography(fontSize = font_size_700, lineHeight = line_height_700, fontFamily = font_family_display, fontWeight = font_weight_700, letterSpacing = letter_spacing_100)
+    val typography_button_sm = Typography(fontSize = font_size_075, lineHeight = line_height_075, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_button_md = Typography(fontSize = font_size_100, lineHeight = line_height_100, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_button_lg = Typography(fontSize = font_size_125, lineHeight = line_height_125, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_input = Typography(fontSize = font_size_100, lineHeight = line_height_100, fontFamily = font_family_body, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val typography_label_xs = Typography(fontSize = font_size_050, lineHeight = line_height_050, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_label_sm = Typography(fontSize = font_size_075, lineHeight = line_height_075, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_label_md = Typography(fontSize = font_size_100, lineHeight = line_height_100, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_label_md_float = Typography(fontSize = font_size_075, lineHeight = line_height_075, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_label_lg = Typography(fontSize = font_size_125, lineHeight = line_height_125, fontFamily = font_family_body, fontWeight = font_weight_500, letterSpacing = letter_spacing_100)
+    val typography_code_sm = Typography(fontSize = font_size_075, lineHeight = line_height_075, fontFamily = font_family_mono, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val typography_code_md = Typography(fontSize = font_size_100, lineHeight = line_height_100, fontFamily = font_family_mono, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val typography_code_lg = Typography(fontSize = font_size_125, lineHeight = line_height_125, fontFamily = font_family_mono, fontWeight = font_weight_400, letterSpacing = letter_spacing_100)
+    val shadow_none = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_000, blur = blur_000, opacity = shadow_opacity_none, color = shadow_black_100)
+    val shadow_container = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_100, blur = blur_075, opacity = shadow_opacity_moderate, color = shadow_black_100)
+    val shadow_navigation = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_100, blur = blur_125, opacity = shadow_opacity_soft, color = shadow_black_100)
+    val shadow_dropdown = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_100, blur = blur_075, opacity = shadow_opacity_moderate, color = shadow_black_100)
+    val shadow_modal = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_200, blur = blur_100, opacity = shadow_opacity_depth_200, color = shadow_black_100)
+    val shadow_toast = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_300, blur = blur_150, opacity = shadow_opacity_depth_300, color = shadow_black_100)
+    val shadow_tooltip = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_300, blur = blur_150, opacity = shadow_opacity_depth_300, color = shadow_black_100)
+    val shadow_fab = Typography(offsetX = shadow_offset_x_300, offsetY = shadow_offset_y_400, blur = blur_025, opacity = shadow_opacity_hard, color = shadow_blue_100)
+    val shadow_hover = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_100, blur = blur_125, opacity = shadow_opacity_soft, color = shadow_black_100)
+    val shadow_navigation_indicator = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_000, blur = blur_025, opacity = shadow_opacity_soft, color = shadow_black_100)
+    val shadow_sunrise = Typography(offsetX = shadow_offset_x_n_300, offsetY = shadow_offset_y_200, blur = blur_075, opacity = shadow_opacity_moderate, color = shadow_blue_100)
+    val shadow_morning = Typography(offsetX = shadow_offset_x_n_150, offsetY = shadow_offset_y_200, blur = blur_075, opacity = shadow_opacity_moderate, color = shadow_black_100)
+    val shadow_noon = Typography(offsetX = shadow_offset_x_000, offsetY = shadow_offset_y_200, blur = blur_075, opacity = shadow_opacity_moderate, color = shadow_black_100)
+    val shadow_dusk = Typography(offsetX = shadow_offset_x_150, offsetY = shadow_offset_y_200, blur = blur_075, opacity = shadow_opacity_moderate, color = shadow_black_100)
+    val shadow_sunset = Typography(offsetX = shadow_offset_x_300, offsetY = shadow_offset_y_200, blur = blur_075, opacity = shadow_opacity_moderate, color = shadow_blue_100)
+    val opacity_subtle = opacity_088
+    val opacity_medium = opacity_072
+    val opacity_heavy = opacity_048
+    val opacity_ghost = opacity_032
+    val blend_hover_darker = blend_200
+    val blend_hover_lighter = blend_200
+    val blend_pressed_darker = blend_300
+    val blend_pressed_lighter = blend_300
+    val blend_focus_saturate = blend_200
+    val blend_disabled_desaturate = blend_300
+    val blend_container_hover_darker = blend_100
+    val color_icon_optical_balance = blend_200
+    val grid_gutter_xs = space_200
+    val grid_gutter_sm = space_250
+    val grid_gutter_md = space_300
+    val grid_gutter_lg = space_400
+    val grid_margin_xs = space_300
+    val grid_margin_sm = space_300
+    val grid_margin_md = space_400
+    val grid_margin_lg = space_500
+    val grid_gutter_native = space_250
+    val grid_margin_native = space_300
+    val icon_stroke_width = border_width_200
+    val icon_size_050 = 16.dp // Icon size calculated from fontSize050 × custom multiplier = 13 × 1.231 = 16px (rounded from 16.003). Uses optical correction multiplier instead of lineHeight050 (1.538) for better balance with small text. | Pairs with: Icon size for caption, legal, labelXs typography (smallest text)
+    val icon_size_075 = 20.dp // Icon size calculated from fontSize075 × lineHeight075 = 14 × 1.429 = 20px (rounded from 20.006) | Pairs with: Icon size for bodySm, buttonSm, labelSm typography
+    val icon_size_100 = 24.dp // Icon size calculated from fontSize100 × lineHeight100 = 16 × 1.5 = 24px | Pairs with: Icon size for bodyMd, buttonMd, labelMd, input typography (standard)
+    val icon_size_125 = 28.dp // Icon size calculated from fontSize125 × lineHeight125 = 18 × 1.556 = 28px (rounded from 28.008) | Pairs with: Icon size for bodyLg, buttonLg, labelLg typography
+    val icon_size_150 = 28.dp // Icon size calculated from fontSize150 × lineHeight150 = 20 × 1.4 = 28px | Pairs with: Icon size for h6 typography (smallest heading)
+    val icon_size_200 = 32.dp // Icon size calculated from fontSize200 × lineHeight200 = 23 × 1.391 = 32px (rounded from 31.993) | Pairs with: Icon size for h5 typography
+    val icon_size_300 = 32.dp // Icon size calculated from fontSize300 × lineHeight300 = 26 × 1.231 = 32px (rounded from 32.006) | Pairs with: Icon size for h4 typography
+    val icon_size_400 = 36.dp // Icon size calculated from fontSize400 × lineHeight400 = 29 × 1.241 = 36px (rounded from 35.989) | Pairs with: Icon size for h3 typography
+    val icon_size_500 = 40.dp // Icon size calculated from fontSize500 × lineHeight500 = 33 × 1.212 = 40px (rounded from 39.996) | Pairs with: Icon size for h2 typography
+    val icon_size_600 = 44.dp // Icon size calculated from fontSize600 × lineHeight600 = 37 × 1.19 = 44px (rounded from 44.03) | Pairs with: Icon size for h1 typography
+    val icon_size_700 = 48.dp // Icon size calculated from fontSize700 × lineHeight700 = 42 × 1.143 = 48px (rounded from 48.006) | Pairs with: Icon size for display typography (hero text)
+    // WCAG 2.4.7 Focus Visible
+    val accessibility_focus_offset = space_025
+    // WCAG 2.4.7 Focus Visible
+    val accessibility_focus_width = border_width_200
+    // WCAG 2.4.7 Focus Visible
+    val accessibility_focus_color = Color.argb(255, 0, 240, 255)
+    val border_none = border_width_000
+    val border_default = border_width_100
+    val border_emphasis = border_width_200
+    val border_heavy = border_width_400
+    val radius_none = radius_000
+    val radius_subtle = radius_025
+    val radius_small = radius_050
+    val radius_normal = radius_100
+    val radius_large = radius_200
+    val radius_full = radius_max
+    val radius_circle = radius_half
+    val space_grouped_none = space_000
+    val space_grouped_minimal = space_025
+    val space_grouped_tight = space_050
+    val space_grouped_normal = space_100
+    val space_grouped_loose = space_150
+    val space_related_none = space_000
+    val space_related_tight = space_100
+    val space_related_normal = space_200
+    val space_related_loose = space_300
+    val space_separated_none = space_000
+    val space_separated_tight = space_200
+    val space_separated_normal = space_300
+    val space_separated_loose = space_400
+    val space_sectioned_none = space_000
+    val space_sectioned_tight = space_400
+    val space_sectioned_normal = space_500
+    val space_sectioned_loose = space_600
+    val space_inset_100 = space_100
+    val space_inset_150 = space_150
+    val space_inset_200 = space_200
+    val space_inset_300 = space_300
+    val space_inset_400 = space_400
+    val space_inset_none = space_000
+    val space_inset_050 = space_050
+    val space_inset_075 = space_075
+
+    // Motion Tokens
+    // MARK: Duration Tokens
+    
+    /** Animation duration values in milliseconds */
+    object Duration {
+        /** duration150: 150ms */
+        val Duration150 = 150
+        /** duration250: 250ms */
+        val Duration250 = 250
+        /** duration350: 350ms */
+        val Duration350 = 350
+    }
+    
+    // MARK: Easing Tokens
+    
+    /** Piecewise linear easing via lookup table interpolation */
+    class PiecewiseLinearEasing(private val stops: List<Pair<Float, Float>>) : Easing {
+        override fun transform(fraction: Float): Float {
+            if (fraction <= 0f) return 0f
+            if (fraction >= 1f) return 1f
+            var lo = 0; var hi = stops.size - 1
+            while (lo < hi - 1) { val mid = (lo + hi) / 2; if (stops[mid].first <= fraction) lo = mid else hi = mid }
+            val seg = stops[lo]; val next = stops[hi]
+            val frac = if (next.first > seg.first) (fraction - seg.first) / (next.first - seg.first) else 1f
+            return seg.second + (next.second - seg.second) * frac
+        }
+    }
+    
+    /** Animation easing curves */
+    object Easing {
+        /** easingStandard: cubic-bezier(0.4, 0.0, 0.2, 1) */
+        val EasingStandard = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f)
+        /** easingDecelerate: cubic-bezier(0.0, 0.0, 0.2, 1) */
+        val EasingDecelerate = CubicBezierEasing(0.0f, 0.0f, 0.2f, 1.0f)
+        /** easingAccelerate: cubic-bezier(0.4, 0.0, 1, 1) */
+        val EasingAccelerate = CubicBezierEasing(0.4f, 0.0f, 1.0f, 1.0f)
+        /** easingGlideDecelerate: piecewise linear (15 stops, 350ms) */
+        val EasingGlideDecelerate = PiecewiseLinearEasing(listOf(0f to 0f, 0.009f to 0.012f, 0.02f to 0.05f, 0.092f to 0.411f, 0.118f to 0.517f, 0.146f to 0.611f, 0.177f to 0.694f, 0.211f to 0.765f, 0.248f to 0.824f, 0.289f to 0.872f, 0.334f to 0.91f, 0.384f to 0.939f, 0.509f to 0.977f, 0.684f to 0.994f, 1f to 1f))
+    }
+    
+    // MARK: Scale Tokens
+    
+    /** Transform scale factors (unitless) */
+    /** When applying to base values, use round() for whole pixels */
+    object Scale {
+        /** scale088: 0.88 */
+        val Scale088 = 0.88f
+        /** scale092: 0.92 */
+        val Scale092 = 0.92f
+        /** scale096: 0.96 */
+        val Scale096 = 0.96f
+        /** scale100: 1 */
+        val Scale100 = 1.0f
+        /** scale104: 1.04 */
+        val Scale104 = 1.04f
+        /** scale108: 1.08 */
+        val Scale108 = 1.08f
+    }
+    
+    // MARK: Semantic Motion Tokens
+    
+    /** Composed motion styles for specific animation contexts */
+    
+    /** Float label animation for text input fields */
+    object MotionFloatLabel {
+        val duration = Duration.Duration250
+        val easing = Easing.EasingStandard
+    }
+    
+    /** Focus state transitions for interactive elements */
+    object MotionFocusTransition {
+        val duration = Duration.Duration150
+        val easing = Easing.EasingStandard
+    }
+    
+    /** Button press and release animations */
+    object MotionButtonPress {
+        val duration = Duration.Duration150
+        val easing = Easing.EasingAccelerate
+    }
+    
+    /** Modal and overlay slide animations */
+    object MotionModalSlide {
+        val duration = Duration.Duration350
+        val easing = Easing.EasingDecelerate
+    }
+    
+    /** Selection state transitions for selectable elements */
+    object MotionSelectionTransition {
+        val duration = Duration.Duration250
+        val easing = Easing.EasingStandard
+    }
+    
+    /** Follow-through transitions that settle after a state change */
+    object MotionSettleTransition {
+        val duration = Duration.Duration350
+        val easing = Easing.EasingDecelerate
+    }
+    
+
+    // Layering Tokens (Elevation)
+    val elevation_none = 0.dp
+    val elevation_container = 8.dp
+    val elevation_navigation = 4.dp
+    val elevation_dropdown = 8.dp
+    val elevation_modal = 16.dp
+    val elevation_toast = 24.dp
+    val elevation_tooltip = 24.dp
+
+    // WCAG Theme Semantic Overrides (Spec 080 Phase 2)
+    val color_feedback_info_text_wcag = Color.argb(255, 99, 21, 143)
+    val color_feedback_info_background_wcag = Color.argb(255, 243, 224, 255)
+    val color_feedback_info_border_wcag = Color.argb(255, 99, 21, 143)
+    val color_action_primary_wcag_light = Color.argb(255, 26, 83, 92)
+    val color_action_primary_wcag_dark = Color.argb(255, 0, 240, 255)
+    val color_action_navigation_wcag_light = Color.argb(255, 15, 46, 51)
+    val color_action_navigation_wcag_dark = Color.argb(255, 217, 232, 234)
+    val color_contrast_on_action_wcag = Color.argb(255, 255, 255, 255)
+    val color_background_primary_subtle_wcag_light = Color.argb(255, 217, 232, 234)
+    val color_background_primary_subtle_wcag_dark = Color.argb(255, 15, 46, 51)
+}
