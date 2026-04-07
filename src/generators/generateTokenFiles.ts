@@ -19,17 +19,22 @@ import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
 import { getAllPrimitiveTokens } from '../tokens';
 import { getAllSemanticTokens } from '../tokens/semantic';
+import type { ResolvedConfig } from '../config/ConfigLoader';
 
 /**
- * Main generation function
+ * Main generation function.
+ *
+ * @param outputDir - Output directory (legacy parameter, used when no config provided)
+ * @param config - Optional resolved config from ConfigLoader. When provided, outputDir is ignored.
  */
-export function generateTokenFiles(outputDir: string = 'output'): void {
+export function generateTokenFiles(outputDir: string = 'output', config?: ResolvedConfig): void {
+  const effectiveOutputDir = config?.outputDir || outputDir;
   console.log('🚀 Starting token file generation...\n');
 
   // Create output directory if it doesn't exist
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-    console.log(`📁 Created output directory: ${outputDir}\n`);
+  if (!fs.existsSync(effectiveOutputDir)) {
+    fs.mkdirSync(effectiveOutputDir, { recursive: true });
+    console.log(`📁 Created output directory: ${effectiveOutputDir}\n`);
   }
 
   // Validate semantic token references before generation
@@ -149,7 +154,7 @@ export function generateTokenFiles(outputDir: string = 'output'): void {
   ]);
 
   const results = generator.generateAll({
-    outputDir,
+    outputDir: effectiveOutputDir,
     version: '1.0.0',
     includeComments: true,
     groupByCategory: true,
