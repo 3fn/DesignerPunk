@@ -1002,21 +1002,23 @@ export class TokenFileGenerator {
     platform: 'web' | 'ios' | 'android',
     baseLight: Array<Omit<SemanticToken, 'primitiveTokens'>>,
     baseDark: Array<Omit<SemanticToken, 'primitiveTokens'>>,
-    themeOverrides: ThemeOverrideSet[]
+    themeOverrides: ThemeOverrideSet[],
+    name: string = 'DesignerPunk',
+    abbreviation: string = 'DP'
   ): string[] {
     const lines: string[] = [];
-    for (const theme of themeOverrides) {
-      switch (platform) {
-        case 'web':
+    switch (platform) {
+      case 'web':
+        for (const theme of themeOverrides) {
           lines.push(...this.generateWebThemeBlock(baseLight, baseDark, theme));
-          break;
-        case 'ios':
-          // Stub — Task 2.3 implements Swift protocol + structs + EnvironmentKey
-          break;
-        case 'android':
-          // Stub — Task 2.4 implements Kotlin data class + instances + CompositionLocal
-          break;
-      }
+        }
+        break;
+      case 'ios':
+        lines.push(...this.generateSwiftThemeTypes(baseLight, baseDark, themeOverrides, name, abbreviation));
+        break;
+      case 'android':
+        // Stub — Task 2.4 implements Kotlin data class + instances + CompositionLocal
+        break;
     }
     return lines;
   }
@@ -1089,8 +1091,165 @@ export class TokenFileGenerator {
   }
 
   /**
+   * Generate Swift theme types: protocol, concrete structs, and EnvironmentKey.
+   * Uses SwiftUI Color type directly (not UIColor) for clean consumption.
+   *
+   * Output structure:
+   * - `{Name}Theme` protocol with theme-varying color properties
+   * - Concrete struct per theme context (light+dark for 'both', single for 'dark'/'light')
+   * - `{Abbreviation}ThemeKey: EnvironmentKey` with base light default
+   * - `EnvironmentValues` extension for `.{abbreviation}Theme` access
+   */
+  private generateSwiftThemeTypes(
+    baseLight: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    baseDark: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    themeOverrides: ThemeOverrideSet[],
+    name: string,
+    abbreviation: string
+  ): string[] {
+    // Collect all theme-varying token names
+    const varyingNames = new Set<string>();
+    for (const theme of themeOverrides) {
+      for (const key of theme.overrideKeys) {
+        varyingNames.add(key);
+      }
+    }
+    // Also include tokens that differ between base light and dark
+    const baseDarkMap = new Map(baseDark.map(t => [t.name, t]));
+    for (const lt of baseLight) {
+      if (lt.category !== SemanticCategory.COLOR) continue;
+      const dt = baseDarkMap.get(lt.name);
+      if (!dt) continue;
+      const lv = this.getResolvedValue(lt);
+      const dv = this.getResolvedValue(dt);
+      if (lv !== dv) varyingNames.add(lt.name);
+    }
+
+    if (varyingNames.size === 0) return [];
+
+    const lines: string[] = [];
+    const lowerAbbr = abbreviation.toLowerCase();
+
+    // Sort for deterministic output
+    const sortedNames = Array.from(varyingNames).sort();
+
+    // --- Protocol ---
+    lines.push('');
+    lines.push(`// MARK: - ${name} Theme System (Spec 094)`);
+    lines.push('');
+    lines.push('import SwiftUI');
+    lines.push('');
+    lines.push(`public protocol ${name}Theme {`);
+    for (const tokenName of sortedNames) {
+      const propName = this.iosGenerator.getTokenName(tokenName, SemanticCategory.COLOR);
+      lines.push(`    var ${propName}: Color { get }`);
+    }
+    lines.push('}');
+
+    // --- Base light struct ---
+    lines.push('');
+    lines.push(`public struct ${name}BaseLight: ${name}Theme {`);
+    for (const tokenName of sortedNames) {
+      const propName = this.iosGenerator.getTokenName(tokenName, SemanticCategory.COLOR);
+      const token = baseLight.find(t => t.name === tokenName);
+      const value = token ? this.rgbaToSwiftUIColor(this.getResolvedValue(token)) : 'Color.clear';
+      lines.push(`    public let ${propName}: Color = ${value}`);
+    }
+    lines.push('}');
+
+    // --- Base dark struct ---
+    lines.push('');
+    lines.push(`public struct ${name}BaseDark: ${name}Theme {`);
+    for (const tokenName of sortedNames) {
+      const propName = this.iosGenerator.getTokenName(tokenName, SemanticCategory.COLOR);
+      const dt = baseDark.find(t => t.name === tokenName);
+      const value = dt ? this.rgbaToSwiftUIColor(this.getResolvedValue(dt)) : 'Color.clear';
+      lines.push(`    public let ${propName}: Color = ${value}`);
+    }
+    lines.push('}');
+
+    // --- Theme override structs ---
+    for (const theme of themeOverrides) {
+      const themeName = theme.name.charAt(0).toUpperCase() + theme.name.slice(1);
+      if (theme.mode === 'both') {
+        // Light variant
+        lines.push('');
+        lines.push(`public struct ${name}${themeName}Light: ${name}Theme {`);
+        for (const tokenName of sortedNames) {
+          const propName = this.iosGenerator.getTokenName(tokenName, SemanticCategory.COLOR);
+          const token = theme.lightTokens.find(t => t.name === tokenName)
+            || baseLight.find(t => t.name === tokenName);
+          const value = token ? this.rgbaToSwiftUIColor(this.getResolvedValue(token)) : 'Color.clear';
+          lines.push(`    public let ${propName}: Color = ${value}`);
+        }
+        lines.push('}');
+        // Dark variant
+        lines.push('');
+        lines.push(`public struct ${name}${themeName}Dark: ${name}Theme {`);
+        for (const tokenName of sortedNames) {
+          const propName = this.iosGenerator.getTokenName(tokenName, SemanticCategory.COLOR);
+          const token = theme.darkTokens.find(t => t.name === tokenName)
+            || baseDark.find(t => t.name === tokenName);
+          const value = token ? this.rgbaToSwiftUIColor(this.getResolvedValue(token)) : 'Color.clear';
+          lines.push(`    public let ${propName}: Color = ${value}`);
+        }
+        lines.push('}');
+      } else {
+        // Single-mode (dark or light)
+        const tokens = theme.mode === 'dark' ? theme.darkTokens : theme.lightTokens;
+        const fallback = theme.mode === 'dark' ? baseDark : baseLight;
+        lines.push('');
+        lines.push(`public struct ${name}${themeName}: ${name}Theme {`);
+        for (const tokenName of sortedNames) {
+          const propName = this.iosGenerator.getTokenName(tokenName, SemanticCategory.COLOR);
+          const token = tokens.find(t => t.name === tokenName)
+            || fallback.find(t => t.name === tokenName);
+          const value = token ? this.rgbaToSwiftUIColor(this.getResolvedValue(token)) : 'Color.clear';
+          lines.push(`    public let ${propName}: Color = ${value}`);
+        }
+        lines.push('}');
+      }
+    }
+
+    // --- EnvironmentKey ---
+    lines.push('');
+    lines.push(`public struct ${abbreviation}ThemeKey: EnvironmentKey {`);
+    lines.push(`    public static let defaultValue: any ${name}Theme = ${name}BaseLight()`);
+    lines.push('}');
+    lines.push('');
+    lines.push('public extension EnvironmentValues {');
+    lines.push(`    var ${lowerAbbr}Theme: any ${name}Theme {`);
+    lines.push(`        get { self[${abbreviation}ThemeKey.self] }`);
+    lines.push(`        set { self[${abbreviation}ThemeKey.self] = newValue }`);
+    lines.push('    }');
+    lines.push('}');
+
+    return lines;
+  }
+
+  /** Extract the resolved value string from a semantic token's primitiveReferences. */
+  private getResolvedValue(token: Omit<SemanticToken, 'primitiveTokens'>): string {
+    return token.primitiveReferences?.value
+      ?? token.primitiveReferences?.default
+      ?? Object.values(token.primitiveReferences || {})[0]
+      ?? '';
+  }
+
+  /** Convert an rgba() string to SwiftUI Color initializer. */
+  private rgbaToSwiftUIColor(rgba: string): string {
+    const m = rgba.match(/rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
+    if (!m) return `Color.clear /* unresolved: ${rgba} */`;
+    const r = (+m[1] / 255).toFixed(2);
+    const g = (+m[2] / 255).toFixed(2);
+    const b = (+m[3] / 255).toFixed(2);
+    const a = (+m[4]).toFixed(2);
+    return `Color(red: ${r}, green: ${g}, blue: ${b}, opacity: ${a})`;
+  }
+
+  /**
+   * Generate icon size token with calculated value.
    * Resolves fontSize and lineHeight primitives and applies formula: fontSize × lineHeight
-   * 
+   *
    * @param semantic - Icon size semantic token
    * @param platform - Target platform
    * @param generator - Platform-specific generator
