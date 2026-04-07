@@ -55,6 +55,7 @@ Before Phase 2 starts:
 - Lina: Shadow DOM + CSS custom property smoke test with Nav-Header-App under themed context
 - Sparky: Build tooling input — project scaffolding for the marketing site repo
 - Stacy: Confirm process scaffolding covers Phase 2 product work
+- Thurgood: Full MCP audit — verify Docs MCP and Application MCP serve accurate, current information post-Phase 1
 - Peter: Finalize design direction and content priorities
 
 ---
