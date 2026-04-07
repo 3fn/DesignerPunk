@@ -69,6 +69,14 @@ import { ProgressStepperDetailed } from './components/core/Progress-Stepper-Deta
 import { NavSegmentedChoiceBase } from './components/core/Nav-SegmentedChoice-Base/platforms/web/NavSegmentedChoiceBase.web';
 // Nav-TabBar-Base - Stemma System naming (primary bottom navigation with icon-only tabs)
 import { NavTabBarBase } from './components/core/Nav-TabBar-Base/platforms/web/NavTabBarBase.web';
+// Nav-Header-Base - Stemma System naming (structural primitive for top-of-screen navigation bars)
+import { NavHeaderBase } from './components/core/Nav-Header-Base/platforms/web/NavHeaderBase.web';
+// Nav-Header-App - Stemma System naming (app-level header composing Nav-Header-Base)
+import { NavHeaderApp } from './components/core/Nav-Header-App/platforms/web/NavHeaderApp.web';
+// Nav-Header-Page - Stemma System naming (page-level header composing Nav-Header-Base)
+import { NavHeaderPage } from './components/core/Nav-Header-Page/platforms/web/NavHeaderPage.web';
+// Progress-Bar-Base - Stemma System naming (determinate/indeterminate progress bar)
+import { ProgressBarBase } from './components/core/Progress-Bar-Base/platforms/web/ProgressBarBase.web';
 
 /**
  * Check if design tokens are loaded in the document.
@@ -185,6 +193,14 @@ safeDefine('progress-stepper-detailed', ProgressStepperDetailed);
 safeDefine('nav-segmented-choice', NavSegmentedChoiceBase);
 // Nav-TabBar-Base - Stemma System naming (primary bottom navigation with icon-only tabs)
 safeDefine('nav-tab-bar', NavTabBarBase);
+// Nav-Header-Base - Stemma System naming (structural primitive for top-of-screen navigation bars)
+safeDefine('nav-header', NavHeaderBase);
+// Nav-Header-App - Stemma System naming (app-level header composing Nav-Header-Base)
+safeDefine('nav-header-app', NavHeaderApp);
+// Nav-Header-Page - Stemma System naming (page-level header composing Nav-Header-Base)
+safeDefine('nav-header-page', NavHeaderPage);
+// Progress-Bar-Base - Stemma System naming (determinate/indeterminate progress bar)
+safeDefine('progress-bar', ProgressBarBase);
 
 // Check tokens after DOM is ready and CSS is applied
 // Uses requestAnimationFrame to ensure stylesheets have been fully parsed and applied
@@ -202,7 +218,7 @@ if (typeof document !== 'undefined') {
 
 // Export all components for UMD global access and ESM imports
 // Requirements: 1.2, 2.3
-export { InputTextBase, InputTextEmail, InputTextPassword, InputTextPhoneNumber, ButtonCTA, IconBaseElement, ButtonIcon, ContainerBaseWeb, ButtonVerticalListItem, ButtonVerticalListSet, AvatarBaseElement, BadgeLabelBase, BadgeCountBase, BadgeCountNotification, InputCheckboxBaseElement, InputCheckboxLegalElement, ChipBaseElement, ChipFilterElement, ChipInputElement, ContainerCardBaseWeb, InputRadioBaseElement, InputRadioSetElement, ProgressIndicatorNodeBase, ProgressIndicatorConnectorBase, ProgressIndicatorLabelBase, ProgressPaginationBase, ProgressStepperBase, ProgressStepperDetailed, NavSegmentedChoiceBase, NavTabBarBase };
+export { InputTextBase, InputTextEmail, InputTextPassword, InputTextPhoneNumber, ButtonCTA, IconBaseElement, ButtonIcon, ContainerBaseWeb, ButtonVerticalListItem, ButtonVerticalListSet, AvatarBaseElement, BadgeLabelBase, BadgeCountBase, BadgeCountNotification, InputCheckboxBaseElement, InputCheckboxLegalElement, ChipBaseElement, ChipFilterElement, ChipInputElement, ContainerCardBaseWeb, InputRadioBaseElement, InputRadioSetElement, ProgressIndicatorNodeBase, ProgressIndicatorConnectorBase, ProgressIndicatorLabelBase, ProgressPaginationBase, ProgressStepperBase, ProgressStepperDetailed, NavSegmentedChoiceBase, NavTabBarBase, NavHeaderBase, NavHeaderApp, NavHeaderPage, ProgressBarBase };
 
 // Also export with more intuitive names for the UMD global
 export const Icon = IconBaseElement;
@@ -246,3 +262,9 @@ export const StepperDetailed = ProgressStepperDetailed;
 export const SegmentedChoice = NavSegmentedChoiceBase;
 // Nav-TabBar - Intuitive alias for NavTabBarBase
 export const TabBar = NavTabBarBase;
+// Nav-Header - Intuitive aliases for navigation header components
+export const NavHeader = NavHeaderBase;
+export const NavHeaderAppElement = NavHeaderApp;
+export const NavHeaderPageElement = NavHeaderPage;
+// Progress-Bar - Intuitive alias for ProgressBarBase
+export const ProgressBar = ProgressBarBase;

@@ -3,13 +3,11 @@ purpose: "Structural primitive for top-of-screen navigation bars providing safe 
 # Derived from family-level guidance (Component-Family-Navigation.md)
 usage:
   when_to_use:
-    - "Switching between 2–5 mutually exclusive content views within a single screen"
-    - "Persistent bottom navigation between 3–5 top-level app destinations"
+    - "Building a semantic header variant that needs safe area, background, layout regions, and landmark semantics"
+    - "Internal composition target for Nav-Header-App and Nav-Header-Page"
   when_not_to_use:
-    - "More than 5 options — consider Nav-Tabs (planned) or a dropdown"
-    - "Hierarchical navigation — consider Nav-Breadcrumb (planned)"
-    - "Actions that don't switch views — consider Chip-Filter or Button"
-    - "In-page content switching — use Nav-SegmentedChoice-Base, not Nav-TabBar-Base"
+    - "Product-level screen headers — use Nav-Header-App (root destinations) or Nav-Header-Page (pushed/presented screens)"
+    - "Direct use in product code — this is an internal structural primitive"
 
 contexts:
   - "app-bars"

@@ -373,7 +373,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
 
 ---
 
-- [ ] 5. Integration Guide & Agent Updates
+- [ ] 5. Integration Guide, Steering Docs & Agent Updates
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
@@ -382,6 +382,11 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
   - Update `docs/roadmap/integration-guide-draft.md` with actual pipeline config steps, theme creation workflow, prerequisites
   - Document TypeScript execution strategy decision
   - Include complete `designerpunk.config.ts` example with `name`, `abbreviation`, theme registration
+  - Update Docs MCP steering docs to reflect new infrastructure:
+    - `Token-Governance.md` — theme registration governance, product theme creation rules
+    - `Rosetta-System-Architecture.md` — registry pattern, configurable pipeline, `defineConfig` API
+    - `Component-Development-Guide.md` — new iOS/Android consumption pattern (`@Environment`/`CompositionLocal` instead of static `DesignTokens`)
+    - `Token-Quick-Reference.md` — theme-varying vs static distinction if relevant to agent token selection
   - Update agent resources: Ada (theme registry), Leo (token data queries), product agents (package consumption)
   - Update `/knowledge` bases for relevant agents
   - CSS scoping integration test: render Shadow DOM components inside `data-theme` container, verify themed values inherited (including nested Nav-Header-App → Nav-Header-Base) — owned by Lina
