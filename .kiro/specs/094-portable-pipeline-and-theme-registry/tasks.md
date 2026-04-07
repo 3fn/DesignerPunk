@@ -21,7 +21,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
 
 ## Task List
 
-- [ ] 0. Prereqs: ESM Bundle Fix + Metadata Correction
+- [x] 0. Prereqs: ESM Bundle Fix + Metadata Correction
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
