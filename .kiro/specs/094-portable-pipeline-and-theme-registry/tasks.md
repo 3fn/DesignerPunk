@@ -105,7 +105,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
 
 ---
 
-- [ ] 2. Platform Generator Restructuring (WS4 — Phase 2: Extend)
+- [x] 2. Platform Generator Restructuring (WS4 — Phase 2: Extend)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
@@ -179,7 +179,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Tests: data class generated, instances correct, CompositionLocal default correct
     - _Requirements: R3 AC 12-17_
 
-  - [ ] 2.5 DTCG and Figma generator updates
+  - [x] 2.5 DTCG and Figma generator updates
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
