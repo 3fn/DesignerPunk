@@ -13,10 +13,10 @@ import { PrimitiveTokenRegistry } from '../registries/PrimitiveTokenRegistry';
 import { SemanticTokenRegistry } from '../registries/SemanticTokenRegistry';
 import { SemanticOverrideResolver } from '../resolvers/SemanticOverrideResolver';
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
+import { ThemeRegistry } from '../themes/ThemeRegistry';
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
-import type { ContextOverrideSet } from '../tokens/themes/types';
 import { getAllPrimitiveTokens } from '../tokens';
 import { getAllSemanticTokens } from '../tokens/semantic';
 
@@ -77,7 +77,24 @@ export function generateTokenFiles(outputDir: string = 'output'): void {
   // Initialize generator
   const generator = new TokenFileGenerator();
 
-  // Mode + theme resolution: resolve semantic tokens into 4 context sets (Spec 080 Phase 2)
+  // Mode + theme resolution via ThemeRegistry (Spec 094)
+  const themeRegistry = new ThemeRegistry();
+  themeRegistry.setSemanticValidator((name) => semanticRegistry.has(name));
+
+  // Register existing themes with pre-composed override maps matching legacy behavior.
+  // 'wcag' mode 'both': light-wcag uses wcag overrides, dark-wcag uses merged dark+wcag+dark-wcag.
+  // To produce identical output, we register two themes:
+  //   - 'dark' (mode 'dark'): dark overrides only → produces dark-base context
+  //   - 'wcag' (mode 'both'): light gets wcag overrides, dark gets merged overrides
+  // The base light context has no overrides (handled by resolveForRegistry's baseline).
+
+  // For the WCAG theme, we need different overrides per mode.
+  // The registry stores one override map per theme. To match legacy behavior where
+  // dark-wcag = dark + wcag + dark-wcag merged, we register the WCAG theme with
+  // the light-wcag overrides and handle the dark-wcag composition in the resolver.
+  // BUT — for migration safety, we use the legacy resolveAllContexts path and
+  // convert its output to ResolvedThemeSet format. This guarantees identical output.
+
   const overrideResolver = new SemanticOverrideResolver(semanticRegistry, darkSemanticOverrides);
   const overrideValidation = overrideResolver.validate();
   if (!overrideValidation.valid) {
@@ -87,11 +104,26 @@ export function generateTokenFiles(outputDir: string = 'output'): void {
     return;
   }
 
-  const contextOverrides: ContextOverrideSet = {
+  // Register themes in the registry for downstream consumers (getThemeVaryingTokens, etc.)
+  themeRegistry.register({
+    name: 'dark',
+    mode: 'dark',
+    overrides: darkSemanticOverrides,
+  });
+  themeRegistry.register({
+    name: 'wcag',
+    mode: 'both',
+    overrides: { ...wcagSemanticOverrides, ...darkWcagSemanticOverrides },
+  });
+
+  // Use legacy resolution path to guarantee identical output during migration.
+  // The registry is populated for getThemeVaryingTokens() and future consumers,
+  // but generation still uses the proven ContextOverrideSet path.
+  const contextOverrides = {
     'light-wcag': wcagSemanticOverrides,
     'dark-base': darkSemanticOverrides,
     'dark-wcag': { ...darkSemanticOverrides, ...wcagSemanticOverrides, ...darkWcagSemanticOverrides },
-  };
+  } as import('../tokens/themes/types').ContextOverrideSet;
 
   const contextValidation = overrideResolver.validateAll(contextOverrides);
   if (!contextValidation.valid) {

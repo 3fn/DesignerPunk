@@ -16,11 +16,12 @@ const FIXTURES_DIR = path.resolve(
 );
 const DIST_DIR = path.resolve(__dirname, '../../../../dist');
 
-/** Strip generated timestamps so comparison is content-only */
+/** Strip generated timestamps and version strings so comparison is content-only */
 function normalizeTimestamp(content: string): string {
   return content
     .replace(/Generated: \d{4}-\d{2}-\d{2}T[\d:.]+Z/g, 'Generated: NORMALIZED')
-    .replace(/"generatedAt":\s*"\d{4}-\d{2}-\d{2}T[\d:.]+Z"/g, '"generatedAt": "NORMALIZED"');
+    .replace(/"generatedAt":\s*"\d{4}-\d{2}-\d{2}T[\d:.]+Z"/g, '"generatedAt": "NORMALIZED"')
+    .replace(/"rosettaVersion":\s*"\d+\.\d+\.\d+"/g, '"rosettaVersion": "NORMALIZED"');
 }
 
 const SNAPSHOT_FILES = [

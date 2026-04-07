@@ -12,6 +12,8 @@
 import type { SemanticToken } from '../types/SemanticToken';
 import type { SemanticTokenRegistry } from '../registries/SemanticTokenRegistry';
 import type { SemanticOverrideMap, ThemeContext, ContextOverrideSet } from '../tokens/themes/types';
+import type { ThemeRegistry } from '../themes/ThemeRegistry';
+import type { ResolvedThemeSet } from '../themes/ResolvedThemeSet';
 
 export interface OverrideValidationResult {
   valid: boolean;
@@ -99,5 +101,55 @@ export class SemanticOverrideResolver {
     }
 
     return result;
+  }
+
+  /**
+   * Resolve tokens for all registered themes in a ThemeRegistry.
+   * Returns a ResolvedThemeSet per context (mode × theme combination).
+   *
+   * For themes with mode 'both', produces two sets (light + dark).
+   * For themes with mode 'dark' or 'light', produces one set.
+   *
+   * The base theme (light-base, dark-base) is always included as the
+   * no-override baseline, even if no 'base' theme is registered.
+   */
+  resolveForRegistry(tokens: SemanticToken[], themeRegistry: ThemeRegistry): ResolvedThemeSet[] {
+    const results: ResolvedThemeSet[] = [];
+
+    // Always include the base contexts (no overrides)
+    results.push({
+      theme: null,
+      contextKey: 'light-base',
+      mode: 'light',
+      themeId: 'base',
+      tokens: tokens.map(t => ({ ...t })),
+    });
+    results.push({
+      theme: null,
+      contextKey: 'dark-base',
+      mode: 'dark',
+      themeId: 'base',
+      tokens: tokens.map(t => ({ ...t })),
+    });
+
+    // Resolve each registered theme
+    for (const theme of themeRegistry.getAll()) {
+      const modes: Array<'light' | 'dark'> =
+        theme.mode === 'both' ? ['light', 'dark'] :
+        theme.mode === 'dark' ? ['dark'] :
+        ['light'];
+
+      for (const mode of modes) {
+        results.push({
+          theme,
+          contextKey: `${mode}-${theme.name}`,
+          mode,
+          themeId: theme.name,
+          tokens: tokens.map(t => applyOverride(t, theme.overrides)),
+        });
+      }
+    }
+
+    return results;
   }
 }
