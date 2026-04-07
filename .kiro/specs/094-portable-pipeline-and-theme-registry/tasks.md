@@ -36,7 +36,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
 
 ---
 
-- [ ] 1. Theme Registry & Migration (WS4 — Phase 1: Migrate)
+- [x] 1. Theme Registry & Migration (WS4 — Phase 1: Migrate)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
@@ -62,7 +62,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
   - Commit: `./.kiro/hooks/commit-task.sh "Task 1 Complete: Theme Registry & Migration"`
   - Verify on GitHub
 
-  - [ ] 1.1 Capture pre-migration snapshots
+  - [x] 1.1 Capture pre-migration snapshots
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Ada
@@ -71,7 +71,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - These snapshots are the regression baseline for the entire spec
     - _Requirements: R6 AC 4_
 
-  - [ ] 1.2 Implement ThemeRegistry
+  - [x] 1.2 Implement ThemeRegistry
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -81,7 +81,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Unit tests: register, iterate, duplicate rejection, invalid reference rejection, theme-varying token set computation
     - _Requirements: R1 AC 1-4, R2 AC 5_
 
-  - [ ] 1.3 Migrate existing themes to registry
+  - [x] 1.3 Migrate existing themes to registry
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -94,7 +94,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Assert all platform outputs match pre-migration snapshots (byte-for-byte)
     - _Requirements: R1 AC 5-6, R2 AC 1, R6 AC 1-4_
 
-  - [ ] 1.4 Run full regression
+  - [x] 1.4 Run full regression
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -132,7 +132,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
   - Commit: `./.kiro/hooks/commit-task.sh "Task 2 Complete: Platform Generator Restructuring"`
   - Verify on GitHub
 
-  - [ ] 2.1 Split `generatePlatformTokens` for theme-aware output
+  - [x] 2.1 Split `generatePlatformTokens` for theme-aware output
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Ada
