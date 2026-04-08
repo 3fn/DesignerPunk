@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "10.2.2",
+  "version": "10.2.3",
   "description": "True Native cross-platform design system with mathematical foundations",
   "main": "./dist/browser/designerpunk.esm.js",
   "module": "./dist/browser/designerpunk.esm.js",
@@ -14,6 +14,7 @@
     "dist/config/*.js",
     "dist/config/*.d.ts",
     "dist/cli/designerpunk.js",
+    "bin/",
     "dist/blend/*.js",
     "dist/blend/*.d.ts",
     "dist/DesignTokens.web.css",
@@ -65,7 +66,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "designerpunk": "./dist/cli/designerpunk.js"
+    "designerpunk": "./bin/designerpunk.js"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

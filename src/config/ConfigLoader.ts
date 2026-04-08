@@ -67,13 +67,12 @@ export async function loadConfig(cwd: string = process.cwd()): Promise<ResolvedC
   const output = userConfig.output || DEFAULTS.output;
   const componentTokenPaths = userConfig.componentTokens || DEFAULTS.componentTokens;
 
-  // Resolve token source root: installed package or repo root
+  // Resolve token source root: relative to this module (inside the package), or cwd fallback
+  const fromConfig = path.resolve(__dirname, '../..');
   let tokenSourceRoot: string;
-  try {
-    const pkgJsonPath = require.resolve('@designerpunk/core/package.json');
-    tokenSourceRoot = path.dirname(pkgJsonPath);
-  } catch {
-    // Not installed as a package — assume we're in the DesignerPunk repo
+  if (fs.existsSync(path.join(fromConfig, 'package.json'))) {
+    tokenSourceRoot = fromConfig;
+  } else {
     tokenSourceRoot = cwd;
   }
 

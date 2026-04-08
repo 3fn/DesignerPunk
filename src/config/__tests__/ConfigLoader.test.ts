@@ -56,11 +56,13 @@ describe('ConfigLoader', () => {
     expect(config.outputDir).toBe(path.resolve(tmpDir, 'dist'));
   });
 
-  test('resolves token source root to cwd when not installed as package', async () => {
+  test('resolves token source root to package root via __dirname', async () => {
     const config = await loadConfig(tmpDir);
 
-    // Not installed as @designerpunk/core in tmpDir, so falls back to cwd
-    expect(config.tokenSourceRoot).toBe(tmpDir);
+    // tokenSourceRoot resolves relative to ConfigLoader's __dirname (the package root),
+    // not cwd. This works in both repo and product contexts.
+    expect(config.tokenSourceRoot).toContain('DesignerPunk');
+    expect(require('fs').existsSync(path.join(config.tokenSourceRoot, 'package.json'))).toBe(true);
   });
 
   test('resolves component token dirs relative to config dir', async () => {

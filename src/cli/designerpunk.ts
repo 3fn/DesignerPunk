@@ -41,13 +41,15 @@ async function main() {
   }
 }
 
-/** Resolve the DesignerPunk package root — installed package or cwd fallback. */
+/** Resolve the DesignerPunk package root — relative to this CLI file, or cwd fallback. */
 function resolvePackageRoot(): string {
-  try {
-    return path.dirname(require.resolve('@designerpunk/core/package.json'));
-  } catch {
-    return process.cwd();
+  // The CLI lives at src/cli/designerpunk.ts (or bin/designerpunk.js).
+  // The package root is two levels up from src/cli/.
+  const fromCli = path.resolve(__dirname, '../..');
+  if (require('fs').existsSync(path.join(fromCli, 'package.json'))) {
+    return fromCli;
   }
+  return process.cwd();
 }
 
 async function runGenerate() {
