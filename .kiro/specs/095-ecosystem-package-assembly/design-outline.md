@@ -206,12 +206,16 @@ Steering docs, release tooling, test standards, process docs, audit methodology,
 
 | Item | Rationale |
 |------|-----------|
-| `npx designerpunk sync:ios` / `sync:android` | Native platform consumption requires a sync mechanism. Design the target model now, build for M0b. |
-| Kotlin package namespace from config | Generator produces `com.designerpunk.*` — product-specific namespaces deferred. |
-| Swift Package generation for iOS | SPM local package could give iOS a cleaner consumption path than file copy. |
+| `npx designerpunk sync:ios` | iOS files in npm package need to be synced to Xcode project. Manual copy documented for M0a. |
+| `npx designerpunk sync:android` | Android files in npm package need to be synced to Gradle module. Manual copy documented for M0a. |
+| Kotlin package namespace from config | Generator produces `com.designerpunk.*`. Product-specific namespaces require generator change. |
+| Swift Package generation for local SPM | SPM could reference a local package — cleaner than file copy for iOS. |
+| Compose BOM version compatibility | Document minimum Compose BOM version components are written against. Integration Guide item for M0b. |
+| R8/ProGuard keep rules | Synced Kotlin files need keep rules if product uses code shrinking. Integration Guide item for M0b. |
+| iOS framework dependency metadata | `UIKit` and `SwiftUI` need to be declared when sync tool generates `Package.swift`. |
 | Tree-shaking / individual component exports | Full bundle for M0a. Side-effect-free individual exports for M0b. |
-| Personal Note template (replace Peter's note with template for other humans) | Only one foreseeable customer right now. |
-| Exclude "A Vision of the Future.md" | Peter's philosophical foundation, not reusable ecosystem artifact. Defer until second customer. |
+| Personal Note template | Replace Peter's note with template for other humans. Only one customer right now. |
+| Exclude "A Vision of the Future.md" | Peter's philosophical foundation, not reusable ecosystem artifact. |
 
 ---
 
