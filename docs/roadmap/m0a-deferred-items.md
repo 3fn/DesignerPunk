@@ -19,7 +19,7 @@ Each entry records: what was deferred, which spec or planning doc deferred it, w
 | `mode: 'light'` (light-only theme) | No current use case | A product needs a light-only theme |
 | `data-theme` attribute configurability | No collision scenario today; adding prefix later is non-breaking | A product has a competing `data-theme` system |
 | ThemeAwareBlendUtilities consolidation (iOS) | Existing `ThemeModeKey` can coexist during migration | Post-R8 cleanup or M0b iOS work |
-| Platform token reference build-time validation | Cross-reference `DesignTokens.*` usages in platform files against generated output. Prevents the quality gap found by Data and Kenya (10 Android + 7 iOS components with broken refs). Same pattern as ESM bundle reconciliation test. | After R8 fixes the existing broken refs |
+| Platform token reference build-time validation | Cross-reference `DesignTokens.*` usages in platform files against generated output. Prevents the quality gap found by Data and Kenya (10 Android + 7 iOS components with broken refs). Same pattern as ESM bundle reconciliation test. | After R8 fixes the existing broken refs | **Resolved → Spec 095 scope** |
 
 ## North Star / Roadmap Decisions
 

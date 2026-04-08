@@ -140,6 +140,7 @@ In a product context, agents need to know:
 - Agent configuration template for product repos
 - Integration Guide contribution (Block B section)
 - Knowledge base setup documentation
+- Platform token reference build-time validation test — cross-reference `DesignTokens.*` usages in platform files against generated output (prevents recurrence of the quality gap found during Spec 094 R8)
 
 ### Out of Scope
 - Token pipeline changes (Spec 094 — complete)
