@@ -35,7 +35,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
-- [ ] 2. Package.json Restructuring
+- [x] 2. Package.json Restructuring
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
@@ -94,7 +94,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
     - Add `tsx` to `dependencies` (not devDependencies — runtime pipeline dependency)
     - _Requirements: R5 AC 6, R6 AC 1-2_
 
-  - [ ] 2.4 Cleanup duplicates
+  - [x] 2.4 Cleanup duplicates
     **Type**: Implementation
     **Validation**: Tier 1 - Minimal
     **Agent**: Lina
