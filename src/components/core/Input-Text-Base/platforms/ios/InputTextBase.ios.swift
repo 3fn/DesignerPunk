@@ -101,6 +101,8 @@ struct InputTextBase: View {
     /// Whether reduce motion is enabled
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     
+    @Environment(\.dpTheme) private var theme
+    
     /// Whether label animation has completed (for icon timing coordination)
     @State private var labelAnimationComplete: Bool = true
     
@@ -124,33 +126,33 @@ struct InputTextBase: View {
     /// Label font size based on floated state
     private var labelFont: Font {
         if isLabelFloated {
-            return Font.system(size: DesignTokens.typography.labelMdFloat.fontSize)
-                .weight(DesignTokens.typography.labelMdFloat.fontWeight)
+            return Font.system(size: DesignTokens.typographyLabelMdFloat.fontSize)
+                .weight(DesignTokens.typographyLabelMdFloat.fontWeight)
         } else {
-            return Font.system(size: DesignTokens.typography.labelMd.fontSize)
-                .weight(DesignTokens.typography.labelMd.fontWeight)
+            return Font.system(size: DesignTokens.typographyLabelMd.fontSize)
+                .weight(DesignTokens.typographyLabelMd.fontWeight)
         }
     }
     
     /// Label color based on state
     private var labelColor: Color {
         if hasError {
-            return Color(DesignTokens.colorFeedbackErrorText)
+            return theme.colorFeedbackErrorText
         } else if isSuccess {
-            return Color(DesignTokens.colorFeedbackSuccessText)
+            return theme.colorFeedbackSuccessText
         } else if isDisabled {
-            return Color(DesignTokens.colorActionPrimary).disabledBlend()
+            return theme.colorActionPrimary.disabledBlend()
         } else if isFocused {
-            return Color(DesignTokens.colorActionPrimary).focusBlend()
+            return theme.colorActionPrimary.focusBlend()
         } else {
-            return Color(DesignTokens.color.text.muted)
+            return theme.colorTextMuted
         }
     }
     
     /// Label vertical offset based on floated state
     private var labelOffset: CGFloat {
         if isLabelFloated {
-            return -(DesignTokens.typography.labelMd.lineHeight + DesignTokens.space.grouped.tight)
+            return -(DesignTokens.typographyLabelMd.lineHeight + DesignTokens.spaceGroupedTight)
         } else {
             return 0
         }
@@ -159,15 +161,15 @@ struct InputTextBase: View {
     /// Border color based on state
     private var borderColor: Color {
         if hasError {
-            return Color(DesignTokens.colorFeedbackErrorText)
+            return theme.colorFeedbackErrorText
         } else if isSuccess {
-            return Color(DesignTokens.colorFeedbackSuccessText)
+            return theme.colorFeedbackSuccessText
         } else if isDisabled {
-            return Color(DesignTokens.colorActionPrimary).disabledBlend()
+            return theme.colorActionPrimary.disabledBlend()
         } else if isFocused {
-            return Color(DesignTokens.colorActionPrimary).focusBlend()
+            return theme.colorActionPrimary.focusBlend()
         } else {
-            return Color(DesignTokens.color.border)
+            return theme.colorStructureBorder
         }
     }
     
@@ -199,13 +201,13 @@ struct InputTextBase: View {
                         .foregroundColor(labelColor)
                         .offset(y: labelOffset)
                         .animation(
-                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.motion.floatLabel.duration),
+                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.MotionFloatLabel.duration),
                             value: isLabelFloated
                         )
                         .allowsHitTesting(false)
                         .onChange(of: isLabelFloated) { _ in
                             labelAnimationComplete = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + DesignTokens.motion.floatLabel.duration) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + DesignTokens.MotionFloatLabel.duration) {
                                 labelAnimationComplete = true
                             }
                         }
@@ -269,48 +271,48 @@ struct InputTextBase: View {
                 
                 // Trailing icon (error, success, or info)
                 if showErrorIcon {
-                    IconBase(name: "x", size: DesignTokens.icon.size100, color: Color(DesignTokens.colorFeedbackErrorText))
-                        .padding(.trailing, DesignTokens.space.inset.100)
+                    IconBase(name: "x", size: DesignTokens.iconSize100, color: theme.colorFeedbackErrorText)
+                        .padding(.trailing, DesignTokens.spaceInset100)
                         .transition(.opacity)
                         .animation(
-                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.motion.floatLabel.duration),
+                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.MotionFloatLabel.duration),
                             value: showErrorIcon
                         )
                 } else if showSuccessIcon {
-                    IconBase(name: "check", size: DesignTokens.icon.size100, color: Color(DesignTokens.colorFeedbackSuccessText))
-                        .padding(.trailing, DesignTokens.space.inset.100)
+                    IconBase(name: "check", size: DesignTokens.iconSize100, color: theme.colorFeedbackSuccessText)
+                        .padding(.trailing, DesignTokens.spaceInset100)
                         .transition(.opacity)
                         .animation(
-                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.motion.floatLabel.duration),
+                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.MotionFloatLabel.duration),
                             value: showSuccessIcon
                         )
                 } else if showInfoIconVisible {
-                    IconBase(name: "info", size: DesignTokens.icon.size100, color: Color(DesignTokens.color.text.muted))
-                        .padding(.trailing, DesignTokens.space.inset.100)
+                    IconBase(name: "info", size: DesignTokens.iconSize100, color: theme.colorTextMuted)
+                        .padding(.trailing, DesignTokens.spaceInset100)
                         .transition(.opacity)
                         .animation(
-                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.motion.floatLabel.duration),
+                            reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.MotionFloatLabel.duration),
                             value: showInfoIconVisible
                         )
                 }
             }
-            .frame(minHeight: DesignTokens.accessibility.tapArea.recommended)
+            .frame(minHeight: DesignTokens.tapAreaRecommended)
             
             // Helper text (persistent)
             if let helperText = helperText {
                 Text(helperText)
-                    .font(Font.system(size: DesignTokens.typography.caption.fontSize)
-                        .weight(DesignTokens.typography.caption.fontWeight))
-                    .foregroundColor(Color(DesignTokens.color.text.muted))
+                    .font(Font.system(size: DesignTokens.typographyCaption.fontSize)
+                        .weight(DesignTokens.typographyCaption.fontWeight))
+                    .foregroundColor(theme.colorTextMuted)
                     .accessibilityIdentifier("\(id)-helper")
             }
             
             // Error message (conditional)
             if let errorMessage = errorMessage {
                 Text(errorMessage)
-                    .font(Font.system(size: DesignTokens.typography.caption.fontSize)
-                        .weight(DesignTokens.typography.caption.fontWeight))
-                    .foregroundColor(Color(DesignTokens.colorFeedbackErrorText))
+                    .font(Font.system(size: DesignTokens.typographyCaption.fontSize)
+                        .weight(DesignTokens.typographyCaption.fontWeight))
+                    .foregroundColor(theme.colorFeedbackErrorText)
                     .accessibilityIdentifier("\(id)-error")
             }
         }
@@ -365,27 +367,28 @@ struct InputTextBaseFieldStyle: TextFieldStyle {
     let hasTrailingIcon: Bool
     
     @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.dpTheme) private var theme
     
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
-            .font(Font.system(size: DesignTokens.typography.input.fontSize)
-                .weight(DesignTokens.typography.input.fontWeight))
-            .foregroundColor(isDisabled ? Color(DesignTokens.color.text.muted) : Color(DesignTokens.color.text.default))
-            .padding(.leading, DesignTokens.space.inset.100)
-            .padding(.vertical, DesignTokens.space.inset.100)
-            .padding(.trailing, hasTrailingIcon ? 0 : DesignTokens.space.inset.100)
-            .background(Color(DesignTokens.color.background))
+            .font(Font.system(size: DesignTokens.typographyInput.fontSize)
+                .weight(DesignTokens.typographyInput.fontWeight))
+            .foregroundColor(isDisabled ? theme.colorTextMuted : theme.colorTextDefault)
+            .padding(.leading, DesignTokens.spaceInset100)
+            .padding(.vertical, DesignTokens.spaceInset100)
+            .padding(.trailing, hasTrailingIcon ? 0 : DesignTokens.spaceInset100)
+            .background(theme.colorStructureCanvas)
             .overlay(
                 RoundedRectangle(cornerRadius: DesignTokens.radius150)
-                    .stroke(borderColor, lineWidth: DesignTokens.border.default)
+                    .stroke(borderColor, lineWidth: DesignTokens.borderDefault)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: DesignTokens.radius150)
-                    .stroke(Color(DesignTokens.colorActionPrimary), lineWidth: DesignTokens.accessibility.focus.width)
-                    .padding(-DesignTokens.accessibility.focus.offset)
+                    .stroke(theme.colorActionPrimary, lineWidth: DesignTokens.accessibilityFocusWidth)
+                    .padding(-DesignTokens.accessibilityFocusOffset)
                     .opacity(isFocused && !isDisabled ? 1 : 0)
                     .animation(
-                        reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.motion.focusTransition.duration),
+                        reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.MotionFocusTransition.duration),
                         value: isFocused
                     )
             )

@@ -84,22 +84,18 @@ enum ChipTokens {
     /// Default background color
     /// References: color.structure.surface
     /// @see Requirements: 3.1 - Default state background
-    static let backgroundColor: Color = Color(DesignTokens.colorStructureSurface)
     
     /// Default border color
     /// References: color.structure.border
     /// @see Requirements: 3.1 - Default state border
-    static let borderColor: Color = Color(DesignTokens.colorStructureBorder)
     
     /// Default text color
     /// References: color.text.default
     /// @see Requirements: 3.1 - Default state text
-    static let textColor: Color = Color(DesignTokens.colorTextDefault)
     
     /// Primary action color for hover/pressed border
     /// References: color.action.primary
     /// @see Requirements: 3.2, 3.3 - Hover/pressed state border
-    static let primaryColor: Color = Color(DesignTokens.colorActionPrimary)
     
     // MARK: - Animation Tokens
     
@@ -161,6 +157,8 @@ public struct ChipBase: View {
     
     /// Tracks pressed state for visual feedback
     @State private var isPressed: Bool = false
+
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Initialization
     
@@ -230,7 +228,7 @@ public struct ChipBase: View {
                 IconBase(
                     name: iconName,
                     size: ChipTokens.iconSize,
-                    color: ChipTokens.textColor
+                    color: theme.colorTextDefault
                 )
             }
             
@@ -240,7 +238,7 @@ public struct ChipBase: View {
                     size: DesignTokens.fontSize075,
                     weight: .medium
                 ))
-                .foregroundColor(ChipTokens.textColor)
+                .foregroundColor(theme.colorTextDefault)
         }
         .padding(.horizontal, ChipTokens.paddingInline)
         .padding(.vertical, ChipTokens.paddingBlock)
@@ -303,9 +301,9 @@ struct ChipButtonStyle: ButtonStyle {
     private func backgroundColor(isPressed: Bool) -> Color {
         if isPressed {
             // Apply pressed blend (12% darker)
-            return ChipTokens.backgroundColor.pressedBlend()
+            return theme.colorStructureSurface.pressedBlend()
         }
-        return ChipTokens.backgroundColor
+        return theme.colorStructureSurface
     }
     
     /**
@@ -318,9 +316,9 @@ struct ChipButtonStyle: ButtonStyle {
      */
     private func borderColor(isPressed: Bool) -> Color {
         if isPressed {
-            return ChipTokens.primaryColor
+            return theme.colorActionPrimary
         }
-        return ChipTokens.borderColor
+        return theme.colorStructureBorder
     }
 }
 

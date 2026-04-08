@@ -311,7 +311,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Same three-step pattern as 4.1
     - _Requirements: R8 AC 1, 3, 5_
 
-  - [ ] 4.3 iOS migration: Form Input + Chip families
+  - [x] 4.3 iOS migration: Form Input + Chip families
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

@@ -75,36 +75,29 @@ enum ChipFilterTokens {
     
     /// Default background color
     /// References: color.structure.surface
-    static let backgroundColor: Color = Color(DesignTokens.colorStructureSurface)
     
     /// Default border color
     /// References: color.structure.border
-    static let borderColor: Color = Color(DesignTokens.colorStructureBorder)
     
     /// Default text color
     /// References: color.text.default
-    static let textColor: Color = Color(DesignTokens.colorTextDefault)
     
     /// Primary action color for hover/pressed border
     /// References: color.action.primary
-    static let primaryColor: Color = Color(DesignTokens.colorActionPrimary)
     
     // MARK: - Selected State Color Tokens
     
     /// Selected state background color
     /// References: color.feedback.select.background.rest
     /// @see Requirement 4.2 - Selected state background
-    static let selectedBackgroundColor: Color = Color(DesignTokens.colorFeedbackSelectBackgroundRest)
     
     /// Selected state border color
     /// References: color.feedback.select.text.rest (used for border)
     /// @see Requirement 4.2 - Selected state border
-    static let selectedBorderColor: Color = Color(DesignTokens.colorFeedbackSelectTextRest)
     
     /// Selected state text color
     /// References: color.feedback.select.text.rest
     /// @see Requirement 4.2 - Selected state text
-    static let selectedTextColor: Color = Color(DesignTokens.colorFeedbackSelectTextRest)
     
     // MARK: - Animation Tokens
     
@@ -168,6 +161,8 @@ public struct ChipFilter: View {
     
     /// Tracks pressed state for visual feedback
     @State private var isPressed: Bool = false
+
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Initialization
     
@@ -251,14 +246,14 @@ public struct ChipFilter: View {
                 IconBase(
                     name: "check",
                     size: ChipFilterTokens.iconSize,
-                    color: ChipFilterTokens.selectedTextColor
+                    color: theme.colorFeedbackSelectTextRest
                 )
             } else if let iconName = icon {
                 // Leading icon when not selected
                 IconBase(
                     name: iconName,
                     size: ChipFilterTokens.iconSize,
-                    color: ChipFilterTokens.textColor
+                    color: theme.colorTextDefault
                 )
             }
             
@@ -268,7 +263,7 @@ public struct ChipFilter: View {
                     size: DesignTokens.fontSize075,
                     weight: .medium
                 ))
-                .foregroundColor(selected ? ChipFilterTokens.selectedTextColor : ChipFilterTokens.textColor)
+                .foregroundColor(selected ? theme.colorFeedbackSelectTextRest : theme.colorTextDefault)
         }
         .padding(.horizontal, ChipFilterTokens.paddingInline)
         .padding(.vertical, ChipFilterTokens.paddingBlock)
@@ -346,15 +341,15 @@ struct ChipFilterButtonStyle: ButtonStyle {
         if selected {
             if isPressed {
                 // Selected + pressed: slightly darker selected background
-                return ChipFilterTokens.selectedBackgroundColor.opacity(0.9)
+                return theme.colorFeedbackSelectBackgroundRest.opacity(0.9)
             }
-            return ChipFilterTokens.selectedBackgroundColor
+            return theme.colorFeedbackSelectBackgroundRest
         } else {
             if isPressed {
                 // Not selected + pressed: apply pressed blend
-                return ChipFilterTokens.backgroundColor.pressedBlend()
+                return theme.colorStructureSurface.pressedBlend()
             }
-            return ChipFilterTokens.backgroundColor
+            return theme.colorStructureSurface
         }
     }
     
@@ -369,11 +364,11 @@ struct ChipFilterButtonStyle: ButtonStyle {
      */
     private func borderColor(isPressed: Bool) -> Color {
         if selected {
-            return ChipFilterTokens.selectedBorderColor
+            return theme.colorFeedbackSelectTextRest
         } else if isPressed {
-            return ChipFilterTokens.primaryColor
+            return theme.colorActionPrimary
         }
-        return ChipFilterTokens.borderColor
+        return theme.colorStructureBorder
     }
 }
 

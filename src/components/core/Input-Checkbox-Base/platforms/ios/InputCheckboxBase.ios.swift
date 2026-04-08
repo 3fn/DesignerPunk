@@ -238,6 +238,7 @@ struct InputCheckboxBase: View {
     
     /// Environment for reduce motion preference
     @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Initialization
     
@@ -317,7 +318,7 @@ struct InputCheckboxBase: View {
                     if let helperText = helperText {
                         Text(helperText)
                             .font(.system(size: DesignTokens.fontSize050, weight: .regular))
-                            .foregroundColor(Color(DesignTokens.colorTextMuted))
+                            .foregroundColor(theme.colorTextMuted)
                             .accessibilityLabel("Helper: \(helperText)")
                             .accessibilityIdentifier("\(testID ?? "checkbox")-helper")
                     }
@@ -325,7 +326,7 @@ struct InputCheckboxBase: View {
                     if let errorMessage = errorMessage {
                         Text(errorMessage)
                             .font(.system(size: DesignTokens.fontSize050, weight: .regular))
-                            .foregroundColor(Color(DesignTokens.colorFeedbackErrorText))
+                            .foregroundColor(theme.colorFeedbackErrorText)
                             .accessibilityLabel("Error: \(errorMessage)")
                             .accessibilityIdentifier("\(testID ?? "checkbox")-error")
                     }
@@ -349,14 +350,14 @@ struct InputCheckboxBase: View {
             // Filled background when checked or indeterminate
             if checked || indeterminate {
                 RoundedRectangle(cornerRadius: size.radius)
-                    .fill(Color(DesignTokens.colorFeedbackSelectBackgroundRest))
+                    .fill(theme.colorFeedbackSelectBackgroundRest)
                     .frame(width: size.boxSize, height: size.boxSize)
                 
                 // Icon (check or minus)
                 IconBase(
                     name: indeterminate ? "minus" : "check",
                     size: size.iconSize,
-                    color: Color(DesignTokens.colorContrastOnDark)
+                    color: theme.colorContrastOnDark
                 )
             }
         }
@@ -384,7 +385,7 @@ struct InputCheckboxBase: View {
     private var labelText: some View {
         Text(label)
             .font(.system(size: effectiveLabelFontSize, weight: .medium))
-            .foregroundColor(Color(DesignTokens.colorTextDefault))
+            .foregroundColor(theme.colorTextDefault)
             .fixedSize(horizontal: false, vertical: true)
     }
     
@@ -404,11 +405,11 @@ struct InputCheckboxBase: View {
     /// @see Requirements 1.4, 1.6 - Hover and error states
     private var borderColor: Color {
         if errorMessage != nil {
-            return Color(DesignTokens.colorFeedbackErrorBorder)
+            return theme.colorFeedbackErrorBorder
         } else if checked || indeterminate {
-            return Color(DesignTokens.colorFeedbackSelectBorderRest)
+            return theme.colorFeedbackSelectBorderRest
         } else {
-            return Color(DesignTokens.colorFeedbackSelectBorderDefault)
+            return theme.colorFeedbackSelectBorderDefault
         }
     }
     

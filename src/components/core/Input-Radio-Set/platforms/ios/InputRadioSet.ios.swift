@@ -117,6 +117,8 @@ struct InputRadioSet<Content: View>: View {
     /// Currently selected value (controlled via binding)
     /// @see Requirement 9.3 - Pass selected state to matching child
     @Binding var selectedValue: String?
+
+    @Environment(\.dpTheme) private var theme
     
     /// Whether a selection is required for validation
     /// @see Requirement 9.7 - Required validation
@@ -189,7 +191,7 @@ struct InputRadioSet<Content: View>: View {
             if error, let message = errorMessage {
                 Text(message)
                     .font(.system(size: DesignTokens.fontSize050, weight: .regular))
-                    .foregroundColor(Color(DesignTokens.colorFeedbackErrorText))
+                    .foregroundColor(theme.colorFeedbackErrorText)
                     // @see Requirement 9.9 - Error message announced to screen readers
                     // accessibilityLabel prefixed with "Error:" for clear VoiceOver context
                     .accessibilityLabel("Error: \(message)")

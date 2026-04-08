@@ -161,9 +161,9 @@ describe('Input-Text-Base Focus Indicators', () => {
       const iosComponentPath = path.join(__dirname, '../platforms/ios/InputTextBase.ios.swift');
       const iosComponentContent = fs.readFileSync(iosComponentPath, 'utf-8');
       
-      // Verify accessibility tokens are used (nested structure)
-      expect(iosComponentContent).toContain('accessibility.focus.width');
-      expect(iosComponentContent).toContain('accessibility.focus.offset');
+      // Verify accessibility tokens are used
+      expect(iosComponentContent).toContain('accessibilityFocusWidth');
+      expect(iosComponentContent).toContain('accessibilityFocusOffset');
       
       // Verify focus ring is visible when focused (and not disabled)
       expect(iosComponentContent).toContain('.opacity(isFocused && !isDisabled ? 1 : 0)');

@@ -113,6 +113,8 @@ struct InputCheckboxLegal: View {
     
     /// Whether checkbox is checked (binding for two-way data flow)
     @Binding var checked: Bool
+
+    @Environment(\.dpTheme) private var theme
     
     /// Label text (required for accessibility)
     let label: String
@@ -204,7 +206,7 @@ struct InputCheckboxLegal: View {
             if showRequiredIndicator {
                 Text("Required")
                     .font(.system(size: DesignTokens.fontSize050, weight: .medium))
-                    .foregroundColor(Color(DesignTokens.colorTextMuted))
+                    .foregroundColor(theme.colorTextMuted)
                     .accessibilityLabel("Required field")
             }
             

@@ -200,6 +200,7 @@ struct InputRadioBase: View {
     
     /// Environment for reduce motion preference
     @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Computed Properties
     
@@ -283,7 +284,7 @@ struct InputRadioBase: View {
                     if let helperText = helperText {
                         Text(helperText)
                             .font(.system(size: DesignTokens.fontSize050, weight: .regular))
-                            .foregroundColor(Color(DesignTokens.colorTextMuted))
+                            .foregroundColor(theme.colorTextMuted)
                             .accessibilityLabel("Helper: \(helperText)")
                             .accessibilityIdentifier("\(testID ?? "radio")-helper")
                     }
@@ -291,7 +292,7 @@ struct InputRadioBase: View {
                     if let errorMessage = errorMessage {
                         Text(errorMessage)
                             .font(.system(size: DesignTokens.fontSize050, weight: .regular))
-                            .foregroundColor(Color(DesignTokens.colorFeedbackErrorText))
+                            .foregroundColor(theme.colorFeedbackErrorText)
                             .accessibilityLabel("Error: \(errorMessage)")
                             .accessibilityIdentifier("\(testID ?? "radio")-error")
                     }
@@ -317,7 +318,7 @@ struct InputRadioBase: View {
             // @see Requirement 4.1-4.4 - Dot indicator
             if isSelected {
                 Circle()
-                    .fill(Color(DesignTokens.colorFeedbackSelectBackgroundRest))
+                    .fill(theme.colorFeedbackSelectBackgroundRest)
                     .frame(width: size.dotSize, height: size.dotSize)
                     .transition(.scale)
             }
@@ -343,7 +344,7 @@ struct InputRadioBase: View {
     private var labelContent: some View {
         Text(label)
             .font(.system(size: size.labelFontSize, weight: .medium))
-            .foregroundColor(Color(DesignTokens.colorTextDefault))
+            .foregroundColor(theme.colorTextDefault)
             .fixedSize(horizontal: false, vertical: true)
     }
     
@@ -354,13 +355,13 @@ struct InputRadioBase: View {
     private var borderColor: Color {
         if errorMessage != nil {
             // @see Requirement 1.5 - Error border color
-            return Color(DesignTokens.colorFeedbackErrorBorder)
+            return theme.colorFeedbackErrorBorder
         } else if isSelected {
             // @see Requirement 1.2 - Selected border color
-            return Color(DesignTokens.colorFeedbackSelectBorderRest)
+            return theme.colorFeedbackSelectBorderRest
         } else {
             // @see Requirement 1.1 - Unselected border color
-            return Color(DesignTokens.colorFeedbackSelectBorderDefault)
+            return theme.colorFeedbackSelectBorderDefault
         }
     }
     
