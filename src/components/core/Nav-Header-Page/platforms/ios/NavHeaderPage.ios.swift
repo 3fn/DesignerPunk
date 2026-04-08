@@ -47,7 +47,6 @@ enum ScrollBehavior {
 // MARK: - Tokens
 
 enum NavHeaderPageTokens {
-    static let titleColor: Color = Color(DesignTokens.colorActionNavigation)
     static let trailingGap: CGFloat = DesignTokens.spaceGroupedMinimal
     static let closeGap: CGFloat = DesignTokens.spaceGroupedTight
     static let scrollThreshold: CGFloat = 8
@@ -79,6 +78,7 @@ struct NavHeaderPage: View {
     @State private var isHidden = false
     @State private var lastScrollOffset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dpTheme) private var theme
 
     var body: some View {
         NavHeaderBase(
@@ -149,7 +149,7 @@ struct NavHeaderPage: View {
                 size: DesignTokens.typographyLabelMd.fontSize,
                 weight: .medium
             ))
-            .foregroundColor(NavHeaderPageTokens.titleColor)
+            .foregroundColor(theme.colorActionNavigation)
             .lineLimit(1)
             .truncationMode(.tail)
             .accessibilityAddTraits(.isHeader)

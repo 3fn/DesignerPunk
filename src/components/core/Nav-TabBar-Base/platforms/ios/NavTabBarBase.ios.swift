@@ -20,22 +20,12 @@ import SwiftUI
 /// Contracts: visual_background, visual_state_colors, visual_gradient_glow
 enum NavTabBarTokens {
     // Container (contract: visual_background)
-    static let containerBackground: Color = Color(DesignTokens.colorStructureCanvas)
-    static let borderColor: Color = Color(DesignTokens.colorStructureBorderSubtle)
     static let borderWidth: CGFloat = DesignTokens.borderDefault
-
-    // Icons (contract: visual_state_colors)
-    static let activeIconColor: Color = Color(DesignTokens.colorActionNavigation)
-    static let inactiveIconColor: Color = Color(DesignTokens.colorIconNavigationInactive)
 
     // Dot (contract: visual_state_colors)
     static let dotSize: CGFloat = DesignTokens.size050
-    static let dotColor: Color = Color(DesignTokens.colorActionNavigation)
 
     // Glow gradient (contract: visual_gradient_glow)
-    static let glowActiveCenter: Color = Color(DesignTokens.colorBackgroundPrimarySubtle)
-    static let glowInactiveCenter: Color = Color(DesignTokens.colorStructureCanvas)
-    static let glowEdgeColor: Color = Color(DesignTokens.colorStructureCanvas)
     static let glowEdgeOpacity: Double = DesignTokens.opacity024
 
     // Spacing (contract: layout_flexible_length)
@@ -105,6 +95,8 @@ public struct NavTabBarBase<Badge: View>: View {
     // Pressed state (contract: interaction_pressable)
     @State private var pressedTab: String? = nil
 
+    @Environment(\.dpTheme) private var theme
+
     // Haptics
     private let haptic = UIImpactFeedbackGenerator(style: .light)
 
@@ -147,7 +139,7 @@ extension NavTabBarBase {
 
                 // Dot indicator — positioned absolutely, animated
                 Circle()
-                    .fill(NavTabBarTokens.dotColor)
+                    .fill(theme.colorActionNavigation)
                     .frame(width: NavTabBarTokens.dotSize, height: NavTabBarTokens.dotSize)
                     .offset(x: dotOffset - NavTabBarTokens.dotSize / 2)
                     .frame(maxHeight: .infinity, alignment: .bottom)
@@ -156,10 +148,10 @@ extension NavTabBarBase {
             .background(
                 LinearGradient(
                     stops: [
-                        .init(color: NavTabBarTokens.containerBackground.opacity(0.80), location: 0.0),
-                        .init(color: NavTabBarTokens.containerBackground.opacity(0.88), location: 0.16),
-                        .init(color: NavTabBarTokens.containerBackground.opacity(0.96), location: 0.32),
-                        .init(color: NavTabBarTokens.containerBackground, location: 0.48),
+                        .init(color: theme.colorStructureCanvas.opacity(0.80), location: 0.0),
+                        .init(color: theme.colorStructureCanvas.opacity(0.88), location: 0.16),
+                        .init(color: theme.colorStructureCanvas.opacity(0.96), location: 0.32),
+                        .init(color: theme.colorStructureCanvas, location: 0.48),
                     ],
                     startPoint: .top,
                     endPoint: .bottom
@@ -167,7 +159,7 @@ extension NavTabBarBase {
             )
             .overlay(alignment: .top) {
                 Rectangle()
-                    .fill(NavTabBarTokens.borderColor)
+                    .fill(theme.colorStructureBorderSubtle)
                     .frame(height: NavTabBarTokens.borderWidth)
             }
             .onAppear {
@@ -206,11 +198,11 @@ extension NavTabBarBase {
 
         // Contract: interaction_pressable — blend.pressedLighter on inactive press
         let iconColor: Color = if isSelected {
-            NavTabBarTokens.activeIconColor
+            theme.colorActionNavigation
         } else if isTabPressed {
-            NavTabBarTokens.inactiveIconColor.pressedLighterBlend()
+            Color(DesignTokens.colorIconNavigationInactive).pressedLighterBlend()
         } else {
-            NavTabBarTokens.inactiveIconColor
+            Color(DesignTokens.colorIconNavigationInactive)
         }
 
         return Button(action: { handleTap(tab.value, tabWidth: tabWidth) }) {
@@ -258,9 +250,9 @@ extension NavTabBarBase {
             if isSelected {
                 RadialGradient(
                     gradient: Gradient(stops: [
-                        .init(color: NavTabBarTokens.glowActiveCenter.opacity(opacity), location: 0.0),
-                        .init(color: NavTabBarTokens.glowActiveCenter.opacity(opacity * 0.5), location: 0.4),
-                        .init(color: NavTabBarTokens.glowEdgeColor.opacity(NavTabBarTokens.glowEdgeOpacity), location: 0.8),
+                        .init(color: theme.colorBackgroundPrimarySubtle.opacity(opacity), location: 0.0),
+                        .init(color: theme.colorBackgroundPrimarySubtle.opacity(opacity * 0.5), location: 0.4),
+                        .init(color: theme.colorStructureCanvas.opacity(NavTabBarTokens.glowEdgeOpacity), location: 0.8),
                         .init(color: .clear, location: 1.0),
                     ]),
                     center: .center,

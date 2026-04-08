@@ -191,7 +191,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
 
 ---
 
-- [ ] 3. Portable Pipeline (WS1)
+- [x] 3. Portable Pipeline (WS1)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
@@ -218,7 +218,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
   - Commit: `./.kiro/hooks/commit-task.sh "Task 3 Complete: Portable Pipeline"`
   - Verify on GitHub
 
-  - [ ] 3.1 Implement `defineConfig` and `ConfigLoader`
+  - [x] 3.1 Implement `defineConfig` and `ConfigLoader`
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -229,7 +229,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Tests: default config, custom config, missing config, invalid config
     - _Requirements: R4 AC 1-9, R5 AC 1-3_
 
-  - [ ] 3.2 Abstract hardcoded paths in generators
+  - [x] 3.2 Abstract hardcoded paths in generators
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -241,7 +241,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Verify DesignerPunk repo scripts produce identical output with default config
     - _Requirements: R5 AC 2-4, R6 AC 1-2_
 
-  - [ ] 3.3 Pipeline CLI
+  - [x] 3.3 Pipeline CLI
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -251,7 +251,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - **Decision (settled)**: TypeScript execution strategy is `tsx` — lightweight, fast, no `tsconfig.json` required. Bundled as a dependency of `@designerpunk/core` during Block B (WS2 packaging). For Phase 1 implementation, CLI uses native `import()` which works in the DesignerPunk repo via existing `ts-node`. The `tsx` bootstrap is wired when the package's `bin` entry point is built.
     - _Requirements: R5 AC 5_
 
-  - [ ] 3.4 Integration test: product repo simulation
+  - [x] 3.4 Integration test: product repo simulation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -291,7 +291,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
   - Commit: `./.kiro/hooks/commit-task.sh "Task 4 Complete: Component Consumption Migration"`
   - Verify on GitHub
 
-  - [ ] 4.1 iOS migration: Navigation family
+  - [x] 4.1 iOS migration: Navigation family
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

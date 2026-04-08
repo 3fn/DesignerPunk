@@ -21,19 +21,15 @@ import SwiftUI
 /// Contracts: visual_background, visual_border, visual_shadow, visual_state_colors
 enum NavSegmentedChoiceTokens {
     // Container (contract: visual_background, visual_border)
-    static let containerBackground: Color = Color(DesignTokens.colorStructureSurface)
-    static let containerBorderColor: Color = Color(DesignTokens.colorStructureBorder)
     static let containerBorderWidth: CGFloat = DesignTokens.borderDefault
     static let containerRadius: CGFloat = DesignTokens.radiusNormal
     static let containerPadding: CGFloat = DesignTokens.space050
 
     // Indicator (contract: visual_shadow, visual_state_colors)
-    static let indicatorBackground: Color = Color(DesignTokens.colorStructureCanvas)
     static let indicatorRadius: CGFloat = DesignTokens.radiusSmall
     static let indicatorShadow = DesignTokens.shadowNavigationIndicator
 
     // Segments (contract: visual_state_colors, layout_flexible_length)
-    static let segmentColor: Color = Color(DesignTokens.colorActionNavigation)
     static let segmentRadius: CGFloat = DesignTokens.radiusSmall
     static let fontWeight: UIFont.Weight = DesignTokens.fontWeight700
     static let minSegmentWidth: CGFloat = DesignTokens.tapAreaMinimum
@@ -139,6 +135,8 @@ public struct NavSegmentedChoiceBase: View {
     // Keyboard focus (contract: interaction_keyboard_navigation, interaction_roving_tabindex)
     @FocusState private var focusedSegment: String?
 
+    @Environment(\.dpTheme) private var theme
+
     /// Contract: validation_selection_constraints
     init(segments: [SegmentOption], selectedValue: Binding<String>,
          onSelectionChange: ((String) -> Void)? = nil,
@@ -168,11 +166,11 @@ public struct NavSegmentedChoiceBase: View {
                 }
             }
             .padding(NavSegmentedChoiceTokens.containerPadding)
-            .background(NavSegmentedChoiceTokens.containerBackground)
+            .background(theme.colorStructureSurface)
             .clipShape(RoundedRectangle(cornerRadius: NavSegmentedChoiceTokens.containerRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: NavSegmentedChoiceTokens.containerRadius)
-                    .stroke(NavSegmentedChoiceTokens.containerBorderColor,
+                    .stroke(theme.colorStructureBorder,
                             lineWidth: NavSegmentedChoiceTokens.containerBorderWidth)
             )
             .onAppear {
@@ -205,7 +203,7 @@ public struct NavSegmentedChoiceBase: View {
     private var indicator: some View {
         let shadow = NavSegmentedChoiceTokens.indicatorShadow
         return RoundedRectangle(cornerRadius: NavSegmentedChoiceTokens.indicatorRadius)
-            .fill(NavSegmentedChoiceTokens.indicatorBackground)
+            .fill(theme.colorStructureCanvas)
             .shadow(
                 color: Color.black.opacity(shadow.opacity * shadowOpacity),
                 radius: shadow.blur / 2,
@@ -247,7 +245,7 @@ public struct NavSegmentedChoiceBase: View {
             Text(label)
                 .font(.system(size: size.fontSize, weight: .bold))
                 .lineSpacing(size.fontSize * (size.lineHeight - 1))
-                .foregroundColor(NavSegmentedChoiceTokens.segmentColor)
+                .foregroundColor(theme.colorActionNavigation)
                 .padding(.vertical, size.blockPadding)
                 .padding(.horizontal, size.inlinePadding)
 
@@ -255,7 +253,7 @@ public struct NavSegmentedChoiceBase: View {
             IconBase(
                 name: icon,
                 size: size.iconSize,
-                color: NavSegmentedChoiceTokens.segmentColor
+                color: theme.colorActionNavigation
             )
                 .padding(.vertical, size.blockPadding)
                 .padding(.horizontal, size.inlinePadding)

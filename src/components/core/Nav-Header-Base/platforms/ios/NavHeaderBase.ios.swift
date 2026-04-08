@@ -19,11 +19,7 @@ import SwiftUI
 
 /// Component token references for Nav-Header-Base.
 enum NavHeaderTokens {
-    // Background (contract: visual_background)
-    static let canvasBackground: Color = Color(DesignTokens.colorStructureCanvas)
-
     // Separator (contract: visual_separator)
-    static let separatorColor: Color = Color(DesignTokens.colorStructureBorderSubtle)
     static let separatorWidth: CGFloat = DesignTokens.borderWidth100
 
     // Touch target (contract: accessibility_touch_target)
@@ -42,6 +38,8 @@ struct NavHeaderBase<Leading: View, Title: View, Trailing: View>: View {
     var appearance: NavHeaderAppearance = .opaque
     var showSeparator: Bool = true
     var testID: String? = nil
+
+    @Environment(\.dpTheme) var theme
 
     var body: some View {
         VStack(spacing: 0) {
@@ -65,7 +63,7 @@ struct NavHeaderBase<Leading: View, Title: View, Trailing: View>: View {
             // Separator (contract: visual_separator)
             if showSeparator {
                 Rectangle()
-                    .fill(NavHeaderTokens.separatorColor)
+                    .fill(theme.colorStructureBorderSubtle)
                     .frame(height: NavHeaderTokens.separatorWidth)
                     .accessibilityHidden(true)
             }
@@ -84,7 +82,7 @@ struct NavHeaderBase<Leading: View, Title: View, Trailing: View>: View {
     private var backgroundView: some View {
         switch appearance {
         case .opaque:
-            NavHeaderTokens.canvasBackground
+            theme.colorStructureCanvas
         case .translucent:
             // iOS system material for translucent backdrop (Kenya R1: use .system* variants)
             // blur100 → .systemThinMaterial (designed for system chrome like navigation bars)
