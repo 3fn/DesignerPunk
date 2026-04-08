@@ -1,6 +1,6 @@
 /**
  * DesignerPunk Design System - Android Tokens
- * Generated: 2026-04-04T00:41:33.704Z
+ * Generated: 2026-04-08T02:50:21.565Z
  * Version: 1.0.0
  * Platform: Android (Kotlin Constants)
  */
@@ -473,9 +473,6 @@ object DesignTokens {
     val color_feedback_warning_text = Color.argb(255, 204, 85, 41)
     val color_feedback_warning_background = Color.argb(255, 255, 229, 220)
     val color_feedback_warning_border = Color.argb(255, 204, 85, 41)
-    val color_feedback_info_text = Color.argb(255, 21, 66, 74)
-    val color_feedback_info_background = Color.argb(255, 217, 232, 234)
-    val color_feedback_info_border = Color.argb(255, 21, 66, 74)
     val color_feedback_select_text_rest = Color.argb(255, 0, 192, 204)
     val color_feedback_select_text_default = Color.argb(255, 94, 112, 124)
     val color_feedback_select_background_rest = Color.argb(255, 204, 251, 255)
@@ -486,10 +483,7 @@ object DesignTokens {
     val color_feedback_notification_text = Color.argb(255, 255, 255, 255)
     val color_identity_human = Color.argb(255, 255, 107, 53)
     val color_identity_agent = Color.argb(255, 77, 155, 165)
-    val color_action_primary = Color.argb(255, 0, 240, 255)
     val color_action_secondary = Color.argb(255, 24, 34, 40)
-    val color_action_navigation_light = Color.argb(255, 0, 136, 143)
-    val color_action_navigation_dark = Color.argb(255, 204, 251, 255)
     val color_attention = Color.argb(255, 199, 192, 2)
     val color_highlight = Color.argb(255, 249, 240, 2)
     val color_tech = Color.argb(255, 141, 30, 204)
@@ -499,21 +493,12 @@ object DesignTokens {
     val color_text_subtle = Color.argb(255, 178, 188, 196)
     val color_contrast_on_light = Color.argb(255, 0, 0, 0)
     val color_contrast_on_dark = Color.argb(255, 255, 255, 255)
-    val color_contrast_on_action = Color.argb(255, 0, 0, 0)
-    val color_structure_canvas_light = Color.argb(255, 255, 255, 255)
-    val color_structure_canvas_dark = Color.argb(255, 24, 34, 40)
     val color_structure_surface = Color.argb(255, 245, 245, 250)
     val color_structure_surface_primary = Color.argb(255, 245, 245, 250)
     val color_structure_surface_secondary = Color.argb(255, 232, 232, 240)
     val color_structure_surface_tertiary = Color.argb(255, 197, 197, 213)
     val color_structure_border = Color.argb(255, 178, 188, 196)
-    val color_structure_border_subtle_light = Color.argb(122, 178, 188, 196)
-    val color_structure_border_subtle_dark = Color.argb(122, 16, 22, 26)
-    val color_background_primary_subtle_light = Color.argb(255, 204, 251, 255)
-    val color_background_primary_subtle_dark = Color.argb(255, 0, 136, 143)
     val color_icon_default = Color.argb(255, 94, 112, 124)
-    val color_icon_navigation_inactive_light = Color.argb(255, 38, 50, 58)
-    val color_icon_navigation_inactive_dark = Color.argb(255, 178, 188, 196)
     val color_print_default = Color.argb(255, 58, 58, 69)
     val glow_neon_purple = Color.argb(255, 99, 21, 143)
     val glow_neon_cyan = Color.argb(255, 0, 136, 143)

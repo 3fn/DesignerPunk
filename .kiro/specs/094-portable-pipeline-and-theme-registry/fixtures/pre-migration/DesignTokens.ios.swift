@@ -1,6 +1,6 @@
 ///
 /// DesignerPunk Design System - iOS Tokens
-/// Generated: 2026-04-04T00:41:33.701Z
+/// Generated: 2026-04-08T02:50:21.562Z
 /// Version: 1.0.0
 /// Platform: iOS (Swift Constants)
 ///
@@ -473,9 +473,6 @@ public struct DesignTokens {
     public static let colorFeedbackWarningText: UIColor = UIColor(red: 0.80, green: 0.33, blue: 0.16, alpha: 1.00)
     public static let colorFeedbackWarningBackground: UIColor = UIColor(red: 1.00, green: 0.90, blue: 0.86, alpha: 1.00)
     public static let colorFeedbackWarningBorder: UIColor = UIColor(red: 0.80, green: 0.33, blue: 0.16, alpha: 1.00)
-    public static let colorFeedbackInfoText: UIColor = UIColor(red: 0.08, green: 0.26, blue: 0.29, alpha: 1.00)
-    public static let colorFeedbackInfoBackground: UIColor = UIColor(red: 0.85, green: 0.91, blue: 0.92, alpha: 1.00)
-    public static let colorFeedbackInfoBorder: UIColor = UIColor(red: 0.08, green: 0.26, blue: 0.29, alpha: 1.00)
     public static let colorFeedbackSelectTextRest: UIColor = UIColor(red: 0.00, green: 0.75, blue: 0.80, alpha: 1.00)
     public static let colorFeedbackSelectTextDefault: UIColor = UIColor(red: 0.37, green: 0.44, blue: 0.49, alpha: 1.00)
     public static let colorFeedbackSelectBackgroundRest: UIColor = UIColor(red: 0.80, green: 0.98, blue: 1.00, alpha: 1.00)
@@ -486,9 +483,7 @@ public struct DesignTokens {
     public static let colorFeedbackNotificationText: UIColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
     public static let colorIdentityHuman: UIColor = UIColor(red: 1.00, green: 0.42, blue: 0.21, alpha: 1.00)
     public static let colorIdentityAgent: UIColor = UIColor(red: 0.30, green: 0.61, blue: 0.65, alpha: 1.00)
-    public static let colorActionPrimary: UIColor = UIColor(red: 0.00, green: 0.94, blue: 1.00, alpha: 1.00)
     public static let colorActionSecondary: UIColor = UIColor(red: 0.09, green: 0.13, blue: 0.16, alpha: 1.00)
-    public static let colorActionNavigation: UIColor = UIColor { $0.userInterfaceStyle == .dark ? UIColor(red: 0.80, green: 0.98, blue: 1.00, alpha: 1.00) : UIColor(red: 0.00, green: 0.53, blue: 0.56, alpha: 1.00) }
     public static let colorAttention: UIColor = UIColor(red: 0.78, green: 0.75, blue: 0.01, alpha: 1.00)
     public static let colorHighlight: UIColor = UIColor(red: 0.98, green: 0.94, blue: 0.01, alpha: 1.00)
     public static let colorTech: UIColor = UIColor(red: 0.55, green: 0.12, blue: 0.80, alpha: 1.00)
@@ -498,17 +493,12 @@ public struct DesignTokens {
     public static let colorTextSubtle: UIColor = UIColor(red: 0.70, green: 0.74, blue: 0.77, alpha: 1.00)
     public static let colorContrastOnLight: UIColor = UIColor(red: 0.00, green: 0.00, blue: 0.00, alpha: 1.00)
     public static let colorContrastOnDark: UIColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
-    public static let colorContrastOnAction: UIColor = UIColor(red: 0.00, green: 0.00, blue: 0.00, alpha: 1.00)
-    public static let colorStructureCanvas: UIColor = UIColor { $0.userInterfaceStyle == .dark ? UIColor(red: 0.09, green: 0.13, blue: 0.16, alpha: 1.00) : UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00) }
     public static let colorStructureSurface: UIColor = UIColor(red: 0.96, green: 0.96, blue: 0.98, alpha: 1.00)
     public static let colorStructureSurfacePrimary: UIColor = UIColor(red: 0.96, green: 0.96, blue: 0.98, alpha: 1.00)
     public static let colorStructureSurfaceSecondary: UIColor = UIColor(red: 0.91, green: 0.91, blue: 0.94, alpha: 1.00)
     public static let colorStructureSurfaceTertiary: UIColor = UIColor(red: 0.77, green: 0.77, blue: 0.84, alpha: 1.00)
     public static let colorStructureBorder: UIColor = UIColor(red: 0.70, green: 0.74, blue: 0.77, alpha: 1.00)
-    public static let colorStructureBorderSubtle: UIColor = UIColor { $0.userInterfaceStyle == .dark ? UIColor(red: 0.06, green: 0.09, blue: 0.10, alpha: 0.48) : UIColor(red: 0.70, green: 0.74, blue: 0.77, alpha: 0.48) }
-    public static let colorBackgroundPrimarySubtle: UIColor = UIColor { $0.userInterfaceStyle == .dark ? UIColor(red: 0.00, green: 0.53, blue: 0.56, alpha: 1.00) : UIColor(red: 0.80, green: 0.98, blue: 1.00, alpha: 1.00) }
     public static let colorIconDefault: UIColor = UIColor(red: 0.37, green: 0.44, blue: 0.49, alpha: 1.00)
-    public static let colorIconNavigationInactive: UIColor = UIColor { $0.userInterfaceStyle == .dark ? UIColor(red: 0.70, green: 0.74, blue: 0.77, alpha: 1.00) : UIColor(red: 0.15, green: 0.20, blue: 0.23, alpha: 1.00) }
     public static let colorPrintDefault: UIColor = UIColor(red: 0.23, green: 0.23, blue: 0.27, alpha: 1.00)
     public static let glowNeonPurple: UIColor = UIColor(red: 0.39, green: 0.08, blue: 0.56, alpha: 1.00)
     public static let glowNeonCyan: UIColor = UIColor(red: 0.00, green: 0.53, blue: 0.56, alpha: 1.00)

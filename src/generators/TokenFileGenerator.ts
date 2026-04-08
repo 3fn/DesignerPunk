@@ -39,6 +39,8 @@ export interface GenerationOptions extends BaseGenerationOptions {
   wcagOverrideKeys?: Set<string>;
   /** Registered theme override sets for generalized theme block generation (Spec 094). */
   themeOverrides?: ThemeOverrideSet[];
+  /** Token names that have moved to theme types — excluded from static iOS/Android output (Spec 094). */
+  themeVaryingTokens?: Set<string>;
 }
 
 /**
@@ -782,7 +784,8 @@ export class TokenFileGenerator {
   private generateSemanticSection(
     semantics: Array<Omit<SemanticToken, 'primitiveTokens'>>,
     platform: 'web' | 'ios' | 'android',
-    darkSemantics?: Array<Omit<SemanticToken, 'primitiveTokens'>>
+    darkSemantics?: Array<Omit<SemanticToken, 'primitiveTokens'>>,
+    excludeTokenNames?: Set<string>
   ): string[] {
     const lines: string[] = [];
 
@@ -815,6 +818,11 @@ export class TokenFileGenerator {
     for (const semantic of semantics) {
       // Skip tokens without primitiveReferences (e.g., semantic-only layering tokens)
       if (!semantic.primitiveReferences) {
+        continue;
+      }
+
+      // Skip tokens that have moved to theme types (Spec 094 — prevents dual-pattern consumption)
+      if (excludeTokenNames && excludeTokenNames.has(semantic.name)) {
         continue;
       }
       
@@ -1666,7 +1674,10 @@ export class TokenFileGenerator {
     if (includeComments) {
       lines.push(generator.generateSectionComment('semantic'));
     }
-    const semanticLines = this.generateSemanticSection(semantics, platform, darkSemantics);
+    const semanticLines = this.generateSemanticSection(
+      semantics, platform, darkSemantics,
+      platform !== 'web' ? options.themeVaryingTokens : undefined
+    );
     lines.push(...semanticLines);
     semanticTokenCount = semantics.length;
 

@@ -153,6 +153,18 @@ export function generateTokenFiles(outputDir: string = 'output', config?: Resolv
     ...Object.keys(darkWcagSemanticOverrides),
   ]);
 
+  // Compute theme-varying tokens: overrides from registry + base light/dark differences
+  const themeVaryingTokens = themeRegistry.getThemeVaryingTokens();
+  const darkMap = new Map(resolvedDark.map(t => [t.name, t]));
+  for (const lt of resolvedLight) {
+    if (lt.category !== 'color') continue;
+    const dt = darkMap.get(lt.name);
+    if (!dt) continue;
+    const lv = lt.primitiveReferences?.value ?? '';
+    const dv = dt.primitiveReferences?.value ?? '';
+    if (lv !== dv) themeVaryingTokens.add(lt.name);
+  }
+
   const results = generator.generateAll({
     outputDir: effectiveOutputDir,
     version: '1.0.0',
@@ -162,7 +174,8 @@ export function generateTokenFiles(outputDir: string = 'output', config?: Resolv
     darkSemanticTokens: resolvedDark,
     wcagSemanticTokens: resolvedLightWcag,
     darkWcagSemanticTokens: resolvedDarkWcag,
-    wcagOverrideKeys
+    wcagOverrideKeys,
+    themeVaryingTokens
   });
 
   // Write files to disk
