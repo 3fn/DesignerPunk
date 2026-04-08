@@ -47,10 +47,10 @@ import kotlin.math.roundToInt
 // MARK: - Tokens
 
 object NavHeaderPageTokens {
-    val closeGap = DesignTokens.spaceGroupedTight
-    val androidPadding = DesignTokens.spaceInset100
+    val closeGap = DesignTokens.space_grouped_tight
+    val androidPadding = DesignTokens.space_inset_100
     val scrollThreshold = 8f
-    val animationDuration = DesignTokens.duration150.toInt()
+    val animationDuration = DesignTokens.Duration.Duration150.toInt()
 }
 
 enum class PageTitleAlignment { CENTER, LEADING }
@@ -103,8 +103,8 @@ fun NavHeaderPage(
             Text(
                 text = title,
                 color = theme.color_action_navigation,
-                fontSize = DesignTokens.typographyLabelMd.fontSize,
-                fontWeight = DesignTokens.typographyLabelMd.fontWeight,
+                fontSize = DesignTokens.typography_label_md.fontSize,
+                fontWeight = DesignTokens.typography_label_md.fontWeight,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = when (titleAlignment) {

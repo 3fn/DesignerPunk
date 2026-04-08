@@ -200,9 +200,9 @@ extension NavTabBarBase {
         let iconColor: Color = if isSelected {
             theme.colorActionNavigation
         } else if isTabPressed {
-            Color(DesignTokens.colorIconNavigationInactive).pressedLighterBlend()
+            theme.colorIconNavigationInactive.pressedLighterBlend()
         } else {
-            Color(DesignTokens.colorIconNavigationInactive)
+            theme.colorIconNavigationInactive
         }
 
         return Button(action: { handleTap(tab.value, tabWidth: tabWidth) }) {

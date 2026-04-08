@@ -50,7 +50,7 @@ final class VerticalListButtonItemTests: XCTestCase {
         
         // Verify rest state styling
         XCTAssertFalse(styles.checkmarkVisible, "Rest state should not show checkmark")
-        XCTAssertEqual(styles.borderWidth, DesignTokens.borderBorderDefault, "Rest state should use default border (1pt)")
+        XCTAssertEqual(styles.borderWidth, DesignTokens.borderDefault, "Rest state should use default border (1pt)")
         XCTAssertEqual(styles.borderColor, .clear, "Rest state should have transparent border color")
         
         // Verify colors use correct tokens (comparing against static styles)
@@ -65,7 +65,7 @@ final class VerticalListButtonItemTests: XCTestCase {
         
         // Verify selected state styling
         XCTAssertTrue(styles.checkmarkVisible, "Selected state should show checkmark")
-        XCTAssertEqual(styles.borderWidth, DesignTokens.borderBorderEmphasis, "Selected state should use emphasis border (2pt)")
+        XCTAssertEqual(styles.borderWidth, DesignTokens.borderEmphasis, "Selected state should use emphasis border (2pt)")
         XCTAssertNotEqual(styles.borderColor, .clear, "Selected state should have visible border color")
         
         // Verify colors use correct tokens
@@ -80,7 +80,7 @@ final class VerticalListButtonItemTests: XCTestCase {
         
         // Verify notSelected state styling
         XCTAssertFalse(styles.checkmarkVisible, "NotSelected state should not show checkmark")
-        XCTAssertEqual(styles.borderWidth, DesignTokens.borderBorderDefault, "NotSelected state should use default border (1pt)")
+        XCTAssertEqual(styles.borderWidth, DesignTokens.borderDefault, "NotSelected state should use default border (1pt)")
         XCTAssertEqual(styles.borderColor, .clear, "NotSelected state should have transparent border color")
         
         // Verify colors use correct tokens
@@ -95,7 +95,7 @@ final class VerticalListButtonItemTests: XCTestCase {
         
         // Verify checked state styling
         XCTAssertTrue(styles.checkmarkVisible, "Checked state should show checkmark")
-        XCTAssertEqual(styles.borderWidth, DesignTokens.borderBorderDefault, "Checked state should use default border (1pt)")
+        XCTAssertEqual(styles.borderWidth, DesignTokens.borderDefault, "Checked state should use default border (1pt)")
         XCTAssertEqual(styles.borderColor, .clear, "Checked state should have transparent border color")
         
         // Verify colors use correct tokens
@@ -110,7 +110,7 @@ final class VerticalListButtonItemTests: XCTestCase {
         
         // Verify unchecked state styling
         XCTAssertFalse(styles.checkmarkVisible, "Unchecked state should not show checkmark")
-        XCTAssertEqual(styles.borderWidth, DesignTokens.borderBorderDefault, "Unchecked state should use default border (1pt)")
+        XCTAssertEqual(styles.borderWidth, DesignTokens.borderDefault, "Unchecked state should use default border (1pt)")
         XCTAssertEqual(styles.borderColor, .clear, "Unchecked state should have transparent border color")
         
         // Verify colors use correct tokens
@@ -211,11 +211,11 @@ final class VerticalListButtonItemTests: XCTestCase {
     /// Requirements: 6.1 - 11pt padding for 1pt border (borderDefault)
     func testPaddingCompensationFor1ptBorder() throws {
         // Verify 11pt padding for 1pt border
-        let padding = calculatePaddingBlock(borderWidth: DesignTokens.borderBorderDefault)
+        let padding = calculatePaddingBlock(borderWidth: DesignTokens.borderDefault)
         XCTAssertEqual(padding, 11, "1pt border should have 11pt padding")
         
         // Verify this matches the component token
-        XCTAssertEqual(padding, DesignTokens.verticalListItemPaddingBlockRest, 
+        XCTAssertEqual(padding, VerticalListItemTokens.paddingBlockRest, 
             "Padding should match verticalListItemPaddingBlockRest token")
     }
     
@@ -224,11 +224,11 @@ final class VerticalListButtonItemTests: XCTestCase {
     /// Requirements: 6.2 - 10pt padding for 2pt border (borderEmphasis)
     func testPaddingCompensationFor2ptBorder() throws {
         // Verify 10pt padding for 2pt border
-        let padding = calculatePaddingBlock(borderWidth: DesignTokens.borderBorderEmphasis)
+        let padding = calculatePaddingBlock(borderWidth: DesignTokens.borderEmphasis)
         XCTAssertEqual(padding, 10, "2pt border should have 10pt padding")
         
         // Verify this matches the component token
-        XCTAssertEqual(padding, DesignTokens.verticalListItemPaddingBlockSelected, 
+        XCTAssertEqual(padding, VerticalListItemTokens.paddingBlockSelected, 
             "Padding should match verticalListItemPaddingBlockSelected token")
     }
     
@@ -239,13 +239,13 @@ final class VerticalListButtonItemTests: XCTestCase {
         let contentHeight: CGFloat = 24 // Content height (typography.buttonMd line height)
         
         // Rest state: 1pt border + 11pt padding + 24pt content + 11pt padding + 1pt border = 48pt
-        let restBorder = DesignTokens.borderBorderDefault
+        let restBorder = DesignTokens.borderDefault
         let restPadding = calculatePaddingBlock(borderWidth: restBorder)
         let restTotal = (restBorder * 2) + (restPadding * 2) + contentHeight
         XCTAssertEqual(restTotal, 48, "Rest state should have 48pt total height")
         
         // Selected state: 2pt border + 10pt padding + 24pt content + 10pt padding + 2pt border = 48pt
-        let selectedBorder = DesignTokens.borderBorderEmphasis
+        let selectedBorder = DesignTokens.borderEmphasis
         let selectedPadding = calculatePaddingBlock(borderWidth: selectedBorder)
         let selectedTotal = (selectedBorder * 2) + (selectedPadding * 2) + contentHeight
         XCTAssertEqual(selectedTotal, 48, "Selected state should have 48pt total height")
@@ -297,15 +297,15 @@ final class VerticalListButtonItemTests: XCTestCase {
     /// Feature: 038-vertical-list-buttons, Property 11: Padding Compensation Correctness
     func testPaddingCompensationUsesComponentTokens() throws {
         // Verify component tokens are defined correctly
-        XCTAssertEqual(DesignTokens.verticalListItemPaddingBlockRest, 11, 
+        XCTAssertEqual(VerticalListItemTokens.paddingBlockRest, 11, 
             "Rest padding token should be 11pt")
-        XCTAssertEqual(DesignTokens.verticalListItemPaddingBlockSelected, 10, 
+        XCTAssertEqual(VerticalListItemTokens.paddingBlockSelected, 10, 
             "Selected padding token should be 10pt")
         
         // Verify border tokens are defined correctly
-        XCTAssertEqual(DesignTokens.borderBorderDefault, 1, 
+        XCTAssertEqual(DesignTokens.borderDefault, 1, 
             "Default border token should be 1pt")
-        XCTAssertEqual(DesignTokens.borderBorderEmphasis, 2, 
+        XCTAssertEqual(DesignTokens.borderEmphasis, 2, 
             "Emphasis border token should be 2pt")
     }
     
@@ -466,7 +466,7 @@ final class VerticalListButtonItemTests: XCTestCase {
         let errorStyles = applyErrorStyles(baseStyles, visualState: .rest)
         
         // Select mode should have 2pt border
-        XCTAssertEqual(errorStyles.borderWidth, DesignTokens.borderBorderEmphasis, 
+        XCTAssertEqual(errorStyles.borderWidth, DesignTokens.borderEmphasis, 
             "Select mode error should use emphasis border (2pt)")
         
         // Checkmark visibility should be preserved
@@ -505,7 +505,7 @@ final class VerticalListButtonItemTests: XCTestCase {
             let errorStyles = computeStyles(visualState: state, error: true)
             
             // All Select mode states with error should have 2pt border
-            XCTAssertEqual(errorStyles.borderWidth, DesignTokens.borderBorderEmphasis, 
+            XCTAssertEqual(errorStyles.borderWidth, DesignTokens.borderEmphasis, 
                 "\(state) with error should use emphasis border (2pt)")
         }
     }
@@ -545,11 +545,11 @@ final class VerticalListButtonItemTests: XCTestCase {
     /// Requirements: 7.1, 13.3 - Use motion.selectionTransition (250ms, standard easing)
     func testAnimationTiming() throws {
         // Verify motion token is defined correctly
-        XCTAssertEqual(DesignTokens.motionSelectionTransitionDuration, 0.25, 
+        XCTAssertEqual(DesignTokens.MotionSelectionTransition.duration, 0.25, 
             "Motion selection transition duration should be 250ms (0.25 seconds)")
         
         // The component uses withAnimation with this timing:
-        //   Animation.easeInOut(duration: DesignTokens.motionSelectionTransitionDuration)
+        //   Animation.easeInOut(duration: DesignTokens.MotionSelectionTransition.duration)
         // This is verified through code review of the implementation
         XCTAssertTrue(true, "Component uses motion.selectionTransition timing - verified in implementation")
     }
@@ -703,7 +703,7 @@ final class VisualStateStylesTests: XCTestCase {
         let errorStyles = applyErrorStyles(baseStyles, visualState: .rest)
         
         // Select mode should have 2pt border
-        XCTAssertEqual(errorStyles.borderWidth, DesignTokens.borderBorderEmphasis, 
+        XCTAssertEqual(errorStyles.borderWidth, DesignTokens.borderEmphasis, 
             "Select mode error should use emphasis border")
         // Checkmark visibility should be preserved
         XCTAssertEqual(errorStyles.checkmarkVisible, baseStyles.checkmarkVisible, 
@@ -737,12 +737,12 @@ final class VisualStateStylesTests: XCTestCase {
     func testComputeStylesWithError() {
         // Select mode with error
         let restErrorStyles = computeStyles(visualState: .rest, error: true)
-        XCTAssertEqual(restErrorStyles.borderWidth, DesignTokens.borderBorderEmphasis, 
+        XCTAssertEqual(restErrorStyles.borderWidth, DesignTokens.borderEmphasis, 
             "Rest with error should use emphasis border")
         
         // Multi-Select mode with error
         let checkedErrorStyles = computeStyles(visualState: .checked, error: true)
-        XCTAssertEqual(checkedErrorStyles.borderWidth, DesignTokens.borderBorderDefault, 
+        XCTAssertEqual(checkedErrorStyles.borderWidth, DesignTokens.borderDefault, 
             "Checked with error should preserve default border")
     }
     

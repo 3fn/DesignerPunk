@@ -268,8 +268,8 @@ fun NavTabBarBase(
                     // Contract: interaction_pressable — blend.pressedLighter on inactive press
                     val iconTint = when {
                         isSelected -> theme.color_action_navigation
-                        isPressed -> Color(DesignTokens.color_icon_navigation_inactive).pressedLighterBlend()
-                        else -> Color(DesignTokens.color_icon_navigation_inactive)
+                        isPressed -> theme.color_icon_navigation_inactive.pressedLighterBlend()
+                        else -> theme.color_icon_navigation_inactive
                     }
 
                     Column(

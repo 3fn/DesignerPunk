@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.dp
 /** Component token references for Nav-Header-Base. */
 object NavHeaderTokens {
     // Separator (contract: visual_separator)
-    val separatorWidth = DesignTokens.borderWidth100
+    val separatorWidth = DesignTokens.border_width_100
 
     // Touch target (contract: accessibility_touch_target)
-    val minHeight = DesignTokens.tapAreaRecommended.dp
+    val minHeight = DesignTokens.tap_area_recommended.dp
 }
 
 /** Appearance mode for Nav-Header-Base. */

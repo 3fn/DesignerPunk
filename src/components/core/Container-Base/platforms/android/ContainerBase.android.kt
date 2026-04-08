@@ -623,9 +623,9 @@ fun getContainerBaseCornerRadiusPx(borderRadius: ContainerBaseBorderRadiusValue)
     // Token references: radius-050, radius-100, radius-200
     return when (borderRadius) {
         ContainerBaseBorderRadiusValue.None -> 0f
-        ContainerBaseBorderRadiusValue.Tight -> DesignTokens.radius050
-        ContainerBaseBorderRadiusValue.Normal -> DesignTokens.radius100
-        ContainerBaseBorderRadiusValue.Loose -> DesignTokens.radius200
+        ContainerBaseBorderRadiusValue.Tight -> DesignTokens.radius_050
+        ContainerBaseBorderRadiusValue.Normal -> DesignTokens.radius_100
+        ContainerBaseBorderRadiusValue.Loose -> DesignTokens.radius_200
     }
 }
 
@@ -651,4 +651,4 @@ val accessibilityFocusWidth: Dp = borderWidth200 /* borderWidth200 */
  * Focus indicator outline color — references accessibility.focus.color token
  * Ensures 3:1 contrast ratio per WCAG 1.4.11
  */
-val accessibilityFocusColor: Color = Color(DesignTokens.accessibilityFocusColor)
+val accessibilityFocusColor: Color = Color(DesignTokens.accessibility_focus_color)

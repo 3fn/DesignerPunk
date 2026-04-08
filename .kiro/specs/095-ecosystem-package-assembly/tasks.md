@@ -118,7 +118,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
-- [ ] 4. Build-Time Validation Test
+- [x] 4. Build-Time Validation Test
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard

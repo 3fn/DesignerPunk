@@ -52,9 +52,9 @@ object ProgressBarTokens {
     val easing = DesignTokens.Easing.EasingStandard
 
     fun height(size: ProgressBarSize) = when (size) {
-        ProgressBarSize.SM -> DesignTokens.size050
-        ProgressBarSize.MD -> DesignTokens.size100
-        ProgressBarSize.LG -> DesignTokens.size150
+        ProgressBarSize.SM -> DesignTokens.size_050
+        ProgressBarSize.MD -> DesignTokens.size_100
+        ProgressBarSize.LG -> DesignTokens.size_150
     }
 }
 
