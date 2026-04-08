@@ -47,4 +47,10 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 
 ## Block B / Block C Deferred Items
 
-*To be populated as those specs are written.*
+### Decided — Implementation Staged
+
+| Decision | Decided In | Implementation Location |
+|----------|-----------|------------------------|
+| **`tsx` as TypeScript execution strategy** for `designerpunk.config.ts` loading | Spec 094, Task 3.3 | Block B (WS2 packaging) — bundle `tsx` as dependency, wire CLI `bin` entry point. Phase 1 CLI uses native `import()` via existing `ts-node`. |
+
+*Additional Block B / Block C deferred items to be populated as those specs are written.*

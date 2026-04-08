@@ -19,7 +19,7 @@ Goal: Publish `@designerpunk/core` to GitHub Packages — a product repo can ins
 
 **Block A — Theme Foundation** (Ada, sequential)
 1. **WS4: Theme registry pattern** — Replace hardcoded ThemeContext with registry. Must support themes defined outside the core repo. This changes the resolver and type system.
-2. **WS1: Portable token pipeline** — Abstract hardcoded paths in generators. Configurable root directories. Product repos can create SemanticOverrides and run the pipeline. Builds on the registry pattern from WS4.
+2. **WS1: Portable token pipeline** — Abstract hardcoded paths in generators. Configurable root directories. Product repos can create SemanticOverrides and run the pipeline. Builds on the registry pattern from WS4. **TypeScript execution strategy: `tsx`** — bundled as a dependency during Block B packaging. Lightweight (~2MB), fast (esbuild-based), no `tsconfig.json` required. Product repos run `npx designerpunk generate` without extra setup.
 
 **Block B — Package Assembly** (Lina + Thurgood, can start in parallel with Block A)
 3. **WS2: Component library package** — Clean up package.json `files`/`exports`. ESM bundle with all 34 components. CSS tokens, blend utilities, responsive grid, fonts.

@@ -248,7 +248,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - CLI entry point for `npx designerpunk generate`
     - Reads config from working directory
     - Resolves package location via `require.resolve`
-    - **Decision point**: TypeScript execution strategy for config loading — choose between: (a) bundle `ts-node` as dependency, (b) require as peer dependency, (c) use `tsx`, (d) pre-compile config. Decision affects DX of first `npx designerpunk generate` in a product repo. Document decision in Integration Guide.
+    - **Decision (settled)**: TypeScript execution strategy is `tsx` — lightweight, fast, no `tsconfig.json` required. Bundled as a dependency of `@designerpunk/core` during Block B (WS2 packaging). For Phase 1 implementation, CLI uses native `import()` which works in the DesignerPunk repo via existing `ts-node`. The `tsx` bootstrap is wired when the package's `bin` entry point is built.
     - _Requirements: R5 AC 5_
 
   - [ ] 3.4 Integration test: product repo simulation
