@@ -100,7 +100,6 @@ async function runMcpDocs() {
 
 /** Spawn an MCP server as a child process with the given env vars. */
 function spawnServer(entryPoint: string, envVars: Record<string, string>) {
-  // Use tsx if available (product repo), fall back to ts-node (dev repo)
   const runner = resolveTsRunner();
 
   const child = spawn(runner, [entryPoint], {
