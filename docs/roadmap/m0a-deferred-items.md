@@ -67,6 +67,7 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 | Kotlin package namespace from config | Generator produces `com.designerpunk.*`. Product-specific namespaces require generator change. | M0b Android activation |
 | Swift Package generation for local SPM | SPM could reference a local package — cleaner than file copy for iOS. | M0b iOS activation |
 | Tree-shaking / individual component exports | Full ESM bundle for M0a. Side-effect-free individual exports needed for mobile bundle size. | M0b scoping |
+| `"type": "module"` in package.json | May break existing CJS `require()` calls in tests or build scripts. Verify during Task 5.3 — only add if ESM resolution requires it. | Task 5.3 validation reveals it's needed |
 | Personal Note template | Replace Peter's note with a template for other humans. Only one customer right now. | Second human customer |
 | Exclude "A Vision of the Future.md" | Peter's philosophical foundation, not reusable. | Second human customer |
 

@@ -1414,3 +1414,244 @@ This isn't a design change — just confirming the template approach works for m
 The design is solid from the iOS perspective. All artifacts ship, the validation test covers iOS patterns, and the agent template approach works for my workflow. Ready for tasks.
 
 ---
+
+## Tasks Feedback
+
+### Ada
+
+#### [ADA R1]
+
+**Overall assessment**: Task structure is solid, sequencing is correct, and my assignments (Tasks 1 and 3) are well-scoped. Three observations — one deferral recommendation, one scope clarification, and one note for Lina's validation test.
+
+### Task 1: `"type": "module"` — Recommend Deferring
+
+The task includes "Verify `"type": "module"` compatibility." Adding `"type": "module"` to `package.json` changes how Node.js resolves imports across the entire repo — every `require()` call in tests, build scripts, and the pipeline would need to become `import` or use `createRequire`. This is a potentially large change that could cascade through 318 test suites.
+
+The exports map works without `"type": "module"` — the `"import"` condition in the exports field is independent of the package's `"type"` field. Bundlers (Vite, Astro) resolve the `"import"` condition regardless.
+
+**Recommendation**: Defer `"type": "module"` unless a specific export fails without it. Verify during Task 5.3 (fresh-repo export validation). If all exports resolve correctly without it, leave it out for M0a. It's a correctness improvement, not a blocker.
+
+### Task 3: MCP Server Startup Is Process Management
+
+The task says "start server" but the MCP servers are TypeScript applications (`mcp-server/src/index.ts`, `application-mcp-server/src/index.ts`). Starting them means:
+
+1. Resolve the server entry point path (package or cwd)
+2. Spawn a child process running the server via `tsx` (product repo) or `ts-node` (DesignerPunk repo)
+3. Pass data directory arguments to the spawned process
+4. Pipe stdout for connection details
+5. Handle process lifecycle (the CLI command stays alive while the server runs)
+
+This is process management, not just path resolution. The task description should acknowledge this so the implementation isn't surprised by the complexity. It's still correctly scoped — just want to set expectations.
+
+### Task 4: Theme Reference Validation (Note for Lina)
+
+The validation test needs to check `theme.*` references (from the Spec 094 migration) in addition to `DesignTokens.*` references. To validate theme references, the test needs to know which property names exist on the theme protocol (iOS) and data class (Android).
+
+**Recommended approach**: Parse the generated Swift/Kotlin output files to extract theme property names, rather than instantiating the ThemeRegistry. This is more self-contained — the test validates against the actual generated output, not a recomputation of the theme-varying set. If the generator produces `var colorActionPrimary: Color { get }` in the protocol, the test extracts `colorActionPrimary` as a valid theme reference.
+
+### Sequencing: Correct
+
+```
+Task 1 (Ada: build steps)
+  → Task 2 (Lina: package.json) — needs dist/config/ and dist/cli/
+  → Task 3 (Ada: MCP CLI) — extends the compiled CLI
+  → Task 4 (Lina: validation test)
+  → Task 5 (Lina: publish + validation)
+  → Tasks 6 + 7 (Thurgood: agents + guide) — parallel with late Task 5
+```
+
+No concerns with the dependency chain.
+
+---
+
+### Lina
+
+#### [LINA R1]
+
+**Overall assessment**: Task structure is well-organized and the sequencing is correct. My assignments (Tasks 2, 4, 5) are well-scoped. Ada's observations are all valid — the `"type": "module"` deferral, MCP process management complexity, and theme reference validation approach. One scope clarification on my tasks and one sequencing note.
+
+### Task 2 (Package.json): Ready to Execute
+
+Subtasks 2.1-2.4 are clear and correctly scoped. The dependency on Task 1 (Ada's build steps) is explicit — I need `dist/config/` and `dist/cli/` to exist before I can define exports and `bin` that point to them. I can start 2.1 (`files` field, rename) and 2.4 (cleanup duplicates) immediately while Ada works on Task 1, then do 2.2 (exports) and 2.3 (bin) after Task 1 completes.
+
+### Task 4 (Validation Test): Agree with Ada's Approach
+
+Ada's recommendation to parse the generated Swift/Kotlin output for theme property names (rather than recomputing from ThemeRegistry) is the right approach. The test validates against what the generator actually produced, not what it should have produced. This is more robust — if the generator has a bug, the test catches the drift between generated output and component consumption, which is the actual failure mode we're preventing.
+
+Implementation plan:
+1. Parse `dist/DesignTokens.ios.swift` for `static let` property names → valid static token refs
+2. Parse the theme protocol for `var ... { get }` property names → valid theme refs
+3. Scan `src/components/core/*/platforms/ios/*.swift` for `DesignTokens.*` and `theme.*` patterns
+4. Cross-reference. Same for Android with `dist/DesignTokens.android.kt` and the theme data class.
+5. Parse `browser-entry.ts` imports vs `src/components/core/*/platforms/web/` directories.
+
+### Task 5 (Publish): One Sequencing Note
+
+Task 5.1 (npm pack dry run) should run after Task 4 (validation test) passes. If the validation test catches drift, we don't want to pack and publish a package with broken token references. The task list implies this ordering (4 before 5), but it's worth making explicit — Task 4 is a gate for Task 5.
+
+### On Ada's `"type": "module"` Deferral
+
+Agree. The exports map works without it. If Task 5.3 (fresh-repo validation) reveals an export that doesn't resolve without `"type": "module"`, we add it then. No point risking 318 test suites for a speculative improvement.
+
+### Summary
+
+| Task | Assessment | Action |
+|------|-----------|--------|
+| Task 1 (Ada: build steps) | Correctly scoped, blocks my Task 2.2/2.3 | None |
+| Task 2 (Lina: package.json) | Ready, can partially start before Task 1 | Start 2.1 + 2.4 immediately |
+| Task 3 (Ada: MCP CLI) | Process management complexity noted | None from me |
+| Task 4 (Lina: validation test) | Agree with Ada's parse-generated-output approach | Implement as described |
+| Task 5 (Lina: publish) | Task 4 is a gate | Make explicit |
+| Tasks 6-7 (Thurgood: agents + guide) | No concerns | None |
+
+Ready for implementation.
+
+---
+
+---
+
+### Leonardo
+
+#### [LEONARDO R1]
+
+**Overall assessment**: The task list is well-sequenced and the assignments are correct. The internal dependency chain (build steps → package.json → validation → pack → publish → fresh-repo validation) is right. WS6 running in parallel with WS2's later tasks is efficient. My feedback is brief — three observations, no blocking concerns.
+
+### Task 3 (CLI MCP Commands) — Connection Output Format
+
+Task 3 says "print connection details (protocol, data directory, ready status)." From my requirements feedback: the output should be copy-pasteable into an MCP configuration block. This is an implementation detail, not a task change — just reinforcing that the output format matters for the product setup workflow. If the output is `Application MCP started on stdio, data: /path/to/components`, that's useful. If it's a JSON block that can be dropped into `.kiro/settings.json` or equivalent, that's better.
+
+### Task 6 (Agent Template) — MCP-Only Confirmed
+
+Task 6 correctly captures the consensus: MCP-only, no `fs_read` fallbacks. This is the right call. One note: the template should include a brief comment in each agent prompt explaining *why* there are no `fs_read` fallbacks — something like "This template uses MCP queries for all design system knowledge. Ensure MCP servers are running before starting agents (see Integration Guide)." Without that context, a product developer might think the fallbacks were accidentally omitted and add them back.
+
+### Task 7 (Integration Guide) — "Explore" Step Included
+
+I see the "explore component catalog" step made it into Task 7 — the example MCP queries (`get_component_catalog`, `find_components`, `list_experience_patterns`) are listed. This is exactly what I asked for in my requirements feedback. No changes needed.
+
+### Sequencing Observation
+
+Tasks 1-5 form a strict chain for WS2. Tasks 6-7 (WS6) can run in parallel starting anytime. The critical path is WS2 — specifically Task 1 (build steps) unblocking Task 2.2 (exports) and Task 2.3 (bin). If Task 1 takes longer than expected (the type chain compilation Ada flagged), everything downstream shifts. Worth monitoring but not worth restructuring — the dependency is real.
+
+### Summary
+
+No blocking concerns. No task changes needed. Ready for implementation.
+
+### Stacy
+
+#### [STACY R1]
+
+**Overall assessment**: The task list is well-structured, correctly sequenced, and the assignments match agent domains. Ada and Lina's observations are both valid — the `"type": "module"` deferral is the right call, and the theme reference validation approach (parse generated output, not recompute) is more robust. No blocking concerns. Three observations from the governance and process perspective.
+
+### Task Sequencing: Task 4 as a Gate for Task 5
+
+Lina flagged this and I want to reinforce it: Task 4 (validation test) should be an explicit gate for Task 5 (publish). If the drift validation catches broken token references or missing bundle registrations, we don't publish a package with known defects. The task list implies this ordering but doesn't state it as a dependency. Making it explicit prevents someone from running Tasks 4 and 5.1 in parallel and publishing before validation passes.
+
+### Task 6: Leonardo's Comment About Explaining the MCP-Only Decision
+
+Leonardo's note is a good one — the agent template should include a brief comment explaining why there are no `fs_read` fallbacks. Without that context, a product developer (or a future agent) might reintroduce them thinking they were accidentally omitted. This is a small addition to Task 6 that preserves the governance intent. From my audit perspective, if fallbacks silently reappear, I lose the ability to distinguish MCP gaps from fallback usage — which is the whole reason we removed them.
+
+### Process Scaffolding Alignment
+
+The tasks doc follows the Spec Feedback Protocol's sequential formalization correctly — design outline → requirements → design → tasks, with feedback at each gate. The task types and validation tiers are correctly assigned:
+
+- Task 1 (build steps): Implementation / Tier 2 ✅
+- Task 2 (package.json): Parent / Tier 3 with subtasks ✅
+- Task 3 (CLI MCP): Implementation / Tier 2 ✅
+- Task 4 (validation test): Implementation / Tier 2 ✅
+- Task 5 (publish): Parent / Tier 3 with subtasks ✅
+- Tasks 6-7 (WS6): Implementation / Tier 2 ✅
+
+Per the M0a process scaffolding, the product-level completion docs for this spec go in `docs/roadmap/m0a/phase-1/`. The spec-level completion docs follow the standard paths listed in Tasks 2 and 5. Both layers are accounted for.
+
+### Summary
+
+No blocking concerns. No task changes needed. Ready for implementation.
+
+---
+
+### Sparky
+
+#### [SPARKY R1]
+
+**Overall assessment**: The task list is well-sequenced and the assignments are correct. My design feedback concern (`"type": "module"`) is addressed by Ada's deferral recommendation — verify during Task 5.3, only add if needed. No blocking concerns. Two observations from the web platform perspective.
+
+### Task 1: `"type": "module"` Deferral — Agree
+
+Ada's recommendation to defer `"type": "module"` is the right call. I flagged this in my design feedback as a potential blocker if the current `tsconfig.json` compiles to CJS. Ada's point is cleaner: the `"import"` condition in the exports map works regardless of the package's `"type"` field. Vite and Astro resolve the `"import"` condition directly — they don't care about `"type"`. If Task 5.3 (fresh-repo validation) reveals an export that doesn't resolve, we add it then with a targeted fix rather than a repo-wide change affecting 318 test suites.
+
+### Task 5.3: This Is My Validation Too
+
+Task 5.3 (fresh-repo install and export validation) is the task that validates everything I reviewed across the design outline, requirements, and design feedback rounds. Every export path I verified against Vite/Astro gets a real-world test here. Specifically:
+
+- Root import resolves to ESM bundle (not TokenEngine.js) ✅
+- `./tokens.css` resolves to `dist/DesignTokens.web.css` (not `dist/browser/tokens.css`) ✅
+- `./config` resolves to compiled JS with types (depends on Task 1) ✅
+- No `./BlendUtilities` export exists ✅
+- No CJS `require` condition on root ✅
+- 34 custom elements register from the ESM bundle ✅
+
+If any of these fail, it's a finding that traces back to the specific requirement and design decision. The task is correctly scoped.
+
+**One note**: Task 5.3 says "verify `import { defineConfig } from '@designerpunk/core/config'` provides TypeScript types." This verification needs a `tsconfig.json` in the temp directory with `"moduleResolution": "bundler"` or `"node16"` — the default `"node"` resolution doesn't read the `exports` map. Without this, the type check will fail even if the export is correct. Small implementation detail but easy to miss.
+
+### Task 4 Gate for Task 5 — Endorse
+
+Lina and Stacy both flagged this: Task 4 (validation test) should be an explicit gate for Task 5 (publish). Agree. If the drift validation catches a missing component in `browser-entry.ts`, we don't want to publish a bundle that's missing web components. The ESM bundle is the primary web consumer artifact — shipping it incomplete is worse than delaying the publish.
+
+### Summary
+
+| Task | Assessment | Action |
+|------|-----------|--------|
+| Task 1 | `"type": "module"` deferral is correct | None |
+| Task 2 | No concerns from web perspective | None |
+| Task 5.3 | Validates all my export findings; needs `moduleResolution` in temp tsconfig | Implementation detail |
+| Task 4 → 5 gate | Endorse | Make explicit |
+
+Ready for implementation.
+
+
+### Kenya
+
+#### [KENYA R4]
+
+**Scope**: Tasks doc review — verifying iOS-relevant tasks (Task 4 validation test, Task 7 Integration Guide iOS section), and confirming nothing is missing from the iOS perspective.
+
+### Task 4 (Build-Time Validation Test) — iOS Patterns Correct
+
+The subtask description says: "scan iOS `.swift` files for `DesignTokens.*` and `theme.*` patterns, validate against generated `DesignTokens.ios.swift` and theme protocol property names."
+
+This covers both consumption patterns. One implementation note I raised in my design feedback: the `theme.*` validation needs to extract property names from the generated protocol. Parsing the Swift file for `var colorActionPrimary: Color { get }` lines is the simplest approach — no coupling to pipeline internals.
+
+The test should also handle the supporting files that don't reference `DesignTokens` at all (like `RoundedPointyTopHexagon.swift`, `AvatarPreview.swift`) — these should be silently skipped, not flagged as errors. Just confirming the scan targets files that actually contain `DesignTokens.` or `theme.` references, not all `.swift` files.
+
+No changes needed to the task description.
+
+### Task 7 (Integration Guide — iOS Section) — Correct, Matches My R2 Feedback
+
+The iOS section covers: where to find Swift files, manual copy into Xcode, minimum deployment target 17.0+, required frameworks (SwiftUI, UIKit), and the `sync:ios` M0b note. This matches what I requested in my requirements feedback.
+
+Two items from my R2 that should be captured in the guide (confirming they're implied by the task description):
+
+1. **Explicit file list** — the guide should list every Swift file to copy, not just "where to find them." This includes the 5 supporting files (`RoundedPointyTopHexagon.swift`, `AvatarPreview.swift`, `VisualStateStyles.swift`, `TokenMapping.swift`, `ButtonVerticalListSetPreview.swift`) that aren't obvious from the component directory names.
+
+2. **Single-target recommendation** — the guide should note that all files should be added to the same Xcode target to avoid access modifier issues (supporting files use `internal` access).
+
+These are content details for Thurgood to include when writing the guide, not task structure changes.
+
+### Sequencing — No iOS Dependencies
+
+None of the tasks have iOS-specific dependencies. Task 1 (build steps) and Task 2 (package.json) are infrastructure. Task 4 (validation test) scans iOS files but doesn't modify them. Task 7 (Integration Guide) documents iOS consumption but doesn't require iOS code changes.
+
+The only iOS work that could surface is if the validation test (Task 4) catches broken token references — which it will, given the quality gap we documented in Spec 094. But those fixes are already tracked in the Spec 094 issue, not this spec. Task 4 just makes the detection automated going forward.
+
+### Summary
+
+| Task | Assessment | Action |
+|------|-----------|--------|
+| Task 4 (validation test) | iOS patterns correct | None — implementation note about skipping non-token files |
+| Task 7 (Integration Guide) | iOS section correct | Thurgood includes explicit file list and single-target note |
+| Sequencing | No iOS dependencies | None |
+
+No blocking concerns. Ready for implementation.
+
+---
