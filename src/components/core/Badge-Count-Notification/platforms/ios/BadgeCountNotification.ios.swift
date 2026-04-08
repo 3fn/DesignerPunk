@@ -51,19 +51,6 @@ import UIKit
  * @see Requirements: 3.1, 4.7 - notification-specific color tokens
  * @see .kiro/specs/058-component-token-architecture-cleanup for color token migration
  */
-enum BadgeCountNotificationTokens {
-    // MARK: - Fixed Notification Colors
-    
-    /// Background color for notification badge
-    /// Uses generated token: DesignTokens.colorFeedbackNotificationBackground
-    /// Source: BadgeNotificationColorTokens['notification.background'] → pink400
-    /// @see Requirement 3.1 - notification-specific color tokens
-    
-    /// Text color for notification badge
-    /// Uses generated token: DesignTokens.colorFeedbackNotificationText
-    /// Source: BadgeNotificationColorTokens['notification.text'] → white100
-    /// @see Requirement 3.1 - notification-specific color tokens
-}
 
 // MARK: - Badge-Count-Notification Size Enum
 

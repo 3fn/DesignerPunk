@@ -263,7 +263,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
 
 ---
 
-- [ ] 4. Component Consumption Migration (R8)
+- [x] 4. Component Consumption Migration (R8)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
@@ -360,7 +360,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Same components as 4.4, Android platform files
     - _Requirements: R8 AC 2, 4, 5_
 
-  - [ ] 4.9 Remove old static color properties + full regression
+  - [x] 4.9 Remove old static color properties + full regression
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada (generator change) + Lina (regression)
