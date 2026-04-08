@@ -373,7 +373,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
 
 ---
 
-- [ ] 5. Integration Guide, Steering Docs & Agent Updates
+- [x] 5. Integration Guide, Steering Docs & Agent Updates
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
