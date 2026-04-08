@@ -41,7 +41,7 @@ describe('Nav-TabBar-Base Android — Contract Compliance', () => {
     });
 
     it('visual_state_colors: dot uses color.action.navigation and size050', () => {
-      expect(kt).toContain('dotColor');
+      expect(kt).toContain('theme.color_action_navigation');
       expect(kt).toContain('dotSize');
       expect(kt).toContain('size_050');
       expect(kt).toContain('CircleShape');

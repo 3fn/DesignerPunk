@@ -38,11 +38,7 @@ import androidx.compose.ui.unit.dp
 
 /** Component token references for Nav-Header-Base. */
 object NavHeaderTokens {
-    // Background (contract: visual_background)
-    val canvasBackground: Color = Color(DesignTokens.colorStructureCanvas)
-
     // Separator (contract: visual_separator)
-    val separatorColor: Color = Color(DesignTokens.colorStructureBorderSubtle)
     val separatorWidth = DesignTokens.borderWidth100
 
     // Touch target (contract: accessibility_touch_target)
@@ -77,10 +73,11 @@ fun NavHeaderBase(
     showSeparator: Boolean = true,
     testID: String? = null,
 ) {
+    val theme = LocalDPTheme.current
     val backgroundColor = when (appearance) {
-        NavHeaderAppearance.OPAQUE -> NavHeaderTokens.canvasBackground
+        NavHeaderAppearance.OPAQUE -> theme.color_structure_canvas
         // Android convention: solid background for translucent (blur tokens available, not consumed)
-        NavHeaderAppearance.TRANSLUCENT -> NavHeaderTokens.canvasBackground
+        NavHeaderAppearance.TRANSLUCENT -> theme.color_structure_canvas
     }
 
     // Modifier order matters for edge-to-edge:
@@ -123,7 +120,7 @@ fun NavHeaderBase(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(NavHeaderTokens.separatorWidth)
-                    .background(NavHeaderTokens.separatorColor)
+                    .background(theme.color_structure_border_subtle)
             )
         }
     }

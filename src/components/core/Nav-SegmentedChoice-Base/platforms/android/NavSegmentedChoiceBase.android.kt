@@ -74,20 +74,16 @@ import kotlinx.coroutines.launch
  */
 private object NavSegmentedChoiceTokens {
     // Container (contract: visual_background, visual_border)
-    val containerBackground = Color(DesignTokens.color_structure_surface)
-    val containerBorderColor = Color(DesignTokens.color_structure_border)
     val containerBorderWidth = DesignTokens.border_default
     val containerRadius = DesignTokens.radius_normal
     val containerPadding = DesignTokens.space_050
 
     // Indicator (contract: visual_shadow, visual_state_colors)
-    val indicatorBackground = Color(DesignTokens.color_structure_canvas)
     val indicatorRadius = DesignTokens.radius_small
     // Contract: visual_shadow — shadow.navigation.indicator token
     val indicatorShadow = DesignTokens.shadow_navigation_indicator
 
     // Segments (contract: visual_state_colors, layout_flexible_length)
-    val segmentColor = Color(DesignTokens.color_action_navigation)
     val minSegmentWidth = DesignTokens.tap_area_minimum
 }
 
@@ -158,6 +154,7 @@ fun NavSegmentedChoiceBase(
     componentId: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     // Contract: validation_selection_constraints
     require(segments.size >= 2) {
         "Nav-SegmentedChoice-Base requires at least 2 segments. Received: ${segments.size}."
@@ -204,10 +201,10 @@ fun NavSegmentedChoiceBase(
     BoxWithConstraints(
         modifier = modifier
             .clip(containerShape)
-            .background(NavSegmentedChoiceTokens.containerBackground)
+            .background(theme.color_structure_surface)
             .border(
                 NavSegmentedChoiceTokens.containerBorderWidth,
-                NavSegmentedChoiceTokens.containerBorderColor,
+                theme.color_structure_border,
                 containerShape
             )
             .padding(NavSegmentedChoiceTokens.containerPadding)
@@ -297,7 +294,7 @@ fun NavSegmentedChoiceBase(
                         spotColor = Color(shadowToken.color).copy(alpha = shadowToken.opacity * currentShadowAlpha)
                     )
                     .clip(indicatorShape)
-                    .background(NavSegmentedChoiceTokens.indicatorBackground)
+                    .background(theme.color_structure_canvas)
             )
 
             // Segments layer (contract: layout_flexible_length)
@@ -364,7 +361,7 @@ fun NavSegmentedChoiceBase(
                         when (segment) {
                             is SegmentOption.Text -> Text(
                                 text = segment.label,
-                                color = NavSegmentedChoiceTokens.segmentColor,
+                                color = theme.color_action_navigation,
                                 fontSize = size.fontSize.sp,
                                 lineHeight = (size.fontSize * size.lineHeight).sp,
                                 fontWeight = FontWeight.Bold,
@@ -377,7 +374,7 @@ fun NavSegmentedChoiceBase(
                             is SegmentOption.IconSegment -> IconBase(
                                 name = segment.icon,
                                 size = size.iconSize,
-                                color = NavSegmentedChoiceTokens.segmentColor,
+                                color = theme.color_action_navigation,
                                 modifier = Modifier.padding(
                                     horizontal = size.inlinePadding,
                                     vertical = size.blockPadding

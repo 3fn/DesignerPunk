@@ -77,22 +77,14 @@ import kotlinx.coroutines.launch
  */
 private object NavTabBarTokens {
     // Container (contract: visual_background)
-    val containerBackground = Color(DesignTokens.color_structure_canvas)
-    val borderColor = Color(DesignTokens.color_structure_border_subtle)
     val borderWidth = DesignTokens.border_default
 
     // Icons (contract: visual_state_colors)
-    val activeIconColor = Color(DesignTokens.color_action_navigation)
-    val inactiveIconColor = Color(DesignTokens.color_icon_navigation_inactive)
 
     // Dot (contract: visual_state_colors)
     val dotSize = DesignTokens.size_050
-    val dotColor = Color(DesignTokens.color_action_navigation)
 
     // Glow gradient (contract: visual_gradient_glow)
-    val glowActiveCenter = Color(DesignTokens.color_background_primary_subtle)
-    val glowInactiveCenter = Color(DesignTokens.color_structure_canvas)
-    val glowEdgeColor = Color(DesignTokens.color_structure_canvas)
     val glowEdgeOpacity = DesignTokens.opacity_024
 
     // Spacing
@@ -149,6 +141,7 @@ fun NavTabBarBase(
     modifier: Modifier = Modifier,
     badgeContent: @Composable (String) -> Unit = {}
 ) {
+    val theme = LocalDPTheme.current
     // Contract: validation_selection_constraints
     require(tabs.size >= 2) {
         "Nav-TabBar-Base requires at least 2 tabs. Received: ${tabs.size}."
@@ -191,10 +184,10 @@ fun NavTabBarBase(
             .background(
                 Brush.verticalGradient(
                     colorStops = arrayOf(
-                        0f to NavTabBarTokens.containerBackground.copy(alpha = 0.80f),
-                        0.16f to NavTabBarTokens.containerBackground.copy(alpha = 0.88f),
-                        0.32f to NavTabBarTokens.containerBackground.copy(alpha = 0.96f),
-                        0.48f to NavTabBarTokens.containerBackground
+                        0f to theme.color_structure_canvas.copy(alpha = 0.80f),
+                        0.16f to theme.color_structure_canvas.copy(alpha = 0.88f),
+                        0.32f to theme.color_structure_canvas.copy(alpha = 0.96f),
+                        0.48f to theme.color_structure_canvas
                     )
                 )
             )
@@ -204,7 +197,7 @@ fun NavTabBarBase(
         val tabWidthPx = totalWidthPx / tabs.size
 
         // Top stroke (contract: visual_background)
-        Divider(color = NavTabBarTokens.borderColor, thickness = NavTabBarTokens.borderWidth)
+        Divider(color = theme.color_structure_border_subtle, thickness = NavTabBarTokens.borderWidth)
 
         // Contract: animation_initial_render
         LaunchedEffect(Unit) {
@@ -268,15 +261,15 @@ fun NavTabBarBase(
                 tabs.forEachIndexed { index, tab ->
                     val isSelected = tab.value == resolvedSelectedValue
                     val glowAlpha = glowAlphas.value[tab.value] ?: 1f
-                    val centerColor = if (isSelected) NavTabBarTokens.glowActiveCenter else NavTabBarTokens.glowInactiveCenter
+                    val centerColor = if (isSelected) theme.color_background_primary_subtle else theme.color_structure_canvas
                     val interactionSource = remember { MutableInteractionSource() }
                     val isPressed by interactionSource.collectIsPressedAsState()
 
                     // Contract: interaction_pressable — blend.pressedLighter on inactive press
                     val iconTint = when {
-                        isSelected -> NavTabBarTokens.activeIconColor
-                        isPressed -> NavTabBarTokens.inactiveIconColor.pressedLighterBlend()
-                        else -> NavTabBarTokens.inactiveIconColor
+                        isSelected -> theme.color_action_navigation
+                        isPressed -> Color(DesignTokens.color_icon_navigation_inactive).pressedLighterBlend()
+                        else -> Color(DesignTokens.color_icon_navigation_inactive)
                     }
 
                     Column(
@@ -337,7 +330,7 @@ fun NavTabBarBase(
                                             colorStops = arrayOf(
                                                 0f to centerColor.copy(alpha = glowAlpha),
                                                 0.4f to centerColor.copy(alpha = glowAlpha * 0.5f),
-                                                0.8f to NavTabBarTokens.glowEdgeColor.copy(alpha = NavTabBarTokens.glowEdgeOpacity),
+                                                0.8f to theme.color_structure_canvas.copy(alpha = NavTabBarTokens.glowEdgeOpacity),
                                                 1f to Color.Transparent
                                             ),
                                             radius = hRadius
@@ -375,7 +368,7 @@ fun NavTabBarBase(
                     .align(Alignment.BottomStart)
                     .padding(bottom = NavTabBarTokens.activePaddingBottom.dp)
                     .size(NavTabBarTokens.dotSize.dp)
-                    .background(NavTabBarTokens.dotColor, CircleShape)
+                    .background(theme.color_action_navigation, CircleShape)
             )
         }
     }

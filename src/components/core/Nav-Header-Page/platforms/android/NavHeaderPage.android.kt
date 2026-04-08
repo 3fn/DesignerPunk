@@ -47,8 +47,6 @@ import kotlin.math.roundToInt
 // MARK: - Tokens
 
 object NavHeaderPageTokens {
-    // Token values are raw — platform builder generates correct units
-    val titleColor = DesignTokens.colorActionNavigation
     val closeGap = DesignTokens.spaceGroupedTight
     val androidPadding = DesignTokens.spaceInset100
     val scrollThreshold = 8f
@@ -70,6 +68,7 @@ fun NavHeaderPage(
     showSeparator: Boolean = true,
     testID: String? = null,
 ) {
+    val theme = LocalDPTheme.current
     // Collapsible state
     var isHidden by remember { mutableStateOf(false) }
     val offsetY = remember { Animatable(0f) }
@@ -103,7 +102,7 @@ fun NavHeaderPage(
         titleSlot = {
             Text(
                 text = title,
-                color = NavHeaderPageTokens.titleColor,
+                color = theme.color_action_navigation,
                 fontSize = DesignTokens.typographyLabelMd.fontSize,
                 fontWeight = DesignTokens.typographyLabelMd.fontWeight,
                 maxLines = 1,

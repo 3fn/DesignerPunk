@@ -328,7 +328,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Same three-step pattern
     - _Requirements: R8 AC 1, 3, 5_
 
-  - [ ] 4.5 Android migration: Navigation family
+  - [x] 4.5 Android migration: Navigation family
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
