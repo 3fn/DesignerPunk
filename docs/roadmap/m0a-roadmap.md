@@ -21,9 +21,9 @@ Goal: Publish `@designerpunk/core` to GitHub Packages — a product repo can ins
 1. **WS4: Theme registry pattern** — Replace hardcoded ThemeContext with registry. Must support themes defined outside the core repo. This changes the resolver and type system.
 2. **WS1: Portable token pipeline** — Abstract hardcoded paths in generators. Configurable root directories. Product repos can create SemanticOverrides and run the pipeline. Builds on the registry pattern from WS4. **TypeScript execution strategy: `tsx`** — bundled as a dependency during Block B packaging. Lightweight (~2MB), fast (esbuild-based), no `tsconfig.json` required. Product repos run `npx designerpunk generate` without extra setup.
 
-**Block B — Package Assembly** (Lina + Thurgood, can start in parallel with Block A)
-3. **WS2: Component library package** — Clean up package.json `files`/`exports`. ESM bundle with all 34 components. CSS tokens, blend utilities, responsive grid, fonts.
-4. **WS6: Agent configurations for product context** — Agent configs that work when DesignerPunk is a dependency. Product agents know where to find things.
+**Block B — Package Assembly** (Lina + Thurgood)
+3. **WS2: Component library package** — Rename to `@designerpunk/core`. Define `files` (allowlist), `exports` (ESM-only root, `./config`, `./tokens.css`, `./component-tokens.css`, `./blend`, `./grid.css`, `./fonts/*`), `bin` (CLI). Add build step for `dist/config/`. Remove legacy `./BlendUtilities` export and CJS root condition. Add `tsx` as runtime dependency. Build-time validation test (platform token refs + bundle registration). Clean up duplicate token files. Publish to GitHub Packages. Validate fresh-repo install.
+4. **WS6: Agent configurations for product context** — Produce concrete agent config template for installed-package context. Document MCP server startup (`npx designerpunk mcp:app`/`mcp:docs`). Document native platform consumption (iOS/Android manual copy for M0a, target sync model for M0b). Document knowledge base setup. Update Integration Guide with full product setup loop including platform-specific sections.
 
 **Block C — MCP Infrastructure** (can start after Block A stabilizes)
 5. **WS3: Configurable MCP servers** — Application MCP and Docs MCP accept configurable data directories. Runnable from a product repo.

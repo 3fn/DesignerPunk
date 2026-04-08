@@ -175,7 +175,11 @@ Steering docs, release tooling, test standards, process docs, audit methodology,
 2. **Document prompt customization** — what to change (product name, domain-specific knowledge, product-specific MCP data)
 3. **Document MCP server startup** — `npx designerpunk mcp:app` / `mcp:docs` with connection details
 4. **Document knowledge base setup** — what to index, include/exclude patterns for a product repo
-5. **Update Integration Guide** — full product setup loop: install → config → MCP servers → agent connections → verify → generate → build
+5. **Document native platform consumption (M0a workaround):**
+   - iOS section: where to find Swift files in the installed package, how to manually copy into Xcode project, minimum deployment target (iOS 17.0+), required frameworks (SwiftUI, UIKit), note that `sync:ios` is coming in M0b
+   - Android section: where to find Kotlin files, how to manually copy into Gradle module, minimum Compose BOM version, R8/ProGuard considerations, note that `sync:android` is coming in M0b
+   - Document the target sync model so Kenya and Data have a clear picture of M0b
+6. **Update Integration Guide** — full product setup loop: install → config → MCP servers → agent connections → verify → generate → build. Include platform-specific sections for web, iOS, and Android.
 
 ---
 

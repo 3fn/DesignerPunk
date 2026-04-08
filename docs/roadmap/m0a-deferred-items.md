@@ -17,8 +17,9 @@ Each entry records: what was deferred, which spec or planning doc deferred it, w
 | Deadline | Items |
 |----------|-------|
 | **Before Phase 2 starts** | Token coverage analysis, `marketing-pages` vocabulary |
-| **Before M0b starts** | Tree-shaking, ThemeAwareBlendUtilities consolidation, full Product MCP features, token namespace collision prevention |
+| **Before M0b starts** | Tree-shaking, ThemeAwareBlendUtilities consolidation, full Product MCP features, token namespace collision prevention, native sync CLI (`sync:ios`/`sync:android`), Kotlin package namespace from config, Swift Package generation |
 | **End of Phase 2 (after all theming work)** | `mode: 'light'` support, `data-theme` attribute configurability |
+| **When second customer appears** | Personal Note template, exclude "A Vision of the Future.md" |
 
 ---
 
@@ -56,6 +57,18 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 ---
 
 ## Block B / Block C Deferred Items
+
+### Spec 095: Ecosystem Package Assembly
+
+| Item | Rationale | Activation Trigger |
+|------|-----------|-------------------|
+| `npx designerpunk sync:ios` | iOS files in npm package need to be synced to Xcode project. Manual copy documented for M0a. | M0b iOS activation |
+| `npx designerpunk sync:android` | Android files in npm package need to be synced to Gradle module. Manual copy documented for M0a. | M0b Android activation |
+| Kotlin package namespace from config | Generator produces `com.designerpunk.*`. Product-specific namespaces require generator change. | M0b Android activation |
+| Swift Package generation for local SPM | SPM could reference a local package — cleaner than file copy for iOS. | M0b iOS activation |
+| Tree-shaking / individual component exports | Full ESM bundle for M0a. Side-effect-free individual exports needed for mobile bundle size. | M0b scoping |
+| Personal Note template | Replace Peter's note with a template for other humans. Only one customer right now. | Second human customer |
+| Exclude "A Vision of the Future.md" | Peter's philosophical foundation, not reusable. | Second human customer |
 
 ### Decided — Implementation Staged
 
