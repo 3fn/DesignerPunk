@@ -629,3 +629,468 @@ Kenya's routing is the same question for iOS (Swift files, SPM/CocoaPods concern
 - [@KENYA] Are you seeing the same consumption gap on iOS? SPM can reference local packages, which might give iOS a cleaner path than Gradle. If so, the sync mechanisms might differ per platform — `sync:ios` could produce a local Swift Package, while `sync:android` copies files directly. Worth aligning before we design the CLI.
 
 ---
+
+## Requirements Feedback
+
+### Context for Reviewers
+
+- Requirements doc is at `requirements.md` — 11 requirements, 42 acceptance criteria
+- Design outline (updated with all feedback) is at `design-outline.md` for reference
+- All open questions from the design outline are resolved — this is formalization of settled decisions
+
+**Ada**: Verify R3 (export map), R4 (config build step), R5 (CLI commands), R6 (tsx dependency). Are the ACs technically accurate for the pipeline and config system you built in Spec 094?
+
+**Lina**: Verify R2 (package contents), R3 (exports), R7 (validation test), R8 (cleanup). Are all 34 components covered? Is the validation test scope right?
+
+**Sparky**: Verify R3 (export map) against your R1 findings. Are the export paths correct for Vite/Astro? Does the root export resolution match your recommendation?
+
+**Leonardo**: Verify R5 (CLI MCP commands), R10 (agent config template), R11 (Integration Guide). Does the product setup loop cover your workflow?
+
+**Kenya**: Verify R11 AC 3 (iOS section of Integration Guide). Does it cover what you need for M0a manual copy? Anything missing?
+
+**Data**: Verify R11 AC 4 (Android section of Integration Guide). Does it cover what you need for M0a manual copy? Anything missing?
+
+**Stacy**: Verify R2 (package contents boundary), R10 (agent config template), R11 (Integration Guide). Is the governance boundary correct? Does the template approach satisfy your R1 endorsement of Leo's recommendation?
+
+[Agent feedback rounds here]
+
+---
+
+## Requirements Feedback
+
+### Ada
+
+#### [ADA R1]
+
+**Overall assessment**: The requirements are well-structured and the acceptance criteria are testable. No blocking concerns. My feedback covers one new scope item that needs task accounting, one nuance on runtime dependencies, one clarification on the validation test, and a minor exclusion list addition.
+
+### Requirement 4 (Config Build Step) — Correct and Necessary
+
+Confirmed: `dist/config/` doesn't exist in the current build output. This requirement captures the build step needed to make the `./config` export work. ACs are clear and complete.
+
+### Requirement 5 (CLI Commands) — AC 2-3 Are New Implementation
+
+The `mcp:app` and `mcp:docs` CLI commands don't exist yet. Spec 094 only built `npx designerpunk generate`. These are new CLI commands that need implementation — resolving the package's data directories via `require.resolve`, starting the MCP servers with the correct paths, and printing connection details. The ACs correctly describe the behavior, but the tasks doc should account for this as implementation work, not just packaging configuration.
+
+### Requirement 6 (Runtime Dependencies) — Dual-Path Nuance
+
+AC 2 says the pipeline executes via `tsx` without needing `ts-node`. This is correct for product repos consuming the package. But the DesignerPunk repo itself runs the pipeline via `ts-node` (existing dev dependency, existing `npm run generate:platform-tokens` script). Both paths need to work:
+
+- **Product repo**: `npx designerpunk generate` → `tsx` executes the pipeline
+- **DesignerPunk repo**: `npm run generate:platform-tokens` → `ts-node` executes the pipeline (existing behavior, backward compatible)
+
+This isn't a contradiction — the `bin` entry point uses `tsx`, while the repo's npm scripts use the existing `ts-node` path. But the requirement should acknowledge both paths to prevent someone "fixing" the DesignerPunk repo to use `tsx` and breaking the existing workflow.
+
+### Requirement 7 (Build-Time Validation) — Clarification on Scope
+
+AC 1-2 cross-reference `DesignTokens.*` usages in platform files against generated output. After the Spec 094 R8 migration, some iOS/Android components now reference tokens via the theme protocol/data class (`theme.colorActionPrimary`) instead of static `DesignTokens.colorActionPrimary`. The validation test needs to handle both patterns:
+
+- Static references: `DesignTokens.space100`, `DesignTokens.blend200` — validate against generated `DesignTokens.ios.swift` / `DesignTokens.android.kt`
+- Theme references: `theme.colorActionPrimary` — validate against the theme protocol/data class property names
+
+If the test only checks `DesignTokens.*` patterns, it'll miss broken theme references. If it checks both, it needs to know which tokens are theme-varying (available from `ThemeRegistry.getThemeVaryingTokens()`).
+
+### Requirement 2 AC 3 — One Addition to Exclusion List
+
+Add `peter-michaels-allen-resume.json` (repo root). Peter's CV is referenced in the Personal Note but is personal content, not ecosystem infrastructure.
+
+### Deferred Items — Clean
+
+The Kotlin namespace, Swift Package generation, sync commands, and philosophical documents are all correctly deferred with clear activation triggers. No concerns.
+
+### Summary
+
+| Requirement | Assessment | Action |
+|-------------|-----------|--------|
+| R1: Package Identity | No issues | None |
+| R2: Package Contents | One exclusion addition | Add resume to exclusion list |
+| R3: Export Map | No issues | None |
+| R4: Config Build Step | Correct, necessary | None |
+| R5: CLI Commands | AC 2-3 are new implementation | Account in tasks |
+| R6: Runtime Dependencies | Dual-path nuance | Acknowledge both tsx and ts-node paths |
+| R7: Validation Test | Theme reference pattern needed | Clarify both static and theme patterns |
+| R8: Cleanup | No issues | None |
+| R9: Publish & Validation | No issues | None |
+| R10: Agent Template | No issues | None |
+| R11: Integration Guide | No issues | None |
+
+No blocking concerns. Ready for design.
+
+---
+
+### Lina
+
+#### [LINA R1]
+
+**Overall assessment**: The requirements are well-structured and the ACs are testable. Ada's R1 catches the right nuances (theme reference patterns in R7, new CLI implementation in R5). My feedback covers R2 (contents verification), R3 (export accuracy), R7 (validation test scope from the component side), and R8 (cleanup verification).
+
+### Requirement 2 (Package Contents) — Verified, One Observation
+
+R2 AC 3's exclusion list is thorough. I verified the key inclusions from the component side:
+
+- All 34 component directories under `src/components/core/` with `types.ts`, `contracts.yaml`, `*.schema.yaml`, `component-meta.yaml`, platform directories ✅
+- `browser-entry.ts` (ESM bundle source) ✅
+- `src/assets/fonts/` ✅
+- `src/styles/responsive-grid.css` ✅
+
+**Observation**: The `files` field will need to include `src/browser-entry.ts` explicitly (or via `src/` directory inclusion). It's at the `src/` root, not inside a subdirectory. If `files` lists specific subdirectories like `src/components/`, `src/tokens/`, etc. rather than `src/` as a whole, `browser-entry.ts` could be missed. Ada's position (ship `src/` as-is) avoids this — but if the `files` field ends up being more granular, this is a file to watch.
+
+### Requirement 3 (Export Map) — Correct
+
+All export paths match what I'd expect from the component consumer side:
+
+- R3 AC 1-2: Root and `./components` both resolve to the ESM bundle — correct. Products can use either `import '@designerpunk/core'` or `import '@designerpunk/core/components'`.
+- R3 AC 3-4: Token CSS paths point to `dist/DesignTokens.web.css` and `dist/ComponentTokens.web.css` — correct (not the `dist/browser/tokens.css` copy that Sparky flagged).
+- R3 AC 9-10: Legacy `./BlendUtilities` removed, no CJS root condition — correct.
+
+No issues.
+
+### Requirement 7 (Validation Test) — Agree with Ada, One Addition
+
+Ada's right that the test needs to handle both `DesignTokens.*` static references and `theme.*` references after the Spec 094 R8 migration. From the component side, here's the full picture of what the test needs to validate:
+
+**iOS patterns to check:**
+- `DesignTokens.space100`, `DesignTokens.borderDefault`, etc. — static tokens, validate against generated `DesignTokens.ios.swift`
+- `theme.colorActionPrimary`, `theme.colorStructureCanvas`, etc. — theme-varying tokens, validate property names exist on the theme protocol
+- `Color(DesignTokens.colorIconNavigationInactive)` — the few static color refs that intentionally stayed (not theme-varying), validate against generated file
+
+**Android patterns to check:**
+- `DesignTokens.space_100`, `DesignTokens.border_default`, etc. — static tokens
+- `theme.color_action_primary`, `theme.color_structure_canvas`, etc. — theme-varying tokens
+- `Color(DesignTokens.color_icon_navigation_inactive)` — intentional static color refs
+
+**`browser-entry.ts` registration (R7 AC 3):** This is the one I care about most. The test should compare `ls src/components/core/*/platforms/web/` against the import statements in `browser-entry.ts`. Any component with a web platform directory that isn't imported is a failure. This catches the exact gap from Spec 094 Task 0.
+
+R7 AC 5 captures this correctly. No changes needed to the AC — just confirming the scope is right.
+
+### Requirement 8 (Cleanup) — Verified
+
+- R8 AC 1-2: `dist/android/` and `dist/ios/` duplicates — confirmed these exist and should be removed. Data flagged this in his R1.
+- R8 AC 3: `./BlendUtilities` legacy export — confirmed it exists in current `package.json` and should be removed.
+- R8 AC 4: CJS `require` condition on root export — confirmed it points to `TokenEngine.js` which is a completely different API from the ESM bundle. Removing it is correct.
+
+### Summary
+
+| Requirement | Assessment | Action |
+|-------------|-----------|--------|
+| R2: Package Contents | Verified, watch `browser-entry.ts` inclusion | None if `src/` ships as a whole |
+| R3: Export Map | Correct | None |
+| R7: Validation Test | Agree with Ada on theme patterns | Clarify both static and theme reference patterns in implementation |
+| R8: Cleanup | Verified, all four items confirmed | None |
+
+No blocking concerns. Ready for design.
+
+---
+
+### Leonardo
+
+#### [LEONARDO R1]
+
+**Overall assessment**: The requirements are solid and the ACs are testable. R5, R10, and R11 directly address the concerns I raised in my design outline feedback — CLI-first MCP startup, concrete agent templates instead of just documentation, and the full product setup loop in the Integration Guide. Ada's catch on R5 AC 2-3 being new implementation is important. One refinement on R10, one on R11, and an endorsement of Ada's R6 dual-path observation.
+
+### Requirement 5 (CLI Commands) — Correct, One Emphasis
+
+R5 captures exactly what I asked for in my design outline R1: `npx designerpunk mcp:app` and `npx designerpunk mcp:docs` with automatic path resolution and zero-config defaults.
+
+AC 4 ("print connection details to the console") is the detail that matters most for my workflow. When I start an MCP server, I need to know how to point the agent's MCP configuration at it. If the server starts silently, I'm guessing at ports and protocols. The AC is correct — just emphasizing that the output format should be copy-pasteable into an MCP configuration block, not just human-readable.
+
+AC 5 ("no config required for MCP commands") is the right default. MCP servers should work out of the box with the package's own data. Config overrides are for products that add their own data directories alongside the package's.
+
+Agree with Ada that AC 2-3 are new implementation, not just packaging. Tasks should account for this.
+
+### Requirement 10 (Agent Config Template) — One Refinement
+
+R10 captures my design outline recommendation (concrete template, not just documentation). The ACs are right. One refinement:
+
+AC 2 says paths "SHALL resolve against the installed package location, not hardcoded repo paths." This is the critical AC. But it's underspecified on *how* paths resolve. Two options:
+
+- **Option A**: Template prompts contain literal `node_modules/@designerpunk/core/...` paths. Simple, but breaks if the package is installed in a monorepo with hoisted dependencies or a non-standard `node_modules` location.
+- **Option B**: Template prompts reference paths via the config system or a CLI helper (e.g., `npx designerpunk paths` outputs the resolved locations). More robust, but adds a setup step.
+
+For M0a, Option A is probably fine — the marketing site is a simple repo with standard `node_modules`. But the AC should acknowledge that the path resolution strategy may need to evolve for M0b (monorepo, workspace setups). I'd suggest adding a note in the Integration Guide rather than complicating the AC.
+
+### Requirement 11 (Integration Guide) — One Addition
+
+R11 covers the full setup loop I outlined in my design outline R1. ACs 1-5 map to my 7-step list. Two observations:
+
+AC 3 (iOS) and AC 4 (Android) correctly note that `sync:ios` and `sync:android` are coming in M0b, with manual copy for M0a. This is the right framing — document what works now, signal what's coming.
+
+**Addition**: AC 1 says the guide covers "install → config → MCP servers → agent connections → verify → generate → build." I'd add one more step between "verify" and "generate": **"explore the component catalog."** After verifying MCP connectivity, the natural next step for a product architect is to browse what's available — `get_component_catalog`, `find_components`, `list_experience_patterns`. The guide should include a "try these queries" section that demonstrates the MCP layer is working and gives the developer a feel for what the ecosystem provides. This is the "two entry points" promise in action — the first thing a design-led team does after setup is query the MCP, not read source code.
+
+This doesn't need a new AC — it fits within AC 1's scope. Just flagging it so the guide author includes it.
+
+### Endorsement: Ada's R6 Dual-Path Observation
+
+Ada's point about `tsx` (product repos) vs `ts-node` (DesignerPunk repo) coexisting is important. The requirement is correct as written — it describes the product experience. But the tasks should ensure the DesignerPunk repo's existing `npm run generate:platform-tokens` workflow isn't broken by the packaging changes. Both paths need to work.
+
+### Summary
+
+| Requirement | Assessment | Action |
+|-------------|-----------|--------|
+| R5: CLI Commands | Correct, AC 2-3 are new implementation | Account in tasks; ensure connection output is copy-pasteable |
+| R10: Agent Template | Correct, one refinement | Note path resolution strategy may evolve for M0b |
+| R11: Integration Guide | Correct, one addition | Include "explore the catalog" step after MCP verification |
+
+No blocking concerns. Ready for design.
+
+---
+
+### Stacy
+
+#### [STACY R1]
+
+**Overall assessment**: The requirements are well-structured and the ACs are testable. My R1 design outline concern (success criteria inconsistency) is resolved — R2 AC 3 now correctly lists exclusions rather than incorrectly claiming tests and steering docs don't ship. The other agents caught the right nuances. My feedback covers the three items I was routed (R2 governance boundary, R10 agent template, R11 Integration Guide) plus one process observation.
+
+### Requirement 2 (Package Contents) — Governance Boundary Is Correct
+
+R2 AC 3's exclusion list is the right boundary from a governance perspective:
+
+- `.kiro/specs/`, `.kiro/issues/`, `docs/roadmap/`, `docs/specs/`, `docs/releases/` — DesignerPunk's development history, correctly excluded
+- `demos/`, `**/examples/` — secondary educational material, correctly excluded (MCP layer is the primary learning path)
+- Source maps, UMD bundles, test output — build artifacts, correctly excluded
+
+What ships (tests, steering docs, release tooling, process standards) is the governance layer that makes "ecosystem, not library" real. The boundary is clean.
+
+Ada's addition of `peter-michaels-allen-resume.json` to the exclusion list is correct — personal content, not ecosystem infrastructure.
+
+### Requirement 10 (Agent Config Template) — Satisfies My R1 Endorsement
+
+R10 captures exactly what I endorsed in my design outline R1 item 5: a concrete artifact (template prompts), not just documentation. AC 2 ("resolve against the installed package location, not hardcoded repo paths") is the critical governance requirement — agent prompts that silently break in a product context undermine the governance layer.
+
+Leonardo's refinement on path resolution strategy (Option A vs Option B) is the right concern to flag. For M0a, literal `node_modules` paths are fine. The Integration Guide should note this may evolve — that's sufficient without complicating the AC.
+
+One addition: **AC 2 should also cover knowledge base indexing paths.** The current agent prompts reference knowledge base paths relative to the repo root (`./experience-patterns`, `./layout-templates`). In a product context, these are inside the package. The template should resolve these correctly, or the Integration Guide should document how to configure knowledge base indexing for the installed package structure. This is the same category as the MCP path resolution — if it's wrong, agents silently fail to find data.
+
+### Requirement 11 (Integration Guide) — Correct, One Governance Note
+
+R11 ACs cover the full product setup loop. Leonardo's addition ("explore the catalog" step after MCP verification) is the right call — it's the "two entry points" promise in action.
+
+**Governance note**: The Integration Guide is the single document that determines whether a new team can actually use the ecosystem. It should be validated by Sparky during Phase 2 (marketing site) as a real end-to-end test — Sparky follows the guide from scratch and documents every friction point. This isn't a new AC (it's a process concern, not a requirement), but it should be noted in the tasks doc as a Phase 2 validation step. If the guide has gaps, Phase 2 is where we find them.
+
+### Process Observation
+
+The requirements correctly defer platform sync commands (`sync:ios`, `sync:android`) to M0b with clear activation triggers. The deferred items table is clean and well-structured. This is the right approach — document what works now (manual copy), signal what's coming (CLI sync), defer implementation until a real product demands it.
+
+The "Personal Note template" and "A Vision of the Future.md" deferrals are interesting — they acknowledge that some content is Peter-specific and shouldn't ship to other teams yet. The activation trigger ("second human customer") is the right gate. This is a governance decision that respects the current team size without creating technical debt.
+
+### Summary
+
+| Requirement | Assessment | Action |
+|-------------|-----------|--------|
+| R2: Package Contents | Governance boundary correct | None |
+| R10: Agent Template | Satisfies my R1 endorsement | Add knowledge base path resolution to AC 2 or Integration Guide |
+| R11: Integration Guide | Correct | Note Phase 2 validation by Sparky in tasks (process concern, not AC) |
+
+No blocking concerns. Ready for design.
+
+---
+
+### Sparky
+
+#### [SPARKY R1]
+
+**Overall assessment**: The requirements accurately formalize the decisions from the design outline feedback round. My R1 design outline findings (wrong `./tokens.css` target, missing `dist/config/`, dual-package hazard on root export, legacy `./BlendUtilities`) are all addressed in R3, R4, and R8. No blocking concerns. One sequencing note and two endorsements.
+
+### Requirement 3 (Export Map) — My R1 Findings Fully Incorporated
+
+Verified each AC against modern web build tooling (Vite, Astro, plain ESM `<script type="module">`):
+
+- AC 1-2: Root and `./components` both resolve to the ESM bundle — correct. Both `import '@designerpunk/core'` and `import '@designerpunk/core/components'` work in Vite/Astro without configuration.
+- AC 3: `./tokens.css` → `dist/DesignTokens.web.css` — correct. This fixes the wrong-file issue I flagged (was pointing to `dist/browser/tokens.css`).
+- AC 4: `./component-tokens.css` → `dist/ComponentTokens.web.css` — correct.
+- AC 5: `./config` → `dist/config/` with `.d.ts` — correct, contingent on R4.
+- AC 6-8: `./blend`, `./grid.css`, `./fonts/*` — all resolve correctly. CSS imports from `src/` are fine since they're not TypeScript.
+- AC 9: Legacy `./BlendUtilities` removed — correct.
+- AC 10: No CJS root condition — correct. Ada confirmed the pipeline never `require()`s the package root.
+
+No issues with any export path from the web bundler perspective.
+
+### Sequencing Note: R4 Must Complete Before R3 AC 5
+
+R3 AC 5 (`import { defineConfig } from '@designerpunk/core/config'`) depends on R4 (config build step producing `dist/config/`). If R4 isn't done, the export won't resolve. The tasks doc should make this dependency explicit — R4 is a prerequisite for R3 validation.
+
+### Endorsements
+
+1. **Ada's R7 clarification on theme reference patterns** — correct from the web side too. The validation test needs to handle both `DesignTokens.*` static references and `theme.*` references. Web components don't use the theme protocol pattern (they use CSS custom properties), but the test covers iOS and Android platform files where both patterns exist.
+
+2. **Stacy's note on Phase 2 validation** — I'm ready for this. Following the Integration Guide from scratch during the marketing site build is the right way to find gaps. If the guide says "import tokens" and the export doesn't resolve, I'll catch it in real usage rather than in a review.
+
+### Summary
+
+| Requirement | Assessment | Action |
+|-------------|-----------|--------|
+| R3: Export Map | All ACs verified for web bundler compatibility | None |
+| R4: Config Build Step | Correct, prerequisite for R3 AC 5 | Make sequencing explicit in tasks |
+| R5: CLI Commands | AC 4 (connection details) addresses my R1 request | None |
+| R7: Validation Test | AC 3 and AC 5 capture browser-entry.ts drift detection | None |
+| R8: Cleanup | All four items verified against current package.json | None |
+
+No blocking concerns. Ready for design.
+
+---
+
+### Data
+
+#### [DATA R2]
+
+**Scope**: Requirements review from the Android consumer perspective — verifying R11 AC 4 (Integration Guide Android section), R7 (validation test Android coverage), and flagging one gap in R2 that affects M0b readiness.
+
+### Requirement 11 AC 4 (Integration Guide — Android) — Correct, Two Additions
+
+AC 4 covers the right items: where to find Kotlin files, manual copy into Gradle module, minimum Compose BOM version, R8/ProGuard considerations, and the `sync:android` M0b note. This matches what I flagged in my design outline R1.
+
+**Addition 1: Document the full file list to copy.** "Where to find Kotlin files" is vague. The guide should list every file an Android developer needs to copy, grouped by purpose:
+
+- Generated tokens: `dist/DesignTokens.android.kt`, `dist/ComponentTokens.android.kt`
+- Blend utilities: `src/blend/ThemeAwareBlendUtilities.android.kt`
+- Motion tokens: `src/tokens/platforms/android/MotionTokens.kt`
+- Component implementations: `src/components/core/*/platforms/android/*.android.kt` (34 components)
+- Supporting files: `src/components/core/Avatar-Base/platforms/android/HexagonShape.kt`, `AvatarPreview.kt`, etc.
+
+Without this list, a developer will miss files and hit compile errors. The guide should be copy-paste-ready — "copy these directories to your project" — not "explore the package and find what you need."
+
+**Addition 2: Document the target package structure.** The Kotlin files use `package com.designerpunk.tokens` and `package com.designerpunk.components.core`. The guide should tell the developer what directory structure to create in their Android project to match these package declarations:
+
+```
+app/src/main/java/com/designerpunk/
+  tokens/
+    DesignTokens.android.kt
+    ComponentTokens.android.kt
+    MotionTokens.kt
+    ThemeAwareBlendUtilities.android.kt
+  components/core/
+    ButtonCTA.android.kt
+    ...
+```
+
+Or, if the developer wants their own package namespace, document that they'll need to refactor the `package` declarations. This is the gap the deferred "Kotlin package namespace from config" item addresses for M0b — but for M0a, the manual workaround needs to be documented.
+
+### Requirement 7 (Validation Test) — Agree with Ada and Lina
+
+Ada's point about theme reference patterns is correct for Android. After the Spec 094 R8 migration, Android components use both:
+- `DesignTokens.space_100` (static) — validate against generated `DesignTokens.android.kt`
+- `theme.colorActionPrimary` (theme-varying) — validate against the `{Name}Theme` data class properties
+
+The test also needs to catch the three failure patterns I documented in the Spec 094 issue (2026-04-07-android-token-reference-quality-gap.md): uninitialized stubs, camelCase vs snake_case mismatches, and shortened token names. If R7 had existed before Spec 094, it would have caught all 10 broken components.
+
+No changes needed to the ACs — they're correctly scoped. Just confirming the Android patterns are covered.
+
+### Requirement 2 (Package Contents) — One M0b-Readiness Gap
+
+R2 defines what ships and what doesn't. The `files` field will include `src/components/core/*/platforms/android/`. This is correct for M0a.
+
+**Gap for M0b**: When `sync:android` exists, it needs to know which files to copy. Right now, Android files are scattered across multiple directories:
+- `src/components/core/*/platforms/android/` — component implementations
+- `src/blend/` — blend utilities (`.android.kt` mixed with `.ios.swift` and `.ts`)
+- `src/tokens/platforms/android/` — motion tokens
+- `dist/` — generated token files
+
+The sync tool will need to resolve all of these. If the `files` field or package structure consolidates Android artifacts under a predictable pattern, sync is simpler. If they stay scattered, sync needs a manifest or hardcoded path list.
+
+This isn't a change to R2 — the current structure is fine for M0a. But I'd recommend adding a note to the design doc (or a deferred item) that M0b's `sync:android` implementation will be significantly easier if the package structure groups platform files predictably. One option: generate a `platform-manifest.json` during build that lists all Android (and iOS) files with their source and target paths. The sync tool reads the manifest instead of hardcoding paths.
+
+### Deferred Items — Complete for Android
+
+The deferred items table covers everything I flagged:
+- `sync:android` ✅
+- Kotlin package namespace from config ✅
+- Compose BOM version documentation ✅
+- R8/ProGuard keep rules ✅
+
+All with "M0b Android activation" as the trigger. Clean.
+
+### Summary
+
+| Requirement | Assessment | Action |
+|-------------|-----------|--------|
+| R11 AC 4 | Correct, two additions | Add explicit file list and target package structure to guide |
+| R7 | Correct, Android patterns covered | None |
+| R2 | Correct for M0a, M0b gap noted | Consider platform manifest for sync tool (deferred item) |
+| Deferred Items | Complete for Android | None |
+
+No blocking concerns. Ready for design.
+
+---
+
+
+### Kenya
+
+#### [KENYA R2]
+
+**Scope**: Requirements review from the iOS consumer perspective — verifying R11 AC 3 (Integration Guide iOS section), R7 (validation test iOS coverage), R2 (package contents for iOS), and the deferred items table.
+
+### Requirement 11 AC 3 (Integration Guide — iOS) — Correct, Same Two Additions as Data
+
+AC 3 covers the right items: where to find Swift files, manual copy into Xcode, minimum deployment target 17.0+, required frameworks SwiftUI/UIKit, and the `sync:ios` M0b note. This matches what I flagged in my design outline R1.
+
+**Addition 1: Document the full file list to copy.** Same gap Data flagged for Android. "Where to find Swift files" needs to be an explicit list:
+
+- Generated tokens: `dist/DesignTokens.ios.swift`, `dist/ComponentTokens.ios.swift`
+- Blend utilities: `src/blend/ThemeAwareBlendUtilities.ios.swift`
+- Motion tokens: `src/tokens/platforms/ios/MotionTokens.swift`
+- Component implementations: `src/components/core/*/platforms/ios/*.swift` (41 files across 34 components)
+- Supporting files: `RoundedPointyTopHexagon.swift`, `AvatarPreview.swift`, `VisualStateStyles.swift`, `TokenMapping.swift`, `ButtonVerticalListSetPreview.swift`
+
+Without this list, a developer will miss supporting files like `VisualStateStyles.swift` (which `VerticalListButtonItem.ios.swift` depends on) and hit compile errors.
+
+**Addition 2: Document the target Xcode project structure.** Unlike Android's package declarations, Swift doesn't enforce directory-to-module mapping. But the guide should still recommend a structure:
+
+```
+WrKingClass/
+  DesignerPunk/
+    Tokens/
+      DesignTokens.ios.swift
+      ComponentTokens.ios.swift
+      MotionTokens.swift
+    Utilities/
+      ThemeAwareBlendUtilities.ios.swift
+    Components/
+      Avatar.ios.swift
+      RoundedPointyTopHexagon.swift
+      ButtonCTA.ios.swift
+      ...
+```
+
+And note that all files should be added to the same target — the access modifier concern I flagged in my design outline R1 (supporting files use internal access, which won't be visible across module boundaries).
+
+### Requirement 7 (Validation Test) — Correct, One iOS-Specific Note
+
+R7 ACs 1 and 4 cover iOS validation correctly: cross-reference `DesignTokens.*` usages against the generated output, fail with component name and invalid reference.
+
+**One note on post-R8 patterns**: After the Spec 094 component migration, iOS components use both:
+- `DesignTokens.space100` (static) — validate against `DesignTokens.ios.swift`
+- `theme.colorActionPrimary` (theme-varying via `@Environment`) — validate against the `{Name}Theme` protocol properties
+
+The validation test should cover both patterns. The static refs are straightforward string matching. The theme refs require knowing the protocol's property names — which are generated by the pipeline. If the test only checks `DesignTokens.*` patterns, it'll miss broken theme property references.
+
+That said, this is the same point Ada and Data raised. The ACs as written are sufficient — they say "cross-reference all `DesignTokens.*` usages," and the theme property validation is a natural extension. No AC change needed, just confirming the iOS patterns align.
+
+### Requirement 2 (Package Contents) — Same M0b Gap as Data
+
+R2 AC 3 correctly excludes `dist/ios/` (the duplicate). The canonical `dist/DesignTokens.ios.swift` ships via the `dist/` inclusion.
+
+**Same scattered-files concern as Data**: iOS artifacts live across `dist/`, `src/blend/`, `src/tokens/platforms/ios/`, and `src/components/core/*/platforms/ios/`. Data's platform manifest suggestion (`platform-manifest.json` generated during build) would help `sync:ios` just as much as `sync:android`. I endorse adding it as a deferred item.
+
+### Deferred Items — Complete for iOS
+
+The deferred items table covers everything I flagged:
+- `sync:ios` ✅
+- Swift Package generation for local SPM ✅
+- iOS framework dependency metadata ✅
+
+All with "M0b iOS activation" as the trigger.
+
+**One addition I'd suggest**: the deferred items table should include "iOS access modifier audit" — when `sync:ios` generates a local Swift Package, supporting files with `internal` access need to be audited. This is the module visibility concern from my design outline R1. Trigger: M0b iOS activation, same as the others.
+
+### Summary
+
+| Requirement | Assessment | Action |
+|-------------|-----------|--------|
+| R11 AC 3 | Correct, two additions | Add explicit file list and target Xcode structure to guide |
+| R7 | Correct, iOS patterns covered | None |
+| R2 | Correct for M0a, M0b gap noted | Endorse Data's platform manifest suggestion |
+| Deferred Items | Complete, one addition | Add "iOS access modifier audit" deferred item |
+
+No blocking concerns. Ready for design.
+
+---
