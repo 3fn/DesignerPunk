@@ -1,6 +1,6 @@
 {
-  "name": "@designerpunk/core",
-  "version": "10.2.0",
+  "name": "@3fn/core",
+  "version": "10.2.2",
   "description": "True Native cross-platform design system with mathematical foundations",
   "main": "./dist/browser/designerpunk.esm.js",
   "module": "./dist/browser/designerpunk.esm.js",
@@ -61,10 +61,14 @@
     },
     "./grid.css": "./src/styles/responsive-grid.css",
     "./fonts/inter.css": "./src/assets/fonts/inter/inter.css",
-    "./fonts/rajdhani.css": "./src/assets/fonts/rajdhani/rajdhani.css"
+    "./fonts/rajdhani.css": "./src/assets/fonts/rajdhani/rajdhani.css",
+    "./package.json": "./package.json"
   },
   "bin": {
     "designerpunk": "./dist/cli/designerpunk.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "generate:types": "ts-node scripts/generate-token-types.ts",

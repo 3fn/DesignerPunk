@@ -31,8 +31,8 @@ describe('Bundler Resolution', () => {
   });
 
   describe('Package Identity', () => {
-    it('should be named @designerpunk/core', () => {
-      expect(packageJson.name).toBe('@designerpunk/core');
+    it('should be named @3fn/core', () => {
+      expect(packageJson.name).toBe('@3fn/core');
     });
   });
 

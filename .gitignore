@@ -86,3 +86,4 @@ temp-*.md
 performance-*.json
 *-baseline.txt
 *-baseline.json
+.npmrc

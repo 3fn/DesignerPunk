@@ -133,6 +133,21 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
+- [ ] 4.5 Fix CLI Module Resolution (Blocker)
+
+  **Type**: Implementation
+  **Validation**: Tier 2 - Standard
+  **Agent**: Ada
+  **Blocks**: Task 5.4 (CLI validation in fresh repo)
+
+  - `dist/cli/designerpunk.js` cannot resolve pipeline modules (`../generators/generateTokenFiles`) because generators ship as TypeScript source in `src/`, not compiled JS in `dist/`
+  - Fix: register `tsx` as a require hook at the top of `src/cli/designerpunk.ts` before pipeline imports
+  - Rebuild CLI, verify `npx designerpunk generate` works from a product repo context
+  - See: `.kiro/issues/2026-04-08-cli-module-resolution.md`
+  - _Requirements: R5 AC 1-3_
+
+---
+
 - [ ] 5. Publish and End-to-End Validation
 
   **Type**: Parent
