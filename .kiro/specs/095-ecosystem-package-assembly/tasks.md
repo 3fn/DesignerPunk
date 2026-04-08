@@ -61,7 +61,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
   - Commit: `./.kiro/hooks/commit-task.sh "Task 2 Complete: Package.json Restructuring"`
   - Verify on GitHub
 
-  - [ ] 2.1 Rename package and define `files` field
+  - [x] 2.1 Rename package and define `files` field
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
