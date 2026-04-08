@@ -63,6 +63,9 @@
     "./fonts/inter.css": "./src/assets/fonts/inter/inter.css",
     "./fonts/rajdhani.css": "./src/assets/fonts/rajdhani/rajdhani.css"
   },
+  "bin": {
+    "designerpunk": "./dist/cli/designerpunk.js"
+  },
   "scripts": {
     "generate:types": "ts-node scripts/generate-token-types.ts",
     "generate:platform-tokens": "ts-node scripts/generate-platform-tokens.ts",
@@ -117,6 +120,7 @@
     "@octokit/rest": "^20.0.0",
     "@types/uuid": "^10.0.0",
     "dotenv": "^17.3.1",
+    "tsx": "^4.19.0",
     "uuid": "^13.0.0"
   }
 }

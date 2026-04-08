@@ -86,7 +86,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
     - Remove CJS `require` condition on root export
     - _Requirements: R3 AC 1-10, R8 AC 3-4_
 
-  - [ ] 2.3 Add `bin` and `tsx` dependency
+  - [x] 2.3 Add `bin` and `tsx` dependency
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
