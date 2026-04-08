@@ -178,6 +178,7 @@ fun ButtonIcon(
     testID: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     // Focus ring buffer size (accessibility.focus.offset + accessibility.focus.width)
     // Uses token references: space_025 (2dp offset) + border_width_200 (2dp width) = 4dp total
     // @see Requirements 1.4, 6.3
@@ -271,7 +272,7 @@ fun ButtonIcon(
  */
 private fun getBackgroundColor(variant: ButtonIconVariant): Color {
     return when (variant) {
-        ButtonIconVariant.PRIMARY -> Color(DesignTokens.color_action_primary)
+        ButtonIconVariant.PRIMARY -> theme.color_action_primary
         ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> Color.Transparent
     }
 }
@@ -284,8 +285,8 @@ private fun getBackgroundColor(variant: ButtonIconVariant): Color {
  */
 private fun getIconColor(variant: ButtonIconVariant): Color {
     return when (variant) {
-        ButtonIconVariant.PRIMARY -> Color(DesignTokens.color_contrast_on_dark)
-        ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> Color(DesignTokens.color_action_primary)
+        ButtonIconVariant.PRIMARY -> theme.color_contrast_on_dark
+        ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> theme.color_action_primary
     }
 }
 
@@ -310,7 +311,7 @@ private fun getBorderWidth(variant: ButtonIconVariant): Dp {
  */
 private fun getBorderColor(variant: ButtonIconVariant): Color {
     return when (variant) {
-        ButtonIconVariant.SECONDARY -> Color(DesignTokens.color_action_primary)
+        ButtonIconVariant.SECONDARY -> theme.color_action_primary
         ButtonIconVariant.PRIMARY, ButtonIconVariant.TERTIARY -> Color.Transparent
     }
 }
@@ -323,8 +324,8 @@ private fun getBorderColor(variant: ButtonIconVariant): Color {
  */
 private fun getRippleColor(variant: ButtonIconVariant): Color {
     return when (variant) {
-        ButtonIconVariant.PRIMARY -> Color(DesignTokens.color_contrast_on_dark)
-        ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> Color(DesignTokens.color_action_primary)
+        ButtonIconVariant.PRIMARY -> theme.color_contrast_on_dark
+        ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> theme.color_action_primary
     }
 }
 

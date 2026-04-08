@@ -145,6 +145,7 @@ fun ButtonCTA(
     testID: String? = null,
     disabled: Boolean = false
 ) {
+    val theme = LocalDPTheme.current
     // Remember interaction source for tracking pressed state
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -354,9 +355,6 @@ private data class ButtonCTAStyleConfig(
  */
 private fun getButtonCTAStyleConfig(style: ButtonCTAStyle, isPressed: Boolean, disabled: Boolean): ButtonCTAStyleConfig {
     // Import semantic color tokens from generated constants
-    val colorActionPrimary = Color(DesignTokens.color_action_primary)           // color.action.primary (purple)
-    val colorBackground = Color(DesignTokens.color_structure_canvas)     // color.structure.canvas (white)
-    val colorContrastOnDark = Color(DesignTokens.color_contrast_on_dark) // color.contrast.onDark (white)
     
     // Calculate state-based background colors using theme-aware blend utilities
     // @see Requirements: 7.1, 7.2, 7.3, 11.1, 11.2, 11.3

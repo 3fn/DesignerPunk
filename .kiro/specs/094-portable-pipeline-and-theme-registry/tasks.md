@@ -338,7 +338,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Move color refs from private object to composable body
     - _Requirements: R8 AC 2, 4, 5_
 
-  - [ ] 4.6 Android migration: Button + Container families
+  - [x] 4.6 Android migration: Button + Container families
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

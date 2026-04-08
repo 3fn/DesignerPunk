@@ -215,8 +215,8 @@ fun mapBorderToWidth(border: BorderValue): Dp {
  * 
  * @see Requirements 6.5
  */
-fun getBorderColor(): Color {
-    return colorBorder
+fun getBorderColor(theme: DesignerPunkTheme): Color {
+    return theme.color_structure_border
 }
 
 /**
@@ -237,17 +237,17 @@ fun getBorderColor(): Color {
  * 
  * @see Requirements 2.1, 2.2, 2.3 - Border color
  */
-fun resolveBorderColor(borderColor: String?): Color {
+fun resolveBorderColor(borderColor: String?, theme: DesignerPunkTheme): Color {
     if (borderColor.isNullOrEmpty()) {
         // Default to color.border.default when not specified
-        return colorBorder
+        return theme.color_structure_border
     }
     
     // Resolve the border color token
     return when (borderColor) {
-        "color.border.default" -> colorBorder
-        "color.structure.border.subtle" -> colorBorderSubtle
-        "color.border.emphasis" -> colorBorderEmphasis
+        "color.border.default" -> theme.color_structure_border
+        "color.structure.border.subtle" -> theme.color_structure_border_subtle
+        "color.border.emphasis" -> theme.color_border_emphasis
         else -> colorBorder  // Fall back to default border color for unknown tokens
     }
 }
@@ -311,7 +311,7 @@ fun getRoundedCornerShape(borderRadius: BorderRadiusValue): RoundedCornerShape {
  * @see Requirements 2.2, 4.1-4.4
  * @see Confirmed Actions: A1, M3 (Escalate - requires color.canvas token)
  */
-fun resolveColorToken(tokenName: String?): Color {
+fun resolveColorToken(tokenName: String?, theme: DesignerPunkTheme): Color {
     if (tokenName.isNullOrEmpty()) {
         return Color.Transparent
     }
@@ -320,50 +320,50 @@ fun resolveColorToken(tokenName: String?): Color {
     // Updated for Spec 052 semantic token naming restructure
     return when (tokenName) {
         // Action concept tokens
-        "color.action.primary" -> colorActionPrimary
-        "color.action.secondary" -> colorActionSecondary
+        "color.action.primary" -> theme.color_action_primary
+        "color.action.secondary" -> theme.color_action_secondary
         
         // Structure concept tokens
-        "color.structure.canvas" -> colorStructureCanvas
-        "color.structure.surface" -> colorStructureSurface
-        "color.structure.surface.primary" -> colorSurfacePrimary
-        "color.structure.surface.secondary" -> colorSurfaceSecondary
-        "color.structure.surface.tertiary" -> colorSurfaceTertiary
-        "color.structure.border" -> colorStructureBorder
+        "color.structure.canvas" -> theme.color_structure_canvas
+        "color.structure.surface" -> theme.color_structure_surface
+        "color.structure.surface.primary" -> theme.color_structure_surface_primary
+        "color.structure.surface.secondary" -> theme.color_structure_surface_secondary
+        "color.structure.surface.tertiary" -> theme.color_structure_surface_tertiary
+        "color.structure.border" -> theme.color_structure_border
         
         // Feedback concept tokens
-        "color.feedback.error.text" -> colorFeedbackErrorText
-        "color.feedback.error.background" -> colorFeedbackErrorBackground
-        "color.feedback.error.border" -> colorFeedbackErrorBorder
-        "color.feedback.success.text" -> colorFeedbackSuccessText
-        "color.feedback.success.background" -> colorFeedbackSuccessBackground
-        "color.feedback.success.border" -> colorFeedbackSuccessBorder
-        "color.feedback.warning.text" -> colorFeedbackWarningText
-        "color.feedback.warning.background" -> colorFeedbackWarningBackground
-        "color.feedback.warning.border" -> colorFeedbackWarningBorder
-        "color.feedback.info.text" -> colorFeedbackInfoText
-        "color.feedback.info.background" -> colorFeedbackInfoBackground
-        "color.feedback.info.border" -> colorFeedbackInfoBorder
+        "color.feedback.error.text" -> theme.color_feedback_error_text
+        "color.feedback.error.background" -> theme.color_feedback_error_background
+        "color.feedback.error.border" -> theme.color_feedback_error_border
+        "color.feedback.success.text" -> theme.color_feedback_success_text
+        "color.feedback.success.background" -> theme.color_feedback_success_background
+        "color.feedback.success.border" -> theme.color_feedback_success_border
+        "color.feedback.warning.text" -> theme.color_feedback_warning_text
+        "color.feedback.warning.background" -> theme.color_feedback_warning_background
+        "color.feedback.warning.border" -> theme.color_feedback_warning_border
+        "color.feedback.info.text" -> theme.color_feedback_info_text
+        "color.feedback.info.background" -> theme.color_feedback_info_background
+        "color.feedback.info.border" -> theme.color_feedback_info_border
         
         // Contrast concept tokens
-        "color.contrast.onLight" -> colorContrastOnLight
-        "color.contrast.onDark" -> colorContrastOnDark
+        "color.contrast.onLight" -> theme.color_contrast_on_light
+        "color.contrast.onDark" -> theme.color_contrast_on_dark
         
         // Text tokens
-        "color.text.default" -> colorTextDefault
-        "color.text.muted" -> colorTextMuted
-        "color.text.subtle" -> colorTextSubtle
+        "color.text.default" -> theme.color_text_default
+        "color.text.muted" -> theme.color_text_muted
+        "color.text.subtle" -> theme.color_text_subtle
         
         // Icon tokens
-        "color.icon.default" -> colorIconDefault
+        "color.icon.default" -> theme.color_icon_default
         
         // Border tokens (semantic)
-        "color.border" -> colorBorder
-        "color.border.default" -> colorBorder
-        "color.structure.border.subtle" -> colorBorderSubtle
-        "color.border.emphasis" -> colorBorderEmphasis
+        "color.border" -> theme.color_structure_border
+        "color.border.default" -> theme.color_structure_border
+        "color.structure.border.subtle" -> theme.color_structure_border_subtle
+        "color.border.emphasis" -> theme.color_border_emphasis
         
-        else -> colorStructureCanvas  // Default to canvas (white100)
+        else -> theme.color_structure_canvas  // Default to canvas (white100)
     }
 }
 
@@ -556,47 +556,18 @@ private val elevationTooltip: Dp = DesignTokens.elevation_tooltip
 // Color tokens
 // Updated Jan 25, 2026 - Spec 052 semantic token naming restructure
 // Border tokens
-private val colorBorder: Color = Color(DesignTokens.color_structure_border)
-private val colorBorderSubtle: Color = Color(DesignTokens.color_structure_border_subtle)  // color.structure.border.subtle
-private val colorBorderEmphasis: Color = Color(DesignTokens.color_border_emphasis)  // color.border.emphasis
 
 // Action concept tokens
-private val colorActionPrimary: Color = Color(DesignTokens.color_action_primary)
-private val colorActionSecondary: Color = Color(DesignTokens.color_action_secondary)
 
 // Structure concept tokens
-private val colorStructureCanvas: Color = Color(DesignTokens.color_structure_canvas)
-private val colorStructureSurface: Color = Color(DesignTokens.color_structure_surface)
-private val colorSurfacePrimary: Color = Color(DesignTokens.color_structure_surface_primary)
-private val colorSurfaceSecondary: Color = Color(DesignTokens.color_structure_surface_secondary)
-private val colorSurfaceTertiary: Color = Color(DesignTokens.color_structure_surface_tertiary)
-private val colorStructureBorder: Color = Color(DesignTokens.color_structure_border)
 
 // Feedback concept tokens
-private val colorFeedbackErrorText: Color = Color(DesignTokens.color_feedback_error_text)
-private val colorFeedbackErrorBackground: Color = Color(DesignTokens.color_feedback_error_background)
-private val colorFeedbackErrorBorder: Color = Color(DesignTokens.color_feedback_error_border)
-private val colorFeedbackSuccessText: Color = Color(DesignTokens.color_feedback_success_text)
-private val colorFeedbackSuccessBackground: Color = Color(DesignTokens.color_feedback_success_background)
-private val colorFeedbackSuccessBorder: Color = Color(DesignTokens.color_feedback_success_border)
-private val colorFeedbackWarningText: Color = Color(DesignTokens.color_feedback_warning_text)
-private val colorFeedbackWarningBackground: Color = Color(DesignTokens.color_feedback_warning_background)
-private val colorFeedbackWarningBorder: Color = Color(DesignTokens.color_feedback_warning_border)
-private val colorFeedbackInfoText: Color = Color(DesignTokens.color_feedback_info_text)
-private val colorFeedbackInfoBackground: Color = Color(DesignTokens.color_feedback_info_background)
-private val colorFeedbackInfoBorder: Color = Color(DesignTokens.color_feedback_info_border)
 
 // Contrast concept tokens
-private val colorContrastOnLight: Color = Color(DesignTokens.color_contrast_on_light)
-private val colorContrastOnDark: Color = Color(DesignTokens.color_contrast_on_dark)
 
 // Text tokens
-private val colorTextDefault: Color = Color(DesignTokens.color_text_default)
-private val colorTextMuted: Color = Color(DesignTokens.color_text_muted)
-private val colorTextSubtle: Color = Color(DesignTokens.color_text_subtle)
 
 // Icon tokens
-private val colorIconDefault: Color = Color(DesignTokens.color_icon_default)
 
 // Opacity tokens
 // Regenerated Dec 18, 2025 - includes all semantic opacity tokens

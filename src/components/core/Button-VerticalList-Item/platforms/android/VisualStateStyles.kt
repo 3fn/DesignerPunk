@@ -249,96 +249,66 @@ data class VisualStateStyles(
         /** Rest state styles (Tap mode default)
          * Requirements: 1.1 - color.structure.canvas, borderDefault (1dp), color.text.default
          */
-        val rest = VisualStateStyles(
-            background = Color(DesignTokens.color_structure_canvas),
+        fun rest(theme: DesignerPunkTheme) = VisualStateStyles(
+            background = theme.color_structure_canvas,
             borderWidth = DesignTokens.border_default.dp,
             borderColor = Color.Transparent,
-            labelColor = Color(DesignTokens.color_text_default),
-            iconColor = Color(DesignTokens.color_text_default),
+            labelColor = theme.color_text_default,
+            iconColor = theme.color_text_default,
             checkmarkVisible = false
         )
         
-        /** Selected state styles (Select mode)
-         * Requirements: 1.2 - color.feedback.select.background.rest, borderEmphasis (2dp), 
-         *               color.feedback.select.text.rest for border and label
-         * @see Spec 052 - Semantic Token Naming Implementation
-         */
-        val selected = VisualStateStyles(
-            background = Color(DesignTokens.color_feedback_select_background_rest),
+        fun selected(theme: DesignerPunkTheme) = VisualStateStyles(
+            background = theme.color_feedback_select_background_rest,
             borderWidth = DesignTokens.border_emphasis.dp,
-            borderColor = Color(DesignTokens.color_feedback_select_text_rest),
-            labelColor = Color(DesignTokens.color_feedback_select_text_rest),
-            iconColor = Color(DesignTokens.color_feedback_select_text_rest),
+            borderColor = theme.color_feedback_select_text_rest,
+            labelColor = theme.color_feedback_select_text_rest,
+            iconColor = theme.color_feedback_select_text_rest,
             checkmarkVisible = true
         )
         
-        /** Not selected state styles (Select mode)
-         * Requirements: 1.3 - color.feedback.select.background.default, borderDefault (1dp),
-         *               transparent border, color.feedback.select.text.default
-         * @see Spec 052 - Semantic Token Naming Implementation
-         */
-        val notSelected = VisualStateStyles(
-            background = Color(DesignTokens.color_feedback_select_background_default),
+        fun notSelected(theme: DesignerPunkTheme) = VisualStateStyles(
+            background = theme.color_feedback_select_background_default,
             borderWidth = DesignTokens.border_default.dp,
             borderColor = Color.Transparent,
-            labelColor = Color(DesignTokens.color_feedback_select_text_default),
-            iconColor = Color(DesignTokens.color_feedback_select_text_default),
+            labelColor = theme.color_feedback_select_text_default,
+            iconColor = theme.color_feedback_select_text_default,
             checkmarkVisible = false
         )
         
-        /** Checked state styles (Multi-Select mode)
-         * Requirements: 1.4 - color.feedback.select.background.rest, borderDefault (1dp),
-         *               transparent border, color.feedback.select.text.rest
-         * @see Spec 052 - Semantic Token Naming Implementation
-         */
-        val checked = VisualStateStyles(
-            background = Color(DesignTokens.color_feedback_select_background_rest),
+        fun checked(theme: DesignerPunkTheme) = VisualStateStyles(
+            background = theme.color_feedback_select_background_rest,
             borderWidth = DesignTokens.border_default.dp,
             borderColor = Color.Transparent,
-            labelColor = Color(DesignTokens.color_feedback_select_text_rest),
-            iconColor = Color(DesignTokens.color_feedback_select_text_rest),
+            labelColor = theme.color_feedback_select_text_rest,
+            iconColor = theme.color_feedback_select_text_rest,
             checkmarkVisible = true
         )
         
-        /** Unchecked state styles (Multi-Select mode)
-         * Requirements: 1.5 - color.structure.canvas, borderDefault (1dp),
-         *               transparent border, color.text.default
-         */
-        val unchecked = VisualStateStyles(
-            background = Color(DesignTokens.color_structure_canvas),
+        fun unchecked(theme: DesignerPunkTheme) = VisualStateStyles(
+            background = theme.color_structure_canvas,
             borderWidth = DesignTokens.border_default.dp,
             borderColor = Color.Transparent,
-            labelColor = Color(DesignTokens.color_text_default),
-            iconColor = Color(DesignTokens.color_text_default),
+            labelColor = theme.color_text_default,
+            iconColor = theme.color_text_default,
             checkmarkVisible = false
         )
         
-        // MARK: - Error State Styles
-        
-        /** Error state styles for Select mode (full treatment)
-         * Requirements: 3.1 - color.feedback.error.background, borderEmphasis (2dp),
-         *               color.feedback.error.text for border, label, and icon
-         * @see Spec 052 - Semantic Token Naming Implementation
-         */
-        fun errorSelectMode(checkmarkVisible: Boolean): VisualStateStyles {
+        fun errorSelectMode(checkmarkVisible: Boolean, theme: DesignerPunkTheme): VisualStateStyles {
             return VisualStateStyles(
-                background = Color(DesignTokens.color_feedback_error_background),
+                background = theme.color_feedback_error_background,
                 borderWidth = DesignTokens.border_emphasis.dp,
-                borderColor = Color(DesignTokens.color_feedback_error_text),
-                labelColor = Color(DesignTokens.color_feedback_error_text),
-                iconColor = Color(DesignTokens.color_feedback_error_text),
+                borderColor = theme.color_feedback_error_text,
+                labelColor = theme.color_feedback_error_text,
+                iconColor = theme.color_feedback_error_text,
                 checkmarkVisible = checkmarkVisible
             )
         }
         
-        /** Error state styles for Multi-Select mode (colors only)
-         * Requirements: 3.2 - preserves background and border, only changes label/icon colors
-         * @see Spec 052 - Semantic Token Naming Implementation
-         */
-        fun errorMultiSelectMode(baseStyles: VisualStateStyles): VisualStateStyles {
+        fun errorMultiSelectMode(baseStyles: VisualStateStyles, theme: DesignerPunkTheme): VisualStateStyles {
             return baseStyles.copy(
-                labelColor = Color(DesignTokens.color_feedback_error_text),
-                iconColor = Color(DesignTokens.color_feedback_error_text)
+                labelColor = theme.color_feedback_error_text,
+                iconColor = theme.color_feedback_error_text
             )
         }
     }
@@ -355,12 +325,12 @@ data class VisualStateStyles(
  * Requirements:
  * - 1.1-1.5: Visual state rendering
  */
-val visualStateMap: Map<VisualState, VisualStateStyles> = mapOf(
-    VisualState.REST to VisualStateStyles.rest,
-    VisualState.SELECTED to VisualStateStyles.selected,
-    VisualState.NOT_SELECTED to VisualStateStyles.notSelected,
-    VisualState.CHECKED to VisualStateStyles.checked,
-    VisualState.UNCHECKED to VisualStateStyles.unchecked
+fun visualStateMap(theme: DesignerPunkTheme): Map<VisualState, VisualStateStyles> = mapOf(
+    VisualState.REST to VisualStateStyles.rest(theme),
+    VisualState.SELECTED to VisualStateStyles.selected(theme),
+    VisualState.NOT_SELECTED to VisualStateStyles.notSelected(theme),
+    VisualState.CHECKED to VisualStateStyles.checked(theme),
+    VisualState.UNCHECKED to VisualStateStyles.unchecked(theme)
 )
 
 // MARK: - Style Retrieval
@@ -374,8 +344,8 @@ val visualStateMap: Map<VisualState, VisualStateStyles> = mapOf(
  * @param visualState The visual state to get styles for
  * @return The corresponding VisualStateStyles
  */
-fun getVisualStateStyles(visualState: VisualState): VisualStateStyles {
-    return visualStateMap[visualState] ?: VisualStateStyles.rest
+fun getVisualStateStyles(visualState: VisualState, theme: DesignerPunkTheme): VisualStateStyles {
+    return visualStateMap(theme)[visualState] ?: VisualStateStyles.rest(theme)
 }
 
 // MARK: - Error Styling
@@ -408,23 +378,18 @@ fun getVisualStateStyles(visualState: VisualState): VisualStateStyles {
  */
 fun applyErrorStyles(
     baseStyles: VisualStateStyles,
-    visualState: VisualState
+    visualState: VisualState,
+    theme: DesignerPunkTheme
 ): VisualStateStyles {
     
     if (visualState.isSelectMode) {
-        // Select mode: full error treatment (border + background + colors)
-        // Requirements: 3.1
-        return VisualStateStyles.errorSelectMode(checkmarkVisible = baseStyles.checkmarkVisible)
+        return VisualStateStyles.errorSelectMode(checkmarkVisible = baseStyles.checkmarkVisible, theme = theme)
     }
     
     if (visualState.isMultiSelectMode) {
-        // Multi-Select mode: text/icon colors only
-        // Requirements: 3.2
-        return VisualStateStyles.errorMultiSelectMode(baseStyles = baseStyles)
+        return VisualStateStyles.errorMultiSelectMode(baseStyles = baseStyles, theme = theme)
     }
     
-    // Tap mode (rest state in tap context): error has no effect
-    // Requirements: 3.4
     return baseStyles
 }
 
@@ -440,12 +405,13 @@ fun applyErrorStyles(
  */
 fun computeStyles(
     visualState: VisualState,
-    error: Boolean
+    error: Boolean,
+    theme: DesignerPunkTheme
 ): VisualStateStyles {
-    val baseStyles = getVisualStateStyles(visualState)
+    val baseStyles = getVisualStateStyles(visualState, theme)
     
     return if (error) {
-        applyErrorStyles(baseStyles, visualState)
+        applyErrorStyles(baseStyles, visualState, theme)
     } else {
         baseStyles
     }

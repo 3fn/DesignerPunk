@@ -154,6 +154,7 @@ fun VerticalListButtonItem(
     onBlur: (() -> Unit)? = null,
     testTag: String? = null
 ) {
+    val theme = LocalDPTheme.current
     // MARK: - Token Access
     
     // Access design tokens via CompositionLocal
@@ -184,7 +185,7 @@ fun VerticalListButtonItem(
     // Compute styles based on visual state and error
     // Requirements: 1.1-1.5, 3.1-3.4
     val styles = remember(visualState, error) {
-        computeStyles(visualState, error)
+        computeStyles(visualState, error, theme)
     }
     
     // MARK: - Animation Specs
@@ -465,7 +466,7 @@ fun VerticalListButtonItem(
                 description?.let { desc ->
                     Text(
                         text = desc,
-                        color = Color(DesignTokens.color_text_muted),
+                        color = theme.color_text_muted,
                         fontSize = DesignTokens.typography_body_sm.fontSize,
                         fontWeight = FontWeight.Normal
                     )

@@ -423,6 +423,7 @@ fun ButtonVerticalListSet(
     errorMessage: String? = null,
     testTag: String? = null
 ) {
+    val theme = LocalDPTheme.current
     // MARK: - Internal State
     
     // Track focused item index for keyboard navigation
@@ -519,7 +520,7 @@ fun ButtonVerticalListSet(
         if (error && errorMessage != null) {
             Text(
                 text = errorMessage,
-                color = Color(DesignTokens.color_feedback_error_text),
+                color = theme.color_feedback_error_text,
                 fontSize = DesignTokens.typography_body_sm.fontSize.sp,
                 fontWeight = FontWeight(DesignTokens.typography_body_sm.fontWeight.toInt()),
                 modifier = Modifier

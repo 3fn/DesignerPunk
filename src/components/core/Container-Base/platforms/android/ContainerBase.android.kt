@@ -221,6 +221,7 @@ fun ContainerBase(
     
     // Get layout direction for inline padding calculations
     val layoutDirection = LocalLayoutDirection.current
+    val theme = LocalDPTheme.current
     
     // Set up hover interaction source for hover state tracking
     val interactionSource = remember { MutableInteractionSource() }
@@ -259,7 +260,7 @@ fun ContainerBase(
     
     // Resolve border color (defaults to color.border.default when null)
     // @see Requirements 2.1-2.3 - Border color
-    val resolvedBorderColor = resolveContainerBaseBorderColor(borderColor)
+    val resolvedBorderColor = resolveContainerBaseBorderColor(borderColor, theme)
     
     // Build modifier chain with all styling
     val containerModifier = modifier
@@ -553,17 +554,17 @@ fun resolveContainerBaseColorToken(tokenName: String): Color {
  * 
  * @see Requirements 2.1, 2.2, 2.3 - Border color
  */
-fun resolveContainerBaseBorderColor(borderColor: String?): Color {
+fun resolveContainerBaseBorderColor(borderColor: String?, theme: DesignerPunkTheme): Color {
     if (borderColor.isNullOrEmpty()) {
         // Default to color.border.default when not specified
-        return colorBorder
+        return theme.color_structure_border
     }
     
     // Resolve the border color token
     return when (borderColor) {
-        "color.border.default" -> colorBorder
-        "color.structure.border.subtle" -> colorBorderSubtle
-        "color.border.emphasis" -> colorBorderEmphasis
+        "color.border.default" -> theme.color_structure_border
+        "color.structure.border.subtle" -> theme.color_structure_border_subtle
+        "color.border.emphasis" -> theme.color_border_emphasis
         else -> colorBorder  // Fall back to default border color for unknown tokens
     }
 }

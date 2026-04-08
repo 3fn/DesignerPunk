@@ -286,6 +286,7 @@ fun ContainerCardBase(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
+    val theme = LocalDPTheme.current
     // Get layout direction for inline padding calculations
     val layoutDirection = LocalLayoutDirection.current
     
@@ -592,9 +593,9 @@ fun calculateCardDirectionalPadding(
  */
 fun mapCardBackgroundToColor(background: CardBackground): Color {
     return when (background) {
-        CardBackground.SurfacePrimary -> colorSurfacePrimary /* color.surface.primary */
-        CardBackground.SurfaceSecondary -> colorSurfaceSecondary /* color.surface.secondary */
-        CardBackground.SurfaceTertiary -> colorSurfaceTertiary /* color.surface.tertiary */
+        CardBackground.SurfacePrimary -> theme.color_structure_surface_primary /* color.surface.primary */
+        CardBackground.SurfaceSecondary -> theme.color_structure_surface_secondary /* color.surface.secondary */
+        CardBackground.SurfaceTertiary -> theme.color_structure_surface_tertiary /* color.surface.tertiary */
     }
 }
 
@@ -638,8 +639,8 @@ fun mapCardBorderToWidth(border: CardBorder): Dp {
  */
 fun mapCardBorderColorToColor(borderColor: CardBorderColor): Color {
     return when (borderColor) {
-        CardBorderColor.BorderDefault -> colorBorder /* color.border.default */
-        CardBorderColor.BorderSubtle -> colorBorderSubtle /* color.structure.border.subtle */
+        CardBorderColor.BorderDefault -> theme.color_structure_border /* color.border.default */
+        CardBorderColor.BorderSubtle -> theme.color_structure_border_subtle /* color.structure.border.subtle */
     }
 }
 
@@ -693,11 +694,6 @@ private val radius200: Dp = DesignTokens.radius_200 /* radius-200 */
 private val borderDefault: Dp = DesignTokens.border_default /* border.border.default */
 
 // Color tokens
-private val colorSurfacePrimary: Color = Color(DesignTokens.color_structure_surface_primary) /* color.structure.surface.primary */
-private val colorSurfaceSecondary: Color = Color(DesignTokens.color_structure_surface_secondary) /* color.structure.surface.secondary */
-private val colorSurfaceTertiary: Color = Color(DesignTokens.color_structure_surface_tertiary) /* color.structure.surface.tertiary */
-private val colorBorder: Color = Color(DesignTokens.color_border) /* color.border.default */
-private val colorBorderSubtle: Color = Color(DesignTokens.color_structure_border_subtle) /* color.structure.border.subtle */
 
 // Shadow tokens (elevation on Android)
 private val shadowContainerElevation: Dp = DesignTokens.elevation_container /* shadow.container */
