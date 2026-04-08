@@ -170,7 +170,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
   - Commit: `./.kiro/hooks/commit-task.sh "Task 5 Complete: Publish and Validation"`
   - Verify on GitHub
 
-  - [ ] 5.1 npm pack dry run
+  - [x] 5.1 npm pack dry run
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -179,7 +179,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
     - Assert all expected paths present
     - _Requirements: R2 AC 2-3, R9 AC 1_
 
-  - [ ] 5.2 Publish to GitHub Packages
+  - [x] 5.2 Publish to GitHub Packages
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -187,7 +187,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
     - Verify package appears in GitHub Packages
     - _Requirements: R1 AC 2_
 
-  - [ ] 5.3 Fresh-repo install and export validation
+  - [x] 5.3 Fresh-repo install and export validation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
