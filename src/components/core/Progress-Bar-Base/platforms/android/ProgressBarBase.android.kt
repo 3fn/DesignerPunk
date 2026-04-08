@@ -47,9 +47,6 @@ private const val PULSE_OPACITY_MAX = 1f
 private val MILESTONES = listOf(0, 25, 50, 75, 100)
 
 object ProgressBarTokens {
-    val trackColor = DesignTokens.colorProgressPendingBackground
-    val determinateFillColor = DesignTokens.colorProgressCompletedBackground
-    val indeterminateFillColor = DesignTokens.colorProgressCurrentBackground
     val animationDuration = DesignTokens.Duration.duration150.toInt()
     val pulseDuration = DesignTokens.Duration.duration350.toInt()
     val easing = DesignTokens.Easing.EasingStandard
@@ -70,6 +67,7 @@ fun ProgressBarBase(
     size: ProgressBarSize = ProgressBarSize.MD,
     testID: String? = null,
 ) {
+    val theme = LocalDPTheme.current
     // Validate early — before semantics consumption (Data F2)
     if (mode is ProgressBarMode.Determinate) {
         require(mode.value in 0f..1f) {
@@ -90,7 +88,7 @@ fun ProgressBarBase(
             .fillMaxWidth()
             .height(barHeight.dp)
             .clip(capsule)
-            .background(ProgressBarTokens.trackColor)
+            .background(ProgressBarTokenstheme.color_progress_pending_background)
             .then(if (testID != null) Modifier.testTag(testID) else Modifier)
             .semantics {
                 contentDescription = accessibilityLabel
@@ -120,7 +118,7 @@ fun ProgressBarBase(
                         .fillMaxWidth(animatedWidth)
                         .fillMaxHeight()
                         .clip(capsule)
-                        .background(ProgressBarTokens.determinateFillColor)
+                        .background(ProgressBarTokenstheme.color_progress_completed_background)
                 )
 
                 // Milestone announcements (Data F1)
@@ -159,7 +157,7 @@ fun ProgressBarBase(
                         .fillMaxHeight()
                         .clip(capsule)
                         .alpha(opacity)
-                        .background(ProgressBarTokens.indeterminateFillColor)
+                        .background(ProgressBarTokenstheme.color_progress_current_background)
                 )
             }
         }

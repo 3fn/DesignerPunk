@@ -115,14 +115,12 @@ private object BadgeCountNotificationTokens {
      * Source: BadgeNotificationColorTokens['notification.background'] → pink400 (#CC2257)
      * @see Requirement 3.1 - notification-specific color tokens
      */
-    val backgroundColor: Color = Color(DesignTokens.color_feedback_notification_background)
     
     /** Text color for notification badge
      * Uses generated token: DesignTokens.color_feedback_notification_text
      * Source: BadgeNotificationColorTokens['notification.text'] → white100 (#FFFFFF)
      * @see Requirement 3.1 - notification-specific color tokens
      */
-    val textColor: Color = Color(DesignTokens.color_feedback_notification_text)
 }
 
 
@@ -300,6 +298,7 @@ fun BadgeCountNotification(
     testTag: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     // Handle negative counts by using absolute value
     // @see Error Handling in design.md - count is negative → Render absolute value or 0
     val normalizedCount = max(0, abs(count))

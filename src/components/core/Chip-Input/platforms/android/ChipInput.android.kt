@@ -113,22 +113,18 @@ private object ChipInputTokens {
     /** Default background color
      * References: color.structure.surface
      */
-    val backgroundColor: Color = Color(DesignTokens.color_surface)
     
     /** Default border color
      * References: color.structure.border
      */
-    val borderColor: Color = Color(DesignTokens.color_border)
     
     /** Default text color
      * References: color.text.default
      */
-    val textColor: Color = Color(DesignTokens.color_text_default)
     
     /** Primary action color for pressed border
      * References: color.action.primary
      */
-    val primaryColor: Color = Color(DesignTokens.color_primary)
     
     // MARK: - Animation Tokens
     
@@ -181,6 +177,7 @@ fun ChipInput(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit = {}
 ) {
+    val theme = LocalDPTheme.current
     // Track interaction state for pressed styling
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -189,15 +186,15 @@ fun ChipInput(
     // @see Requirements: 3.1, 3.3 - State styling (inherited from Chip-Base)
     val backgroundColor = if (isPressed) {
         // Apply pressed blend (12% darker)
-        ChipInputTokens.backgroundColor.pressedBlend()
+        theme.color_structure_surface.pressedBlend()
     } else {
-        ChipInputTokens.backgroundColor
+        theme.color_structure_surface
     }
     
     val borderColor = if (isPressed) {
-        ChipInputTokens.primaryColor
+        theme.color_action_primary
     } else {
-        ChipInputTokens.borderColor
+        theme.color_structure_border
     }
     
     // Accessible label for the chip: "Remove [label]"
@@ -249,7 +246,7 @@ fun ChipInput(
                 IconBase(
                     name = icon,
                     size = ChipInputTokens.iconSize,
-                    color = ChipInputTokens.textColor
+                    color = theme.color_text_default
                 )
             }
             
@@ -262,7 +259,7 @@ fun ChipInput(
                     lineHeight = (DesignTokens.font_size_075 * DesignTokens.line_height_075).sp,
                     fontWeight = FontWeight.Medium
                 ),
-                color = ChipInputTokens.textColor
+                color = theme.color_text_default
             )
             
             // Trailing X icon (always visible)
@@ -270,7 +267,7 @@ fun ChipInput(
             IconBase(
                 name = "x",
                 size = ChipInputTokens.iconSize,
-                color = ChipInputTokens.textColor
+                color = theme.color_text_default
             )
         }
     }

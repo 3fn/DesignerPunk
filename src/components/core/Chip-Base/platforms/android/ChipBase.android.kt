@@ -116,25 +116,21 @@ private object ChipTokens {
      * References: color.structure.surface
      * @see Requirements: 3.1 - Default state background
      */
-    val backgroundColor: Color = Color(DesignTokens.color_surface)
     
     /** Default border color
      * References: color.structure.border
      * @see Requirements: 3.1 - Default state border
      */
-    val borderColor: Color = Color(DesignTokens.color_border)
     
     /** Default text color
      * References: color.text.default
      * @see Requirements: 3.1 - Default state text
      */
-    val textColor: Color = Color(DesignTokens.color_text_default)
     
     /** Primary action color for pressed border
      * References: color.action.primary
      * @see Requirements: 3.3 - Pressed state border
      */
-    val primaryColor: Color = Color(DesignTokens.color_primary)
     
     // MARK: - Animation Tokens
     
@@ -187,6 +183,7 @@ fun ChipBase(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
+    val theme = LocalDPTheme.current
     // Track interaction state for pressed styling
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -195,15 +192,15 @@ fun ChipBase(
     // @see Requirements: 3.1, 3.3 - State styling
     val backgroundColor = if (isPressed) {
         // Apply pressed blend (12% darker)
-        ChipTokens.backgroundColor.pressedBlend()
+        theme.color_structure_surface.pressedBlend()
     } else {
-        ChipTokens.backgroundColor
+        theme.color_structure_surface
     }
     
     val borderColor = if (isPressed) {
-        ChipTokens.primaryColor
+        theme.color_action_primary
     } else {
-        ChipTokens.borderColor
+        theme.color_structure_border
     }
     
     // Build modifier chain
@@ -250,7 +247,7 @@ fun ChipBase(
                 IconBase(
                     name = icon,
                     size = ChipTokens.iconSize,
-                    color = ChipTokens.textColor
+                    color = theme.color_text_default
                 )
             }
             
@@ -263,7 +260,7 @@ fun ChipBase(
                     lineHeight = (DesignTokens.font_size_075 * DesignTokens.line_height_075).sp,
                     fontWeight = FontWeight.Medium
                 ),
-                color = ChipTokens.textColor
+                color = theme.color_text_default
             )
         }
     }

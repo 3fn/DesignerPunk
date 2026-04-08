@@ -123,10 +123,10 @@ enum class ProgressNodeContent {
  */
 private fun nodeBackgroundColor(state: ProgressNodeState): Color {
     return when (state) {
-        ProgressNodeState.INCOMPLETE -> Color(DesignTokens.color_progress_pending_background)
-        ProgressNodeState.CURRENT    -> Color(DesignTokens.color_progress_current_background)
-        ProgressNodeState.COMPLETED  -> Color(DesignTokens.color_progress_completed_background)
-        ProgressNodeState.ERROR      -> Color(DesignTokens.color_progress_error_background)
+        ProgressNodeState.INCOMPLETE -> theme.color_progress_pending_background
+        ProgressNodeState.CURRENT    -> theme.color_progress_current_background
+        ProgressNodeState.COMPLETED  -> theme.color_progress_completed_background
+        ProgressNodeState.ERROR      -> theme.color_progress_error_background
     }
 }
 
@@ -135,10 +135,10 @@ private fun nodeBackgroundColor(state: ProgressNodeState): Color {
  */
 private fun nodeForegroundColor(state: ProgressNodeState): Color {
     return when (state) {
-        ProgressNodeState.INCOMPLETE -> Color(DesignTokens.color_progress_pending_text)
-        ProgressNodeState.CURRENT    -> Color(DesignTokens.color_progress_current_text)
-        ProgressNodeState.COMPLETED  -> Color(DesignTokens.color_progress_completed_text)
-        ProgressNodeState.ERROR      -> Color(DesignTokens.color_progress_error_text)
+        ProgressNodeState.INCOMPLETE -> theme.color_progress_pending_text
+        ProgressNodeState.CURRENT    -> theme.color_progress_current_text
+        ProgressNodeState.COMPLETED  -> theme.color_progress_completed_text
+        ProgressNodeState.ERROR      -> theme.color_progress_error_text
     }
 }
 
@@ -168,6 +168,7 @@ fun ProgressIndicatorNodeBase(
     testTag: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     // Determine dimension: current state gets +4dp emphasis
     val targetDimension = if (state == ProgressNodeState.CURRENT) size.currentDp else size.baseDp
 

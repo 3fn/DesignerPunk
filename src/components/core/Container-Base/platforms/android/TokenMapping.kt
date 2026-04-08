@@ -201,25 +201,6 @@ fun mapBorderToWidth(border: BorderValue): Dp {
 }
 
 /**
- * Get border color from token
- * 
- * Returns the color.border token value for border styling.
- * This is a constant color used for all borders.
- * 
- * @return Border color as Compose Color
- * 
- * @example
- * ```kotlin
- * getBorderColor() // Returns color.border token value
- * ```
- * 
- * @see Requirements 6.5
- */
-fun getBorderColor(theme: DesignerPunkTheme): Color {
-    return theme.color_structure_border
-}
-
-/**
  * Resolve border color from token name
  * 
  * Returns the color for the border based on the borderColor prop.
@@ -248,7 +229,7 @@ fun resolveBorderColor(borderColor: String?, theme: DesignerPunkTheme): Color {
         "color.border.default" -> theme.color_structure_border
         "color.structure.border.subtle" -> theme.color_structure_border_subtle
         "color.border.emphasis" -> theme.color_border_emphasis
-        else -> colorBorder  // Fall back to default border color for unknown tokens
+        else -> theme.color_structure_border  // Fall back to default border color for unknown tokens
     }
 }
 

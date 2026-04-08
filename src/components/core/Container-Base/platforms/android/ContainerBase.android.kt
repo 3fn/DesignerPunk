@@ -238,7 +238,7 @@ fun ContainerBase(
     // which applies darkerBlend(color.surface, blend.hoverDarker) - 8% darker
     // @see Requirements: 9.1 - Container hover state
     // @see Requirements: 11.1, 11.2, 11.3 - Theme-aware utilities
-    val baseBackgroundColor = if (background != null) resolveContainerBaseColorToken(background) else Color.Transparent
+    val baseBackgroundColor = if (background != null) resolveContainerBaseColorToken(background, theme) else Color.Transparent
     val currentBackgroundColor = if (hoverable && isHovered) {
         baseBackgroundColor.hoverBlend()
     } else {
@@ -538,9 +538,8 @@ fun calculateContainerBaseDirectionalPadding(
     return PaddingValues(start = start, top = top, end = end, bottom = bottom)
 }
 
-fun resolveContainerBaseColorToken(tokenName: String): Color {
-    // Implementation would resolve token to Color
-    return Color.Gray
+fun resolveContainerBaseColorToken(tokenName: String, theme: DesignerPunkTheme): Color {
+    return resolveColorToken(tokenName, theme)
 }
 
 /**
@@ -587,11 +586,6 @@ fun getContainerBaseRoundedCornerShape(borderRadius: ContainerBaseBorderRadiusVa
         ContainerBaseBorderRadiusValue.Normal -> RoundedCornerShape(radius100) /* radius-100 */
         ContainerBaseBorderRadiusValue.Loose -> RoundedCornerShape(radius200) /* radius-200 */
     }
-}
-
-fun getContainerBaseBorderColor(): Color {
-    // Implementation would return color.border token value
-    return Color.Gray
 }
 
 fun mapContainerBaseLayeringToElevation(layering: ContainerBaseLayeringValue): Dp {

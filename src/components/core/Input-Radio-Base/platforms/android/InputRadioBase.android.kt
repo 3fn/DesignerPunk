@@ -177,47 +177,34 @@ private object RadioTokens {
      * References: color.feedback.select.border.default
      * @see Requirement 1.1 - Unselected state border
      */
-    val defaultBorderColor: Color
-        get() = Color(DesignTokens.color_feedback_select_border_default)
 
     /** Active border color (selected)
      * References: color.feedback.select.border.rest
      * @see Requirement 1.2 - Selected state border
      */
-    val activeBorderColor: Color
-        get() = Color(DesignTokens.color_feedback_select_border_rest)
 
     /** Error border color
      * References: color.feedback.error.border
      * @see Requirement 1.5 - Error state border
      */
-    val errorBorderColor: Color
-        get() = Color(DesignTokens.color_feedback_error_border)
 
     /** Dot fill color (selected state)
      * References: color.feedback.select.background.rest
      * @see Requirement 4.2 - Dot fill color
      */
     val dotColor: Color
-        get() = Color(DesignTokens.color_feedback_select_background_rest)
 
     /** Label text color
      * References: color.text.default
      */
-    val labelColor: Color
-        get() = Color(DesignTokens.color_text_default)
 
     /** Helper text color
      * References: color.text.muted
      */
-    val helperTextColor: Color
-        get() = Color(DesignTokens.color_text_muted)
 
     /** Error text color
      * References: color.feedback.error.text
      */
-    val errorTextColor: Color
-        get() = Color(DesignTokens.color_feedback_error_text)
 
     // MARK: - Border Tokens
 
@@ -286,9 +273,9 @@ private fun RadioCircle(
     // @see Requirement 1.6 - State transition animation using motion.selectionTransition
     val borderColor by animateColorAsState(
         targetValue = when {
-            hasError -> RadioTokens.errorBorderColor
-            selected -> RadioTokens.activeBorderColor
-            else -> RadioTokens.defaultBorderColor
+            hasError -> theme.color_feedback_error_border
+            selected -> theme.color_feedback_select_border_rest
+            else -> theme.color_feedback_select_border_default
         },
         animationSpec = if (reduceMotion) snap() else tween(durationMillis = RadioTokens.animationDuration, easing = DesignTokens.Easing.EasingStandard),
         label = "radioBorder"
@@ -402,6 +389,7 @@ fun InputRadioBase(
     errorMessage: String? = null,
     testTag: String? = null
 ) {
+    val theme = LocalDPTheme.current
     val isSelected = selectedValue == value
     val hasError = errorMessage != null
     val reduceMotion = isReduceMotionEnabled()
@@ -435,7 +423,7 @@ fun InputRadioBase(
                     // @see Requirement 7.3 - Material ripple effect using blend.pressedDarker (12%)
                     indication = rememberRipple(
                         bounded = true,
-                        color = RadioTokens.activeBorderColor.copy(
+                        color = theme.color_feedback_select_border_rest.copy(
                             alpha = BlendTokenValues.pressedDarker
                         )
                     )
@@ -463,7 +451,7 @@ fun InputRadioBase(
                     fontSize = size.labelFontSize.sp,
                     fontWeight = FontWeight.Medium
                 ),
-                color = RadioTokens.labelColor
+                color = theme.color_text_default
             )
         }
 
@@ -485,7 +473,7 @@ fun InputRadioBase(
                             fontSize = RadioTokens.helperFontSize.sp,
                             fontWeight = FontWeight.Normal
                         ),
-                        color = RadioTokens.helperTextColor,
+                        color = theme.color_text_muted,
                         modifier = Modifier.clearAndSetSemantics {
                             contentDescription = "Helper text: $helperText"
                         }
@@ -501,7 +489,7 @@ fun InputRadioBase(
                             fontSize = RadioTokens.helperFontSize.sp,
                             fontWeight = FontWeight.Normal
                         ),
-                        color = RadioTokens.errorTextColor,
+                        color = theme.color_feedback_error_text,
                         modifier = Modifier.clearAndSetSemantics {
                             contentDescription = "Error: $errorMessage"
                         }
@@ -678,7 +666,7 @@ fun InputRadioBasePreview() {
             Text(
                 text = "Selected: $selectedPlan",
                 style = TextStyle(fontSize = RadioTokens.helperFontSize.sp),
-                color = RadioTokens.helperTextColor
+                color = theme.color_text_muted
             )
         }
     }

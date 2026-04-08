@@ -112,22 +112,18 @@ private object ChipFilterTokens {
     /** Default background color
      * References: color.structure.surface
      */
-    val backgroundColor: Color = Color(DesignTokens.color_surface)
     
     /** Default border color
      * References: color.structure.border
      */
-    val borderColor: Color = Color(DesignTokens.color_border)
     
     /** Default text color
      * References: color.text.default
      */
-    val textColor: Color = Color(DesignTokens.color_text_default)
     
     /** Primary action color for pressed border
      * References: color.action.primary
      */
-    val primaryColor: Color = Color(DesignTokens.color_primary)
     
     // MARK: - Selected State Color Tokens
     
@@ -135,19 +131,16 @@ private object ChipFilterTokens {
      * References: color.feedback.select.background.rest
      * @see Requirement 4.2 - Selected state background
      */
-    val selectedBackgroundColor: Color = Color(DesignTokens.color_feedback_select_background_rest)
     
     /** Selected state border color
      * References: color.feedback.select.text.rest (used for border)
      * @see Requirement 4.2 - Selected state border
      */
-    val selectedBorderColor: Color = Color(DesignTokens.color_feedback_select_text_rest)
     
     /** Selected state text color
      * References: color.feedback.select.text.rest
      * @see Requirement 4.2 - Selected state text
      */
-    val selectedTextColor: Color = Color(DesignTokens.color_feedback_select_text_rest)
     
     // MARK: - Animation Tokens
     
@@ -212,6 +205,7 @@ fun ChipFilter(
     onSelectionChange: (Boolean) -> Unit = {},
     onClick: () -> Unit = {}
 ) {
+    val theme = LocalDPTheme.current
     // Track interaction state for pressed styling
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -221,30 +215,30 @@ fun ChipFilter(
     val backgroundColor = when {
         selected && isPressed -> {
             // Selected + pressed: slightly darker selected background
-            ChipFilterTokens.selectedBackgroundColor.copy(alpha = 0.9f)
+            theme.color_feedback_select_background_rest.copy(alpha = 0.9f)
         }
         selected -> {
-            ChipFilterTokens.selectedBackgroundColor
+            theme.color_feedback_select_background_rest
         }
         isPressed -> {
             // Not selected + pressed: apply pressed blend
-            ChipFilterTokens.backgroundColor.pressedBlend()
+            theme.color_structure_surface.pressedBlend()
         }
         else -> {
-            ChipFilterTokens.backgroundColor
+            theme.color_structure_surface
         }
     }
     
     val borderColor = when {
-        selected -> ChipFilterTokens.selectedBorderColor
-        isPressed -> ChipFilterTokens.primaryColor
-        else -> ChipFilterTokens.borderColor
+        selected -> theme.color_feedback_select_text_rest
+        isPressed -> theme.color_action_primary
+        else -> theme.color_structure_border
     }
     
     val textColor = if (selected) {
-        ChipFilterTokens.selectedTextColor
+        theme.color_feedback_select_text_rest
     } else {
-        ChipFilterTokens.textColor
+        theme.color_text_default
     }
     
     // Determine which icon to show:

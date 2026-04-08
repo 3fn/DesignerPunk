@@ -345,7 +345,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Same components as 4.2, Android platform files
     - _Requirements: R8 AC 2, 4, 5_
 
-  - [ ] 4.7 Android migration: Form Input + Chip families
+  - [x] 4.7 Android migration: Form Input + Chip families
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -353,7 +353,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Same components as 4.3, Android platform files
     - _Requirements: R8 AC 2, 4, 5_
 
-  - [ ] 4.8 Android migration: Remaining families
+  - [x] 4.8 Android migration: Remaining families
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

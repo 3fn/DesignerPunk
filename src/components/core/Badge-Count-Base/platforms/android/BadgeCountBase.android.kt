@@ -94,13 +94,11 @@ private object BadgeCountBaseTokens {
      * References: color.surface → white200
      * @see Requirements: Design.md - Default colors
      */
-    val backgroundColor: Color = Color(DesignTokens.color_structure_surface)
     
     /** Text color for badge
      * References: color.text.default → gray300
      * @see Requirements: Design.md - Default colors
      */
-    val textColor: Color = Color(DesignTokens.color_text_default)
 }
 
 // MARK: - Badge-Count-Base Default Values
@@ -231,6 +229,7 @@ fun BadgeCountBase(
     testTag: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     // Handle negative counts by using absolute value
     // @see Error Handling in design.md - count is negative → Render absolute value or 0
     val normalizedCount = max(0, abs(count))

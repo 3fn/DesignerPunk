@@ -111,19 +111,16 @@ private object BadgeLabelBaseTokens {
      * References: color.surface → white200
      * @see Requirements: Design.md - Default colors
      */
-    val backgroundColor: Color = Color(DesignTokens.color_surface)
     
     /** Text color for badge
      * References: color.text.default → gray300
      * @see Requirements: Design.md - Default colors
      */
-    val textColor: Color = Color(DesignTokens.color_text_default)
     
     /** Icon color for badge
      * References: color.icon.default → gray200
      * @see Requirements: Design.md - Default colors
      */
-    val iconColor: Color = Color(DesignTokens.color_icon_default)
 }
 
 /**
@@ -225,6 +222,7 @@ fun BadgeLabelBase(
     testTag: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     // Get size-specific token configuration
     val sizeConfig = getSizeConfig(size)
     

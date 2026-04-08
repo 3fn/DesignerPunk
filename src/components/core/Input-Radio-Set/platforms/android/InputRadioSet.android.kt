@@ -103,7 +103,7 @@ private object RadioSetTokens {
      * @see Requirement 9.8 - Error message display
      */
     val errorTextColor: Color
-        get() = Color(DesignTokens.color_feedback_error_text)
+        get() = theme.color_feedback_error_text
 
     /** Error text font size
      * References: fontSize050 (12sp)
@@ -191,6 +191,7 @@ fun InputRadioSet(
     testTag: String? = null,
     content: @Composable () -> Unit
 ) {
+    val theme = LocalDPTheme.current
     Column(
         verticalArrangement = Arrangement.spacedBy(RadioSetTokens.groupSpacing),
         modifier = modifier

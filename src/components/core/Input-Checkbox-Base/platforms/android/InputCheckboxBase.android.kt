@@ -221,54 +221,38 @@ private object CheckboxTokens {
      * References: color.feedback.select.background.rest
      * @see Requirement 1.2, 1.3 - Checked/indeterminate state
      */
-    val checkedBackground: Color
-        get() = Color(DesignTokens.color_feedback_select_background_rest)
     
     /** Default border color (unchecked)
      * References: color.feedback.select.border.default
      * @see Requirement 1.1 - Unchecked state border
      */
-    val defaultBorderColor: Color
-        get() = Color(DesignTokens.color_feedback_select_border_default)
     
     /** Active border color (checked/hover)
      * References: color.feedback.select.border.rest
      * @see Requirement 1.2, 1.4 - Checked/hover state border
      */
-    val activeBorderColor: Color
-        get() = Color(DesignTokens.color_feedback_select_border_rest)
     
     /** Error border color
      * References: color.feedback.error.border
      * @see Requirement 1.6 - Error state border
      */
-    val errorBorderColor: Color
-        get() = Color(DesignTokens.color_feedback_error_border)
     
     /** Icon color (on dark/filled background)
      * References: color.contrast.onDark
      * @see Requirement 4.4 - Icon color
      */
-    val iconColor: Color
-        get() = Color(DesignTokens.color_contrast_on_dark)
     
     /** Label text color
      * References: color.text.default
      */
-    val labelColor: Color
-        get() = Color(DesignTokens.color_text_default)
     
     /** Helper text color
      * References: color.text.muted
      */
-    val helperTextColor: Color
-        get() = Color(DesignTokens.color_text_muted)
     
     /** Error text color
      * References: color.feedback.error.text
      */
-    val errorTextColor: Color
-        get() = Color(DesignTokens.color_feedback_error_text)
     
     // MARK: - Border Tokens
     
@@ -407,6 +391,7 @@ fun InputCheckboxBase(
     errorMessage: String? = null,
     testTag: String? = null
 ) {
+    val theme = LocalDPTheme.current
     // Track interaction state for ripple effect
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -424,16 +409,16 @@ fun InputCheckboxBase(
     // Animated colors for smooth state transitions
     // @see Requirement 1.7 - State transition animation using motion.selectionTransition
     val backgroundColor by animateColorAsState(
-        targetValue = if (isActive) CheckboxTokens.checkedBackground else CheckboxTokens.uncheckedBackground,
+        targetValue = if (isActive) theme.color_feedback_select_background_rest else CheckboxTokens.uncheckedBackground,
         animationSpec = if (reduceMotion) snap() else tween(durationMillis = CheckboxTokens.animationDuration, easing = DesignTokens.Easing.EasingStandard),
         label = "checkboxBackground"
     )
     
     val borderColor by animateColorAsState(
         targetValue = when {
-            hasError -> CheckboxTokens.errorBorderColor
-            isActive -> CheckboxTokens.activeBorderColor
-            else -> CheckboxTokens.defaultBorderColor
+            hasError -> theme.color_feedback_error_border
+            isActive -> theme.color_feedback_select_border_rest
+            else -> theme.color_feedback_select_border_default
         },
         animationSpec = if (reduceMotion) snap() else tween(durationMillis = CheckboxTokens.animationDuration, easing = DesignTokens.Easing.EasingStandard),
         label = "checkboxBorder"
@@ -485,7 +470,7 @@ fun InputCheckboxBase(
                     // @see Requirement 7.3 - Material ripple effect using blend.pressedDarker
                     indication = rememberRipple(
                         bounded = true,
-                        color = CheckboxTokens.activeBorderColor.copy(
+                        color = theme.color_feedback_select_border_rest.copy(
                             alpha = BlendTokenValues.pressedDarker
                         )
                     )
@@ -522,7 +507,7 @@ fun InputCheckboxBase(
                     fontSize = effectiveLabelFontSize.sp,
                     fontWeight = FontWeight.Medium
                 ),
-                color = CheckboxTokens.labelColor
+                color = theme.color_text_default
             )
         }
         
@@ -545,7 +530,7 @@ fun InputCheckboxBase(
                             fontSize = CheckboxTokens.helperFontSize.sp,
                             fontWeight = FontWeight.Normal
                         ),
-                        color = CheckboxTokens.helperTextColor,
+                        color = theme.color_text_muted,
                         modifier = Modifier.clearAndSetSemantics {
                             // Provide clear accessibility label for TalkBack
                             contentDescription = "Helper text: $helperText"
@@ -563,7 +548,7 @@ fun InputCheckboxBase(
                             fontSize = CheckboxTokens.helperFontSize.sp,
                             fontWeight = FontWeight.Normal
                         ),
-                        color = CheckboxTokens.errorTextColor,
+                        color = theme.color_feedback_error_text,
                         modifier = Modifier.clearAndSetSemantics {
                             // Provide clear accessibility label for TalkBack
                             // Error messages are announced with higher priority
@@ -613,7 +598,7 @@ private fun CheckboxBox(
             IconBase(
                 name = if (indeterminate) "minus" else "check",
                 size = size.iconSize,
-                color = CheckboxTokens.iconColor
+                color = theme.color_contrast_on_dark
             )
         }
     }

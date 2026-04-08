@@ -98,7 +98,7 @@ private object LegalCheckboxTokens {
      * References: color.text.muted
      */
     val requiredIndicatorColor: Color
-        get() = Color(DesignTokens.color_text_muted)
+        get() = theme.color_text_muted
     
     /** Required indicator font size
      * References: fontSize050 (12sp)
@@ -210,6 +210,7 @@ fun InputCheckboxLegal(
     onConsentChange: ((ConsentChangeData) -> Unit)? = null,
     testTag: String? = null
 ) {
+    val theme = LocalDPTheme.current
     // Track if consent warning has been shown
     var consentWarningShown by remember { mutableStateOf(false) }
     

@@ -73,6 +73,7 @@ fun ProgressIndicatorLabelBase(
     testTag: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     val labelModifier = modifier
         .then(if (testTag != null) Modifier.testTag(testTag) else Modifier)
         .clearAndSetSemantics { } // Primitive is decorative; semantic variant handles a11y
@@ -90,7 +91,7 @@ fun ProgressIndicatorLabelBase(
             text = label,
             fontSize = labelFontSize,
             fontWeight = labelFontWeight,
-            color = Color(DesignTokens.color_text_default),
+            color = theme.color_text_default,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -103,7 +104,7 @@ fun ProgressIndicatorLabelBase(
                 text = helperText,
                 fontSize = labelFontSize,
                 fontWeight = labelFontWeight,
-                color = Color(DesignTokens.color_text_subtle).copy(alpha = 0.7f),
+                color = theme.color_text_subtle.copy(alpha = 0.7f),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

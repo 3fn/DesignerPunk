@@ -61,8 +61,8 @@ enum class ProgressConnectorState {
  */
 private fun connectorColor(state: ProgressConnectorState): Color {
     return when (state) {
-        ProgressConnectorState.ACTIVE   -> Color(DesignTokens.color_progress_completed_connector)
-        ProgressConnectorState.INACTIVE -> Color(DesignTokens.color_progress_pending_connector)
+        ProgressConnectorState.ACTIVE   -> theme.color_progress_completed_connector
+        ProgressConnectorState.INACTIVE -> theme.color_progress_pending_connector
     }
 }
 
@@ -95,6 +95,7 @@ fun ProgressIndicatorConnectorBase(
     testTag: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     val color = connectorColor(state)
 
     val connectorModifier = modifier

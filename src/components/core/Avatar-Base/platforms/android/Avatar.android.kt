@@ -109,7 +109,6 @@ object AvatarTokens {
      * @see Requirements: 4.1 - Human type background color
      * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
      */
-    val colorHuman: Color = Color(DesignTokens.color_identity_human)
     
     /**
      * Background color for agent avatars
@@ -117,7 +116,6 @@ object AvatarTokens {
      * @see Requirements: 4.2 - Agent type background color
      * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
      */
-    val colorAgent: Color = Color(DesignTokens.color_identity_agent)
     
     /**
      * Icon color on human avatar background
@@ -125,7 +123,6 @@ object AvatarTokens {
      * @see Requirements: 6.1 - Human type icon contrast color
      * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
      */
-    val contrastOnHuman: Color = Color(DesignTokens.color_contrast_on_dark)
     
     /**
      * Icon color on agent avatar background
@@ -133,7 +130,6 @@ object AvatarTokens {
      * @see Requirements: 6.2 - Agent type icon contrast color
      * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
      */
-    val contrastOnAgent: Color = Color(DesignTokens.color_contrast_on_dark)
     
     /**
      * Border color for avatars (xs through xl sizes)
@@ -141,14 +137,12 @@ object AvatarTokens {
      * @see Requirements: 7.2 - Border color for xs-xl sizes
      * @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
      */
-    val borderColor: Color = Color(DesignTokens.color_structure_border)
     
     /**
      * Border color for xxl size avatars
      * References: color.contrast.onDark → white100
      * @see Requirements: 7.4 - Border color for xxl size
      */
-    val borderColorXxl: Color = Color(DesignTokens.color_contrast_on_dark)
     
     // MARK: - Avatar Border Tokens
     
@@ -376,19 +370,19 @@ fun Avatar(
     
     // Determine background color based on type
     val backgroundColor = when (type) {
-        AvatarType.Human -> AvatarTokens.colorHuman
-        AvatarType.Agent -> AvatarTokens.colorAgent
+        AvatarType.Human -> theme.color_identity_human
+        AvatarType.Agent -> theme.color_identity_agent
     }
     
     // Determine icon color based on type
     val iconColor = when (type) {
-        AvatarType.Human -> AvatarTokens.contrastOnHuman
-        AvatarType.Agent -> AvatarTokens.contrastOnAgent
+        AvatarType.Human -> theme.color_contrast_on_dark
+        AvatarType.Agent -> theme.color_contrast_on_dark
     }
     
     // Determine border color based on size
     val borderColor = when (size) {
-        AvatarSize.Xxl -> AvatarTokens.borderColorXxl
+        AvatarSize.Xxl -> theme.color_contrast_on_dark
         else -> AvatarTokens.borderColor.copy(alpha = AvatarTokens.opacityHeavy)
     }
     

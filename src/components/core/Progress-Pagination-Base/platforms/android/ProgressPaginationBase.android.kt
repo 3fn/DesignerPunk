@@ -100,6 +100,7 @@ fun ProgressPaginationBase(
     testTag: String? = null,
     modifier: Modifier = Modifier
 ) {
+    val theme = LocalDPTheme.current
     // Validate and clamp totalItems
     // @see Requirements 2.9-2.10
     val effectiveTotalItems = if (totalItems > PAGINATION_MAX_ITEMS) {
@@ -166,7 +167,7 @@ fun ProgressPaginationBase(
             .then(if (testTag != null) Modifier.testTag(testTag) else Modifier)
             .semantics { contentDescription = effectiveLabel }
             .width(viewportWidth)
-            .background(color = DesignTokens.color_scrim_standard, shape = pillShape)
+            .background(color = theme.color_scrim_standard, shape = pillShape)
             .clip(pillShape),
         state = listState,
         horizontalArrangement = Arrangement.spacedBy(gap),
