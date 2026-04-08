@@ -8,7 +8,17 @@
 
 ## How to Use
 
-Each entry records: what was deferred, which spec or planning doc deferred it, why, and what triggers it becoming active. Review this tracker before starting M0b or any future milestone to assess accumulated debt.
+Each entry records: what was deferred, which spec or planning doc deferred it, why, and when it needs to be done. Review this tracker before starting M0b or any future milestone to assess accumulated debt.
+
+---
+
+## Deadlines
+
+| Deadline | Items |
+|----------|-------|
+| **Before Phase 2 starts** | Token coverage analysis, `marketing-pages` vocabulary |
+| **Before M0b starts** | Tree-shaking, ThemeAwareBlendUtilities consolidation, full Product MCP features, token namespace collision prevention |
+| **End of Phase 2 (after all theming work)** | `mode: 'light'` support, `data-theme` attribute configurability |
 
 ---
 
