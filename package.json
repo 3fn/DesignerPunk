@@ -2,10 +2,10 @@
   "name": "@designerpunk/core",
   "version": "10.2.0",
   "description": "True Native cross-platform design system with mathematical foundations",
-  "main": "./dist/TokenEngine.js",
+  "main": "./dist/browser/designerpunk.esm.js",
   "module": "./dist/browser/designerpunk.esm.js",
   "browser": "./dist/browser/designerpunk.esm.js",
-  "types": "./dist/TokenEngine.d.ts",
+  "types": "./dist/browser-entry.d.ts",
   "files": [
     "src/",
     "dist/browser/designerpunk.esm.js",
@@ -43,21 +43,25 @@
   "exports": {
     ".": {
       "import": "./dist/browser/designerpunk.esm.js",
-      "require": "./dist/TokenEngine.js",
-      "types": "./dist/TokenEngine.d.ts"
+      "types": "./dist/browser-entry.d.ts"
     },
-    "./BlendUtilities": {
-      "import": "./dist/BlendUtilities.web.ts",
-      "require": "./dist/BlendUtilities.web.ts",
-      "types": "./dist/BlendUtilities.web.ts",
-      "default": "./dist/BlendUtilities.web.ts"
+    "./components": {
+      "import": "./dist/browser/designerpunk.esm.js",
+      "types": "./dist/browser-entry.d.ts"
+    },
+    "./tokens.css": "./dist/DesignTokens.web.css",
+    "./component-tokens.css": "./dist/ComponentTokens.web.css",
+    "./config": {
+      "import": "./dist/config/index.js",
+      "types": "./dist/config/index.d.ts"
     },
     "./blend": {
       "import": "./dist/blend/index.js",
-      "require": "./dist/blend/index.js",
       "types": "./dist/blend/index.d.ts"
     },
-    "./tokens.css": "./dist/browser/tokens.css"
+    "./grid.css": "./src/styles/responsive-grid.css",
+    "./fonts/inter.css": "./src/assets/fonts/inter/inter.css",
+    "./fonts/rajdhani.css": "./src/assets/fonts/rajdhani/rajdhani.css"
   },
   "scripts": {
     "generate:types": "ts-node scripts/generate-token-types.ts",

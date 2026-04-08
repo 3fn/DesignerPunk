@@ -70,7 +70,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
     - Accept `examples/` shipping (~1MB, harmless) — simplifies `files` to `"src/"` without exclusion patterns
     - _Requirements: R1 AC 1, R2 AC 1-4_
 
-  - [ ] 2.2 Define exports map
+  - [x] 2.2 Define exports map
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
