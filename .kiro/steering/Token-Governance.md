@@ -230,17 +230,44 @@ The human should consider:
 
 ### Dimension Governance
 
-The Rosetta token system currently resolves across three dimensions: platform (build-time), theme (WCAG), and mode (light/dark). Adding new dimensions — or new values within existing dimensions (e.g., a "high contrast" mode, a "compact" density dimension) — has cascading impact across the resolver pipeline, generator output, theme files, and governance documentation.
+The Rosetta token system resolves across three dimensions: platform (build-time), theme (base/WCAG/custom), and mode (light/dark). Adding new dimensions — or new values within existing dimensions (e.g., a "high contrast" mode, a "compact" density dimension) — has cascading impact across the resolver pipeline, generator output, theme files, and governance documentation.
 
-**Rule**: Adding a new mode, theme, or resolution dimension requires:
+**Rule**: Adding a new mode or resolution dimension requires:
 1. A formal spec (design outline → requirements → design → tasks)
 2. Peter's explicit approval before implementation begins
 
-This applies to both new dimensions (e.g., density) and new values within existing dimensions (e.g., a third mode beyond light/dark).
+This applies to new dimensions (e.g., density) and new values within existing dimensions (e.g., a third mode beyond light/dark).
 
 **Rationale**: Dimensions are multiplicative. Each new dimension multiplies the resolution matrix, theme file surface, and testing burden. This is an architectural decision, not a token decision.
 
 *Added by Spec 080 (Rosetta Mode Architecture), Decision #12.*
+
+### Theme Registry (Spec 094)
+
+As of Spec 094, themes are managed via a **ThemeRegistry** pattern. Products register themes in `designerpunk.config.ts` using `defineConfig()`. The pipeline discovers and generates output for all registered themes.
+
+**Adding a new theme does NOT require a formal spec.** Themes are product-level configuration, not architectural decisions. A product developer creates a `SemanticOverrides.ts` and registers it in their config:
+
+```typescript
+import { defineConfig } from '@designerpunk/core/config';
+import { myOverrides } from './themes/my-theme/SemanticOverrides';
+
+export default defineConfig({
+  name: 'MyProduct',
+  abbreviation: 'MP',
+  themes: [{ name: 'my-theme', mode: 'dark', overrides: myOverrides }],
+  output: './dist/tokens'
+});
+```
+
+**Theme governance rules:**
+- Theme overrides reference existing semantic tokens only — the registry validates at registration time
+- Overrides swap primitive references, not token structure — the `SemanticOverrideMap` format is unchanged
+- Theme-varying tokens are determined automatically (union of all overridden token names across registered themes)
+- Non-theme-varying tokens (spacing, sizing, radius, typography, motion) stay as static constants
+- Each platform generates theme-aware output in its native idiom: CSS `data-theme` scoping, Swift `@Environment`, Kotlin `CompositionLocal`
+
+**Known limitation**: Theme-varying determination is direct, not transitive. Shadow tokens referencing overridden color primitives will use base values on iOS/Android. See Spec 094 design.md § "Known Limitations".
 
 ---
 

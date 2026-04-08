@@ -22,17 +22,26 @@ A product repo integrating `@designerpunk/core` needs:
 
 ---
 
-## Setup Steps (Anticipated)
+## Setup Steps
 
 1. Install the package: `npm install @designerpunk/core`
-2. Create `designerpunk.config.ts` at project root (or use defaults)
-3. Create theme override file(s) if custom theming is needed
-4. Run the pipeline: `npx designerpunk generate`
-5. Import generated tokens in your project: `import '@designerpunk/core/tokens.css'`
-6. Import components: `import '@designerpunk/core/components'`
-7. Start MCP servers for agent-assisted development
+2. Create `designerpunk.config.ts` at project root:
+   ```typescript
+   import { defineConfig } from '@designerpunk/core/config';
 
-**Note**: These steps are anticipated based on the Spec 094 design outline. Actual steps will be validated during Phase 1 implementation and Phase 2 (marketing site) consumption.
+   export default defineConfig({
+     name: 'MyProduct',
+     abbreviation: 'MP',
+     output: './dist/tokens'
+   });
+   ```
+3. Run the pipeline: `npx designerpunk generate`
+4. Import generated tokens in your project:
+   - Web: `import '@designerpunk/core/tokens.css'` or reference the generated CSS in your output dir
+   - iOS: Add generated Swift file to your Xcode project
+   - Android: Add generated Kotlin file to your Gradle module
+5. Import components: `import '@designerpunk/core/components'` (web ESM bundle)
+6. For custom theming, create a `SemanticOverrides.ts` and register it in the config (see Configuration section)
 
 ---
 

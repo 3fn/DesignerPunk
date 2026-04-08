@@ -493,11 +493,41 @@ export const ComponentNameTokens = defineComponentTokens({
 | **Definition** | `src/tokens/` | Token source files |
 | **Validation** | `src/integration/ValidationCoordinator.ts` | Validation orchestration |
 | **Registry** | `src/registries/` | Token storage and queries |
+| **Theme Registry** | `src/themes/ThemeRegistry.ts` | Theme registration, validation, theme-varying token computation |
+| **Configuration** | `src/config/defineConfig.ts` | Pipeline config API (`@designerpunk/core/config`) |
+| **Config Loader** | `src/config/ConfigLoader.ts` | Loads `designerpunk.config.ts`, resolves paths |
 | **Generation** | `src/generators/TokenFileGenerator.ts` | Platform output generation |
 | **Platform Generators** | `src/providers/*FormatGenerator.ts` | Platform-specific formatting |
-| **Output** | `dist/` | Generated platform files |
+| **Theme Generators** | `generateWebThemeBlocks`, `generateSwiftThemeTypes`, `generateKotlinThemeTypes` | Platform-specific theme-aware output |
+| **Output** | Configured output dir (default: `dist/`) | Generated platform files |
 | **Component Tokens** | `src/build/tokens/defineComponentTokens.ts` | Component token authoring |
 | **Color Tokens** | `src/tokens/ColorTokens.ts` | RGBA primitive definitions |
+| **Pipeline CLI** | `npx designerpunk generate` | Run pipeline from any project |
+
+---
+
+## Portable Pipeline (Spec 094)
+
+The token pipeline is portable — it runs from any project that installs `@designerpunk/core`. Products configure the pipeline via `designerpunk.config.ts`:
+
+```typescript
+import { defineConfig } from '@designerpunk/core/config';
+import { myOverrides } from './themes/my-theme/SemanticOverrides';
+
+export default defineConfig({
+  name: 'MyProduct',
+  abbreviation: 'MP',
+  themes: [{ name: 'my-theme', mode: 'dark', overrides: myOverrides }],
+  componentTokens: ['./components'],
+  output: './dist/tokens'
+});
+```
+
+**Path resolution**: Token sources resolve from the installed package. Theme overrides and component tokens resolve relative to the config file. Output directory is configurable. When no config exists, defaults match the DesignerPunk repo structure (backward compatible).
+
+**Theme registration**: Themes are explicitly imported and registered in the config — no directory walking, no auto-discovery. The config IS the registry.
+
+See: `Token-Governance.md` § "Theme Registry (Spec 094)" for governance rules.
 
 ---
 

@@ -950,7 +950,40 @@ val spaceInsetNormal = 8.dp
 
 **3. Platform implementations use generated tokens**:
 
-Each platform uses its native syntax to consume the generated token values. The mathematical relationships are preserved across all platforms - only the syntax differs.
+Each platform uses its native syntax to consume the generated token values. The mathematical relationships are preserved across all platforms — only the syntax differs.
+
+### Token Consumption by Platform (Spec 094)
+
+Tokens are split into two categories: **static tokens** (spacing, sizing, radius, typography, motion) that don't vary by theme, and **theme-varying tokens** (colors, color-dependent shadows/glows) that change per theme.
+
+**Web** — CSS custom properties, no code changes needed for theming:
+```css
+/* Static and theme-varying tokens both consumed as custom properties */
+var(--space-inset-100)          /* Static — same in all themes */
+var(--color-action-primary)     /* Theme-varying — changes with data-theme attribute */
+```
+
+**iOS** — Static tokens via `DesignTokens`, theme-varying via `@Environment`:
+```swift
+// Static tokens — unchanged
+DesignTokens.spaceInset100
+
+// Theme-varying tokens — read from environment
+@Environment(\.{abbreviation}Theme) var theme
+theme.colorActionPrimary
+```
+
+**Android** — Static tokens via `DesignTokens`, theme-varying via `CompositionLocal`:
+```kotlin
+// Static tokens — unchanged
+DesignTokens.space_inset_100
+
+// Theme-varying tokens — read from CompositionLocal
+val theme = Local{Abbreviation}Theme.current
+theme.colorActionPrimary
+```
+
+**Key rule**: Components should NOT mix static and theme-aware access for the same token. If a token is in the theme-varying set (determined by the ThemeRegistry), always use the theme-aware access pattern on iOS/Android. On web, all tokens use CSS custom properties regardless.
 
 ### Token Reference Format
 

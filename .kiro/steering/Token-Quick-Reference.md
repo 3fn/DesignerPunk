@@ -78,9 +78,9 @@ export const darkSemanticOverrides: SemanticOverrideMap = {
 };
 ```
 
-### 4-Context Resolution (Phase 2)
+### Context Resolution
 
-Mode (light/dark) and theme (base/wcag) are independent dimensions, producing 4 contexts:
+Mode (light/dark) and theme (base/wcag/custom) are independent dimensions. The base system produces 4 contexts:
 
 | Context | Mode | Theme | Override Source |
 |---------|------|-------|----------------|
@@ -89,7 +89,19 @@ Mode (light/dark) and theme (base/wcag) are independent dimensions, producing 4 
 | dark-base | dark | base | `src/tokens/themes/dark/SemanticOverrides.ts` |
 | dark-wcag | dark | wcag | Composed: dark + wcag + `src/tokens/themes/dark-wcag/SemanticOverrides.ts` |
 
-`SemanticOverrideResolver.resolveAllContexts()` produces all 4 token sets from a `ContextOverrideSet`.
+**Custom themes (Spec 094)**: Products register additional themes via `designerpunk.config.ts`. Each registered theme adds contexts to the resolution matrix. A dark-only theme adds one context; a theme with mode `'both'` adds two (light + dark).
+
+The **ThemeRegistry** manages all themes. `SemanticOverrideResolver.resolveForRegistry()` produces `ResolvedThemeSet[]` — one entry per theme context.
+
+**Theme-varying vs static tokens**: The registry computes the union of all overridden token names across registered themes. Tokens in that set are theme-varying (generated as protocol/data class properties on iOS/Android, `data-theme` scoped on web). Everything else stays as static constants.
+
+### Platform Theme Output
+
+| Platform | Theme mechanism | Static tokens | Theme-varying tokens |
+|----------|----------------|---------------|---------------------|
+| Web | CSS `data-theme` attribute scoping | CSS custom properties on `:root` | Scoped under `:root[data-theme="{name}"]` |
+| iOS | `@Environment` with `{Name}Theme` protocol | `DesignTokens` static lets | Struct per theme conforming to protocol |
+| Android | `CompositionLocal` with `{Name}Theme` data class | `DesignTokens` object constants | Instance per theme in `{Name}Themes` object |
 
 ### Governance Tools
 
