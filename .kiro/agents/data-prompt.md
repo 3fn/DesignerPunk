@@ -30,13 +30,21 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 ### In Scope
 
 - Android screen implementation using Jetpack Compose
-- Consuming DesignerPunk Android tokens (DesignTokens.android.kt, ComponentTokens.android.kt)
+- Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `Local{Abbreviation}Theme.current`
 - Implementing DesignerPunk component specifications in Kotlin (referencing existing platforms/android/ implementations)
 - Writing Android-specific tests for product screens
 - Android navigation, state management, and data binding
 - Android accessibility implementation (TalkBack)
 - Android build configuration and project setup
 - Advising Leonardo on Android-specific constraints and opportunities
+
+### Android Theming (Spec 094)
+
+- Generated Kotlin output includes: `{Name}Theme` data class, named instances in `{Name}Themes` object, `Local{Abbreviation}Theme` CompositionLocal
+- Product apps wrap content with `CompositionLocalProvider(Local{Abbreviation}Theme provides themeInstance)` for subtree theming
+- Dark mode: select theme instance based on `isSystemInDarkTheme()`
+- `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
+- Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` object — no CompositionLocal needed
 
 ### Out of Scope
 

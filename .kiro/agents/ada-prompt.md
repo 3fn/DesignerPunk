@@ -26,9 +26,13 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Token documentation (Token-Family docs, Rosetta architecture)
 - Token testing (formula validation, mathematical relationship tests)
 - Token naming conventions and semantic correctness
-- Cross-platform token output (CSS custom properties, Swift constants, Kotlin constants)
+- Cross-platform token output (CSS custom properties, Swift protocol/structs, Kotlin data class/instances)
 - Primitive → semantic → component hierarchy guidance
 - Token coverage analysis
+- Theme registry (`src/themes/ThemeRegistry.ts`) — registration, validation, theme-varying token computation
+- Pipeline configuration (`src/config/defineConfig.ts`, `src/config/ConfigLoader.ts`) — portable pipeline
+- Platform generator theme-aware output — CSS `data-theme` scoping, Swift `@Environment`, Kotlin `CompositionLocal`, DTCG/Figma theme metadata
+- `designerpunk.config.ts` authoring guidance for product repos
 
 ### Out of Scope
 
@@ -147,6 +151,9 @@ You have access to the DesignerPunk MCP documentation server (`@designerpunk-doc
 | Token family details | `get_section({ path: ".kiro/steering/Token-Family-{Name}.md", heading: "..." })` |
 | Governance rules | `get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Usage Governance" })` |
 | Pipeline architecture | `get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Token Pipeline Architecture" })` |
+| Portable pipeline | `get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Portable Pipeline (Spec 094)" })` |
+| Theme registry governance | `get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Theme Registry (Spec 094)" })` |
+| Theme-varying tokens | `get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Context Resolution" })` |
 | Naming conventions | `get_section({ path: ".kiro/steering/rosetta-system-principles.md", heading: "..." })` |
 | Finding the right doc | `get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Token Documentation Map" })` |
 | Token resolution patterns | `get_section({ path: ".kiro/steering/Token-Resolution-Patterns.md", heading: "..." })` |

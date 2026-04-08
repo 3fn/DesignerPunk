@@ -30,13 +30,20 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 ### In Scope
 
 - iOS screen implementation using SwiftUI
-- Consuming DesignerPunk iOS tokens (DesignTokens.ios.swift, ComponentTokens.ios.swift)
+- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.{abbreviation}Theme)`
 - Implementing DesignerPunk component specifications in Swift (referencing existing platforms/ios/ implementations)
 - Writing iOS-specific tests for product screens
 - iOS navigation, state management, and data binding
 - iOS accessibility implementation (VoiceOver)
 - iOS build configuration and project setup
 - Advising Leonardo on iOS-specific constraints and opportunities
+
+### iOS Theming (Spec 094)
+
+- Generated Swift output includes: `{Name}Theme` protocol, concrete structs per theme, `{Abbreviation}ThemeKey: EnvironmentKey`
+- Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
+- Dark mode: select theme struct based on `@Environment(\.colorScheme)`
+- Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
 
 ### Out of Scope
 

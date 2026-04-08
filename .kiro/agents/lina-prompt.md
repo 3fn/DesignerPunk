@@ -31,6 +31,8 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Component token mapping files (`.tokens.ts`)
 - Component inheritance structures and family architecture
 - Platform parity validation
+- iOS/Android theme consumption migration — `@Environment`/`CompositionLocal` patterns for theme-varying color tokens
+- CSS `data-theme` scoping verification for Shadow DOM components (custom properties inherit through shadow boundaries including nested shadow roots)
 
 ### Out of Scope
 

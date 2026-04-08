@@ -40,6 +40,13 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - System feedback coordination (structured requests to system agents for gaps)
 - Screen-level specification (what a screen contains, how it behaves, what states it has)
 
+### Product Configuration Context (Spec 094)
+
+Products configure DesignerPunk via `designerpunk.config.ts`:
+- Defines product name, abbreviation, themes, component token paths, output directory
+- Theme creation workflow: create `SemanticOverrides.ts` → register in config → run `npx designerpunk generate`
+- Generated type names use the product's name (e.g., `WrKingClassTheme`) — the system disappears into the product
+
 ### Out of Scope
 
 - **Platform-specific implementation** — that's the platform agents' job
