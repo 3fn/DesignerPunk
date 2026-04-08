@@ -46,12 +46,10 @@ enum BadgeCountBaseTokens {
     /// Background color for badge
     /// References: color.surface → white200
     /// @see Requirements: Design.md - Default colors
-    static let backgroundColor: Color = Color(DesignTokens.colorSurface)
     
     /// Text color for badge
     /// References: color.text.default → gray300
     /// @see Requirements: Design.md - Default colors
-    static let textColor: Color = Color(DesignTokens.colorTextDefault)
 }
 
 // MARK: - Badge-Count-Base Size Enum
@@ -183,6 +181,8 @@ public enum BadgeCountBaseDefaults {
  * @see Requirements: 2.1-2.13, 4.3, 4.4, 5.2
  */
 public struct BadgeCountBase: View {
+    @Environment(.dpTheme) private var theme
+
     
     // MARK: - Properties
     
@@ -306,14 +306,14 @@ public struct BadgeCountBase: View {
     private var badgeContainer: some View {
         Text(displayText)
             .font(.system(size: size.fontSize, weight: .medium))
-            .foregroundColor(BadgeCountBaseTokens.textColor)
+            .foregroundColor(theme.colorTextDefault)
             .lineLimit(1)
             .padding(.vertical, size.paddingVertical)
             .padding(.horizontal, size.paddingHorizontal)
             .frame(minWidth: isSingleDigit ? size.minWidth : nil, minHeight: size.minWidth)
             .background(
                 Capsule()
-                    .fill(BadgeCountBaseTokens.backgroundColor)
+                    .fill(theme.colorStructureSurface)
             )
     }
 }

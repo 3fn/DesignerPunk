@@ -41,8 +41,8 @@ public enum ProgressConnectorState: String, CaseIterable {
 private enum ProgressConnectorColors {
     static func color(for state: ProgressConnectorState) -> Color {
         switch state {
-        case .active:   return Color(DesignTokens.colorProgressCompletedConnector)
-        case .inactive: return Color(DesignTokens.colorProgressPendingConnector)
+        case .active:   return theme.colorProgressCompletedConnector
+        case .inactive: return theme.colorProgressPendingConnector
         }
     }
 }
@@ -75,6 +75,8 @@ private let connectorThickness: CGFloat = DesignTokens.borderWidth100  // 1pt
  * @see Requirements: 1.6-1.7, 12.10-12.12
  */
 public struct ProgressIndicatorConnectorBase: View {
+    @Environment(.dpTheme) private var theme
+
 
     // MARK: - Properties
 

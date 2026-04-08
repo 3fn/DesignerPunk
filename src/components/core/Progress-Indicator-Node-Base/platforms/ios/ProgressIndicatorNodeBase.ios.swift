@@ -92,19 +92,19 @@ private let iconScaleRatio: CGFloat = 0.5
 private enum ProgressNodeColors {
     static func backgroundColor(for state: ProgressNodeState) -> Color {
         switch state {
-        case .incomplete: return Color(DesignTokens.colorProgressPendingBackground)
-        case .current:    return Color(DesignTokens.colorProgressCurrentBackground)
-        case .completed:  return Color(DesignTokens.colorProgressCompletedBackground)
-        case .error:      return Color(DesignTokens.colorProgressErrorBackground)
+        case .incomplete: return theme.colorProgressPendingBackground
+        case .current:    return theme.colorProgressCurrentBackground
+        case .completed:  return theme.colorProgressCompletedBackground
+        case .error:      return theme.colorProgressErrorBackground
         }
     }
 
     static func foregroundColor(for state: ProgressNodeState) -> Color {
         switch state {
-        case .incomplete: return Color(DesignTokens.colorProgressPendingText)
-        case .current:    return Color(DesignTokens.colorProgressCurrentText)
-        case .completed:  return Color(DesignTokens.colorProgressCompletedText)
-        case .error:      return Color(DesignTokens.colorProgressErrorText)
+        case .incomplete: return theme.colorProgressPendingText
+        case .current:    return theme.colorProgressCurrentText
+        case .completed:  return theme.colorProgressCompletedText
+        case .error:      return theme.colorProgressErrorText
         }
     }
 }
@@ -126,6 +126,8 @@ private enum ProgressNodeColors {
  * @see Requirements: 1.1-1.5, 12.1-12.16
  */
 public struct ProgressIndicatorNodeBase: View {
+    @Environment(.dpTheme) private var theme
+
 
     // MARK: - Properties
 

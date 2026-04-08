@@ -19,9 +19,6 @@ private let MILESTONES: [Int] = [0, 25, 50, 75, 100]
 // MARK: - Tokens
 
 enum ProgressBarTokens {
-    static let trackColor = Color(DesignTokens.colorProgressPendingBackground)
-    static let determinateFillColor = Color(DesignTokens.colorProgressCompletedBackground)
-    static let indeterminateFillColor = Color(DesignTokens.colorProgressCurrentBackground)
     static let valueDuration: Double = DesignTokens.Duration.duration150
     static let pulseDuration: Double = DesignTokens.Duration.duration350
 
@@ -47,13 +44,14 @@ struct ProgressBarBase: View {
     @State private var pulseOpacity: Double = PULSE_OPACITY_MIN
     @State private var lastAnnouncedMilestone: Int = -1
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(.dpTheme) private var theme
 
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 // Track
                 Capsule()
-                    .fill(ProgressBarTokens.trackColor)
+                    .fill(ProgressBarTokens.theme.colorProgressPendingBackground)
 
                 // Fill
                 Capsule()
@@ -75,8 +73,8 @@ struct ProgressBarBase: View {
 
     private var fillColor: Color {
         switch mode {
-        case .determinate: return ProgressBarTokens.determinateFillColor
-        case .indeterminate: return ProgressBarTokens.indeterminateFillColor
+        case .determinate: return ProgressBarTokens.theme.colorProgressCompletedBackground
+        case .indeterminate: return ProgressBarTokens.intheme.colorProgressCompletedBackground
         }
     }
 

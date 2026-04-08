@@ -47,6 +47,8 @@ private let labelFontWeight: Font.Weight = .medium  // fontWeight500
  * @see Requirements: 1.8-1.10
  */
 public struct ProgressIndicatorLabelBase: View {
+    @Environment(.dpTheme) private var theme
+
 
     // MARK: - Properties
 
@@ -78,7 +80,7 @@ public struct ProgressIndicatorLabelBase: View {
             // @see Requirement 1.10 - Truncate with ellipsis
             Text(label)
                 .font(.system(size: labelFontSize, weight: labelFontWeight))
-                .foregroundColor(Color(DesignTokens.colorTextDefault))
+                .foregroundColor(theme.colorTextDefault)
                 .lineLimit(1)
                 .truncationMode(.tail)
 
@@ -87,7 +89,7 @@ public struct ProgressIndicatorLabelBase: View {
             if let helperText = helperText {
                 Text(helperText)
                     .font(.system(size: labelFontSize, weight: labelFontWeight))
-                    .foregroundColor(Color(DesignTokens.colorTextSubtle))
+                    .foregroundColor(theme.colorTextSubtle)
                     .opacity(0.7)
                     .lineLimit(1)
                     .truncationMode(.tail)
@@ -143,7 +145,7 @@ struct ProgressIndicatorLabelBase_Previews: PreviewProvider {
                     label: "This is a very long step label that should truncate",
                     helperText: "This helper text is also very long and should truncate with ellipsis"
                 )
-                .frame(width: DesignTokens.space.inset.200)
+                .frame(width: DesignTokens.spaceInset200)
             }
         }
         .padding()

@@ -65,17 +65,14 @@ enum BadgeLabelBaseTokens {
     /// Background color for badge
     /// References: color.surface → white200
     /// @see Requirements: Design.md - Default colors
-    static let backgroundColor: Color = Color(DesignTokens.colorSurface)
     
     /// Text color for badge
     /// References: color.text.default → gray300
     /// @see Requirements: Design.md - Default colors
-    static let textColor: Color = Color(DesignTokens.colorTextDefault)
     
     /// Icon color for badge
     /// References: color.icon.default → gray200
     /// @see Requirements: Design.md - Default colors
-    static let iconColor: Color = Color(DesignTokens.colorIconDefault)
 }
 
 // MARK: - Badge-Label-Base Size Enum
@@ -211,6 +208,8 @@ public enum BadgeLabelBaseDefaults {
  * @see Requirements: 1.1-1.10, 4.1, 4.2, 4.4, 4.5, 4.6, 4.8, 5.2
  */
 public struct BadgeLabelBase: View {
+    @Environment(.dpTheme) private var theme
+
     
     // MARK: - Properties
     
@@ -307,7 +306,7 @@ public struct BadgeLabelBase: View {
         }
         .padding(.vertical, size.paddingVertical)
         .padding(.horizontal, size.paddingHorizontal)
-        .background(BadgeLabelBaseTokens.backgroundColor)
+        .background(theme.colorStructureSurface)
         .cornerRadius(BadgeLabelBaseTokens.cornerRadius)
     }
     
@@ -326,7 +325,7 @@ public struct BadgeLabelBase: View {
         IconBase(
             name: name,
             size: size.iconSize,
-            color: BadgeLabelBaseTokens.iconColor
+            color: theme.colorIconDefault
         )
         .accessibilityHidden(true)
     }
@@ -349,14 +348,14 @@ public struct BadgeLabelBase: View {
         if truncate {
             Text(label)
                 .font(.system(size: size.fontSize, weight: .medium))
-                .foregroundColor(BadgeLabelBaseTokens.textColor)
+                .foregroundColor(theme.colorTextDefault)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .frame(maxWidth: BadgeLabelBaseTokens.maxWidth, alignment: .leading)
         } else {
             Text(label)
                 .font(.system(size: size.fontSize, weight: .medium))
-                .foregroundColor(BadgeLabelBaseTokens.textColor)
+                .foregroundColor(theme.colorTextDefault)
                 .lineLimit(1)
         }
     }

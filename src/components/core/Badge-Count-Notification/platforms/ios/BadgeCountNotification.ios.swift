@@ -58,13 +58,11 @@ enum BadgeCountNotificationTokens {
     /// Uses generated token: DesignTokens.colorFeedbackNotificationBackground
     /// Source: BadgeNotificationColorTokens['notification.background'] → pink400
     /// @see Requirement 3.1 - notification-specific color tokens
-    static let backgroundColor: Color = Color(DesignTokens.colorBadgeNotificationBackground)
     
     /// Text color for notification badge
     /// Uses generated token: DesignTokens.colorFeedbackNotificationText
     /// Source: BadgeNotificationColorTokens['notification.text'] → white100
     /// @see Requirement 3.1 - notification-specific color tokens
-    static let textColor: Color = Color(DesignTokens.colorBadgeNotificationText)
 }
 
 // MARK: - Badge-Count-Notification Size Enum
@@ -237,6 +235,8 @@ public struct BadgeCountNotification: View {
     
     /// Previous count for tracking changes (used for announcements)
     @State private var previousCount: Int?
+
+    @Environment(.dpTheme) private var theme
     
     // MARK: - Initialization
     
@@ -374,14 +374,14 @@ public struct BadgeCountNotification: View {
     private var badgeContainer: some View {
         Text(displayText)
             .font(.system(size: size.fontSize, weight: .medium))
-            .foregroundColor(BadgeCountNotificationTokens.textColor)
+            .foregroundColor(theme.colorFeedbackNotificationText)
             .lineLimit(1)
             .padding(.vertical, size.paddingVertical)
             .padding(.horizontal, size.paddingHorizontal)
             .frame(minWidth: isSingleDigit ? size.minWidth : nil, minHeight: size.minWidth)
             .background(
                 Capsule()
-                    .fill(BadgeCountNotificationTokens.backgroundColor)
+                    .fill(theme.colorFeedbackNotificationBackground)
             )
     }
     

@@ -61,31 +61,26 @@ enum AvatarTokens {
     /// References: color.identity.human → orange300
     /// @see Requirements: 4.1 - Human type background color
     /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    static let colorHuman: Color = Color(DesignTokens.colorIdentityHuman)
     
     /// Background color for agent avatars
     /// References: color.identity.agent → teal200
     /// @see Requirements: 4.2 - Agent type background color
     /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    static let colorAgent: Color = Color(DesignTokens.colorIdentityAgent)
     
     /// Icon color on human avatar background
     /// References: color.contrast.onDark → white100
     /// @see Requirements: 6.1 - Human type icon contrast color
     /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    static let contrastOnHuman: Color = Color(DesignTokens.colorContrastOnDark)
     
     /// Icon color on agent avatar background
     /// References: color.contrast.onDark → white100
     /// @see Requirements: 6.2 - Agent type icon contrast color
     /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    static let contrastOnAgent: Color = Color(DesignTokens.colorContrastOnDark)
     
     /// Border color for avatars (xs through xl sizes)
     /// References: color.structure.border → gray100
     /// @see Requirements: 7.2 - Border color for xs-xl sizes
     /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
-    static let borderColor: Color = Color(DesignTokens.colorStructureBorder)
     
     /// Border color for xxl size avatars
     /// References: color.contrast.onSurface
@@ -293,6 +288,8 @@ public struct Avatar: View {
     
     /// Tracks hover state for interactive avatars
     @State private var isHovered: Bool = false
+
+    @Environment(.dpTheme) private var theme
     
     /// Tracks whether image failed to load (for fallback to icon)
     @State private var imageLoadFailed: Bool = false
@@ -538,8 +535,8 @@ public struct Avatar: View {
      */
     private var backgroundColor: Color {
         switch type {
-        case .human: return AvatarTokens.colorHuman
-        case .agent: return AvatarTokens.colorAgent
+        case .human: return theme.colorIdentityHuman
+        case .agent: return theme.colorIdentityAgent
         }
     }
     
@@ -557,8 +554,8 @@ public struct Avatar: View {
      */
     private var iconColor: Color {
         switch type {
-        case .human: return AvatarTokens.contrastOnHuman
-        case .agent: return AvatarTokens.contrastOnAgent
+        case .human: return theme.colorContrastOnDark
+        case .agent: return theme.colorContrastOnDark
         }
     }
     
@@ -583,9 +580,9 @@ public struct Avatar: View {
     private var borderColor: Color {
         switch size {
         case .xxl:
-            return AvatarTokens.borderColorXxl
+            return theme.colorStructureBorderXxl
         default:
-            return AvatarTokens.borderColor.opacity(AvatarTokens.opacityHeavy)
+            return theme.colorStructureBorder.opacity(AvatarTokens.opacityHeavy)
         }
     }
     
