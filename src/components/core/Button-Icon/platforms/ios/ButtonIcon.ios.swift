@@ -175,6 +175,8 @@ struct ButtonIcon: View {
     
     /// Tracks pressed state for scale animation
     @State private var isPressed: Bool = false
+
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Computed Properties
     
@@ -191,7 +193,7 @@ struct ButtonIcon: View {
     private var backgroundColor: Color {
         switch variant {
         case .primary:
-            return Color(DesignTokens.colorActionPrimary)
+            return theme.colorActionPrimary
         case .secondary, .tertiary:
             return Color.clear
         }
@@ -204,9 +206,9 @@ struct ButtonIcon: View {
     private var iconColor: Color {
         switch variant {
         case .primary:
-            return Color(DesignTokens.colorContrastOnDark)
+            return theme.colorContrastOnDark
         case .secondary, .tertiary:
-            return Color(DesignTokens.colorActionPrimary)
+            return theme.colorActionPrimary
         }
     }
     
@@ -230,7 +232,7 @@ struct ButtonIcon: View {
     private var borderColor: Color {
         switch variant {
         case .secondary:
-            return Color(DesignTokens.colorActionPrimary)
+            return theme.colorActionPrimary
         case .primary, .tertiary:
             return Color.clear
         }

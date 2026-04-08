@@ -269,6 +269,8 @@ struct ContainerCardBase<Content: View>: View {
     
     /// Tracks pressed state for tap feedback
     @State private var isPressed: Bool = false
+
+    @Environment(\.dpTheme) private var theme
     
     /// Tracks focus state for keyboard navigation (WCAG 2.4.7)
     @FocusState private var isFocused: Bool
@@ -468,8 +470,8 @@ struct ContainerCardBase<Content: View>: View {
     private var resolvedBorderColor: Color? {
         guard border != .none else { return nil }
         switch borderColor {
-        case .borderDefault: return colorBorder
-        case .borderSubtle: return colorBorderSubtle
+        case .borderDefault: return theme.colorStructureBorder
+        case .borderSubtle: return theme.colorStructureBorderSubtle
         }
     }
     
@@ -732,11 +734,11 @@ func calculateCardPadding(
 func mapCardBackgroundToColor(_ background: CardBackground) -> Color {
     switch background {
     case .surfacePrimary:
-        return colorSurfacePrimary /* color.surface.primary */
+        return theme.colorStructureSurfacePrimary /* color.surface.primary */
     case .surfaceSecondary:
-        return colorSurfaceSecondary /* color.surface.secondary */
+        return theme.colorStructureSurfaceSecondary /* color.surface.secondary */
     case .surfaceTertiary:
-        return colorSurfaceTertiary /* color.surface.tertiary */
+        return theme.colorStructureSurfaceTertiary /* color.surface.tertiary */
     }
 }
 
@@ -781,9 +783,9 @@ func mapCardBorderToLineWidth(_ border: CardBorder) -> CGFloat {
 func mapCardBorderColorToColor(_ borderColor: CardBorderColor) -> Color {
     switch borderColor {
     case .borderDefault:
-        return colorBorder /* color.border.default */
+        return theme.colorStructureBorder /* color.border.default */
     case .borderSubtle:
-        return colorBorderSubtle /* color.structure.border.subtle */
+        return theme.colorStructureBorderSubtle /* color.structure.border.subtle */
     }
 }
 
@@ -830,13 +832,6 @@ let radius200: CGFloat = DesignTokens.radius200
 
 // Border tokens
 let borderDefault: CGFloat = DesignTokens.borderDefault
-
-// Color tokens
-let colorSurfacePrimary: Color = Color(DesignTokens.colorStructureSurfacePrimary)
-let colorSurfaceSecondary: Color = Color(DesignTokens.colorStructureSurfaceSecondary)
-let colorSurfaceTertiary: Color = Color(DesignTokens.colorStructureSurfaceTertiary)
-let colorBorder: Color = Color(DesignTokens.colorStructureBorder)
-let colorBorderSubtle: Color = Color(DesignTokens.colorStructureBorderSubtle)
 
 // Shadow tokens — reference generated shadow composite
 let shadowContainerColor: Color = Color.black.opacity(Double(DesignTokens.shadowOpacityModerate))

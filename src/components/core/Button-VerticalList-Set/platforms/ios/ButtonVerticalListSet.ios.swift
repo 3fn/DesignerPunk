@@ -337,6 +337,8 @@ public struct ButtonVerticalListSet: View {
     /// Track previous error state for announcements
     /// Requirements: 10.5 - Announce error state changes to VoiceOver
     @State private var previousErrorState: Bool = false
+
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Initializers
     
@@ -542,7 +544,7 @@ public struct ButtonVerticalListSet: View {
     private func errorMessageView(message: String) -> some View {
         Text(message)
             .font(.system(size: 14, weight: .regular))
-            .foregroundColor(Color(DesignTokens.colorFeedbackErrorText))
+            .foregroundColor(theme.colorFeedbackErrorText)
             .padding(.bottom, DesignTokens.space100)
             .accessibilityAddTraits(.isStaticText)
             // role="alert" equivalent for VoiceOver - immediate announcement

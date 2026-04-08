@@ -302,7 +302,7 @@ Prereqs (Lina, before Task 1): Fix ESM bundle (4 missing components) + Nav-Heade
     - Clean up empty enums if applicable
     - _Requirements: R8 AC 1, 3, 5_
 
-  - [ ] 4.2 iOS migration: Button + Container families
+  - [x] 4.2 iOS migration: Button + Container families
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

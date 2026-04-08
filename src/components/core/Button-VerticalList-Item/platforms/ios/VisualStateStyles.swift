@@ -163,88 +163,98 @@ public struct VisualStateStyles: Equatable {
     
     /// Rest state styles (Tap mode default)
     /// Requirements: 1.1 - color.structure.canvas, borderDefault (1px), color.text.default
-    public static let rest = VisualStateStyles(
-        background: Color(DesignTokens.colorStructureCanvas),
-        borderWidth: DesignTokens.borderDefault,
-        borderColor: .clear,
-        labelColor: Color(DesignTokens.colorTextDefault),
-        iconColor: Color(DesignTokens.colorTextDefault),
-        checkmarkVisible: false
-    )
+    public static func rest(theme: any DesignerPunkTheme) -> VisualStateStyles {
+        VisualStateStyles(
+            background: theme.colorStructureCanvas,
+            borderWidth: DesignTokens.borderDefault,
+            borderColor: .clear,
+            labelColor: theme.colorTextDefault,
+            iconColor: theme.colorTextDefault,
+            checkmarkVisible: false
+        )
+    }
     
     /// Selected state styles (Select mode)
     /// Requirements: 1.2 - color.feedback.select.background.rest, borderEmphasis (2px), 
     ///               color.feedback.select.text.rest for border and label
-    public static let selected = VisualStateStyles(
-        background: Color(DesignTokens.colorFeedbackSelectBackgroundRest),
-        borderWidth: DesignTokens.borderEmphasis,
-        borderColor: Color(DesignTokens.colorFeedbackSelectTextRest),
-        labelColor: Color(DesignTokens.colorFeedbackSelectTextRest),
-        iconColor: Color(DesignTokens.colorFeedbackSelectTextRest),
-        checkmarkVisible: true
-    )
+    public static func selected(theme: any DesignerPunkTheme) -> VisualStateStyles {
+        VisualStateStyles(
+            background: theme.colorFeedbackSelectBackgroundRest,
+            borderWidth: DesignTokens.borderEmphasis,
+            borderColor: theme.colorFeedbackSelectTextRest,
+            labelColor: theme.colorFeedbackSelectTextRest,
+            iconColor: theme.colorFeedbackSelectTextRest,
+            checkmarkVisible: true
+        )
+    }
     
     /// Not selected state styles (Select mode)
     /// Requirements: 1.3 - color.feedback.select.background.default, borderDefault (1px),
     ///               transparent border, color.feedback.select.text.default
-    public static let notSelected = VisualStateStyles(
-        background: Color(DesignTokens.colorFeedbackSelectBackgroundDefault),
-        borderWidth: DesignTokens.borderDefault,
-        borderColor: .clear,
-        labelColor: Color(DesignTokens.colorFeedbackSelectTextDefault),
-        iconColor: Color(DesignTokens.colorFeedbackSelectTextDefault),
-        checkmarkVisible: false
-    )
+    public static func notSelected(theme: any DesignerPunkTheme) -> VisualStateStyles {
+        VisualStateStyles(
+            background: theme.colorFeedbackSelectBackgroundDefault,
+            borderWidth: DesignTokens.borderDefault,
+            borderColor: .clear,
+            labelColor: theme.colorFeedbackSelectTextDefault,
+            iconColor: theme.colorFeedbackSelectTextDefault,
+            checkmarkVisible: false
+        )
+    }
     
     /// Checked state styles (Multi-Select mode)
     /// Requirements: 1.4 - color.feedback.select.background.rest, borderDefault (1px),
     ///               transparent border, color.feedback.select.text.rest
-    public static let checked = VisualStateStyles(
-        background: Color(DesignTokens.colorFeedbackSelectBackgroundRest),
-        borderWidth: DesignTokens.borderDefault,
-        borderColor: .clear,
-        labelColor: Color(DesignTokens.colorFeedbackSelectTextRest),
-        iconColor: Color(DesignTokens.colorFeedbackSelectTextRest),
-        checkmarkVisible: true
-    )
+    public static func checked(theme: any DesignerPunkTheme) -> VisualStateStyles {
+        VisualStateStyles(
+            background: theme.colorFeedbackSelectBackgroundRest,
+            borderWidth: DesignTokens.borderDefault,
+            borderColor: .clear,
+            labelColor: theme.colorFeedbackSelectTextRest,
+            iconColor: theme.colorFeedbackSelectTextRest,
+            checkmarkVisible: true
+        )
+    }
     
     /// Unchecked state styles (Multi-Select mode)
     /// Requirements: 1.5 - color.structure.canvas, borderDefault (1px),
     ///               transparent border, color.text.default
-    public static let unchecked = VisualStateStyles(
-        background: Color(DesignTokens.colorStructureCanvas),
-        borderWidth: DesignTokens.borderDefault,
-        borderColor: .clear,
-        labelColor: Color(DesignTokens.colorTextDefault),
-        iconColor: Color(DesignTokens.colorTextDefault),
-        checkmarkVisible: false
-    )
+    public static func unchecked(theme: any DesignerPunkTheme) -> VisualStateStyles {
+        VisualStateStyles(
+            background: theme.colorStructureCanvas,
+            borderWidth: DesignTokens.borderDefault,
+            borderColor: .clear,
+            labelColor: theme.colorTextDefault,
+            iconColor: theme.colorTextDefault,
+            checkmarkVisible: false
+        )
+    }
     
     // MARK: - Error State Styles
     
     /// Error state styles for Select mode (full treatment)
     /// Requirements: 3.1 - color.feedback.error.background, borderEmphasis (2px),
     ///               color.feedback.error.text for border, label, and icon
-    public static func errorSelectMode(checkmarkVisible: Bool) -> VisualStateStyles {
+    public static func errorSelectMode(checkmarkVisible: Bool, theme: any DesignerPunkTheme) -> VisualStateStyles {
         return VisualStateStyles(
-            background: Color(DesignTokens.colorFeedbackErrorBackground),
+            background: theme.colorFeedbackErrorBackground,
             borderWidth: DesignTokens.borderEmphasis,
-            borderColor: Color(DesignTokens.colorFeedbackErrorText),
-            labelColor: Color(DesignTokens.colorFeedbackErrorText),
-            iconColor: Color(DesignTokens.colorFeedbackErrorText),
+            borderColor: theme.colorFeedbackErrorText,
+            labelColor: theme.colorFeedbackErrorText,
+            iconColor: theme.colorFeedbackErrorText,
             checkmarkVisible: checkmarkVisible
         )
     }
     
     /// Error state styles for Multi-Select mode (colors only)
     /// Requirements: 3.2 - preserves background and border, only changes label/icon colors
-    public static func errorMultiSelectMode(baseStyles: VisualStateStyles) -> VisualStateStyles {
+    public static func errorMultiSelectMode(baseStyles: VisualStateStyles, theme: any DesignerPunkTheme) -> VisualStateStyles {
         return VisualStateStyles(
             background: baseStyles.background,
             borderWidth: baseStyles.borderWidth,
             borderColor: baseStyles.borderColor,
-            labelColor: Color(DesignTokens.colorFeedbackErrorText),
-            iconColor: Color(DesignTokens.colorFeedbackErrorText),
+            labelColor: theme.colorFeedbackErrorText,
+            iconColor: theme.colorFeedbackErrorText,
             checkmarkVisible: baseStyles.checkmarkVisible
         )
     }
@@ -261,13 +271,15 @@ public struct VisualStateStyles: Equatable {
  * Requirements:
  * - 1.1-1.5: Visual state rendering
  */
-public let visualStateMap: [VisualState: VisualStateStyles] = [
-    .rest: .rest,
-    .selected: .selected,
-    .notSelected: .notSelected,
-    .checked: .checked,
-    .unchecked: .unchecked
-]
+public func visualStateMap(theme: any DesignerPunkTheme) -> [VisualState: VisualStateStyles] {
+    [
+        .rest: .rest(theme: theme),
+        .selected: .selected(theme: theme),
+        .notSelected: .notSelected(theme: theme),
+        .checked: .checked(theme: theme),
+        .unchecked: .unchecked(theme: theme)
+    ]
+}
 
 // MARK: - Style Retrieval
 
@@ -280,8 +292,8 @@ public let visualStateMap: [VisualState: VisualStateStyles] = [
  * - Parameter visualState: The visual state to get styles for
  * - Returns: The corresponding VisualStateStyles
  */
-public func getStylesForState(_ visualState: VisualState) -> VisualStateStyles {
-    return visualStateMap[visualState] ?? .rest
+public func getStylesForState(_ visualState: VisualState, theme: any DesignerPunkTheme) -> VisualStateStyles {
+    return visualStateMap(theme: theme)[visualState] ?? .rest(theme: theme)
 }
 
 // MARK: - Error Styling
@@ -313,19 +325,20 @@ public func getStylesForState(_ visualState: VisualState) -> VisualStateStyles {
  */
 public func applyErrorStyles(
     _ baseStyles: VisualStateStyles,
-    visualState: VisualState
+    visualState: VisualState,
+    theme: any DesignerPunkTheme
 ) -> VisualStateStyles {
     
     if visualState.isSelectMode {
         // Select mode: full error treatment (border + background + colors)
         // Requirements: 3.1
-        return VisualStateStyles.errorSelectMode(checkmarkVisible: baseStyles.checkmarkVisible)
+        return VisualStateStyles.errorSelectMode(checkmarkVisible: baseStyles.checkmarkVisible, theme: theme)
     }
     
     if visualState.isMultiSelectMode {
         // Multi-Select mode: text/icon colors only
         // Requirements: 3.2
-        return VisualStateStyles.errorMultiSelectMode(baseStyles: baseStyles)
+        return VisualStateStyles.errorMultiSelectMode(baseStyles: baseStyles, theme: theme)
     }
     
     // Tap mode (rest state in tap context): error has no effect
@@ -346,12 +359,13 @@ public func applyErrorStyles(
  */
 public func computeStyles(
     visualState: VisualState,
-    error: Bool
+    error: Bool,
+    theme: any DesignerPunkTheme
 ) -> VisualStateStyles {
-    let baseStyles = getStylesForState(visualState)
+    let baseStyles = getStylesForState(visualState, theme: theme)
     
     if error {
-        return applyErrorStyles(baseStyles, visualState: visualState)
+        return applyErrorStyles(baseStyles, visualState: visualState, theme: theme)
     }
     
     return baseStyles

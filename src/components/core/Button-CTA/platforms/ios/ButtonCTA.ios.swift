@@ -133,6 +133,8 @@ struct ButtonCTA: View {
     
     /// Tracks pressed state for scale transform animation
     @State private var isPressed = false
+
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Initialization
     
@@ -250,9 +252,9 @@ struct ButtonCTA: View {
     private var pressedBackgroundColor: Color {
         switch style {
         case .primary:
-            return Color(DesignTokens.colorActionPrimary).pressedBlend()
+            return theme.colorActionPrimary.pressedBlend()
         case .secondary:
-            return Color(DesignTokens.colorBackground).pressedBlend()
+            return theme.colorStructureCanvas.pressedBlend()
         case .tertiary:
             return Color.clear
         }
@@ -264,9 +266,9 @@ struct ButtonCTA: View {
     private var disabledBackgroundColor: Color {
         switch style {
         case .primary:
-            return Color(DesignTokens.colorActionPrimary).disabledBlend()
+            return theme.colorActionPrimary.disabledBlend()
         case .secondary:
-            return Color(DesignTokens.colorBackground)
+            return theme.colorStructureCanvas
         case .tertiary:
             return Color.clear
         }
@@ -388,9 +390,9 @@ struct ButtonCTA: View {
     private var backgroundColor: Color {
         switch style {
         case .primary:
-            return Color(DesignTokens.colorActionPrimary) // Semantic token: color.action.primary
+            return theme.colorActionPrimary // Semantic token: color.action.primary
         case .secondary:
-            return Color(DesignTokens.colorBackground) // Semantic token: color.background (white)
+            return theme.colorStructureCanvas // Semantic token: color.background (white)
         case .tertiary:
             return Color.clear // transparent
         }
@@ -401,9 +403,9 @@ struct ButtonCTA: View {
     private var textColor: Color {
         switch style {
         case .primary:
-            return Color(DesignTokens.colorContrastOnDark) // Semantic token: color.contrast.onDark
+            return theme.colorContrastOnDark // Semantic token: color.contrast.onDark
         case .secondary, .tertiary:
-            return Color(DesignTokens.colorActionPrimary) // Semantic token: color.action.primary
+            return theme.colorActionPrimary // Semantic token: color.action.primary
         }
     }
     
@@ -414,7 +416,7 @@ struct ButtonCTA: View {
         case .primary, .tertiary:
             return Color.clear // No border
         case .secondary:
-            return Color(DesignTokens.colorActionPrimary) // Semantic token: color.action.primary
+            return theme.colorActionPrimary // Semantic token: color.action.primary
         }
     }
     
@@ -437,11 +439,11 @@ struct ButtonCTA: View {
         case .primary:
             // Primary style: Use colorContrastOnDark with optical balance blend
             // iconBlend() applies lighterBlend with blend.iconLighter (8%)
-            return Color(DesignTokens.colorContrastOnDark).iconBlend()
+            return theme.colorContrastOnDark.iconBlend()
         case .secondary, .tertiary:
             // Secondary/Tertiary: Use color.action.primary with optical balance blend
             // iconBlend() applies lighterBlend with blend.iconLighter (8%)
-            return Color(DesignTokens.colorActionPrimary).iconBlend()
+            return theme.colorActionPrimary.iconBlend()
         }
     }
 }

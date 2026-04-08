@@ -221,6 +221,7 @@ public struct VerticalListButtonItem: View {
     /// This environment variable is available for custom RTL behavior if needed,
     /// but the component relies on SwiftUI's automatic layout mirroring.
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - State
     
@@ -248,7 +249,7 @@ public struct VerticalListButtonItem: View {
     /// Computed styles based on visual state and error
     /// Requirements: 1.1-1.5, 3.1-3.4
     private var styles: VisualStateStyles {
-        return computeStyles(visualState: visualState, error: error)
+        return computeStyles(visualState: visualState, error: error, theme: theme)
     }
     
     /// Padding compensation for border width changes
@@ -417,7 +418,7 @@ public struct VerticalListButtonItem: View {
             if let desc = description {
                 Text(desc)
                     .font(.system(size: DesignTokens.typographyBodySm.fontSize, weight: .regular))
-                    .foregroundColor(Color(DesignTokens.colorTextMuted))
+                    .foregroundColor(theme.colorTextMuted)
                     .lineLimit(nil)
             }
         }
