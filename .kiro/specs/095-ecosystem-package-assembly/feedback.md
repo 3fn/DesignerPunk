@@ -1094,3 +1094,323 @@ All with "M0b iOS activation" as the trigger.
 No blocking concerns. Ready for design.
 
 ---
+
+## Design Document Feedback
+
+### Ada
+
+#### [ADA R1]
+
+**Overall assessment**: The design doc is well-structured. The package structure diagram is clear, the export map is correct, and the design decisions are well-reasoned. My feedback covers two missing build steps I verified against the actual repo, one `files` field concern, and a note on the MCP CLI implementation.
+
+### Missing Build Step: `dist/cli/designerpunk.js`
+
+The `bin` field points to `./dist/cli/designerpunk.js`, but this file doesn't exist. The current `dist/cli/` directory contains only the Figma CLI tools (`figma-extract.js`, `figma-push.js`). The Spec 094 CLI lives at `src/cli/designerpunk.ts` — it's never been compiled to `dist/`.
+
+This needs the same treatment as the config module: a build step that compiles `src/cli/designerpunk.ts` to `dist/cli/designerpunk.js`. The `tsconfig.config.json` approach in the design doc could be extended to cover both, or a separate `tsconfig.cli.json` could handle it. Either way, the `bin` entry point must exist as compiled JS before `npm pack`.
+
+The design doc's "Build Step: dist/config/" section should be expanded to "Build Steps: dist/config/ and dist/cli/" — or generalized to "compile all consumer-facing entry points."
+
+### `dist/config/` Build — Confirmed Needed
+
+Verified: `dist/config/` does not exist in the current build output. The design doc's `tsconfig.config.json` approach is correct. One detail: the `include` path should also cover `src/themes/ThemeRegistry.ts` and `src/tokens/themes/types.ts` since `defineConfig.ts` imports `ThemeMode` from `ThemeRegistry` and `SemanticOverrideMap` from the theme types. If those aren't compiled alongside the config module, the `.d.ts` declarations will have broken references.
+
+The simplest approach: compile `src/config/`, `src/themes/`, and `src/tokens/themes/types.ts` together so the type chain is complete. Or use project references in `tsconfig.json` to handle the dependency graph.
+
+### `files` Field: `examples/` Exclusion
+
+The design doc correctly notes that npm's `files` field doesn't support negation patterns. The three options listed are all viable. My recommendation: **option (c) — accept that `examples/` ships.** It's ~1MB, harmless, and avoids the complexity of maintaining a hybrid `files` + `.npmignore` approach or listing every `src/` subdirectory explicitly. The decision to exclude `examples/` was about package size, not about shipping harmful content. At ~1MB out of 20-27MB, it's not worth the packaging complexity.
+
+If Peter feels strongly about excluding them, option (b) (list `src/` subdirectories explicitly) is the cleanest — it avoids `.npmignore` entirely and keeps the allowlist approach pure.
+
+### MCP CLI Commands: Implementation Note
+
+The pseudocode for `mcp:app` and `mcp:docs` shows `require.resolve('@designerpunk/core/package.json')` to find the package root. This works when the CLI runs from a product repo where the package is installed. But when the CLI runs from the DesignerPunk repo itself (during development), the package isn't installed — `require.resolve` will fail.
+
+The `ConfigLoader` already handles this with a try/catch fallback to `cwd`. The MCP commands should use the same pattern: try `require.resolve` for the package path, fall back to `cwd` for the repo context. This is consistent with how `loadConfig` works and ensures both contexts are supported.
+
+### Everything Else: Solid
+
+- Export map matches what Sparky validated in R1 (ESM-only root, correct file paths)
+- Agent configuration template approach (concrete template, not just docs) matches Leonardo's recommendation
+- Build-time validation test structure covers both drift categories (token refs + bundle registration)
+- Error handling table is comprehensive
+- Design decisions are all sound with trade-offs documented
+
+### Summary
+
+| Area | Assessment | Action |
+|------|-----------|--------|
+| `dist/cli/designerpunk.js` | Missing, needs build step | Add to build pipeline alongside config |
+| `dist/config/` build | Correct approach, needs type chain | Include theme types in compilation |
+| `files` exclusion of `examples/` | Accept shipping them (~1MB, harmless) | Simplify to `"src/"` with no exclusion |
+| MCP CLI path resolution | Needs cwd fallback for repo context | Use same pattern as ConfigLoader |
+| Export map | Correct | None |
+| Agent template | Correct approach | None |
+| Validation test | Correct structure | None |
+
+No blocking concerns. Ready for tasks.
+
+---
+
+### Lina
+
+#### [LINA R1]
+
+**Overall assessment**: The design doc is clean and well-structured. The package structure diagram, export map, and CLI design are all correct. Ada's R1 catches the two missing build steps (CLI and config compilation) and the MCP path resolution fallback. My feedback is focused on the component-side specifics: the `files` field from the component perspective, the validation test implementation detail, and one observation about the agent template.
+
+### `files` Field: Component Coverage Verified
+
+The `files` entry `"src/"` captures everything I need:
+- All 34 component directories with all platform files, types, contracts, schemas, metadata
+- `browser-entry.ts` (at `src/` root — would be missed if `files` listed subdirectories)
+- Component `__tests__/` directories (governance tests, per Ada/Peter's decision)
+- Component `.tokens.ts` files (component token definitions used by the pipeline)
+
+I agree with Ada on option (c) for `examples/` — accept that they ship. The ~1MB isn't worth the packaging complexity. If we later decide to exclude them, listing `src/` subdirectories explicitly (option b) is cleaner than a hybrid approach.
+
+### Validation Test: Implementation Detail for `browser-entry.ts` Check
+
+The design doc's test structure is correct. One implementation detail for the ESM bundle registration check (R7 AC 3/5):
+
+The test should parse `browser-entry.ts` for `import` statements matching the pattern `from './components/core/{ComponentName}/platforms/web/'`, not just check for the component name as a string. The file also has `safeDefine('{tag-name}', ClassName)` calls, but the import is the authoritative check — if the import is missing, the component isn't in the bundle regardless of whether a `safeDefine` call exists elsewhere.
+
+The comparison should be:
+```
+web platform dirs:  ls src/components/core/*/platforms/web/ → extract component names
+browser-entry.ts:   parse imports → extract component names from import paths
+diff:               any in web dirs but not in imports = failure
+```
+
+This is straightforward to implement. The existing `component-registration.test.ts` already reads `browser-entry.ts` as a string and checks for specific content — the new test follows the same pattern but does a structural comparison instead of spot-checking.
+
+### Agent Template: One Observation
+
+The design doc says the template resolves package paths "programmatically" via `require.resolve`. This works for MCP queries and knowledge base paths. But agent prompts also contain inline file path references for `fs_read` fallback scenarios — e.g., "if MCP is unavailable, read the file directly at `.kiro/steering/Component-Development-Guide.md`."
+
+In a product context, that path becomes `node_modules/@designerpunk/core/.kiro/steering/Component-Development-Guide.md`. The template should either:
+- (a) Replace these with MCP-only references (remove `fs_read` fallbacks), or
+- (b) Use a path variable that resolves at agent startup (e.g., `${DESIGNERPUNK_ROOT}/.kiro/steering/...`)
+
+Option (a) is simpler and aligns with the MCP-first architecture. The `fs_read` fallbacks exist because MCP servers might not be running — but if the Integration Guide's setup loop ensures MCP servers are started before agents, the fallbacks are unnecessary in the product context.
+
+This is a WS6 implementation detail, not a design concern. Just flagging it so the template work accounts for it.
+
+### Summary
+
+| Area | Assessment | Action |
+|------|-----------|--------|
+| `files` field | Correct, `"src/"` covers all components | None |
+| `examples/` exclusion | Agree with Ada: accept shipping them | Simplify |
+| Validation test | Correct structure, one implementation detail | Parse imports, not string search |
+| Agent template | Path resolution needs attention for `fs_read` fallbacks | WS6 implementation detail |
+| Export map | Correct | None |
+| Package structure | Correct | None |
+
+No blocking concerns. Ready for tasks.
+
+---
+
+### Leonardo
+
+#### [LEONARDO R1]
+
+**Overall assessment**: The design doc is solid. The package structure, export map, and CLI design all match what I need as the product architect. Ada's catches (missing CLI build step, MCP path resolution fallback) and Lina's observation (agent template `fs_read` fallbacks) are both real. My feedback covers the MCP CLI design, the agent template from the product workflow perspective, and one observation about the Integration Guide's downstream impact.
+
+### MCP CLI Design — Correct
+
+The `mcp:app` and `mcp:docs` commands using `require.resolve` to find the package root is exactly what I asked for. Zero-config defaults, automatic path resolution, connection details printed on startup. Ada's note about the `cwd` fallback for the DesignerPunk repo context is important — both paths need to work.
+
+One thing I want to confirm: when `mcp:app` starts, does it index the package's component data at startup (schemas, contracts, component-meta, family guidance, experience patterns, layout templates)? Or does it expect a pre-built index? This matters because if indexing happens at startup, the first query after `npx designerpunk mcp:app` might be slow. If it expects a pre-built index, the index needs to be in the `files` field. The current Application MCP builds its index at startup from YAML files — if that behavior is preserved, startup time is the only concern, and it's probably fine for M0a.
+
+### Agent Template — Endorsing Lina's Option (a)
+
+Lina's observation about `fs_read` fallback paths in agent prompts is the most important implementation detail for WS6. Her option (a) — remove `fs_read` fallbacks and go MCP-only in the product template — is the right call. Here's why from my seat:
+
+In the DesignerPunk repo, agents sometimes fall back to `fs_read` when MCP queries don't return enough detail. In a product context, the MCP servers are the authoritative interface. If an agent can't get what it needs from MCP, the answer is "the MCP needs to be better," not "read the file from `node_modules`." Keeping `fs_read` fallbacks in the product template creates a crutch that masks MCP gaps we should be discovering during M0a.
+
+The Integration Guide's setup loop ensures MCP servers are running before agents start. If they're not running, the agent should tell the user to start them — not silently read files from deep inside `node_modules`.
+
+### Integration Guide — Downstream Validation
+
+The design doc lists the Integration Guide as a downstream consumer. I want to reinforce what I said in my requirements feedback: this guide should be validated by Sparky during Phase 2. Sparky follows the guide from scratch in the marketing site repo, and every friction point becomes a finding.
+
+This isn't a design concern — it's a Phase 2 planning note. But the design doc's Integration Points section should mention this validation step so it doesn't get lost between specs.
+
+### Everything Else: Solid
+
+- Package structure diagram is clear and complete
+- Export map matches Sparky's R1 validation
+- `files` field with `"src/"` as a single entry is the right simplification (agree with Ada and Lina on accepting `examples/`)
+- Build-time validation test covers both drift categories
+- Design decisions are well-reasoned with trade-offs documented
+- Error handling table is comprehensive
+
+### Summary
+
+| Area | Assessment | Action |
+|------|-----------|--------|
+| MCP CLI | Correct, confirm startup indexing behavior | Minor — verify Application MCP indexes at startup |
+| Agent template | Endorse Lina's option (a): MCP-only, no `fs_read` fallbacks | WS6 implementation |
+| Integration Guide | Add Phase 2 validation note | Integration Points section |
+| Package structure | Correct | None |
+| Export map | Correct | None |
+| Validation test | Correct | None |
+
+No blocking concerns. Ready for tasks.
+
+### Stacy
+
+#### [STACY R1]
+
+**Overall assessment**: The design doc is clean and well-structured. Ada's catches (missing CLI build step, config type chain, MCP path resolution fallback) and Lina's observation (agent template `fs_read` fallbacks) are the most important findings. Leonardo's endorsement of Lina's option (a) — MCP-only, no `fs_read` fallbacks in product templates — is the right governance call. No blocking concerns from my side. My feedback covers the governance-relevant items: agent template approach, validation test from the audit perspective, and one process alignment note.
+
+### Agent Template: MCP-Only Is the Right Governance Call
+
+Lina's option (a) — remove `fs_read` fallbacks from the product template — is correct, and Leonardo's endorsement nails the reasoning. From the governance perspective: `fs_read` fallbacks in product templates mask MCP gaps. If an agent can't get what it needs from MCP, that's a finding we need to capture, not a problem to silently work around by reading files from `node_modules`.
+
+This directly supports my audit work. During Phase 2, if I see agents falling back to file reads instead of MCP queries, that's a metadata accuracy or MCP coverage gap — exactly the kind of finding that routes to system agents via Tier 3 escalation. If the template has `fs_read` fallbacks baked in, I can't distinguish "MCP gap" from "agent chose the fallback path." Removing the fallbacks makes the signal clean.
+
+### Validation Test: Audit Perspective
+
+The build-time drift validation test (R7) is the automated version of something I'd otherwise catch manually during audits. Two drift categories in one test — token reference validity and bundle registration completeness — is the right scope. This is the kind of systemic check that prevents recurring issues (the 4-component bundle miss, the 10 broken Android token references from Spec 094).
+
+From my audit checklist, this test covers item #8 (Metadata Accuracy) indirectly — if platform files reference tokens that don't exist, the component's runtime behavior won't match its metadata promises. The test catches the infrastructure-level drift; my per-screen metadata accuracy tracking during Phase 2 catches the selection-level drift. Different layers, complementary.
+
+### Process Alignment: Two Documentation Layers Confirmed
+
+Per the M0a process scaffolding (section 8), this spec produces docs at two layers:
+
+- **Spec-level**: `.kiro/specs/095-ecosystem-package-assembly/completion/` — standard completion docs per the Completion Documentation Guide, with summary docs in `docs/specs/` for release detection
+- **Product-level**: `docs/roadmap/m0a/phase-1/` — cross-workstream completion docs capturing integration points and lessons for the milestone review
+
+The design doc's workstreams map to the process scaffolding's type classifications:
+- WS2 (package assembly) → Setup type → Tier 1 validation and documentation
+- WS6 (agent configurations) → Implementation type → Tier 2 validation and documentation
+
+This is consistent with what I defined in the scaffolding. No changes needed.
+
+### `examples/` Exclusion: Agree with Ada and Lina
+
+Accept that `examples/` ships. ~1MB out of 20-27MB isn't worth the packaging complexity. The MCP layer is the primary learning path for product teams. If we later decide to exclude them, option (b) (list `src/` subdirectories explicitly) is cleaner than a hybrid approach.
+
+### Summary
+
+| Area | Assessment | Action |
+|------|-----------|--------|
+| Agent template | MCP-only is correct governance call | WS6 implementation |
+| Validation test | Complements my audit checklist | None |
+| Documentation layers | Consistent with process scaffolding | None |
+| `examples/` exclusion | Agree: accept shipping them | None |
+
+No blocking concerns. Ready for tasks.
+
+---
+
+### Sparky
+
+#### [SPARKY R1]
+
+**Overall assessment**: The design doc is solid. The export map matches my R1 validation, the package structure is correct, and the design decisions are well-reasoned. Ada's catches (missing CLI build step, config type chain) are the most important findings — without those build steps, the `bin` entry and `./config` export both fail. My feedback covers the export map verification, one concern about `"type": "module"`, and endorsements.
+
+### Export Map — Verified Against Web Tooling
+
+The `exports` object in the design doc's `package.json` matches what I validated in my requirements R1. Every path resolves correctly for Vite, Astro, and plain ESM:
+
+- Root and `./components` → ESM bundle ✅
+- `./tokens.css` → `dist/DesignTokens.web.css` (not the `dist/browser/` copy) ✅
+- `./config` → `dist/config/index.js` with types ✅ (contingent on Ada's build step)
+- CSS assets from `src/` → no compilation needed ✅
+- No `./BlendUtilities`, no CJS root condition ✅
+
+No issues.
+
+### `"type": "module"` — Needs Verification
+
+The design doc adds `"type": "module"` to `package.json`. This tells Node.js to treat all `.js` files in the package as ESM. This is correct for the consumer-facing exports (ESM bundle, compiled config, compiled blend). But it affects the entire package — including the pipeline source that `tsx` executes.
+
+**Concern**: When `npx designerpunk generate` runs, `tsx` executes TypeScript files from `src/`. With `"type": "module"`, Node.js expects ESM syntax in any `.js` files that get loaded. If any pipeline dependency (or the compiled CLI itself) uses `require()` or `module.exports`, it'll fail with `ERR_REQUIRE_ESM` or `ReferenceError: require is not defined`.
+
+`tsx` handles TypeScript files regardless of the `type` field — it has its own loader. But the compiled `dist/cli/designerpunk.js` (the `bin` entry point) will be treated as ESM by Node.js. The `tsc` output needs to use ESM syntax (`import`/`export`), not CJS (`require`/`module.exports`). This depends on the `tsconfig.json` `module` setting — if it's set to `commonjs`, the compiled output will use `require()` and break under `"type": "module"`.
+
+**Action**: Verify that `tsconfig.json` (or the new `tsconfig.config.json` / `tsconfig.cli.json`) uses `"module": "ESNext"` or `"module": "Node16"` so compiled output is ESM-compatible. If the existing `tsconfig.json` uses `"module": "commonjs"`, adding `"type": "module"` to `package.json` will break all compiled JS in `dist/`.
+
+This could be a blocking issue if the current build produces CJS output. Worth checking before implementation.
+
+### `examples/` Exclusion — Agree: Accept Shipping Them
+
+Agree with Ada and Lina. ~1MB out of 20-27MB isn't worth the packaging complexity. Option (c) — accept that `examples/` ships — is the right call.
+
+### Endorsements
+
+1. **Ada's missing CLI build step** — critical. The `bin` field points to `dist/cli/designerpunk.js` which doesn't exist. Without this build step, `npx designerpunk generate` fails in a product repo. This is the same category as the `dist/config/` gap.
+
+2. **Lina's option (a) for agent template `fs_read` fallbacks** — correct from the web implementation perspective. If I'm implementing a screen and the MCP doesn't have what I need, I should flag the gap to Leonardo, not silently read from `node_modules`. Leonardo's endorsement nails the reasoning.
+
+3. **Ada's MCP `cwd` fallback** — necessary. During DesignerPunk development, the CLI runs from the repo root, not from a product that installed the package. The `require.resolve` path won't work in that context. Same pattern as `ConfigLoader`.
+
+### Summary
+
+| Area | Assessment | Action |
+|------|-----------|--------|
+| Export map | Verified, correct | None |
+| `"type": "module"` | Needs tsconfig verification | Check `module` setting before implementation |
+| `examples/` exclusion | Agree: accept shipping them | None |
+| CLI build step | Ada's catch is critical | Must be addressed |
+| Agent template | Endorse Lina's option (a) | WS6 implementation |
+| MCP path resolution | Ada's `cwd` fallback is necessary | Implementation detail |
+
+No blocking concerns, pending `"type": "module"` verification. Ready for tasks.
+
+---
+
+
+### Kenya
+
+#### [KENYA R3]
+
+**Scope**: Design doc review from the iOS consumer perspective — verifying the package structure accounts for all iOS artifacts, the `files` field includes everything needed, and the agent template addresses iOS-specific concerns.
+
+### Package Structure: iOS Artifacts Accounted For
+
+The package structure diagram shows `src/components/core/` (which includes `platforms/ios/` per component) and `dist/DesignTokens.ios.swift`. The `files` field includes `src/` and `dist/DesignTokens.*` / `dist/ComponentTokens.*`. This covers all iOS artifacts:
+
+- ✅ Generated tokens (`dist/DesignTokens.ios.swift`, `dist/ComponentTokens.ios.swift`) — via `dist/DesignTokens.*` and `dist/ComponentTokens.*` globs
+- ✅ Component implementations (`src/components/core/*/platforms/ios/*.swift`) — via `src/`
+- ✅ Blend utilities (`src/blend/ThemeAwareBlendUtilities.ios.swift`) — via `src/`
+- ✅ Motion tokens (`src/tokens/platforms/ios/MotionTokens.swift`) — via `src/`
+- ✅ iOS tests (`VerticalListButtonItemTests.swift`, `ButtonVerticalListSetTests.swift`) — via `src/` (tests ship per Ada's revised position)
+
+No missing iOS files.
+
+### `files` Field: One Concern About `dist/ios/` Exclusion
+
+R2 AC 3 says `dist/ios/` should not ship (it's a duplicate of `dist/DesignTokens.ios.swift`). R8 AC 2 says `dist/ios/` should not exist at publish time. But the `files` field in the design doc uses `dist/DesignTokens.*` as a glob — this correctly picks up `dist/DesignTokens.ios.swift` without including `dist/ios/`. So the exclusion is handled implicitly by the allowlist. Clean.
+
+However — the `dist/DesignTokens.*` glob also matches `dist/DesignTokens.dtcg.json` and `dist/DesignTokens.figma.json`, which is correct (they should ship). Just confirming the glob behavior is intentional and covers all five platform outputs (web.css, ios.swift, android.kt, dtcg.json, figma.json).
+
+### Build-Time Validation Test: iOS Patterns Correct
+
+The design doc's validation test description says "Scan iOS .swift files for `DesignTokens.*` and `theme.*` references." This covers both the static pattern (`DesignTokens.space100`) and the post-R8 theme-aware pattern (`theme.colorActionPrimary`). Correct.
+
+One implementation note: the `theme.*` pattern needs to know the protocol's property names. These are generated by the pipeline — they're the theme-varying token set from `ThemeRegistry.getThemeVaryingTokens()`. The validation test could either (a) parse the generated Swift file for the protocol definition and extract property names, or (b) run the pipeline's theme-varying determination logic and compare. Option (a) is simpler and doesn't couple the test to the pipeline internals.
+
+### Agent Template: iOS-Specific Path Resolution
+
+The design doc says the template "resolves package paths programmatically." For my prompt specifically, the key paths that need to resolve from the package are:
+
+- `DesignTokens.ios.swift` — I reference this when verifying token consumption
+- `ComponentTokens.ios.swift` — same
+- Component `platforms/ios/` directories — I reference these during implementation
+- `ThemeAwareBlendUtilities.ios.swift` — I reference this for blend patterns
+- `MotionTokens.swift` — I reference this for animation patterns
+
+In the repo context, these are relative paths. In the product context, they're inside `node_modules/@designerpunk/core/`. The template should use the MCP layer for component queries (which resolves paths internally) and only use direct file paths for the generated token files (which the config system can resolve).
+
+This isn't a design change — just confirming the template approach works for my workflow. The MCP handles the heavy lifting; direct file access is the exception, not the rule.
+
+### No Blocking Concerns
+
+The design is solid from the iOS perspective. All artifacts ship, the validation test covers iOS patterns, and the agent template approach works for my workflow. Ready for tasks.
+
+---
