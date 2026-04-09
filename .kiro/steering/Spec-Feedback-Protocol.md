@@ -22,13 +22,25 @@ Spec formalization produces shared artifacts (design-outline, requirements, desi
 
 ## The Feedback Document
 
-Every spec MUST have a feedback document created alongside the design outline:
+Every spec MUST have feedback documents created alongside the design outline. Two structures are supported:
 
+**Single file** (for smaller specs):
 ```
 .kiro/specs/[spec-name]/feedback.md
 ```
 
-This is the single location for all agent feedback across the spec lifecycle. See the Spec Feedback Template section below for the required structure.
+**Split by phase** (for larger specs — reduces token cost per agent review):
+```
+.kiro/specs/[spec-name]/feedback/
+  design-outline.md
+  requirements.md
+  design.md
+  tasks.md
+```
+
+The split structure is preferred for specs with multiple feedback rounds. Each agent only reads the feedback doc for the current phase, not the entire history. The single-file structure remains valid for specs where feedback is lightweight.
+
+Either way, the feedback document(s) are the location for all agent feedback. See the Spec Feedback Template section below for the required structure within each file.
 
 ---
 
