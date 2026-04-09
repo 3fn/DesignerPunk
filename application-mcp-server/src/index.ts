@@ -21,6 +21,16 @@ const SERVER_NAME = 'mcp-component-server';
 const SERVER_VERSION = '0.1.0';
 const DEFAULT_COMPONENTS_DIR = 'src/components/core';
 
+/** Explicit data paths for the Application MCP. All optional — defaults derive from package root. */
+interface DataPaths {
+  componentsDir: string;
+  patternsDir?: string;
+  templatesDir?: string;
+  guidanceDir?: string;
+  registryPath?: string;
+  tokenIndexDir?: string;
+}
+
 // Tool definitions
 const tools = [
   {
@@ -146,17 +156,22 @@ class ComponentMCPServer {
   private assemblyValidator: AssemblyValidator;
   private fileWatcher: FileWatcher;
 
-  constructor(private componentsDir: string = DEFAULT_COMPONENTS_DIR) {
+  constructor(private paths: DataPaths) {
     this.server = new Server({ name: SERVER_NAME, version: SERVER_VERSION }, { capabilities: { tools: {} } });
     this.indexer = new ComponentIndexer();
     this.queryEngine = new ComponentQueryEngine(this.indexer);
     this.assemblyValidator = new AssemblyValidator(this.indexer);
-    this.fileWatcher = new FileWatcher(this.indexer, this.componentsDir);
+    this.fileWatcher = new FileWatcher(this.indexer, this.paths.componentsDir);
     this.registerHandlers();
   }
 
   async start(): Promise<void> {
-    await this.indexer.indexComponents(this.componentsDir);
+    await this.indexer.indexComponents(
+      this.paths.componentsDir,
+      this.paths.patternsDir,
+      this.paths.templatesDir,
+      this.paths.guidanceDir
+    );
     this.fileWatcher.start();
     const health = this.indexer.getHealth();
     console.error(`[${SERVER_NAME}] Indexed ${health.componentsIndexed} components (${health.warnings.length} warnings)`);
@@ -202,7 +217,12 @@ class ComponentMCPServer {
       case 'get_component_health':
         return this.queryEngine.getHealth();
       case 'rebuild_index':
-        await this.indexer.indexComponents(this.componentsDir);
+        await this.indexer.indexComponents(
+          this.paths.componentsDir,
+          this.paths.patternsDir,
+          this.paths.templatesDir,
+          this.paths.guidanceDir
+        );
         return this.queryEngine.getHealth();
       case 'list_experience_patterns':
         return this.queryEngine.getPatternCatalog();
@@ -232,9 +252,16 @@ class ComponentMCPServer {
   }
 }
 
-// Start server
+// Start server — read explicit paths from env vars, fall back to defaults
 const componentsDir = process.env.COMPONENTS_DIR || DEFAULT_COMPONENTS_DIR;
-const server = new ComponentMCPServer(componentsDir);
+const server = new ComponentMCPServer({
+  componentsDir,
+  patternsDir: process.env.PATTERNS_DIR,
+  templatesDir: process.env.TEMPLATES_DIR,
+  guidanceDir: process.env.GUIDANCE_DIR,
+  registryPath: process.env.REGISTRY_PATH,
+  tokenIndexDir: process.env.TOKEN_INDEX_DIR,
+});
 server.start().catch((err) => {
   console.error(`[${SERVER_NAME}] Fatal error:`, err);
   process.exit(1);

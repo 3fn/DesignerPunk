@@ -44,7 +44,12 @@ export class ComponentIndexer {
   /**
    * Scan component directories and build initial index.
    */
-  async indexComponents(componentsDir: string): Promise<void> {
+  async indexComponents(
+    componentsDir: string,
+    patternsDir?: string,
+    templatesDir?: string,
+    guidanceDir?: string
+  ): Promise<void> {
     this.index.clear();
     this.contractsCache.clear();
     this.indexWarnings = [];
@@ -80,17 +85,17 @@ export class ComponentIndexer {
     // Third pass: resolve composed tokens (needs all components indexed first)
     this.resolveComposedTokens();
 
-    // Index experience patterns (resolve from project root, not components dir)
-    const patternsDir = path.resolve(componentsDir, '..', '..', '..', 'experience-patterns');
-    await this.patternIndexer.indexPatterns(patternsDir);
+    // Index experience patterns
+    const effectivePatternsDir = patternsDir || path.resolve(componentsDir, '..', '..', '..', 'experience-patterns');
+    await this.patternIndexer.indexPatterns(effectivePatternsDir);
 
-    // Index layout templates (resolve from project root, not components dir)
-    const layoutTemplatesDir = path.resolve(componentsDir, '..', '..', '..', 'layout-templates');
-    await this.layoutTemplateIndexer.indexTemplates(layoutTemplatesDir);
+    // Index layout templates
+    const effectiveTemplatesDir = templatesDir || path.resolve(componentsDir, '..', '..', '..', 'layout-templates');
+    await this.layoutTemplateIndexer.indexTemplates(effectiveTemplatesDir);
 
     // Index family guidance (must run after components and patterns for cross-reference validation)
-    const guidanceDir = path.resolve(componentsDir, '..', '..', '..', 'family-guidance');
-    await this.guidanceIndexer.indexGuidance(guidanceDir);
+    const effectiveGuidanceDir = guidanceDir || path.resolve(componentsDir, '..', '..', '..', 'family-guidance');
+    await this.guidanceIndexer.indexGuidance(effectiveGuidanceDir);
 
     // Cross-reference validation (components + patterns must be indexed first)
     const componentNames = new Set(Array.from(this.index.keys()));

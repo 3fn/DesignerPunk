@@ -76,6 +76,10 @@ async function runMcpApp() {
   const pkgRoot = resolvePackageRoot();
   const serverBundle = path.join(pkgRoot, 'dist/mcp/application-mcp.js');
   const componentsDir = path.join(pkgRoot, 'src/components/core');
+  const patternsDir = path.join(pkgRoot, 'experience-patterns');
+  const templatesDir = path.join(pkgRoot, 'layout-templates');
+  const guidanceDir = path.join(pkgRoot, 'family-guidance');
+  const registryPath = path.join(pkgRoot, 'family-registry.yaml');
 
   console.log('DesignerPunk Application MCP');
   console.log(`  Protocol: stdio`);
@@ -83,7 +87,13 @@ async function runMcpApp() {
   console.log(`  Server: ${serverBundle}`);
   console.log('  Starting...\n');
 
-  spawnServer(serverBundle, { COMPONENTS_DIR: componentsDir }, true);
+  spawnServer(serverBundle, {
+    COMPONENTS_DIR: componentsDir,
+    PATTERNS_DIR: patternsDir,
+    TEMPLATES_DIR: templatesDir,
+    GUIDANCE_DIR: guidanceDir,
+    REGISTRY_PATH: registryPath,
+  }, true);
 }
 
 async function runMcpDocs() {
