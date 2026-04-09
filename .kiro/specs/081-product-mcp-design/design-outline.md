@@ -1,24 +1,37 @@
-# Product MCP Design: Schema, Primitives, and Cross-MCP References
+# Spec 081: Product MCP Design
 
 **Date**: 2026-03-20
-**Purpose**: Define the Product MCP's schema, product primitives shape, and cross-MCP reference patterns — completing the three-MCP architecture established in Spec 070
+**Rewritten**: 2026-04-09 (consolidated from multiple rounds of additions)
+**Purpose**: Define the Product MCP — what it is, what data it serves, where the boundary sits with the Application MCP, and how products configure it
 **Organization**: spec-guide
 **Scope**: 081-product-mcp-design
-**Status**: Design outline — capturing scope and open questions for future design sessions
+**Status**: Design outline — active, not waiting for M0b
 
 ---
 
 ## Problem Statement
 
-Spec 070 (Agent Architecture) established a three-node knowledge network with three corresponding MCPs: Docs MCP (system core), Application MCP (system application), and Product MCP (product ecosystem). The MCP Relationship Model (drafted in Spec 070) defines the boundaries, information flow, and access model between them.
+DesignerPunk ships three MCP servers as ecosystem infrastructure: Docs MCP (steering documentation), Application MCP (components, patterns, templates, tokens), and Product MCP (product-specific data). The first two are built and working. The third doesn't exist yet.
 
-Two design conversations remain unresolved:
+Without the Product MCP:
+- Product agents have no structured way to query screen specs, product flows, or product-specific patterns
+- The boundary between "design system data" and "product data" is undefined — experience patterns, layout templates, and product-created tokens/components have no clear home
+- MCP path configuration (WS3) can't be finalized because we don't know which data goes where
+- Leo has no single endpoint for queries that span system and product data
 
-1. **Product primitives shape** — The Product MCP's most architecturally significant content type. Objects, surfaces, and intent signals need a schema that connects product domain knowledge to DesignerPunk's component and pattern vocabulary. Without this, Leonardo has no structured way to translate product context into screen specifications.
+This spec defines what the Product MCP is, settles the data boundary with the Application MCP, and builds it as ecosystem infrastructure that ships with `@designerpunk/core`.
 
-2. **Cross-MCP reference patterns** — How Product MCP entries reference Application MCP components and patterns, and how those references stay stable as both systems evolve. The relationship model established four governing principles but deferred the detailed patterns.
+---
 
-These are parent-child: the relationship model (parent) must be stable before product primitives (child) can take shape. The relationship model is drafted. This spec picks up from there.
+## Key Decisions (Settled)
+
+| Decision | Source |
+|----------|--------|
+| Product MCP ships with `@designerpunk/core` | Peter (2026-04-09) — ecosystem infrastructure, not product-built |
+| Three MCP servers are ecosystem infrastructure | North Star — products configure them, they don't build them |
+| System and product are bidirectional | North Star — products add tokens, themes, potentially components and patterns |
+| WS3 (path configuration) and WS5 (Product MCP) are part of this spec | Spec 096 restructuring (2026-04-08) |
+| Token data index is Application MCP scope | Spec 096 (WS7) — unambiguous, proceeds independently |
 
 ---
 
@@ -26,122 +39,73 @@ These are parent-child: the relationship model (parent) must be stable before pr
 
 | Spec | Relationship | Status |
 |------|-------------|--------|
-| 070 (Agent Architecture) | Established three-node model, MCP relationship model, product agent definitions | Design outline + drafts complete |
-| 067 (Application MCP) | The Application MCP that Product MCP references | Complete |
-| 068 (Family Guidance Indexer) | Prop guidance that Product MCP entries may reference | Complete |
-| 069 (Layout Templates) | Layout guidance that Product MCP entries may reference | Design outline |
+| 070 (Agent Architecture) | Established three-MCP model, relationship principles | Complete |
+| 067 (Application MCP) | The Application MCP that Product MCP interacts with | Complete |
+| 094 (Portable Pipeline) | Pipeline, theme registry, config system | ✅ Complete |
+| 095 (Package Assembly) | Package published, CLI working, MCP servers bundled | ✅ Complete |
+| 096 (Token Data Index) | Token queries in Application MCP | In progress (independent) |
 
 ---
 
-## Activation Trigger
-
-**Updated 2026-04-07**: The packaging trigger is being resolved by M0a Phase 1. The Product MCP foundation (minimal scaffold) ships with `@designerpunk/core` as part of the Block C spec. The full spec (081) activates for M0b when a real product demands the complete Product MCP vision.
-
-Remaining triggers for full spec activation:
-- M0a Phase 2 (marketing site) generates real usage data about what product agents actually query
-- M0b (WrKing Class) requires product primitives, cross-MCP references, and wish list capabilities
-- The MCP Relationship Model (Spec 070) has been validated through M0a product application
-
----
-
-## North Star Context (2026-04-07, updated 2026-04-08)
-
-This spec exists within the DesignerPunk ecosystem vision defined in `docs/roadmap/north-star-design-system-ecosystem.md`. Key context:
-
-- **DesignerPunk is an ecosystem, not a library.** Products install `@designerpunk/core` and get the pipeline, components, MCP servers, and governance framework. Products participate in the ecosystem (adding tokens, themes, potentially components) — they don't just consume outputs.
-- **System and product are bidirectional.** Products create their own tokens and themes using the packaged pipeline. The Product MCP bridges product-specific data with design system data served by the Application MCP.
-- **Leonardo's discovery wish list** is captured in `discovery-leonardo-wish-list.md` alongside this outline. Bidirectional screen↔component lookup is the highest-value capability. The wish list informs extension points but is explicitly speculative — real usage during M0a Phase 2 and M0b validates priorities.
-
-### Scope Expansion (2026-04-08): WS3 + WS5 Absorbed into This Spec
-
-During Spec 096 (Block C) planning, we identified that the Application MCP / Product MCP data boundary is unsettled, and two workstreams depend on it:
-
-- **WS3 (Configurable MCP paths)** — configuring which data directories each MCP server reads from. This depends on knowing which data lives in the Application MCP vs the Product MCP. Example: experience patterns might move to the Product MCP. Templates might exist in both.
-- **WS5 (Product MCP foundation)** — building the Product MCP. Can't be built without knowing what it hosts.
-
-**These are the same architectural question.** WS3 and WS5 are now part of this spec (081), not Block C. Spec 096 retains only WS7 (token data index), which is unambiguously Application MCP scope.
-
-### What This Spec Must Now Define
-
-Before any implementation, this design outline must answer:
-
-1. **Data boundary**: What data lives in the Application MCP vs the Product MCP?
-   - Components, schemas, contracts, metadata — Application MCP (clear)
-   - Token data index — Application MCP (clear, WS7)
-   - Family guidance — Application MCP? Product MCP? Both?
-   - Experience patterns — Application MCP? Product MCP? Both? Products may have their own patterns.
-   - Layout templates — Application MCP? Product MCP? Both?
-   - Screen specs, product flows — Product MCP (clear)
-   - Product config (name, platforms, theme) — Product MCP (clear)
-
-2. **Merging vs separation**: If both MCPs serve patterns/templates, how does an agent query across both? Does the Product MCP merge its data with the Application MCP's, or do agents query both separately?
-
-3. **Path configuration (WS3)**: Once the boundary is defined, how does each MCP discover its data? Env vars? Config file? Package root resolution?
-
-4. **Product MCP identity**: What IS the Product MCP? A proxy that enriches Application MCP queries with product context? A standalone server with its own data? A merged view of system + product data?
-
-### What Changed from the Original Design Outline
-
-The original design outline (pre-ecosystem) focused on:
-- Product primitives (objects, surfaces, intent signals)
-- Cross-MCP reference patterns
-- Dedicated MCP agent
-
-These are still relevant but now sit within a larger question: the data boundary between Application and Product MCPs in an ecosystem where products participate, not just consume. The product primitives design depends on knowing where they live and how they're queried.
-
-### Activation
-
-This spec is now active — not waiting for M0b. The data boundary question blocks:
-- WS3 (MCP path configuration) — can't configure paths without knowing what goes where
-- WS5 (Product MCP foundation) — can't build it without knowing what it hosts
-- Phase 2 (marketing site) — Leo needs to know which MCP to query for what
-
-The token data index (WS7, Spec 096) can proceed independently.
-
----
-
-## Design Session 0: Application MCP / Product MCP Data Boundary
-
-**Added**: 2026-04-08 (WS3 + WS5 absorption)
-**Status**: Open — needs resolution before WS3 or WS5 implementation
+## Design Session 0: Data Boundary
 
 ### The Core Question
 
-What data lives in the Application MCP vs the Product MCP? The answer determines path configuration (WS3), Product MCP identity (WS5), and how agents query across both.
+What data lives in the Application MCP vs the Product MCP? The answer determines path configuration, Product MCP identity, and how agents query across both.
 
-### Preliminary Assessment (Thurgood — instincts, not decisions)
+### Boundary Principle
 
-| Data | Likely Home | Reasoning |
-|------|-------------|-----------|
-| Components, schemas, contracts, metadata | Application MCP | Design system artifacts — same for every product |
-| Token data index | Application MCP | Rosetta system artifacts (confirmed — WS7/Spec 096) |
-| Family guidance | Application MCP | Describes how DesignerPunk families work — system knowledge |
-| Ecosystem experience patterns | Application MCP | Describe how DesignerPunk components compose — system knowledge |
-| Ecosystem layout templates | Application MCP | Describe page-level layout with DesignerPunk tokens — system knowledge |
-| Product-specific experience patterns | Product MCP | A "legislation feed" pattern is WrKing Class knowledge, not system knowledge |
-| Product-specific layout templates | Product MCP | A product's custom page layouts |
-| Screen specs, product flows | Product MCP | Product architecture — Leo's domain |
-| Product config (name, platforms, theme) | Product MCP | Product identity |
-| Product-created tokens | ? | Products create tokens via the pipeline. Are they system data (Application MCP indexes them) or product data (Product MCP indexes them)? |
-| Product-created components | ? | Same question. If a product extends Stemma with its own components, which MCP serves them? |
+**Application MCP serves ecosystem data** — artifacts that come from `@designerpunk/core` and are the same for every product. Components, tokens, family guidance, ecosystem patterns, ecosystem templates.
 
-### Preliminary Assessment: Product MCP Identity
+**Product MCP serves product data** — artifacts that are specific to a product and don't exist in the ecosystem package. Screen specs, product flows, product-created patterns, product-created templates, product config.
 
-Three models considered:
+**The gray area**: products can create tokens, components, patterns, and templates that extend the ecosystem. Where do those live?
 
-1. **Proxy**: Product MCP forwards all queries to Application MCP, adds nothing. Agents query one endpoint. — Too thin. Adds a hop without adding value.
+### Preliminary Data Boundary
 
-2. **Standalone**: Product MCP has its own data, agents query both MCPs separately. — Fragmented. Leo doesn't want to query two endpoints for "what components can I use?"
+| Data | MCP | Reasoning |
+|------|-----|-----------|
+| Ecosystem components (34 shipped) | Application | Same for every product |
+| Ecosystem token data index | Application | Rosetta system artifacts (Spec 096) |
+| Ecosystem family guidance | Application | Describes how DesignerPunk families work |
+| Ecosystem experience patterns (9 shipped) | Application | Describe how ecosystem components compose |
+| Ecosystem layout templates (4 shipped) | Application | Describe page-level layout with ecosystem tokens |
+| Family registry | Application | Canonical family names |
+| Product-created experience patterns | Product | A "legislation feed" pattern is product knowledge |
+| Product-created layout templates | Product | A product's custom page layouts |
+| Screen specs, product flows | Product | Product architecture |
+| Product config (name, platforms, theme) | Product | Product identity |
+| Product-created tokens | ? | Open — see below |
+| Product-created components | ? | Open — see below |
 
-3. **Merged view**: Product MCP queries Application MCP for system data, adds product data to the results. Agents see one unified response. — Best of both. Single endpoint, enriched with product context. When Leo queries "find components for a login form," the Product MCP returns Application MCP results plus product-specific annotations.
+### Open: Product-Created Tokens and Components
 
-**Preliminary recommendation**: Merged view. But this has implications — the Product MCP needs to understand the Application MCP's query interface well enough to merge results coherently. That's a tighter coupling than a simple proxy.
+Products create tokens via the pipeline (theme overrides, product-specific semantic tokens). Products may create components extending Stemma. Where does this data get indexed?
+
+**Option A: Application MCP indexes everything.** The Application MCP reads from both the package AND the product repo. `find_components` returns ecosystem + product components. `search_tokens` returns ecosystem + product tokens. Simple for agents — one query, complete results. But the Application MCP needs to know about the product repo's file structure.
+
+**Option B: Product MCP indexes product-created artifacts.** The Application MCP only knows about ecosystem data. The Product MCP indexes product tokens and components separately. Agents query both, or the Product MCP merges results. Clean separation, but agents need to know which MCP to query (or the Product MCP handles merging).
+
+**Option C: Product MCP merges at query time.** The Product MCP queries the Application MCP for ecosystem data, adds product data, returns a unified response. Agents always query the Product MCP. The Application MCP stays pure (ecosystem only). The Product MCP is the "enriched view."
+
+### Product MCP Identity
+
+Three models:
+
+1. **Proxy** — forwards queries to Application MCP, adds nothing. Too thin.
+2. **Standalone** — has its own data, agents query both MCPs separately. Fragmented.
+3. **Merged view** — queries Application MCP for ecosystem data, adds product data, returns unified response. Single endpoint for agents.
+
+**Preliminary recommendation: Merged view (Option C).** Leo gets one endpoint. The Application MCP stays clean. Product data enriches ecosystem data at query time.
+
+Implications:
+- Product MCP must understand the Application MCP's query interface
+- Product MCP must handle the case where product data overlaps with ecosystem data (e.g., a product pattern with the same name as an ecosystem pattern)
+- Product MCP startup depends on Application MCP being available
 
 ### Questions for Agent Feedback
 
-These should be explored during the design outline formalization, potentially via a questionnaire to product agents:
-
-1. **Leo**: When you spec a screen, do you want one MCP endpoint or two? If one, do you want product patterns mixed into the same `list_experience_patterns` results as ecosystem patterns, or separated?
+1. **Leo**: When you spec a screen, do you want one MCP endpoint or two? If one, do you want product patterns mixed into `list_experience_patterns` results alongside ecosystem patterns, or separated?
 
 2. **Leo**: If a product creates its own component (extending Stemma), should `find_components` return it alongside the 34 ecosystem components? Or should product components be a separate query?
 
@@ -163,23 +127,23 @@ Product primitives were identified in Spec 070 as "the objects users create, the
 
 ### Three Elements
 
-- **Objects**: Domain entities users interact with (e.g., in a civic engagement app: Bill, Representative, UserProfile, ImpactScore)
+- **Objects**: Domain entities users interact with (e.g., Bill, Representative, UserProfile, ImpactScore)
 - **Surfaces**: Contexts where objects appear (e.g., Dashboard, Detail Sheet, Search Results, Onboarding Flow)
 - **Intent Signals**: Routing logic connecting objects to surfaces (e.g., user tapped bill → Bill Detail surface)
 
 ### Open Questions
 
-1. **Schema format**: YAML (consistent with Application MCP's component-meta and family guidance)? JSON? Something else?
-2. **Granularity**: How detailed should object definitions be? Just names and relationships, or full property schemas?
-3. **Surface → Pattern mapping**: How does a surface definition reference Application MCP experience patterns? Direct reference by pattern name? Contextual query parameters?
-4. **Object → Component mapping**: How does an object definition specify which DesignerPunk components render its properties? Per-property mapping? Per-surface mapping?
-5. **Intent signal representation**: Are these routing rules, state machine transitions, or something simpler?
-6. **Template vs convention**: Does DesignerPunk provide a product primitives template (scaffolding), or just the convention (documentation)?
-7. **Queryability**: What MCP tools would agents use to query product primitives? `find_objects`, `get_surface`, `resolve_intent`?
+1. **Schema format**: YAML (consistent with Application MCP's component-meta and family guidance)?
+2. **Granularity**: Just names and relationships, or full property schemas?
+3. **Surface → Pattern mapping**: How does a surface reference an experience pattern?
+4. **Object → Component mapping**: How does an object specify which components render its properties?
+5. **Intent signal representation**: Routing rules, state machine transitions, or something simpler?
+6. **Template vs convention**: Does DesignerPunk provide a product primitives template, or just documentation?
+7. **Queryability**: What MCP tools query product primitives? `find_objects`, `get_surface`, `resolve_intent`?
 
 ### Relationship to Application MCP
 
-Product primitives determine *which* Application MCP pattern to use for *which* object on *which* surface. This is the primary cross-MCP reference point:
+Product primitives determine *which* Application MCP pattern to use for *which* object on *which* surface:
 
 ```
 Product MCP                          Application MCP
@@ -188,6 +152,8 @@ Surface: "Bill Detail"        →      Experience Pattern: "detail-view"
 Object: "Bill"                →      Components: Container-Card-Base, Badge-Label-Base
 Intent: "user tapped bill"   →      Navigation: push to detail surface
 ```
+
+**Note**: This session needs Leo's input — he's the primary consumer of product primitives.
 
 ---
 
@@ -202,105 +168,119 @@ The MCP Relationship Model (Spec 070) established four governing principles:
 3. Graceful degradation (clear "not found" on broken references)
 4. Promotion is explicit (product content doesn't auto-become system content)
 
-This session defines the detailed patterns that implement these principles.
-
 ### Open Questions
 
-1. **Reference syntax**: How does a Product MCP entry reference an Application MCP component? By name string (`"Button-CTA"`)? By a structured reference object (`{ mcp: "application", type: "component", name: "Button-CTA" }`)?
-2. **Version stability**: When Application MCP renames a component or pattern, how do Product MCP references update? Manual migration? Alias support? Breaking change protocol?
-3. **Validation**: Can the Product MCP validate its references against the Application MCP at build time? At query time? Both?
-4. **Bidirectional awareness**: The relationship model says system MCPs have no knowledge of product content. But should the Application MCP be *aware* that products reference its identifiers, even if it doesn't know which products? This affects how breaking changes are communicated.
-5. **Reference resolution**: When Leonardo queries the Product MCP for a surface definition that references Application MCP patterns, does the Product MCP resolve those references (returning enriched data), or does Leonardo make separate queries to each MCP?
-6. **Cross-MCP query patterns**: Does Leonardo ever need to query across MCPs in a single operation ("give me the surface definition AND the referenced pattern details"), or are sequential queries sufficient?
+1. **Reference syntax**: Name string (`"Button-CTA"`) or structured reference (`{ mcp: "application", type: "component", name: "Button-CTA" }`)?
+2. **Version stability**: How do Product MCP references update when Application MCP renames something?
+3. **Validation**: Build-time, query-time, or both?
+4. **Reference resolution**: Does the Product MCP resolve references (returning enriched data), or does the agent make separate queries?
+5. **Cross-MCP queries**: Does Leo ever need a single operation spanning both MCPs?
+
+**Note**: If the Product MCP is a merged view (Session 0 recommendation), questions 4-5 are answered — the Product MCP resolves references internally and returns enriched data. The agent always queries one endpoint.
+
+---
+
+## WS3: MCP Path Configuration
+
+Once the data boundary is settled, each MCP needs explicit path configuration.
+
+### Current State
+
+- Application MCP: accepts `COMPONENTS_DIR` env var, derives patterns/templates/guidance by walking `../../..` from components
+- Docs MCP: accepts `MCP_STEERING_DIR` env var
+- Product MCP: doesn't exist yet
+
+### Target State
+
+All three MCPs accept explicit paths for their data sources. The CLI (`npx designerpunk mcp:app`, `mcp:docs`, `mcp:product`) resolves paths from the package root and passes them. Products can override via env vars or config.
+
+Specific path configuration depends on the data boundary decision from Session 0.
+
+---
+
+## WS5: Product MCP Foundation
+
+Build the Product MCP as ecosystem infrastructure that ships with `@designerpunk/core`.
+
+### Minimum Capabilities
+
+1. **Serve product configuration** — product name, platforms, theme (from `designerpunk.config.ts`)
+2. **Serve product-specific data** — screen specs, product patterns, product templates (from a configured product data directory)
+3. **Merge with Application MCP data** — if merged view model is confirmed, proxy ecosystem queries and enrich with product data
+4. **Extension points** — hooks for product primitives (Session 1) and cross-MCP references (Session 2) when those designs are finalized
+5. **CLI command** — `npx designerpunk mcp:product`
+
+### What Does NOT Ship in Phase 1
+
+- Leo's wish list features (screen↔component lookup, state models, gap detection)
+- Product primitives schema (Session 1 — needs Leo's design input)
+- Cross-MCP reference validation (Session 2 — needs design input)
+- Dedicated MCP agent (see below — may be deferred)
+
+---
+
+## Dedicated MCP Agent
+
+With three MCPs in production, cross-cutting infrastructure concerns (index health, metadata validation, cross-MCP reference integrity) need an owner.
+
+### Proposed Scope
+- Index health monitoring across all three MCPs
+- Metadata validation
+- Cross-MCP reference integrity
+- Rebuild triggers when indexes are stale
+- Recommending alignment when drift is detected
+
+### Open Questions
+1. Agent name and identity
+2. Relationship to Thurgood — coexist or subsume MCP-related governance?
+3. Timing — ship with the Product MCP, or defer until cross-MCP references are implemented?
+
+---
+
+## Discovery Inputs
+
+- **Leonardo's wish list**: `discovery-leonardo-wish-list.md` — bidirectional screen↔component lookup is the highest-value capability. Speculative — real usage validates priorities.
+- **AI Interaction Atlas**: `github.com/quietloudlab/ai-interaction-atlas` — taxonomy for AI interaction design. Relevant to intent signals in product primitives. Limitation: AI-specific, not general-purpose.
 
 ---
 
 ## Scope Boundaries
 
 ### In Scope
-- Product primitives schema definition
-- Cross-MCP reference pattern specification
-- Product MCP tool design (query interface)
-- Template or convention for product teams adopting DesignerPunk
-- Dedicated MCP agent definition and creation (see below)
+- Application MCP / Product MCP data boundary definition
+- Product MCP design and implementation (ships with `@designerpunk/core`)
+- MCP path configuration for all three servers (WS3)
+- Product primitives schema (with Leo's input)
+- Cross-MCP reference patterns
+- `npx designerpunk mcp:product` CLI command
+- Integration Guide contribution (Product MCP section)
 
 ### Out of Scope
-- Product MCP server implementation (separate engineering spec)
-- DesignerPunk packaging vehicle (Kiro Power, plugin, etc.)
-- Specific product content (Working Class or any other product)
-- Docs MCP or Application MCP changes (unless cross-MCP references require them)
+- Token data index (Spec 096 — independent)
+- Docs MCP changes (beyond path configuration)
+- Application MCP query tool changes (beyond path configuration)
+- Specific product content (marketing site screens, WrKing Class data)
+- Leo's full wish list features (M0b — after real usage validates priorities)
 
 ---
 
-## Relationship to Spec 070
+## Success Criteria
 
-This spec is a direct child of Spec 070's MCP Relationship Model. It does not revisit the boundary definitions, information flow, or access model — those are settled in Spec 070. It extends the relationship model with the detailed design that was explicitly deferred.
-
-| Defined in Spec 070 | Extended in Spec 081 |
-|---------------------|---------------------|
-| Three-MCP boundaries | Product MCP content schema |
-| Information flow direction | Cross-MCP reference patterns |
-| Access model (who queries what) | Product MCP query tools |
-| Interface contract principles | Detailed reference syntax and validation |
-| Product primitives concept | Product primitives schema |
-| — | Dedicated MCP agent (new) |
+1. Data boundary between Application MCP and Product MCP is defined and documented
+2. All three MCP servers accept explicit path configuration
+3. `npx designerpunk mcp:product` starts the Product MCP
+4. Product MCP serves product configuration as queryable data
+5. Product MCP serves product-specific patterns and templates from a configured directory
+6. If merged view: Product MCP proxies Application MCP queries and enriches with product data
+7. Product primitives schema is defined (even if minimal for Phase 1)
+8. Integration Guide documents Product MCP setup and configuration
 
 ---
 
-## Dedicated MCP Agent
+## Feedback Requested
 
-**Added**: 2026-03-29 (from Spec 086 Task 5.1 scope boundary discussion)
+**Session 0 (data boundary)**: All agents — answer the 6 questionnaire questions above.
 
-With three MCPs in production, no single existing agent owns the cross-cutting infrastructure concerns. A dedicated MCP agent should be defined and created as part of this spec so it's born alongside the Product MCP with all three MCPs in scope from day one.
+**Session 1 (product primitives)**: Leo primarily — he's the consumer. Ada for token boundary. Lina for component boundary.
 
-### Proposed Scope
-- Index health monitoring across all three MCPs
-- Metadata validation (correct headers, required fields)
-- Cross-MCP reference integrity (stability contract enforcement)
-- Rebuild triggers when indexes are stale or corrupted
-- Recommending alignment specs or tasks when drift is detected between MCPs
-
-### Operating Model
-- **Audits and recommends** — does not modify domain content
-- Domain agents (Ada, Lina) still own their content; the MCP agent owns infrastructure and integrity
-- Same audit-vs-write distinction as Thurgood's test governance role
-
-### Open Questions
-1. Agent name and identity
-2. Which tools does it need access to? (All three MCPs' health/index tools at minimum)
-3. Does it need write access to any MCP configuration, or is it purely advisory?
-4. Relationship to Thurgood — Thurgood currently uses Documentation MCP tools for spec work. Does the MCP agent subsume that, or do they coexist?
-
----
-
-## Reevaluation Triggers
-
-- **Packaging vehicle decision**: The technical integration pattern may constrain schema and reference design choices
-- **First product application attempt**: Real usage will validate or invalidate assumptions about what product primitives need to contain
-- **Application MCP evolution**: New tools or content types (layout templates from Spec 069) may affect cross-MCP reference patterns
-- **Agent tooling maturity**: Direct agent-to-agent communication (if it becomes available) may change how cross-MCP queries work
-
----
-
-## Reference Bookmarks
-
-### AI Interaction Atlas
-
-**Source**: https://github.com/quietloudlab/ai-interaction-atlas (Apache 2.0)
-**NPM**: `@quietloudlab/ai-interaction-atlas`
-**Relevance**: Design Session 1 (Product Primitives Shape)
-
-An open-source taxonomy for AI interaction design with six dimensions: AI tasks, human tasks, system tasks, data artifacts, constraints, and touchpoints. Each task has typed inputs/outputs, relations to other tasks (enables, commonly_followed_by, incompatible_with), and UX notes (risk, tip, anti_patterns). Available as a queryable npm package.
-
-**Why it's worth reviewing when this spec activates:**
-
-The atlas's data model offers one approach to the "intent signals" question in product primitives. Its `WorkflowTemplate` concept — a graph of connected tasks with typed data flowing between them — is structurally close to what the Product MCP needs for describing how user actions connect to system and AI behavior. The task-relation model (with strength ratings and constraint attachments) is a concrete schema example for encoding product interaction flows.
-
-The atlas's constraint categories (accuracy, bias, privacy, transparency, latency) are also relevant for AI-powered products like WrKing Class, where ethical constraints shape screen-level design decisions.
-
-**Limitations to keep in mind:** The atlas is AI-interaction-specific. The Product MCP needs to serve any product, not just AI-powered ones. The atlas should inform the product primitives shape, not constrain it. Non-AI screens (settings, profile editors, simple forms) still need product primitives without AI task vocabulary.
-
----
-
-**Organization**: spec-guide
-**Scope**: 081-product-mcp-design
+**Session 2 (cross-MCP references)**: Leo + Ada + Lina — they own the data being referenced.
