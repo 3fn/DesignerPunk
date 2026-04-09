@@ -17,7 +17,7 @@ Each entry records: what was deferred, which spec or planning doc deferred it, w
 | Deadline | Items |
 |----------|-------|
 | **Before Phase 2 starts** | Token coverage analysis, `marketing-pages` vocabulary |
-| **Before M0b starts** | Tree-shaking, ThemeAwareBlendUtilities consolidation, full Product MCP features, token namespace collision prevention, native sync CLI (`sync:ios`/`sync:android`), Kotlin package namespace from config, Swift Package generation |
+| **Before M0b starts** | Tree-shaking, ThemeAwareBlendUtilities consolidation, full Product MCP features, token namespace collision prevention, native sync CLI (`sync:ios`/`sync:android`), Kotlin package namespace from config, Swift Package generation, dedicated MCP & documentation agent, experience pattern review |
 | **End of Phase 2 (after all theming work)** | `mode: 'light'` support, `data-theme` attribute configurability |
 | **When second customer appears** | Personal Note template, exclude "A Vision of the Future.md" |
 
@@ -80,3 +80,10 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 | **`tsx` as TypeScript execution strategy** for `designerpunk.config.ts` loading | Spec 094, Task 3.3 | Block B (WS2 packaging) — bundle `tsx` as dependency, wire CLI `bin` entry point. Phase 1 CLI uses native `import()` via existing `ts-node`. |
 
 *Additional Block B / Block C deferred items to be populated as those specs are written.*
+
+### Spec 081: Product MCP Design
+
+| Item | Rationale | Activation Trigger |
+|------|-----------|-------------------|
+| Dedicated MCP & Documentation Agent (9th agent) | Cross-cutting view across all three MCPs and documentation layer. Thurgood focuses on system, Stacy on product — MCPs span both. | Ships with the Product MCP |
+| Experience pattern review (9 ecosystem patterns) | Need to review each pattern individually to determine if it's an assembly recipe (stays in App MCP) or a screen-type template (moves to Product MCP). | Before Product MCP implementation |

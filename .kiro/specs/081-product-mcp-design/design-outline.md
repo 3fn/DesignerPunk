@@ -27,8 +27,12 @@ This spec defines the Product MCP, settles the data boundary with the Applicatio
 | Three MCP servers are ecosystem infrastructure | North Star — products configure them, they don't build them |
 | System agents serve the repo, not just DesignerPunk | Peter — Ada governs all tokens, Lina governs all components, Thurgood governs all tests/specs |
 | Products modify the system — no separation between "ecosystem" and "product" artifacts for tokens/components | Peter — the package is a starting point that the product molds |
-| Token data index is Application MCP scope | Spec 096 (WS7) — proceeds independently |
-| Experience pattern placement validated during Phase 2 | Peter + Thurgood — sorting happens against real screens |
+| Token data index is Application MCP scope, indexes all tokens in repo | Spec 096 (WS7) + Ada R1 — ecosystem + product-created, one unified index |
+| Ecosystem patterns stay in Application MCP as basic assembly guidance | Leo Concern 1 + Ada + Thurgood — parallel to basic layout templates |
+| Product MCP enriches screen specs with Application MCP data | Leo Concern 2 + platform agent consensus |
+| Screen status: `not-started / in-progress / complete / blocked` per platform | Leo R2 + Kenya + Data + Sparky consensus |
+| Governance: brief principle in prompts, detailed table in Integration Guide | Stacy R1 + Thurgood + Lina alignment |
+| Experience pattern sorting validated during Phase 2 | Peter + Thurgood — review 9 ecosystem patterns individually to confirm each is an assembly recipe |
 
 ---
 
@@ -40,10 +44,10 @@ See `research/mcp-ownership-map.md` for the full working document.
 How to build with DesignerPunk. Steering docs, token/component family references, architectural guides, process standards.
 
 ### Application MCP — System Layer
-What exists and how it works. Components, tokens, family guidance, basic layout templates, family registry, assembly validation, composition checking.
+What exists and how it works. Components, tokens, family guidance, basic assembly guidance (ecosystem experience patterns), basic layout templates, family registry, assembly validation, composition checking.
 
 ### Product MCP — Product Architecture Layer
-What we're building and how it's structured. Product context, configuration, principles, experience map, product templates, domain objects.
+What we're building and how it's structured. Product overview (context, config), product principles (design direction, cross-platform strategy), experience map (screen specs for verticals, flows, feature pages), product templates (page layouts, content layout patterns), domain objects.
 
 ---
 
@@ -89,11 +93,94 @@ Three types at the same level, each containing the same child specification stru
 
 The type affects navigation patterns: flows have sequential navigation (next/back), verticals have hierarchical navigation (drill in/out), feature pages have hub navigation (launch into).
 
+### Per-Screen Spec: Platform Branching
+
+Screen specs support `shared` + per-platform branching within any facet. The shared parts are the cross-platform spec. Platform-specific parts are where implementations diverge.
+
+**Single-file example** (login feature page):
+```yaml
+name: login
+type: feature-page
+status:
+  web: in-progress
+  ios: not-started
+  android: not-started
+
+ux-direction: |
+  Single screen with primary passkey/biometric authentication
+  and password fallback. Platform-native security APIs.
+
+ui-tree:
+  shared:
+    - Nav-Header-Page:
+        title: "Sign In"
+    - Container-Base:
+        children:
+          - brand-logo (one-off)
+          - auth-action-area
+          - password-fallback-link
+  ios:
+    - auth-action-area uses ASAuthorizationController button
+  android:
+    - auth-action-area uses CredentialManager prompt
+  web:
+    - auth-action-area uses WebAuthn button
+
+state-model:
+  shared:
+    - idle
+    - authenticating
+    - authenticated
+    - error
+  ios:
+    - passkey-prompt (ASAuthorizationController)
+    - biometric-fallback (Face ID / Touch ID)
+  android:
+    - credential-manager-prompt
+    - biometric-fallback (BiometricPrompt)
+  web:
+    - webauthn-prompt
+    - password-fallback
+
+data-sources:
+  shared:
+    - user-profile-api
+  ios:
+    - AuthenticationServices framework
+  android:
+    - CredentialManager API
+  web:
+    - navigator.credentials API
+
+accessibility:
+  shared:
+    - heading: "Sign In" (h1)
+    - focus order: logo → auth action → fallback link
+  ios:
+    - VoiceOver announces biometric type available
+  android:
+    - TalkBack announces credential type available
+```
+
+**Multi-file example** (same screen, split by facet):
+```
+pages/login/
+  login.yaml              # Core: name, type, status, ux-direction, ui-tree
+  login.state.yaml        # State model with shared + platform branches
+  login.data.yaml         # Data sources with shared + platform branches
+  login.a11y.yaml         # Accessibility with shared + platform branches
+  login.analytics.yaml    # Analytics
+```
+
+Each file follows the same `shared` + per-platform structure. The Product MCP assembles all files in the directory into one response.
+
+Leo specs the shared structure and flags where platforms diverge. Platform agents own the platform-specific implementation details. When Kenya queries `get_screen_spec({ name: "login" })`, she gets the shared parts plus the iOS-specific parts.
+
 ### UI Tree: Systems Components vs One-off Components
 
 Each screen's UI Tree distinguishes between:
 - **Systems Components**: Ecosystem components from the Application MCP (Button-CTA, Container-Card-Base, etc.). Queryable via `get_component_full`, governed by Stemma.
-- **One-off Components**: Product-specific compositions that don't exist in the ecosystem. Built from systems components but arranged in product-specific ways. Not in the Application MCP — only the Product MCP knows about them.
+- **One-off Components**: Product-specific compositions that don't exist in the ecosystem. Built from systems components but arranged in product-specific ways. Not in the Application MCP — only the Product MCP knows about them. Same rigor as Stemma (schema, contracts especially for accessibility, token references) without the ceremony (no family membership, full README, readiness tracking, three-platform review, component-meta.yaml). Product MCP indexes and serves their schema + contracts inline with screen specs.
 
 ### Product Templates
 
@@ -109,16 +196,14 @@ Product entities referenced by screens. A "Bill" object appears on multiple scre
 
 ## Application MCP Changes
 
-The Application MCP's scope narrows slightly and gains configurability:
+The Application MCP gains configurability and one clarification:
 
-### Removed
-- Experience patterns — moved to Product MCP (experience map + product templates)
-
-### Changed
-- Layout templates → "Basic layout templates" (universal page-level responsive structure only)
+### Clarified
+- Experience patterns (9 ecosystem patterns) — confirmed as basic assembly guidance. They stay in the Application MCP. They are generic recipes, not product-specific screen specs.
+- Layout templates — confirmed as basic/universal page-level responsive structure. Product-specific layouts go in the Product MCP's Product Templates.
 
 ### Added
-- Token data index (Spec 096, WS7)
+- Token data index (Spec 096, WS7) — indexes all tokens in the repo (ecosystem + product-created)
 - Configurable paths for all data sources (WS3)
 
 ### Unchanged
@@ -142,6 +227,7 @@ Application MCP paths:
 - Components directory
 - Token index directory (Spec 096)
 - Family guidance directory
+- Basic assembly guidance directory (ecosystem experience patterns)
 - Basic layout templates directory
 - Family registry path
 
@@ -158,16 +244,48 @@ Docs MCP paths:
 ### Data Format
 
 The Product MCP is a hybrid:
-- **Structured data** (YAML): Experience map entries, domain objects, product templates, product config. Queryable via specific tools.
-- **Documentary data** (Markdown): Product context, UX principles, design direction. Indexed and searchable like the Docs MCP.
+- **Structured data** (YAML): Experience map entries (screen specs), domain objects, product templates, product config, one-off component schemas and contracts. Queryable via specific tools.
+- **Documentary data** (Markdown): Product context, UX principles, design direction, cross-platform strategy. Indexed and searchable like the Docs MCP.
+
+### Product Data Directory Structure
+
+Nested directories mirroring the architecture. One directory per screen. Single YAML file by default, multi-file split available for complex screens. Product MCP assembles either format into one response.
+
+```
+product/
+  overview.yaml
+  principles/
+    design-direction.md
+    cross-platform-strategy.md
+  experience-map/
+    verticals/
+      legislation/
+        legislation.yaml
+    flows/
+      onboarding/
+        onboarding.yaml
+    pages/
+      dashboard/
+        dashboard.yaml
+  templates/
+    card-grid.yaml
+    hero-section.yaml
+  domain-objects/
+    bill.yaml
+    representative.yaml
+  components/
+    legislation-card/
+      legislation-card.schema.yaml
+      legislation-card.contracts.yaml
+```
 
 ### Query Tools (Phase 1 — minimum)
 
 | Tool | Purpose |
 |------|---------|
 | `get_product_overview` | Product context, config, principles |
-| `list_experience_map` | All verticals, flows, feature pages with status |
-| `get_screen_spec` | Full spec for a vertical/flow/feature page (UI tree, state model, data sources, accessibility) |
+| `list_experience_map` | All verticals, flows, feature pages with status per platform |
+| `get_screen_spec` | Full spec for a vertical/flow/feature page — UI tree (with enriched Systems Component data from Application MCP), state model, data sources, accessibility, analytics, status |
 | `get_domain_object` | Domain object definition and which screens reference it |
 | `list_product_templates` | Product-specific layout and content patterns |
 
@@ -188,15 +306,25 @@ Governance gradient applies: ecosystem artifacts that affect all products get he
 
 ---
 
+## Resolved from Feedback
+
+| Question | Resolution | Source |
+|----------|-----------|--------|
+| Experience pattern placement | Basic assembly guidance (the 9 ecosystem patterns) stays in Application MCP as recipes. Product MCP has the Experience Map (screen specs). They're different things — recipes vs specifications. No sorting needed. | Leo Concern 1, Ada, Thurgood, Peter |
+| Status granularity | `not-started / in-progress / complete / blocked` per platform. No percentages, no blocking issues in status (those go in implementation reports). | Leo R2, Kenya, Data, Sparky consensus |
+| Token data index scope | Indexes all tokens in the repo — ecosystem + product-created. One unified index. | Ada R1, Leo confirmation |
+| Governance documentation | Brief principle in agent prompts, detailed table in Integration Guide. | Stacy R1, Thurgood, Lina alignment |
+| Cross-MCP query resolution | Product MCP enriches screen spec UI Tree references with Application MCP component data. Agents query the Product MCP for screen specs and get enriched results. Application MCP queried directly for system-level queries (find_components, search_tokens). | Leo Concern 2, platform agent consensus |
+| Product data directory structure | Nested directories mirroring the architecture. One directory per screen. Single YAML file by default, multi-file split available for complex screens. Product MCP assembles either format into one response. | Peter + Thurgood |
+| One-off component metadata | Same rigor as Stemma (schema, contracts especially for accessibility, token references) without the ceremony (no family membership, full README, readiness tracking, three-platform review, component-meta.yaml). Product MCP indexes and serves schema + contracts inline with screen specs. | Peter + Thurgood |
+| Experience pattern structure | Application MCP patterns are assembly recipes (generic). Product MCP Experience Map entries are screen specs (specific). Different things, different structures, complementary. No shared format needed. | Peter + Thurgood |
+| Token creation "gap" | Not a gap. Token creation follows the standard governance process: Leo identifies need → Thurgood captures → Ada creates in token source → pipeline generates → Application MCP indexes. Config is for pipeline configuration, not token vocabulary. Investigate source of misunderstanding with Ada. | Peter + Thurgood |
+
+---
+
 ## Open Questions
 
-1. **Experience pattern placement**: The 9 ecosystem patterns need sorting — some become Product Templates, some become Experience Map entries, some stay as Docs MCP guidance. Validated during Phase 2 against real screens.
-
-2. **Product data directory structure**: What does the on-disk layout look like for the Product MCP's data? YAML files per screen? A single large file? A directory tree mirroring the architecture?
-
-3. **One-off component metadata**: One-off components in the UI Tree aren't in the Application MCP. Does the Product MCP need its own component metadata format for these, or is a simple description sufficient?
-
-4. **Cross-MCP queries**: When a screen spec references a Systems Component, does the Product MCP resolve it against the Application MCP (merged view), or does the agent query both MCPs separately?
+None remaining. Ready for requirements.
 
 ---
 
@@ -221,6 +349,30 @@ Governance gradient applies: ecosystem artifacts that affect all products get he
 7. Product MCP serves product templates
 8. Integration Guide documents Product MCP setup and data format
 9. Agent prompts updated to reflect "serves the repo" model
+
+---
+
+## Dedicated MCP & Documentation Agent
+
+Ships with the Product MCP. A 9th agent whose primary responsibility is the cross-cutting view across all three MCPs and the documentation layer.
+
+### Why a Dedicated Agent
+- Thurgood focuses on the system. Stacy focuses on the product. The MCPs and documentation span both.
+- The cross-cutting perspective — "are all three MCPs telling a coherent, accurate story together?" — is nobody's primary job today.
+- As the ecosystem grows (Product MCP, multiple products, cross-MCP references), the maintenance burden exceeds what existing agents handle as secondary work.
+
+### Proposed Scope
+- MCP index health monitoring across all three servers
+- Steering doc accuracy (are docs current after infrastructure changes?)
+- Cross-MCP reference integrity (does a screen spec reference components that exist?)
+- Documentation maintenance (Integration Guide, agent prompts, knowledge bases)
+- Rebuild triggers when indexes go stale
+- Drift detection and alignment recommendations
+
+### Open Questions
+1. Agent name and identity
+2. Relationship to Thurgood and Stacy — complements, not replaces
+3. Detailed scope definition during Spec 081 formalization
 
 ---
 
