@@ -110,24 +110,23 @@ These questions explore how agents actually work, not how they'd use a specific 
 **Leonardo (Product Architect):**
 1. When you're beginning to develop a new product on DesignerPunk, what open questions do you have? What context would be helpful to have before you start?
 2. When developing a spec for a new screen or experience within a product, what context and data do you need at a minimum to begin formulating a plan? What would be ideal?
-3. Walk me through your mental process when you're selecting components for a screen. What do you look up, in what order, and what do you wish you could look up but can't today?
+3. Walk me through your mental process when you're selecting components for a screen. What do you look for, and what do you hope to find? How does that contrast with your experience today? What do you wish you could look up but can't today?
 
 **Ada (Token Specialist):**
-4. When a product creates its own tokens (theme overrides, product-specific semantics), how do you think about those tokens relative to the ecosystem's tokens? Are they the same kind of thing, or fundamentally different?
-5. If you were helping a product developer create a new semantic token, what context would you need about the product to give good guidance?
+4. When a product needs its a new token, how do you think those tokens should be housed and expressed? Are tokens inherent to DesignerPunk fundamentally different from tokens added to support a product? Why?
+5. When would you want a product developer to discover on their own vs consult with you on token needs directly? If you were helping a product developer create a new semantic token, what context would you need about the product to give good guidance?
 
 **Lina (Component Specialist):**
-6. If a product needed a component that doesn't exist in the ecosystem, how would you think about whether it belongs in the ecosystem or stays product-specific?
-7. When a product extends or customizes an ecosystem component, what should the system know about that extension?
+6. When a product needs its a new component, how do you think those components should be housed and expressed? Are components inherent to DesignerPunk fundamentally different from those added to support a product? Why?
+7. If a product needed a component that doesn't exist in the ecosystem, how would you think about whether it belongs in the DesignerPunk ecosystem or stays product-specific?
+8. When a product extends or customizes an ecosystem component, how should the system handle that change? What areas around the component's code need to be updated?
 
-**Kenya / Data (Platform Engineers):**
-8. When you're implementing a screen from Leo's spec, what do you look up and where? What's the gap between what you need and what's available today?
-
-**Sparky (Web Platform):**
-9. Same as Kenya/Data — what do you look up when implementing a screen? What's missing?
+**Kenya / Data / Sparky (Platform Engineers):**
+9. When you're receiving implementation direction from Leo, what do you need? What would be optimal for you to receive and/or find on your own?
+10. How does that contrast with your experience today?
 
 **Stacy (Governance):**
-10. When a product creates its own patterns, components, or tokens, should they be governed the same way as ecosystem artifacts? What would "product-level governance" look like vs "ecosystem-level governance"?
+11. When a product creates its own patterns, components, or tokens, should they be governed the same way as ecosystem artifacts? What would "product-level governance" look like vs "ecosystem-level governance"?
 
 ---
 
@@ -291,7 +290,7 @@ With three MCPs in production, cross-cutting infrastructure concerns (index heal
 
 ## Feedback Requested
 
-**Session 0 (data boundary)**: All agents — answer the 6 questionnaire questions above.
+**Session 0 (data boundary)**: All agents — answer the 11 questionnaire questions above.
 
 **Session 1 (product primitives)**: Leo primarily — he's the consumer. Ada for token boundary. Lina for component boundary.
 
