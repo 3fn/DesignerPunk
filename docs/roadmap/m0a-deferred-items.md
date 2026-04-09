@@ -56,6 +56,8 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 
 ---
 
+| MCP server end-to-end in product context | stdio protocol prevents automated CLI testing; bundle loads without errors but full query validation needs an MCP client | Phase 1→2 transition — Sparky's first `mcp:app` connection from marketing site repo |
+
 ## Block B / Block C Deferred Items
 
 ### Spec 095: Ecosystem Package Assembly

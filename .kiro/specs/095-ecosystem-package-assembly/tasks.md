@@ -148,7 +148,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
-- [ ] 5. Publish and End-to-End Validation
+- [x] 5. Publish and End-to-End Validation
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
@@ -197,7 +197,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
     - Import ESM bundle, verify 34 custom elements defined
     - _Requirements: R3 AC 1-8, R9 AC 1-2, R9 AC 5_
 
-  - [ ] 5.4 CLI validation in fresh repo
+  - [x] 5.4 CLI validation in fresh repo
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
