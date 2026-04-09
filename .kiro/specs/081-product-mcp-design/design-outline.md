@@ -100,6 +100,61 @@ The token data index (WS7, Spec 096) can proceed independently.
 
 ---
 
+## Design Session 0: Application MCP / Product MCP Data Boundary
+
+**Added**: 2026-04-08 (WS3 + WS5 absorption)
+**Status**: Open — needs resolution before WS3 or WS5 implementation
+
+### The Core Question
+
+What data lives in the Application MCP vs the Product MCP? The answer determines path configuration (WS3), Product MCP identity (WS5), and how agents query across both.
+
+### Preliminary Assessment (Thurgood — instincts, not decisions)
+
+| Data | Likely Home | Reasoning |
+|------|-------------|-----------|
+| Components, schemas, contracts, metadata | Application MCP | Design system artifacts — same for every product |
+| Token data index | Application MCP | Rosetta system artifacts (confirmed — WS7/Spec 096) |
+| Family guidance | Application MCP | Describes how DesignerPunk families work — system knowledge |
+| Ecosystem experience patterns | Application MCP | Describe how DesignerPunk components compose — system knowledge |
+| Ecosystem layout templates | Application MCP | Describe page-level layout with DesignerPunk tokens — system knowledge |
+| Product-specific experience patterns | Product MCP | A "legislation feed" pattern is WrKing Class knowledge, not system knowledge |
+| Product-specific layout templates | Product MCP | A product's custom page layouts |
+| Screen specs, product flows | Product MCP | Product architecture — Leo's domain |
+| Product config (name, platforms, theme) | Product MCP | Product identity |
+| Product-created tokens | ? | Products create tokens via the pipeline. Are they system data (Application MCP indexes them) or product data (Product MCP indexes them)? |
+| Product-created components | ? | Same question. If a product extends Stemma with its own components, which MCP serves them? |
+
+### Preliminary Assessment: Product MCP Identity
+
+Three models considered:
+
+1. **Proxy**: Product MCP forwards all queries to Application MCP, adds nothing. Agents query one endpoint. — Too thin. Adds a hop without adding value.
+
+2. **Standalone**: Product MCP has its own data, agents query both MCPs separately. — Fragmented. Leo doesn't want to query two endpoints for "what components can I use?"
+
+3. **Merged view**: Product MCP queries Application MCP for system data, adds product data to the results. Agents see one unified response. — Best of both. Single endpoint, enriched with product context. When Leo queries "find components for a login form," the Product MCP returns Application MCP results plus product-specific annotations.
+
+**Preliminary recommendation**: Merged view. But this has implications — the Product MCP needs to understand the Application MCP's query interface well enough to merge results coherently. That's a tighter coupling than a simple proxy.
+
+### Questions for Agent Feedback
+
+These should be explored during the design outline formalization, potentially via a questionnaire to product agents:
+
+1. **Leo**: When you spec a screen, do you want one MCP endpoint or two? If one, do you want product patterns mixed into the same `list_experience_patterns` results as ecosystem patterns, or separated?
+
+2. **Leo**: If a product creates its own component (extending Stemma), should `find_components` return it alongside the 34 ecosystem components? Or should product components be a separate query?
+
+3. **Ada**: If a product creates tokens via the pipeline, should the token data index (Spec 096) include them? Or are product tokens a separate index served by the Product MCP?
+
+4. **Kenya/Data**: When you implement a screen, do you query the MCP for component APIs? If the Product MCP merges system + product data, does that help or confuse your workflow?
+
+5. **Sparky**: Same question from the web side — merged results helpful or confusing?
+
+6. **Stacy**: From a governance perspective, should product-created patterns/components be held to the same standards as ecosystem patterns/components? If so, the Product MCP needs to validate them the same way the Application MCP validates ecosystem data.
+
+---
+
 ## Design Session 1: Product Primitives Shape
 
 ### Context

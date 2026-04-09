@@ -84,11 +84,12 @@ Four new tools loaded at startup alongside the component index:
 
 ---
 
-## Open Questions
+## Resolved Questions
 
-1. **Index scope — all platforms or web-only values?** The index should include values for all three platforms (web CSS property, iOS Swift constant, Android Kotlin constant). But the generated platform files use different naming conventions (`--color-action-primary` vs `colorActionPrimary` vs `color_action_primary`). Should the index include all three names, or just the canonical token name with a note about platform conventions?
-
-2. **Mathematical relationships — how detailed?** Primitive tokens have mathematical foundations (e.g., `space100 = 8` from the 8px baseline grid, `space150 = space100 * 1.5`). Should the index capture the formula, just the value, or both?
+| Question | Resolution | Rationale |
+|----------|-----------|-----------|
+| Index scope — all platforms? | All three platforms. Each token includes canonical name + platform-specific names (CSS `--color-action-primary`, Swift `colorActionPrimary`, Kotlin `color_action_primary`). | Product agents (Sparky, Kenya, Data) need their platform's code references. Note: Spec 081 questionnaire research may refine what platform agents actually query for. |
+| Mathematical relationships | Both formula and value. `space150 = space100 * 1.5 = 12`. | The formula is what makes the Rosetta system meaningful — agents making token selection decisions benefit from understanding WHY a value is what it is, not just what it is. |
 
 ---
 
