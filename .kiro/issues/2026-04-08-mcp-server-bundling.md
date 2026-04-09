@@ -4,6 +4,8 @@
 **Severity**: High (blocks Task 5.4 — MCP validation)
 **Agent**: Lina (found during fresh-repo validation)
 **Blocks**: Spec 095 Task 5.4 (MCP portion)
+**Status**: ✅ Resolved (2026-04-08)
+**Resolved by**: Ada
 
 ## Problem
 
@@ -15,45 +17,34 @@ Require stack:
 - node_modules/@3fn/core/application-mcp-server/src/indexer/parsers.ts
 ```
 
-## What Works
+## Resolution
 
-- Path resolution ✅ — CLI correctly finds MCP server at package root
-- Connection details print ✅ — protocol, data dir, server path shown
-- Server entry point loads ✅ — `tsx` resolves the TypeScript
+Pre-bundled both MCP servers with esbuild into standalone JS files:
 
-## What Fails
-
-Server imports `js-yaml` (and other dependencies) which aren't installed in the product repo's `node_modules`.
-
-## Recommended Fix: Pre-Bundle MCP Servers
-
-Use esbuild (already a devDependency) to compile each MCP server into a standalone JS file with all dependencies bundled:
-
-```bash
-# Application MCP
-esbuild application-mcp-server/src/index.ts --bundle --platform=node --outfile=dist/mcp/application-mcp.js
-
-# Docs MCP  
-esbuild mcp-server/src/index.ts --bundle --platform=node --outfile=dist/mcp/docs-mcp.js
+```
+dist/mcp/application-mcp.js  (315KB — all dependencies bundled)
+dist/mcp/docs-mcp.js         (218KB — all dependencies bundled)
 ```
 
-The CLI's `mcp:app` and `mcp:docs` commands then spawn `node dist/mcp/application-mcp.js` instead of `tsx application-mcp-server/src/index.ts`.
+### Changes
 
-Benefits:
-- No dependency resolution issues — everything is bundled
-- No `tsx` needed for MCP servers — they're plain JS
-- Smaller footprint — one file per server instead of entire source tree
-- `files` field can ship `dist/mcp/` instead of `mcp-server/src/` and `application-mcp-server/src/`
+- `src/cli/designerpunk.ts` — MCP commands now spawn `node dist/mcp/application-mcp.js` instead of `tsx application-mcp-server/src/index.ts`. No `tsx` needed for MCP servers.
+- `package.json` — added `build:mcp` script using esbuild, included in `npm run build` pipeline.
+- `spawnServer()` — accepts `bundled` flag: `true` uses `node` (bundled JS), `false` uses `tsx`/`ts-node` (TypeScript).
 
-The MCP server source still ships in `src/` for reference/modification, but the bundled versions are what the CLI runs.
+### Benefits
 
-## Build Step
+- No dependency resolution issues — everything bundled into one file per server
+- No `tsx` needed for MCP servers — plain `node` execution
+- Smaller footprint — one file per server instead of entire source tree + dependencies
+- `files` field ships `dist/mcp/` instead of needing MCP server dependencies declared
 
-Add to `npm run build` pipeline:
+### Build Step
+
 ```json
-"build:mcp": "esbuild application-mcp-server/src/index.ts --bundle --platform=node --outfile=dist/mcp/application-mcp.js && esbuild mcp-server/src/index.ts --bundle --platform=node --outfile=dist/mcp/docs-mcp.js"
+"build:mcp": "npx esbuild application-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/application-mcp.js && npx esbuild mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/docs-mcp.js"
 ```
 
-## Owner
+## Lesson
 
-Ada — MCP server infrastructure + build pipeline.
+Packages with sub-projects that have their own dependency trees need those dependencies either declared in the main `package.json` or pre-bundled. Pre-bundling is cleaner — it avoids polluting the main dependency list with internal implementation details and produces self-contained artifacts.

@@ -74,35 +74,35 @@ async function runGenerate() {
 
 async function runMcpApp() {
   const pkgRoot = resolvePackageRoot();
-  const serverEntry = path.join(pkgRoot, 'application-mcp-server/src/index.ts');
+  const serverBundle = path.join(pkgRoot, 'dist/mcp/application-mcp.js');
   const componentsDir = path.join(pkgRoot, 'src/components/core');
 
   console.log('DesignerPunk Application MCP');
   console.log(`  Protocol: stdio`);
   console.log(`  Data: ${componentsDir}`);
-  console.log(`  Server: ${serverEntry}`);
+  console.log(`  Server: ${serverBundle}`);
   console.log('  Starting...\n');
 
-  spawnServer(serverEntry, { COMPONENTS_DIR: componentsDir });
+  spawnServer(serverBundle, { COMPONENTS_DIR: componentsDir }, true);
 }
 
 async function runMcpDocs() {
   const pkgRoot = resolvePackageRoot();
-  const serverEntry = path.join(pkgRoot, 'mcp-server/src/index.ts');
+  const serverBundle = path.join(pkgRoot, 'dist/mcp/docs-mcp.js');
   const steeringDir = path.join(pkgRoot, '.kiro/steering');
 
   console.log('DesignerPunk Docs MCP');
   console.log(`  Protocol: stdio`);
   console.log(`  Data: ${steeringDir}`);
-  console.log(`  Server: ${serverEntry}`);
+  console.log(`  Server: ${serverBundle}`);
   console.log('  Starting...\n');
 
-  spawnServer(serverEntry, { MCP_STEERING_DIR: steeringDir });
+  spawnServer(serverBundle, { MCP_STEERING_DIR: steeringDir }, true);
 }
 
-/** Spawn an MCP server as a child process with the given env vars. */
-function spawnServer(entryPoint: string, envVars: Record<string, string>) {
-  const runner = resolveTsRunner();
+/** Spawn a server as a child process. Uses node for bundled JS, tsx/ts-node for TypeScript. */
+function spawnServer(entryPoint: string, envVars: Record<string, string>, bundled: boolean = false) {
+  const runner = bundled ? 'node' : resolveTsRunner();
 
   const child = spawn(runner, [entryPoint], {
     env: { ...process.env, ...envVars },
