@@ -103,19 +103,31 @@ Implications:
 - Product MCP must handle the case where product data overlaps with ecosystem data (e.g., a product pattern with the same name as an ecosystem pattern)
 - Product MCP startup depends on Application MCP being available
 
-### Questions for Agent Feedback
+### Research Questions for Agent Feedback
 
-1. **Leo**: When you spec a screen, do you want one MCP endpoint or two? If one, do you want product patterns mixed into `list_experience_patterns` results alongside ecosystem patterns, or separated?
+These questions explore how agents actually work, not how they'd use a specific MCP design. The data boundary should emerge from understanding workflows.
 
-2. **Leo**: If a product creates its own component (extending Stemma), should `find_components` return it alongside the 34 ecosystem components? Or should product components be a separate query?
+**Leonardo (Product Architect):**
+1. When you're beginning to develop a new product on DesignerPunk, what open questions do you have? What context would be helpful to have before you start?
+2. When developing a spec for a new screen or experience within a product, what context and data do you need at a minimum to begin formulating a plan? What would be ideal?
+3. Walk me through your mental process when you're selecting components for a screen. What do you look up, in what order, and what do you wish you could look up but can't today?
 
-3. **Ada**: If a product creates tokens via the pipeline, should the token data index (Spec 096) include them? Or are product tokens a separate index served by the Product MCP?
+**Ada (Token Specialist):**
+4. When a product creates its own tokens (theme overrides, product-specific semantics), how do you think about those tokens relative to the ecosystem's tokens? Are they the same kind of thing, or fundamentally different?
+5. If you were helping a product developer create a new semantic token, what context would you need about the product to give good guidance?
 
-4. **Kenya/Data**: When you implement a screen, do you query the MCP for component APIs? If the Product MCP merges system + product data, does that help or confuse your workflow?
+**Lina (Component Specialist):**
+6. If a product needed a component that doesn't exist in the ecosystem, how would you think about whether it belongs in the ecosystem or stays product-specific?
+7. When a product extends or customizes an ecosystem component, what should the system know about that extension?
 
-5. **Sparky**: Same question from the web side — merged results helpful or confusing?
+**Kenya / Data (Platform Engineers):**
+8. When you're implementing a screen from Leo's spec, what do you look up and where? What's the gap between what you need and what's available today?
 
-6. **Stacy**: From a governance perspective, should product-created patterns/components be held to the same standards as ecosystem patterns/components? If so, the Product MCP needs to validate them the same way the Application MCP validates ecosystem data.
+**Sparky (Web Platform):**
+9. Same as Kenya/Data — what do you look up when implementing a screen? What's missing?
+
+**Stacy (Governance):**
+10. When a product creates its own patterns, components, or tokens, should they be governed the same way as ecosystem artifacts? What would "product-level governance" look like vs "ecosystem-level governance"?
 
 ---
 
