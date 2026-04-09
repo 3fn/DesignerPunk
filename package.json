@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "10.2.3",
+  "version": "10.2.4",
   "description": "True Native cross-platform design system with mathematical foundations",
   "main": "./dist/browser/designerpunk.esm.js",
   "module": "./dist/browser/designerpunk.esm.js",
