@@ -209,7 +209,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
-- [ ] 6. Agent Configuration Template (WS6)
+- [x] 6. Agent Configuration Template (WS6)
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
@@ -224,7 +224,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
-- [ ] 7. Integration Guide and Documentation (WS6)
+- [x] 7. Integration Guide and Documentation (WS6)
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard

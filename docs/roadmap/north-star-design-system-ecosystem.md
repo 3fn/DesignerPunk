@@ -131,9 +131,10 @@ Three specs, organized by block. Each block is one spec with clear task ownershi
 
 | Spec | Block | Workstreams | Primary Owner | Scope |
 |------|-------|-------------|---------------|-------|
-| Portable Pipeline & Theme Registry | A | WS4 + WS1 | Ada | Token system portability and extensibility. Critical path — all other blocks depend on this. |
-| Ecosystem Package Assembly | B | WS2 + WS6 | Lina (WS2) + Thurgood (WS6) | What ships in the package and how it's consumed. Can run in parallel with Block A. |
-| MCP Infrastructure for Products | C | WS3 + WS5 + WS7 | Cross-agent | All MCP servers working in product context — configurable servers, Product MCP foundation, token data index. Starts when Block A stabilizes. |
+| Spec 094: Portable Pipeline & Theme Registry | A | WS4 + WS1 | Ada | Token system portability and extensibility. ✅ Complete. |
+| Spec 095: Ecosystem Package Assembly | B | WS2 + WS6 | Lina (WS2) + Thurgood (WS6) | What ships in the package and how it's consumed. ✅ Complete. |
+| Spec 096: Token Data Index | C | WS7 | Ada | Queryable token data in Application MCP. |
+| Spec 081: Product MCP Design | — | WS3 + WS5 | Cross-agent | Application/Product MCP data boundary, path configuration, Product MCP foundation. Activated — not waiting for M0b. |
 
 Block D (Publish & Agent Updates) is not a spec — publishing is the final task of Phase 1, and agent resource updates (WS8) are distributed as tasks within each spec above. The Integration Guide (`docs/roadmap/integration-guide-draft.md`) is formalized during Block D — each spec contributes its section, then the guide moves to `.kiro/steering/` for Docs MCP serving.
 

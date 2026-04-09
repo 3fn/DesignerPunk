@@ -44,25 +44,59 @@ Remaining triggers for full spec activation:
 
 ---
 
-## North Star Context (2026-04-07)
+## North Star Context (2026-04-07, updated 2026-04-08)
 
 This spec exists within the DesignerPunk ecosystem vision defined in `docs/roadmap/north-star-design-system-ecosystem.md`. Key context:
 
 - **DesignerPunk is an ecosystem, not a library.** Products install `@designerpunk/core` and get the pipeline, components, MCP servers, and governance framework. Products participate in the ecosystem (adding tokens, themes, potentially components) — they don't just consume outputs.
 - **System and product are bidirectional.** Products create their own tokens and themes using the packaged pipeline. The Product MCP bridges product-specific data with design system data served by the Application MCP.
-- **The Product MCP foundation ships with the package.** M0a Phase 1 (Block C spec) delivers a minimal scaffold: connect to Application MCP, proxy design system queries, accept a product config file (name, platforms, theme). Extension points only — no features from the wish list.
-- **This spec (081) owns the full Product MCP vision.** The Block C foundation is a slice. The full scope — product primitives, cross-MCP references, Leo's wish list (screen↔component lookup, state models, gap detection) — lives here and gets formalized when M0b demands it.
 - **Leonardo's discovery wish list** is captured in `discovery-leonardo-wish-list.md` alongside this outline. Bidirectional screen↔component lookup is the highest-value capability. The wish list informs extension points but is explicitly speculative — real usage during M0a Phase 2 and M0b validates priorities.
 
-### M0a Phase 1 Foundation Scope (Block C)
+### Scope Expansion (2026-04-08): WS3 + WS5 Absorbed into This Spec
 
-The Block C spec takes a minimal slice of this design:
-- Connect to Application MCP and proxy design system queries (single endpoint for product agents)
-- Accept a product configuration file declaring product name, active platforms, and theme
-- Extension points for product-specific data
-- No product primitives schema, no cross-MCP reference patterns, no wish list features
+During Spec 096 (Block C) planning, we identified that the Application MCP / Product MCP data boundary is unsettled, and two workstreams depend on it:
 
-Everything else in this design outline remains deferred until M0b activation.
+- **WS3 (Configurable MCP paths)** — configuring which data directories each MCP server reads from. This depends on knowing which data lives in the Application MCP vs the Product MCP. Example: experience patterns might move to the Product MCP. Templates might exist in both.
+- **WS5 (Product MCP foundation)** — building the Product MCP. Can't be built without knowing what it hosts.
+
+**These are the same architectural question.** WS3 and WS5 are now part of this spec (081), not Block C. Spec 096 retains only WS7 (token data index), which is unambiguously Application MCP scope.
+
+### What This Spec Must Now Define
+
+Before any implementation, this design outline must answer:
+
+1. **Data boundary**: What data lives in the Application MCP vs the Product MCP?
+   - Components, schemas, contracts, metadata — Application MCP (clear)
+   - Token data index — Application MCP (clear, WS7)
+   - Family guidance — Application MCP? Product MCP? Both?
+   - Experience patterns — Application MCP? Product MCP? Both? Products may have their own patterns.
+   - Layout templates — Application MCP? Product MCP? Both?
+   - Screen specs, product flows — Product MCP (clear)
+   - Product config (name, platforms, theme) — Product MCP (clear)
+
+2. **Merging vs separation**: If both MCPs serve patterns/templates, how does an agent query across both? Does the Product MCP merge its data with the Application MCP's, or do agents query both separately?
+
+3. **Path configuration (WS3)**: Once the boundary is defined, how does each MCP discover its data? Env vars? Config file? Package root resolution?
+
+4. **Product MCP identity**: What IS the Product MCP? A proxy that enriches Application MCP queries with product context? A standalone server with its own data? A merged view of system + product data?
+
+### What Changed from the Original Design Outline
+
+The original design outline (pre-ecosystem) focused on:
+- Product primitives (objects, surfaces, intent signals)
+- Cross-MCP reference patterns
+- Dedicated MCP agent
+
+These are still relevant but now sit within a larger question: the data boundary between Application and Product MCPs in an ecosystem where products participate, not just consume. The product primitives design depends on knowing where they live and how they're queried.
+
+### Activation
+
+This spec is now active — not waiting for M0b. The data boundary question blocks:
+- WS3 (MCP path configuration) — can't configure paths without knowing what goes where
+- WS5 (Product MCP foundation) — can't build it without knowing what it hosts
+- Phase 2 (marketing site) — Leo needs to know which MCP to query for what
+
+The token data index (WS7, Spec 096) can proceed independently.
 
 ---
 

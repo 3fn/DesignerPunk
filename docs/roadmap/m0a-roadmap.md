@@ -26,9 +26,9 @@ Goal: Publish `@designerpunk/core` to GitHub Packages — a product repo can ins
 4. **WS6: Agent configurations for product context** — Produce concrete agent config template for installed-package context. Document MCP server startup (`npx designerpunk mcp:app`/`mcp:docs`). Document native platform consumption (iOS/Android manual copy for M0a, target sync model for M0b). Document knowledge base setup. Update Integration Guide with full product setup loop including platform-specific sections.
 
 **Block C — MCP Infrastructure** (can start after Block A stabilizes)
-5. **WS3: Configurable MCP servers** — Application MCP and Docs MCP accept configurable data directories. Runnable from a product repo.
-6. **WS5: Product MCP foundation** — Minimal scaffold. Connects to Application MCP, proxies queries, accepts product config file. Extension points only.
-7. **WS7: Token data in Application MCP** — Build-time YAML index of all tokens (three files by tier: primitives, semantics, components). Names, values, families, platforms, consumer relationships. Application MCP loads and serves it. Can overlap with WS1's tail.
+5. **WS7: Token data in Application MCP** — Build-time YAML index of all tokens (three files by tier: primitives, semantics, components). Names, values, families, platforms, consumer relationships. Application MCP loads and serves it. New query tools: search_tokens, get_token_details, get_token_family, get_token_consumers.
+
+**Note**: WS3 (configurable MCP paths) and WS5 (Product MCP foundation) moved to Spec 081. The Application MCP / Product MCP data boundary must be defined before path configuration or Product MCP implementation can proceed. Spec 081 is now active — not waiting for M0b.
 
 **Block D — Publish & Agent Updates**
 8. **WS8: Agent resource and /knowledge updates** — Update agent prompts, resources, and knowledge bases to reflect new capabilities from WS1-7. Leo updated for token data queries, Ada for theme registry, product agents for Product MCP foundation and package consumption patterns.
