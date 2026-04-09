@@ -30,6 +30,9 @@ async function main() {
     case 'mcp:docs':
       await runMcpDocs();
       break;
+    case 'mcp:product':
+      await runMcpProduct();
+      break;
     case '--help':
     case '-h':
       printHelp();
@@ -110,6 +113,20 @@ async function runMcpDocs() {
   spawnServer(serverBundle, { MCP_STEERING_DIR: steeringDir }, true);
 }
 
+async function runMcpProduct() {
+  const pkgRoot = resolvePackageRoot();
+  const serverEntry = path.join(pkgRoot, 'product-mcp-server/src/index.ts');
+  const productDir = process.env.PRODUCT_DIR || path.resolve(process.cwd(), 'product');
+
+  console.log('DesignerPunk Product MCP');
+  console.log(`  Protocol: stdio`);
+  console.log(`  Data: ${productDir}`);
+  console.log(`  Server: ${serverEntry}`);
+  console.log('  Starting...\n');
+
+  spawnServer(serverEntry, { PRODUCT_DIR: productDir }, false);
+}
+
 /** Spawn a server as a child process. Uses node for bundled JS, tsx/ts-node for TypeScript. */
 function spawnServer(entryPoint: string, envVars: Record<string, string>, bundled: boolean = false) {
   const runner = bundled ? 'node' : resolveTsRunner();
@@ -150,10 +167,11 @@ function printHelp() {
 DesignerPunk Pipeline CLI
 
 Usage:
-  npx designerpunk generate    Generate token files from designerpunk.config.ts
-  npx designerpunk mcp:app     Start Application MCP server
-  npx designerpunk mcp:docs    Start Docs MCP server
-  npx designerpunk --help      Show this help
+  npx designerpunk generate      Generate token files from designerpunk.config.ts
+  npx designerpunk mcp:app       Start Application MCP server
+  npx designerpunk mcp:docs      Start Docs MCP server
+  npx designerpunk mcp:product   Start Product MCP server
+  npx designerpunk --help        Show this help
 
 Configuration:
   Place a designerpunk.config.ts in your project root.

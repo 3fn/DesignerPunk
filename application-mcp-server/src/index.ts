@@ -175,6 +175,9 @@ class ComponentMCPServer {
     this.fileWatcher.start();
     const health = this.indexer.getHealth();
     console.error(`[${SERVER_NAME}] Indexed ${health.componentsIndexed} components (${health.warnings.length} warnings)`);
+    if (!this.paths.tokenIndexDir) {
+      console.error(`[${SERVER_NAME}] Token index not available (Spec 096 pending)`);
+    }
 
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
