@@ -20,7 +20,7 @@ description: Application MCP tool reference — all tools, parameters, response 
 
 - **Name**: `mcp-component-server`
 - **Transport**: stdio
-- **Start**: `node application-mcp-server/dist/index.js`
+- **Start**: `npx designerpunk mcp:app` (from any project with `@designerpunk/core` installed, or from the DesignerPunk repo)
 - **Components directory**: `src/components/core` (default)
 
 ---
