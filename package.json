@@ -79,7 +79,7 @@
     "prebuild": "npm run generate:types && npm run generate:platform-tokens",
     "build": "tsc --skipLibCheck && npm run build:validate && npm run build:browser && npm run build:mcp",
     "build:browser": "node scripts/build-browser-bundles.js",
-    "build:mcp": "npx esbuild application-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/application-mcp.js && npx esbuild mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/docs-mcp.js",
+    "build:mcp": "npx esbuild application-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/application-mcp.js && npx esbuild mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/docs-mcp.js && npx esbuild product-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/product-mcp.js",
     "build:watch": "tsc --watch --skipLibCheck",
     "build:verify": "node verify-build.js",
     "build:validate": "npx ts-node src/validators/buildValidation.ts",

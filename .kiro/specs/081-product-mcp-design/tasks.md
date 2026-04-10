@@ -106,7 +106,7 @@ WS3 can start immediately. WS5 depends on WS3 (Product MCP needs the path config
     - Test: unknown one-off component referenced in UI tree → return spec with warning noting unresolved reference (Stacy's addition)
     - _Requirements: R1 AC 4-6, R2 AC 1-3, R3 AC 1-6, R4 AC 1-2, R5 AC 1-2_
 
-  - [ ] 2.4 Bundle and package integration
+  - [x] 2.4 Bundle and package integration
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

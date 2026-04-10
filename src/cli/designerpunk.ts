@@ -115,16 +115,16 @@ async function runMcpDocs() {
 
 async function runMcpProduct() {
   const pkgRoot = resolvePackageRoot();
-  const serverEntry = path.join(pkgRoot, 'product-mcp-server/src/index.ts');
+  const serverBundle = path.join(pkgRoot, 'dist/mcp/product-mcp.js');
   const productDir = process.env.PRODUCT_DIR || path.resolve(process.cwd(), 'product');
 
   console.log('DesignerPunk Product MCP');
   console.log(`  Protocol: stdio`);
   console.log(`  Data: ${productDir}`);
-  console.log(`  Server: ${serverEntry}`);
+  console.log(`  Server: ${serverBundle}`);
   console.log('  Starting...\n');
 
-  spawnServer(serverEntry, { PRODUCT_DIR: productDir }, false);
+  spawnServer(serverBundle, { PRODUCT_DIR: productDir }, true);
 }
 
 /** Spawn a server as a child process. Uses node for bundled JS, tsx/ts-node for TypeScript. */
