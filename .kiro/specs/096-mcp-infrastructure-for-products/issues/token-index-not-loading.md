@@ -54,7 +54,7 @@ Add `TOKEN_INDEX_DIR` to `.kiro/settings/mcp.json` for the current running serve
 ### Startup integration test (follow-up)
 Add a test that validates the Application MCP starts with default paths and loads all expected data (components, tokens, patterns, templates, guidance). Catches config gaps before they reach production.
 
-**Status**: Ada handles Option A, Thurgood handles Option B.
+**Status**: ✅ Both options applied. Option A (Ada) — code default. Option B (Thurgood) — mcp.json config.
 
 ## Resolution
 
