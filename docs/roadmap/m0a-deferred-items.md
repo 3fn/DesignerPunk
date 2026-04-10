@@ -86,4 +86,4 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 | Item | Rationale | Activation Trigger |
 |------|-----------|-------------------|
 | Dedicated MCP & Documentation Agent (9th agent) | Cross-cutting view across all three MCPs and documentation layer. Thurgood focuses on system, Stacy on product — MCPs span both. | Ships with the Product MCP |
-| Experience pattern review (9 ecosystem patterns) | Need to review each pattern individually to determine if it's an assembly recipe (stays in App MCP) or a screen-type template (moves to Product MCP). | Before Product MCP implementation |
+| Experience pattern review (9 ecosystem patterns) | Need to review each pattern individually to determine if it's an assembly recipe (stays in App MCP) or a screen-type template (moves to Product MCP). | Before Product MCP implementation | **Resolved** — Leo reviewed. 5 stay, 4 move. Execution during Phase 1→2 transition. |

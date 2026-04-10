@@ -146,7 +146,8 @@ Before Phase 2 starts:
 - Lina: Shadow DOM + CSS custom property smoke test with Nav-Header-App under the marketing theme — verify nested shadow boundaries inherit themed custom properties correctly
 - Sparky: Build tooling input — project scaffolding preferences for the marketing site repo
 - Stacy: Confirm process scaffolding covers Phase 2 product work
-- Thurgood: Full MCP audit — verify both Docs MCP and Application MCP serve accurate, current information after Phase 1 infrastructure changes. Check for stale steering docs, outdated file path references, and metadata drift.
+- Thurgood: Full MCP audit — verify Docs MCP, Application MCP, and Product MCP serve accurate, current information after Phase 1 infrastructure changes
+- Thurgood + Lina: Execute experience pattern moves — move dashboard, settings, onboarding, view-edit-screen from Application MCP to Product MCP as starter templates. Extract 4 universal principles as assembly guidance. Per Leo's review (`research/experience-pattern-review.md`).
 - Peter: Finalize design direction and content priorities
 
 #### Phase 2: Marketing Site (~2-3 weeks)
