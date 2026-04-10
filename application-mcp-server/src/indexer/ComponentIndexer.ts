@@ -29,6 +29,7 @@ import { deriveContractTokenRelationships } from './ContractTokenDeriver';
 import { PatternIndexer } from './PatternIndexer';
 import { FamilyGuidanceIndexer } from './FamilyGuidanceIndexer';
 import { LayoutTemplateIndexer } from './LayoutTemplateIndexer';
+import { TokenIndexer } from './TokenIndexer';
 import { ModeClassifier } from './ModeClassifier';
 
 export class ComponentIndexer {
@@ -37,6 +38,7 @@ export class ComponentIndexer {
   private patternIndexer = new PatternIndexer();
   private guidanceIndexer = new FamilyGuidanceIndexer();
   private layoutTemplateIndexer = new LayoutTemplateIndexer();
+  private tokenIndexer = new TokenIndexer();
   private modeClassifier = new ModeClassifier();
   private lastIndexTime = '';
   private indexWarnings: string[] = [];
@@ -48,7 +50,8 @@ export class ComponentIndexer {
     componentsDir: string,
     patternsDir?: string,
     templatesDir?: string,
-    guidanceDir?: string
+    guidanceDir?: string,
+    tokenIndexDir?: string
   ): Promise<void> {
     this.index.clear();
     this.contractsCache.clear();
@@ -101,6 +104,11 @@ export class ComponentIndexer {
     const componentNames = new Set(Array.from(this.index.keys()));
     const patternNames = new Set(this.patternIndexer.getCatalog().map(p => p.name));
     this.guidanceIndexer.validateCrossReferences(componentNames, patternNames, projectRoot);
+
+    // Index token data (if token index directory exists)
+    if (tokenIndexDir) {
+      await this.tokenIndexer.indexTokens(tokenIndexDir);
+    }
 
     this.lastIndexTime = new Date().toISOString();
   }
@@ -162,13 +170,15 @@ export class ComponentIndexer {
     const patternHealth = this.patternIndexer.getHealth();
     const guidanceHealth = this.guidanceIndexer.getHealth();
     const layoutHealth = this.layoutTemplateIndexer.getHealth();
-    const allWarnings = [...this.indexWarnings, ...patternHealth.warnings, ...guidanceHealth.warnings, ...layoutHealth.warnings];
+    const tokenHealth = this.tokenIndexer.getHealth();
+    const allWarnings = [...this.indexWarnings, ...patternHealth.warnings, ...guidanceHealth.warnings, ...layoutHealth.warnings, ...this.tokenIndexer.getWarnings()];
     return {
       status: count === 0 ? 'empty' : allWarnings.length > 0 ? 'degraded' : 'healthy',
       componentsIndexed: count,
       patternsIndexed: patternHealth.patternsIndexed,
       guidanceFamiliesIndexed: guidanceHealth.familiesIndexed,
       layoutTemplatesIndexed: layoutHealth.templatesIndexed,
+      tokensIndexed: tokenHealth,
       lastIndexTime: this.lastIndexTime,
       errors: [],
       warnings: allWarnings,

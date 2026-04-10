@@ -243,6 +243,7 @@ export interface IndexHealth {
   patternsIndexed: number;
   guidanceFamiliesIndexed: number;
   layoutTemplatesIndexed: number;
+  tokensIndexed?: { primitives: number; semantics: number; componentTokens: number };
   lastIndexTime: string;
   errors: string[];
   warnings: string[];

@@ -83,7 +83,7 @@ Three tasks, sequential:
     - Tests: search by family, search by tier, exact name match, details with consumers, family listing, consumer lookup, missing token, missing family, empty index
     - _Requirements: R2 AC 1-4_
 
-  - [ ] 2.3 Rebuild and health integration
+  - [x] 2.3 Rebuild and health integration
     **Type**: Implementation
     **Validation**: Tier 1 - Minimal
     **Agent**: Lina

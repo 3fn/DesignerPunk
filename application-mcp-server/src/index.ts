@@ -219,13 +219,13 @@ class ComponentMCPServer {
       this.paths.componentsDir,
       this.paths.patternsDir,
       this.paths.templatesDir,
-      this.paths.guidanceDir
+      this.paths.guidanceDir,
+      this.paths.tokenIndexDir
     );
     this.fileWatcher.start();
 
-    // Load token index (Spec 096) — optional, graceful if missing
+    // Token index status (loaded inside indexComponents if tokenIndexDir provided)
     if (this.paths.tokenIndexDir) {
-      await this.tokenIndexer.indexTokens(this.paths.tokenIndexDir);
       const th = this.tokenIndexer.getHealth();
       console.error(`[${SERVER_NAME}] Token index: ${th.primitives} primitives, ${th.semantics} semantics, ${th.componentTokens} component tokens`);
     }
@@ -281,8 +281,12 @@ class ComponentMCPServer {
           this.paths.componentsDir,
           this.paths.patternsDir,
           this.paths.templatesDir,
-          this.paths.guidanceDir
+          this.paths.guidanceDir,
+          this.paths.tokenIndexDir
         );
+        if (this.paths.tokenIndexDir) {
+          await this.tokenIndexer.indexTokens(this.paths.tokenIndexDir);
+        }
         return this.queryEngine.getHealth();
       case 'list_experience_patterns':
         return this.queryEngine.getPatternCatalog();
