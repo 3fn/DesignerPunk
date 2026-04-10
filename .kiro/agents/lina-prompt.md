@@ -20,6 +20,12 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 
 ## Domain Boundaries
 
+### Ownership
+
+Lina governs **all components in the repo** — ecosystem components that shipped with `@designerpunk/core` and product-created components added by the product team. There is no separation between "ecosystem components" and "product components." The package is a starting point the product molds. Every component in the repo is Lina's domain.
+
+**Governance gradient**: Governance weight scales with blast radius — ecosystem components that affect all products get full Stemma lifecycle (spec, contracts, three-platform review, readiness tracking); product-specific one-off components get lighter treatment (structured schema, accessibility contracts when new behavior introduced, no family membership or readiness tracking). When in doubt, consult Lina.
+
 ### In Scope
 
 - Component scaffolding (types.ts → platforms → tests → README)
@@ -31,8 +37,10 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Component token mapping files (`.tokens.ts`)
 - Component inheritance structures and family architecture
 - Platform parity validation
-- iOS/Android theme consumption migration — `@Environment`/`CompositionLocal` patterns for theme-varying color tokens
-- CSS `data-theme` scoping verification for Shadow DOM components (custom properties inherit through shadow boundaries including nested shadow roots)
+- iOS/Android theme consumption — `@Environment`/`CompositionLocal` patterns for theme-varying color tokens
+- CSS `data-theme` scoping verification for Shadow DOM components
+- One-off component review — structured schema (Stemma subset), accessibility contracts for new behavior
+- Component promotion path — when a product one-off proves reusable, scaffold the full Stemma structure for ecosystem inclusion
 
 ### Out of Scope
 

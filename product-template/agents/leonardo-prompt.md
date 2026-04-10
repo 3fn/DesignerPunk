@@ -54,19 +54,37 @@ Products configure DesignerPunk via `designerpunk.config.ts`:
 
 All design system knowledge is accessed via MCP queries. Do not read package files directly.
 
+### Application MCP (system data)
+
 | Need | MCP Query |
 |------|-----------|
 | Find components by context | `find_components({ context: "..." })` |
 | Find components by purpose | `find_components({ purpose: "..." })` |
 | Component full metadata | `get_component_full({ name: "..." })` |
 | Family selection guidance | `get_prop_guidance({ component: "..." })` |
-| Experience patterns | `get_experience_pattern({ name: "..." })` |
+| Assembly guidance patterns | `get_experience_pattern({ name: "..." })` |
 | Layout templates | `get_layout_template({ name: "..." })` |
 | Assembly validation | `validate_assembly({ assembly: {...} })` |
 | Component catalog | `get_component_catalog()` |
+
+### Product MCP (product architecture)
+
+| Need | MCP Query |
+|------|-----------|
+| Product overview | `get_product_overview()` |
+| All screens with status | `list_experience_map()` |
+| Screen spec (full or platform-filtered) | `get_screen_spec({ name: "...", platform?: "ios" })` |
+| Domain object | `get_domain_object({ name: "..." })` |
+| Product templates | `list_product_templates()` |
+| Product MCP health | `get_product_health()` |
+
+### Docs MCP (knowledge)
+
+| Need | MCP Query |
+|------|-----------|
 | Token governance | `get_section({ path: ".kiro/steering/Token-Governance.md", heading: "..." })` |
 | Component development guide | `get_section({ path: ".kiro/steering/Component-Development-Guide.md", heading: "..." })` |
-| Theme-varying tokens | `get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Context Resolution" })` |
+| Integration guide | `get_section({ path: ".kiro/steering/DesignerPunk-Integration-Guide.md", heading: "..." })` |
 
 ---
 

@@ -253,13 +253,129 @@ Runs automatically as part of `npx designerpunk generate` when platform paths ar
 
 ---
 
+## Product MCP Setup
+
+### Starting the Product MCP
+
+```bash
+npx designerpunk mcp:product
+```
+
+Resolves product data from:
+1. `PRODUCT_DIR` env var (if set)
+2. `designerpunk.config.ts` product data path (if configured)
+3. `./product/` relative to cwd (default)
+
+Starts with empty data if no product directory exists (warning, not error).
+
+### Product Data Directory
+
+```
+product/
+  overview.yaml              # Product context + config
+  principles/
+    design-direction.md      # Visual and UX philosophy
+    cross-platform-strategy.md
+  experience-map/
+    verticals/               # Feature suites
+      legislation/
+        legislation.yaml
+    flows/                   # Sequential experiences
+      onboarding/
+        onboarding.yaml
+    pages/                   # Standalone feature pages
+      dashboard/
+        dashboard.yaml
+  templates/                 # Product-specific layouts
+    card-grid.yaml
+    hero-section.yaml
+  domain-objects/            # Product entities
+    bill.yaml
+    representative.yaml
+  components/                # One-off components (Stemma subset)
+    legislation-card/
+      legislation-card.schema.yaml
+      legislation-card.contracts.yaml  # Only if new accessibility behavior
+```
+
+### Writing Screen Specs
+
+Each screen is a YAML file with platform branching:
+
+```yaml
+name: dashboard
+type: feature-page
+status:
+  spec: complete
+  web: in-progress
+  ios: not-started
+  android: not-started
+
+ux-direction: |
+  Overview screen with stats, recent activity, and quick actions.
+
+ui-tree:
+  shared:
+    - component: Nav-Header-App
+    - component: Container-Base
+      children:
+        - component: stats-bar    # One-off
+        - component: activity-feed # One-off
+  ios:
+    navigation: TabBar root destination
+
+state-model:
+  shared:
+    - loading
+    - populated
+    - error
+```
+
+**Single file** for simple screens. **Multi-file** (split by facet) for complex screens:
+```
+pages/dashboard/
+  dashboard.yaml           # Core: UX direction, UI tree, status
+  dashboard.state.yaml     # State model
+  dashboard.data.yaml      # Data sources
+  dashboard.a11y.yaml      # Accessibility
+```
+
+Systems Components are referenced by name — resolve details from the Application MCP. One-off components include their schema and contracts inline from `product/components/`.
+
+### One-off Component Metadata
+
+One-off components use a Stemma subset — same rigor, less ceremony:
+
+**Required**: name, purpose, composed-from with slot/role mapping, props with types and defaults, token references.
+
+**Required when new behavior**: accessibility contracts (when the composition introduces behavior its parts don't cover).
+
+**Not required**: family membership, full README, readiness tracking, three-platform review, component-meta.yaml, inheritance declarations.
+
+---
+
+## Governance Gradient
+
+| Tier | Artifacts | Review Depth | Who Governs |
+|------|-----------|-------------|-------------|
+| **Ecosystem** | Tokens, components, patterns, templates that shipped with `@designerpunk/core` | Full — contracts, metadata, multi-agent review, spec process | Ada (tokens), Lina (components), Thurgood (specs/tests) |
+| **Product extending** | Product-created tokens, one-off components, product templates | Schema compliance, naming conventions, accessibility contracts for new behavior | Ada/Lina consulted, Stacy audits at synthesis |
+| **Product internal** | Screen compositions, product-specific layouts, one-off styling | Minimal — does it work? does it use the ecosystem correctly? | Platform agents self-governed, Stacy spot-checks |
+
+**Principle**: Governance weight scales with blast radius. Ecosystem artifacts that affect all products get full review. Product-specific artifacts that affect only this product get lighter review. When in doubt, consult the specialist.
+
+**Promotion path**: When a product artifact proves reusable (a second product needs it, or it fills a gap in the ecosystem taxonomy), it gets promoted through the full spec process. The product version becomes the reference implementation. Full Stemma lifecycle applies at promotion, not at creation.
+
+---
+
 ## CLI Commands
 
 | Command | What It Does |
 |---------|-------------|
 | `npx designerpunk generate` | Run token pipeline with local `designerpunk.config.ts` |
-| `npx designerpunk mcp:app` | Start Application MCP server (component queries) |
+| `npx designerpunk mcp:app` | Start Application MCP server (component/token queries) |
 | `npx designerpunk mcp:docs` | Start Docs MCP server (steering doc queries) |
+| `npx designerpunk mcp:product` | Start Product MCP server (screen specs, domain objects, product architecture) |
 
 ---
 
@@ -307,3 +423,15 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `get_section({ path, heading })` | Specific section by heading |
 | `list_cross_references({ path })` | Cross-references in a document |
 | `get_index_health()` | Index health status |
+
+### Product MCP (product architecture queries)
+
+| Query | Purpose |
+|-------|---------|
+| `get_product_overview()` | Product context, config, principles |
+| `list_experience_map()` | All verticals, flows, feature pages with status |
+| `get_screen_spec({ name, platform? })` | Full screen spec (optional platform filter) |
+| `get_domain_object({ name })` | Domain object definition + referencing screens |
+| `list_product_templates()` | Product-specific layout and content patterns |
+| `get_product_health()` | Index status, data counts, warnings |
+| `rebuild_product_index()` | Re-index product data |
