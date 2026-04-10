@@ -261,6 +261,67 @@ class ProductMCPServer {
     return refs;
   }
 
+  /**
+   * Resolve a screen spec: apply platform filter and enrich one-off component references.
+   */
+  private resolveScreenSpec(spec: Record<string, unknown>, platform?: string): Record<string, unknown> {
+    const resolved = platform ? this.filterPlatform(spec, platform) : { ...spec };
+    const warnings: string[] = [];
+    this.enrichOneOffs(resolved, warnings);
+    if (warnings.length > 0) {
+      (resolved as any)._warnings = warnings;
+    }
+    return resolved;
+  }
+
+  /**
+   * Filter a spec to shared + requested platform content.
+   */
+  private filterPlatform(spec: Record<string, unknown>, platform: string): Record<string, unknown> {
+    const filtered: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(spec)) {
+      if (value && typeof value === 'object' && !Array.isArray(value) && 'shared' in (value as any)) {
+        const branched = value as Record<string, unknown>;
+        const shared = branched.shared;
+        const platformData = branched[platform];
+        if (platformData && Array.isArray(shared) && Array.isArray(platformData)) {
+          filtered[key] = [...shared, ...platformData];
+        } else if (platformData && typeof shared === 'object' && typeof platformData === 'object') {
+          filtered[key] = { ...shared as object, ...platformData as object };
+        } else if (platformData !== undefined) {
+          filtered[key] = { shared, [platform]: platformData };
+        } else {
+          filtered[key] = shared;
+        }
+      } else {
+        filtered[key] = value;
+      }
+    }
+    return filtered;
+  }
+
+  /**
+   * Enrich one-off component references in UI tree with their schema/contracts.
+   * Systems Components are left as name references.
+   */
+  private enrichOneOffs(spec: Record<string, unknown>, warnings: string[]): void {
+    const walk = (node: any) => {
+      if (!node || typeof node !== 'object') return;
+      if (Array.isArray(node)) { node.forEach(walk); return; }
+      if (node.component && typeof node.component === 'string') {
+        const oneOff = this.oneOffComponents.get(node.component);
+        if (oneOff) {
+          node._oneOffSchema = oneOff;
+        } else if (node.component.includes('-') && node.component[0] === node.component[0].toLowerCase()) {
+          warnings.push(`One-off component '${node.component}' referenced but not found in product/components/`);
+        }
+      }
+      if (node.children) walk(node.children);
+    };
+    const uiTree = spec['ui-tree'] || spec['uiTree'];
+    if (uiTree) walk(uiTree);
+  }
+
   private loadYaml(filePath: string): Record<string, unknown> | null {
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
@@ -308,8 +369,8 @@ class ProductMCPServer {
         const screenName = params.name as string;
         const spec = this.screenSpecs.get(screenName);
         if (!spec) return { error: `Screen '${screenName}' not found` };
-        // Platform filtering implemented in Task 2.3
-        return spec;
+        const platform = params.platform as string | undefined;
+        return this.resolveScreenSpec(spec, platform);
       }
 
       case 'get_domain_object': {
