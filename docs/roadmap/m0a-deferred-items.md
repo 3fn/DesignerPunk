@@ -46,13 +46,16 @@ Each entry records: what was deferred, which spec or planning doc deferred it, w
 
 These aren't deferred items — they're explicitly scheduled for the Phase 1→2 transition. Listed here for completeness.
 
-| Item | Owner | Gate |
-|------|-------|------|
-| Leo + Ada theme registry API session | Leo, Ada | Before Phase 2 screen specs |
-| Leo + Ada token index walkthrough | Leo, Ada | Before Phase 2 screen specs |
-| Lina Shadow DOM smoke test under marketing theme | Lina | Before Phase 2 web implementation |
-| Sparky build tooling input | Sparky | Before marketing site repo creation |
-| Stacy process scaffolding finalization | Stacy | Before Phase 1 specs finalized |
+| Item | Owner | Gate | Status |
+|------|-------|------|--------|
+| Leo + Ada theme registry API session | Leo, Ada | Before Phase 2 screen specs | ⬜ |
+| Leo + Ada token index walkthrough | Leo, Ada | Before Phase 2 screen specs | ⬜ |
+| Lina Shadow DOM smoke test under marketing theme | Lina | Before Phase 2 web implementation | ⬜ (needs theme) |
+| Sparky build tooling input | Sparky | Before marketing site repo creation | ⬜ |
+| Stacy process scaffolding finalization | Stacy | Before Phase 1 specs finalized | ⬜ |
+| Full MCP audit | Thurgood | Before Phase 2 | ✅ Complete — `docs/roadmap/phase1-mcp-audit.md` |
+| MCP audit fixes (4 stale steering docs) | Thurgood | Before Phase 2 | ⬜ Pending budget |
+| Experience pattern moves (4 patterns) | Thurgood + Lina | Before Phase 2 | ⬜ Decision made, execution pending |
 
 ---
 
