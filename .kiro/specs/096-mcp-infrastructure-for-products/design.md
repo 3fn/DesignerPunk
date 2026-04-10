@@ -44,24 +44,24 @@ tokens:
     formula: "baselineGrid * 1"
     platforms:
       web: "--space-100"
-      ios: "spaceInset100"  # DesignTokens static let name
-      android: "space_100"  # DesignTokens const val name
+      ios: "DesignTokens.space100"
+      android: "DesignTokens.space_100"
   space150:
     family: spacing
     value: 12
     formula: "space100 * 1.5"
     platforms:
       web: "--space-150"
-      ios: "space150"
-      android: "space_150"
+      ios: "DesignTokens.space150"
+      android: "DesignTokens.space_150"
   cyan300:
     family: color
     value: "rgba(0, 240, 255, 1)"
     formula: null
     platforms:
       web: "--cyan-300"
-      ios: "cyan300"
-      android: "cyan_300"
+      ios: "DesignTokens.cyan300"
+      android: "DesignTokens.cyan_300"
 ```
 
 **semantics.yaml**:
@@ -74,8 +74,8 @@ tokens:
     themeVarying: true
     platforms:
       web: "--color-action-primary"
-      ios: "colorActionPrimary"  # Theme protocol property
-      android: "colorActionPrimary"  # Theme data class property
+      ios: "theme.colorActionPrimary"
+      android: "theme.colorActionPrimary"
     consumers:
       - Button-CTA
       - Button-Icon
@@ -87,8 +87,8 @@ tokens:
     themeVarying: false
     platforms:
       web: "--space-inset-200"
-      ios: "spaceInset200"  # DesignTokens static let
-      android: "space_inset_200"  # DesignTokens const val
+      ios: "DesignTokens.spaceInset200"
+      android: "DesignTokens.space_inset_200"
     consumers:
       - Container-Base
       - Container-Card-Base
