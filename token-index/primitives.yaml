@@ -1,0 +1,2061 @@
+tokens:
+  space000:
+    family: spacing
+    value: 0
+    formula: base × 0 = 8 × 0 = 0
+    platforms:
+      web: '--space-000'
+      ios: space000
+      android: space_000
+  space025:
+    family: spacing
+    value: 2
+    formula: base × 0.25 = 8 × 0.25 = 2
+    platforms:
+      web: '--space-025'
+      ios: space025
+      android: space_025
+  space050:
+    family: spacing
+    value: 4
+    formula: base × 0.5 = 8 × 0.5 = 4
+    platforms:
+      web: '--space-050'
+      ios: space050
+      android: space_050
+  space075:
+    family: spacing
+    value: 6
+    formula: space100 × 0.75
+    platforms:
+      web: '--space-075'
+      ios: space075
+      android: space_075
+  space100:
+    family: spacing
+    value: 8
+    formula: base × 1 = 8 × 1 = 8
+    platforms:
+      web: '--space-100'
+      ios: space100
+      android: space_100
+  space125:
+    family: spacing
+    value: 10
+    formula: space100 × 1.25
+    platforms:
+      web: '--space-125'
+      ios: space125
+      android: space_125
+  space150:
+    family: spacing
+    value: 12
+    formula: base × 1.5 = 8 × 1.5 = 12
+    platforms:
+      web: '--space-150'
+      ios: space150
+      android: space_150
+  space200:
+    family: spacing
+    value: 16
+    formula: base × 2 = 8 × 2 = 16
+    platforms:
+      web: '--space-200'
+      ios: space200
+      android: space_200
+  space250:
+    family: spacing
+    value: 20
+    formula: space100 × 2.5
+    platforms:
+      web: '--space-250'
+      ios: space250
+      android: space_250
+  space300:
+    family: spacing
+    value: 24
+    formula: base × 3 = 8 × 3 = 24
+    platforms:
+      web: '--space-300'
+      ios: space300
+      android: space_300
+  space400:
+    family: spacing
+    value: 32
+    formula: base × 4 = 8 × 4 = 32
+    platforms:
+      web: '--space-400'
+      ios: space400
+      android: space_400
+  space500:
+    family: spacing
+    value: 40
+    formula: base × 5 = 8 × 5 = 40
+    platforms:
+      web: '--space-500'
+      ios: space500
+      android: space_500
+  space600:
+    family: spacing
+    value: 48
+    formula: base × 6 = 8 × 6 = 48
+    platforms:
+      web: '--space-600'
+      ios: space600
+      android: space_600
+  space700:
+    family: spacing
+    value: 56
+    formula: base × 7 = 8 × 7 = 56
+    platforms:
+      web: '--space-700'
+      ios: space700
+      android: space_700
+  space800:
+    family: spacing
+    value: 64
+    formula: base × 8 = 8 × 8 = 64
+    platforms:
+      web: '--space-800'
+      ios: space800
+      android: space_800
+  fontSize050:
+    family: fontSize
+    value: 0.8125
+    formula: base ÷ (1.125²) = 16 ÷ 1.266 ≈ 13
+    platforms:
+      web: '--font-size-050'
+      ios: fontSize050
+      android: font_size_050
+  fontSize075:
+    family: fontSize
+    value: 0.875
+    formula: base ÷ 1.125 = 16 ÷ 1.125 ≈ 14
+    platforms:
+      web: '--font-size-075'
+      ios: fontSize075
+      android: font_size_075
+  fontSize100:
+    family: fontSize
+    value: 1
+    formula: base × 1 = 16 × 1 = 16
+    platforms:
+      web: '--font-size-100'
+      ios: fontSize100
+      android: font_size_100
+  fontSize125:
+    family: fontSize
+    value: 1.125
+    formula: base × 1.125 = 16 × 1.125 = 18
+    platforms:
+      web: '--font-size-125'
+      ios: fontSize125
+      android: font_size_125
+  fontSize150:
+    family: fontSize
+    value: 1.25
+    formula: base × (1.125²) = 16 × 1.266 ≈ 20
+    platforms:
+      web: '--font-size-150'
+      ios: fontSize150
+      android: font_size_150
+  fontSize200:
+    family: fontSize
+    value: 1.4375
+    formula: base × (1.125³) = 16 × 1.424 ≈ 23
+    platforms:
+      web: '--font-size-200'
+      ios: fontSize200
+      android: font_size_200
+  fontSize300:
+    family: fontSize
+    value: 1.625
+    formula: base × (1.125⁴) = 16 × 1.602 ≈ 26
+    platforms:
+      web: '--font-size-300'
+      ios: fontSize300
+      android: font_size_300
+  fontSize400:
+    family: fontSize
+    value: 1.8125
+    formula: base × (1.125⁵) = 16 × 1.802 ≈ 29
+    platforms:
+      web: '--font-size-400'
+      ios: fontSize400
+      android: font_size_400
+  fontSize500:
+    family: fontSize
+    value: 2.0625
+    formula: base × (1.125⁶) = 16 × 2.027 ≈ 32.4 → 33 (adjusted for 4pt subgrid)
+    platforms:
+      web: '--font-size-500'
+      ios: fontSize500
+      android: font_size_500
+  fontSize600:
+    family: fontSize
+    value: 2.3125
+    formula: base × (1.125⁷) = 16 × 2.281 ≈ 36.5 → 37 (adjusted for 4pt subgrid)
+    platforms:
+      web: '--font-size-600'
+      ios: fontSize600
+      android: font_size_600
+  fontSize700:
+    family: fontSize
+    value: 2.625
+    formula: base × (1.125⁸) = 16 × 2.566 ≈ 41.1 → 42 (adjusted for 4pt subgrid)
+    platforms:
+      web: '--font-size-700'
+      ios: fontSize700
+      android: font_size_700
+  fontFamilySystem:
+    family: fontFamily
+    value: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+    formula: N/A - Categorical value
+    platforms:
+      web: '--font-family-system'
+      ios: fontFamilySystem
+      android: font_family_system
+  fontFamilyMono:
+    family: fontFamily
+    value: 'SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'
+    formula: N/A - Categorical value
+    platforms:
+      web: '--font-family-mono'
+      ios: fontFamilyMono
+      android: font_family_mono
+  fontFamilyDisplay:
+    family: fontFamily
+    value: 'Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+    formula: N/A - Categorical value
+    platforms:
+      web: '--font-family-display'
+      ios: fontFamilyDisplay
+      android: font_family_display
+  fontFamilyBody:
+    family: fontFamily
+    value: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+    formula: N/A - Categorical value
+    platforms:
+      web: '--font-family-body'
+      ios: fontFamilyBody
+      android: font_family_body
+  fontWeight100:
+    family: fontWeight
+    value: 100
+    formula: base × 0.25 = 400 × 0.25 = 100
+    platforms:
+      web: '--font-weight-100'
+      ios: fontWeight100
+      android: font_weight_100
+  fontWeight200:
+    family: fontWeight
+    value: 200
+    formula: base × 0.5 = 400 × 0.5 = 200
+    platforms:
+      web: '--font-weight-200'
+      ios: fontWeight200
+      android: font_weight_200
+  fontWeight300:
+    family: fontWeight
+    value: 300
+    formula: base × 0.75 = 400 × 0.75 = 300
+    platforms:
+      web: '--font-weight-300'
+      ios: fontWeight300
+      android: font_weight_300
+  fontWeight400:
+    family: fontWeight
+    value: 400
+    formula: base × 1 = 400 × 1 = 400
+    platforms:
+      web: '--font-weight-400'
+      ios: fontWeight400
+      android: font_weight_400
+  fontWeight500:
+    family: fontWeight
+    value: 500
+    formula: base × 1.25 = 400 × 1.25 = 500
+    platforms:
+      web: '--font-weight-500'
+      ios: fontWeight500
+      android: font_weight_500
+  fontWeight600:
+    family: fontWeight
+    value: 600
+    formula: base × 1.5 = 400 × 1.5 = 600
+    platforms:
+      web: '--font-weight-600'
+      ios: fontWeight600
+      android: font_weight_600
+  fontWeight700:
+    family: fontWeight
+    value: 700
+    formula: base × 1.75 = 400 × 1.75 = 700
+    platforms:
+      web: '--font-weight-700'
+      ios: fontWeight700
+      android: font_weight_700
+  fontWeight800:
+    family: fontWeight
+    value: 800
+    formula: base × 2 = 400 × 2 = 800
+    platforms:
+      web: '--font-weight-800'
+      ios: fontWeight800
+      android: font_weight_800
+  fontWeight900:
+    family: fontWeight
+    value: 900
+    formula: base × 2.25 = 400 × 2.25 = 900
+    platforms:
+      web: '--font-weight-900'
+      ios: fontWeight900
+      android: font_weight_900
+  lineHeight050:
+    family: lineHeight
+    value: 1.538
+    formula: fontSize050 × baseValue ≈ 20
+    platforms:
+      web: '--line-height-050'
+      ios: lineHeight050
+      android: line_height_050
+  lineHeight075:
+    family: lineHeight
+    value: 1.429
+    formula: fontSize075 × baseValue ≈ 20
+    platforms:
+      web: '--line-height-075'
+      ios: lineHeight075
+      android: line_height_075
+  lineHeight100:
+    family: lineHeight
+    value: 1.5
+    formula: fontSize100 × baseValue = 24
+    platforms:
+      web: '--line-height-100'
+      ios: lineHeight100
+      android: line_height_100
+  lineHeight125:
+    family: lineHeight
+    value: 1.556
+    formula: fontSize125 × baseValue ≈ 28
+    platforms:
+      web: '--line-height-125'
+      ios: lineHeight125
+      android: line_height_125
+  lineHeight150:
+    family: lineHeight
+    value: 1.4
+    formula: fontSize150 × baseValue = 28
+    platforms:
+      web: '--line-height-150'
+      ios: lineHeight150
+      android: line_height_150
+  lineHeight200:
+    family: lineHeight
+    value: 1.391
+    formula: fontSize200 × baseValue ≈ 32
+    platforms:
+      web: '--line-height-200'
+      ios: lineHeight200
+      android: line_height_200
+  lineHeight300:
+    family: lineHeight
+    value: 1.231
+    formula: fontSize300 × baseValue ≈ 32
+    platforms:
+      web: '--line-height-300'
+      ios: lineHeight300
+      android: line_height_300
+  lineHeight400:
+    family: lineHeight
+    value: 1.241
+    formula: fontSize400 × baseValue ≈ 36
+    platforms:
+      web: '--line-height-400'
+      ios: lineHeight400
+      android: line_height_400
+  lineHeight500:
+    family: lineHeight
+    value: 1.212
+    formula: fontSize500 × baseValue ≈ 40
+    platforms:
+      web: '--line-height-500'
+      ios: lineHeight500
+      android: line_height_500
+  lineHeight600:
+    family: lineHeight
+    value: 1.19
+    formula: fontSize600 × baseValue ≈ 44
+    platforms:
+      web: '--line-height-600'
+      ios: lineHeight600
+      android: line_height_600
+  lineHeight700:
+    family: lineHeight
+    value: 1.143
+    formula: fontSize700 × baseValue ≈ 48
+    platforms:
+      web: '--line-height-700'
+      ios: lineHeight700
+      android: line_height_700
+  letterSpacing025:
+    family: letterSpacing
+    value: -0.025
+    formula: base - 0.025 = 0 - 0.025 = -0.025
+    platforms:
+      web: '--letter-spacing-025'
+      ios: letterSpacing025
+      android: letter_spacing_025
+  letterSpacing050:
+    family: letterSpacing
+    value: -0.05
+    formula: base - 0.05 = 0 - 0.05 = -0.05
+    platforms:
+      web: '--letter-spacing-050'
+      ios: letterSpacing050
+      android: letter_spacing_050
+  letterSpacing100:
+    family: letterSpacing
+    value: 0
+    formula: base × 1 = 0 × 1 = 0
+    platforms:
+      web: '--letter-spacing-100'
+      ios: letterSpacing100
+      android: letter_spacing_100
+  letterSpacing125:
+    family: letterSpacing
+    value: 0.025
+    formula: base + 0.025 = 0 + 0.025 = 0.025
+    platforms:
+      web: '--letter-spacing-125'
+      ios: letterSpacing125
+      android: letter_spacing_125
+  letterSpacing150:
+    family: letterSpacing
+    value: 0.05
+    formula: base + 0.05 = 0 + 0.05 = 0.05
+    platforms:
+      web: '--letter-spacing-150'
+      ios: letterSpacing150
+      android: letter_spacing_150
+  radius000:
+    family: radius
+    value: 0
+    formula: base × 0 = 8 × 0 = 0
+    platforms:
+      web: '--radius-000'
+      ios: radius000
+      android: radius_000
+  radius025:
+    family: radius
+    value: 2
+    formula: base × 0.25 = 8 × 0.25 = 2
+    platforms:
+      web: '--radius-025'
+      ios: radius025
+      android: radius_025
+  radius050:
+    family: radius
+    value: 4
+    formula: base × 0.5 = 8 × 0.5 = 4
+    platforms:
+      web: '--radius-050'
+      ios: radius050
+      android: radius_050
+  radius075:
+    family: radius
+    value: 6
+    formula: base × 0.75 = 8 × 0.75 = 6
+    platforms:
+      web: '--radius-075'
+      ios: radius075
+      android: radius_075
+  radius100:
+    family: radius
+    value: 8
+    formula: base × 1 = 8 × 1 = 8
+    platforms:
+      web: '--radius-100'
+      ios: radius100
+      android: radius_100
+  radius125:
+    family: radius
+    value: 10
+    formula: base × 1.25 = 8 × 1.25 = 10
+    platforms:
+      web: '--radius-125'
+      ios: radius125
+      android: radius_125
+  radius150:
+    family: radius
+    value: 12
+    formula: base × 1.5 = 8 × 1.5 = 12
+    platforms:
+      web: '--radius-150'
+      ios: radius150
+      android: radius_150
+  radius200:
+    family: radius
+    value: 16
+    formula: base × 2 = 8 × 2 = 16
+    platforms:
+      web: '--radius-200'
+      ios: radius200
+      android: radius_200
+  radius250:
+    family: radius
+    value: 20
+    formula: base × 2.5 = 8 × 2.5 = 20
+    platforms:
+      web: '--radius-250'
+      ios: radius250
+      android: radius_250
+  radius300:
+    family: radius
+    value: 24
+    formula: base × 3 = 8 × 3 = 24
+    platforms:
+      web: '--radius-300'
+      ios: radius300
+      android: radius_300
+  radius400:
+    family: radius
+    value: 32
+    formula: base × 4 = 8 × 4 = 32
+    platforms:
+      web: '--radius-400'
+      ios: radius400
+      android: radius_400
+  radiusMax:
+    family: radius
+    value: 9999
+    formula: special case = 9999 (effectively infinite)
+    platforms:
+      web: '--radius-max'
+      ios: radiusMax
+      android: radius_max
+  radiusHalf:
+    family: radius
+    value: 50%
+    formula: percentage = 50% (creates circle from square)
+    platforms:
+      web: '--radius-half'
+      ios: radiusHalf
+      android: radius_half
+  densityCompact:
+    family: density
+    value: 0.75
+    formula: base × 0.75 = 1.0 × 0.75 = 0.75
+    platforms:
+      web: '--density-compact'
+      ios: densityCompact
+      android: density_compact
+  densityDefault:
+    family: density
+    value: 1
+    formula: base × 1 = 1.0 × 1 = 1.0
+    platforms:
+      web: '--density-default'
+      ios: densityDefault
+      android: density_default
+  densityComfortable:
+    family: density
+    value: 1.25
+    formula: base × 1.25 = 1.0 × 1.25 = 1.25
+    platforms:
+      web: '--density-comfortable'
+      ios: densityComfortable
+      android: density_comfortable
+  densitySpacious:
+    family: density
+    value: 1.5
+    formula: base × 1.5 = 1.0 × 1.5 = 1.5
+    platforms:
+      web: '--density-spacious'
+      ios: densitySpacious
+      android: density_spacious
+  tapAreaMinimum:
+    family: tapArea
+    value: 44
+    formula: base × 1 = 44 × 1 = 44
+    platforms:
+      web: '--tap-area-minimum'
+      ios: tapAreaMinimum
+      android: tap_area_minimum
+  tapAreaRecommended:
+    family: tapArea
+    value: 48
+    formula: base × 1.09 = 44 × 1.09 ≈ 48
+    platforms:
+      web: '--tap-area-recommended'
+      ios: tapAreaRecommended
+      android: tap_area_recommended
+  tapAreaComfortable:
+    family: tapArea
+    value: 56
+    formula: base × 1.27 = 44 × 1.27 ≈ 56
+    platforms:
+      web: '--tap-area-comfortable'
+      ios: tapAreaComfortable
+      android: tap_area_comfortable
+  tapAreaGenerous:
+    family: tapArea
+    value: 64
+    formula: base × 1.45 = 44 × 1.45 ≈ 64
+    platforms:
+      web: '--tap-area-generous'
+      ios: tapAreaGenerous
+      android: tap_area_generous
+  gray100:
+    family: color
+    value:
+      light:
+        base: 'rgba(178, 188, 196, 1)'
+        wcag: 'rgba(178, 188, 196, 1)'
+      dark:
+        base: 'rgba(178, 188, 196, 1)'
+        wcag: 'rgba(178, 188, 196, 1)'
+    formula: Systematic gray scale progression - lightest
+    platforms:
+      web: '--gray-100'
+      ios: gray100
+      android: gray_100
+  gray200:
+    family: color
+    value:
+      light:
+        base: 'rgba(94, 112, 124, 1)'
+        wcag: 'rgba(94, 112, 124, 1)'
+      dark:
+        base: 'rgba(94, 112, 124, 1)'
+        wcag: 'rgba(94, 112, 124, 1)'
+    formula: Systematic gray scale progression - medium-light
+    platforms:
+      web: '--gray-200'
+      ios: gray200
+      android: gray_200
+  gray300:
+    family: color
+    value:
+      light:
+        base: 'rgba(38, 50, 58, 1)'
+        wcag: 'rgba(38, 50, 58, 1)'
+      dark:
+        base: 'rgba(38, 50, 58, 1)'
+        wcag: 'rgba(38, 50, 58, 1)'
+    formula: Systematic gray scale progression - medium
+    platforms:
+      web: '--gray-300'
+      ios: gray300
+      android: gray_300
+  gray400:
+    family: color
+    value:
+      light:
+        base: 'rgba(24, 34, 40, 1)'
+        wcag: 'rgba(24, 34, 40, 1)'
+      dark:
+        base: 'rgba(24, 34, 40, 1)'
+        wcag: 'rgba(24, 34, 40, 1)'
+    formula: Systematic gray scale progression - dark
+    platforms:
+      web: '--gray-400'
+      ios: gray400
+      android: gray_400
+  gray500:
+    family: color
+    value:
+      light:
+        base: 'rgba(16, 22, 26, 1)'
+        wcag: 'rgba(16, 22, 26, 1)'
+      dark:
+        base: 'rgba(16, 22, 26, 1)'
+        wcag: 'rgba(16, 22, 26, 1)'
+    formula: Systematic gray scale progression - darkest
+    platforms:
+      web: '--gray-500'
+      ios: gray500
+      android: gray_500
+  black100:
+    family: color
+    value:
+      light:
+        base: 'rgba(58, 58, 69, 1)'
+        wcag: 'rgba(82, 82, 92, 1)'
+      dark:
+        base: 'rgba(58, 58, 69, 1)'
+        wcag: 'rgba(82, 82, 92, 1)'
+    formula: Systematic black scale progression - lightest
+    platforms:
+      web: '--black-100'
+      ios: black100
+      android: black_100
+  black200:
+    family: color
+    value:
+      light:
+        base: 'rgba(34, 34, 42, 1)'
+        wcag: 'rgba(46, 46, 56, 1)'
+      dark:
+        base: 'rgba(34, 34, 42, 1)'
+        wcag: 'rgba(46, 46, 56, 1)'
+    formula: Systematic black scale progression - medium
+    platforms:
+      web: '--black-200'
+      ios: black200
+      android: black_200
+  black300:
+    family: color
+    value:
+      light:
+        base: 'rgba(10, 10, 15, 1)'
+        wcag: 'rgba(10, 10, 15, 1)'
+      dark:
+        base: 'rgba(10, 10, 15, 1)'
+        wcag: 'rgba(10, 10, 15, 1)'
+    formula: Systematic black scale progression - dark
+    platforms:
+      web: '--black-300'
+      ios: black300
+      android: black_300
+  black400:
+    family: color
+    value:
+      light:
+        base: 'rgba(6, 6, 10, 1)'
+        wcag: 'rgba(6, 6, 10, 1)'
+      dark:
+        base: 'rgba(6, 6, 10, 1)'
+        wcag: 'rgba(6, 6, 10, 1)'
+    formula: Systematic black scale progression - very dark
+    platforms:
+      web: '--black-400'
+      ios: black400
+      android: black_400
+  black500:
+    family: color
+    value:
+      light:
+        base: 'rgba(0, 0, 0, 1)'
+        wcag: 'rgba(0, 0, 0, 1)'
+      dark:
+        base: 'rgba(0, 0, 0, 1)'
+        wcag: 'rgba(0, 0, 0, 1)'
+    formula: Systematic black scale progression - pure black
+    platforms:
+      web: '--black-500'
+      ios: black500
+      android: black_500
+  white100:
+    family: color
+    value:
+      light:
+        base: 'rgba(255, 255, 255, 1)'
+        wcag: 'rgba(255, 255, 255, 1)'
+      dark:
+        base: 'rgba(255, 255, 255, 1)'
+        wcag: 'rgba(255, 255, 255, 1)'
+    formula: Systematic white scale progression - pure white
+    platforms:
+      web: '--white-100'
+      ios: white100
+      android: white_100
+  white200:
+    family: color
+    value:
+      light:
+        base: 'rgba(245, 245, 250, 1)'
+        wcag: 'rgba(245, 245, 250, 1)'
+      dark:
+        base: 'rgba(245, 245, 250, 1)'
+        wcag: 'rgba(245, 245, 250, 1)'
+    formula: Systematic white scale progression - near white
+    platforms:
+      web: '--white-200'
+      ios: white200
+      android: white_200
+  white300:
+    family: color
+    value:
+      light:
+        base: 'rgba(232, 232, 240, 1)'
+        wcag: 'rgba(232, 232, 240, 1)'
+      dark:
+        base: 'rgba(232, 232, 240, 1)'
+        wcag: 'rgba(232, 232, 240, 1)'
+    formula: Systematic white scale progression - light gray-white
+    platforms:
+      web: '--white-300'
+      ios: white300
+      android: white_300
+  white400:
+    family: color
+    value:
+      light:
+        base: 'rgba(197, 197, 213, 1)'
+        wcag: 'rgba(197, 197, 213, 1)'
+      dark:
+        base: 'rgba(197, 197, 213, 1)'
+        wcag: 'rgba(197, 197, 213, 1)'
+    formula: Systematic white scale progression - medium gray-white
+    platforms:
+      web: '--white-400'
+      ios: white400
+      android: white_400
+  white500:
+    family: color
+    value:
+      light:
+        base: 'rgba(153, 153, 171, 1)'
+        wcag: 'rgba(153, 153, 171, 1)'
+      dark:
+        base: 'rgba(153, 153, 171, 1)'
+        wcag: 'rgba(153, 153, 171, 1)'
+    formula: Systematic white scale progression - dark gray-white
+    platforms:
+      web: '--white-500'
+      ios: white500
+      android: white_500
+  yellow100:
+    family: color
+    value:
+      light:
+        base: 'rgba(254, 251, 204, 1)'
+        wcag: 'rgba(254, 251, 204, 1)'
+      dark:
+        base: 'rgba(254, 251, 204, 1)'
+        wcag: 'rgba(252, 246, 128, 1)'
+    formula: Systematic yellow scale progression - lightest
+    platforms:
+      web: '--yellow-100'
+      ios: yellow100
+      android: yellow_100
+  yellow200:
+    family: color
+    value:
+      light:
+        base: 'rgba(252, 246, 128, 1)'
+        wcag: 'rgba(252, 246, 128, 1)'
+      dark:
+        base: 'rgba(252, 246, 128, 1)'
+        wcag: 'rgba(249, 240, 2, 1)'
+    formula: Systematic yellow scale progression - medium-light
+    platforms:
+      web: '--yellow-200'
+      ios: yellow200
+      android: yellow_200
+  yellow300:
+    family: color
+    value:
+      light:
+        base: 'rgba(249, 240, 2, 1)'
+        wcag: 'rgba(249, 240, 2, 1)'
+      dark:
+        base: 'rgba(249, 240, 2, 1)'
+        wcag: 'rgba(199, 192, 2, 1)'
+    formula: Systematic yellow scale progression - bright
+    platforms:
+      web: '--yellow-300'
+      ios: yellow300
+      android: yellow_300
+  yellow400:
+    family: color
+    value:
+      light:
+        base: 'rgba(199, 192, 2, 1)'
+        wcag: 'rgba(199, 192, 2, 1)'
+      dark:
+        base: 'rgba(199, 192, 2, 1)'
+        wcag: 'rgba(143, 139, 1, 1)'
+    formula: Systematic yellow scale progression - dark
+    platforms:
+      web: '--yellow-400'
+      ios: yellow400
+      android: yellow_400
+  yellow500:
+    family: color
+    value:
+      light:
+        base: 'rgba(143, 139, 1, 1)'
+        wcag: 'rgba(143, 139, 1, 1)'
+      dark:
+        base: 'rgba(143, 139, 1, 1)'
+        wcag: 'rgba(143, 139, 1, 1)'
+    formula: Systematic yellow scale progression - darkest
+    platforms:
+      web: '--yellow-500'
+      ios: yellow500
+      android: yellow_500
+  orange100:
+    family: color
+    value:
+      light:
+        base: 'rgba(255, 229, 220, 1)'
+        wcag: 'rgba(255, 243, 224, 1)'
+      dark:
+        base: 'rgba(255, 229, 220, 1)'
+        wcag: 'rgba(255, 217, 163, 1)'
+    formula: Systematic orange scale progression - lightest
+    platforms:
+      web: '--orange-100'
+      ios: orange100
+      android: orange_100
+  orange200:
+    family: color
+    value:
+      light:
+        base: 'rgba(255, 184, 160, 1)'
+        wcag: 'rgba(245, 158, 0, 1)'
+      dark:
+        base: 'rgba(255, 184, 160, 1)'
+        wcag: 'rgba(255, 184, 77, 1)'
+    formula: Systematic orange scale progression - medium-light
+    platforms:
+      web: '--orange-200'
+      ios: orange200
+      android: orange_200
+  orange300:
+    family: color
+    value:
+      light:
+        base: 'rgba(255, 107, 53, 1)'
+        wcag: 'rgba(184, 117, 0, 1)'
+      dark:
+        base: 'rgba(255, 107, 53, 1)'
+        wcag: 'rgba(217, 149, 0, 1)'
+    formula: Systematic orange scale progression - bright
+    platforms:
+      web: '--orange-300'
+      ios: orange300
+      android: orange_300
+  orange400:
+    family: color
+    value:
+      light:
+        base: 'rgba(204, 85, 41, 1)'
+        wcag: 'rgba(140, 90, 0, 1)'
+      dark:
+        base: 'rgba(204, 85, 41, 1)'
+        wcag: 'rgba(166, 112, 0, 1)'
+    formula: Systematic orange scale progression - dark
+    platforms:
+      web: '--orange-400'
+      ios: orange400
+      android: orange_400
+  orange500:
+    family: color
+    value:
+      light:
+        base: 'rgba(143, 60, 29, 1)'
+        wcag: 'rgba(77, 49, 0, 1)'
+      dark:
+        base: 'rgba(143, 60, 29, 1)'
+        wcag: 'rgba(92, 61, 0, 1)'
+    formula: Systematic orange scale progression - darkest
+    platforms:
+      web: '--orange-500'
+      ios: orange500
+      android: orange_500
+  purple100:
+    family: color
+    value:
+      light:
+        base: 'rgba(243, 224, 255, 1)'
+        wcag: 'rgba(243, 224, 255, 1)'
+      dark:
+        base: 'rgba(243, 224, 255, 1)'
+        wcag: 'rgba(243, 224, 255, 1)'
+    formula: Systematic purple scale progression - lightest
+    platforms:
+      web: '--purple-100'
+      ios: purple100
+      android: purple_100
+  purple200:
+    family: color
+    value:
+      light:
+        base: 'rgba(217, 138, 255, 1)'
+        wcag: 'rgba(217, 138, 255, 1)'
+      dark:
+        base: 'rgba(217, 138, 255, 1)'
+        wcag: 'rgba(217, 138, 255, 1)'
+    formula: Systematic purple scale progression - medium-light
+    platforms:
+      web: '--purple-200'
+      ios: purple200
+      android: purple_200
+  purple300:
+    family: color
+    value:
+      light:
+        base: 'rgba(176, 38, 255, 1)'
+        wcag: 'rgba(176, 38, 255, 1)'
+      dark:
+        base: 'rgba(176, 38, 255, 1)'
+        wcag: 'rgba(176, 38, 255, 1)'
+    formula: Systematic purple scale progression - primary brand
+    platforms:
+      web: '--purple-300'
+      ios: purple300
+      android: purple_300
+  purple400:
+    family: color
+    value:
+      light:
+        base: 'rgba(141, 30, 204, 1)'
+        wcag: 'rgba(141, 30, 204, 1)'
+      dark:
+        base: 'rgba(141, 30, 204, 1)'
+        wcag: 'rgba(141, 30, 204, 1)'
+    formula: Systematic purple scale progression - dark
+    platforms:
+      web: '--purple-400'
+      ios: purple400
+      android: purple_400
+  purple500:
+    family: color
+    value:
+      light:
+        base: 'rgba(99, 21, 143, 1)'
+        wcag: 'rgba(99, 21, 143, 1)'
+      dark:
+        base: 'rgba(99, 21, 143, 1)'
+        wcag: 'rgba(99, 21, 143, 1)'
+    formula: Systematic purple scale progression - darkest
+    platforms:
+      web: '--purple-500'
+      ios: purple500
+      android: purple_500
+  pink100:
+    family: color
+    value:
+      light:
+        base: 'rgba(255, 218, 232, 1)'
+        wcag: 'rgba(252, 228, 236, 1)'
+      dark:
+        base: 'rgba(255, 218, 232, 1)'
+        wcag: 'rgba(255, 179, 209, 1)'
+    formula: Systematic pink scale progression - lightest
+    platforms:
+      web: '--pink-100'
+      ios: pink100
+      android: pink_100
+  pink200:
+    family: color
+    value:
+      light:
+        base: 'rgba(255, 130, 180, 1)'
+        wcag: 'rgba(233, 30, 99, 1)'
+      dark:
+        base: 'rgba(255, 130, 180, 1)'
+        wcag: 'rgba(255, 107, 163, 1)'
+    formula: Systematic pink scale progression - medium-light
+    platforms:
+      web: '--pink-200'
+      ios: pink200
+      android: pink_200
+  pink300:
+    family: color
+    value:
+      light:
+        base: 'rgba(255, 42, 109, 1)'
+        wcag: 'rgba(194, 24, 91, 1)'
+      dark:
+        base: 'rgba(255, 42, 109, 1)'
+        wcag: 'rgba(230, 48, 117, 1)'
+    formula: Systematic pink scale progression - base
+    platforms:
+      web: '--pink-300'
+      ios: pink300
+      android: pink_300
+  pink400:
+    family: color
+    value:
+      light:
+        base: 'rgba(204, 34, 87, 1)'
+        wcag: 'rgba(136, 14, 79, 1)'
+      dark:
+        base: 'rgba(204, 34, 87, 1)'
+        wcag: 'rgba(179, 38, 89, 1)'
+    formula: Systematic pink scale progression - dark
+    platforms:
+      web: '--pink-400'
+      ios: pink400
+      android: pink_400
+  pink500:
+    family: color
+    value:
+      light:
+        base: 'rgba(128, 21, 55, 1)'
+        wcag: 'rgba(77, 8, 41, 1)'
+      dark:
+        base: 'rgba(128, 21, 55, 1)'
+        wcag: 'rgba(92, 26, 51, 1)'
+    formula: Systematic pink scale progression - darkest
+    platforms:
+      web: '--pink-500'
+      ios: pink500
+      android: pink_500
+  green100:
+    family: color
+    value:
+      light:
+        base: 'rgba(230, 255, 245, 1)'
+        wcag: 'rgba(232, 245, 233, 1)'
+      dark:
+        base: 'rgba(230, 255, 245, 1)'
+        wcag: 'rgba(179, 255, 179, 1)'
+    formula: Systematic green scale progression - lightest
+    platforms:
+      web: '--green-100'
+      ios: green100
+      android: green_100
+  green200:
+    family: color
+    value:
+      light:
+        base: 'rgba(128, 255, 187, 1)'
+        wcag: 'rgba(76, 175, 80, 1)'
+      dark:
+        base: 'rgba(128, 255, 187, 1)'
+        wcag: 'rgba(102, 255, 102, 1)'
+    formula: Systematic green scale progression - medium-light
+    platforms:
+      web: '--green-200'
+      ios: green200
+      android: green_200
+  green300:
+    family: color
+    value:
+      light:
+        base: 'rgba(51, 255, 153, 1)'
+        wcag: 'rgba(56, 142, 60, 1)'
+      dark:
+        base: 'rgba(51, 255, 153, 1)'
+        wcag: 'rgba(51, 224, 51, 1)'
+    formula: Systematic green scale progression - bright
+    platforms:
+      web: '--green-300'
+      ios: green300
+      android: green_300
+  green400:
+    family: color
+    value:
+      light:
+        base: 'rgba(0, 255, 136, 1)'
+        wcag: 'rgba(27, 94, 32, 1)'
+      dark:
+        base: 'rgba(0, 255, 136, 1)'
+        wcag: 'rgba(38, 179, 38, 1)'
+    formula: Systematic green scale progression - strong
+    platforms:
+      web: '--green-400'
+      ios: green400
+      android: green_400
+  green500:
+    family: color
+    value:
+      light:
+        base: 'rgba(0, 204, 110, 1)'
+        wcag: 'rgba(13, 48, 16, 1)'
+      dark:
+        base: 'rgba(0, 204, 110, 1)'
+        wcag: 'rgba(20, 89, 20, 1)'
+    formula: Systematic green scale progression - darkest/glow
+    platforms:
+      web: '--green-500'
+      ios: green500
+      android: green_500
+  cyan100:
+    family: color
+    value:
+      light:
+        base: 'rgba(204, 251, 255, 1)'
+        wcag: 'rgba(204, 251, 255, 1)'
+      dark:
+        base: 'rgba(204, 251, 255, 1)'
+        wcag: 'rgba(204, 251, 255, 1)'
+    formula: Systematic cyan scale progression - lightest
+    platforms:
+      web: '--cyan-100'
+      ios: cyan100
+      android: cyan_100
+  cyan200:
+    family: color
+    value:
+      light:
+        base: 'rgba(128, 246, 255, 1)'
+        wcag: 'rgba(128, 246, 255, 1)'
+      dark:
+        base: 'rgba(128, 246, 255, 1)'
+        wcag: 'rgba(128, 246, 255, 1)'
+    formula: Systematic cyan scale progression - medium-light
+    platforms:
+      web: '--cyan-200'
+      ios: cyan200
+      android: cyan_200
+  cyan300:
+    family: color
+    value:
+      light:
+        base: 'rgba(0, 240, 255, 1)'
+        wcag: 'rgba(0, 240, 255, 1)'
+      dark:
+        base: 'rgba(0, 240, 255, 1)'
+        wcag: 'rgba(0, 240, 255, 1)'
+    formula: Systematic cyan scale progression - tech primary
+    platforms:
+      web: '--cyan-300'
+      ios: cyan300
+      android: cyan_300
+  cyan400:
+    family: color
+    value:
+      light:
+        base: 'rgba(0, 192, 204, 1)'
+        wcag: 'rgba(0, 192, 204, 1)'
+      dark:
+        base: 'rgba(0, 192, 204, 1)'
+        wcag: 'rgba(0, 192, 204, 1)'
+    formula: Systematic cyan scale progression - dark
+    platforms:
+      web: '--cyan-400'
+      ios: cyan400
+      android: cyan_400
+  cyan500:
+    family: color
+    value:
+      light:
+        base: 'rgba(0, 136, 143, 1)'
+        wcag: 'rgba(0, 136, 143, 1)'
+      dark:
+        base: 'rgba(0, 136, 143, 1)'
+        wcag: 'rgba(0, 136, 143, 1)'
+    formula: Systematic cyan scale progression - darkest
+    platforms:
+      web: '--cyan-500'
+      ios: cyan500
+      android: cyan_500
+  teal100:
+    family: color
+    value:
+      light:
+        base: 'rgba(217, 232, 234, 1)'
+        wcag: 'rgba(217, 232, 234, 1)'
+      dark:
+        base: 'rgba(217, 232, 234, 1)'
+        wcag: 'rgba(217, 232, 234, 1)'
+    formula: Systematic teal scale progression - lightest
+    platforms:
+      web: '--teal-100'
+      ios: teal100
+      android: teal_100
+  teal200:
+    family: color
+    value:
+      light:
+        base: 'rgba(77, 155, 165, 1)'
+        wcag: 'rgba(77, 155, 165, 1)'
+      dark:
+        base: 'rgba(77, 155, 165, 1)'
+        wcag: 'rgba(77, 155, 165, 1)'
+    formula: Systematic teal scale progression - medium-light
+    platforms:
+      web: '--teal-200'
+      ios: teal200
+      android: teal_200
+  teal300:
+    family: color
+    value:
+      light:
+        base: 'rgba(26, 83, 92, 1)'
+        wcag: 'rgba(26, 83, 92, 1)'
+      dark:
+        base: 'rgba(26, 83, 92, 1)'
+        wcag: 'rgba(0, 240, 255, 1)'
+    formula: Systematic teal scale progression - secondary UI
+    platforms:
+      web: '--teal-300'
+      ios: teal300
+      android: teal_300
+  teal400:
+    family: color
+    value:
+      light:
+        base: 'rgba(21, 66, 74, 1)'
+        wcag: 'rgba(21, 66, 74, 1)'
+      dark:
+        base: 'rgba(21, 66, 74, 1)'
+        wcag: 'rgba(21, 66, 74, 1)'
+    formula: Systematic teal scale progression - dark
+    platforms:
+      web: '--teal-400'
+      ios: teal400
+      android: teal_400
+  teal500:
+    family: color
+    value:
+      light:
+        base: 'rgba(15, 46, 51, 1)'
+        wcag: 'rgba(15, 46, 51, 1)'
+      dark:
+        base: 'rgba(15, 46, 51, 1)'
+        wcag: 'rgba(15, 46, 51, 1)'
+    formula: Systematic teal scale progression - darkest
+    platforms:
+      web: '--teal-500'
+      ios: teal500
+      android: teal_500
+  shadowBlack100:
+    family: color
+    value:
+      light:
+        base: 'rgba(0, 0, 0, 1)'
+        wcag: 'rgba(0, 0, 0, 1)'
+      dark:
+        base: 'rgba(0, 0, 0, 1)'
+        wcag: 'rgba(0, 0, 0, 1)'
+    formula: 'Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic'
+    platforms:
+      web: '--shadow-black-100'
+      ios: shadowBlack100
+      android: shadow_black_100
+  shadowBlue100:
+    family: color
+    value:
+      light:
+        base: 'rgba(20, 25, 40, 1)'
+        wcag: 'rgba(20, 25, 40, 1)'
+      dark:
+        base: 'rgba(20, 25, 40, 1)'
+        wcag: 'rgba(20, 25, 40, 1)'
+    formula: Systematic shadow color family - blue-tinted gray for sunrise/sunset lighting - mode-agnostic
+    platforms:
+      web: '--shadow-blue-100'
+      ios: shadowBlue100
+      android: shadow_blue_100
+  shadowOrange100:
+    family: color
+    value:
+      light:
+        base: 'rgba(25, 20, 15, 1)'
+        wcag: 'rgba(25, 20, 15, 1)'
+      dark:
+        base: 'rgba(25, 20, 15, 1)'
+        wcag: 'rgba(25, 20, 15, 1)'
+    formula: Systematic shadow color family - warm-tinted gray for cool lighting environments - mode-agnostic
+    platforms:
+      web: '--shadow-orange-100'
+      ios: shadowOrange100
+      android: shadow_orange_100
+  shadowGray100:
+    family: color
+    value:
+      light:
+        base: 'rgba(15, 20, 30, 1)'
+        wcag: 'rgba(15, 20, 30, 1)'
+      dark:
+        base: 'rgba(15, 20, 30, 1)'
+        wcag: 'rgba(15, 20, 30, 1)'
+    formula: Systematic shadow color family - blue-gray for ambient/overcast conditions - mode-agnostic
+    platforms:
+      web: '--shadow-gray-100'
+      ios: shadowGray100
+      android: shadow_gray_100
+  borderWidth000:
+    family: borderWidth
+    value: 0
+    formula: base × 0 = 1 × 0 = 0
+    platforms:
+      web: '--border-width-000'
+      ios: borderWidth000
+      android: border_width_000
+  borderWidth100:
+    family: borderWidth
+    value: 1
+    formula: base × 1 = 1 × 1 = 1
+    platforms:
+      web: '--border-width-100'
+      ios: borderWidth100
+      android: border_width_100
+  borderWidth200:
+    family: borderWidth
+    value: 2
+    formula: base × 2 = 1 × 2 = 2
+    platforms:
+      web: '--border-width-200'
+      ios: borderWidth200
+      android: border_width_200
+  borderWidth400:
+    family: borderWidth
+    value: 4
+    formula: base × 4 = 1 × 4 = 4
+    platforms:
+      web: '--border-width-400'
+      ios: borderWidth400
+      android: border_width_400
+  shadowOffsetX.100:
+    family: shadow
+    value: 4
+    formula: base × 1 = 4 × 1 = 4
+    platforms:
+      web: '--shadow-offset-x-100'
+      ios: shadowOffsetX100
+      android: shadow_offset_x_100
+  shadowOffsetX.150:
+    family: shadow
+    value: 6
+    formula: base × 1.5 = 4 × 1.5 = 6
+    platforms:
+      web: '--shadow-offset-x-150'
+      ios: shadowOffsetX150
+      android: shadow_offset_x_150
+  shadowOffsetX.200:
+    family: shadow
+    value: 8
+    formula: base × 2 = 4 × 2 = 8
+    platforms:
+      web: '--shadow-offset-x-200'
+      ios: shadowOffsetX200
+      android: shadow_offset_x_200
+  shadowOffsetX.300:
+    family: shadow
+    value: 12
+    formula: base × 3 = 4 × 3 = 12
+    platforms:
+      web: '--shadow-offset-x-300'
+      ios: shadowOffsetX300
+      android: shadow_offset_x_300
+  shadowOffsetX.n300:
+    family: shadow
+    value: -12
+    formula: base × -3 = 4 × -3 = -12
+    platforms:
+      web: '--shadow-offset-x-n-300'
+      ios: shadowOffsetXN300
+      android: shadow_offset_x_n_300
+  shadowOffsetX.n200:
+    family: shadow
+    value: -8
+    formula: base × -2 = 4 × -2 = -8
+    platforms:
+      web: '--shadow-offset-x-n-200'
+      ios: shadowOffsetXN200
+      android: shadow_offset_x_n_200
+  shadowOffsetX.n150:
+    family: shadow
+    value: -6
+    formula: base × -1.5 = 4 × -1.5 = -6
+    platforms:
+      web: '--shadow-offset-x-n-150'
+      ios: shadowOffsetXN150
+      android: shadow_offset_x_n_150
+  shadowOffsetX.n100:
+    family: shadow
+    value: -4
+    formula: base × -1 = 4 × -1 = -4
+    platforms:
+      web: '--shadow-offset-x-n-100'
+      ios: shadowOffsetXN100
+      android: shadow_offset_x_n_100
+  shadowOffsetX.000:
+    family: shadow
+    value: 0
+    formula: base × 0 = 4 × 0 = 0
+    platforms:
+      web: '--shadow-offset-x-000'
+      ios: shadowOffsetX000
+      android: shadow_offset_x_000
+  shadowOffsetY.100:
+    family: shadow
+    value: 4
+    formula: base × 1 = 4 × 1 = 4
+    platforms:
+      web: '--shadow-offset-y-100'
+      ios: shadowOffsetY100
+      android: shadow_offset_y_100
+  shadowOffsetY.200:
+    family: shadow
+    value: 8
+    formula: base × 2 = 4 × 2 = 8
+    platforms:
+      web: '--shadow-offset-y-200'
+      ios: shadowOffsetY200
+      android: shadow_offset_y_200
+  shadowOffsetY.300:
+    family: shadow
+    value: 12
+    formula: base × 3 = 4 × 3 = 12
+    platforms:
+      web: '--shadow-offset-y-300'
+      ios: shadowOffsetY300
+      android: shadow_offset_y_300
+  shadowOffsetY.400:
+    family: shadow
+    value: 16
+    formula: base × 4 = 4 × 4 = 16
+    platforms:
+      web: '--shadow-offset-y-400'
+      ios: shadowOffsetY400
+      android: shadow_offset_y_400
+  shadowOffsetY.000:
+    family: shadow
+    value: 0
+    formula: base × 0 = 4 × 0 = 0
+    platforms:
+      web: '--shadow-offset-y-000'
+      ios: shadowOffsetY000
+      android: shadow_offset_y_000
+  shadowOpacityNone:
+    family: shadow
+    value: 0
+    formula: base × 0 = 0.3 × 0 = 0
+    platforms:
+      web: '--shadow-opacity-none'
+      ios: shadowOpacityNone
+      android: shadow_opacity_none
+  shadowOpacityHard:
+    family: shadow
+    value: 0.4
+    formula: base × 1.33 = 0.3 × 1.33 ≈ 0.4
+    platforms:
+      web: '--shadow-opacity-hard'
+      ios: shadowOpacityHard
+      android: shadow_opacity_hard
+  shadowOpacityModerate:
+    family: shadow
+    value: 0.3
+    formula: base × 1 = 0.3 × 1 = 0.3
+    platforms:
+      web: '--shadow-opacity-moderate'
+      ios: shadowOpacityModerate
+      android: shadow_opacity_moderate
+  shadowOpacitySoft:
+    family: shadow
+    value: 0.2
+    formula: base × 0.67 = 0.3 × 0.67 ≈ 0.2
+    platforms:
+      web: '--shadow-opacity-soft'
+      ios: shadowOpacitySoft
+      android: shadow_opacity_soft
+  shadowOpacityDepth200:
+    family: shadow
+    value: 0.35
+    formula: base × 1.17 = 0.3 × 1.17 ≈ 0.35
+    platforms:
+      web: '--shadow-opacity-depth-200'
+      ios: shadowOpacityDepth200
+      android: shadow_opacity_depth_200
+  shadowOpacityDepth300:
+    family: shadow
+    value: 0.4
+    formula: base × 1.33 = 0.3 × 1.33 ≈ 0.4
+    platforms:
+      web: '--shadow-opacity-depth-300'
+      ios: shadowOpacityDepth300
+      android: shadow_opacity_depth_300
+  glowOpacity100:
+    family: glow
+    value: 0.8
+    formula: base × 1 = 0.8 × 1 = 0.8
+    platforms:
+      web: '--glow-opacity-100'
+      ios: glowOpacity100
+      android: glow_opacity_100
+  glowOpacity200:
+    family: glow
+    value: 0.6
+    formula: base × 0.75 = 0.8 × 0.75 = 0.6
+    platforms:
+      web: '--glow-opacity-200'
+      ios: glowOpacity200
+      android: glow_opacity_200
+  glowOpacity300:
+    family: glow
+    value: 0.4
+    formula: base × 0.5 = 0.8 × 0.5 = 0.4
+    platforms:
+      web: '--glow-opacity-300'
+      ios: glowOpacity300
+      android: glow_opacity_300
+  glowOpacity400:
+    family: glow
+    value: 0.2
+    formula: base × 0.25 = 0.8 × 0.25 = 0.2
+    platforms:
+      web: '--glow-opacity-400'
+      ios: glowOpacity400
+      android: glow_opacity_400
+  opacity000:
+    family: opacity
+    value: 0
+    formula: base × 0 = 0.08 × 0 = 0.0
+    platforms:
+      web: '--opacity-000'
+      ios: opacity000
+      android: opacity_000
+  opacity008:
+    family: opacity
+    value: 0.08
+    formula: base × 1 = 0.08 × 1 = 0.08
+    platforms:
+      web: '--opacity-008'
+      ios: opacity008
+      android: opacity_008
+  opacity016:
+    family: opacity
+    value: 0.16
+    formula: base × 2 = 0.08 × 2 = 0.16
+    platforms:
+      web: '--opacity-016'
+      ios: opacity016
+      android: opacity_016
+  opacity024:
+    family: opacity
+    value: 0.24
+    formula: base × 3 = 0.08 × 3 = 0.24
+    platforms:
+      web: '--opacity-024'
+      ios: opacity024
+      android: opacity_024
+  opacity032:
+    family: opacity
+    value: 0.32
+    formula: base × 4 = 0.08 × 4 = 0.32
+    platforms:
+      web: '--opacity-032'
+      ios: opacity032
+      android: opacity_032
+  opacity040:
+    family: opacity
+    value: 0.4
+    formula: base × 5 = 0.08 × 5 = 0.40
+    platforms:
+      web: '--opacity-040'
+      ios: opacity040
+      android: opacity_040
+  opacity048:
+    family: opacity
+    value: 0.48
+    formula: base × 6 = 0.08 × 6 = 0.48
+    platforms:
+      web: '--opacity-048'
+      ios: opacity048
+      android: opacity_048
+  opacity056:
+    family: opacity
+    value: 0.56
+    formula: base × 7 = 0.08 × 7 = 0.56
+    platforms:
+      web: '--opacity-056'
+      ios: opacity056
+      android: opacity_056
+  opacity064:
+    family: opacity
+    value: 0.64
+    formula: base × 8 = 0.08 × 8 = 0.64
+    platforms:
+      web: '--opacity-064'
+      ios: opacity064
+      android: opacity_064
+  opacity072:
+    family: opacity
+    value: 0.72
+    formula: base × 9 = 0.08 × 9 = 0.72
+    platforms:
+      web: '--opacity-072'
+      ios: opacity072
+      android: opacity_072
+  opacity080:
+    family: opacity
+    value: 0.8
+    formula: base × 10 = 0.08 × 10 = 0.80
+    platforms:
+      web: '--opacity-080'
+      ios: opacity080
+      android: opacity_080
+  opacity088:
+    family: opacity
+    value: 0.88
+    formula: base × 11 = 0.08 × 11 = 0.88
+    platforms:
+      web: '--opacity-088'
+      ios: opacity088
+      android: opacity_088
+  opacity096:
+    family: opacity
+    value: 0.96
+    formula: base × 12 = 0.08 × 12 = 0.96
+    platforms:
+      web: '--opacity-096'
+      ios: opacity096
+      android: opacity_096
+  opacity100:
+    family: opacity
+    value: 1
+    formula: 'Special case: full opacity = 1.0'
+    platforms:
+      web: '--opacity-100'
+      ios: opacity100
+      android: opacity_100
+  blend100:
+    family: blend
+    value: 0.04
+    formula: base × 1 = 0.04 × 1 = 0.04
+    platforms:
+      web: '--blend-100'
+      ios: blend100
+      android: blend_100
+  blend200:
+    family: blend
+    value: 0.08
+    formula: base × 2 = 0.04 × 2 = 0.08
+    platforms:
+      web: '--blend-200'
+      ios: blend200
+      android: blend_200
+  blend300:
+    family: blend
+    value: 0.12
+    formula: base × 3 = 0.04 × 3 = 0.12
+    platforms:
+      web: '--blend-300'
+      ios: blend300
+      android: blend_300
+  blend400:
+    family: blend
+    value: 0.16
+    formula: base × 4 = 0.04 × 4 = 0.16
+    platforms:
+      web: '--blend-400'
+      ios: blend400
+      android: blend_400
+  blend500:
+    family: blend
+    value: 0.2
+    formula: base × 5 = 0.04 × 5 = 0.20
+    platforms:
+      web: '--blend-500'
+      ios: blend500
+      android: blend_500
+  breakpointXs:
+    family: breakpoint
+    value: 320
+    formula: Practical device-based value
+    platforms:
+      web: '--breakpoint-xs'
+      ios: breakpointXs
+      android: breakpoint_xs
+  breakpointSm:
+    family: breakpoint
+    value: 375
+    formula: Practical device-based value
+    platforms:
+      web: '--breakpoint-sm'
+      ios: breakpointSm
+      android: breakpoint_sm
+  breakpointMd:
+    family: breakpoint
+    value: 1024
+    formula: Practical device-based value
+    platforms:
+      web: '--breakpoint-md'
+      ios: breakpointMd
+      android: breakpoint_md
+  breakpointLg:
+    family: breakpoint
+    value: 1440
+    formula: Practical device-based value
+    platforms:
+      web: '--breakpoint-lg'
+      ios: breakpointLg
+      android: breakpoint_lg
+  duration150:
+    family: duration
+    value: 150
+    formula: base - 100 = 250 - 100 = 150
+    platforms:
+      web: '--duration-150'
+      ios: duration150
+      android: duration_150
+  duration250:
+    family: duration
+    value: 250
+    formula: base × 1 = 250 × 1 = 250
+    platforms:
+      web: '--duration-250'
+      ios: duration250
+      android: duration_250
+  duration350:
+    family: duration
+    value: 350
+    formula: base + 100 = 250 + 100 = 350
+    platforms:
+      web: '--duration-350'
+      ios: duration350
+      android: duration_350
+  easingStandard:
+    family: easing
+    value: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
+    formula: 'Material Design standard curve: cubic-bezier(0.4, 0.0, 0.2, 1)'
+    platforms:
+      web: '--easing-standard'
+      ios: easingStandard
+      android: easing_standard
+  easingDecelerate:
+    family: easing
+    value: 'cubic-bezier(0.0, 0.0, 0.2, 1)'
+    formula: 'Material Design deceleration curve: cubic-bezier(0.0, 0.0, 0.2, 1)'
+    platforms:
+      web: '--easing-decelerate'
+      ios: easingDecelerate
+      android: easing_decelerate
+  easingAccelerate:
+    family: easing
+    value: 'cubic-bezier(0.4, 0.0, 1, 1)'
+    formula: 'Material Design acceleration curve: cubic-bezier(0.4, 0.0, 1, 1)'
+    platforms:
+      web: '--easing-accelerate'
+      ios: easingAccelerate
+      android: easing_accelerate
+  easingGlideDecelerate:
+    family: easing
+    value: '[[0,0],[0.009,0.012],[0.02,0.05],[0.092,0.411],[0.118,0.517],[0.146,0.611],[0.177,0.694],[0.211,0.765],[0.248,0.824],[0.289,0.872],[0.334,0.91],[0.384,0.939],[0.509,0.977],[0.684,0.994],[1,1]]'
+    formula: 'Piecewise linear: 15 stops, aggressive deceleration curve. Paired with duration350 (350ms).'
+    platforms:
+      web: '--easing-glide-decelerate'
+      ios: easingGlideDecelerate
+      android: easing_glide_decelerate
+  scale088:
+    family: scale
+    value: 0.88
+    formula: 'base - 0.12 = 1.00 - 0.12 = 0.88 (8-interval progression: 3 × 0.04)'
+    platforms:
+      web: '--scale-088'
+      ios: scale088
+      android: scale_088
+  scale092:
+    family: scale
+    value: 0.92
+    formula: 'base - 0.08 = 1.00 - 0.08 = 0.92 (8-interval progression: 2 × 0.04)'
+    platforms:
+      web: '--scale-092'
+      ios: scale092
+      android: scale_092
+  scale096:
+    family: scale
+    value: 0.96
+    formula: 'base - 0.04 = 1.00 - 0.04 = 0.96 (8-interval progression: 1 × 0.04)'
+    platforms:
+      web: '--scale-096'
+      ios: scale096
+      android: scale_096
+  scale100:
+    family: scale
+    value: 1
+    formula: 'base × 1 = 1.00 × 1 = 1.00 (baseline, no transformation)'
+    platforms:
+      web: '--scale-100'
+      ios: scale100
+      android: scale_100
+  scale104:
+    family: scale
+    value: 1.04
+    formula: 'base + 0.04 = 1.00 + 0.04 = 1.04 (8-interval progression: 1 × 0.04)'
+    platforms:
+      web: '--scale-104'
+      ios: scale104
+      android: scale_104
+  scale108:
+    family: scale
+    value: 1.08
+    formula: 'base + 0.08 = 1.00 + 0.08 = 1.08 (8-interval progression: 2 × 0.04)'
+    platforms:
+      web: '--scale-108'
+      ios: scale108
+      android: scale_108
+  blur000:
+    family: blur
+    value: 0
+    formula: '0'
+    platforms:
+      web: '--blur-000'
+      ios: blur000
+      android: blur_000
+  blur025:
+    family: blur
+    value: 4
+    formula: base × 0.25 = 16 × 0.25 = 4
+    platforms:
+      web: '--blur-025'
+      ios: blur025
+      android: blur_025
+  blur050:
+    family: blur
+    value: 8
+    formula: base × 0.5 = 16 × 0.5 = 8
+    platforms:
+      web: '--blur-050'
+      ios: blur050
+      android: blur_050
+  blur075:
+    family: blur
+    value: 12
+    formula: base × 0.75 = 16 × 0.75 = 12
+    platforms:
+      web: '--blur-075'
+      ios: blur075
+      android: blur_075
+  blur100:
+    family: blur
+    value: 16
+    formula: base × 1 = 16 × 1 = 16
+    platforms:
+      web: '--blur-100'
+      ios: blur100
+      android: blur_100
+  blur125:
+    family: blur
+    value: 20
+    formula: base × 1.25 = 16 × 1.25 = 20
+    platforms:
+      web: '--blur-125'
+      ios: blur125
+      android: blur_125
+  blur150:
+    family: blur
+    value: 24
+    formula: base × 1.5 = 16 × 1.5 = 24
+    platforms:
+      web: '--blur-150'
+      ios: blur150
+      android: blur_150
+  blur200:
+    family: blur
+    value: 32
+    formula: base × 2 = 16 × 2 = 32
+    platforms:
+      web: '--blur-200'
+      ios: blur200
+      android: blur_200
+  blur250:
+    family: blur
+    value: 40
+    formula: base × 2.5 = 16 × 2.5 = 40
+    platforms:
+      web: '--blur-250'
+      ios: blur250
+      android: blur_250
+  size050:
+    family: sizing
+    value: 4
+    formula: base × 0.5 = 8 × 0.5 = 4
+    platforms:
+      web: '--size-050'
+      ios: size050
+      android: size_050
+  size100:
+    family: sizing
+    value: 8
+    formula: base × 1 = 8 × 1 = 8
+    platforms:
+      web: '--size-100'
+      ios: size100
+      android: size_100
+  size150:
+    family: sizing
+    value: 12
+    formula: base × 1.5 = 8 × 1.5 = 12
+    platforms:
+      web: '--size-150'
+      ios: size150
+      android: size_150
+  size200:
+    family: sizing
+    value: 16
+    formula: base × 2 = 8 × 2 = 16
+    platforms:
+      web: '--size-200'
+      ios: size200
+      android: size_200
+  size250:
+    family: sizing
+    value: 20
+    formula: base × 2.5 = 8 × 2.5 = 20
+    platforms:
+      web: '--size-250'
+      ios: size250
+      android: size_250
+  size300:
+    family: sizing
+    value: 24
+    formula: base × 3 = 8 × 3 = 24
+    platforms:
+      web: '--size-300'
+      ios: size300
+      android: size_300
+  size400:
+    family: sizing
+    value: 32
+    formula: base × 4 = 8 × 4 = 32
+    platforms:
+      web: '--size-400'
+      ios: size400
+      android: size_400
+  size500:
+    family: sizing
+    value: 40
+    formula: base × 5 = 8 × 5 = 40
+    platforms:
+      web: '--size-500'
+      ios: size500
+      android: size_500
+  size600:
+    family: sizing
+    value: 48
+    formula: base × 6 = 8 × 6 = 48
+    platforms:
+      web: '--size-600'
+      ios: size600
+      android: size_600
+  size700:
+    family: sizing
+    value: 56
+    formula: base × 7 = 8 × 7 = 56
+    platforms:
+      web: '--size-700'
+      ios: size700
+      android: size_700
+  size800:
+    family: sizing
+    value: 64
+    formula: base × 8 = 8 × 8 = 64
+    platforms:
+      web: '--size-800'
+      ios: size800
+      android: size_800
+  size900:
+    family: sizing
+    value: 72
+    formula: base × 9 = 8 × 9 = 72
+    platforms:
+      web: '--size-900'
+      ios: size900
+      android: size_900
+  size1000:
+    family: sizing
+    value: 80
+    formula: base × 10 = 8 × 10 = 80
+    platforms:
+      web: '--size-1000'
+      ios: size1000
+      android: size_1000
+  size1600:
+    family: sizing
+    value: 128
+    formula: base × 16 = 8 × 16 = 128
+    platforms:
+      web: '--size-1600'
+      ios: size1600
+      android: size_1600

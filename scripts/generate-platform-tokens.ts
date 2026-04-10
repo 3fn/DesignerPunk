@@ -94,6 +94,14 @@ async function main() {
       console.log('   Platform token generation was not affected.\n');
     }
 
+    // --- Token Index Generation (Spec 096) ---
+    try {
+      const { execSync } = require('child_process');
+      execSync('npx ts-node scripts/generate-token-index.ts', { stdio: 'inherit', cwd: path.resolve(__dirname, '..') });
+    } catch (indexError) {
+      console.error('⚠️  Token index generation failed (non-blocking):', indexError instanceof Error ? indexError.message : indexError);
+    }
+
     if (allComponentValid) {
       console.log('✨ All platform files generated successfully!');
       process.exit(0);

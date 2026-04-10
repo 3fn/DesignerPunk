@@ -1,0 +1,2092 @@
+tokens:
+  color.feedback.success.text:
+    category: color
+    primitiveReferences:
+      value: green400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-success-text'
+      ios: colorFeedbackSuccessText
+      android: color_feedback_success_text
+    consumers: []
+  color.feedback.success.background:
+    category: color
+    primitiveReferences:
+      value: green100
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-success-background'
+      ios: colorFeedbackSuccessBackground
+      android: color_feedback_success_background
+    consumers: []
+  color.feedback.success.border:
+    category: color
+    primitiveReferences:
+      value: green400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-success-border'
+      ios: colorFeedbackSuccessBorder
+      android: color_feedback_success_border
+    consumers: []
+  color.feedback.error.text:
+    category: color
+    primitiveReferences:
+      value: pink400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-error-text'
+      ios: colorFeedbackErrorText
+      android: color_feedback_error_text
+    consumers: []
+  color.feedback.error.background:
+    category: color
+    primitiveReferences:
+      value: pink100
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-error-background'
+      ios: colorFeedbackErrorBackground
+      android: color_feedback_error_background
+    consumers: []
+  color.feedback.error.border:
+    category: color
+    primitiveReferences:
+      value: pink400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-error-border'
+      ios: colorFeedbackErrorBorder
+      android: color_feedback_error_border
+    consumers: []
+  color.feedback.warning.text:
+    category: color
+    primitiveReferences:
+      value: orange400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-warning-text'
+      ios: colorFeedbackWarningText
+      android: color_feedback_warning_text
+    consumers: []
+  color.feedback.warning.background:
+    category: color
+    primitiveReferences:
+      value: orange100
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-warning-background'
+      ios: colorFeedbackWarningBackground
+      android: color_feedback_warning_background
+    consumers: []
+  color.feedback.warning.border:
+    category: color
+    primitiveReferences:
+      value: orange400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-warning-border'
+      ios: colorFeedbackWarningBorder
+      android: color_feedback_warning_border
+    consumers: []
+  color.feedback.info.text:
+    category: color
+    primitiveReferences:
+      value: teal400
+    themeVarying: true
+    platforms:
+      web: '--color-feedback-info-text'
+      ios: theme.colorFeedbackInfoText
+      android: theme.color_feedback_info_text
+    consumers: []
+  color.feedback.info.background:
+    category: color
+    primitiveReferences:
+      value: teal100
+    themeVarying: true
+    platforms:
+      web: '--color-feedback-info-background'
+      ios: theme.colorFeedbackInfoBackground
+      android: theme.color_feedback_info_background
+    consumers: []
+  color.feedback.info.border:
+    category: color
+    primitiveReferences:
+      value: teal400
+    themeVarying: true
+    platforms:
+      web: '--color-feedback-info-border'
+      ios: theme.colorFeedbackInfoBorder
+      android: theme.color_feedback_info_border
+    consumers: []
+  color.feedback.select.text.rest:
+    category: color
+    primitiveReferences:
+      value: cyan400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-select-text-rest'
+      ios: colorFeedbackSelectTextRest
+      android: color_feedback_select_text_rest
+    consumers: []
+  color.feedback.select.text.default:
+    category: color
+    primitiveReferences:
+      value: gray200
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-select-text-default'
+      ios: colorFeedbackSelectTextDefault
+      android: color_feedback_select_text_default
+    consumers: []
+  color.feedback.select.background.rest:
+    category: color
+    primitiveReferences:
+      value: cyan100
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-select-background-rest'
+      ios: colorFeedbackSelectBackgroundRest
+      android: color_feedback_select_background_rest
+    consumers: []
+  color.feedback.select.background.default:
+    category: color
+    primitiveReferences:
+      value: gray100
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-select-background-default'
+      ios: colorFeedbackSelectBackgroundDefault
+      android: color_feedback_select_background_default
+    consumers: []
+  color.feedback.select.border.rest:
+    category: color
+    primitiveReferences:
+      value: cyan400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-select-border-rest'
+      ios: colorFeedbackSelectBorderRest
+      android: color_feedback_select_border_rest
+    consumers: []
+  color.feedback.select.border.default:
+    category: color
+    primitiveReferences:
+      value: gray200
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-select-border-default'
+      ios: colorFeedbackSelectBorderDefault
+      android: color_feedback_select_border_default
+    consumers: []
+  color.feedback.notification.background:
+    category: color
+    primitiveReferences:
+      value: pink400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-notification-background'
+      ios: colorFeedbackNotificationBackground
+      android: color_feedback_notification_background
+    consumers: []
+  color.feedback.notification.text:
+    category: color
+    primitiveReferences:
+      value: white100
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-notification-text'
+      ios: colorFeedbackNotificationText
+      android: color_feedback_notification_text
+    consumers: []
+  color.identity.human:
+    category: color
+    primitiveReferences:
+      value: orange300
+    themeVarying: false
+    platforms:
+      web: '--color-identity-human'
+      ios: colorIdentityHuman
+      android: color_identity_human
+    consumers: []
+  color.identity.agent:
+    category: color
+    primitiveReferences:
+      value: teal200
+    themeVarying: false
+    platforms:
+      web: '--color-identity-agent'
+      ios: colorIdentityAgent
+      android: color_identity_agent
+    consumers: []
+  color.action.primary:
+    category: color
+    primitiveReferences:
+      value: cyan300
+    themeVarying: true
+    platforms:
+      web: '--color-action-primary'
+      ios: theme.colorActionPrimary
+      android: theme.color_action_primary
+    consumers: []
+  color.action.secondary:
+    category: color
+    primitiveReferences:
+      value: gray400
+    themeVarying: false
+    platforms:
+      web: '--color-action-secondary'
+      ios: colorActionSecondary
+      android: color_action_secondary
+    consumers: []
+  color.action.navigation:
+    category: color
+    primitiveReferences:
+      value: cyan500
+    themeVarying: true
+    platforms:
+      web: '--color-action-navigation'
+      ios: theme.colorActionNavigation
+      android: theme.color_action_navigation
+    consumers: []
+  color.attention:
+    category: color
+    primitiveReferences:
+      value: yellow400
+    themeVarying: false
+    platforms:
+      web: '--color-attention'
+      ios: colorAttention
+      android: color_attention
+    consumers: []
+  color.highlight:
+    category: color
+    primitiveReferences:
+      value: yellow300
+    themeVarying: false
+    platforms:
+      web: '--color-highlight'
+      ios: colorHighlight
+      android: color_highlight
+    consumers: []
+  color.tech:
+    category: color
+    primitiveReferences:
+      value: purple400
+    themeVarying: false
+    platforms:
+      web: '--color-tech'
+      ios: colorTech
+      android: color_tech
+    consumers: []
+  color.data:
+    category: color
+    primitiveReferences:
+      value: purple300
+    themeVarying: false
+    platforms:
+      web: '--color-data'
+      ios: colorData
+      android: color_data
+    consumers: []
+  color.text.default:
+    category: color
+    primitiveReferences:
+      value: gray300
+    themeVarying: false
+    platforms:
+      web: '--color-text-default'
+      ios: colorTextDefault
+      android: color_text_default
+    consumers: []
+  color.text.muted:
+    category: color
+    primitiveReferences:
+      value: gray200
+    themeVarying: false
+    platforms:
+      web: '--color-text-muted'
+      ios: colorTextMuted
+      android: color_text_muted
+    consumers: []
+  color.text.subtle:
+    category: color
+    primitiveReferences:
+      value: gray100
+    themeVarying: false
+    platforms:
+      web: '--color-text-subtle'
+      ios: colorTextSubtle
+      android: color_text_subtle
+    consumers: []
+  color.contrast.onLight:
+    category: color
+    primitiveReferences:
+      value: black500
+    themeVarying: false
+    platforms:
+      web: '--color-contrast-on-light'
+      ios: colorContrastOnLight
+      android: color_contrast_on_light
+    consumers: []
+  color.contrast.onDark:
+    category: color
+    primitiveReferences:
+      value: white100
+    themeVarying: false
+    platforms:
+      web: '--color-contrast-on-dark'
+      ios: colorContrastOnDark
+      android: color_contrast_on_dark
+    consumers: []
+  color.contrast.onAction:
+    category: color
+    primitiveReferences:
+      value: black500
+    themeVarying: true
+    platforms:
+      web: '--color-contrast-on-action'
+      ios: theme.colorContrastOnAction
+      android: theme.color_contrast_on_action
+    consumers: []
+  color.structure.canvas:
+    category: color
+    primitiveReferences:
+      value: white100
+    themeVarying: true
+    platforms:
+      web: '--color-structure-canvas'
+      ios: theme.colorStructureCanvas
+      android: theme.color_structure_canvas
+    consumers: []
+  color.structure.surface:
+    category: color
+    primitiveReferences:
+      value: white200
+    themeVarying: false
+    platforms:
+      web: '--color-structure-surface'
+      ios: colorStructureSurface
+      android: color_structure_surface
+    consumers: []
+  color.structure.surface.primary:
+    category: color
+    primitiveReferences:
+      value: white200
+    themeVarying: false
+    platforms:
+      web: '--color-structure-surface-primary'
+      ios: colorStructureSurfacePrimary
+      android: color_structure_surface_primary
+    consumers: []
+  color.structure.surface.secondary:
+    category: color
+    primitiveReferences:
+      value: white300
+    themeVarying: false
+    platforms:
+      web: '--color-structure-surface-secondary'
+      ios: colorStructureSurfaceSecondary
+      android: color_structure_surface_secondary
+    consumers: []
+  color.structure.surface.tertiary:
+    category: color
+    primitiveReferences:
+      value: white400
+    themeVarying: false
+    platforms:
+      web: '--color-structure-surface-tertiary'
+      ios: colorStructureSurfaceTertiary
+      android: color_structure_surface_tertiary
+    consumers: []
+  color.structure.border:
+    category: color
+    primitiveReferences:
+      value: gray100
+    themeVarying: false
+    platforms:
+      web: '--color-structure-border'
+      ios: colorStructureBorder
+      android: color_structure_border
+    consumers: []
+  color.structure.border.subtle:
+    category: color
+    primitiveReferences:
+      color: gray100
+      opacity: opacity048
+    themeVarying: true
+    platforms:
+      web: '--color-structure-border-subtle'
+      ios: theme.colorStructureBorderSubtle
+      android: theme.color_structure_border_subtle
+    consumers: []
+  color.background.primary.subtle:
+    category: color
+    primitiveReferences:
+      value: cyan100
+    themeVarying: true
+    platforms:
+      web: '--color-background-primary-subtle'
+      ios: theme.colorBackgroundPrimarySubtle
+      android: theme.color_background_primary_subtle
+    consumers: []
+  color.icon.default:
+    category: color
+    primitiveReferences:
+      value: gray200
+    themeVarying: false
+    platforms:
+      web: '--color-icon-default'
+      ios: colorIconDefault
+      android: color_icon_default
+    consumers: []
+  color.icon.navigation.inactive:
+    category: color
+    primitiveReferences:
+      value: gray300
+    themeVarying: true
+    platforms:
+      web: '--color-icon-navigation-inactive'
+      ios: theme.colorIconNavigationInactive
+      android: theme.color_icon_navigation_inactive
+    consumers: []
+  color.print.default:
+    category: color
+    primitiveReferences:
+      value: black100
+    themeVarying: false
+    platforms:
+      web: '--color-print-default'
+      ios: colorPrintDefault
+      android: color_print_default
+    consumers: []
+  glow.neonPurple:
+    category: color
+    primitiveReferences:
+      value: purple500
+    themeVarying: false
+    platforms:
+      web: '--glow-neon-purple'
+      ios: glowNeonPurple
+      android: glow_neon_purple
+    consumers: []
+  glow.neonCyan:
+    category: color
+    primitiveReferences:
+      value: cyan500
+    themeVarying: false
+    platforms:
+      web: '--glow-neon-cyan'
+      ios: glowNeonCyan
+      android: glow_neon_cyan
+    consumers: []
+  glow.neonYellow:
+    category: color
+    primitiveReferences:
+      value: yellow500
+    themeVarying: false
+    platforms:
+      web: '--glow-neon-yellow'
+      ios: glowNeonYellow
+      android: glow_neon_yellow
+    consumers: []
+  glow.neonGreen:
+    category: color
+    primitiveReferences:
+      value: green500
+    themeVarying: false
+    platforms:
+      web: '--glow-neon-green'
+      ios: glowNeonGreen
+      android: glow_neon_green
+    consumers: []
+  glow.neonPink:
+    category: color
+    primitiveReferences:
+      value: pink500
+    themeVarying: false
+    platforms:
+      web: '--glow-neon-pink'
+      ios: glowNeonPink
+      android: glow_neon_pink
+    consumers: []
+  color.progress.current.background:
+    category: color
+    primitiveReferences:
+      value: cyan300
+    themeVarying: false
+    platforms:
+      web: '--color-progress-current-background'
+      ios: colorProgressCurrentBackground
+      android: color_progress_current_background
+    consumers: []
+  color.progress.current.text:
+    category: color
+    primitiveReferences:
+      value: cyan400
+    themeVarying: false
+    platforms:
+      web: '--color-progress-current-text'
+      ios: colorProgressCurrentText
+      android: color_progress_current_text
+    consumers: []
+  color.progress.pending.background:
+    category: color
+    primitiveReferences:
+      value: white300
+    themeVarying: false
+    platforms:
+      web: '--color-progress-pending-background'
+      ios: colorProgressPendingBackground
+      android: color_progress_pending_background
+    consumers: []
+  color.progress.pending.text:
+    category: color
+    primitiveReferences:
+      value: gray300
+    themeVarying: false
+    platforms:
+      web: '--color-progress-pending-text'
+      ios: colorProgressPendingText
+      android: color_progress_pending_text
+    consumers: []
+  color.progress.pending.connector:
+    category: color
+    primitiveReferences:
+      value: white200
+    themeVarying: false
+    platforms:
+      web: '--color-progress-pending-connector'
+      ios: colorProgressPendingConnector
+      android: color_progress_pending_connector
+    consumers: []
+  color.progress.completed.background:
+    category: color
+    primitiveReferences:
+      value: green100
+    themeVarying: false
+    platforms:
+      web: '--color-progress-completed-background'
+      ios: colorProgressCompletedBackground
+      android: color_progress_completed_background
+    consumers: []
+  color.progress.completed.text:
+    category: color
+    primitiveReferences:
+      value: green400
+    themeVarying: false
+    platforms:
+      web: '--color-progress-completed-text'
+      ios: colorProgressCompletedText
+      android: color_progress_completed_text
+    consumers: []
+  color.progress.completed.connector:
+    category: color
+    primitiveReferences:
+      value: green100
+    themeVarying: false
+    platforms:
+      web: '--color-progress-completed-connector'
+      ios: colorProgressCompletedConnector
+      android: color_progress_completed_connector
+    consumers: []
+  color.progress.error.background:
+    category: color
+    primitiveReferences:
+      value: pink100
+    themeVarying: false
+    platforms:
+      web: '--color-progress-error-background'
+      ios: colorProgressErrorBackground
+      android: color_progress_error_background
+    consumers: []
+  color.progress.error.text:
+    category: color
+    primitiveReferences:
+      value: pink400
+    themeVarying: false
+    platforms:
+      web: '--color-progress-error-text'
+      ios: colorProgressErrorText
+      android: color_progress_error_text
+    consumers: []
+  color.scrim.standard:
+    category: color
+    primitiveReferences:
+      value: black500
+    themeVarying: false
+    platforms:
+      web: '--color-scrim-standard'
+      ios: colorScrimStandard
+      android: color_scrim_standard
+    consumers: []
+  typography.bodySm:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize075
+      lineHeight: lineHeight075
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-body-sm'
+      ios: typographyBodySm
+      android: typography_body_sm
+    consumers: []
+  typography.bodyMd:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize100
+      lineHeight: lineHeight100
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-body-md'
+      ios: typographyBodyMd
+      android: typography_body_md
+    consumers: []
+  typography.bodyLg:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize125
+      lineHeight: lineHeight125
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-body-lg'
+      ios: typographyBodyLg
+      android: typography_body_lg
+    consumers: []
+  typography.h1:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize600
+      lineHeight: lineHeight600
+      fontFamily: fontFamilyDisplay
+      fontWeight: fontWeight700
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-h-1'
+      ios: typographyH1
+      android: typography_h_1
+    consumers: []
+  typography.h2:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize500
+      lineHeight: lineHeight500
+      fontFamily: fontFamilyDisplay
+      fontWeight: fontWeight700
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-h-2'
+      ios: typographyH2
+      android: typography_h_2
+    consumers: []
+  typography.h3:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize400
+      lineHeight: lineHeight400
+      fontFamily: fontFamilyDisplay
+      fontWeight: fontWeight600
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-h-3'
+      ios: typographyH3
+      android: typography_h_3
+    consumers: []
+  typography.h4:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize300
+      lineHeight: lineHeight300
+      fontFamily: fontFamilyDisplay
+      fontWeight: fontWeight600
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-h-4'
+      ios: typographyH4
+      android: typography_h_4
+    consumers: []
+  typography.h5:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize200
+      lineHeight: lineHeight200
+      fontFamily: fontFamilyDisplay
+      fontWeight: fontWeight600
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-h-5'
+      ios: typographyH5
+      android: typography_h_5
+    consumers: []
+  typography.h6:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize150
+      lineHeight: lineHeight150
+      fontFamily: fontFamilyDisplay
+      fontWeight: fontWeight700
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-h-6'
+      ios: typographyH6
+      android: typography_h_6
+    consumers: []
+  typography.caption:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize050
+      lineHeight: lineHeight050
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight300
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-caption'
+      ios: typographyCaption
+      android: typography_caption
+    consumers: []
+  typography.legal:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize050
+      lineHeight: lineHeight050
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-legal'
+      ios: typographyLegal
+      android: typography_legal
+    consumers: []
+  typography.display:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize700
+      lineHeight: lineHeight700
+      fontFamily: fontFamilyDisplay
+      fontWeight: fontWeight700
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-display'
+      ios: typographyDisplay
+      android: typography_display
+    consumers: []
+  typography.buttonSm:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize075
+      lineHeight: lineHeight075
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-button-sm'
+      ios: typographyButtonSm
+      android: typography_button_sm
+    consumers: []
+  typography.buttonMd:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize100
+      lineHeight: lineHeight100
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-button-md'
+      ios: typographyButtonMd
+      android: typography_button_md
+    consumers: []
+  typography.buttonLg:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize125
+      lineHeight: lineHeight125
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-button-lg'
+      ios: typographyButtonLg
+      android: typography_button_lg
+    consumers: []
+  typography.input:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize100
+      lineHeight: lineHeight100
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-input'
+      ios: typographyInput
+      android: typography_input
+    consumers: []
+  typography.labelXs:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize050
+      lineHeight: lineHeight050
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-label-xs'
+      ios: typographyLabelXs
+      android: typography_label_xs
+    consumers: []
+  typography.labelSm:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize075
+      lineHeight: lineHeight075
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-label-sm'
+      ios: typographyLabelSm
+      android: typography_label_sm
+    consumers: []
+  typography.labelMd:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize100
+      lineHeight: lineHeight100
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-label-md'
+      ios: typographyLabelMd
+      android: typography_label_md
+    consumers: []
+  typography.labelMdFloat:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize075
+      lineHeight: lineHeight075
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-label-md-float'
+      ios: typographyLabelMdFloat
+      android: typography_label_md_float
+    consumers: []
+  typography.labelLg:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize125
+      lineHeight: lineHeight125
+      fontFamily: fontFamilyBody
+      fontWeight: fontWeight500
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-label-lg'
+      ios: typographyLabelLg
+      android: typography_label_lg
+    consumers: []
+  typography.codeSm:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize075
+      lineHeight: lineHeight075
+      fontFamily: fontFamilyMono
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-code-sm'
+      ios: typographyCodeSm
+      android: typography_code_sm
+    consumers: []
+  typography.codeMd:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize100
+      lineHeight: lineHeight100
+      fontFamily: fontFamilyMono
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-code-md'
+      ios: typographyCodeMd
+      android: typography_code_md
+    consumers: []
+  typography.codeLg:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize125
+      lineHeight: lineHeight125
+      fontFamily: fontFamilyMono
+      fontWeight: fontWeight400
+      letterSpacing: letterSpacing100
+    themeVarying: false
+    platforms:
+      web: '--typography-code-lg'
+      ios: typographyCodeLg
+      android: typography_code_lg
+    consumers: []
+  shadow.none:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.000
+      blur: blur000
+      opacity: shadowOpacityNone
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-none'
+      ios: shadowNone
+      android: shadow_none
+    consumers: []
+  shadow.container:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.100
+      blur: blur075
+      opacity: shadowOpacityModerate
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-container'
+      ios: shadowContainer
+      android: shadow_container
+    consumers: []
+  shadow.navigation:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.100
+      blur: blur125
+      opacity: shadowOpacitySoft
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-navigation'
+      ios: shadowNavigation
+      android: shadow_navigation
+    consumers: []
+  shadow.dropdown:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.100
+      blur: blur075
+      opacity: shadowOpacityModerate
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-dropdown'
+      ios: shadowDropdown
+      android: shadow_dropdown
+    consumers: []
+  shadow.modal:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.200
+      blur: blur100
+      opacity: shadowOpacityDepth200
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-modal'
+      ios: shadowModal
+      android: shadow_modal
+    consumers: []
+  shadow.toast:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.300
+      blur: blur150
+      opacity: shadowOpacityDepth300
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-toast'
+      ios: shadowToast
+      android: shadow_toast
+    consumers: []
+  shadow.tooltip:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.300
+      blur: blur150
+      opacity: shadowOpacityDepth300
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-tooltip'
+      ios: shadowTooltip
+      android: shadow_tooltip
+    consumers: []
+  shadow.fab:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.300
+      offsetY: shadowOffsetY.400
+      blur: blur025
+      opacity: shadowOpacityHard
+      color: shadowBlue100
+    themeVarying: false
+    platforms:
+      web: '--shadow-fab'
+      ios: shadowFab
+      android: shadow_fab
+    consumers: []
+  shadow.hover:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.100
+      blur: blur125
+      opacity: shadowOpacitySoft
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-hover'
+      ios: shadowHover
+      android: shadow_hover
+    consumers: []
+  shadow.navigation.indicator:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.000
+      blur: blur025
+      opacity: shadowOpacitySoft
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-navigation-indicator'
+      ios: shadowNavigationIndicator
+      android: shadow_navigation_indicator
+    consumers: []
+  shadow.sunrise:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.n300
+      offsetY: shadowOffsetY.200
+      blur: blur075
+      opacity: shadowOpacityModerate
+      color: shadowBlue100
+    themeVarying: false
+    platforms:
+      web: '--shadow-sunrise'
+      ios: shadowSunrise
+      android: shadow_sunrise
+    consumers: []
+  shadow.morning:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.n150
+      offsetY: shadowOffsetY.200
+      blur: blur075
+      opacity: shadowOpacityModerate
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-morning'
+      ios: shadowMorning
+      android: shadow_morning
+    consumers: []
+  shadow.noon:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.000
+      offsetY: shadowOffsetY.200
+      blur: blur075
+      opacity: shadowOpacityModerate
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-noon'
+      ios: shadowNoon
+      android: shadow_noon
+    consumers: []
+  shadow.dusk:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.150
+      offsetY: shadowOffsetY.200
+      blur: blur075
+      opacity: shadowOpacityModerate
+      color: shadowBlack100
+    themeVarying: false
+    platforms:
+      web: '--shadow-dusk'
+      ios: shadowDusk
+      android: shadow_dusk
+    consumers: []
+  shadow.sunset:
+    category: shadow
+    primitiveReferences:
+      offsetX: shadowOffsetX.300
+      offsetY: shadowOffsetY.200
+      blur: blur075
+      opacity: shadowOpacityModerate
+      color: shadowBlue100
+    themeVarying: false
+    platforms:
+      web: '--shadow-sunset'
+      ios: shadowSunset
+      android: shadow_sunset
+    consumers: []
+  opacity.subtle:
+    category: interaction
+    primitiveReferences:
+      value: opacity088
+    themeVarying: false
+    platforms:
+      web: '--opacity-subtle'
+      ios: opacitySubtle
+      android: opacity_subtle
+    consumers: []
+  opacity.medium:
+    category: interaction
+    primitiveReferences:
+      value: opacity072
+    themeVarying: false
+    platforms:
+      web: '--opacity-medium'
+      ios: opacityMedium
+      android: opacity_medium
+    consumers: []
+  opacity.heavy:
+    category: interaction
+    primitiveReferences:
+      value: opacity048
+    themeVarying: false
+    platforms:
+      web: '--opacity-heavy'
+      ios: opacityHeavy
+      android: opacity_heavy
+    consumers: []
+  opacity.ghost:
+    category: interaction
+    primitiveReferences:
+      value: opacity032
+    themeVarying: false
+    platforms:
+      web: '--opacity-ghost'
+      ios: opacityGhost
+      android: opacity_ghost
+    consumers: []
+  blend.hoverDarker:
+    category: interaction
+    primitiveReferences:
+      value: blend200
+    themeVarying: false
+    platforms:
+      web: '--blend-hover-darker'
+      ios: blendHoverDarker
+      android: blend_hover_darker
+    consumers: []
+  blend.hoverLighter:
+    category: interaction
+    primitiveReferences:
+      value: blend200
+    themeVarying: false
+    platforms:
+      web: '--blend-hover-lighter'
+      ios: blendHoverLighter
+      android: blend_hover_lighter
+    consumers: []
+  blend.pressedDarker:
+    category: interaction
+    primitiveReferences:
+      value: blend300
+    themeVarying: false
+    platforms:
+      web: '--blend-pressed-darker'
+      ios: blendPressedDarker
+      android: blend_pressed_darker
+    consumers: []
+  blend.pressedLighter:
+    category: interaction
+    primitiveReferences:
+      value: blend300
+    themeVarying: false
+    platforms:
+      web: '--blend-pressed-lighter'
+      ios: blendPressedLighter
+      android: blend_pressed_lighter
+    consumers: []
+  blend.focusSaturate:
+    category: interaction
+    primitiveReferences:
+      value: blend200
+    themeVarying: false
+    platforms:
+      web: '--blend-focus-saturate'
+      ios: blendFocusSaturate
+      android: blend_focus_saturate
+    consumers: []
+  blend.disabledDesaturate:
+    category: interaction
+    primitiveReferences:
+      value: blend300
+    themeVarying: false
+    platforms:
+      web: '--blend-disabled-desaturate'
+      ios: blendDisabledDesaturate
+      android: blend_disabled_desaturate
+    consumers: []
+  blend.containerHoverDarker:
+    category: interaction
+    primitiveReferences:
+      value: blend100
+    themeVarying: false
+    platforms:
+      web: '--blend-container-hover-darker'
+      ios: blendContainerHoverDarker
+      android: blend_container_hover_darker
+    consumers: []
+  color.icon.opticalBalance:
+    category: interaction
+    primitiveReferences:
+      value: blend200
+    themeVarying: false
+    platforms:
+      web: '--color-icon-optical-balance'
+      ios: colorIconOpticalBalance
+      android: color_icon_optical_balance
+    consumers: []
+  zIndex.container:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--z-index-container'
+      ios: zIndexContainer
+      android: z_index_container
+    consumers: []
+  zIndex.navigation:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--z-index-navigation'
+      ios: zIndexNavigation
+      android: z_index_navigation
+    consumers: []
+  zIndex.dropdown:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--z-index-dropdown'
+      ios: zIndexDropdown
+      android: z_index_dropdown
+    consumers: []
+  zIndex.modal:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--z-index-modal'
+      ios: zIndexModal
+      android: z_index_modal
+    consumers: []
+  zIndex.toast:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--z-index-toast'
+      ios: zIndexToast
+      android: z_index_toast
+    consumers: []
+  zIndex.tooltip:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--z-index-tooltip'
+      ios: zIndexTooltip
+      android: z_index_tooltip
+    consumers: []
+  elevation.none:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--elevation-none'
+      ios: elevationNone
+      android: elevation_none
+    consumers: []
+  elevation.container:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--elevation-container'
+      ios: elevationContainer
+      android: elevation_container
+    consumers: []
+  elevation.navigation:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--elevation-navigation'
+      ios: elevationNavigation
+      android: elevation_navigation
+    consumers: []
+  elevation.dropdown:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--elevation-dropdown'
+      ios: elevationDropdown
+      android: elevation_dropdown
+    consumers: []
+  elevation.modal:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--elevation-modal'
+      ios: elevationModal
+      android: elevation_modal
+    consumers: []
+  elevation.toast:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--elevation-toast'
+      ios: elevationToast
+      android: elevation_toast
+    consumers: []
+  elevation.tooltip:
+    category: layering
+    primitiveReferences: !<tag:yaml.org,2002:js/undefined> ''
+    themeVarying: false
+    platforms:
+      web: '--elevation-tooltip'
+      ios: elevationTooltip
+      android: elevation_tooltip
+    consumers: []
+  gridGutterXs:
+    category: spacing
+    primitiveReferences:
+      spacing: space200
+    themeVarying: false
+    platforms:
+      web: '--grid-gutter-xs'
+      ios: gridGutterXs
+      android: grid_gutter_xs
+    consumers: []
+  gridGutterSm:
+    category: spacing
+    primitiveReferences:
+      spacing: space250
+    themeVarying: false
+    platforms:
+      web: '--grid-gutter-sm'
+      ios: gridGutterSm
+      android: grid_gutter_sm
+    consumers: []
+  gridGutterMd:
+    category: spacing
+    primitiveReferences:
+      spacing: space300
+    themeVarying: false
+    platforms:
+      web: '--grid-gutter-md'
+      ios: gridGutterMd
+      android: grid_gutter_md
+    consumers: []
+  gridGutterLg:
+    category: spacing
+    primitiveReferences:
+      spacing: space400
+    themeVarying: false
+    platforms:
+      web: '--grid-gutter-lg'
+      ios: gridGutterLg
+      android: grid_gutter_lg
+    consumers: []
+  gridMarginXs:
+    category: spacing
+    primitiveReferences:
+      spacing: space300
+    themeVarying: false
+    platforms:
+      web: '--grid-margin-xs'
+      ios: gridMarginXs
+      android: grid_margin_xs
+    consumers: []
+  gridMarginSm:
+    category: spacing
+    primitiveReferences:
+      spacing: space300
+    themeVarying: false
+    platforms:
+      web: '--grid-margin-sm'
+      ios: gridMarginSm
+      android: grid_margin_sm
+    consumers: []
+  gridMarginMd:
+    category: spacing
+    primitiveReferences:
+      spacing: space400
+    themeVarying: false
+    platforms:
+      web: '--grid-margin-md'
+      ios: gridMarginMd
+      android: grid_margin_md
+    consumers: []
+  gridMarginLg:
+    category: spacing
+    primitiveReferences:
+      spacing: space500
+    themeVarying: false
+    platforms:
+      web: '--grid-margin-lg'
+      ios: gridMarginLg
+      android: grid_margin_lg
+    consumers: []
+  gridGutterNative:
+    category: spacing
+    primitiveReferences:
+      spacing: space250
+    themeVarying: false
+    platforms:
+      web: '--grid-gutter-native'
+      ios: gridGutterNative
+      android: grid_gutter_native
+    consumers: []
+  gridMarginNative:
+    category: spacing
+    primitiveReferences:
+      spacing: space300
+    themeVarying: false
+    platforms:
+      web: '--grid-margin-native'
+      ios: gridMarginNative
+      android: grid_margin_native
+    consumers: []
+  icon.strokeWidth:
+    category: icon
+    primitiveReferences:
+      value: borderWidth200
+    themeVarying: false
+    platforms:
+      web: '--icon-stroke-width'
+      ios: iconStrokeWidth
+      android: icon_stroke_width
+    consumers: []
+  icon.size050:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize050
+      multiplier: 'custom:1.231'
+    themeVarying: false
+    platforms:
+      web: '--icon-size-050'
+      ios: iconSize050
+      android: icon_size_050
+    consumers: []
+  icon.size075:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize075
+      multiplier: lineHeight075
+    themeVarying: false
+    platforms:
+      web: '--icon-size-075'
+      ios: iconSize075
+      android: icon_size_075
+    consumers: []
+  icon.size100:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize100
+      multiplier: lineHeight100
+    themeVarying: false
+    platforms:
+      web: '--icon-size-100'
+      ios: iconSize100
+      android: icon_size_100
+    consumers: []
+  icon.size125:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize125
+      multiplier: lineHeight125
+    themeVarying: false
+    platforms:
+      web: '--icon-size-125'
+      ios: iconSize125
+      android: icon_size_125
+    consumers: []
+  icon.size150:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize150
+      multiplier: lineHeight150
+    themeVarying: false
+    platforms:
+      web: '--icon-size-150'
+      ios: iconSize150
+      android: icon_size_150
+    consumers: []
+  icon.size200:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize200
+      multiplier: lineHeight200
+    themeVarying: false
+    platforms:
+      web: '--icon-size-200'
+      ios: iconSize200
+      android: icon_size_200
+    consumers: []
+  icon.size300:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize300
+      multiplier: lineHeight300
+    themeVarying: false
+    platforms:
+      web: '--icon-size-300'
+      ios: iconSize300
+      android: icon_size_300
+    consumers: []
+  icon.size400:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize400
+      multiplier: lineHeight400
+    themeVarying: false
+    platforms:
+      web: '--icon-size-400'
+      ios: iconSize400
+      android: icon_size_400
+    consumers: []
+  icon.size500:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize500
+      multiplier: lineHeight500
+    themeVarying: false
+    platforms:
+      web: '--icon-size-500'
+      ios: iconSize500
+      android: icon_size_500
+    consumers: []
+  icon.size600:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize600
+      multiplier: lineHeight600
+    themeVarying: false
+    platforms:
+      web: '--icon-size-600'
+      ios: iconSize600
+      android: icon_size_600
+    consumers: []
+  icon.size700:
+    category: icon
+    primitiveReferences:
+      fontSize: fontSize700
+      multiplier: lineHeight700
+    themeVarying: false
+    platforms:
+      web: '--icon-size-700'
+      ios: iconSize700
+      android: icon_size_700
+    consumers: []
+  accessibility.focus.offset:
+    category: accessibility
+    primitiveReferences:
+      value: space025
+    themeVarying: false
+    platforms:
+      web: '--accessibility-focus-offset'
+      ios: accessibilityFocusOffset
+      android: accessibility_focus_offset
+    consumers: []
+  accessibility.focus.width:
+    category: accessibility
+    primitiveReferences:
+      value: borderWidth200
+    themeVarying: false
+    platforms:
+      web: '--accessibility-focus-width'
+      ios: accessibilityFocusWidth
+      android: accessibility_focus_width
+    consumers: []
+  accessibility.focus.color:
+    category: accessibility
+    primitiveReferences:
+      value: cyan300
+    themeVarying: false
+    platforms:
+      web: '--accessibility-focus-color'
+      ios: accessibilityFocusColor
+      android: accessibility_focus_color
+    consumers: []
+  motion.floatLabel:
+    category: interaction
+    primitiveReferences:
+      duration: duration250
+      easing: easingStandard
+    themeVarying: false
+    platforms:
+      web: '--motion-float-label'
+      ios: motionFloatLabel
+      android: motion_float_label
+    consumers: []
+  motion.focusTransition:
+    category: interaction
+    primitiveReferences:
+      duration: duration150
+      easing: easingStandard
+    themeVarying: false
+    platforms:
+      web: '--motion-focus-transition'
+      ios: motionFocusTransition
+      android: motion_focus_transition
+    consumers: []
+  motion.buttonPress:
+    category: interaction
+    primitiveReferences:
+      duration: duration150
+      easing: easingAccelerate
+    themeVarying: false
+    platforms:
+      web: '--motion-button-press'
+      ios: motionButtonPress
+      android: motion_button_press
+    consumers: []
+  motion.modalSlide:
+    category: interaction
+    primitiveReferences:
+      duration: duration350
+      easing: easingDecelerate
+    themeVarying: false
+    platforms:
+      web: '--motion-modal-slide'
+      ios: motionModalSlide
+      android: motion_modal_slide
+    consumers: []
+  motion.selectionTransition:
+    category: interaction
+    primitiveReferences:
+      duration: duration250
+      easing: easingStandard
+    themeVarying: false
+    platforms:
+      web: '--motion-selection-transition'
+      ios: motionSelectionTransition
+      android: motion_selection_transition
+    consumers: []
+  motion.settleTransition:
+    category: interaction
+    primitiveReferences:
+      duration: duration350
+      easing: easingDecelerate
+    themeVarying: false
+    platforms:
+      web: '--motion-settle-transition'
+      ios: motionSettleTransition
+      android: motion_settle_transition
+    consumers: []
+  border.none:
+    category: border
+    primitiveReferences:
+      value: borderWidth000
+    themeVarying: false
+    platforms:
+      web: '--border-none'
+      ios: borderNone
+      android: border_none
+    consumers: []
+  border.default:
+    category: border
+    primitiveReferences:
+      value: borderWidth100
+    themeVarying: false
+    platforms:
+      web: '--border-default'
+      ios: borderDefault
+      android: border_default
+    consumers: []
+  border.emphasis:
+    category: border
+    primitiveReferences:
+      value: borderWidth200
+    themeVarying: false
+    platforms:
+      web: '--border-emphasis'
+      ios: borderEmphasis
+      android: border_emphasis
+    consumers: []
+  border.heavy:
+    category: border
+    primitiveReferences:
+      value: borderWidth400
+    themeVarying: false
+    platforms:
+      web: '--border-heavy'
+      ios: borderHeavy
+      android: border_heavy
+    consumers: []
+  radius.none:
+    category: layout
+    primitiveReferences:
+      value: radius000
+    themeVarying: false
+    platforms:
+      web: '--radius-none'
+      ios: radiusNone
+      android: radius_none
+    consumers: []
+  radius.subtle:
+    category: layout
+    primitiveReferences:
+      value: radius025
+    themeVarying: false
+    platforms:
+      web: '--radius-subtle'
+      ios: radiusSubtle
+      android: radius_subtle
+    consumers: []
+  radius.small:
+    category: layout
+    primitiveReferences:
+      value: radius050
+    themeVarying: false
+    platforms:
+      web: '--radius-small'
+      ios: radiusSmall
+      android: radius_small
+    consumers: []
+  radius.normal:
+    category: layout
+    primitiveReferences:
+      value: radius100
+    themeVarying: false
+    platforms:
+      web: '--radius-normal'
+      ios: radiusNormal
+      android: radius_normal
+    consumers: []
+  radius.large:
+    category: layout
+    primitiveReferences:
+      value: radius200
+    themeVarying: false
+    platforms:
+      web: '--radius-large'
+      ios: radiusLarge
+      android: radius_large
+    consumers: []
+  radius.full:
+    category: layout
+    primitiveReferences:
+      value: radiusMax
+    themeVarying: false
+    platforms:
+      web: '--radius-full'
+      ios: radiusFull
+      android: radius_full
+    consumers: []
+  radius.circle:
+    category: layout
+    primitiveReferences:
+      value: radiusHalf
+    themeVarying: false
+    platforms:
+      web: '--radius-circle'
+      ios: radiusCircle
+      android: radius_circle
+    consumers: []
+  space.grouped.none:
+    category: spacing
+    primitiveReferences:
+      value: space000
+    themeVarying: false
+    platforms:
+      web: '--space-grouped-none'
+      ios: spaceGroupedNone
+      android: space_grouped_none
+    consumers: []
+  space.grouped.minimal:
+    category: spacing
+    primitiveReferences:
+      value: space025
+    themeVarying: false
+    platforms:
+      web: '--space-grouped-minimal'
+      ios: spaceGroupedMinimal
+      android: space_grouped_minimal
+    consumers: []
+  space.grouped.tight:
+    category: spacing
+    primitiveReferences:
+      value: space050
+    themeVarying: false
+    platforms:
+      web: '--space-grouped-tight'
+      ios: spaceGroupedTight
+      android: space_grouped_tight
+    consumers: []
+  space.grouped.normal:
+    category: spacing
+    primitiveReferences:
+      value: space100
+    themeVarying: false
+    platforms:
+      web: '--space-grouped-normal'
+      ios: spaceGroupedNormal
+      android: space_grouped_normal
+    consumers: []
+  space.grouped.loose:
+    category: spacing
+    primitiveReferences:
+      value: space150
+    themeVarying: false
+    platforms:
+      web: '--space-grouped-loose'
+      ios: spaceGroupedLoose
+      android: space_grouped_loose
+    consumers: []
+  space.related.none:
+    category: spacing
+    primitiveReferences:
+      value: space000
+    themeVarying: false
+    platforms:
+      web: '--space-related-none'
+      ios: spaceRelatedNone
+      android: space_related_none
+    consumers: []
+  space.related.tight:
+    category: spacing
+    primitiveReferences:
+      value: space100
+    themeVarying: false
+    platforms:
+      web: '--space-related-tight'
+      ios: spaceRelatedTight
+      android: space_related_tight
+    consumers: []
+  space.related.normal:
+    category: spacing
+    primitiveReferences:
+      value: space200
+    themeVarying: false
+    platforms:
+      web: '--space-related-normal'
+      ios: spaceRelatedNormal
+      android: space_related_normal
+    consumers: []
+  space.related.loose:
+    category: spacing
+    primitiveReferences:
+      value: space300
+    themeVarying: false
+    platforms:
+      web: '--space-related-loose'
+      ios: spaceRelatedLoose
+      android: space_related_loose
+    consumers: []
+  space.separated.none:
+    category: spacing
+    primitiveReferences:
+      value: space000
+    themeVarying: false
+    platforms:
+      web: '--space-separated-none'
+      ios: spaceSeparatedNone
+      android: space_separated_none
+    consumers: []
+  space.separated.tight:
+    category: spacing
+    primitiveReferences:
+      value: space200
+    themeVarying: false
+    platforms:
+      web: '--space-separated-tight'
+      ios: spaceSeparatedTight
+      android: space_separated_tight
+    consumers: []
+  space.separated.normal:
+    category: spacing
+    primitiveReferences:
+      value: space300
+    themeVarying: false
+    platforms:
+      web: '--space-separated-normal'
+      ios: spaceSeparatedNormal
+      android: space_separated_normal
+    consumers: []
+  space.separated.loose:
+    category: spacing
+    primitiveReferences:
+      value: space400
+    themeVarying: false
+    platforms:
+      web: '--space-separated-loose'
+      ios: spaceSeparatedLoose
+      android: space_separated_loose
+    consumers: []
+  space.sectioned.none:
+    category: spacing
+    primitiveReferences:
+      value: space000
+    themeVarying: false
+    platforms:
+      web: '--space-sectioned-none'
+      ios: spaceSectionedNone
+      android: space_sectioned_none
+    consumers: []
+  space.sectioned.tight:
+    category: spacing
+    primitiveReferences:
+      value: space400
+    themeVarying: false
+    platforms:
+      web: '--space-sectioned-tight'
+      ios: spaceSectionedTight
+      android: space_sectioned_tight
+    consumers: []
+  space.sectioned.normal:
+    category: spacing
+    primitiveReferences:
+      value: space500
+    themeVarying: false
+    platforms:
+      web: '--space-sectioned-normal'
+      ios: spaceSectionedNormal
+      android: space_sectioned_normal
+    consumers: []
+  space.sectioned.loose:
+    category: spacing
+    primitiveReferences:
+      value: space600
+    themeVarying: false
+    platforms:
+      web: '--space-sectioned-loose'
+      ios: spaceSectionedLoose
+      android: space_sectioned_loose
+    consumers: []
+  space.inset.100:
+    category: spacing
+    primitiveReferences:
+      value: space100
+    themeVarying: false
+    platforms:
+      web: '--space-inset-100'
+      ios: spaceInset100
+      android: space_inset_100
+    consumers: []
+  space.inset.150:
+    category: spacing
+    primitiveReferences:
+      value: space150
+    themeVarying: false
+    platforms:
+      web: '--space-inset-150'
+      ios: spaceInset150
+      android: space_inset_150
+    consumers: []
+  space.inset.200:
+    category: spacing
+    primitiveReferences:
+      value: space200
+    themeVarying: false
+    platforms:
+      web: '--space-inset-200'
+      ios: spaceInset200
+      android: space_inset_200
+    consumers: []
+  space.inset.300:
+    category: spacing
+    primitiveReferences:
+      value: space300
+    themeVarying: false
+    platforms:
+      web: '--space-inset-300'
+      ios: spaceInset300
+      android: space_inset_300
+    consumers: []
+  space.inset.400:
+    category: spacing
+    primitiveReferences:
+      value: space400
+    themeVarying: false
+    platforms:
+      web: '--space-inset-400'
+      ios: spaceInset400
+      android: space_inset_400
+    consumers: []
+  space.inset.none:
+    category: spacing
+    primitiveReferences:
+      value: space000
+    themeVarying: false
+    platforms:
+      web: '--space-inset-none'
+      ios: spaceInsetNone
+      android: space_inset_none
+    consumers: []
+  space.inset.050:
+    category: spacing
+    primitiveReferences:
+      value: space050
+    themeVarying: false
+    platforms:
+      web: '--space-inset-050'
+      ios: spaceInset050
+      android: space_inset_050
+    consumers: []
+  space.inset.075:
+    category: spacing
+    primitiveReferences:
+      value: space075
+    themeVarying: false
+    platforms:
+      web: '--space-inset-075'
+      ios: spaceInset075
+      android: space_inset_075
+    consumers: []
