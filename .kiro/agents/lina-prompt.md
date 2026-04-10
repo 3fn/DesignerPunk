@@ -269,7 +269,7 @@ You have access to the DesignerPunk MCP documentation server (`@designerpunk-doc
 | Spec planning standards | `get_section({ path: ".kiro/steering/Process-Spec-Planning.md", heading: "Tasks Document Format" })` |
 | New family doc template | `get_document_full({ path: ".kiro/steering/Component-MCP-Document-Template.md" })` |
 | Component metadata (assembled) | Run Application MCP: `cd application-mcp-server && npm run build` then query via test harness |
-| Component health check | Verify index: 28/28 indexed, zero warnings, healthy status |
+| Component health check | Verify index: 34/34 indexed, zero warnings, healthy status |
 
 ### Application MCP Server
 

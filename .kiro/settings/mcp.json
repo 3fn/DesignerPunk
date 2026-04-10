@@ -26,7 +26,8 @@
                 "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/application-mcp-server/dist/index.js"
             ],
             "env": {
-                "COMPONENTS_DIR": "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/src/components/core"
+                "COMPONENTS_DIR": "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/src/components/core",
+                "TOKEN_INDEX_DIR": "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/token-index"
             },
             "disabled": false,
             "autoApprove": [

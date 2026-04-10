@@ -29,7 +29,7 @@ Strategic gaps are easy to identify in conversation and easy to forget between s
 ## Current State (Post-071)
 
 - Docs MCP: Steering docs, token governance, component standards — queryable via progressive disclosure
-- Application MCP: 10 tools, 8 family guidance YAMLs, 3 experience patterns, 28 components indexed
+- Application MCP: 10 tools, 9 family guidance YAMLs, 9 experience patterns, 34 components indexed
 - Product MCP: Not yet built (Spec 070 design outline exists)
 
 ---
