@@ -76,7 +76,7 @@ WS3 can start immediately. WS5 depends on WS3 (Product MCP needs the path config
     - Start with empty data when no product directory exists (warning, not error)
     - _Requirements: R1 AC 1-3_
 
-  - [ ] 2.2 Product data indexer
+  - [x] 2.2 Product data indexer
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

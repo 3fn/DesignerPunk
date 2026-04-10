@@ -10,6 +10,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as yaml from 'js-yaml';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
@@ -82,6 +83,7 @@ class ProductMCPServer {
   private screenSpecs: Map<string, Record<string, unknown>> = new Map();
   private domainObjects: Map<string, Record<string, unknown>> = new Map();
   private templates: Array<Record<string, unknown>> = [];
+  private oneOffComponents: Map<string, Record<string, unknown>> = new Map();
 
   constructor(productDir: string = DEFAULT_PRODUCT_DIR) {
     this.productDir = productDir;
@@ -106,10 +108,176 @@ class ProductMCPServer {
 
   async indexProductData(): Promise<void> {
     this.warnings = [];
-    // Indexing logic implemented in Task 2.2
+    this.overview = null;
+    this.experienceMap = [];
+    this.screenSpecs.clear();
+    this.domainObjects.clear();
+    this.templates = [];
+    this.oneOffComponents.clear();
+
+    // Overview
+    const overviewPath = path.join(this.productDir, 'overview.yaml');
+    if (fs.existsSync(overviewPath)) {
+      this.overview = this.loadYaml(overviewPath);
+    }
+
+    // Principles (markdown, stored as text)
+    const principlesDir = path.join(this.productDir, 'principles');
+    if (fs.existsSync(principlesDir)) {
+      const principles: Record<string, string> = {};
+      for (const file of this.listFiles(principlesDir, '.md')) {
+        const name = path.basename(file, '.md');
+        principles[name] = fs.readFileSync(file, 'utf-8');
+      }
+      if (this.overview) {
+        (this.overview as any).principles = principles;
+      } else {
+        this.overview = { principles };
+      }
+    }
+
+    // Experience map — verticals, flows, pages
+    const expDir = path.join(this.productDir, 'experience-map');
+    if (fs.existsSync(expDir)) {
+      for (const typeDir of ['verticals', 'flows', 'pages']) {
+        const typePath = path.join(expDir, typeDir);
+        if (!fs.existsSync(typePath)) continue;
+        const type = typeDir === 'pages' ? 'feature-page' : typeDir.replace(/s$/, '') as string;
+
+        for (const entry of fs.readdirSync(typePath, { withFileTypes: true })) {
+          if (entry.isDirectory()) {
+            this.indexScreenDirectory(path.join(typePath, entry.name), entry.name, type);
+          } else if (entry.isFile() && entry.name.endsWith('.yaml')) {
+            const name = entry.name.replace('.yaml', '');
+            this.indexScreenFile(path.join(typePath, entry.name), name, type);
+          }
+        }
+      }
+    }
+
+    // Templates
+    const templatesDir = path.join(this.productDir, 'templates');
+    if (fs.existsSync(templatesDir)) {
+      for (const file of this.listFiles(templatesDir, '.yaml')) {
+        const data = this.loadYaml(file);
+        if (data) this.templates.push(data);
+      }
+    }
+
+    // Domain objects
+    const domainsDir = path.join(this.productDir, 'domain-objects');
+    if (fs.existsSync(domainsDir)) {
+      for (const file of this.listFiles(domainsDir, '.yaml')) {
+        const data = this.loadYaml(file);
+        if (data && (data as any).name) {
+          this.domainObjects.set((data as any).name, data);
+        }
+      }
+    }
+
+    // Build bidirectional domain object ↔ screen cross-references
+    for (const [screenName, spec] of Array.from(this.screenSpecs)) {
+      const refs = this.extractDomainRefs(spec);
+      for (const ref of refs) {
+        const obj = this.domainObjects.get(ref);
+        if (obj) {
+          const referencedBy = ((obj as any).referencedBy || []) as string[];
+          if (!referencedBy.includes(screenName)) referencedBy.push(screenName);
+          (obj as any).referencedBy = referencedBy;
+        }
+      }
+    }
+
+    // One-off components
+    const componentsDir = path.join(this.productDir, 'components');
+    if (fs.existsSync(componentsDir)) {
+      for (const entry of fs.readdirSync(componentsDir, { withFileTypes: true })) {
+        if (!entry.isDirectory()) continue;
+        const compDir = path.join(componentsDir, entry.name);
+        const schemaFile = this.listFiles(compDir, '.schema.yaml')[0];
+        if (!schemaFile) continue;
+        const schema = this.loadYaml(schemaFile) || {};
+        const contractFile = this.listFiles(compDir, '.contracts.yaml')[0];
+        if (contractFile) {
+          (schema as any).contracts = this.loadYaml(contractFile);
+        }
+        const name = (schema as any).name || entry.name;
+        this.oneOffComponents.set(name, schema);
+      }
+    }
+
     this.indexed = true;
     this.lastIndexTime = new Date().toISOString();
-    console.error(`[${SERVER_NAME}] Indexed product data from ${this.productDir}`);
+    console.error(`[${SERVER_NAME}] Indexed: ${this.screenSpecs.size} screens, ${this.domainObjects.size} domain objects, ${this.templates.length} templates, ${this.oneOffComponents.size} one-off components`);
+  }
+
+  // --- Indexing helpers ---
+
+  private indexScreenFile(filePath: string, name: string, type: string): void {
+    const data = this.loadYaml(filePath);
+    if (!data) return;
+    (data as any).name = (data as any).name || name;
+    (data as any).type = (data as any).type || type;
+    this.screenSpecs.set((data as any).name, data);
+    this.experienceMap.push({
+      name: (data as any).name,
+      type: (data as any).type,
+      status: (data as any).status || {},
+    });
+  }
+
+  private indexScreenDirectory(dirPath: string, name: string, type: string): void {
+    const yamlFiles = this.listFiles(dirPath, '.yaml');
+    if (yamlFiles.length === 0) return;
+
+    // Primary file is the one matching the directory name, or the first file
+    const primaryFile = yamlFiles.find(f => path.basename(f, '.yaml') === name) || yamlFiles[0];
+    const assembled = this.loadYaml(primaryFile) || {};
+    (assembled as any).name = (assembled as any).name || name;
+    (assembled as any).type = (assembled as any).type || type;
+
+    // Merge additional facet files (e.g., onboarding.state.yaml, onboarding.a11y.yaml)
+    for (const file of yamlFiles) {
+      if (file === primaryFile) continue;
+      const facetData = this.loadYaml(file);
+      if (facetData) Object.assign(assembled, facetData);
+    }
+
+    this.screenSpecs.set((assembled as any).name, assembled);
+    this.experienceMap.push({
+      name: (assembled as any).name,
+      type: (assembled as any).type,
+      status: (assembled as any).status || {},
+    });
+  }
+
+  private extractDomainRefs(spec: Record<string, unknown>): string[] {
+    const refs: string[] = [];
+    const text = JSON.stringify(spec);
+    // Look for domain-objects references in data-sources or repeat expressions
+    for (const [name] of Array.from(this.domainObjects)) {
+      if (text.toLowerCase().includes(name.toLowerCase())) refs.push(name);
+    }
+    return refs;
+  }
+
+  private loadYaml(filePath: string): Record<string, unknown> | null {
+    try {
+      const content = fs.readFileSync(filePath, 'utf-8');
+      return yaml.load(content) as Record<string, unknown>;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      this.warnings.push(`Failed to parse ${filePath}: ${msg}`);
+      console.error(`[${SERVER_NAME}] Skipping malformed YAML: ${filePath} — ${msg}`);
+      return null;
+    }
+  }
+
+  private listFiles(dir: string, ext: string): string[] {
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir)
+      .filter(f => f.endsWith(ext))
+      .map(f => path.join(dir, f));
   }
 
   private registerHandlers(): void {
@@ -163,6 +331,7 @@ class ProductMCPServer {
             screens: this.screenSpecs.size,
             domainObjects: this.domainObjects.size,
             templates: this.templates.length,
+            oneOffComponents: this.oneOffComponents.size,
           },
           warnings: this.warnings,
         };
