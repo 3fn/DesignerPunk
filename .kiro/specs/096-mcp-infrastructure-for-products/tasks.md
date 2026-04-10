@@ -19,7 +19,7 @@ Three tasks, sequential:
 
 ## Task List
 
-- [ ] 1. Token Index Generation Script
+- [x] 1. Token Index Generation Script
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
@@ -60,7 +60,7 @@ Three tasks, sequential:
   - Commit: `./.kiro/hooks/commit-task.sh "Task 2 Complete: Token Query Tools"`
   - Verify on GitHub
 
-  - [ ] 2.1 Token indexer module
+  - [x] 2.1 Token indexer module
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
