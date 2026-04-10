@@ -16,6 +16,7 @@ import { ComponentIndexer } from './indexer/ComponentIndexer';
 import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
 import { FileWatcher } from './watcher/FileWatcher';
+import { TokenIndexer } from './indexer/TokenIndexer';
 
 const SERVER_NAME = 'mcp-component-server';
 const SERVER_VERSION = '0.1.0';
@@ -147,6 +148,52 @@ const tools = [
       required: ['component'],
     },
   },
+  // Token query tools (Spec 096)
+  {
+    name: 'search_tokens',
+    description: 'Search tokens by family, tier (primitive/semantic/component), or name. All parameters optional and combinable.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        family: { type: 'string', description: 'Token family (e.g., "spacing", "color")' },
+        tier: { type: 'string', description: 'Token tier: "primitive", "semantic", or "component"' },
+        name: { type: 'string', description: 'Token name (partial match)' },
+      },
+    },
+  },
+  {
+    name: 'get_token_details',
+    description: 'Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        name: { type: 'string', description: 'Token name (e.g., "space100", "color.action.primary")' },
+      },
+      required: ['name'],
+    },
+  },
+  {
+    name: 'get_token_family',
+    description: 'Get all tokens in a family across all tiers.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        family: { type: 'string', description: 'Family name (e.g., "spacing", "color")' },
+      },
+      required: ['family'],
+    },
+  },
+  {
+    name: 'get_token_consumers',
+    description: 'Get all components that reference a token.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        name: { type: 'string', description: 'Token name' },
+      },
+      required: ['name'],
+    },
+  },
 ];
 
 class ComponentMCPServer {
@@ -155,6 +202,7 @@ class ComponentMCPServer {
   private queryEngine: ComponentQueryEngine;
   private assemblyValidator: AssemblyValidator;
   private fileWatcher: FileWatcher;
+  private tokenIndexer: TokenIndexer;
 
   constructor(private paths: DataPaths) {
     this.server = new Server({ name: SERVER_NAME, version: SERVER_VERSION }, { capabilities: { tools: {} } });
@@ -162,6 +210,7 @@ class ComponentMCPServer {
     this.queryEngine = new ComponentQueryEngine(this.indexer);
     this.assemblyValidator = new AssemblyValidator(this.indexer);
     this.fileWatcher = new FileWatcher(this.indexer, this.paths.componentsDir);
+    this.tokenIndexer = new TokenIndexer();
     this.registerHandlers();
   }
 
@@ -173,6 +222,14 @@ class ComponentMCPServer {
       this.paths.guidanceDir
     );
     this.fileWatcher.start();
+
+    // Load token index (Spec 096) — optional, graceful if missing
+    if (this.paths.tokenIndexDir) {
+      await this.tokenIndexer.indexTokens(this.paths.tokenIndexDir);
+      const th = this.tokenIndexer.getHealth();
+      console.error(`[${SERVER_NAME}] Token index: ${th.primitives} primitives, ${th.semantics} semantics, ${th.componentTokens} component tokens`);
+    }
+
     const health = this.indexer.getHealth();
     console.error(`[${SERVER_NAME}] Indexed ${health.componentsIndexed} components (${health.warnings.length} warnings)`);
     if (!this.paths.tokenIndexDir) {
@@ -239,6 +296,21 @@ class ComponentMCPServer {
         return this.assemblyValidator.validate(params.assembly as any);
       case 'get_prop_guidance':
         return this.queryEngine.getGuidance(params.component as string, params.verbose as boolean | undefined);
+      // Token query tools (Spec 096)
+      case 'search_tokens':
+        return this.tokenIndexer.search({
+          family: params.family as string | undefined,
+          tier: params.tier as string | undefined,
+          name: params.name as string | undefined,
+        });
+      case 'get_token_details': {
+        const entry = this.tokenIndexer.getDetails(params.name as string);
+        return entry || { error: `Token '${params.name}' not found` };
+      }
+      case 'get_token_family':
+        return this.tokenIndexer.getFamily(params.family as string);
+      case 'get_token_consumers':
+        return this.tokenIndexer.getConsumers(params.name as string);
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
