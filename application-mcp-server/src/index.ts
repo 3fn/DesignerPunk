@@ -21,6 +21,7 @@ import { TokenIndexer } from './indexer/TokenIndexer';
 const SERVER_NAME = 'mcp-component-server';
 const SERVER_VERSION = '0.1.0';
 const DEFAULT_COMPONENTS_DIR = 'src/components/core';
+const DEFAULT_TOKEN_INDEX_DIR = 'token-index';
 
 /** Explicit data paths for the Application MCP. All optional — defaults derive from package root. */
 interface DataPaths {
@@ -339,7 +340,7 @@ const server = new ComponentMCPServer({
   templatesDir: process.env.TEMPLATES_DIR,
   guidanceDir: process.env.GUIDANCE_DIR,
   registryPath: process.env.REGISTRY_PATH,
-  tokenIndexDir: process.env.TOKEN_INDEX_DIR,
+  tokenIndexDir: process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR,
 });
 server.start().catch((err) => {
   console.error(`[${SERVER_NAME}] Fatal error:`, err);

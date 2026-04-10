@@ -4,7 +4,7 @@
 **Discovered by**: Lina (health check)
 **Spec**: 096 - MCP Infrastructure for Products
 **Severity**: Medium — tokens indexed at 0/0/0 despite generation pipeline producing all three YAML files
-**Status**: Open — awaiting Ada and Thurgood input
+**Status**: ✅ Resolved (2026-04-10) — Ada applied Option A
 
 ---
 
@@ -55,6 +55,16 @@ Add `TOKEN_INDEX_DIR` to `.kiro/settings/mcp.json` for the current running serve
 Add a test that validates the Application MCP starts with default paths and loads all expected data (components, tokens, patterns, templates, guidance). Catches config gaps before they reach production.
 
 **Status**: Ada handles Option A, Thurgood handles Option B.
+
+## Resolution
+
+Option A applied: added `DEFAULT_TOKEN_INDEX_DIR = 'token-index'` constant and used it as fallback when `TOKEN_INDEX_DIR` env var is not set. Token index now loads out of the box without extra env config.
+
+Changes:
+- `application-mcp-server/src/index.ts` line 24: added `DEFAULT_TOKEN_INDEX_DIR`
+- `application-mcp-server/src/index.ts` line 342: `tokenIndexDir: process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR`
+
+Option B (mcp.json update) still recommended for Thurgood as belt-and-suspenders — explicit config is good documentation even when the default works.
 
 ## Questions for Ada
 
