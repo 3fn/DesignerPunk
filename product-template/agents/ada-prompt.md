@@ -68,6 +68,10 @@ All design system knowledge is accessed via MCP queries. Do not read package fil
 | Theme-varying tokens | `get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Context Resolution" })` |
 | Naming conventions | `get_section({ path: ".kiro/steering/rosetta-system-principles.md", heading: "..." })` |
 | Token documentation map | `get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Token Documentation Map" })` |
+| Search tokens | `search_tokens({ family: "spacing" })` |
+| Token details | `get_token_details({ name: "space100" })` |
+| Token family | `get_token_family({ family: "color" })` |
+| Token consumers | `get_token_consumers({ token: "colorActionPrimary" })` |
 
 ---
 

@@ -39,6 +39,7 @@
     "family-guidance/",
     "experience-patterns/",
     "layout-templates/",
+    "token-index/",
     "family-registry.yaml",
     "designerpunk.config.ts"
   ],

@@ -160,6 +160,10 @@ You have access to the DesignerPunk MCP documentation server (`@designerpunk-doc
 | Portable pipeline | `get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Portable Pipeline (Spec 094)" })` |
 | Theme registry governance | `get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Theme Registry (Spec 094)" })` |
 | Theme-varying tokens | `get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Context Resolution" })` |
+| Search tokens | `search_tokens({ family: "spacing" })` — find tokens by family, tier, or name |
+| Token details | `get_token_details({ name: "space100" })` — value, family, platforms, formula, theme-varying, consumers |
+| Token family | `get_token_family({ family: "color" })` — all tokens in a family |
+| Token consumers | `get_token_consumers({ token: "colorActionPrimary" })` — which components use a token |
 | Naming conventions | `get_section({ path: ".kiro/steering/rosetta-system-principles.md", heading: "..." })` |
 | Finding the right doc | `get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Token Documentation Map" })` |
 | Token resolution patterns | `get_section({ path: ".kiro/steering/Token-Resolution-Patterns.md", heading: "..." })` |

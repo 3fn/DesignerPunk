@@ -39,7 +39,7 @@ Three tasks, sequential:
 
 ---
 
-- [ ] 2. Application MCP Token Query Tools
+- [x] 2. Application MCP Token Query Tools
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
@@ -71,7 +71,7 @@ Three tasks, sequential:
     - Handle malformed YAML (skip bad file, log error, load other tiers)
     - _Requirements: R2 AC 5-6_
 
-  - [ ] 2.2 Query tools
+  - [x] 2.2 Query tools
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada

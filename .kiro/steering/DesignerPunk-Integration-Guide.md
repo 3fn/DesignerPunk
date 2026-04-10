@@ -133,6 +133,7 @@ Produces platform token files in your configured output directory:
 - `ComponentTokens.web.css` / `.ios.swift` / `.android.kt` — component tokens
 - `DesignTokens.dtcg.json` — DTCG standard format
 - `DesignTokens.figma.json` — Figma Variables format
+- `token-index/` — structured YAML index (primitives, semantics, components) loaded by the Application MCP for token queries
 
 If you registered a custom theme, the output includes themed values scoped by `data-theme` attribute (web) or as additional theme structs/instances (iOS/Android).
 
@@ -395,7 +396,7 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 
 ## MCP Query Reference
 
-### Application MCP (component queries)
+### Application MCP (component and token queries)
 
 | Query | Purpose |
 |-------|---------|
@@ -410,8 +411,12 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `list_layout_templates()` | All available templates |
 | `validate_assembly({ assembly })` | Validate a component tree |
 | `check_composition({ parent, child })` | Check parent-child compatibility |
+| `search_tokens({ family?, tier?, name? })` | Find tokens by family, tier, or name |
+| `get_token_details({ name })` | Full token: value, family, platforms, formula, theme-varying status, consumers |
+| `get_token_family({ family })` | All tokens in a family with values and relationships |
+| `get_token_consumers({ token })` | Components that reference a token |
 | `get_component_health()` | Index health status |
-| `rebuild_index()` | Rebuild component index |
+| `rebuild_index()` | Rebuild component + token index |
 
 ### Docs MCP (steering doc queries)
 
