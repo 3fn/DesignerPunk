@@ -116,7 +116,7 @@ WS3 can start immediately. WS5 depends on WS3 (Product MCP needs the path config
     - Verify `npm pack` includes the Product MCP bundle
     - _Requirements: R1 AC 1-2_
 
-  - [ ] 2.5 Integration test
+  - [x] 2.5 Integration test
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
