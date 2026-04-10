@@ -77,7 +77,7 @@ function main() {
 
     semanticsIndex[token.name] = {
       category: token.category,
-      primitiveReferences: token.primitiveReferences,
+      primitiveReferences: token.primitiveReferences || null,
       themeVarying: isThemeVarying,
       platforms: {
         web: webGen.getTokenName(token.name, token.category),
