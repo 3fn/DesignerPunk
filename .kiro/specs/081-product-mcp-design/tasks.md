@@ -21,7 +21,7 @@ WS3 can start immediately. WS5 depends on WS3 (Product MCP needs the path config
 
 ## Task List
 
-- [ ] 1. MCP Path Configuration (WS3)
+- [x] 1. MCP Path Configuration (WS3)
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
@@ -65,7 +65,7 @@ WS3 can start immediately. WS5 depends on WS3 (Product MCP needs the path config
   - Commit: `./.kiro/hooks/commit-task.sh "Task 2 Complete: Product MCP Server"`
   - Verify on GitHub
 
-  - [ ] 2.1 Server scaffold and CLI command
+  - [x] 2.1 Server scaffold and CLI command
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Ada
@@ -92,7 +92,7 @@ WS3 can start immediately. WS5 depends on WS3 (Product MCP needs the path config
     - Handle malformed YAML: skip bad files, log error with path, continue indexing
     - _Requirements: R3 AC 1-6, R4 AC 1-2, R5 AC 1-2, R6 AC 1-4, R7 AC 1-4_
 
-  - [ ] 2.3 Query tools
+  - [x] 2.3 Query tools
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -132,7 +132,7 @@ WS3 can start immediately. WS5 depends on WS3 (Product MCP needs the path config
 
 ---
 
-- [ ] 3. Agent Reframing and Integration Guide
+- [x] 3. Agent Reframing and Integration Guide
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
