@@ -1,0 +1,218 @@
+# Feedback from GitHub's Microsoft Copilot
+
+**Date**: 2026-04-11
+**Severity**: Medium (necessary for the successful execution of product development)
+**Agent**: Peter
+**Blocks**: M0b, possibly M0a
+**Status**: Open
+
+## What Works
+
+### The Server is Solid Fundamentally
+- Clean separation of concerns: indexing, storage, query handlers
+- Proper YAML parsing with error handling
+- Cross-reference building (domain objects ↔ screens) is exactly what was needed
+- Platform branching/filtering logic is sound
+- Health checking and rebuild capability are there
+
+### The Architecture Decision Was Right
+The choice to NOT enrich Product MCP with Application MCP data is correct. Reference-by-name keeps data sources clean and prevents sync coupling. That was the right call.
+
+## What I Actually Think Could Be Better
+
+### 1. The Search/Discovery is Anemic
+
+The spec says `find_components` in the Application MCP lets you search by context. The Product MCP has none of this. All queries are by exact name:
+
+- `get_screen_spec('legislation-list')` — but what if you don't know the name?
+- `list_experience_map()` — returns 200 screens, you parse them manually
+- `get_domain_object('bill')` — exact name required
+
+#### What it should have:
+
+Query tools for discovery
+
+Code
+```
+find_screens({ 
+  context?: 'authentication' | 'data-display' | 'settings',  
+  status?: 'not-started' | 'in-progress' | 'complete' | 'blocked',
+  platform?: 'web' | 'ios' | 'android',
+  usesComponent?: 'Button-CTA',
+  usesDomainObject?: 'Bill'
+})
+```
+
+#### Why?
+Data talks. If a component changes, a product agent needs to ask "which screens reference this" without knowing the screen names ahead of time. Right now, that requires manual parsing of `list_experience_map()`.
+
+### 2. One-Off Component Enrichment is Indirect
+
+When you query a screen spec with one-off components, the implementation does:
+
+TypeScript
+```
+const oneOff = this.oneOffComponents.get(node.component);
+if (oneOff) {
+  node._oneOffSchema = oneOff;  // ← underscore prefix suggests "internal"
+}
+```
+This works, but it feels like a secondary concern. The one-off component is discovered during the screen spec query, which means:
+
+- There's no way to query a one-off directly without getting a full screen spec
+- If a product component's contract changes, you need to query all screens that use it to see the change
+- The schema sits in `_oneOffSchema` (private namespace, not documented as public API)
+
+Better approach: Add a tool
+
+Code
+```
+get_product_component(name: string): ProductComponent
+```
+Then screen specs reference them cleanly, agents can query them directly.
+
+### 3. Platform Filtering is Shallow
+
+The `filterPlatform` function merges `shared + platform` content. But it doesn't understand intent. Consider:
+
+YAML
+```
+accessibility:
+  shared:
+    - heading: h1
+  ios:
+    - voiceOver custom rotor
+```
+When you query web, you get: `{ shared: [h1], ios: [voiceOver] }` merged. But the iOS-specific content shouldn't exist in a web response.
+
+The current code handles arrays and objects, but the warnings about missing one-offs only fire after platform filtering. A product agent working on web never learns that the component references a product component they don't have.
+
+Better: Filter first, then enrich, then warn. Warnings should be platform-aware.
+
+### 4. No Cross-Reference Querying in the Other Direction
+
+The implementation builds `referencedBy` on domain objects:
+
+TypeScript
+```
+(obj as any).referencedBy = referencedBy;
+```
+This is great — you can query `get_domain_object('bill')` and see which screens use it. But there's no tool to query it directly:
+
+Code
+```
+// This doesn't exist but should:
+find_domain_objects_in_screen(screenName: string) → DomainObject[]
+find_screens_using_domain_object(objectName: string) → ScreenSpec[]
+```
+Why? Impact analysis. When a domain object schema changes, you need to know exactly which screens are affected. Same for components.
+
+### 5. Experience Map is Minimalist
+
+`list_experience_map()` returns:
+
+TypeScript
+```
+{
+  name: 'legislation-list',
+  type: 'vertical',
+  status: { web: 'in-progress', ios: 'not-started', android: 'not-started' }
+}
+```
+This is useful, but it's missing the context that only lives in the full spec. Platform agents querying this data can't answer:
+
+- "Which screens are blocked and why?"
+- "Which screens are complete across all platforms?"
+- "Show me all screens that use Component X"
+
+The `list_experience_map()` response should be enriched with:
+- Blocked reason (from `status.ios.blockedReason` if it exists)
+- Referenced components (parsed from UI tree)
+- Referenced domain objects
+
+This would make the experience map queryable as impact analysis data.
+
+### 6. Template System is Afterthought
+
+Templates are indexed but never connected to screens:
+
+- No way to query "which screens use this template"
+- No way to say "this screen uses the card-grid template"
+- `list_product_templates()` returns an array, but templates aren't discoverable by context
+Templates should support queries like:
+
+Code
+```
+find_templates({ category?: 'layout' | 'content', usedBy?: screenName })
+```
+And screen specs should be able to reference them: `template: card-grid` (which gets enriched with the template data).
+
+### 7. Principles Are Stored, Not Queryable
+
+Principles live as markdown files, get loaded into the overview:
+
+TypeScript
+```
+principles[name] = fs.readFileSync(file, 'utf-8');
+```
+But there's no semantic way to query them. A product agent working on a screen can't ask "what's our principle on empty states?" They'd have to parse unstructured markdown.
+
+Principles should either be:
+
+- Structured YAML with tags/keywords that let agents find relevant principles by context
+- Or queryable by natural language through the MCP (but that's harder)
+
+Right now they're just text blobs.
+
+## The Bigger Pattern I See
+
+The Product MCP feels like Phase 1 (MVP) infrastructure without Phase 2 (agent-driven) thinking.
+
+It successfully serves documentation queries (overview, spec by name). But it doesn't yet serve analysis queries (impact, discovery, relationships). The design doc's "Leonardo's Wish List" includes:
+
+> 1. Screen → Component lookup: Given a screen name, return the component tree. ✅
+>
+> 2. Component → Screen reverse lookup: Given a component, return all screens that use it. ❌
+>
+> 3. Screen state model query: ... ✅ (part of screen spec)
+>
+> 4. Screen → Token lookup: ... ⚠️ (tokens are mentioned but not extracted/queryable)
+
+Item #2 isn't built. Item #4 is half-done.
+
+## What I'd Actually Do
+
+Phase 2 additions (not redo, add):
+
+1. Add discovery tools:
+- `find_screens(context, status, platform, usesComponent, usesDomainObject)`
+- `find_domain_objects_in_screen(screenName)`
+- `find_screens_using_component(componentName)`
+- `find_screens_using_domain_object(objectName)`
+
+2. Extract and index tokens from screen specs:
+- Build a reverse index during indexing: screen → tokens used
+- Add `find_screens_using_token(tokenName)` for impact analysis
+
+3. Make principles queryable:
+- Convert to YAML with `keyword` tags
+- Add `find_principles(keyword)` or embed tags in the overview
+
+4. Make templates first-class:
+- Allow screens to reference `template: name`
+- Add cross-references: template → screens using it
+- Make templates discoverable by use case
+
+5. Enrich list_experience_map():
+
+- Include component references (not full tree, just names)
+- Include blocked reasons
+- Support filtering by component/domain object usage
+
+## The Real Issue
+
+The Product MCP right now is write-friendly but query-unfriendly. It's great for Leopardo (the architect) to specify screens. It's weak for platform agents to analyze impact, discover relationships, and reason about what changed.
+
+It's documentation infrastructure when it should be intelligence infrastructure for agents.
+
+That's the honest take.
