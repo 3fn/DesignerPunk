@@ -91,7 +91,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Extend root `createTestProductData()` in `src/__tests__/ProductMCPIntegration.test.ts` with same new fields (tokens: blocks, tags, frontmatter, gap detection component) for integration smoke test
     - _Requirements: 1, 2, 3, 8, 9_
 
-- [ ] 2. Reverse Indexes, Gap Detection & New Tools
+- [x] 2. Reverse Indexes, Gap Detection & New Tools
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -120,7 +120,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 2 Complete: Reverse Indexes, Gap Detection & New Tools"`
   - Verify: Check GitHub for committed changes
 
-  - [ ] 2.1 Implement ReverseIndexBuilder
+  - [x] 2.1 Implement ReverseIndexBuilder
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -131,7 +131,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Write unit tests: verify index population, duplicate handling, clear behavior
     - _Requirements: 2_
 
-  - [ ] 2.2 Implement GapDetector
+  - [x] 2.2 Implement GapDetector
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -143,7 +143,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Write unit tests with mock component-meta directory
     - _Requirements: 9_
 
-  - [ ] 2.3 Wire walkUiTree with ReverseIndexBuilder and GapDetector
+  - [x] 2.3 Wire walkUiTree with ReverseIndexBuilder and GapDetector
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -156,7 +156,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Write integration-level tests: given fixture screen spec → after `ProductIndexer.index()` → verify reverse indexes contain expected component/token/domain object entries AND gaps detected for `nonexistent-widget`
     - _Requirements: 2, 3, 6, 7, 9_
 
-  - [ ] 2.4 Implement ScreenQuery (find_screens)
+  - [x] 2.4 Implement ScreenQuery (find_screens)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -170,7 +170,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Write unit tests with mock enriched map entries and reverse indexes
     - _Requirements: 1_
 
-  - [ ] 2.5 Implement ExperienceMapQuery (enriched list_experience_map)
+  - [x] 2.5 Implement ExperienceMapQuery (enriched list_experience_map)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -180,7 +180,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Write unit tests
     - _Requirements: 6_
 
-  - [ ] 2.6 Register new tools and wire handlers in index.ts
+  - [x] 2.6 Register new tools and wire handlers in index.ts
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -193,7 +193,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Update `COMPONENT_DIR` env var handling (default: `src/components/core`)
     - _Requirements: 1, 4, 5, 6, 7, 8, 9, 10_
 
-  - [ ] 2.7 Fix platform filtering order
+  - [x] 2.7 Fix platform filtering order
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

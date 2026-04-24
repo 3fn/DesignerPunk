@@ -3,7 +3,7 @@
  * Product MCP Server Entry Point
  *
  * Thin server shell: MCP SDK wiring, tool definitions, and query-time response building.
- * All indexing logic lives in ProductIndexer.
+ * All indexing logic lives in ProductIndexer. Query logic in ScreenQuery/ExperienceMapQuery.
  *
  * @see .kiro/specs/081-product-mcp-design/design.md
  * @see .kiro/specs/097-product-mcp-intelligence-layer/design.md
@@ -14,10 +14,23 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { ProductIndexer } from './indexer/ProductIndexer';
+import { ScreenQuery } from './query/ScreenQuery';
+import { ExperienceMapQuery } from './query/ExperienceMapQuery';
+import type { ScreenFilter } from './models';
 
 const SERVER_NAME = 'mcp-product-server';
-const SERVER_VERSION = '0.1.0';
+const SERVER_VERSION = '0.2.0';
 const DEFAULT_PRODUCT_DIR = 'product';
+const DEFAULT_COMPONENT_DIR = 'src/components/core';
+
+const filterSchema = {
+  context: { type: 'string', description: 'Screen type, name, or tag substring match' },
+  status: { type: 'string', description: 'Filter by status (not-started, in-progress, complete, blocked)' },
+  platform: { type: 'string', description: 'Filter by platform (web, ios, android)' },
+  usesComponent: { type: 'string', description: 'Screens whose UI tree references this component' },
+  usesDomainObject: { type: 'string', description: 'Screens that reference this domain object' },
+  usesToken: { type: 'string', description: 'Screens whose UI tree tokens: blocks reference this token' },
+};
 
 const tools = [
   {
@@ -26,18 +39,45 @@ const tools = [
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
+    name: 'find_screens',
+    description: 'Find screens by component usage, token usage, domain object usage, status, platform, or context. All filters are conjunctive (AND). No params returns all screens.',
+    inputSchema: { type: 'object' as const, properties: filterSchema },
+  },
+  {
     name: 'list_experience_map',
-    description: 'List all verticals, flows, and feature pages with type, name, and per-platform status.',
-    inputSchema: { type: 'object' as const, properties: {} },
+    description: 'List experience map entries with referenced components, domain objects, and blocked reasons. Supports same filters as find_screens.',
+    inputSchema: { type: 'object' as const, properties: filterSchema },
   },
   {
     name: 'get_screen_spec',
-    description: 'Get full spec for a screen (UI tree, state model, data sources, accessibility, status). Optional platform filter.',
+    description: 'Get full spec for a screen (UI tree, state model, data sources, accessibility, status). Includes _componentGaps for unmatched components. Optional platform filter.',
     inputSchema: {
       type: 'object' as const,
       properties: {
         name: { type: 'string', description: 'Screen name' },
         platform: { type: 'string', description: 'Optional platform filter (web, ios, android)' },
+      },
+      required: ['name'],
+    },
+  },
+  {
+    name: 'get_screen_state_model',
+    description: 'Get just the state model of a screen (data, states, actions, transitions) without the full spec.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        screen: { type: 'string', description: 'Screen name' },
+      },
+      required: ['screen'],
+    },
+  },
+  {
+    name: 'get_product_component',
+    description: 'Get a product-specific (one-off) component by name — schema, contracts, and composition details.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        name: { type: 'string', description: 'One-off component name' },
       },
       required: ['name'],
     },
@@ -54,13 +94,35 @@ const tools = [
     },
   },
   {
+    name: 'find_principles',
+    description: 'Find design principles by keyword.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        keyword: { type: 'string', description: 'Keyword to search in principle keywords arrays' },
+      },
+      required: ['keyword'],
+    },
+  },
+  {
+    name: 'find_templates',
+    description: 'Find product templates by category or by which screen uses them.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        category: { type: 'string', description: 'Template category (layout, content)' },
+        usedBy: { type: 'string', description: 'Screen name that uses the template' },
+      },
+    },
+  },
+  {
     name: 'list_product_templates',
     description: 'List all product-specific layout and content patterns.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_product_health',
-    description: 'Get index status, data counts, last index time, and warnings.',
+    description: 'Get index status, data counts, reverse index sizes, gap counts, and warnings.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
@@ -74,10 +136,12 @@ class ProductMCPServer {
   private server: Server;
   private productDir: string;
   private indexer: ProductIndexer;
+  private screenQuery!: ScreenQuery;
+  private experienceMapQuery!: ExperienceMapQuery;
 
-  constructor(productDir: string = DEFAULT_PRODUCT_DIR) {
+  constructor(productDir: string, componentDir: string) {
     this.productDir = productDir;
-    this.indexer = new ProductIndexer(productDir);
+    this.indexer = new ProductIndexer(productDir, componentDir);
     this.server = new Server(
       { name: SERVER_NAME, version: SERVER_VERSION },
       { capabilities: { tools: {} } }
@@ -87,7 +151,7 @@ class ProductMCPServer {
 
   async start(): Promise<void> {
     if (fs.existsSync(this.productDir)) {
-      await this.indexer.index();
+      await this.indexAndBuildQueries();
     } else {
       console.error(`[${SERVER_NAME}] Product directory not found: ${this.productDir} — starting with empty data`);
     }
@@ -97,12 +161,25 @@ class ProductMCPServer {
     console.error(`[${SERVER_NAME}] Server running on stdio`);
   }
 
-  // --- Query-time response building (stays in server shell) ---
+  private async indexAndBuildQueries(): Promise<void> {
+    await this.indexer.index();
+    this.screenQuery = new ScreenQuery(this.indexer.getEnrichedExperienceMap(), this.indexer.getReverseIndexes());
+    this.experienceMapQuery = new ExperienceMapQuery(this.indexer.getEnrichedExperienceMap(), this.indexer.getReverseIndexes());
+  }
 
-  private resolveScreenSpec(spec: Record<string, unknown>, platform?: string): Record<string, unknown> {
+  // --- Query-time response building ---
+
+  private resolveScreenSpec(spec: Record<string, unknown>, screenName: string, platform?: string): Record<string, unknown> {
     const resolved = platform ? this.filterPlatform(spec, platform) : { ...spec };
     const warnings: string[] = [];
     this.enrichOneOffs(resolved, warnings);
+
+    // Attach component gaps
+    const gaps = this.indexer.getGaps(screenName);
+    if (gaps.length > 0) {
+      (resolved as any)._componentGaps = gaps;
+    }
+
     if (warnings.length > 0) {
       (resolved as any)._warnings = warnings;
     }
@@ -147,7 +224,18 @@ class ProductMCPServer {
       if (node.children) walk(node.children);
     };
     const uiTree = spec['ui-tree'] || spec['uiTree'];
-    if (uiTree) walk(uiTree);
+    if (!uiTree || typeof uiTree !== 'object') return;
+
+    // Handle branched (shared + platform) or flat UI trees
+    if (!Array.isArray(uiTree) && 'shared' in (uiTree as any)) {
+      const branched = uiTree as Record<string, unknown>;
+      if (branched.shared) walk(branched.shared);
+      for (const [key, val] of Object.entries(branched)) {
+        if (key !== 'shared' && Array.isArray(val)) walk(val);
+      }
+    } else {
+      walk(uiTree);
+    }
   }
 
   // --- MCP handlers ---
@@ -173,15 +261,35 @@ class ProductMCPServer {
       case 'get_product_overview':
         return this.indexer.getOverview() || { message: 'No product data indexed' };
 
+      case 'find_screens':
+        return this.screenQuery ? this.screenQuery.find(params as ScreenFilter) : [];
+
       case 'list_experience_map':
-        return this.indexer.getExperienceMap();
+        return this.experienceMapQuery
+          ? this.experienceMapQuery.find(params as ScreenFilter)
+          : this.indexer.getExperienceMap();
 
       case 'get_screen_spec': {
         const screenName = params.name as string;
         const spec = this.indexer.getScreenSpec(screenName);
         if (!spec) return { error: `Screen '${screenName}' not found` };
         const platform = params.platform as string | undefined;
-        return this.resolveScreenSpec(spec, platform);
+        return this.resolveScreenSpec(spec, screenName, platform);
+      }
+
+      case 'get_screen_state_model': {
+        const screenName = params.screen as string;
+        const spec = this.indexer.getScreenSpec(screenName);
+        if (!spec) return { error: `Screen '${screenName}' not found` };
+        const stateModel = spec['state-model'] || spec['stateModel'];
+        return stateModel || {};
+      }
+
+      case 'get_product_component': {
+        const compName = params.name as string;
+        const comp = this.indexer.getOneOffComponent(compName);
+        if (!comp) return { error: `Product component '${compName}' not found` };
+        return comp;
       }
 
       case 'get_domain_object': {
@@ -191,17 +299,63 @@ class ProductMCPServer {
         return obj;
       }
 
+      case 'find_principles': {
+        const keyword = (params.keyword as string).toLowerCase();
+        return this.indexer.getPrinciples().filter(p =>
+          p.keywords.some(k => k.toLowerCase() === keyword)
+        );
+      }
+
+      case 'find_templates': {
+        let templates = this.indexer.getTemplates();
+        if (params.category) {
+          templates = templates.filter(t => (t as any).category === params.category);
+        }
+        // Attach usedBy to each template
+        const result = templates.map(t => {
+          const name = (t as any).name as string;
+          const usedBy = this.indexer.getTemplateScreens(name);
+          return { ...t, usedBy };
+        });
+        if (params.usedBy) {
+          return result.filter(t => t.usedBy.includes(params.usedBy as string));
+        }
+        return result;
+      }
+
       case 'list_product_templates':
         return this.indexer.getTemplates();
 
-      case 'get_product_health':
-        return this.indexer.getHealth();
+      case 'get_product_health': {
+        const health = this.indexer.getHealth() as any;
+        const indexes = this.indexer.getReverseIndexes();
+        const allGaps = this.indexer.getAllGaps();
+        let totalGaps = 0;
+        for (const gaps of allGaps.values()) totalGaps += gaps.length;
+        return {
+          ...health,
+          counts: {
+            ...health.counts,
+            principles: this.indexer.getPrinciples().length,
+          },
+          reverseIndexSizes: {
+            components: indexes.componentToScreens.size,
+            tokens: indexes.tokenToScreens.size,
+            domainObjects: indexes.domainObjectToScreens.size,
+          },
+          gapCounts: {
+            totalGaps,
+            screensWithGaps: allGaps.size,
+          },
+          catalogSize: this.indexer.getCatalogSize(),
+        };
+      }
 
       case 'rebuild_product_index':
         if (fs.existsSync(this.productDir)) {
-          await this.indexer.index();
+          await this.indexAndBuildQueries();
         }
-        return this.indexer.getHealth();
+        return this.handleTool('get_product_health', {});
 
       default:
         throw new Error(`Unknown tool: ${name}`);
@@ -211,7 +365,8 @@ class ProductMCPServer {
 
 // Start server
 const productDir = process.env.PRODUCT_DIR || DEFAULT_PRODUCT_DIR;
-const server = new ProductMCPServer(productDir);
+const componentDir = process.env.COMPONENT_DIR || DEFAULT_COMPONENT_DIR;
+const server = new ProductMCPServer(productDir, componentDir);
 server.start().catch((err) => {
   console.error(`[${SERVER_NAME}] Fatal error:`, err);
   process.exit(1);

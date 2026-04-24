@@ -10,13 +10,16 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import type { Principle } from '../models';
+import type { Principle, ComponentGap, EnrichedMapEntry, ReverseIndexes } from '../models';
 import { parsePrinciples } from './PrinciplesParser';
+import { ReverseIndexBuilder } from './ReverseIndexBuilder';
+import { GapDetector } from './GapDetector';
 
 const SERVER_NAME = 'mcp-product-server';
 
 export class ProductIndexer {
   private productDir: string;
+  private componentDir: string;
   private indexed: boolean = false;
   private lastIndexTime: string = '';
   private warnings: string[] = [];
@@ -28,9 +31,15 @@ export class ProductIndexer {
   private templates: Array<Record<string, unknown>> = [];
   private oneOffComponents: Map<string, Record<string, unknown>> = new Map();
   private principles: Principle[] = [];
+  private reverseIndexBuilder = new ReverseIndexBuilder();
+  private gapDetector!: GapDetector;
+  private gaps: Map<string, ComponentGap[]> = new Map();
+  private enrichedExperienceMap: EnrichedMapEntry[] = [];
+  private templateToScreens: Map<string, string[]> = new Map();
 
-  constructor(productDir: string) {
+  constructor(productDir: string, componentDir: string = 'src/components/core') {
     this.productDir = productDir;
+    this.componentDir = componentDir;
   }
 
   async index(): Promise<void> {
@@ -42,6 +51,10 @@ export class ProductIndexer {
     this.templates = [];
     this.oneOffComponents.clear();
     this.principles = [];
+    this.reverseIndexBuilder.clear();
+    this.gaps.clear();
+    this.enrichedExperienceMap = [];
+    this.templateToScreens.clear();
 
     this.indexOverview();
     this.indexPrinciples();
@@ -51,10 +64,37 @@ export class ProductIndexer {
     this.buildDomainCrossRefs();
     this.indexOneOffComponents();
 
-    // Placeholder: walk UI trees for reverse indexes and gap detection (Task 2.3)
-    for (const [, spec] of this.screenSpecs) {
-      this.walkUiTree(spec);
+    // Initialize gap detector with one-off names
+    this.gapDetector = new GapDetector(
+      this.componentDir,
+      new Set(this.oneOffComponents.keys())
+    );
+    this.gapDetector.loadCatalog();
+
+    // Walk UI trees: populate reverse indexes, detect gaps, collect per-screen components
+    const screenComponents = new Map<string, Set<string>>();
+    for (const [screenName, spec] of this.screenSpecs) {
+      const components = new Set<string>();
+      this.walkUiTree(screenName, spec, components);
+      screenComponents.set(screenName, components);
+
+      // Domain object reverse index
+      const domainRefs = this.extractDomainRefs(spec);
+      for (const ref of domainRefs) {
+        this.reverseIndexBuilder.addDomainObject(screenName, ref);
+      }
+
+      // Template cross-refs
+      const template = (spec as any).template;
+      if (template && typeof template === 'string') {
+        const screens = this.templateToScreens.get(template);
+        if (screens) { screens.push(screenName); }
+        else { this.templateToScreens.set(template, [screenName]); }
+      }
     }
+
+    // Build enriched experience map
+    this.buildEnrichedExperienceMap(screenComponents);
 
     this.indexed = true;
     this.lastIndexTime = new Date().toISOString();
@@ -79,6 +119,13 @@ export class ProductIndexer {
   getWarnings(): string[] { return this.warnings; }
   isIndexed(): boolean { return this.indexed; }
   getLastIndexTime(): string { return this.lastIndexTime; }
+  getReverseIndexes(): ReverseIndexes { return this.reverseIndexBuilder.getIndexes(); }
+  getGaps(screenName: string): ComponentGap[] { return this.gaps.get(screenName) || []; }
+  getAllGaps(): Map<string, ComponentGap[]> { return this.gaps; }
+  getEnrichedExperienceMap(): EnrichedMapEntry[] { return this.enrichedExperienceMap; }
+  getTemplateScreens(templateName: string): string[] { return this.templateToScreens.get(templateName) || []; }
+  getTemplateToScreens(): Map<string, string[]> { return this.templateToScreens; }
+  getCatalogSize(): number { return this.gapDetector ? this.gapDetector.getCatalogSize() : 0; }
 
   getHealth(): Record<string, unknown> {
     return {
@@ -193,10 +240,96 @@ export class ProductIndexer {
     }
   }
 
-  // --- UI tree walk (placeholder for Task 2.3) ---
+  // --- UI tree walk ---
 
-  private walkUiTree(_spec: Record<string, unknown>): void {
-    // Placeholder — will be wired to ReverseIndexBuilder and GapDetector in Task 2.3
+  private walkUiTree(screenName: string, spec: Record<string, unknown>, components: Set<string>): void {
+    const uiTree = spec['ui-tree'] || spec['uiTree'];
+    if (!uiTree || typeof uiTree !== 'object') return;
+
+    const walk = (node: any, pathPrefix: string): void => {
+      if (!node || typeof node !== 'object') return;
+      if (Array.isArray(node)) {
+        node.forEach((child, i) => walk(child, `${pathPrefix}[${i}]`));
+        return;
+      }
+
+      // Component reference
+      if (node.component && typeof node.component === 'string') {
+        const nodePath = `${pathPrefix}.component`;
+        this.reverseIndexBuilder.addComponent(screenName, node.component, nodePath);
+        components.add(node.component);
+
+        // Gap detection
+        const result = this.gapDetector.check(node.component);
+        if (result === 'not-found') {
+          const screenGaps = this.gaps.get(screenName) || [];
+          screenGaps.push({ component: node.component, issue: 'not-found', path: nodePath });
+          this.gaps.set(screenName, screenGaps);
+        }
+      }
+
+      // Token extraction from tokens: block
+      if (node.tokens && typeof node.tokens === 'object' && !Array.isArray(node.tokens)) {
+        const tokenPath = `${pathPrefix}.tokens`;
+        for (const val of Object.values(node.tokens)) {
+          if (typeof val === 'string') {
+            this.reverseIndexBuilder.addToken(screenName, val, tokenPath);
+          }
+        }
+      }
+
+      // Recurse into children
+      if (node.children) walk(node.children, `${pathPrefix}.children`);
+    };
+
+    // Handle platform branching: walk shared always, walk platform arrays
+    if ('shared' in (uiTree as any)) {
+      const branched = uiTree as Record<string, unknown>;
+      if (branched.shared) walk(branched.shared, 'ui-tree.shared');
+      for (const [key, val] of Object.entries(branched)) {
+        if (key !== 'shared' && Array.isArray(val)) {
+          walk(val, `ui-tree.${key}`);
+        }
+      }
+    } else if (Array.isArray(uiTree)) {
+      walk(uiTree, 'ui-tree');
+    }
+  }
+
+  // --- Enriched experience map ---
+
+  private buildEnrichedExperienceMap(screenComponents: Map<string, Set<string>>): void {
+    const domainIdx = this.reverseIndexBuilder.getIndexes().domainObjectToScreens;
+
+    for (const entry of this.experienceMap) {
+      const name = entry.name as string;
+      const spec = this.screenSpecs.get(name);
+
+      // Referenced domain objects for this screen
+      const referencedDomainObjects: string[] = [];
+      for (const [objName, refs] of domainIdx) {
+        if (refs.some(r => r.screen === name)) {
+          referencedDomainObjects.push(objName);
+        }
+      }
+
+      const enriched: EnrichedMapEntry = {
+        name,
+        type: entry.type as string,
+        tags: (spec as any)?.tags,
+        status: entry.status as Record<string, string>,
+        referencedComponents: Array.from(screenComponents.get(name) || []),
+        referencedDomainObjects,
+      };
+
+      // Blocked reasons
+      const blockedReasons = (spec as any)?.blockedReasons;
+      if (blockedReasons && typeof blockedReasons === 'object') {
+        enriched.blockedReasons = blockedReasons;
+      }
+
+      this.enrichedExperienceMap.push(enriched);
+    }
   }
 
   // --- Helpers ---
