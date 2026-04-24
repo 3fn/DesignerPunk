@@ -1,0 +1,5 @@
+name: WrKingClass
+abbreviation: WKC
+platforms: [web, ios, android]
+theme: marketing
+description: Civic engagement platform

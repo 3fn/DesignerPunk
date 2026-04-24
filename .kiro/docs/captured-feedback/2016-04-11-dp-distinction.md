@@ -843,9 +843,10 @@ It is NOT adequate for product-level design.
 
 Leonardo needs both:
 
-Application MCP (working well) for component/token/pattern understanding
-A much better Product MCP (currently weak) for impact analysis and validation
-Possibly, new bridge queries that let him understand how product choices ripple through the component system
+1. Application MCP (working well) for component/token/pattern understanding
+2. A much better Product MCP (currently weak) for impact analysis and validation
+3. Possibly, new bridge queries that let him understand how product choices ripple through the component system
+
 Right now Leonardo is designing specs almost blind to impact. He makes good local decisions (good component choices) but can't see the systemic effects.
 
 That's a bigger gap than I initially said. It's not just that Product MCP Phase 2 is missing—it's that Leonardo needs both MCPs to be sophisticated for his role to work well.

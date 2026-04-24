@@ -1,0 +1,13 @@
+name: dashboard
+type: feature-page
+template: card-grid
+status:
+  spec: complete
+  web: not-started
+ux-direction: Hub page launching into verticals and flows
+ui-tree:
+  shared:
+    - component: Container-Base
+      tokens:
+        background: color.structure.surface
+        padding: space.inset.normal

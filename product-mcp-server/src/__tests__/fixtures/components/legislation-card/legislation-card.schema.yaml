@@ -1,0 +1,17 @@
+name: legislation-card
+purpose: Display a bill summary
+composed-from:
+  - component: Container-Card-Base
+    role: card-wrapper
+  - component: Badge-Label-Base
+    role: status-indicator
+props:
+  title:
+    type: string
+    required: true
+  status:
+    type: string
+    required: true
+tokens:
+  - color.action.primary
+  - space.inset.200

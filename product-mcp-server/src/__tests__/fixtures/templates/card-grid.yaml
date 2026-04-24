@@ -1,0 +1,7 @@
+name: card-grid
+category: layout
+description: Responsive grid of cards
+columns:
+  mobile: 1
+  tablet: 2
+  desktop: 3

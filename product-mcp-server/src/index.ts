@@ -2,18 +2,18 @@
 /**
  * Product MCP Server Entry Point
  *
- * Serves product architecture as queryable structured data:
- * product overview, experience map, domain objects, product templates.
+ * Thin server shell: MCP SDK wiring, tool definitions, and query-time response building.
+ * All indexing logic lives in ProductIndexer.
  *
  * @see .kiro/specs/081-product-mcp-design/design.md
+ * @see .kiro/specs/097-product-mcp-intelligence-layer/design.md
  */
 
 import * as fs from 'fs';
-import * as path from 'path';
-import * as yaml from 'js-yaml';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { ProductIndexer } from './indexer/ProductIndexer';
 
 const SERVER_NAME = 'mcp-product-server';
 const SERVER_VERSION = '0.1.0';
@@ -73,20 +73,11 @@ const tools = [
 class ProductMCPServer {
   private server: Server;
   private productDir: string;
-  private indexed: boolean = false;
-  private lastIndexTime: string = '';
-  private warnings: string[] = [];
-
-  // Data stores — populated by indexer (Task 2.2)
-  private overview: Record<string, unknown> | null = null;
-  private experienceMap: Array<Record<string, unknown>> = [];
-  private screenSpecs: Map<string, Record<string, unknown>> = new Map();
-  private domainObjects: Map<string, Record<string, unknown>> = new Map();
-  private templates: Array<Record<string, unknown>> = [];
-  private oneOffComponents: Map<string, Record<string, unknown>> = new Map();
+  private indexer: ProductIndexer;
 
   constructor(productDir: string = DEFAULT_PRODUCT_DIR) {
     this.productDir = productDir;
+    this.indexer = new ProductIndexer(productDir);
     this.server = new Server(
       { name: SERVER_NAME, version: SERVER_VERSION },
       { capabilities: { tools: {} } }
@@ -96,7 +87,7 @@ class ProductMCPServer {
 
   async start(): Promise<void> {
     if (fs.existsSync(this.productDir)) {
-      await this.indexProductData();
+      await this.indexer.index();
     } else {
       console.error(`[${SERVER_NAME}] Product directory not found: ${this.productDir} — starting with empty data`);
     }
@@ -106,164 +97,8 @@ class ProductMCPServer {
     console.error(`[${SERVER_NAME}] Server running on stdio`);
   }
 
-  async indexProductData(): Promise<void> {
-    this.warnings = [];
-    this.overview = null;
-    this.experienceMap = [];
-    this.screenSpecs.clear();
-    this.domainObjects.clear();
-    this.templates = [];
-    this.oneOffComponents.clear();
+  // --- Query-time response building (stays in server shell) ---
 
-    // Overview
-    const overviewPath = path.join(this.productDir, 'overview.yaml');
-    if (fs.existsSync(overviewPath)) {
-      this.overview = this.loadYaml(overviewPath);
-    }
-
-    // Principles (markdown, stored as text)
-    const principlesDir = path.join(this.productDir, 'principles');
-    if (fs.existsSync(principlesDir)) {
-      const principles: Record<string, string> = {};
-      for (const file of this.listFiles(principlesDir, '.md')) {
-        const name = path.basename(file, '.md');
-        principles[name] = fs.readFileSync(file, 'utf-8');
-      }
-      if (this.overview) {
-        (this.overview as any).principles = principles;
-      } else {
-        this.overview = { principles };
-      }
-    }
-
-    // Experience map — verticals, flows, pages
-    const expDir = path.join(this.productDir, 'experience-map');
-    if (fs.existsSync(expDir)) {
-      for (const typeDir of ['verticals', 'flows', 'pages']) {
-        const typePath = path.join(expDir, typeDir);
-        if (!fs.existsSync(typePath)) continue;
-        const type = typeDir === 'pages' ? 'feature-page' : typeDir.replace(/s$/, '') as string;
-
-        for (const entry of fs.readdirSync(typePath, { withFileTypes: true })) {
-          if (entry.isDirectory()) {
-            this.indexScreenDirectory(path.join(typePath, entry.name), entry.name, type);
-          } else if (entry.isFile() && entry.name.endsWith('.yaml')) {
-            const name = entry.name.replace('.yaml', '');
-            this.indexScreenFile(path.join(typePath, entry.name), name, type);
-          }
-        }
-      }
-    }
-
-    // Templates
-    const templatesDir = path.join(this.productDir, 'templates');
-    if (fs.existsSync(templatesDir)) {
-      for (const file of this.listFiles(templatesDir, '.yaml')) {
-        const data = this.loadYaml(file);
-        if (data) this.templates.push(data);
-      }
-    }
-
-    // Domain objects
-    const domainsDir = path.join(this.productDir, 'domain-objects');
-    if (fs.existsSync(domainsDir)) {
-      for (const file of this.listFiles(domainsDir, '.yaml')) {
-        const data = this.loadYaml(file);
-        if (data && (data as any).name) {
-          this.domainObjects.set((data as any).name, data);
-        }
-      }
-    }
-
-    // Build bidirectional domain object ↔ screen cross-references
-    for (const [screenName, spec] of Array.from(this.screenSpecs)) {
-      const refs = this.extractDomainRefs(spec);
-      for (const ref of refs) {
-        const obj = this.domainObjects.get(ref);
-        if (obj) {
-          const referencedBy = ((obj as any).referencedBy || []) as string[];
-          if (!referencedBy.includes(screenName)) referencedBy.push(screenName);
-          (obj as any).referencedBy = referencedBy;
-        }
-      }
-    }
-
-    // One-off components
-    const componentsDir = path.join(this.productDir, 'components');
-    if (fs.existsSync(componentsDir)) {
-      for (const entry of fs.readdirSync(componentsDir, { withFileTypes: true })) {
-        if (!entry.isDirectory()) continue;
-        const compDir = path.join(componentsDir, entry.name);
-        const schemaFile = this.listFiles(compDir, '.schema.yaml')[0];
-        if (!schemaFile) continue;
-        const schema = this.loadYaml(schemaFile) || {};
-        const contractFile = this.listFiles(compDir, '.contracts.yaml')[0];
-        if (contractFile) {
-          (schema as any).contracts = this.loadYaml(contractFile);
-        }
-        const name = (schema as any).name || entry.name;
-        this.oneOffComponents.set(name, schema);
-      }
-    }
-
-    this.indexed = true;
-    this.lastIndexTime = new Date().toISOString();
-    console.error(`[${SERVER_NAME}] Indexed: ${this.screenSpecs.size} screens, ${this.domainObjects.size} domain objects, ${this.templates.length} templates, ${this.oneOffComponents.size} one-off components`);
-  }
-
-  // --- Indexing helpers ---
-
-  private indexScreenFile(filePath: string, name: string, type: string): void {
-    const data = this.loadYaml(filePath);
-    if (!data) return;
-    (data as any).name = (data as any).name || name;
-    (data as any).type = (data as any).type || type;
-    this.screenSpecs.set((data as any).name, data);
-    this.experienceMap.push({
-      name: (data as any).name,
-      type: (data as any).type,
-      status: (data as any).status || {},
-    });
-  }
-
-  private indexScreenDirectory(dirPath: string, name: string, type: string): void {
-    const yamlFiles = this.listFiles(dirPath, '.yaml');
-    if (yamlFiles.length === 0) return;
-
-    // Primary file is the one matching the directory name, or the first file
-    const primaryFile = yamlFiles.find(f => path.basename(f, '.yaml') === name) || yamlFiles[0];
-    const assembled = this.loadYaml(primaryFile) || {};
-    (assembled as any).name = (assembled as any).name || name;
-    (assembled as any).type = (assembled as any).type || type;
-
-    // Merge additional facet files (e.g., onboarding.state.yaml, onboarding.a11y.yaml)
-    for (const file of yamlFiles) {
-      if (file === primaryFile) continue;
-      const facetData = this.loadYaml(file);
-      if (facetData) Object.assign(assembled, facetData);
-    }
-
-    this.screenSpecs.set((assembled as any).name, assembled);
-    this.experienceMap.push({
-      name: (assembled as any).name,
-      type: (assembled as any).type,
-      status: (assembled as any).status || {},
-    });
-  }
-
-  private extractDomainRefs(spec: Record<string, unknown>): string[] {
-    const refs: string[] = [];
-    const text = JSON.stringify(spec);
-    // Look for domain-objects references in data-sources or repeat expressions
-    for (const [name] of Array.from(this.domainObjects)) {
-      if (text.toLowerCase().includes(name.toLowerCase())) refs.push(name);
-    }
-    return refs;
-  }
-
-  /**
-   * Resolve a screen spec: apply platform filter and enrich one-off component references.
-   */
   private resolveScreenSpec(spec: Record<string, unknown>, platform?: string): Record<string, unknown> {
     const resolved = platform ? this.filterPlatform(spec, platform) : { ...spec };
     const warnings: string[] = [];
@@ -274,9 +109,6 @@ class ProductMCPServer {
     return resolved;
   }
 
-  /**
-   * Filter a spec to shared + requested platform content.
-   */
   private filterPlatform(spec: Record<string, unknown>, platform: string): Record<string, unknown> {
     const filtered: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(spec)) {
@@ -300,16 +132,12 @@ class ProductMCPServer {
     return filtered;
   }
 
-  /**
-   * Enrich one-off component references in UI tree with their schema/contracts.
-   * Systems Components are left as name references.
-   */
   private enrichOneOffs(spec: Record<string, unknown>, warnings: string[]): void {
     const walk = (node: any) => {
       if (!node || typeof node !== 'object') return;
       if (Array.isArray(node)) { node.forEach(walk); return; }
       if (node.component && typeof node.component === 'string') {
-        const oneOff = this.oneOffComponents.get(node.component);
+        const oneOff = this.indexer.getOneOffComponent(node.component);
         if (oneOff) {
           node._oneOffSchema = oneOff;
         } else if (node.component.includes('-') && node.component[0] === node.component[0].toLowerCase()) {
@@ -322,24 +150,7 @@ class ProductMCPServer {
     if (uiTree) walk(uiTree);
   }
 
-  private loadYaml(filePath: string): Record<string, unknown> | null {
-    try {
-      const content = fs.readFileSync(filePath, 'utf-8');
-      return yaml.load(content) as Record<string, unknown>;
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      this.warnings.push(`Failed to parse ${filePath}: ${msg}`);
-      console.error(`[${SERVER_NAME}] Skipping malformed YAML: ${filePath} — ${msg}`);
-      return null;
-    }
-  }
-
-  private listFiles(dir: string, ext: string): string[] {
-    if (!fs.existsSync(dir)) return [];
-    return fs.readdirSync(dir)
-      .filter(f => f.endsWith(ext))
-      .map(f => path.join(dir, f));
-  }
+  // --- MCP handlers ---
 
   private registerHandlers(): void {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
@@ -360,14 +171,14 @@ class ProductMCPServer {
   private async handleTool(name: string, params: Record<string, unknown>): Promise<unknown> {
     switch (name) {
       case 'get_product_overview':
-        return this.overview || { message: 'No product data indexed' };
+        return this.indexer.getOverview() || { message: 'No product data indexed' };
 
       case 'list_experience_map':
-        return this.experienceMap;
+        return this.indexer.getExperienceMap();
 
       case 'get_screen_spec': {
         const screenName = params.name as string;
-        const spec = this.screenSpecs.get(screenName);
+        const spec = this.indexer.getScreenSpec(screenName);
         if (!spec) return { error: `Screen '${screenName}' not found` };
         const platform = params.platform as string | undefined;
         return this.resolveScreenSpec(spec, platform);
@@ -375,33 +186,22 @@ class ProductMCPServer {
 
       case 'get_domain_object': {
         const objName = params.name as string;
-        const obj = this.domainObjects.get(objName);
+        const obj = this.indexer.getDomainObject(objName);
         if (!obj) return { error: `Domain object '${objName}' not found` };
         return obj;
       }
 
       case 'list_product_templates':
-        return this.templates;
+        return this.indexer.getTemplates();
 
       case 'get_product_health':
-        return {
-          status: this.indexed ? 'healthy' : 'empty',
-          indexed: this.indexed,
-          lastIndexTime: this.lastIndexTime,
-          counts: {
-            screens: this.screenSpecs.size,
-            domainObjects: this.domainObjects.size,
-            templates: this.templates.length,
-            oneOffComponents: this.oneOffComponents.size,
-          },
-          warnings: this.warnings,
-        };
+        return this.indexer.getHealth();
 
       case 'rebuild_product_index':
         if (fs.existsSync(this.productDir)) {
-          await this.indexProductData();
+          await this.indexer.index();
         }
-        return this.handleTool('get_product_health', {});
+        return this.indexer.getHealth();
 
       default:
         throw new Error(`Unknown tool: ${name}`);

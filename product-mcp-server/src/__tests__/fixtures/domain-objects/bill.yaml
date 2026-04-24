@@ -1,0 +1,9 @@
+name: bill
+description: A piece of legislation
+properties:
+  title:
+    type: string
+    description: Bill title
+  status:
+    type: string
+    description: active, passed, or failed

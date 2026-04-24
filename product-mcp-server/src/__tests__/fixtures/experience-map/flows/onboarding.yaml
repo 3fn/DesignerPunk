@@ -1,0 +1,18 @@
+name: onboarding
+type: flow
+status:
+  spec: draft
+  web: not-started
+  ios: not-started
+  android: not-started
+ux-direction: Three-step onboarding flow
+ui-tree:
+  shared:
+    - component: Progress-Stepper-Base
+    - component: Container-Base
+      children:
+        - component: Button-CTA
+          tokens:
+            background: color.action.primary
+state-model:
+  shared: [step-1, step-2, step-3, complete]

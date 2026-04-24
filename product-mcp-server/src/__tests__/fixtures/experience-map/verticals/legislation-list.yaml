@@ -1,0 +1,47 @@
+name: legislation-list
+type: vertical
+tags: [civic, legislation]
+template: card-grid
+status:
+  spec: complete
+  web: in-progress
+  ios: not-started
+  android: blocked
+blockedReasons:
+  android: Waiting on sync tool
+ux-direction: Scrollable list of legislation with filter bar
+ui-tree:
+  shared:
+    - component: Nav-Header-App
+      tokens:
+        background: color.structure.surface
+    - component: Container-Base
+      tokens:
+        padding: space.inset.normal
+      children:
+        - component: Chip-Filter
+          tokens:
+            background: color.action.primary
+        - component: legislation-card
+          repeat: for-each bill in data.bills
+          tokens:
+            background: color.structure.surface
+            padding: space.inset.normal
+        - component: nonexistent-widget
+          tokens:
+            color: color.action.primary
+  ios:
+    navigation: NavigationStack push
+  web:
+    navigation: client-side route
+state-model:
+  shared: [idle, loading, populated, empty, error]
+  ios: [pull-to-refresh]
+data-sources:
+  shared:
+    - legislation-api: /api/v1/bills
+accessibility:
+  shared:
+    - "heading: Legislation (h1)"
+  ios:
+    - VoiceOver custom rotor

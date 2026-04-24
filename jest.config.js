@@ -28,7 +28,7 @@ module.exports = {
   
   // Restrict test discovery to src/ directory only (F1)
   // This prevents duplicate test execution from dist/ directory
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/src', '<rootDir>/product-mcp-server/src'],
   
   // Explicit test file patterns (F1, F2)
   // Only match files in __tests__ directories with .test.ts or .test.tsx extension

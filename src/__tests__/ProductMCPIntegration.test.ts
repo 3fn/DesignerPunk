@@ -29,18 +29,23 @@ function createTestProductData(): void {
   }));
 
   fs.writeFileSync(path.join(TEST_PRODUCT_DIR, 'principles/design-direction.md'),
-    '# Design Direction\nDark theme, civic engagement focus.\n');
+    '---\nname: design-direction\nkeywords: [civic, dark-theme, engagement]\n---\n# Design Direction\nDark theme, civic engagement focus.\n');
 
   fs.writeFileSync(path.join(TEST_PRODUCT_DIR, 'experience-map/verticals/legislation/legislation-list.yaml'), yaml.dump({
     name: 'legislation-list', type: 'vertical',
+    tags: ['civic', 'legislation'],
     status: { spec: 'complete', web: 'in-progress', ios: 'not-started', android: 'blocked' },
     blockedReasons: { android: 'Waiting on sync tool' },
     'ux-direction': 'Scrollable list of legislation with filter bar',
     'ui-tree': {
-      shared: [{ component: 'Nav-Header-App' }, { component: 'Container-Base', children: [
-        { component: 'Chip-Filter' },
-        { component: 'legislation-card', repeat: 'for-each bill in data.bills' },
-      ]}],
+      shared: [
+        { component: 'Nav-Header-App', tokens: { background: 'color.structure.surface' } },
+        { component: 'Container-Base', tokens: { padding: 'space.inset.normal' }, children: [
+          { component: 'Chip-Filter', tokens: { background: 'color.action.primary' } },
+          { component: 'legislation-card', repeat: 'for-each bill in data.bills', tokens: { background: 'color.structure.surface', padding: 'space.inset.normal' } },
+          { component: 'nonexistent-widget', tokens: { color: 'color.action.primary' } },
+        ]},
+      ],
       ios: { navigation: 'NavigationStack push' },
       web: { navigation: 'client-side route' },
     },
@@ -61,14 +66,20 @@ function createTestProductData(): void {
 
   fs.writeFileSync(path.join(TEST_PRODUCT_DIR, 'experience-map/pages/dashboard/dashboard.yaml'), yaml.dump({
     name: 'dashboard', type: 'feature-page',
+    template: 'card-grid',
     status: { spec: 'complete', web: 'not-started' },
     'ux-direction': 'Hub page launching into verticals and flows',
-    'ui-tree': { shared: [{ component: 'Container-Base' }] },
+    'ui-tree': { shared: [{ component: 'Container-Base', tokens: { background: 'color.structure.surface', padding: 'space.inset.normal' } }] },
   }));
 
   fs.writeFileSync(path.join(TEST_PRODUCT_DIR, 'domain-objects/bill.yaml'), yaml.dump({
     name: 'bill', description: 'A piece of legislation',
     properties: { title: { type: 'string', description: 'Bill title' }, status: { type: 'string', description: 'active, passed, or failed' } },
+  }));
+
+  fs.writeFileSync(path.join(TEST_PRODUCT_DIR, 'domain-objects/representative.yaml'), yaml.dump({
+    name: 'representative', description: 'An elected official',
+    properties: { name: { type: 'string', description: 'Full name' }, district: { type: 'string', description: 'District identifier' } },
   }));
 
   fs.writeFileSync(path.join(TEST_PRODUCT_DIR, 'templates/card-grid.yaml'), yaml.dump({
@@ -115,7 +126,7 @@ describe('Product MCP Integration', () => {
     beforeAll(() => { output = runServer(TEST_PRODUCT_DIR); });
 
     it('indexes 3 screens', () => { expect(output).toContain('3 screens'); });
-    it('indexes 1 domain object', () => { expect(output).toContain('1 domain objects'); });
+    it('indexes 2 domain objects', () => { expect(output).toContain('2 domain objects'); });
     it('indexes 1 template', () => { expect(output).toContain('1 templates'); });
     it('indexes 1 one-off component', () => { expect(output).toContain('1 one-off components'); });
   });

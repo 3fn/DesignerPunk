@@ -1,0 +1,9 @@
+name: representative
+description: An elected official
+properties:
+  name:
+    type: string
+    description: Full name
+  district:
+    type: string
+    description: District identifier
