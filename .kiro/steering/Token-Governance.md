@@ -539,14 +539,14 @@ export const semanticTokenName = {
 
 **Detailed guide**: See `.kiro/specs/token-system/token-category-pattern-guide.md`
 
-**Theme file sync (Spec 080)**: When creating a new semantic color token, add a corresponding entry to all existing theme files (`src/tokens/themes/dark/SemanticOverrides.ts` and any future theme files). The entry should be commented-out with the base primitive reference as a note. This prevents theme files from drifting out of sync with the base token set.
+**Theme sync (Spec 094)**: When creating a new semantic color token, ensure it has appropriate values in all registered themes. Base themes (`dark`, `wcag`, `dark-wcag`) are defined in the DesignerPunk repo. Product themes are registered via `designerpunk.config.ts` and are the product team's responsibility.
+
+New semantic tokens should have a base primitive reference. The theme drift audit (`npm run audit:theme-drift`) catches missing entries in CI.
 
 ```typescript
-// In src/tokens/themes/dark/SemanticOverrides.ts:
+// In a theme's SemanticOverrides:
 // color.new.token.name: { value: 'primitiveRef' }
 ```
-
-The theme file generator (Spec 080, Task 6) will also catch missing entries in CI, but manual sync at creation time is preferred to avoid CI churn.
 
 ---
 
@@ -642,9 +642,9 @@ get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Creati
 - [Rosetta System Architecture](./Rosetta-System-Architecture.md) — Token pipeline architecture
 - [Rosetta System Principles](./rosetta-system-principles.md) — Mathematical foundations
 - [Token Quick Reference](./Token-Quick-Reference.md) — Token documentation routing
-- [Token Category Pattern Guide](../.kiro/specs/token-system/token-category-pattern-guide.md) — Detailed primitive/semantic creation patterns
+- [Token Category Pattern Guide](../specs/token-system/token-category-pattern-guide.md) — Detailed primitive/semantic creation patterns
 - [Core Goals](./Core%20Goals.md) — Project principles including token-first approach
-- [Design Authority](../.kiro/specs/051-semantic-token-naming-restructure/design-outline.md) — Semantic token naming restructure design
+- [Design Authority](../specs/051-semantic-token-naming-restructure/design-outline.md) — Semantic token naming restructure design
 
 ### DTCG Integration
 - [DTCG Integration Guide](./DTCG-Integration-Guide.md) — Integrating DesignerPunk tokens with external design tools via DTCG format

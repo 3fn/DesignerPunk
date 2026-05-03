@@ -18,6 +18,7 @@ Each entry records: what was deferred, which spec or planning doc deferred it, w
 |----------|-------|
 | **Before Phase 2 starts** | Token coverage analysis, `marketing-pages` vocabulary |
 | **Before M0b starts** | Tree-shaking, ThemeAwareBlendUtilities consolidation, full Product MCP features, token namespace collision prevention, native sync CLI (`sync:ios`/`sync:android`), Kotlin package namespace from config, Swift Package generation, dedicated MCP & documentation agent, experience pattern review |
+| **After 3+ real screen specs in Phase 2** | UI tree convention reassessment (Spec 097) |
 | **End of Phase 2 (after all theming work)** | `mode: 'light'` support, `data-theme` attribute configurability |
 | **When second customer appears** | Personal Note template, exclude "A Vision of the Future.md" |
 
@@ -90,3 +91,18 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 |------|-----------|-------------------|
 | Dedicated MCP & Documentation Agent (9th agent) | Cross-cutting view across all three MCPs and documentation layer. Thurgood focuses on system, Stacy on product — MCPs span both. | Ships with the Product MCP |
 | Experience pattern review (9 ecosystem patterns) | Need to review each pattern individually to determine if it's an assembly recipe (stays in App MCP) or a screen-type template (moves to Product MCP). | Before Product MCP implementation | **Resolved** — Leo reviewed. 5 stay, 4 move. Execution during Phase 1→2 transition. |
+
+### Spec 097: Product MCP Intelligence Layer
+
+| Item | Rationale | Activation Trigger |
+|------|-----------|-------------------|
+| UI tree convention reassessment (Phase 2) | Convention-vs-implementation alignment confirmed (Task 3.3). Convention-vs-real-authoring alignment can only be assessed after Leo writes real screen specs. Assess whether convention needs formalization (schema), revision, or promotion to stable. Leo's priority ordering for expected gaps: (1) accessibility annotation placement, (2) conditional rendering, (3) component substitution across platforms, (4) slot composition, (5) token keys vocabulary. | After Leo has authored 3+ real screen specs in Phase 2 |
+| Token gap detection | Screen specs can reference nonexistent tokens without warning. Intentionally absent — specs may reference aspirational tokens ahead of creation. Same architecture as component gap detection (read token registry from disk at index time). | When token reference errors become a real problem in product development |
+| Scaffold-status detection | Readiness lives in schema YAML, not `component-meta.yaml`. Application MCP already surfaces readiness via `get_component_summary`. | When `not-found` alone proves insufficient for Leo's workflow |
+
+### Integration Guide
+
+| Item | Rationale | Activation Trigger |
+|------|-----------|-------------------|
+| Storybook integration guidance | Storybook MCP under consideration for component showcase and AI-driven testing. Web Components compatibility needs verification first. | After Storybook adoption decision is finalized and Web Components renderer tested |
+| Troubleshooting section | Common issues (auth failures, server startup errors, pipeline errors) not documented. Will surface naturally during marketing site build. | After Phase 2 Block E (foundation) — capture real issues encountered during first product repo setup |

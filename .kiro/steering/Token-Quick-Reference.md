@@ -12,7 +12,7 @@ description: Token documentation routing table — maps token types to their MCP
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, token-selection, styling
-**Last Reviewed**: 2026-01-25
+**Last Reviewed**: 2026-04-23
 
 ---
 
@@ -57,7 +57,7 @@ Semantic color tokens support light/dark mode through a two-level resolution sys
 |----------|--------|-----------------|
 | Is the token mode-invariant (print, glow, scrim, contrast.onLight/onDark)? | Yes → same value in both modes | Mode-invariant — no action needed |
 | Does the token use the same primitive name in both modes, just with different light/dark values? | Yes → primitive handles it | Level 1 — populate primitive's dark value in `ColorTokens.ts` |
-| Does the token need a *different primitive name* in dark mode (role remapping)? | Yes → semantic override needed | Level 2 — add entry to `src/tokens/themes/dark/SemanticOverrides.ts` |
+| Does the token need a *different primitive name* in dark mode (role remapping)? | Yes → semantic override needed | Level 2 — add entry to the appropriate theme's SemanticOverrides |
 
 ### Level 1 Example (Primitive Handles Mode)
 
@@ -70,9 +70,9 @@ No semantic override needed — the primitive handles differentiation.
 
 ### Level 2 Example (Semantic Override)
 
-`color.action.navigation` references `cyan500` in light mode, but dark mode needs `cyan100` (a different primitive). The dark theme file overrides the reference:
+`color.action.navigation` references `cyan500` in light mode, but dark mode needs `cyan100` (a different primitive). The dark theme overrides the reference:
 ```typescript
-// src/tokens/themes/dark/SemanticOverrides.ts
+// Dark theme SemanticOverrides
 export const darkSemanticOverrides: SemanticOverrideMap = {
   'color.action.navigation': { primitiveReferences: { value: 'cyan100' } },
 };
@@ -85,13 +85,15 @@ Mode (light/dark) and theme (base/wcag/custom) are independent dimensions. The b
 | Context | Mode | Theme | Override Source |
 |---------|------|-------|----------------|
 | light-base | light | base | No overrides (base tokens) |
-| light-wcag | light | wcag | `src/tokens/themes/wcag/SemanticOverrides.ts` |
-| dark-base | dark | base | `src/tokens/themes/dark/SemanticOverrides.ts` |
-| dark-wcag | dark | wcag | Composed: dark + wcag + `src/tokens/themes/dark-wcag/SemanticOverrides.ts` |
+| light-wcag | light | wcag | WCAG theme SemanticOverrides |
+| dark-base | dark | base | Dark theme SemanticOverrides |
+| dark-wcag | dark | wcag | Composed: dark + wcag + dark-wcag SemanticOverrides |
 
 **Custom themes (Spec 094)**: Products register additional themes via `designerpunk.config.ts`. Each registered theme adds contexts to the resolution matrix. A dark-only theme adds one context; a theme with mode `'both'` adds two (light + dark).
 
 The **ThemeRegistry** manages all themes. `SemanticOverrideResolver.resolveForRegistry()` produces `ResolvedThemeSet[]` — one entry per theme context.
+
+**Base vs product themes**: The paths in this section (`src/tokens/themes/dark/`, `wcag/`, `dark-wcag/`) are the base system's built-in theme files, shipped with `@designerpunk/core`. Product teams creating custom themes do NOT edit these files — they create their own `SemanticOverrides.ts` and register it in `designerpunk.config.ts`. See Token-Governance § "Theme Registry (Spec 094)" for product theme governance.
 
 **Theme-varying vs static tokens**: The registry computes the union of all overridden token names across registered themes. Tokens in that set are theme-varying (generated as protocol/data class properties on iOS/Android, `data-theme` scoped on web). Everything else stays as static constants.
 

@@ -202,7 +202,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Write test: web agent doesn't see iOS-only one-off warnings
     - _Requirements: 10_
 
-- [ ] 3. Documentation & Reassessment
+- [x] 3. Documentation & Reassessment
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -225,7 +225,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 3 Complete: Documentation & Reassessment"`
   - Verify: Check GitHub for committed changes
 
-  - [ ] 3.1 Update Integration Guide with new Product MCP tools
+  - [x] 3.1 Update Integration Guide with new Product MCP tools
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -236,7 +236,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Document `COMPONENT_DIR` env var
     - _Requirements: 11_
 
-  - [ ] 3.2 Add UI tree convention to Integration Guide
+  - [x] 3.2 Add UI tree convention to Integration Guide
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -249,7 +249,7 @@ Sequenced in three phases: foundation (module extraction + test infrastructure),
     - Mark as draft — to be revised after 3-5 real screen specs
     - _Requirements: 11_
 
-  - [ ] 3.3 Reassess UI tree convention with Leonardo
+  - [x] 3.3 Reassess UI tree convention with Leonardo
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood + Leonardo

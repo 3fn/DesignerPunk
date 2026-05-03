@@ -175,3 +175,92 @@ Both reviews aligned on the same three issues. No conflicts. Incorporating all i
 **Leo's Task 2.6 observation**: Noted. No structural change — Lina is aware this is the largest subtask. Integration test in root project is the safety net.
 
 **Leo's Task 1.2 verification**: Noted. Task 1.2 already includes "verify all 7 existing tools work identically." Running `ProductMCPIntegration.test.ts` before and after extraction is the concrete verification step.
+
+---
+
+### Leonardo R1 — Task 3.3 Reassessment Review (2026-04-23)
+
+**Disposition**: Thurgood's assessment is accurate. Convention and implementation are aligned. Agree with all three observations and both recommendations. One additional observation from my review.
+
+---
+
+#### Verification: I Checked the Implementation
+
+I read `ProductIndexer.ts` (specifically `walkUiTree`), `ProductIndexerWalk.test.ts`, and all fixture YAML files. Thurgood's alignment claims are correct:
+
+- **Node structure**: `walkUiTree` checks `node.component` (string → addComponent + gap check), `node.tokens` (object, not array → iterate values → addToken), `node.children` (recurse). Matches convention exactly.
+- **Token extraction**: `Object.values(node.tokens)` with `typeof val === 'string'` guard. Stores as-is. Correct.
+- **Platform branching**: Checks `'shared' in uiTree`, walks shared, then walks other keys only if `Array.isArray(val)`. Correct.
+- **Gap detection**: `gapDetector.check(node.component)` per node, one-offs provided at construction. Correct.
+- **Path tracking**: Every `addComponent` and `addToken` call includes a path string (`ui-tree.shared[0].component`, etc.). Required, as I requested in design review.
+
+#### Agree: Observation 1 — Platform Branch Traversal Permissiveness
+
+Thurgood's right that the implementation traverses any array under a platform key, not just arrays containing nodes with `component` fields. The convention is stricter than the implementation. This is the safe direction — the walk processes what it can and ignores the rest. No false positives possible because the walk checks `node.component` before doing anything meaningful.
+
+No code change needed. Convention accurately describes intent.
+
+#### Agree: Observation 2 — No Warning for Component-less Nodes with Tokens
+
+A node with `tokens:` but no `component:` would have its tokens silently ignored. The walk only enters the token extraction block after checking `node.component` — wait, actually, looking at the code more carefully:
+
+```typescript
+if (node.component && typeof node.component === 'string') {
+  // ... addComponent, gap check
+}
+if (node.tokens && typeof node.tokens === 'object' && !Array.isArray(node.tokens)) {
+  // ... addToken for each value
+}
+if (node.children) walk(node.children, ...);
+```
+
+These are independent `if` blocks, not nested. A node with `tokens:` but no `component:` **would** have its tokens extracted and indexed. The component check and token check are separate.
+
+**This is actually a discrepancy with Thurgood's assessment.** He said tokens would be "silently ignored" for component-less nodes. They wouldn't — they'd be indexed. Whether that's correct behavior is debatable:
+- **Argument for indexing**: If someone puts tokens on a wrapper node without a component name, those tokens are still used by the screen. Indexing them means `find_screens({ usesToken: "X" })` catches them.
+- **Argument against**: A `tokens:` block without a `component:` is likely a spec authoring error. Indexing it gives correct reverse-lookup results but masks the structural issue.
+
+For M0a, indexing them is fine. The reverse lookup is more useful than the authoring warning. But this is worth noting in the convention — `tokens:` blocks are indexed regardless of whether the node has a `component:` field.
+
+#### Agree: Observation 3 — Fixtures Match Convention
+
+The fixtures are well-constructed. They exercise:
+- Platform branching: `legislation-list` has `shared` + `ios` (metadata) + `web` (metadata) ✅
+- `tokens:` blocks at multiple nesting levels ✅
+- `children` recursion ✅
+- `repeat` expression ✅
+- One-off component (`legislation-card`) ✅
+- Genuine not-found (`nonexistent-widget`) ✅
+- Absent-from-catalog (`Progress-Stepper-Base` in onboarding) ✅
+- YAML frontmatter on principles ✅
+- Template cross-refs (`card-grid` on both `legislation-list` and `dashboard`) ✅
+- Blocked screen with reason ✅
+- Second domain object (`representative`) ✅
+
+The test coverage in `ProductIndexerWalk.test.ts` is thorough — 6 describe blocks covering component indexes, token indexes, domain object indexes, gap detection, enriched experience map, and template cross-refs. Each test asserts specific fixture data, not just "something exists."
+
+#### Agree: Recommendations
+
+1. **No changes needed now.** Correct. The convention and implementation are aligned (with the minor token-extraction nuance above, which is acceptable behavior).
+2. **Phase 2 follow-up reassessment after real screen specs.** Correct. This is exactly what I said in my tasks review — Task 3.3 is most valuable after real authoring. The convention-vs-implementation alignment is confirmed; convention-vs-real-authoring can only be assessed later.
+3. **Convention stays draft.** Correct. Promote to stable after Phase 2 reassessment.
+
+#### One Addition to Deferred Items
+
+The convention's "What This Convention Does NOT Cover" lists five areas. Based on what I've seen in the fixtures and what I expect from real spec authoring, here's my priority ordering for which will come up first:
+
+1. **Accessibility annotation placement** — almost certainly needed for the first real spec. Where do ARIA roles, heading levels, and focus order go? Currently in a separate `accessibility:` section, but that's disconnected from the UI tree nodes they apply to.
+2. **Conditional rendering** — likely needed soon. "Show error state when data fetch fails" needs an `if` or `when` expression.
+3. **Component substitution across platforms** — likely needed when iOS and web use different components for the same role (e.g., iOS uses a native picker, web uses a custom dropdown).
+4. **Slot composition** — probably later. Relevant when product components have named insertion points.
+5. **Token keys vocabulary** — probably never needs formalization. Freeform keys work fine.
+
+This ordering should inform which convention extensions get priority when the Phase 2 reassessment happens.
+
+---
+
+#### Summary
+
+Thurgood's assessment is thorough and accurate, with one minor correction (tokens are indexed independently of component presence, not silently ignored). Convention and implementation are aligned. No changes needed now. Phase 2 reassessment deferred until real screen spec authoring.
+
+**Task 3.3 status from my perspective: complete.** The convention-vs-implementation review is done. The convention-vs-real-authoring review is correctly deferred.

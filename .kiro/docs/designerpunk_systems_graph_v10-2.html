@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DesignerPunk — Systems Graph v10</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #050a0e; overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100vh; border-radius: 0; cursor: crosshair; }
+  #tip {
+    position: fixed; pointer-events: none; display: none;
+    background: rgba(4,8,12,0.97);
+    border: 0.5px solid rgba(0,229,255,0.4);
+    border-radius: 4px; padding: 7px 12px;
+    font-family: 'Courier New', monospace; font-size: 11px;
+    color: #00e5ff; z-index: 99; max-width: 300px;
+    line-height: 1.6; letter-spacing: 0.03em;
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="tip"></div>
+<script>
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+const tip=document.getElementById('tip');
+
+function resize(){
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=canvas.offsetWidth*dpr;
+  canvas.height=canvas.offsetHeight*dpr;
+  ctx.scale(dpr,dpr);
+}
+resize();
+window.addEventListener('resize',()=>{resize();buildLayout();});
+
+let mx=-999,my=-999,tiltX=0.28,tiltY=0,targetTiltX=0.28,targetTiltY=0;
+let mouseActive=false,mouseIdleTimer=null,idleAngle=0;
+
+canvas.addEventListener('mousemove',e=>{
+  const r=canvas.getBoundingClientRect();
+  mx=e.clientX-r.left;my=e.clientY-r.top;
+  targetTiltX=0.28+((my/canvas.offsetHeight)-0.5)*0.44;
+  targetTiltY=((mx/canvas.offsetWidth)-0.5)*0.36;
+  mouseActive=true;
+  tip.style.left=(e.clientX+16)+'px';tip.style.top=(e.clientY-12)+'px';
+  clearTimeout(mouseIdleTimer);
+  mouseIdleTimer=setTimeout(()=>{mouseActive=false;},1800);
+});
+canvas.addEventListener('mouseleave',()=>{mx=-999;my=-999;tip.style.display='none';mouseActive=false;});
+
+const C={
+  root:   [0,229,255],rosetta:[0,185,255],stemma:[130,80,255],
+  mcp:    [0,229,255],figma:[255,80,160],release:[0,220,160],
+  a2ui:   [0,229,255],agent:[255,160,40],
+};
+const LC={
+  root:   [210,250,255],rosetta:[165,228,255],stemma:[215,180,255],
+  mcp:    [165,245,255],figma:[255,168,218],release:[135,255,218],
+  a2ui:   [165,245,255],agent:[255,210,140],
+};
+
+function rgb(c,a=1){return `rgba(${c[0]},${c[1]},${c[2]},${a})`;}
+function lerp(a,b,t){return a+(b-a)*t;}
+function lerpC(a,b,t){return[lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];}
+
+function project(x3,y3,z3){
+  const cx=Math.cos(tiltX),sx=Math.sin(tiltX);
+  const ry=y3*cx-z3*sx,rz=y3*sx+z3*cx;
+  const cy2=Math.cos(tiltY),sy2=Math.sin(tiltY);
+  const rx2=x3*cy2+rz*sy2,rz2=-x3*sy2+rz*cy2;
+  const sc=1100/(1100+rz2+350);
+  return{sx:canvas.offsetWidth/2+rx2*sc,sy:canvas.offsetHeight/2+ry*sc,scale:sc,z:rz2};
+}
+
+const S_SPHERE='sphere',S_CUBE='cube',S_HEX='hex';
+
+const NODES=[
+  {id:'root',        label:'DesignerPunk',        ck:'root',   tier:0,shape:S_SPHERE,desc:'True native cross-platform design system — v10.0.1 · 7,963 tests'},
+  {id:'docs-mcp',    label:'// Docs MCP',         ck:'mcp',    tier:1,shape:S_SPHERE,desc:'Queryable steering docs · 82% token reduction · progressive disclosure architecture'},
+  {id:'app-mcp',     label:'// Application MCP',  ck:'mcp',    tier:1,shape:S_SPHERE,desc:'10 query tools · agent-driven component selection · assembly validation · experience patterns'},
+  {id:'product-mcp', label:'// Product MCP',      ck:'mcp',    tier:1,shape:S_SPHERE,desc:'YAML-based context layer · directs agents toward what is being built · product architecture'},
+  {id:'figma-mcp',   label:'// Figma Console MCP',ck:'figma',  tier:1,shape:S_SPHERE,desc:'Bidirectional Figma integration · token push to Variables + Styles · component analysis extraction'},
+  {id:'rosetta',     label:'// Rosetta',          ck:'rosetta',tier:1,shape:S_CUBE,  desc:'Mathematical token system · define once, generate everywhere · Web CSS · iOS Swift · Android Kotlin'},
+  {id:'primitive',   label:'Primitive tokens',    ck:'rosetta',tier:2,shape:S_CUBE,  desc:'Base layer · space, color, typography, radius, shadow, motion · e.g. space100=8px'},
+  {id:'semantic',    label:'Semantic tokens',     ck:'rosetta',tier:2,shape:S_CUBE,  desc:'Intentional layer · color.primary · space.inset.* · bodyMd · WCAG validator'},
+  {id:'dtcg',        label:'DTCG output',         ck:'rosetta',tier:2,shape:S_CUBE,  desc:'Design Token Community Group JSON · integrates with Figma MCP, PenPot, Console MCP'},
+  {id:'figma-out',   label:'Figma output',        ck:'rosetta',tier:2,shape:S_CUBE,  desc:'DesignTokens.figma.json · synced as native Figma Variables and Styles'},
+  {id:'stemma',      label:'// Stemma',           ck:'stemma', tier:1,shape:S_CUBE,  desc:'Component architecture · build once, implement natively · shared behavioral contracts'},
+  {id:'prim-comp',   label:'Primitive components',ck:'stemma', tier:2,shape:S_CUBE,  desc:'[Family]-[Type]-Base · behavioral contracts defined · cross-platform foundation'},
+  {id:'sem-comp',    label:'Semantic components', ck:'stemma', tier:2,shape:S_CUBE,  desc:'[Family]-[Type]-Variant · inherits base contracts · extended specialized contracts'},
+  {id:'contracts',   label:'Contracts',           ck:'stemma', tier:2,shape:S_CUBE,  desc:'210 concepts · 10 categories · accessibility, animation, interaction, state, visual'},
+  {id:'release',     label:'// Release Manager',  ck:'release',tier:1,shape:S_CUBE,  desc:'Spec-based release analysis · semantic versioning · changelog · completed work to packages'},
+  {id:'a2ui',        label:'// A2UI',             ck:'a2ui',   tier:1,shape:S_CUBE,  desc:'Agent-to-UI · AI generates UI from unambiguous token + contract language'},
+  {id:'ada',         label:'// Ada',              ck:'agent',  tier:2,shape:S_HEX,   desc:'Token development + management · Rosetta compliance · owns primitive→semantic pipeline'},
+  {id:'lina',        label:'// Lina',             ck:'agent',  tier:2,shape:S_HEX,   desc:'Component development + management · Stemma compliance · owns component family work'},
+  {id:'thurgood',    label:'// Thurgood',         ck:'agent',  tier:2,shape:S_HEX,   desc:'System auditing, governance, spec development + testing · cross-system integrity'},
+  {id:'leonardo',    label:'// Leonardo',         ck:'agent',  tier:2,shape:S_HEX,   desc:'Product technical architecture · tech lead for Sparky, Kenya, Data · coordinates product delivery'},
+  {id:'stacy',       label:'// Stacy',            ck:'agent',  tier:2,shape:S_HEX,   desc:'Product governance + learning · auditing, spec development, lessons-learned documentation'},
+  {id:'sparky',      label:'// Sparky',           ck:'agent',  tier:2,shape:S_HEX,   desc:'Web product development specialist · implements components and patterns for Web platform'},
+  {id:'kenya',       label:'// Kenya',            ck:'agent',  tier:2,shape:S_HEX,   desc:'iOS product development specialist · implements components and patterns for iOS platform'},
+  {id:'data',        label:'// Data',             ck:'agent',  tier:2,shape:S_HEX,   desc:'Android product development specialist · implements components and patterns for Android'},
+];
+
+const EDGES=[
+  ['root','rosetta'],['root','stemma'],
+  ['root','docs-mcp'],['root','app-mcp'],['root','product-mcp'],
+  ['root','figma-mcp'],['root','release'],['root','a2ui'],
+  ['rosetta','primitive'],['rosetta','semantic'],['rosetta','dtcg'],['rosetta','figma-out'],
+  ['stemma','prim-comp'],['stemma','sem-comp'],['stemma','contracts'],
+  ['docs-mcp','ada'],['docs-mcp','lina'],['docs-mcp','thurgood'],
+  ['product-mcp','leonardo'],['product-mcp','stacy'],
+  ['product-mcp','sparky'],['product-mcp','kenya'],['product-mcp','data'],
+  ['primitive','semantic'],['semantic','dtcg'],
+  ['dtcg','figma-mcp'],['figma-out','figma-mcp'],
+  ['semantic','prim-comp'],['contracts','sem-comp'],['prim-comp','sem-comp'],
+  ['app-mcp','stemma'],['docs-mcp','rosetta'],
+  ['a2ui','app-mcp'],['a2ui','rosetta'],['release','docs-mcp'],
+  ['ada','rosetta'],['lina','stemma'],['thurgood','docs-mcp'],
+  ['stacy','product-mcp'],['sparky','app-mcp'],['leonardo','app-mcp'],
+];
+
+const CROSS=new Set([
+  'primitive->semantic','semantic->dtcg','dtcg->figma-mcp','figma-out->figma-mcp',
+  'semantic->prim-comp','contracts->sem-comp','prim-comp->sem-comp',
+  'app-mcp->stemma','docs-mcp->rosetta','a2ui->app-mcp','a2ui->rosetta','release->docs-mcp',
+  'ada->rosetta','lina->stemma','thurgood->docs-mcp','stacy->product-mcp',
+  'sparky->app-mcp','leonardo->app-mcp',
+]);
+
+const nodeMap={};
+NODES.forEach(n=>nodeMap[n.id]=n);
+
+const PLACEMENTS={
+  root:          {a:0,              r:0,     z:40},
+  'figma-mcp':   {a:-0.42*Math.PI,  r:0.26,  z:110},
+  'docs-mcp':    {a:-0.18*Math.PI,  r:0.26,  z:80},
+  'app-mcp':     {a: 0.08*Math.PI,  r:0.26,  z:100},
+  'product-mcp': {a: 0.32*Math.PI,  r:0.26,  z:85},
+  release:       {a: 0.58*Math.PI,  r:0.26,  z:30},
+  stemma:        {a: 0.76*Math.PI,  r:0.26,  z:40},
+  a2ui:          {a: 0.92*Math.PI,  r:0.26,  z:20},
+  rosetta:       {a:-0.82*Math.PI,  r:0.26,  z:50},
+};
+
+function buildLayout(){
+  const R=Math.min(canvas.offsetWidth,canvas.offsetHeight);
+  NODES.forEach(n=>{
+    const pl=PLACEMENTS[n.id];
+    if(pl){n.x3=Math.cos(pl.a)*pl.r*R;n.y3=Math.sin(pl.a)*pl.r*R;n.z3=pl.z;n._angle=pl.a;}
+  });
+  const systemSubs={rosetta:['primitive','semantic','dtcg','figma-out'],stemma:['prim-comp','sem-comp','contracts']};
+  Object.entries(systemSubs).forEach(([pid,children])=>{
+    const parent=nodeMap[pid];
+    children.forEach((id,idx)=>{
+      const n=nodeMap[id];const count=children.length;
+      const spread=count<=2?0.42:0.58;
+      const offset=count>1?(idx/(count-1)-0.5)*spread:0;
+      const a=parent._angle+offset;const r2=R*0.20;
+      n.x3=parent.x3+Math.cos(a)*r2;n.y3=parent.y3+Math.sin(a)*r2;
+      n.z3=parent.z3-25+idx*12;n._angle=a;
+    });
+  });
+  const docsMcp=nodeMap['docs-mcp'];
+  ['ada','lina','thurgood'].forEach((id,idx)=>{
+    const n=nodeMap[id];const count=3;
+    const offset=(idx/(count-1)-0.5)*0.62;
+    const a=docsMcp._angle+offset-0.18;const r2=R*0.23;
+    n.x3=docsMcp.x3+Math.cos(a)*r2;n.y3=docsMcp.y3+Math.sin(a)*r2;
+    n.z3=docsMcp.z3+20+idx*8;n._angle=a;
+  });
+  const prodMcp=nodeMap['product-mcp'];
+  ['leonardo','stacy','sparky','kenya','data'].forEach((id,idx)=>{
+    const n=nodeMap[id];const count=5;
+    const offset=(idx/(count-1)-0.5)*0.78;
+    const a=prodMcp._angle+offset+0.18;const r2=R*0.23;
+    n.x3=prodMcp.x3+Math.cos(a)*r2;n.y3=prodMcp.y3+Math.sin(a)*r2;
+    n.z3=prodMcp.z3+15+idx*8;n._angle=a;
+  });
+}
+buildLayout();
+
+const pulses=EDGES.map(()=>({t:Math.random(),speed:0.003+Math.random()*0.0025}));
+
+function baseR(n,sc){
+  if(n.id==='root')return 22*Math.max(0.55,sc);
+  if(n.tier===1)return 16*Math.max(0.55,sc);
+  if(n.shape===S_HEX)return 9*Math.max(0.55,sc);
+  return 10*Math.max(0.55,sc);
+}
+
+function drawSphere(sx,sy,r,c,isHover,breathe){
+  ctx.beginPath();ctx.ellipse(sx+3,sy+r*0.6,r*0.75,r*0.2,0,0,Math.PI*2);
+  ctx.fillStyle='rgba(0,0,0,0.22)';ctx.fill();
+  const hr=r*(isHover?5:4),ha=0.09+(isHover?0.22:0)+breathe*0.04;
+  const hg=ctx.createRadialGradient(sx,sy,0,sx,sy,hr);
+  hg.addColorStop(0,rgb(c,ha));hg.addColorStop(0.45,rgb(c,ha*0.3));hg.addColorStop(1,rgb(c,0));
+  ctx.beginPath();ctx.arc(sx,sy,hr,0,Math.PI*2);ctx.fillStyle=hg;ctx.fill();
+  const sg=ctx.createRadialGradient(sx-r*0.25,sy-r*0.3,r*0.1,sx+r*0.1,sy+r*0.1,r*1.1);
+  sg.addColorStop(0,rgb([Math.min(255,c[0]*0.8+140),Math.min(255,c[1]*0.8+140),Math.min(255,c[2]*0.8+140)],0.92));
+  sg.addColorStop(0.35,rgb(c,0.95));sg.addColorStop(0.72,rgb([c[0]*0.45,c[1]*0.45,c[2]*0.45],0.95));
+  sg.addColorStop(1,rgb([c[0]*0.15,c[1]*0.15,c[2]*0.15],1));
+  ctx.beginPath();ctx.arc(sx,sy,r,0,Math.PI*2);ctx.fillStyle=sg;ctx.fill();
+  const rim=ctx.createRadialGradient(sx+r*0.45,sy+r*0.45,r*0.35,sx,sy,r*1.02);
+  rim.addColorStop(0,rgb(c,0));rim.addColorStop(0.72,rgb(c,0));rim.addColorStop(1,rgb(c,isHover?0.5:0.3));
+  ctx.beginPath();ctx.arc(sx,sy,r,0,Math.PI*2);ctx.fillStyle=rim;ctx.fill();
+  ctx.beginPath();ctx.ellipse(sx-r*0.22,sy-r*0.24,r*0.12,r*0.08,-Math.PI/4,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,255,255,0.28)';ctx.fill();
+  ctx.beginPath();ctx.arc(sx,sy,r,0,Math.PI*2);
+  ctx.strokeStyle=rgb(c,isHover?0.85:0.45);ctx.lineWidth=isHover?1.3:0.85;ctx.stroke();
+}
+
+function drawCube(sx,sy,r,c,isHover,breathe){
+  const s=r*0.9;
+  const corners3=[[-s,-s,-s],[s,-s,-s],[s,s,-s],[-s,s,-s],[-s,-s,s],[s,-s,s],[s,s,s],[-s,s,s]];
+  const ld=[0.4,-0.6,0.7];const lm=Math.sqrt(ld.reduce((a,v)=>a+v*v,0));ld.forEach((_,i)=>ld[i]/=lm);
+  const fN=[{verts:[4,5,6,7],n:[0,0,1]},{verts:[0,1,5,4],n:[0,-1,0]},{verts:[1,2,6,5],n:[1,0,0]},
+    {verts:[0,3,7,4],n:[-1,0,0]},{verts:[3,2,6,7],n:[0,1,0]},{verts:[0,1,2,3],n:[0,0,-1]}];
+  const proj=corners3.map(([x,y,z])=>{
+    const cx2=Math.cos(tiltX),sxr=Math.sin(tiltX);
+    const ry=y*cx2-z*sxr,rz=y*sxr+z*cx2;
+    const cy2=Math.cos(tiltY),sy2=Math.sin(tiltY);
+    const rx2=x*cy2+rz*sy2,rz2=-x*sy2+rz*cy2;
+    const sc=1100/(1100+rz2+350);
+    return{px:rx2*sc,py:ry*sc,z:rz2};
+  });
+  const faces=fN.map(f=>({...f,avgZ:f.verts.reduce((a,i)=>a+proj[i].z,0)/4,bright:Math.max(0,f.n[0]*ld[0]+f.n[1]*ld[1]+f.n[2]*ld[2])})).sort((a,b)=>b.avgZ-a.avgZ);
+  const hr=r*(isHover?4.8:3.8),ha=0.09+(isHover?0.22:0)+breathe*0.04;
+  const hg=ctx.createRadialGradient(sx,sy,0,sx,sy,hr);
+  hg.addColorStop(0,rgb(c,ha));hg.addColorStop(0.5,rgb(c,ha*0.3));hg.addColorStop(1,rgb(c,0));
+  ctx.beginPath();ctx.arc(sx,sy,hr,0,Math.PI*2);ctx.fillStyle=hg;ctx.fill();
+  faces.forEach(f=>{
+    const pts=f.verts.map(i=>({x:sx+proj[i].px,y:sy+proj[i].py}));
+    ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.closePath();
+    const fc=[Math.min(255,c[0]*(0.3+f.bright*0.7)),Math.min(255,c[1]*(0.3+f.bright*0.7)),Math.min(255,c[2]*(0.3+f.bright*0.7))];
+    ctx.fillStyle=rgb(fc,0.88+(isHover?0.1:0));ctx.fill();
+    ctx.strokeStyle=rgb(c,isHover?0.8:0.45);ctx.lineWidth=isHover?1.2:0.7;ctx.stroke();
+  });
+  const top=faces.find(f=>f.n[1]===-1);
+  if(top){
+    const tp=top.verts.map(i=>({x:sx+proj[i].px,y:sy+proj[i].py}));
+    ctx.beginPath();ctx.moveTo(tp[0].x,tp[0].y);tp.slice(1).forEach(p=>ctx.lineTo(p.x,p.y));ctx.closePath();
+    const gg=ctx.createRadialGradient(tp[0].x,tp[0].y,0,tp[0].x,tp[0].y,s*0.8);
+    gg.addColorStop(0,'rgba(255,255,255,0.28)');gg.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=gg;ctx.fill();
+  }
+}
+
+function drawHex(sx,sy,r,c,isHover,breathe){
+  const rot=Math.PI/6,depth=r*0.5*(isHover?1.3:1);
+  const hr=r*(isHover?4.5:3.5),ha=0.09+(isHover?0.22:0)+breathe*0.04;
+  const hg=ctx.createRadialGradient(sx,sy,0,sx,sy,hr);
+  hg.addColorStop(0,rgb(c,ha));hg.addColorStop(0.5,rgb(c,ha*0.3));hg.addColorStop(1,rgb(c,0));
+  ctx.beginPath();ctx.arc(sx,sy,hr,0,Math.PI*2);ctx.fillStyle=hg;ctx.fill();
+  for(let i=0;i<6;i++){
+    const a1=(Math.PI/3)*i+rot,a2=(Math.PI/3)*(i+1)+rot;
+    const x1=sx+r*Math.cos(a1),y1=sy+r*Math.sin(a1);
+    const x2=sx+r*Math.cos(a2),y2=sy+r*Math.sin(a2);
+    if(i>=1&&i<=4){
+      const sf=i===2||i===3?0.45:0.3;
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.lineTo(x2,y2+depth);ctx.lineTo(x1,y1+depth);ctx.closePath();
+      ctx.fillStyle=rgb([c[0]*sf,c[1]*sf,c[2]*sf],0.88);ctx.fill();
+      ctx.strokeStyle=rgb(c,0.3);ctx.lineWidth=0.5;ctx.stroke();
+    }
+  }
+  ctx.beginPath();
+  for(let i=0;i<6;i++){const a=(Math.PI/3)*i+rot;i===0?ctx.moveTo(sx+r*Math.cos(a),sy+r*Math.sin(a)):ctx.lineTo(sx+r*Math.cos(a),sy+r*Math.sin(a));}
+  ctx.closePath();
+  const fg=ctx.createRadialGradient(sx-r*0.2,sy-r*0.2,0,sx,sy,r);
+  fg.addColorStop(0,rgb([Math.min(255,c[0]*0.7+120),Math.min(255,c[1]*0.7+120),Math.min(255,c[2]*0.7+120)],0.92));
+  fg.addColorStop(0.4,rgb(c,0.95));fg.addColorStop(1,rgb(c,0.55));
+  ctx.fillStyle=fg;ctx.fill();
+  ctx.beginPath();
+  for(let i=0;i<6;i++){const a=(Math.PI/3)*i+rot;i===0?ctx.moveTo(sx+r*Math.cos(a),sy+r*Math.sin(a)):ctx.lineTo(sx+r*Math.cos(a),sy+r*Math.sin(a));}
+  ctx.closePath();
+  ctx.strokeStyle=rgb(c,isHover?0.95:0.6);ctx.lineWidth=isHover?1.3:0.9;ctx.stroke();
+  ctx.beginPath();
+  for(let i=0;i<6;i++){const a=(Math.PI/3)*i+rot;i===0?ctx.moveTo(sx+r*0.58*Math.cos(a),sy+r*0.58*Math.sin(a)):ctx.lineTo(sx+r*0.58*Math.cos(a),sy+r*0.58*Math.sin(a));}
+  ctx.closePath();
+  ctx.strokeStyle=rgb(c,isHover?0.45:0.2);ctx.lineWidth=0.5;ctx.stroke();
+}
+
+function drawGrid(t){
+  const sp=42,off=(t*3)%sp;
+  ctx.strokeStyle='rgba(0,229,255,0.03)';ctx.lineWidth=0.5;
+  for(let x=off;x<canvas.offsetWidth;x+=sp){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.offsetHeight);ctx.stroke();}
+  for(let y=0;y<canvas.offsetHeight;y+=sp){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.offsetWidth,y);ctx.stroke();}
+}
+
+let hovered=null;
+
+function draw(t){
+  const W=canvas.offsetWidth,H=canvas.offsetHeight;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#050a0e';ctx.fillRect(0,0,W,H);
+  drawGrid(t);
+  if(!mouseActive){
+    idleAngle+=0.0018;
+    targetTiltY=Math.sin(idleAngle)*0.22;
+    targetTiltX=0.28+Math.sin(idleAngle*0.4)*0.06;
+  }
+  tiltX=lerp(tiltX,targetTiltX,0.05);
+  tiltY=lerp(tiltY,targetTiltY,0.05);
+
+  NODES.forEach(n=>{
+    if(n.x3===undefined)return;
+    const p=project(n.x3,n.y3,n.z3);
+    n.sx=p.sx;n.sy=p.sy;n.pscale=p.scale;n.pz=p.z;
+  });
+
+  const sorted=[...NODES].filter(n=>n.sx!==undefined).sort((a,b)=>b.pz-a.pz);
+
+  EDGES.forEach((e,i)=>{
+    const a=nodeMap[e[0]],b=nodeMap[e[1]];
+    if(!a?.sx||!b?.sx)return;
+    const key=e[0]+'->'+e[1];
+    const isCross=CROSS.has(key);
+    const ac=C[a.ck]||[120,120,140],bc=C[b.ck]||[120,120,140];
+    if(isCross){
+      const grad=ctx.createLinearGradient(a.sx,a.sy,b.sx,b.sy);
+      grad.addColorStop(0,rgb(ac,0.8));grad.addColorStop(1,rgb(bc,0.8));
+      ctx.beginPath();ctx.moveTo(a.sx,a.sy);ctx.lineTo(b.sx,b.sy);
+      ctx.strokeStyle=grad;ctx.lineWidth=1.4;ctx.setLineDash([4,5]);ctx.stroke();ctx.setLineDash([]);
+    }else{
+      ctx.beginPath();ctx.moveTo(a.sx,a.sy);ctx.lineTo(b.sx,b.sy);
+      ctx.strokeStyle=rgb(ac,0.42);ctx.lineWidth=0.9;ctx.stroke();
+    }
+    const p=pulses[i];
+    const px=lerp(a.sx,b.sx,p.t),py=lerp(a.sy,b.sy,p.t);
+    const fade=Math.sin(p.t*Math.PI);
+    const pc=lerpC(ac,bc,p.t);
+    ctx.beginPath();ctx.arc(px,py,isCross?3:2,0,Math.PI*2);
+    ctx.fillStyle=rgb(pc,fade*(isCross?1:0.75));ctx.fill();
+  });
+
+  hovered=null;
+  sorted.forEach(n=>{
+    const c=C[n.ck]||[120,120,140],lc=LC[n.ck]||[200,200,200];
+    const r=baseR(n,n.pscale);
+    const dist=Math.hypot((mx===-999?99999:mx)-n.sx,(my===-999?99999:my)-n.sy);
+    const isHover=dist<r+14;
+    if(isHover)hovered=n;
+    const breathe=0.5+0.5*Math.sin(t*0.7+n.x3*0.02);
+    if(n.shape===S_SPHERE)drawSphere(n.sx,n.sy,r,c,isHover,breathe);
+    else if(n.shape===S_CUBE)drawCube(n.sx,n.sy,r,c,isHover,breathe);
+    else drawHex(n.sx,n.sy,r,c,isHover,breathe);
+
+    if(n.tier===0||n.tier===1||n.shape===S_HEX){
+      const angle=n._angle!==undefined?n._angle:-Math.PI/2;
+      const loff=r+8;
+      const lx=n.sx+Math.cos(angle)*loff,ly=n.sy+Math.sin(angle)*loff;
+      ctx.save();
+      ctx.imageSmoothingEnabled=false;
+      const fromCx=lx-W*0.5,fromCy=ly-H*0.5;
+      const fs=n.tier===0?15:n.shape===S_HEX?12:13;
+      const weight=n.tier===0?'bold':'500';
+      ctx.font=`${weight} ${fs}px ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Courier New",monospace`;
+      ctx.fillStyle=isHover?'rgba(255,255,255,1)':rgb(lc,0.92);
+      if(n.tier===0){ctx.textAlign='center';ctx.textBaseline='middle';}
+      else{ctx.textAlign=fromCx<0?'right':'left';ctx.textBaseline=fromCy<0?'bottom':'top';}
+      ctx.fillText(n.label,Math.round(lx),Math.round(ly));
+      ctx.restore();
+    }
+  });
+
+  if(hovered){
+    tip.style.display='block';
+    tip.innerHTML='<span style="color:#fff;font-weight:bold;">'+hovered.label+'</span><br>'+hovered.desc;
+  }else{tip.style.display='none';}
+}
+
+function frame(ts){
+  const t=ts/1000;
+  pulses.forEach(p=>{p.t+=p.speed;if(p.t>1)p.t=0;});
+  draw(t);requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -15,6 +15,7 @@ import * as path from 'path';
 import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
+import { runInit } from './init';
 
 async function main() {
   const command = process.argv[2];
@@ -23,6 +24,9 @@ async function main() {
     case undefined:
     case 'generate':
       await runGenerate();
+      break;
+    case 'init':
+      await runInit(process.argv.slice(3));
       break;
     case 'mcp:app':
       await runMcpApp();
@@ -167,11 +171,18 @@ function printHelp() {
 DesignerPunk Pipeline CLI
 
 Usage:
-  npx designerpunk generate      Generate token files from designerpunk.config.ts
-  npx designerpunk mcp:app       Start Application MCP server
-  npx designerpunk mcp:docs      Start Docs MCP server
-  npx designerpunk mcp:product   Start Product MCP server
-  npx designerpunk --help        Show this help
+  npx designerpunk init            Bootstrap a new product repo
+  npx designerpunk generate        Generate token files from designerpunk.config.ts
+  npx designerpunk mcp:app         Start Application MCP server
+  npx designerpunk mcp:docs        Start Docs MCP server
+  npx designerpunk mcp:product     Start Product MCP server
+  npx designerpunk --help          Show this help
+
+Init options:
+  --name <name>                    Product name (prompted if omitted)
+  --abbreviation <abbr>            Short form (prompted if omitted)
+  --skip-components                Don't copy starter components
+  --skip-agents                    Don't copy agent templates
 
 Configuration:
   Place a designerpunk.config.ts in your project root.

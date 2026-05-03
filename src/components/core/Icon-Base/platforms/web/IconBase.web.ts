@@ -547,3 +547,7 @@ if (!customElements.get('icon-base')) {
  */
 export default IconBaseElement;
 
+// Legacy aliases for backward compatibility
+export const createIcon = createIconBase;
+export const Icon = IconBase;
+

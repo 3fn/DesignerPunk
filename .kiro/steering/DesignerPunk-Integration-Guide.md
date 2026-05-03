@@ -26,8 +26,17 @@
 
 ### 1. Install
 
+GitHub Packages requires authentication. Create a `.npmrc` in your project root:
+
+```
+@designerpunk:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+Set `GITHUB_TOKEN` as an environment variable with a personal access token that has `read:packages` scope. Then install:
+
 ```bash
-npm install @designerpunk/core --registry https://npm.pkg.github.com
+npm install @designerpunk/core
 ```
 
 ### 2. Configure
@@ -66,14 +75,45 @@ export default defineConfig({
 
 If no config file exists, the pipeline uses defaults.
 
+#### Creating a Theme
+
+A theme is a `SemanticOverrideMap` — a record of semantic token names mapped to replacement primitive references. Create a file in your product repo:
+
+```typescript
+// themes/marketing/SemanticOverrides.ts
+import type { SemanticOverrideMap } from '@designerpunk/core/config';
+
+export const marketingOverrides: SemanticOverrideMap = {
+  // Swap action color from default cyan to teal
+  'color.action.primary': { primitiveReferences: { value: 'teal400' } },
+  'color.action.navigation': { primitiveReferences: { value: 'teal500' } },
+
+  // Adjust surface for darker feel
+  'color.structure.surface': { primitiveReferences: { value: 'black200' } },
+};
+```
+
+**How to find which tokens to override:**
+1. Query available semantic tokens: `search_tokens({ tier: "semantic", family: "color" })`
+2. Get details on a specific token: `get_token_details({ name: "color.action.primary" })`
+3. Browse primitive options: `get_token_family({ family: "color" })`
+
+Each override replaces the `primitiveReferences` entirely — no partial merge. Only override tokens you want to change; everything else inherits from the base theme.
+
+**Theme modes:**
+- `mode: 'dark'` — dark-only theme (sets `color-scheme: dark` on web, dark theme struct on iOS/Android)
+- `mode: 'light'` — light-only theme
+- `mode: 'both'` — generates both light and dark contexts (not yet supported in M0a)
+
 ### 3. Start MCP Servers
 
 ```bash
-npx designerpunk mcp:app    # Application MCP — component queries
-npx designerpunk mcp:docs   # Docs MCP — steering doc queries
+npx designerpunk mcp:app      # Application MCP — component + token queries
+npx designerpunk mcp:docs     # Docs MCP — steering doc queries
+npx designerpunk mcp:product  # Product MCP — screen specs, domain objects, product architecture
 ```
 
-Both commands resolve data paths from the installed package automatically. No configuration needed for the default case.
+All commands resolve data paths from the installed package automatically. No configuration needed for the default case. The Product MCP starts with empty data if no `product/` directory exists yet — that's expected for a new project. Create the directory when you're ready to write screen specs (see "Product MCP Setup" below).
 
 On startup, each server prints its connection details:
 ```
@@ -269,13 +309,25 @@ Resolves product data from:
 
 Starts with empty data if no product directory exists (warning, not error).
 
+**Component gap detection** reads `component-meta.yaml` files to validate component references in screen specs. Configure the component source directory:
+- `COMPONENT_DIR` env var (if set)
+- Default: `src/components/core`
+
+**In a product repo** (where DesignerPunk is installed as a package), set `COMPONENT_DIR` to point into the installed package:
+```bash
+COMPONENT_DIR=./node_modules/@designerpunk/core/src/components/core npx designerpunk mcp:product
+```
+Or add it to your MCP server configuration so it's set automatically on startup.
+
+If `COMPONENT_DIR` is missing or empty, gap detection is disabled (all components pass). No crash.
+
 ### Product Data Directory
 
 ```
 product/
   overview.yaml              # Product context + config
   principles/
-    design-direction.md      # Visual and UX philosophy
+    design-direction.md      # Visual and UX philosophy (YAML frontmatter with keywords)
     cross-platform-strategy.md
   experience-map/
     verticals/               # Feature suites
@@ -306,6 +358,7 @@ Each screen is a YAML file with platform branching:
 ```yaml
 name: dashboard
 type: feature-page
+tags: [overview, navigation]          # Optional — searchable via find_screens context filter
 status:
   spec: complete
   web: in-progress
@@ -318,7 +371,12 @@ ux-direction: |
 ui-tree:
   shared:
     - component: Nav-Header-App
+      tokens:
+        background: color.structure.surface
+        text: color.contrast.onLight
     - component: Container-Base
+      tokens:
+        padding: space.inset.normal
       children:
         - component: stats-bar    # One-off
         - component: activity-feed # One-off
@@ -330,7 +388,88 @@ state-model:
     - loading
     - populated
     - error
+
+template: card-grid                   # Optional — references product/templates/
 ```
+
+**`tokens:` block convention**: Token references go in a dedicated `tokens:` block per UI tree node, separate from `props:`. Props describe what a component does (label, variant). Tokens describe how it looks (color, spacing). Only `tokens:` blocks are indexed by the Product MCP — tokens in `props:` are not discoverable via `find_screens({ usesToken })`.
+
+Use canonical Rosetta token names as-is (dot-notation for semantic tokens like `color.action.primary`, flat names for primitives like `space100` or `bodyMd`). The indexer stores token names exactly as written — no normalization.
+
+**`_componentGaps`**: When you query a screen spec via `get_screen_spec`, the response includes a `_componentGaps` array listing any component references that don't match the ecosystem catalog (`component-meta.yaml`) or product one-off components. Each gap includes the component name, issue type (`not-found`), and UI tree path. This catches typos, outdated names, and references to components that haven't been built yet.
+
+### UI Tree Convention (Draft)
+
+**Status**: Draft — to be revised after 3-5 real screen specs have been authored.
+
+This convention defines the expected structure of `ui-tree` in screen spec YAML files. It's what the Product MCP indexer relies on for component extraction, token extraction, and gap detection. It's a convention, not a schema — the indexer handles deviations gracefully (log warnings, index what it can), never rejects specs.
+
+#### Node Structure
+
+```yaml
+- component: ComponentName        # Required. System component or product one-off name.
+  props:                          # Optional. Component configuration. NOT indexed.
+    variant: elevated
+    label: "Section Title"
+  tokens:                         # Optional. Design token references. Indexed.
+    background: color.structure.surface
+    padding: space.inset.normal
+  children:                       # Optional. Array of child nodes. Traversed recursively.
+    - component: ChildComponent
+      props: { ... }
+      tokens: { ... }
+  repeat: "for-each item in data.items"  # Optional. List rendering. NOT indexed.
+```
+
+| Field | Type | Required | Indexed By |
+|-------|------|----------|------------|
+| `component` | string | Yes | Reverse index (component→screens), gap detector |
+| `props` | object | No | Not indexed |
+| `tokens` | object (string keys, string values) | No | Reverse index (token→screens) |
+| `children` | array of nodes | No | Traversed recursively |
+| `repeat` | string | No | Not indexed |
+
+**What the indexer does per node**: reads `component` → adds to reverse index + checks gap detector. Reads `tokens` → adds each value to token reverse index. Recurses into `children`. Ignores everything else.
+
+**What the indexer ignores**: `props` values are never treated as token references. Unknown nesting keys (anything other than `children`) are not traversed.
+
+#### Platform Branching in UI Trees
+
+```yaml
+ui-tree:
+  shared:                         # Always traversed
+    - component: Nav-Header-App
+  ios:                            # Traversed only when platform=ios requested
+    - component: Button-CTA       # Node array → traversed
+  web:
+    navigation: client-side route  # Metadata object → NOT traversed
+```
+
+- `shared` is always traversed for reverse indexes.
+- Platform branches (`ios`, `android`, `web`) are traversed only when they contain node arrays (at least one object with a `component` field). Metadata objects are stored but not walked.
+- Without a platform filter, reverse indexes reflect the `shared` tree only.
+
+#### Token Reference Format
+
+Use canonical Rosetta token names as-is. Dot-notation and flat names are both valid:
+
+```yaml
+tokens:
+  background: color.structure.surface    # Dot-notation semantic
+  gap: space100                          # Flat primitive
+  fontSize: bodyMd                       # Flat typography
+```
+
+Token keys (left side) are descriptive labels — not indexed, no enforced vocabulary. Token values (right side) are stored exactly as written — no normalization, no validation against the token registry.
+
+#### What This Convention Does NOT Cover
+
+- Accessibility annotations (inline vs separate section — not yet standardized)
+- Conditional rendering beyond `repeat` (`if`/`when` — not yet needed)
+- Slot composition (named slots in the tree — undefined)
+- Component substitution across platforms (branching handles it, no explicit annotation)
+
+These will be addressed when real screen specs require them.
 
 **Single file** for simple screens. **Multi-file** (split by facet) for complex screens:
 ```
@@ -352,6 +491,55 @@ One-off components use a Stemma subset — same rigor, less ceremony:
 **Required when new behavior**: accessibility contracts (when the composition introduces behavior its parts don't cover).
 
 **Not required**: family membership, full README, readiness tracking, three-platform review, component-meta.yaml, inheritance declarations.
+
+### Principles with YAML Frontmatter
+
+Principle files are markdown with optional YAML frontmatter for keyword-based discovery:
+
+```markdown
+---
+name: design-direction
+keywords: [visual-identity, color, typography, brand, dark-theme]
+---
+
+The marketing site uses a dark theme with cyan/teal electric accent...
+```
+
+The `keywords` array makes principles queryable via `find_principles({ keyword: "dark-theme" })`. Without frontmatter, the principle is still indexed (accessible via `get_product_overview`) but won't appear in keyword searches.
+
+### Product MCP Example Queries
+
+```
+# Impact analysis: which screens use a specific component?
+find_screens({ usesComponent: "Button-CTA" })
+
+# Triage: which screens are blocked on iOS?
+find_screens({ status: "blocked", platform: "ios" })
+
+# Token impact: which screens reference a specific token?
+find_screens({ usesToken: "color.action.primary" })
+
+# Compound query: blocked iOS screens that use a specific component
+find_screens({ usesComponent: "Nav-Header-App", status: "blocked", platform: "ios" })
+
+# Context search: find screens related to legislation (matches type, name, or tags)
+find_screens({ context: "legislation" })
+
+# State model for platform implementation
+get_screen_state_model({ screen: "legislation-list" })
+
+# Direct one-off component lookup
+get_product_component({ name: "legislation-card" })
+
+# Find principles about theming
+find_principles({ keyword: "dark-theme" })
+
+# Which templates does the dashboard use?
+find_templates({ usedBy: "dashboard" })
+
+# Enriched experience map with component references and blocked reasons
+list_experience_map({ status: "in-progress", platform: "web" })
+```
 
 ---
 
@@ -434,9 +622,14 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | Query | Purpose |
 |-------|---------|
 | `get_product_overview()` | Product context, config, principles |
-| `list_experience_map()` | All verticals, flows, feature pages with status |
-| `get_screen_spec({ name, platform? })` | Full screen spec (optional platform filter) |
+| `list_experience_map({ status?, platform?, usesComponent?, usesDomainObject?, usesToken? })` | All verticals, flows, feature pages — enriched with `referencedComponents`, `referencedDomainObjects`, `blockedReasons`. Optional filters (all conjunctive). |
+| `find_screens({ context?, status?, platform?, usesComponent?, usesDomainObject?, usesToken? })` | Discovery and impact analysis. Filters are conjunctive. `context` matches against screen type, name, and tags. Returns enriched screen summaries. |
+| `get_screen_spec({ name, platform? })` | Full screen spec (optional platform filter). Includes `_componentGaps` for any components not found in the ecosystem catalog or product one-offs. |
+| `get_screen_state_model({ screen })` | Returns the `state-model` section from a screen spec as-is, without the UI tree, accessibility, or UX direction. |
+| `get_product_component({ name })` | Direct query for a product one-off component's schema and contracts, without fetching a full screen spec. |
 | `get_domain_object({ name })` | Domain object definition + referencing screens |
+| `find_principles({ keyword })` | Find design principles by keyword. Principles use YAML frontmatter with `keywords` array on markdown files. |
+| `find_templates({ category?, usedBy? })` | Find product templates by category or by which screen uses them. Templates include `usedBy` arrays. |
 | `list_product_templates()` | Product-specific layout and content patterns |
-| `get_product_health()` | Index status, data counts, warnings |
-| `rebuild_product_index()` | Re-index product data |
+| `get_product_health()` | Index status, data counts, reverse index sizes, gap counts, warnings |
+| `rebuild_product_index()` | Re-index product data and rebuild all reverse indexes |

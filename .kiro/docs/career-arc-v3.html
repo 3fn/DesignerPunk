@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peter Michaels Allen — Career Arc</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #050a0e; font-family: 'Courier New', Consolas, monospace; min-height: 100vh; }
+#container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 48px 40px 64px; }
+#header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+.bracket-name { font-size: 13px; color: #00e5c8; letter-spacing: 0.12em; }
+.bracket-name span { color: #2a2a2a; }
+.header-right { text-align: right; font-size: 10px; color: #2a2a2a; letter-spacing: 0.1em; line-height: 1.8; text-transform: uppercase; }
+#chart-wrap { position: relative; width: 100%; }
+canvas#chart { width: 100%; height: auto; display: block; cursor: default; }
+#tooltip {
+  position: fixed; pointer-events: none; display: none;
+  background: rgba(4,10,16,0.97);
+  border: 0.5px solid rgba(0,229,200,0.3);
+  padding: 14px 18px;
+  font-family: 'Courier New', monospace; font-size: 11px; color: #00e5c8;
+  z-index: 99; max-width: 270px; line-height: 1.7;
+}
+.tt-title { font-size: 12px; color: #fff; font-weight: bold; margin-bottom: 3px; letter-spacing: 0.04em; }
+.tt-period { color: #333; font-size: 10px; margin-bottom: 10px; letter-spacing: 0.08em; }
+.tt-row { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 3px; font-size: 11px; }
+.tt-row span:first-child { color: #444; }
+.tt-design { color: #e8006a; font-weight: bold; }
+.tt-eng { color: #00e5c8; font-weight: bold; }
+.tt-desc { color: #444; font-size: 10px; line-height: 1.6; margin-top: 8px; border-top: 0.5px solid #111; padding-top: 8px; }
+#legend { display: flex; gap: 28px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.leg { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #333; letter-spacing: 0.1em; text-transform: uppercase; }
+.leg-swatch { width: 20px; height: 3px; }
+.leg-dot { width: 7px; height: 7px; border-radius: 50%; }
+#footer-bracket { display: flex; justify-content: space-between; align-items: center; margin-top: 44px; padding-top: 24px; border-top: 0.5px solid #0f0f0f; }
+.fb-l, .fb-r { font-size: 20px; color: #151515; font-weight: bold; }
+.fb-c { text-align: center; }
+.fb-name { font-size: 11px; color: #00e5c8; letter-spacing: 0.2em; text-transform: uppercase; }
+.fb-role { font-size: 10px; color: #2a2a2a; letter-spacing: 0.12em; margin-top: 4px; }
+.fb-links { display: flex; gap: 20px; justify-content: center; margin-top: 10px; }
+.fb-links a { font-size: 9px; color: #252525; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.2s; }
+.fb-links a:hover { color: #00e5c8; }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <div class="bracket-name"><span>&lt;</span> // Peter Michaels Allen <span>/&gt;</span></div>
+    <div class="header-right">18 years · Design &amp; Engineering<br>Hover roles to explore</div>
+  </div>
+  <div id="chart-wrap"><canvas id="chart"></canvas></div>
+  <div id="legend">
+    <div class="leg"><div class="leg-swatch" style="background:#e8006a;"></div><span style="color:#e8006a;">Design</span></div>
+    <div class="leg"><div class="leg-swatch" style="background:#00e5c8;"></div><span style="color:#00e5c8;">Engineering</span></div>
+    <div class="leg"><div class="leg-dot" style="background:rgba(255,255,255,0.5);"></div><span>Role</span></div>
+    <div class="leg"><div class="leg-dot" style="background:rgba(255,200,80,0.5);border-radius:2px;"></div><span>3fn Design (independent)</span></div>
+  </div>
+  <div id="footer-bracket">
+    <div class="fb-l">&lt;</div>
+    <div class="fb-c">
+      <div class="fb-name">Peter Michaels Allen</div>
+      <div class="fb-role">Design Systems Architect · Product UX &amp; Systems Designer</div>
+      <div class="fb-links">
+        <a href="https://linkedin.com/in/petermichaelsallen">LinkedIn</a>
+        <a href="https://github.com/3fn">GitHub</a>
+        <a href="#">Resume</a>
+      </div>
+    </div>
+    <div class="fb-r">/&gt;</div>
+  </div>
+</div>
+
+<div id="tooltip">
+  <div class="tt-title" id="tt-title"></div>
+  <div class="tt-period" id="tt-period"></div>
+  <div class="tt-row"><span>Design</span><span class="tt-design" id="tt-design"></span></div>
+  <div class="tt-row"><span>Engineering</span><span class="tt-eng" id="tt-eng"></span></div>
+  <div class="tt-desc" id="tt-desc"></div>
+</div>
+
+<script>
+// All roles in chronological order with precise year boundaries
+// yearStart/yearEnd in decimal years
+const ALL_ROLES = [
+  {
+    id: 'ea',
+    label: 'Electronic Arts',
+    short: 'EA',
+    yearStart: 2010.58, yearEnd: 2010.83,
+    design: 50, eng: 50,
+    period: 'Aug – Oct 2010',
+    desc: 'Led UI Design for FIFA on Nintendo 3DS. Designing and directly editing code for the dual-screen mobile experience.',
+    is3fn: false,
+  },
+  {
+    id: 'magi',
+    label: 'Magi.com',
+    short: 'Magi',
+    yearStart: 2011.08, yearEnd: 2012.25,
+    design: 100, eng: 0,
+    period: 'Feb 2011 – Mar 2012',
+    desc: 'Designed interfaces for next-gen social gaming. Pure design — no engineering involvement.',
+    is3fn: false,
+  },
+  {
+    id: 'ehealth',
+    label: 'eHealth',
+    short: 'eHealth',
+    yearStart: 2013.25, yearEnd: 2015.25,
+    design: 99, eng: 1,
+    period: 'Apr 2013 – Mar 2015',
+    desc: 'Led design and user research for the first end-to-end ACA eCommerce product. Engineering was rare — roughly 1% of time.',
+    is3fn: false,
+  },
+  {
+    id: 'fantalk',
+    label: 'FanTalk',
+    short: 'FanTalk',
+    yearStart: 2015.33, yearEnd: 2016.08,
+    design: 92, eng: 8,
+    period: 'May 2015 – Feb 2016',
+    desc: 'Championed the sports fan voice for iOS. Some engineering involvement — roughly 5–10% of time.',
+    is3fn: false,
+  },
+  {
+    id: 'reddit',
+    label: 'Reddit',
+    short: 'Reddit',
+    yearStart: 2017.08, yearEnd: 2019.5,
+    design: 100, eng: 0,
+    period: 'Feb 2017 – Jun 2019',
+    desc: 'Led design systems for Web and Native — Community Styling, token system, first DS practice. Technically challenging, but no code written.',
+    is3fn: false,
+  },
+  {
+    id: 'venmo',
+    label: 'Venmo / PayPal',
+    short: 'Venmo',
+    yearStart: 2019.5, yearEnd: 2024.33,
+    design: 100, eng: 0,
+    period: 'Jul 2019 – Apr 2024',
+    desc: 'Established and grew Venmo DS from 0-to-1 to executive approval. Led accessibility compliance and PayPal redesign. Technically demanding — no code written.',
+    is3fn: false,
+  },
+  {
+    id: 'dp',
+    label: 'DesignerPunk',
+    short: 'DP',
+    yearStart: 2025.0, yearEnd: 2026.3,
+    design: 45, eng: 55,
+    period: '2025 – Present',
+    desc: 'True Native cross-platform design system. 310+ tokens, 30 components, 8k+ tests, MCP servers, 9 custom AI agents. Back to deep engineering — majority of time on the engineering side.',
+    is3fn: false,
+  },
+];
+
+const TFN_DESIGN = 60, TFN_ENG = 40;
+const TFN_COLOR = [255, 190, 60];
+const MIN_GAP = 3/12; // 3 months in decimal years
+const CAREER_START = 2006.0;
+const YEAR_START = 2005.6;
+const YEAR_END = 2026.5;
+
+// Build 3fn segments: before first role, and gaps > 3 months between roles
+function build3fnSegments() {
+  const segs = [];
+  const sorted = [...ALL_ROLES].sort((a,b) => a.yearStart - b.yearStart);
+
+  // Pre-career: 2006 up to first role
+  const first = sorted[0];
+  if (first.yearStart - CAREER_START > MIN_GAP) {
+    segs.push({ yearStart: CAREER_START, yearEnd: first.yearStart, design: TFN_DESIGN, eng: TFN_ENG });
+  }
+
+  // Gaps between consecutive roles
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const gapStart = sorted[i].yearEnd;
+    const gapEnd = sorted[i+1].yearStart;
+    if (gapEnd - gapStart > MIN_GAP) {
+      segs.push({ yearStart: gapStart, yearEnd: gapEnd, design: TFN_DESIGN, eng: TFN_ENG });
+    }
+  }
+
+  return segs;
+}
+
+const TFN_SEGS = build3fnSegments();
+
+// All displayable segments for area + bars
+// Each segment has yearStart, yearEnd, design, eng, and optional role ref
+const ALL_SEGS = [
+  ...TFN_SEGS.map(s => ({ ...s, is3fn: true, id: '3fn', label: '3fn Design', short: '3fn',
+    period: `${yearToLabel(s.yearStart)} – ${yearToLabel(s.yearEnd)}`,
+    desc: 'Independent design consultancy. Running throughout career — shown here during periods between full-time roles.',
+  })),
+  ...ALL_ROLES.map(r => ({ ...r })),
+].sort((a,b) => a.yearStart - b.yearStart);
+
+function yearToLabel(y) {
+  const yr = Math.floor(y);
+  const mo = Math.round((y - yr) * 12);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return mo === 0 ? `${yr}` : `${months[Math.min(mo,11)]} ${yr}`;
+}
+
+// Compute mid point for each segment
+ALL_SEGS.forEach(s => { s.yearMid = (s.yearStart + s.yearEnd) / 2; });
+
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+let W, H, DPR;
+let hovered = null;
+let animT = 0, lastTs = null, animDone = false;
+const PAD = { top: 52, bottom: 52, left: 20, right: 20 };
+
+function setup() {
+  const wrap = document.getElementById('chart-wrap');
+  DPR = window.devicePixelRatio || 1;
+  W = wrap.offsetWidth || 800;
+  H = Math.round(W * 0.40);
+  canvas.width = W * DPR;
+  canvas.height = H * DPR;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.scale(DPR, DPR);
+}
+
+function xFor(year) {
+  return PAD.left + (year - YEAR_START) / (YEAR_END - YEAR_START) * (W - PAD.left - PAD.right);
+}
+const MID = () => PAD.top + (H - PAD.top - PAD.bottom) * 0.5;
+const HALF = () => (H - PAD.top - PAD.bottom) * 0.46;
+
+function easeOut(t) { return 1 - Math.pow(1-t, 3); }
+
+function drawAreaForSeg(seg, prog, alpha) {
+  const x1 = xFor(seg.yearStart);
+  const x2 = xFor(seg.yearEnd);
+  const mid = MID(), half = HALF();
+  const dh = (seg.design/100) * half * prog;
+  const eh = (seg.eng/100) * half * prog;
+  const is3fn = seg.is3fn;
+  const dc = is3fn ? TFN_COLOR : [232,0,106];
+  const ec = is3fn ? TFN_COLOR : [0,229,200];
+
+  // Design fill above axis
+  if (dh > 0.5) {
+    ctx.beginPath();
+    ctx.moveTo(x1, mid);
+    ctx.lineTo(x1, mid - dh);
+    ctx.lineTo(x2, mid - dh);
+    ctx.lineTo(x2, mid);
+    ctx.closePath();
+    const g = ctx.createLinearGradient(0, mid-dh, 0, mid);
+    g.addColorStop(0, `rgba(${dc[0]},${dc[1]},${dc[2]},${(is3fn?0.22:0.2)*alpha})`);
+    g.addColorStop(1, `rgba(${dc[0]},${dc[1]},${dc[2]},${(is3fn?0.04:0.04)*alpha})`);
+    ctx.fillStyle = g;
+    ctx.fill();
+    // Top edge line
+    ctx.beginPath();
+    ctx.moveTo(x1, mid - dh);
+    ctx.lineTo(x2, mid - dh);
+    if (is3fn) { ctx.setLineDash([3,4]); } else { ctx.setLineDash([]); }
+    ctx.strokeStyle = `rgba(${dc[0]},${dc[1]},${dc[2]},${(is3fn?0.45:0.55)*alpha})`;
+    ctx.lineWidth = is3fn ? 1 : 1.5;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Engineering fill below axis
+  if (eh > 0.5) {
+    ctx.beginPath();
+    ctx.moveTo(x1, mid);
+    ctx.lineTo(x1, mid + eh);
+    ctx.lineTo(x2, mid + eh);
+    ctx.lineTo(x2, mid);
+    ctx.closePath();
+    const g = ctx.createLinearGradient(0, mid, 0, mid+eh);
+    g.addColorStop(0, `rgba(${ec[0]},${ec[1]},${ec[2]},${(is3fn?0.04:0.04)*alpha})`);
+    g.addColorStop(1, `rgba(${ec[0]},${ec[1]},${ec[2]},${(is3fn?0.22:0.2)*alpha})`);
+    ctx.fillStyle = g;
+    ctx.fill();
+    // Bottom edge line
+    ctx.beginPath();
+    ctx.moveTo(x1, mid + eh);
+    ctx.lineTo(x2, mid + eh);
+    if (is3fn) { ctx.setLineDash([3,4]); } else { ctx.setLineDash([]); }
+    ctx.strokeStyle = `rgba(${ec[0]},${ec[1]},${ec[2]},${(is3fn?0.45:0.55)*alpha})`;
+    ctx.lineWidth = is3fn ? 1 : 1.5;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function draw(ts) {
+  if (lastTs === null) lastTs = ts;
+  const dt = Math.min((ts - lastTs)/1000, 0.05);
+  lastTs = ts;
+  if (!animDone) animT = Math.min(animT + dt * 0.5, 1);
+  const prog = easeOut(animT);
+
+  ctx.clearRect(0, 0, W, H);
+  const mid = MID(), half = HALF();
+
+  // Grid
+  ctx.strokeStyle = 'rgba(0,229,200,0.025)';
+  ctx.lineWidth = 0.5;
+  for (let y = 2006; y <= 2026; y++) {
+    const x = xFor(y);
+    ctx.beginPath(); ctx.moveTo(x, PAD.top); ctx.lineTo(x, H-PAD.bottom); ctx.stroke();
+  }
+
+  // Year labels
+  ctx.fillStyle = '#181818';
+  ctx.font = `10px 'Courier New', monospace`;
+  ctx.textAlign = 'center';
+  for (let y = 2006; y <= 2026; y += 2) {
+    ctx.fillText(y, xFor(y), H - PAD.bottom + 16);
+  }
+
+  // Axis labels
+  ctx.fillStyle = '#1e1e1e';
+  ctx.font = `10px 'Courier New', monospace`;
+  ctx.textAlign = 'left';
+  ctx.fillText('DESIGN ↑', PAD.left, PAD.top - 10);
+  ctx.fillText('ENGINEERING ↓', PAD.left, H - PAD.bottom + 32);
+
+  // Draw area fills per segment (no interpolation across gaps)
+  for (const seg of ALL_SEGS) {
+    const isHov = hovered && hovered.id === seg.id;
+    drawAreaForSeg(seg, prog, isHov ? 2.2 : 1);
+  }
+
+  // Center axis
+  ctx.beginPath();
+  ctx.moveTo(PAD.left, mid);
+  ctx.lineTo(W - PAD.right, mid);
+  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([]);
+  ctx.stroke();
+
+  // Discrete bars + nodes for each segment
+  for (const seg of ALL_SEGS) {
+    const nx = xFor(seg.yearMid);
+    const isHov = hovered && hovered.id === seg.id;
+    const bw = isHov ? 4.5 : 3;
+    const is3fn = seg.is3fn;
+    const dc = is3fn ? TFN_COLOR : [232,0,106];
+    const ec = is3fn ? TFN_COLOR : [0,229,200];
+
+    // Design bar up
+    if (seg.design > 0) {
+      const bh = (seg.design/100) * half * prog;
+      const g = ctx.createLinearGradient(0, mid-bh, 0, mid);
+      g.addColorStop(0, `rgba(${dc[0]},${dc[1]},${dc[2]},${isHov?0.95:0.65})`);
+      g.addColorStop(1, `rgba(${dc[0]},${dc[1]},${dc[2]},${isHov?0.3:0.15})`);
+      ctx.fillStyle = g;
+      ctx.fillRect(nx - bw/2, mid - bh, bw, bh);
+    }
+
+    // Engineering bar down
+    if (seg.eng > 0) {
+      const bh = (seg.eng/100) * half * prog;
+      const g = ctx.createLinearGradient(0, mid, 0, mid+bh);
+      g.addColorStop(0, `rgba(${ec[0]},${ec[1]},${ec[2]},${isHov?0.3:0.15})`);
+      g.addColorStop(1, `rgba(${ec[0]},${ec[1]},${ec[2]},${isHov?0.95:0.65})`);
+      ctx.fillStyle = g;
+      ctx.fillRect(nx - bw/2, mid, bw, bh);
+    }
+
+    // Node dot
+    const nr = isHov ? 5 : 3.5;
+    const dotColor = is3fn ? `rgba(${TFN_COLOR[0]},${TFN_COLOR[1]},${TFN_COLOR[2]},0.8)` : (isHov ? '#fff' : 'rgba(255,255,255,0.65)');
+    // Glow
+    const glow = ctx.createRadialGradient(nx, mid, 0, nx, mid, nr*5);
+    glow.addColorStop(0, is3fn ? `rgba(${TFN_COLOR[0]},${TFN_COLOR[1]},${TFN_COLOR[2]},${isHov?0.15:0.07})` : `rgba(255,255,255,${isHov?0.12:0.05})`);
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.beginPath(); ctx.arc(nx, mid, nr*5, 0, Math.PI*2);
+    ctx.fillStyle = glow; ctx.fill();
+    // Dot
+    ctx.beginPath(); ctx.arc(nx, mid, nr, 0, Math.PI*2);
+    ctx.fillStyle = dotColor; ctx.fill();
+
+    // Label — below axis, nudged down
+    const labelY = mid + half * 0.75;
+    ctx.fillStyle = isHov
+      ? (is3fn ? `rgba(${TFN_COLOR[0]},${TFN_COLOR[1]},${TFN_COLOR[2]},1)` : 'rgba(255,255,255,0.95)')
+      : (is3fn ? `rgba(${TFN_COLOR[0]},${TFN_COLOR[1]},${TFN_COLOR[2]},0.35)` : 'rgba(255,255,255,0.2)');
+    ctx.font = `${isHov?'bold ':''}10px 'Courier New', monospace`;
+    ctx.textAlign = 'center';
+    ctx.fillText(is3fn ? '3fn' : seg.short, nx, labelY);
+  }
+
+  // DP pulse ring
+  if (prog > 0.9) {
+    const dp = ALL_SEGS.find(s => s.id === 'dp');
+    if (dp) {
+      const nx = xFor(dp.yearMid);
+      const pulse = 0.5 + 0.5 * Math.sin(ts * 0.002);
+      ctx.beginPath();
+      ctx.arc(nx, mid, 5 + pulse*7, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(0,229,200,${0.08 + pulse*0.1})`;
+      ctx.lineWidth = 1; ctx.stroke();
+    }
+  }
+
+  if (animT < 1 || hovered !== null) requestAnimationFrame(draw);
+  else animDone = true;
+}
+
+// --- Hit detection: hover over entire bar area ---
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = W / rect.width;
+  const scaleY = H / rect.height;
+  const mx = (e.clientX - rect.left) * scaleX;
+  const my = (e.clientY - rect.top) * scaleY;
+  const mid = MID(), half = HALF();
+
+  let found = null;
+  // Check each segment — hit if within x range of segment and within bar height
+  for (const seg of ALL_SEGS) {
+    const x1 = xFor(seg.yearStart);
+    const x2 = xFor(seg.yearEnd);
+    const barW = Math.max(x2 - x1, 16); // min hit width
+    const cx = xFor(seg.yearMid);
+    const hitX1 = cx - barW/2 - 6;
+    const hitX2 = cx + barW/2 + 6;
+    const dh = (seg.design/100) * half;
+    const eh = (seg.eng/100) * half;
+    const topY = mid - dh - 8;
+    const botY = mid + Math.max(eh, 8) + 8;
+
+    if (mx >= hitX1 && mx <= hitX2 && my >= topY && my <= botY) {
+      found = seg; break;
+    }
+  }
+
+  const prev = hovered;
+  hovered = found;
+
+  if (found) {
+    canvas.style.cursor = 'pointer';
+    document.getElementById('tt-title').textContent = found.label;
+    document.getElementById('tt-period').textContent = found.period;
+    document.getElementById('tt-design').textContent = found.design + '%';
+    document.getElementById('tt-eng').textContent = found.eng + '%';
+    document.getElementById('tt-desc').textContent = found.desc;
+    const tt = document.getElementById('tooltip');
+    tt.style.display = 'block';
+    // Keep tooltip on screen
+    const ttW = 270, ttH = 160;
+    let tx = e.clientX + 18;
+    let ty = e.clientY - 12;
+    if (tx + ttW > window.innerWidth) tx = e.clientX - ttW - 10;
+    if (ty + ttH > window.innerHeight) ty = window.innerHeight - ttH - 10;
+    tt.style.left = tx + 'px';
+    tt.style.top = ty + 'px';
+  } else {
+    canvas.style.cursor = 'default';
+    document.getElementById('tooltip').style.display = 'none';
+  }
+
+  if (prev !== found) {
+    animDone = false;
+    requestAnimationFrame(draw);
+  }
+});
+
+canvas.addEventListener('mouseleave', () => {
+  hovered = null;
+  document.getElementById('tooltip').style.display = 'none';
+  animDone = false;
+  requestAnimationFrame(draw);
+});
+
+window.addEventListener('resize', () => {
+  setup(); animT = 0; lastTs = null; animDone = false;
+  requestAnimationFrame(draw);
+});
+
+setup();
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

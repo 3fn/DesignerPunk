@@ -20,7 +20,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ## Task List
 
-- [ ] 1. Build Steps for Consumer Entry Points
+- [x] 1. Build Steps for Consumer Entry Points
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
@@ -104,7 +104,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
-- [ ] 3. CLI MCP Commands
+- [x] 3. CLI MCP Commands
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard
@@ -133,7 +133,7 @@ WS2 has internal sequencing: build steps → package.json → validation test �
 
 ---
 
-- [ ] 4.5 Fix CLI Module Resolution (Blocker)
+- [x] 4.5 Fix CLI Module Resolution (Blocker)
 
   **Type**: Implementation
   **Validation**: Tier 2 - Standard

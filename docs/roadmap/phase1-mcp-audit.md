@@ -93,9 +93,9 @@
 
 | Steering Doc | Issue | Priority |
 |-------------|-------|----------|
-| Token-Governance.md | Stale theme file sync reference | Medium — fix before Phase 2 theming work |
-| Token-Quick-Reference.md | Stale hardcoded theme paths | Medium — fix before Phase 2 theming work |
-| component-mcp-query-guide.md | Missing token + Product MCP tools | High — agents reference this guide |
+| Token-Governance.md | Stale theme file sync reference | Medium — fix before Phase 2 theming work | **Resolved** — Updated to reference theme registry pattern, removed hardcoded paths |
+| Token-Quick-Reference.md | Stale hardcoded theme paths | Medium — fix before Phase 2 theming work | **Resolved** — Replaced hardcoded paths with generic theme references |
+| component-mcp-query-guide.md | Missing token + Product MCP tools | High — agents reference this guide | **Resolved** — Spec 097 Task 3, renamed to MCP Query Guide, added token tools (Spec 096), Product MCP tools (Spec 097), Docs MCP reference |
 | Agent-Directory.md | Missing repo ownership reframing | Low — agents have updated prompts |
 | MCP-Relationship-Model.md | Pre-ecosystem data boundary | Low — Spec 081 decisions supersede |
 | Platform-Resource-Map.md | May need theme-aware output paths | Low |
