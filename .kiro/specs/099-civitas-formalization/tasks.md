@@ -19,7 +19,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
 
 ### Work Stream A — Naming Rollout
 
-- [ ] 1. Civitas Definition Document
+- [x] 1. Civitas Definition Document
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -40,7 +40,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
   **Post-Completion:**
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 1 Complete: Civitas Definition Document"`
 
-  - [ ] 1.1 Draft Civitas definition document
+  - [x] 1.1 Draft Civitas definition document
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
