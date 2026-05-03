@@ -16,7 +16,13 @@ description: Essential startup checklist — date verification, Jest test comman
 
 1. Check the **CURRENT** date
 
-2. **CRITICAL: Wait for User Authorization Before Starting New Tasks**
+2. **Civitas Governance Health Check**
+   
+   IF it's been >30 days since last governance health check **[2026-05-03]**, THEN flag: "Governance health check overdue — switch to Thurgood (`ctrl+shift+t`) to run monthly health check before proceeding."
+   
+   *Only Thurgood runs the health check. All agents check the date and flag if overdue.*
+
+3. **CRITICAL: Wait for User Authorization Before Starting New Tasks**
    
    **WHEN reporting the completion of a task THEN you MUST:**
    - **STOP and WAIT for user authorization before starting the next task**
@@ -46,7 +52,7 @@ description: Essential startup checklist — date verification, Jest test comman
    - ❌ Automatically reading files for the next task
    - ❌ Beginning implementation without explicit user request
 
-3. **CRITICAL: This project uses Jest, NOT Vitest**
+4. **CRITICAL: This project uses Jest, NOT Vitest**
    
    **WHEN running tests THEN you MUST use Jest commands (NOT Vitest commands)**
    
@@ -64,7 +70,7 @@ description: Essential startup checklist — date verification, Jest test comman
    
    **Key difference:** Jest runs tests once by default. Vitest uses `--run` for single execution, but Jest doesn't need or support this flag.
 
-4. **Test Command Selection Guidelines**
+5. **Test Command Selection Guidelines**
    
    **WHEN validating regular task completion THEN:**
    - Use `npm test` (default - excludes performance tests)
@@ -99,7 +105,7 @@ description: Essential startup checklist — date verification, Jest test comman
    
    **Default assumption**: Use `npm test` for parent tasks unless working on release tool or performance systems.
 
-5. **CRITICAL: Task Completion Sequence (MUST FOLLOW)**
+6. **CRITICAL: Task Completion Sequence (MUST FOLLOW)**
    
    **DO NOT mark tasks complete before completing the required steps for that task type.**
    

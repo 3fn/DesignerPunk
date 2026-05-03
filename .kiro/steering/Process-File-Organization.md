@@ -107,6 +107,11 @@ All files use explicit metadata to declare organizational intent, enabling safe 
 **Task**: Associated task number and name (if applicable)
 ```
 
+**Civitas Governance Note:** Steering documents require additional metadata fields (`Last Reviewed`, `Layer`, `Relevant Tasks`, `inclusion` in YAML frontmatter). For the complete steering doc metadata requirements and lifecycle process (creation → review → update → deprecation), see Thurgood's Civitas Steward operational mode or query:
+```
+get_section({ path: ".kiro/steering/Civitas-System-Overview.md", heading: "Governance Processes" })
+```
+
 ### Organization Field Values
 
 #### Framework-Level Artifacts

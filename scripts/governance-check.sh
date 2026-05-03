@@ -98,8 +98,25 @@ fi
 echo "---"
 if [ "$FINDINGS" -eq 0 ]; then
   echo "✅ Governance check complete. No issues found."
-  exit 0
 else
   echo "⚠️  Governance check complete. Issues found — review above."
+fi
+
+# Update governance health check date in Start Up Tasks if --full was used
+if [ "$FULL_CHECK" = true ]; then
+  STARTUP_FILE=".kiro/steering/Start Up Tasks.md"
+  TODAY=$(date +%Y-%m-%d)
+  if [ -f "$STARTUP_FILE" ]; then
+    sed -i '' "s/\*\*\[.*\]\*\*/\*\*\[$TODAY\]\*\*/" "$STARTUP_FILE" 2>/dev/null || \
+    sed -i "s/\*\*\[.*\]\*\*/\*\*\[$TODAY\]\*\*/" "$STARTUP_FILE" 2>/dev/null || \
+    echo "⚠️  Could not auto-update governance date in Start Up Tasks. Update manually to $TODAY."
+  fi
+  echo ""
+  echo "📅 Governance health check date updated to $TODAY in Start Up Tasks."
+fi
+
+if [ "$FINDINGS" -eq 0 ]; then
+  exit 0
+else
   exit 1
 fi

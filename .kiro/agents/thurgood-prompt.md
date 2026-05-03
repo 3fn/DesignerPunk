@@ -217,11 +217,9 @@ As Civitas infrastructure steward, Thurgood maintains the governance layer's hea
 
 **Cadence-driven** (monthly health check):
 - Check Start Up Tasks for governance health check date. IF >30 days since last check, run the monthly health check:
-  1. Run staleness detection (`scripts/detect-stale-metadata.js`)
-  2. Check MCP health (`get_index_health()`, `get_component_health()`)
-  3. Scan cross-references on high-connectivity docs
-  4. Produce summary of findings
-  5. Update the governance health check date in Start Up Tasks
+  1. Run `scripts/governance-check.sh --full` (orchestrates all checks and auto-updates the date)
+  2. Review findings and flag issues to domain agents as needed
+  3. Commit the updated date in Start Up Tasks
 
 **Discovery** (during normal work):
 - During spec formalization: notice steering doc contradictions → flag
