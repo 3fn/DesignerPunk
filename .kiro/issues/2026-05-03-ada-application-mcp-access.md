@@ -21,7 +21,7 @@ This means:
 
 ## Resolution
 
-Add `"@designerpunk-components"` to Ada's `allowedTools` array in `ada.json`. One-line config change.
+Add `"@designerpunk-application"` to Ada's `allowedTools` array in `ada.json`. One-line config change.
 
 ## Related
 

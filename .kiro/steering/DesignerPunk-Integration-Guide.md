@@ -576,7 +576,7 @@ For agents using `/knowledge` in Kiro CLI, recommended indexes for a product rep
 |---------------|------|---------|---------|
 | product-source | `./src` | `**/*.ts`, `**/*.tsx` | Product source code |
 | product-screens | `./specs` or `./screens` | `**/*.md` | Screen specifications |
-| designerpunk-components | `node_modules/@designerpunk/core/src/components/core` | `**/*.ts`, `**/*.yaml` | Component source and metadata |
+| designerpunk-application | `node_modules/@designerpunk/core/src/components/core` | `**/*.ts`, `**/*.yaml` | Component source and metadata |
 
 Agents primarily use MCP queries for design system knowledge. Knowledge bases supplement with searchable source access for deep dives.
 

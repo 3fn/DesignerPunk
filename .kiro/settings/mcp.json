@@ -20,7 +20,7 @@
                 "rebuild_index"
             ]
         },
-        "designerpunk-components": {
+        "designerpunk-application": {
             "command": "node",
             "args": [
                 "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/application-mcp-server/dist/index.js"

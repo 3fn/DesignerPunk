@@ -7,7 +7,7 @@
   "allowedTools": [
     "read",
     "@designerpunk-docs",
-    "@designerpunk-components"
+    "@designerpunk-application"
   ],
   "toolsSettings": {
     "write": {
