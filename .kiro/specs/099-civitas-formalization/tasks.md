@@ -126,7 +126,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
 
 ---
 
-- [ ] 3. Thurgood Scope Expansion and Shared Doc Reassignment
+- [x] 3. Thurgood Scope Expansion and Shared Doc Reassignment
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -152,7 +152,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
   **Post-Completion:**
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 3 Complete: Thurgood Scope Expansion and Shared Doc Reassignment"`
 
-  - [ ] 3.1 Update Thurgood prompt, config, and Agent Directory
+  - [x] 3.1 Update Thurgood prompt, config, and Agent Directory
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
@@ -168,7 +168,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
     - Present to Peter for ballot measure approval
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 9.1, 9.2, 9.3, 9.4_
 
-  - [ ] 3.2 Reassign Shared docs and update Lina
+  - [x] 3.2 Reassign Shared docs and update Lina
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -178,7 +178,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
     - Present to Peter for ballot measure approval
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-  - [ ] 3.3 Lina metadata confirmation
+  - [x] 3.3 Lina metadata confirmation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Lina

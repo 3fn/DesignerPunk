@@ -185,7 +185,7 @@ Is this animation cross-platform?
 **Platform-appropriate idioms for token consumption**:
 - **Web**: CSS custom properties (`var(--space-inset-normal)`)
 - **iOS**: Swift constants (`spaceInsetNormal`)
-- **Android**: Kotlin constants (`spaceInsetNormal.dp`)
+- **Android**: Kotlin constants (`DesignTokens.space_200`)
 
 ### Platform-Specific Mapping Approaches
 
@@ -223,7 +223,7 @@ Button(action: action) {
 // Token-based styling with Kotlin constants
 Button(
     onClick = onClick,
-    modifier = Modifier.padding(spaceInsetNormal.dp)
+    modifier = Modifier.padding(DesignTokens.space_200)
 ) {
     Text(text = label)
 }

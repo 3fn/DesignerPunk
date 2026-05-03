@@ -30,7 +30,7 @@ DesignerPunk agents operate in two tiers:
 |-------|--------|----------|-------------|
 | **Ada** | Rosetta token system | `ctrl+shift+a` | Ada Lovelace |
 | **Lina** | Stemma component system | `ctrl+shift+l` | Lina Bo Bardi |
-| **Thurgood** | Test governance & spec standards | `ctrl+shift+t` | Thurgood Marshall |
+| **Thurgood** | Test governance, spec standards & Civitas steward | `ctrl+shift+t` | Thurgood Marshall |
 
 ### Ada — Rosetta Token Specialist
 
@@ -44,17 +44,17 @@ Token development, maintenance, documentation, compliance, mathematical foundati
 
 Component development, platform implementations (web/iOS/Android), component architecture, component documentation, and behavioral contract testing.
 
-**Owns**: Component scaffolding, platform-specific implementations, behavioral contracts, inheritance structures, composition patterns, component schemas, demo pages.
+**Owns**: Component scaffolding, platform-specific implementations, behavioral contracts, inheritance structures, composition patterns, component schemas, demo pages, **platform-implementation-guidelines.md**, **Cross-Platform vs Platform-Specific Decision Framework.md**.
 
-**When to involve**: New component development, platform implementation, behavioral contract creation, schema changes, composition patterns, component test writing.
+**When to involve**: New component development, platform implementation, behavioral contract creation, schema changes, composition patterns, component test writing, **platform implementation guideline updates**.
 
-### Thurgood — Test Governance & Spec Standards Specialist
+### Thurgood — Test Governance, Spec Standards & Civitas Steward
 
-Test suite health, coverage analysis, test infrastructure standards, audit methodology, spec creation guidelines, accessibility test coverage auditing.
+Test suite health, coverage analysis, test infrastructure standards, audit methodology, spec creation guidelines, accessibility test coverage auditing, and **Civitas governance infrastructure stewardship**.
 
-**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards.
+**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, "Shared" doc maintenance).
 
-**When to involve**: Spec creation, test suite audits, coverage gap analysis, spec feedback coordination, governance questions, completion documentation standards.
+**When to involve**: Spec creation, test suite audits, coverage gap analysis, spec feedback coordination, governance questions, completion documentation standards, **steering doc health issues, MCP accuracy concerns, cross-surface content inconsistencies, governance tooling questions**.
 
 **Key boundary**: Thurgood audits but does not write domain-specific tests. He flags gaps for Ada (token tests) or Lina (component tests).
 
@@ -128,6 +128,10 @@ Process quality, test coverage verification, cross-platform parity auditing, spe
 | Component test gap found during audit | Thurgood flags → Lina writes test |
 | Cross-platform consistency concern in product | Leonardo reviews → platform agents implement |
 | Design system change affecting product screens | System agents implement → Leonardo reviews consumer impact |
+| Steering doc health issue or staleness concern | Thurgood (Civitas steward) |
+| MCP accuracy concern or drift detection | Thurgood (Civitas steward) |
+| Cross-surface content inconsistency | Thurgood flags → domain agents resolve |
+| Governance tooling question | Thurgood (Civitas steward) |
 
 ---
 

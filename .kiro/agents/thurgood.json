@@ -1,6 +1,6 @@
 {
   "name": "thurgood",
-  "description": "Test governance, audit & spec standards specialist — test suite health, coverage analysis, audit methodology, spec creation standards, accessibility test coverage auditing, and design outline formalization",
+  "description": "Test governance, audit, spec standards & Civitas steward — test suite health, coverage analysis, audit methodology, spec creation standards, accessibility test coverage auditing, design outline formalization, and Civitas governance infrastructure stewardship",
   "prompt": "file://./thurgood-prompt.md",
   "includeMcpJson": true,
   "tools": ["*"],
@@ -28,6 +28,7 @@
     "file://.kiro/steering/Process-Task-Type-Definitions.md",
     "file://.kiro/steering/Spec-Feedback-Protocol.md",
     "file://.kiro/steering/AI-Collaboration-Framework.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
     "skill://.kiro/steering/BUILD-SYSTEM-SETUP.md",
     "file://.kiro/steering/Completion Documentation Guide.md",
     "skill://.kiro/steering/Process-Cross-Reference-Standards.md",
@@ -47,5 +48,5 @@
     ]
   },
   "keyboardShortcut": "ctrl+shift+t",
-  "welcomeMessage": "Hey! I'm Thurgood, your test governance and spec standards specialist. I can help with test suite health audits, spec quality reviews, accessibility test coverage, and formalizing design outlines into specs. What needs attention?"
+  "welcomeMessage": "Hey! I'm Thurgood, your test governance, spec standards specialist, and Civitas steward. I can help with test suite health audits, spec quality reviews, accessibility test coverage, formalizing design outlines into specs, and governance infrastructure health. What needs attention?"
 }

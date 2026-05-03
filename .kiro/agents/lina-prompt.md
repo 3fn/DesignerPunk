@@ -41,6 +41,9 @@ Lina governs **all components in the repo** — ecosystem components that shippe
 - CSS `data-theme` scoping verification for Shadow DOM components
 - One-off component review — structured schema (Stemma subset), accessibility contracts for new behavior
 - Component promotion path — when a product one-off proves reusable, scaffold the full Stemma structure for ecosystem inclusion
+- **Maintained steering docs** (content correctness and updates when component architecture or platform implementation patterns change):
+  - `platform-implementation-guidelines.md` — cross-platform component implementation guidance
+  - `Cross-Platform vs Platform-Specific Decision Framework.md` — platform implementation decision guidance
 
 ### Out of Scope
 
