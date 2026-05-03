@@ -18,12 +18,13 @@ description: Foundational principles and governance for systematic component dev
 
 ## Overview
 
-The Stemma System establishes foundational principles and architecture governing component relationships, inheritance, and behavioral contracts across web, iOS, and Android platforms. It complements the Rosetta System (mathematical token foundation) with relational component foundation.
+The Stemma System establishes foundational principles and architecture governing component relationships, inheritance, and behavioral contracts across web, iOS, and Android platforms. It complements the Rosetta System (mathematical token foundation) and is governed by the Civitas System (governance foundation) to form the complete design system architecture.
 
-**Rosetta + Stemma Integration**:
+**Rosetta + Stemma + Civitas Integration**:
 - **Rosetta System**: Mathematical relationships and token hierarchy (how things look and scale)
 - **Stemma System**: Family relationships and component hierarchy (how things behave and relate)
-- **Together**: Complete design system foundation covering both visual consistency (Rosetta) and behavioral consistency (Stemma)
+- **Civitas System**: Governance infrastructure and processes (how the system is governed and maintained)
+- **Together**: Complete design system foundation covering visual consistency (Rosetta), behavioral consistency (Stemma), and operational consistency (Civitas)
 
 ---
 
@@ -794,7 +795,7 @@ Android Implementation:
 
 ### Rosetta System Integration
 
-The Stemma System complements Rosetta by handling different concerns:
+The Stemma System complements Rosetta by handling different concerns, with both systems governed by Civitas:
 
 | Concern | System | Responsibility |
 |---------|--------|----------------|
@@ -884,6 +885,8 @@ get_section({ path: ".kiro/steering/stemma-system-principles.md", heading: "Comp
 
 ## Related Documentation
 
+- [Civitas System Overview](./Civitas-System-Overview.md) - Governance foundation for operational consistency
+- [DesignerPunk Systems Overview](./DesignerPunk-Systems-Overview.md) - Visual architecture of all three systems
 - [Primitive vs Semantic Usage Philosophy](./Component-Primitive-vs-Semantic-Philosophy.md) - Comprehensive decision guidance for component selection
 - [Component Schema Format Specification](./Component-Schema-Format.md) - Formal schema structure and validation rules
 - [Component Readiness Status System](./Component-Readiness-Status.md) - Comprehensive readiness status definitions and transition guidelines
@@ -893,4 +896,4 @@ get_section({ path: ".kiro/steering/stemma-system-principles.md", heading: "Comp
 
 ---
 
-*This document establishes the Stemma System as the relational foundation for component development, complementing the Rosetta System's mathematical foundation to create a complete design system architecture.*
+*This document establishes the Stemma System as the relational foundation for component development, complementing the Rosetta System's mathematical foundation and governed by the Civitas System's governance infrastructure to create a complete design system architecture.*

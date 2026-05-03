@@ -37,7 +37,7 @@
     "skill://.kiro/steering/Spec-Feedback-Protocol.md",
     "skill://.kiro/steering/Technology Stack.md",
     "skill://.kiro/steering/Test-Development-Standards.md",
-    "skill://.kiro/steering/Rosetta-Stemma-Systems-Overview.md"
+    "skill://.kiro/steering/DesignerPunk-Systems-Overview.md"
   ],
   "hooks": {
     "agentSpawn": [

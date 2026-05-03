@@ -101,10 +101,10 @@ Core skepticism and candid communication requirements. Read completely.
 
 Structured protocol for multi-agent feedback during spec formalization. Defines stamp format, @ mention scanning, feedback checkpoints, and context for reviewers. Read completely.
 
-#### 8. Rosetta-Stemma-Systems-Overview
-**File**: #[[file:.kiro/steering/Rosetta-Stemma-Systems-Overview.md]]
+#### 8. DesignerPunk-Systems-Overview
+**File**: #[[file:.kiro/steering/DesignerPunk-Systems-Overview.md]]
 
-Visual architecture overview of Rosetta (token) + Stemma (component) systems. Contains Mermaid diagrams. Read completely.
+Visual architecture overview of Rosetta (token), Stemma (component), and Civitas (governance) systems. Contains Mermaid diagrams. Read completely.
 
 
 ---
@@ -298,7 +298,7 @@ These documents remain auto-loaded every session:
 - Start Up Tasks (~700 tokens)
 - AI-Collaboration-Principles (~800 tokens)
 - Spec-Feedback-Protocol (~1,500 tokens)
-- Rosetta-Stemma-Systems-Overview (~1,000 tokens)
+- DesignerPunk-Systems-Overview (~1,000 tokens)
 - Process-Development-Workflow (~16,000 tokens) - strategic reading applies
 - Process-File-Organization (~16,000 tokens) - strategic reading applies
 

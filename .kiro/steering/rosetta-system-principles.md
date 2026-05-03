@@ -18,12 +18,13 @@ description: Rosetta System foundational principles — primitive-to-semantic hi
 
 ## Overview
 
-The Rosetta System establishes foundational principles and architecture governing token relationships, mathematical foundations, and cross-platform consistency across web, iOS, and Android platforms. It complements the Stemma System (relational component foundation) with mathematical token foundation.
+The Rosetta System establishes foundational principles and architecture governing token relationships, mathematical foundations, and cross-platform consistency across web, iOS, and Android platforms. It complements the Stemma System (relational component foundation) and is governed by the Civitas System (governance foundation) to form the complete design system architecture.
 
-**Rosetta + Stemma Integration**:
+**Rosetta + Stemma + Civitas Integration**:
 - **Rosetta System**: Mathematical relationships and token hierarchy (how things look and scale)
 - **Stemma System**: Family relationships and component hierarchy (how things behave and relate)
-- **Together**: Complete design system foundation covering both visual consistency (Rosetta) and behavioral consistency (Stemma)
+- **Civitas System**: Governance infrastructure and processes (how the system is governed and maintained)
+- **Together**: Complete design system foundation covering visual consistency (Rosetta), behavioral consistency (Stemma), and operational consistency (Civitas)
 
 ---
 
@@ -579,6 +580,8 @@ get_section({ path: ".kiro/steering/rosetta-system-principles.md", heading: "Mat
 ## Related Documentation
 
 - [Stemma System Principles](./stemma-system-principles.md) - Relational foundation for component development
+- [Civitas System Overview](./Civitas-System-Overview.md) - Governance foundation for operational consistency
+- [DesignerPunk Systems Overview](./DesignerPunk-Systems-Overview.md) - Visual architecture of all three systems
 - [Token System Overview](../../docs/token-system-overview.md) - Master document mapping token files
 - [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation routing
 - [Token Architecture 2.0 Mathematics](../../preserved-knowledge/token-architecture-2-0-mathematics.md) - Detailed mathematical formulas
@@ -586,4 +589,4 @@ get_section({ path: ".kiro/steering/rosetta-system-principles.md", heading: "Mat
 
 ---
 
-*This document establishes the Rosetta System as the mathematical foundation for token development, complementing the Stemma System's relational foundation to create a complete design system architecture.*
+*This document establishes the Rosetta System as the mathematical foundation for token development, complementing the Stemma System's relational foundation and governed by the Civitas System's governance infrastructure to create a complete design system architecture.*

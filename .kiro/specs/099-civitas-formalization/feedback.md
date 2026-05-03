@@ -34,3 +34,18 @@
 
 ### Context for Reviewers
 - [To be populated before tasks review]
+
+#### [ADA R1]
+**Task 2.2 — Ada review checkpoint: Rosetta section of DesignerPunk-Systems-Overview.md**
+
+**[ADA ✓]** — Rosetta content approved. No content correctness issues.
+
+- Rosetta token pipeline diagram (Definition → Validation → Registry → Generation → Platform output) is accurate → DesignerPunk-Systems-Overview.md § "Rosetta System: Token Pipeline and Layers"
+- Three-layer token hierarchy (Primitive → Semantic → Component) is correct → DesignerPunk-Systems-Overview.md § "Rosetta System: Token Pipeline and Layers"
+- High-level diagram preserves Rosetta internal structure and `R_CompTok --> Stemma` connection; Civitas additions are purely additive → DesignerPunk-Systems-Overview.md § "High-Level: DesignerPunk Three-System Architecture"
+- Integration and Combined Overview diagrams: Rosetta content unchanged, Civitas governance overlay is additive → DesignerPunk-Systems-Overview.md § "Integration: Tokens → Components → Platforms"
+- Related Documentation: Rosetta links preserved and correct → DesignerPunk-Systems-Overview.md § "Related Documentation"
+
+**Non-blocking observation:** The pipeline diagram omits Stage 4 (Mode Resolution, Spec 080) — the two-level light/dark resolver between Registry and Generation. This is a pre-existing simplification carried over from the original document, not a regression. Acceptable for a high-level visual overview. If this document is revised for accuracy beyond the Civitas restructure, the pipeline should show the six-stage flow: Definition → Validation → Registry → Mode Resolution → Generation → Platform Output.
+
+**Verdict:** Approved to proceed to Task 2.3 (terminology rollout).

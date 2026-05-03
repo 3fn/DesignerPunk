@@ -1,14 +1,14 @@
 ---
 inclusion: always
-name: Rosetta-Stemma-Systems-Overview
-description: Visual architecture overview of DesignerPunk's dual foundation — Rosetta (mathematical token system) and Stemma (relational component system). Mermaid diagrams showing token hierarchy, component families, pipeline flow, and platform integration. Load for high-level system understanding.
+name: DesignerPunk-Systems-Overview
+description: Visual architecture overview of DesignerPunk's three foundational systems — Rosetta (mathematical token system), Stemma (relational component system), and Civitas (governance system). Mermaid diagrams showing token hierarchy, component families, governance infrastructure, pipeline flow, and platform integration.
 ---
 
-# Rosetta and Stemma Systems — Visual Overview
+# DesignerPunk Systems Overview
 
-**Date**: 2026-02-21
-**Last Reviewed**: 2026-02-21
-**Purpose**: Visual architecture overview of DesignerPunk's dual foundation systems
+**Date**: 2026-05-03
+**Last Reviewed**: 2026-05-03
+**Purpose**: Visual architecture overview of DesignerPunk's three foundational systems
 **Organization**: architecture-overview
 **Scope**: cross-project
 **Layer**: 1
@@ -18,18 +18,21 @@ description: Visual architecture overview of DesignerPunk's dual foundation — 
 
 ## Overview
 
-DesignerPunk is built on two complementary foundation systems:
+DesignerPunk is built on three complementary foundation systems:
 
 - **Rosetta System** — Mathematical foundation for visual consistency (tokens, scales, relationships)
 - **Stemma System** — Relational foundation for behavioral consistency (components, contracts, inheritance)
+- **Civitas System** — Governance foundation for operational consistency (steering docs, MCP servers, agent coordination, processes)
 
 This document provides visual diagrams showing how these systems work individually and how they integrate to create the complete design system.
 
+For detailed Civitas documentation, see [Civitas System Overview](./Civitas-System-Overview.md).
+
 ---
 
-## High-Level: DesignerPunk Dual Foundation
+## High-Level: DesignerPunk Three-System Architecture
 
-This diagram shows the relationship between Rosetta (mathematical) and Stemma (relational) systems, and how they work together to provide both visual and behavioral consistency.
+This diagram shows the relationship between Rosetta (mathematical), Stemma (relational), and Civitas (governance) systems, and how they work together.
 
 ```mermaid
 flowchart TB
@@ -54,11 +57,25 @@ flowchart TB
             S_Base --> S_Contracts
             S_Sem --> S_Contracts
         end
+
+        subgraph Civitas["Civitas System — Governance Foundation"]
+            direction TB
+            C_Desc["How the system is governed<br/>Standards, processes, coordination"]
+            C_Steer["Steering Docs (86)"]
+            C_MCP["MCP Servers (3)"]
+            C_Agents["Agent Configs (8)"]
+            C_Auto["Hooks & Tooling"]
+            C_Steer --- C_MCP
+            C_Agents --- C_Auto
+        end
     end
 
     R_CompTok --> Stemma
+    Civitas -.->|"Governs"| Rosetta
+    Civitas -.->|"Governs"| Stemma
     Rosetta -.->|"Visual consistency"| R_Desc
     Stemma -.->|"Behavioral consistency"| S_Desc
+    Civitas -.->|"Operational consistency"| C_Desc
 ```
 
 ---
@@ -93,11 +110,11 @@ flowchart LR
 
 ## Stemma System: Families and Inheritance
 
-This diagram shows the 13 component families, the family inheritance pattern (primitive base → semantic variants), and how behavioral contracts apply to components.
+This diagram shows the component families, the family inheritance pattern (primitive base → semantic variants), and how behavioral contracts apply to components.
 
 ```mermaid
 flowchart TB
-    subgraph Families["13 component families"]
+    subgraph Families["Component families"]
         F1["Buttons"]
         F2["Form Inputs"]
         F3["Containers"]
@@ -134,9 +151,51 @@ flowchart TB
 
 ---
 
+## Civitas System: Governance Infrastructure
+
+This diagram shows the Civitas governance infrastructure — steering documentation served via MCP, agent configurations with domain boundaries, and the trigger mechanisms that keep governance active.
+
+```mermaid
+flowchart TB
+    subgraph Civitas["Civitas System"]
+        subgraph Docs["Steering Documentation"]
+            L0["Layer 0: Meta-guide"]
+            L1["Layer 1: Foundation (always loaded)"]
+            L2["Layer 2: Frameworks (MCP-queryable)"]
+            L3["Layer 3: Implementations (conditional)"]
+            L0 --> L1 --> L2 --> L3
+        end
+
+        subgraph MCPs["MCP Servers"]
+            DocsMCP["Docs MCP<br/>86 docs, 2,753 sections"]
+            AppMCP["Application MCP<br/>34 components, 437 tokens"]
+            ProdMCP["Product MCP<br/>(conceptual)"]
+        end
+
+        subgraph Agents["Agent Ecosystem"]
+            Sys["System Agents<br/>Ada (Rosetta), Lina (Stemma), Thurgood (Civitas)"]
+            Prod["Product Agents<br/>Leonardo, Sparky, Kenya, Data, Stacy"]
+        end
+
+        subgraph Governance["Governance Processes"]
+            Triggers["Event-driven triggers"]
+            Cadence["Monthly health checks"]
+            Ballot["Ballot measure model"]
+        end
+    end
+
+    Docs --> MCPs
+    MCPs --> Agents
+    Governance -.->|"Maintains"| Docs
+    Governance -.->|"Monitors"| MCPs
+    Governance -.->|"Verifies"| Agents
+```
+
+---
+
 ## Integration: Tokens → Components → Platforms
 
-This diagram shows how Rosetta tokens flow into Stemma components, which then generate platform-specific implementations (Web, iOS, Android).
+This diagram shows how Rosetta tokens flow into Stemma components, which then generate platform-specific implementations (Web, iOS, Android), all governed by Civitas.
 
 ```mermaid
 flowchart TB
@@ -159,21 +218,27 @@ flowchart TB
         And["Android<br/>Kotlin extensions<br/>Jetpack Compose"]
     end
 
+    subgraph Civitas["Civitas System"]
+        Gov["Governance<br/>Standards, processes, MCP"]
+    end
+
     CT --> Comp
     Comp --> Web
     Comp --> iOS
     Comp --> And
+    Civitas -.->|"Governs"| Rosetta
+    Civitas -.->|"Governs"| Stemma
 ```
 
 ---
 
 ## Combined Overview (Single Diagram)
 
-This diagram provides a simplified single-view of the complete system: Rosetta foundation → Stemma foundation → Platform output.
+This diagram provides a simplified single-view of the complete system: three foundations → platform output.
 
 ```mermaid
 flowchart TB
-    subgraph Foundation["DesignerPunk foundation"]
+    subgraph Foundation["DesignerPunk Foundation"]
         subgraph Rosetta["Rosetta — Mathematical"]
             R1["Primitive tokens"]
             R2["Semantic tokens"]
@@ -182,13 +247,20 @@ flowchart TB
         end
 
         subgraph Stemma["Stemma — Relational"]
-            S1["Component families (11)"]
+            S1["Component families"]
             S2["Primitive (Base) components"]
             S3["Semantic components"]
             S4["Behavioral contracts"]
             S1 --> S2 --> S3
             S2 --> S4
             S3 --> S4
+        end
+
+        subgraph Civitas["Civitas — Governance"]
+            C1["Steering docs & MCP"]
+            C2["Agent coordination"]
+            C3["Processes & triggers"]
+            C1 --> C2 --> C3
         end
     end
 
@@ -202,11 +274,16 @@ flowchart TB
     S3 --> Web
     S3 --> iOS
     S3 --> And
+    Civitas -.->|"Governs"| Rosetta
+    Civitas -.->|"Governs"| Stemma
 ```
 
 ---
 
 ## Related Documentation
+
+**Civitas System:**
+- [Civitas System Overview](./Civitas-System-Overview.md) — Governance layer definition, three-layer boundary, processes
 
 **Rosetta System:**
 - [Rosetta System Principles](./rosetta-system-principles.md) — Mathematical foundation and token philosophy
@@ -229,10 +306,5 @@ flowchart TB
 - [Component-Family-Divider.md](./Component-Family-Divider.md) (placeholder)
 - [Component-Family-Loading.md](./Component-Family-Loading.md) (placeholder)
 - [Component-Family-Modal.md](./Component-Family-Modal.md) (placeholder)
-- [Component-Family-Navigation.md](./Component-Family-Navigation.md) (placeholder)
+- [Component-Family-Navigation.md](./Component-Family-Navigation.md)
 - [Component-Family-Data-Display.md](./Component-Family-Data-Display.md) (placeholder)
-
----
-
-**Organization**: architecture-overview
-**Scope**: cross-project

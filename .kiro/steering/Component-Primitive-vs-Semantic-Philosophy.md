@@ -16,7 +16,7 @@ inclusion: manual
 
 ## Overview
 
-The Stemma System has a fundamentally different philosophy for primitive component usage compared to the Rosetta System's token usage. Understanding this distinction is critical for making appropriate component choices.
+The Stemma System has a fundamentally different philosophy for primitive component usage compared to the Rosetta System's token usage. Understanding this distinction is critical for making appropriate component choices. (Both systems are governed by the Civitas System's standards and processes.)
 
 **Key Insight**: While primitive tokens are discouraged (always prefer semantic tokens), primitive components are LEGITIMATE for coverage gaps.
 

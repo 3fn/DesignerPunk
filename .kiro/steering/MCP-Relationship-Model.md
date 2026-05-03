@@ -27,7 +27,7 @@ DesignerPunk operates three MCP servers (two existing, one future) that form a k
 **Owns**:
 - Token documentation (all families, governance, resolution patterns)
 - Steering documentation (process, standards, principles)
-- Architecture guides (Rosetta, Stemma, platform guidelines)
+- Architecture guides (Rosetta, Stemma, Civitas, platform guidelines)
 - Governance rules (ballot measures, token creation, component creation)
 - System process standards (development workflow, file organization, spec planning)
 
@@ -179,7 +179,7 @@ Breaking changes to stable identifiers require coordination across MCPs.
 ### Docs MCP Content Types (Established)
 - Token definitions (primitive, semantic, component)
 - Steering documents (process, governance, architecture)
-- System principles (Rosetta, Stemma)
+- System principles (Rosetta, Stemma, Civitas)
 - Platform guidelines
 - Test standards
 
