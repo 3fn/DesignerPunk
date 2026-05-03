@@ -4,6 +4,11 @@
 **Source**: Spec 098 surface area inventory, Spec 099 Known Gaps
 **Severity**: Moderate — Ada cannot verify token content served by Application MCP
 **Owner**: Peter (agent config change)
+**Status**: Resolved (2026-05-03)
+
+## Resolution
+
+Added `"@designerpunk-components"` to Ada's `allowedTools` array in `ada.json`. Committed in "Fix: Ada Application MCP access + platform-guidelines contract location."
 
 ## Description
 

@@ -4,6 +4,7 @@
 **Source**: Spec 099 Known Gaps, Stacy R1 feedback
 **Severity**: Low — follow-up audit, not urgent
 **Owner**: Thurgood (Civitas steward)
+**Status**: Open — scheduled for November 2026 - May 2027
 
 ## Description
 

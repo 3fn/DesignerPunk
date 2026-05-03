@@ -4,6 +4,7 @@
 **Source**: Spec 099 Task 4.2 — `validate-steering-metadata.js` output
 **Severity**: Low — not blocking, addressable incrementally
 **Owner**: Thurgood (Civitas steward)
+**Status**: Open — tracked for incremental resolution during monthly health checks
 
 ## Description
 

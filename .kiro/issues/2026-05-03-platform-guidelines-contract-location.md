@@ -4,6 +4,11 @@
 **Source**: Spec 099 Task 3.3 — Lina metadata confirmation Finding 1
 **Severity**: Moderate — could mislead agents looking for contracts
 **Owner**: Lina (content correctness for this doc)
+**Status**: Resolved (2026-05-03)
+
+## Resolution
+
+Updated line 31 to reference `contracts.yaml` and Contract-System-Reference.md. Updated Related Documentation section with Contract System Reference link. Committed in "Fix: Ada Application MCP access + platform-guidelines contract location."
 
 ## Description
 
