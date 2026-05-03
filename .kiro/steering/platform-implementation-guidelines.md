@@ -28,7 +28,7 @@ This document provides guidelines for implementing Stemma System components acro
 
 ### 1. Behavioral Contract Compliance
 
-Every platform implementation MUST honor all behavioral contracts defined in the component schema.
+Every platform implementation MUST honor all behavioral contracts defined in the component's `contracts.yaml` file (see [Contract System Reference](./Contract-System-Reference.md)).
 
 **Compliance Checklist**:
 ```yaml
@@ -806,7 +806,8 @@ Modifier.size(SizeVariant.MEDIUM.dp)  // .dp on enum property, not token
 
 - [Behavioral Contract Validation Framework](./Test-Behavioral-Contract-Validation.md) - Validation criteria and checklists
 - [Stemma System Principles](./stemma-system-principles.md) - Core behavioral contract definitions
-- [Component Schema Format Specification](./Component-Schema-Format.md) - Schema structure for contracts
+- [Component Schema Format Specification](./Component-Schema-Format.md) - Schema structure for component definitions
+- [Contract System Reference](./Contract-System-Reference.md) - Behavioral contract format, taxonomy, and naming conventions
 - [Component Development Guide](./Component-Development-Guide.md) - Component implementation guidance
 
 ---
