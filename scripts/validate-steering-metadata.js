@@ -12,7 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Standardized task vocabulary (core 14 types)
+// Standardized task vocabulary (expanded from original 14 core types)
 const CORE_TASK_TYPES = [
   'spec-creation',
   'general-task-execution',
@@ -30,23 +30,71 @@ const CORE_TASK_TYPES = [
   'hook-setup'
 ];
 
-// Additional task types for conditional triggers
+// Additional task types added through project evolution
 const ADDITIONAL_TASK_TYPES = [
   'component-development',
+  'component-selection',
   'token-selection',
+  'token-development',
+  'token-format',
   'cross-platform-components',
+  'cross-platform-validation',
+  'platform-implementation',
+  'cross-platform-parity',
   'build-issues',
   'typescript-errors',
-  'testing-output'
+  'testing-output',
+  'ui-composition',
+  'feature-building',
+  'pipeline-integration',
+  'mcp-documentation',
+  'mcp-integration',
+  'mcp-development',
+  'product-development',
+  'audit',
+  'test-failure-audit',
+  'test-quality',
+  'spec-completion',
+  'spec-planning',
+  'agent-architecture',
+  'tool-integration',
+  'dtcg-integration',
+  'tooling-development',
+  'transformer-development',
+  'figma-integration',
+  'token-push',
+  'design-extraction',
+  'web-component-integration',
+  'browser-distribution',
+  'icon-integration',
+  'responsive-design',
+  'token-system-development',
+  'component-creation',
+  'component-audit',
+  'screen-specification',
+  'layout-templates',
+  'hook-debugging',
+  'hook-setup',
+  'automation-troubleshooting',
+  'task-completion',
+  'release-related-work',
+  'test-coverage-audit',
+  'all-tasks'
 ];
 
 const ALL_TASK_TYPES = [...CORE_TASK_TYPES, ...ADDITIONAL_TASK_TYPES];
 
 // Valid values for controlled vocabulary fields
-const VALID_ORGANIZATION = ['process-standard'];
+const VALID_ORGANIZATION = [
+  'process-standard',
+  'architecture-overview',
+  'spec-guide',
+  'spec-summary',
+  'spec-completion'
+];
 const VALID_SCOPE = ['cross-project'];
 const VALID_LAYERS = [0, 1, 2, 3];
-const VALID_INCLUSION = ['always', 'conditional'];
+const VALID_INCLUSION = ['always', 'conditional', 'manual'];
 
 // ISO 8601 date format regex (YYYY-MM-DD)
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
@@ -191,8 +239,8 @@ function validateTaskTypes(metadata) {
     const taskTypes = relevantTasks.split(',').map(t => t.trim());
     
     for (const taskType of taskTypes) {
-      if (!CORE_TASK_TYPES.includes(taskType)) {
-        metadata.errors.push(`Invalid task type in relevantTasks: "${taskType}" (must be from core 14 types or "all-tasks")`);
+      if (!ALL_TASK_TYPES.includes(taskType)) {
+        metadata.errors.push(`Invalid task type in relevantTasks: "${taskType}" (not in recognized task vocabulary)`);
       }
     }
   }

@@ -200,7 +200,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
 
 ### Work Stream B — Governance Activation
 
-- [ ] 4. Dormant Tooling Assessment and Trigger Implementation
+- [x] 4. Dormant Tooling Assessment and Trigger Implementation
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -225,7 +225,7 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
   **Post-Completion:**
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 4 Complete: Dormant Tooling Assessment and Trigger Implementation"`
 
-  - [ ] 4.1 Assess dormant governance scripts
+  - [x] 4.1 Assess dormant governance scripts
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
@@ -237,19 +237,21 @@ All steering doc changes require Peter's approval via ballot measure model. Ada 
     - **Human checkpoint:** Present assessment to Peter for review before proceeding to 4.2. Assessment findings determine 4.2's implementation path.
     - _Requirements: 6.1, 6.2, 6.4, 6.5_
 
-  - [ ] 4.2 Update/build trigger scripts
+  - [x] 4.2 Update/build trigger scripts
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
-    **Informed Placeholder**: Concrete implementation steps depend on Task 4.1 assessment findings and Peter's review. The following are known structural elements; remaining steps TBD from 4.1 findings.
-    - Build `scripts/detect-affected-steering-docs.sh` using `git diff --name-only` with tag fallback (new — no existing script covers this)
-    - Build post-prompt-modification verification script: checks prompt-to-steering-doc alignment and Agent Directory consistency for modified prompt files (new — no existing script covers this)
-    - _For assessed scripts:_ update viable ones per assessment, build replacements for superseded ones, integrate all into governance-check.sh
+    - **Update `detect-stale-metadata.js`**: Separate "missing metadata" from "genuinely stale" in output categories. Add structured JSON output option alongside human-readable. Update exit codes to 0/1/2 convention.
+    - **Update `validate-steering-metadata.js`**: Update hardcoded task vocabulary to match current expanded set. Update valid organization values (add `architecture-overview`, `spec-guide`, `spec-summary`, `spec-completion`). Update valid inclusion values (add `manual`). Add structured JSON output option. Update exit codes to 0/1/2 convention.
+    - **Update `validate-cross-reference-format.sh`**: Fix hardcoded output path (currently writes to spec-020 directory). Add structured output. Update exit codes.
+    - **Deprecate `scan-cross-references.sh`**: Add deprecation header noting MCP `list_cross_references()` as replacement. Do not delete — preserve as historical artifact.
+    - **Build `scripts/detect-affected-steering-docs.sh`**: New script using `git diff --name-only <last-tag>..HEAD -- .kiro/steering/`. Tag fallback: if no tags, compare against previous commit or produce informative message. Structured markdown output.
+    - **Build post-prompt-modification verification script**: New script that checks prompt-to-steering-doc alignment and Agent Directory consistency for modified prompt files.
     - All scripts: structured markdown output, exit codes 0/1/2, edge case handling (no tags, no changes, file access errors)
     - Test each script: normal case, no-changes case, error case
-    - _Requirements: 6.3, 6.6, 6.7, 7.1, 7.2, 7.3, 7.5, 7.6 (7.5/7.6 shared with 4.3 — apply to both individual scripts and wrapper)_
+    - _Requirements: 6.3, 6.4, 6.6, 6.7, 7.1, 7.2, 7.3, 7.5, 7.6 (7.5/7.6 shared with 4.3 — apply to both individual scripts and wrapper)_
 
-  - [ ] 4.3 Build governance-check.sh wrapper
+  - [x] 4.3 Build governance-check.sh wrapper
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

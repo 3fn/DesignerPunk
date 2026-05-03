@@ -1,5 +1,10 @@
 #!/bin/bash
-# Scan and validate cross-references in steering documents
+# DEPRECATED (Spec 099, 2026-05-03): Superseded by Docs MCP list_cross_references() tool.
+# The MCP tool provides the same data with better structure (JSON with target, context, section, line number).
+# Use: list_cross_references({ path: ".kiro/steering/<doc>.md" }) via MCP query.
+# This script is preserved as a historical artifact. Do not use for new work.
+#
+# Original purpose: Scan and validate cross-references in steering documents
 
 OUTPUT_FILE=".kiro/specs/020-steering-documentation-refinement/cross-reference-report.md"
 

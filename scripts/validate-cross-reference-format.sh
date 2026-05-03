@@ -4,7 +4,7 @@
 # Skip intentional violations marked with HTML comments
 
 STEERING_DIR=".kiro/steering"
-OUTPUT_FILE=".kiro/specs/020-steering-documentation-refinement/cross-reference-format-validation.md"
+OUTPUT_FILE="/dev/stdout"
 
 echo "# Cross-Reference Format Validation Report" > "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"

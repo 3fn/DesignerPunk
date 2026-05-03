@@ -86,7 +86,7 @@ function analyzeDocument(filepath) {
   if (parsed.error) {
     return {
       filename: parsed.filename,
-      status: 'error',
+      status: 'metadata-issue',
       ageInMonths: null,
       lastReviewed: null,
       message: parsed.error
@@ -117,14 +117,39 @@ function analyzeDocument(filepath) {
 /**
  * Generate staleness report
  */
-function generateReport(results) {
+function generateReport(results, jsonOutput) {
+  if (jsonOutput) {
+    const output = {
+      date: new Date().toISOString().split('T')[0],
+      total: results.length,
+      metadataIssues: results.filter(r => r.status === 'metadata-issue'),
+      stale: results.filter(r => r.status === 'error'),
+      warning: results.filter(r => r.status === 'warning'),
+      fresh: results.filter(r => r.status === 'fresh')
+    };
+    console.log(JSON.stringify(output, null, 2));
+    return output.metadataIssues.length > 0 || output.stale.length > 0 ? 1 : 0;
+  }
+
   console.log('\n=== Steering Document Staleness Report ===\n');
   console.log(`Report Date: ${new Date().toISOString().split('T')[0]}\n`);
   
   // Separate results by status
+  const metadataIssues = results.filter(r => r.status === 'metadata-issue');
   const errors = results.filter(r => r.status === 'error');
   const warnings = results.filter(r => r.status === 'warning');
   const fresh = results.filter(r => r.status === 'fresh');
+
+  // Display metadata issues (missing/invalid Last Reviewed)
+  if (metadataIssues.length > 0) {
+    console.log('⚠️  METADATA ISSUES (missing or invalid Last Reviewed):\n');
+    metadataIssues
+      .sort((a, b) => a.filename.localeCompare(b.filename))
+      .forEach(result => {
+        console.log(`  📄 ${result.filename}`);
+        console.log(`     ${result.message}\n`);
+      });
+  }
   
   // Display errors (> 12 months)
   if (errors.length > 0) {
@@ -170,10 +195,16 @@ function generateReport(results) {
   console.log(`Fresh (< 6 months): ${fresh.length}`);
   console.log(`Potentially stale (6-12 months): ${warnings.length}`);
   console.log(`Stale (> 12 months): ${errors.length}`);
+  console.log(`Metadata issues (missing/invalid): ${metadataIssues.length}`);
   
   // Recommendations
-  if (errors.length > 0 || warnings.length > 0) {
+  if (errors.length > 0 || warnings.length > 0 || metadataIssues.length > 0) {
     console.log('\n=== Recommendations ===\n');
+    
+    if (metadataIssues.length > 0) {
+      console.log('⚠️  FIX: Add or correct "Last Reviewed" field in documents with metadata issues');
+      console.log('   These documents are missing required metadata, not necessarily stale.\n');
+    }
     
     if (errors.length > 0) {
       console.log('❌ URGENT: Review and update documents that are > 12 months old');
@@ -188,17 +219,11 @@ function generateReport(results) {
     console.log('\n✅ All documents are fresh! No action needed.\n');
   }
   
-  // Exit code
-  if (errors.length > 0) {
-    console.log('Exit code: 1 (errors found)\n');
+  // Exit code: 0 = clean, 1 = findings, 2 = script error
+  if (errors.length > 0 || metadataIssues.length > 0) {
     return 1;
-  } else if (warnings.length > 0) {
-    console.log('Exit code: 0 (warnings only)\n');
-    return 0;
-  } else {
-    console.log('Exit code: 0 (all fresh)\n');
-    return 0;
   }
+  return 0;
 }
 
 /**
@@ -206,10 +231,11 @@ function generateReport(results) {
  */
 function main() {
   const steeringDir = path.join(process.cwd(), '.kiro', 'steering');
+  const jsonOutput = process.argv.includes('--json');
   
   if (!fs.existsSync(steeringDir)) {
     console.error(`Error: Steering directory not found at ${steeringDir}`);
-    process.exit(1);
+    process.exit(2);
   }
   
   // Get all markdown files in steering directory
@@ -222,13 +248,15 @@ function main() {
     process.exit(0);
   }
   
-  console.log(`Analyzing ${files.length} steering documents for staleness...\n`);
+  if (!jsonOutput) {
+    console.log(`Analyzing ${files.length} steering documents for staleness...\n`);
+  }
   
   // Analyze all documents
   const results = files.map(analyzeDocument);
   
   // Generate and display report
-  const exitCode = generateReport(results);
+  const exitCode = generateReport(results, jsonOutput);
   process.exit(exitCode);
 }
 
