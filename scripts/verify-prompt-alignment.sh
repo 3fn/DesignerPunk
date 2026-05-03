@@ -47,13 +47,20 @@ check_prompt() {
   local missing_refs=""
   while IFS= read -r ref; do
     local ref_path=$(echo "$ref" | sed 's/.*file:\/\///' | sed 's/".*//')
-    # Resolve relative paths (./foo) from agents dir, absolute paths (.kiro/foo) from repo root
+    # Resolve relative paths: check from agents dir first, then repo root
+    local found=false
     if [[ "$ref_path" == ./* ]]; then
-      local resolved="$AGENTS_DIR/${ref_path#./}"
+      local from_agents="$AGENTS_DIR/${ref_path#./}"
+      local from_root="${ref_path#./}"
+      if [ -f "$from_agents" ] || [ -d "$from_agents" ] || [ -f "$from_root" ] || [ -d "$from_root" ]; then
+        found=true
+      fi
     else
-      local resolved="$ref_path"
+      if [ -f "$ref_path" ] || [ -d "$ref_path" ]; then
+        found=true
+      fi
     fi
-    if [ ! -f "$resolved" ] && [ ! -d "$resolved" ]; then
+    if [ "$found" = false ]; then
       missing_refs="$missing_refs\n    - $ref_path"
     fi
   done < <(grep '"file://' "$json_file" || true)
@@ -66,12 +73,19 @@ check_prompt() {
   # Check 5: skill:// references in JSON resolve to existing files
   while IFS= read -r ref; do
     local ref_path=$(echo "$ref" | sed 's/.*skill:\/\///' | sed 's/".*//')
+    local found=false
     if [[ "$ref_path" == ./* ]]; then
-      local resolved="$AGENTS_DIR/${ref_path#./}"
+      local from_agents="$AGENTS_DIR/${ref_path#./}"
+      local from_root="${ref_path#./}"
+      if [ -f "$from_agents" ] || [ -f "$from_root" ]; then
+        found=true
+      fi
     else
-      local resolved="$ref_path"
+      if [ -f "$ref_path" ]; then
+        found=true
+      fi
     fi
-    if [ ! -f "$resolved" ]; then
+    if [ "$found" = false ]; then
       echo "⚠️  $agent_name: Broken skill:// reference: $ref_path"
       FINDINGS=1
     fi
