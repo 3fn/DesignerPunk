@@ -115,6 +115,34 @@ Approved with the refinements above. The two factual corrections (Risk 5, Gap 1 
 
 Ready to proceed to tasks.md drafting once feedback is incorporated.
 
+#### [THURGOOD R2]
+
+All Ada R1 items accepted. No pushback on any of her recommendations — they're correct on substance and appropriately scoped.
+
+**Factual corrections incorporated:**
+- **Risk 5 (stale)** → `design-outline.md § "Risks"` — moved to new "De-risked during review" subsection with strikethrough; `src/cli/__tests__/` existence confirmed; test lives at `src/cli/__tests__/init.test.ts`.
+- **Gap 1 scope clarification** → `design-outline.md § "Scope > In scope"` item 1 — added explicit scope limitation to MCP wrappers only; non-MCP CLI commands continue using stdout for operator output (correct Unix behavior).
+
+**Open question resolutions:**
+- **OQ1 parent structure** → RESOLVED: Two parents mirroring Spec 101. Section added to `design-outline.md § "Approach > Parent task structure"` codifying the split.
+- **OQ2 integration test scope** → RESOLVED: init.ts only, focused on re-runnability (direct regression guard for Gap 3).
+- **OQ3 Gap 3 merge behavior** → RESOLVED per Ada's three refinements: never overwrite existing files, emit summary counts not per-file logs, apply uniformly across all 4 `copyDir` calls. Gap 3 scope in `design-outline.md § "Scope > In scope"` item 3 updated to capture all three.
+- **OQ4 Gap 5 mcp.json merge semantics** → RESOLVED per Ada's decision matrix: create-if-absent, merge-if-present-without-conflict, skip-with-warning-if-conflict. Scope item 5 updated with the three-scenario behavior table.
+- **OQ5 version `11.1.0`** → RESOLVED: confirmed. All gaps are fixes or additive; semver-clean minor bump.
+- **OQ7 integration test location** → RESOLVED: `src/cli/__tests__/init.test.ts` (matches existing `figma-push.test.ts`, `figma-extract.test.ts` convention).
+
+**Additional findings incorporated:**
+- **Apply Spec 101 chicken-and-egg lesson preemptively** → `design-outline.md § "Approach > Sequence"` step 6 — summary doc creation + commit now explicitly sequenced BEFORE `release:notes` regeneration, with reference to the Spec 101 lesson.
+- **Drift-script verification against tarball** → `design-outline.md § "Approach > Sequence"` step 8 — `npm run check:drift` against tmp-extracted 11.1.0 tarball now explicitly part of post-publish verification (regression guard for drift-prevention tooling itself).
+- **`npm deprecate` GHP limitation** → `design-outline.md § "Risks"` item 6 — flagged alongside existing risks. Unlikely to bite Spec 102 (11.0.0 is clean) but captured in case surface registry state changes.
+- **Gap 5 merge semantics consistent with Gap 3** → addressed inline in Scope item 5 (explicit reference to same principle as Gap 3 — skip-don't-overwrite, preserve consumer customizations).
+
+**Followup question Ada raised (not resolving here, flagging for future):**
+
+Ada noted that for the steering case specifically, a consumer's pre-existing `designerpunk.md` gets merged properly post-Gap-3, but raised whether init should copy steering at all — they're served by Docs MCP from `node_modules/@3fn/core/.kiro/steering/` regardless, so copying duplicates the data. This is a real question but outside Gap 3's scope (Gap 3 fixes skip-behavior; the "should init copy steering" question is an independent design decision). Flagging for a potential future init.ts architecture spec; NOT expanding Spec 102 scope to include it.
+
+**Status:** All feedback incorporated. Design outline coherent with Ada's recommendations. Ready to proceed to tasks.md drafting pending Peter's go-ahead.
+
 ---
 
 ## Tasks Feedback

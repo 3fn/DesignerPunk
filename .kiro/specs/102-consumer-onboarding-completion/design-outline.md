@@ -40,15 +40,20 @@ Success is measured against the Spec 101 Task 2.3 walkthrough: same flow (create
 
 ### In scope
 
-1. **Gap 1: Stop stdout pollution from CLI wrappers.** Route header prints to `stderr` instead of `stdout` so MCP protocol handshake over stdio isn't corrupted. Applies to `runMcpApp()`, `runMcpDocs()`, and `runMcpProduct()`.
+1. **Gap 1: Stop stdout pollution from CLI wrappers.** Route header prints to `stderr` instead of `stdout` so MCP protocol handshake over stdio isn't corrupted. Applies **only to the MCP wrapper methods** (`runMcpApp()`, `runMcpDocs()`, `runMcpProduct()`). Non-MCP CLI commands (`runGenerate`, etc.) continue using stdout for operator output — correct Unix CLI behavior. Broader "stderr-by-default" convention is explicitly out of scope.
 
 2. **Gap 2: Include `TOKEN_INDEX_DIR` in `runMcpApp()` env vars.** One-line addition passing `path.join(pkgRoot, 'token-index')`.
 
-3. **Gap 3: Change `init.ts` skip-if-exists behavior to merge mode.** When destination directory exists, copy each file individually; skip only the specific file if it already exists; don't skip the entire directory. Emit a clear summary of what was copied vs. skipped.
+3. **Gap 3: Change `init.ts` skip-if-exists behavior to merge mode.** When destination directory exists, copy each file individually; skip only individual existing files (never overwrite — consumer edits are preserved); don't skip the entire directory. Emit summary counts rather than per-file logs when count is above a small threshold. Applies uniformly across all `copyDir` calls (`src/tokens/`, `src/components/core/`, `.kiro/agents/`, `.kiro/steering/`). Gap 5's new copy operation uses the same merge semantics (see Scope item 5).
 
 4. **Gap 4: Expand Integration Guide Step 4 with concrete `.kiro/settings/mcp.json` template.** Use the direct-node invocation pattern validated in Spec 101 Task 2.3 (reference: `DP-PortfolioSite/.kiro/settings/mcp.json`). Include the restart-agent-session note.
 
-5. **Gap 5: Add `.kiro/settings/mcp.json` scaffolding to `init.ts`.** New step that emits the MCP config template at `.kiro/settings/mcp.json`. If file exists, merge DesignerPunk's entries without disturbing consumer's other MCP configs.
+5. **Gap 5: Add `.kiro/settings/mcp.json` scaffolding to `init.ts`.** New step that emits the MCP config template at `.kiro/settings/mcp.json`. Three behaviors based on existing state:
+   - File doesn't exist → create with DesignerPunk's 2 entries (`designerpunk-docs`, `designerpunk-application`) + standard autoApprove arrays
+   - File exists, no DesignerPunk entries → merge: add DesignerPunk's 2 entries to existing `mcpServers` object; preserve other entries
+   - File exists with conflicting `designerpunk-docs` or `...application` entries → **skip those specific entries** with prominent warning; don't overwrite (consumer customizations preserved)
+
+   Uses direct-node invocation pattern validated in Spec 101 Task 2.3. Generates paths dynamically in the scaffolded template.
 
 6. **Publish `@3fn/core@11.1.0`** (minor version bump, non-breaking fixes). Standard publish sequence: regenerate release notes, publish, verify against fresh repo, tag.
 
@@ -94,30 +99,47 @@ Success is measured against the Spec 101 Task 2.3 walkthrough: same flow (create
 2. Tasks document written
 3. Ada executes source changes (Gaps 1, 2, 3, 5) and adds integration test; Thurgood executes Gap 4 doc update (parallel)
 4. Fresh rebuild of `dist/` (same hygiene as Spec 101 Task 1.6)
-5. Peter reviews changes
-6. Release notes regeneration, publish `@3fn/core@11.1.0` as public, tag `v11.1.0`
-7. Post-publish verification: fresh repo install, follow Integration Guide end-to-end, confirm all 5 gaps closed, no workarounds needed
-8. Completion documentation captures what shipped and any new findings
+5. Peter reviews changes and authorizes publish
+6. **Create Parent 1 summary doc (`docs/specs/102-consumer-onboarding-completion/task-1-summary.md`) and commit BEFORE running `release:notes`** — applies the Spec 101 chicken-and-egg lesson preemptively; SummaryScanner only discovers committed summary docs
+7. Regenerate release notes; publish `@3fn/core@11.1.0` as public; tag `v11.1.0`
+8. Post-publish verification: fresh repo install, follow Integration Guide end-to-end, confirm all 5 gaps closed with no workarounds, **explicitly run `npm run check:drift` against a tmp-extracted tarball of the installed 11.1.0** (regression guard for drift-prevention tooling itself)
+9. Completion documentation captures what shipped and any new findings
 
-### Parent task structure (tentative, refine in tasks.md)
+### Parent task structure
 
-Probably one parent task with ~7 subtasks: Gap 1, Gap 2, Gap 3, Gap 4, Gap 5, integration test, publish+verify. Alternatively two parents (source+doc fixes, then publish+verify) following Spec 101's structure. Decide during tasks drafting based on whether the publish warrants a separate parent.
+RESOLVED during Ada R1: two parents mirroring Spec 101.
+
+- **Parent 1**: Fixes 1-5 + integration test + fresh rebuild. Reversible, local work.
+- **Parent 2**: Release notes, publish, verify, tag + completion docs. Irreversible publish behind human gate.
+
+Human review between parents at the same checkpoint as Spec 101: after Parent 1 reconciliation work is complete and before `npm publish --access public` is authorized.
 
 ---
 
 ## Open questions
 
-To be resolved during feedback round or early in task execution:
+All five resolved during Ada R1 review on 2026-05-07.
 
-1. **Parent task structure.** Single parent with all work + publish, or two parents (fixes vs. publish) mirroring Spec 101? Recommending two parents for consistency and for the human gate before publish; open to Ada's view.
+1. **Parent task structure.** RESOLVED: Two parents mirroring Spec 101. Rationale: clear gate between reversible fix work and irreversible publish; Peter's muscle memory from Spec 101 fits the structure. Parent 1 = Fixes 1-5 + integration test + fresh rebuild; Parent 2 = release notes, publish, verify, tag + completion docs.
 
-2. **Integration test scope.** Just the init.ts flow, or also cover the MCP wrapper stderr routing? Preferring init.ts coverage now (highest-value) and deferring wrapper tests unless low-effort.
+2. **Integration test scope.** RESOLVED: `init.ts` only, with specific focus on re-runnability (run init twice, verify second run adds new files without disturbing first-run state — the exact scenario Gap 3 fixes). CLI wrapper stderr routing validated manually during post-publish verification; automated tests low-value given the simplicity of the change.
 
-3. **Gap 3 behavior detail: merge vs prompt vs warn.** Issue file suggested three options. My lean: merge mode (copy individual files, skip individual existing files, emit structured summary). Peter or Ada may prefer prompting on conflict.
+3. **Gap 3 behavior detail: merge mode specifics.** RESOLVED: Merge mode with three specific refinements:
+   - **Never overwrite existing files.** When destination file exists, skip that individual file. Principle: init is additive, never destructive. Consumer edits are preserved.
+   - **Emit summary counts, not per-file logs.** "Copied 43 new files; skipped 1 existing file (preserved your edits)" — per-file logging only for SKIPPED files, and only if count is small (e.g., ≤10).
+   - **Apply uniformly across all `copyDir` calls.** Merge behavior applies to `src/tokens/`, `src/components/core/`, `.kiro/agents/`, and `.kiro/steering/` — not just the directory that triggered the original bug.
 
-4. **Gap 5 mcp.json merge semantics.** If `.kiro/settings/mcp.json` exists in the product repo (consumer may use other MCPs), should init add DesignerPunk's 2 entries to the existing `mcpServers` object, or leave the file entirely alone? Preferring merge with explicit "added" log line.
+4. **Gap 5 mcp.json merge semantics.** RESOLVED per Ada's decision matrix:
 
-5. **Version number confirmation.** `11.1.0` is my default (minor, non-breaking). If Ada/Peter see any of Gaps 1-5 as consumer-breaking (I don't think any are), this needs reconsideration.
+   | Scenario | Init behavior |
+   |----------|---------------|
+   | `.kiro/settings/mcp.json` doesn't exist | Create with DesignerPunk's 2 entries + standard autoApprove arrays |
+   | File exists, no DesignerPunk entries | Merge — add 2 entries to existing `mcpServers` object; preserve others |
+   | File exists, `designerpunk-docs` or `...application` already present | **Skip those specific entries** with prominent warning; don't overwrite |
+
+   Principle: consumer customizations are sacred. A consumer with experimental forks pointing at local MCP builds shouldn't have init silently clobber them. Content template uses the direct-node invocation pattern validated in Spec 101 Task 2.3 (reference: `DP-PortfolioSite/.kiro/settings/mcp.json`).
+
+5. **Version number.** RESOLVED: `11.1.0`. All 5 gaps are fixes or additive enhancements, none break existing consumer code. Semver-clean minor bump.
 
 ---
 
@@ -125,13 +147,19 @@ To be resolved during feedback round or early in task execution:
 
 1. **Stdout-to-stderr routing could break some consumer's existing usage.** Some consumer might be parsing `npx designerpunk mcp:app` output in a script expecting the headers on stdout. Unlikely — the headers are informational, not machine-readable — but flagging.
 
-2. **init.ts merge mode complicates error messaging.** Currently init says "skipped: X (already exists)" per whole directory. Merge mode needs a new per-file skip message; risk of log noise if the destination has many pre-existing files. Mitigation: emit summary count ("skipped 43 files already present, added 43 new files") rather than per-file.
+2. **Stderr routing may not be sufficient if some MCP clients don't tolerate stderr noise.** MCP clients SHOULD tolerate stderr noise (protocol only cares about stdout purity), but some may not. If post-publish verification reveals Kiro or another client still complains, escalate to "suppress headers in MCP-client context" (detect via `!process.stdout.isTTY` heuristic). Planning stderr routing as minimum-change-first approach, not silver bullet.
 
-3. **mcp.json merge edge cases.** If consumer has an existing entry named `designerpunk-docs` or `designerpunk-application` pointing somewhere else (experimental config), merge would overwrite. Decision needed: overwrite with warning, skip with warning, or prompt.
+3. **init.ts merge mode complicates error messaging.** Currently init says "skipped: X (already exists)" per whole directory. Merge mode needs a new per-file skip message; risk of log noise if the destination has many pre-existing files. Mitigation per Open Question 3: emit summary count rather than per-file logs when count is above threshold.
 
-4. **v11.1.0 publish needs its own first-consumer verification.** We shouldn't assume because 11.0.0 worked that 11.1.0 will. Task 2.3-equivalent verification still required.
+4. **mcp.json merge edge cases for existing DesignerPunk entries.** Resolved per Open Question 4: skip existing entries with prominent warning; don't overwrite. Decision matrix codified in scope.
 
-5. **Integration test in `src/cli/__tests__/` may not exist as a directory yet.** If there's no established test location for CLI, Ada needs to decide where it lives before writing the test.
+5. **v11.1.0 publish needs its own first-consumer verification.** We shouldn't assume because 11.0.0 worked that 11.1.0 will. Task 2.3-equivalent verification still required in Parent 2. Should explicitly include drift-script check against tmp-extracted tarball (regression guard for drift-prevention tooling itself) — per Ada's R1 observation, Spec 101 verified this implicitly via Task 1.6's fresh rebuild; Spec 102 makes it explicit.
+
+6. **`npm deprecate` still won't work on GitHub Packages.** Same long-standing GHP limitation Spec 101 hit. Unlikely to bite Spec 102 (11.0.0 is clean; no prior-version cleanup needed), but flagging in case any unexpected registry state surfaces during publish.
+
+### De-risked during review
+
+- ~~**Integration test location may not exist yet.**~~ Ada verified `src/cli/__tests__/` exists with `figma-extract.test.ts` and `figma-push.test.ts`. Integration test lives at `src/cli/__tests__/init.test.ts` alongside existing CLI tests.
 
 ---
 
