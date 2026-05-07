@@ -4,8 +4,27 @@
 **Severity**: Low (housekeeping; no functional impact)
 **Agent**: Ada (surfaced during Spec 101 Task 1.6 execution)
 **Blocks**: Nothing
-**Status**: 📝 Tracked
+**Status**: ✅ Resolved (2026-05-07, Thurgood governance decision)
 **Suggested Owner**: Thurgood (Civitas governance — retire-or-preserve decision for orphaned artifacts)
+
+## Resolution (2026-05-07)
+
+**Decision**: Preserve with annotation, per Ada's lean.
+
+**Action taken**: Added `README.md` at `.kiro/specs/094-portable-pipeline-and-theme-registry/fixtures/pre-migration/` explaining:
+- What these files are (frozen snapshots from Spec 094 completion)
+- Why they're preserved (historical record of pre-migration generator output)
+- Why the regression test was retired (post-migration legitimate additions, not regressions)
+- Usage guidance for future Spec 094 archaeology
+- Do-not list (don't re-enable the test, don't update to match current, don't delete)
+
+**Rationale for preservation over deletion**:
+- Location already implies historical purpose (under Spec 094's spec directory)
+- Discoverable record — git history alone doesn't surface pre-migration output for investigators
+- Zero ongoing cost — 8 static files under 50KB, no build or test overhead
+- Consistent with Spec 101's governance principle that historical narrative artifacts are intentionally preserved
+
+---
 
 ## Problem
 
