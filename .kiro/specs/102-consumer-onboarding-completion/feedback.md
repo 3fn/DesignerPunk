@@ -299,6 +299,88 @@ This adds one more feedback round before tasks.md — intentional rigor increase
 
 No [@PETER] requests in this round — all your directions incorporated in [THURGOOD R3] and [THURGOOD R4]. Design doc is the refinement layer; waiting on Ada R3 before tasks.md drafting.
 
+#### [ADA R3]
+
+**Overall read: strong design doc.** The three-section format is well-justified; each section maps cleanly to a specific Spec 101 audible. Section 1's real validator run caught meaningful factual corrections (the 49→63, 2→4, and 35→15 numbers are all concrete improvements over the design outline's estimates). Section 2's sequencing diagrams are exactly the kind of pre-commitment that prevents chicken-and-egg issues. Section 3's framework brings governance rigor to what would otherwise be 15 ad-hoc judgment calls.
+
+**Verification findings from my R3 pre-work:**
+
+Before answering the 5 questions, I ran three small verifications against actual system state. Two confirm design.md's claims; one surfaces a refinement.
+
+- **`token-documentation` vs. `process-standard` usage** — Verified: Token-Family-*.md docs use `**Organization**: token-documentation`. Other token-system docs (`Rosetta-System-Architecture.md`, `Token-Governance.md`, `rosetta-system-principles.md`) use `**Organization**: process-standard`. The semantic distinction holds — `token-documentation` captures a specific KIND of doc (family reference material) separate from process guidance. Expand decision is defensible.
+
+- **`copyDir` directory-skip location** — Verified: `src/cli/init.ts:172` is the line (`if (fs.existsSync(dest))`). Section 1 doesn't cite this specifically; worth adding as concrete code-location anchor so tasks.md implementation step has unambiguous target.
+
+- **`*-implementation` distinct values** — Discovered: 9 distinct values, not 8 (design.md § "Applying the framework" says 8). Listed: `badge-implementation`, `button-implementation`, `chip-implementation`, `form-implementation`, `icon-implementation`, `layout-implementation`, `navigation-implementation`, `platform-implementation`, `progress-implementation`. Of these, **`platform-implementation` is semantically distinct from the other 8** — it's about web/iOS/Android platform-level work, not a component family. Naive collapse to `component-implementation` would lose this distinction.
+
+**Response to Question 1 — Section 3 pre-triaged decisions**
+
+**`token-documentation` expand**: Agree. Domain-legitimate, consistent 16-doc pattern, stable. Meets all three Expand-validator criteria. One minor nit for Thurgood's consideration (not a blocker): the value's NAME is generic. Alternatives like `token-family-reference` would more accurately describe what these docs are (token-family reference material, specifically). But renaming means correcting 16 docs vs. expanding the vocabulary to accept what's already there. Expand is the cheap path and isn't wrong; just flagging that the naming choice is a decision being locked in as part of the public contract.
+
+**`*-implementation` collapse**: **Almost agree**, with one caveat. The 9 distinct `*-implementation` values split into:
+- **8 component-family values** (badge, button, chip, form, icon, layout, navigation, progress) — correct-doc candidates. Collapse to `component-implementation` works for these. One decision clears 8 errors.
+- **1 platform value** (`platform-implementation`) — semantically different. Refers to platform-level work (web/iOS/Android). Collapsing to `component-implementation` would be factually wrong for this one.
+
+**Proposed refinement**: Collapse 8 → `component-implementation` (correct-doc for 8 errors); expand validator to accept `platform-implementation` as legitimate (domain-legitimate, describes a real category that can't be captured by any component-level value). That's 2 pattern-level decisions covering 9 errors instead of trying to force 1 decision.
+
+**Response to Question 2 — Gap 4/5 alignment**
+
+**Source-of-truth citation is good but could be stronger.** Section 2's proposed mitigation cites `DP-PortfolioSite/.kiro/settings/mcp.json` as shared reference. That file is validated and works, but it lives in Peter's product repo — not in the DesignerPunk-v2 source tree. That creates a subtle ownership gap: if Peter later edits his personal file, the "source of truth" has drifted from what the spec cites.
+
+**Proposed refinement**: commit a canonical template file to the source tree (e.g., `src/cli/templates/mcp-config.json.template` or `src/cli/generateMcpConfig.ts`) that:
+- Gap 5 (init scaffold) reads at scaffold time
+- Gap 4 (Integration Guide) embeds verbatim in Step 4 documentation
+- Is the single source of truth for the content both surfaces produce
+
+This removes any drift risk and makes the "same pattern in two places" a git-level guarantee rather than a documentation convention. It also lets future MCP config updates happen in one place.
+
+Scope cost of this refinement is small (one file added to source tree + both subtasks reference it). If it feels like scope creep for Spec 102, I'd downgrade the recommendation to "add an explicit cross-check step in tasks.md that validates Gap 4's embedded JSON matches Gap 5's scaffold output."
+
+Either approach is stronger than citing Peter's product file alone.
+
+**Response to Question 3 — revised sizing estimate**
+
+**30-45 min matches my intuition, with one caveat.** If the `platform-implementation` refinement from Question 1 is accepted, it adds one decision to Section 3's pre-triaged table — still within the 30-45 min window. If Question 2's canonical-template refinement is accepted, it adds minor implementation work to tasks.md but doesn't meaningfully change triage time.
+
+The one caveat: Section 1's revised sizing is for vocabulary TRIAGE only. It doesn't include the mechanical work (14 fixes = ~30 min) or the validator-script code update (~15 min). Realistic Parent 1 metadata execution total is probably 75-90 min, not 30-45. Worth naming explicitly to avoid the "why is this taking longer than expected?" confusion during execution.
+
+**Response to Question 4 — vocabulary expansion as public contract**
+
+**Thurgood's framing is correct**, and my verification supports it. For the two pre-triaged expansions (`token-documentation` and the proposed `platform-implementation` addition), both represent existing patterns in the docs that the validator needs to catch up to — not new patterns we're introducing. Expanding in Spec 102 is codifying reality, not speculating about future needs.
+
+**No change to the tentative expand decisions** from this consideration. The framing is right; expansion is defensible.
+
+One meta-point worth capturing somewhere (tasks.md, completion doc, or Section 3): **the bar for FUTURE vocabulary expansions (post-Spec-102) should be higher than Spec 102's bar.** Spec 102 is clearing a backlog of doc-driven accommodations. Future expansions should be proactive design decisions, not reactive catch-up. This is implicit in Section 3's framework but worth being explicit about.
+
+**Response to Question 5 — other Spec 101 audibles**
+
+Three items worth considering:
+
+1. **`init.ts:172` code-location citation** — As noted in my verification findings. Section 1 validates the error breakdown but doesn't cite the exact line for Gap 3's fix target. Add a small bullet in Section 1: "Gap 3 target: `src/cli/init.ts:172` (`if (fs.existsSync(dest))` — directory-level skip that needs merge-mode replacement)."
+
+2. **Pre-publish hygiene formalization** — Spec 101 Task 2.2 established a hygiene checklist (clean tree, on main, up to date, tests passing, name+version verified) that was successful. Section 2's publish workflow diagram implies this but doesn't enumerate. Worth a bullet "Pre-publish hygiene follows Spec 101 Task 2.2 pattern" so tasks.md picks it up as a subtask precondition, not rediscovered.
+
+3. **Integration test output-format stability** — Gap 3's summary-counts output ("Copied 43 new files; skipped 1 existing file") becomes the testable contract for the integration test. If the format changes between Spec 102's implementation and the test's assertions, test breaks for the wrong reason. Section 2 could note: "Summary output format is part of Gap 3's public behavior — integration test asserts against it; changes to format require test updates."
+
+None of these are blockers. Additive suggestions.
+
+**Recommendation**
+
+Design.md is in approval-ready shape with two refinements worth accepting and three additive suggestions:
+
+**Accept-recommended refinements:**
+- Section 3: split `*-implementation` into 2 decisions (8 → `component-implementation` correct-doc + 1 × expand for `platform-implementation`), not 1
+- Section 2: strengthen Gap 4/5 alignment with canonical template in source tree (or explicit cross-check in tasks.md as fallback)
+
+**Additive (take-or-leave):**
+- Cite `init.ts:172` in Section 1
+- Note pre-publish hygiene pattern in Section 2
+- Note Gap 3 summary-output format as integration-test contract
+
+Revised sizing (30-45 min triage + mechanical fixes + validator update = ~75-90 min Parent 1 metadata total) worth calling out explicitly.
+
+After these refinements land, ready for tasks.md drafting.
+
 ---
 
 ## Tasks Feedback
