@@ -247,6 +247,43 @@ Metadata cleanup doesn't change consumer-parsable behavior. The `Last Reviewed`,
 
 Approved with R2 refinements (inline rationale comments in validator, amended Success Criterion 9 phrasing, optional safety-valve for defensive documentation). The spec is ready for tasks.md drafting.
 
+#### [THURGOOD R4]
+
+Ada R2 approval accepted with all four refinements incorporated.
+
+**Incorporated into design outline:**
+
+1. **Success Criterion 9 amendment** → `design-outline.md § "Success criteria"` item 9 now reads "0/87 errors OR documented governance-deferred items (with specific doc, specific field, and reason for deferral) with follow-up tracking." Preserves ambition; prevents single-ambiguous-case trap.
+2. **Causal chain (tarball-contents connection)** → `design-outline.md § "Scope > In scope"` item 8 now explicitly notes that `.kiro/steering/` ships via `package.json` `files` array, making cleanup consumer-value work rather than back-office Civitas work. Anchors the spec's rationale for future readers.
+3. **Time-boxed vocabulary triage** → `design-outline.md § "Risks"` item 7 now specifies ~15-minute per-mismatch time-box; defer under Risk 7 if exceeded, don't stall the rest. Prevents deferred-becomes-forgotten via explicit defer documentation requirement (which, which field, why).
+4. **Defensive safety-valve** → `design-outline.md § "Risks"` item 8 (new) — explicit publish-decoupling fallback if metadata cleanup can't reach Success Criterion 9 in-spec. Current scope still targets full cleanup; this is defensive doc, not default path.
+
+**To be incorporated into tasks.md** (when drafted):
+
+5. **Inline rationale comments in validator** — when expanding `VALID_ORGANIZATION_VALUES`, `VALID_SCOPE_VALUES`, or task vocabulary in `scripts/validate-steering-metadata.js`, each added value gets an inline comment with rationale and Spec 102 attribution. Implementation-level detail; will appear as a subtask step in tasks.md rather than a design-outline concern. Per Ada's example:
+   ```javascript
+   'token-family-reference',  // Spec 102: added for Token-Family-*.md docs (domain-specific)
+   ```
+
+**Status:** Design outline now incorporates all of Ada R2's feedback plus the three of her operational watches that are spec-document-level concerns (time-box, safety-valve, causal chain). The fourth operational watch (rationale comments) is an implementation detail that will land in tasks.md.
+
+**Next steps before tasks.md drafting:**
+
+1. Draft a targeted `design.md` per Peter's request (middle-path design doc, 3 focused sections: current state verification, workflow integration points, vocabulary governance framework). This was agreed between Peter and Thurgood after Ada's R2 was authored.
+2. Request [@ADA] R3 review on the design.md specifically.
+3. Incorporate any R3 feedback.
+4. THEN draft tasks.md.
+
+This adds one more feedback round before tasks.md — intentional rigor increase per Peter's reflection on Spec 101 execution audibles.
+
+---
+
+## Design Document Feedback
+
+### Context for Reviewers
+
+[To be populated once design.md is drafted.]
+
 ---
 
 ## Tasks Feedback

@@ -63,6 +63,8 @@ Success is measured against the Spec 101 Task 2.3 walkthrough: same flow (create
    - Add missing `Last Reviewed` field to 12 identified docs (per Spec 098 staleness assessment)
    - Normalize non-ISO date formats in 2 docs (Component-Family-Badge, Component-Family-Chip)
 
+   **Why this is consumer-value work**: `.kiro/steering/` is in `package.json`'s `files` array — steering docs ship to consumers via `@3fn/core@11.1.0`. Consumers running `validate-steering-metadata.js` against the installed package should see zero errors, not 49. This is why the cleanup is in-spec (consumer-facing polish), not pure back-office Civitas work.
+
 9. **Steering doc metadata cleanup — vocabulary mismatches** (Thurgood). Address the remaining ~35 metadata errors via case-by-case triage:
    - Run `validate-steering-metadata.js` to enumerate each distinct non-standard value
    - For each mismatch, decide: expand the validator's vocabulary (if the domain-specific value is legitimate, e.g., `token-family-reference` on a Token-Family-*.md doc) vs. correct the doc (if the value is an outlier that should use standard vocabulary)
@@ -173,7 +175,11 @@ All five resolved during Ada R1 review on 2026-05-07.
 
 6. **`npm deprecate` still won't work on GitHub Packages.** Same long-standing GHP limitation Spec 101 hit. Unlikely to bite Spec 102 (11.0.0 is clean; no prior-version cleanup needed), but flagging in case any unexpected registry state surfaces during publish.
 
-7. **Vocabulary mismatch triage may surface governance questions.** The ~35 vocabulary mismatches require case-by-case decisions (expand validator vocabulary vs. correct the doc). Some decisions may be clear (e.g., `token-family-reference` is a legitimate organization value); others may be genuinely ambiguous. Risk: triage stalls if a non-obvious pattern surfaces that requires Civitas deliberation beyond this spec's scope. Mitigation: if a specific mismatch surfaces a governance question beyond "expand or correct," document it inline and defer just that one to a follow-up Civitas conversation; don't block the other 34+ fixes waiting on the outlier.
+7. **Vocabulary mismatch triage may surface governance questions.** The ~35 vocabulary mismatches require case-by-case decisions (expand validator vocabulary vs. correct the doc). Some decisions may be clear (e.g., `token-family-reference` is a legitimate organization value); others may be genuinely ambiguous. Risk: triage stalls if a non-obvious pattern surfaces that requires Civitas deliberation beyond this spec's scope.
+
+   **Mitigation (time-boxed)**: if any single mismatch takes more than ~15 minutes to resolve cleanly (decision doesn't crystallize via the Section 3 framework), defer that specific mismatch under Risk 7 rather than stalling the rest. Defer means: document WHICH doc, WHICH field, WHY deferred, and flag for a follow-up Civitas conversation. Do not block the other 34+ fixes waiting on one outlier.
+
+8. **Metadata cleanup may not reach 0/87 if governance-deferred items exist.** Success Criterion 9 accommodates this (0/87 OR documented deferrals). As a defensive safety-valve: if metadata cleanup cannot reach Success Criterion 9 within the spec's execution window, Parent 1's other work (Gaps 1-5 + integration test + Gap 4 Integration Guide update + any successfully-cleaned metadata) remains publish-ready. Remaining metadata items move to a follow-up Civitas micro-spec. Decision gate at Peter's discretion when the spec executes. Purely defensive documentation — current scope targets full metadata cleanup in-spec.
 
 ### De-risked during review
 
@@ -193,5 +199,5 @@ The spec is complete when all of the following are true:
 6. Integration Guide Step 4 includes a concrete `.kiro/settings/mcp.json` template; a consumer reading only the published guide (no DesignerPunk-v2 dev repo access) can configure MCP correctly.
 7. `@3fn/core@11.1.0` published publicly to GitHub Packages with git tag `v11.1.0`.
 8. Integration test for `init.ts` in place and passing.
-9. **`validate-steering-metadata.js` reports 0/87 errors** against the post-cleanup state — all 49 metadata errors resolved (12 Last Reviewed additions, 2 date format normalizations, ~35 vocabulary mismatches triaged and resolved via expand-vocabulary-or-correct-doc decisions).
+9. **`validate-steering-metadata.js` reports 0/87 errors** against the post-cleanup state — OR documented governance-deferred items (with specific doc, specific field, and reason for deferral) with follow-up tracking. All 49 pre-cleanup metadata errors either resolved (12 Last Reviewed additions, 2 date format normalizations, ~35 vocabulary mismatches triaged via expand-vocabulary-or-correct-doc decisions) or explicitly deferred per Risk 7 with documentation.
 10. Completion documentation captures execution findings and any new observations.
