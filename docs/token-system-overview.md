@@ -612,7 +612,7 @@ dist/BlendUtilities.android.kt  # Kotlin Color extensions
 
 **Web (TypeScript)**:
 ```typescript
-import { getBlendUtilities, createBlendUtilities } from '@designerpunk/tokens/BlendUtilities';
+import { getBlendUtilities, createBlendUtilities } from '@3fn/core/BlendUtilities';
 
 // Factory function returns utilities bound to current theme
 const blend = getBlendUtilities();

@@ -8,7 +8,7 @@
 
 ## Phase 1: Package the Ecosystem
 
-Goal: Publish `@designerpunk/core` to GitHub Packages — a product repo can install it, run the pipeline, create a theme, use components, and query MCP servers.
+Goal: Publish `@3fn/core` to GitHub Packages — a product repo can install it, run the pipeline, create a theme, use components, and query MCP servers.
 
 ### Prereqs (before Phase 1 specs begin)
 - Lina: Fix 4 missing components in ESM bundle (Nav-Header-Base, Nav-Header-App, Nav-Header-Page, Progress-Bar-Base)
@@ -22,7 +22,7 @@ Goal: Publish `@designerpunk/core` to GitHub Packages — a product repo can ins
 2. **WS1: Portable token pipeline** — Abstract hardcoded paths in generators. Configurable root directories. Product repos can create SemanticOverrides and run the pipeline. Builds on the registry pattern from WS4. **TypeScript execution strategy: `tsx`** — bundled as a dependency during Block B packaging. Lightweight (~2MB), fast (esbuild-based), no `tsconfig.json` required. Product repos run `npx designerpunk generate` without extra setup.
 
 **Block B — Package Assembly** (Lina + Thurgood)
-3. **WS2: Component library package** — Rename to `@designerpunk/core`. Define `files` (allowlist), `exports` (ESM-only root, `./config`, `./tokens.css`, `./component-tokens.css`, `./blend`, `./grid.css`, `./fonts/*`), `bin` (CLI). Add build step for `dist/config/`. Remove legacy `./BlendUtilities` export and CJS root condition. Add `tsx` as runtime dependency. Build-time validation test (platform token refs + bundle registration). Clean up duplicate token files. Publish to GitHub Packages. Validate fresh-repo install.
+3. **WS2: Component library package** — Rename to `@3fn/core`. Define `files` (allowlist), `exports` (ESM-only root, `./config`, `./tokens.css`, `./component-tokens.css`, `./blend`, `./grid.css`, `./fonts/*`), `bin` (CLI). Add build step for `dist/config/`. Remove legacy `./BlendUtilities` export and CJS root condition. Add `tsx` as runtime dependency. Build-time validation test (platform token refs + bundle registration). Clean up duplicate token files. Publish to GitHub Packages. Validate fresh-repo install.
 4. **WS6: Agent configurations for product context** — Produce concrete agent config template for installed-package context. Document MCP server startup (`npx designerpunk mcp:app`/`mcp:docs`). Document native platform consumption (iOS/Android manual copy for M0a, target sync model for M0b). Document knowledge base setup. Update Integration Guide with full product setup loop including platform-specific sections.
 
 **Block C — MCP Infrastructure** (can start after Block A stabilizes)
@@ -32,7 +32,7 @@ Goal: Publish `@designerpunk/core` to GitHub Packages — a product repo can ins
 
 **Block D — Publish & Agent Updates**
 8. **WS8: Agent resource and /knowledge updates** — Update agent prompts, resources, and knowledge bases to reflect new capabilities from WS1-7. Leo updated for token data queries, Ada for theme registry, product agents for Product MCP foundation and package consumption patterns.
-9. **Publish `@designerpunk/core`** to GitHub Packages. Validate install in a fresh repo.
+9. **Publish `@3fn/core`** to GitHub Packages. Validate install in a fresh repo.
 10. **Formalize Integration Guide** — Finalize `docs/roadmap/integration-guide-draft.md` with actual commands, configuration, and troubleshooting from Phase 1 implementation. Move to `.kiro/steering/DesignerPunk-Integration-Guide.md` for Docs MCP serving. Each Phase 1 spec contributes its section — Block A (pipeline config, theme setup), Block B (package install, imports), Block C (MCP server startup, Product MCP config).
 
 ### Dependencies
@@ -62,12 +62,12 @@ Before Phase 2 starts:
 
 ## Phase 2: Marketing Site
 
-Goal: Build the DesignerPunk marketing site in a separate repo, consuming `@designerpunk/core`. Dark-only marketing theme. Public-facing artifact.
+Goal: Build the DesignerPunk marketing site in a separate repo, consuming `@3fn/core`. Dark-only marketing theme. Public-facing artifact.
 
 ### Sequence
 
 **Block E — Foundation**
-1. **Create marketing site repo** — Install `@designerpunk/core`. Sparky sets up project scaffolding.
+1. **Create marketing site repo** — Install `@3fn/core`. Sparky sets up project scaffolding.
 2. **Create marketing theme** — SemanticOverrides in the product repo. Dark, cyan/teal electric accent. Run pipeline to generate themed outputs. Verify components render correctly.
 
 **Block F — Content Pages** (can proceed once theme is working)

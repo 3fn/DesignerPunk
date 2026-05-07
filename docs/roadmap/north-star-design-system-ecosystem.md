@@ -93,7 +93,7 @@ These are real gaps between today's state and the North Star. Not blockers — b
 
 ### Milestone 0a: Ecosystem Packaging + Marketing Site (First Product)
 
-M0a is two phases: first, package DesignerPunk as a consumable ecosystem (`@designerpunk/core`); then build the marketing site in a separate repo consuming that package. This front-loads the infrastructure that M0b and all future products need.
+M0a is two phases: first, package DesignerPunk as a consumable ecosystem (`@3fn/core`); then build the marketing site in a separate repo consuming that package. This front-loads the infrastructure that M0b and all future products need.
 
 #### Phase 1: Package the Ecosystem (~4-6 weeks)
 
@@ -123,7 +123,7 @@ Add structured, queryable token data to the Application MCP — token names, val
 **8. Agent resource and /knowledge updates**
 Update agent prompts, resources, and knowledge bases to reflect new capabilities from workstreams 1-7. Examples: Leo updated for token data queries in Application MCP, Ada updated for theme registry, product agents updated for Product MCP foundation and package consumption patterns. Must happen before publish — agents need to know what they can query before Phase 2 starts.
 
-**Publish**: `@designerpunk/core` to GitHub Packages. Includes pipeline, components, MCP servers, Product MCP foundation, agent configs, starter kit.
+**Publish**: `@3fn/core` to GitHub Packages. Includes pipeline, components, MCP servers, Product MCP foundation, agent configs, starter kit.
 
 #### Phase 1 Spec Breakdown
 
@@ -152,7 +152,7 @@ Before Phase 2 starts:
 
 #### Phase 2: Marketing Site (~2-3 weeks)
 
-Separate repo. Installs `@designerpunk/core`. Builds the marketing theme using the packaged pipeline. Product-specific code (hero layout, `//` heading prefixes, hexagonal diagram, footer) lives in the product repo.
+Separate repo. Installs `@3fn/core`. Builds the marketing theme using the packaged pipeline. Product-specific code (hero layout, `//` heading prefixes, hexagonal diagram, footer) lives in the product repo.
 
 **Theming**: Marketing theme created in the product repo as a `SemanticOverrides.ts` using the registry pattern. Dark background, cyan/teal electric accent. Proves the "install DesignerPunk, configure it for your brand" workflow.
 
@@ -183,7 +183,7 @@ Build a single flow of WrKing Class (civic engagement platform) across web, iOS,
 
 **Validates**: Cross-platform workflow, custom theming/branding, Product MCP extension, experience pattern sufficiency, component gap discovery. Exercises Kenya (iOS), Data (Android), and the full agent team.
 
-**Note**: M0b creates its own branded theme using the same registry pattern and pipeline from M0a Phase 1. Validates that a second product can install `@designerpunk/core` and configure it independently.
+**Note**: M0b creates its own branded theme using the same registry pattern and pipeline from M0a Phase 1. Validates that a second product can install `@3fn/core` and configure it independently.
 
 **Lessons synthesis**: Formal lightweight reviews after M0b single-platform completion and after M0b cross-platform completion. Each synthesis categorizes lessons as M0b-specific or general ecosystem.
 
@@ -210,7 +210,7 @@ Build the `create-designerpunk` (or equivalent) experience — guided setup, bra
 | 2026-04-05 | Lessons synthesis at milestone checkpoints | Formal lightweight reviews after M0a, M0b single-platform, M0b cross-platform. Lessons categorized as product-specific or general ecosystem. (Stacy R1) |
 | 2026-04-05 | Review triad: Leonardo + Stacy + Thurgood | Default reviewers for vision-level and milestone-level documents. (Stacy R1) |
 | 2026-04-05 | Pre-M0a prep: 4 items | Process scaffolding, metadata health check, scope definition, triad agreement. Lightweight — if it takes more than a session or two, we're over-engineering. (Stacy R1) |
-| 2026-04-05 | Package as `@designerpunk/core` | Scoped package leaves room for `@designerpunk/ios`, `@designerpunk/android`. M0b may start on iOS. |
+| 2026-04-05 | Package as `@3fn/core` | Scoped package leaves room for `@designerpunk/ios`, `@designerpunk/android`. M0b may start on iOS. |
 | 2026-04-05 | Full bundle for M0a, tree-shaking for M0b | Individual component exports add complexity that distracts from M0a learning goals. Multi-platform packaging in M0b changes the structure anyway. |
 | 2026-04-06 | Option 5 packaging: full ecosystem as npm package | Minimal CSS export insufficient — product needs the pipeline, theme infrastructure, MCP servers. Front-loading this work serves M0b and all future products. Git subtree (Option 4) defers the problem; Option 5 solves it. |
 | 2026-04-06 | M0a becomes two phases: packaging then product | Phase 1 (~4-6 weeks): package pipeline, components, MCP servers, theme registry, Product MCP foundation, agent configs. Phase 2 (~2-3 weeks): marketing site in separate repo consuming the package. |
@@ -221,7 +221,7 @@ Build the `create-designerpunk` (or equivalent) experience — guided setup, bra
 | 2026-04-06 | Product MCP foundation ships in Phase 1 | Minimal scaffold: connect to Application MCP, proxy design system queries, accept product config (name, platforms, theme). Extension points for product-specific data. Features grow from real usage during Phase 2 and M0b. (Leonardo R2 recommendation) |
 | 2026-04-06 | Token data added to Application MCP | Structured, queryable token index (names, values, families, platform outputs, consumer relationships) across all three platforms. Required for Product MCP screen→token lookup and theme creation workflows. |
 | 2026-04-06 | Token index: purpose-built YAML at build time | DTCG JSON lacks component tokens and consumer relationships. Build-time script walks token sources + component schemas, produces structured index. Three files by tier: primitives.yaml, semantics.yaml, components.yaml. Application MCP loads at startup. YAML for consistency with metadata layer convention. (Ada R2, R3, R4) |
-| 2026-04-06 | Blend utilities: same version, ship together | Coupling is inherent — same base values, same color space math. Single version for `@designerpunk/core`. (Ada R2) |
+| 2026-04-06 | Blend utilities: same version, ship together | Coupling is inherent — same base values, same color space math. Single version for `@3fn/core`. (Ada R2) |
 | 2026-04-06 | Ada's workstream sequencing: WS4 → WS1 → WS7 | Theme registry first (changes resolver), portable pipeline second (builds on registry), token index third (needs stable pipeline). WS4→WS1 hard dependency. (Ada R2) |
 | 2026-04-06 | Token namespace collision noted for future | Products adding their own tokens could create collisions. Not a Phase 1 problem (isolated repos). Note for when Product MCP aggregates across products. (Ada R2) |
 | 2026-04-06 | Theme registry must support external themes | Marketing theme lives in product repo, not core. Pipeline needs configurable theme discovery beyond `src/tokens/themes/`. (Ada R2) |

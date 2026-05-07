@@ -12,7 +12,7 @@
 
 M0a is two phases with different structures:
 
-- **Phase 1** (~4-6 weeks): Package DesignerPunk as `@designerpunk/core` — seven infrastructure workstreams across system agents
+- **Phase 1** (~4-6 weeks): Package DesignerPunk as `@3fn/core` — seven infrastructure workstreams across system agents
 - **Phase 2** (~2-3 weeks): Marketing site in a separate repo consuming the package — product screens built by product agents
 
 This document defines:
@@ -212,7 +212,7 @@ After Phase 1 is complete and before Phase 2 begins. This is a formal go/no-go a
 
 ## Package Published?
 
-- [ ] `@designerpunk/core` published to GitHub Packages
+- [ ] `@3fn/core` published to GitHub Packages
 - [ ] Version: [version]
 - [ ] Sparky has confirmed install works in a fresh project
 
@@ -343,7 +343,7 @@ After Phase 2 is complete (all screens built, reviewed, documented). Focuses on 
 
 ## Package Consumption Findings
 
-[How did `@designerpunk/core` work in practice? Friction points, missing exports, import issues, theme workflow experience]
+[How did `@3fn/core` work in practice? Friction points, missing exports, import issues, theme workflow experience]
 
 ## Process Assessment
 

@@ -108,7 +108,7 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
     - Update `Last Reviewed` date to `2026-05-06` on each modified file (Civitas process)
     - _Design Outline: "Scope > In scope" item 1, "Open questions" item 4_
 
-  - [ ] 1.5 Review and update living roadmap docs case-by-case
+  - [x] 1.5 Review and update living roadmap docs case-by-case
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

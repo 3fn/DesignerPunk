@@ -48,7 +48,7 @@ import 'designerpunk/fonts/rajdhani.css'
 
 ```json
 {
-  "name": "@designerpunk/core",
+  "name": "@3fn/core",
   "version": "10.2.0",
   "exports": {
     ".": {
@@ -132,6 +132,6 @@ npm install ./path/to/designerpunk-10.2.0.tgz  # From local tarball
 
 ## Decisions
 
-1. **Scoped package: `@designerpunk/core`** — leaves room for `@designerpunk/ios`, `@designerpunk/android` later. M0b may start on iOS, so the scoped structure matters.
+1. **Scoped package: `@3fn/core`** — leaves room for `@designerpunk/ios`, `@designerpunk/android` later. M0b may start on iOS, so the scoped structure matters.
 2. **Fonts bundled in package** — simpler for M0a, avoids CDN dependency.
 3. **Full bundle for M0a, tree-shaking noted for M0b** — individual component exports add packaging complexity that distracts from the consumption workflow learning goal. When M0b introduces iOS (Swift Package Manager), the multi-platform packaging structure changes fundamentally — tree-shaking work is better done then.
