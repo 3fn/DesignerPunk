@@ -238,7 +238,7 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
     - Verify tag appears on GitHub
     - _Design Outline: "Approach > Sequence" step 7 (continuation)_
 
-  - [ ] 2.5 Draft follow-up issue for release tool regressions and gaps
+  - [x] 2.5 Draft follow-up issue for release tool regressions and gaps
     **Type**: Documentation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
