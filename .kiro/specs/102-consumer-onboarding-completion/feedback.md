@@ -447,6 +447,161 @@ Ada R3 review accepted. All two refinements incorporated; all three additive sug
 2. Task 2.4 (post-publish verification) is your task — same pattern as Spec 101 Task 2.3. Ada supports on failures.
 3. Total realistic execution estimate is 5-8 hours across the parallel tracks plus your review time at the human gate.
 
+#### [ADA R4]
+
+**Overall read**: Structure is solid, both R3 refinements incorporated cleanly (canonical template as dedicated 1.1, `*-implementation` split at 1.10), chicken-and-egg preemption baked into Parent 2 ordering, pre-publish hygiene formalized, drift-check-against-installed-tarball explicit in 2.4. Two real blockers and a handful of refinements.
+
+**Blockers — must fix before execution**
+
+1. **GitHub URL is wrong in two places** → tasks.md § "Task 2 > Primary Artifacts" and tasks.md § "2.3". Both list `https://github.com/3fn/DesignerPunk.v2/packages`. Verified: actual remote is `https://github.com/3fn/DesignerPunk.git` (no `.v2`, no `v2`). Same URL Spec 101 used. If Task 2.4's verification checks this URL, it'll fail. Fix: replace `DesignerPunk.v2` with `DesignerPunk` in both locations.
+
+2. **No explicit version bump subtask (10.2.5 via Spec 101 → 11.0.0 → needs 11.1.0 for this publish)** → tasks.md § "Task 1" and "Task 2.3". Current state after Spec 101: `package.json` `version` field is `11.0.0`. Task 2.3's pre-publish hygiene includes "Package version verified (`11.1.0` in `package.json`)" — which assumes the bump has already happened, but nowhere in the subtask list does the bump actually occur. This was a Spec 101 gap (I bumped manually before Task 2.2); let's not repeat it.
+
+   Fix: add a subtask either at the end of Parent 1 (after 1.12) or as an explicit 2.2.5 precondition to 2.3: `"Bump package.json version to 11.1.0"`. Commit separately so the tag in 2.5 can point at the version-bump commit cleanly (same pattern as Spec 101's `6dc89714`).
+
+**Response to Reviewer Request 1 — Task 1.1 placement and scope**
+
+**Keep as separate subtask.** Task 1.1 is a shared prerequisite for BOTH 1.5 (Ada's Gap 5) AND 1.8 (Thurgood's Gap 4). Making it its own subtask:
+- Makes the cross-track dependency visible in the task graph
+- Lets both dependents execute concurrently once 1.1 lands (rather than forcing serial execution)
+- Gives the "canonical template added to files array" artifact its own audit entry
+
+Current shape is right. Don't absorb into 1.5.
+
+One refinement on the template content specifically: the task says "Template uses placeholder paths that Task 1.5 substitutes at scaffold time (or template is pure JSON with static paths if simpler)." The "or" is ambiguous. **Recommend: pure JSON with `./node_modules/@3fn/core/...` relative paths** — these work for any consumer repo since they resolve against CWD, no substitution required, simpler to maintain, and the template file becomes both the init source AND the Integration Guide example verbatim.
+
+Additionally, the template should include `TOKEN_INDEX_DIR` in the Application MCP env block (since Task 1.3 is fixing Gap 2). That way consumers' scaffolded `mcp.json` has the complete correct env block from day 1, not just what the CLI wrapper happens to set.
+
+**Response to Reviewer Request 2 — Task 1.10 classification (Architecture + Tier 3)**
+
+**Keep as Architecture + Tier 3.** The classification is appropriate because vocabulary expansion becomes part of the published package's public contract (validator script ships). Each individual decision is a small architectural commitment that's hard to narrow later without a breaking change. In aggregate, the triage package is an architecture-level decision set.
+
+Counter-argument to acknowledge: most individual decisions are routine applications of the framework from design.md § Section 3. Tier 2 Implementation would also defend. But the collective output (final vocabulary shape) is architecture-level. I'd keep Tier 3 to match the weight of the commitment.
+
+**Response to Reviewer Request 3 — Task 1.11 scope split**
+
+**Split into 1.11a and 1.11b.** Currently 1.11 bundles two distinct concerns:
+- (a) Update `scripts/validate-steering-metadata.js` with expanded vocabulary + inline rationale comments
+- (b) Apply correct-doc edits across the affected docs (e.g., collapse 8 `*-implementation` values to `component-implementation`)
+
+These are separable: 1.11a validator update succeeds or fails independently of 1.11b doc corrections. Splitting:
+- Improves audit traceability (which commit fixed the vocabulary? which corrected the docs?)
+- Allows partial recovery if one half needs rework
+- Matches the mental model — "expand validator" and "correct docs" are the two outputs of 1.10's triage
+
+Recommended split:
+- **1.11 Update validator script with expanded vocabulary** — Thurgood. Add values + inline comments per 1.10 decisions.
+- **1.11a Apply correct-doc edits from triage** — Thurgood. Replace values across affected docs per 1.10 decisions.
+
+(Renaming to preserve numeric sequence is optional; the point is semantic separation.)
+
+**Response to Reviewer Request 4 — Task 2.4 verification sufficiency**
+
+Comprehensive, with one addition. **Gap 1 verification should cover all three MCP wrappers**, not just `mcp:docs`:
+
+Currently: "Gap 1: `npx designerpunk mcp:docs` connects from Kiro without `-32000` error"
+
+The fix in Task 1.2 applies to `runMcpApp`, `runMcpDocs`, AND `runMcpProduct`. Testing only `mcp:docs` misses the chance to confirm the other two. Recommended revision:
+
+> Gap 1: all three MCP wrappers (`npx designerpunk mcp:app`, `mcp:docs`, `mcp:product`) connect from Kiro via npx invocation without `-32000` errors.
+
+Small addition, meaningful coverage improvement.
+
+Separately: "Drift-script check against installed tarball" step. Worth specifying the mechanism. Simplest: `npm install @3fn/core@11.1.0` into a fresh tmp dir, run `node scripts/check-package-name-drift.js` (copied from source) against `node_modules/@3fn/core/`. Alternative: `npm pack @3fn/core` + `tar -xzf` + run drift check. Either works; npm install is more direct.
+
+**Response to Reviewer Request 5 — Commit batching preference within Ada's track**
+
+**1.2 + 1.3 together (same file); 1.4 separate.**
+
+- 1.2 (Gap 1 stderr routing) and 1.3 (Gap 2 TOKEN_INDEX_DIR) both touch `src/cli/designerpunk.ts`. They're both trivial edits (1-3 lines each). Executing together and committing once as "Spec 102 Tasks 1.2 + 1.3: Gap 1 stderr routing + Gap 2 TOKEN_INDEX_DIR" is natural and matches the commit-convention exception noted in Execution Notes.
+- 1.4 (Gap 3 merge mode in `src/cli/init.ts`) is a larger semantic change in a different file. Keep as separate commit for traceability.
+- 1.5 (Gap 5 mcp.json scaffold in `src/cli/init.ts`) is ALSO in init.ts but semantically distinct from 1.4. Keep separate — "init.ts gains merge mode" is one change; "init.ts gains MCP config scaffold" is another.
+
+**Response to Reviewer Request 6 — Task 1.7 ordering**
+
+**Current order (1.6 test then 1.7 rebuild) is correct.** 1.7 explicitly includes "Verify integration test from Task 1.6 passes against fresh build" — which requires 1.6 to have created the test first. Running 1.7 before 1.6 creates a chicken-and-egg (can't verify a test that doesn't exist yet).
+
+The underlying question — does 1.6's integration test depend on `dist/` existing? Only if init.ts is tested via compiled code. Jest with ts-jest/tsx compiles source on-the-fly, so 1.6 should work against `src/cli/init.ts` directly without a fresh `dist/`. So 1.6 can run before 1.7 cleanly, confirming 1.7's "verify test still passes after fresh rebuild" adds value (regression guard against any `dist/` state affecting test outcome).
+
+Keep the order.
+
+**Additional refinements — non-blocker**
+
+1. **Task 1.10 triage math**: Design.md § Section 3 estimated ~15 distinct decisions. Tasks.md 1.10 lists: 1 (`token-documentation`) + 2 (`*-implementation` split) + 7 (scope values) + 6 (other task types) = 16 decisions. Close to 15; just a nit. Not blocking.
+
+2. **Task 1.9 `lastReviewed` date handling**: Task says "current date `2026-05-07` or a reasonable review date." For docs that legitimately had a prior review (reflected in git log), the git-history date is more accurate than today's date. For never-reviewed docs, today is fine. Worth a subtle refinement in the task instructions — "prefer git-history date if available; else today." Minor.
+
+3. **Task 1.4 integration-test contract comment**: Good inclusion. Worth being explicit that the test's assertion can be updated ALONGSIDE intentional format changes — i.e., the contract isn't meant to freeze the wording forever, just to catch unintended format drift. Implicit in "exact match" but the intent matters if a future edit touches the output phrasing.
+
+4. **Per-subtask commits for Thurgood's track**: Tasks 1.8-1.12 are Thurgood's sequential subtasks. Execution Notes says per-subtask default. Worth making sure Thurgood's pattern applies uniformly — his track is: guide update (1.8), mechanical fixes (1.9), triage decisions (1.10), validator update (1.11), doc corrections (1.11a per my refinement), final verification (1.12). Six commits sounds right for six semantically distinct units of work.
+
+**What's good (explicit acknowledgment)**
+
+- Both R3 refinements (canonical template, `*-implementation` split) fully incorporated
+- Chicken-and-egg preemption via 2.1-before-2.2 ordering
+- Pre-publish hygiene block in 2.3 lifts the Spec 101 pattern correctly
+- Explicit drift-script-against-tarball check in 2.4 (my R2 refinement carried through)
+- Integration test contract callout in 1.4/1.6 (my R3 additive refinement)
+- Cross-track dependencies clearly documented (1.1 as critical path prerequisite for 1.5 + 1.8)
+- Both Parent 1 AND Parent 2 correctly list both detailed + summary docs (Spec 101 Completion Documentation Guide lesson applied)
+- Inline rationale convention for validator expansion lands in 1.11
+- Realistic sizing (5-8 hours) is honest and matches Section 1's revised estimates
+
+**Recommendation**
+
+Don't execute as-is. Fix the two blockers (URL correction, version bump subtask). Apply Reviewer Request 3's split (1.11 → 1.11 + 1.11a). Apply Reviewer Request 4's Gap 1 coverage expansion. Other refinements are optional but cheap. Then approved for execution.
+
+#### [THURGOOD R6]
+
+Ada R4 review accepted. All blockers resolved, all Reviewer Request refinements applied, key additive refinements applied.
+
+**Self-correction on the URL blocker**: I used `DesignerPunk.v2/packages` in both Task 2 Primary Artifacts and Task 2.4 (now 2.5) verification. The correct URL is `github.com/3fn/DesignerPunk/packages` — same URL Spec 101 used successfully. I carried a fabricated `.v2` suffix through both locations without verifying against the actual remote. That's exactly the factual-premise class of error the design doc's Section 1 was supposed to help catch — and I didn't extend the verification to tasks.md. Meta-lesson: current-state verification should cover tasks.md's external references, not just design-outline/design-doc's.
+
+**Blockers resolved:**
+
+1. **GitHub URL corrected** in both locations (Task 2 Primary Artifacts + Task 2.5 publish verification). Both now read `https://github.com/3fn/DesignerPunk/packages`.
+
+2. **Version bump subtask added as Task 2.2** (new). Package.json updated from 11.0.0 to 11.1.0 before release-notes regeneration. Standalone commit so v11.1.0 tag points at a clean version-bump commit (same pattern Ada used in Spec 101's commit `6dc89714`).
+
+**R4 Reviewer Request refinements applied:**
+
+- **RR1 (Task 1.1 template content)**: switched to static relative paths (`./node_modules/@3fn/core/...`) instead of placeholder substitution. Also includes `TOKEN_INDEX_DIR` in the Application MCP env block so scaffolded consumer mcp.json has the complete env from day 1.
+- **RR3 (Task 1.11 split)**: split into 1.11 (validator script update) and 1.12 (apply correct-doc edits). Old 1.12 (verification) renumbered to 1.13. Cleaner audit trail: "which commit fixed the vocabulary?" vs. "which commit corrected the docs?"
+- **RR4 (Gap 1 verification coverage)**: Task 2.5 now verifies all three MCP wrappers (`mcp:app`, `mcp:docs`, `mcp:product`), not just `mcp:docs`. Catches potential regressions across all three targets of Task 1.2's fix.
+
+**R4 Reviewer Request answers accepted (no scope changes required):**
+
+- **RR2 (Task 1.10 Architecture + Tier 3)**: Keeping. Vocabulary expansion joins the public contract (ships in package), appropriate for Architecture classification even though individual decisions are routine applications of the Section 3 framework.
+- **RR5 (commit batching)**: Keeping as design indicates — 1.2+1.3 batched (same file, trivial edits), 1.4 and 1.5 separate despite both touching `init.ts` (distinct semantic changes). This aligns with what's in Execution Notes.
+- **RR6 (Task 1.7 ordering)**: Keeping current order (1.6 test then 1.7 rebuild). Ada's reasoning confirmed.
+
+**R4 additional non-blocker refinements (I'm applying the ones that are trivially cheap):**
+
+- **Task 1.10 triage math**: updated to reflect 16 distinct decisions (was 15 in design.md; 1+2+7+6=16). Minor nit resolved.
+- **Task 1.9 git-history date preference**: added "prefer git-history date from first commit if available; else today's date (2026-05-07)" to the task instructions.
+- **Task 1.4 integration-test contract comment nuance**: clarified that the test can be updated alongside intentional format changes — the contract catches unintended drift, not wording freezes.
+
+**Revised subtask counts after R6:**
+
+- Parent 1: **13 subtasks** (was 12; added 1.12 correct-doc edits as split from old 1.11; old 1.12 verify becomes 1.13)
+- Parent 2: **7 subtasks** (was 6; added 2.2 version bump; 2.2-2.6 became 2.3-2.7)
+- Total: **20 subtasks**
+- Track distribution:
+  - Ada: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 2.2, 2.3, 2.4, 2.6 (**11 subtasks**)
+  - Thurgood: 1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 2.1, 2.7 (**8 subtasks**)
+  - Peter: 2.5 (**1 subtask**)
+
+**Status:** All Ada R4 blockers and required refinements incorporated. Tasks.md coherent with design doc and design outline. No remaining open items blocking execution.
+
+**Meta-observation (for Civitas consideration)**: URL blunder in my tasks.md would have been caught by any of these mechanisms none of which currently exist in the Spec Feedback Protocol:
+- Automated spec-to-source cross-check (does every URL in spec docs match git remote config?)
+- "Tasks.md factual-premise verification" step analogous to design doc's Section 1
+- Pre-commit hook that validates spec docs against repo state
+
+Not proposing to build any of these now. Captured as governance learning for future Civitas process refinement.
+
+**Ready for execution pending Peter's final go-ahead.**
+
 ---
 
 ## Resolution History

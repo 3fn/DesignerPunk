@@ -54,18 +54,19 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
   - Commit changes: `./.kiro/hooks/commit-task.sh "Spec 102 Task 1 Complete: Reconciliation and Publish Preparation"`
   - Peter reviews all changes and explicitly authorizes proceeding to Parent 2
 
-  - [ ] 1.1 Create canonical MCP config template
+  - [x] 1.1 Create canonical MCP config template
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Ada
     - Create `src/cli/templates/mcp-config.json.template` (or preferred location within source tree)
     - Content derived from `DP-PortfolioSite/.kiro/settings/mcp.json` (Spec 101 Task 2.3 validated pattern — direct-node invocation with full autoApprove arrays for `designerpunk-docs` and `designerpunk-application`)
-    - Template uses placeholder paths that Task 1.5 substitutes at scaffold time (or template is pure JSON with static paths if simpler)
+    - **Use static relative paths** (e.g., `./node_modules/@3fn/core/dist/mcp/docs-mcp.js`) — these resolve against consumer CWD, no substitution required at scaffold time. Simpler to maintain; the template file is the init source AND the Integration Guide example verbatim.
+    - **Include `TOKEN_INDEX_DIR`** in the Application MCP env block (fixes Gap 2 at the template level, so consumers' scaffolded mcp.json has the complete correct env from day 1 — not just what the CLI wrapper happens to set)
     - Add the file to `package.json` `files` array so it ships with the package
     - **This subtask must land before Tasks 1.5 and 1.8 — both reference this template as single source of truth**
     - _Design: "Cross-workflow dependency: mcp.json scaffold vs. Integration Guide Step 4 update"_
 
-  - [ ] 1.2 Route MCP wrapper stdout headers to stderr (Gap 1)
+  - [x] 1.2 Route MCP wrapper stdout headers to stderr (Gap 1)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -74,7 +75,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Verify change via local test: running `npx designerpunk mcp:docs 2>/dev/null` produces no stdout output before JSON-RPC frames
     - _Design: "Applying the framework: current-state decisions" + Design Outline Scope item 1_
 
-  - [ ] 1.3 Add `TOKEN_INDEX_DIR` to runMcpApp env vars (Gap 2)
+  - [x] 1.3 Add `TOKEN_INDEX_DIR` to runMcpApp env vars (Gap 2)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -83,7 +84,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Verify token-index directory ships with the package (already in `package.json` `files` array; confirm no regression)
     - _Design Outline Scope item 2_
 
-  - [ ] 1.4 Change `init.ts` copyDir to merge mode (Gap 3)
+  - [x] 1.4 Change `init.ts` copyDir to merge mode (Gap 3)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -91,10 +92,10 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Merge behavior: copy each source file individually; if destination file exists, skip that individual file (never overwrite — consumer edits preserved); recurse into subdirectories
     - Emit summary counts: "Copied N new files; skipped M existing files (preserved your edits)" — per-file logging only for skipped files when count ≤ 10
     - Apply uniformly across all `copyDir` calls — `src/tokens/`, `src/components/core/`, `.kiro/agents/`, `.kiro/steering/`
-    - **Comment near summary-emission code**: note that the output format is part of Gap 3's public behavior, asserted by integration test (Task 1.6)
+    - **Comment near summary-emission code**: note that the output format is part of Gap 3's public behavior, asserted by integration test (Task 1.6). Intentional format changes can update the assertion alongside the code; the contract catches unintended drift, not wording freezes.
     - _Design: "Applying the framework" merge semantics + Design Outline Scope item 3_
 
-  - [ ] 1.5 Scaffold `.kiro/settings/mcp.json` in init.ts (Gap 5)
+  - [x] 1.5 Scaffold `.kiro/settings/mcp.json` in init.ts (Gap 5)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -107,7 +108,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Generate dynamic path references at scaffold time for the `args` and `env` fields
     - _Design Outline Scope item 5 + Open Question 4 resolution_
 
-  - [ ] 1.6 Create integration test for init.ts re-runnability
+  - [x] 1.6 Create integration test for init.ts re-runnability
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -117,7 +118,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Verify `.kiro/settings/mcp.json` entries after init include correct direct-node paths
     - _Design Outline Scope item 7 + Open Question 2 resolution_
 
-  - [ ] 1.7 Fresh rebuild and verify `dist/` clean
+  - [x] 1.7 Fresh rebuild and verify `dist/` clean
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -129,7 +130,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Remove `dist.backup/` after verification succeeds
     - _Design: Section 2 workflow + Design Outline Sequence step 4_
 
-  - [ ] 1.8 Update Integration Guide Step 4 with MCP config documentation (Gap 4)
+  - [x] 1.8 Update Integration Guide Step 4 with MCP config documentation (Gap 4)
     **Type**: Documentation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
@@ -146,7 +147,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
-    - Add missing `lastReviewed` field to 10 identified docs (current date `2026-05-07` or a reasonable review date)
+    - Add missing `lastReviewed` field to 10 identified docs (prefer date from git-log first-commit if available; else today's date `2026-05-07`)
     - Add missing `inclusion` field to 4 identified docs
     - Normalize non-ISO Date formats to YYYY-MM-DD in 4 docs (AI-Collaboration-Principles, Component-Family-Badge, Component-Family-Chip, Contract-System-Reference)
     - Normalize non-ISO lastReviewed formats to YYYY-MM-DD in 2 docs (Component-Family-Badge, Component-Family-Chip)
@@ -162,7 +163,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
       - `token-documentation` (16 docs) → **expand**
       - 8 component-family `*-implementation` values (badge/button/chip/form/icon/layout/navigation/progress) → **correct-doc** collapse to `component-implementation`
       - `platform-implementation` (1 doc) → **expand** (distinct from component family)
-    - Remaining triage: 7 scope values + 6 other task-type values (testing, token-creation, styling, integrations, accessibility-compliance, architecture-planning)
+    - Remaining triage: 7 scope values + 6 other task-type values (testing, token-creation, styling, integrations, accessibility-compliance, architecture-planning). Total decision count across all categories: **16 distinct decisions** (1 + 2 + 7 + 6).
     - **Time-box**: if any single mismatch takes >15 min to resolve under the framework, defer under Risk 7 with documented doc/field/reason
     - Capture all decisions in a triage log (appended to task completion doc or dedicated artifact)
     - _Design Outline Scope item 9 + Design Section 3_
@@ -172,15 +173,25 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
     - **Depends on Task 1.10 decisions**
-    - Update `scripts/validate-steering-metadata.js` — add expanded values to appropriate `VALID_*_VALUES` arrays
+    - Update `scripts/validate-steering-metadata.js` — add expanded values to appropriate `VALID_*_VALUES` arrays per 1.10 triage
     - **Each added value gets an inline comment** with Spec 102 attribution + rationale (per Ada R2 refinement):
       ```javascript
       'token-documentation',  // Spec 102: added for Token-Family-*.md docs (16 docs, domain-legitimate)
       ```
-    - Also apply doc corrections for the correct-doc triage decisions (e.g., `component-implementation` replacement across 8 docs)
     - _Design Section 2 workflow + Design Outline Scope item 9_
 
-  - [ ] 1.12 Verify 0/87 metadata errors or documented deferrals
+  - [ ] 1.12 Apply correct-doc edits from triage
+    **Type**: Implementation
+    **Validation**: Tier 2 - Standard
+    **Agent**: Thurgood
+    - **Depends on Task 1.10 decisions**
+    - Replace non-standard vocabulary values across affected docs per 1.10's correct-doc decisions
+    - Primary example: collapse 8 component-family `*-implementation` task-type values (badge/button/chip/form/icon/layout/navigation/progress) to `component-implementation`
+    - Apply additional correct-doc changes for any scope or task-type values 1.10 decided should be corrected rather than expanded
+    - Split from validator update (1.11) for audit traceability — "which commit fixed the vocabulary list?" vs. "which commit corrected the docs?" are separable questions
+    - _Design Outline Scope item 9 + Ada R4 RR3_
+
+  - [ ] 1.13 Verify 0/87 metadata errors or documented deferrals
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -206,7 +217,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
   - Completion documentation and summary document created
 
   **Primary Artifacts:**
-  - Published package `@3fn/core@11.1.0` at `https://github.com/3fn/DesignerPunk.v2/packages`
+  - Published package `@3fn/core@11.1.0` at `https://github.com/3fn/DesignerPunk/packages`
   - `docs/releases/RELEASE-NOTES-11.1.0.md` (manual cleanup from tool output as needed per Spec 101 Task 2.5's release-tool regressions-and-gaps issue)
   - Git tag `v11.1.0`
   - `.kiro/specs/102-consumer-onboarding-completion/completion/task-2-completion.md`
@@ -229,7 +240,17 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - **Commit this file BEFORE running release:notes** — the Spec 101 Task 2.1 chicken-and-egg lesson; SummaryScanner uses `git log --diff-filter=A` on committed summaries, so uncommitted summaries are invisible to the tool
     - _Design Section 2 publish workflow + Spec 101 lesson_
 
-  - [ ] 2.2 Regenerate release notes for 11.1.0
+  - [ ] 2.2 Bump package.json version to 11.1.0
+    **Type**: Setup
+    **Validation**: Tier 1 - Minimal
+    **Agent**: Ada
+    - Update `package.json` `version` field from `11.0.0` to `11.1.0`
+    - Commit as a standalone commit (matches Spec 101 pattern — clean version-bump commit that the v11.1.0 tag can point at)
+    - Preferred commit message: `"Bump version to 11.1.0"` or `"Spec 102 Task 2.2: Bump version to 11.1.0"`
+    - Release notes regeneration in 2.3 picks up the new version automatically
+    - _Ada R4 blocker 2 — version bump must be explicit, not assumed by 2.4's hygiene checklist_
+
+  - [ ] 2.3 Regenerate release notes for 11.1.0
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Ada
@@ -241,7 +262,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Review rendered notes for accuracy
     - _Design Section 2 publish workflow + Spec 101 Task 2.5 known issues_
 
-  - [ ] 2.3 Publish `@3fn/core@11.1.0` to GitHub Packages
+  - [ ] 2.4 Publish `@3fn/core@11.1.0` to GitHub Packages
     **Type**: Implementation
     **Validation**: Tier 3 - Comprehensive (high-stakes, irreversible once tagged)
     **Agent**: Ada (Peter authorizes)
@@ -254,10 +275,10 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
       - Package version verified (`11.1.0` in `package.json`)
     - Verify Peter's PAT still has `write:packages` + `read:packages` + `repo` scopes
     - Run `npm publish --access public`
-    - Verify package appears at `https://github.com/3fn/DesignerPunk.v2/packages`
+    - Verify package appears at `https://github.com/3fn/DesignerPunk/packages`
     - _Design Section 2 publish workflow + pre-publish hygiene subsection_
 
-  - [ ] 2.4 Post-publish verification in a fresh repo
+  - [ ] 2.5 Post-publish verification in a fresh repo
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Peter (executes), Ada (supports if failures)
@@ -265,16 +286,16 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Configure `.npmrc` with GitHub Packages auth
     - Run `npm install @3fn/core` — must succeed (install verification)
     - **Run all 5 gap-closure verifications** (no workarounds required):
-      - Gap 1: `npx designerpunk mcp:docs` connects from Kiro without `-32000` error
+      - Gap 1: **all three MCP wrappers** (`npx designerpunk mcp:app`, `mcp:docs`, `mcp:product`) connect from Kiro via npx invocation without `-32000 Connection closed` errors (per Ada R4 RR4 — Task 1.2's fix applies to all three wrappers, not just mcp:docs)
       - Gap 2: Application MCP token-query tools return non-empty results
       - Gap 3: run `npx designerpunk init` twice; verify second run preserves files from first
       - Gap 4: Integration Guide Step 4 documents the mcp.json config — follow it standalone
       - Gap 5: `ls .kiro/settings/mcp.json` exists after `npx designerpunk init`
-    - **Explicit drift-script check against installed tarball** (per Ada R2): extract installed 11.1.0 to tmp dir, run `check:drift` against it, confirm zero drift in shipped files
-    - Confirm `validate-steering-metadata.js` reports 0/87 errors (or documented deferrals matching Task 1.12 final state)
+    - **Explicit drift-script check against installed tarball** (per Ada R2): extract installed 11.1.0 to tmp dir (e.g., `npm install @3fn/core@11.1.0` into fresh tmp; run `node scripts/check-package-name-drift.js` copied from source against `node_modules/@3fn/core/`), confirm zero drift in shipped files
+    - Confirm `validate-steering-metadata.js` reports 0/87 errors (or documented deferrals matching Task 1.13 final state)
     - _Design Section 2 + Success criteria 1-10_
 
-  - [ ] 2.5 Tag `v11.1.0` and commit release notes
+  - [ ] 2.6 Tag `v11.1.0` and commit release notes
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Ada
@@ -284,7 +305,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Verify tag appears on GitHub
     - _Design Section 2 publish workflow_
 
-  - [ ] 2.6 Write Parent 2 completion documentation and summary
+  - [ ] 2.7 Write Parent 2 completion documentation and summary
     **Type**: Documentation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood

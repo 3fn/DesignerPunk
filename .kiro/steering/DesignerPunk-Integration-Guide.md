@@ -1,7 +1,7 @@
 # DesignerPunk Integration Guide
 
 **Date**: 2026-04-08
-**Last Reviewed**: 2026-05-06
+**Last Reviewed**: 2026-05-07
 **Purpose**: Everything a product developer needs to integrate DesignerPunk into a product repo
 **Organization**: process-standard
 **Scope**: cross-project
@@ -125,7 +125,74 @@ DesignerPunk Application MCP started
 
 ### 4. Configure Agent Connections
 
-Connect your Kiro agents to the running MCP servers using the connection details printed at startup.
+Your Kiro agents need two things to connect to the MCP servers: a configuration file telling them how to reach the servers, and agent prompt files telling them what their role is.
+
+#### 4a. Configure MCP server connections
+
+Create `.kiro/settings/mcp.json` at your project root (Kiro reads this file on agent session startup to discover MCP servers):
+
+```json
+{
+  "mcpServers": {
+    "designerpunk-docs": {
+      "command": "node",
+      "args": [
+        "./node_modules/@3fn/core/dist/mcp/docs-mcp.js"
+      ],
+      "env": {
+        "MCP_STEERING_DIR": "./node_modules/@3fn/core/.kiro/steering"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_documentation_map",
+        "get_document_summary",
+        "get_document_full",
+        "get_section",
+        "list_cross_references",
+        "validate_metadata",
+        "get_index_health",
+        "rebuild_index"
+      ]
+    },
+    "designerpunk-application": {
+      "command": "node",
+      "args": [
+        "./node_modules/@3fn/core/dist/mcp/application-mcp.js"
+      ],
+      "env": {
+        "COMPONENTS_DIR": "./node_modules/@3fn/core/src/components/core",
+        "PATTERNS_DIR": "./node_modules/@3fn/core/experience-patterns",
+        "TEMPLATES_DIR": "./node_modules/@3fn/core/layout-templates",
+        "GUIDANCE_DIR": "./node_modules/@3fn/core/family-guidance",
+        "REGISTRY_PATH": "./node_modules/@3fn/core/family-registry.yaml",
+        "TOKEN_INDEX_DIR": "./node_modules/@3fn/core/token-index"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_component_catalog",
+        "get_component_summary",
+        "get_component_full",
+        "find_components",
+        "validate_component",
+        "get_component_health"
+      ]
+    }
+  }
+}
+```
+
+**This configuration uses direct-node invocation** — Kiro spawns the MCP server binaries directly from `node_modules/@3fn/core/dist/mcp/`, rather than going through the `npx designerpunk mcp:*` CLI wrappers. The direct path is more reliable for MCP protocol handshake over stdio.
+
+**After saving `.kiro/settings/mcp.json`, restart your Kiro agent session** — agent sessions read the MCP config on startup; existing sessions won't pick up the new servers until restarted.
+
+Once the agent session reconnects, it should show `designerpunk-docs` and `designerpunk-application` as connected MCP servers. If either reports connection failure, verify:
+- `node_modules/@3fn/core/dist/mcp/` contains the bundled server files (they should ship with the package)
+- Your `@3fn/core` install completed without errors
+- Paths in `mcp.json` resolve from your project root
+
+> **Template source**: this configuration is the canonical template shipped with `@3fn/core` at `src/cli/templates/mcp-config.json.template`. If you've run `npx designerpunk init`, the file was scaffolded automatically using this template. If you're configuring manually (or init skipped the file because it already existed), copy the JSON above.
+
+#### 4b. Set up agent prompts
 
 If using the product agent template:
 ```bash
