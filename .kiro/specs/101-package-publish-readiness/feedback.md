@@ -355,6 +355,31 @@ File `docs/specs/095-ecosystem-package-assembly/task-5-summary.md` correctly ide
 
 **Status**: All feedback incorporated. Ready to execute.
 
+#### [ADA R3]
+
+**Findings from Task 2.1 execution.** Four release-tool behaviors surfaced when running `npm run release:notes` on 2026-05-06. Two are the already-known regressions that Task 2.5 tracks; two are new. Plus one spec-governance concern surfaced by the same execution.
+
+**Proposed Task 2.5 scope expansion** — recommend extending the follow-up issue file from covering 2 items to covering all 4. All are release-tool behavior. Grouping them in one file avoids fragmenting the "release-tool needs work" story and matches how a future tool-improvement spec would address them:
+
+1. *(known)* Tool emits `release-X.Y.Z.md` instead of `RELEASE-NOTES-X.Y.Z.md`. Canonical convention is `RELEASE-NOTES-X.Y.Z.md` (consistent back to 9.0.0).
+2. *(known)* Tool emits unwanted `.internal.md` and `.json` sidecar artifacts alongside the public notes file.
+3. *(NEW)* Tool `Date` field uses UTC conversion — `2026-05-07` emitted for a run that happened on 2026-05-06 local (PDT), because the run occurred after 8 PM local (past midnight UTC). All prior RELEASE-NOTES files use local dates. Inconsistent with convention; required a manual date correction in the generated file.
+4. *(NEW, chicken-and-egg)* `SummaryScanner` (in `src/tools/release/pipeline/SummaryScanner.ts:13`) uses `git log --diff-filter=A` against `docs/specs/*/task-*-summary.md` to find changes since the last tag. A spec that culminates in a publish event (like Spec 101) can't have its own work reflected in its release notes unless the spec's summary doc is committed *before* `release:notes` runs. First run of Task 2.1 returned 19 changes with zero Spec 101 content; had to create and commit `task-1-summary.md` (commit `2cc76e5d`) then re-run. Either the tool needs a fallback (scan completion docs or commit messages when no summary exists) or spec-writers need explicit guidance that the summary doc must land before the release-notes step within a single-spec publish cycle.
+
+If extending Task 2.5's scope doesn't fit the tactical constraints of executing Parent 2, a fallback: log items 3 and 4 as a new `.kiro/issues/2026-05-06-release-tool-date-and-discovery-gaps.md` alongside Task 2.5's filename/sidecar file. Lean toward scope extension for cohesion, but deferring to Thurgood's judgment.
+
+**Spec-governance concern for [@THURGOOD] review** — surfaced during Task 2.1 execution, distinct from the tool issues above.
+
+`tasks.md` Task 1's `Completion Documentation` block only listed `task-1-completion.md` (the detailed doc). The Completion Documentation Guide's "When to Create Each Document" table requires parent tasks to have **both** a detailed completion doc AND a summary doc. Task 2 correctly lists both (`task-2-completion.md` + `task-2-summary.md`); Task 1 does not. Had to create `task-1-summary.md` mid-execution to unblock the release tool (see item 4 above).
+
+The asymmetry seems like an oversight in the tasks doc, not intentional design. Worth a pattern check going forward: when scoping a parent task's completion artifacts, the Completion Documentation Guide should be the authoritative checklist, not the tasks-doc template. Parent 2 got it right; Parent 1 missed.
+
+Recommendation (Thurgood's call): amend `tasks.md` Task 1's `Completion Documentation` block to list `docs/specs/101-package-publish-readiness/task-1-summary.md` alongside the detailed doc, so the spec record matches the reality of what was produced. Alternatively, leave `tasks.md` as-is since the work is already done and instead capture the pattern observation in the final completion doc or a Civitas process note. Either is defensible; I'd lean toward amending for spec-to-reality fidelity, but I recognize touching the tasks doc mid-execution carries its own audit-trail concerns.
+
+Independent of whether `tasks.md` is amended, this is also a second instance of the same class of lesson I hit earlier in this spec (subtask completion docs). The root cause both times: I read `tasks.md` as the authoritative spec of required artifacts rather than treating it as the plan and the Completion Documentation Guide as the governance authority. I've updated my internal default: Completion Documentation Guide is the baseline; `tasks.md` provides extensions only. Flagging here so the pattern is visible for agent-governance purposes, not just my own learning.
+
+**Status**: Task 2.1 complete; findings logged. Ready to proceed with 2.2 pending Peter's authorization.
+
 ---
 
 ## Resolution History
