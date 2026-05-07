@@ -186,6 +186,67 @@ Still a lightweight spec relative to Spec 101's scope, just roughly double the p
 4. No objection to metadata work running in parallel with your source-code track in Parent 1
 5. Version `11.1.0` still correct with the scope expansion
 
+#### [ADA R2]
+
+**R1 incorporation: excellent.** All 5 open questions resolved with rationale captured. My R1 refinements (merge semantics, chicken-and-egg preemption, explicit drift check, Risk 5 de-risk) all landed cleanly. Peter's Direction 3 on the metadata cleanup expansion is authoritative — not my scope to question; my job is to validate the approach Thurgood has built around it. Answering the 5 explicit validation requests:
+
+**1. Scope split (mechanical vs. vocabulary triage): Reasonable.**
+
+Mechanical fixes (14 total: 12 missing `Last Reviewed` + 2 date format normalizations) are zero-decision work — can batch-execute quickly. Vocabulary triage (~35 cases) requires per-item judgment — naturally serial. Separating them allows mechanical cleanup to finish fast (fast win on Success Criterion 9 progress) while triage takes the time it needs. Clean split.
+
+**2. Vocabulary mismatch handling (expand validator vs. correct doc, case-by-case): Sound.**
+
+The binary decision tree is the right framing. Legitimate domain-specific values (e.g., `token-family-reference` on a Token-Family-*.md doc) deserve validator-vocabulary expansion — the validator should accommodate legitimate patterns, not force docs into a smaller vocabulary than the domain requires. Outlier values that don't represent a general pattern deserve doc correction. Case-by-case triage with this decision tree is how domain-aware validators evolve correctly.
+
+**One concrete refinement to propose**: when "expand validator vocabulary" is chosen for a given value, capture the rationale as a comment in `scripts/validate-steering-metadata.js` at the point where the value is added. Example:
+
+```javascript
+const VALID_ORGANIZATION_VALUES = [
+  'process-standard',
+  'rosetta-system',
+  'stemma-system',
+  'civitas-system',
+  'token-family-reference',  // Spec 102: added for Token-Family-*.md docs (domain-specific)
+  'component-family-reference',  // Spec 102: added for Component-Family-*.md docs (domain-specific)
+];
+```
+
+Without inline rationale, future maintainers see an expanded vocabulary list without context on WHY each value is accepted. Preserves auditability with near-zero cost.
+
+**3. Risk 7's mitigation (defer-one-don't-block-others): Acceptable, with one success-criterion refinement.**
+
+"Defer this one, continue the rest" is the right escape hatch for a genuinely ambiguous vocabulary decision. One refinement: **when an individual mismatch is deferred, document WHICH one and WHY in the task completion doc**, not just in passing. Otherwise "deferred" risks becoming "forgotten" — a quiet failure mode I've seen in other specs.
+
+This creates a minor tension with Success Criterion 9's phrasing ("0/87 errors"). With Risk 7's mitigation in play, the honest criterion is:
+
+> 9'. `validate-steering-metadata.js` reports 0/87 errors **OR** documented governance-deferred items (with specific doc, specific field, and reason for deferral) with follow-up tracking.
+
+Recommend Thurgood amend Success Criterion 9 to that phrasing — preserves the ambitious target while preventing the spec from being trapped by a single ambiguous case.
+
+**4. Parallel execution with source-code track: No objection.**
+
+Ada's source track (Gaps 1, 2, 3, 5 + integration test) and Thurgood's metadata track are genuinely independent. The only weak coupling is Gap 4 (Integration Guide Step 4) and Gap 5 (init scaffolds the same config the Guide documents) — but both are Thurgood's OR Ada's respectively with no cross-track dependency. Zero conflicts. Parallel execution works cleanly.
+
+**5. Version 11.1.0 with scope expansion: Still correct.**
+
+Metadata cleanup doesn't change consumer-parsable behavior. The `Last Reviewed`, `Date`, and vocabulary fields are Civitas governance metadata, not consumer API. Pure additive/corrective internal-quality work that also happens to ship in the tarball (consumer experience benefit = better-governed docs). Semver-clean minor bump remains correct.
+
+**Three operational watches (not objections — things to keep an eye on during execution):**
+
+1. **Parent 1 critical path now dominated by Thurgood's metadata work.** Fine as long as Thurgood's triage proceeds smoothly. If vocabulary triage surfaces a Civitas governance question, Risk 7's mitigation handles it — but works best if invoked EARLY (defer a blocker, don't let it become a stall point). Suggest Thurgood set a rough time-box for triage (e.g., "if a single mismatch takes >15 minutes to resolve cleanly, defer it under Risk 7") and hold the line on it.
+
+2. **Optional safety-valve in Sequence/Risks section for defensive documentation.** Peter's Direction 3 chose Option B; that's definitive. But if execution surfaces something unexpected, an explicit "Publish decoupling" sentence makes the fallback path official rather than ad-hoc. Something like:
+
+   > If metadata cleanup (scope items 8-9) cannot reach Success Criterion 9 within the spec's execution window, the publish-ready state of Parent 1's other work (Gaps 1-5 + integration test + Gap 4 Integration Guide update) proceeds to Parent 2. Remaining metadata items move to a follow-up Civitas micro-spec. Decision gate at Peter's discretion.
+
+   Purely defensive documentation. Thurgood's call whether to add — Peter's direction doesn't preclude it, it just makes it non-default.
+
+3. **Causal chain worth naming.** Peter's rationale for Direction 3 was "doesn't want these shipping with the package." Worth making the tarball-contents connection explicit somewhere (completion doc or even as a note in Scope item 8): `.kiro/steering/` is in `package.json` `files` array → corrected metadata flows to consumers via publish → this is why cleanup is in-spec rather than back-office Civitas work. Future readers see the consumer-value trace.
+
+**Recommendation**
+
+Approved with R2 refinements (inline rationale comments in validator, amended Success Criterion 9 phrasing, optional safety-valve for defensive documentation). The spec is ready for tasks.md drafting.
+
 ---
 
 ## Tasks Feedback
