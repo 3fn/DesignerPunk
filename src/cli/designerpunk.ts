@@ -87,12 +87,13 @@ async function runMcpApp() {
   const templatesDir = path.join(pkgRoot, 'layout-templates');
   const guidanceDir = path.join(pkgRoot, 'family-guidance');
   const registryPath = path.join(pkgRoot, 'family-registry.yaml');
+  const tokenIndexDir = path.join(pkgRoot, 'token-index');
 
-  console.log('DesignerPunk Application MCP');
-  console.log(`  Protocol: stdio`);
-  console.log(`  Data: ${componentsDir}`);
-  console.log(`  Server: ${serverBundle}`);
-  console.log('  Starting...\n');
+  console.error('DesignerPunk Application MCP');
+  console.error(`  Protocol: stdio`);
+  console.error(`  Data: ${componentsDir}`);
+  console.error(`  Server: ${serverBundle}`);
+  console.error('  Starting...\n');
 
   spawnServer(serverBundle, {
     COMPONENTS_DIR: componentsDir,
@@ -100,6 +101,7 @@ async function runMcpApp() {
     TEMPLATES_DIR: templatesDir,
     GUIDANCE_DIR: guidanceDir,
     REGISTRY_PATH: registryPath,
+    TOKEN_INDEX_DIR: tokenIndexDir,
   }, true);
 }
 
@@ -108,11 +110,11 @@ async function runMcpDocs() {
   const serverBundle = path.join(pkgRoot, 'dist/mcp/docs-mcp.js');
   const steeringDir = path.join(pkgRoot, '.kiro/steering');
 
-  console.log('DesignerPunk Docs MCP');
-  console.log(`  Protocol: stdio`);
-  console.log(`  Data: ${steeringDir}`);
-  console.log(`  Server: ${serverBundle}`);
-  console.log('  Starting...\n');
+  console.error('DesignerPunk Docs MCP');
+  console.error(`  Protocol: stdio`);
+  console.error(`  Data: ${steeringDir}`);
+  console.error(`  Server: ${serverBundle}`);
+  console.error('  Starting...\n');
 
   spawnServer(serverBundle, { MCP_STEERING_DIR: steeringDir }, true);
 }
@@ -122,11 +124,11 @@ async function runMcpProduct() {
   const serverBundle = path.join(pkgRoot, 'dist/mcp/product-mcp.js');
   const productDir = process.env.PRODUCT_DIR || path.resolve(process.cwd(), 'product');
 
-  console.log('DesignerPunk Product MCP');
-  console.log(`  Protocol: stdio`);
-  console.log(`  Data: ${productDir}`);
-  console.log(`  Server: ${serverBundle}`);
-  console.log('  Starting...\n');
+  console.error('DesignerPunk Product MCP');
+  console.error(`  Protocol: stdio`);
+  console.error(`  Data: ${productDir}`);
+  console.error(`  Server: ${serverBundle}`);
+  console.error('  Starting...\n');
 
   spawnServer(serverBundle, { PRODUCT_DIR: productDir }, true);
 }

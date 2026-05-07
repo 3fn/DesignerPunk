@@ -34,6 +34,7 @@
     "dist/ComponentTokens.android.kt",
     "dist/TokenEngine.js",
     "dist/TokenEngine.d.ts",
+    "src/cli/templates/",
     ".kiro/steering/",
     ".kiro/agents/",
     "product-template/",
