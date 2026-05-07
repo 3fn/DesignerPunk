@@ -232,7 +232,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
   - Commit changes: `./.kiro/hooks/commit-task.sh "Spec 102 Task 2 Complete: Publish 11.1.0 and Verify"`
   - Verify: Confirm package visibility and release notes on GitHub
 
-  - [ ] 2.1 Create and commit Parent 1 summary doc
+  - [x] 2.1 Create and commit Parent 1 summary doc
     **Type**: Documentation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
