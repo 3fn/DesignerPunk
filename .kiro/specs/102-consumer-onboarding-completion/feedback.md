@@ -418,7 +418,34 @@ Ada R3 review accepted. All two refinements incorporated; all three additive sug
 
 ### Context for Reviewers
 
-[To be populated after design outline feedback is incorporated.]
+- **Structure**: two parents with human gate between, mirroring Spec 101. Parent 1 = reversible fix and cleanup work (12 subtasks across Ada's and Thurgood's tracks); Parent 2 = irreversible publish (6 subtasks, strictly sequential).
+- **Subtask count**: 18 total (12 in Parent 1, 6 in Parent 2).
+- **Critical path dependency**: Task 1.1 (canonical MCP config template) must land before Tasks 1.5 (Gap 5 init scaffold) and 1.8 (Gap 4 Integration Guide). Called out in Parent 1 success criteria and in each dependent subtask.
+- **Track distribution**:
+  - Ada: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 2.2, 2.3, 2.5 (10 subtasks)
+  - Thurgood: 1.8, 1.9, 1.10, 1.11, 1.12, 2.1, 2.6 (7 subtasks)
+  - Peter: 2.4 (executes; Ada supports on failures) (1 subtask)
+- **Parent 1 parallelism**: after 1.1 lands, Ada's remaining 6 subtasks (1.2-1.7) and Thurgood's 5 subtasks (1.8-1.12) run in parallel with zero file conflicts (disjoint targets).
+- **Completion Documentation Guide applied correctly**: both Parent 1 AND Parent 2 list detailed + summary docs. This is the explicit lesson from Spec 101 where Task 1 listed only detailed. Baseline-per-Guide, not tasks.md-template.
+- **Cross-track sequence in Parent 2**: 2.1 (summary doc commit) BEFORE 2.2 (release notes regeneration). Preemptively applies Spec 101 chicken-and-egg lesson — SummaryScanner needs committed summaries to discover them.
+- **Inline rationale convention** from Ada R2 lands in Task 1.11: every expanded vocabulary value in `scripts/validate-steering-metadata.js` gets a `// Spec 102: <rationale>` inline comment.
+- **References to design doc section references, not requirement IDs**: this is a lightweight spec. Subtasks cite `_Design: "Section"_` or `_Design Outline Scope item N_`.
+
+### Reviewer Requests
+
+[@ADA] Primary review requested on tasks. Please validate:
+
+1. **Task 1.1 placement and scope** — is "create canonical template" as its own subtask the right shape, or should it be absorbed into 1.5? Currently separate because it's also a dependency of 1.8 (Thurgood's).
+2. **Task 1.10 (Architecture + Tier 3)** — vocabulary triage is the only non-trivial-decision work in the spec. Comfortable with Architecture task type classification? Reasonable alternative is Implementation + Tier 2 with the decisions treated as execution details rather than architectural.
+3. **Task 1.11 scope** — does validator script update + applying doc corrections for correct-doc triage decisions fit cleanly as one subtask, or should correct-doc edits be a separate subtask (e.g., 1.11a validator update, 1.11b doc corrections)?
+4. **Task 2.4 verification steps** — all 5 gap-closure verifications + drift-script tarball check + validator 0/87 check. Sufficient, or missing any check that would give confidence before declaring Parent 2 complete?
+5. **Task sequencing within Ada's track** — Tasks 1.2, 1.3, 1.4 all touch `src/cli/designerpunk.ts` (1.2, 1.3) and `src/cli/init.ts` (1.4). Your preference on commit batching: per-subtask (default), 1.2+1.3 batched (same file), 1.2+1.3+1.4 batched (same session)?
+6. **Task 1.7 ordering** — fresh rebuild runs before or after 1.6 integration test? Currently sequenced as 1.6 test then 1.7 rebuild; could be reversed if rebuild should happen first to test the built state.
+
+[@PETER] For awareness:
+1. Task 2.3 is marked Tier 3 - Comprehensive per Spec 101 pattern (irreversible publish).
+2. Task 2.4 (post-publish verification) is your task — same pattern as Spec 101 Task 2.3. Ada supports on failures.
+3. Total realistic execution estimate is 5-8 hours across the parallel tracks plus your review time at the human gate.
 
 ---
 
