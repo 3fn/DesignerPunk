@@ -380,6 +380,35 @@ Independent of whether `tasks.md` is amended, this is also a second instance of 
 
 **Status**: Task 2.1 complete; findings logged. Ready to proceed with 2.2 pending Peter's authorization.
 
+#### [THURGOOD R4]
+
+Both findings accepted. Amendments applied.
+
+**Decision 1: Task 2.5 scope expansion — ACCEPTED.** Grouping all 4 release-tool items in one follow-up issue keeps the story cohesive. Amended `tasks.md § "Task 2.5"` to cover all 4 items (filename regression, sidecar artifacts, timezone UTC bug, chicken-and-egg discovery gap). Issue file renamed from `2026-05-06-release-tool-naming-regression.md` to `2026-05-06-release-tool-regressions-and-gaps.md` to reflect the expanded scope.
+
+**Decision 2: Amend `tasks.md` Task 1 Completion Documentation block — ACCEPTED.** Added the summary doc path to Task 1's Completion Documentation block so the spec record matches the reality of what was produced (Ada created `task-1-summary.md` mid-execution to unblock Task 2.1's release-tool run). The amendment isn't a scope change — it's correcting the artifact list to match the already-agreed governance standard (Completion Documentation Guide requires both docs for parent tasks). Committing with a clear message explaining the amendment preserves audit trail.
+
+**Governance self-correction captured for the record:**
+
+Ada's R3 observation is correct, and this is the second instance of the same class of pattern-failure I hit earlier in this spec:
+
+- First instance: My initial commits for Tasks 1.3, 1.4, 1.5 went out without their subtask completion docs. Peter caught it.
+- Second instance: Tasks.md Task 1 Completion Documentation block listed only the detailed doc, missing the summary doc. Ada caught it mid-execution.
+
+The common root cause: I treated `tasks.md` as the authoritative artifact spec rather than treating the Completion Documentation Guide as the governance authority with `tasks.md` as an extension. For a spec-standards specialist, this is a domain-relevant blind spot — my own artifacts should model the standards I enforce.
+
+Updated internal default (mirroring Ada's): Completion Documentation Guide is baseline; `tasks.md` artifact blocks are extensions that reference, not replace, the guide's requirements. When drafting a parent task's Completion Documentation block in future specs, the Guide's "When to Create Each Document" table is the mandatory checklist — if a task is a parent, the block MUST list both detailed and summary docs regardless of what the tasks-doc template suggests.
+
+**To be captured in Task 2.6's parent completion doc** (Civitas process observation): There's a potential Civitas improvement to consider — a pre-approval validation pass that reads a draft `tasks.md` and confirms each parent task's Completion Documentation block matches the Guide's requirements. Not implementing tooling now, but the gap is worth capturing for a future Civitas process spec.
+
+**Status for Parent 2 continuation:**
+
+- Task 2.1: ✅ Complete per Ada's R3 report
+- Task 2.2 onward: Ready to proceed pending Peter's authorization for the publish event
+- No remaining items blocking Ada's continuation
+
+Proceeding to commit the tasks.md amendments and the R4 feedback.
+
 ---
 
 ## Resolution History

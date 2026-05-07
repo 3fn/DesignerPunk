@@ -49,6 +49,7 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/101-package-publish-readiness/completion/task-1-completion.md`
+  - Summary: `docs/specs/101-package-publish-readiness/task-1-summary.md`
 
   **Post-Completion:**
   - Mark complete: Use `taskStatus` tool to update task status
@@ -237,12 +238,17 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
     - Verify tag appears on GitHub
     - _Design Outline: "Approach > Sequence" step 7 (continuation)_
 
-  - [ ] 2.5 Draft follow-up issue for release tool regression
+  - [ ] 2.5 Draft follow-up issue for release tool regressions and gaps
     **Type**: Documentation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
-    - Create `.kiro/issues/2026-05-06-release-tool-naming-regression.md`
-    - Document: (a) wrong naming convention (`release-X.Y.Z.md` instead of `RELEASE-NOTES-X.Y.Z.md`), (b) unwanted `.internal.md` and `.json` sidecar artifacts, (c) observed during 11.0.0 generation on 2026-05-06, (d) assigned to Ada for follow-up spec
+    - Create `.kiro/issues/2026-05-06-release-tool-regressions-and-gaps.md`
+    - Document all 4 release-tool issues observed during Spec 101 execution (grouped as one follow-up for cohesion):
+      1. (Filename regression) Tool emits `release-X.Y.Z.md` instead of the canonical `RELEASE-NOTES-X.Y.Z.md` format established back to 9.0.0
+      2. (Sidecar artifact regression) Tool emits unwanted `.internal.md` and `.json` sidecar artifacts alongside the public notes file
+      3. (Timezone bug) Tool `Date` field uses UTC conversion — late-evening-local runs emit next-day UTC dates, inconsistent with all prior RELEASE-NOTES files (local dates). Observed on 2026-05-06 when a run past 20:00 PDT emitted `2026-05-07`.
+      4. (Chicken-and-egg discovery gap) `SummaryScanner` (`src/tools/release/pipeline/SummaryScanner.ts:13`) uses `git log --diff-filter=A` on `docs/specs/*/task-*-summary.md` to find changes since last tag. A spec that culminates in a publish event cannot have its own work reflected in its release notes unless its summary doc is committed *before* `release:notes` runs. Either tool needs a fallback (scan completion docs or commit messages when no summary exists) or spec-writers need explicit guidance.
+    - Assign to Ada for follow-up spec consideration
     - _Design Outline: "Scope > Out of scope" context_
 
   - [ ] 2.6 Write completion documentation and summary
