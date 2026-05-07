@@ -2,6 +2,12 @@
   "name": "@3fn/core",
   "version": "10.2.5",
   "description": "True Native cross-platform design system with mathematical foundations",
+  "license": "Apache-2.0",
+  "author": "Peter Michaels Allen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3fn/DesignerPunk.git"
+  },
   "main": "./dist/browser/designerpunk.esm.js",
   "module": "./dist/browser/designerpunk.esm.js",
   "browser": "./dist/browser/designerpunk.esm.js",
@@ -30,6 +36,7 @@
     "dist/TokenEngine.d.ts",
     ".kiro/steering/",
     ".kiro/agents/",
+    "product-template/",
     "mcp-server/src/",
     "mcp-server/package.json",
     "mcp-server/tsconfig.json",
