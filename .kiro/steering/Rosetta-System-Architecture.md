@@ -12,7 +12,7 @@ description: Rosetta token pipeline architecture — subsystem entry points, tok
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: token-development, component-development, pipeline-integration
-**Last Reviewed**: 2026-01-25
+**Last Reviewed**: 2026-05-06
 
 ---
 
@@ -494,7 +494,7 @@ export const ComponentNameTokens = defineComponentTokens({
 | **Validation** | `src/integration/ValidationCoordinator.ts` | Validation orchestration |
 | **Registry** | `src/registries/` | Token storage and queries |
 | **Theme Registry** | `src/themes/ThemeRegistry.ts` | Theme registration, validation, theme-varying token computation |
-| **Configuration** | `src/config/defineConfig.ts` | Pipeline config API (`@designerpunk/core/config`) |
+| **Configuration** | `src/config/defineConfig.ts` | Pipeline config API (`@3fn/core/config`) |
 | **Config Loader** | `src/config/ConfigLoader.ts` | Loads `designerpunk.config.ts`, resolves paths |
 | **Generation** | `src/generators/TokenFileGenerator.ts` | Platform output generation |
 | **Platform Generators** | `src/providers/*FormatGenerator.ts` | Platform-specific formatting |
@@ -508,10 +508,10 @@ export const ComponentNameTokens = defineComponentTokens({
 
 ## Portable Pipeline (Spec 094)
 
-The token pipeline is portable — it runs from any project that installs `@designerpunk/core`. Products configure the pipeline via `designerpunk.config.ts`:
+The token pipeline is portable — it runs from any project that installs `@3fn/core`. Products configure the pipeline via `designerpunk.config.ts`:
 
 ```typescript
-import { defineConfig } from '@designerpunk/core/config';
+import { defineConfig } from '@3fn/core/config';
 import { myOverrides } from './themes/my-theme/SemanticOverrides';
 
 export default defineConfig({

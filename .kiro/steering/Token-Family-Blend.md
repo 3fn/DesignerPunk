@@ -7,7 +7,7 @@ description: Blend token family — color modification utilities (darken, lighte
 # Blend Tokens Guide
 
 **Date**: 2025-12-29
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-05-06
 **Purpose**: Complete reference for blend tokens with utility functions and theme-aware patterns
 **Organization**: token-documentation
 **Scope**: cross-project
@@ -86,7 +86,7 @@ import {
   getBlendUtilities, 
   createBlendUtilities,
   BlendTokenValues 
-} from '@designerpunk/tokens/ThemeAwareBlendUtilities';
+} from '@3fn/core/ThemeAwareBlendUtilities';
 ```
 
 **Available Functions**:

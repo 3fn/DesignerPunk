@@ -7,7 +7,7 @@ description: Guide for building components with appropriate token usage, True Na
 # Component Development and Practices Guide
 
 **Date**: 2025-11-17
-**Last Reviewed**: 2026-01-13
+**Last Reviewed**: 2026-05-06
 **Purpose**: Guide AI agents in building components with appropriate token usage, True Native Architecture, and effective collaboration practices
 **Organization**: process-standard
 **Scope**: cross-project
@@ -1080,7 +1080,7 @@ Blend utilities enable components to create new opaque colors for interaction st
 ### Web Platform Usage
 
 ```typescript
-import { getBlendUtilities } from '@designerpunk/tokens/ThemeAwareBlendUtilities';
+import { getBlendUtilities } from '@3fn/core/ThemeAwareBlendUtilities';
 
 class MyComponent extends HTMLElement {
   connectedCallback() {

@@ -96,7 +96,7 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
     - Update `product-template/agents/README.md` (2 references — install instruction and copy command)
     - _Design Outline: "Scope > In scope" item 1_
 
-  - [ ] 1.4 Update authoritative steering docs with correct package name
+  - [x] 1.4 Update authoritative steering docs with correct package name
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

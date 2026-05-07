@@ -7,7 +7,7 @@ description: Layering token family — z-index (web/iOS) and elevation (Android)
 # Layering Tokens
 
 **Date**: 2025-10-28
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-05-06
 **Purpose**: Documentation guide for the Layering Token System
 **Organization**: token-documentation
 **Scope**: cross-project
@@ -74,7 +74,7 @@ Z-Index tokens provide stacking order values for web and iOS platforms. They use
 **Standard Modal with Shadow**:
 ```typescript
 // React/TypeScript
-import { zIndexTokens } from '@designerpunk/tokens';
+import { zIndexTokens } from '@3fn/core';
 
 <Modal style={{
   zIndex: zIndexTokens['zIndex.modal'].value,      // 400

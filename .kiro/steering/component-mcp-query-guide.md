@@ -23,7 +23,7 @@ description: MCP tool reference — all tools across Application, Product, and D
 
 - **Name**: `mcp-component-server`
 - **Transport**: stdio
-- **Start**: `npx designerpunk mcp:app` (from any project with `@designerpunk/core` installed, or from the DesignerPunk repo)
+- **Start**: `npx designerpunk mcp:app` (from any project with `@3fn/core` installed, or from the DesignerPunk repo)
 - **Components directory**: `src/components/core` (default)
 
 ---

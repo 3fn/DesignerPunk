@@ -1,7 +1,7 @@
 # DesignerPunk Integration Guide
 
 **Date**: 2026-04-08
-**Last Reviewed**: 2026-04-08
+**Last Reviewed**: 2026-05-06
 **Purpose**: Everything a product developer needs to integrate DesignerPunk into a product repo
 **Organization**: process-standard
 **Scope**: cross-project
@@ -15,10 +15,10 @@
 | Prerequisite | Why | Minimum Version |
 |-------------|-----|-----------------|
 | Node.js | Pipeline, MCP servers, CLI | 18+ (22+ recommended) |
-| npm | Install `@designerpunk/core` from GitHub Packages | 9+ |
+| npm | Install `@3fn/core` from GitHub Packages | 9+ |
 | TypeScript | Theme overrides and config are TypeScript files | 5.0+ |
 
-`tsx` (TypeScript execution) ships as a dependency of `@designerpunk/core` — no separate install needed.
+`tsx` (TypeScript execution) ships as a dependency of `@3fn/core` — no separate install needed.
 
 ---
 
@@ -36,7 +36,7 @@ GitHub Packages requires authentication. Create a `.npmrc` in your project root:
 Set `GITHUB_TOKEN` as an environment variable with a personal access token that has `read:packages` scope. Then install:
 
 ```bash
-npm install @designerpunk/core
+npm install @3fn/core
 ```
 
 ### 2. Configure
@@ -44,7 +44,7 @@ npm install @designerpunk/core
 Create `designerpunk.config.ts` at your project root:
 
 ```typescript
-import { defineConfig } from '@designerpunk/core/config';
+import { defineConfig } from '@3fn/core/config';
 
 export default defineConfig({
   name: 'MyProduct',        // → generated type names (MyProductTheme)
@@ -56,7 +56,7 @@ export default defineConfig({
 For custom theming, add a theme:
 
 ```typescript
-import { defineConfig } from '@designerpunk/core/config';
+import { defineConfig } from '@3fn/core/config';
 import { myOverrides } from './themes/my-theme/SemanticOverrides';
 
 export default defineConfig({
@@ -81,7 +81,7 @@ A theme is a `SemanticOverrideMap` — a record of semantic token names mapped t
 
 ```typescript
 // themes/marketing/SemanticOverrides.ts
-import type { SemanticOverrideMap } from '@designerpunk/core/config';
+import type { SemanticOverrideMap } from '@3fn/core/config';
 
 export const marketingOverrides: SemanticOverrideMap = {
   // Swap action color from default cyan to teal
@@ -129,7 +129,7 @@ Connect your Kiro agents to the running MCP servers using the connection details
 
 If using the product agent template:
 ```bash
-cp -r node_modules/@designerpunk/core/product-template/agents/ .kiro/agents/
+cp -r node_modules/@3fn/core/product-template/agents/ .kiro/agents/
 ```
 
 Then customize `[CUSTOMIZE]` markers in each prompt file with your product name, human lead, and domain-specific context. See `product-template/agents/README.md` for details.
@@ -183,18 +183,18 @@ If you registered a custom theme, the output includes themed values scoped by `d
 
 ```typescript
 // Import all web components
-import '@designerpunk/core';
-// or: import '@designerpunk/core/components';
+import '@3fn/core';
+// or: import '@3fn/core/components';
 
 // Import design tokens
-import '@designerpunk/core/tokens.css';
-import '@designerpunk/core/component-tokens.css';
+import '@3fn/core/tokens.css';
+import '@3fn/core/component-tokens.css';
 
 // Optional: responsive grid, fonts, blend utilities
-import '@designerpunk/core/grid.css';
-import '@designerpunk/core/fonts/inter.css';
-import '@designerpunk/core/fonts/rajdhani.css';
-import { BlendCalculator } from '@designerpunk/core/blend';
+import '@3fn/core/grid.css';
+import '@3fn/core/fonts/inter.css';
+import '@3fn/core/fonts/rajdhani.css';
+import { BlendCalculator } from '@3fn/core/blend';
 ```
 
 For theming, set the `data-theme` attribute on any HTML element:
@@ -209,10 +209,10 @@ Base theme applies at `:root` with no attribute. Dark-only themes automatically 
 #### iOS (M0a — Manual Copy)
 
 1. Locate Swift files in the installed package:
-   - `node_modules/@designerpunk/core/dist/DesignTokens.ios.swift`
-   - `node_modules/@designerpunk/core/dist/ComponentTokens.ios.swift`
-   - Component platform files: `node_modules/@designerpunk/core/src/components/core/*/platforms/ios/`
-   - Blend utilities: `node_modules/@designerpunk/core/src/blend/ThemeAwareBlendUtilities.ios.swift`
+   - `node_modules/@3fn/core/dist/DesignTokens.ios.swift`
+   - `node_modules/@3fn/core/dist/ComponentTokens.ios.swift`
+   - Component platform files: `node_modules/@3fn/core/src/components/core/*/platforms/ios/`
+   - Blend utilities: `node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift`
 
 2. Copy into your Xcode project's source tree
 
@@ -232,10 +232,10 @@ Base theme applies at `:root` with no attribute. Dark-only themes automatically 
 #### Android (M0a — Manual Copy)
 
 1. Locate Kotlin files in the installed package:
-   - `node_modules/@designerpunk/core/dist/DesignTokens.android.kt`
-   - `node_modules/@designerpunk/core/dist/ComponentTokens.android.kt`
-   - Component platform files: `node_modules/@designerpunk/core/src/components/core/*/platforms/android/`
-   - Blend utilities: `node_modules/@designerpunk/core/src/blend/ThemeAwareBlendUtilities.android.kt`
+   - `node_modules/@3fn/core/dist/DesignTokens.android.kt`
+   - `node_modules/@3fn/core/dist/ComponentTokens.android.kt`
+   - Component platform files: `node_modules/@3fn/core/src/components/core/*/platforms/android/`
+   - Blend utilities: `node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt`
 
 2. Copy into your Android module's source tree
 
@@ -282,15 +282,15 @@ Runs automatically as part of `npx designerpunk generate` when platform paths ar
 
 | Import Path | What You Get |
 |-------------|-------------|
-| `@designerpunk/core` | All 34 web components (ESM bundle) |
-| `@designerpunk/core/components` | Same (alias) |
-| `@designerpunk/core/tokens.css` | Design tokens as CSS custom properties |
-| `@designerpunk/core/component-tokens.css` | Component-level tokens as CSS custom properties |
-| `@designerpunk/core/config` | `defineConfig` function with TypeScript types |
-| `@designerpunk/core/blend` | Blend calculation utilities |
-| `@designerpunk/core/grid.css` | Responsive grid CSS |
-| `@designerpunk/core/fonts/inter.css` | Inter font family |
-| `@designerpunk/core/fonts/rajdhani.css` | Rajdhani font family |
+| `@3fn/core` | All 34 web components (ESM bundle) |
+| `@3fn/core/components` | Same (alias) |
+| `@3fn/core/tokens.css` | Design tokens as CSS custom properties |
+| `@3fn/core/component-tokens.css` | Component-level tokens as CSS custom properties |
+| `@3fn/core/config` | `defineConfig` function with TypeScript types |
+| `@3fn/core/blend` | Blend calculation utilities |
+| `@3fn/core/grid.css` | Responsive grid CSS |
+| `@3fn/core/fonts/inter.css` | Inter font family |
+| `@3fn/core/fonts/rajdhani.css` | Rajdhani font family |
 
 ---
 
@@ -315,7 +315,7 @@ Starts with empty data if no product directory exists (warning, not error).
 
 **In a product repo** (where DesignerPunk is installed as a package), set `COMPONENT_DIR` to point into the installed package:
 ```bash
-COMPONENT_DIR=./node_modules/@designerpunk/core/src/components/core npx designerpunk mcp:product
+COMPONENT_DIR=./node_modules/@3fn/core/src/components/core npx designerpunk mcp:product
 ```
 Or add it to your MCP server configuration so it's set automatically on startup.
 
@@ -547,7 +547,7 @@ list_experience_map({ status: "in-progress", platform: "web" })
 
 | Tier | Artifacts | Review Depth | Who Governs |
 |------|-----------|-------------|-------------|
-| **Ecosystem** | Tokens, components, patterns, templates that shipped with `@designerpunk/core` | Full — contracts, metadata, multi-agent review, spec process | Ada (tokens), Lina (components), Thurgood (specs/tests) |
+| **Ecosystem** | Tokens, components, patterns, templates that shipped with `@3fn/core` | Full — contracts, metadata, multi-agent review, spec process | Ada (tokens), Lina (components), Thurgood (specs/tests) |
 | **Product extending** | Product-created tokens, one-off components, product templates | Schema compliance, naming conventions, accessibility contracts for new behavior | Ada/Lina consulted, Stacy audits at synthesis |
 | **Product internal** | Screen compositions, product-specific layouts, one-off styling | Minimal — does it work? does it use the ecosystem correctly? | Platform agents self-governed, Stacy spot-checks |
 
@@ -576,7 +576,7 @@ For agents using `/knowledge` in Kiro CLI, recommended indexes for a product rep
 |---------------|------|---------|---------|
 | product-source | `./src` | `**/*.ts`, `**/*.tsx` | Product source code |
 | product-screens | `./specs` or `./screens` | `**/*.md` | Screen specifications |
-| designerpunk-application | `node_modules/@designerpunk/core/src/components/core` | `**/*.ts`, `**/*.yaml` | Component source and metadata |
+| designerpunk-application | `node_modules/@3fn/core/src/components/core` | `**/*.ts`, `**/*.yaml` | Component source and metadata |
 
 Agents primarily use MCP queries for design system knowledge. Knowledge bases supplement with searchable source access for deep dives.
 

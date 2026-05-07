@@ -12,7 +12,7 @@ description: Token governance framework — selection matrix, usage autonomy lev
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, token-development, spec-planning
-**Last Reviewed**: 2026-01-25
+**Last Reviewed**: 2026-05-06
 
 ---
 
@@ -249,7 +249,7 @@ As of Spec 094, themes are managed via a **ThemeRegistry** pattern. Products reg
 **Adding a new theme does NOT require a formal spec.** Themes are product-level configuration, not architectural decisions. A product developer creates a `SemanticOverrides.ts` and registers it in their config:
 
 ```typescript
-import { defineConfig } from '@designerpunk/core/config';
+import { defineConfig } from '@3fn/core/config';
 import { myOverrides } from './themes/my-theme/SemanticOverrides';
 
 export default defineConfig({

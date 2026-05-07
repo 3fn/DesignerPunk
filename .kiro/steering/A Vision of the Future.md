@@ -5,7 +5,7 @@ inclusion: manual
 # A Vision of the Future
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2025-12-15
+**Last Reviewed**: 2026-05-06
 **Purpose**: Philosophical foundation and vision for DesignerPunk as AI-human collaborative design system
 **Organization**: process-standard
 **Scope**: cross-project
@@ -338,7 +338,7 @@ export const tokens = {
 // Mathematical validation happens behind the scenes
 Option 2: Progressive Complexity
 // Level 1: Simple tokens (most developers)
-import { space, colors } from '@designerpunk/tokens';
+import { space, colors } from '@3fn/core';
 
 // Level 2: Mathematical validation (design system teams)
 import { validateTokenUsage } from '@designerpunk/validation';
