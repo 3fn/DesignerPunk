@@ -11,7 +11,7 @@
 
 ## Implementation Plan
 
-Spec 101 resolves the first-consumer validation findings from 2026-05-06 and ships `@3fn/core@11.0.0` as DesignerPunk's first public release. Work is organized into two parent tasks with a human gate between them:
+Spec 101 resolves the first-consumer validation findings from 2026-05-06 and ships `@3fn/core@11.0.0` as DesignerPunk's first reconciled public release (first publish with reconciled name, scope, and metadata after the initial 10.2.x experimental publishes). Work is organized into two parent tasks with a human gate between them:
 
 - **Parent 1: Reconcile Package References and Prepare for Publish** — all the rename/update work, metadata additions, fresh build, prevention tooling. Completes with Peter reviewing everything before the publish is authorized.
 - **Parent 2: Publish 11.0.0 and Verify** — regenerate notes, publish, verify end-to-end, tag, capture follow-ups.
@@ -233,7 +233,7 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
     **Validation**: Tier 1 - Minimal
     **Agent**: Ada
     - Commit `RELEASE-NOTES-11.0.0.md` and all spec 101 changes
-    - Create annotated tag: `git tag -a v11.0.0 -m "Release 11.0.0 — First Public Release"`
+    - Create annotated tag: `git tag -a v11.0.0 -m "First Reconciled Public Release"` (phrasing reflects the post-discovery reality that 10.2.x versions were already on the registry from pre-Spec-101 testing; this is the first publish with reconciled name/scope/metadata)
     - Push tag: `git push origin v11.0.0`
     - Verify tag appears on GitHub
     - _Design Outline: "Approach > Sequence" step 7 (continuation)_

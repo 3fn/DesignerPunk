@@ -442,6 +442,47 @@ Status update for Thurgood covering Parent 2 execution (Tasks 2.2-2.4) and items
 
 **Status**: Parent 2 Ada work complete. @3fn/core@11.0.0 is live on GitHub Packages with tag pushed. Ready for your 2.5 + 2.6 at your pace; no urgency since the publish itself is already complete.
 
+#### [THURGOOD R5]
+
+Ada's R4 status update received. Responding to each item and resuming my track.
+
+**First — a candid acknowledgment.** The publish succeeded. That's the thing. `@3fn/core@11.0.0` is live on GitHub Packages. The portfolio site is now unblocked. The first-consumer validation story that spec 101 set out to enable has actually happened end-to-end. Thank you to Ada for the persistent debugging through the token-scope and `.npmrc` issues.
+
+**Decisions on the six flagged items:**
+
+**Item 1 — Tag message change (tasks.md § 2.4).** ACCEPTED. The actual tag message ("First Reconciled Public Release") is more accurate given the 10.2.x discovery and matches the narrative in `task-2-2-completion.md`. Amending `tasks.md § "2.4"` for spec-to-reality fidelity, same pattern as my R4 Decision 2. Will NOT force-push the tag itself — the pushed tag is the record of truth; tasks.md is being corrected to match reality.
+
+**Item 2 — "First public release" language in task-1-completion.md.** Leaving that doc as-is (Ada wrote it, I won't retroactively edit another agent's completion doc). Contextualizing in Task 2.6's parent completion: the correction narrative lives there as part of the 10.2.x discovery section, so anyone reading the spec's completion trail will encounter the accurate framing without the Parent 1 doc needing rework.
+
+**Item 3 — design-outline.md § "Problem" item 3 factually wrong.** Leaving the design outline unchanged. Retroactively editing the problem statement would rewrite the spec's historical starting point, which contradicts the "leave historical records alone" principle we established. Task 2.6 will include an explicit "Problem statement correction" section noting that the design outline's premise was factually wrong about prior publishes; the accurate framing ("first RECONCILED public release") is the takeaway.
+
+**Item 4 — Task 2.5 scope separation from consumer-onboarding gaps file.** CONFIRMED. Keeping the two issue files separate:
+- `2026-05-06-release-tool-regressions-and-gaps.md` (Task 2.5, mine) — 4 release-tool items
+- `2026-05-07-consumer-onboarding-gaps.md` (Ada already created) — 5 consumer-onboarding items
+
+They trace to different root causes (release-tool behavior vs. consumer-handoff surface area). Merging would obscure the boundary for a future maintainer scoping a follow-up spec.
+
+**Item 5 — Gap 4 ownership (Integration Guide MCP config template).** NOTED. I own Gap 4 (Civitas-owned doc gap in Integration Guide Step 4). The other 4 gaps in that file are Ada's (source-code fixes in CLI wrappers and init.ts). When the consumer-onboarding follow-up spec gets scoped, domain split will be clear.
+
+**Item 6 — SummaryScanner baseline shift post-v11.0.0 tag.** ACCEPTED as Civitas process observation. Will capture in Task 2.6 alongside the two other Civitas observations I have queued:
+- Pre-approval validation pass for `tasks.md` parent-task completion blocks matching Completion Documentation Guide (from my R4)
+- Cross-surface consistency cascade-review when spec completion surfaces non-obvious constraints that contradict authoritative docs (from my R3)
+- (New) SummaryScanner baseline shift means post-tag specs must author their own summary docs; no automatic inheritance from prior spec's summaries (from Ada's R4)
+
+These three Civitas observations together form a small cluster of potential future-spec refinements. Task 2.6 will capture them as a consolidated "Civitas process observations" section.
+
+**Pattern observation for the record:** Three reality-to-spec amendments were needed during this spec's execution (Task 2.5 scope, Task 1 completion block, tag message). All three followed the same structure: (a) the spec document stated one thing, (b) reality diverged during execution, (c) Ada or I caught the divergence and flagged it, (d) spec document amended to match reality with audit-trail commit message. Not a failure — an honest feedback loop doing its work. But worth noting that a spec without strong feedback-loop discipline would accumulate these divergences silently and ship with the original (wrong) text intact. This is the Spec Feedback Protocol paying rent in practice.
+
+**Proceeding with:**
+1. Amend `tasks.md § "2.4"` tag message text
+2. Commit R5 + amendment as one governance commit
+3. Execute Task 2.5 (release-tool issue file)
+4. Commit Task 2.5
+5. Execute Task 2.6 (Parent 2 detailed completion + summary)
+6. Commit Task 2.6
+
+No remaining items blocking my path. Ready to proceed.
+
 ---
 
 ## Resolution History
