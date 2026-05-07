@@ -282,7 +282,22 @@ This adds one more feedback round before tasks.md — intentional rigor increase
 
 ### Context for Reviewers
 
-[To be populated once design.md is drafted.]
+- **Rationale for adding design.md to a lightweight spec**: Peter reflected after Spec 101 that several execution audibles might have been preventable with more formal pre-work. Three classes of audibles specifically: factual-premise errors (10.2.x discovery), sequencing issues (SummaryScanner chicken-and-egg), and governance-decision risk (Task 1 Completion Documentation asymmetry). Design.md adds three focused sections to address those classes specifically. Not a full formal design per Process-Spec-Planning's template — architecture/interfaces/data-models are explicitly out of scope since Spec 102 is bug fixes + metadata cleanup, not new system architecture. → design.md § "Purpose of This Document"
+- **What's new in this feedback round vs. design-outline round**: Section 1 of design.md contains ACTUAL verified current state, not just assumptions. Surfaced one factual-premise correction (issue file said 2 date-format docs; actual is 4) and a more significant sizing revision: vocabulary triage is ~15 decisions (not 35), most resolvable in 30-45 minutes (not 1-2 hours) when the Section 3 framework is applied. The `*-implementation` task type pattern could collapse 8 errors into 1 decision. These findings refine the design outline's rough estimates.
+- **Section 3 is the most decision-dense**: four tentative triage decisions pre-applied using the framework (shown in the table at the end of Section 3). Ada R3 should dispute any she'd call differently.
+- **Stakeholder alignment**: Ada already approved the design outline in R2. This round is specifically about whether the design doc's three additions (current-state verification, workflow integration points, vocabulary governance framework) are sound and complete. Ada's R3 is additive to R2, not a re-review of the whole spec.
+
+### Reviewer Requests
+
+[@ADA] R3 review requested on design.md specifically. Five questions stamped at the end of design.md:
+
+1. Section 3 pre-triaged decisions — agreement on `token-documentation` expand and proposed `*-implementation` consolidation?
+2. Section 2 Gap 4/5 alignment risk — is source-of-truth citation sufficient, or need explicit cross-check in tasks.md?
+3. Section 1 revised sizing (~30-45 min triage) — matches your intuition?
+4. Vocabulary expansion as public contract — does "shipped in package, hard to narrow later" change any of the tentative expand decisions?
+5. Any other Spec 101 audibles that Section 1 or Section 2 should cover?
+
+No [@PETER] requests in this round — all your directions incorporated in [THURGOOD R3] and [THURGOOD R4]. Design doc is the refinement layer; waiting on Ada R3 before tasks.md drafting.
 
 ---
 
