@@ -112,7 +112,9 @@
     "server": "python3 -m http.server 8001",
     "figma:push": "npx ts-node src/cli/figma-push.ts",
     "figma:extract": "npx ts-node src/cli/figma-extract.ts",
-    "figma:generate-component": "npx ts-node scripts/figma-component-generator.ts"
+    "figma:generate-component": "npx ts-node scripts/figma-component-generator.ts",
+    "check:drift": "node scripts/check-package-name-drift.js",
+    "prepublishOnly": "npm run build && npm run check:drift"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",

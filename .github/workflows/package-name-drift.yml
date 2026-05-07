@@ -1,0 +1,35 @@
+name: Package Name Drift Detection
+
+# Runs the drift detection script against PRs targeting main and on pushes to main.
+# Catches any reference where scope doesn't match package.json "name" scope across:
+#   .kiro/steering/, src/, product-template/, .kiro/agents/, dist/
+#
+# Failure blocks merge until drift is reconciled.
+# See: scripts/check-package-name-drift.js
+# See: .kiro/specs/101-package-publish-readiness/design-outline.md § "Scope > In scope" item 7
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check-drift:
+    name: Check package name drift
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run drift detection
+        run: node scripts/check-package-name-drift.js
