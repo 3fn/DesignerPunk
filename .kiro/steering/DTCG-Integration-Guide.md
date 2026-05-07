@@ -10,7 +10,7 @@ description: Tool-agnostic DTCG format specification and integration patterns. C
 **Last Reviewed**: 2026-02-21
 **Purpose**: DTCG format specification and tool integration patterns
 **Organization**: process-standard
-**Scope**: dtcg-format
+**Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: token-format, tool-integration, dtcg-integration
 

@@ -10,7 +10,7 @@ description: Unified blur token family — single primitive scale for shadow edg
 **Last Reviewed**: 2026-03-31
 **Purpose**: Unified blur primitive token reference and usage guide
 **Organization**: token-documentation
-**Scope**: shadow-glow-token-system
+**Scope**: cross-project
 **Layer**: 3
 **Relevant Tasks**: component-development, token-selection
 

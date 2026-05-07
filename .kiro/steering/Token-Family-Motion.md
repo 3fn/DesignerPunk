@@ -10,7 +10,7 @@ description: Motion token family — animation duration, easing curves, and scal
 **Last Reviewed**: 2025-12-30
 **Purpose**: Motion token reference and usage guide
 **Organization**: token-documentation
-**Scope**: motion-token-system
+**Scope**: cross-project
 **Layer**: 3
 **Relevant Tasks**: component-development, token-selection
 

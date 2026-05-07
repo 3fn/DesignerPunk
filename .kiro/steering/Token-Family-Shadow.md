@@ -10,7 +10,7 @@ description: Shadow token family — directional depth effects with compositiona
 **Last Reviewed**: 2025-12-30
 **Purpose**: Shadow token reference and usage guide
 **Organization**: token-documentation
-**Scope**: shadow-glow-token-system
+**Scope**: cross-project
 **Layer**: 3
 **Relevant Tasks**: component-development, token-selection
 

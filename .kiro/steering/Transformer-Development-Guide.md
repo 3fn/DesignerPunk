@@ -10,7 +10,7 @@ description: Transformer development guide — ITokenTransformer interface, Tran
 **Last Reviewed**: 2026-02-21
 **Purpose**: Guide for building custom token transformers that consume DTCG output and produce tool-specific formats
 **Organization**: process-standard
-**Scope**: transformer-development
+**Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: transformer-development, dtcg-integration, tool-integration
 

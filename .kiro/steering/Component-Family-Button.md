@@ -11,7 +11,7 @@ description: Button component family — ButtonCTA variants, sizes, icon support
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 3
-**Relevant Tasks**: component-development, ui-composition, button-implementation
+**Relevant Tasks**: component-development, ui-composition, component-implementation
 **Last Reviewed**: 2026-01-25
 
 ---

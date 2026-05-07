@@ -5,7 +5,8 @@ inclusion: manual
 # Integration Methodology
 
 **Date**: 2026-02-25
-**Purpose**: Repeatable methodology for building 3rd-party integrations in DesignerPunk
+**Last Reviewed**: 2026-02-25
+**Purpose**: for building 3rd-party integrations in DesignerPunk
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 2

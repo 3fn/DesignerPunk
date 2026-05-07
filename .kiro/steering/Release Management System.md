@@ -5,6 +5,7 @@ inclusion: manual
 # Release Management System
 
 **Date**: 2026-02-28
+**Last Reviewed**: 2026-02-28
 **Last Updated**: 2026-02-28
 **Purpose**: Mental model of the release management system for AI agents
 **Organization**: process-standard

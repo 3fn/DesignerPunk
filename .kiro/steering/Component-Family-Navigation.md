@@ -11,7 +11,7 @@ description: Navigation component family — wayfinding and view-switching compo
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 3
-**Relevant Tasks**: component-development, ui-composition, navigation-implementation
+**Relevant Tasks**: component-development, ui-composition, component-implementation
 **Last Reviewed**: 2026-03-18
 
 ---

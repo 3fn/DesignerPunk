@@ -7,6 +7,7 @@ description: Layout specification vocabulary — responsive layout terms, grid s
 # Layout Specification Vocabulary
 
 **Date**: 2026-03-23
+**Last Reviewed**: 2026-03-23
 **Purpose**: Canonical vocabulary and specification format for responsive layout across platforms
 **Organization**: process-standard
 **Scope**: cross-project

@@ -79,7 +79,14 @@ const ADDITIONAL_TASK_TYPES = [
   'task-completion',
   'release-related-work',
   'test-coverage-audit',
-  'all-tasks'
+  'all-tasks',
+  'component-implementation',  // Spec 102: added as consolidation of *-implementation family (badge, button, chip, etc.)
+  'architecture-planning',  // Spec 102: added for docs about architectural planning work (4 docs)
+  'testing',  // Spec 102: added for docs about testing practices (2 docs)
+  'token-creation',  // Spec 102: added for docs about token creation workflows (1 doc)
+  'styling',  // Spec 102: added for Token-Quick-Reference (referenced during styling tasks)
+  'integrations',  // Spec 102: added for docs about integration work (1 doc)
+  'accessibility-compliance'  // Spec 102: added for docs about accessibility compliance (1 doc)
 ];
 
 const ALL_TASK_TYPES = [...CORE_TASK_TYPES, ...ADDITIONAL_TASK_TYPES];
@@ -90,7 +97,8 @@ const VALID_ORGANIZATION = [
   'architecture-overview',
   'spec-guide',
   'spec-summary',
-  'spec-completion'
+  'spec-completion',
+  'token-documentation',  // Spec 102: added for Token-Family-*.md docs (16 docs, domain-legitimate)
 ];
 const VALID_SCOPE = ['cross-project'];
 const VALID_LAYERS = [0, 1, 2, 3];

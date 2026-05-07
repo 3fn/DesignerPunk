@@ -6,13 +6,13 @@ description: Chip component family — compact, interactive elements for filteri
 
 # Chip Components
 
-**Date**: February 4, 2026
+**Date**: 2026-02-04
 **Purpose**: MCP-queryable documentation for Chip component family
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 3
-**Relevant Tasks**: component-development, ui-composition, chip-implementation
-**Last Reviewed**: February 4, 2026
+**Relevant Tasks**: component-development, ui-composition, component-implementation
+**Last Reviewed**: 2026-02-04
 
 ---
 

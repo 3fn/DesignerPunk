@@ -10,7 +10,7 @@ description: Bidirectional Figma integration workflow — token push (054a) and 
 **Last Reviewed**: 2026-02-23
 **Purpose**: Figma integration workflow documentation for token push and design extraction
 **Organization**: process-standard
-**Scope**: figma-integration
+**Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: figma-integration, token-push, design-extraction
 

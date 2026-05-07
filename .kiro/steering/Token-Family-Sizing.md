@@ -10,7 +10,7 @@ description: Sizing token family — component dimensions (width, height, box si
 **Last Reviewed**: 2026-04-03
 **Purpose**: Sizing primitive token reference and usage guide
 **Organization**: token-documentation
-**Scope**: token-system
+**Scope**: cross-project
 **Layer**: 3
 **Relevant Tasks**: component-development, token-selection
 

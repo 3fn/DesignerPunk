@@ -1,3 +1,9 @@
+---
+inclusion: manual
+name: MCP-Relationship-Model
+description: Defines boundaries, information flow, access model, and interface contracts between DesignerPunk's three MCP servers
+---
+
 # MCP Relationship Model
 
 **Date**: 2026-03-20

@@ -143,7 +143,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Update `**Last Reviewed**` date to `2026-05-07`
     - _Design Outline Scope item 4_
 
-  - [ ] 1.9 Mechanical metadata fixes
+  - [x] 1.9 Mechanical metadata fixes
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -154,7 +154,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Re-run `validate-steering-metadata.js` after mechanical fixes; confirm 20 mechanical errors cleared
     - _Design Outline Scope item 8 + Design Section 1 error breakdown_
 
-  - [ ] 1.10 Vocabulary triage decisions
+  - [x] 1.10 Vocabulary triage decisions
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
@@ -168,7 +168,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Capture all decisions in a triage log (appended to task completion doc or dedicated artifact)
     - _Design Outline Scope item 9 + Design Section 3_
 
-  - [ ] 1.11 Update validator script with expanded vocabulary
+  - [x] 1.11 Update validator script with expanded vocabulary
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -180,7 +180,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
       ```
     - _Design Section 2 workflow + Design Outline Scope item 9_
 
-  - [ ] 1.12 Apply correct-doc edits from triage
+  - [x] 1.12 Apply correct-doc edits from triage
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -191,7 +191,7 @@ Structure mirrors Spec 101: two parent tasks with a human gate between them. Par
     - Split from validator update (1.11) for audit traceability — "which commit fixed the vocabulary list?" vs. "which commit corrected the docs?" are separable questions
     - _Design Outline Scope item 9 + Ada R4 RR3_
 
-  - [ ] 1.13 Verify 0/87 metadata errors or documented deferrals
+  - [x] 1.13 Verify 0/87 metadata errors or documented deferrals
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

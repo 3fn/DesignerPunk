@@ -6,8 +6,9 @@ description: Uniform behavioral contract system reference — 10-category taxono
 
 # Contract System Reference
 
-**Date**: February 25, 2026
-**Purpose**: Authoritative reference for the uniform behavioral contract system governing all Stemma components
+**Date**: 2026-02-25
+**Last Reviewed**: 2026-04-03
+**Purpose**: governing all Stemma components
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 2

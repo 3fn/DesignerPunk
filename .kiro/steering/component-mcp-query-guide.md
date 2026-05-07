@@ -7,6 +7,7 @@ description: MCP tool reference — all tools across Application, Product, and D
 # MCP Query Guide
 
 **Date**: 2026-02-28
+**Last Reviewed**: 2026-05-06
 **Updated**: 2026-04-23
 **Purpose**: Documents all MCP tools, parameters, and usage patterns across Application, Product, and Docs MCP servers
 **Organization**: process-standard

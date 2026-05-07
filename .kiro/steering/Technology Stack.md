@@ -1,3 +1,9 @@
+---
+inclusion: manual
+name: Technology-Stack
+description: Define technology choices for DesignerPunk cross-platform implementation
+---
+
 # Technology Stack
 
 **Date**: 2025-11-26

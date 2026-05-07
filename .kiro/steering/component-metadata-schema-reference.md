@@ -7,6 +7,7 @@ description: Complete field reference for assembled ComponentMetadata JSON — a
 # Component Metadata Schema Reference
 
 **Date**: 2026-02-28
+**Last Reviewed**: 2026-03-28
 **Purpose**: Documents all fields in the assembled component metadata JSON
 **Organization**: process-standard
 **Scope**: cross-project

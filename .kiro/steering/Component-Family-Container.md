@@ -11,7 +11,7 @@ description: Container component family — layout and content organization with
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 3
-**Relevant Tasks**: component-development, ui-composition, layout-implementation
+**Relevant Tasks**: component-development, ui-composition, component-implementation
 **Last Reviewed**: 2026-01-21
 
 ---

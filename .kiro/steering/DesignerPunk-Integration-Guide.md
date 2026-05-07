@@ -1,3 +1,9 @@
+---
+inclusion: manual
+name: DesignerPunk-Integration-Guide
+description: Everything a product developer needs to integrate DesignerPunk into a product repo
+---
+
 # DesignerPunk Integration Guide
 
 **Date**: 2026-04-08

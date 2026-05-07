@@ -9,7 +9,7 @@ inclusion: manual
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 3
-**Relevant Tasks**: component-development, ui-composition, progress-implementation
+**Relevant Tasks**: component-development, ui-composition, component-implementation
 **Last Reviewed**: 2026-03-09
 
 ---

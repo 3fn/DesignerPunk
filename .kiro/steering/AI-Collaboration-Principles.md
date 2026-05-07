@@ -4,7 +4,8 @@ inclusion: always
 
 # AI Collaboration Principles
 
-**Date**: January 15, 2026
+**Date**: 2026-01-15
+**Last Reviewed**: 2026-01-16
 **Purpose**: Core skepticism and candid communication requirements for AI-human collaboration
 **Organization**: process-standard
 **Scope**: cross-project
