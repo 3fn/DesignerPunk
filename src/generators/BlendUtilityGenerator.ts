@@ -54,7 +54,7 @@ export class BlendUtilityGenerator {
       lines.push(' * returning the calculated color as a hex string.');
       lines.push(' * ');
       lines.push(' * @example');
-      lines.push(' * import { BlendTokens, darkerBlend } from "@designerpunk/tokens";');
+      lines.push(' * import { BlendTokens, darkerBlend } from "@3fn/core/blend";');
       lines.push(' * ');
       lines.push(' * const hoverColor = darkerBlend("#A855F7", BlendTokens.blend200);');
       lines.push(' * // Returns: "#9A4EE3" (purple500 + 8% black)');

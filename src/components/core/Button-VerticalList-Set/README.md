@@ -103,7 +103,7 @@ This component guarantees the following behaviors across all platforms:
 ### JavaScript/TypeScript
 
 ```typescript
-import { ButtonVerticalListSet } from '@designerpunk/components/Button-VerticalList-Set';
+import { ButtonVerticalListSet } from '@3fn/core/components';
 
 // Programmatic usage - Tap mode
 const tapSet = document.createElement('button-vertical-list-set') as ButtonVerticalListSet;

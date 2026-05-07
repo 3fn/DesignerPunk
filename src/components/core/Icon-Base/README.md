@@ -39,7 +39,7 @@ Icon-Base is the foundational primitive component for all icon components in the
 ### Web (JavaScript/TypeScript)
 
 ```typescript
-import { createIconBase, IconBase, IconBaseElement } from '@designerpunk/components';
+import { createIconBase, IconBase, IconBaseElement } from '@3fn/core/components';
 
 // Functional API
 const iconHTML = createIconBase({ name: 'arrow-right', size: 24 });

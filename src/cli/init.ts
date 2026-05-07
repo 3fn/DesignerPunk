@@ -40,7 +40,7 @@ export async function runInit(argv: string[]): Promise<void> {
   // 1. .npmrc
   createFileIfNotExists(
     path.join(dest, '.npmrc'),
-    '@designerpunk:registry=https://npm.pkg.github.com\n',
+    '@3fn:registry=https://npm.pkg.github.com\n',
     '.npmrc',
   );
 
@@ -186,7 +186,7 @@ function copyDir(src: string, dest: string, opts?: CopyOptions): boolean {
 }
 
 function generateConfig(name: string, abbreviation: string): string {
-  return `import { defineConfig } from '@designerpunk/core/config';
+  return `import { defineConfig } from '@3fn/core/config';
 import { darkOverrides } from './src/tokens/themes/dark/SemanticOverrides';
 import { wcagOverrides } from './src/tokens/themes/wcag/SemanticOverrides';
 

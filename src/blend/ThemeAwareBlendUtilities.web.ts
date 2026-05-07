@@ -281,7 +281,7 @@ export function createBlendUtilities(): BlendUtilitiesResult {
  * @example
  * ```typescript
  * // For SSR, testing, or build-time calculations
- * import { getBlendUtilities } from '@designerpunk/tokens/ThemeAwareBlendUtilities';
+ * import { getBlendUtilities } from '@3fn/core/blend';
  * 
  * const blendUtils = getBlendUtilities();
  * const hoverColor = blendUtils.hoverColor('#A855F7');

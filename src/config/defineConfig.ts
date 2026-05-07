@@ -1,13 +1,13 @@
 /**
  * DesignerPunk Configuration API
  *
- * Exported from `@designerpunk/core/config` for product repos.
+ * Exported from `@3fn/core/config` for product repos.
  * Products create a `designerpunk.config.ts` that imports `defineConfig`
  * and explicitly registers themes and component token paths.
  *
  * @example
  * ```typescript
- * import { defineConfig } from '@designerpunk/core/config';
+ * import { defineConfig } from '@3fn/core/config';
  * import { marketingOverrides } from './themes/marketing/SemanticOverrides';
  *
  * export default defineConfig({

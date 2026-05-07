@@ -108,7 +108,7 @@ This component guarantees the following behaviors across all platforms:
 ### JavaScript/TypeScript
 
 ```typescript
-import { ButtonVerticalListItem } from '@designerpunk/components/Button-VerticalList-Item';
+import { ButtonVerticalListItem } from '@3fn/core/components';
 
 // Programmatic usage
 const item = document.createElement('button-vertical-list-item') as ButtonVerticalListItem;
