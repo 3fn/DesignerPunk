@@ -157,7 +157,7 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
     - Verify workflow triggers correctly on a test branch or via `act` (if available)
     - _Design Outline: "Scope > In scope" item 7_
 
-- [ ] 2. Publish 11.0.0 and Verify
+- [x] 2. Publish 11.0.0 and Verify
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -251,7 +251,7 @@ Work distributes across Ada (pipeline/CLI/publish) and Thurgood (docs/governance
     - Assign to Ada for follow-up spec consideration
     - _Design Outline: "Scope > Out of scope" context_
 
-  - [ ] 2.6 Write completion documentation and summary
+  - [x] 2.6 Write completion documentation and summary
     **Type**: Documentation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
