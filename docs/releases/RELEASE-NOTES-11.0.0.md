@@ -6,6 +6,8 @@
 
 ## 🔴 Breaking / Consumer-Facing
 
+- **Reconcile Package References and Prepare for Publish** *(Consumer-Facing)*
+  Reconciled all active `@designerpunk/core` references (and three historical orphan scopes: `@designerpunk/tokens`, `@designerpunk/components`, `@designerpunk/build`) to the current published scope `@3fn/core` across source code, steering docs, agent prompts, roadmap docs, product-template artifacts, and the MCP-governed surface area. Added publish-required `package.json` metadata — `repository`, `license: "Apache-2.0"`, `author` — plus the `product-template/` directory to the `files` array so agent templates ship to consumers. Created an Apache License 2.0 `LICENSE` file at repo root. Built `scripts/check-package-name-drift.js` drift detection script, wired it into `prepublishOnly`, and added a GitHub Actions workflow that runs on PRs and pushes to `main`. Fresh `dist/` rebuild verified zero `@designerpunk/*` references in published artifacts.
 - **Reverse Indexes, Gap Detection & New Tools** *(Token)*
   Built the intelligence layer for the Product MCP: three reverse indexes (component→screens, token→screens, domainObject→screens), gap detection against the component catalog, 5 new query tools, enriched experience map, and platform-aware filtering. Fixed a latent bug in one-off enrichment for branched UI trees.
 - **Application MCP Token Query Tools** *(Token)*
