@@ -1,6 +1,6 @@
 # Product Agent Configuration Template
 
-**Purpose**: Pre-configured agent prompts for products consuming `@designerpunk/core`
+**Purpose**: Pre-configured agent prompts for products consuming `@3fn/core`
 **Usage**: Copy this `product-template/agents/` directory to your product repo's `.kiro/agents/`, then customize the fields marked with `[CUSTOMIZE]`.
 
 ---
@@ -9,7 +9,7 @@
 
 1. Copy this directory to your product repo:
    ```bash
-   cp -r node_modules/@designerpunk/core/product-template/agents/ .kiro/agents/
+   cp -r node_modules/@3fn/core/product-template/agents/ .kiro/agents/
    ```
 
 2. Customize each prompt file — search for `[CUSTOMIZE]` and replace with your product's values:

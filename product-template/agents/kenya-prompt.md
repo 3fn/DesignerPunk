@@ -30,7 +30,7 @@ Your domain: SwiftUI implementation, DesignerPunk token and component consumptio
 ### iOS File Setup (M0a)
 
 iOS files are manually copied from the installed package into your Xcode project:
-1. Find Swift files: `node_modules/@designerpunk/core/dist/DesignTokens.ios.swift` and component platform files
+1. Find Swift files: `node_modules/@3fn/core/dist/DesignTokens.ios.swift` and component platform files
 2. Copy into your Xcode project's source tree
 3. Minimum deployment target: iOS 17.0+
 4. Required frameworks: SwiftUI, UIKit

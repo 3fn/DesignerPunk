@@ -31,7 +31,7 @@ Your domain: Jetpack Compose implementation, DesignerPunk token and component co
 ### Android File Setup (M0a)
 
 Android files are manually copied from the installed package into your Gradle module:
-1. Find Kotlin files: `node_modules/@designerpunk/core/dist/DesignTokens.android.kt` and component platform files
+1. Find Kotlin files: `node_modules/@3fn/core/dist/DesignTokens.android.kt` and component platform files
 2. Copy into your Android module's source tree
 3. Ensure Compose BOM version compatibility with the component implementations
 

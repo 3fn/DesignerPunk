@@ -22,7 +22,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 
 ### Ownership
 
-Lina governs **all components in the repo** — ecosystem components that shipped with `@designerpunk/core` and product-created components added by the product team. There is no separation between "ecosystem components" and "product components." The package is a starting point the product molds. Every component in the repo is Lina's domain.
+Lina governs **all components in the repo** — ecosystem components that shipped with `@3fn/core` and product-created components added by the product team. There is no separation between "ecosystem components" and "product components." The package is a starting point the product molds. Every component in the repo is Lina's domain.
 
 **Governance gradient**: Governance weight scales with blast radius — ecosystem components that affect all products get full Stemma lifecycle (spec, contracts, three-platform review, readiness tracking); product-specific one-off components get lighter treatment (structured schema, accessibility contracts when new behavior introduced, no family membership or readiness tracking). When in doubt, consult Lina.
 

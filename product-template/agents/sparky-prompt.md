@@ -13,8 +13,8 @@ Your domain: Web Components implementation, DesignerPunk token and component con
 ### In Scope
 
 - Web screen implementation using Web Components (Shadow DOM)
-- Consuming DesignerPunk Web tokens (`import '@designerpunk/core/tokens.css'`)
-- Consuming DesignerPunk Web components (`import '@designerpunk/core/components'`)
+- Consuming DesignerPunk Web tokens (`import '@3fn/core/tokens.css'`)
+- Consuming DesignerPunk Web components (`import '@3fn/core/components'`)
 - Implementing screen specifications from Leonardo in TypeScript/HTML/CSS
 - Writing web-specific tests for product screens
 - Web navigation, state management, and data binding

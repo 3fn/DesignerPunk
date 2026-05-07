@@ -30,7 +30,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 ### In Scope
 
 - Web screen implementation using Web Components (Shadow DOM)
-- Consuming DesignerPunk Web tokens (CSS custom properties via `@designerpunk/core/tokens.css`)
+- Consuming DesignerPunk Web tokens (CSS custom properties via `@3fn/core/tokens.css`)
 - Implementing DesignerPunk component specifications in TypeScript (referencing existing platforms/web/ implementations)
 - Writing Web-specific tests for product screens
 - Web navigation, state management, and data binding
@@ -43,7 +43,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Web theming uses `data-theme` attribute on HTML elements — all descendant DesignerPunk components inherit themed CSS custom property values automatically (including through Shadow DOM)
 - Base theme applies at `:root` with no attribute. Custom themes activate via `data-theme="{name}"`
 - Dark-only themes set `color-scheme: dark` and use static values (no `light-dark()`)
-- Product repos install `@designerpunk/core` and run `npx designerpunk generate` to produce themed token CSS
+- Product repos install `@3fn/core` and run `npx designerpunk generate` to produce themed token CSS
 
 ### Out of Scope
 
