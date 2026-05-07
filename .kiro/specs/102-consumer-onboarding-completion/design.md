@@ -51,11 +51,15 @@ Running `node scripts/validate-steering-metadata.js` on 2026-05-07 confirmed:
 | Task type values | 18 (14 distinct; 8 follow `*-implementation` pattern) | ~7 (if `*-implementation` decided as family = 1 decision) |
 | **Total** | **63** | **~15 distinct decisions** |
 
-**What this changes**: Design-outline.md § "Scope" item 9 estimated "~35 case-by-case decisions" with "~1-2 hours triage." Actual is ~15 distinct decisions, with one decision clearing 16 errors and another potentially clearing 8 in a single pattern call. **Revised estimate: ~30-45 minutes of triage plus mechanical fixes.** Spec 102's execution sizing is notably lighter than previously thought.
+**What this changes**: Design-outline.md § "Scope" item 9 estimated "~35 case-by-case decisions" with "~1-2 hours triage." Actual is ~15 distinct decisions (refined to ~4-6 pattern-level decisions when Section 3's framework is applied). Triage itself should be **~30-45 minutes**.
+
+**Realistic total metadata execution time (per Ada R3)**: triage ~30-45 min + mechanical fixes for 20 errors across ~14 docs ~30 min + validator script update with expansion comments ~15 min = **~75-90 min total for all Parent 1 metadata work**. Worth naming explicitly to avoid the "why is this taking longer than expected?" confusion during execution — triage alone is fast, but mechanical work and validator updates add substantial real time.
 
 ### Verified: Source-file locations for Gaps 1-5
 
 Line numbers in the design outline come from `.kiro/issues/2026-05-07-consumer-onboarding-gaps.md` (authored by Ada during Spec 101 Task 2.3 verification). Location evidence is Ada's direct observation during a successful end-to-end consumer walkthrough. Accepting as verified without independent re-check — if any line numbers drifted due to intervening edits, it surfaces as a benign implementation-time correction during execution (similar to Spec 101 Task 1.4's scope expansion when additional files surfaced).
+
+**Gap 3 code-location anchor** (per Ada R3 verification): `src/cli/init.ts:172` is the specific line — `if (fs.existsSync(dest))` — where the directory-level skip currently lives. This is the target for Gap 3's merge-mode replacement. Anchored here explicitly so tasks.md implementation step has an unambiguous target rather than a file-level search.
 
 ### Verified: Package registry state
 
@@ -149,7 +153,35 @@ Important: validator changes ship in the package (`scripts/` is referenced from 
 
 These two artifacts must **match**. If Ada's scaffold uses one path convention and Thurgood's guide documents a different one, consumers see inconsistency.
 
-**Mitigation**: both artifacts use the `DP-PortfolioSite/.kiro/settings/mcp.json` Peter authored during Spec 101 Task 2.3 as the canonical reference. Both tasks cite the same source of truth.
+**Mitigation (strengthened per Ada R3)**: commit a canonical template file to the source tree (e.g., `src/cli/templates/mcp-config.json.template` or equivalent) that serves as the **single source of truth**:
+
+- Gap 5 (`init.ts`) reads the template at scaffold time and produces `.kiro/settings/mcp.json` from it
+- Gap 4 (Integration Guide Step 4) embeds the template content verbatim in the published doc
+- Both subtasks cite the canonical template file, not an external reference
+
+Original plan cited `DP-PortfolioSite/.kiro/settings/mcp.json` (Peter's personal file) as the shared reference. That file validated the pattern during Spec 101 Task 2.3, but it lives outside the DesignerPunk-v2 source tree. If Peter later edits it, the "source of truth" drifts from what the spec cites. Committing a canonical template to the source tree removes that drift risk and makes "same pattern in two places" a git-level guarantee.
+
+**Scope impact**: one new file in source tree + both subtasks reference it. Small addition to Parent 1 scope. If this feels like scope creep, the fallback is: add an explicit cross-check step in tasks.md that validates Gap 4's embedded JSON matches Gap 5's scaffold output. Either approach is stronger than citing an external product file.
+
+### Pre-publish hygiene (per Ada R3)
+
+Parent 2's publish step inherits the hygiene checklist validated during Spec 101 Task 2.2:
+- Working tree clean (`git status` reports no uncommitted changes)
+- On `main` branch
+- Up to date with remote
+- Tests passing (`npm test` exits 0)
+- Package name verified (`cat package.json | grep '"name"'` shows `@3fn/core`)
+- Package version verified (updated to `11.1.0`)
+
+Tasks.md will pick this up as a subtask precondition in Task 2.2-equivalent; not rediscovered at execution time.
+
+### Gap 3 output format as integration-test contract (per Ada R3)
+
+The summary-counts output format from Gap 3's merge mode — e.g., "Copied 43 new files; skipped 1 existing file (preserved your edits)" — becomes a **testable contract** for the integration test (Parent 1 subtask).
+
+Implication: future maintenance of `init.ts`'s output formatting needs to keep the integration test in sync. If someone rewrites the summary message cosmetically, the test breaks for the wrong reason. Worth a brief comment in `init.ts` near the summary-emission code indicating the format is part of its public behavior.
+
+This is captured here as a Section 2 observation so tasks.md's integration-test subtask describes the assertion explicitly (match the exact format, not regex-flexible matching).
 
 ---
 
@@ -212,11 +244,23 @@ Pre-triaged using the framework (Thurgood's reading; Ada can dispute any during 
 | Value | Affected | Decision | Reasoning |
 |-------|----------|----------|-----------|
 | `token-documentation` (organization) | 16 docs | **Expand** | Domain-legitimate, consistent pattern, stable — 16 Token-Family-*.md docs all use it correctly |
-| `*-implementation` task types (8 values) | 8 docs | **Triage as a family** — consider collapsing to one value `component-implementation`, which would be correct-doc for all 8 | If collapsed, clears 8 errors in one pattern decision |
+| 8 component-family `*-implementation` task types (badge, button, chip, form, icon, layout, navigation, progress) | 8 docs | **Correct doc** — collapse to `component-implementation` | Too-specific per Section 3 criteria; `component-implementation` communicates the same category with less fragmentation. 1 decision clears 8 errors. |
+| `platform-implementation` task type | 1 doc | **Expand** | Semantically distinct from the component-family `*-implementation` values — describes platform-level work (web/iOS/Android), which has no existing vocabulary equivalent. Domain-legitimate, stable. (Per Ada R3 verification — design's original framing incorrectly grouped this with the component family.) |
 | Scope values like `motion-token-system`, `shadow-glow-token-system` | 7 distinct × 9 errors | **Per-value per Section 3** — likely a mix of expand (where domain-legitimate) and correct (where over-specific) | Needs actual review of each value's doc context |
 | `testing`, `token-creation`, `styling`, `integrations`, `accessibility-compliance`, `architecture-planning` (remaining task types) | 6 distinct × 10 errors | **Per-value per Section 3** | Some probably legitimate, some outliers |
 
-**Revised estimate with the framework applied**: ~3-5 pattern-level decisions (not 15 individual decisions). The `*-implementation` family alone collapses 8 into 1. Triage should be **~20-30 minutes**, not 1-2 hours.
+**Revised estimate with the framework applied**: ~4-6 pattern-level decisions (not 15 individual decisions). The `token-documentation` expand + `component-implementation` correct-doc pattern + `platform-implementation` expand already collapse 24 errors into 3 decisions. Triage should be **~30-45 minutes**.
+
+### Meta-point: the bar for future vocabulary expansions
+
+Spec 102's vocabulary expansions are **catching up to existing doc patterns** — codifying reality, not introducing new vocabulary. This is a backlog-clearing action, not a proactive contract expansion.
+
+**Future vocabulary expansions (post-Spec-102) should be held to a higher bar.** When a new value surfaces:
+- Is it justified by a new doc pattern emerging organically? → consider expand (like Spec 102's approach)
+- Is it a one-off usage? → correct-doc preferred
+- Is it a proactive addition without multi-doc usage? → strongly prefer deferring until the pattern actually emerges
+
+Per Ada R3: "Spec 102 is clearing a backlog of doc-driven accommodations. Future expansions should be proactive design decisions, not reactive catch-up." Captured here so the framework's permissiveness doesn't get read as perpetual policy.
 
 ### Escape hatch: Risk 7's defer
 

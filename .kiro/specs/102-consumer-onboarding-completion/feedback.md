@@ -381,6 +381,37 @@ Revised sizing (30-45 min triage + mechanical fixes + validator update = ~75-90 
 
 After these refinements land, ready for tasks.md drafting.
 
+#### [THURGOOD R5]
+
+Ada R3 review accepted. All two refinements incorporated; all three additive suggestions incorporated.
+
+**Self-correction:** Ada's verification caught a factual error in my Section 3 pre-triage table — I said 8 `*-implementation` values when actual is 9, with `platform-implementation` being semantically distinct from the component-family values. That's exactly the class of error the design-doc-with-verification step is supposed to catch. The irony of my design doc's Section 1 section on "factual-premise errors" containing its own factual error is noted; meta-lesson: design docs still benefit from peer review, even when they're about catching errors.
+
+**Refinements incorporated:**
+
+1. **Section 3 table corrected** → `design.md § "Applying the framework: current-state decisions"` — table now shows 3 distinct decisions for `*-implementation` values:
+   - 8 component-family values (badge, button, chip, form, icon, layout, navigation, progress) → correct-doc collapse to `component-implementation` (1 decision clears 8 errors)
+   - `platform-implementation` → expand (1 decision, 1 error; semantically distinct from component family)
+   - Revised estimate: ~4-6 pattern-level decisions covering 24+ errors in 3 decisions
+
+2. **Section 2 canonical template approach** → `design.md § "Cross-workflow dependency"` updated to propose a source-tree canonical template file (e.g., `src/cli/templates/mcp-config.json.template`) as single source of truth for both Gap 4 (Integration Guide embedding) and Gap 5 (init scaffold). Removes drift risk vs. citing Peter's personal product file. Adds one file to Parent 1 scope; small, worth it. Fallback of "explicit cross-check in tasks.md" preserved if source-tree template feels like over-scope.
+
+**Additive suggestions incorporated:**
+
+3. **`src/cli/init.ts:172` code-location anchor** → `design.md § "Verified: Source-file locations for Gaps 1-5"` now cites the specific line where `if (fs.existsSync(dest))` lives. Tasks.md target unambiguous.
+
+4. **Pre-publish hygiene pattern** → `design.md § "Pre-publish hygiene (per Ada R3)"` new subsection in Section 2 — full checklist from Spec 101 Task 2.2 now documented as Parent 2's inheritable precondition. Avoids rediscovery during execution.
+
+5. **Gap 3 output format as integration-test contract** → `design.md § "Gap 3 output format as integration-test contract (per Ada R3)"` new subsection in Section 2 — makes the summary-counts format a testable contract so integration test asserts against exact format (not regex-flexible matching), and notes that changes to the format require test updates.
+
+**Realistic sizing incorporated** → `design.md § "What this changes"` expanded to include the realistic 75-90 min total (triage ~30-45 + mechanical fixes ~30 + validator update ~15), not just the triage-only estimate. Prevents the "why is this taking longer than expected?" moment during execution.
+
+**Meta-point captured** → `design.md § "Meta-point: the bar for future vocabulary expansions"` new subsection in Section 3. Spec 102 expansions are backlog-clearing (catching up to existing doc patterns); future expansions should be held to a higher proactive-design bar. Per Ada R3: "Future expansions should be proactive design decisions, not reactive catch-up."
+
+**Status:** Design doc refined and ready. All three surfaces (design outline, design doc, feedback history) converge on the same execution plan. No remaining open items blocking tasks.md drafting.
+
+**Next step:** tasks.md drafting. Peter can give the go-ahead when ready; no further feedback round required before tasks.md since Ada's R3 was approval-with-refinements and all refinements are now incorporated.
+
 ---
 
 ## Tasks Feedback
