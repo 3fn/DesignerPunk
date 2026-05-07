@@ -46,7 +46,7 @@ describe('WebBuildValidator', () => {
     describe('package.json validation', () => {
         it('should validate package.json has required fields', () => {
             const packageJson = {
-                name: '@designerpunk/tokens',
+                name: '@3fn/core',
                 version: '1.0.0',
                 description: 'DesignerPunk design tokens',
                 main: './dist/index.js',
@@ -70,7 +70,7 @@ describe('WebBuildValidator', () => {
 
         it('should detect missing required fields in package.json', () => {
             const invalidPackageJson = {
-                name: '@designerpunk/tokens'
+                name: '@3fn/core'
                 // Missing version, main, module, types
             };
 
@@ -83,7 +83,7 @@ describe('WebBuildValidator', () => {
 
         it('should validate package.json exports configuration', () => {
             const packageJson = {
-                name: '@designerpunk/tokens',
+                name: '@3fn/core',
                 version: '1.0.0',
                 main: './dist/index.js',
                 module: './dist/index.mjs',
@@ -106,7 +106,7 @@ describe('WebBuildValidator', () => {
 
         it('should validate package.json syntax is valid JSON', () => {
             const validJson = JSON.stringify({
-                name: '@designerpunk/tokens',
+                name: '@3fn/core',
                 version: '1.0.0',
                 main: './dist/index.js'
             });
@@ -118,7 +118,7 @@ describe('WebBuildValidator', () => {
         });
 
         it('should detect invalid JSON syntax', () => {
-            const invalidJson = '{ name: "@designerpunk/tokens", version: "1.0.0" }'; // Missing quotes
+            const invalidJson = '{ name: "@3fn/core", version: "1.0.0" }'; // Missing quotes
 
             const result = validator.validatePackageJsonSyntax(invalidJson);
 
@@ -238,7 +238,7 @@ describe('WebBuildValidator', () => {
 
         it('should validate package can be imported as ESM', () => {
             const packageJson = {
-                name: '@designerpunk/tokens',
+                name: '@3fn/core',
                 version: '1.0.0',
                 type: 'module',
                 exports: {
@@ -257,7 +257,7 @@ describe('WebBuildValidator', () => {
 
         it('should validate package can be imported as CommonJS', () => {
             const packageJson = {
-                name: '@designerpunk/tokens',
+                name: '@3fn/core',
                 version: '1.0.0',
                 main: './dist/index.js',
                 exports: {
@@ -339,7 +339,7 @@ customElements.define('design-button', DesignButton);
 
         it('should validate tree-shaking support', () => {
             const packageJson = {
-                name: '@designerpunk/tokens',
+                name: '@3fn/core',
                 version: '1.0.0',
                 sideEffects: false,
                 exports: {
@@ -385,7 +385,7 @@ customElements.define('design-button', DesignButton);
         it('should perform complete Web build validation', () => {
             const buildOutput = {
                 packageJson: {
-                    name: '@designerpunk/tokens',
+                    name: '@3fn/core',
                     version: '1.0.0',
                     main: './dist/index.js',
                     module: './dist/index.mjs',
@@ -427,7 +427,7 @@ customElements.define('design-button', DesignButton);
         it('should aggregate validation errors from all checks', () => {
             const invalidBuildOutput = {
                 packageJson: {
-                    name: '@designerpunk/tokens'
+                    name: '@3fn/core'
                     // Missing required fields
                 },
                 css: ':root { --Space100 8px }', // Invalid syntax

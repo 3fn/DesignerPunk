@@ -134,7 +134,7 @@ describe('WebBuilder - NPM Package Structure', () => {
       const packageJson = JSON.parse(packageJsonContent);
 
       // Verify package metadata
-      expect(packageJson.name).toBe('@designerpunk/tokens');
+      expect(packageJson.name).toBe('@3fn/core');
       expect(packageJson.version).toBeDefined();
       expect(packageJson.description).toBeDefined();
 

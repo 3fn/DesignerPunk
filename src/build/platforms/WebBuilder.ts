@@ -125,7 +125,7 @@ export class WebBuilder implements PlatformBuilder {
       target: buildOptions?.target || 'es2020',
       formats: buildOptions?.formats || ['esm', 'cjs'],
       externals: buildOptions?.externals || [],
-      packageName: '@designerpunk/tokens',
+      packageName: '@3fn/core',
       packageVersion: '1.0.0',
       packageDescription: 'DesignerPunk Design System - Web Components and Tokens'
     };

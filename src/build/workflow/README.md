@@ -17,7 +17,7 @@ Source maps enable debugging of generated platform-specific code back to origina
 ### Usage
 
 ```typescript
-import { SourceMapGenerator } from '@designerpunk/build/workflow';
+import { SourceMapGenerator } from '@3fn/core/build/workflow';
 
 const generator = new SourceMapGenerator();
 
@@ -205,7 +205,7 @@ interface SourceMapResult {
 Source maps integrate seamlessly with the build orchestrator:
 
 ```typescript
-import { BuildOrchestrator, SourceMapGenerator } from '@designerpunk/build';
+import { BuildOrchestrator, SourceMapGenerator } from '@3fn/core/build';
 
 const orchestrator = new BuildOrchestrator();
 const sourceMapGenerator = new SourceMapGenerator();
