@@ -143,6 +143,49 @@ Ada noted that for the steering case specifically, a consumer's pre-existing `de
 
 **Status:** All feedback incorporated. Design outline coherent with Ada's recommendations. Ready to proceed to tasks.md drafting pending Peter's go-ahead.
 
+#### [PETER DIRECTION — 2026-05-07]
+
+Peter gave three direction-setting answers after [THURGOOD R2] was posted:
+
+**Direction 1 — Priority of Spec 102**: M0A's goal is testing the developer experience for installing DesignerPunk, getting it to "not breaking" (not perfect). Resolving these onboarding issues is in service of that M0A goal. → Spec 102 is on the critical path, not queue-for-later.
+
+**Direction 2 — Steering docs copy during init**: Installing DP should mean getting the steering docs. Rationale: developers might need to modify certain processes, update token and component docs, and see what influences the AI agents. → Current init behavior (copy steering) is correct by design, not a bug. Ada's flagged followup question ("should init copy steering at all?") is RESOLVED as not-a-future-spec — current behavior is intentional.
+
+**Direction 3 — 49/87 steering doc metadata errors**: Peter's most concerning item; doesn't want these shipping with the package. Chose **Option B**: expand Spec 102 to cover all 49 metadata errors, not just the mechanical fixes. Honest scope expansion over deferral.
+
+#### [THURGOOD R3]
+
+Incorporating Peter's three directions.
+
+**Direction 1 (priority)** — No design outline changes needed; "M0A consumer-onboarding testing" context is implicit in the Problem section. Noting in completion doc framing.
+
+**Direction 2 (steering docs)** — Resolves Ada's R1 followup question. No longer flagged as future spec; treated as intentional behavior. No negative action needed on Spec 102 scope — Gap 3 merge mode still applies to `.kiro/steering/` and all other `copyDir` targets.
+
+**Direction 3 (metadata cleanup scope expansion)** — Meaningful scope expansion applied to design outline:
+
+- **`design-outline.md § "Scope > In scope"`** — added items 8, 9, 10 covering mechanical fixes (12 Last Reviewed + 2 date formats), vocabulary mismatch triage (~35 decisions + validator script update), and validator accuracy re-verification (0/87 target).
+- **`design-outline.md § "Approach > Domain distribution"`** — added three Thurgood rows (mechanical fixes, vocabulary triage, re-verification).
+- **`design-outline.md § "Risks"`** — added item 7: vocabulary mismatch triage may surface governance questions; mitigation is to defer any genuinely-ambiguous individual mismatches to a follow-up without blocking the other ~34 fixes.
+- **`design-outline.md § "Success criteria"`** — added criterion 9: `validate-steering-metadata.js` reports 0/87 errors.
+- **Parent 1 scope**: now materially larger (5 gaps + integration test + fresh rebuild + metadata cleanup). Parent task structure still fits — all work remains reversible and behind the human gate before publish. Parallelism: Ada's source-code work and Thurgood's metadata work run independently, no coordination conflicts.
+
+**Version decision**: `11.1.0` remains correct. Metadata cleanup doesn't change consumer-visible API; docs get cleaner but shape doesn't change.
+
+**Execution sizing observation**: Spec 102 execution time roughly doubles vs. pre-expansion scope. The metadata work splits cleanly into:
+- Mechanical fixes (~30 min, no decisions)
+- Vocabulary mismatch triage (~1-2 hours, ~35 decisions at ~2-3 min each average)
+- Validator script update (small, tied to vocabulary decisions)
+- Re-verification (trivial)
+
+Still a lightweight spec relative to Spec 101's scope, just roughly double the prior 102 estimate.
+
+**Requesting [@ADA] R2 review on the expanded scope.** Specifically please validate:
+1. Metadata cleanup scope split (mechanical vs. vocabulary triage) is reasonable
+2. Vocabulary mismatch handling approach (expand validator vs. correct doc, case-by-case) is sound
+3. Risk 7's mitigation (defer ambiguous individual mismatches without blocking others) is acceptable
+4. No objection to metadata work running in parallel with your source-code track in Parent 1
+5. Version `11.1.0` still correct with the scope expansion
+
 ---
 
 ## Tasks Feedback

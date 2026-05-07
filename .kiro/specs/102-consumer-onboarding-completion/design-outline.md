@@ -59,6 +59,19 @@ Success is measured against the Spec 101 Task 2.3 walkthrough: same flow (create
 
 7. **Prevention: Integration test for `init.ts` end-to-end.** Tests that `npx designerpunk init` in a scratch repo produces all expected artifacts including the new MCP config, and that subsequent runs handle pre-existing files correctly.
 
+8. **Steering doc metadata cleanup — mechanical fixes** (Thurgood). Address the portion of the 49/87 metadata errors that require no governance decisions:
+   - Add missing `Last Reviewed` field to 12 identified docs (per Spec 098 staleness assessment)
+   - Normalize non-ISO date formats in 2 docs (Component-Family-Badge, Component-Family-Chip)
+
+9. **Steering doc metadata cleanup — vocabulary mismatches** (Thurgood). Address the remaining ~35 metadata errors via case-by-case triage:
+   - Run `validate-steering-metadata.js` to enumerate each distinct non-standard value
+   - For each mismatch, decide: expand the validator's vocabulary (if the domain-specific value is legitimate, e.g., `token-family-reference` on a Token-Family-*.md doc) vs. correct the doc (if the value is an outlier that should use standard vocabulary)
+   - Update `scripts/validate-steering-metadata.js` with expanded vocabulary where decided
+   - Update individual docs where correction was decided
+   - Goal: zero metadata errors when validator runs against the final state
+
+10. **Validator accuracy check**: after both mechanical and vocabulary passes, re-run `validate-steering-metadata.js` and confirm zero errors (0/87). This becomes a Parent 1 success criterion.
+
 ### Out of scope
 
 1. **The seven-issue triage batch this spec originated from.** Issues #1, #2, #3, #4, #5, #7 from Peter's 2026-05-07 triage are handled separately:
@@ -89,7 +102,10 @@ Success is measured against the Spec 101 Task 2.3 walkthrough: same flow (create
 | Gap 3: init.ts merge mode | **Ada** | `src/cli/init.ts` — `copyDir()` behavior change |
 | Gap 4: Integration Guide Step 4 | **Thurgood** | `.kiro/steering/DesignerPunk-Integration-Guide.md` doc update |
 | Gap 5: mcp.json scaffold in init.ts | **Ada** | `src/cli/init.ts` new step |
-| Integration test for init.ts | **Ada** | New test in `src/cli/__tests__/` or equivalent |
+| Integration test for init.ts | **Ada** | New test in `src/cli/__tests__/init.test.ts` |
+| Metadata mechanical fixes (Last Reviewed + date format) | **Thurgood** | ~14 doc edits |
+| Metadata vocabulary mismatches (triage + validator update) | **Thurgood** | ~35 decisions + validator script update |
+| Validator accuracy re-verification | **Thurgood** | Run validator, confirm 0/87 errors |
 | Release notes, publish, verify, tag | **Ada** | Same pattern as Spec 101 Parent 2 |
 | Parent task completion docs | **Thurgood** | Following Completion Documentation Guide |
 
@@ -157,6 +173,8 @@ All five resolved during Ada R1 review on 2026-05-07.
 
 6. **`npm deprecate` still won't work on GitHub Packages.** Same long-standing GHP limitation Spec 101 hit. Unlikely to bite Spec 102 (11.0.0 is clean; no prior-version cleanup needed), but flagging in case any unexpected registry state surfaces during publish.
 
+7. **Vocabulary mismatch triage may surface governance questions.** The ~35 vocabulary mismatches require case-by-case decisions (expand validator vocabulary vs. correct the doc). Some decisions may be clear (e.g., `token-family-reference` is a legitimate organization value); others may be genuinely ambiguous. Risk: triage stalls if a non-obvious pattern surfaces that requires Civitas deliberation beyond this spec's scope. Mitigation: if a specific mismatch surfaces a governance question beyond "expand or correct," document it inline and defer just that one to a follow-up Civitas conversation; don't block the other 34+ fixes waiting on the outlier.
+
 ### De-risked during review
 
 - ~~**Integration test location may not exist yet.**~~ Ada verified `src/cli/__tests__/` exists with `figma-extract.test.ts` and `figma-push.test.ts`. Integration test lives at `src/cli/__tests__/init.test.ts` alongside existing CLI tests.
@@ -175,4 +193,5 @@ The spec is complete when all of the following are true:
 6. Integration Guide Step 4 includes a concrete `.kiro/settings/mcp.json` template; a consumer reading only the published guide (no DesignerPunk-v2 dev repo access) can configure MCP correctly.
 7. `@3fn/core@11.1.0` published publicly to GitHub Packages with git tag `v11.1.0`.
 8. Integration test for `init.ts` in place and passing.
-9. Completion documentation captures execution findings and any new observations.
+9. **`validate-steering-metadata.js` reports 0/87 errors** against the post-cleanup state — all 49 metadata errors resolved (12 Last Reviewed additions, 2 date format normalizations, ~35 vocabulary mismatches triaged and resolved via expand-vocabulary-or-correct-doc decisions).
+10. Completion documentation captures execution findings and any new observations.
