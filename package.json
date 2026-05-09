@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "11.2.0",
+  "version": "11.2.1",
   "description": "True Native cross-platform design system with mathematical foundations",
   "license": "Apache-2.0",
   "author": "Peter Michaels Allen",
@@ -70,6 +70,11 @@
     "./config": {
       "import": "./dist/config/index.js",
       "types": "./dist/config/index.d.ts"
+    },
+    "./types": {
+      "import": "./src/types/index.ts",
+      "require": "./src/types/index.ts",
+      "types": "./src/types/index.ts"
     },
     "./blend": {
       "import": "./dist/blend/index.js",

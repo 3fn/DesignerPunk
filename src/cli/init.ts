@@ -51,11 +51,11 @@ export async function runInit(argv: string[]): Promise<void> {
     'designerpunk.config.ts (dark + wcag themes registered)',
   );
 
-  // 3. Token source
+  // 3. Token source (rewrite relative type imports to package imports)
   const tokensResult = copyDir(
     path.join(pkgRoot, 'src/tokens'),
     path.join(dest, 'src/tokens'),
-    { exclude: ['__tests__'] },
+    { exclude: ['__tests__'], transform: rewriteTypeImports },
   );
   reportCopy('token source', tokensResult);
 
@@ -169,6 +169,8 @@ function createFileIfNotExists(filePath: string, content: string, label: string)
 
 interface CopyOptions {
   exclude?: string[];
+  /** Optional transform applied to file content (only .ts files) before writing. */
+  transform?: (content: string) => string;
 }
 
 /**
@@ -240,7 +242,12 @@ function copyDirRecursive(
           result.skippedFiles.push(path.relative(process.cwd(), destPath));
         }
       } else {
-        fs.copyFileSync(srcPath, destPath);
+        if (opts?.transform && basename.endsWith('.ts')) {
+          const content = fs.readFileSync(srcPath, 'utf-8');
+          fs.writeFileSync(destPath, opts.transform(content), 'utf-8');
+        } else {
+          fs.copyFileSync(srcPath, destPath);
+        }
         result.added++;
       }
     }
@@ -365,6 +372,20 @@ function scaffoldMcpConfig(templatePath: string, destPath: string): void {
       `  ⚠️  .kiro/settings/mcp.json already has '${key}' entry; left unchanged. If outdated, delete the entry and re-run init, or update manually.`,
     );
   }
+}
+
+/**
+ * Rewrite relative type imports to use the @3fn/core/types package subpath.
+ * Converts: import { X } from '../types/PrimitiveToken'
+ * To:       import { X } from '@3fn/core/types'
+ *
+ * Also handles deeper relative paths (../../types/...) and type-only imports.
+ */
+function rewriteTypeImports(content: string): string {
+  return content.replace(
+    /from\s+['"]\.\.\/(?:\.\.\/)*types\/[^'"]*['"]/g,
+    `from '@3fn/core/types'`
+  );
 }
 
 function generateConfig(name: string, abbreviation: string): string {
