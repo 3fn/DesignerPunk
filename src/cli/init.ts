@@ -51,20 +51,36 @@ export async function runInit(argv: string[]): Promise<void> {
     'designerpunk.config.ts (dark + wcag themes registered)',
   );
 
-  // 3. Token source (rewrite relative type imports to package imports)
+  // 3. Token source (types ship alongside for relative import resolution)
+  const typesResult = copyDir(
+    path.join(pkgRoot, 'src/types'),
+    path.join(dest, 'src/types'),
+    { exclude: ['__tests__', 'generated'] },
+  );
+  reportCopy('type definitions', typesResult);
+
+  // 3b. Token source — primitives and semantics (no transform needed; ../types/ resolves naturally)
   const tokensResult = copyDir(
     path.join(pkgRoot, 'src/tokens'),
     path.join(dest, 'src/tokens'),
-    { exclude: ['__tests__'], transform: rewriteTypeImports },
+    { exclude: ['__tests__', 'component'] },
   );
   reportCopy('token source', tokensResult);
 
-  // 4. Components
+  // 3c. Token source — component tokens (with build import transform)
+  const componentTokensResult = copyDir(
+    path.join(pkgRoot, 'src/tokens/component'),
+    path.join(dest, 'src/tokens/component'),
+    { exclude: ['__tests__'], transform: rewriteBuildImports },
+  );
+  reportCopy('component tokens (token source)', componentTokensResult);
+
+  // 4. Components (with build import transform for token files)
   if (!opts.skipComponents) {
     const compResult = copyDir(
       path.join(pkgRoot, 'src/components/core'),
       path.join(dest, 'src/components/core'),
-      { exclude: ['__tests__'] },
+      { exclude: ['__tests__'], transform: rewriteBuildImports },
     );
     reportCopy('starter components', compResult);
   }
@@ -375,16 +391,17 @@ function scaffoldMcpConfig(templatePath: string, destPath: string): void {
 }
 
 /**
- * Rewrite relative type imports to use the @3fn/core/types package subpath.
- * Converts: import { X } from '../types/PrimitiveToken'
- * To:       import { X } from '@3fn/core/types'
+ * Rewrite build system imports to use @3fn/core/build package subpath.
+ * Converts: import { defineComponentTokens } from '../../build/tokens'
+ * To:       import { defineComponentTokens } from '@3fn/core/build'
  *
- * Also handles deeper relative paths (../../types/...) and type-only imports.
+ * Handles any depth of relative path (../build/tokens, ../../build/tokens, etc.)
+ * and specific file imports (../../build/tokens/defineComponentTokens).
  */
-function rewriteTypeImports(content: string): string {
+function rewriteBuildImports(content: string): string {
   return content.replace(
-    /from\s+['"]\.\.\/(?:\.\.\/)*types\/[^'"]*['"]/g,
-    `from '@3fn/core/types'`
+    /from\s+['"]\.\.\/(?:\.\.\/)*build\/tokens(?:\/[^'"]*)?['"]/g,
+    `from '@3fn/core/build'`
   );
 }
 
@@ -396,7 +413,8 @@ import { wcagSemanticOverrides } from './src/tokens/themes/wcag/SemanticOverride
 export default defineConfig({
   name: '${name}',
   abbreviation: '${abbreviation}',
-  componentTokens: ['./src/components'],
+  tokenSource: './src/tokens',
+  componentTokens: ['./src/components/core', './src/tokens/component'],
   themes: [
     { name: 'dark', mode: 'dark', overrides: darkSemanticOverrides },
     { name: 'wcag', mode: 'light', overrides: wcagSemanticOverrides },

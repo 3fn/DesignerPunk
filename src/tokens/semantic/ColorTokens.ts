@@ -849,86 +849,18 @@ export const progressColorTokens = Object.fromEntries(progressColorTokenNames.ma
 export const scrimColorTokens = Object.fromEntries(scrimColorTokenNames.map(n => [n, colorTokens[n]]));
 
 // ============================================================================
-// BACKWARD COMPATIBILITY RE-EXPORTS (Spec 058)
+// BACKWARD COMPATIBILITY RE-EXPORTS — REMOVED (Spec 104)
 // ============================================================================
-/**
- * Re-export Avatar color tokens for backward compatibility
- * 
- * DEPRECATED: Avatar color tokens have been migrated to their canonical location
- * at src/components/core/Avatar-Base/avatar.tokens.ts per Rosetta System architecture.
- * 
- * Update your imports to use the canonical location:
- * 
- * Old (deprecated):
- * import { AvatarColorTokens } from 'src/tokens/semantic/ColorTokens';
- * 
- * New (canonical):
- * import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
- * 
- * @deprecated Use import from 'src/components/core/Avatar-Base/avatar.tokens' instead
- * @see .kiro/specs/058-component-token-architecture-cleanup for migration details
- */
-export { AvatarColorTokens } from '../../components/core/Avatar-Base/avatar.tokens';
+// Avatar and Badge component color tokens were previously re-exported here for
+// backward compatibility (Spec 058). These re-exports violated the token source
+// portability boundary (importing from ../../components/) and have been removed.
+//
+// Use canonical imports instead:
+//   import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
+//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+// ============================================================================
 
-/**
- * Re-export Badge notification color tokens for backward compatibility
- * 
- * DEPRECATED: Badge notification color tokens have been migrated to their canonical location
- * at src/components/core/Badge-Count-Notification/tokens.ts per Rosetta System architecture.
- * 
- * Update your imports to use the canonical location:
- * 
- * Old (deprecated):
- * import { BadgeNotificationColorTokens } from 'src/tokens/semantic/ColorTokens';
- * 
- * New (canonical):
- * import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
- * 
- * @deprecated Use import from 'src/components/core/Badge-Count-Notification/tokens' instead
- * @see .kiro/specs/058-component-token-architecture-cleanup for migration details
- */
-export { BadgeNotificationColorTokens } from '../../components/core/Badge-Count-Notification/tokens';
+// Deprecated helper functions removed (Spec 104) — use canonical imports instead:
+//   import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
+//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
 
-// Log deprecation warning once per session
-let avatarDeprecationWarningLogged = false;
-let badgeDeprecationWarningLogged = false;
-
-/**
- * Get Avatar color token with deprecation warning
- * 
- * @deprecated Use getAvatarColorToken from 'src/components/core/Avatar-Base/avatar.tokens' instead
- */
-export function getAvatarColorTokenDeprecated(key: string): string | undefined {
-  if (!avatarDeprecationWarningLogged) {
-    console.warn(
-      '[DEPRECATED] Avatar color tokens have moved to src/components/core/Avatar-Base/avatar.tokens.ts. ' +
-      'Update your imports to avoid future breaking changes. ' +
-      'See .kiro/specs/058-component-token-architecture-cleanup for migration details.'
-    );
-    avatarDeprecationWarningLogged = true;
-  }
-  
-  // Import dynamically to avoid circular dependency issues
-  const { AvatarColorTokens } = require('../../components/core/Avatar-Base/avatar.tokens');
-  return AvatarColorTokens[key as keyof typeof AvatarColorTokens];
-}
-
-/**
- * Get Badge notification color token with deprecation warning
- * 
- * @deprecated Use getBadgeNotificationColorToken from 'src/components/core/Badge-Count-Notification/tokens' instead
- */
-export function getBadgeNotificationColorTokenDeprecated(key: string): string | undefined {
-  if (!badgeDeprecationWarningLogged) {
-    console.warn(
-      '[DEPRECATED] Badge notification color tokens have moved to src/components/core/Badge-Count-Notification/tokens.ts. ' +
-      'Update your imports to avoid future breaking changes. ' +
-      'See .kiro/specs/058-component-token-architecture-cleanup for migration details.'
-    );
-    badgeDeprecationWarningLogged = true;
-  }
-  
-  // Import dynamically to avoid circular dependency issues
-  const { BadgeNotificationColorTokens } = require('../../components/core/Badge-Count-Notification/tokens');
-  return BadgeNotificationColorTokens[key as keyof typeof BadgeNotificationColorTokens];
-}

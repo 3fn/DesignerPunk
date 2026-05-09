@@ -1284,15 +1284,12 @@ describe('Semantic Color Tokens - Palette Update', () => {
     });
 
     describe('Backward Compatibility Re-exports', () => {
-      it('should re-export AvatarColorTokens for backward compatibility', () => {
-        // Import the re-exported AvatarColorTokens
-        const { AvatarColorTokens } = require('../ColorTokens');
-        expect(AvatarColorTokens).toBeDefined();
-        expect(AvatarColorTokens['human.background']).toBe('color.identity.human');
-        expect(AvatarColorTokens['agent.background']).toBe('color.identity.agent');
-        expect(AvatarColorTokens['human.icon']).toBe('color.contrast.onDark');
-        expect(AvatarColorTokens['agent.icon']).toBe('color.contrast.onDark');
-        expect(AvatarColorTokens['default.border']).toBe('color.structure.border');
+      it('re-exports removed for portability (Spec 104)', () => {
+        // Backward-compatibility re-exports from ColorTokens were removed in Spec 104
+        // to enforce the token source portability boundary. Use canonical imports:
+        //   import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
+        const ColorTokens = require('../ColorTokens');
+        expect(ColorTokens.AvatarColorTokens).toBeUndefined();
       });
     });
   });
@@ -1331,22 +1328,11 @@ describe('Semantic Color Tokens - Palette Update', () => {
     });
 
     describe('Backward Compatibility Re-exports', () => {
-      it('should re-export BadgeNotificationColorTokens for backward compatibility', () => {
-        // Import the re-exported tokens
-        const { BadgeNotificationColorTokens } = require('../ColorTokens');
-        expect(BadgeNotificationColorTokens).toBeDefined();
-      });
-
-      it('should have notification.background in re-exported tokens', () => {
-        const { BadgeNotificationColorTokens } = require('../ColorTokens');
-        // Updated to expect semantic token reference (Spec 046 Task 8.2)
-        expect(BadgeNotificationColorTokens['notification.background']).toBe('color.feedback.notification.background');
-      });
-
-      it('should have notification.text in re-exported tokens', () => {
-        const { BadgeNotificationColorTokens } = require('../ColorTokens');
-        // Updated to expect semantic token reference (Spec 046 Task 8.2)
-        expect(BadgeNotificationColorTokens['notification.text']).toBe('color.feedback.notification.text');
+      it('re-exports removed for portability (Spec 104)', () => {
+        // Backward-compatibility re-exports from ColorTokens were removed in Spec 104
+        // Use canonical import: import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+        const ColorTokens = require('../ColorTokens');
+        expect(ColorTokens.BadgeNotificationColorTokens).toBeUndefined();
       });
     });
 
@@ -1396,9 +1382,9 @@ describe('Semantic Color Tokens - Palette Update', () => {
         expect(colorTokens['color.badge.notification.text']).toBeUndefined();
       });
 
-      it('should satisfy Requirement 4.1: Re-exports with deprecation warnings available', () => {
-        const { BadgeNotificationColorTokens } = require('../ColorTokens');
-        expect(BadgeNotificationColorTokens).toBeDefined();
+      it('should satisfy Requirement 4.1: Re-exports removed for portability (Spec 104)', () => {
+        const ColorTokens = require('../ColorTokens');
+        expect(ColorTokens.BadgeNotificationColorTokens).toBeUndefined();
       });
     });
   });

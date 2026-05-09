@@ -134,8 +134,10 @@ describe('CLI init — integration', () => {
 
       // Exact format assertions from Task 1.4 CopyResult JSDoc contract:
       // "✓ {label}: {N} existing file[s] preserved"
-      // (50 token source files ship in the package; plural form)
-      expect(secondOutput).toContain('✓ token source: 50 existing files preserved');
+      // Token source is now split: types + primitives/semantics + component tokens
+      expect(secondOutput).toContain('✓ type definitions:');
+      expect(secondOutput).toContain('✓ token source:');
+      expect(secondOutput).toContain('existing files preserved');
       // 87 steering docs ship in the package
       expect(secondOutput).toContain('✓ steering docs: 87 existing files preserved');
     });

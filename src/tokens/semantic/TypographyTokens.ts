@@ -13,7 +13,6 @@
  */
 
 import { SemanticToken, SemanticCategory } from '../../types/SemanticToken';
-import { UnitConverter } from '../../build/tokens/UnitConverter';
 
 /**
  * Calculate scaled fontSize for labelMdFloat using scale088 (0.88)
@@ -23,10 +22,9 @@ import { UnitConverter } from '../../build/tokens/UnitConverter';
  * 
  * Formula: fontSize100 (16px) × scale088 (0.88) = 14.08px → rounds to 14px
  * 
- * Uses applyScaleWithRounding to ensure whole pixel values for consistent rendering.
+ * Inlined for token source portability (Spec 104) — token files must be self-contained.
  */
-const unitConverter = new UnitConverter();
-const labelMdFloatFontSize = unitConverter.applyScaleWithRounding(16, 0.88);
+const labelMdFloatFontSize = Math.round(16 * 0.88); // 14
 
 /**
  * Typography semantic tokens for common text styles

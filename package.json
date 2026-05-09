@@ -76,6 +76,11 @@
       "require": "./src/types/index.ts",
       "types": "./src/types/index.ts"
     },
+    "./build": {
+      "import": "./src/build/tokens/index.ts",
+      "require": "./src/build/tokens/index.ts",
+      "types": "./src/build/tokens/index.ts"
+    },
     "./blend": {
       "import": "./dist/blend/index.js",
       "types": "./dist/blend/index.d.ts"

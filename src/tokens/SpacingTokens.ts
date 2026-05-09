@@ -7,7 +7,17 @@
  */
 
 import { PrimitiveToken, TokenCategory, PlatformValues } from '../types/PrimitiveToken';
-import { STRATEGIC_FLEXIBILITY_TOKENS } from '../constants/StrategicFlexibilityTokens';
+
+/**
+ * Strategic flexibility token definitions used by spacing tokens.
+ * Inlined for token source portability (Spec 104) — token files must be self-contained.
+ * Canonical source remains at src/constants/StrategicFlexibilityTokens.ts for validator consumers.
+ */
+const STRATEGIC_FLEXIBILITY_TOKENS = {
+  space075: { value: 6, derivation: 'space100 × 0.75' },
+  space125: { value: 10, derivation: 'space100 × 1.25' },
+  space250: { value: 20, derivation: 'space100 × 2.5' },
+} as const;
 
 /**
  * Spacing token base value for mathematical calculations

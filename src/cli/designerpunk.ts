@@ -16,6 +16,7 @@ import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
 import { resolveTokens } from './resolveTokens';
+import { loadComponentTokens } from './loadComponentTokens';
 import { runValidate } from './validate';
 import { runInit } from './init';
 
@@ -84,6 +85,20 @@ async function runGenerate() {
   try {
     const config = await loadConfig(process.cwd());
     const tokens = resolveTokens(config);
+
+    // Load component tokens from local source when tokenSource is set
+    if (config.tokenSourceMode === 'local') {
+      const componentCount = loadComponentTokens(config);
+      if (componentCount === 0) {
+        console.warn(
+          `⚠️  No component token files found.\n` +
+          `   Searched: ${path.relative(process.cwd(), config.tokenSourceRoot)}/component/\n` +
+          `   And: ${config.componentTokenDirs.map(d => path.relative(process.cwd(), d)).join(', ') || '(none configured)'}\n` +
+          `   Component token output will be empty.\n` +
+          `   Run \`npx designerpunk init\` to copy component tokens locally.\n`
+        );
+      }
+    }
 
     const relativePath = path.relative(process.cwd(), config.tokenSourceRoot);
     console.log(`📦 ${config.name} (${config.abbreviation})`);
