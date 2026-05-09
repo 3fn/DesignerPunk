@@ -13,7 +13,7 @@
  * @see docs/roadmap/integration-guide-draft.md
  */
 
-import { defineConfig } from './src/config/defineConfig.ts';
+import { defineConfig } from './src/config/defineConfig';
 
 export default defineConfig({
   name: 'DesignerPunk',
