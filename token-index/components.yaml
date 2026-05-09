@@ -1,68 +1,4 @@
 tokens:
-  avatar.size.xs:
-    component: Avatar
-    primitiveReferences:
-      value: size300
-    platforms:
-      web: '--avatar-size-xs'
-      ios: avatarSizeXs
-      android: avatar_size_xs
-  avatar.size.sm:
-    component: Avatar
-    primitiveReferences:
-      value: size400
-    platforms:
-      web: '--avatar-size-sm'
-      ios: avatarSizeSm
-      android: avatar_size_sm
-  avatar.size.md:
-    component: Avatar
-    primitiveReferences:
-      value: size500
-    platforms:
-      web: '--avatar-size-md'
-      ios: avatarSizeMd
-      android: avatar_size_md
-  avatar.size.lg:
-    component: Avatar
-    primitiveReferences:
-      value: size600
-    platforms:
-      web: '--avatar-size-lg'
-      ios: avatarSizeLg
-      android: avatar_size_lg
-  avatar.size.xl:
-    component: Avatar
-    primitiveReferences:
-      value: size1000
-    platforms:
-      web: '--avatar-size-xl'
-      ios: avatarSizeXl
-      android: avatar_size_xl
-  avatar.size.xxl:
-    component: Avatar
-    primitiveReferences:
-      value: size1600
-    platforms:
-      web: '--avatar-size-xxl'
-      ios: avatarSizeXxl
-      android: avatar_size_xxl
-  avatar.icon.size.xs:
-    component: Avatar
-    primitiveReferences:
-      value: '12'
-    platforms:
-      web: '--avatar-icon-size-xs'
-      ios: avatarIconSizeXs
-      android: avatar_icon_size_xs
-  avatar.icon.size.xxl:
-    component: Avatar
-    primitiveReferences:
-      value: '64'
-    platforms:
-      web: '--avatar-icon-size-xxl'
-      ios: avatarIconSizeXxl
-      android: avatar_icon_size_xxl
   buttonicon.inset.large:
     component: ButtonIcon
     primitiveReferences:
@@ -127,6 +63,70 @@ tokens:
       web: '--verticallistitem-padding-block-selected'
       ios: verticallistitemPaddingBlockSelected
       android: verticallistitem_padding_block_selected
+  avatar.size.xs:
+    component: Avatar
+    primitiveReferences:
+      value: size300
+    platforms:
+      web: '--avatar-size-xs'
+      ios: avatarSizeXs
+      android: avatar_size_xs
+  avatar.size.sm:
+    component: Avatar
+    primitiveReferences:
+      value: size400
+    platforms:
+      web: '--avatar-size-sm'
+      ios: avatarSizeSm
+      android: avatar_size_sm
+  avatar.size.md:
+    component: Avatar
+    primitiveReferences:
+      value: size500
+    platforms:
+      web: '--avatar-size-md'
+      ios: avatarSizeMd
+      android: avatar_size_md
+  avatar.size.lg:
+    component: Avatar
+    primitiveReferences:
+      value: size600
+    platforms:
+      web: '--avatar-size-lg'
+      ios: avatarSizeLg
+      android: avatar_size_lg
+  avatar.size.xl:
+    component: Avatar
+    primitiveReferences:
+      value: size1000
+    platforms:
+      web: '--avatar-size-xl'
+      ios: avatarSizeXl
+      android: avatar_size_xl
+  avatar.size.xxl:
+    component: Avatar
+    primitiveReferences:
+      value: size1600
+    platforms:
+      web: '--avatar-size-xxl'
+      ios: avatarSizeXxl
+      android: avatar_size_xxl
+  avatar.icon.size.xs:
+    component: Avatar
+    primitiveReferences:
+      value: '12'
+    platforms:
+      web: '--avatar-icon-size-xs'
+      ios: avatarIconSizeXs
+      android: avatar_icon_size_xs
+  avatar.icon.size.xxl:
+    component: Avatar
+    primitiveReferences:
+      value: '64'
+    platforms:
+      web: '--avatar-icon-size-xxl'
+      ios: avatarIconSizeXxl
+      android: avatar_icon_size_xxl
   badgelabelbase.maxWidth:
     component: BadgeLabelBase
     primitiveReferences:

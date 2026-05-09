@@ -53,7 +53,8 @@
  */
 
 import { defineComponentTokens } from '../../../build/tokens';
-import { sizingTokens, SIZING_BASE_VALUE } from '../../../tokens/SizingTokens';
+import { SIZING_BASE_VALUE } from '../../../tokens/SizingTokens';
+import { AvatarSizingTokens } from './avatar-sizing.tokens';
 
 /**
  * Avatar component tokens defined using the hybrid authoring API.
@@ -82,32 +83,6 @@ export const AvatarTokens = defineComponentTokens({
   component: 'Avatar',
   family: 'spacing',
   tokens: {
-    // Size tokens for avatar dimensions
-    'size.xs': {
-      reference: sizingTokens.size300,
-      reasoning: 'Extra small avatar (24px = 3× base) for inline mentions and compact UI contexts where minimal visual footprint is needed',
-    },
-    'size.sm': {
-      reference: sizingTokens.size400,
-      reasoning: 'Small avatar (32px = 4× base) for list items and secondary UI contexts with moderate visual presence',
-    },
-    'size.md': {
-      reference: sizingTokens.size500,
-      reasoning: 'Medium avatar (40px = 5× base) as the default size, providing balanced visual weight for most UI contexts',
-    },
-    'size.lg': {
-      reference: sizingTokens.size600,
-      reasoning: 'Large avatar (48px = 6× base) for profile headers and primary UI contexts requiring prominent visual presence',
-    },
-    'size.xl': {
-      reference: sizingTokens.size1000,
-      reasoning: 'Extra large avatar (80px = 10× base) for profile pages and hero sections where avatar is a focal point',
-    },
-    'size.xxl': {
-      reference: sizingTokens.size1600,
-      reasoning: 'Extra extra large avatar (128px = 16× base) for hero profiles and full-page profile views requiring maximum visual impact',
-    },
-    
     // Icon size tokens (gap fillers for sizes without existing icon tokens)
     // These fill gaps where no standard icon token exists at the required 50% ratio
     'icon.size.xs': {
@@ -238,7 +213,7 @@ export type AvatarIconSizeVariant = 'xs' | 'xxl';
  * @see Requirements 2.1-2.6 in .kiro/specs/042-avatar-component/requirements.md
  */
 export function getAvatarSize(variant: AvatarSizeVariant): number {
-  return AvatarTokens[`size.${variant}`];
+  return AvatarSizingTokens[`size.${variant}`];
 }
 
 /**

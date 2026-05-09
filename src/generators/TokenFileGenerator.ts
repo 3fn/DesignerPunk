@@ -14,7 +14,7 @@ import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
 import { FileMetadata } from '../providers/FormatProvider';
-import { getAllPrimitiveTokens, getTokensByCategory, durationTokens, easingTokens, scaleTokens } from '../tokens';
+import { getAllPrimitiveTokens, durationTokens, easingTokens, scaleTokens } from '../tokens';
 import { getAllSemanticTokens, getAllZIndexTokens, getAllElevationTokens, motionTokens } from '../tokens/semantic';
 import { BlendUtilityGenerator, BlendUtilityGenerationOptions } from './BlendUtilityGenerator';
 import { ComponentTokenRegistry, RegisteredComponentToken } from '../registries/ComponentTokenRegistry';
@@ -27,6 +27,8 @@ export interface BaseGenerationOptions {
 }
 
 export interface GenerationOptions extends BaseGenerationOptions {
+  /** Resolved primitive tokens from the configured source. When omitted, loads from package. */
+  primitiveTokens?: PrimitiveToken[];
   /** Pre-resolved semantic tokens (light-base context). Generators require externally-resolved tokens (D9 Option B). */
   semanticTokens: Array<Omit<SemanticToken, 'primitiveTokens'>>;
   /** Pre-resolved semantic tokens (dark-base context). Used with semanticTokens to produce mode-aware output. */
@@ -1584,8 +1586,8 @@ export class TokenFileGenerator {
   private static readonly DEDICATED_SEMANTIC_PREFIXES = ['zIndex.', 'elevation.', 'motion.'];
 
   /** Get primitive tokens for the generic pass (excludes dedicated-section categories). */
-  private getGenerationPrimitives(): PrimitiveToken[] {
-    return getAllPrimitiveTokens().filter(
+  private getGenerationPrimitives(primitiveTokens: PrimitiveToken[]): PrimitiveToken[] {
+    return primitiveTokens.filter(
       t => !TokenFileGenerator.DEDICATED_PRIMITIVE_CATEGORIES.has(t.category)
     );
   }
@@ -1632,7 +1634,7 @@ export class TokenFileGenerator {
     const generator = this.getGenerator(platform);
     const metadata: FileMetadata = { version, generatedAt: new Date() };
 
-    const tokens = this.getGenerationPrimitives();
+    const tokens = this.getGenerationPrimitives(options.primitiveTokens || getAllPrimitiveTokens());
     const semantics = this.filterGenerationSemantics(semanticTokens);
     const darkSemantics = this.filterGenerationSemantics(darkSemanticTokens);
 
@@ -1719,7 +1721,7 @@ export class TokenFileGenerator {
       platform,
       filePath: `${outputDir}/${config.fileName}`,
       content,
-      tokenCount: getAllPrimitiveTokens().length,
+      tokenCount: (options.primitiveTokens || getAllPrimitiveTokens()).length,
       semanticTokenCount,
       valid: validation.valid,
       errors: validation.errors,

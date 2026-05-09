@@ -47,7 +47,7 @@ export function verifyBarrelContract(sourcePath: string): void {
   } catch (err: any) {
     const msg = err?.message || String(err);
     // Distinguish "file not found" from "file found but has unresolved imports"
-    if (msg.includes('Cannot find module') && msg.includes(sourcePath)) {
+    if (msg.includes(`Cannot find module '${sourcePath}'`) || msg.includes(`Cannot find module "${sourcePath}"`)) {
       throw new Error(
         `Token source not found at: ${sourcePath}\n` +
         `Expected a barrel file (index.ts) exporting getAllPrimitiveTokens().`

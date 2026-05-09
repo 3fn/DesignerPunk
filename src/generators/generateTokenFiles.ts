@@ -171,6 +171,7 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     version: '1.0.0',
     includeComments: true,
     groupByCategory: true,
+    primitiveTokens,
     semanticTokens: resolvedLight,
     darkSemanticTokens: resolvedDark,
     wcagSemanticTokens: resolvedLightWcag,
