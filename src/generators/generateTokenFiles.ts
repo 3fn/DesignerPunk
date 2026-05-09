@@ -223,6 +223,24 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   console.log(`   Failed: ${results.filter(r => !r.valid).length}`);
   console.log(`   Total tokens per platform: ${results[0]?.tokenCount || 0}`);
 
+  // --- Component Token Generation ---
+  const componentResults = generator.generateComponentTokens({
+    outputDir: effectiveOutputDir,
+    version: '1.0.0',
+    includeComments: true,
+  });
+
+  for (const result of componentResults) {
+    if (result.valid) {
+      fs.writeFileSync(result.filePath, result.content, 'utf-8');
+    }
+  }
+
+  const componentTokenCount = componentResults[0]?.tokenCount || 0;
+  if (componentTokenCount > 0) {
+    console.log(`   Component tokens: ${componentTokenCount} (${componentResults.filter(r => r.valid).length} platforms)`);
+  }
+
   // --- DTCG Format Generation ---
   try {
     const { DTCGFormatGenerator } = require('./DTCGFormatGenerator');
