@@ -53,7 +53,7 @@ function scanForTokenFiles(dir: string): number {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory() && entry.name !== '__tests__' && entry.name !== 'node_modules') {
       count += scanForTokenFiles(fullPath);
-    } else if (entry.isFile() && entry.name.endsWith('.tokens.ts') && !entry.name.endsWith('.test.ts')) {
+    } else if (entry.isFile() && (entry.name.endsWith('.tokens.ts') || entry.name === 'tokens.ts') && !entry.name.endsWith('.test.ts')) {
       require(fullPath);
       count++;
     }
