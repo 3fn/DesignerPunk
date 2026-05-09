@@ -142,8 +142,22 @@ export function parseArgs(argv: string[]): FigmaExtractArgs {
 // Token loading
 // ---------------------------------------------------------------------------
 
-/** Default path to the DTCG token file. */
-const DTCG_INPUT_PATH = path.resolve('dist', 'DesignTokens.dtcg.json');
+/** Default path to the DTCG token file — checks config output dir first, falls back to dist/. */
+const DTCG_INPUT_PATH = (() => {
+  // Try config-specified output directory
+  const configPath = path.resolve('designerpunk.config.ts');
+  if (fs.existsSync(configPath)) {
+    try {
+      const raw = fs.readFileSync(configPath, 'utf-8');
+      const outputMatch = raw.match(/output:\s*['"]([^'"]+)['"]/);
+      if (outputMatch) {
+        const configOutput = path.resolve(outputMatch[1], 'DesignTokens.dtcg.json');
+        if (fs.existsSync(configOutput)) return configOutput;
+      }
+    } catch { /* fall through to default */ }
+  }
+  return path.resolve('dist', 'DesignTokens.dtcg.json');
+})();
 
 /**
  * Load and parse the DTCG token file.

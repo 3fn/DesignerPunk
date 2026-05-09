@@ -11,6 +11,7 @@ import * as path from 'path';
 import * as os from 'os';
 import { loadConfig } from '../../config/ConfigLoader';
 import { generateTokenFiles } from '../generateTokenFiles';
+import { resolveTokens } from '../../cli/resolveTokens';
 
 describe('Product repo simulation (Spec 094)', () => {
   let tmpDir: string;
@@ -32,7 +33,7 @@ describe('Product repo simulation (Spec 094)', () => {
     expect(config.themes).toEqual([]);
 
     // Pipeline runs with the resolved output dir
-    generateTokenFiles(config.outputDir, config);
+    generateTokenFiles(resolveTokens(config), config);
 
     // Verify platform files were generated
     const distDir = config.outputDir;
@@ -58,7 +59,7 @@ describe('Product repo simulation (Spec 094)', () => {
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
 
     const config = await loadConfig(tmpDir);
-    generateTokenFiles(config.outputDir, config);
+    generateTokenFiles(resolveTokens(config), config);
 
     expect(fs.existsSync(path.join(customOut, 'DesignTokens.web.css'))).toBe(true);
     expect(fs.existsSync(path.join(customOut, 'DesignTokens.ios.swift'))).toBe(true);
@@ -67,7 +68,7 @@ describe('Product repo simulation (Spec 094)', () => {
 
   test('generated CSS contains base theme at :root', async () => {
     const config = await loadConfig(tmpDir);
-    generateTokenFiles(config.outputDir, config);
+    generateTokenFiles(resolveTokens(config), config);
 
     const css = fs.readFileSync(path.join(config.outputDir, 'DesignTokens.web.css'), 'utf-8');
 
@@ -79,7 +80,7 @@ describe('Product repo simulation (Spec 094)', () => {
 
   test('generated CSS contains WCAG theme block', async () => {
     const config = await loadConfig(tmpDir);
-    generateTokenFiles(config.outputDir, config);
+    generateTokenFiles(resolveTokens(config), config);
 
     const css = fs.readFileSync(path.join(config.outputDir, 'DesignTokens.web.css'), 'utf-8');
 

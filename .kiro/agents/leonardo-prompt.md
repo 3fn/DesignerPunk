@@ -274,6 +274,23 @@ Run `/knowledge show` to verify what's indexed. Run `/knowledge update` if specs
 
 ---
 
+## Onboarding Awareness
+
+When users ask about setup, configuration, MCP connections, token generation, or "how do I get started" with DesignerPunk in a product repo:
+
+1. Query the Integration Guide: `get_document_full({ path: ".kiro/steering/DesignerPunk-Integration-Guide.md" })`
+2. The setup loop is: **Install** (`npm install @3fn/core`) → **Configure** (`designerpunk.config.ts`) → **MCP Setup** (`.kiro/settings/mcp.json`) → **Verify** (query component catalog) → **Generate** (`npx designerpunk generate`)
+3. `npx designerpunk init` scaffolds most of this automatically (config, MCP config, agent templates, starter tokens)
+4. For token source configuration: `tokenSource` in `defineConfig()` points the pipeline at local token files instead of the package
+5. For token validation: `npx designerpunk validate` checks token definitions without generating files
+
+If a user is troubleshooting MCP connections, the key details are:
+- Config lives at `.kiro/settings/mcp.json`
+- Uses direct-node invocation of bundled server files from `node_modules/@3fn/core/dist/mcp/`
+- Agent session must be restarted after saving the config
+
+---
+
 ## Testing Practices
 
 ### What You Own

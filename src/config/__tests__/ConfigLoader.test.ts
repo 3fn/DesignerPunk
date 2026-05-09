@@ -56,13 +56,22 @@ describe('ConfigLoader', () => {
     expect(config.outputDir).toBe(path.resolve(tmpDir, 'dist'));
   });
 
-  test('resolves token source root to package root via __dirname', async () => {
+  test('resolves token source root to package tokens path when tokenSource omitted', async () => {
     const config = await loadConfig(tmpDir);
 
-    // tokenSourceRoot resolves relative to ConfigLoader's __dirname (the package root),
-    // not cwd. This works in both repo and product contexts.
-    expect(config.tokenSourceRoot).toContain('DesignerPunk');
-    expect(require('fs').existsSync(path.join(config.tokenSourceRoot, 'package.json'))).toBe(true);
+    // When tokenSource is not configured, resolves to package's src/tokens/
+    expect(config.tokenSourceRoot).toBe(path.resolve(__dirname, '../../tokens'));
+    expect(config.tokenSourceMode).toBe('package');
+  });
+
+  test('resolves token source root to configured path when tokenSource set', async () => {
+    const configContent = `module.exports = { tokenSource: './src/tokens' };`;
+    fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
+
+    const config = await loadConfig(tmpDir);
+
+    expect(config.tokenSourceRoot).toBe(path.resolve(tmpDir, './src/tokens'));
+    expect(config.tokenSourceMode).toBe('local');
   });
 
   test('resolves component token dirs relative to config dir', async () => {

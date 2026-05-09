@@ -22,6 +22,8 @@ export interface ResolvedConfig {
   themes: ConfigTheme[];
   /** Resolved absolute path to token source root. */
   tokenSourceRoot: string;
+  /** Whether token source is local (from config) or package (default). */
+  tokenSourceMode: 'local' | 'package';
   /** Resolved absolute paths to component token directories. */
   componentTokenDirs: string[];
   /** Resolved absolute path to output directory. */
@@ -67,14 +69,11 @@ export async function loadConfig(cwd: string = process.cwd()): Promise<ResolvedC
   const output = userConfig.output || DEFAULTS.output;
   const componentTokenPaths = userConfig.componentTokens || DEFAULTS.componentTokens;
 
-  // Resolve token source root: relative to this module (inside the package), or cwd fallback
-  const fromConfig = path.resolve(__dirname, '../..');
-  let tokenSourceRoot: string;
-  if (fs.existsSync(path.join(fromConfig, 'package.json'))) {
-    tokenSourceRoot = fromConfig;
-  } else {
-    tokenSourceRoot = cwd;
-  }
+  // Resolve token source: configured local path or package's src/tokens/
+  const tokenSourceMode: 'local' | 'package' = userConfig.tokenSource ? 'local' : 'package';
+  const tokenSourceRoot = userConfig.tokenSource
+    ? path.resolve(configDir, userConfig.tokenSource)
+    : path.resolve(__dirname, '../tokens');
 
   // Resolve paths relative to config directory
   const outputDir = path.resolve(configDir, output);
@@ -85,6 +84,7 @@ export async function loadConfig(cwd: string = process.cwd()): Promise<ResolvedC
     abbreviation,
     themes,
     tokenSourceRoot,
+    tokenSourceMode,
     componentTokenDirs,
     outputDir,
     configDir,

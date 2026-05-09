@@ -46,7 +46,10 @@ async function main() {
     // Generate all platform files using the unified orchestration (Spec 080 Phase 2)
     // This handles 4-context resolution, override validation, and WCAG override keys
     const { generateTokenFiles } = await import('../src/generators/generateTokenFiles');
-    generateTokenFiles(outputDir);
+    const { resolveTokens } = await import('../src/cli/resolveTokens');
+    const { loadConfig } = await import('../src/config/ConfigLoader');
+    const config = await loadConfig(process.cwd());
+    generateTokenFiles(resolveTokens(config), config);
 
     // Generate component tokens (from ComponentTokenRegistry)
     console.log('📊 Component Token Generation Results:\n');

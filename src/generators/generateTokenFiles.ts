@@ -14,21 +14,22 @@ import { SemanticTokenRegistry } from '../registries/SemanticTokenRegistry';
 import { SemanticOverrideResolver } from '../resolvers/SemanticOverrideResolver';
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import { ThemeRegistry } from '../themes/ThemeRegistry';
+// Theme overrides remain as static imports — they resolve from the config's themes array,
+// independent of tokenSource. These are the base system's built-in themes shipped with @3fn/core.
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
-import { getAllPrimitiveTokens } from '../tokens';
-import { getAllSemanticTokens } from '../tokens/semantic';
 import type { ResolvedConfig } from '../config/ConfigLoader';
+import type { TokenInput } from '../cli/resolveTokens';
 
 /**
  * Main generation function.
  *
- * @param outputDir - Output directory (legacy parameter, used when no config provided)
- * @param config - Optional resolved config from ConfigLoader. When provided, outputDir is ignored.
+ * @param tokens - Resolved token arrays (primitive and semantic) from the configured source.
+ * @param config - Resolved config from ConfigLoader.
  */
-export function generateTokenFiles(outputDir: string = 'output', config?: ResolvedConfig): void {
-  const effectiveOutputDir = config?.outputDir || outputDir;
+export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): void {
+  const effectiveOutputDir = config.outputDir;
   console.log('🚀 Starting token file generation...\n');
 
   // Create output directory if it doesn't exist
@@ -44,8 +45,8 @@ export function generateTokenFiles(outputDir: string = 'output', config?: Resolv
   const semanticRegistry = new SemanticTokenRegistry(primitiveRegistry);
   const validator = new SemanticTokenValidator(primitiveRegistry, semanticRegistry);
   
-  const primitiveTokens = getAllPrimitiveTokens();
-  const semanticTokens = getAllSemanticTokens();
+  const primitiveTokens = tokens.primitiveTokens;
+  const semanticTokens = tokens.semanticTokens;
 
   // Register semantic tokens so override resolver can validate against them
   for (const token of semanticTokens) {
@@ -220,11 +221,35 @@ export function generateTokenFiles(outputDir: string = 'output', config?: Resolv
   console.log(`   Successful: ${results.filter(r => r.valid).length}`);
   console.log(`   Failed: ${results.filter(r => !r.valid).length}`);
   console.log(`   Total tokens per platform: ${results[0]?.tokenCount || 0}`);
-  console.log('\n✨ Token file generation complete!');
-}
 
-// Run if executed directly
-if (require.main === module) {
-  const outputDir = process.argv[2] || 'output';
-  generateTokenFiles(outputDir);
+  // --- DTCG Format Generation ---
+  try {
+    const { DTCGFormatGenerator } = require('./DTCGFormatGenerator');
+    const dtcgGenerator = new DTCGFormatGenerator();
+    const dtcgOutputPath = path.join(effectiveOutputDir, 'DesignTokens.dtcg.json');
+    dtcgGenerator.writeToFile(dtcgOutputPath);
+    console.log(`   DTCG: DesignTokens.dtcg.json`);
+  } catch (dtcgError) {
+    console.error('   ⚠️  DTCG generation failed (non-blocking):', dtcgError instanceof Error ? dtcgError.message : dtcgError);
+  }
+
+  // --- Figma Format Generation (depends on DTCG) ---
+  try {
+    const dtcgPath = path.join(effectiveOutputDir, 'DesignTokens.dtcg.json');
+    if (fs.existsSync(dtcgPath)) {
+      const { FigmaTransformer } = require('./transformers/FigmaTransformer');
+      const dtcgContent = JSON.parse(fs.readFileSync(dtcgPath, 'utf-8'));
+      const transformer = new FigmaTransformer();
+      if (transformer.canTransform(dtcgContent)) {
+        const result = transformer.transform(dtcgContent);
+        const figmaOutputPath = path.join(effectiveOutputDir, 'DesignTokens.figma.json');
+        fs.writeFileSync(figmaOutputPath, result.content, 'utf-8');
+        console.log(`   Figma: DesignTokens.figma.json`);
+      }
+    }
+  } catch (figmaError) {
+    console.error('   ⚠️  Figma generation failed (non-blocking):', figmaError instanceof Error ? figmaError.message : figmaError);
+  }
+
+  console.log('\n✨ Token file generation complete!');
 }

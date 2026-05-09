@@ -7,7 +7,7 @@ description: Everything a product developer needs to integrate DesignerPunk into
 # DesignerPunk Integration Guide
 
 **Date**: 2026-04-08
-**Last Reviewed**: 2026-05-07
+**Last Reviewed**: 2026-05-09
 **Purpose**: Everything a product developer needs to integrate DesignerPunk into a product repo
 **Organization**: process-standard
 **Scope**: cross-project
@@ -68,18 +68,48 @@ import { myOverrides } from './themes/my-theme/SemanticOverrides';
 export default defineConfig({
   name: 'MyProduct',
   abbreviation: 'MP',
-  // Theme attribute: defaults to "data-theme".
+  // Token attribute: defaults to "data-theme".
   // If your product uses "data-theme" for another purpose,
   // this can be made configurable in a future version.
   themes: [
     { name: 'my-theme', mode: 'dark', overrides: myOverrides }
   ],
+  tokenSource: './src/tokens',        // local token source (omit to use package defaults)
   componentTokens: ['./components'],  // product component tokens (if any)
   output: './dist/tokens'
 });
 ```
 
 If no config file exists, the pipeline uses defaults.
+
+#### Token Source Configuration
+
+By default, the pipeline reads token definitions from the installed `@3fn/core` package. If your product maintains local token source (for customization or contribution back to core), set `tokenSource`:
+
+```typescript
+export default defineConfig({
+  name: 'MyProduct',
+  abbreviation: 'MP',
+  tokenSource: './src/tokens',  // resolve tokens from local source
+  output: './dist/tokens'
+});
+```
+
+**Rules:**
+- Path is resolved relative to the config file's directory
+- Must be a **complete** token source — no fallback to the package for missing families
+- Must export `getAllPrimitiveTokens()` from the root barrel and `getAllSemanticTokens()` from a `semantic/` subdirectory
+- Theme overrides are independent of `tokenSource` — they always resolve from the config's `themes` array
+- `npx designerpunk init` copies a complete token source to `src/tokens/` automatically
+
+**When to use `tokenSource`:**
+- You're iterating on token values locally before contributing back to core
+- You need product-specific primitive token customizations
+- You want `npx designerpunk validate` to check your local edits
+
+**When NOT to use `tokenSource`:**
+- You only consume published tokens without modification (use the package default)
+- You only need theme overrides (use the `themes` config instead)
 
 #### Creating a Theme
 
@@ -238,6 +268,23 @@ If these queries return results, the ecosystem is working.
 ```bash
 npx designerpunk generate
 ```
+
+The pipeline shows where tokens are being read from:
+```
+📦 MyProduct (MP)
+   Tokens: ./src/tokens  (local)
+   Output: ./dist/tokens
+   Themes: my-theme (dark)
+```
+
+The `(local)` annotation means tokens resolve from your configured `tokenSource` path. If `tokenSource` is omitted, you'll see `(package)` — meaning tokens come from the installed `@3fn/core` package.
+
+To validate token definitions without generating files:
+```bash
+npx designerpunk validate
+```
+
+This checks semantic reference integrity, required fields, mathematical relationships, and family membership. Run it after editing token source files to catch errors before generation.
 
 Produces platform token files in your configured output directory:
 - `DesignTokens.web.css` — CSS custom properties

@@ -103,10 +103,34 @@ export function parseArgs(argv: string[]): FigmaPushArgs {
 // ---------------------------------------------------------------------------
 
 /** Default path to the DTCG token file. */
-const DTCG_INPUT_PATH = path.resolve('dist', 'DesignTokens.dtcg.json');
+/** Resolve DTCG input path — checks config output dir first, falls back to dist/. */
+const DTCG_INPUT_PATH = (() => {
+  const configPath = path.resolve('designerpunk.config.ts');
+  if (fs.existsSync(configPath)) {
+    try {
+      const raw = fs.readFileSync(configPath, 'utf-8');
+      const outputMatch = raw.match(/output:\s*['"]([^'"]+)['"]/);
+      if (outputMatch) {
+        const configOutput = path.resolve(outputMatch[1], 'DesignTokens.dtcg.json');
+        if (fs.existsSync(configOutput)) return configOutput;
+      }
+    } catch { /* fall through to default */ }
+  }
+  return path.resolve('dist', 'DesignTokens.dtcg.json');
+})();
 
 /** Default path for the Figma format output. */
-const FIGMA_OUTPUT_PATH = path.resolve('dist', 'DesignTokens.figma.json');
+const FIGMA_OUTPUT_PATH = (() => {
+  const configPath = path.resolve('designerpunk.config.ts');
+  if (fs.existsSync(configPath)) {
+    try {
+      const raw = fs.readFileSync(configPath, 'utf-8');
+      const outputMatch = raw.match(/output:\s*['"]([^'"]+)['"]/);
+      if (outputMatch) return path.resolve(outputMatch[1], 'DesignTokens.figma.json');
+    } catch { /* fall through to default */ }
+  }
+  return path.resolve('dist', 'DesignTokens.figma.json');
+})();
 
 /**
  * Load and parse the DTCG token file.

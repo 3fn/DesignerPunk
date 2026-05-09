@@ -457,7 +457,20 @@ export class ConsoleMCPClientImpl implements ConsoleMCPClient {
           (data.document as Record<string, unknown>) ??
           data;
 
-        return this.extractComponentFields(componentObj);
+        const fields = this.extractComponentFields(componentObj);
+
+        // Fetch boundVariables via Plugin API — the reconstruction format
+        // does NOT include them. Plugin API is the only source.
+        try {
+          const pluginData = await this.fetchNodeWithBoundVariables(fileKey, normalizedNodeId);
+          if (pluginData) {
+            return this.mergePluginBoundVariables(fields, pluginData);
+          }
+        } catch {
+          // Plugin API unavailable — return without boundVariables (graceful degradation)
+        }
+
+        return fields;
       }
 
       return {};
@@ -515,6 +528,118 @@ export class ConsoleMCPClientImpl implements ConsoleMCPClient {
            * The Plugin API provides boundVariables but may fail on some node types.
            * Merging both gives us the complete picture.
            */
+
+  /**
+   * Fetch a single node's full tree with boundVariables via Plugin API.
+   * Returns the parsed node data or undefined if the call fails.
+   */
+  private async fetchNodeWithBoundVariables(
+    fileKey: string,
+    nodeId: string,
+  ): Promise<Record<string, unknown> | undefined> {
+    const code = `
+const node = await figma.getNodeByIdAsync('${nodeId}');
+if (!node) return JSON.stringify({ error: 'Node not found' });
+
+function extractNode(n, depth) {
+  if (depth > 6) return { id: n.id, name: n.name, type: n.type };
+  const data = {
+    id: n.id, name: n.name, type: n.type,
+    visible: n.visible
+  };
+  if ('layoutMode' in n) data.layoutMode = n.layoutMode;
+  if ('itemSpacing' in n) data.itemSpacing = n.itemSpacing;
+  if ('paddingTop' in n) data.paddingTop = n.paddingTop;
+  if ('paddingRight' in n) data.paddingRight = n.paddingRight;
+  if ('paddingBottom' in n) data.paddingBottom = n.paddingBottom;
+  if ('paddingLeft' in n) data.paddingLeft = n.paddingLeft;
+  if ('counterAxisSpacing' in n) data.counterAxisSpacing = n.counterAxisSpacing;
+  if ('cornerRadius' in n) data.cornerRadius = n.cornerRadius;
+  if ('fills' in n) data.fills = n.fills;
+  if ('strokes' in n) data.strokes = n.strokes;
+  if ('effects' in n) data.effects = n.effects;
+  if ('opacity' in n) data.opacity = n.opacity;
+  if ('strokeWeight' in n) data.strokeWeight = n.strokeWeight;
+  if ('strokeAlign' in n) data.strokeAlign = n.strokeAlign;
+  if ('layoutSizingHorizontal' in n) data.layoutSizingHorizontal = n.layoutSizingHorizontal;
+  if ('layoutSizingVertical' in n) data.layoutSizingVertical = n.layoutSizingVertical;
+  if ('primaryAxisAlignItems' in n) data.primaryAxisAlignItems = n.primaryAxisAlignItems;
+  if ('counterAxisAlignItems' in n) data.counterAxisAlignItems = n.counterAxisAlignItems;
+  if ('layoutAlign' in n) data.layoutAlign = n.layoutAlign;
+  if ('layoutGrow' in n) data.layoutGrow = n.layoutGrow;
+  if (n.type === 'TEXT') {
+    if ('fontSize' in n) data.fontSize = n.fontSize;
+    if ('fontName' in n) data.fontName = n.fontName;
+    if ('fontWeight' in n) data.fontWeight = n.fontWeight;
+    if ('lineHeight' in n) data.lineHeight = n.lineHeight;
+    if ('letterSpacing' in n) data.letterSpacing = n.letterSpacing;
+    if ('characters' in n) data.characters = n.characters;
+    if ('textAlignHorizontal' in n) data.textAlignHorizontal = n.textAlignHorizontal;
+    if ('textAlignVertical' in n) data.textAlignVertical = n.textAlignVertical;
+  }
+  if ('boundVariables' in n) {
+    const bv = {};
+    for (const [key, val] of Object.entries(n.boundVariables)) {
+      if (val && typeof val === 'object') {
+        if (Array.isArray(val)) {
+          bv[key] = val.map(v => ({ id: v.id, type: v.type }));
+        } else {
+          bv[key] = { id: val.id, type: val.type };
+        }
+      }
+    }
+    if (Object.keys(bv).length > 0) data.boundVariables = bv;
+  }
+  if ('width' in n) data.width = n.width;
+  if ('height' in n) data.height = n.height;
+  if ('children' in n && n.children) {
+    data.children = n.children.map(c => extractNode(c, depth + 1));
+  }
+  return data;
+}
+
+return JSON.stringify(extractNode(node, 0));
+    `.trim();
+
+    const result = await this.callTool('figma_execute', { fileKey, code });
+    if (!result) return undefined;
+
+    let parsed: unknown;
+    if (typeof result === 'object') {
+      const raw = result as Record<string, unknown>;
+      const inner = raw.result ?? raw;
+      if (typeof inner === 'string') {
+        try { parsed = JSON.parse(inner); } catch { return undefined; }
+      } else {
+        parsed = inner;
+      }
+    } else if (typeof result === 'string') {
+      try { parsed = JSON.parse(result); } catch { return undefined; }
+    }
+
+    if (parsed && typeof parsed === 'object' && !('error' in (parsed as Record<string, unknown>))) {
+      return parsed as Record<string, unknown>;
+    }
+    return undefined;
+  }
+
+  /**
+   * Merge Plugin API node data (with boundVariables) into reconstruction fields.
+   * Plugin API returns the complete node tree — use it as primary, preserving
+   * reconstruction metadata (description) that plugin may not provide.
+   */
+  private mergePluginBoundVariables(
+    reconstructionFields: FigmaComponentData,
+    pluginData: Record<string, unknown>,
+  ): FigmaComponentData {
+    return {
+      ...reconstructionFields,
+      ...pluginData,
+      name: (pluginData.name as string) || reconstructionFields.name,
+      description: reconstructionFields.description,
+    };
+  }
+
           private async getComponentSetWithReconstruction(
             fileKey: string,
             nodeId: string,

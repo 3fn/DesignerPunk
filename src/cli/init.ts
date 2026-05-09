@@ -369,17 +369,16 @@ function scaffoldMcpConfig(templatePath: string, destPath: string): void {
 
 function generateConfig(name: string, abbreviation: string): string {
   return `import { defineConfig } from '@3fn/core/config';
-import { darkOverrides } from './src/tokens/themes/dark/SemanticOverrides';
-import { wcagOverrides } from './src/tokens/themes/wcag/SemanticOverrides';
+import { darkSemanticOverrides } from './src/tokens/themes/dark/SemanticOverrides.ts';
+import { wcagSemanticOverrides } from './src/tokens/themes/wcag/SemanticOverrides.ts';
 
 export default defineConfig({
   name: '${name}',
   abbreviation: '${abbreviation}',
-  tokenSourceRoot: './src/tokens',
   componentTokens: ['./src/components'],
   themes: [
-    { name: 'dark', mode: 'dark', overrides: darkOverrides },
-    { name: 'wcag', mode: 'light', overrides: wcagOverrides },
+    { name: 'dark', mode: 'dark', overrides: darkSemanticOverrides },
+    { name: 'wcag', mode: 'light', overrides: wcagSemanticOverrides },
   ],
   output: './dist/tokens',
 });

@@ -15,6 +15,8 @@ import * as path from 'path';
 import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
+import { resolveTokens } from './resolveTokens';
+import { runValidate } from './validate';
 import { runInit } from './init';
 
 async function main() {
@@ -24,6 +26,9 @@ async function main() {
     case undefined:
     case 'generate':
       await runGenerate();
+      break;
+    case 'validate':
+      await runValidateCommand();
       break;
     case 'init':
       await runInit(process.argv.slice(3));
@@ -36,6 +41,12 @@ async function main() {
       break;
     case 'mcp:product':
       await runMcpProduct();
+      break;
+    case 'figma:push':
+      await runFigmaCommand('figma-push');
+      break;
+    case 'figma:extract':
+      await runFigmaCommand('figma-extract');
       break;
     case '--help':
     case '-h':
@@ -59,19 +70,31 @@ function resolvePackageRoot(): string {
   return process.cwd();
 }
 
+async function runValidateCommand() {
+  try {
+    await runValidate();
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`❌ ${message}`);
+    process.exit(1);
+  }
+}
+
 async function runGenerate() {
   try {
     const config = await loadConfig(process.cwd());
+    const tokens = resolveTokens(config);
 
+    const relativePath = path.relative(process.cwd(), config.tokenSourceRoot);
     console.log(`📦 ${config.name} (${config.abbreviation})`);
-    console.log(`   Source: ${config.tokenSourceRoot}`);
-    console.log(`   Output: ${config.outputDir}`);
+    console.log(`   Tokens: ${relativePath}  (${config.tokenSourceMode})`);
+    console.log(`   Output: ${path.relative(process.cwd(), config.outputDir)}`);
     if (config.themes.length > 0) {
       console.log(`   Themes: ${config.themes.map(t => `${t.name} (${t.mode})`).join(', ')}`);
     }
     console.log('');
 
-    generateTokenFiles(config.outputDir, config);
+    generateTokenFiles(tokens, config);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`❌ ${message}`);
@@ -168,6 +191,32 @@ function resolveTsRunner(): string {
   }
 }
 
+/** Run a figma CLI command by spawning the compiled JS file with remaining args. */
+async function runFigmaCommand(script: 'figma-push' | 'figma-extract') {
+  const pkgRoot = resolvePackageRoot();
+  const scriptPath = path.join(pkgRoot, `dist/cli/${script}.js`);
+
+  if (!require('fs').existsSync(scriptPath)) {
+    console.error(`❌ ${script} not found at ${scriptPath}`);
+    process.exit(1);
+  }
+
+  const args = [scriptPath, ...process.argv.slice(3)];
+  const child = spawn('node', args, {
+    env: process.env,
+    stdio: 'inherit',
+  });
+
+  child.on('error', (err) => {
+    console.error(`❌ Failed to run ${script}: ${err.message}`);
+    process.exit(1);
+  });
+
+  child.on('exit', (code) => {
+    process.exit(code ?? 0);
+  });
+}
+
 function printHelp() {
   console.log(`
 DesignerPunk Pipeline CLI
@@ -175,9 +224,12 @@ DesignerPunk Pipeline CLI
 Usage:
   npx designerpunk init            Bootstrap a new product repo
   npx designerpunk generate        Generate token files from designerpunk.config.ts
+  npx designerpunk validate        Validate token definitions against active source
   npx designerpunk mcp:app         Start Application MCP server
   npx designerpunk mcp:docs        Start Docs MCP server
   npx designerpunk mcp:product     Start Product MCP server
+  npx designerpunk figma:push      Push tokens to Figma (requires Figma Desktop + Console MCP)
+  npx designerpunk figma:extract   Extract design specs from Figma
   npx designerpunk --help          Show this help
 
 Init options:

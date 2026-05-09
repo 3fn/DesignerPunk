@@ -45,6 +45,14 @@ export interface DesignerPunkConfig {
   componentTokens?: string[];
   /** Output directory for generated files. Default: 'dist' */
   output?: string;
+  /**
+   * Path to local token source directory. When set, the pipeline resolves
+   * primitive and semantic tokens from this path instead of the installed package.
+   * Must be a complete token source — no fallback to package for missing families.
+   * Path is resolved relative to the config file's directory.
+   * When omitted, tokens resolve from the installed package's `src/tokens/`.
+   */
+  tokenSource?: string;
 }
 
 /**
