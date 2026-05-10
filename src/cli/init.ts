@@ -114,15 +114,41 @@ export async function runInit(argv: string[]): Promise<void> {
     path.join(dest, '.kiro/settings/mcp.json'),
   );
 
-  // 9. Next steps
+  // 9. Test configuration
+  createFileIfNotExists(
+    path.join(dest, 'jest.config.js'),
+    `module.exports = {\n  ...require('@3fn/core/jest-preset'),\n  roots: ['<rootDir>/src'],\n};\n`,
+    'jest.config.js',
+  );
+
+  createFileIfNotExists(
+    path.join(dest, 'tsconfig.test.json'),
+    JSON.stringify({
+      compilerOptions: {
+        target: 'ES2020',
+        module: 'commonjs',
+        strict: true,
+        esModuleInterop: true,
+        skipLibCheck: true,
+        resolveJsonModule: true,
+        downlevelIteration: true,
+        types: ['jest', 'node'],
+      },
+      include: ['src/**/*'],
+    }, null, 2) + '\n',
+    'tsconfig.test.json',
+  );
+
+  // 10. Next steps
   console.log(`
 Your product "${opts.name}" is ready.
 
 Next steps:
   1. Set GITHUB_TOKEN env var (read:packages scope)
-  2. npm install                    # Install dependencies
-  3. npx designerpunk generate      # Generate platform tokens
-  4. npx designerpunk mcp:app       # Start component queries
+  2. npm install
+  3. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
+  4. npx designerpunk generate      # Generate platform tokens
+  5. npx jest                        # Run component tests
 
 To customize your visual language:
   • Edit src/tokens/ to change base values and design intent

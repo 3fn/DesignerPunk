@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "11.3.3",
+  "version": "11.4.0",
   "description": "True Native cross-platform design system with mathematical foundations",
   "license": "Apache-2.0",
   "author": "Peter Michaels Allen",
@@ -39,6 +39,13 @@
     "dist/ComponentTokens.android.kt",
     "dist/TokenEngine.js",
     "dist/TokenEngine.d.ts",
+    "dist/testing/jest-preset.js",
+    "dist/testing/jest-preset.d.ts",
+    "dist/testing/index.js",
+    "dist/testing/index.d.ts",
+    "dist/testing/style-mock.js",
+    "dist/testing/validators.js",
+    "dist/testing/validators.d.ts",
     "src/cli/templates/",
     ".kiro/steering/",
     ".kiro/agents/",
@@ -84,6 +91,14 @@
     "./blend": {
       "import": "./dist/blend/index.js",
       "types": "./dist/blend/index.d.ts"
+    },
+    "./jest-preset": {
+      "require": "./dist/testing/jest-preset.js"
+    },
+    "./testing": {
+      "import": "./dist/testing/index.js",
+      "require": "./dist/testing/index.js",
+      "types": "./dist/testing/index.d.ts"
     },
     "./grid.css": "./src/styles/responsive-grid.css",
     "./fonts/inter.css": "./src/assets/fonts/inter/inter.css",

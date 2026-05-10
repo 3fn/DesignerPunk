@@ -118,8 +118,8 @@ describe('CLI init — integration', () => {
       const app = config.mcpServers['designerpunk-application'];
       expect(app.command).toBe('node');
       expect(app.args[0]).toContain('node_modules/@3fn/core/dist/mcp/application-mcp.js');
-      expect(app.env.COMPONENTS_DIR).toContain('node_modules/@3fn/core/src/components/core');
-      expect(app.env.TOKEN_INDEX_DIR).toContain('node_modules/@3fn/core/token-index');
+      expect(app.env.COMPONENTS_DIR).toBe('./src/components/core');
+      expect(app.env.TOKEN_INDEX_DIR).toBe('./token-index');
       expect(app.autoApprove).toContain('find_components');
     });
   });

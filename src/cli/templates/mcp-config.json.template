@@ -26,12 +26,12 @@
         "./node_modules/@3fn/core/dist/mcp/application-mcp.js"
       ],
       "env": {
-        "COMPONENTS_DIR": "./node_modules/@3fn/core/src/components/core",
+        "COMPONENTS_DIR": "./src/components/core",
         "PATTERNS_DIR": "./node_modules/@3fn/core/experience-patterns",
         "TEMPLATES_DIR": "./node_modules/@3fn/core/layout-templates",
         "GUIDANCE_DIR": "./node_modules/@3fn/core/family-guidance",
         "REGISTRY_PATH": "./node_modules/@3fn/core/family-registry.yaml",
-        "TOKEN_INDEX_DIR": "./node_modules/@3fn/core/token-index"
+        "TOKEN_INDEX_DIR": "./token-index"
       },
       "disabled": false,
       "autoApprove": [

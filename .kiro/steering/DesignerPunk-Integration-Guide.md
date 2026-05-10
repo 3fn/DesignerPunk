@@ -7,7 +7,7 @@ description: Everything a product developer needs to integrate DesignerPunk into
 # DesignerPunk Integration Guide
 
 **Date**: 2026-04-08
-**Last Reviewed**: 2026-05-09
+**Last Reviewed**: 2026-05-10
 **Purpose**: Everything a product developer needs to integrate DesignerPunk into a product repo
 **Organization**: process-standard
 **Scope**: cross-project
@@ -196,12 +196,12 @@ Create `.kiro/settings/mcp.json` at your project root (Kiro reads this file on a
         "./node_modules/@3fn/core/dist/mcp/application-mcp.js"
       ],
       "env": {
-        "COMPONENTS_DIR": "./node_modules/@3fn/core/src/components/core",
+        "COMPONENTS_DIR": "./src/components/core",
         "PATTERNS_DIR": "./node_modules/@3fn/core/experience-patterns",
         "TEMPLATES_DIR": "./node_modules/@3fn/core/layout-templates",
         "GUIDANCE_DIR": "./node_modules/@3fn/core/family-guidance",
         "REGISTRY_PATH": "./node_modules/@3fn/core/family-registry.yaml",
-        "TOKEN_INDEX_DIR": "./node_modules/@3fn/core/token-index"
+        "TOKEN_INDEX_DIR": "./token-index"
       },
       "disabled": false,
       "autoApprove": [
@@ -219,7 +219,7 @@ Create `.kiro/settings/mcp.json` at your project root (Kiro reads this file on a
 
 **This configuration uses direct-node invocation** — Kiro spawns the MCP server binaries directly from `node_modules/@3fn/core/dist/mcp/`, rather than going through the `npx designerpunk mcp:*` CLI wrappers. The direct path is more reliable for MCP protocol handshake over stdio.
 
-**After saving `.kiro/settings/mcp.json`, restart your Kiro agent session** — agent sessions read the MCP config on startup; existing sessions won't pick up the new servers until restarted.
+**After saving `.kiro/settings/mcp.json`, restart your Kiro agent session** — agent sessions read the MCP config on startup; existing sessions won't pick up new servers or env var changes until restarted. A `rebuild_index` alone is NOT sufficient if you've changed directory paths — the server process must be restarted to read the new environment.
 
 Once the agent session reconnects, it should show `designerpunk-docs` and `designerpunk-application` as connected MCP servers. If either reports connection failure, verify:
 - `node_modules/@3fn/core/dist/mcp/` contains the bundled server files (they should ship with the package)
@@ -371,6 +371,111 @@ Base theme applies at `:root` with no attribute. Dark-only themes automatically 
    ```
 
 **Note**: `npx designerpunk sync:android` is planned for M0b to automate this process.
+
+---
+
+## Running Component Tests
+
+Product repos can run the same component tests that ship with `@3fn/core`. The package provides a Jest preset and shared test utilities — you extend the preset with one line and install 4 devDependencies.
+
+### Setup
+
+Install test dependencies:
+
+```bash
+npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
+```
+
+If you ran `npx designerpunk init`, `jest.config.js` and `tsconfig.test.json` are already scaffolded. Otherwise, create them manually:
+
+**jest.config.js**:
+```javascript
+module.exports = {
+  ...require('@3fn/core/jest-preset'),
+  roots: ['<rootDir>/src'],
+};
+```
+
+**tsconfig.test.json**:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "types": ["jest", "node"]
+  },
+  "include": ["src/**/*"]
+}
+```
+
+### Running Tests
+
+```bash
+npx jest                          # Run all tests
+npx jest src/components/core/     # Run component tests only
+npx jest --testPathPattern=Button # Run tests matching "Button"
+```
+
+### Shared Test Utilities
+
+Import from `@3fn/core/testing`:
+
+```typescript
+import {
+  registerComponent,
+  createComponentFixture,
+  cleanupDOM,
+  waitForShadowDOM,
+  setupTokenProperties,
+  cleanupTokenProperties,
+} from '@3fn/core/testing';
+```
+
+**Minimal working test example:**
+
+```typescript
+/** @jest-environment jsdom */
+import { registerComponent, createComponentFixture, cleanupDOM, waitForShadowDOM } from '@3fn/core/testing';
+import { ButtonCTA } from '../platforms/web/ButtonCTA.web';
+
+registerComponent('button-cta', ButtonCTA);
+
+describe('Button-CTA', () => {
+  afterEach(() => cleanupDOM());
+
+  it('renders with label', async () => {
+    const { element, cleanup } = createComponentFixture('button-cta', { label: 'Click me' });
+    await waitForShadowDOM(element);
+
+    const button = element.shadowRoot!.querySelector('button');
+    expect(button).not.toBeNull();
+    expect(button!.textContent).toContain('Click me');
+
+    cleanup();
+  });
+});
+```
+
+### Stemma Validators
+
+For `.stemma.test.ts` pattern tests (naming, token usage, accessibility validation):
+
+```typescript
+import { validateComponentName, validateTokenUsage } from '@3fn/core/testing';
+```
+
+These run static analysis against component schemas and source — no DOM required.
+
+### Notes
+
+- The preset defaults to `jsdom` environment. All web component tests run in jsdom automatically.
+- `jest-environment-jsdom` is required — without it, DOM APIs are unavailable.
+- If tests fail after updating `@3fn/core`, re-run `npx designerpunk init` to refresh component source. Stale source (from an older init) may cause test failures.
 
 ---
 
