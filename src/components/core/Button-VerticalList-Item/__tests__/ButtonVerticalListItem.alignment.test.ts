@@ -104,12 +104,12 @@ describe('Button-VerticalList-Item Alignment Tests (Spec 040)', () => {
      * **Validates: Requirements 1.3, 1.4 (Spec 040)**
      */
     
-    it('should import getBlendUtilities from ThemeAwareBlendUtilities', () => {
+    it('should import getBlendUtilities from @3fn/core/blend', () => {
       const tsContent = getTSContent();
       
       // Verify blend utilities import
       expect(tsContent).toContain('import { getBlendUtilities');
-      expect(tsContent).toContain('ThemeAwareBlendUtilities.web');
+      expect(tsContent).toContain("@3fn/core/blend");
     });
     
     it('should initialize blend utilities in constructor', () => {

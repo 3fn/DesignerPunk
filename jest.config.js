@@ -60,7 +60,12 @@ module.exports = {
   // @see scripts/esbuild-css-plugin.js for build-time transformation
   // @see Requirements: 8.2, 8.3 (components render correctly in browser bundles)
   moduleNameMapper: {
-    '\\.css$': '<rootDir>/src/__tests__/__mocks__/styleMock.js'
+    '\\.css$': '<rootDir>/src/__tests__/__mocks__/styleMock.js',
+    '^@3fn/core/blend$': '<rootDir>/src/blend/index.ts',
+    '^@3fn/core/build$': '<rootDir>/src/build/tokens/index.ts',
+    '^@3fn/core/types$': '<rootDir>/src/types/index.ts',
+    '^@3fn/core/testing$': '<rootDir>/src/testing/index.ts',
+    '^@3fn/core/config$': '<rootDir>/src/config/index.ts',
   },
   
   // Timeout for infrastructure tests (F2)

@@ -34,7 +34,7 @@ import {
 import '../../../Icon-Base/platforms/web/IconBase.web';
 import { iconBaseSizes } from '../../../Icon-Base/types';
 // Import theme-aware blend utilities for state color calculations
-import { getBlendUtilities, BlendUtilitiesResult } from '../../../../../blend/ThemeAwareBlendUtilities.web';
+import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 
 // Import CSS as string for browser bundle compatibility
 // The esbuild CSS-as-string plugin transforms this import into a JS string export

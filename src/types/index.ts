@@ -33,3 +33,10 @@ export type {
 
 // Component Types
 export type { InsetPadding } from './ComponentTypes';
+
+// Generated Token Name Types
+export type {
+  ColorTokenName,
+  OpacityTokenName,
+  ShadowTokenName,
+} from './generated/TokenTypes';

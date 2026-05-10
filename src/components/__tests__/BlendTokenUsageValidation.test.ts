@@ -129,7 +129,7 @@ function hasBlendUtilityUsage(source: string, platform: 'web' | 'ios' | 'android
       source.includes('pressedColor') ||
       source.includes('disabledColor') ||
       source.includes('iconColor') ||
-      source.includes('ThemeAwareBlendUtilities')
+      source.includes('@3fn/core/blend')
     );
   } else if (platform === 'ios') {
     // iOS: Check for Color extension method calls OR standalone blend functions
@@ -196,7 +196,7 @@ function hasBlendTokenValue(source: string, tokenValue: number): boolean {
     // Web: getBlendUtilities(), createBlendUtilities(), BlendUtilitiesResult
     /getBlendUtilities\s*\(\s*\)/,
     /createBlendUtilities\s*\(\s*\)/,
-    /ThemeAwareBlendUtilities/,
+    /@3fn\/core\/blend/,
     /BlendUtilitiesResult/,
     // iOS: hoverBlend(), pressedBlend(), disabledBlend(), iconBlend()
     /\.hoverBlend\s*\(\s*\)/,

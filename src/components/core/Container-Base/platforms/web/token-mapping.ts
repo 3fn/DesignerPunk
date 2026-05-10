@@ -47,7 +47,7 @@ import type {
   ColorTokenName,
   ShadowTokenName,
   OpacityTokenName
-} from '../../../../../types/generated/TokenTypes';
+} from '@3fn/core/types';
 
 /**
  * Convert token name to CSS custom property format

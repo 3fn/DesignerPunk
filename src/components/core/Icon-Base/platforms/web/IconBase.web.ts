@@ -23,7 +23,7 @@ import { IconBaseProps, IconBaseName, IconBaseSize } from '../../types';
 // Import theme-aware blend utilities for optical balance calculations
 // Uses getBlendUtilities() factory for consistent state styling across components
 // @see Requirements: 11.1, 11.2, 11.3 - Theme-aware utilities
-import { getBlendUtilities, BlendUtilitiesResult } from '../../../../../blend/ThemeAwareBlendUtilities.web';
+import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 
 // Create blend utilities instance for icon optical balance
 // Uses getBlendUtilities() factory for cross-platform consistency

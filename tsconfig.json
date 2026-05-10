@@ -21,6 +21,14 @@
         // Affects: PrimitiveTokenRegistry.ts (line 128), SemanticTokenRegistry.ts (line 165), 
         //          ThreeTierValidator.ts (line 282)
         "downlevelIteration": true,
+        "baseUrl": ".",
+        "paths": {
+            "@3fn/core/blend": ["./src/blend/index.ts"],
+            "@3fn/core/build": ["./src/build/tokens/index.ts"],
+            "@3fn/core/types": ["./src/types/index.ts"],
+            "@3fn/core/testing": ["./src/testing/index.ts"],
+            "@3fn/core/config": ["./src/config/index.ts"]
+        },
         "types": [
             "jest",
             "node"

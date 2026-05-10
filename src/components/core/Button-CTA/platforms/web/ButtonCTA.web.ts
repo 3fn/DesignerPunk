@@ -30,7 +30,7 @@ import { IconBaseSize, iconBaseSizes } from '../../../Icon-Base/types';
 // Import theme-aware blend utilities for state color calculations
 // Uses getBlendUtilities() factory for consistent state styling across components
 // @see Requirements: 11.1, 11.2, 11.3 - Theme-aware utilities
-import { getBlendUtilities, BlendUtilitiesResult } from '../../../../../blend/ThemeAwareBlendUtilities.web';
+import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 
 // Import CSS as string for browser bundle compatibility
 // The esbuild CSS-as-string plugin transforms this import into a JS string export

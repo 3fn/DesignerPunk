@@ -17,7 +17,7 @@
  * @see Requirements 1.1, 1.4, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 3.4, 3.5, 4.1, 4.2, 4.3
  */
 
-import { getBlendUtilities, BlendUtilitiesResult } from '../../../../../blend/ThemeAwareBlendUtilities.web';
+import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 // Ensure Container-Base is registered before Card uses it
 import '../../../Container-Base/platforms/web/ContainerBase.web';
 import type {

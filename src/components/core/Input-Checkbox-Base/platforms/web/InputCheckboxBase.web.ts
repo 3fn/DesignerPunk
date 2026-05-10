@@ -37,7 +37,7 @@ import { IconBaseSize } from '../../../Icon-Base/types';
 // Import theme-aware blend utilities for hover state color calculations
 // Uses getBlendUtilities() factory for consistent state styling across components
 // @see Requirements: 1.4, 7.4 - Hover applies blend.hoverDarker to border
-import { getBlendUtilities, BlendUtilitiesResult } from '../../../../../blend/ThemeAwareBlendUtilities.web';
+import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 
 // Import CSS as string for browser bundle compatibility
 // The esbuild CSS-as-string plugin transforms this import into a JS string export

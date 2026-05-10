@@ -34,7 +34,7 @@ import {
   InputTextBaseState
 } from '../../types';
 // Import theme-aware blend utilities for state color calculations
-import { getBlendUtilities, BlendUtilitiesResult } from '../../../../../blend/ThemeAwareBlendUtilities.web';
+import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 import {
   createInitialState,
   handleFocus,
