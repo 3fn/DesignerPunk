@@ -383,7 +383,7 @@ Product repos can run the same component tests that ship with `@3fn/core`. The p
 Install test dependencies:
 
 ```bash
-npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
+npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node
 ```
 
 If you ran `npx designerpunk init`, `jest.config.js` and `tsconfig.test.json` are already scaffolded. Otherwise, create them manually:
@@ -475,6 +475,7 @@ These run static analysis against component schemas and source — no DOM requir
 
 - The preset defaults to `jsdom` environment. All web component tests run in jsdom automatically.
 - `jest-environment-jsdom` is required — without it, DOM APIs are unavailable.
+- `@types/node` is required for contract tests that read CSS source from disk (the style-mock returns `''` for CSS imports, so filesystem reads are needed to verify CSS content).
 - If tests fail after updating `@3fn/core`, re-run `npx designerpunk init` to refresh component source. Stale source (from an older init) may cause test failures.
 
 ---

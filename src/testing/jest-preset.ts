@@ -13,6 +13,14 @@
  * };
  * ```
  *
+ * **Required devDependencies** (install in your product repo):
+ * ```
+ * npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node
+ * ```
+ *
+ * `jest-environment-jsdom` is required because this preset sets
+ * `testEnvironment: 'jsdom'`. Without it, Jest will error on startup.
+ *
  * @see Spec 105 design.md § "Jest Preset"
  */
 

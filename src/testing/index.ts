@@ -136,3 +136,19 @@ export function setupBlendColorProperties(): void {
 export function cleanupBlendColorProperties(): void {
   cleanupTokenProperties(BLEND_PROPERTIES);
 }
+
+/**
+ * Read a component's CSS source from disk.
+ *
+ * The jest-preset style-mock returns '' for CSS imports, so tests that
+ * verify CSS content (contract tests checking custom property declarations)
+ * must read the file directly. This utility encapsulates that pattern.
+ *
+ * @param dirname - Pass `__dirname` from the test file
+ * @param relativePath - Relative path to the CSS file (e.g., '../platforms/web/Component.styles.css')
+ */
+export function readComponentCSS(dirname: string, relativePath: string): string {
+  const fs = require('fs');
+  const path = require('path');
+  return fs.readFileSync(path.resolve(dirname, relativePath), 'utf-8');
+}
