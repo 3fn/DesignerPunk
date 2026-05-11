@@ -28,6 +28,11 @@ import * as path from 'path';
 
 const styleMockPath = path.resolve(__dirname, 'style-mock.js');
 
+// Resolve @3fn/core package root for subpath export mappings.
+// In the published package, __dirname is node_modules/@3fn/core/src/testing/ (or dist/testing/).
+// The package root is 2 levels up from src/testing/ or dist/testing/.
+const pkgRoot = path.resolve(__dirname, '../..');
+
 module.exports = {
   testEnvironment: 'jsdom',
   transform: {
@@ -47,6 +52,11 @@ module.exports = {
   ],
   moduleNameMapper: {
     '\\.css$': styleMockPath,
+    '^@3fn/core/blend$': path.join(pkgRoot, 'src/blend/index.ts'),
+    '^@3fn/core/build$': path.join(pkgRoot, 'src/build/tokens/index.ts'),
+    '^@3fn/core/types$': path.join(pkgRoot, 'src/types/index.ts'),
+    '^@3fn/core/testing$': path.join(pkgRoot, 'src/testing/index.ts'),
+    '^@3fn/core/config$': path.join(pkgRoot, 'src/config/index.ts'),
   },
   testTimeout: 10000,
 };
