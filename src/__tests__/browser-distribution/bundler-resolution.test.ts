@@ -70,8 +70,9 @@ describe('Bundler Resolution', () => {
 
     it('should have blend export with types', () => {
       const blend = packageJson.exports['./blend'];
-      expect(blend.import).toBe('./dist/blend/index.js');
-      expect(blend.types).toBe('./dist/blend/index.d.ts');
+      expect(blend.import).toBe('./src/blend/index.ts');
+      expect(blend.require).toBe('./src/blend/index.ts');
+      expect(blend.types).toBe('./src/blend/index.ts');
     });
 
     it('should have grid.css export', () => {
@@ -123,7 +124,7 @@ describe('Bundler Resolution', () => {
     });
 
     it('should have blend utilities at export path', () => {
-      const blendPath = path.join(PROJECT_ROOT, 'dist', 'blend', 'index.js');
+      const blendPath = path.join(PROJECT_ROOT, 'src', 'blend', 'index.ts');
       expect(fs.existsSync(blendPath)).toBe(true);
     });
 

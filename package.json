@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "11.5.0",
+  "version": "11.5.1",
   "description": "True Native cross-platform design system with mathematical foundations",
   "license": "Apache-2.0",
   "author": "Peter Michaels Allen",
@@ -89,8 +89,9 @@
       "types": "./src/build/tokens/index.ts"
     },
     "./blend": {
-      "import": "./dist/blend/index.js",
-      "types": "./dist/blend/index.d.ts"
+      "import": "./src/blend/index.ts",
+      "require": "./src/blend/index.ts",
+      "types": "./src/blend/index.ts"
     },
     "./jest-preset": {
       "require": "./dist/testing/jest-preset.js"
