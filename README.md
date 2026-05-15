@@ -1,495 +1,167 @@
-# DesignerPunk v10
+# DesignerPunk
 
-**A Design System Foundation Built for Modern Product Development, Cross-Platform Excellence, and AI-Assisted Development**
-
-[![Version](https://img.shields.io/badge/Version-10.2.0-purple)](docs/releases/RELEASE-NOTES-10.2.0.md)
+[![Version](https://img.shields.io/badge/Version-11.5.2-purple)](docs/releases/RELEASE-NOTES-11.3.2.md)
 [![Repository](https://img.shields.io/badge/GitHub-DesignerPunkv2-blue)](https://github.com/3fn/DesignerPunkv2)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/Tests-8138%2B-brightgreen)](.)
-
-[![Punk Your Design w/ Peter Michaels Allen | Wireframe Live](https://img.youtube.com/vi/sFjNMasG_mU/maxresdefault.jpg)](https://www.youtube.com/live/sFjNMasG_mU)
-*🎬 Punk Your Design w/ Peter Michaels Allen — Wireframe Live on Design Systems House*
+[![Tests](https://img.shields.io/badge/Tests-8358%2B-brightgreen)](.)
 
 ---
 
-## The Problem It Solves
-
-### The Real Issues
-
-**For designers building products**: You need consistency across web, iOS, and Android without maintaining three separate design systems. Mathematical precision in your token system prevents "but what does medium padding mean?" arguments between platforms.
-
-**For AI agents assisting with design**: They encounter "fuzzy" terminology where terms mean different things across contexts. When you tell Claude "use space100," that's unambiguous: it means 8 pixels/points/dp. When you say "add padding," Claude has to guess.
-
-**For teams learning design systems**: Good design systems are hard to understand because they're rarely documented with their underlying philosophy. You see tokens and components but not *why* they're structured that way.
-
-### How DesignerPunk Addresses Them
-
-- **Mathematical Foundation**: Every spacing relationship derives from an 8px baseline grid. space075=6, space100=8, space150=12. It's mathematical, not arbitrary.
-- **True Native Architecture**: Build-time platform separation means you ship native iOS/Android/Web code—not a cross-platform compromise.
-- **AI-First Documentation**: The MCP Documentation Server lets AI agents query your design system intelligently, reducing context load by 82%.
+Design systems are no longer simply tools for brand consistency. They're a shared context and working agreement between humans and AI agents for building software together. This is not the future; this is today. This is essential infrastructure for teams of any size, where machines query and validate with precision while humans contribute intent and meaning. DesignerPunk is built from the ground up to deliver this collaborative reality.
 
 ---
 
-## Why This Matters
+## The Challenge
 
-### For Designers
+For AI agents to be genuine collaborators in design system work, three things need to be true:
 
-**Design systems are infrastructure**, not just pretty components. You need:
-- Mathematical relationships that hold across platforms (no fuzzy "medium padding")
-- Clear architectural thinking (so you know *why* tokens are organized this way)
-- Built-in contamination prevention (so your system doesn't degrade as it evolves)
+1. Every design decision must be queryable, not buried in docs humans forgot to update
+2. Every component contract must be machine-validatable, not implicit tribal knowledge
+3. Institutional context must persist across sessions, not reset every conversation
 
-DesignerPunk demonstrates all three.
-
-### For Developers
-
-**Cross-platform development is hard** because you usually choose:
-- Shared codebase (loses native performance)
-- Separate codebases (multiplies maintenance)
-
-True native architecture says: same *design system*, separate *implementations*. One source of truth (tokens), platform-optimized delivery (native code).
-
-### For AI Advocates
-
-**AI can't collaborate on design without precision**. "Use medium padding" is ambiguous. "Use space150" is unambiguous. The MCP server proves that precise design language enables AI agents to generate better code.
+No publicly available design system solves for these. They're built for human consumption and retrofitted for machines as an afterthought — if retrofitted at all.
 
 ---
 
-## Engineering Approach: AI-Driven Implementation Supported by Human Framing
+## The Ecosystem
 
-I provide architectural direction, design decisions, and problem-solving; AI agents (Claude, Cursor) handle implementation.
+DesignerPunk is an ecosystem, not just a design system. Not "ecosystem" in the tech-industry sense of selling you more shit for your living room. Ecosystem in the biological sense: a shared environment where interdependent systems sustain each other and evolve together. This is punk.
 
-This is the **producer/musician model**: I don't write the music, but I shape the sound through clear vision, specific guidance, and iterative refinement.
-
-**Why this matters**: This demonstrates how modern product teams actually work. You don't need to be an expert coder to build sophisticated systems—you need to understand architecture, make good decisions, and guide implementation effectively.
-
-DesignerPunk has 8,138+ tests, production implementations across Web/iOS/Android, and sophisticated build pipelines—all architected and guided by clear framing, with execution handled by AI.
-
-This is a working case study in how to lead AI-driven development at scale.
+Its three foundational systems (Rosetta, Stemma, Civitas) are interdependent: tokens feed components, components depend on governance, governance maintains the health of both. Humans and AI agents co-exist within this ecosystem as partners with distinct, complementary roles. The system is designed to evolve, not just to ship.
 
 ---
 
-## Current State
+### Rosetta: The Mathematical Foundation
 
-### ✅ Production Ready
+**What it is:** A token system and build pipeline that translates design intent into platform-native code.
 
-**Form Inputs Family** (Web, iOS, Android)
-- `Input-Text-Base`, `Input-Text-Email`, `Input-Text-Password`, `Input-Text-PhoneNumber`
-- Complete with validation, accessibility, and cross-platform consistency
+**What it solves:** Every value is mathematical, not arbitrary. Machines validate relationships; humans define intent.
 
-**Core Components** (Web, iOS, Android)
-- Avatar, Badges (Label/Count/Notification), Buttons (CTA/Icon), Containers (Base/Card), Icon System
-- Chips (Base/Filter/Input) — Compact interactive elements for filtering, selection, and input
-- Checkboxes (Base/Legal) — Binary selection controls with legal consent support
-- Radio Buttons (Base/Set) — Single-selection controls with mutual exclusivity and group orchestration
-- Progress Indicators — Node-Base, Connector-Base, Label-Base (primitives) + Pagination-Base, Stepper-Base, Stepper-Detailed (semantic variants) with sliding window virtualization + Progress-Bar-Base (continuous/percentage-based)
-- Navigation — SegmentedChoice-Base, TabBar-Base with three-phase animation choreography and cross-platform behavioral contracts
-- Nav-Header — Nav-Header-Base (structural primitive), Nav-Header-Page (semantic: h1 title, back/close/trailing), Nav-Header-App (semantic: permissive scaffold)
-- 34 production-ready components with behavioral contracts
-- Full cross-platform support with platform-native implementations
-- Uniform contract system: 10 categories, 136 concepts, formal inheritance
+**Deliverables:** 437 tokens across spacing, sizing, color, typography, radius, shadow, glow, motion, opacity, blend, and blur. Cross-platform generation to CSS, Swift, Kotlin, and DTCG JSON. Three-tier architecture: Primitive → Semantic → Component.
 
-**Custom Agent System**
-- 8 specialized AI agents: Ada (tokens), Lina (components), Thurgood (governance), Leonardo (product architect), Sparky (web), Kenya (iOS), Data (Android), Stacy (product QA)
-- Domain-scoped configurations with progressive resource loading
-- 11 user-triggered validation hooks across all agents
-- 85 steering docs with on-demand loading
-
-**Rosetta Token System**
-- 320+ tokens (spacing, sizing, typography, color, radius, shadow, glow, motion, opacity, blend, blur)
-- Cross-platform generation (CSS, Swift, Kotlin, DTCG JSON)
-- Three-tier architecture (Primitive → Semantic → Component)
-- MCP Documentation Server with 82% token reduction for AI agent queries
-- Application MCP Server with progressive disclosure queries for agent-driven selection
-- 9 experience patterns for assembly guidance
-- Family guidance YAML files for machine-queryable component selection
-- Bidirectional Figma integration: token push (Variables + Styles) and design extraction (ComponentAnalysis with three-tier classification)
-
-### 🟡 Structural Foundation Ready
-
-**Placeholder Component Families** (5 families)
-- Data Displays, Loading, Modals, Dividers, and additional Navigation components
-- Architecture documented, inheritance patterns defined, ready for implementation
-- Waiting for component-specific needs to drive development
-
-### 📋 What's Not Included (And Why)
-
-**Design Tool Integration** 
-- Figma integration is production-ready (v7.0.0) — bidirectional token sync and component analysis
-- Other design tools (Sketch, Adobe XD) not currently supported
-
-**Pre-built Themes Beyond Base/WCAG**
-- By design—you define additional themes using the token system
-- The system enables infinite variations rather than shipping predefined ones
-- Current support: Original theme + WCAG 2.2 theme, each with day/night modes
-
-**Component Templates for Non-Web Platforms**
-- Currently Web-forward—iOS and Android use hand-written Swift/Kotlin
-- Future exploration may provide templates to accelerate platform parity
+**How AI agents access it:**
+```
+get_token_details({ name: "space150" })
+→ { value: 12, formula: "base × 1.5", tier: "primitive", platforms: { web: "0.75rem", ios: "12pt", android: "12dp" } }
+```
 
 ---
 
-## Latest Release: v10.2.0
+### Stemma: The Component Architecture
 
-**New Component, Sizing Tokens, & Native Platform Sweep** (Specs 090 + 091 + 092 + 093):
+**What it is:** A framework for building components that behave identically across platforms while staying native.
 
-- **Progress-Bar-Base** (Spec 090): First continuous/percentage-based progress component. Determinate, indeterminate, and indeterminate-static fill modes. True Native across Web, iOS, Android. Gap report #2 resolved.
-- **Sizing Token Family** (Spec 092): 13 new sizing primitives (size050–size1600, base 8) separating component dimensions from spacing. 6 component families migrated internally. Zero visual change.
-- **Native Readiness Sweep** (Spec 091): 28 components reviewed and fixed across iOS and Android. 10 families touched. All components now `reviewed: true` on both platforms.
-- **Native Implementation Modernization** (Spec 093): iOS spring animations replacing cubic bezier. Android ripple vs blend design decision documented. All 7 correctness properties verified.
-- **Application MCP**: `rebuild_index` tool added for live catalog reindexing.
-- 311 test suites, 8,138 tests passing, 34 production components, 136 behavioral contract concepts.
+**What it solves:** Every component makes explicit behavioral promises. Machines validate contracts; humans define interaction intent.
 
-[Full Release Notes →](docs/releases/RELEASE-NOTES-10.2.0.md)
+**Deliverables:** 34 production components with behavioral contracts. 10 contract categories, 136 concepts. True native implementations (Web Components, SwiftUI, Jetpack Compose). Formal inheritance with intentional exclusions.
 
----
-
-## One Thing First
-
-This is **my design system foundation**—15+ years of industry experience distilled into an opinionated, mathematically-grounded system. I built it for my own work. If it's useful for yours too, excellent. But I'm sharing it because I believe these principles and patterns represent genuinely better approaches to design systems.
+**How AI agents access it:**
+```
+find_components({ context: "login-forms" })
+→ [Input-Text-Email, Input-Text-Password, Button-CTA] with selection guidance, accessibility notes, and composition rules
+```
 
 ---
 
-## What This Actually Is
+### Civitas: The Governance Layer
 
-DesignerPunk isn't a design system you download and use off-the-shelf. It's:
+**What it is:** The steering documentation, agent configurations, automation, and processes that bind the ecosystem together.
 
-1. **A complete toolkit I use for my own projects** - Including components, tokens, build systems, and tooling
-2. **A case study in design system thinking** - Portfolio work demonstrating deep expertise in cross-platform design systems
-3. **A working exploration of AI-assisted design development** - With a production-grade MCP server that actually reduces AI context load by 82%
+**What it solves:** Institutional knowledge persists across sessions. Machines query what they need progressively; humans maintain the source of truth.
+
+**Deliverables:** 87 steering documents with progressive disclosure. 3 MCP servers (docs, application, product). 8 specialized AI agents with domain boundaries. 13 validation hooks. Automated release detection and completion documentation system. 106+ specs encoding institutional decisions.
+
+**How AI agents access it:**
+```
+get_section({ path: "Token-Governance.md", heading: "Token Selection Matrix" })
+→ Exactly the governance context needed for this decision, not the entire 2,000-line document
+```
 
 ---
 
-## Core Systems
+## Result
 
-DesignerPunk is built on two interconnected systems:
+The architecture is the argument. The numbers are the evidence.
 
-![High-Level Architecture](docs/architecture/High-Level%20Architecture.png)
+**By the numbers:**
+- 8,358 tests passing across 331 test suites
+- 34 production components with full cross-platform implementations
+- 437 design tokens with mathematical relationships
+- 3 MCP servers enabling progressive, context-efficient AI access
+- 8 AI agents with domain-scoped expertise operating within defined boundaries
+- 106+ specs documenting every architectural decision and its rationale
+- Published as `@3fn/core` on GitHub Packages with a working CLI (`npx designerpunk`)
 
-### Rosetta System — The Mathematical Foundation
+**What this enables:**
+- An AI agent can select the right component for a login form, validate the assembly, and generate platform-native code without a human explaining the system from scratch every session
+- The system self-documents its own evolution: every completed task produces completion documentation and triggers release analysis automatically
+- A new agent (or a new human) can onboard by querying the MCP servers rather than reading thousands of lines of documentation linearly
+- Token changes propagate to all three platforms through a single generation pipeline with mathematical validation at every step
+- Design tokens export to DTCG JSON and Figma Variables, enabling canvas tools to sync with live code
 
-![Rosetta System](docs/architecture/Rosetta.png)
+**Where it stands today:**
 
-A token system + build pipeline that translates design intent into platform-native code.
+The ecosystem creates, maintains, and evolves itself as intended. AI agents and humans collaborate on token creation, component development, governance, and cross-platform generation daily.
 
-- **Tokens**: ~320 mathematical values (spacing, sizing, color, typography, radius, shadow, glow, motion, opacity, blend, blur)
-- **Build Pipeline**: Converts tokens to CSS (web), Swift (iOS), Kotlin (Android)
-- **Documentation**: Mechanical parsing + MCP servers for AI-friendly access
-- **Purpose**: Single source of truth that generates consistent output across platforms
-
-Think of it as: **Define once, generate everywhere**
-
-**What's included:**
-- Three-tier architecture: Primitive → Semantic → Component tokens
-- Cross-platform generation with platform-native syntax
-- MCP Documentation Server with 82% token reduction for AI agents
-- Application MCP Server with query tools for agent-driven component selection
-- Empirically validated performance and token efficiency
-
-### Stemma System — The Component Architecture
-
-![Stemma System](docs/architecture/Stemma.png)
-
-A framework for building components that work identically across platforms while staying native.
-
-- **Naming Convention**: `[Family]-[Type]-[Variant]` (AI-discoverable)
-- **Behavioral Contracts**: 10-category taxonomy with 136 concepts — explicit specifications ensuring cross-platform consistency
-- **Application MCP Server**: Machine-readable metadata with query tools for agent-driven component selection, experience patterns, family guidance, and assembly validation
-- **11 Component Families**: Navigation, Form Inputs, Core, Progress Indicators, Data Displays, etc.
-- **Purpose**: Systematic, scalable component development with shared architecture
-
-Think of it as: **Build once, implement natively everywhere**
-
-**What's included:**
-- Form Inputs family (4 production-ready components)
-- Core components (11 production-ready components)
-- Placeholder families with documented patterns (5 families, ready for implementation)
-- Health guardrails with 270+ validation tests
-- Component token API for lightweight, reasoned token authoring
-- 34 contracts.yaml files with formal inheritance and intentional exclusions
-- 34 component-meta.yaml semantic annotations for agent selection guidance
-
-#### Unified Contract System
-
-![Unified Contract System](docs/architecture/Unified%20Contract%20System.png)
-
-Every component makes explicit behavioral promises organized by a 10-category taxonomy (layout, interaction, state, validation, accessibility, composition, content, animation, visual, performance), with formal inheritance and intentional exclusions. Contracts define WHAT behavior occurs across platforms — implementations define HOW. The Application MCP server makes these contracts queryable by agents.
+Guiding agents to apply tokens and components to product design specs is the current top priority. The foundational infrastructure to support this is operating, but requires further maturation and refinement.
 
 ---
 
 ## Getting Started
 
-### What You Can Actually Use Today
-
-If you want to understand how these ideas work in practice:
-
-1. **The token system** (`src/tokens/`) — 320+ tokens organized mathematically with cross-platform generation
-2. **Component implementations** (`src/components/`) — Real, production-ready components for Web/iOS/Android
-3. **MCP Documentation Server** (`mcp-server/`) — Working implementation you can integrate with Cursor or Claude
-4. **Application MCP Server** (`application-mcp-server/`) — Agent-driven component selection, experience patterns, and assembly validation
-5. **Steering Documentation** (`.kiro/steering/`) — Current architectural thinking and development guidance
-
-### Installation
-
+**Use it in your project:**
 ```bash
-git clone https://github.com/3fn/DesignerPunkv2.git
-cd DesignerPunkv2
-npm install
-npm test
+npm install @3fn/core
+npx designerpunk init
+npx designerpunk generate
 ```
+Not comfortable with terminal commands? Ask your AI agent to follow these steps. That's the point.
 
-### If You Want to Explore
+[Full integration guide →](docs/integration-guide.md)
 
-**5-minute intro**: Read [The Problem It Solves](#the-problem-it-solves) + [Core Systems](#core-systems)
-
-**30-minute deep dive**: 
-- Read [.kiro/steering/Token System Overview](.kiro/steering/)
-- Check [Component Examples](#architecture-highlights)
-- Look at one component implementation (e.g., `src/components/core/Button-CTA/`)
-
-**Full commitment**:
-- Review [.kiro/steering/](.kiro/steering/) — Current architectural thinking and development guidance
-- Study [Strategic Framework](strategic-framework/) — How core systems fit together
-- Read component code across Web, iOS, Android to see true native architecture in action
+**Study the architecture:**
+- [DesignerPunk Systems Overview](.kiro/steering/DesignerPunk-Systems-Overview.md)
+- [Steering documentation](.kiro/steering/) (87 docs, the governance layer in practice)
+- [AI Collaboration Framework](.kiro/steering/AI-Collaboration-Framework.md)
 
 ---
 
-## Architecture Highlights
+## Why Punk
 
-### True Native Design-to-Code
+Punk isn't an aesthetic. It's a stance: the tools to create should not be gatekept by those who can afford enterprise licenses, dedicated teams, or years of specialized training.
 
-Instead of cross-platform compromises:
-
-```
-DesignerPunk Tokens (unambiguous)
-         ↓
-    [Build System]
-    /      |      \
-  Web    iOS     Android
-  ↓       ↓        ↓
- CSS    Swift    Kotlin
-(Native code for each platform)
-```
-
-### AI-Accessible Design Language
-
-```
-Traditional: "Add medium padding"
-DesignerPunk: "Add space150" (unambiguous: 8px/pt/dp)
-
-Claude with DesignerPunk: "Use space150 for button padding"
-Result: Correct implementation on all platforms
-```
-
-### Documentation as a Queryable System
-
-Instead of: *"Read our 26,000-token documentation"*
-With MCP: *"Query the documentation map → get summary → retrieve specific section"*
-
-**Result**: 82% token reduction, AI agents can access design guidance without context exhaustion
-
-### Component Selection as a Queryable System
-
-Instead of: *"Parse 34 schema files, 34 contract files, and 34 annotation files"*
-With Application MCP: *"find_components({ context: 'login-forms' }) → get_experience_pattern('simple-form') → get_prop_guidance('Form Inputs') → validate_assembly(tree)"*
-
-**Result**: Agents select components by context, learn assembly patterns, query family-level selection guidance, and validate complete UI trees — all through structured queries
-
-### Component Token Authoring
-
-```typescript
-defineComponentTokens({
-  component: 'buttonicon',
-  family: 'spacing',
-  tokens: {
-    insetLarge: {
-      reference: space150,
-      reasoning: 'Large buttons need comfortable touch targets'
-    }
-  }
-})
-```
-
-Lightweight authoring with explicit reasoning, cross-platform generation.
+DesignerPunk exists so that a solo founder, a small team, or a community organizer can have the same systematic infrastructure that Fortune 500 companies build behind closed doors and never share. AI eliminates the barrier to entry. This system levels the competitive field.
 
 ---
 
-## Core Philosophy
+## Engineering Approach
 
-### The Business Localization Model
+The new coding language isn't React, Swift, or Kotlin. It's English.
 
-Tokens are "remote workers" with specialized expertise serving multiple "markets" (platforms) through "translation services" (build system):
+I provide architectural direction, design decisions, and quality standards. AI agents execute implementation within those constraints. This is the producer/musician model: I shape the sound; I don't play every instrument. We make music together.
 
-- **Remote Workers (Tokens)**: Provide pure mathematical expertise (space100=8)
-- **Language Translators**: Convert expertise to platform formats (8px web, 8pt iOS, 8dp Android)
-- **Cultural Translators (Build System)**: Ensure platform-native delivery
-- **Local Operations (Components)**: Serve end users with consistent, native experiences
+The system is tool-agnostic by design. The architecture is the constant; which AI, IDE, CLI, or design tool you use is interchangeable. This isn't a workaround. It's the methodology the system was built to prove.
 
-This metaphor clarifies the whole architecture.
+Note: primarily developed on Kiro IDE and CLI. Broader tool support is in progress.
 
-### Mathematical Precision with Strategic Flexibility
-
-- **8px baseline grid**: Systematic foundation
-- **Strategic flexibility**: Mathematically-derived exceptions (space075=6, not arbitrary)
-- **Cross-platform consistency**: Same relationships across all platforms
-
-### Systematic Skepticism in AI Collaboration
-
-Every AI recommendation includes mandatory counter-arguments:
-
-```
-"I recommend space.grouped.normal for field spacing.
-
-HOWEVER, here's why this might be wrong:
-- If validation is complex, space.related.normal provides better separation
-- For mobile, space.grouped.tight might be more appropriate
-- Consider whether space.inset tokens are needed for internal padding"
-```
-
-This prevents AI optimism bias and builds trust.
+8,358 tests. 34 components across three platforms. A published package with a working CLI. All architected through this model.
 
 ---
 
-## Development Direction
+## About
 
-The following represent areas of active development, sequenced by dependencies and architectural coherence rather than strict timelines.
+**Peter Michaels Allen** — Design Systems Architect & Design Engineer
 
-### Current Work
+18 years of design experience. 10+ years creating and managing design systems at scale at Reddit, Venmo, and PayPal, and across enterprise, healthcare, fintech, government, and gaming. DesignerPunk is the synthesis: a working system that demonstrates how design systems, cross-platform architecture, and AI collaboration converge.
 
-- Specs 048-093 (active implementation)
+[![Punk Your Design w/ Peter Michaels Allen | Wireframe Live](https://img.youtube.com/vi/sFjNMasG_mU/maxresdefault.jpg)](https://www.youtube.com/live/sFjNMasG_mU)
+*Punk Your Design — a conversation about the philosophy and architecture behind DesignerPunk on Design Systems House*
 
-### Near-Term Focus
-
-Development continues based on architectural needs and emerging patterns. Check `.kiro/specs/` for current work in progress.
-
----
-
-## Areas to Explore
-
-These represent genuine interests—not committed roadmap items, but directions we're actively thinking about:
-
-### Design Tool Integration
-
-**Figma Console MCP** — Bidirectional Figma integration is now production-ready (v7.0.0). Token push syncs DesignerPunk tokens to Figma as native Variables and Styles. Design extraction reads Figma components and generates ComponentAnalysis artifacts with three-tier token classification.
-
-**What's next**: Expanded property extraction for HTML/CSS prototype generation, typography style capture, and multi-file support.
-
-### Expanded Theming System
-
-Currently: Original theme, WCAG 2.2 theme, day/night modes for both
-
-Future exploration:
-- Additional semantic themes (high-contrast, reduced-motion variants)
-- Custom theme authoring patterns
-- Theme composition (mix and match variant strategies)
-
-**Why it matters**: Different use cases need different themes; the infrastructure exists, patterns need exploration.
-
-### Component Generation from Specifications
-
-**Wireframing-to-component**: Generate component skeletons from wireframe specifications
-
-**Spec-to-component**: Auto-generate component boilerplate from Stemma System specs
-
-**Why it matters**: Reduces manual scaffolding; accelerates component development cycle.
-
-### Design File-to-Component Pipeline
-
-**Active exploration**: ComponentAnalysis extraction (v7.0.0) captures layout, typography, color, stroke, and dimensions from Figma components with token classification. The analysis data is rich enough to inform prototype generation — a natural next step.
-
-**Why it matters**: Closes the gap between design and implementation with structured, machine-readable analysis rather than manual translation.
-
----
-
-## Key Innovations
-
-### Mathematical Token System
-Every spacing token derives from 8px baseline. Color relationships follow design theory (warm light creates cool shadows). Motion timing follows Material Design curves. Nothing is arbitrary.
-
-### Electric Design Language
-45-color palette system with dual themes:
-- **Original**: Maximum aesthetic impact for marketing moments
-- **WCAG 2.2**: Accessible while maintaining electric character
-
-Both support day/night modes for comprehensive coverage.
-
-### Hierarchical Spacing Semantics
-Two-category system that encodes design intent:
-- **Layout tokens**: External spacing (space.grouped, space.separated)
-- **Inset tokens**: Internal spacing (space.inset.tight, space.inset.spacious)
-
-### True Native Architecture
-Build-time platform separation provides native performance with unified developer experience—no runtime platform detection, same API contracts, platform-specific optimization.
-
----
-
-## Portfolio Context
-
-This project demonstrates:
-
-| What | Why It Matters |
-|------|----------------|
-| **Complete design system foundation** | Shows understanding of system design, not just components |
-| **Cross-platform native code** | Demonstrates bridge between design and deep technical work |
-| **320+ tokens** | Proves ability to create systematic, scalable foundations |
-| **8,138+ tests** | Shows commitment to reliability and quality |
-| **2 MCP Servers** (docs + application) | Working solutions to real AI collaboration problems |
-| **136 behavioral contract concepts** | Explicit cross-platform consistency guarantees |
-| **Architectural documentation** | Demonstrates design leadership and systems thinking |
-
-For hiring managers: This shows someone who understands both design and engineering deeply enough to build infrastructure that serves both disciplines.
-
----
-
-## How to Use This
-
-### If You're Evaluating Design Systems
-This demonstrates what a complete, mathematically-grounded design system looks like. Read the token definitions, study component implementations.
-
-### If You're Hiring
-This shows design system expertise, cross-platform thinking, ability to direct AI-driven development, and the ability to build infrastructure that serves both design and engineering.
-
-### If You're Building Products
-Study the token system and component patterns. The architecture is reusable—even if you don't adopt DesignerPunk directly, these principles will improve your own work.
-
-### If You're Interested in AI + Design
-The MCP Documentation Server is a working solution to the "AI context exhaustion" problem. It's production-grade and empirically validated.
-
----
-
-## Deep Dives
-
-**Want the full story?**
-
-- [Strategic Framework](strategic-framework/) — How core systems fit together
-- [Steering Documentation](.kiro/steering/) — Current architectural thinking and development guidance  
-- [Component Development Guide](.kiro/steering/Component-Development-Guide.md) — How to build components in this system
-- [Token System Overview](docs/token-system-overview.md) — Complete token documentation
-
----
-
-## Learning About Me
-
-**Peter Michaels Allen** — Designer, Design System Architect, and Design Leadership Expert
-
-- 15+ years of design leadership across enterprise, healthcare, fintech
-- Deep expertise in design systems at scale
-- Strong opinions about mathematical precision, accessibility, and sustainable development
-- Teaching myself engineering processes and structure to build infrastructure that serves design
-
-**LinkedIn**: [petermichaelsallen](https://www.linkedin.com/in/petermichaelsallen/)
+[LinkedIn](https://www.linkedin.com/in/petermichaelsallen/) · [GitHub](https://github.com/3fn)
 
 ---
 
 ## License
 
-MIT — Use it however you want.
-
----
-
-## One More Thing
-
-This project reflects my opinions about what good design systems look like. You might disagree with some choices (the mathematical relationships, the semantic token structure, the emphasis on AI collaboration). That's fine. The point is to demonstrate *systematic thinking* about design system architecture.
-
-Even if you don't adopt DesignerPunk directly, I hope it influences how you think about design systems in your own work.
+Apache-2.0 — See [LICENSE](LICENSE) for details.
