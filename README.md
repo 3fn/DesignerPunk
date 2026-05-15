@@ -72,6 +72,21 @@ find_components({ context: "login-forms" })
 
 **Deliverables:** 87 steering documents with progressive disclosure. 3 MCP servers (docs, application, product). 8 specialized AI agents with domain boundaries. 13 validation hooks. Automated release detection and completion documentation system. 106+ specs encoding institutional decisions.
 
+**The agent system:**
+
+| Agent | Domain | Named After |
+|-------|--------|-------------|
+| Ada | Token system (Rosetta) | Ada Lovelace |
+| Lina | Component system (Stemma) | Lina Bo Bardi |
+| Thurgood | Governance & testing (Civitas) | Thurgood Marshall |
+| Leonardo | Product architecture | Leonardo da Vinci |
+| Sparky | Web platform | Sarah Parks |
+| Kenya | iOS platform | Kenya Hara |
+| Data | Android platform | Commander Data |
+| Stacy | Product QA | Stacey Abrams |
+
+Each agent knows what it owns, what it doesn't, and who to defer to. No agent operates without constraints.
+
 **How AI agents access it:**
 ```
 get_section({ path: "Token-Governance.md", heading: "Token Selection Matrix" })
