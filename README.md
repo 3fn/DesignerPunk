@@ -74,16 +74,16 @@ find_components({ context: "login-forms" })
 
 **The agent system:**
 
-| Agent | Domain | Named After |
-|-------|--------|-------------|
-| Ada | Token system (Rosetta) | [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace) |
-| Lina | Component system (Stemma) | [Lina Bo Bardi](https://en.wikipedia.org/wiki/Lina_Bo_Bardi) |
-| Thurgood | Governance & testing (Civitas) | [Thurgood Marshall](https://en.wikipedia.org/wiki/Thurgood_Marshall) |
-| Leonardo | Product architecture | [Leonardo da Vinci](https://en.wikipedia.org/wiki/Leonardo_da_Vinci) |
-| Sparky | Web platform | [Sarah Parks](https://www.linkedin.com/in/sarahparks/) |
-| Kenya | iOS platform | [Kenya Hara](https://en.wikipedia.org/wiki/Kenya_Hara) |
-| Data | Android platform | [Commander Data](https://en.wikipedia.org/wiki/Data_(Star_Trek)) |
-| Stacy | Product QA | [Stacey Abrams](https://en.wikipedia.org/wiki/Stacey_Abrams) |
+| Agent | Domain | Named After | Why |
+|-------|--------|-------------|-----|
+| Ada | Token system (Rosetta) | [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace) | Saw computing as more than calculation |
+| Lina | Component system (Stemma) | [Lina Bo Bardi](https://en.wikipedia.org/wiki/Lina_Bo_Bardi) | Architecture that serves people, not ego |
+| Thurgood | Governance & testing (Civitas) | [Thurgood Marshall](https://en.wikipedia.org/wiki/Thurgood_Marshall) | Held systems accountable to their own promises |
+| Leonardo | Product architecture | [Leonardo da Vinci](https://en.wikipedia.org/wiki/Leonardo_da_Vinci) | Unified art and engineering |
+| Sparky | Web platform | [Sarah Parks](https://www.linkedin.com/in/sarahparks/) | Collaborative power between design and engineering |
+| Kenya | iOS platform | [Kenya Hara](https://en.wikipedia.org/wiki/Kenya_Hara) | Simplicity as sophistication |
+| Data | Android platform | [Commander Data](https://en.wikipedia.org/wiki/Data_(Star_Trek)) | Precision with aspiration toward human understanding |
+| Stacy | Product QA | [Stacey Abrams](https://en.wikipedia.org/wiki/Stacey_Abrams) | Ensured systems deliver on their promises |
 
 Each agent knows what it owns, what it doesn't, and who to defer to. No agent operates without constraints.
 
