@@ -28,9 +28,9 @@ DesignerPunk agents operate in two tiers:
 
 | Agent | Domain | Shortcut | Named After |
 |-------|--------|----------|-------------|
-| **Ada** | Rosetta token system | `ctrl+shift+a` | Ada Lovelace |
-| **Lina** | Stemma component system | `ctrl+shift+l` | Lina Bo Bardi |
-| **Thurgood** | Test governance, spec standards & Civitas steward | `ctrl+shift+t` | Thurgood Marshall |
+| **Ada** | Rosetta token system | `ctrl+shift+a` | [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace) |
+| **Lina** | Stemma component system | `ctrl+shift+l` | [Lina Bo Bardi](https://en.wikipedia.org/wiki/Lina_Bo_Bardi) |
+| **Thurgood** | Test governance, spec standards & Civitas steward | `ctrl+shift+t` | [Thurgood Marshall](https://en.wikipedia.org/wiki/Thurgood_Marshall) |
 
 ### Ada — Rosetta Token Specialist
 
@@ -64,11 +64,11 @@ Test suite health, coverage analysis, test infrastructure standards, audit metho
 
 | Agent | Domain | Shortcut | Named After |
 |-------|--------|----------|-------------|
-| **Leonardo** | Product architecture | `ctrl+shift+o` | Leonardo da Vinci |
-| **Sparky** | Web platform engineering | `ctrl+shift+w` | Sarah Parks |
-| **Kenya** | iOS platform engineering | `ctrl+shift+i` | Kenya Hara |
-| **Data** | Android platform engineering | `ctrl+shift+d` | Commander Data |
-| **Stacy** | Product governance & QA | `ctrl+shift+g` | Stacey Abrams |
+| **Leonardo** | Product architecture | `ctrl+shift+o` | [Leonardo da Vinci](https://en.wikipedia.org/wiki/Leonardo_da_Vinci) |
+| **Sparky** | Web platform engineering | `ctrl+shift+w` | [Sarah Parks](https://www.linkedin.com/in/sarahparks/) |
+| **Kenya** | iOS platform engineering | `ctrl+shift+i` | [Kenya Hara](https://en.wikipedia.org/wiki/Kenya_Hara) |
+| **Data** | Android platform engineering | `ctrl+shift+d` | [Commander Data](https://en.wikipedia.org/wiki/Data_(Star_Trek)) |
+| **Stacy** | Product governance & QA | `ctrl+shift+g` | [Stacey Abrams](https://en.wikipedia.org/wiki/Stacey_Abrams) |
 
 ### Leonardo — Product Architect
 

@@ -76,14 +76,14 @@ find_components({ context: "login-forms" })
 
 | Agent | Domain | Named After |
 |-------|--------|-------------|
-| Ada | Token system (Rosetta) | Ada Lovelace |
-| Lina | Component system (Stemma) | Lina Bo Bardi |
-| Thurgood | Governance & testing (Civitas) | Thurgood Marshall |
-| Leonardo | Product architecture | Leonardo da Vinci |
-| Sparky | Web platform | Sarah Parks |
-| Kenya | iOS platform | Kenya Hara |
-| Data | Android platform | Commander Data |
-| Stacy | Product QA | Stacey Abrams |
+| Ada | Token system (Rosetta) | [Ada Lovelace](https://en.wikipedia.org/wiki/Ada_Lovelace) |
+| Lina | Component system (Stemma) | [Lina Bo Bardi](https://en.wikipedia.org/wiki/Lina_Bo_Bardi) |
+| Thurgood | Governance & testing (Civitas) | [Thurgood Marshall](https://en.wikipedia.org/wiki/Thurgood_Marshall) |
+| Leonardo | Product architecture | [Leonardo da Vinci](https://en.wikipedia.org/wiki/Leonardo_da_Vinci) |
+| Sparky | Web platform | [Sarah Parks](https://www.linkedin.com/in/sarahparks/) |
+| Kenya | iOS platform | [Kenya Hara](https://en.wikipedia.org/wiki/Kenya_Hara) |
+| Data | Android platform | [Commander Data](https://en.wikipedia.org/wiki/Data_(Star_Trek)) |
+| Stacy | Product QA | [Stacey Abrams](https://en.wikipedia.org/wiki/Stacey_Abrams) |
 
 Each agent knows what it owns, what it doesn't, and who to defer to. No agent operates without constraints.
 
