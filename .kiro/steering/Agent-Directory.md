@@ -65,10 +65,10 @@ Test suite health, coverage analysis, test infrastructure standards, audit metho
 | Agent | Domain | Shortcut | Named After |
 |-------|--------|----------|-------------|
 | **Leonardo** | Product architecture | `ctrl+shift+o` | Leonardo da Vinci |
-| **Sparky** | Web platform engineering | `ctrl+shift+w` | — |
-| **Kenya** | iOS platform engineering | `ctrl+shift+i` | — |
-| **Data** | Android platform engineering | `ctrl+shift+d` | — |
-| **Stacy** | Product governance & QA | `ctrl+shift+g` | — |
+| **Sparky** | Web platform engineering | `ctrl+shift+w` | Sarah Parks |
+| **Kenya** | iOS platform engineering | `ctrl+shift+i` | Kenya Hara |
+| **Data** | Android platform engineering | `ctrl+shift+d` | Commander Data |
+| **Stacy** | Product governance & QA | `ctrl+shift+g` | Stacey Abrams |
 
 ### Leonardo — Product Architect
 
