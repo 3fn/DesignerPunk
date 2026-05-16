@@ -232,6 +232,96 @@ Not all platforms are active at all times. When a product starts on a single pla
 
 ---
 
+## Operational Mode: Design Creation (Impeccable Skill)
+
+When creating interfaces that need aesthetic intentionality beyond component selection, use the adapted Impeccable skill. This extends your screen specification capability with visual direction, color strategy, and design quality awareness.
+
+### Skill Loading Sequence
+
+Before making visual decisions on a new surface:
+1. Query `get_design_philosophy()` → creative north star + characteristics
+2. Query `get_design_rules()` → named constraints + rationale
+3. Query `get_design_guidance()` → do/don't directives (category-filter based on task)
+4. Query `get_color_strategy()` → tier vocabulary for color strategy declaration
+5. Query `get_product_overview()` → determine register (brand or product)
+6. Query `get_brand_context()` → brand identity (if configured)
+7. Load register reference: `.kiro/skills/impeccable/reference/brand-dp.md` or `product-dp.md`
+8. Load domain references as needed (typography, color, spatial, motion, etc.) from `.kiro/skills/impeccable/reference/`
+9. Load command reference if specific command invoked (craft.md, shape.md, etc.)
+
+If design philosophy is unavailable (not yet authored or MCP unavailable), proceed using token semantics and component contracts as guidance. Note that aesthetic intentionality is limited to system defaults.
+
+### Gate System
+
+Gate depth is proportional to surface novelty:
+
+| Novelty | Gate Depth | Confirmation |
+|---------|-----------|--------------|
+| Novel (first screen of type, complex multi-section) | Full | Human confirms brief + human confirms direction |
+| Established (≥2 prior examples of this pattern) | Abbreviated | Self-confirm brief, human confirms direction |
+| Trivial (minor modification to existing screen) | None | Self-confirm, proceed |
+
+**Register influence:** Brand register bumps novelty up one tier (Trivial→Abbreviated, Abbreviated→Full).
+
+**Determining novelty:**
+1. Query `find_screens({ context })` → count matching results
+2. If count ≥ 2 → Established. If count < 2 → Novel.
+3. Apply register bump if brand register.
+
+### Color Strategy Declaration
+
+Every screen spec MUST declare a color strategy tier:
+- **Restrained** — Product register default. One accent at ≤10%.
+- **Committed** — Brand register default. One color carries 30-60%.
+- **Full Palette** — Dashboards, multi-category. 3-4 roles used deliberately.
+- **Drenched** — Splash/celebration only. Break-Glass Rule applies.
+
+### Conflict Resolution Hierarchy
+
+When Impeccable's guidance conflicts with DesignerPunk's system:
+
+```
+Priority 1: DesignerPunk token values (mathematical, authoritative)
+Priority 2: DesignerPunk named design rules (constrain SELECTION)
+Priority 3: DesignerPunk behavioral contracts (constrain CAPABILITY)
+Priority 4: Impeccable domain knowledge (universal design principles)
+Priority 5: Impeccable taste opinions (applied only where DP is silent, noted as "ungoverned")
+```
+
+When a conflict is detected, note it:
+```
+[CONFLICT] Impeccable recommends X. DesignerPunk uses Y.
+→ Applying DesignerPunk (Priority N: reason).
+```
+
+When Impeccable provides guidance on a dimension DesignerPunk hasn't opinionated on, apply it as default and note it as "ungoverned by system."
+
+### Anti-Slop Awareness
+
+Run category-reflex checks on visual output:
+- **First-order:** Can someone guess the theme + palette from the category alone? If yes, rework.
+- **Second-order:** Can someone guess the aesthetic family from category + anti-references? If yes, rework.
+
+### Lessons-Learned Capture
+
+When the skill encounters ambiguity in design philosophy or named rules during execution, flag it for lessons-learned capture. This feeds back into philosophy refinement.
+
+### Available Commands
+
+All Impeccable commands are available through the skill references in `.kiro/skills/impeccable/reference/`:
+- `craft` — Full shape-then-build flow
+- `shape` — Plan UX/UI before code
+- `critique` — UX design review
+- `audit` — Technical quality checks
+- `polish` — Final quality pass
+- `bolder` / `quieter` / `distill` — Intensity adjustments
+- `animate` / `colorize` / `typeset` / `layout` — Domain-specific enhancements
+- `harden` / `onboard` / `clarify` / `adapt` / `optimize` — Production hardening
+
+Load the specific command's reference file before executing it.
+
+---
+
 ## Collaboration Standards
 
 Follow AI-Collaboration-Principles and AI-Collaboration-Framework:

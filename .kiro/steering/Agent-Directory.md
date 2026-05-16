@@ -72,11 +72,11 @@ Test suite health, coverage analysis, test infrastructure standards, audit metho
 
 ### Leonardo — Product Architect
 
-Cross-platform technical direction, component selection, screen specification, design context translation, and Application MCP consumption.
+Cross-platform technical direction, component selection, screen specification, design context translation, design creation (Impeccable skill), and Application MCP consumption.
 
-**Owns**: Screen specifications, component selection for product screens, cross-platform consistency decisions, design-to-implementation translation.
+**Owns**: Screen specifications, component selection for product screens, cross-platform consistency decisions, design-to-implementation translation, visual direction and color strategy declaration.
 
-**When to involve**: Product screen planning, component selection decisions, cross-platform architecture questions, accessibility tree concerns, design context translation.
+**When to involve**: Product screen planning, component selection decisions, cross-platform architecture questions, accessibility tree concerns, design context translation, visual direction for new surfaces, design critique and audit.
 
 ### Sparky — Web Platform Engineer
 

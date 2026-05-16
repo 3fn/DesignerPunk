@@ -1,5 +1,7 @@
 # Design Critique Integration (Impeccable)
 
+> **DEPRECATED (2026-05-16):** This spec is subsumed by Spec 107 (Design Language Context for AI-Driven Interface Creation). All critique capabilities originally scoped here are delivered through the Impeccable skill adaptation in Spec 107. See `.kiro/specs/107-design-language-context/` for the active spec.
+
 **Date**: 2026-05-04
 **Purpose**: Integrate design critique capabilities into the DesignerPunk ecosystem, leveraging Impeccable's anti-pattern detection and design reference system with system-aware filtering
 **Organization**: spec-guide

@@ -45,7 +45,7 @@ export const fontFamilyTokens: Record<string, PrimitiveToken> = {
         baselineGridAlignment: false,
         isStrategicFlexibility: false,
         isPrecisionTargeted: false,
-        platforms: generateFontFamilyPlatformValues('SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace')
+        platforms: generateFontFamilyPlatformValues('"Commit Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace')
     },
 
     fontFamilyDisplay: {
@@ -71,7 +71,7 @@ export const fontFamilyTokens: Record<string, PrimitiveToken> = {
         baselineGridAlignment: false,
         isStrategicFlexibility: false,
         isPrecisionTargeted: false,
-        platforms: generateFontFamilyPlatformValues('Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif')
+        platforms: generateFontFamilyPlatformValues('Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif')
     }
 };
 

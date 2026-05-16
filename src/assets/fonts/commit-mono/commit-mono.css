@@ -1,0 +1,45 @@
+/**
+ * Commit Mono Font Family - @font-face Declarations
+ * 
+ * Purpose: Web font loading configuration for Commit Mono font family
+ * Weights: Regular (400), Bold (700)
+ * Format: OTF
+ * 
+ * Spec 107: Replaces SF Mono as the monospace font for DesignerPunk brand surfaces.
+ */
+
+/* Commit Mono Regular (400) */
+@font-face {
+  font-family: 'Commit Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./CommitMono-400-Regular.otf') format('opentype');
+}
+
+/* Commit Mono Regular Italic (400) */
+@font-face {
+  font-family: 'Commit Mono';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./CommitMono-400-Italic.otf') format('opentype');
+}
+
+/* Commit Mono Bold (700) */
+@font-face {
+  font-family: 'Commit Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./CommitMono-700-Regular.otf') format('opentype');
+}
+
+/* Commit Mono Bold Italic (700) */
+@font-face {
+  font-family: 'Commit Mono';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./CommitMono-700-Italic.otf') format('opentype');
+}

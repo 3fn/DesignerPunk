@@ -1,0 +1,40 @@
+schemaVersion: 1
+
+philosophy:
+  northStar: "Test North Star"
+  description: "Test description of the design philosophy."
+  characteristics:
+    - "Characteristic one"
+    - "Characteristic two"
+
+rules:
+  - name: "Rule One"
+    constraint: "Do the thing correctly"
+    rationale: "Because correctness matters"
+  - name: "Rule Two"
+    constraint: "Never do the bad thing"
+    rationale: "Because bad things are bad"
+
+guidance:
+  do:
+    - category: "spacing"
+      directive: "Use 8px grid"
+    - category: "color"
+      directive: "Use semantic color tokens"
+  dont:
+    - category: "spacing"
+      directive: "Use arbitrary values"
+    - category: "color"
+      directive: "Use more than one accent per component"
+
+colorStrategy:
+  - tier: "Restrained"
+    definition: "Neutral surfaces dominate"
+    whenToUse: "Product register defaults"
+    whenNotToUse: "Brand surfaces"
+    example: "Settings page with one accent"
+  - tier: "Committed"
+    definition: "One saturated color carries the surface"
+    whenToUse: "Hero sections"
+    whenNotToUse: "Dense data"
+    example: "Hero with deep cyan background"

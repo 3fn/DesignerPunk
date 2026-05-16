@@ -39,6 +39,11 @@ const tools = [
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
+    name: 'get_brand_context',
+    description: 'Get product brand identity: personality, voice, tone, anti-references, register. Returns structured "not configured" response if brand fields are absent.',
+    inputSchema: { type: 'object' as const, properties: {} },
+  },
+  {
     name: 'find_screens',
     description: 'Find screens by component usage, token usage, domain object usage, status, platform, or context. All filters are conjunctive (AND). No params returns all screens.',
     inputSchema: { type: 'object' as const, properties: filterSchema },
@@ -260,6 +265,9 @@ class ProductMCPServer {
     switch (name) {
       case 'get_product_overview':
         return this.indexer.getOverview() || { message: 'No product data indexed' };
+
+      case 'get_brand_context':
+        return this.indexer.getBrandContext();
 
       case 'find_screens':
         return this.screenQuery ? this.screenQuery.find(params as ScreenFilter) : [];

@@ -17,6 +17,7 @@ import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
 import { FileWatcher } from './watcher/FileWatcher';
 import { TokenIndexer } from './indexer/TokenIndexer';
+import { DesignPhilosophyIndexer } from './indexer/DesignPhilosophyIndexer';
 
 const SERVER_NAME = 'mcp-component-server';
 const SERVER_VERSION = '0.1.0';
@@ -31,6 +32,7 @@ interface DataPaths {
   guidanceDir?: string;
   registryPath?: string;
   tokenIndexDir?: string;
+  designLanguagePath?: string;
 }
 
 // Tool definitions
@@ -195,6 +197,36 @@ const tools = [
       required: ['name'],
     },
   },
+  {
+    name: 'get_design_philosophy',
+    description: 'Get the design system\'s creative north star, aesthetic philosophy, and key characteristics.',
+    inputSchema: { type: 'object' as const, properties: {} },
+  },
+  {
+    name: 'get_design_rules',
+    description: 'Get named design rules as structured data (name, constraint, rationale).',
+    inputSchema: { type: 'object' as const, properties: {} },
+  },
+  {
+    name: 'get_design_guidance',
+    description: 'Get design do\'s and don\'ts as categorized directives. Optionally filter by category.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        category: { type: 'string', description: 'Filter by category (e.g., "spacing", "color", "typography", "motion")' },
+      },
+    },
+  },
+  {
+    name: 'get_color_strategy',
+    description: 'Get color strategy vocabulary (Restrained/Committed/Full/Drenched) with usage guidance. Optionally filter by tier.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        tier: { type: 'string', description: 'Filter by tier (e.g., "Restrained", "Committed", "Full", "Drenched")' },
+      },
+    },
+  },
 ];
 
 class ComponentMCPServer {
@@ -204,6 +236,7 @@ class ComponentMCPServer {
   private assemblyValidator: AssemblyValidator;
   private fileWatcher: FileWatcher;
   private tokenIndexer: TokenIndexer;
+  private philosophyIndexer: DesignPhilosophyIndexer;
 
   constructor(private paths: DataPaths) {
     this.server = new Server({ name: SERVER_NAME, version: SERVER_VERSION }, { capabilities: { tools: {} } });
@@ -212,6 +245,7 @@ class ComponentMCPServer {
     this.assemblyValidator = new AssemblyValidator(this.indexer);
     this.fileWatcher = new FileWatcher(this.indexer, this.paths.componentsDir);
     this.tokenIndexer = new TokenIndexer();
+    this.philosophyIndexer = new DesignPhilosophyIndexer();
     this.registerHandlers();
   }
 
@@ -235,6 +269,15 @@ class ComponentMCPServer {
     console.error(`[${SERVER_NAME}] Indexed ${health.componentsIndexed} components (${health.warnings.length} warnings)`);
     if (!this.paths.tokenIndexDir) {
       console.error(`[${SERVER_NAME}] Token index not available (Spec 096 pending)`);
+    }
+
+    // Design philosophy
+    if (this.paths.designLanguagePath) {
+      await this.philosophyIndexer.index(this.paths.designLanguagePath);
+      const pw = this.philosophyIndexer.getWarnings();
+      if (pw.length > 0) {
+        console.error(`[${SERVER_NAME}] Design philosophy: ${pw.length} warning(s)`);
+      }
     }
 
     const transport = new StdioServerTransport();
@@ -288,6 +331,9 @@ class ComponentMCPServer {
         if (this.paths.tokenIndexDir) {
           await this.tokenIndexer.indexTokens(this.paths.tokenIndexDir);
         }
+        if (this.paths.designLanguagePath) {
+          await this.philosophyIndexer.index(this.paths.designLanguagePath);
+        }
         return this.queryEngine.getHealth();
       case 'list_experience_patterns':
         return this.queryEngine.getPatternCatalog();
@@ -316,6 +362,14 @@ class ComponentMCPServer {
         return this.tokenIndexer.getFamily(params.family as string);
       case 'get_token_consumers':
         return this.tokenIndexer.getConsumers(params.name as string);
+      case 'get_design_philosophy':
+        return this.philosophyIndexer.getPhilosophy() || { status: 'not_authored', message: 'Design philosophy has not been authored yet.' };
+      case 'get_design_rules':
+        return this.philosophyIndexer.getRules();
+      case 'get_design_guidance':
+        return this.philosophyIndexer.getGuidance(params.category as string | undefined);
+      case 'get_color_strategy':
+        return this.philosophyIndexer.getColorStrategy(params.tier as string | undefined);
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
@@ -341,6 +395,7 @@ const server = new ComponentMCPServer({
   guidanceDir: process.env.GUIDANCE_DIR,
   registryPath: process.env.REGISTRY_PATH,
   tokenIndexDir: process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR,
+  designLanguagePath: process.env.DESIGN_LANGUAGE_PATH || 'design-language/design-philosophy.yaml',
 });
 server.start().catch((err) => {
   console.error(`[${SERVER_NAME}] Fatal error:`, err);

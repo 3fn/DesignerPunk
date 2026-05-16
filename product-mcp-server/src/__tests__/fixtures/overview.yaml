@@ -3,3 +3,12 @@ abbreviation: WKC
 platforms: [web, ios, android]
 theme: marketing
 description: Civic engagement platform
+register: product
+
+brand:
+  personality: [empowering, accessible, trustworthy]
+  voice: Direct and encouraging
+  tone: Confident but approachable
+  antiReferences: [government bureaucracy, social media toxicity]
+  users: Civic-minded adults seeking meaningful community engagement
+  accessibilityRequirements: WCAG 2.1 AA

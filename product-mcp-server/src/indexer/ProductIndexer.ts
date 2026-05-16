@@ -108,6 +108,12 @@ export class ProductIndexer {
   // --- Getters ---
 
   getOverview(): Record<string, unknown> | null { return this.overview; }
+  getBrandContext(): Record<string, unknown> {
+    if (!this.overview) return { status: 'not_configured', message: 'No product overview found. Create product/overview.yaml with brand fields.' };
+    const brand = (this.overview as any).brand;
+    if (!brand) return { status: 'not_configured', message: 'Brand context not configured in overview.yaml. Add a "brand" section with personality, voice, tone, and antiReferences.' };
+    return { ...brand, register: (this.overview as any).register };
+  }
   getScreenSpec(name: string): Record<string, unknown> | undefined { return this.screenSpecs.get(name); }
   getScreenSpecs(): Map<string, Record<string, unknown>> { return this.screenSpecs; }
   getDomainObject(name: string): Record<string, unknown> | undefined { return this.domainObjects.get(name); }

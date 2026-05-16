@@ -104,6 +104,8 @@
     "./grid.css": "./src/styles/responsive-grid.css",
     "./fonts/inter.css": "./src/assets/fonts/inter/inter.css",
     "./fonts/rajdhani.css": "./src/assets/fonts/rajdhani/rajdhani.css",
+    "./fonts/figtree.css": "./src/assets/fonts/figtree/figtree.css",
+    "./fonts/commit-mono.css": "./src/assets/fonts/commit-mono/commit-mono.css",
     "./package.json": "./package.json"
   },
   "bin": {

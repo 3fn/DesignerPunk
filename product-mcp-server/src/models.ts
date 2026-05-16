@@ -81,3 +81,14 @@ export interface HealthStatus {
   catalogSize: number;
   warnings: string[];
 }
+
+/** Brand context for product-level identity (Spec 107). */
+export interface BrandContext {
+  personality?: string[];
+  voice?: string;
+  tone?: string;
+  antiReferences?: string[];
+  users?: string;
+  register?: 'brand' | 'product';
+  accessibilityRequirements?: string;
+}

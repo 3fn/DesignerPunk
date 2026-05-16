@@ -82,7 +82,7 @@ describe('Font Family Tokens', () => {
       expect(monoToken?.description).toContain('Monospace font stack');
       
       const fontStack = monoToken?.platforms.web.value as string;
-      expect(fontStack).toContain('SF Mono');
+      expect(fontStack).toContain('Commit Mono');
       expect(fontStack).toContain('Monaco');
       expect(fontStack).toContain('Inconsolata');
       expect(fontStack).toContain('Roboto Mono');
@@ -106,14 +106,14 @@ describe('Font Family Tokens', () => {
       expect(fontStack).toContain('sans-serif');
     });
 
-    test('should provide Inter-based body font stack', () => {
+    test('should provide Figtree-based body font stack', () => {
       const bodyToken = getFontFamilyToken('fontFamilyBody');
       
       expect(bodyToken).toBeDefined();
       expect(bodyToken?.description).toContain('Body font stack');
       
       const fontStack = bodyToken?.platforms.web.value as string;
-      expect(fontStack).toContain('Inter');
+      expect(fontStack).toContain('Figtree');
       expect(fontStack).toContain('-apple-system');
       expect(fontStack).toContain('BlinkMacSystemFont');
       expect(fontStack).toContain('Segoe UI');
@@ -151,12 +151,12 @@ describe('Font Family Tokens', () => {
       const displayToken = getFontFamilyToken('fontFamilyDisplay');
       const bodyToken = getFontFamilyToken('fontFamilyBody');
       
-      // Display should start with Rajdhani, body should start with Inter
+      // Display should start with Rajdhani, body should start with Figtree
       const displayStack = displayToken?.platforms.web.value as string;
       const bodyStack = bodyToken?.platforms.web.value as string;
       
       expect(displayStack.startsWith('Rajdhani')).toBe(true);
-      expect(bodyStack.startsWith('Inter')).toBe(true);
+      expect(bodyStack.startsWith('Figtree')).toBe(true);
       
       // Both should have same fallback chain after their primary font
       const displayFallbacks = displayStack.split(',').slice(1).map(s => s.trim());
@@ -246,9 +246,9 @@ describe('Font Family Tokens', () => {
       const displayStack = displayToken?.platforms.web.value as string;
       const bodyStack = bodyToken?.platforms.web.value as string;
       
-      // Rajdhani should be first choice for display, Inter for body
+      // Rajdhani should be first choice for display, Figtree for body
       expect(displayStack.startsWith('Rajdhani')).toBe(true);
-      expect(bodyStack.startsWith('Inter')).toBe(true);
+      expect(bodyStack.startsWith('Figtree')).toBe(true);
     });
 
     test('should include platform-specific system fonts', () => {

@@ -312,7 +312,8 @@ import '@3fn/core/component-tokens.css';
 
 // Optional: responsive grid, fonts, blend utilities
 import '@3fn/core/grid.css';
-import '@3fn/core/fonts/inter.css';
+import '@3fn/core/fonts/figtree.css';
+import '@3fn/core/fonts/commit-mono.css';
 import '@3fn/core/fonts/rajdhani.css';
 import { BlendCalculator } from '@3fn/core/blend';
 ```
@@ -516,8 +517,10 @@ Runs automatically as part of `npx designerpunk generate` when platform paths ar
 | `@3fn/core/config` | `defineConfig` function with TypeScript types |
 | `@3fn/core/blend` | Blend calculation utilities |
 | `@3fn/core/grid.css` | Responsive grid CSS |
-| `@3fn/core/fonts/inter.css` | Inter font family |
-| `@3fn/core/fonts/rajdhani.css` | Rajdhani font family |
+| `@3fn/core/fonts/figtree.css` | Figtree font family (body/UI) |
+| `@3fn/core/fonts/commit-mono.css` | Commit Mono font family (code/mono) |
+| `@3fn/core/fonts/rajdhani.css` | Rajdhani font family (display) |
+| `@3fn/core/fonts/inter.css` | Inter font family (legacy, deprecated) |
 
 ---
 

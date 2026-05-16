@@ -87,3 +87,6 @@ performance-*.json
 *-baseline.txt
 *-baseline.json
 .npmrc
+
+# Presentations
+docs/presentations/
