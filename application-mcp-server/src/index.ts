@@ -16,7 +16,6 @@ import { ComponentIndexer } from './indexer/ComponentIndexer';
 import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
 import { FileWatcher } from './watcher/FileWatcher';
-import { TokenIndexer } from './indexer/TokenIndexer';
 import { DesignPhilosophyIndexer } from './indexer/DesignPhilosophyIndexer';
 
 const SERVER_NAME = 'mcp-component-server';
@@ -235,7 +234,6 @@ class ComponentMCPServer {
   private queryEngine: ComponentQueryEngine;
   private assemblyValidator: AssemblyValidator;
   private fileWatcher: FileWatcher;
-  private tokenIndexer: TokenIndexer;
   private philosophyIndexer: DesignPhilosophyIndexer;
 
   constructor(private paths: DataPaths) {
@@ -244,7 +242,6 @@ class ComponentMCPServer {
     this.queryEngine = new ComponentQueryEngine(this.indexer);
     this.assemblyValidator = new AssemblyValidator(this.indexer);
     this.fileWatcher = new FileWatcher(this.indexer, this.paths.componentsDir);
-    this.tokenIndexer = new TokenIndexer();
     this.philosophyIndexer = new DesignPhilosophyIndexer();
     this.registerHandlers();
   }
@@ -261,7 +258,7 @@ class ComponentMCPServer {
 
     // Token index status (loaded inside indexComponents if tokenIndexDir provided)
     if (this.paths.tokenIndexDir) {
-      const th = this.tokenIndexer.getHealth();
+      const th = this.indexer.getTokenIndexer().getHealth();
       console.error(`[${SERVER_NAME}] Token index: ${th.primitives} primitives, ${th.semantics} semantics, ${th.componentTokens} component tokens`);
     }
 
@@ -328,9 +325,6 @@ class ComponentMCPServer {
           this.paths.guidanceDir,
           this.paths.tokenIndexDir
         );
-        if (this.paths.tokenIndexDir) {
-          await this.tokenIndexer.indexTokens(this.paths.tokenIndexDir);
-        }
         if (this.paths.designLanguagePath) {
           await this.philosophyIndexer.index(this.paths.designLanguagePath);
         }
@@ -349,19 +343,19 @@ class ComponentMCPServer {
         return this.queryEngine.getGuidance(params.component as string, params.verbose as boolean | undefined);
       // Token query tools (Spec 096)
       case 'search_tokens':
-        return this.tokenIndexer.search({
+        return this.indexer.getTokenIndexer().search({
           family: params.family as string | undefined,
           tier: params.tier as string | undefined,
           name: params.name as string | undefined,
         });
       case 'get_token_details': {
-        const entry = this.tokenIndexer.getDetails(params.name as string);
+        const entry = this.indexer.getTokenIndexer().getDetails(params.name as string);
         return entry || { error: `Token '${params.name}' not found` };
       }
       case 'get_token_family':
-        return this.tokenIndexer.getFamily(params.family as string);
+        return this.indexer.getTokenIndexer().getFamily(params.family as string);
       case 'get_token_consumers':
-        return this.tokenIndexer.getConsumers(params.name as string);
+        return this.indexer.getTokenIndexer().getConsumers(params.name as string);
       case 'get_design_philosophy':
         return this.philosophyIndexer.getPhilosophy() || { status: 'not_authored', message: 'Design philosophy has not been authored yet.' };
       case 'get_design_rules':

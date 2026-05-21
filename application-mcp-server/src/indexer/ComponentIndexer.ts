@@ -215,6 +215,11 @@ export class ComponentIndexer {
     return this.layoutTemplateIndexer.getCatalog();
   }
 
+  /** Expose token indexer for tool handlers */
+  getTokenIndexer(): TokenIndexer {
+    return this.tokenIndexer;
+  }
+
   /** Expose index for query engine */
   getIndex(): Map<string, ComponentMetadata> {
     return this.index;
