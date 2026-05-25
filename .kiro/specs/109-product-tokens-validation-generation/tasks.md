@@ -15,7 +15,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
 
 ## Task List
 
-- [ ] 1. Token-Index Format Extension
+- [x] 1. Token-Index Format Extension
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -37,7 +37,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
   - Detailed: `.kiro/specs/109-product-tokens-validation-generation/completion/task-1-completion.md`
   - Summary: `docs/specs/109-product-tokens-validation-generation/task-1-summary.md`
 
-  - [ ] 1.1 Implement qualified path generation for nested primitives
+  - [x] 1.1 Implement qualified path generation for nested primitives
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -47,7 +47,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Regenerate token-index and verify format
     - _Requirements: 7.1, 7.2, 7.6_
 
-  - [ ] 1.2 Implement qualified path generation for component tokens
+  - [x] 1.2 Implement qualified path generation for component tokens
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -57,7 +57,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Regenerate token-index and verify format
     - _Requirements: 7.5, 7.6_
 
-  - [ ] 1.3 Verify existing consumers are unaffected
+  - [x] 1.3 Verify existing consumers are unaffected
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada + Lina
@@ -66,7 +66,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Verify Product MCP TokenRefResolver resolves refs correctly with new format
     - _Requirements: 7.3, 7.4_
 
-- [ ] 2. Product Token Generator Core
+- [x] 2. Product Token Generator Core
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -87,7 +87,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
   - Detailed: `.kiro/specs/109-product-tokens-validation-generation/completion/task-2-completion.md`
   - Summary: `docs/specs/109-product-tokens-validation-generation/task-2-summary.md`
 
-  - [ ] 2.1 Implement TokenIndexReader
+  - [x] 2.1 Implement TokenIndexReader
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -98,7 +98,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write unit tests
     - _Requirements: 7.1, 7.5, 8.1, 8.2_
 
-  - [ ] 2.2 Implement ProductTokenGenerator
+  - [x] 2.2 Implement ProductTokenGenerator
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -133,7 +133,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
   - Detailed: `.kiro/specs/109-product-tokens-validation-generation/completion/task-3-completion.md`
   - Summary: `docs/specs/109-product-tokens-validation-generation/task-3-summary.md`
 
-  - [ ] 3.1 Implement WebEmitter
+  - [x] 3.1 Implement WebEmitter
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
