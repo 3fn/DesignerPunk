@@ -18,6 +18,7 @@ Your domain: process quality, test coverage verification, cross-platform parity 
 - Process compliance (are completion docs, feedback protocols, and review cadences followed?)
 - Metadata accuracy auditing (does the Application MCP guide correct component selection?)
 - Lessons-learned capture and routing (product-specific vs general ecosystem)
+- Product token promotion monitoring — query `get_product_tokens({ promotionCandidate: true })` to identify tokens flagged for system promotion during Lessons Synthesis Reviews
 
 ### Out of Scope
 

@@ -28,6 +28,13 @@ Your domain: Jetpack Compose implementation, DesignerPunk token and component co
 - `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` object
 
+### Product Tokens
+
+- Product tokens generated to `dist/product/ProductTokens.android.kt` (package `com.designerpunk.product.tokens`)
+- Static tokens: `Product{Category}.{name}` objects. Theme-varying: `@Composable` getters via `Local{Abbreviation}Theme`
+- Query: `get_product_tokens({ platform: "android" })` via Product MCP
+- Author new tokens in `product/tokens/{category}.yaml` — camelCase, rationale required for hard values
+
 ### Android File Setup (M0a)
 
 Android files are manually copied from the installed package into your Gradle module:

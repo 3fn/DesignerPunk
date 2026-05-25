@@ -38,6 +38,7 @@ Products configure DesignerPunk via `designerpunk.config.ts`:
 - Defines product name, abbreviation, themes, component token paths, output directory
 - Theme creation workflow: create `SemanticOverrides.ts` → register in config → run `npx designerpunk generate`
 - Generated type names use the product's name — the system disappears into the product
+- Product tokens: define in `product/tokens/{category}.yaml`, configure `productTokens` path in config, query via `get_product_tokens()`
 
 ### Out of Scope
 

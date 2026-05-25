@@ -28,6 +28,13 @@ Your domain: Web Components implementation, DesignerPunk token and component con
 - Dark-only themes set `color-scheme: dark` and use static values (no `light-dark()`)
 - Run `npx designerpunk generate` to produce themed token CSS from `designerpunk.config.ts`
 
+### Product Tokens
+
+- Product tokens generated to `dist/product/ProductTokens.web.css` — load after system tokens
+- Naming: `--product-{category}-{token-name}` (e.g., `--product-layout-content-max-width`)
+- Query: `get_product_tokens({ platform: "web" })` via Product MCP
+- Author new tokens in `product/tokens/{category}.yaml` — camelCase, rationale required for hard values
+
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job

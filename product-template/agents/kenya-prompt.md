@@ -27,6 +27,13 @@ Your domain: SwiftUI implementation, DesignerPunk token and component consumptio
 - Dark mode: select theme struct based on `@Environment(\.colorScheme)`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
 
+### Product Tokens
+
+- Product tokens generated to `dist/product/ProductTokens.ios.swift`
+- Static tokens: `Product{Category}.{name}` enums. Theme-varying: protocol extension on `{Name}Theme`
+- Query: `get_product_tokens({ platform: "ios" })` via Product MCP
+- Author new tokens in `product/tokens/{category}.yaml` — camelCase, rationale required for hard values
+
 ### iOS File Setup (M0a)
 
 iOS files are manually copied from the installed package into your Xcode project:

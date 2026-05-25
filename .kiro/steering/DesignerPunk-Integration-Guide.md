@@ -579,7 +579,52 @@ product/
     legislation-card/
       legislation-card.schema.yaml
       legislation-card.contracts.yaml  # Only if new accessibility behavior
+  tokens/                    # Product tokens (Specs 108/109)
+    layout.yaml              # Layout constraints (contentMaxWidth, contentIndent, etc.)
+    motion.yaml              # Motion characteristics (flipDuration, etc.)
 ```
+
+### Product Tokens
+
+Product tokens are product-level values that don't belong in Rosetta (system tokens) or Stemma (component tokens). Define them in `product/tokens/{category}.yaml`:
+
+```yaml
+# product/tokens/layout.yaml
+category: layout
+description: Structural layout constraints
+
+tokens:
+  contentMaxWidth:
+    value: 1336
+    unitType: logical
+    description: Maximum content column width
+    rationale: "Optimized for 70-75 characters per line at body font size"
+    platforms: [web, ios, android]
+
+  contentIndent:
+    ref: space300
+    description: Left indent for section content
+    platforms: [web, ios, android]
+```
+
+**Configuration** — add to `designerpunk.config.ts`:
+```typescript
+export default defineConfig({
+  // ...existing config...
+  productTokens: './product/tokens',
+});
+```
+
+**Generation** — `npx designerpunk generate` produces:
+- `dist/product/ProductTokens.web.css` (CSS custom properties)
+- `dist/product/ProductTokens.ios.swift` (Swift constants)
+- `dist/product/ProductTokens.android.kt` (Kotlin objects)
+
+**Validation** — `npx designerpunk validate --product-tokens` checks ref integrity.
+
+**MCP query** — `get_product_tokens({ category: "layout" })` returns tokens with resolved system token values.
+
+**Governance** — see `Product-Token-Governance.md` for naming conventions, rationale requirements, and promotion signals.
 
 ### Writing Screen Specs
 

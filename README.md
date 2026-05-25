@@ -70,7 +70,7 @@ find_components({ context: "login-forms" })
 
 **What it solves:** Institutional knowledge persists across sessions. Machines query what they need progressively; humans maintain the source of truth.
 
-**Deliverables:** 87 steering documents with progressive disclosure. 3 MCP servers (docs, application, product). 8 specialized AI agents with domain boundaries. 13 validation hooks. Automated release detection and completion documentation system. 106+ specs encoding institutional decisions.
+**Deliverables:** 88 steering documents with progressive disclosure. 3 MCP servers (docs, application, product). 8 specialized AI agents with domain boundaries. 13 validation hooks. Automated release detection and completion documentation system. 109+ specs encoding institutional decisions.
 
 **The agent system:**
 
@@ -100,16 +100,17 @@ get_section({ path: "Token-Governance.md", heading: "Token Selection Matrix" })
 The architecture is the argument. The numbers are the evidence.
 
 **By the numbers:**
-- 8,358 tests passing across 331 test suites
+- 8,483 tests passing across 340 test suites
 - 34 production components with full cross-platform implementations
 - 437 design tokens with mathematical relationships
 - 3 MCP servers enabling progressive, context-efficient AI access
 - 8 AI agents with domain-scoped expertise operating within defined boundaries
-- 106+ specs documenting every architectural decision and its rationale
+- 109+ specs documenting every architectural decision and its rationale
 - Published as `@3fn/core` on GitHub Packages with a working CLI (`npx designerpunk`)
 
 **What this enables:**
 - An AI agent can select the right component for a login form, validate the assembly, and generate platform-native code without a human explaining the system from scratch every session
+- Products define their own tokens (`product/tokens/*.yaml`) with structured governance — the system generates platform-native output and makes them queryable via MCP alongside system tokens
 - The system self-documents its own evolution: every completed task produces completion documentation and triggers release analysis automatically
 - A new agent (or a new human) can onboard by querying the MCP servers rather than reading thousands of lines of documentation linearly
 - Token changes propagate to all three platforms through a single generation pipeline with mathematical validation at every step
@@ -137,7 +138,7 @@ Not comfortable with terminal commands? Ask your AI agent to follow these steps.
 
 **Study the architecture:**
 - [DesignerPunk Systems Overview](.kiro/steering/DesignerPunk-Systems-Overview.md)
-- [Steering documentation](.kiro/steering/) (87 docs, the governance layer in practice)
+- [Steering documentation](.kiro/steering/) (88 docs, the governance layer in practice)
 - [AI Collaboration Framework](.kiro/steering/AI-Collaboration-Framework.md)
 
 ---
