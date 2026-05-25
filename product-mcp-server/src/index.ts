@@ -22,6 +22,7 @@ const SERVER_NAME = 'mcp-product-server';
 const SERVER_VERSION = '0.2.0';
 const DEFAULT_PRODUCT_DIR = 'product';
 const DEFAULT_COMPONENT_DIR = 'src/components/core';
+const DEFAULT_TOKEN_INDEX_DIR = 'token-index';
 
 const filterSchema = {
   context: { type: 'string', description: 'Screen type, name, or tag substring match' },
@@ -131,6 +132,18 @@ const tools = [
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
+    name: 'get_product_tokens',
+    description: 'Get product tokens by category, name, or platform. Returns structured values with resolved system token references. All filters optional and conjunctive.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        category: { type: 'string', description: 'Filter by category name' },
+        name: { type: 'string', description: 'Filter by token name' },
+        platform: { type: 'string', description: 'Filter to tokens applicable to this platform (web, ios, android)' },
+      },
+    },
+  },
+  {
     name: 'rebuild_product_index',
     description: 'Re-index all product data. Returns new health status.',
     inputSchema: { type: 'object' as const, properties: {} },
@@ -146,7 +159,7 @@ class ProductMCPServer {
 
   constructor(productDir: string, componentDir: string) {
     this.productDir = productDir;
-    this.indexer = new ProductIndexer(productDir, componentDir);
+    this.indexer = new ProductIndexer(productDir, componentDir, DEFAULT_TOKEN_INDEX_DIR);
     this.server = new Server(
       { name: SERVER_NAME, version: SERVER_VERSION },
       { capabilities: { tools: {} } }
@@ -356,8 +369,12 @@ class ProductMCPServer {
             screensWithGaps: allGaps.size,
           },
           catalogSize: this.indexer.getCatalogSize(),
+          productTokens: this.indexer.getProductTokenHealth(),
         };
       }
+
+      case 'get_product_tokens':
+        return this.indexer.getProductTokens(params as { category?: string; name?: string; platform?: string });
 
       case 'rebuild_product_index':
         if (fs.existsSync(this.productDir)) {

@@ -14,12 +14,15 @@ import type { Principle, ComponentGap, EnrichedMapEntry, ReverseIndexes } from '
 import { parsePrinciples } from './PrinciplesParser';
 import { ReverseIndexBuilder } from './ReverseIndexBuilder';
 import { GapDetector } from './GapDetector';
+import { ProductTokenIndexer } from './ProductTokenIndexer';
+import type { ProductTokenCategory, ProductTokenHealth } from '../models';
 
 const SERVER_NAME = 'mcp-product-server';
 
 export class ProductIndexer {
   private productDir: string;
   private componentDir: string;
+  private tokenIndexDir: string | undefined;
   private indexed: boolean = false;
   private lastIndexTime: string = '';
   private warnings: string[] = [];
@@ -36,10 +39,13 @@ export class ProductIndexer {
   private gaps: Map<string, ComponentGap[]> = new Map();
   private enrichedExperienceMap: EnrichedMapEntry[] = [];
   private templateToScreens: Map<string, string[]> = new Map();
+  private productTokenIndexer: ProductTokenIndexer;
 
-  constructor(productDir: string, componentDir: string = 'src/components/core') {
+  constructor(productDir: string, componentDir: string = 'src/components/core', tokenIndexDir?: string) {
     this.productDir = productDir;
     this.componentDir = componentDir;
+    this.tokenIndexDir = tokenIndexDir;
+    this.productTokenIndexer = new ProductTokenIndexer(tokenIndexDir);
   }
 
   async index(): Promise<void> {
@@ -96,6 +102,9 @@ export class ProductIndexer {
     // Build enriched experience map
     this.buildEnrichedExperienceMap(screenComponents);
 
+    // Index product tokens
+    this.indexTokens();
+
     this.indexed = true;
     this.lastIndexTime = new Date().toISOString();
     console.error(
@@ -132,6 +141,11 @@ export class ProductIndexer {
   getTemplateScreens(templateName: string): string[] { return this.templateToScreens.get(templateName) || []; }
   getTemplateToScreens(): Map<string, string[]> { return this.templateToScreens; }
   getCatalogSize(): number { return this.gapDetector ? this.gapDetector.getCatalogSize() : 0; }
+
+  getProductTokens(filters: { category?: string; name?: string; platform?: string }): { categories: ProductTokenCategory[]; warnings: string[] } {
+    return this.productTokenIndexer.query(filters);
+  }
+  getProductTokenHealth(): ProductTokenHealth { return this.productTokenIndexer.getHealth(); }
 
   getHealth(): Record<string, unknown> {
     return {
@@ -244,6 +258,12 @@ export class ProductIndexer {
       const name = (schema as any).name || entry.name;
       this.oneOffComponents.set(name, schema);
     }
+  }
+
+  private indexTokens(): void {
+    const tokensDir = path.join(this.productDir, 'tokens');
+    if (!fs.existsSync(tokensDir)) return;
+    this.productTokenIndexer.index(tokensDir);
   }
 
   // --- UI tree walk ---
