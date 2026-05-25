@@ -19,7 +19,7 @@ describe('TokenRefResolver', () => {
 
   describe('primitive resolution', () => {
     it('resolves spacing primitive with full depth', () => {
-      expect(resolver.resolve('space300')).toEqual({ value: 24, unitType: 'logical', depth: 'full' });
+      expect(resolver.resolve('space300')).toEqual({ value: 24, unitType: 'logical', depth: 'full', themeVarying: false });
     });
 
     it('resolves color primitive with full depth', () => {
@@ -27,34 +27,35 @@ describe('TokenRefResolver', () => {
       expect(r).not.toBeNull();
       expect(r!.unitType).toBe('color');
       expect(r!.depth).toBe('full');
+      expect(r!.themeVarying).toBe(false);
       // Color values are structured objects
       expect(r!.value).toEqual({ light: { base: '#E91E63', wcag: 4.5 }, dark: { base: '#F48FB1', wcag: 4.5 } });
     });
 
     it('resolves duration primitive', () => {
-      expect(resolver.resolve('duration250')).toEqual({ value: 250, unitType: 'duration', depth: 'full' });
+      expect(resolver.resolve('duration250')).toEqual({ value: 250, unitType: 'duration', depth: 'full', themeVarying: false });
     });
 
     it('resolves fontSize primitive as logical', () => {
-      expect(resolver.resolve('fontSize100')).toEqual({ value: 1, unitType: 'logical', depth: 'full' });
+      expect(resolver.resolve('fontSize100')).toEqual({ value: 1, unitType: 'logical', depth: 'full', themeVarying: false });
     });
 
     it('resolves lineHeight primitive as ratio', () => {
-      expect(resolver.resolve('lineHeight100')).toEqual({ value: 1.5, unitType: 'ratio', depth: 'full' });
+      expect(resolver.resolve('lineHeight100')).toEqual({ value: 1.5, unitType: 'ratio', depth: 'full', themeVarying: false });
     });
 
     it('resolves fontWeight primitive as count', () => {
-      expect(resolver.resolve('fontWeight400')).toEqual({ value: 400, unitType: 'count', depth: 'full' });
+      expect(resolver.resolve('fontWeight400')).toEqual({ value: 400, unitType: 'count', depth: 'full', themeVarying: false });
     });
 
     it('resolves easing primitive as easing', () => {
       expect(resolver.resolve('easingStandard')).toEqual({
-        value: 'cubic-bezier(0.4, 0, 0.2, 1)', unitType: 'easing', depth: 'full',
+        value: 'cubic-bezier(0.4, 0, 0.2, 1)', unitType: 'easing', depth: 'full', themeVarying: false,
       });
     });
 
     it('resolves opacity primitive as percent', () => {
-      expect(resolver.resolve('opacity048')).toEqual({ value: 0.48, unitType: 'percent', depth: 'full' });
+      expect(resolver.resolve('opacity048')).toEqual({ value: 0.48, unitType: 'percent', depth: 'full', themeVarying: false });
     });
   });
 
@@ -70,7 +71,7 @@ describe('TokenRefResolver', () => {
 
     it('resolves semantic with non-value single key — chases to primitive (full)', () => {
       const r = resolver.resolve('gridGutterMd');
-      expect(r).toEqual({ value: 24, unitType: 'logical', depth: 'full' });
+      expect(r).toEqual({ value: 24, unitType: 'logical', depth: 'full', themeVarying: false });
     });
   });
 
@@ -105,13 +106,21 @@ describe('TokenRefResolver', () => {
       expect(r!.depth).toBe('partial');
       expect(r!.unitType).toBe('count'); // category: layering → count
       expect(r!.value).toBe('zIndex.navigation');
+      expect(r!.themeVarying).toBe(false);
+    });
+
+    it('returns themeVarying: true for theme-varying semantic tokens', () => {
+      const r = resolver.resolve('color.feedback.info.text');
+      expect(r).not.toBeNull();
+      expect(r!.themeVarying).toBe(true);
+      expect(r!.depth).toBe('full');
     });
   });
 
   describe('component resolution', () => {
     it('resolves component with primitive ref — chases to primitive (full)', () => {
       const r = resolver.resolve('buttonicon.inset.large');
-      expect(r).toEqual({ value: 16, unitType: 'logical', depth: 'full' });
+      expect(r).toEqual({ value: 16, unitType: 'logical', depth: 'full', themeVarying: false });
     });
 
     it('resolves component with literal value as partial', () => {

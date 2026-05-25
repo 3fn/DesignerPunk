@@ -140,6 +140,7 @@ const tools = [
         category: { type: 'string', description: 'Filter by category name' },
         name: { type: 'string', description: 'Filter by token name' },
         platform: { type: 'string', description: 'Filter to tokens applicable to this platform (web, ios, android)' },
+        promotionCandidate: { type: 'boolean', description: 'Filter to tokens flagged as promotion candidates' },
       },
     },
   },
@@ -374,7 +375,7 @@ class ProductMCPServer {
       }
 
       case 'get_product_tokens':
-        return this.indexer.getProductTokens(params as { category?: string; name?: string; platform?: string });
+        return this.indexer.getProductTokens(params as { category?: string; name?: string; platform?: string; promotionCandidate?: boolean });
 
       case 'rebuild_product_index':
         if (fs.existsSync(this.productDir)) {

@@ -37,7 +37,7 @@ export class ProductTokenIndexer {
     }
   }
 
-  query(filters: { category?: string; name?: string; platform?: string }): {
+  query(filters: { category?: string; name?: string; platform?: string; promotionCandidate?: boolean }): {
     categories: ProductTokenCategory[];
     warnings: string[];
   } {
@@ -47,11 +47,12 @@ export class ProductTokenIndexer {
       result = result.filter(c => c.name === filters.category);
     }
 
-    if (filters.name || filters.platform) {
+    if (filters.name || filters.platform || filters.promotionCandidate !== undefined) {
       result = result.map(cat => {
         let tokens = cat.tokens;
         if (filters.name) tokens = tokens.filter(t => t.name === filters.name);
         if (filters.platform) tokens = tokens.filter(t => t.platforms.includes(filters.platform!));
+        if (filters.promotionCandidate !== undefined) tokens = tokens.filter(t => t.promotionCandidate === filters.promotionCandidate);
         return tokens.length > 0 ? { ...cat, tokens } : null;
       }).filter((c): c is ProductTokenCategory => c !== null);
     }
@@ -174,6 +175,7 @@ export class ProductTokenIndexer {
     let resolvedValue: number | string | null = null;
     let resolvedUnitType: string | null = null;
     let resolutionDepth: 'full' | 'partial' | null = null;
+    let themeVarying = false;
 
     if (hasRef) {
       const resolved = this.resolver.resolve(entry.ref);
@@ -181,6 +183,7 @@ export class ProductTokenIndexer {
         resolvedValue = resolved.value;
         resolvedUnitType = resolved.unitType;
         resolutionDepth = resolved.depth;
+        themeVarying = resolved.themeVarying;
       } else {
         this.warnings.push(`Token '${name}' references '${entry.ref}' which is not in token-index — verify index is current (\`npx designerpunk generate\`).`);
       }
@@ -199,6 +202,7 @@ export class ProductTokenIndexer {
       usage: entry.usage || null,
       platforms,
       promotionCandidate: entry.promotionCandidate || false,
+      themeVarying,
     };
   }
 }

@@ -107,6 +107,7 @@ export interface ProductTokenEntry {
   usage: string | null;
   platforms: string[];
   promotionCandidate: boolean;
+  themeVarying: boolean;
 }
 
 /** Product token category grouping. */

@@ -18,6 +18,7 @@ export interface ResolvedRef {
   value: number | string;
   unitType: string;
   depth: 'full' | 'partial';
+  themeVarying: boolean;
 }
 
 const FAMILY_UNIT_MAP: Record<string, string> = {
@@ -59,7 +60,7 @@ const CATEGORY_UNIT_MAP: Record<string, string> = {
 };
 
 interface PrimitiveEntry { value: unknown; family: string }
-interface SemanticEntry { category: string; primitiveReferences: Record<string, string> | null }
+interface SemanticEntry { category: string; primitiveReferences: Record<string, string> | null; themeVarying: boolean }
 interface ComponentEntry { component: string; primitiveReferences: Record<string, string> | null }
 
 export class TokenRefResolver {
@@ -83,7 +84,7 @@ export class TokenRefResolver {
       this.primitives.set(key, { value: entry.value, family: entry.family });
     });
     this.loadFile('semantics.yaml', (key, entry) => {
-      this.semantics.set(key, { category: entry.category, primitiveReferences: entry.primitiveReferences ?? null });
+      this.semantics.set(key, { category: entry.category, primitiveReferences: entry.primitiveReferences ?? null, themeVarying: entry.themeVarying || false });
     });
     this.loadFile('components.yaml', (key, entry) => {
       this.components.set(key, { component: entry.component, primitiveReferences: entry.primitiveReferences ?? null });
@@ -94,46 +95,46 @@ export class TokenRefResolver {
     // 1. Primitive — direct value
     const prim = this.primitives.get(name);
     if (prim) {
-      return { value: prim.value as number | string, unitType: this.inferUnitType(prim.family), depth: 'full' };
+      return { value: prim.value as number | string, unitType: this.inferUnitType(prim.family), depth: 'full', themeVarying: false };
     }
 
     // 2. Semantic — chase through primitiveReferences
     const sem = this.semantics.get(name);
     if (sem) {
       if (!sem.primitiveReferences) {
-        return { value: name, unitType: CATEGORY_UNIT_MAP[sem.category] || 'unknown', depth: 'partial' };
+        return { value: name, unitType: CATEGORY_UNIT_MAP[sem.category] || 'unknown', depth: 'partial', themeVarying: sem.themeVarying };
       }
       const primaryRef = this.extractPrimaryRef(sem.primitiveReferences);
       if (primaryRef) {
         const chased = this.primitives.get(primaryRef);
         if (chased) {
-          return { value: chased.value as number | string, unitType: this.inferUnitType(chased.family), depth: 'full' };
+          return { value: chased.value as number | string, unitType: this.inferUnitType(chased.family), depth: 'full', themeVarying: sem.themeVarying };
         }
         // primaryRef is a literal or unresolvable
-        return { value: primaryRef, unitType: CATEGORY_UNIT_MAP[sem.category] || 'unknown', depth: 'partial' };
+        return { value: primaryRef, unitType: CATEGORY_UNIT_MAP[sem.category] || 'unknown', depth: 'partial', themeVarying: sem.themeVarying };
       }
       // Multi-key — can't extract single primary
-      return { value: name, unitType: CATEGORY_UNIT_MAP[sem.category] || 'unknown', depth: 'partial' };
+      return { value: name, unitType: CATEGORY_UNIT_MAP[sem.category] || 'unknown', depth: 'partial', themeVarying: sem.themeVarying };
     }
 
     // 3. Component — chase through primitiveReferences.value
     const comp = this.components.get(name);
     if (comp) {
       if (!comp.primitiveReferences) {
-        return { value: name, unitType: 'unknown', depth: 'partial' };
+        return { value: name, unitType: 'unknown', depth: 'partial', themeVarying: false };
       }
       const refValue = comp.primitiveReferences.value;
       if (refValue == null) {
-        return { value: name, unitType: 'unknown', depth: 'partial' };
+        return { value: name, unitType: 'unknown', depth: 'partial', themeVarying: false };
       }
       // Chase: is refValue a primitive name?
       const chased = this.primitives.get(refValue);
       if (chased) {
-        return { value: chased.value as number | string, unitType: this.inferUnitType(chased.family), depth: 'full' };
+        return { value: chased.value as number | string, unitType: this.inferUnitType(chased.family), depth: 'full', themeVarying: false };
       }
       // Literal value — parse as number if possible
       const numVal = Number(refValue);
-      return { value: isNaN(numVal) ? refValue : numVal, unitType: 'unknown', depth: 'partial' };
+      return { value: isNaN(numVal) ? refValue : numVal, unitType: 'unknown', depth: 'partial', themeVarying: false };
     }
 
     // 4. Not found

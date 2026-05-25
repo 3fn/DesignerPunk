@@ -175,7 +175,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write unit tests
     - _Requirements: 4.1–4.10, 8.5, 8.8, 8.9_
 
-- [ ] 4. CLI & Pipeline Integration
+- [x] 4. CLI & Pipeline Integration
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -198,7 +198,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
   - Detailed: `.kiro/specs/109-product-tokens-validation-generation/completion/task-4-completion.md`
   - Summary: `docs/specs/109-product-tokens-validation-generation/task-4-summary.md`
 
-  - [ ] 4.1 Extend defineConfig with productTokens field
+  - [x] 4.1 Extend defineConfig with productTokens field
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Lina
@@ -206,7 +206,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Add JSDoc documentation
     - _Requirements: 5.1_
 
-  - [ ] 4.2 Implement validate --product-tokens CLI command
+  - [x] 4.2 Implement validate --product-tokens CLI command
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -217,7 +217,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write unit tests
     - _Requirements: 1.1–1.10_
 
-  - [ ] 4.3 Integrate generation into npx designerpunk generate
+  - [x] 4.3 Integrate generation into npx designerpunk generate
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina + Ada (cross-domain: Lina wires integration, Ada ensures index freshness flow)
@@ -229,7 +229,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write integration test
     - _Requirements: 5.2–5.8, 9.1–9.3_
 
-- [ ] 5. Product MCP Enhancements
+- [x] 5. Product MCP Enhancements
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -247,7 +247,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
   - Detailed: `.kiro/specs/109-product-tokens-validation-generation/completion/task-5-completion.md`
   - Summary: `docs/specs/109-product-tokens-validation-generation/task-5-summary.md`
 
-  - [ ] 5.1 Add promotionCandidate filter to get_product_tokens
+  - [x] 5.1 Add promotionCandidate filter to get_product_tokens
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -257,7 +257,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write test
     - _Requirements: 6.1–6.3_
 
-  - [ ] 5.2 Add themeVarying field to resolved ref response
+  - [x] 5.2 Add themeVarying field to resolved ref response
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

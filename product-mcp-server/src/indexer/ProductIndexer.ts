@@ -142,7 +142,7 @@ export class ProductIndexer {
   getTemplateToScreens(): Map<string, string[]> { return this.templateToScreens; }
   getCatalogSize(): number { return this.gapDetector ? this.gapDetector.getCatalogSize() : 0; }
 
-  getProductTokens(filters: { category?: string; name?: string; platform?: string }): { categories: ProductTokenCategory[]; warnings: string[] } {
+  getProductTokens(filters: { category?: string; name?: string; platform?: string; promotionCandidate?: boolean }): { categories: ProductTokenCategory[]; warnings: string[] } {
     return this.productTokenIndexer.query(filters);
   }
   getProductTokenHealth(): ProductTokenHealth { return this.productTokenIndexer.getHealth(); }

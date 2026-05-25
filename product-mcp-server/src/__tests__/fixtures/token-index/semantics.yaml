@@ -62,3 +62,13 @@ tokens:
       ios: colorStructureBorderSubtle
       android: color_structure_border_subtle
     consumers: []
+  color.feedback.info.text:
+    category: color
+    primitiveReferences:
+      value: pink400
+    themeVarying: true
+    platforms:
+      web: '--color-feedback-info-text'
+      ios: theme.colorFeedbackInfoText
+      android: theme.color_feedback_info_text
+    consumers: []
