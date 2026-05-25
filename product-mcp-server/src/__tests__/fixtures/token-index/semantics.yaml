@@ -1,0 +1,64 @@
+tokens:
+  color.feedback.error.text:
+    category: color
+    primitiveReferences:
+      value: pink400
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-error-text'
+      ios: colorFeedbackErrorText
+      android: color_feedback_error_text
+    consumers: []
+  gridGutterMd:
+    category: spacing
+    primitiveReferences:
+      spacing: space300
+    themeVarying: false
+    platforms:
+      web: '--grid-gutter-md'
+      ios: gridGutterMd
+      android: grid_gutter_md
+    consumers: []
+  typography.bodyMd:
+    category: typography
+    primitiveReferences:
+      fontSize: fontSize100
+      lineHeight: lineHeight100
+      fontWeight: fontWeight400
+    themeVarying: false
+    platforms:
+      web: '--typography-body-md'
+      ios: typographyBodyMd
+      android: typography_body_md
+    consumers: []
+  motion.floatLabel:
+    category: interaction
+    primitiveReferences:
+      duration: duration250
+      easing: easingStandard
+    themeVarying: false
+    platforms:
+      web: '--motion-float-label'
+      ios: motionFloatLabel
+      android: motion_float_label
+    consumers: []
+  zIndex.navigation:
+    category: layering
+    primitiveReferences: null
+    themeVarying: false
+    platforms:
+      web: '--z-index-navigation'
+      ios: zIndexNavigation
+      android: z_index_navigation
+    consumers: []
+  color.structure.border.subtle:
+    category: color
+    primitiveReferences:
+      color: pink400
+      opacity: opacity048
+    themeVarying: false
+    platforms:
+      web: '--color-structure-border-subtle'
+      ios: colorStructureBorderSubtle
+      android: color_structure_border_subtle
+    consumers: []

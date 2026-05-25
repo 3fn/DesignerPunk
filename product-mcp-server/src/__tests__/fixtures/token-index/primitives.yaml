@@ -1,0 +1,79 @@
+tokens:
+  space200:
+    family: spacing
+    value: 16
+    formula: base × 2
+    platforms:
+      web: '--space-200'
+      ios: space200
+      android: space_200
+  space300:
+    family: spacing
+    value: 24
+    formula: base × 3
+    platforms:
+      web: '--space-300'
+      ios: space300
+      android: space_300
+  pink400:
+    family: color
+    value:
+      light:
+        base: '#E91E63'
+        wcag: 4.5
+      dark:
+        base: '#F48FB1'
+        wcag: 4.5
+    formula: N/A
+    platforms:
+      web: '--pink-400'
+      ios: pink400
+      android: pink_400
+  duration250:
+    family: duration
+    value: 250
+    formula: base × 2.5
+    platforms:
+      web: '--duration-250'
+      ios: duration250
+      android: duration_250
+  fontSize100:
+    family: fontSize
+    value: 1
+    formula: base × 1
+    platforms:
+      web: '--font-size-100'
+      ios: fontSize100
+      android: font_size_100
+  lineHeight100:
+    family: lineHeight
+    value: 1.5
+    formula: N/A
+    platforms:
+      web: '--line-height-100'
+      ios: lineHeight100
+      android: line_height_100
+  fontWeight400:
+    family: fontWeight
+    value: 400
+    formula: N/A
+    platforms:
+      web: '--font-weight-400'
+      ios: fontWeight400
+      android: font_weight_400
+  easingStandard:
+    family: easing
+    value: 'cubic-bezier(0.4, 0, 0.2, 1)'
+    formula: N/A
+    platforms:
+      web: '--easing-standard'
+      ios: easingStandard
+      android: easing_standard
+  opacity048:
+    family: opacity
+    value: 0.48
+    formula: N/A
+    platforms:
+      web: '--opacity-048'
+      ios: opacity048
+      android: opacity_048

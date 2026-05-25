@@ -1,0 +1,17 @@
+tokens:
+  buttonicon.inset.large:
+    component: ButtonIcon
+    primitiveReferences:
+      value: space200
+    platforms:
+      web: '--buttonicon-inset-large'
+      ios: buttoniconInsetLarge
+      android: buttonicon_inset_large
+  verticallistitem.paddingBlock.rest:
+    component: VerticalListItem
+    primitiveReferences:
+      value: '11'
+    platforms:
+      web: '--verticallistitem-padding-block-rest'
+      ios: verticallistitemPaddingBlockRest
+      android: verticallistitem_padding_block_rest

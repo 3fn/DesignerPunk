@@ -217,7 +217,7 @@ tokens:
       android: font_family_system
   fontFamilyMono:
     family: fontFamily
-    value: 'SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'
+    value: '"Commit Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'
     formula: N/A - Categorical value
     platforms:
       web: '--font-family-mono'
@@ -233,7 +233,7 @@ tokens:
       android: font_family_display
   fontFamilyBody:
     family: fontFamily
-    value: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+    value: 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     formula: N/A - Categorical value
     platforms:
       web: '--font-family-body'
