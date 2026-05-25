@@ -36,7 +36,8 @@
     "skill://.kiro/steering/Test-Development-Standards.md",
     "skill://.kiro/steering/Test-Behavioral-Contract-Validation.md",
     "skill://.kiro/steering/Spec-Feedback-Protocol.md",
-    "skill://.kiro/steering/Technology Stack.md"
+    "skill://.kiro/steering/Technology Stack.md",
+    "skill://.kiro/steering/Product-Token-Governance.md"
   ],
   "hooks": {
     "agentSpawn": [

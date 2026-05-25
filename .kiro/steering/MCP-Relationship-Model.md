@@ -7,7 +7,7 @@ description: Defines boundaries, information flow, access model, and interface c
 # MCP Relationship Model
 
 **Date**: 2026-03-20
-**Last Reviewed**: 2026-03-20
+**Last Reviewed**: 2026-05-25
 **Purpose**: Defines boundaries, information flow, access model, and interface contracts between DesignerPunk's three MCP servers
 **Organization**: process-standard
 **Scope**: cross-project
@@ -69,26 +69,30 @@ DesignerPunk operates three MCP servers (two existing, one future) that form a k
 
 ### Product MCP — "What we're building"
 
-**Status**: Conceptual (future — v1 after DesignerPunk is packageable)
-**Scope**: Product-specific knowledge — brand, users, business rules, domain model
+**Status**: Production (Specs 081, 097, 108)
+**Scope**: Product-specific knowledge — product tokens, users, business rules, domain model, screen inventory
 **Repository**: Lives in the product's own repository, not in DesignerPunk
 
-**Will own**:
-- Brand tokens (product-specific color, typography, voice extensions)
+**Design Philosophy**: Deviation is welcome; deviation without communication is not. The Product MCP is a communication layer — it makes product-level decisions visible, structured, and queryable, enabling the organization to observe patterns across verticals and evolve the system in response to real product needs.
+
+**Owns**:
+- Product tokens (product-specific values — layout constraints, motion characteristics, visualization constants; see Product-Token-Governance.md)
+- Brand context (personality, voice, tone, anti-references)
 - User personas and research
 - Business rules and domain logic
-- Product primitives (objects, surfaces, intent signals — shape TBD, see Spec 081)
+- Product primitives (objects, surfaces, intent signals — Spec 081)
 - Content standards (voice, tone, terminology)
 - Screen inventory (what's been built, what's planned)
 - Product-specific patterns (recurring product UI that isn't generalizable to DesignerPunk)
 
-**Will not own**:
+**Does not own**:
 - DesignerPunk system knowledge (Docs MCP)
 - DesignerPunk component catalog or patterns (Application MCP)
-- Anything generalizable across products (belongs in Application MCP or Docs MCP)
+- Anything generalizable across product verticals (belongs in Application MCP or Docs MCP via promotion)
 
-**Tools**: TBD — likely mirrors progressive disclosure pattern
-**Query pattern**: TBD
+**Tools**: `get_product_overview`, `get_brand_context`, `find_screens`, `get_screen_spec`, `list_experience_map`, `get_product_tokens`, `get_product_health`, `rebuild_product_index`
+
+**Query pattern**: Context-driven — overview → screens/tokens by filter → specific details
 
 ---
 
@@ -112,12 +116,18 @@ queryable docs       queryable components         queryable context
 
 ### Promotion Path
 
-When product work reveals something generalizable:
+When product work reveals something generalizable across verticals:
+
+**"Cross-product" means cross-vertical within one organization** — not unrelated businesses. DesignerPunk serves a single organization's product portfolio, where each vertical shares the system layer but owns its product-level decisions.
+
+**Scope model**: Product token (one vertical) → System token (all verticals). Component tokens are orthogonal — system-level tokens with component-scoped consumption, not a tier below product tokens.
+
+**Promotion signal**: When two or more product verticals independently define tokens for the same semantic need (e.g., Portfolio defines `contentMaxWidth: 1336` and WrKingClass defines `contentMaxWidth: 1280`), that's evidence the system has a gap.
 
 ```
-Product-specific discovery
+Product-specific discovery (product token authored)
     ↓
-Lessons Synthesis Review (Stacy leads)
+Lessons Synthesis Review (Stacy leads — observes cross-vertical patterns)
     ↓
 Classified as "pattern candidate" or "systemic"
     ↓
@@ -164,7 +174,7 @@ Nothing gets promoted without human review (Peter approves routing).
 
 **Product MCP → Application MCP**: Product primitives (future) will reference Application MCP components and experience patterns by name. A product surface definition might specify "use the `simple-form` experience pattern for user registration." The Product MCP assumes Application MCP component names and pattern names are stable identifiers.
 
-**Product MCP → Docs MCP**: Brand tokens in the Product MCP extend or override DesignerPunk semantic tokens. The Product MCP references Docs MCP token names as the base layer that product tokens build on.
+**Product MCP → Docs MCP**: Product tokens reference system tokens by canonical name (e.g., `ref: space300`, `ref: color.feedback.error.text`). The Product MCP reads the generated `token-index/` directory to resolve these references at query time. The Product MCP assumes Docs MCP token names (as they appear in `token-index/*.yaml` keys) are stable identifiers.
 
 ### Stability Contract
 
@@ -174,7 +184,7 @@ For cross-MCP references to work, each MCP must maintain stable identifiers:
 |-----|-------------------|
 | Docs MCP | Token names (e.g., `space150`, `color.primary`) |
 | Application MCP | Component names (e.g., `Button-CTA`), pattern names (e.g., `simple-form`), context values (e.g., `login-forms`) |
-| Product MCP | Product primitive names (TBD), brand token names (TBD) |
+| Product MCP | Product token names (e.g., `contentMaxWidth` in `layout` category), screen names, domain object names |
 
 Breaking changes to stable identifiers require coordination across MCPs.
 
@@ -195,16 +205,17 @@ Breaking changes to stable identifiers require coordination across MCPs.
 - Family guidance (prop selection, when-to-use)
 - Composition rules (parent-child constraints)
 
-### Product MCP Content Types (Future — Shape TBD)
-- **Brand tokens** — product-specific extensions to DesignerPunk's semantic token layer
+### Product MCP Content Types (Established — Specs 081, 097, 108)
+- **Product tokens** — product-specific values (layout constraints, motion characteristics, visualization constants) scoped to one vertical. Governed by Product-Token-Governance.md. Queryable via `get_product_tokens`.
+- **Brand context** — personality, voice, tone, anti-references, register
 - **User personas** — who the product serves, their needs and contexts
 - **Business rules** — domain logic that affects UI decisions
-- **Product primitives** — objects, surfaces, intent signals (shape deferred to Spec 081)
+- **Product primitives** — objects, surfaces, intent signals (Spec 081)
 - **Content standards** — voice, tone, terminology conventions
 - **Screen inventory** — what's been built, current state, planned work
 - **Product-specific patterns** — recurring UI that isn't generalizable
 
-Product primitives are the most architecturally significant content type in the Product MCP. Their shape will be defined in Spec 081 (Product MCP Design).
+Product tokens are the most recently established content type (Spec 108). They reference system tokens via canonical names and are resolved at query time against the shared `token-index/` directory.
 
 ---
 
@@ -229,7 +240,9 @@ The packaging vehicle (Kiro Power, plugin, or other mechanism) will determine th
 
 ## Deferred Items
 
-- Product primitives shape → Spec 081 (Product MCP Design), Design Session 1
+- ~~Product primitives shape → Spec 081~~ ✅ Resolved
+- ~~Product MCP tooling and query patterns → Spec 081~~ ✅ Resolved
 - Cross-MCP reference detailed patterns → Spec 081, Design Session 2
-- Product MCP tooling and query patterns → Spec 081
 - Technical integration pattern (depends on packaging vehicle)
+- Product token platform generation (CSS, Swift, Kotlin output) → Spec 109
+- Product token reference drift detection and validation reporting → Spec 109

@@ -15,7 +15,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
 
 ## Task List
 
-- [ ] 1. Token Reference Resolver
+- [x] 1. Token Reference Resolver
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -36,7 +36,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
   - Detailed: `.kiro/specs/108-product-tokens-source-format/completion/task-1-completion.md`
   - Summary: `docs/specs/108-product-tokens-source-format/task-1-summary.md`
 
-  - [ ] 1.1 Implement TokenRefResolver class
+  - [x] 1.1 Implement TokenRefResolver class
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina + Ada (cross-domain: Lina owns Product MCP implementation, Ada owns token-index structure knowledge)
@@ -48,7 +48,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
     - Handle missing token-index directory gracefully (no crash, resolver returns null for all)
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7_
 
-  - [ ] 1.2 Write TokenRefResolver tests
+  - [x] 1.2 Write TokenRefResolver tests
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -64,7 +64,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
     - Create minimal test fixtures for token-index files
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7_
 
-- [ ] 2. Product Token Indexer
+- [x] 2. Product Token Indexer
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -85,14 +85,14 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
   - Detailed: `.kiro/specs/108-product-tokens-source-format/completion/task-2-completion.md`
   - Summary: `docs/specs/108-product-tokens-source-format/task-2-summary.md`
 
-  - [ ] 2.1 Add interfaces to models.ts
+  - [x] 2.1 Add interfaces to models.ts
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Lina
     - Add `ProductTokenEntry`, `ProductTokenCategory`, `ProductTokenHealth` interfaces to `product-mcp-server/src/models.ts`
     - _Requirements: 4.8, 5.1_
 
-  - [ ] 2.2 Implement ProductTokenIndexer class
+  - [x] 2.2 Implement ProductTokenIndexer class
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -106,7 +106,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
     - Wire TokenRefResolver (instantiate in constructor, reload on index)
     - _Requirements: 1.1–1.11, 2.1–2.7, 4.2–4.7_
 
-  - [ ] 2.3 Write ProductTokenIndexer tests
+  - [x] 2.3 Write ProductTokenIndexer tests
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -128,7 +128,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
     - Test: re-index clears stale data
     - _Requirements: 1.1–1.11, 2.1–2.7, 4.2–4.10, 5.1–5.4_
 
-- [ ] 3. Server Integration
+- [x] 3. Server Integration
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -148,7 +148,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
   - Detailed: `.kiro/specs/108-product-tokens-source-format/completion/task-3-completion.md`
   - Summary: `docs/specs/108-product-tokens-source-format/task-3-summary.md`
 
-  - [ ] 3.1 Integrate ProductTokenIndexer into ProductIndexer
+  - [x] 3.1 Integrate ProductTokenIndexer into ProductIndexer
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -159,7 +159,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
     - Pass `tokenIndexDir` through for resolver initialization
     - _Requirements: 2.1, 2.6, 2.7_
 
-  - [ ] 3.2 Register get_product_tokens tool and wire handlers
+  - [x] 3.2 Register get_product_tokens tool and wire handlers
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -168,7 +168,7 @@ Implementation follows a bottom-up approach: resolver first (foundation), then i
     - Add productTokens to `get_product_health` response
     - _Requirements: 4.1, 4.9, 5.1–5.4_
 
-  - [ ] 3.3 Write integration test
+  - [x] 3.3 Write integration test
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
