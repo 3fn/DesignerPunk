@@ -46,6 +46,15 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` object — no CompositionLocal needed
 
+### Product Tokens (Specs 108/109)
+
+- Product tokens are generated to `dist/product/ProductTokens.android.kt` (package `com.designerpunk.product.tokens`)
+- Static tokens: `object Product{Category} { val name = value.dp }`
+- Theme-varying tokens: `@Composable @ReadOnlyComposable get()` accessing `Local{Abbreviation}Theme.current.{prop}` — must be read inside composition scope
+- Ref tokens reference `DesignTokens.*` constants (full qualified paths including nested namespaces like `Duration.Duration350`)
+- Query available tokens: `get_product_tokens({ platform: "android" })` via Product MCP
+- Author new tokens in `product/tokens/{category}.yaml` — follow Product-Token-Governance.md
+
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job

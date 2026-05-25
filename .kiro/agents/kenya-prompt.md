@@ -45,6 +45,15 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Dark mode: select theme struct based on `@Environment(\.colorScheme)`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
 
+### Product Tokens (Specs 108/109)
+
+- Product tokens are generated to `dist/product/ProductTokens.ios.swift`
+- Static tokens: `public enum Product{Category} { public static let name: CGFloat = value }`
+- Theme-varying tokens: protocol extension on `{Name}Theme` — access via `theme.product{Category}{Name}`
+- Ref tokens reference `DesignTokens.*` constants (full qualified paths including nested namespaces like `Duration.duration350`)
+- Query available tokens: `get_product_tokens({ platform: "ios" })` via Product MCP
+- Author new tokens in `product/tokens/{category}.yaml` — follow Product-Token-Governance.md
+
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job

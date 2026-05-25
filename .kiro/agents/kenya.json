@@ -8,7 +8,8 @@
     "read",
     "knowledge",
     "@designerpunk-docs",
-    "@designerpunk-application"
+    "@designerpunk-application",
+    "@designerpunk-product"
   ],
   "toolsSettings": {
     "write": {

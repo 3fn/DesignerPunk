@@ -7,7 +7,8 @@
   "allowedTools": [
     "read",
     "@designerpunk-docs",
-    "@designerpunk-application"
+    "@designerpunk-application",
+    "@designerpunk-product"
   ],
   "toolsSettings": {
     "write": {
@@ -31,7 +32,8 @@
     "skill://.kiro/steering/Test-Behavioral-Contract-Validation.md",
     "skill://.kiro/steering/Spec-Feedback-Protocol.md",
     "skill://.kiro/steering/Completion Documentation Guide.md",
-    "skill://.kiro/steering/Contract-System-Reference.md"
+    "skill://.kiro/steering/Contract-System-Reference.md",
+    "skill://.kiro/steering/Product-Token-Governance.md"
   ],
   "hooks": {
     "agentSpawn": [

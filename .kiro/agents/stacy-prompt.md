@@ -171,6 +171,7 @@ See the Product Handoff Protocol for the full review structure, timing triggers,
 - Draft the synthesis document with classifications and recommended routing
 - Present to Peter for routing approval
 - Draft Tier 3 System Escalation Requests for system-level items
+- **Product token promotion monitoring**: Query `get_product_tokens({ promotionCandidate: true })` to identify tokens flagged for potential system promotion. When multiple verticals independently define tokens for the same semantic need, flag this as a promotion signal for Ada's evaluation.
 
 ### What You Don't Do
 - You don't decide whether a systemic lesson becomes a spec — Peter and the system agents make that call

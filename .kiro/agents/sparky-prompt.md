@@ -45,6 +45,14 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Dark-only themes set `color-scheme: dark` and use static values (no `light-dark()`)
 - Product repos install `@3fn/core` and run `npx designerpunk generate` to produce themed token CSS
 
+### Product Tokens (Specs 108/109)
+
+- Product tokens are generated to `dist/product/ProductTokens.web.css` — load after system tokens, before component styles
+- Naming: `--product-{category}-{token-name}` (e.g., `--product-layout-content-max-width`)
+- Ref tokens emit `var()` references to system tokens (e.g., `var(--space-300)`)
+- Query available tokens: `get_product_tokens({ platform: "web" })` via Product MCP
+- Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance.md (camelCase, rationale for hard values)
+
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job

@@ -38,6 +38,27 @@
                 "validate_component",
                 "get_component_health"
             ]
+        },
+        "designerpunk-product": {
+            "command": "node",
+            "args": [
+                "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/dist/mcp/product-mcp.js"
+            ],
+            "env": {
+                "PRODUCT_DIR": "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/product",
+                "COMPONENT_DIR": "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/src/components/core",
+                "TOKEN_INDEX_DIR": "/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/token-index"
+            },
+            "disabled": false,
+            "autoApprove": [
+                "get_product_overview",
+                "get_brand_context",
+                "get_product_tokens",
+                "get_product_health",
+                "find_screens",
+                "get_screen_spec",
+                "list_experience_map"
+            ]
         }
     }
 }

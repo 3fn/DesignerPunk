@@ -47,6 +47,16 @@ Products configure DesignerPunk via `designerpunk.config.ts`:
 - Theme creation workflow: create `SemanticOverrides.ts` → register in config → run `npx designerpunk generate`
 - Generated type names use the product's name (e.g., `WrKingClassTheme`) — the system disappears into the product
 
+### Product Tokens (Specs 108/109)
+
+Products define product-level values in `product/tokens/{category}.yaml`. These are values that don't belong in Rosetta (system tokens) or Stemma (component tokens) — layout constraints, motion characteristics, product-specific colors.
+
+- **Query**: `get_product_tokens()` via Product MCP — returns values with resolved system token references
+- **Author**: Define tokens during screen specification when you identify product-level values
+- **Validate**: `npx designerpunk validate --product-tokens` checks ref integrity
+- **Generate**: `npx designerpunk generate` produces platform output when `productTokens` is configured
+- **Governance**: See Product-Token-Governance.md — camelCase naming, rationale required for hard values, two-gate justification for colors
+
 ### Out of Scope
 
 - **Platform-specific implementation** — that's the platform agents' job
