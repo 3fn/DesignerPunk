@@ -1777,104 +1777,104 @@ tokens:
     formula: base - 100 = 250 - 100 = 150
     platforms:
       web: '--duration-150'
-      ios: duration150
-      android: duration_150
+      ios: Duration.duration150
+      android: Duration.Duration150
   duration250:
     family: duration
     value: 250
     formula: base × 1 = 250 × 1 = 250
     platforms:
       web: '--duration-250'
-      ios: duration250
-      android: duration_250
+      ios: Duration.duration250
+      android: Duration.Duration250
   duration350:
     family: duration
     value: 350
     formula: base + 100 = 250 + 100 = 350
     platforms:
       web: '--duration-350'
-      ios: duration350
-      android: duration_350
+      ios: Duration.duration350
+      android: Duration.Duration350
   easingStandard:
     family: easing
     value: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
     formula: 'Material Design standard curve: cubic-bezier(0.4, 0.0, 0.2, 1)'
     platforms:
       web: '--easing-standard'
-      ios: easingStandard
-      android: easing_standard
+      ios: Easing.easingStandard
+      android: Easing.EasingStandard
   easingDecelerate:
     family: easing
     value: 'cubic-bezier(0.0, 0.0, 0.2, 1)'
     formula: 'Material Design deceleration curve: cubic-bezier(0.0, 0.0, 0.2, 1)'
     platforms:
       web: '--easing-decelerate'
-      ios: easingDecelerate
-      android: easing_decelerate
+      ios: Easing.easingDecelerate
+      android: Easing.EasingDecelerate
   easingAccelerate:
     family: easing
     value: 'cubic-bezier(0.4, 0.0, 1, 1)'
     formula: 'Material Design acceleration curve: cubic-bezier(0.4, 0.0, 1, 1)'
     platforms:
       web: '--easing-accelerate'
-      ios: easingAccelerate
-      android: easing_accelerate
+      ios: Easing.easingAccelerate
+      android: Easing.EasingAccelerate
   easingGlideDecelerate:
     family: easing
     value: '[[0,0],[0.009,0.012],[0.02,0.05],[0.092,0.411],[0.118,0.517],[0.146,0.611],[0.177,0.694],[0.211,0.765],[0.248,0.824],[0.289,0.872],[0.334,0.91],[0.384,0.939],[0.509,0.977],[0.684,0.994],[1,1]]'
     formula: 'Piecewise linear: 15 stops, aggressive deceleration curve. Paired with duration350 (350ms).'
     platforms:
       web: '--easing-glide-decelerate'
-      ios: easingGlideDecelerate
-      android: easing_glide_decelerate
+      ios: Easing.easingGlideDecelerate
+      android: Easing.EasingGlideDecelerate
   scale088:
     family: scale
     value: 0.88
     formula: 'base - 0.12 = 1.00 - 0.12 = 0.88 (8-interval progression: 3 × 0.04)'
     platforms:
       web: '--scale-088'
-      ios: scale088
-      android: scale_088
+      ios: Scale.scale088
+      android: Scale.Scale088
   scale092:
     family: scale
     value: 0.92
     formula: 'base - 0.08 = 1.00 - 0.08 = 0.92 (8-interval progression: 2 × 0.04)'
     platforms:
       web: '--scale-092'
-      ios: scale092
-      android: scale_092
+      ios: Scale.scale092
+      android: Scale.Scale092
   scale096:
     family: scale
     value: 0.96
     formula: 'base - 0.04 = 1.00 - 0.04 = 0.96 (8-interval progression: 1 × 0.04)'
     platforms:
       web: '--scale-096'
-      ios: scale096
-      android: scale_096
+      ios: Scale.scale096
+      android: Scale.Scale096
   scale100:
     family: scale
     value: 1
     formula: 'base × 1 = 1.00 × 1 = 1.00 (baseline, no transformation)'
     platforms:
       web: '--scale-100'
-      ios: scale100
-      android: scale_100
+      ios: Scale.scale100
+      android: Scale.Scale100
   scale104:
     family: scale
     value: 1.04
     formula: 'base + 0.04 = 1.00 + 0.04 = 1.04 (8-interval progression: 1 × 0.04)'
     platforms:
       web: '--scale-104'
-      ios: scale104
-      android: scale_104
+      ios: Scale.scale104
+      android: Scale.Scale104
   scale108:
     family: scale
     value: 1.08
     formula: 'base + 0.08 = 1.00 + 0.08 = 1.08 (8-interval progression: 2 × 0.04)'
     platforms:
       web: '--scale-108'
-      ios: scale108
-      android: scale_108
+      ios: Scale.scale108
+      android: Scale.Scale108
   blur000:
     family: blur
     value: 0

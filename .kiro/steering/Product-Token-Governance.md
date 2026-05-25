@@ -175,6 +175,8 @@ errorRed:
 3. Is this a brand-level color that should apply across the product's surfaces? → Use `SemanticOverrides`
 4. Is this a product-specific color for a specific use case (visualization, one-off UI)? → Product token with two-gate rationale
 
+**Audit note**: The indexer validates that `rationale` exists for color tokens mechanically. The *quality* of the rationale (whether it genuinely addresses both gates) is a governance audit responsibility — Thurgood and Stacy review this during quality audits, not the indexer at index time.
+
 ---
 
 ## Single-Value Principle

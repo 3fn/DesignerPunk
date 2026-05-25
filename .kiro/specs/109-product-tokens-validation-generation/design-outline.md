@@ -2,156 +2,290 @@
 
 **Date**: 2026-05-25
 **Spec**: 109 - Product Tokens — Reference Validation & Platform Generation
-**Status**: Design Outline (Preliminary)
+**Status**: Design Outline
 **Author**: Thurgood (with Peter)
-**Depends on**: Spec 108 (Product Tokens — Source Format & MCP Discoverability)
+**Depends on**: Spec 108 (Product Tokens — Source Format & MCP Discoverability) ✅ Complete
 
 ---
 
 ## Problem Statement
 
-Spec 108 establishes the source format for product tokens and makes them queryable via the Product MCP. This spec addresses the remaining infrastructure:
+Spec 108 established the source format for product tokens and made them queryable via the Product MCP. However, product tokens are not yet **consumable** in platform code. Product agents can query `get_product_tokens` to discover values, but platform agents cannot import generated constants into their implementations.
 
-1. **Reference validation** — ensuring `ref` values point to tokens that actually exist, detecting drift, and reporting broken references as a governance concern
-2. **Platform generation** — producing CSS custom properties, Swift constants, and Kotlin objects from the YAML source format
-3. **Pipeline integration** — extending `designerpunk.config.ts` and the CLI to include product tokens in the generation workflow
+This spec delivers the generation pipeline that transforms `product/tokens/*.yaml` into platform-native output (CSS custom properties, Swift constants, Kotlin objects), plus proactive reference validation as a CLI command.
 
 ---
 
-## What We Know (From Spec 108)
+## Design Philosophy
 
-### Source Format (Settled)
+Product token generation follows the same principle as Rosetta's pipeline: one source of truth (YAML), platform-appropriate output. The generation is deliberately simpler than system token generation — no mathematical validation, no formula evaluation, no cross-product reuse checks. Product tokens are lighter by design.
 
+---
+
+## What's Settled (From Spec 108)
+
+### Source Format
 - YAML files in `product/tokens/{category}.yaml`
-- Token entries have `value` (with `unitType` + `rationale`) or `ref` (canonical token name)
-- `platforms` field filters applicability per token
-- `usage` field provides optional consumption guidance
-- Category filenames allow lowercase ASCII + hyphens
+- Token entries: `value` (with `unitType` + `rationale`) or `ref` (canonical token name)
+- `platforms` field filters per-token applicability
+- Category filenames: lowercase ASCII + hyphens
+- Token names: camelCase, acronyms as words
 
-### Unit Type System (Settled)
+### Unit Type → Platform Output Mapping
 
-| unitType | Web | iOS | Android |
-|----------|-----|-----|---------|
-| `logical` | `px` | `CGFloat` | `.dp` |
-| `duration` | `ms` | `TimeInterval` | `Long` (ms) |
-| `ch` | `ch` | N/A | N/A |
-| `ratio` | unitless | unitless | unitless |
-| `count` | unitless | `Int` | `Int` |
-| `percent` | `%` | `CGFloat` (0-1) | `Float` (0-1) |
-| `color` | hex/rgb | `UIColor` | `Color` |
+| unitType | Web (CSS) | iOS (Swift) | Android (Kotlin) |
+|----------|-----------|-------------|------------------|
+| `logical` | `{value}px` | `CGFloat = {value}` | `{value}.dp` |
+| `duration` | `{value}ms` | `TimeInterval = {value/1000}` | `{value} // ms` (Int) |
+| `ch` | `{value}ch` | N/A | N/A |
+| `ratio` | `{value}` | `CGFloat = {value}` | `{value}f` |
+| `count` | `{value}` | `Int = {value}` | `{value}` |
+| `percent` | `{value}%` | `CGFloat = {value/100}` | `{value/100}f` |
+| `color` | `{value}` | `Color(hex: "{value}")` | `Color(0xFF{hex})` |
 
-### Naming Convention (Settled)
+### Naming Convention (Extracted from Existing Pipeline)
 
-- CSS: `--product-{category}-{token-name}` (kebab-case)
-- Swift: `Product{Category}.{tokenName}` (PascalCase namespace, camelCase member)
-- Kotlin: `Product{Category}.{tokenName}` (PascalCase object, camelCase val)
-- Category hyphens transform: `layout-grid` → `ProductLayoutGrid`
+The existing `WebBuilder.toCSSVariableName()` rule:
+```
+camelCase → kebab-case (insert hyphen before uppercase)
+dots → hyphens
+letter-number boundary → hyphen
+lowercase all
+```
 
-### Reference Resolution (Settled in Spec 108)
+Applied to product tokens with `--product-{category}-` prefix:
+- `contentMaxWidth` in `layout.yaml` → `--product-layout-content-max-width`
+- `flipDuration` in `motion.yaml` → `--product-motion-flip-duration`
+- `chartAccentBlue` in `visualization.yaml` → `--product-visualization-chart-accent-blue`
 
-- Product MCP already resolves refs at query time by reading `token-index/`
-- Canonical token names map to `token-index/*.yaml` keys
-- Unresolved refs produce warnings (not errors) in query responses
+Swift/Kotlin use PascalCase namespace + camelCase member:
+- `contentMaxWidth` in `layout.yaml` → `ProductLayout.contentMaxWidth`
+- `flipDuration` in `motion.yaml` → `ProductMotion.flipDuration`
+- Category `layout-grid` → `ProductLayoutGrid`
 
-### Consumption Rule (Settled)
-
-Platform output units are applied by the generation pipeline. Consumers use generated constants, never appending units manually. Same rule as system tokens.
+### Reference Resolution
+- Refs resolve against `token-index/` — the index already provides platform-specific constant names in its `platforms` field, so the generator reads them directly (no name conversion logic needed for refs)
+- Name mapping (via `PlatformNamingRules.ts`) is only needed for the product token's OWN output name, not for resolving system token references
+- In generated output, refs emit platform references to the system token's generated constant:
+  - CSS: `ref: space300` → `var(--space-300)`
+  - Swift: `ref: space300` → `DesignTokens.space300`
+  - Swift (duration): `ref: duration350` → `DesignTokens.Duration.duration350`
+  - Kotlin: `ref: space300` → `DesignTokens.space_300`
+  - Kotlin (duration): `ref: duration350` → `DesignTokens.Duration.Duration350`
 
 ---
 
-## What This Spec Addresses
+## Resolved Questions
 
-### 1. Reference Drift Detection & Validation Reporting
+### Q1: Canonical → Platform Name Mapping (Resolved)
 
-**What we know:**
-- Spec 108's Product MCP reports unresolved refs as warnings at query time
-- This spec adds proactive validation: a CLI command or build step that checks all product token refs against the current token index
-- Broken refs should be surfaced as governance issues, not just query-time warnings
+A shared utility already exists: `src/naming/PlatformNamingRules.ts` exports `getPlatformTokenName()` and `convertToNamingConvention()`. The product token generator uses this for the token's OWN output name (e.g., `contentMaxWidth` → `--product-layout-content-max-width`).
 
-**Placeholders (TBD from Spec 108 implementation experience):**
-- What's the right UX for reporting broken refs? CLI output? Health dashboard? Both?
-- Should broken refs block generation, or generate with a warning comment?
-- How frequently does staleness actually occur in practice? (Spec 108 usage will inform this)
+For ref resolution, the generator reads platform names directly from the token-index `platforms` field — no conversion logic needed. This distinction is critical:
+- **Own name**: Uses `PlatformNamingRules` with `product-{category}-` prefix
+- **Ref target name**: Reads from `token-index/*.yaml → platforms.{web|ios|android}`
+
+### Q2: Generation Pipeline Architecture (Resolved)
+
+**Decision**: Option C — standalone lightweight generator at `src/build/product/ProductTokenGenerator.ts`.
+
+**Rationale**: Product tokens are simpler than system tokens (no formulas, no mathematical validation, no cross-platform consistency checks). A standalone `ProductTokenGenerator` class that reads YAML and emits platform files is ~200 lines per platform. It doesn't need the `BuildOrchestrator`, `TokenSelector`, or `UnitConverter` infrastructure — those solve problems product tokens don't have.
+
+**Location**: `src/build/product/` — mirrors `src/build/tokens/ComponentTokenGenerator.ts` pattern. NOT in `product-mcp-server/` (that's a runtime MCP server, not a build-time artifact).
+
+The generator is invoked by the CLI (`npx designerpunk generate`) after system token generation completes.
+
+### Q3: Ref Resolution at Generation Time (Resolved)
+
+**Decision**: Option A — read `token-index/`.
+
+**Rationale**: Generation runs after `npm run build` which regenerates the token index. The index is guaranteed fresh at generation time. Using the same resolution path as the Product MCP (read `token-index/`) keeps behavior consistent — if the MCP resolves a ref, generation will too.
+
+### Q4: Promotion Workflow Tooling (Resolved)
+
+**Decision**: Manual process with documentation. Out of scope for this spec.
+
+When a product token is promoted:
+1. Author creates the new system token (Ada reviews)
+2. Author updates the product token YAML: change `value` to `ref` pointing at the new system token
+3. Regenerate — output automatically changes from hard value to system token reference
+4. Consumers update their imports (CSS variable name changes from `--product-*` to system token name)
+
+Step 4 is a breaking change for consumers. Documentation in the governance doc covers this.
+
+---
+
+## Architecture
+
+```
+product/tokens/*.yaml          token-index/*.yaml
+        │                              │
+        ▼                              ▼
+┌──────────────────────────────────────────────┐
+│         ProductTokenGenerator                 │
+│  - reads YAML source                         │
+│  - validates refs against token-index        │
+│  - emits platform files                      │
+└──────────────────────────────────────────────┘
+        │
+        ├── dist/product/ProductTokens.web.css
+        ├── dist/product/ProductTokens.ios.swift
+        └── dist/product/ProductTokens.android.kt
+```
+
+---
+
+## Proposed Solution
+
+### 1. Reference Validation CLI
+
+```bash
+npx designerpunk validate --product-tokens
+```
+
+- Reads all `product/tokens/*.yaml` files
+- Checks every `ref` value against `token-index/` (all three files)
+- Reports broken refs with actionable messages
+- Exit code 0 = all valid, exit code 1 = broken refs found
+- Can be integrated into CI/pre-commit
+
+**Output format:**
+```
+✅ layout.yaml: 4 tokens, all refs valid
+❌ motion.yaml: 3 tokens, 1 broken ref
+   → flickerCurve references 'easeInOutCustom' which is not in token-index
+   
+1 broken reference found. Run `npx designerpunk generate` to refresh token-index.
+```
 
 ### 2. Platform Code Generation
 
-**What we know:**
-- Output formats per platform (see naming convention above)
-- `ref` tokens resolve to the referenced token's generated constant (e.g., `var(--space-300)` in CSS, `DesignTokens.space300` in Swift)
-- Hard `value` tokens emit the value with platform-appropriate unit
-- Platform filtering: tokens with `platforms: [web]` only appear in web output
+**Web output** (`dist/product/ProductTokens.web.css`):
+```css
+:root {
+  /* Product tokens: layout */
+  --product-layout-content-max-width: 1336px; /* Maximum content column width */
+  --product-layout-content-indent: var(--space-300); /* Left indent for section content */
+  --product-layout-prose-measure-max: 48ch; /* Maximum line length for body text */
 
-**Placeholders (TBD):**
-- Output file location: `dist/tokens/ProductValues.{platform}.{ext}`? Or co-located with system token output?
-- Load order on web: system tokens → product tokens → component styles. Needs confirmation from Sparky.
-- How do `ref` tokens that point to semantic tokens render? `var(--color-feedback-error-text)` in CSS — need to confirm the canonical→CSS mapping rule (Sparky F1 from Spec 108 feedback)
-- Should generated files include comments with `description` and `rationale`? (DX consideration)
+  /* Product tokens: motion */
+  --product-motion-flip-duration: var(--duration-350); /* Card-to-modal expansion timing */
+  --product-motion-flicker-duration: 800ms; /* Neon easter egg animation cycle */
+}
+```
+
+**iOS output** (`dist/product/ProductTokens.ios.swift`):
+```swift
+import UIKit
+
+// Product tokens — generated from product/tokens/*.yaml
+// Do not edit manually.
+
+public enum ProductLayout {
+    public static let contentMaxWidth: CGFloat = 1336
+    public static let contentIndent: CGFloat = DesignTokens.space300
+}
+
+public enum ProductMotion {
+    public static let flipDuration: TimeInterval = DesignTokens.Duration.duration350
+    public static let flickerDuration: TimeInterval = 0.8
+}
+```
+
+**Android output** (`dist/product/ProductTokens.android.kt`):
+```kotlin
+package com.designerpunk.product.tokens
+
+// Product tokens — generated from product/tokens/*.yaml
+// Do not edit manually.
+
+object ProductLayout {
+    val contentMaxWidth = 1336.dp
+    val contentIndent = DesignTokens.space_300
+}
+
+object ProductMotion {
+    val flipDuration = DesignTokens.Duration.Duration350
+    val flickerDuration = 800 // ms
+}
+```
 
 ### 3. Pipeline Integration
 
-**What we know:**
-- `designerpunk.config.ts` needs a way to point at the product tokens source directory
-- `npx designerpunk generate` should include product token output alongside system token output
-- The generation should validate refs before emitting (fail-fast on broken refs)
+**Config extension:**
+```typescript
+export default defineConfig({
+  name: 'DesignerPunk',
+  abbreviation: 'DP',
+  themes: [],
+  componentTokens: ['./src/components/core'],
+  output: './dist',
+  productTokens: './product/tokens',  // NEW — path to product token YAML directory
+});
+```
 
-**Placeholders (TBD):**
-- Config shape: `productTokens: './product/tokens'` as a path in `defineConfig()`?
-- Should product token generation be opt-in (explicit config) or automatic (detect `product/tokens/` directory)?
-- Relationship to `tokenSource` config option — does local token source affect ref resolution for product tokens?
+**Generation flow:**
+1. `npx designerpunk generate` runs
+2. System tokens generated (existing behavior)
+3. Token index generated (existing behavior)
+4. IF `productTokens` path configured AND directory exists:
+   - Validate all refs against freshly-generated token-index
+   - If broken refs: warn but continue (don't block system token output)
+   - Generate `ProductTokens.web.css`, `ProductTokens.ios.swift`, `ProductTokens.android.kt`
+5. Report summary
+
+**Broken refs behavior**: Warn, don't block. System token generation should never be blocked by product token issues. Product token files are generated with warning comments for unresolved refs:
+```css
+  /* ⚠️ UNRESOLVED: --product-motion-flicker-curve references 'easeInOutCustom' (not in token-index) */
+  --product-motion-flicker-curve: /* unresolved */;
+```
 
 ---
 
-## Open Questions (To Be Informed by Spec 108)
+## Resolved Open Questions
 
-### Q1: Canonical → platform name mapping rule
+### Q5: Description comments in generated output (Resolved)
 
-Sparky flagged this in Spec 108 feedback. The rule for transforming canonical token names to platform output names needs to be defined:
-- `space300` → `--space-300` (number boundary insertion?)
-- `color.feedback.error.text` → `--color-feedback-error-text` (dots → hyphens)
-- `duration350` → `--duration-350`
+**Decision**: Include `description` as inline comments in CSS output. Omit from Swift/Kotlin (noise in autocomplete).
 
-This rule exists implicitly in the current generation pipeline. It needs to be extracted and documented for product token generation to use the same logic.
+**Rationale**: Sparky confirmed CSS comments are zero-cost (gzipped away) and help debugging in DevTools. Kenya/Data didn't request them for native platforms.
 
-### Q2: Generation pipeline architecture
+### Q6: Output file location (Resolved)
 
-Should product token generation:
-- **A**: Be a new generator alongside `WebBuilder`, `iOSBuilder`, `AndroidBuilder`
-- **B**: Be an extension to the existing builders (they already know how to emit platform-specific code)
-- **C**: Be a standalone lightweight generator (product tokens are simpler than system tokens — no math validation, no formula evaluation)
+**Decision**: `dist/product/ProductTokens.{platform}.{ext}` (subdirectory).
 
-Ada's input needed on how this fits with the existing `BuildOrchestrator` architecture.
+**Rationale**: Mirrors source structure (`product/tokens/` → `dist/product/`), aligns with Product MCP ownership boundary, keeps `dist/` root clean for system-level artifacts. Sparky confirmed this works for her import workflow.
 
-### Q3: Ref resolution at generation time vs index time
+### Q7: Auto-detect vs explicit config (Resolved)
 
-Spec 108's Product MCP resolves refs by reading `token-index/`. The generation pipeline has direct access to the token source (it's building the tokens). Should generation:
-- **A**: Also read `token-index/` (consistent with Product MCP, but depends on index being current)
-- **B**: Resolve refs directly from token source (more accurate, but different code path than MCP)
+**Decision**: Option B — require explicit `productTokens` path in config.
 
-### Q4: Promotion workflow tooling
+**Rationale**: Leonardo strongly prefers explicit. Auto-detect is dangerous in product repos where experimental YAML might sit in `product/tokens/` from a spike. Aligns with how `componentTokens` already works.
 
-When a product token is promoted to a system token:
-- The product token YAML entry should be replaced with a `ref` to the new system token
-- The generated output changes from a hard value to a reference
-- Consumers shouldn't notice (the CSS variable name changes from `--product-*` to the system token name)
+### Platform Filtering Clarification
 
-What tooling (if any) supports this migration? Or is it a manual process with documentation?
+Tokens with platform-limited `unitType` (e.g., `ch`) that specify `platforms: [web]` are excluded entirely from iOS/Android output. Spec 108's validation already prevents `unitType: ch` with `platforms: [ios]` — so generated output will never contain platform-incompatible values. No placeholder comments, no "web concept" annotations in native output.
 
 ---
 
 ## Scope
 
 **In scope:**
-- Reference validation CLI command (`npx designerpunk validate --product-tokens`)
-- Platform code generation for product tokens (CSS, Swift, Kotlin)
-- `designerpunk.config.ts` extension for product token source path
-- Integration with existing `npx designerpunk generate` command
-- Canonical → platform name mapping documentation
+- `ProductTokenGenerator` class (reads YAML, resolves refs, emits platform files)
+- `npx designerpunk validate --product-tokens` CLI command
+- `designerpunk.config.ts` `productTokens` field extension
+- Integration with `npx designerpunk generate` command
+- Platform output files (CSS, Swift, Kotlin) in `dist/product/`
+- Canonical → platform name mapping (using `PlatformNamingRules.ts`)
+- `promotionCandidate` filter parameter added to `get_product_tokens` (Spec 108 Product MCP enhancement for governance queryability)
 
 **Out of scope:**
-- Source format changes (settled in Spec 108)
-- Product MCP tool changes (settled in Spec 108)
-- Promotion workflow automation (future spec)
-- Product token authoring tooling (IDE extensions, scaffolding)
+- Source format changes (Spec 108)
+- Promotion workflow automation (future)
+- Watch mode / incremental generation (future)
+- Product token authoring tooling (future)
+- Cross-vertical comparison tooling (future — noted as dependency for Stacy's Lessons Synthesis workflow)
+- Parity validation mode (future — `validate --parity` for cross-platform output consistency)
 
 ---
 
@@ -159,17 +293,21 @@ What tooling (if any) supports this migration? Or is it a manual process with do
 
 | Dependency | What we need | Status |
 |------------|-------------|--------|
-| Spec 108 implementation | Stable YAML format, working Product MCP indexer, real-world usage patterns | Not started |
-| Existing generation pipeline | Understanding of `BuildOrchestrator`, platform builders, `UnitConverter` | Available (Ada's domain) |
-| `designerpunk.config.ts` | Current `defineConfig` interface and extension patterns | Available (Spec 094/103/104) |
-| Token index format | Structure of `token-index/*.yaml` for ref resolution | Available |
+| Spec 108 | Stable YAML format, working Product MCP indexer | ✅ Complete |
+| Existing generation pipeline | `WebBuilder.toCSSVariableName()`, `iOSBuilder.toSwiftConstantName()` patterns | ✅ Available |
+| `designerpunk.config.ts` | `defineConfig` interface extension pattern | ✅ Available (Spec 094/103/104) |
+| Token index format | `token-index/*.yaml` structure | ✅ Available |
+| CLI infrastructure | `src/cli/designerpunk.ts` command registration | ✅ Available |
 
 ---
 
-## Next Steps
+## Success Criteria
 
-1. Complete Spec 108 implementation
-2. Gather real-world usage data (how many product tokens, how often refs break, what categories emerge)
-3. Formalize this outline into requirements based on implementation experience
-4. Get Ada's input on generation pipeline architecture (Q2)
-5. Get Sparky's input on canonical→CSS mapping rule (Q1) and load order
+1. `npx designerpunk validate --product-tokens` reports broken refs with actionable messages
+2. `npx designerpunk generate` produces `dist/product/ProductTokens.web.css`, `dist/product/ProductTokens.ios.swift`, `dist/product/ProductTokens.android.kt`
+3. Generated CSS uses `var()` references for `ref` tokens (not resolved values)
+4. Generated Swift/Kotlin uses `DesignTokens.*` references for `ref` tokens (platform names read from token-index)
+5. Platform filtering works — `ch` tokens don't appear in iOS/Android output
+6. `productTokens` config field documented in `defineConfig` interface
+7. Broken refs warn but don't block system token generation
+8. `get_product_tokens` supports `promotionCandidate` filter for governance queryability

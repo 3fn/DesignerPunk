@@ -53,17 +53,39 @@ function main() {
   // Build consumer map from ComponentTokenRegistry
   const consumerMap = buildConsumerMap();
 
+  // Families that generate inside nested namespaces (enum/object) on iOS/Android.
+  // Derived from TokenFileGenerator.DEDICATED_PRIMITIVE_CATEGORIES — keep in sync.
+  const NESTED_PRIMITIVE_FAMILIES = new Set([
+    TokenCategory.DURATION, TokenCategory.EASING, TokenCategory.SCALE,
+  ]);
+
   // Generate primitives index
   const primitivesIndex: Record<string, any> = {};
   for (const token of primitives) {
+    const isNested = NESTED_PRIMITIVE_FAMILIES.has(token.category as TokenCategory);
+    let iosPath = iosGen.getTokenName(token.name, token.category);
+    let androidPath = androidGen.getTokenName(token.name, token.category);
+
+    if (isNested) {
+      // iOS: enum namespace + camelCase property (getTokenName already returns camelCase)
+      const namespace = token.category.charAt(0).toUpperCase() + token.category.slice(1);
+      iosPath = `${namespace}.${iosPath}`;
+      // Android: object namespace + PascalCase property (toKotlinTypeName logic)
+      const androidProp = token.name
+        .split(/[.\-]/)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join('');
+      androidPath = `${namespace}.${androidProp}`;
+    }
+
     primitivesIndex[token.name] = {
       family: token.category,
       value: token.platforms.web.value,
       formula: token.mathematicalRelationship || null,
       platforms: {
         web: webGen.getTokenName(token.name, token.category),
-        ios: iosGen.getTokenName(token.name, token.category),
-        android: androidGen.getTokenName(token.name, token.category),
+        ios: iosPath,
+        android: androidPath,
       },
     };
   }
@@ -92,13 +114,20 @@ function main() {
   const componentTokensIndex: Record<string, any> = {};
   const allComponentTokens = ComponentTokenRegistry.getAll();
   for (const ct of allComponentTokens) {
+    // Component tokens use {Component}Tokens.{propertyName} on iOS/Android
+    const enumName = `${ct.component}Tokens`;
+    const parts = ct.name.split('.');
+    const propertyName = parts.slice(1).map((part, i) =>
+      i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1)
+    ).join('');
+
     componentTokensIndex[ct.name] = {
       component: ct.component,
       primitiveReferences: ct.primitiveReference ? { value: ct.primitiveReference } : { value: String(ct.value) },
       platforms: {
         web: webGen.getTokenName(ct.name, 'component'),
-        ios: iosGen.getTokenName(ct.name, 'component'),
-        android: androidGen.getTokenName(ct.name, 'component'),
+        ios: `${enumName}.${propertyName}`,
+        android: `${enumName}.${propertyName}`,
       },
     };
   }

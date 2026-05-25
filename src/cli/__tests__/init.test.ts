@@ -138,8 +138,8 @@ describe('CLI init — integration', () => {
       expect(secondOutput).toContain('✓ type definitions:');
       expect(secondOutput).toContain('✓ token source:');
       expect(secondOutput).toContain('existing files preserved');
-      // 87 steering docs ship in the package
-      expect(secondOutput).toContain('✓ steering docs: 87 existing files preserved');
+      // 88 steering docs ship in the package
+      expect(secondOutput).toContain('✓ steering docs: 88 existing files preserved');
     });
 
     test('preserves existing files — no overwrites after second run', async () => {
@@ -182,18 +182,18 @@ describe('CLI init — integration', () => {
 
       const output = await runInitIn(scratchDir);
 
-      // Package contributed 87 new steering files (no conflict with designerpunk.md
+      // Package contributed 88 new steering files (no conflict with designerpunk.md
       // because the package doesn't have a file by that name)
-      expect(output).toContain('✓ steering docs: 87 new files');
+      expect(output).toContain('✓ steering docs: 88 new files');
 
       // Custom file preserved
       expect(
         fs.readFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), 'utf-8'),
       ).toBe('# Custom product steering\n');
 
-      // Plus 87 package files merged alongside it (total 88)
+      // Plus 88 package files merged alongside it (total 89)
       const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
-      expect(steeringFiles.length).toBe(88);
+      expect(steeringFiles.length).toBe(89);
     });
   });
 
