@@ -1,0 +1,45 @@
+category: invalid
+description: Tokens with various validation errors
+
+tokens:
+  bothValueAndRef:
+    value: 100
+    unitType: logical
+    ref: space300
+    description: Has both value and ref
+    rationale: "Should not matter"
+
+  neitherValueNorRef:
+    description: Has neither value nor ref
+
+  missingUnitType:
+    value: 42
+    description: Missing unitType
+    rationale: "Some rationale"
+
+  missingRationale:
+    value: 42
+    unitType: logical
+    description: Missing rationale
+
+  BadCamelCase:
+    value: 10
+    unitType: logical
+    description: Starts with uppercase
+    rationale: "Some rationale"
+
+  chOnIos:
+    value: 60
+    unitType: ch
+    description: ch unit on non-web platform
+    rationale: "Some rationale"
+    platforms: [web, ios]
+
+  validSibling:
+    ref: space200
+    description: This one should survive despite sibling errors
+
+  missingDescription:
+    value: 10
+    unitType: logical
+    rationale: "Has rationale but no description"

@@ -1,0 +1,15 @@
+category: motion
+description: Product-specific motion characteristics
+
+tokens:
+  flipDuration:
+    ref: duration250
+    description: Card-to-modal expansion timing
+    platforms: [web, ios, android]
+
+  flickerDuration:
+    value: 800
+    unitType: duration
+    description: Neon easter egg animation cycle
+    rationale: "Tuned to match 24fps flicker perception threshold"
+    platforms: [web]

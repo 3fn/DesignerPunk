@@ -92,3 +92,36 @@ export interface BrandContext {
   register?: 'brand' | 'product';
   accessibilityRequirements?: string;
 }
+
+/** Product token entry as returned by get_product_tokens (Spec 108). */
+export interface ProductTokenEntry {
+  name: string;
+  value: number | string | null;
+  unitType: string | null;
+  ref: string | null;
+  resolvedValue: number | string | null;
+  resolvedUnitType: string | null;
+  resolutionDepth: 'full' | 'partial' | null;
+  description: string;
+  rationale: string | null;
+  usage: string | null;
+  platforms: string[];
+  promotionCandidate: boolean;
+}
+
+/** Product token category grouping. */
+export interface ProductTokenCategory {
+  name: string;
+  description: string;
+  tokens: ProductTokenEntry[];
+}
+
+/** Health data for product tokens section of get_product_health. */
+export interface ProductTokenHealth {
+  tokenCount: number;
+  categoryCount: number;
+  errorCount: number;
+  warningCount: number;
+  errors: string[];
+  warnings: string[];
+}

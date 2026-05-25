@@ -1,0 +1,24 @@
+category: layout
+description: Structural layout constraints for the product
+
+tokens:
+  contentMaxWidth:
+    value: 1336
+    unitType: logical
+    description: Maximum content column width
+    rationale: "Optimized for 70-75 characters per line at body font size"
+    usage: "Applied above breakpointMd"
+    platforms: [web, ios, android]
+
+  contentIndent:
+    ref: space300
+    description: Left indent for section content
+    platforms: [web, ios, android]
+
+  proseMeasureMax:
+    value: 48
+    unitType: ch
+    description: Maximum line length for body text
+    rationale: "Typographic best practice for readability"
+    platforms: [web]
+    promotionCandidate: true
