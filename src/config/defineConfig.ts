@@ -53,6 +53,13 @@ export interface DesignerPunkConfig {
    * When omitted, tokens resolve from the installed package's `src/tokens/`.
    */
   tokenSource?: string;
+  /**
+   * Path to product token YAML directory. When set, product tokens are generated
+   * alongside system tokens during `npx designerpunk generate`.
+   * Path is resolved relative to the config file's directory.
+   * @see Spec 109 — Product Tokens: Reference Validation & Platform Generation
+   */
+  productTokens?: string;
 }
 
 /**

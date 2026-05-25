@@ -30,6 +30,8 @@ export interface ResolvedConfig {
   outputDir: string;
   /** Directory the config file was loaded from (or cwd for defaults). */
   configDir: string;
+  /** Resolved absolute path to product tokens directory, or undefined if not configured. */
+  productTokens?: string;
 }
 
 const DEFAULTS = {
@@ -88,5 +90,6 @@ export async function loadConfig(cwd: string = process.cwd()): Promise<ResolvedC
     componentTokenDirs,
     outputDir,
     configDir,
+    productTokens: userConfig.productTokens ? path.resolve(configDir, userConfig.productTokens) : undefined,
   };
 }

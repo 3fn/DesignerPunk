@@ -111,7 +111,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write unit tests with fixture YAML
     - _Requirements: 1.2, 1.3, 2.2, 2.3, 3.2, 3.3, 4.2, 4.3, 5.5, 5.6_
 
-- [ ] 3. Platform Emitters
+- [x] 3. Platform Emitters
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -147,7 +147,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write unit tests
     - _Requirements: 2.1–2.11_
 
-  - [ ] 3.2 Implement SwiftEmitter
+  - [x] 3.2 Implement SwiftEmitter
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina + Kenya (cross-domain: Lina implements, Kenya validates Swift idioms)
@@ -161,7 +161,7 @@ Implementation follows a dependency-driven sequence: token-index extension first
     - Write unit tests
     - _Requirements: 3.1–3.10, 8.4, 8.6, 8.7, 8.9, 8.10_
 
-  - [ ] 3.3 Implement KotlinEmitter
+  - [x] 3.3 Implement KotlinEmitter
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina + Data (cross-domain: Lina implements, Data validates Kotlin idioms)

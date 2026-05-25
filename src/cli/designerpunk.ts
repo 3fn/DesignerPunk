@@ -19,6 +19,8 @@ import { resolveTokens } from './resolveTokens';
 import { loadComponentTokens } from './loadComponentTokens';
 import { runValidate } from './validate';
 import { runInit } from './init';
+import { runValidateProductTokens } from './validateProductTokens';
+import { generateProductTokens } from './generateProductTokens';
 
 async function main() {
   const command = process.argv[2];
@@ -73,7 +75,11 @@ function resolvePackageRoot(): string {
 
 async function runValidateCommand() {
   try {
-    await runValidate();
+    if (process.argv.includes('--product-tokens')) {
+      await runValidateProductTokens();
+    } else {
+      await runValidate();
+    }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`❌ ${message}`);
@@ -110,6 +116,11 @@ async function runGenerate() {
     console.log('');
 
     generateTokenFiles(tokens, config);
+
+    // Product token generation (after system tokens + token-index are fresh)
+    if (config.productTokens) {
+      generateProductTokens(config);
+    }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`❌ ${message}`);
@@ -240,6 +251,7 @@ Usage:
   npx designerpunk init            Bootstrap a new product repo
   npx designerpunk generate        Generate token files from designerpunk.config.ts
   npx designerpunk validate        Validate token definitions against active source
+  npx designerpunk validate --product-tokens  Validate product token refs against token-index
   npx designerpunk mcp:app         Start Application MCP server
   npx designerpunk mcp:docs        Start Docs MCP server
   npx designerpunk mcp:product     Start Product MCP server
