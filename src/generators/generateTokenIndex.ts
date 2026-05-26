@@ -13,6 +13,8 @@ import * as yaml from 'js-yaml';
 import { getAllPrimitiveTokens } from '../tokens';
 import { getAllSemanticTokens } from '../tokens/semantic';
 import { TokenCategory } from '../types/PrimitiveToken';
+import type { PrimitiveToken } from '../types/PrimitiveToken';
+import type { SemanticToken } from '../types/SemanticToken';
 import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
@@ -21,6 +23,12 @@ import { ThemeRegistry } from '../themes/ThemeRegistry';
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
+
+/** Optional resolved tokens — when provided, these are used instead of package barrel imports. */
+export interface TokenIndexInput {
+  primitiveTokens?: PrimitiveToken[];
+  semanticTokens?: SemanticToken[];
+}
 
 /** Build a map of token name → consuming component names from schema.yaml files. */
 function buildConsumerMap(componentsDir: string): Map<string, string[]> {
@@ -62,7 +70,7 @@ function buildConsumerMap(componentsDir: string): Map<string, string[]> {
  *
  * @param tokenIndexDir - Absolute or relative (to cwd) path for output. Defaults to 'token-index'.
  */
-export function generateTokenIndex(tokenIndexDir: string = 'token-index'): void {
+export function generateTokenIndex(tokenIndexDir: string = 'token-index', input?: TokenIndexInput): void {
   const outputDir = path.isAbsolute(tokenIndexDir)
     ? tokenIndexDir
     : path.resolve(process.cwd(), tokenIndexDir);
@@ -79,8 +87,8 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index'): void 
   themeRegistry.register({ name: 'wcag', mode: 'both', overrides: { ...wcagSemanticOverrides, ...darkWcagSemanticOverrides } });
   const themeVarying = themeRegistry.getThemeVaryingTokens();
 
-  const primitives = getAllPrimitiveTokens();
-  const semantics = getAllSemanticTokens();
+  const primitives = input?.primitiveTokens || getAllPrimitiveTokens();
+  const semantics = input?.semanticTokens || getAllSemanticTokens();
 
   // Build consumer map from ComponentTokenRegistry
   const componentsDir = path.resolve(__dirname, '..', 'components', 'core');

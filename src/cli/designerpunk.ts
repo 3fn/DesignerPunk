@@ -119,7 +119,10 @@ async function runGenerate() {
     generateTokenFiles(tokens, config);
 
     // Generate token-index for Application MCP (reflects local token additions)
-    generateTokenIndex(path.resolve(process.cwd(), 'token-index'));
+    generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
+      primitiveTokens: tokens.primitiveTokens,
+      semanticTokens: tokens.semanticTokens,
+    });
 
     // Product token generation (after system tokens + token-index are fresh)
     if (config.productTokens) {
