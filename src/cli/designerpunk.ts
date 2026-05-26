@@ -15,6 +15,7 @@ import * as path from 'path';
 import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
+import { generateTokenIndex } from '../generators/generateTokenIndex';
 import { resolveTokens } from './resolveTokens';
 import { loadComponentTokens } from './loadComponentTokens';
 import { runValidate } from './validate';
@@ -116,6 +117,9 @@ async function runGenerate() {
     console.log('');
 
     generateTokenFiles(tokens, config);
+
+    // Generate token-index for Application MCP (reflects local token additions)
+    generateTokenIndex(path.resolve(process.cwd(), 'token-index'));
 
     // Product token generation (after system tokens + token-index are fresh)
     if (config.productTokens) {

@@ -98,11 +98,13 @@ export class DocumentIndexer {
       // File was deleted - remove from index
       this.documentMap.delete(filePath);
       this.documentContent.delete(filePath);
+      this.lastIndexTime = new Date().toISOString();
       return;
     }
 
     // Re-index the file
     await this.indexFile(filePath);
+    this.lastIndexTime = new Date().toISOString();
   }
 
   /**
