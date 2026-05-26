@@ -22,13 +22,6 @@ import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
 
-// Import component token files to trigger registration
-import '../components/core/Button-Icon/buttonIcon.tokens';
-import '../components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens';
-import '../components/core/Avatar-Base/avatar.tokens';
-import '../components/core/Badge-Label-Base/tokens';
-import '../tokens/component/progress';
-
 /** Build a map of token name → consuming component names from schema.yaml files. */
 function buildConsumerMap(componentsDir: string): Map<string, string[]> {
   const map = new Map<string, string[]>();
