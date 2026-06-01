@@ -2,6 +2,23 @@ Run systematic **technical** quality checks and generate a comprehensive report.
 
 This is a code-level audit, not a design critique. Check what's measurable and verifiable in the implementation.
 
+## Detector (Optional Enhancement)
+
+Before the manual diagnostic scan, run the bundled anti-pattern detector for objective evidence:
+
+```bash
+node .kiro/skills/impeccable/scripts/detect.mjs --json <target-file-or-directory>
+```
+
+**Integration**:
+- Run against the target being audited (HTML file, directory, or URL)
+- Filter results against `detector-exclusions.md` (exclude rules that conflict with intentional DesignerPunk patterns)
+- Fold detector findings into the Anti-Patterns dimension (dimension 5) as objective evidence
+- Detector findings supplement but do not replace the manual anti-pattern check
+- If the detector errors or the target is too large, skip it and proceed with the manual scan
+
+**The detector is an enhancement, not a requirement.** An audit without detector results is still valid. An audit with detector results has stronger evidence for the Anti-Patterns dimension.
+
 ## Diagnostic Scan
 
 Run comprehensive checks across 5 dimensions. Score each dimension 0-4 using the criteria below.

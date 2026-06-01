@@ -140,20 +140,9 @@ DesignerPunk uses build-time platform separation, not runtime detection. Each pl
 
 ### Web
 - **Component Model**: Web Components (Custom Elements with Shadow DOM)
-- **Styling**: CSS with logical properties (`padding-inline`, `margin-block-start`, etc.)
+- **Styling**: CSS with logical properties — see Web-Authoring-Standards.md for all CSS rules
 - **File extension**: `.web.tsx`
-- **Key rule**: Use logical properties for layout spacing. Physical properties only when design explicitly requires physical positioning regardless of writing mode.
-
-```css
-/* ✅ CORRECT — Logical properties */
-padding-inline: var(--space-inset-normal);
-padding-block: var(--space-inset-tight);
-margin-inline-start: var(--space-100);
-
-/* ❌ WRONG — Physical properties */
-padding-left: var(--space-inset-normal);
-margin-left: var(--space-100);
-```
+- **Key rule**: Use logical properties for all directional CSS. Physical properties only when design explicitly requires physical positioning regardless of writing mode.
 
 ### iOS
 - **Language**: Swift (native)

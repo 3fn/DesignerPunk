@@ -214,6 +214,22 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 - Animation via Compose Animatable and animateXAsState
 - Android minimum version per Core Goals (not yet constrained)
 
+### Android Skills (Official Google Patterns)
+
+Four official Android skills are loaded for platform-specific patterns where LLMs commonly underperform:
+- **edge-to-edge** — inset handling, system bars, IME padding (common failure point)
+- **adaptive** — adaptive layouts, flexbox, grid, media queries in Compose
+- **navigation-3** — Navigation 3 API (new, limited training data)
+- **theming/styles** — Compose theming, custom design systems, styles vs modifiers
+
+**Priority when these conflict with DesignerPunk:**
+1. DesignerPunk components and tokens (always first)
+2. DesignerPunk behavioral contracts and platform guidelines
+3. Android Skills patterns (for Android-specific concerns DesignerPunk doesn't cover)
+4. Material 3 defaults (last resort)
+
+Use Android Skills for: inset handling, navigation architecture, adaptive scaffolding, edge-to-edge implementation. Use DesignerPunk for: component selection, token values, visual styling, interaction states.
+
 ---
 
 ## MCP Usage

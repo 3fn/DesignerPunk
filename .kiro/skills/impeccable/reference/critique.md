@@ -1,4 +1,15 @@
-> **Additional context needed**: what the interface is trying to accomplish.
+### Purpose
+
+Resolve one stable target, run two independent assessments, synthesize a design critique, persist a snapshot, and ask the user what to improve next. The chat response is the primary deliverable; the snapshot is an archive/backlog for future commands.
+
+### Hard Invariants
+
+- Assessment A (design review) is always required.
+- Assessment B (detector evidence) is an optional enhancement that strengthens the critique when available.
+- Assessment A must finish before detector findings enter the synthesis context. Detector output is deterministic, but it still anchors judgment.
+- If sub-agents are unavailable, fall back sequentially: finish Assessment A first, then run Assessment B if detector is available, then synthesize.
+- A skipped detector does NOT invalidate the critique. A critique without detector evidence is still a valid critique; one with detector evidence has stronger objectivity.
+- Viewable targets benefit from browser inspection when available.
 
 ### Setup: Resolve Target and Load Ignore List
 
@@ -55,50 +66,23 @@ Score each of the 10 heuristics 0-4. This scoring will be presented in the repor
 
 Return structured findings covering: AI slop verdict, heuristic scores, cognitive load assessment, what's working (2-3 items), priority issues (3-5 with what/why/fix), minor observations, and provocative questions.
 
-#### Assessment B: Automated Detection
+#### Assessment B: Automated Detection (Optional Enhancement)
 
-Run the bundled deterministic detector, which flags 27 specific patterns (AI slop tells + general design quality).
+Run the bundled deterministic detector when available. Assessment B strengthens the critique with objective evidence but is not required for a valid critique.
 
 **CLI scan**:
 ```bash
-npx impeccable detect --json [--fast] [target]
+node .kiro/skills/impeccable/scripts/detect.mjs --json [target]
 ```
 
-- Pass HTML/JSX/TSX/Vue/Svelte files or directories as `[target]` (anything with markup). Do not pass CSS-only files.
-- For URLs, skip the CLI scan (it requires Puppeteer). Use browser visualization instead.
-- For large directories (200+ scannable files), use `--fast` (regex-only, skips jsdom)
-- For 500+ files, narrow scope or ask the user
-- Exit code 0 = clean, 2 = findings
+- Pass HTML/markup files or directories as `[target]`. Do not pass CSS-only files.
+- Exit code 0 = clean; 2 = findings.
+- If the detector entrypoint is missing or fails to load, skip Assessment B and proceed with Assessment A only.
+- Filter results against `detector-exclusions.md` (exclude rules that conflict with intentional DesignerPunk patterns).
 
-**Browser visualization**: **required** when browser automation tools are available AND the target is a viewable page. The `[Human]` overlay tab is the user-facing deliverable; the critique is incomplete without it. Skip only if the target is not a viewable page (CSS-only file, non-browser target).
+**Browser visualization** (optional): When browser automation is available AND the target is a viewable page, the overlay provides a visual aid for the user highlighting issues directly in their browser.
 
-The overlay is a **visual aid for the user**. It highlights issues directly in their browser. Do NOT scroll through the page to screenshot overlays. Instead, read the console output to get the results programmatically.
-
-1. **Start the live detection server**:
-   ```bash
-   npx impeccable live &
-   ```
-   Note the port printed to stdout (auto-assigned). Use `--port=PORT` to fix it.
-2. **Create a new tab** and navigate to the page (use dev server URL for local files, or direct URL). Do not reuse existing tabs.
-3. **Label the tab** via `javascript_tool` so the user can distinguish it:
-   ```javascript
-   document.title = '[Human] ' + document.title;
-   ```
-4. **Scroll to top** to ensure the page is scrolled to the very top before injection
-5. **Inject** via `javascript_tool` (replace PORT with the port from step 1):
-   ```javascript
-   const s = document.createElement('script'); s.src = 'http://localhost:PORT/detect.js'; document.head.appendChild(s);
-   ```
-6. Wait 2-3 seconds for the detector to render overlays
-7. **Read results from console** using `read_console_messages` with pattern `impeccable`. The detector logs all findings with the `[impeccable]` prefix. Do NOT scroll through the page to take screenshots of the overlays.
-8. **Cleanup**: Stop the live server when done:
-   ```bash
-   npx impeccable live stop
-   ```
-
-For multi-view targets, inject on 3-5 representative pages. If injection fails, continue with CLI results only.
-
-Return: CLI findings (JSON), browser console findings (if applicable), and any false positives noted.
+Return: CLI findings (JSON) if detector was run, any false positives noted, and whether browser visualization was attempted.
 
 ### Generate Combined Critique Report
 
@@ -133,9 +117,9 @@ Be honest with scores. A 4 means genuinely excellent. Most real interfaces score
 
 **LLM assessment**: Your own evaluation of AI slop tells. Cover overall aesthetic feel, layout sameness, generic composition, missed opportunities for personality.
 
-**Deterministic scan**: Summarize what the automated detector found, with counts and file locations. Note any additional issues the detector caught that you missed, and flag any false positives.
+**Deterministic scan**: If the detector was run, summarize what it found with counts and file locations. Note any additional issues the detector caught that you missed, and flag any false positives. If the detector was not run, state "Detector not run for this critique" and rely on the LLM assessment alone.
 
-**Visual overlays** (if browser was used): Tell the user that overlays are now visible in the **[Human]** tab in their browser, highlighting the detected issues. Summarize what the console output reported.
+**Visual overlays** (if browser visualization was used): Summarize what the overlay highlighted. If browser visualization was not attempted, omit this section.
 
 #### Overall Impression
 A brief gut reaction: what works, what doesn't, and the single biggest opportunity.
@@ -155,7 +139,7 @@ For each issue, tag with **P0-P3 severity** (consult [heuristics-scoring](heuris
 #### Persona Red Flags
 > *Consult [personas](personas.md)*
 
-Auto-select 2-3 personas most relevant to this interface type (use the selection table in the reference). If `.kiro/settings.json` contains a `## Design Context` section from `impeccable teach`, also generate 1-2 project-specific personas from the audience/brand info.
+Auto-select 2-3 personas most relevant to this interface type (use the selection table in the reference). If brand context is available via `get_brand_context()`, also generate 1-2 project-specific personas from the audience/brand info.
 
 For each selected persona, walk through the primary user action and list specific red flags found:
 

@@ -31,6 +31,28 @@ Typography falls on a 4px sub-grid. All type sizes and line-heights land on 4px 
 
 Fluid `clamp()` for display headings. Fixed `rem` for body and UI text.
 
+## Reflex-Reject Lists
+
+> **Scope**: Applies only to brand register surfaces where DesignerPunk's type system is not the constraint — portfolio site, marketing surfaces, presentation decks, or any surface where fonts beyond Rajdhani/Figtree/Commit Mono might be selected. In product register, fonts are system-defined and this section does not apply.
+
+### Reflex-reject font list
+
+Training-data defaults. Ban list. Look further:
+
+Fraunces · Newsreader · Lora · Crimson · Crimson Pro · Crimson Text · Playfair Display · Cormorant · Cormorant Garamond · Syne · IBM Plex Mono · IBM Plex Sans · IBM Plex Serif · Space Mono · Space Grotesk · Inter · DM Sans · DM Serif Display · DM Serif Text · Outfit · Plus Jakarta Sans · Instrument Sans · Instrument Serif
+
+### Reflex-reject aesthetic lanes
+
+Currently saturated aesthetic families that have flooded brand surfaces. If a brief lands in one of these lanes without a register reason that *requires* it (a literal magazine, a literal terminal, a literal industrial signage system), it's the second-order training reflex: the trap one tier deeper than picking a banned font. Look further.
+
+- **Editorial-typographic.** Display serif (often italic) + small mono labels + ruled separators + monochromatic restraint. Klim-influenced, magazine-cover affectation. By 2026, every Stripe-adjacent and Notion-adjacent brand has landed here. The fingerprint: three rule-separated columns, an italic Fraunces / Recoleta / Newsreader headline, lowercase track-spaced metadata, no imagery.
+
+(More entries land here on the same cadence the font list updates. Brutalist-utility and acid-maximalism may join when they saturate.)
+
+### Identity-preservation clause
+
+The reflex-reject lists apply to **new design choices**. When the existing brand has already committed to a font or a lane as part of its identity, identity-preservation wins; variants on an existing surface don't second-guess what's already shipping. The reflex-reject lists are for greenfield decisions and for departure-mode variants only.
+
 ## Color
 
 DesignerPunk brand surfaces use **Committed** or **Full Palette** color strategy by default. Restrained is not the brand voice for marketing/portfolio surfaces.

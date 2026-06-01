@@ -2,7 +2,7 @@
 
 Build a feature with impeccable UX and UI quality: shape the design, land the visual direction, build real production code, inspect and improve in-browser until it meets a high-end studio bar.
 
-Before writing code, you need: PRODUCT.md loaded, register identified and the matching reference loaded, and a confirmed design direction for this task (either from `shape` or supplied by the user). PRODUCT.md is project context, not a task-specific brief.
+Before writing code, you need: design context loaded via MCP (setup steps), register identified and the matching reference loaded, and a confirmed design direction for this task (either from `shape` or supplied by the user). MCP context is project context, not a task-specific brief.
 
 Treat any approved visual direction (generated mock or stated reference) as a concrete contract for composition, hierarchy, density, atmosphere, signature motifs, and distinctive visual moves. Don't let mocks replace structure, copy, accessibility, or state design. But if the live result lacks the approved direction's major ingredients, the implementation is wrong.
 
@@ -48,7 +48,7 @@ Present the shape output and stop. Wait for the user to confirm, override, or co
 
 If the user already supplied a confirmed brief or ran shape separately, use it and skip this step.
 
-When the original prompt + PRODUCT.md already answer scope, content, and visual direction with no real ambiguity, the shape output can be **compact** (3-5 bullets stating what you're building and the visual lane, ending with one or two specific questions or "confirm or override"). The full 10-section structured brief is reserved for genuinely ambiguous, multi-screen, or stakeholder-heavy tasks. Don't pad a clear brief into a long one to look thorough; equally, don't skip the pause to look efficient.
+When the original prompt + MCP context already answer scope, content, and visual direction with no real ambiguity, the shape output can be **compact** (3-5 bullets stating what you're building and the visual lane, ending with one or two specific questions or "confirm or override"). The full 10-section structured brief is reserved for genuinely ambiguous, multi-screen, or stakeholder-heavy tasks. Don't pad a clear brief into a long one to look thorough; equally, don't skip the pause to look efficient.
 
 If the harness has native image generation (Codex), a compact shape's "confirm or override" advances to **Step 3 and the codex.md flow**, not to Step 4. Phrase the closing line accordingly: "Confirm or override; once we lock direction, I'll run a couple of palette and reference questions before generating any mocks." This stops the model from reading shape confirmation as code-green.
 
@@ -56,15 +56,15 @@ If the harness has native image generation (Codex), a compact shape's "confirm o
 
 Based on the design brief's "Recommended References" section, consult the relevant impeccable reference files. At minimum, always consult:
 
-- [spatial-design.md](spatial-design.md) for layout and spacing
-- [typography.md](typography.md) for type hierarchy
+- [layout.md](layout.md) for layout, spacing, grid, container queries, optical adjustments
+- [typeset.md](typeset.md) for type hierarchy, font loading, OpenType features
 
 Then add references based on the brief's needs:
 - Complex interactions or forms? Consult [interaction-design.md](interaction-design.md)
-- Animation or transitions? Consult [motion-design.md](motion-design.md)
-- Color-heavy or themed? Consult [color-and-contrast.md](color-and-contrast.md)
-- Responsive requirements? Consult [responsive-design.md](responsive-design.md)
-- Heavy on copy, labels, or errors? Consult [ux-writing.md](ux-writing.md)
+- Animation or transitions? Consult [animate.md](animate.md) (motion materials, durations, easing, perceived performance)
+- Color-heavy or themed? Consult [colorize.md](colorize.md) (OKLCH, palette structure, dark mode, contrast)
+- Responsive requirements? Consult [adapt.md](adapt.md) (breakpoints, input methods, safe areas, responsive images)
+- Heavy on copy, labels, or errors? Consult [clarify.md](clarify.md) (button labels, error formula, voice/tone, translation)
 
 ## Step 3: Visual Direction & Assets (Harness-Gated)
 

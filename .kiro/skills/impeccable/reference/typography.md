@@ -32,7 +32,7 @@ Use `ch` units for character-based measure (`max-width: 65ch`). Line-height scal
 
 ## Font Selection & Pairing
 
-The tactical selection procedure and the reflex-reject list live in [reference/brand.md](brand.md) under **Font selection procedure** and **Reflex-reject list** (loaded for brand-register tasks). The rest of this section covers the adjacent knowledge: anti-reflex corrections, system font use, and pairing rules.
+The tactical selection procedure and the reflex-reject list live in [reference/brand-dp.md](brand-dp.md) under **Reflex-Reject Lists** (loaded for brand-register tasks). The rest of this section covers the adjacent knowledge: anti-reflex corrections, system font use, and pairing rules.
 
 ### Anti-reflexes worth defending against
 

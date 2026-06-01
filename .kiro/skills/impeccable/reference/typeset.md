@@ -1,12 +1,14 @@
 Typography carries most of the information on the page. Replace generic defaults (Inter, Roboto, system fallback at flat scale) with type that reflects the brand and scales with intentional contrast.
 
+> **DesignerPunk scope**: In product register, fonts are system-defined (Rajdhani/Figtree/Commit Mono) per DesignerPunk Design Laws. The font selection procedure and brand register guidance below do NOT apply. Typography improvements in product register are limited to: hierarchy tuning, weight contrast, measure optimization, and loading strategy. For web font loading strategies, consult [typography.md](typography.md).
+
 ---
 
 ## Register
 
-Brand: run the font selection procedure in [brand.md](brand.md). Pairing follows the brand's lane (display serif + sans body for editorial/luxury, one committed sans for tech, etc.). Fluid `clamp()` scale, ≥1.25 ratio between steps.
+Brand: run the font selection procedure in [brand-dp.md](brand-dp.md). Pairing follows the brand's lane (display serif + sans body for editorial/luxury, one committed sans for tech, etc.). Fluid `clamp()` scale, ≥1.25 ratio between steps.
 
-Product: system fonts and familiar sans stacks are legitimate here. One well-tuned family typically carries the whole UI. Fixed `rem` scale, 1.125–1.2 ratio between more closely-spaced steps.
+Product: DesignerPunk's type system is the constraint. One well-tuned family typically carries the whole UI. Fixed `rem` scale, 1.125–1.2 ratio between more closely-spaced steps.
 
 ---
 

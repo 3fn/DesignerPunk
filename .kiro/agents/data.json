@@ -39,7 +39,11 @@
     "skill://.kiro/steering/Test-Behavioral-Contract-Validation.md",
     "skill://.kiro/steering/Spec-Feedback-Protocol.md",
     "skill://.kiro/steering/Technology Stack.md",
-    "skill://.kiro/steering/Product-Token-Governance.md"
+    "skill://.kiro/steering/Product-Token-Governance.md",
+    "skill://.kiro/skills/android/edge-to-edge/SKILL.md",
+    "skill://.kiro/skills/android/adaptive/SKILL.md",
+    "skill://.kiro/skills/android/navigation-3/SKILL.md",
+    "skill://.kiro/skills/android/theming/styles/SKILL.md"
   ],
   "hooks": {
     "agentSpawn": [

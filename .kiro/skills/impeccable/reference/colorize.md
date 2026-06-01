@@ -1,5 +1,7 @@
 > **Additional context needed**: existing brand colors.
 
+> **DesignerPunk scope**: In product register, color decisions are governed by DesignerPunk's semantic color tokens (Conflict Resolution Priority 1). This reference applies to ungoverned color decisions only — brand register surfaces, data visualization, or product-specific colors where no system token exists. Query `get_color_strategy()` for the four-tier vocabulary.
+
 Replace timid grayscale or single-accent designs with a strategic palette: pick a color strategy, choose a hue family that fits the brand, then apply color with intent. More color ≠ better. Strategic color beats rainbow vomit.
 
 ---
@@ -68,10 +70,10 @@ Add color systematically across these dimensions:
 - **Hover states**: Introduce color on interaction
 
 ### Background & Surfaces
-- **Tinted backgrounds**: Replace pure gray (`#f5f5f5`) with warm neutrals (`oklch(97% 0.01 60)`) or cool tints (`oklch(97% 0.01 250)`)
+- **Tinted backgrounds**: If you replace pure gray, tint toward the brand hue, not toward a generic-warm-or-cool pair. The default-warm-tint (`oklch(97% 0.01 60)` and its neighbors) is now the AI cream/sand giveaway. Be specific to the brand or stay neutral.
 - **Colored sections**: Use subtle background colors to separate areas
 - **Gradient backgrounds**: Add depth with subtle, intentional gradients (not generic purple-blue)
-- **Cards & surfaces**: Tint cards or surfaces slightly for warmth
+- **Cards & surfaces**: Tint cards or surfaces toward the brand, not "for warmth" by reflex
 
 **Use OKLCH for color**: It's perceptually uniform, meaning equal steps in lightness *look* equal. Great for generating harmonious scales.
 
@@ -124,8 +126,7 @@ Ensure color addition improves rather than overwhelms:
 - Use every color in the rainbow (choose 2-4 colors beyond neutrals)
 - Apply color randomly without semantic meaning
 - Put gray text on colored backgrounds. It looks washed out; use a darker shade of the background color or transparency instead
-- Use pure gray for neutrals. Add subtle color tint (warm or cool) for depth
-- Use pure black (`#000`) or pure white (`#fff`) for large areas
+
 - Violate WCAG contrast requirements
 - Use color as the only indicator (accessibility issue)
 - Make everything colorful (defeats the purpose)

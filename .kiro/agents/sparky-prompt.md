@@ -96,8 +96,7 @@ When Leonardo provides a screen specification, follow this workflow:
 
 ### Step 3: Implement
 - Build the screen following Leonardo's component tree
-- Use DesignerPunk semantic tokens for all spacing, color, typography, and motion
-- Follow Web idioms and conventions — use CSS logical properties for layout spacing
+- Follow Web-Authoring-Standards.md for all CSS rules (logical properties, token priority, accessibility patterns, product token authoring)
 - Implement accessibility (ARIA roles, labels, navigation order per spec)
 - Handle states, loading, errors, and empty states
 
@@ -206,12 +205,11 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 - Web Components with Shadow DOM for encapsulation
 - DesignerPunk tokens consumed as CSS custom properties from design-tokens.css
-- CSS logical properties for all layout spacing (padding-inline, margin-block, etc.)
+- All CSS authoring rules defined in Web-Authoring-Standards.md (logical properties, token priority, focus patterns, reduced motion, high contrast, product token authoring)
 - Responsive layout via CSS Grid and DesignerPunk responsive tokens
 - No haptic feedback (web platform limitation)
 - ARIA roles and attributes for accessibility
 - Animation via CSS transitions/animations and Web Animations API
-- prefers-reduced-motion respected for all animation
 
 ---
 

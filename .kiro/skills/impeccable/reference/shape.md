@@ -16,16 +16,16 @@ This is a required interaction, not optional guidance. Ask these questions in co
 
 ### Interview cadence
 
-Discovery includes at least one user-answer round unless PRODUCT.md, DESIGN.md, or an already-confirmed brief directly answers the needed inputs. With a sparse prompt, do **not** synthesize a complete brief for confirmation on the first response.
+Discovery includes at least one user-answer round unless MCP context (product overview, brand context), or an already-confirmed brief directly answers the needed inputs. With a sparse prompt, do **not** synthesize a complete brief for confirmation on the first response.
 
 - Use the harness's structured question tool when one exists. Otherwise, ask directly in chat and stop.
 - Ask **2-3 questions per round**, then wait for answers.
-- Treat PRODUCT.md and DESIGN.md as anchors; they reduce repeated questions but do **not** replace shape for craft. Shape is task-specific.
+- Treat MCP context as anchors; it reduces repeated questions but does **not** replace shape for craft. Shape is task-specific.
 - One round is the default. Add a second only if the first answers leave material gaps. Don't run a second round just to feel thorough.
 - Round 1 should clarify purpose, audience/context, content/scope, and (for brand) visual direction.
 - Round 2, when needed, fills in whatever's still genuinely missing.
 
-**Assert-then-confirm, not menu-with-escape.** When PRODUCT.md and the user's prompt make one option obvious, name it and ask the user to confirm or override. Don't enumerate "Restrained / Committed / Or something else?" as a real choice; "This reads as Restrained, confirm?" beats a four-option menu when the answer is already clear.
+**Assert-then-confirm, not menu-with-escape.** When MCP context and the user's prompt make one option obvious, name it and ask the user to confirm or override. Don't enumerate "Restrained / Committed / Or something else?" as a real choice; "This reads as Restrained, confirm?" beats a four-option menu when the answer is already clear.
 
 ### Purpose & Context
 - What is this feature for? What problem does it solve?
@@ -42,7 +42,7 @@ Discovery includes at least one user-answer round unless PRODUCT.md, DESIGN.md, 
 
 ### Design Direction
 
-Force a visual decision on three fronts. Skip anything PRODUCT.md or DESIGN.md already answers; ask only what's missing.
+Force a visual decision on three fronts. Skip anything MCP context (product overview, brand context, design philosophy) already answers; ask only what's missing.
 
 - **Color strategy for this surface.** Pick one: Restrained / Committed / Full palette / Drenched. Can override the project default if the surface earns it (e.g. a drenched hero inside an otherwise Restrained product).
 - **Theme via scene sentence.** Write one sentence of physical context for this surface: who uses it, where, under what ambient light, in what mood. The sentence forces dark vs light. If it doesn't, add detail until it does.
@@ -57,7 +57,7 @@ Always ask. Sketch quality and shipped quality are different outputs; don't gues
 - **Interactivity.** Static visual / interactive prototype / shipped-quality component?
 - **Time intent.** Quick exploration, or polish until it ships?
 
-Scope answers are task-scoped. Don't write them to PRODUCT.md or DESIGN.md; carry them through the design brief only.
+Scope answers are task-scoped. Don't persist them beyond the design brief.
 
 ### Constraints
 - Are there technical constraints? (Framework, performance budget, browser support)
@@ -115,7 +115,7 @@ After the interview and any required probes, present a brief and **end your resp
 
 **Choose the brief shape based on how clear the answers are:**
 
-- **Compact form (3-5 bullets)** when discovery was crisp and the original prompt + PRODUCT.md already pinned scope, content, and direction. State what you're building, the visual lane, and end with one or two specific questions or a clear "confirm or override?" prompt. This is the default for typical craft requests with a clear prompt.
+- **Compact form (3-5 bullets)** when discovery was crisp and the original prompt + MCP context already pinned scope, content, and direction. State what you're building, the visual lane, and end with one or two specific questions or a clear "confirm or override?" prompt. This is the default for typical craft requests with a clear prompt.
 - **Full structured form (sections below)** when the task is genuinely ambiguous, multi-screen, or when the user asked for shape as a standalone step. Use this when the discipline of structure earns its weight.
 
 Don't pad a clear brief into a long one to look thorough. A 70-line brief restating answers the user just gave is noise, not rigor. Equally, don't skip the confirmation pause to look efficient: the pause is the point.
@@ -131,7 +131,7 @@ What this is, who it's for, what it needs to accomplish.
 The single most important thing a user should do or understand here.
 
 **3. Design Direction**
-Color strategy (Restrained / Committed / Full palette / Drenched) + the theme scene sentence + 2–3 named anchor references. Reference PRODUCT.md and DESIGN.md where they already answer, and note any per-surface overrides.
+Color strategy (Restrained / Committed / Full palette / Drenched) + the theme scene sentence + 2–3 named anchor references. Reference MCP context (product overview, brand context) where it already answers, and note any per-surface overrides.
 
 If you ran the Visual Direction Probe step, name which probe direction won and what changed in the brief because of it.
 
@@ -151,7 +151,7 @@ How users interact with this feature. What happens on click, hover, scroll? What
 What copy, labels, empty state messages, error messages, and microcopy are needed. Note any dynamic content and its realistic ranges. For image-led surfaces, also list the required image/media roles and their likely source (project asset, generated raster, semantic SVG/CSS, canvas/WebGL, icon library, or accepted omission).
 
 **9. Recommended References**
-Based on the brief, list which impeccable reference files would be most valuable during implementation (e.g., spatial-design.md for complex layouts, motion-design.md for animated features, interaction-design.md for form-heavy features).
+Based on the brief, list which impeccable reference files would be most valuable during implementation (e.g., layout.md for complex layouts, animate.md for animated features, interaction-design.md for form-heavy features, typeset.md for typography-driven pages, colorize.md for color-led brands).
 
 **10. Open Questions**
 Anything genuinely unresolved. Don't list "open questions" you've already recommended a default for; assert the default and move on. If you'd write `Recommend: X` next to a question, just decide X.
