@@ -53,8 +53,47 @@
  */
 
 import { defineComponentTokens } from '../../../build/tokens';
-import { SIZING_BASE_VALUE } from '../../../tokens/SizingTokens';
-import { AvatarSizingTokens } from './avatar-sizing.tokens';
+import { SIZING_BASE_VALUE, sizingTokens } from '../../../tokens/SizingTokens';
+
+/**
+ * Avatar sizing tokens — container dimensions for each size variant.
+ *
+ * Previously in a separate file (avatar-sizing.tokens.ts). Inlined to prevent
+ * architectural anomaly (no other component splits tokens across files) and
+ * simplify the package surface for sync.
+ *
+ * @see .kiro/specs/092-sizing-token-family/design.md
+ */
+export const AvatarSizingTokens = defineComponentTokens({
+  component: 'Avatar',
+  family: 'sizing',
+  tokens: {
+    'size.xs': {
+      reference: sizingTokens.size300,
+      reasoning: 'Extra small avatar (24px). Compact contexts — inline mentions, dense lists.',
+    },
+    'size.sm': {
+      reference: sizingTokens.size400,
+      reasoning: 'Small avatar (32px). Comment threads, contact lists.',
+    },
+    'size.md': {
+      reference: sizingTokens.size500,
+      reasoning: 'Medium avatar (40px). Default size — profile cards, list items.',
+    },
+    'size.lg': {
+      reference: sizingTokens.size600,
+      reasoning: 'Large avatar (48px). Profile headers, prominent identity display.',
+    },
+    'size.xl': {
+      reference: sizingTokens.size1000,
+      reasoning: 'Extra large avatar (80px). Profile pages, hero sections.',
+    },
+    'size.xxl': {
+      reference: sizingTokens.size1600,
+      reasoning: 'Extra extra large avatar (128px). Full profile view, onboarding.',
+    },
+  },
+});
 
 /**
  * Avatar component tokens defined using the hybrid authoring API.

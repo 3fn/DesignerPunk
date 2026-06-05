@@ -5,29 +5,29 @@
  * Application MCP's token query tools.
  *
  * @see Spec 096 design.md
+ * @see Spec 114 — data flow restructure (barrel imports removed)
  */
 
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import { getAllPrimitiveTokens } from '../tokens';
-import { getAllSemanticTokens } from '../tokens/semantic';
 import { TokenCategory } from '../types/PrimitiveToken';
 import type { PrimitiveToken } from '../types/PrimitiveToken';
 import type { SemanticToken } from '../types/SemanticToken';
+import type { RegisteredComponentToken } from '../registries/ComponentTokenRegistry';
 import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
-import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
-import { ThemeRegistry } from '../themes/ThemeRegistry';
-import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
-import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
-import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
 
-/** Optional resolved tokens — when provided, these are used instead of package barrel imports. */
+/**
+ * Required input for token-index generation.
+ * All data must be explicitly provided — no barrel import fallbacks.
+ */
 export interface TokenIndexInput {
-  primitiveTokens?: PrimitiveToken[];
-  semanticTokens?: SemanticToken[];
+  primitiveTokens: PrimitiveToken[];
+  semanticTokens: SemanticToken[];
+  componentTokens: RegisteredComponentToken[];
+  themeVaryingTokens: Set<string>;
 }
 
 /** Build a map of token name → consuming component names from schema.yaml files. */
@@ -69,8 +69,9 @@ function buildConsumerMap(componentsDir: string): Map<string, string[]> {
  * Generate the token index YAML files.
  *
  * @param tokenIndexDir - Absolute or relative (to cwd) path for output. Defaults to 'token-index'.
+ * @param input - Required resolved token data from the CLI.
  */
-export function generateTokenIndex(tokenIndexDir: string = 'token-index', input?: TokenIndexInput): void {
+export function generateTokenIndex(tokenIndexDir: string = 'token-index', input: TokenIndexInput): void {
   const outputDir = path.isAbsolute(tokenIndexDir)
     ? tokenIndexDir
     : path.resolve(process.cwd(), tokenIndexDir);
@@ -81,14 +82,9 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input?
   const iosGen = new iOSFormatGenerator();
   const androidGen = new AndroidFormatGenerator('kotlin');
 
-  // Build theme-varying set
-  const themeRegistry = new ThemeRegistry();
-  themeRegistry.register({ name: 'dark', mode: 'dark', overrides: darkSemanticOverrides });
-  themeRegistry.register({ name: 'wcag', mode: 'both', overrides: { ...wcagSemanticOverrides, ...darkWcagSemanticOverrides } });
-  const themeVarying = themeRegistry.getThemeVaryingTokens();
-
-  const primitives = input?.primitiveTokens || getAllPrimitiveTokens();
-  const semantics = input?.semanticTokens || getAllSemanticTokens();
+  const themeVarying = input.themeVaryingTokens;
+  const primitives = input.primitiveTokens;
+  const semantics = input.semanticTokens;
 
   // Build consumer map from ComponentTokenRegistry
   const componentsDir = path.resolve(__dirname, '..', 'components', 'core');
@@ -150,7 +146,7 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input?
 
   // Generate component tokens index
   const componentTokensIndex: Record<string, any> = {};
-  const allComponentTokens = ComponentTokenRegistry.getAll();
+  const allComponentTokens = input.componentTokens;
   for (const ct of allComponentTokens) {
     const enumName = `${ct.component}Tokens`;
     const parts = ct.name.split('.');

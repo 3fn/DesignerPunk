@@ -17,7 +17,7 @@
  */
 
 import { AvatarType, AvatarSize, AVATAR_DEFAULTS } from '../../types';
-import { AvatarSizingTokens } from '../../avatar-sizing.tokens';
+import { AvatarSizingTokens } from '../../avatar.tokens';
 import { IconBaseSize } from '../../../Icon-Base/types';
 // Import createIconBase for rendering icons within Avatar
 // Using the functional API for simpler integration within shadow DOM

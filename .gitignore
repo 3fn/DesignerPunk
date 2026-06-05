@@ -90,3 +90,6 @@ performance-*.json
 
 # Presentations
 docs/presentations/
+
+#Reference projects
+wrkingClass-project/

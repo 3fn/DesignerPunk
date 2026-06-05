@@ -90,9 +90,10 @@ flowchart LR
         D["Definition<br/>Token files"]
         V["Validation<br/>Mathematical rules"]
         R["Registry<br/>Global store"]
+        M["Mode Resolution<br/>Light/dark sets"]
         G["Generation<br/>Platform formats"]
         O["Platform output<br/>CSS / Swift / Kotlin"]
-        D --> V --> R --> G --> O
+        D --> V --> R --> M --> G --> O
     end
 
     subgraph Layers["Token definition layers"]

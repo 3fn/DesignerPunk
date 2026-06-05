@@ -11,6 +11,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as readline from 'readline';
+import { rewriteBuildImports } from './shared/transforms';
 
 interface InitOptions {
   name?: string;
@@ -148,7 +149,20 @@ export async function runInit(argv: string[]): Promise<void> {
     'tsconfig.test.json',
   );
 
-  // 10. Next steps
+  // 10. .designerpunkignore
+  createFileIfNotExists(
+    path.join(dest, '.designerpunkignore'),
+    `# DesignerPunk Sync Ignore
+# Files listed here are never touched by \`npx designerpunk sync\`.
+# Uses .gitignore syntax: globs, exact paths, # comments.
+
+# Example: keep a custom agent prompt
+# .kiro/agents/custom-agent.md
+`,
+    '.designerpunkignore',
+  );
+
+  // 11. Next steps
   console.log(`
 Your product "${opts.name}" is ready.
 
@@ -166,6 +180,8 @@ To customize your visual language:
 Note: Token values have mathematical relationships (modular scale,
 baseline grid). The validator will warn if changes break these
 relationships during generation.
+
+💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.
 `);
 }
 
@@ -425,20 +441,7 @@ function scaffoldMcpConfig(templatePath: string, destPath: string): void {
   }
 }
 
-/**
- * Rewrite build system imports to use @3fn/core/build package subpath.
- * Converts: import { defineComponentTokens } from '../../build/tokens'
- * To:       import { defineComponentTokens } from '@3fn/core/build'
- *
- * Handles any depth of relative path (../build/tokens, ../../build/tokens, etc.)
- * and specific file imports (../../build/tokens/defineComponentTokens).
- */
-function rewriteBuildImports(content: string): string {
-  return content.replace(
-    /from\s+['"]\.\.\/(?:\.\.\/)*build\/tokens(?:\/[^'"]*)?['"]/g,
-    `from '@3fn/core/build'`
-  );
-}
+
 
 function generateConfig(name: string, abbreviation: string): string {
   return `import { defineConfig } from '@3fn/core/config';

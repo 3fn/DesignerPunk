@@ -131,6 +131,7 @@ Guiding agents to apply tokens and components to product design specs is the cur
 npm install @3fn/core
 npx designerpunk init
 npx designerpunk generate
+npx designerpunk sync        # after upgrades — detects and applies stale files
 ```
 Not comfortable with terminal commands? Ask your AI agent to follow these steps. That's the point.
 

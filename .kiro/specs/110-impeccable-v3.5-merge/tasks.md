@@ -163,7 +163,7 @@ Merge upstream Impeccable v3.5.0 improvements into our DesignerPunk-adapted skil
     - Add conflict notes where DesignerPunk Design Laws take precedence
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
-- [ ] 4. Update Brand Register Reference
+- [x] 4. Update Brand Register Reference
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -181,7 +181,7 @@ Merge upstream Impeccable v3.5.0 improvements into our DesignerPunk-adapted skil
   - Detailed: `.kiro/specs/110-impeccable-v3.5-merge/completion/task-4-completion.md`
   - Summary: `docs/specs/110-impeccable-v3.5-merge/task-4-summary.md`
 
-  - [ ] 4.1 Add reflex-reject content to brand-dp.md
+  - [x] 4.1 Add reflex-reject content to brand-dp.md
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Leonardo
@@ -192,7 +192,7 @@ Merge upstream Impeccable v3.5.0 improvements into our DesignerPunk-adapted skil
     - Preserve all existing DesignerPunk brand content
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
 
-- [ ] 5. Regression Verification
+- [x] 5. Regression Verification
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -211,7 +211,7 @@ Merge upstream Impeccable v3.5.0 improvements into our DesignerPunk-adapted skil
   - Detailed: `.kiro/specs/110-impeccable-v3.5-merge/completion/task-5-completion.md`
   - Summary: `docs/specs/110-impeccable-v3.5-merge/task-5-summary.md`
 
-  - [ ] 5.1 Verify architecture preservation
+  - [x] 5.1 Verify architecture preservation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Leonardo + Thurgood

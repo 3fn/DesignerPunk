@@ -12,6 +12,7 @@
  */
 
 import * as path from 'path';
+import * as fs from 'fs';
 import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
@@ -22,14 +23,23 @@ import { runValidate } from './validate';
 import { runInit } from './init';
 import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
+import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
+import { computeThemeVaryingTokens } from './themeVarying';
+import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
+import { runSync } from './sync';
 
 async function main() {
   const command = process.argv[2];
+  const flags = process.argv.slice(3);
 
   switch (command) {
     case undefined:
     case 'generate':
-      await runGenerate();
+      if (flags.includes('--product-only')) {
+        await runProductOnly(flags.includes('--force'));
+      } else {
+        await runGenerate(flags.includes('--force'));
+      }
       break;
     case 'validate':
       await runValidateCommand();
@@ -51,6 +61,9 @@ async function main() {
       break;
     case 'figma:extract':
       await runFigmaCommand('figma-extract');
+      break;
+    case 'sync':
+      await runSyncCommand();
       break;
     case '--help':
     case '-h':
@@ -88,49 +101,116 @@ async function runValidateCommand() {
   }
 }
 
-async function runGenerate() {
+/** @internal Exported for testing */
+export async function runGenerate(force = false) {
+  const config = await loadConfig(process.cwd());
+  const tokens = resolveTokens(config);
+
+  // Load component tokens from local source when tokenSource is set
+  if (config.tokenSourceMode === 'local') {
+    const componentTokens = loadComponentTokens(config);
+    if (componentTokens.length === 0) {
+      console.warn(
+        `⚠️  No component token files found.\n` +
+        `   Searched: ${path.relative(process.cwd(), config.tokenSourceRoot)}/component/\n` +
+        `   And: ${config.componentTokenDirs.map(d => path.relative(process.cwd(), d)).join(', ') || '(none configured)'}\n` +
+        `   Component token output will be empty.\n` +
+        `   Run \`npx designerpunk init\` to copy component tokens locally.\n`
+      );
+    }
+  }
+
+  const relativePath = path.relative(process.cwd(), config.tokenSourceRoot);
+  console.log(`📦 ${config.name} (${config.abbreviation})`);
+  console.log(`   Tokens: ${relativePath}  (${config.tokenSourceMode})`);
+  console.log(`   Output: ${path.relative(process.cwd(), config.outputDir)}`);
+  if (config.themes.length > 0) {
+    console.log(`   Themes: ${config.themes.map(t => `${t.name} (${t.mode})`).join(', ')}`);
+  }
+  console.log('');
+
+  let systemFailed = false;
+  let productFailed = false;
+
+  // --- System Pipeline ---
   try {
-    const config = await loadConfig(process.cwd());
-    const tokens = resolveTokens(config);
-
-    // Load component tokens from local source when tokenSource is set
-    if (config.tokenSourceMode === 'local') {
-      const componentCount = loadComponentTokens(config);
-      if (componentCount === 0) {
-        console.warn(
-          `⚠️  No component token files found.\n` +
-          `   Searched: ${path.relative(process.cwd(), config.tokenSourceRoot)}/component/\n` +
-          `   And: ${config.componentTokenDirs.map(d => path.relative(process.cwd(), d)).join(', ') || '(none configured)'}\n` +
-          `   Component token output will be empty.\n` +
-          `   Run \`npx designerpunk init\` to copy component tokens locally.\n`
-        );
-      }
-    }
-
-    const relativePath = path.relative(process.cwd(), config.tokenSourceRoot);
-    console.log(`📦 ${config.name} (${config.abbreviation})`);
-    console.log(`   Tokens: ${relativePath}  (${config.tokenSourceMode})`);
-    console.log(`   Output: ${path.relative(process.cwd(), config.outputDir)}`);
-    if (config.themes.length > 0) {
-      console.log(`   Themes: ${config.themes.map(t => `${t.name} (${t.mode})`).join(', ')}`);
-    }
-    console.log('');
-
     generateTokenFiles(tokens, config);
 
-    // Generate token-index for Application MCP (reflects local token additions)
+    const themeVaryingTokens = computeThemeVaryingTokens(config, tokens.semanticTokens, tokens.primitiveTokens);
+
     generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
+      componentTokens: ComponentTokenRegistry.getAll(),
+      themeVaryingTokens,
     });
+    console.log('✅ System tokens generated');
+  } catch (err) {
+    systemFailed = true;
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`❌ System token generation failed: ${message}`);
+  }
 
-    // Product token generation (after system tokens + token-index are fresh)
-    if (config.productTokens) {
-      generateProductTokens(config);
+  // --- Product Pipeline (independent) ---
+  if (config.productTokens) {
+    try {
+      if (!isProductTokenStale(config, force)) {
+        const outputPaths = getProductTokenOutputPaths(config);
+        const oldest = Math.min(...outputPaths.map(p => fs.statSync(p).mtimeMs));
+        console.log(`⏭ Product tokens up-to-date (source unchanged since ${new Date(oldest).toLocaleString()})`);
+      } else {
+        if (force) console.log('🔄 Product tokens regenerated (--force)');
+        generateProductTokens(config);
+        console.log('✅ Product tokens generated');
+      }
+    } catch (err) {
+      productFailed = true;
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`❌ Product token generation failed: ${message}`);
     }
+  }
+
+  // --- Status Summary ---
+  if (systemFailed || productFailed) {
+    console.log('');
+    if (systemFailed && !productFailed) {
+      console.log('💡 Tip: Use --product-only to skip system token generation');
+    }
+    process.exit(1);
+  }
+}
+
+/** @internal Exported for testing */
+export async function runProductOnly(force = false) {
+  const config = await loadConfig(process.cwd());
+
+  if (!config.productTokens) {
+    console.error('❌ No productTokens configured. Nothing to generate.');
+    process.exit(1);
+    return;
+  }
+
+  const tokenIndexDir = path.resolve(process.cwd(), 'token-index');
+  if (!fs.existsSync(tokenIndexDir)) {
+    console.error('❌ token-index/ not found. Run `npx designerpunk generate` (full) first to create it.');
+    process.exit(1);
+    return;
+  }
+
+  if (!isProductTokenStale(config, force)) {
+    const outputPaths = getProductTokenOutputPaths(config);
+    const oldest = Math.min(...outputPaths.map(p => fs.statSync(p).mtimeMs));
+    console.log(`⏭ Product tokens up-to-date (source unchanged since ${new Date(oldest).toLocaleString()})`);
+    return;
+  }
+
+  try {
+    if (force) console.log('🔄 Product tokens regenerated (--force)');
+    generateProductTokens(config);
+    console.log('✅ Product tokens generated');
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    console.error(`❌ ${message}`);
+    console.error(`❌ Product token generation failed: ${message}`);
     process.exit(1);
   }
 }
@@ -250,13 +330,28 @@ async function runFigmaCommand(script: 'figma-push' | 'figma-extract') {
   });
 }
 
+async function runSyncCommand() {
+  const flags = process.argv.slice(3);
+  await runSync({
+    dryRun: flags.includes('--dry-run'),
+    force: flags.includes('--force'),
+    projectRoot: process.cwd(),
+  });
+}
+
 function printHelp() {
   console.log(`
 DesignerPunk Pipeline CLI
 
 Usage:
   npx designerpunk init            Bootstrap a new product repo
+  npx designerpunk sync            Detect and apply package updates
+  npx designerpunk sync --dry-run  Preview what sync would do (no changes)
+  npx designerpunk sync --force    Apply all updates without prompting
   npx designerpunk generate        Generate token files from designerpunk.config.ts
+  npx designerpunk generate --force              Regenerate all (skip staleness check)
+  npx designerpunk generate --product-only       Skip system tokens, regenerate product only
+  npx designerpunk generate --product-only --force  Force product regeneration
   npx designerpunk validate        Validate token definitions against active source
   npx designerpunk validate --product-tokens  Validate product token refs against token-index
   npx designerpunk mcp:app         Start Application MCP server
@@ -272,6 +367,10 @@ Init options:
   --skip-components                Don't copy starter components
   --skip-agents                    Don't copy agent templates
 
+Generate options:
+  --force                          Skip staleness detection, always regenerate
+  --product-only                   Skip system token pipeline, use existing token-index
+
 Configuration:
   Place a designerpunk.config.ts in your project root.
   See the DesignerPunk repo's designerpunk.config.ts for an example.
@@ -281,7 +380,10 @@ No configuration needed for default usage.
 `);
 }
 
-main().catch((err) => {
-  console.error('❌ Unexpected error:', err);
-  process.exit(1);
-});
+/* istanbul ignore next -- CLI entry point */
+if (require.main === module) {
+  main().catch((err) => {
+    console.error('❌ Unexpected error:', err);
+    process.exit(1);
+  });
+}

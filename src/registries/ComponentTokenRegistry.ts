@@ -74,6 +74,17 @@ class ComponentTokenRegistryImpl implements IRegistry<RegisteredComponentToken> 
   /** Index by token family */
   private byFamily: Map<string, RegisteredComponentToken[]> = new Map();
 
+  /** Default allowOverwrite for register calls that don't specify it */
+  private defaultAllowOverwrite = false;
+
+  /**
+   * Set the default allowOverwrite flag for subsequent register/registerBatch calls.
+   * Used by loadComponentTokens in local mode to prevent double-registration conflicts.
+   */
+  setDefaultAllowOverwrite(allow: boolean): void {
+    this.defaultAllowOverwrite = allow;
+  }
+
   /**
    * Register a single component token
    * 
@@ -84,7 +95,7 @@ class ComponentTokenRegistryImpl implements IRegistry<RegisteredComponentToken> 
    * @throws Error if token with same name already exists (unless allowOverwrite is true)
    */
   register(token: RegisteredComponentToken, options: ComponentTokenRegistrationOptions = {}): void {
-    const { allowOverwrite = false } = options;
+    const { allowOverwrite = this.defaultAllowOverwrite } = options;
 
     // Check for conflicts
     if (this.tokens.has(token.name) && !allowOverwrite) {

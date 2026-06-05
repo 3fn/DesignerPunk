@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "11.8.0",
+  "version": "11.9.0",
   "description": "True Native cross-platform design system with mathematical foundations",
   "license": "Apache-2.0",
   "author": "Peter Michaels Allen",
@@ -170,7 +170,9 @@
     "@modelcontextprotocol/sdk": "^1.26.0",
     "@octokit/rest": "^20.0.0",
     "@types/uuid": "^10.0.0",
+    "diff": "^7.0.0",
     "dotenv": "^17.3.1",
+    "minimatch": "^9.0.5",
     "tsx": "^4.21.0",
     "uuid": "^13.0.0"
   }

@@ -1,12 +1,13 @@
 /**
  * @category evergreen
- * @purpose Verify loadComponentTokens() discovery and loading (Spec 104)
+ * @purpose Verify loadComponentTokens() discovery, return type, and allowOverwrite (Spec 104, 114)
  */
 
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import { loadComponentTokens } from '../loadComponentTokens';
+import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
 import type { ResolvedConfig } from '../../config/ConfigLoader';
 
 describe('loadComponentTokens', () => {
@@ -14,10 +15,12 @@ describe('loadComponentTokens', () => {
 
   beforeEach(() => {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dp-comp-tokens-'));
+    ComponentTokenRegistry.clear();
   });
 
   afterEach(() => {
     fs.rmSync(tmpDir, { recursive: true, force: true });
+    ComponentTokenRegistry.clear();
   });
 
   function makeConfig(overrides: Partial<ResolvedConfig> = {}): ResolvedConfig {
@@ -34,73 +37,167 @@ describe('loadComponentTokens', () => {
     } as ResolvedConfig;
   }
 
-  test('returns 0 when no component subdirectory exists', () => {
-    fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
-    const config = makeConfig();
-    expect(loadComponentTokens(config)).toBe(0);
+  describe('return type', () => {
+    test('returns RegisteredComponentToken[] (empty when no tokens registered)', () => {
+      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
+      const config = makeConfig();
+      const result = loadComponentTokens(config);
+      expect(Array.isArray(result)).toBe(true);
+    });
+
+    test('returns registered tokens from the registry', () => {
+      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
+      // Pre-register a token
+      ComponentTokenRegistry.register({
+        name: 'test.inset.sm',
+        component: 'Test',
+        family: 'spacing',
+        value: 8,
+        reasoning: 'test',
+      });
+      const config = makeConfig();
+      const result = loadComponentTokens(config);
+      expect(result.length).toBe(1);
+      expect(result[0].name).toBe('test.inset.sm');
+    });
   });
 
-  test('discovers *.ts files in {tokenSourceRoot}/component/', () => {
-    const componentDir = path.join(tmpDir, 'tokens', 'component');
-    fs.mkdirSync(componentDir, { recursive: true });
-    fs.writeFileSync(path.join(componentDir, 'progress.ts'), 'module.exports = {};');
-    fs.writeFileSync(path.join(componentDir, 'another.ts'), 'module.exports = {};');
+  describe('discovery', () => {
+    test('loads files from {tokenSourceRoot}/component/ without throwing', () => {
+      const componentDir = path.join(tmpDir, 'tokens', 'component');
+      fs.mkdirSync(componentDir, { recursive: true });
+      fs.writeFileSync(path.join(componentDir, 'progress.ts'), 'module.exports = {};');
+      fs.writeFileSync(path.join(componentDir, 'another.ts'), 'module.exports = {};');
 
-    const config = makeConfig();
-    expect(loadComponentTokens(config)).toBe(2);
+      const config = makeConfig();
+      expect(() => loadComponentTokens(config)).not.toThrow();
+    });
+
+    test('excludes .test.ts and .d.ts files from component/', () => {
+      const componentDir = path.join(tmpDir, 'tokens', 'component');
+      fs.mkdirSync(componentDir, { recursive: true });
+      // Write a file that would throw if loaded
+      fs.writeFileSync(path.join(componentDir, 'valid.ts'), 'module.exports = {};');
+      fs.writeFileSync(path.join(componentDir, 'valid.test.ts'), 'throw new Error("should not load");');
+      fs.writeFileSync(path.join(componentDir, 'valid.d.ts'), 'throw new Error("should not load");');
+
+      const config = makeConfig();
+      expect(() => loadComponentTokens(config)).not.toThrow();
+    });
+
+    test('discovers *.tokens.ts files recursively in componentTokenDirs', () => {
+      const compDir = path.join(tmpDir, 'components');
+      fs.mkdirSync(path.join(compDir, 'Button-Icon'), { recursive: true });
+      fs.mkdirSync(path.join(compDir, 'Avatar-Base'), { recursive: true });
+      fs.writeFileSync(path.join(compDir, 'Button-Icon', 'buttonIcon.tokens.ts'), 'module.exports = {};');
+      fs.writeFileSync(path.join(compDir, 'Avatar-Base', 'avatar.tokens.ts'), 'module.exports = {};');
+      fs.writeFileSync(path.join(compDir, 'Button-Icon', 'index.ts'), 'module.exports = {};');
+
+      const config = makeConfig({ componentTokenDirs: [compDir] });
+      expect(() => loadComponentTokens(config)).not.toThrow();
+    });
+
+    test('skips __tests__ directories', () => {
+      const compDir = path.join(tmpDir, 'components');
+      fs.mkdirSync(path.join(compDir, '__tests__'), { recursive: true });
+      fs.writeFileSync(path.join(compDir, '__tests__', 'mock.tokens.ts'), 'throw new Error("should not load");');
+
+      const config = makeConfig({ componentTokenDirs: [compDir] });
+      expect(() => loadComponentTokens(config)).not.toThrow();
+    });
+
+    test('skips non-existent componentTokenDirs gracefully', () => {
+      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
+      const config = makeConfig({ componentTokenDirs: ['/nonexistent/path'] });
+      expect(() => loadComponentTokens(config)).not.toThrow();
+    });
   });
 
-  test('excludes .test.ts and .d.ts files from component/', () => {
-    const componentDir = path.join(tmpDir, 'tokens', 'component');
-    fs.mkdirSync(componentDir, { recursive: true });
-    fs.writeFileSync(path.join(componentDir, 'progress.ts'), 'module.exports = {};');
-    fs.writeFileSync(path.join(componentDir, 'progress.test.ts'), 'module.exports = {};');
-    fs.writeFileSync(path.join(componentDir, 'progress.d.ts'), 'module.exports = {};');
+  describe('allowOverwrite', () => {
+    test('uses allowOverwrite when tokenSourceMode is local', () => {
+      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
+      // Pre-register a token that would conflict
+      ComponentTokenRegistry.register({
+        name: 'test.inset.sm',
+        component: 'Test',
+        family: 'spacing',
+        value: 8,
+        reasoning: 'original',
+      });
 
-    const config = makeConfig();
-    expect(loadComponentTokens(config)).toBe(1);
-  });
+      // Write a file that re-registers the same token via require
+      const componentDir = path.join(tmpDir, 'tokens', 'component');
+      fs.mkdirSync(componentDir, { recursive: true });
+      const registryPath = require.resolve('../../registries/ComponentTokenRegistry').replace(/\\/g, '/');
+      fs.writeFileSync(path.join(componentDir, 'reregister.ts'), [
+        `// @ts-nocheck`,
+        `const reg = require('${registryPath}');`,
+        `reg.ComponentTokenRegistry.register({`,
+        `  name: 'test.inset.sm',`,
+        `  component: 'Test',`,
+        `  family: 'spacing',`,
+        `  value: 12,`,
+        `  reasoning: 'local override',`,
+        `});`,
+      ].join('\n'));
 
-  test('discovers *.tokens.ts files recursively in componentTokenDirs', () => {
-    const compDir = path.join(tmpDir, 'components');
-    fs.mkdirSync(path.join(compDir, 'Button-Icon'), { recursive: true });
-    fs.mkdirSync(path.join(compDir, 'Avatar-Base'), { recursive: true });
-    fs.writeFileSync(path.join(compDir, 'Button-Icon', 'buttonIcon.tokens.ts'), 'module.exports = {};');
-    fs.writeFileSync(path.join(compDir, 'Avatar-Base', 'avatar.tokens.ts'), 'module.exports = {};');
-    // Non-token file should be ignored
-    fs.writeFileSync(path.join(compDir, 'Button-Icon', 'index.ts'), 'module.exports = {};');
+      const config = makeConfig({ tokenSourceMode: 'local' });
+      // Should not throw despite double registration
+      expect(() => loadComponentTokens(config)).not.toThrow();
+      // Local version should win
+      const result = ComponentTokenRegistry.get('test.inset.sm');
+      expect(result?.value).toBe(12);
+    });
 
-    const config = makeConfig({ componentTokenDirs: [compDir] });
-    expect(loadComponentTokens(config)).toBe(2);
-  });
+    test('does NOT use allowOverwrite when tokenSourceMode is package', () => {
+      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
+      ComponentTokenRegistry.register({
+        name: 'pkg.conflict',
+        component: 'Pkg',
+        family: 'spacing',
+        value: 8,
+        reasoning: 'original',
+      });
 
-  test('skips __tests__ directories', () => {
-    const compDir = path.join(tmpDir, 'components');
-    fs.mkdirSync(path.join(compDir, '__tests__'), { recursive: true });
-    fs.writeFileSync(path.join(compDir, '__tests__', 'mock.tokens.ts'), 'module.exports = {};');
+      const componentDir = path.join(tmpDir, 'tokens', 'component');
+      fs.mkdirSync(componentDir, { recursive: true });
+      const registryPath = require.resolve('../../registries/ComponentTokenRegistry').replace(/\\/g, '/');
+      fs.writeFileSync(path.join(componentDir, 'conflict.ts'), [
+        `// @ts-nocheck`,
+        `const r = require('${registryPath}');`,
+        `r.ComponentTokenRegistry.register({`,
+        `  name: 'pkg.conflict',`,
+        `  component: 'Pkg',`,
+        `  family: 'spacing',`,
+        `  value: 12,`,
+        `  reasoning: 'conflict',`,
+        `});`,
+      ].join('\n'));
 
-    const config = makeConfig({ componentTokenDirs: [compDir] });
-    expect(loadComponentTokens(config)).toBe(0);
-  });
+      const config = makeConfig({ tokenSourceMode: 'package' });
+      expect(() => loadComponentTokens(config)).toThrow(/already registered/);
+    });
 
-  test('skips non-existent componentTokenDirs gracefully', () => {
-    fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
-    const config = makeConfig({ componentTokenDirs: ['/nonexistent/path'] });
-    expect(loadComponentTokens(config)).toBe(0);
-  });
+    test('resets allowOverwrite after loading completes', () => {
+      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
+      const config = makeConfig({ tokenSourceMode: 'local' });
+      loadComponentTokens(config);
 
-  test('combines both sources', () => {
-    // Source 1: component subdir
-    const componentDir = path.join(tmpDir, 'tokens', 'component');
-    fs.mkdirSync(componentDir, { recursive: true });
-    fs.writeFileSync(path.join(componentDir, 'progress.ts'), 'module.exports = {};');
-
-    // Source 2: explicit dir
-    const compDir = path.join(tmpDir, 'components');
-    fs.mkdirSync(path.join(compDir, 'Button'), { recursive: true });
-    fs.writeFileSync(path.join(compDir, 'Button', 'button.tokens.ts'), 'module.exports = {};');
-
-    const config = makeConfig({ componentTokenDirs: [compDir] });
-    expect(loadComponentTokens(config)).toBe(2);
+      // After loadComponentTokens, registry should reject duplicates again
+      ComponentTokenRegistry.register({
+        name: 'after.test',
+        component: 'After',
+        family: 'spacing',
+        value: 8,
+        reasoning: 'first',
+      });
+      expect(() => ComponentTokenRegistry.register({
+        name: 'after.test',
+        component: 'After',
+        family: 'spacing',
+        value: 8,
+        reasoning: 'duplicate',
+      })).toThrow(/already registered/);
+    });
   });
 });

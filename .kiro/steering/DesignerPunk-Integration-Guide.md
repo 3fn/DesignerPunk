@@ -279,6 +279,23 @@ The pipeline shows where tokens are being read from:
 
 The `(local)` annotation means tokens resolve from your configured `tokenSource` path. If `tokenSource` is omitted, you'll see `(package)` — meaning tokens come from the installed `@3fn/core` package.
 
+**Generate options:**
+
+| Flag | Effect |
+|------|--------|
+| `--force` | Skip staleness detection, always regenerate product tokens |
+| `--product-only` | Skip system token pipeline, regenerate product tokens only (uses existing `token-index/`) |
+
+```bash
+# Fast iteration on product tokens only
+npx designerpunk generate --product-only
+
+# Force full regeneration
+npx designerpunk generate --force
+```
+
+Product token generation automatically detects staleness — if your YAML source files haven't changed since the last build, generation is skipped with a log message. Use `--force` to override.
+
 To validate token definitions without generating files:
 ```bash
 npx designerpunk validate
@@ -908,3 +925,54 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `list_product_templates()` | Product-specific layout and content patterns |
 | `get_product_health()` | Index status, data counts, reverse index sizes, gap counts, warnings |
 | `rebuild_product_index()` | Re-index product data and rebuild all reverse indexes |
+
+---
+
+## Upgrading
+
+After upgrading `@3fn/core` to a new version, run `sync` to detect and apply package changes:
+
+```bash
+# Preview what changed (no modifications)
+npx designerpunk sync --dry-run
+
+# Interactive sync (governance auto-applies, source confirms, conflicts prompt)
+npx designerpunk sync
+
+# Factory reset — overwrite all files to match package (no prompts)
+npx designerpunk sync --force
+```
+
+### How Sync Works
+
+1. Compares your project files against the installed `@3fn/core` package using content hashes
+2. Classifies each file: **New**, **Updated** (safe to apply), **Conflict** (you edited it), or **Unchanged**
+3. Applies changes using a two-tier model:
+   - **Governance** (steering docs, agent configs): auto-applied without prompting
+   - **Source** (tokens, components, types): requires your confirmation
+4. Updates `.kiro/sync-manifest.json` (commit this to git — it tracks sync state for your team)
+
+### Conflict Resolution
+
+When a file you've edited also changed in the package, sync prompts:
+- `[s]kip` — keep your version
+- `[o]verwrite` — replace with the package version
+- `[d]iff` — view a unified diff, then decide
+
+### .designerpunkignore
+
+To permanently exclude files from sync (files you've intentionally customized):
+
+```gitignore
+# .designerpunkignore — uses .gitignore syntax
+.kiro/agents/custom-agent.md
+src/tokens/MyCustomTokens.ts
+```
+
+### CI/CD Integration
+
+In non-interactive environments, sync automatically runs in dry-run mode. Use `--force` to apply changes in CI pipelines:
+
+```bash
+npx designerpunk sync --force  # Applies all updates without prompting
+```

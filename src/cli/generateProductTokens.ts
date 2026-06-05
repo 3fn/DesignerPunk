@@ -9,7 +9,6 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { generateTokenIndex } from '../generators/generateTokenIndex';
 import { ProductTokenGenerator } from '../build/product/ProductTokenGenerator';
 import { emitCSS } from '../build/product/emitters/WebEmitter';
 import { emitSwift } from '../build/product/emitters/SwiftEmitter';
@@ -24,9 +23,7 @@ export function generateProductTokens(config: ResolvedConfig): void {
     return;
   }
 
-  // Regenerate token-index to ensure freshness (Req 9.1, 9.2)
   const tokenIndexDir = path.resolve(config.configDir, 'token-index');
-  generateTokenIndex(tokenIndexDir);
   const outputDir = path.join(config.outputDir, 'product');
 
   const generator = new ProductTokenGenerator({

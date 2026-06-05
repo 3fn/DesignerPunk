@@ -504,6 +504,8 @@ export const ComponentNameTokens = defineComponentTokens({
 | **Color Tokens** | `src/tokens/ColorTokens.ts` | RGBA primitive definitions |
 | **Pipeline CLI** | `npx designerpunk generate` | Run pipeline from any project |
 
+**Note for product repos**: These paths reference `@3fn/core` package source. In product repos consuming the package, pipeline subsystems are accessed via the CLI (`npx designerpunk generate`) and the `defineConfig()` API — not by importing these files directly. To inspect pipeline internals: `node_modules/@3fn/core/src/`.
+
 ---
 
 ## Portable Pipeline (Spec 094)
