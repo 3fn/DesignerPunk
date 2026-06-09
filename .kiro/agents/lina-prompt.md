@@ -290,6 +290,20 @@ The Application MCP server (`application-mcp-server/`) indexes all 28 components
 
 **Fallback:** If the server isn't built or the index seems stale, fall back to reading schema.yaml and types.ts directly. Flag the issue for Peter.
 
+### Write-Side Rebuild Protocol
+
+After modifying content that feeds an MCP server, trigger a rebuild so data is immediately fresh:
+
+| After modifying... | Call |
+|-------------------|------|
+| Component schemas, contracts, component-meta.yaml | `rebuild_index` (Application MCP) |
+| Experience patterns, layout templates, family guidance | `rebuild_index` (Application MCP) |
+| Steering docs | `rebuild_index` (Docs MCP) |
+
+Health states: `healthy` | `degraded` | `failed`. (`"empty"` no longer exists.)
+
+MCP servers auto-detect staleness (30s threshold gate), but calling rebuild after writes ensures immediate freshness — critical when you create a schema and then query it for validation.
+
 ### Progressive Disclosure Workflow
 
 1. Start with `get_document_summary()` to understand structure (~200 tokens)

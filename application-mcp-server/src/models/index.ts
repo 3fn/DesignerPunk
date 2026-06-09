@@ -235,7 +235,7 @@ export interface ApplicationSummary extends ComponentSummary {
 // Index Health
 // ---------------------------------------------------------------------------
 
-export type IndexHealthStatus = 'healthy' | 'degraded' | 'empty';
+export type IndexHealthStatus = 'healthy' | 'degraded' | 'failed';
 
 export interface IndexHealth {
   status: IndexHealthStatus;
@@ -247,6 +247,7 @@ export interface IndexHealth {
   lastIndexTime: string;
   errors: string[];
   warnings: string[];
+  staleFiles: string[];
 }
 
 // ---------------------------------------------------------------------------

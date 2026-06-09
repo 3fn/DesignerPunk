@@ -238,6 +238,40 @@ The packaging vehicle (Kiro Power, plugin, or other mechanism) will determine th
 
 ---
 
+## Health Management Model
+
+All three MCP servers share a common health management architecture (Spec 106):
+
+### Three-State Health
+
+| Status | Meaning |
+|--------|---------|
+| `healthy` | Content indexed, all files current, no warnings |
+| `degraded` | Content indexed but stale files detected or warnings present |
+| `failed` | No content indexed, or initialization error |
+
+### Automatic Staleness Recovery
+
+**Threshold Gate** (automatic, in server code): Every 30 seconds, data-returning tool calls trigger a lightweight mtime scan. If any source file is newer than `lastIndexTime`, the server rebuilds before responding. Agents receive fresh data without manual intervention.
+
+**File Watcher** (automatic, backup): Watches source directories and triggers incremental reindex on filesystem events. Primary mechanism for Product MCP (consumer's mutable files); backup mechanism for Docs/Application MCPs.
+
+**Write-Side Protocol** (agent convention): After modifying MCP-relevant content, agents call `rebuild_index` or `rebuild_product_index` for immediate freshness. Documented in agent system prompts.
+
+### Consumer Context Awareness
+
+When MCP data paths are inside `/node_modules/` (installed package), staleness checks and file watchers are skipped — the content is immutable. Product MCP always watches actively (consumer's `product/` directory is mutable).
+
+### Recovery Tools
+
+| Tool | Server | autoApprove |
+|------|--------|:-----------:|
+| `rebuild_index` | Docs MCP | ✅ |
+| `rebuild_index` | Application MCP | ✅ |
+| `rebuild_product_index` | Product MCP | ✅ |
+
+---
+
 ## Deferred Items
 
 - ~~Product primitives shape → Spec 081~~ ✅ Resolved

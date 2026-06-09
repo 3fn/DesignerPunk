@@ -17,6 +17,7 @@ import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
 import { FileWatcher } from './watcher/FileWatcher';
 import { DesignPhilosophyIndexer } from './indexer/DesignPhilosophyIndexer';
+import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
 
 const SERVER_NAME = 'mcp-component-server';
 const SERVER_VERSION = '0.1.0';
@@ -228,6 +229,11 @@ const tools = [
   },
 ];
 
+const STALENESS_EXEMPT_TOOLS = new Set([
+  'get_component_health',
+  'rebuild_index',
+]);
+
 class ComponentMCPServer {
   private server: Server;
   private indexer: ComponentIndexer;
@@ -235,14 +241,49 @@ class ComponentMCPServer {
   private assemblyValidator: AssemblyValidator;
   private fileWatcher: FileWatcher;
   private philosophyIndexer: DesignPhilosophyIndexer;
+  private stalenessGate: StalenessGate;
 
   constructor(private paths: DataPaths) {
     this.server = new Server({ name: SERVER_NAME, version: SERVER_VERSION }, { capabilities: { tools: {} } });
     this.indexer = new ComponentIndexer();
     this.queryEngine = new ComponentQueryEngine(this.indexer);
     this.assemblyValidator = new AssemblyValidator(this.indexer);
-    this.fileWatcher = new FileWatcher(this.indexer, this.paths.componentsDir);
+    this.fileWatcher = new FileWatcher(
+      this.indexer,
+      this.paths.componentsDir,
+      this.paths.patternsDir,
+      this.paths.templatesDir,
+      this.paths.guidanceDir,
+      this.paths.tokenIndexDir,
+    );
     this.philosophyIndexer = new DesignPhilosophyIndexer();
+
+    const dataDirs = [
+      this.paths.componentsDir,
+      this.paths.patternsDir,
+      this.paths.templatesDir,
+      this.paths.guidanceDir,
+      this.paths.tokenIndexDir,
+    ].filter(Boolean) as string[];
+
+    this.stalenessGate = new StalenessGate({
+      dataDirs,
+      fileExtensions: ['.yaml', '.ts', '.md'],
+      isImmutable: isImmutableContext(this.paths.componentsDir),
+      onRebuild: async () => {
+        await this.indexer.indexComponents(
+          this.paths.componentsDir,
+          this.paths.patternsDir,
+          this.paths.templatesDir,
+          this.paths.guidanceDir,
+          this.paths.tokenIndexDir
+        );
+        if (this.paths.designLanguagePath) {
+          await this.philosophyIndexer.index(this.paths.designLanguagePath);
+        }
+      },
+    });
+
     this.registerHandlers();
   }
 
@@ -278,6 +319,7 @@ class ComponentMCPServer {
     }
 
     const transport = new StdioServerTransport();
+    this.stalenessGate.markIndexed();
     await this.server.connect(transport);
     console.error(`[${SERVER_NAME}] Server running on stdio`);
   }
@@ -300,6 +342,10 @@ class ComponentMCPServer {
   }
 
   private async handleTool(name: string, params: Record<string, unknown>): Promise<unknown> {
+    if (!STALENESS_EXEMPT_TOOLS.has(name)) {
+      await this.stalenessGate.checkAndRebuildIfNeeded();
+    }
+
     switch (name) {
       case 'get_component_catalog':
         return this.queryEngine.getCatalog();
@@ -328,6 +374,7 @@ class ComponentMCPServer {
         if (this.paths.designLanguagePath) {
           await this.philosophyIndexer.index(this.paths.designLanguagePath);
         }
+        this.stalenessGate.markIndexed();
         return this.queryEngine.getHealth();
       case 'list_experience_patterns':
         return this.queryEngine.getPatternCatalog();

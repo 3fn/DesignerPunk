@@ -224,6 +224,7 @@ async function runMcpApp() {
   const guidanceDir = path.join(pkgRoot, 'family-guidance');
   const registryPath = path.join(pkgRoot, 'family-registry.yaml');
   const tokenIndexDir = path.join(pkgRoot, 'token-index');
+  const designLanguagePath = path.join(pkgRoot, 'design-philosophy.yaml');
 
   console.error('DesignerPunk Application MCP');
   console.error(`  Protocol: stdio`);
@@ -231,14 +232,19 @@ async function runMcpApp() {
   console.error(`  Server: ${serverBundle}`);
   console.error('  Starting...\n');
 
-  spawnServer(serverBundle, {
+  const envVars: Record<string, string> = {
     COMPONENTS_DIR: componentsDir,
     PATTERNS_DIR: patternsDir,
     TEMPLATES_DIR: templatesDir,
     GUIDANCE_DIR: guidanceDir,
     REGISTRY_PATH: registryPath,
     TOKEN_INDEX_DIR: tokenIndexDir,
-  }, true);
+  };
+  if (fs.existsSync(designLanguagePath)) {
+    envVars.DESIGN_LANGUAGE_PATH = designLanguagePath;
+  }
+
+  spawnServer(serverBundle, envVars, true);
 }
 
 async function runMcpDocs() {
@@ -259,6 +265,8 @@ async function runMcpProduct() {
   const pkgRoot = resolvePackageRoot();
   const serverBundle = path.join(pkgRoot, 'dist/mcp/product-mcp.js');
   const productDir = process.env.PRODUCT_DIR || path.resolve(process.cwd(), 'product');
+  const componentDir = path.join(pkgRoot, 'src/components/core');
+  const tokenIndexDir = path.join(pkgRoot, 'token-index');
 
   console.error('DesignerPunk Product MCP');
   console.error(`  Protocol: stdio`);
@@ -266,7 +274,11 @@ async function runMcpProduct() {
   console.error(`  Server: ${serverBundle}`);
   console.error('  Starting...\n');
 
-  spawnServer(serverBundle, { PRODUCT_DIR: productDir }, true);
+  spawnServer(serverBundle, {
+    PRODUCT_DIR: productDir,
+    COMPONENT_DIR: componentDir,
+    TOKEN_INDEX_DIR: tokenIndexDir,
+  }, true);
 }
 
 /** Spawn a server as a child process. Uses node for bundled JS, tsx/ts-node for TypeScript. */

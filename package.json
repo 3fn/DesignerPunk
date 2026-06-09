@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "11.9.0",
+  "version": "11.10.0",
   "description": "True Native cross-platform design system with mathematical foundations",
   "license": "Apache-2.0",
   "author": "Peter Michaels Allen",
@@ -127,6 +127,7 @@
     "build:validate": "npx ts-node src/validators/buildValidation.ts",
     "test": "jest --testPathIgnorePatterns='performance/__tests__|__tests__/performance|PerformanceValidation'",
     "test:all": "jest",
+    "test:consumer": "jest --roots='<rootDir>/tests' --testMatch='**/consumer-integration.test.ts' --runInBand --testTimeout=120000",
     "test:performance": "jest --testPathPatterns='performance/__tests__|__tests__/performance'",
     "test:performance:isolated": "jest --config jest.performance.config.js --runInBand",
     "test:quick": "jest --testPathIgnorePatterns='(performance|integration)'",

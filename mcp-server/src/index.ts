@@ -24,6 +24,7 @@ import {
 import { DocumentIndexer } from './indexer/DocumentIndexer';
 import { QueryEngine, QueryMetrics } from './query/QueryEngine';
 import { FileWatcher } from './watcher/FileWatcher';
+import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
 
 // Import tool definitions and handlers
 import {
@@ -69,11 +70,14 @@ const DEFAULT_LOGS_DIR = 'mcp-server/logs';
  * - File watching
  * - Graceful shutdown
  */
+const STALENESS_EXEMPT_TOOLS = new Set(['get_index_health', 'rebuild_index']);
+
 class MCPDocumentationServer {
   private server: Server;
   private indexer: DocumentIndexer;
   private queryEngine: QueryEngine;
   private fileWatcher: FileWatcher;
+  private stalenessGate: StalenessGate;
   private steeringDirectory: string;
   private isRunning: boolean = false;
 
@@ -88,6 +92,16 @@ class MCPDocumentationServer {
 
     // Initialize FileWatcher
     this.fileWatcher = new FileWatcher(this.indexer, this.steeringDirectory);
+
+    // Initialize StalenessGate
+    this.stalenessGate = new StalenessGate({
+      dataDirs: [this.steeringDirectory],
+      fileExtensions: ['.md'],
+      isImmutable: isImmutableContext(this.steeringDirectory),
+      onRebuild: async () => {
+        await this.indexer.indexDirectory(this.steeringDirectory);
+      },
+    });
 
     // Initialize MCP Server
     this.server = new Server(
@@ -132,6 +146,11 @@ class MCPDocumentationServer {
     // Register tool call handler
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { name, arguments: args } = request.params;
+
+      // Staleness gate — check before data-returning tools
+      if (!STALENESS_EXEMPT_TOOLS.has(name)) {
+        await this.stalenessGate.checkAndRebuildIfNeeded();
+      }
 
       try {
         switch (name) {
@@ -193,6 +212,7 @@ class MCPDocumentationServer {
 
           case 'rebuild_index': {
             const result = await handleRebuildIndex(this.queryEngine);
+            this.stalenessGate.markIndexed();
             return formatRebuildIndexResponse(result);
           }
 
@@ -264,6 +284,7 @@ class MCPDocumentationServer {
     console.error(`[MCP Server] Indexing ${this.steeringDirectory}...`);
     try {
       await this.indexer.indexDirectory(this.steeringDirectory);
+      this.stalenessGate.markIndexed();
       console.error('[MCP Server] Indexing complete');
     } catch (error) {
       console.error('[MCP Server] Indexing failed:', error);

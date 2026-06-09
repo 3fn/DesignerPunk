@@ -25,6 +25,7 @@ export class ProductIndexer {
   private tokenIndexDir: string | undefined;
   private indexed: boolean = false;
   private lastIndexTime: string = '';
+  private lastIndexTimeMs: number = 0;
   private warnings: string[] = [];
 
   private overview: Record<string, unknown> | null = null;
@@ -107,6 +108,7 @@ export class ProductIndexer {
 
     this.indexed = true;
     this.lastIndexTime = new Date().toISOString();
+    this.lastIndexTimeMs = this.computeMaxMtime();
     console.error(
       `[${SERVER_NAME}] Indexed: ${this.screenSpecs.size} screens, ` +
       `${this.domainObjects.size} domain objects, ${this.templates.length} templates, ` +
@@ -148,8 +150,17 @@ export class ProductIndexer {
   getProductTokenHealth(): ProductTokenHealth { return this.productTokenIndexer.getHealth(); }
 
   getHealth(): Record<string, unknown> {
+    const staleFiles = this.getStaleFiles();
+    let status: 'healthy' | 'degraded' | 'failed';
+    if (!this.indexed) {
+      status = 'failed';
+    } else if (staleFiles.length > 0 || this.warnings.length > 0) {
+      status = 'degraded';
+    } else {
+      status = 'healthy';
+    }
     return {
-      status: this.indexed ? 'healthy' : 'empty',
+      status,
       indexed: this.indexed,
       lastIndexTime: this.lastIndexTime,
       counts: {
@@ -159,7 +170,52 @@ export class ProductIndexer {
         oneOffComponents: this.oneOffComponents.size,
       },
       warnings: this.warnings,
+      staleFiles,
     };
+  }
+
+  /** Get files newer than last index time. */
+  getStaleFiles(): string[] {
+    if (!this.lastIndexTimeMs || !fs.existsSync(this.productDir)) return [];
+    const stale: string[] = [];
+    this.scanStale(this.productDir, stale);
+    return stale;
+  }
+
+  private scanStale(dir: string, stale: string[]): void {
+    let entries: fs.Dirent[];
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        this.scanStale(fullPath, stale);
+      } else if (entry.name.endsWith('.yaml') || entry.name.endsWith('.md')) {
+        try {
+          if (fs.statSync(fullPath).mtimeMs > this.lastIndexTimeMs) stale.push(fullPath);
+        } catch { /* skip */ }
+      }
+    }
+  }
+
+  private computeMaxMtime(): number {
+    let max = 0;
+    if (fs.existsSync(this.productDir)) {
+      this.walkMaxMtime(this.productDir, (m) => { if (m > max) max = m; });
+    }
+    return max || Date.now();
+  }
+
+  private walkMaxMtime(dir: string, cb: (mtime: number) => void): void {
+    let entries: fs.Dirent[];
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        this.walkMaxMtime(fullPath, cb);
+      } else {
+        try { cb(fs.statSync(fullPath).mtimeMs); } catch { /* skip */ }
+      }
+    }
   }
 
   // --- Indexing steps ---

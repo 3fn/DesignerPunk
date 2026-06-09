@@ -1,0 +1,66 @@
+{
+  ".": {
+    "type": "module",
+    "description": "Main browser entry — Web Components"
+  },
+  "./components": {
+    "type": "module",
+    "description": "Component re-export (same as main)"
+  },
+  "./tokens.css": {
+    "type": "css",
+    "description": "Design token CSS custom properties"
+  },
+  "./component-tokens.css": {
+    "type": "css",
+    "description": "Component token CSS custom properties"
+  },
+  "./config": {
+    "type": "module",
+    "expectedExports": ["defineConfig"]
+  },
+  "./types": {
+    "type": "typescript-source",
+    "expectedExports": ["TokenCategory", "SemanticCategory"]
+  },
+  "./build": {
+    "type": "typescript-source",
+    "expectedExports": ["defineComponentTokens"]
+  },
+  "./blend": {
+    "type": "typescript-source",
+    "expectedExports": ["BlendCalculator", "calculateBlend", "rgbToHsl", "hslToRgb", "useBlendUtilities"]
+  },
+  "./jest-preset": {
+    "type": "commonjs",
+    "description": "Jest configuration preset for component testing"
+  },
+  "./testing": {
+    "type": "module",
+    "expectedExports": ["createComponentFixture", "registerComponent", "cleanupDOM"]
+  },
+  "./grid.css": {
+    "type": "css",
+    "description": "Responsive grid CSS"
+  },
+  "./fonts/inter.css": {
+    "type": "css",
+    "description": "Inter font face declarations"
+  },
+  "./fonts/rajdhani.css": {
+    "type": "css",
+    "description": "Rajdhani font face declarations"
+  },
+  "./fonts/figtree.css": {
+    "type": "css",
+    "description": "Figtree font face declarations"
+  },
+  "./fonts/commit-mono.css": {
+    "type": "css",
+    "description": "Commit Mono font face declarations"
+  },
+  "./package.json": {
+    "type": "json",
+    "description": "Package manifest"
+  }
+}

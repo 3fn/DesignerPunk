@@ -41,7 +41,9 @@ export class ComponentIndexer {
   private tokenIndexer = new TokenIndexer();
   private modeClassifier = new ModeClassifier();
   private lastIndexTime = '';
+  private lastIndexTimeMs = 0;
   private indexWarnings: string[] = [];
+  private dataDirs: string[] = [];
 
   /**
    * Scan component directories and build initial index.
@@ -56,6 +58,7 @@ export class ComponentIndexer {
     this.index.clear();
     this.contractsCache.clear();
     this.indexWarnings = [];
+    this.dataDirs = [componentsDir, patternsDir, templatesDir, guidanceDir, tokenIndexDir].filter(Boolean) as string[];
 
     if (!fs.existsSync(componentsDir)) {
       this.indexWarnings.push(`Components directory not found: ${componentsDir}`);
@@ -111,6 +114,30 @@ export class ComponentIndexer {
     }
 
     this.lastIndexTime = new Date().toISOString();
+    this.lastIndexTimeMs = this.computeMaxMtime();
+  }
+
+  /** Compute the maximum mtime across all tracked files. */
+  private computeMaxMtime(): number {
+    let max = 0;
+    for (const dir of this.dataDirs) {
+      if (!fs.existsSync(dir)) continue;
+      this.walkMaxMtime(dir, (mtime) => { if (mtime > max) max = mtime; });
+    }
+    return max || Date.now();
+  }
+
+  private walkMaxMtime(dir: string, cb: (mtime: number) => void): void {
+    let entries: fs.Dirent[];
+    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        this.walkMaxMtime(fullPath, cb);
+      } else {
+        try { cb(fs.statSync(fullPath).mtimeMs); } catch { /* skip */ }
+      }
+    }
   }
 
   /**
@@ -138,6 +165,34 @@ export class ComponentIndexer {
     this.assembleComponent(componentsDir, dir);
     this.resolveComposedTokens();
     this.lastIndexTime = new Date().toISOString();
+  }
+
+  /** Re-index experience patterns from the given directory. */
+  async reindexPatterns(patternsDir: string): Promise<void> {
+    await this.patternIndexer.indexPatterns(patternsDir);
+    this.lastIndexTime = new Date().toISOString();
+    this.lastIndexTimeMs = this.computeMaxMtime();
+  }
+
+  /** Re-index layout templates from the given directory. */
+  async reindexTemplates(templatesDir: string): Promise<void> {
+    await this.layoutTemplateIndexer.indexTemplates(templatesDir);
+    this.lastIndexTime = new Date().toISOString();
+    this.lastIndexTimeMs = this.computeMaxMtime();
+  }
+
+  /** Re-index family guidance from the given directory. */
+  async reindexGuidance(guidanceDir: string): Promise<void> {
+    await this.guidanceIndexer.indexGuidance(guidanceDir);
+    this.lastIndexTime = new Date().toISOString();
+    this.lastIndexTimeMs = this.computeMaxMtime();
+  }
+
+  /** Re-index token data from the given directory. */
+  async reindexTokens(tokenIndexDir: string): Promise<void> {
+    await this.tokenIndexer.indexTokens(tokenIndexDir);
+    this.lastIndexTime = new Date().toISOString();
+    this.lastIndexTimeMs = this.computeMaxMtime();
   }
 
   /**
@@ -172,8 +227,19 @@ export class ComponentIndexer {
     const layoutHealth = this.layoutTemplateIndexer.getHealth();
     const tokenHealth = this.tokenIndexer.getHealth();
     const allWarnings = [...this.indexWarnings, ...patternHealth.warnings, ...guidanceHealth.warnings, ...layoutHealth.warnings, ...this.tokenIndexer.getWarnings()];
+    const staleFiles = this.getStaleFiles();
+
+    let status: 'healthy' | 'degraded' | 'failed';
+    if (count === 0) {
+      status = 'failed';
+    } else if (staleFiles.length > 0 || allWarnings.length > 0) {
+      status = 'degraded';
+    } else {
+      status = 'healthy';
+    }
+
     return {
-      status: count === 0 ? 'empty' : allWarnings.length > 0 ? 'degraded' : 'healthy',
+      status,
       componentsIndexed: count,
       patternsIndexed: patternHealth.patternsIndexed,
       guidanceFamiliesIndexed: guidanceHealth.familiesIndexed,
@@ -182,7 +248,38 @@ export class ComponentIndexer {
       lastIndexTime: this.lastIndexTime,
       errors: [],
       warnings: allWarnings,
+      staleFiles,
     };
+  }
+
+  /** Get files newer than lastIndexTime across all data directories. */
+  getStaleFiles(): string[] {
+    if (this.lastIndexTimeMs === 0) return [];
+    const stale: string[] = [];
+    for (const dir of this.dataDirs) {
+      if (!fs.existsSync(dir)) continue;
+      this.scanForStaleFiles(dir, stale);
+    }
+    return stale;
+  }
+
+  private scanForStaleFiles(dir: string, stale: string[]): void {
+    let entries: fs.Dirent[];
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch { return; }
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        this.scanForStaleFiles(fullPath, stale);
+      } else if (entry.name.endsWith('.yaml') || entry.name.endsWith('.md') || entry.name.endsWith('.ts')) {
+        try {
+          if (fs.statSync(fullPath).mtimeMs > this.lastIndexTimeMs) {
+            stale.push(fullPath);
+          }
+        } catch { /* skip */ }
+      }
+    }
   }
 
   /** Get a single experience pattern by name. */

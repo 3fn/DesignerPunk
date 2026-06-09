@@ -36,7 +36,8 @@
                 "get_component_full",
                 "find_components",
                 "validate_component",
-                "get_component_health"
+                "get_component_health",
+                "rebuild_index"
             ]
         },
         "designerpunk-product": {
@@ -57,7 +58,8 @@
                 "get_product_health",
                 "find_screens",
                 "get_screen_spec",
-                "list_experience_map"
+                "list_experience_map",
+                "rebuild_product_index"
             ]
         }
     }

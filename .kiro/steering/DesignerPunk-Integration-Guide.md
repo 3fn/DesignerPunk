@@ -151,6 +151,8 @@ npx designerpunk mcp:product  # Product MCP — screen specs, domain objects, pr
 
 All commands resolve data paths from the installed package automatically. No configuration needed for the default case. The Product MCP starts with empty data if no `product/` directory exists yet — that's expected for a new project. Create the directory when you're ready to write screen specs (see "Product MCP Setup" below).
 
+**Data freshness is automatic.** MCP servers detect stale data and rebuild before responding (30-second threshold gate). If you edit product YAML, component schemas, or steering docs, the next query will serve fresh data automatically. No manual health checks or `rebuild_index` calls needed during normal operation.
+
 On startup, each server prints its connection details:
 ```
 DesignerPunk Application MCP started

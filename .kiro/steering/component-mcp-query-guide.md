@@ -27,6 +27,8 @@ description: MCP tool reference — all tools across Application, Product, and D
 - **Start**: `npx designerpunk mcp:app` (from any project with `@3fn/core` installed, or from the DesignerPunk repo)
 - **Components directory**: `src/components/core` (default)
 
+**Data Freshness**: All MCP servers auto-detect stale data via a 30-second threshold gate. If source files change, the next tool call triggers an automatic rebuild before responding. No manual health checks or rebuilds needed during normal operation. Agents following the write-side rebuild protocol (documented in agent prompts) get immediate freshness after writes.
+
 ---
 
 ## Tools

@@ -23,20 +23,22 @@ describe('FileWatcher', () => {
   });
 
   it('starts and stops without error', () => {
-    watcher = new FileWatcher(indexer, COMPONENTS_DIR, 50);
+    watcher = new FileWatcher(indexer, COMPONENTS_DIR, undefined, undefined, undefined, undefined, 50);
     watcher.start();
     expect(watcher.isWatching()).toBe(true);
     watcher.stop();
     expect(watcher.isWatching()).toBe(false);
   });
 
-  it('throws on nonexistent directory', () => {
+  it('does not throw on nonexistent directory', () => {
     watcher = new FileWatcher(indexer, '/nonexistent/path');
-    expect(() => watcher.start()).toThrow('not found');
+    // Missing directories are skipped gracefully (Spec 106 R4 AC3)
+    watcher.start();
+    expect(watcher.isWatching()).toBe(false);
   });
 
   it('re-indexes on file touch', async () => {
-    watcher = new FileWatcher(indexer, COMPONENTS_DIR, 50);
+    watcher = new FileWatcher(indexer, COMPONENTS_DIR, undefined, undefined, undefined, undefined, 50);
     watcher.start();
 
     const before = indexer.getComponent('Badge-Count-Base');

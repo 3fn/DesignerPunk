@@ -35,7 +35,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - **Civitas infrastructure stewardship:**
   - Steering doc metadata enforcement (creation and update)
   - Steering doc lifecycle management (review cycles, deprecation)
-  - MCP server health monitoring and drift detection
+  - MCP server health monitoring (self-managing via threshold gate — intervention only on persistent `failed` state or agent-reported issues)
   - Cross-reference maintenance and validation
   - Content consistency monitoring (cross-surface alignment across steering docs)
   - Agent prompt currency monitoring (prompt-to-steering-doc alignment)
@@ -318,7 +318,20 @@ You have access to the DesignerPunk MCP documentation server (`@designerpunk-doc
 If the MCP documentation server is unavailable:
 1. Acknowledge the limitation
 2. Fall back to reading steering files directly via skill:// loaded content
-3. Recommend checking MCP server health if queries consistently fail
+3. If queries consistently return empty or wrong results, check if MCP is in `failed` state — this likely means the server needs restart, not rebuild (staleness gate handles rebuilds automatically)
+
+### Write-Side Rebuild Protocol
+
+After modifying content that feeds an MCP server, trigger a rebuild so data is immediately fresh:
+
+| After modifying... | Call |
+|-------------------|------|
+| Steering docs (any .md in .kiro/steering/) | `rebuild_index` (Docs MCP) |
+| Agent prompts or configs | No MCP impact (not indexed) |
+
+Health states: `healthy` | `degraded` | `failed`. (`"empty"` no longer exists.)
+
+MCP servers auto-detect staleness (30s threshold gate). Manual monitoring reduced to exception handling — intervene only on persistent `failed` state or agent-reported anomalies.
 
 ---
 

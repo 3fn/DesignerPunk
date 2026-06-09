@@ -183,6 +183,20 @@ The Application MCP server (`application-mcp-server/`) indexes all 28 components
 
 **Fallback:** If unavailable, read the component's schema.yaml `tokens:` section directly.
 
+### Write-Side Rebuild Protocol
+
+After modifying content that feeds an MCP server, trigger a rebuild so data is immediately fresh:
+
+| After modifying... | Call |
+|-------------------|------|
+| Token source files, token-index (via `npx designerpunk generate`) | `rebuild_index` (Application MCP) |
+| Steering docs (token family docs, governance docs) | `rebuild_index` (Docs MCP) |
+| Component schemas, contracts (when doing token integration) | `rebuild_index` (Application MCP) |
+
+Health states: `healthy` | `degraded` | `failed`. (`"empty"` no longer exists.)
+
+MCP servers auto-detect staleness (30s threshold gate), but calling rebuild after writes ensures immediate freshness — critical when running `generate` and then querying token-index data.
+
 ### Progressive Disclosure Workflow
 
 1. Start with `get_document_summary()` to understand structure (~200 tokens)

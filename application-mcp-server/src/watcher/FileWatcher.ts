@@ -1,77 +1,104 @@
 /**
- * Component File Watcher
+ * Application MCP File Watcher
  *
- * Monitors src/components/core/ for schema.yaml, contracts.yaml, and
- * component-meta.yaml changes. On change, identifies the affected component
- * directory and triggers reindexComponent().
+ * Monitors all data source directories for changes and triggers
+ * appropriate reindex on the ComponentIndexer.
  *
- * Same debounce pattern as docs MCP FileWatcher.
+ * Data sources:
+ * - components: schema.yaml, contracts.yaml, component-meta.yaml → reindexComponent
+ * - patterns: *.yaml → reindexPatterns
+ * - templates: *.yaml → reindexTemplates
+ * - guidance: *.yaml → reindexGuidance
+ * - token-index: *.yaml → reindexTokens
  *
- * @see .kiro/specs/064-component-metadata-schema/design.md — Requirement 1.2
+ * @see Spec 106 R4 — expanded watching
  */
 
 import * as fs from 'fs';
 import * as path from 'path';
 import { ComponentIndexer } from '../indexer/ComponentIndexer';
 
-const WATCHED_FILES = new Set(['contracts.yaml', 'component-meta.yaml']);
+const COMPONENT_FILES = new Set(['contracts.yaml', 'component-meta.yaml']);
+
+interface WatchConfig {
+  dir: string;
+  handler: (filename: string) => void;
+}
 
 export class FileWatcher {
-  private watcher: fs.FSWatcher | null = null;
+  private watchers: fs.FSWatcher[] = [];
   private debounceTimers = new Map<string, NodeJS.Timeout>();
 
   constructor(
     private indexer: ComponentIndexer,
-    private watchDirectory: string,
+    private componentsDir: string,
+    private patternsDir?: string,
+    private templatesDir?: string,
+    private guidanceDir?: string,
+    private tokenIndexDir?: string,
     private debounceMs: number = 100,
   ) {}
 
   start(): void {
-    if (!fs.existsSync(this.watchDirectory)) {
-      throw new Error(`Watch directory not found: ${this.watchDirectory}`);
-    }
     this.stop();
-    this.watcher = fs.watch(this.watchDirectory, { recursive: true }, (_event, filename) => {
-      if (filename) this.handleChange(filename);
-    });
-    this.watcher.on('error', (err) => console.error(`FileWatcher error: ${err.message}`));
+
+    const configs: WatchConfig[] = [
+      { dir: this.componentsDir, handler: (f) => this.handleComponentChange(f) },
+    ];
+
+    if (this.patternsDir) configs.push({ dir: this.patternsDir, handler: () => this.debounceReindex('patterns', () => this.indexer.reindexPatterns(this.patternsDir!)) });
+    if (this.templatesDir) configs.push({ dir: this.templatesDir, handler: () => this.debounceReindex('templates', () => this.indexer.reindexTemplates(this.templatesDir!)) });
+    if (this.guidanceDir) configs.push({ dir: this.guidanceDir, handler: () => this.debounceReindex('guidance', () => this.indexer.reindexGuidance(this.guidanceDir!)) });
+    if (this.tokenIndexDir) configs.push({ dir: this.tokenIndexDir, handler: () => this.debounceReindex('tokens', () => this.indexer.reindexTokens(this.tokenIndexDir!)) });
+
+    for (const config of configs) {
+      if (!fs.existsSync(config.dir)) continue;
+      try {
+        const watcher = fs.watch(config.dir, { recursive: true }, (_event, filename) => {
+          if (filename && filename.endsWith('.yaml')) config.handler(filename);
+        });
+        watcher.on('error', (err) => console.error(`FileWatcher error (${config.dir}): ${err.message}`));
+        this.watchers.push(watcher);
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.error(`FileWatcher: could not watch ${config.dir}: ${msg}`);
+      }
+    }
   }
 
   stop(): void {
-    this.watcher?.close();
-    this.watcher = null;
+    for (const w of this.watchers) w.close();
+    this.watchers = [];
     for (const timer of this.debounceTimers.values()) clearTimeout(timer);
     this.debounceTimers.clear();
   }
 
   isWatching(): boolean {
-    return this.watcher !== null;
+    return this.watchers.length > 0;
   }
 
-  private handleChange(filename: string): void {
+  private handleComponentChange(filename: string): void {
     const base = path.basename(filename);
-    if (!base.endsWith('.schema.yaml') && !WATCHED_FILES.has(base)) return;
+    if (!base.endsWith('.schema.yaml') && !COMPONENT_FILES.has(base)) return;
 
-    // Derive component directory: filename is relative to watchDirectory
-    // e.g., "Badge-Count-Base/contracts.yaml" → "Badge-Count-Base"
-    const componentDir = path.join(this.watchDirectory, path.dirname(filename));
-    this.debounceReindex(componentDir);
+    const componentDir = path.join(this.componentsDir, path.dirname(filename));
+    this.debounceReindex(componentDir, () => this.indexer.reindexComponent(componentDir));
   }
 
-  private debounceReindex(componentDir: string): void {
-    const existing = this.debounceTimers.get(componentDir);
+  private debounceReindex(key: string, action: () => Promise<void>): void {
+    const existing = this.debounceTimers.get(key);
     if (existing) clearTimeout(existing);
 
     const timer = setTimeout(async () => {
-      this.debounceTimers.delete(componentDir);
+      this.debounceTimers.delete(key);
       try {
-        await this.indexer.reindexComponent(componentDir);
+        await action();
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
-        console.error(`Failed to reindex ${componentDir}: ${msg}`);
+        console.error(`FileWatcher reindex failed (${key}): ${msg}`);
       }
     }, this.debounceMs);
 
-    this.debounceTimers.set(componentDir, timer);
+    this.debounceTimers.set(key, timer);
   }
 }

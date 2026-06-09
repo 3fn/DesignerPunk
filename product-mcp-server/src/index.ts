@@ -16,6 +16,7 @@ import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprot
 import { ProductIndexer } from './indexer/ProductIndexer';
 import { ScreenQuery } from './query/ScreenQuery';
 import { ExperienceMapQuery } from './query/ExperienceMapQuery';
+import { StalenessGate } from './staleness/StalenessGate';
 import type { ScreenFilter } from './models';
 
 const SERVER_NAME = 'mcp-product-server';
@@ -151,12 +152,19 @@ const tools = [
   },
 ];
 
+const STALENESS_EXEMPT_TOOLS = new Set([
+  'get_product_health',
+  'rebuild_product_index',
+]);
+
 class ProductMCPServer {
   private server: Server;
   private productDir: string;
   private indexer: ProductIndexer;
   private screenQuery!: ScreenQuery;
   private experienceMapQuery!: ExperienceMapQuery;
+  private stalenessGate: StalenessGate;
+  private fileWatcher: fs.FSWatcher | null = null;
 
   constructor(productDir: string, componentDir: string) {
     this.productDir = productDir;
@@ -165,19 +173,54 @@ class ProductMCPServer {
       { name: SERVER_NAME, version: SERVER_VERSION },
       { capabilities: { tools: {} } }
     );
+
+    this.stalenessGate = new StalenessGate({
+      dataDirs: [productDir],
+      fileExtensions: ['.yaml', '.md'],
+      onRebuild: async () => { await this.indexAndBuildQueries(); },
+    });
+
     this.registerHandlers();
   }
 
   async start(): Promise<void> {
     if (fs.existsSync(this.productDir)) {
       await this.indexAndBuildQueries();
+      this.startFileWatcher();
     } else {
       console.error(`[${SERVER_NAME}] Product directory not found: ${this.productDir} — starting with empty data`);
     }
 
+    this.stalenessGate.markIndexed();
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
     console.error(`[${SERVER_NAME}] Server running on stdio`);
+  }
+
+  private startFileWatcher(): void {
+    if (!fs.existsSync(this.productDir)) return;
+    let debounceTimer: NodeJS.Timeout | null = null;
+
+    try {
+      this.fileWatcher = fs.watch(this.productDir, { recursive: true }, (_event, filename) => {
+        if (!filename || (!filename.endsWith('.yaml') && !filename.endsWith('.md'))) return;
+        console.error(`[${SERVER_NAME}] File change detected: ${filename}`);
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(async () => {
+          try {
+            await this.indexAndBuildQueries();
+            this.stalenessGate.markIndexed();
+          } catch (err) {
+            console.error(`[${SERVER_NAME}] Reindex failed: ${err instanceof Error ? err.message : err}`);
+          }
+        }, 200);
+      });
+      this.fileWatcher.on('error', (err) => {
+        console.error(`[${SERVER_NAME}] File watcher error: ${err.message}`);
+      });
+    } catch (err) {
+      console.error(`[${SERVER_NAME}] Could not start file watcher: ${err instanceof Error ? err.message : err}`);
+    }
   }
 
   private async indexAndBuildQueries(): Promise<void> {
@@ -276,6 +319,10 @@ class ProductMCPServer {
   }
 
   private async handleTool(name: string, params: Record<string, unknown>): Promise<unknown> {
+    if (!STALENESS_EXEMPT_TOOLS.has(name)) {
+      await this.stalenessGate.checkAndRebuildIfNeeded();
+    }
+
     switch (name) {
       case 'get_product_overview':
         return this.indexer.getOverview() || { message: 'No product data indexed' };
@@ -380,6 +427,7 @@ class ProductMCPServer {
       case 'rebuild_product_index':
         if (fs.existsSync(this.productDir)) {
           await this.indexAndBuildQueries();
+          this.stalenessGate.markIndexed();
         }
         return this.handleTool('get_product_health', {});
 

@@ -240,6 +240,19 @@ Not all platforms are active at all times. When a product starts on a single pla
 2. Fall back to Docs MCP for token details and platform guidance
 3. Only load full documents when summaries are insufficient or unresolved questions remain
 
+### Write-Side Rebuild Protocol
+
+After modifying content that feeds an MCP server, trigger a rebuild so data is immediately fresh for subsequent queries:
+
+| After modifying... | Call |
+|-------------------|------|
+| Product screen specs, domain objects, product YAML | `rebuild_product_index` (Product MCP) |
+| Component schemas, contracts, or component-meta | `rebuild_index` (Application MCP) |
+
+Health states: `healthy` | `degraded` | `failed`. (`"empty"` no longer exists.)
+
+MCP servers now auto-detect staleness (30s threshold gate), but calling rebuild after writes ensures *immediate* freshness — critical when you write a screen spec and then query it in the same session.
+
 ---
 
 ## Operational Mode: Design Creation (Impeccable Skill)

@@ -232,6 +232,18 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 3. Query Docs MCP for token details and platform patterns
 4. Only load full documents when specific questions arise
 
+### Write-Side Rebuild Protocol
+
+After modifying content that feeds an MCP server, trigger a rebuild so data is immediately fresh:
+
+| After modifying... | Call |
+|-------------------|------|
+| Product screen implementations, product YAML | `rebuild_product_index` (Product MCP) |
+
+Health states: `healthy` | `degraded` | `failed`. (`"empty"` no longer exists.)
+
+MCP servers auto-detect staleness (30s threshold gate), but calling rebuild after writes ensures immediate freshness.
+
 ---
 
 ## Collaboration Standards
