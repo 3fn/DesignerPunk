@@ -219,7 +219,7 @@ Implementation follows a two-phase approach: Phase A (MCP Health Parity) establi
 
 ---
 
-- [ ] 5. Consumer Contract Tests
+- [x] 5. Consumer Contract Tests
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -244,7 +244,7 @@ Implementation follows a two-phase approach: Phase A (MCP Health Parity) establi
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 5 Complete: Consumer Contract Tests"`
   - Verify: Check GitHub for committed changes
 
-  - [ ] 5.1 Implement export contract test
+  - [x] 5.1 Implement export contract test
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -256,7 +256,7 @@ Implementation follows a two-phase approach: Phase A (MCP Health Parity) establi
     - Define expected exports per subpath (`.`, `./types`, `./build`, `./blend`, `./testing`, `./config`)
     - _Requirements: R7 AC1-4_
 
-  - [ ] 5.2 Implement consumer integration test
+  - [x] 5.2 Implement consumer integration test
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada

@@ -1,6 +1,6 @@
 # DesignerPunk
 
-[![Version](https://img.shields.io/badge/Version-11.9.0-purple)](docs/releases/RELEASE-NOTES-11.9.0.md)
+[![Version](https://img.shields.io/badge/Version-11.01.0-purple)](docs/releases/RELEASE-NOTES-11.10.0.md)
 [![Repository](https://img.shields.io/badge/GitHub-DesignerPunkv2-blue)](https://github.com/3fn/DesignerPunkv2)
 [![License](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
