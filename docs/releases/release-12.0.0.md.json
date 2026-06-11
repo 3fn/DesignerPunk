@@ -1,0 +1,190 @@
+{
+  "version": "12.0.0",
+  "previousVersion": "11.10.0",
+  "date": "2026-06-11",
+  "changes": [
+    {
+      "change": {
+        "specName": "112-oklch-color-migration",
+        "taskTitle": "Generator Updates",
+        "taskType": "Unknown",
+        "whatWasDone": "Added OKLCH output methods to all platform generators: Web (oklch() + channel custom properties), iOS (ChromaKit Color.oklch), Android (colormath Oklch.toComposeColor), DTCG/Figma (sRGB hex via CSS L4 gamut mapping), and token-index (OKLCH channel metadata).",
+        "whyItMatters": "",
+        "keyChanges": [
+          "Web: `formatOklchColor` + `formatOklchChannels` (enables CSS relative color syntax)",
+          "iOS: `formatOklchColor` → `Color.oklch(L, C, H)`",
+          "Android: `formatOklchColor` → `Oklch(Lf, Cf, Hf).toComposeColor()`",
+          "DTCG/Figma: `oklchToExportHex` with CSS L4 §13.2 gamut clamping",
+          "Token-index: `getOklchMetadata` (L/C/H + channel references on composed entries)",
+          "23 new tests"
+        ],
+        "impact": []
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "112-oklch-color-migration",
+        "taskTitle": "Component Visual Audit + Contract Updates",
+        "taskType": "Unknown",
+        "whatWasDone": "Audited all 11 components with blend-dependent interaction states against OKLCH ΔL/ΔC thresholds. Verified glow token chroma preservation (found and resolved green500 conflict). Updated 11 contracts.yaml files to replace RGB-era blend percentage language with intent-based descriptions and measurable OKLCH thresholds.",
+        "whyItMatters": "",
+        "keyChanges": [
+          "63 new audit tests verifying hover (ΔL 0.02–0.05), pressed (ΔL 0.05–0.10), focused (ΔC ≥0.02), disabled (ΔC ≥0.03) across all interactive components",
+          "11 contracts.yaml migrated from \"8% darker\" / \"blend.hoverDarker\" to intent-based descriptions (\"perceptibly darker\") + numeric OKLCH thresholds",
+          "Glow chroma finding: `glow.neonGreen` repointed from green500 (C=0.140) to green300 (C=0.208) to preserve vibrancy",
+          "Zero remaining RGB-era blend percentage references in behavioral contracts"
+        ],
+        "impact": []
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "112-oklch-color-migration",
+        "taskTitle": "OKLCH Mathematical Foundation",
+        "taskType": "Unknown",
+        "whatWasDone": "Implemented the mathematical foundation for the OKLCH color migration: `OklchConverter` (conversion, WCAG, ΔE₀₀, CSS L4 gamut mapping) and `OklchValidator` (family constraint enforcement).",
+        "whyItMatters": "",
+        "keyChanges": [
+          "`src/color/OklchConverter.ts` — OKLCH↔sRGB, relative luminance, contrast ratio, CIEDE2000, CSS Color L4 §13.2 gamut clamping",
+          "`src/color/OklchValidator.ts` — lightness monotonicity, min step ≥0.08, chroma monotonicity 300→500, sRGB/P3 gamut, hue consistency, neutral chroma ceiling, neutral partition buffer gaps",
+          "60 unit tests covering all conversion and validation paths"
+        ],
+        "impact": []
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "112-oklch-color-migration",
+        "taskTitle": "Blend Utility Rework",
+        "taskType": "Unknown",
+        "whatWasDone": "Implemented `OklchBlendCalculator` with perceptually uniform OKLCH-space interpolation and surface-aware interaction state blends. Migrated 6 `color-mix(in srgb)` instances to `color-mix(in oklch)` in Nav-TabBar-Base and Avatar-Base CSS.",
+        "whyItMatters": "",
+        "keyChanges": [
+          "`OklchBlendCalculator`: blend(base, overlay, ratio), interactionBlend(base, state, surface)",
+          "Interaction states: hover (ΔL 0.035), pressed (ΔL 0.075), focused (ΔC +0.025), disabled (ΔC -0.04)",
+          "Surface-aware direction: darkens on light surfaces, lightens on dark",
+          "CSS color-mix: 6 instances migrated from sRGB to OKLCH interpolation",
+          "14 new tests"
+        ],
+        "impact": []
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "112-oklch-color-migration",
+        "taskTitle": "WCAG Validation + Regression Testing",
+        "taskType": "Unknown",
+        "whatWasDone": "Validated WCAG AA contrast compliance and perceptual regression for the full OKLCH color palette against pre-migration RGB values.",
+        "whyItMatters": "",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    }
+  ],
+  "recommendation": {
+    "currentVersion": "11.10.0",
+    "recommendedVersion": "12.0.0",
+    "bumpType": "major",
+    "rationale": "5 changes: 2 breaking, 3 context",
+    "confidence": 0.7,
+    "changes": [
+      {
+        "change": {
+          "specName": "112-oklch-color-migration",
+          "taskTitle": "Generator Updates",
+          "taskType": "Unknown",
+          "whatWasDone": "Added OKLCH output methods to all platform generators: Web (oklch() + channel custom properties), iOS (ChromaKit Color.oklch), Android (colormath Oklch.toComposeColor), DTCG/Figma (sRGB hex via CSS L4 gamut mapping), and token-index (OKLCH channel metadata).",
+          "whyItMatters": "",
+          "keyChanges": [
+            "Web: `formatOklchColor` + `formatOklchChannels` (enables CSS relative color syntax)",
+            "iOS: `formatOklchColor` → `Color.oklch(L, C, H)`",
+            "Android: `formatOklchColor` → `Oklch(Lf, Cf, Hf).toComposeColor()`",
+            "DTCG/Figma: `oklchToExportHex` with CSS L4 §13.2 gamut clamping",
+            "Token-index: `getOklchMetadata` (L/C/H + channel references on composed entries)",
+            "23 new tests"
+          ],
+          "impact": []
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "112-oklch-color-migration",
+          "taskTitle": "Component Visual Audit + Contract Updates",
+          "taskType": "Unknown",
+          "whatWasDone": "Audited all 11 components with blend-dependent interaction states against OKLCH ΔL/ΔC thresholds. Verified glow token chroma preservation (found and resolved green500 conflict). Updated 11 contracts.yaml files to replace RGB-era blend percentage language with intent-based descriptions and measurable OKLCH thresholds.",
+          "whyItMatters": "",
+          "keyChanges": [
+            "63 new audit tests verifying hover (ΔL 0.02–0.05), pressed (ΔL 0.05–0.10), focused (ΔC ≥0.02), disabled (ΔC ≥0.03) across all interactive components",
+            "11 contracts.yaml migrated from \"8% darker\" / \"blend.hoverDarker\" to intent-based descriptions (\"perceptibly darker\") + numeric OKLCH thresholds",
+            "Glow chroma finding: `glow.neonGreen` repointed from green500 (C=0.140) to green300 (C=0.208) to preserve vibrancy",
+            "Zero remaining RGB-era blend percentage references in behavioral contracts"
+          ],
+          "impact": []
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "112-oklch-color-migration",
+          "taskTitle": "OKLCH Mathematical Foundation",
+          "taskType": "Unknown",
+          "whatWasDone": "Implemented the mathematical foundation for the OKLCH color migration: `OklchConverter` (conversion, WCAG, ΔE₀₀, CSS L4 gamut mapping) and `OklchValidator` (family constraint enforcement).",
+          "whyItMatters": "",
+          "keyChanges": [
+            "`src/color/OklchConverter.ts` — OKLCH↔sRGB, relative luminance, contrast ratio, CIEDE2000, CSS Color L4 §13.2 gamut clamping",
+            "`src/color/OklchValidator.ts` — lightness monotonicity, min step ≥0.08, chroma monotonicity 300→500, sRGB/P3 gamut, hue consistency, neutral chroma ceiling, neutral partition buffer gaps",
+            "60 unit tests covering all conversion and validation paths"
+          ],
+          "impact": []
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "112-oklch-color-migration",
+          "taskTitle": "Blend Utility Rework",
+          "taskType": "Unknown",
+          "whatWasDone": "Implemented `OklchBlendCalculator` with perceptually uniform OKLCH-space interpolation and surface-aware interaction state blends. Migrated 6 `color-mix(in srgb)` instances to `color-mix(in oklch)` in Nav-TabBar-Base and Avatar-Base CSS.",
+          "whyItMatters": "",
+          "keyChanges": [
+            "`OklchBlendCalculator`: blend(base, overlay, ratio), interactionBlend(base, state, surface)",
+            "Interaction states: hover (ΔL 0.035), pressed (ΔL 0.075), focused (ΔC +0.025), disabled (ΔC -0.04)",
+            "Surface-aware direction: darkens on light surfaces, lightens on dark",
+            "CSS color-mix: 6 instances migrated from sRGB to OKLCH interpolation",
+            "14 new tests"
+          ],
+          "impact": []
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "112-oklch-color-migration",
+          "taskTitle": "WCAG Validation + Regression Testing",
+          "taskType": "Unknown",
+          "whatWasDone": "Validated WCAG AA contrast compliance and perceptual regression for the full OKLCH color palette against pre-migration RGB values.",
+          "whyItMatters": "",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      }
+    ]
+  }
+}
