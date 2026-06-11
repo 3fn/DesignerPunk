@@ -93,31 +93,31 @@ tokens:
     category: color
     primitiveReferences:
       value: teal400
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-feedback-info-text'
-      ios: colorFeedbackInfoText
-      android: color_feedback_info_text
+      ios: theme.colorFeedbackInfoText
+      android: theme.color_feedback_info_text
     consumers: []
   color.feedback.info.background:
     category: color
     primitiveReferences:
       value: teal100
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-feedback-info-background'
-      ios: colorFeedbackInfoBackground
-      android: color_feedback_info_background
+      ios: theme.colorFeedbackInfoBackground
+      android: theme.color_feedback_info_background
     consumers: []
   color.feedback.info.border:
     category: color
     primitiveReferences:
       value: teal400
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-feedback-info-border'
-      ios: colorFeedbackInfoBorder
-      android: color_feedback_info_border
+      ios: theme.colorFeedbackInfoBorder
+      android: theme.color_feedback_info_border
     consumers: []
   color.feedback.select.text.rest:
     category: color
@@ -223,11 +223,11 @@ tokens:
     category: color
     primitiveReferences:
       value: cyan300
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-action-primary'
-      ios: colorActionPrimary
-      android: color_action_primary
+      ios: theme.colorActionPrimary
+      android: theme.color_action_primary
     consumers: []
   color.action.secondary:
     category: color
@@ -243,11 +243,11 @@ tokens:
     category: color
     primitiveReferences:
       value: cyan500
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-action-navigation'
-      ios: colorActionNavigation
-      android: color_action_navigation
+      ios: theme.colorActionNavigation
+      android: theme.color_action_navigation
     consumers: []
   color.attention:
     category: color
@@ -343,21 +343,21 @@ tokens:
     category: color
     primitiveReferences:
       value: black500
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-contrast-on-action'
-      ios: colorContrastOnAction
-      android: color_contrast_on_action
+      ios: theme.colorContrastOnAction
+      android: theme.color_contrast_on_action
     consumers: []
   color.structure.canvas:
     category: color
     primitiveReferences:
       value: white100
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-structure-canvas'
-      ios: colorStructureCanvas
-      android: color_structure_canvas
+      ios: theme.colorStructureCanvas
+      android: theme.color_structure_canvas
     consumers: []
   color.structure.surface:
     category: color
@@ -414,21 +414,21 @@ tokens:
     primitiveReferences:
       color: gray100
       opacity: opacity048
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-structure-border-subtle'
-      ios: colorStructureBorderSubtle
-      android: color_structure_border_subtle
+      ios: theme.colorStructureBorderSubtle
+      android: theme.color_structure_border_subtle
     consumers: []
   color.background.primary.subtle:
     category: color
     primitiveReferences:
       value: cyan100
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-background-primary-subtle'
-      ios: colorBackgroundPrimarySubtle
-      android: color_background_primary_subtle
+      ios: theme.colorBackgroundPrimarySubtle
+      android: theme.color_background_primary_subtle
     consumers: []
   color.icon.default:
     category: color
@@ -444,11 +444,11 @@ tokens:
     category: color
     primitiveReferences:
       value: gray300
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-icon-navigation-inactive'
-      ios: colorIconNavigationInactive
-      android: color_icon_navigation_inactive
+      ios: theme.colorIconNavigationInactive
+      android: theme.color_icon_navigation_inactive
     consumers: []
   color.print.default:
     category: color
