@@ -89,7 +89,7 @@
  * ============================================================================ */
 
 .stepper-detailed__label {
-  margin-block-start: var(--progress-node-gap-md, 8px);
+  margin-block-start: var(--progress-node-gap-md);
   inline-size: 100%;
 }
 
@@ -98,9 +98,9 @@
  * ============================================================================ */
 
 .stepper-detailed--md .stepper-detailed__label {
-  margin-block-start: var(--progress-node-gap-md, 8px);
+  margin-block-start: var(--progress-node-gap-md);
 }
 
 .stepper-detailed--lg .stepper-detailed__label {
-  margin-block-start: var(--progress-node-gap-lg, 12px);
+  margin-block-start: var(--progress-node-gap-lg);
 }

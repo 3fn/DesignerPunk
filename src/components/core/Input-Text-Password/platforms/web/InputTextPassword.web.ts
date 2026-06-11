@@ -225,38 +225,38 @@ export class InputTextPassword extends HTMLElement {
       
       .toggle-button {
         position: absolute;
-        right: var(--space-inset-100, 12px);
+        right: var(--space-inset-100);
         /* Position to vertically center within the input field */
         /* The input field has min-height of tap-area-comfortable (56px) */
         /* Center the button at 28px from top (half of 56px input height) */
-        top: calc(var(--tap-area-comfortable, 56px) / 2);
+        top: calc(var(--tap-area-comfortable) / 2);
         transform: translateY(-50%);
         background: transparent;
         border: none;
         cursor: pointer;
-        padding: var(--space-grouped-minimal, 4px);
+        padding: var(--space-grouped-minimal);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--color-text-muted, #666);
-        border-radius: var(--radius-150, 4px);
+        color: var(--color-text-muted);
+        border-radius: var(--radius-150);
         transition: color var(--motion-focus-transition-duration) var(--motion-focus-transition-easing), background-color var(--motion-focus-transition-duration) var(--motion-focus-transition-easing);
         z-index: 1;
       }
       
       .toggle-button:hover {
-        color: var(--color-text-default, #333);
-        background-color: var(--color-background-hover, rgba(0, 0, 0, 0.05));
+        color: var(--color-text-default);
+        background-color: var(--color-background-hover);
       }
       
       .toggle-button:focus {
-        outline: var(--accessibility-focus-width, 2px) solid var(--accessibility-focus-color, #0066cc);
-        outline-offset: var(--accessibility-focus-offset, 2px);
+        outline: var(--accessibility-focus-width) solid var(--accessibility-focus-color);
+        outline-offset: var(--accessibility-focus-offset);
       }
       
       .toggle-button svg {
-        width: var(--icon-size-100, 20px);
-        height: var(--icon-size-100, 20px);
+        width: var(--icon-size-100);
+        height: var(--icon-size-100);
       }
     `;
     

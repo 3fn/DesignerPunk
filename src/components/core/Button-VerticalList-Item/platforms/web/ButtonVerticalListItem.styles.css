@@ -55,12 +55,12 @@
   --_vlbi-gap: var(--space-grouped-loose);
   
   /* Typography tokens */
-  --_vlbi-label-font-size: var(--typography-button-md-font-size, 1rem);
-  --_vlbi-label-font-weight: var(--typography-button-md-font-weight, 500);
-  --_vlbi-label-line-height: var(--typography-button-md-line-height, 1.5);
-  --_vlbi-description-font-size: var(--typography-body-sm-font-size, 0.875rem);
-  --_vlbi-description-font-weight: var(--typography-body-sm-font-weight, 400);
-  --_vlbi-description-line-height: var(--typography-body-sm-line-height, 1.5);
+  --_vlbi-label-font-size: var(--typography-button-md-font-size);
+  --_vlbi-label-font-weight: var(--typography-button-md-font-weight);
+  --_vlbi-label-line-height: var(--typography-button-md-line-height);
+  --_vlbi-description-font-size: var(--typography-body-sm-font-size);
+  --_vlbi-description-font-weight: var(--typography-body-sm-font-weight);
+  --_vlbi-description-line-height: var(--typography-body-sm-line-height);
   --_vlbi-description-color: var(--color-text-muted);
   
   /* Transition tokens - using motion.selectionTransition semantic token */

@@ -32,7 +32,7 @@
 
 .connector {
   inline-size: 100%;
-  block-size: var(--progress-connector-thickness, 1px);
+  block-size: var(--progress-connector-thickness);
 }
 
 /* ============================================================================

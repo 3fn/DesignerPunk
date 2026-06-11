@@ -246,7 +246,7 @@ class InputTextPassword extends HTMLElement {
 
         .toggle-button {
           position: absolute;
-          right: var(--space-inset-100, 12px);
+          right: var(--space-inset-100);
           top: 50%;
           transform: translateY(-50%);
           background: transparent;
@@ -256,18 +256,18 @@ class InputTextPassword extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--color-text-muted, #666);
+          color: var(--color-text-muted);
           border-radius: 4px;
         }
 
         .toggle-button:hover {
-          color: var(--color-text-default, #333);
-          background-color: rgba(0, 0, 0, 0.05);
+          color: var(--color-text-default);
+          background-color: var(--color-background-hover);
         }
 
         .toggle-button:focus {
-          outline: var(--accessibility-focus-width, 2px) solid var(--accessibility-focus-color, #0066cc);
-          outline-offset: var(--accessibility-focus-offset, 2px);
+          outline: var(--accessibility-focus-width) solid var(--accessibility-focus-color);
+          outline-offset: var(--accessibility-focus-offset);
         }
 
         .toggle-button svg {

@@ -41,9 +41,9 @@
  * ============================================================================ */
 
 .stepper--md {
-  gap: var(--progress-node-gap-md, 8px);
+  gap: var(--progress-node-gap-md);
 }
 
 .stepper--lg {
-  gap: var(--progress-node-gap-lg, 12px);
+  gap: var(--progress-node-gap-lg);
 }

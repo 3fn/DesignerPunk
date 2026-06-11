@@ -44,9 +44,9 @@
   
   /* Typography tokens for error message */
   /* @see Design: typography.body.small for error message */
-  --_vls-error-font-size: var(--typography-body-sm-font-size, 0.875rem);
-  --_vls-error-font-weight: var(--typography-body-sm-font-weight, 400);
-  --_vls-error-line-height: var(--typography-body-sm-line-height, 1.5);
+  --_vls-error-font-size: var(--typography-body-sm-font-size);
+  --_vls-error-font-weight: var(--typography-body-sm-font-weight);
+  --_vls-error-line-height: var(--typography-body-sm-line-height);
   
   /* Color tokens for error message */
   /* @see Design: color.feedback.error.text for error message text */
