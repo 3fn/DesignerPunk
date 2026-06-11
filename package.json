@@ -1,6 +1,6 @@
 {
   "name": "@3fn/core",
-  "version": "12.0.1",
+  "version": "12.0.2",
   "description": "True Native cross-platform design system with mathematical foundations",
   "license": "Apache-2.0",
   "author": "Peter Michaels Allen",
@@ -106,8 +106,7 @@
     "./fonts/rajdhani.css": "./src/assets/fonts/rajdhani/rajdhani.css",
     "./fonts/figtree.css": "./src/assets/fonts/figtree/figtree.css",
     "./fonts/commit-mono.css": "./src/assets/fonts/commit-mono/commit-mono.css",
-    "./package.json": "./package.json",
-    "./src/*": "./src/*"
+    "./package.json": "./package.json"
   },
   "bin": {
     "designerpunk": "./bin/designerpunk.js"

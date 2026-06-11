@@ -392,10 +392,15 @@ No configuration needed for default usage.
 `);
 }
 
-/* istanbul ignore next -- CLI entry point */
-if (require.main === module) {
+/** @internal Entry point for bin/designerpunk.js */
+export const __main = () => {
   main().catch((err) => {
     console.error('❌ Unexpected error:', err);
     process.exit(1);
   });
+};
+
+/* istanbul ignore next -- direct node execution (rare; bin/ is primary path) */
+if (require.main === module) {
+  __main();
 }
