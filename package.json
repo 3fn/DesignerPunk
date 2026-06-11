@@ -149,7 +149,8 @@
     "figma:extract": "npx ts-node src/cli/figma-extract.ts",
     "figma:generate-component": "npx ts-node scripts/figma-component-generator.ts",
     "check:drift": "node scripts/check-package-name-drift.js",
-    "prepublishOnly": "npm run build && npm run check:drift"
+    "prepublishOnly": "npm run build && npm run check:drift",
+    "postpublish": "git diff --quiet token-index/ || (git add token-index/ && git commit -m 'Regenerate token-index (post-publish)' && git push origin main)"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
