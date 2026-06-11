@@ -4,7 +4,7 @@
 [![Repository](https://img.shields.io/badge/GitHub-DesignerPunkv2-blue)](https://github.com/3fn/DesignerPunkv2)
 [![License](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/Tests-8358%2B-brightgreen)](.)
+[![Tests](https://img.shields.io/badge/Tests-8936%2B-brightgreen)](.)
 
 ---
 
@@ -100,7 +100,7 @@ get_section({ path: "Token-Governance.md", heading: "Token Selection Matrix" })
 The architecture is the argument. The numbers are the evidence.
 
 **By the numbers:**
-- 8,483 tests passing across 340 test suites
+- 8,936 tests passing across 369 test suites
 - 34 production components with full cross-platform implementations
 - 437 design tokens with mathematical relationships
 - 3 MCP servers enabling progressive, context-efficient AI access
@@ -162,7 +162,7 @@ The system is tool-agnostic by design. The architecture is the constant; which A
 
 Note: primarily developed on Kiro IDE and CLI. Broader tool support is in progress.
 
-8,358 tests. 34 components across three platforms. A published package with a working CLI. All architected through this model.
+8,936 tests. 34 components across three platforms. A published package with a working CLI. All architected through this model.
 
 ---
 
