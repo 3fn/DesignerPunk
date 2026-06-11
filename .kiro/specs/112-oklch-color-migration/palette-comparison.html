@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OKLCH Palette Comparison — Current vs Shared Lightness</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, sans-serif; padding: 2rem; background: #1a1a1a; color: #eee; }
+h1 { margin-bottom: 0.5rem; font-size: 1.5rem; }
+h2 { margin: 2rem 0 1rem; font-size: 1.1rem; color: #aaa; }
+.note { color: #888; font-size: 0.85rem; margin-bottom: 2rem; }
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+.palette { display: flex; flex-direction: column; gap: 0.25rem; }
+.palette-label { font-size: 0.8rem; color: #888; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.family-row { display: flex; gap: 2px; align-items: center; }
+.family-label { width: 60px; font-size: 0.7rem; color: #666; text-align: right; padding-right: 8px; }
+.swatch { width: 80px; height: 40px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: rgba(0,0,0,0.5); }
+.swatch.light-text { color: rgba(255,255,255,0.7); }
+.step-labels { display: flex; gap: 2px; margin-left: 60px; margin-bottom: 4px; }
+.step-label { width: 80px; text-align: center; font-size: 0.7rem; color: #666; }
+.lightness-note { font-size: 0.65rem; color: #555; margin-top: 2px; text-align: center; width: 80px; }
+.section { margin-bottom: 3rem; }
+table { border-collapse: collapse; font-size: 0.8rem; margin-top: 1rem; }
+th, td { padding: 4px 12px; border: 1px solid #333; text-align: center; }
+th { background: #2a2a2a; color: #aaa; }
+td { color: #ccc; }
+</style>
+</head>
+<body>
+
+<h1>OKLCH Palette Comparison</h1>
+<p class="note">Current RGB palette converted to OKLCH (preserving appearance) vs proposed shared lightness scale (perceptual uniformity). Open this file in a browser.</p>
+
+<div class="comparison">
+  <div class="section">
+    <div class="palette-label">Current Palette (as-is, converted to OKLCH)</div>
+    <div class="step-labels">
+      <div class="step-label">100</div>
+      <div class="step-label">200</div>
+      <div class="step-label">300</div>
+      <div class="step-label">400</div>
+      <div class="step-label">500</div>
+    </div>
+    <div class="palette">
+      <div class="family-row">
+        <div class="family-label">yellow</div>
+        <div class="swatch" style="background:oklch(0.979 0.071 107)">L.98</div>
+        <div class="swatch" style="background:oklch(0.954 0.169 108)">L.95</div>
+        <div class="swatch" style="background:oklch(0.932 0.247 109)">L.93</div>
+        <div class="swatch" style="background:oklch(0.788 0.209 109)">L.79</div>
+        <div class="swatch" style="background:oklch(0.620 0.165 110)">L.62</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">orange</div>
+        <div class="swatch" style="background:oklch(0.941 0.032 44)">L.94</div>
+        <div class="swatch" style="background:oklch(0.843 0.091 43)">L.84</div>
+        <div class="swatch" style="background:oklch(0.705 0.195 42)">L.70</div>
+        <div class="swatch" style="background:oklch(0.597 0.164 42)" class="light-text">L.60</div>
+        <div class="swatch light-text" style="background:oklch(0.463 0.122 43)">L.46</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">pink</div>
+        <div class="swatch" style="background:oklch(0.923 0.047 350)">L.92</div>
+        <div class="swatch" style="background:oklch(0.761 0.166 354)">L.76</div>
+        <div class="swatch" style="background:oklch(0.653 0.245 8)">L.65</div>
+        <div class="swatch light-text" style="background:oklch(0.554 0.205 8)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.396 0.144 7)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">purple</div>
+        <div class="swatch" style="background:oklch(0.931 0.052 311)">L.93</div>
+        <div class="swatch" style="background:oklch(0.758 0.200 312)">L.76</div>
+        <div class="swatch light-text" style="background:oklch(0.601 0.316 307)">L.60</div>
+        <div class="swatch light-text" style="background:oklch(0.510 0.266 307)">L.51</div>
+        <div class="swatch light-text" style="background:oklch(0.397 0.202 308)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">green</div>
+        <div class="swatch" style="background:oklch(0.979 0.031 167)">L.98</div>
+        <div class="swatch" style="background:oklch(0.910 0.163 154)">L.91</div>
+        <div class="swatch" style="background:oklch(0.883 0.231 151)">L.88</div>
+        <div class="swatch" style="background:oklch(0.876 0.257 148)">L.88</div>
+        <div class="swatch" style="background:oklch(0.741 0.214 149)">L.74</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">cyan</div>
+        <div class="swatch" style="background:oklch(0.957 0.048 204)">L.96</div>
+        <div class="swatch" style="background:oklch(0.908 0.107 203)">L.91</div>
+        <div class="swatch" style="background:oklch(0.870 0.148 204)">L.87</div>
+        <div class="swatch" style="background:oklch(0.736 0.125 204)">L.74</div>
+        <div class="swatch light-text" style="background:oklch(0.570 0.097 202)">L.57</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">teal</div>
+        <div class="swatch" style="background:oklch(0.920 0.016 208)">L.92</div>
+        <div class="swatch light-text" style="background:oklch(0.644 0.078 208)">L.64</div>
+        <div class="swatch light-text" style="background:oklch(0.410 0.060 212)">L.41</div>
+        <div class="swatch light-text" style="background:oklch(0.352 0.050 214)">L.35</div>
+        <div class="swatch light-text" style="background:oklch(0.281 0.037 212)">L.28</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="palette-label">Proposed: Shared Lightness (L: .95 / .82 / .70 / .55 / .40)</div>
+    <div class="step-labels">
+      <div class="step-label">100</div>
+      <div class="step-label">200</div>
+      <div class="step-label">300</div>
+      <div class="step-label">400</div>
+      <div class="step-label">500</div>
+    </div>
+    <div class="palette">
+      <div class="family-row">
+        <div class="family-label">yellow</div>
+        <div class="swatch" style="background:oklch(0.95 0.06 109)">L.95</div>
+        <div class="swatch" style="background:oklch(0.82 0.16 109)">L.82</div>
+        <div class="swatch" style="background:oklch(0.70 0.14 109)">L.70</div>
+        <div class="swatch" style="background:oklch(0.55 0.11 109)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.40 0.08 109)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">orange</div>
+        <div class="swatch" style="background:oklch(0.95 0.03 43)">L.95</div>
+        <div class="swatch" style="background:oklch(0.82 0.10 43)">L.82</div>
+        <div class="swatch" style="background:oklch(0.70 0.16 43)">L.70</div>
+        <div class="swatch light-text" style="background:oklch(0.55 0.15 43)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.40 0.11 43)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">pink</div>
+        <div class="swatch" style="background:oklch(0.95 0.03 8)">L.95</div>
+        <div class="swatch" style="background:oklch(0.82 0.10 8)">L.82</div>
+        <div class="swatch" style="background:oklch(0.70 0.16 8)">L.70</div>
+        <div class="swatch light-text" style="background:oklch(0.55 0.20 8)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.40 0.14 8)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">purple</div>
+        <div class="swatch" style="background:oklch(0.95 0.04 307)">L.95</div>
+        <div class="swatch" style="background:oklch(0.82 0.12 307)">L.82</div>
+        <div class="swatch" style="background:oklch(0.70 0.17 307)">L.70</div>
+        <div class="swatch light-text" style="background:oklch(0.55 0.26 307)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.40 0.19 307)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">green</div>
+        <div class="swatch" style="background:oklch(0.95 0.06 150)">L.95</div>
+        <div class="swatch" style="background:oklch(0.82 0.17 150)">L.82</div>
+        <div class="swatch" style="background:oklch(0.70 0.18 150)">L.70</div>
+        <div class="swatch light-text" style="background:oklch(0.55 0.14 150)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.40 0.10 150)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">cyan</div>
+        <div class="swatch" style="background:oklch(0.95 0.04 204)">L.95</div>
+        <div class="swatch" style="background:oklch(0.82 0.10 204)">L.82</div>
+        <div class="swatch" style="background:oklch(0.70 0.12 204)">L.70</div>
+        <div class="swatch light-text" style="background:oklch(0.55 0.09 204)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.40 0.07 204)">L.40</div>
+      </div>
+      <div class="family-row">
+        <div class="family-label">teal</div>
+        <div class="swatch" style="background:oklch(0.95 0.02 211)">L.95</div>
+        <div class="swatch" style="background:oklch(0.82 0.06 211)">L.82</div>
+        <div class="swatch light-text" style="background:oklch(0.70 0.08 211)">L.70</div>
+        <div class="swatch light-text" style="background:oklch(0.55 0.06 211)">L.55</div>
+        <div class="swatch light-text" style="background:oklch(0.40 0.05 211)">L.40</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>What you're seeing</h2>
+<table>
+<tr><th>Left (Current)</th><th>Right (Shared Lightness)</th></tr>
+<tr><td>Lightness varies wildly across families at the same step</td><td>Every family at the same step has equal perceptual weight</td></tr>
+<tr><td>Yellow is bright across all steps; teal is dark</td><td>Yellow and teal at step 300 have the same lightness (0.70)</td></tr>
+<tr><td>Cross-family "weight matching" is inconsistent</td><td>Any color at step 300 from any family looks equally prominent</td></tr>
+<tr><td>Some families (green, yellow) are very light even at 400-500</td><td>All families darken uniformly through the scale</td></tr>
+<tr><td>Preserves existing brand identity</td><td>New visual identity — mathematically correct but different</td></tr>
+</table>
+
+<h2>Shared Lightness Scale Used (proposed)</h2>
+<table>
+<tr><th>Step</th><th>Lightness</th><th>Intended Use</th></tr>
+<tr><td>100</td><td>0.95</td><td>Backgrounds, tints, very light fills</td></tr>
+<tr><td>200</td><td>0.82</td><td>Subtle fills, secondary surfaces</td></tr>
+<tr><td>300</td><td>0.70</td><td>Primary decorative, medium fills</td></tr>
+<tr><td>400</td><td>0.55</td><td>Strong fills, interactive elements</td></tr>
+<tr><td>500</td><td>0.40</td><td>Dark accents, text on light backgrounds</td></tr>
+</table>
+
+<p class="note" style="margin-top: 2rem;">Chroma values in the right palette are approximate — tuned per-family to stay within sRGB gamut at each lightness level. The exact values would be refined during implementation with Ada's gamut validation.</p>
+
+</body>
+</html>

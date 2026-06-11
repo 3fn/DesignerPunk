@@ -51,11 +51,38 @@ function isNeutralColor(color) {
   return false;
 }
 
+// OKLCH → sRGB conversion. L in 0..1, C in 0..~0.4, H in degrees.
+// Returns clamped {r,g,b,a} in 0..255.
+function oklchToSrgb(L, C, H, alpha = 1) {
+  const hRad = (H * Math.PI) / 180;
+  const a_ = C * Math.cos(hRad);
+  const b_ = C * Math.sin(hRad);
+  const l_ = L + 0.3963377774 * a_ + 0.2158037573 * b_;
+  const m_ = L - 0.1055613458 * a_ - 0.0638541728 * b_;
+  const s_ = L - 0.0894841775 * a_ - 1.2914855480 * b_;
+  const lc = l_ * l_ * l_, mc = m_ * m_ * m_, sc = s_ * s_ * s_;
+  const rLin =  4.0767416621 * lc - 3.3077115913 * mc + 0.2309699292 * sc;
+  const gLin = -1.2684380046 * lc + 2.6097574011 * mc - 0.3413193965 * sc;
+  const bLin = -0.0041960863 * lc - 0.7034186147 * mc + 1.7076147010 * sc;
+  const enc = (x) => {
+    const c = Math.max(0, Math.min(1, x));
+    return c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
+  };
+  return { r: Math.round(enc(rLin) * 255), g: Math.round(enc(gLin) * 255), b: Math.round(enc(bLin) * 255), a: alpha };
+}
+
 function parseRgb(color) {
   if (!color || color === 'transparent') return null;
+  // rgb/rgba
   const m = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-  if (!m) return null;
-  return { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
+  if (m) return { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
+  // oklch(L C H) or oklch(L C H / alpha)
+  const ok = color.match(/oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\s*\)/i);
+  if (ok) {
+    const L = ok[2] === '%' ? parseFloat(ok[1]) / 100 : parseFloat(ok[1]);
+    return oklchToSrgb(L, parseFloat(ok[3]), parseFloat(ok[4]), ok[5] !== undefined ? parseFloat(ok[5]) : 1);
+  }
+  return null;
 }
 
 function relativeLuminance({ r, g, b }) {
@@ -75,6 +102,10 @@ function parseGradientColors(bgImage) {
   if (!bgImage || !bgImage.includes('gradient')) return [];
   const colors = [];
   for (const m of bgImage.matchAll(/rgba?\([^)]+\)/g)) {
+    const c = parseRgb(m[0]);
+    if (c) colors.push(c);
+  }
+  for (const m of bgImage.matchAll(/oklch\([^)]+\)/gi)) {
     const c = parseRgb(m[0]);
     if (c) colors.push(c);
   }
@@ -115,6 +146,7 @@ function colorToHex(c) {
 export {
   isNeutralColor,
   parseRgb,
+  oklchToSrgb,
   relativeLuminance,
   contrastRatio,
   parseGradientColors,

@@ -63,8 +63,8 @@ Semantic color tokens support light/dark mode through a two-level resolution sys
 
 `color.structure.canvas` references `white100`. The primitive `white100` carries its own light/dark values:
 ```
-white100.light.base = 'rgba(255, 255, 255, 1)'   // white in light mode
-white100.dark.base  = 'rgba(30, 30, 30, 1)'       // near-black in dark mode
+white100.light.base = 'oklch(1.0 0 0)'      // white in light mode
+white100.dark.base  = 'oklch(0.21 0 0)'     // near-black in dark mode
 ```
 No semantic override needed — the primitive handles differentiation.
 

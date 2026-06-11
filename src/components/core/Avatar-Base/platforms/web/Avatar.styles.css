@@ -288,7 +288,7 @@
   /* Apply opacity.heavy (48%) to border color using color-mix
    * Note: opacity.heavy = 0.48, so we use 48% directly since color-mix
    * doesn't support calc() with decimal-to-percentage conversion */
-  border-color: color-mix(in srgb, var(--color-structure-border) 48%, transparent);
+  border-color: color-mix(in oklch, var(--color-structure-border) 48%, transparent);
 }
 
 /**

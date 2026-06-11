@@ -61,53 +61,53 @@ contracts:
     description: Visual feedback for interaction states
     behavior: |
       Default: surface background, border color, default text.
-      Hover (web): blend.hoverDarker on background, primary border.
-      Pressed: blend.pressedDarker on background, primary border.
+      Hover (web): perceptibly darker background (ΔL 0.02–0.05), primary border.
+      Pressed: distinctly darker background (ΔL 0.05–0.10), primary border.
       Transitions use motion.selectionTransition semantic token
       (duration250 + easingStandard).
     wcag: "1.4.13 Content on Hover or Focus"
     platforms: [web, ios, android]
     validation:
       - Default state uses color.structure.surface background
-      - Hover darkens background
-      - Pressed darkens background further
+      - Hover darkens background (ΔL 0.02–0.05)
+      - Pressed darkens background further (ΔL 0.05–0.10)
     test_approach: |
       - Verify default, hover, and pressed visual states
     required: true
 
   interaction_hover:
     category: interaction
-    description: Visual feedback on hover (pointer-only, desktop)
+    description: Perceptibly darker on hover (pointer-only, desktop)
     behavior: |
       On desktop platforms, chip shows visual feedback when pointer hovers.
-      Uses blend.hoverDarker token (8% darker) on background color.
+      Background darkens subtly (OKLCH ΔL 0.02–0.05, chroma preserved).
       Border transitions to primary color. Transition uses
       motion.selectionTransition (duration250 + easingStandard).
       Pointer-only — no keyboard equivalent (focus ring serves keyboard users).
     wcag: "1.4.13 Content on Hover or Focus"
     platforms: [web]
     validation:
-      - Background darkens on mouse enter
+      - Background darkens on mouse enter (ΔL 0.02–0.05)
       - Background reverts on mouse leave
       - Border changes to primary color
-      - Hover uses blend.hoverDarker token
+      - Chroma unchanged between rest and hover
     test_approach: |
       - Simulate hover, verify background and border change
     required: true
 
   interaction_pressed:
     category: interaction
-    description: Visual feedback when pressed
+    description: Distinctly darker when pressed
     behavior: |
       Shows visual feedback during active press/click/tap.
-      Uses blend.pressedDarker token (12% darker) on background.
+      Background darkens further than hover (OKLCH ΔL 0.05–0.10, chroma preserved).
       Web: color change. iOS: pressedBlend() on background.
       Android: pressedBlend() on background.
     wcag: null
     platforms: [web, ios, android]
     validation:
-      - Visual feedback shown during press
-      - Feedback uses blend.pressedDarker token
+      - Visual feedback shown during press (ΔL 0.05–0.10)
+      - Pressed state is perceptibly stronger than hover
       - Platform-appropriate effect applied
     test_approach: |
       - Simulate press, verify visual feedback

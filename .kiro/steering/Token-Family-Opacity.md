@@ -242,11 +242,11 @@ Opacity tokens use unitless values (0.0 - 1.0) that are identical across all pla
 
 /* Usage Examples */
 .modal-backdrop {
-  background-color: rgba(0, 0, 0, var(--opacity-heavy));
+  background-color: oklch(0 0 0 / var(--opacity-heavy));
 }
 
 .ghost-button {
-  background-color: rgba(255, 255, 255, var(--opacity-ghost));
+  background-color: oklch(1 0 0 / var(--opacity-ghost));
 }
 
 .disabled-overlay {
@@ -387,17 +387,17 @@ Use opacity tokens for hover states and interaction feedback:
 
 ```typescript
 // Hover background - use ghost opacity for subtle feedback
-<Button hoverBackground="rgba(255, 255, 255, opacity.ghost)">  // 32% opacity
+<Button hoverBackground="oklch(1 0 0 / opacity.ghost)">  // 32% opacity
   Action
 </Button>
 
 // Pressed state - use light opacity for pressed feedback
-<Button pressedBackground="rgba(0, 0, 0, opacity016)">  // 16% opacity
+<Button pressedBackground="oklch(0 0 0 / opacity016)">  // 16% opacity
   Action
 </Button>
 
 // Subtle hover - use very light opacity
-<ListItem hoverBackground="rgba(0, 0, 0, opacity008)">  // 8% opacity
+<ListItem hoverBackground="oklch(0 0 0 / opacity008)">  // 8% opacity
   Item
 </ListItem>
 ```

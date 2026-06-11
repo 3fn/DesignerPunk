@@ -586,10 +586,10 @@ export const colorTokens: Record<string, Omit<SemanticToken, 'primitiveTokens'>>
 
   'glow.neonGreen': {
     name: 'glow.neonGreen',
-    primitiveReferences: { value: 'green500' },
+    primitiveReferences: { value: 'green300' },
     category: SemanticCategory.COLOR,
     context: 'Neon green glow color for emphasis effects',
-    description: 'Vibrant green glow referencing green500'
+    description: 'Vibrant green glow referencing green300 (highest chroma in family, brighter for glow effect)'
   },
 
   'glow.neonPink': {

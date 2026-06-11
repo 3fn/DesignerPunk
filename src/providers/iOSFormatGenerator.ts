@@ -187,14 +187,10 @@ export class iOSFormatGenerator extends BaseFormatProvider {
   }
 
   /**
-   * Parse an RGBA string into its component values
-   * Input: 'rgba(184, 182, 200, 1)' or 'rgba(184, 182, 200, 0.48)'
-   * Output: { r: 184, g: 182, b: 200, a: 1 } or { r: 184, g: 182, b: 200, a: 0.48 }
-   * 
-   * @param rgbaString - RGBA color string
-   * @returns Object with r, g, b, a values or null if parsing fails
+   * Parse an RGBA string into component values.
+   * @internal Still needed for opacity composition tokens. Remove once ColorTokens.ts RGBA values are gone.
    */
-  parseRgbaString(rgbaString: string): { r: number; g: number; b: number; a: number } | null {
+  private parseRgbaString(rgbaString: string): { r: number; g: number; b: number; a: number } | null {
     const match = rgbaString.match(/rgba\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
     if (!match) {
       return null;
@@ -209,13 +205,9 @@ export class iOSFormatGenerator extends BaseFormatProvider {
 
   /**
    * Convert an RGBA string to UIColor format
-   * Input: 'rgba(184, 182, 200, 1)'
-   * Output: 'UIColor(red: 0.72, green: 0.71, blue: 0.78, alpha: 1.0)'
-   * 
-   * @param rgbaString - RGBA color string
-   * @returns UIColor initialization string
+   * @internal Still needed for opacity composition tokens. Remove once ColorTokens.ts RGBA values are gone.
    */
-  rgbaStringToUIColor(rgbaString: string): string {
+  private rgbaStringToUIColor(rgbaString: string): string {
     const parsed = this.parseRgbaString(rgbaString);
     if (!parsed) {
       return `UIColor.clear /* Invalid RGBA: ${rgbaString} */`;
@@ -232,10 +224,7 @@ export class iOSFormatGenerator extends BaseFormatProvider {
 
   /**
    * Format a mode-aware color object to UIColor
-   * Extracts light/base value and converts to UIColor format
-   * 
-   * @param colorValue - Mode-aware color object
-   * @returns UIColor initialization string
+   * @internal Still needed for opacity composition tokens. Remove once ColorTokens.ts RGBA values are gone.
    */
   private formatUIColor(colorValue: object): string {
     const modeAware = colorValue as { light?: { base?: string }; dark?: { base?: string } };
@@ -584,5 +573,16 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     lines.push('    /// )');
     
     return lines;
+  }
+
+  // --- OKLCH Output Methods (Spec 112) ---
+
+  /**
+   * Format a resolved OKLCH color as a ChromaKit Color constant.
+   * Output: `static let pink300 = Color.oklch(0.65, 0.242, 10.0)`
+   */
+  formatOklchColor(name: string, l: number, c: number, h: number): string {
+    const swiftName = this.getTokenName(name, 'color');
+    return `    static let ${swiftName} = Color.oklch(${l}, ${c}, ${h})`;
   }
 }

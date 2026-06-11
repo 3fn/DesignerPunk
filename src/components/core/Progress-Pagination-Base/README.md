@@ -200,7 +200,7 @@ State transitions and track centering use split timing for a polished feel:
 
 | Token | Value | Primitive | Usage |
 |-------|-------|-----------|-------|
-| `color.scrim.standard` | rgba(0,0,0,0.80) | `black500` @ `opacity080` | Container background |
+| `color.scrim.standard` | oklch(0 0 0 / 0.80) | `black500` @ `opacity080` | Container background |
 | `radius.full` | 9999px | `radiusMax` | Pill shape (Capsule) |
 | `space.inset.075` | 6px | `space075` | Block padding (sm/md) |
 | `space.inset.100` | 8px | `space100` | Block padding (lg), inline padding (sm/md) |

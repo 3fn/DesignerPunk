@@ -56,16 +56,16 @@ contracts:
 
   visual_optical_balance:
     category: visual
-    description: Optional 8% lighter blend for icon-text pairing
+    description: Perceptibly lighter blend for icon-text optical balance
     behavior: |
-      When opticalBalance=true and hex color provided, applies
-      lighterBlend(color, blend.iconLighter) to compensate for icons
-      appearing heavier than adjacent text. Not applied when
+      When opticalBalance=true and hex color provided, lightens the icon
+      color slightly (OKLCH ΔL 0.02–0.04, chroma preserved) to compensate
+      for icons appearing heavier than adjacent text. Not applied when
       color='inherit' or color is a token reference.
     wcag: "1.4.3 Contrast (Minimum)"
     platforms: [web, ios, android]
     validation:
-      - Hex color lightened by 8% when opticalBalance=true
+      - Hex color lightened when opticalBalance=true (ΔL 0.02–0.04)
       - Original color when opticalBalance=false
       - currentColor when color='inherit'
     test_approach: |

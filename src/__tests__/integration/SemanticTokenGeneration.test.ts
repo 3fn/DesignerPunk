@@ -29,8 +29,8 @@ import { getPlatformTokenName } from '../../naming/PlatformNamingRules';
  */
 const DEDICATED_SEMANTIC_PREFIXES = ['shadow.', 'glow.', 'zIndex.', 'elevation.', 'motion.'];
 
-/** Categories handled by dedicated generator sections (motion). */
-const DEDICATED_PRIMITIVE_CATEGORIES = new Set(['easing', 'duration', 'scale']);
+/** Categories handled by dedicated generator sections (motion) or OKLCH pipeline (color). */
+const DEDICATED_PRIMITIVE_CATEGORIES = new Set(['easing', 'duration', 'scale', 'color']);
 
 /** Filter semantics to only those in the generic semantic pass. */
 function getGenericSemantics() {

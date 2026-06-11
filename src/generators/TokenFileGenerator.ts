@@ -18,6 +18,18 @@ import { getAllPrimitiveTokens, durationTokens, easingTokens, scaleTokens } from
 import { getAllSemanticTokens, getAllZIndexTokens, getAllElevationTokens, motionTokens } from '../tokens/semantic';
 import { BlendUtilityGenerator, BlendUtilityGenerationOptions } from './BlendUtilityGenerator';
 import { ComponentTokenRegistry, RegisteredComponentToken } from '../registries/ComponentTokenRegistry';
+import { allComposedColors } from '../tokens/color';
+import { colorHues, neutralHue } from '../tokens/color/channels/hues';
+import {
+  pinkLightness, orangeLightness, yellowLightness, greenLightness,
+  cyanLightness, tealLightness, purpleLightness,
+} from '../tokens/color/channels/lightness/chromatic';
+import {
+  pinkChroma, orangeChroma, yellowChroma, greenChroma,
+  cyanChroma, tealChroma, purpleChroma,
+} from '../tokens/color/channels/chroma/chromatic';
+import { whiteLightness, grayLightness, blackLightness } from '../tokens/color/channels/lightness/neutral';
+import { whiteChroma, grayChroma, blackChroma } from '../tokens/color/channels/chroma/neutral';
 
 export interface BaseGenerationOptions {
   outputDir?: string;
@@ -1655,6 +1667,20 @@ export class TokenFileGenerator {
     if (groupByCategory) {
       const categories = this.getUniqueCategories(tokens);
       for (const category of categories) {
+        if (category === TokenCategory.COLOR) {
+          // OKLCH color output — uses composed colors instead of old RGBA PrimitiveTokens
+          if (includeComments) {
+            lines.push((generator as any).generateCategoryComment(category));
+          }
+          if (platform === 'web') {
+            lines.push(...this.generateOklchWebColors());
+          } else if (platform === 'ios') {
+            lines.push(...this.generateOklchNativeColors('ios'));
+          } else {
+            lines.push(...this.generateOklchNativeColors('android'));
+          }
+          continue;
+        }
         const categoryTokens = tokens.filter(t => t.category === category);
         if (includeComments) {
           lines.push((generator as any).generateCategoryComment(category));
@@ -1994,5 +2020,51 @@ export class TokenFileGenerator {
       platform: result.platform,
       relationships: { ...relationships }
     }));
+  }
+
+  // --- OKLCH Color Generation Helpers (Spec 112) ---
+
+  private generateOklchWebColors(): string[] {
+    const lines: string[] = [];
+
+    // Channel custom properties
+    const families: Array<{ name: string; hue: number; lightness: Record<number, number>; chroma: Record<number, number> }> = [
+      { name: 'pink', hue: colorHues.pink, lightness: pinkLightness, chroma: pinkChroma },
+      { name: 'orange', hue: colorHues.orange, lightness: orangeLightness, chroma: orangeChroma },
+      { name: 'yellow', hue: colorHues.yellow, lightness: yellowLightness, chroma: yellowChroma },
+      { name: 'green', hue: colorHues.green, lightness: greenLightness, chroma: greenChroma },
+      { name: 'cyan', hue: colorHues.cyan, lightness: cyanLightness, chroma: cyanChroma },
+      { name: 'teal', hue: colorHues.teal, lightness: tealLightness, chroma: tealChroma },
+      { name: 'purple', hue: colorHues.purple, lightness: purpleLightness, chroma: purpleChroma },
+    ];
+
+    // Emit channel primitives
+    for (const family of families) {
+      lines.push(...this.webGenerator.formatOklchChannels(family.name, family.hue, family.lightness, family.chroma));
+    }
+    // Neutral hue
+    lines.push(`  --neutral-hue: ${neutralHue};`);
+    // Neutral channels
+    lines.push(...this.webGenerator.formatOklchChannels('white', neutralHue, whiteLightness as any, whiteChroma as any));
+    lines.push(...this.webGenerator.formatOklchChannels('gray', neutralHue, grayLightness as any, grayChroma as any));
+    lines.push(...this.webGenerator.formatOklchChannels('black', neutralHue, blackLightness as any, blackChroma as any));
+
+    // Emit composed colors
+    for (const color of allComposedColors) {
+      lines.push(this.webGenerator.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
+    }
+
+    return lines;
+  }
+
+  private generateOklchNativeColors(platform: 'ios' | 'android'): string[] {
+    const lines: string[] = [];
+    const gen = platform === 'ios' ? this.iosGenerator : this.androidGenerator;
+
+    for (const color of allComposedColors) {
+      lines.push(gen.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
+    }
+
+    return lines;
   }
 }

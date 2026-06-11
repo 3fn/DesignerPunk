@@ -316,6 +316,18 @@ Produces platform token files in your configured output directory:
 
 If you registered a custom theme, the output includes themed values scoped by `data-theme` attribute (web) or as additional theme structs/instances (iOS/Android).
 
+### Platform Dependencies for OKLCH Color Output
+
+The color system uses OKLCH format. Platform-specific dependencies are needed for native color rendering:
+
+| Platform | Dependency | Purpose | Install |
+|----------|-----------|---------|---------|
+| **Web** | None | CSS `oklch()` is native (Chrome 111+, Safari 15.4+, Firefox 113+) | — |
+| **iOS** | [ChromaKit](https://github.com/HarshilShah/ChromaKit) | `Color.oklch(L, C, H)` API | Swift Package Manager |
+| **Android** | [colormath](https://github.com/ajalt/colormath) | `Oklch(L, C, H).toComposeColor()` | Gradle dependency |
+
+`npx designerpunk init` scaffolds these dependencies in platform-specific config files. If upgrading from a pre-OKLCH version, `npx designerpunk sync` will flag the new dependency requirements.
+
 ### 7. Build Your Product
 
 #### Web
@@ -978,3 +990,15 @@ In non-interactive environments, sync automatically runs in dry-run mode. Use `-
 ```bash
 npx designerpunk sync --force  # Applies all updates without prompting
 ```
+
+### OKLCH Color Migration (v12+)
+
+When upgrading to the OKLCH color system version:
+
+1. **Run sync** — updates token source files from RGBA to OKLCH channel primitives
+2. **Regenerate** — `npx designerpunk generate` produces OKLCH output (CSS `oklch()`, Swift ChromaKit, Kotlin colormath)
+3. **Add platform dependencies** — iOS: ChromaKit via SPM. Android: colormath via Gradle.
+4. **Product color tokens** — convert any `value:` color fields from RGB/hex to OKLCH format: `value: "oklch(0.65 0.24 10)"`. Use an online converter or ask Ada for batch conversion.
+5. **Verify** — CSS custom property names are unchanged (`var(--pink-300)` still works). Only the values change format.
+
+**Visual changes**: Palette refinements (teal, green, orange) and blend re-tuning produce intentional visual differences. See release notes for details.

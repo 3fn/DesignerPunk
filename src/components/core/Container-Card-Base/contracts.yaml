@@ -53,12 +53,13 @@ contracts:
     category: interaction
     description: Background darkens on hover when interactive
     behavior: |
-      When interactive=true and pointer device hovers, darkens background
-      by blend.hoverDarker (8%). Transition uses motion.focusTransition.
+      When interactive=true and pointer device hovers, background darkens
+      subtly (OKLCH ΔL 0.02–0.05, chroma preserved). Transition uses
+      motion.focusTransition.
     wcag: "1.4.13 Content on Hover or Focus"
     platforms: [web]
     validation:
-      - Background darkens on hover when interactive=true
+      - Background darkens on hover when interactive=true (ΔL 0.02–0.05)
       - Only applies with pointer devices
     test_approach: |
       - Set interactive=true, simulate hover, verify darkening
@@ -68,12 +69,13 @@ contracts:
     category: interaction
     description: Background darkens on press when interactive
     behavior: |
-      When interactive=true, darkens background by blend.pressedDarker (12%).
+      When interactive=true, background darkens distinctly
+      (OKLCH ΔL 0.05–0.10, chroma preserved).
       No scale transform to avoid layout shift in card grids.
     wcag: null
     platforms: [web, ios, android]
     validation:
-      - Background darkens on press when interactive=true
+      - Background darkens on press when interactive=true (ΔL 0.05–0.10)
       - No scale transform applied
     test_approach: |
       - Set interactive=true, simulate press, verify darkening

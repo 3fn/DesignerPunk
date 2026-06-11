@@ -1,16 +1,14 @@
 /**
- * Color Primitive Tokens
+ * Color Primitive Tokens (DEPRECATED — Spec 115 Phase B will remove)
  * 
- * Implements mode-aware and theme-aware color primitive tokens with systematic color families.
- * Each color token supports light/dark modes with base/wcag themes for comprehensive
- * accessibility and aesthetic flexibility.
+ * @deprecated This file contains legacy RGBA color token definitions. The active color
+ * pipeline uses OKLCH channel primitives in `src/tokens/color/`. This file persists only
+ * because the opacity composition path (`formatOpacityCompositionToken`) still reads RGBA
+ * values from `getColorToken()`. Once opacity composition migrates to OKLCH, delete this file.
  * 
  * Color families: gray, black, white, yellow, orange, purple, green, pink, cyan, teal
  * Progression: 100-500 scale for systematic color relationships
  * Architecture: colorToken[systemMode][userTheme] resolution pattern
- * 
- * RGBA Migration (Spec 052): All primitive color tokens now use RGBA format for native
- * alpha channel support and direct cross-platform color API mapping.
  */
 
 import { PrimitiveToken, TokenCategory, ColorTokenValue } from '../types/PrimitiveToken';

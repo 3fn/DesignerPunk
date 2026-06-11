@@ -401,7 +401,7 @@ const shadowContainer = {
   offsetY: 'shadowOffsetMorning.y',  // 4px
   blur: 'shadowBlur200',             // 8px
   opacity: 'shadowOpacity200',       // 0.2
-  color: 'shadowBlack100'            // rgba(0,0,0,1)
+  color: 'shadowBlack100'            // oklch(0 0 0)
 };
 ```
 

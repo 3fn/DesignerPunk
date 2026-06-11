@@ -271,9 +271,9 @@ Glows will translate to CSS `box-shadow` with multiple layers.
 /* Multi-layer glow (conceptual) */
 .button-glow {
   box-shadow: 
-    0 0 8px rgba(139, 92, 246, 0.8),   /* Inner layer */
-    0 0 16px rgba(139, 92, 246, 0.6),  /* Middle layer */
-    0 0 24px rgba(139, 92, 246, 0.4);  /* Outer layer */
+    0 0 8px oklch(0.55 0.27 295 / 0.8),   /* Inner layer */
+    0 0 16px oklch(0.55 0.27 295 / 0.6),  /* Middle layer */
+    0 0 24px oklch(0.55 0.27 295 / 0.4);  /* Outer layer */
 }
 ```
 

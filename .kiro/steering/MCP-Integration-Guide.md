@@ -110,7 +110,7 @@ console.log(successText?.$value);    // → "{color.green400}"
 // Shadow composite token
 const containerShadow = getToken(dtcgTokens, 'shadow.container');
 console.log(containerShadow?.$value);
-// → { offsetX: "0px", offsetY: "4px", blur: "12px", spread: "0px", color: "rgba(0, 0, 0, 0.3)" }
+// → { offsetX: "0px", offsetY: "4px", blur: "12px", spread: "0px", color: "#0000004d" }
 
 // Typography composite token
 const bodyMd = getToken(dtcgTokens, 'typography.bodyMd');
@@ -339,7 +339,7 @@ function resolveAlias(value: unknown, dtcgTokens: DTCGTokenFile): unknown {
 // Resolve a semantic color alias
 const token = getToken(dtcgTokens, 'semanticColor.color.feedback.success.text');
 const resolved = resolveAlias(token?.$value, dtcgTokens);
-console.log(resolved); // → "rgba(0, 200, 83, 1)" (the actual color value)
+console.log(resolved); // → "#00c853" (the actual color value, sRGB hex converted from OKLCH source)
 ```
 
 ### Resolving Composite Token Aliases

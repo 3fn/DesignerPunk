@@ -68,14 +68,119 @@ Single spec, sequential tasks, one release. RGBA regression validation used duri
 
 ## Key Design Decisions
 
-### Decision 1: Source Format
+### Decision 1: Source Format — Channel-Primitive Composition (DRAFT — awaiting Ada review)
 
-**Options:**
-- A) Store as OKLCH string: `'oklch(0.75 0.15 280)'`
-- B) Store as structured object: `{ l: 0.75, c: 0.15, h: 280 }`
-- C) Store as tuple: `[0.75, 0.15, 280]`
+**The model**: Color primitives are composed from three independently-managed channel layers, all per-family:
 
-**Leaning:** B — structured object. Enables validation of individual channels (L: 0-1, C: 0-0.4ish, H: 0-360). Generators format to platform-specific strings. Parser/formatter logic is clean.
+1. **Hue** (one per color family) — defines family identity (pink, blue, green, etc.)
+2. **Lightness scale** (per-family) — defines each family's light/dark progression, tunable per customer
+3. **Chroma scale** (per-family) — defines vibrancy at each step, respecting each hue's gamut capacity
+
+```
+// One hue per family — the family's identity
+pinkHue = 10.24
+blueHue = 255.0
+greenHue = 145.0
+
+// Per-family lightness scale — tunable per customer/brand
+pinkLightness100 = 0.92
+pinkLightness200 = 0.76
+pinkLightness300 = 0.65
+pinkLightness400 = 0.55
+pinkLightness500 = 0.40
+
+blueLightness100 = 0.95
+blueLightness200 = 0.82
+blueLightness300 = 0.70
+blueLightness400 = 0.55
+blueLightness500 = 0.40
+
+// Per-family chroma scale — respects gamut limits per hue
+pinkChroma100 = 0.05
+pinkChroma200 = 0.17
+pinkChroma300 = 0.24
+pinkChroma400 = 0.20
+pinkChroma500 = 0.14
+
+// Composed color primitives
+pink300 = oklch(pinkLightness300, pinkChroma300, pinkHue)
+blue300 = oklch(blueLightness300, blueChroma300, blueHue)
+
+// Semantic layer references as normal
+color.feedback.error.text = pink400
+```
+
+**Why per-family lightness (not shared)**:
+- **Customer flexibility**: Different products need different lightness progressions per family. A fintech may want dark, serious reds and bright, celebratory greens. Shared lightness imposes one opinion.
+- **Preserves brand identity during migration**: Existing palette can be encoded without forced visual changes.
+- **Scale and diverse needs**: The `configure` wizard (Spec 113) can offer per-family lightness tuning as a meaningful customization point.
+- **Gamut-friendly**: Each family's lightness can sit at the L value where its hue achieves maximum chroma, rather than being forced to a shared L that constrains vibrancy.
+
+**What's still shared**:
+- The *structure* is consistent (every family has 5 lightness steps, 5 chroma steps, 1 hue)
+- The *step names* (100-500) mean the same thing structurally across families
+- The *composition pattern* is identical: `oklch(familyLightness[step], familyChroma[step], familyHue)`
+
+**Cross-family weight matching** (Leonardo's concern): Handled at the semantic layer, not the primitive layer. `color.feedback.error.text` and `color.feedback.success.text` reference whichever step produces correct contrast — the semantic mapping provides intent-matching, not numeric step equivalence.
+
+**Open questions for Ada**:
+- Can chroma at each step be derived from a formula (e.g., `chromaBase * lightnessRelativeFactor`), or does each family need 5 explicit chroma values?
+- What does generation look like per platform? Web composes at runtime (`oklch(var(--pink-l300) var(--pink-c300) var(--pink-hue))`). iOS/Android resolve at build time — are channel primitives source-only with concrete resolved output?
+- Does this model align with or conflict with the existing mathematical relationships in the spacing/scale token architecture?
+- For hue arithmetic (complementary/analogous): is this a designed-in capability or informal?
+
+**This is a DRAFT architectural proposal.** Ada's expertise on OKLCH gamut behavior, mathematical relationships, and generation pipeline implications is needed before this becomes a spec decision.
+
+### Decisions Resolved (from R1/R2 feedback)
+
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| Lightness scale | Per-family (not shared) | Customer flexibility, brand preservation, gamut-friendly |
+| Chroma derivation | 5 explicit values per family | Formula as validator constraint, not derivation. Steps 100-200 have no cross-family pattern. |
+| Web output | Emit BOTH channel primitives AND composed colors | Negligible cost, enables advanced product composition |
+| iOS/Android output | Resolved concrete values (channel primitives are source-only) | No runtime channel composition on native platforms |
+| Token-index/MCP | Channels as metadata on composed colors (not separate top-level entries) | Leonardo consumes composed colors; channels are authoring-layer |
+| Mathematical relationship | Hand-tuned with validator constraints (monotonicity, min step ≥0.08, k-ratio, gamut) | Color perception isn't purely mathematical like spacing |
+| Hue arithmetic | Designed-in, documented, NOT tokenized | Don't create relationship tokens; document in Token-Family-Color.md |
+| HC chroma | Per-family HC chroma overrides supported (all families except teal need them at extreme L) | Architecture naturally supports via theme config |
+| Token count | 77 channel primitives + 35 composed = 112 total (+77 from current) | Manageable; no MCP structural changes; components reference composed only |
+| Neutral partition | Three non-overlapping bands: White 1.0→0.80, Gray 0.72→0.32, Black 0.28→0.00 | Clean role separation; eliminates current overlap; buffer gaps prevent creep |
+| Neutral hue | Single `neutralHue` token matching product's primary color hue | Neutrals subtly complement the brand; configurable per product via `configure` wizard |
+| Neutral chroma | Parabolic curve peaking in gray mid-range (C≈0.020), near-zero at extremes | Hue perceptible in structural range, invisible in surfaces and deep darks |
+| Gray050 / gray shift | Superseded by full neutral partition redesign | Gap solved architecturally, not by adding tokens or shifting values |
+
+### Neutral Partition Architecture
+
+```
+// Single neutral hue — follows primary color
+neutralHue = primaryHue   // e.g., 260° if primary is purple-blue
+
+// White family: bright surfaces (L 1.0 → 0.80)
+whiteLightness = [1.00, 0.95, 0.90, 0.85, 0.80]
+whiteChroma    = [0.006, 0.009, 0.012, 0.014, 0.015]
+
+   ── 0.08 buffer gap ──
+
+// Gray family: mid-tones, structure, text (L 0.72 → 0.32)
+grayLightness = [0.72, 0.62, 0.52, 0.42, 0.32]
+grayChroma    = [0.018, 0.020, 0.020, 0.018, 0.015]
+
+   ── 0.04 buffer gap ──
+
+// Black family: dark surfaces, deep backgrounds (L 0.28 → 0.00)
+blackLightness = [0.28, 0.21, 0.14, 0.07, 0.00]
+blackChroma    = [0.013, 0.010, 0.008, 0.005, 0.000]
+
+// All composed from same hue:
+white300 = oklch(0.90, 0.012, neutralHue)
+gray500  = oklch(0.32, 0.015, neutralHue)   // body text
+black300 = oklch(0.14, 0.008, neutralHue)   // dark mode surface
+```
+
+**Role assignment:**
+- White = light surfaces, backgrounds, cards
+- Gray = structural elements, muted content, borders, body text (gray500)
+- Black = dark mode surfaces, deep containers, high-contrast anchors
 
 ### Decision 2: iOS Output Strategy
 
@@ -203,3 +308,23 @@ The blend utility rework will produce different visual results for interaction s
 4. Validator updates (WCAG + gamut boundary)
 5. Component visual audit + contract updates
 6. Integration testing + regression validation
+
+### Documentation Updates Required
+
+This migration affects documentation across multiple layers:
+
+| Document | What Changes |
+|----------|-------------|
+| **Token-Family-Color.md** | OKLCH format, new channel descriptions (L/C/H vs R/G/B/A), gamut notes |
+| **Token-Quick-Reference.md** | Color token value format examples |
+| **Product-Token-Governance.md** | Update "Perceptual Tolerance Guidelines" color row: RGB ±2/channel → OKLCH ΔE threshold |
+| **Rosetta-System-Architecture.md** | Pipeline stage descriptions reflect OKLCH source format |
+| **Token-Governance.md** | Color token creation rules updated for OKLCH authoring |
+| **Component-Family docs** (any referencing color) | Blend state descriptions reflect OKLCH terminology |
+| **DesignerPunk-Integration-Guide.md** | Platform dependency additions (ChromaKit, colormath) |
+| **Token-Semantic-Structure.md** | Color semantic resolution updated for OKLCH |
+| **README.md** | If color system is described, update format references |
+
+**Agent prompts**: If any agent prompt references specific color values or RGB patterns, update to OKLCH terminology.
+
+**Release notes**: Major version. Breaking change section documenting: new output format, platform dependency requirements (ChromaKit for iOS, colormath for Android), blend percentage changes, required regeneration.

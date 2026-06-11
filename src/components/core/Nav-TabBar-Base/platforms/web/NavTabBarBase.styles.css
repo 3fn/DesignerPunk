@@ -56,9 +56,9 @@
 
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--color-structure-canvas) 80%, transparent),
-    color-mix(in srgb, var(--color-structure-canvas) 88%, transparent),
-    color-mix(in srgb, var(--color-structure-canvas) 96%, transparent),
+    color-mix(in oklch, var(--color-structure-canvas) 80%, transparent),
+    color-mix(in oklch, var(--color-structure-canvas) 88%, transparent),
+    color-mix(in oklch, var(--color-structure-canvas) 96%, transparent),
     var(--color-structure-canvas) 48%
   );
   border-block-start: 1px solid var(--color-structure-border-subtle);
@@ -124,8 +124,8 @@
 
   background: radial-gradient(
     ellipse var(--space-700) 56% at center,
-    var(--color-background-primary-subtle) 0%, color-mix(in srgb, var(--color-background-primary-subtle) 50%, transparent),
-    color-mix(in srgb, var(--color-structure-canvas) 24%, transparent) 80%,
+    var(--color-background-primary-subtle) 0%, color-mix(in oklch, var(--color-background-primary-subtle) 50%, transparent),
+    color-mix(in oklch, var(--color-structure-canvas) 24%, transparent) 80%,
     transparent 100%
   );
 }

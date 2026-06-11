@@ -222,14 +222,10 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
   }
 
   /**
-   * Parse an RGBA string into its component values
-   * Input: 'rgba(184, 182, 200, 1)' or 'rgba(184, 182, 200, 0.48)'
-   * Output: { r: 184, g: 182, b: 200, a: 1 } or { r: 184, g: 182, b: 200, a: 0.48 }
-   * 
-   * @param rgbaString - RGBA color string
-   * @returns Object with r, g, b, a values or null if parsing fails
+   * Parse an RGBA string into component values.
+   * @internal Still needed for opacity composition tokens. Remove once ColorTokens.ts RGBA values are gone.
    */
-  parseRgbaString(rgbaString: string): { r: number; g: number; b: number; a: number } | null {
+  private parseRgbaString(rgbaString: string): { r: number; g: number; b: number; a: number } | null {
     const match = rgbaString.match(/rgba\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
     if (!match) {
       return null;
@@ -244,13 +240,9 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
 
   /**
    * Convert an RGBA string to Color.argb format
-   * Input: 'rgba(184, 182, 200, 1)'
-   * Output: 'Color.argb(255, 184, 182, 200)'
-   * 
-   * @param rgbaString - RGBA color string
-   * @returns Color.argb initialization string
+   * @internal Still needed for opacity composition tokens. Remove once ColorTokens.ts RGBA values are gone.
    */
-  rgbaStringToColorArgb(rgbaString: string): string {
+  private rgbaStringToColorArgb(rgbaString: string): string {
     const parsed = this.parseRgbaString(rgbaString);
     if (!parsed) {
       return `Color.TRANSPARENT /* Invalid RGBA: ${rgbaString} */`;
@@ -732,5 +724,16 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     lines.push('    // )');
     
     return lines;
+  }
+
+  // --- OKLCH Output Methods (Spec 112) ---
+
+  /**
+   * Format a resolved OKLCH color as a colormath Oklch constant.
+   * Output: `val pink300 = Oklch(0.65f, 0.242f, 8.2f).toComposeColor()`
+   */
+  formatOklchColor(name: string, l: number, c: number, h: number): string {
+    const kotlinName = this.getTokenName(name, 'color');
+    return `    val ${kotlinName} = Oklch(${l}f, ${c}f, ${h}f).toComposeColor()`;
   }
 }

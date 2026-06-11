@@ -1,38 +1,147 @@
 ---
 inclusion: manual
 name: Token-Family-Color
-description: Color token family — palette structure, semantic color tokens, contrast ratios, theme support, and WCAG compliance. Load when working with color tokens, color selection, theme variants, or color-related accessibility.
+description: Color token family — OKLCH channel-primitive architecture, palette structure, semantic color tokens, neutral partition, blend model, theme support, and WCAG compliance. Load when working with color tokens, color selection, theme variants, or color-related accessibility.
 ---
 
 # Color Tokens Guide
 
-**Date**: 2025-12-08
-**Last Reviewed**: 2026-03-12
-**Purpose**: Complete reference for color tokens organized by semantic concept with usage guidance
+**Date**: 2026-06-10
+**Last Reviewed**: 2026-06-10
+**Purpose**: Complete reference for the OKLCH color system — channel primitives, palette architecture, semantic tokens, and platform output
 **Organization**: token-documentation
 **Scope**: cross-project
 **Layer**: 3
-**Relevant Tasks**: component-development, token-selection
+**Relevant Tasks**: component-development, token-selection, product-token-authoring
 
 ---
 
 ## Overview
 
-The DesignerPunk color token system follows the **Nathan Curtis concept-first naming model**, organizing tokens by semantic meaning for intuitive discovery and AI agent reasoning. Color tokens are structured in a primitive→semantic→component hierarchy.
+DesignerPunk's color system is built on **OKLCH** — a perceptually uniform color space where lightness, chroma, and hue are independently meaningful channels. Colors are authored as channel-primitive compositions and organized by semantic concept for discovery and reasoning.
 
 **Key Principles**:
-- **Concept-First Organization**: Tokens grouped by semantic concept (feedback, identity, action, contrast, structure)
-- **Self-Documenting Names**: Token names read as sentences explaining their purpose
-- **Primitive→Semantic Architecture**: Semantic tokens reference primitive color families
-- **RGBA Format**: All colors use RGBA format for native alpha channel support
-- **Cross-Platform Consistency**: Unitless color values convert to platform-specific formats
-- **Accessibility First**: WCAG theme variants ensure contrast compliance
+- **Channel-Primitive Architecture**: Colors composed from independent hue, lightness, and chroma tokens
+- **Perceptual Uniformity**: Equal numeric steps produce equal visual steps (OKLCH's core guarantee)
+- **Concept-First Semantics**: Tokens grouped by meaning (feedback, identity, action, contrast, structure)
+- **Three-Tier Neutral Partition**: White, gray, black occupy distinct lightness bands with clear roles
+- **OKLCH-Native Output**: Web gets runtime channel composition; native platforms get resolved values
+- **Accessibility First**: WCAG compliance via OKLCH→sRGB luminance, contrast validated at build time
 
 ---
 
-## Semantic Concept Tokens
+## Channel-Primitive Architecture
 
-Semantic concept tokens express meaning independent of any component. They follow the pattern:
+### The Model
+
+Every color in the system is composed from three independently-managed channels:
+
+```
+color = oklch(familyLightness[step], familyChroma[step], familyHue)
+```
+
+| Channel | Scope | What It Controls |
+|---------|-------|-----------------|
+| **Hue** | One per family | Color identity (pink, blue, green...) |
+| **Lightness** | Per-family, 5 steps | Light/dark progression |
+| **Chroma** | Per-family, 5 steps | Vibrancy/saturation at each step |
+
+### Why This Matters
+
+- **Change a hue** → entire family shifts identity (pink becomes coral)
+- **Change a lightness step** → one level gets lighter/darker across that family
+- **Change chroma** → one level gets more/less vivid
+- **Dark mode** → swap lightness scale, preserve hue and chroma
+- **Brand customization** → swap hue, system recalculates everything
+
+### Token Structure Per Family
+
+Each chromatic family has **11 channel tokens** + **5 composed colors**:
+
+```
+pinkHue = 10.0                             ← 1 hue
+
+pinkLightness100 = 0.92                    ← 5 lightness steps
+pinkLightness200 = 0.76
+pinkLightness300 = 0.65
+pinkLightness400 = 0.55
+pinkLightness500 = 0.40
+
+pinkChroma100 = 0.045                      ← 5 chroma steps
+pinkChroma200 = 0.160
+pinkChroma300 = 0.242
+pinkChroma400 = 0.203
+pinkChroma500 = 0.141
+
+pink100 = oklch(0.92, 0.045, 10.0)        ← 5 composed colors
+pink200 = oklch(0.76, 0.160, 10.0)
+pink300 = oklch(0.65, 0.242, 10.0)
+pink400 = oklch(0.55, 0.203, 10.0)
+pink500 = oklch(0.40, 0.141, 10.0)
+```
+
+### What Agents Consume
+
+**Composed colors** (`pink300`, `cyan400`) are used in screen specs, component references, and semantic mappings. Channel primitives are authoring-layer concerns — agents reference composed colors, reason about channels.
+
+---
+
+## Neutral Partition
+
+Neutral colors (white, gray, black) occupy **non-overlapping lightness bands**, each with a distinct role:
+
+| Family | Lightness Range | Step Size | Role |
+|--------|----------------|-----------|------|
+| **White** | 1.00 → 0.80 | ~0.05 | Bright surfaces, backgrounds, cards |
+| **Gray** | 0.72 → 0.32 | ~0.10 | Structure, borders, muted content, body text |
+| **Black** | 0.28 → 0.00 | ~0.07 | Dark mode surfaces, deep containers, anchors |
+
+**Buffer gaps** between families prevent overlap creep:
+- White500 (L=0.80) → Gray100 (L=0.72) = **0.08 gap**
+- Gray500 (L=0.32) → Black100 (L=0.28) = **0.04 gap**
+
+### Neutral Hue
+
+All neutral families share a single `neutralHue` token. The system default is **260°** (cool purple-blue). Products can override this to match their primary color hue, creating a subtle warm/cool relationship between brand identity and neutral surfaces.
+
+- Primary is pink (H≈8°) → neutrals have a warm tint
+- Primary is cyan (H≈204°) → neutrals have a cool tint
+- Override to any value; set chroma to 0 for pure achromatic
+
+Neutral chroma follows a parabolic curve — higher in the gray mid-range (C≈0.020, where tint is visible on structural elements) and near-zero at the white/black extremes (where tint would be distracting).
+
+---
+
+## Chromatic Families
+
+Seven chromatic families, each with a single hue identity:
+
+| Family | Hue | Semantic Role | Gamut Note |
+|--------|-----|---------------|------------|
+| **Pink** | ~10° | Error, danger, passion | High chroma capacity |
+| **Orange** | ~42° | Warning, warmth, human identity | Good chroma capacity |
+| **Yellow** | ~109° | Attention, highlights, energy | Max chroma at high lightness |
+| **Green** | ~150° | Success, growth, confirmation | High chroma capacity |
+| **Cyan** | ~204° | Action, navigation, primary interactive | Limited chroma at dark lightness |
+| **Teal** | ~208° | Info, secondary, AI identity | Limited chroma capacity |
+| **Purple** | ~307° | Data, tech, code | Highest chroma capacity |
+
+### Gamut Capacity and Color Strategy
+
+Not all families can achieve the same vibrancy. This affects color strategy declarations:
+
+| Strategy | Can Use | Limited |
+|----------|---------|---------|
+| **Drenched** (max saturation surfaces) | Purple, pink, green, orange, yellow | Cyan (limited), Teal (cannot) |
+| **Full Palette** (3-4 roles at equal weight) | All families at matched lightness steps | — |
+| **Committed** (one family dominant) | All families | — |
+| **Restrained** (minimal color) | All families | — |
+
+---
+
+## Semantic Color Tokens
+
+Semantic tokens express meaning independent of any component. Pattern:
 
 ```
 color.{concept}.{role}.{property?}.{state?}
@@ -40,603 +149,167 @@ color.{concept}.{role}.{property?}.{state?}
 
 ### Feedback Concept
 
-**Purpose**: Communicate system status to users
+| Token | Primitive | Purpose |
+|-------|-----------|---------|
+| `color.feedback.success.text` | green400 | Success messages, validation |
+| `color.feedback.success.background` | green100 | Success alert backgrounds |
+| `color.feedback.success.border` | green400 | Success borders |
+| `color.feedback.error.text` | pink400 | Error messages |
+| `color.feedback.error.background` | pink100 | Error alert backgrounds |
+| `color.feedback.error.border` | pink400 | Error borders |
+| `color.feedback.warning.text` | orange400 | Caution messages |
+| `color.feedback.warning.background` | orange100 | Warning backgrounds |
+| `color.feedback.warning.border` | orange400 | Warning borders |
+| `color.feedback.info.text` | teal400 | Informational messages |
+| `color.feedback.info.background` | teal100 | Info backgrounds |
+| `color.feedback.info.border` | teal400 | Info borders |
 
-The feedback concept provides colors for success, error, warning, info, and selection states. Each role includes text, background, and border properties.
+### Identity, Action, Contrast, Structure, Progress
 
-#### Success Tokens (3 tokens)
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.feedback.success.text` | green400 | Success text - form validation, confirmation messages |
-| `color.feedback.success.background` | green100 | Success backgrounds - alert backgrounds, success banners |
-| `color.feedback.success.border` | green400 | Success borders - input validation borders, success card outlines |
-
-#### Error Tokens (3 tokens)
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.feedback.error.text` | pink400 | Error text - form validation errors, error messages |
-| `color.feedback.error.background` | pink100 | Error backgrounds - alert backgrounds, error banners |
-| `color.feedback.error.border` | pink400 | Error borders - input validation borders, error card outlines |
-
-#### Warning Tokens (3 tokens)
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.feedback.warning.text` | orange400 | Warning text - caution messages, attention-required indicators |
-| `color.feedback.warning.background` | orange100 | Warning backgrounds - alert backgrounds, caution banners |
-| `color.feedback.warning.border` | orange400 | Warning borders - input validation borders, warning card outlines |
-
-#### Info Tokens (3 tokens)
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.feedback.info.text` | teal400 | Info text - help text, informational messages |
-| `color.feedback.info.background` | teal100 | Info backgrounds - info banners, help sections |
-| `color.feedback.info.border` | teal400 | Info borders - info card outlines, help section borders |
-
-#### Select Tokens (6 tokens)
-
-Select tokens include state (`rest`, `default`) because selection has interaction states.
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.feedback.select.text.rest` | cyan400 | Selected item text - label text when item is selected |
-| `color.feedback.select.text.default` | gray200 | Not-selected item text - label text when item is available |
-| `color.feedback.select.background.rest` | cyan100 | Selected item background - background when item is selected |
-| `color.feedback.select.background.default` | gray100 | Not-selected item background - background when item is available |
-| `color.feedback.select.border.rest` | cyan400 | Selected item border - checkmark base, item border when selected |
-| `color.feedback.select.border.default` | gray200 | Not-selected item border - item border when available |
-
-**Design Note**: Select is placed under feedback as UI response to user action. If additional interaction-based use cases emerge (focus states, drag states), consider migrating to an 'interaction' concept.
+These follow the same concept-first pattern documented in semantic token source. Reference `src/tokens/semantic/ColorTokens.ts` for the complete mapping.
 
 ---
 
-### Identity Concept
+## Blend Model
 
-**Purpose**: Distinguish entity types visually
+Interaction states (hover, pressed, focused, disabled) use **OKLCH-space interpolation**. Blend thresholds are defined as perceptual deltas from the rest state:
 
-Identity tokens represent core colors for different entity types. They ARE the color (no property suffix needed).
+| State | ΔL | ΔC | Direction |
+|-------|----|----|-----------|
+| **Hover** | 0.02–0.05 | Preserve | Lighter on dark, darker on light |
+| **Pressed** | 0.05–0.10 | Preserve | Same as hover, further |
+| **Focused** | 0 | +0.02 min | Chroma boost (not lightness) |
+| **Disabled** | 0 | -0.03 min | Desaturate |
+| **Icon lighter** | 0.02–0.04 | Preserve | Lighter (optical balance) |
 
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.identity.human` | orange300 | Human identity - warm, approachable visual identity for human entities |
-| `color.identity.agent` | teal200 | Agent identity - distinct, technical visual identity for AI agent entities |
-
-**Usage**: These tokens are referenced by component tokens (e.g., `color.avatar.human.background` references `color.identity.human`).
-
----
-
-### Action Concept
-
-**Purpose**: Visual emphasis levels for interactive elements
-
-Action tokens represent visual emphasis levels, not action types. Use `primary` for single, focused instances (hero CTAs), `secondary` for repetitive instances (action lists), and `navigation` for inline links and breadcrumbs.
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.action.primary` | cyan300 | Emphasized action - hero CTAs, main buttons, primary interactive elements |
-| `color.action.secondary` | gray400 | De-emphasized action - list item buttons, secondary CTAs, repetitive actions |
-| `color.action.navigation` | cyan500 | Navigation actions - inline text links, breadcrumbs |
-
-**Critical Distinction**: `primary`/`secondary` represent visual emphasis, not action type. Both can be CTAs.
-
-**WCAG Overrides**: 7 color tokens have WCAG theme overrides in `src/tokens/themes/wcag/SemanticOverrides.ts`. See Spec 080 for architecture.
-
-```typescript
-// Single hero CTA on a page
-<ButtonCTA emphasis="primary" />   // → color.action.primary (cyan)
-
-// List of 10 action items
-<ButtonCTA emphasis="secondary" /> // → color.action.secondary (neutral)
-```
+**Web**: Uses `color-mix(in oklch, ...)` for runtime blending.
+**Native**: Blend results pre-resolved at build time.
 
 ---
 
-### Contrast Concept
+## Theme Support
 
-**Purpose**: Ensure readable content on colored backgrounds
+### Dark Mode
 
-Contrast tokens provide colors for content (text, icons) on colored backgrounds. Naming matches the background the content sits ON.
+Dark mode swaps the **lightness** direction while preserving hue and chroma identity. The semantic layer handles mode-switching — component code doesn't change.
 
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.contrast.onLight` | black500 | Dark content on light backgrounds - ensures WCAG AA contrast |
-| `color.contrast.onDark` | white100 | Light content on dark backgrounds - ensures WCAG AA contrast |
-| `color.contrast.onAction` | black500 | Content on action-colored backgrounds - dark on cyan (Standard), white on teal (WCAG) |
+### WCAG High-Contrast
 
-**Usage**: Use `onLight` for text/icons on light surfaces, `onDark` for text/icons on dark surfaces, `onAction` for text/icons on primary action backgrounds.
+High-contrast themes use per-family **lightness + chroma overrides**:
+- Lightness pushed toward extremes (maximum contrast)
+- Chroma may be boosted at extreme lightness to maintain visibility
+- Hue is ALWAYS preserved (no hue drift between themes — orange stays orange)
 
----
+### Theme Override Architecture
 
-### Structure Concept
-
-**Purpose**: Define visual organization and layering of UI elements
-
-Structure tokens provide foundational colors for UI structure: canvas (base layer), surface (elevated layers), and border (boundaries).
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.structure.canvas` | white100 | Base canvas - page backgrounds, foundational layer |
-| `color.structure.surface` | white200 | Elevated surface - cards, containers. Alias for `color.structure.surface.primary` |
-| `color.structure.surface.primary` | white200 | Primary surface - default elevation level above canvas |
-| `color.structure.surface.secondary` | white300 | Secondary surface - nested cards, lower emphasis |
-| `color.structure.surface.tertiary` | white400 | Tertiary surface - deeply nested cards, lowest emphasis |
-| `color.structure.border` | gray100 | Standard borders - UI element borders, dividers |
-| `color.structure.border.subtle` | gray100 @ opacity048 | Semi-transparent border (48% opacity) - soft visual separation |
-
-**Surface Hierarchy**: Three elevation levels (`primary`, `secondary`, `tertiary`) provide progressive visual distinction for nested containers. `color.structure.surface` is retained as an alias for `color.structure.surface.primary` for backward compatibility.
+Overrides are registered via `designerpunk.config.ts` and applied through the `SemanticOverrideResolver`. Override values are OKLCH — the same format as source.
 
 ---
 
-### Progress Concept
+## Platform Output
 
-**Purpose**: Communicate progress state and position in multi-step flows
-
-Progress tokens provide colors for multi-step flows like pagination dots and steppers. They distinguish between current position (where you are), pending steps (not yet reached), completed steps (finished), and error steps (requiring attention).
-
-**Design Note**: Progress uses green for completed steps, similar to `feedback.success`, but with different semantic intent. Feedback tokens communicate system response to user actions; progress tokens communicate position in a multi-step flow. Use progress tokens for steppers/pagination, feedback tokens for validation/alerts.
-
-#### Current State Tokens (2 tokens)
-
-Current state represents the active position ("you are here") in the flow.
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.progress.current.background` | cyan300 | Current node background - active position indicator in pagination/steppers |
-| `color.progress.current.text` | cyan400 | Current node text/icon - content inside active position indicator |
-
-#### Pending State Tokens (3 tokens)
-
-Pending state represents incomplete/upcoming steps not yet reached.
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.progress.pending.background` | white300 | Pending node background - upcoming steps |
-| `color.progress.pending.text` | gray300 | Pending node text/icon - content in upcoming steps |
-| `color.progress.pending.connector` | white200 | Pending connector line - untraversed path between incomplete steps |
-
-#### Completed State Tokens (3 tokens)
-
-Completed state represents successfully finished steps.
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.progress.completed.background` | green100 | Completed node background - finished steps |
-| `color.progress.completed.text` | green400 | Completed node text/icon - checkmark icons in finished steps |
-| `color.progress.completed.connector` | green100 | Completed connector line - traversed path showing progress made |
-
-#### Error State Tokens (2 tokens)
-
-Error state represents steps with problems requiring attention.
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.progress.error.background` | pink100 | Error node background - problematic steps |
-| `color.progress.error.text` | pink400 | Error node text/icon - error indicators in problematic steps |
-
-**Usage Guidance**:
-- Use **current** for the active position in pagination dots or stepper nodes
-- Use **pending** for upcoming/incomplete steps
-- Use **completed** for finished steps (typically with checkmark icon)
-- Use **error** for steps that encountered problems
-- Connector tokens only apply to steppers (not pagination dots)
-
----
-
-## Component Tokens
-
-Component tokens are tied to specific UI components and follow the pattern:
-
-```
-color.{component}.{variant}.{property}
-```
-
-### Avatar Component (5 tokens)
-
-Avatar component tokens reference semantic tokens (identity, contrast) rather than primitives directly.
-
-| Token Name | References | Use Case |
-|------------|------------|----------|
-| `color.avatar.human.background` | color.identity.human | Human avatar background |
-| `color.avatar.agent.background` | color.identity.agent | AI agent avatar background |
-| `color.avatar.human.icon` | color.contrast.onDark | Icon on human avatar background |
-| `color.avatar.agent.icon` | color.contrast.onDark | Icon on AI agent avatar background |
-| `color.avatar.default.border` | gray100 | Avatar border for both variants |
-
-### Badge Component (2 tokens)
-
-Badge tokens follow the `{component}.{variant}.{property}` pattern.
-
-| Token Name | Primitive | Use Case |
-|------------|-----------|----------|
-| `color.badge.notification.background` | pink400 | Notification badge background - high-visibility alert |
-| `color.badge.notification.text` | white100 | Notification badge text - 6.33:1 contrast ratio |
-
-**WCAG Compliance**: The notification badge color combination achieves a **6.33:1 contrast ratio**, exceeding WCAG AA requirements (4.5:1 for normal text).
-
----
-
-## Additional Semantic Tokens
-
-### Attention & Highlight (2 tokens)
-
-| Token Name | Primitive | RGBA Value | Use Case |
-|------------|-----------|------------|----------|
-| `color.attention` | yellow400 | rgba(199, 192, 2, 1) | Attention-grabbing elements, notifications |
-| `color.highlight` | yellow300 | rgba(249, 240, 2, 1) | Highlighted text, emphasized content |
-
-### Tech & Data (2 tokens)
-
-| Token Name | Primitive | RGBA Value | Use Case |
-|------------|-----------|------------|----------|
-| `color.tech` | purple400 | rgba(141, 30, 204, 1) | Technical elements, code snippets |
-| `color.data` | purple300 | rgba(176, 38, 255, 1) | Data visualization, metrics |
-
-### Text Hierarchy (3 tokens)
-
-| Token Name | Primitive | RGBA Value | Use Case |
-|------------|-----------|------------|----------|
-| `color.text.default` | gray300 | rgba(38, 50, 58, 1) | Primary text - body content |
-| `color.text.muted` | gray200 | rgba(94, 112, 124, 1) | Secondary text - less prominent |
-| `color.text.subtle` | gray100 | rgba(178, 188, 196, 1) | Tertiary text - very subtle elements |
-
-### Icon & Print (2 tokens)
-
-| Token Name | Primitive | RGBA Value | Use Case |
-|------------|-----------|------------|----------|
-| `color.icon.default` | gray200 | rgba(94, 112, 124, 1) | Default icon color - optical balance |
-| `color.print.default` | black100 | rgba(58, 58, 69, 1) | Print media - optimal printing quality |
-
-### Background Variant (1 token)
-
-| Token Name | Primitive | RGBA Value | Use Case |
-|------------|-----------|------------|----------|
-| `color.background.primary.subtle` | cyan100 | rgba(204, 251, 255, 1) | Subtle primary background - hover states, selections |
-
----
-
-## Glow Effects (5 tokens)
-
-Glow tokens are a separate family (not under `color.*`) because glow is an effect, not a color semantic.
-
-| Token Name | Primitive | RGBA Value | Use Case |
-|------------|-----------|------------|----------|
-| `glow.neonPurple` | purple500 | rgba(99, 21, 143, 1) | Purple glow - brand emphasis |
-| `glow.neonCyan` | cyan500 | rgba(0, 136, 143, 1) | Cyan glow - tech emphasis |
-| `glow.neonYellow` | yellow500 | rgba(143, 139, 1, 1) | Yellow glow - attention emphasis |
-| `glow.neonGreen` | green500 | rgba(0, 204, 110, 1) | Green glow - success emphasis |
-| `glow.neonPink` | pink500 | rgba(128, 21, 55, 1) | Pink glow - error emphasis |
-
----
-
-## Primitive Color Families
-
-Primitive color tokens provide the foundation for semantic tokens. All primitives use RGBA format.
-
-### Gray Scale - Neutral Surfaces and Text
-
-| Token Name | RGBA Value | Use Case |
-|------------|------------|----------|
-| `gray100` | rgba(178, 188, 196, 1) | Subtle backgrounds, muted text |
-| `gray200` | rgba(94, 112, 124, 1) | Secondary text, borders |
-| `gray300` | rgba(38, 50, 58, 1) | Primary text, prominent borders |
-| `gray400` | rgba(24, 34, 40, 1) | Strong text, container backgrounds |
-| `gray500` | rgba(16, 22, 26, 1) | Deep backgrounds, high contrast text |
-
-### Black Scale - Deep Backgrounds and Containers
-
-| Token Name | RGBA Value (Base) | RGBA Value (WCAG) | Use Case |
-|------------|-------------------|-------------------|----------|
-| `black100` | rgba(58, 58, 69, 1) | rgba(82, 82, 92, 1) | Subtle container backgrounds |
-| `black200` | rgba(34, 34, 42, 1) | rgba(46, 46, 56, 1) | Container backgrounds, surfaces |
-| `black300` | rgba(10, 10, 15, 1) | rgba(10, 10, 15, 1) | Primary backgrounds, deep containers |
-| `black400` | rgba(6, 6, 10, 1) | rgba(6, 6, 10, 1) | Very dark system backgrounds |
-| `black500` | rgba(0, 0, 0, 1) | rgba(0, 0, 0, 1) | Pure black, maximum contrast |
-
-### White Scale - Light Surfaces and Primary Text
-
-| Token Name | RGBA Value | Use Case |
-|------------|------------|----------|
-| `white100` | rgba(255, 255, 255, 1) | Pure white, maximum contrast, primary surfaces |
-| `white200` | rgba(245, 245, 250, 1) | Near-white, subtle surface variations |
-| `white300` | rgba(232, 232, 240, 1) | Light gray-white, secondary surfaces |
-| `white400` | rgba(197, 197, 213, 1) | Medium gray-white, borders and dividers |
-| `white500` | rgba(153, 153, 171, 1) | Dark gray-white, muted text |
-
-### Purple Scale - Data, Tech, and Informational States
-
-| Token Name | RGBA Value | Use Case |
-|------------|------------|----------|
-| `purple100` | rgba(243, 224, 255, 1) | Subtle backgrounds, WCAG info feedback backgrounds |
-| `purple200` | rgba(217, 138, 255, 1) | Accents, secondary elements |
-| `purple300` | rgba(176, 38, 255, 1) | Data visualization, tech elements |
-| `purple400` | rgba(141, 30, 204, 1) | Tech text, secondary tech elements |
-| `purple500` | rgba(99, 21, 143, 1) | WCAG info feedback text, neon glow effects |
-
-### Green Scale - Success States
-
-| Token Name | RGBA Value (Base) | RGBA Value (WCAG) | Use Case |
-|------------|-------------------|-------------------|----------|
-| `green100` | rgba(230, 255, 245, 1) | rgba(232, 245, 233, 1) | Subtle success backgrounds |
-| `green200` | rgba(128, 255, 187, 1) | rgba(76, 175, 80, 1) | Success highlights |
-| `green300` | rgba(51, 255, 153, 1) | rgba(56, 142, 60, 1) | Success accents |
-| `green400` | rgba(0, 255, 136, 1) | rgba(27, 94, 32, 1) | **Primary success** - electric green |
-| `green500` | rgba(0, 204, 110, 1) | rgba(13, 48, 16, 1) | Neon green glow effects |
-
-### Pink Scale - Error States
-
-| Token Name | RGBA Value (Base) | RGBA Value (WCAG) | Use Case |
-|------------|-------------------|-------------------|----------|
-| `pink100` | rgba(255, 218, 232, 1) | rgba(252, 228, 236, 1) | Subtle error backgrounds |
-| `pink200` | rgba(255, 130, 180, 1) | rgba(233, 30, 99, 1) | Error highlights |
-| `pink300` | rgba(255, 42, 109, 1) | rgba(194, 24, 91, 1) | Base pink |
-| `pink400` | rgba(204, 34, 87, 1) | rgba(136, 14, 79, 1) | **Primary error** - hot pink |
-| `pink500` | rgba(128, 21, 55, 1) | rgba(77, 8, 41, 1) | Neon pink glow effects |
-
-### Orange Scale - Warning States
-
-| Token Name | RGBA Value (Base) | RGBA Value (WCAG) | Use Case |
-|------------|-------------------|-------------------|----------|
-| `orange100` | rgba(255, 229, 220, 1) | rgba(255, 243, 224, 1) | Subtle warning backgrounds |
-| `orange200` | rgba(255, 184, 160, 1) | rgba(245, 158, 0, 1) | Warm accents |
-| `orange300` | rgba(255, 107, 53, 1) | rgba(184, 117, 0, 1) | Approachable warnings |
-| `orange400` | rgba(204, 85, 41, 1) | rgba(140, 90, 0, 1) | **Primary warning** |
-| `orange500` | rgba(143, 60, 29, 1) | rgba(77, 49, 0, 1) | Warning text on light backgrounds |
-
-### Yellow Scale - Attention and Highlights
-
-| Token Name | RGBA Value (Base) | RGBA Value (WCAG) | Use Case |
-|------------|-------------------|-------------------|----------|
-| `yellow100` | rgba(254, 251, 204, 1) | rgba(254, 251, 204, 1) | Subtle highlight backgrounds |
-| `yellow200` | rgba(252, 246, 128, 1) | rgba(252, 246, 128, 1) | Warning highlights |
-| `yellow300` | rgba(249, 240, 2, 1) | rgba(249, 240, 2, 1) | **Bright yellow** - high-energy CTAs |
-| `yellow400` | rgba(199, 192, 2, 1) | rgba(199, 192, 2, 1) | **Attention color** |
-| `yellow500` | rgba(143, 139, 1, 1) | rgba(143, 139, 1, 1) | Neon yellow glow effects |
-
-### Cyan Scale - Primary Action and Navigation
-
-| Token Name | RGBA Value | Use Case |
-|------------|------------|----------|
-| `cyan100` | rgba(204, 251, 255, 1) | Subtle action backgrounds, hover states |
-| `cyan200` | rgba(128, 246, 255, 1) | Action accents, link highlights |
-| `cyan300` | rgba(0, 240, 255, 1) | **Primary action color** - CTAs, main buttons |
-| `cyan400` | rgba(0, 192, 204, 1) | Selection states, selected item indicators |
-| `cyan500` | rgba(0, 136, 143, 1) | **Navigation actions** - links, breadcrumbs |
-
-### Teal Scale - Informational States
-
-| Token Name | RGBA Value (Base) | RGBA Value (WCAG) | Use Case |
-|------------|-------------------|-------------------|----------|
-| `teal100` | rgba(217, 232, 234, 1) | rgba(217, 232, 234, 1) | Subtle info backgrounds |
-| `teal200` | rgba(77, 155, 165, 1) | rgba(77, 155, 165, 1) | Info accents |
-| `teal300` | rgba(26, 83, 92, 1) | rgba(0, 240, 255, 1) | Secondary UI elements |
-| `teal400` | rgba(21, 66, 74, 1) | rgba(21, 66, 74, 1) | **Info strong** - dark teal |
-| `teal500` | rgba(15, 46, 51, 1) | rgba(15, 46, 51, 1) | Info text on light backgrounds |
-
----
-
-## Scrim Concept
-
-Scrim tokens provide dark translucent overlays for floating surfaces over content. They use the **modifier architecture**: a base color primitive combined with an opacity modifier, resolved by generators into platform-native RGBA output.
-
-### Available Scrim Tokens
-
-| Token | Base Color | Opacity Modifier | Output | Mode-Invariant |
-|-------|-----------|-----------------|--------|----------------|
-| `color.scrim.standard` | black500 | opacity080 (80%) | `rgba(0, 0, 0, 0.80)` | Yes |
-
-### Mode-Invariance
-
-Scrim tokens are marked `modeInvariant: true` — they produce identical output in light and dark modes. Scrims dim content regardless of theme, so mode-switching is inappropriate.
-
-### Modifier Pattern
-
-Scrim tokens use `SemanticToken.modifiers` rather than the older `primitiveReferences.color` + `primitiveReferences.opacity` composition pattern. The modifier pattern maintains Rosetta traceability through the primitive→semantic reference chain:
-
-```typescript
-{
-  name: 'color.scrim.standard',
-  primitiveReferences: { value: 'black500' },
-  modifiers: [{ type: 'opacity', reference: 'opacity080' }],
-  modeInvariant: true
-}
-```
-
-### Use Cases
-
-- Pagination pill backgrounds over content
-- Modal backdrop overlays
-- Floating toolbar backgrounds
-- Dense overlay surfaces
-
-### Platform Output
-
-- **Web**: `rgba(0, 0, 0, 0.80)`
-- **iOS**: `UIColor(red: 0, green: 0, blue: 0, alpha: 0.80)`
-- **Android**: `Color.argb(204, 0, 0, 0)`
-
----
-
-## Accessibility & WCAG Compliance
-
-### Mode-Aware Values
-
-Color tokens include mode-aware values that automatically adapt to light/dark modes and WCAG compliance levels:
-
-- **Base Mode**: Standard color values optimized for visual appeal (cyberpunk aesthetic)
-- **WCAG Mode**: Adjusted color values that guarantee WCAG 2.1 AA compliance
-
-### Contrast Requirements
-
-All WCAG theme color combinations meet **WCAG 2.1 AA** contrast requirements:
-
-- **Normal text (< 18pt)**: Minimum 4.5:1 contrast ratio
-- **Large text (≥ 18pt or ≥ 14pt bold)**: Minimum 3:1 contrast ratio
-- **UI components and graphical objects**: Minimum 3:1 contrast ratio
-
-### Usage Guidelines for Accessibility
-
-**Do**:
-- Use semantic color tokens for consistent accessible color combinations
-- Use WCAG theme variants when accessibility compliance is required
-- Test color combinations with WCAG contrast checkers
-- Provide text alternatives for color-coded information
-
-**Don't**:
-- Rely solely on color to convey meaning (use icons or text)
-- Use base theme colors for text without verifying contrast
-- Use color alone to indicate interactive states
-- Ignore WCAG mode values when accessibility is required
-
----
-
-## Cross-Platform Usage
-
-### RGBA Format
-
-All color tokens use RGBA format for native alpha channel support and direct cross-platform color API mapping.
-
-**Platform Conversion**:
-- **Web**: `rgba(r, g, b, a)` CSS format
-- **iOS**: `UIColor(red: r/255, green: g/255, blue: b/255, alpha: a)`
-- **Android**: `Color.argb(a, r, g, b)` or `0xAARRGGBB` format
-
-### Platform-Specific Output Examples
-
-#### Web (CSS Custom Properties)
+### Web (CSS)
 
 ```css
-:root {
-  /* Semantic Concept Tokens */
-  --color-feedback-success-text: rgba(0, 255, 136, 1);
-  --color-feedback-error-text: rgba(204, 34, 87, 1);
-  --color-action-primary: rgba(0, 240, 255, 1);
-  --color-contrast-on-dark: rgba(255, 255, 255, 1);
-  --color-structure-canvas: rgba(255, 255, 255, 1);
-  
-  /* Component Tokens */
-  --color-avatar-human-background: rgba(255, 107, 53, 1);
-  --color-badge-notification-background: rgba(204, 34, 87, 1);
-}
+/* Channel primitives (enable runtime composition) */
+--pink-hue: 10;
+--pink-l300: 0.65;
+--pink-c300: 0.242;
+
+/* Composed colors */
+--pink-300: oklch(0.65 0.242 10);
+
+/* Product composition at runtime */
+--overlay: oklch(from var(--pink-300) l c h / 0.56);
 ```
 
-#### iOS (Swift)
+### iOS (ChromaKit)
 
 ```swift
-struct DesignTokens {
-    // Semantic Concept Tokens
-    static let colorFeedbackSuccessText = UIColor(red: 0, green: 1, blue: 0.53, alpha: 1)
-    static let colorFeedbackErrorText = UIColor(red: 0.8, green: 0.13, blue: 0.34, alpha: 1)
-    static let colorActionPrimary = UIColor(red: 0, green: 0.94, blue: 1, alpha: 1)
-    
-    // Component Tokens
-    static let colorAvatarHumanBackground = UIColor(red: 1, green: 0.42, blue: 0.21, alpha: 1)
-}
+static let pink300 = Color.oklch(0.65, 0.242, 10.0)
 ```
 
-#### Android (Kotlin)
+### Android (colormath)
 
 ```kotlin
-object DesignTokens {
-    // Semantic Concept Tokens
-    val colorFeedbackSuccessText = Color.argb(255, 0, 255, 136)
-    val colorFeedbackErrorText = Color.argb(255, 204, 34, 87)
-    val colorActionPrimary = Color.argb(255, 0, 240, 255)
-    
-    // Component Tokens
-    val colorAvatarHumanBackground = Color.argb(255, 255, 107, 53)
-}
+val pink300 = Oklch(0.65f, 0.242f, 10.0f).toComposeColor()
+```
+
+### DTCG / Figma
+
+sRGB hex output (backward-compatible):
+```json
+{ "pink-300": { "$value": "#ff2a6d", "$type": "color" } }
 ```
 
 ---
 
-## Usage Guidelines
+## Hue Arithmetic
 
-### When to Use Semantic Concept Tokens
+Hue relationships are a **designed-in capability** (not tokenized):
 
-Use semantic concept tokens for:
-- **Feedback states**: Success, error, warning, info messages and indicators
-- **Identity differentiation**: Human vs agent visual distinction
-- **Action emphasis**: Primary vs secondary interactive elements
-- **Contrast requirements**: Content on colored backgrounds
-- **Structural elements**: Canvas, surface, and border colors
+| Relationship | Calculation | Use Case |
+|-------------|-------------|----------|
+| Complementary | hue + 180° | Maximum contrast between families |
+| Analogous | hue ± 30° | Harmonious adjacent families |
+| Triadic | hue + 120°, hue + 240° | Balanced three-family palettes |
 
-```typescript
-// Feedback example
-<Alert 
-  background="color.feedback.success.background"
-  textColor="color.feedback.success.text"
-  borderColor="color.feedback.success.border"
->
-  Success!
-</Alert>
+These calculations can inform color strategy but don't produce tokens. Document in spec rationale when used.
 
-// Action example
-<Button 
-  background="color.action.primary"
-  textColor="color.contrast.onAction"
->
-  Submit
-</Button>
-```
+---
 
-### When to Use Component Tokens
+## Validator Constraints
 
-Use component tokens when:
-- Building component-specific styling
-- Need component-scoped token discovery
-- Component has unique variants (human/agent, notification)
+All color tokens are validated at authoring time:
 
-```typescript
-// Avatar using component tokens
-<Avatar 
-  background="color.avatar.human.background"
-  iconColor="color.avatar.human.icon"
-/>
-```
+| Constraint | Rule | Applies To |
+|-----------|------|------------|
+| Lightness monotonicity | L[n] > L[n+1] for adjacent steps | All families |
+| Minimum step distance | |L[n] - L[n+1]| ≥ 0.08 | All families |
+| Chroma monotonicity (300→500) | C[n] ≥ C[n+1] for steps 300→500 | Chromatic families |
+| sRGB gamut compliance | Resolved oklch(L,C,H) within sRGB | All tokens |
+| P3 gamut awareness | Resolved value exceeds sRGB | Warning (not error) |
+| Hue consistency | All tokens in family share one hue | All families |
+| Neutral chroma ceiling | C ≤ 0.035 | White, gray, black |
+| Neutral partition gaps | White→gray ≥0.08, gray→black ≥0.04 | Neutral families |
 
-### When to Use Primitive Tokens
+---
 
-Use primitive color tokens when:
-- No semantic token exists for your use case
-- Building new component-level tokens that reference primitives
-- Creating new semantic color patterns
-- Need specific color variant (100-500) for visual hierarchy
+## WCAG Compliance
 
-```typescript
-// Component-level token referencing primitive
-export const chipTokens = {
-  background: 'purple100',  // Light purple background
-  border: 'purple200'       // Medium purple border
-};
-```
+### Contrast Validation
 
-### Color Semantic Meanings
+WCAG contrast is validated by converting OKLCH → sRGB relative luminance → contrast ratio. This is a build-time check, not a runtime concern.
 
-| Color | Meaning | Use For | Don't Use For |
-|-------|---------|---------|---------------|
-| **Cyan** | Action | Primary buttons, navigation links, action elements | Status indicators |
-| **Purple** | Data/Tech | Data visualization, code blocks, tech elements, WCAG info feedback | Primary actions |
-| **Green** | Success | Success messages, confirmation, positive feedback | Neutral info, warnings |
-| **Pink** | Error | Error messages, delete buttons, critical warnings | Success states, neutral info |
-| **Orange** | Warning | Warning messages, caution buttons, important notices | Success states, errors |
-| **Yellow** | Attention | Highlights, emphasis, attention-grabbing elements | Status indicators |
-| **Teal** | Info | Info messages, help text, neutral notifications, WCAG action overrides | Success states |
+- **Normal text**: Minimum 4.5:1
+- **Large text**: Minimum 3:1
+- **UI components**: Minimum 3:1
+
+### Perceptual Tolerance (Product Tokens)
+
+When authoring product color tokens, the System-First Value Selection rule applies (see Product-Token-Governance.md). Color tolerance uses **CIEDE2000 ΔE₀₀** — not RGB channel comparison.
+
+---
+
+## Source Locations
+
+| Content | Path |
+|---------|------|
+| Channel primitives (hues) | `src/tokens/color/channels/hues.ts` |
+| Channel primitives (lightness) | `src/tokens/color/channels/lightness/` |
+| Channel primitives (chroma) | `src/tokens/color/channels/chroma/` |
+| Composed colors | `src/tokens/color/primitives/` |
+| Semantic mappings | `src/tokens/semantic/ColorTokens.ts` |
+| Theme overrides | `src/tokens/themes/` |
+| Blend utilities | `src/blend/OklchBlendCalculator.ts` |
+| Validators | `src/color/OklchValidator.ts`, `src/color/OklchConverter.ts` |
 
 ---
 
 ## Related Documentation
 
-- **Design Authority**: `.kiro/specs/051-semantic-token-naming-restructure/design-outline.md`
-- **Semantic Color Source**: `src/tokens/semantic/ColorTokens.ts`
-- **Primitive Color Source**: `src/tokens/ColorTokens.ts`
-- **Token System Overview**: `docs/token-system-overview.md`
-- **Component Development Guide**: `.kiro/steering/Component-Development-Guide.md`
 - **Token Governance**: `.kiro/steering/Token-Governance.md`
+- **Product Token Governance**: `.kiro/steering/Product-Token-Governance.md` (System-First Value Selection)
+- **Rosetta Architecture**: `.kiro/steering/Rosetta-System-Architecture.md`
+- **Component Development Guide**: `.kiro/steering/Component-Development-Guide.md`
 - **WCAG Guidelines**: [Web Content Accessibility Guidelines 2.1](https://www.w3.org/WAI/WCAG21/quickref/)
-
----
-
-*This guide provides complete reference for color tokens organized by semantic concept with usage guidance that enables consistent, accessible color usage across all platforms.*

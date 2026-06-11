@@ -198,14 +198,14 @@ contracts:
     category: interaction
     description: Hover feedback on inactive segments only (web)
     behavior: |
-      On hover over an inactive segment, background shows
-      blend.containerHoverDarker (4% darker). No hover feedback on the
+      On hover over an inactive segment, background darkens subtly
+      (OKLCH ΔL 0.02–0.05, chroma preserved). No hover feedback on the
       active segment — it's already selected, and hover would falsely
       suggest "click me" for a no-op action. Web platform only.
     wcag: "1.4.13 Content on Hover or Focus"
     platforms: [web]
     validation:
-      - Inactive segment shows hover background on mouse enter
+      - Inactive segment shows hover background on mouse enter (ΔL 0.02–0.05)
       - Hover background reverts on mouse leave
       - Active segment shows no hover feedback
     test_approach: |

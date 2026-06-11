@@ -164,7 +164,7 @@ interface DesignerPunkExtensions {
 ```json
 {
   "container": {
-    "$value": { "offsetX": "0px", "offsetY": "4px", "blur": "12px", "spread": "0px", "color": "rgba(0, 0, 0, 0.3)" },
+    "$value": { "offsetX": "0px", "offsetY": "4px", "blur": "12px", "spread": "0px", "color": "#0000004d" },
     "$type": "shadow",
     "$extensions": {
       "designerpunk": {
@@ -211,7 +211,7 @@ interface DesignerPunkExtensions {
 ```json
 {
   "purple300": {
-    "$value": "rgba(176, 38, 255, 1)",
+    "$value": "#b026ff",
     "$type": "color",
     "$description": "Bright purple for primary brand color and focus states",
     "$extensions": {
@@ -222,6 +222,8 @@ interface DesignerPunkExtensions {
   }
 }
 ```
+
+**Note**: DTCG color values are output as sRGB hex, converted from the OKLCH source values. This ensures compatibility with DTCG-consuming tools (Figma, Style Dictionary, Tokens Studio) that expect sRGB color format. The canonical OKLCH values are the source of truth in `src/tokens/color/`.
 
 ### Color (semantic alias)
 
@@ -329,7 +331,7 @@ interface DesignerPunkExtensions {
       "offsetY": "4px",
       "blur": "12px",
       "spread": "0px",
-      "color": "rgba(0, 0, 0, 0.3)"
+      "color": "#0000004d"
     },
     "$type": "shadow",
     "$description": "Container shadow",

@@ -425,9 +425,9 @@ describe('Semantic Color Tokens - Palette Update', () => {
       expect(colorTokens['glow.neonGreen']).toBeDefined();
     });
 
-    it('should reference green500 primitive for neon green glow', () => {
+    it('should reference green300 primitive for neon green glow (highest chroma)', () => {
       const token = colorTokens['glow.neonGreen'];
-      expect(token.primitiveReferences.value).toBe('green500');
+      expect(token.primitiveReferences.value).toBe('green300');
     });
 
     it('should have glow.neonPink token', () => {
@@ -439,7 +439,7 @@ describe('Semantic Color Tokens - Palette Update', () => {
       expect(token.primitiveReferences.value).toBe('pink500');
     });
 
-    it('should verify green500 primitive exists', () => {
+    it('should verify green300 primitive exists', () => {
       const token = colorTokens['glow.neonGreen'];
       const primitiveName = token.primitiveReferences.value;
       expect(primitiveColorTokens).toHaveProperty(primitiveName);

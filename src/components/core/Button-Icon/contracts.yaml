@@ -46,17 +46,17 @@ contracts:
 
   interaction_hover:
     category: interaction
-    description: Visual feedback on hover
+    description: Perceptibly darker on hover
     behavior: |
       On desktop platforms, component shows visual feedback on hover.
-      Treatment varies by variant:
-      - Primary: blend.hoverDarker on background
+      Treatment varies by variant (all use OKLCH ΔL 0.02–0.05, chroma preserved):
+      - Primary: background darkens
       - Secondary: color.background.primary.subtle bg + 2px border
-      - Tertiary: blend.hoverDarker on icon
+      - Tertiary: icon color darkens
     wcag: "1.4.13 Content on Hover or Focus"
     platforms: [web]
     validation:
-      - Visual change on mouse enter
+      - Visual change on mouse enter (ΔL 0.02–0.05)
       - Visual reverts on mouse leave
       - Hover treatment matches variant specification
     test_approach: |
@@ -66,18 +66,18 @@ contracts:
 
   interaction_pressed:
     category: interaction
-    description: Visual feedback when pressed
+    description: Distinctly darker when pressed
     behavior: |
       Component shows visual feedback during active press.
-      Treatment varies by variant:
-      - Primary: blend.pressedDarker on background
+      Treatment varies by variant (all use OKLCH ΔL 0.05–0.10, chroma preserved):
+      - Primary: background darkens
       - Secondary: color.background.primary.subtle bg + 2px border
-      - Tertiary: blend.pressedDarker on icon
+      - Tertiary: icon color darkens
       Platform-specific: iOS scale animation, Android ripple effect.
     wcag: null
     platforms: [web, ios, android]
     validation:
-      - Visual feedback shown during press
+      - Visual feedback shown during press (ΔL 0.05–0.10)
       - Platform-appropriate animation applied
     test_approach: |
       - Render button and simulate press

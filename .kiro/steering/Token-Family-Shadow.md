@@ -332,7 +332,7 @@ Shadow tokens translate to CSS `box-shadow` format.
     var(--shadow-container-offset-x) 
     var(--shadow-container-offset-y) 
     var(--shadow-container-blur) 
-    rgba(0, 0, 0, var(--shadow-container-opacity));
+    oklch(0 0 0 / var(--shadow-container-opacity));
 }
 ```
 
@@ -341,28 +341,28 @@ Shadow tokens translate to CSS `box-shadow` format.
 ```css
 :root {
   /* shadow.container */
-  --shadow-container: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-container: 0px 4px 12px oklch(0 0 0 / 0.3);
   --shadow-container-offset-x: 0px;
   --shadow-container-offset-y: 4px;
   --shadow-container-blur: 12px;
   --shadow-container-opacity: 0.3;
-  --shadow-container-color: rgb(0, 0, 0);
+  --shadow-container-color: oklch(0 0 0);
   
   /* shadow.modal */
-  --shadow-modal: 0px 8px 16px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0px 8px 16px oklch(0 0 0 / 0.35);
   --shadow-modal-offset-x: 0px;
   --shadow-modal-offset-y: 8px;
   --shadow-modal-blur: 16px;
   --shadow-modal-opacity: 0.35;
-  --shadow-modal-color: rgb(0, 0, 0);
+  --shadow-modal-color: oklch(0 0 0);
   
   /* shadow.fab */
-  --shadow-fab: 12px 16px 4px rgba(20, 25, 40, 0.4);
+  --shadow-fab: 12px 16px 4px oklch(0.18 0.02 260 / 0.4);
   --shadow-fab-offset-x: 12px;
   --shadow-fab-offset-y: 16px;
   --shadow-fab-blur: 4px;
   --shadow-fab-opacity: 0.4;
-  --shadow-fab-color: rgb(20, 25, 40);
+  --shadow-fab-color: oklch(0.18 0.02 260);
 }
 ```
 
@@ -371,7 +371,7 @@ Shadow tokens translate to CSS `box-shadow` format.
 - **Full Support**: Web supports all shadow properties (offsetX, offsetY, blur, opacity, color)
 - **Spread Property**: Omitted for cross-platform consistency (iOS/Android don't support spread)
 - **Performance**: Use CSS custom properties for efficient shadow updates
-- **Browser Support**: Modern browsers support `box-shadow` with rgba colors
+- **Browser Support**: Modern browsers support `box-shadow` with OKLCH colors (Chrome 111+, Safari 15.4+, Firefox 113+)
 
 ### iOS (Swift)
 
@@ -430,7 +430,7 @@ enum ShadowTokens {
     offset: CGSize(width: 0, height: 4),
     radius: 6,  // blur / 2 for iOS
     opacity: 0.3,
-    color: UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.0)
+    color: Color.oklch(0.0, 0.0, 0.0)
   )
   
   /// Modal shadow with no horizontal offset, 8px vertical offset, 16px blur, slightly darker opacity
@@ -438,7 +438,7 @@ enum ShadowTokens {
     offset: CGSize(width: 0, height: 8),
     radius: 8,  // blur / 2 for iOS
     opacity: 0.35,
-    color: UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.0)
+    color: Color.oklch(0.0, 0.0, 0.0)
   )
   
   /// Dramatic shadow with 12px right offset, 16px down offset, 4px blur, darker opacity, warm (blue-gray) tint
@@ -446,7 +446,7 @@ enum ShadowTokens {
     offset: CGSize(width: 12, height: 16),
     radius: 2,  // blur / 2 for iOS
     opacity: 0.4,
-    color: UIColor(red: 0.078, green: 0.098, blue: 0.157, alpha: 1.0)
+    color: Color.oklch(0.18, 0.02, 260.0)
   )
 }
 ```

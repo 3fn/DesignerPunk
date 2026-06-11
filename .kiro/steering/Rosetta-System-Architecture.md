@@ -58,68 +58,78 @@ This applies to **all token types**: primitive, semantic, and component tokens.
 
 ---
 
-## RGBA Color Pipeline
+## OKLCH Color Pipeline
 
-Color tokens use RGBA format at the primitive level, enabling native alpha channel support and direct mapping to platform-specific color APIs.
+Color tokens use **OKLCH** (perceptually uniform color space) with a channel-primitive composition model. Colors are authored as independent hue, lightness, and chroma channels, composed into primitives, and generated to platform-native formats.
 
-### RGBA Architecture
+### OKLCH Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         RGBA COLOR PIPELINE                                  │
+│                         OKLCH COLOR PIPELINE                                 │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
-│   PRIMITIVE DEFINITION (Source of Truth)                                     │
-│   └── src/tokens/ColorTokens.ts                                             │
-│       └── Format: rgba(R, G, B, A) where R,G,B are 0-255, A is 0.0-1.0     │
-│       └── Example: 'purple-300': 'rgba(176, 38, 255, 1)'                    │
+│   CHANNEL PRIMITIVES (Source of Truth)                                       │
+│   └── src/tokens/color/channels/                                            │
+│       ├── hues.ts: one hue per family (e.g., pinkHue = 10.0)               │
+│       ├── lightness/: 5 steps per family (e.g., pinkL300 = 0.65)           │
+│       └── chroma/: 5 steps per family (e.g., pinkC300 = 0.242)            │
+│                                                                              │
+│                              │                                               │
+│                              ▼                                               │
+│                                                                              │
+│   COMPOSITION (Static, at module load)                                       │
+│   └── src/tokens/color/primitives/                                          │
+│       └── pink300 = oklch(pinkL300, pinkC300, pinkHue)                     │
 │                                                                              │
 │                              │                                               │
 │                              ▼                                               │
 │                                                                              │
 │   SEMANTIC INHERITANCE                                                       │
-│   └── src/tokens/semantic/ColorSemanticTokens.ts                            │
-│       └── References primitives: 'color.action.primary': 'cyan-300'       │
-│       └── Theme overrides: wcag/ + dark-wcag/ → 4-context resolution (Spec 080)    │
-│       └── Baked-in alpha: 'color.structure.border.subtle': 'rgba(...,0.48)'│
+│   └── src/tokens/semantic/ColorTokens.ts                                    │
+│       └── References primitives: 'color.action.primary': 'cyan300'         │
+│       └── Theme overrides: OKLCH values with preserved hue                  │
+│       └── Mode resolution: light/dark/wcag contexts (Spec 080)             │
 │                                                                              │
 │                              │                                               │
 │                              ▼                                               │
 │                                                                              │
 │   PLATFORM GENERATION                                                        │
-│   └── src/providers/*FormatGenerator.ts                                     │
-│       ├── Web: rgba(R, G, B, A) → CSS rgba() format                         │
-│       ├── iOS: rgba(R, G, B, A) → UIColor(red:green:blue:alpha:)           │
-│       └── Android: rgba(R, G, B, A) → Color.argb(A×255, R, G, B)           │
+│   └── src/generators/*FormatGenerator.ts                                    │
+│       ├── Web: oklch(L C H) + channel custom properties                     │
+│       ├── iOS: Color.oklch(L, C, H) via ChromaKit                          │
+│       ├── Android: Oklch(L, C, H).toComposeColor() via colormath           │
+│       ├── DTCG/Figma: OKLCH → sRGB hex conversion                          │
+│       └── Token-index: OKLCH metadata on composed entries                   │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Platform Output Formats
 
-Each platform generator transforms RGBA values to native color formats:
+Each platform generator transforms OKLCH channel values to native color formats:
 
-| Platform | Input | Output Format | Example |
-|----------|-------|---------------|---------|
-| **Web** | `rgba(176, 38, 255, 1)` | CSS `rgba()` | `--purple-300: rgba(176, 38, 255, 1);` |
-| **iOS** | `rgba(176, 38, 255, 1)` | `UIColor(red:green:blue:alpha:)` | `UIColor(red: 0.69, green: 0.15, blue: 1.00, alpha: 1.00)` |
-| **Android** | `rgba(176, 38, 255, 1)` | `Color.argb()` | `Color.argb(255, 176, 38, 255)` |
+| Platform | Source | Output Format | Example |
+|----------|--------|---------------|---------|
+| **Web** | `oklch(0.60, 0.316, 307)` | CSS `oklch()` + channel vars | `--purple-300: oklch(0.60 0.316 307);` |
+| **iOS** | `oklch(0.60, 0.316, 307)` | `Color.oklch()` via ChromaKit | `Color.oklch(0.60, 0.316, 307.0)` |
+| **Android** | `oklch(0.60, 0.316, 307)` | `Oklch().toComposeColor()` | `Oklch(0.60f, 0.316f, 307.0f).toComposeColor()` |
+| **DTCG/Figma** | `oklch(0.60, 0.316, 307)` | sRGB hex (converted) | `#b026ff` |
 
 ### Conversion Rules
 
 **Web (CSS)**:
-- RGBA values pass through unchanged
-- Format: `rgba(R, G, B, A)` where R,G,B are 0-255, A is 0.0-1.0
+- OKLCH values output as native CSS `oklch()` function
+- Format: `oklch(L C H)` where L is 0.0-1.0, C is chroma, H is hue degrees
+- Alpha variant: `oklch(L C H / A)` where A is 0.0-1.0
 
 **iOS (Swift)**:
-- RGB values normalized to 0.0-1.0 range (divide by 255)
-- Alpha preserved as-is (already 0.0-1.0)
-- Format: `UIColor(red: R/255, green: G/255, blue: B/255, alpha: A)`
+- OKLCH values output via ChromaKit extension
+- Format: `Color.oklch(L, C, H)` or `Color.oklch(L, C, H, opacity: A)`
 
 **Android (Kotlin)**:
-- Alpha converted from 0.0-1.0 to 0-255 range (multiply by 255)
-- RGB values preserved as integers
-- Format: `Color.argb(A×255, R, G, B)`
+- OKLCH values output via colormath library
+- Format: `Oklch(L, C, H).toComposeColor()` or with `.copy(alpha = A)`
 
 ### Baked-In Alpha Values
 
@@ -127,13 +137,13 @@ Some semantic tokens have baked-in alpha values for specific use cases:
 
 ```typescript
 // Example: Subtle border with 48% opacity
-'color.structure.border.subtle': 'rgba(184, 182, 200, 0.48)'
+'color.structure.border.subtle': 'oklch(0.78 0.02 280 / 0.48)'
 ```
 
 **Platform Output**:
-- **Web**: `--color-structure-border-subtle: rgba(184, 182, 200, 0.48);`
-- **iOS**: `UIColor(red: 0.72, green: 0.71, blue: 0.78, alpha: 0.48)`
-- **Android**: `Color.argb(122, 184, 182, 200)` (122 = 0.48 × 255)
+- **Web**: `--color-structure-border-subtle: oklch(0.78 0.02 280 / 0.48);`
+- **iOS**: `Color.oklch(0.78, 0.02, 280.0, opacity: 0.48)`
+- **Android**: `Oklch(0.78f, 0.02f, 280.0f).toComposeColor().copy(alpha = 0.48f)`
 
 ### Entry Points
 
@@ -312,7 +322,7 @@ Semantic color tokens are resolved into light and dark mode sets before generati
 │                                                                              │
 │   Orchestration (generateTokenFiles.ts)                                      │
 │   ├── Level 2 first: produces light + dark token name sets                  │
-│   ├── Level 1 second: resolves each set's names to rgba values             │
+│   ├── Level 1 second: resolves each set's names to OKLCH values            │
 │   ├── Passes both resolved sets to generators                               │
 │   └── Generators receive GenerationOptions with required semanticTokens     │
 │       and darkSemanticTokens                                                │
@@ -350,18 +360,18 @@ Mode-resolved tokens are transformed into platform-specific formats. Generators 
 │   └── Location: src/generators/TokenFileGenerator.ts                        │
 │                                                                              │
 │   Platform Format Generators                                                 │
-│   ├── WebFormatGenerator: CSS custom properties (RGBA format)               │
+│   ├── WebFormatGenerator: CSS custom properties (OKLCH format)              │
 │   │   └── Mode-aware: light-dark(lightVal, darkVal) when values differ     │
-│   ├── iOSFormatGenerator: Swift constants (UIColor format)                  │
+│   ├── iOSFormatGenerator: Swift constants (Color.oklch via ChromaKit)       │
 │   │   └── Mode-aware: UIColor { traitCollection } when values differ       │
-│   ├── AndroidFormatGenerator: Kotlin constants (Color.argb format)          │
+│   ├── AndroidFormatGenerator: Kotlin constants (Oklch().toComposeColor())   │
 │   │   └── Mode-aware: name_light + name_dark when values differ            │
 │   └── Location: src/providers/*FormatGenerator.ts                           │
 │                                                                              │
 │   Color Format Conversion                                                    │
-│   ├── parseRgbaString(): Parse RGBA string to components                    │
-│   ├── rgbaStringToUIColor(): Convert to iOS UIColor format                  │
-│   ├── rgbaStringToColorArgb(): Convert to Android Color.argb format         │
+│   ├── formatOklchValue(): Format OKLCH channels to platform string          │
+│   ├── oklchToSwiftColor(): Convert to iOS Color.oklch format                │
+│   ├── oklchToComposeColor(): Convert to Android Oklch().toComposeColor()    │
 │   └── formatColorValue(): Handle mode-aware color objects                   │
 │                                                                              │
 │   Utility Generators                                                         │
@@ -501,7 +511,7 @@ export const ComponentNameTokens = defineComponentTokens({
 | **Theme Generators** | `generateWebThemeBlocks`, `generateSwiftThemeTypes`, `generateKotlinThemeTypes` | Platform-specific theme-aware output |
 | **Output** | Configured output dir (default: `dist/`) | Generated platform files |
 | **Component Tokens** | `src/build/tokens/defineComponentTokens.ts` | Component token authoring |
-| **Color Tokens** | `src/tokens/ColorTokens.ts` | RGBA primitive definitions |
+| **Color Tokens** | `src/tokens/ColorTokens.ts` | OKLCH channel-primitive definitions |
 | **Pipeline CLI** | `npx designerpunk generate` | Run pipeline from any project |
 
 **Note for product repos**: These paths reference `@3fn/core` package source. In product repos consuming the package, pipeline subsystems are accessed via the CLI (`npx designerpunk generate`) and the `defineConfig()` API — not by importing these files directly. To inspect pipeline internals: `node_modules/@3fn/core/src/`.
@@ -565,7 +575,7 @@ get_document_full({ path: ".kiro/steering/Rosetta-System-Architecture.md" })
 
 # Get specific sections
 get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Token Pipeline Architecture" })
-get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "RGBA Color Pipeline" })
+get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "OKLCH Color Pipeline" })
 get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Component Token Integration" })
 get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Subsystem Entry Points Summary" })
 

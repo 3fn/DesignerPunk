@@ -9,20 +9,21 @@ contracts:
 
   interaction_pressable:
     category: interaction
-    description: Inactive tabs respond to press with blend feedback
+    description: Inactive tabs respond to press with perceptible lightening
     behavior: |
-      When an unselected tab is pressed, blend.pressedLighter is applied
-      to the icon as a press hint. The blend reverts on drag-away
+      When an unselected tab is pressed, icon lightens perceptibly
+      (OKLCH ΔL 0.05–0.10, lighter direction, chroma preserved)
+      as a press hint. The lightening reverts on drag-away
       (cancellation). On confirmed release, the full selection animation
       begins (animation_coordination).
     wcag: null
     platforms: [web, ios, android]
     validation:
-      - Pressing inactive tab applies blend.pressedLighter to icon
-      - Dragging away from pressed tab reverts blend
+      - Pressing inactive tab lightens icon (ΔL 0.05–0.10)
+      - Dragging away from pressed tab reverts lightening
       - Releasing pressed tab triggers selection change and animation
     test_approach: |
-      Press inactive tab, verify blend applied. Drag away, verify reverted.
+      Press inactive tab, verify lightening applied. Drag away, verify reverted.
       Release on tab, verify selection change callback invoked.
     required: true
 
@@ -35,7 +36,7 @@ contracts:
     wcag: null
     platforms: [web, ios, android]
     validation:
-      - Pressing active tab does not apply blend
+      - Pressing active tab does not change icon lightness
       - Pressing active tab does not invoke onSelectionChange
     test_approach: |
       Press active tab, verify no blend applied and no callback invoked.
@@ -407,5 +408,5 @@ exclusions:
 
   interaction_hoverable:
     reason: |
-      No hover state on tabs. Pressed state (blend.pressedLighter) provides
+      No hover state on tabs. Pressed state (perceptible lightening) provides
       touch feedback. Hover is not applicable to the primary mobile context.

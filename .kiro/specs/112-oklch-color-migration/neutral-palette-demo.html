@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Recommended Neutral Palette — OKLCH</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, sans-serif; padding: 2rem; background: #1a1a1a; color: #eee; }
+h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+h2 { font-size: 1rem; color: #aaa; margin: 2rem 0 0.75rem; }
+h3 { font-size: 0.85rem; color: #666; margin: 1.5rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.note { color: #888; font-size: 0.8rem; margin-bottom: 2rem; }
+.hue-selector { margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+.hue-selector label { font-size: 0.85rem; color: #aaa; }
+.hue-selector input[type="range"] { width: 300px; }
+.hue-selector .hue-value { font-size: 0.85rem; color: #eee; font-family: monospace; min-width: 60px; }
+.hue-presets { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.hue-presets button { padding: 4px 12px; border: 1px solid #444; background: #2a2a2a; color: #ccc; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+.hue-presets button:hover { background: #3a3a3a; }
+.hue-presets button.active { border-color: #888; background: #3a3a3a; }
+.palette-section { margin-bottom: 1.5rem; }
+.family-row { display: flex; gap: 3px; align-items: center; margin-bottom: 3px; }
+.family-label { width: 55px; font-size: 0.7rem; color: #666; text-align: right; padding-right: 8px; }
+.swatch { width: 100px; height: 50px; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.6rem; gap: 2px; }
+.swatch .label { opacity: 0.7; }
+.swatch .value { opacity: 0.5; font-size: 0.55rem; }
+.swatch.dark-text { color: rgba(0,0,0,0.7); }
+.swatch.light-text { color: rgba(255,255,255,0.7); }
+.step-labels { display: flex; gap: 3px; margin-left: 55px; margin-bottom: 4px; }
+.step-label { width: 100px; text-align: center; font-size: 0.7rem; color: #555; }
+.buffer { display: flex; align-items: center; margin-left: 55px; padding: 4px 0; }
+.buffer-line { height: 1px; flex: 1; background: #333; margin: 0 8px; }
+.buffer-label { font-size: 0.6rem; color: #444; }
+.demo-section { margin-top: 3rem; padding: 2rem; border-radius: 8px; }
+.demo-card { padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; }
+.demo-text { margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+
+<h1>Recommended Neutral Palette — OKLCH Channel Primitives</h1>
+<p class="note">Ranges: White 1.0→0.80 | Gray 0.72→0.32 | Black 0.28→0.00 | Neutral hue follows primary color</p>
+
+<div class="hue-selector">
+  <label>neutralHue (= primary hue):</label>
+  <input type="range" id="hueSlider" min="0" max="360" value="260" step="1">
+  <span class="hue-value" id="hueDisplay">260°</span>
+</div>
+
+<div class="hue-presets">
+  <button onclick="setHue(8)">Pink (8°)</button>
+  <button onclick="setHue(43)">Orange (43°)</button>
+  <button onclick="setHue(109)">Yellow (109°)</button>
+  <button onclick="setHue(150)">Green (150°)</button>
+  <button onclick="setHue(204)">Cyan (204°)</button>
+  <button onclick="setHue(260)" class="active">Purple-Blue (260°)</button>
+  <button onclick="setHue(307)">Purple (307°)</button>
+  <button onclick="setHue(0)">Achromatic (C=0)</button>
+</div>
+
+<div id="palette"></div>
+
+<h2>Light Mode Demo</h2>
+<div id="lightDemo" style="padding: 2rem; border-radius: 8px;"></div>
+
+<h2>Dark Mode Demo</h2>
+<div id="darkDemo" style="padding: 2rem; border-radius: 8px;"></div>
+
+<script>
+const families = {
+  white: { steps: [1.00, 0.95, 0.90, 0.85, 0.80], chroma: [0.006, 0.009, 0.012, 0.014, 0.015] },
+  gray:  { steps: [0.72, 0.62, 0.52, 0.42, 0.32], chroma: [0.018, 0.020, 0.020, 0.018, 0.015] },
+  black: { steps: [0.28, 0.21, 0.14, 0.07, 0.00], chroma: [0.013, 0.010, 0.008, 0.005, 0.000] },
+};
+
+const slider = document.getElementById('hueSlider');
+const display = document.getElementById('hueDisplay');
+
+function setHue(h) {
+  slider.value = h;
+  display.textContent = h === 0 ? 'achromatic' : h + '°';
+  document.querySelectorAll('.hue-presets button').forEach(b => b.classList.remove('active'));
+  render();
+}
+
+slider.addEventListener('input', () => {
+  display.textContent = slider.value + '°';
+  document.querySelectorAll('.hue-presets button').forEach(b => b.classList.remove('active'));
+  render();
+});
+
+function getOklch(L, C, H) {
+  const hue = parseInt(slider.value);
+  const c = hue === 0 ? 0 : C;
+  return `oklch(${L} ${c} ${hue})`;
+}
+
+function render() {
+  const hue = parseInt(slider.value);
+  let html = '';
+
+  // Step labels
+  html += '<div class="step-labels"><div class="step-label">100</div><div class="step-label">200</div><div class="step-label">300</div><div class="step-label">400</div><div class="step-label">500</div></div>';
+
+  // White family
+  html += '<div class="palette-section"><div class="family-row"><div class="family-label">white</div>';
+  families.white.steps.forEach((L, i) => {
+    const C = families.white.chroma[i];
+    const textClass = L > 0.6 ? 'dark-text' : 'light-text';
+    html += `<div class="swatch ${textClass}" style="background:${getOklch(L, C, hue)}"><span class="label">${L.toFixed(2)}</span><span class="value">C=${C}</span></div>`;
+  });
+  html += '</div></div>';
+
+  // Buffer
+  html += '<div class="buffer"><div class="buffer-line"></div><div class="buffer-label">0.08 gap</div><div class="buffer-line"></div></div>';
+
+  // Gray family
+  html += '<div class="palette-section"><div class="family-row"><div class="family-label">gray</div>';
+  families.gray.steps.forEach((L, i) => {
+    const C = families.gray.chroma[i];
+    const textClass = L > 0.55 ? 'dark-text' : 'light-text';
+    html += `<div class="swatch ${textClass}" style="background:${getOklch(L, C, hue)}"><span class="label">${L.toFixed(2)}</span><span class="value">C=${C}</span></div>`;
+  });
+  html += '</div></div>';
+
+  // Buffer
+  html += '<div class="buffer"><div class="buffer-line"></div><div class="buffer-label">0.04 gap</div><div class="buffer-line"></div></div>';
+
+  // Black family
+  html += '<div class="palette-section"><div class="family-row"><div class="family-label">black</div>';
+  families.black.steps.forEach((L, i) => {
+    const C = families.black.chroma[i];
+    const textClass = L > 0.15 ? 'light-text' : 'light-text';
+    html += `<div class="swatch light-text" style="background:${getOklch(L, C, hue)}"><span class="label">${L.toFixed(2)}</span><span class="value">C=${C}</span></div>`;
+  });
+  html += '</div></div>';
+
+  document.getElementById('palette').innerHTML = html;
+
+  // Light mode demo
+  const lightHtml = `
+    <div style="background:${getOklch(1.0, 0.006, hue)}; padding: 2rem; border-radius: 8px;">
+      <div style="color:${getOklch(0.32, 0.015, hue)}; font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Body text on white surface (gray500 on white100)</div>
+      <div style="color:${getOklch(0.52, 0.020, hue)}; font-size: 0.9rem; margin-bottom: 1.5rem;">Muted text (gray300)</div>
+      <div style="background:${getOklch(0.95, 0.009, hue)}; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+        <div style="color:${getOklch(0.32, 0.015, hue)}; font-size: 0.85rem;">Card on white200 surface</div>
+        <div style="color:${getOklch(0.52, 0.020, hue)}; font-size: 0.8rem;">Secondary text in card (gray300)</div>
+      </div>
+      <div style="background:${getOklch(0.90, 0.012, hue)}; padding: 1rem; border-radius: 6px; border: 1px solid ${getOklch(0.80, 0.015, hue)};">
+        <div style="color:${getOklch(0.42, 0.018, hue)}; font-size: 0.85rem;">Input field on white300 with white500 border (gray400 text)</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('lightDemo').innerHTML = lightHtml;
+
+  // Dark mode demo
+  const darkHtml = `
+    <div style="background:${getOklch(0.14, 0.008, hue)}; padding: 2rem; border-radius: 8px;">
+      <div style="color:${getOklch(0.90, 0.012, hue)}; font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Body text on dark surface (white300 on black300)</div>
+      <div style="color:${getOklch(0.62, 0.020, hue)}; font-size: 0.9rem; margin-bottom: 1.5rem;">Muted text (gray200)</div>
+      <div style="background:${getOklch(0.21, 0.010, hue)}; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+        <div style="color:${getOklch(0.90, 0.012, hue)}; font-size: 0.85rem;">Card on black200 surface</div>
+        <div style="color:${getOklch(0.62, 0.020, hue)}; font-size: 0.8rem;">Secondary text (gray200)</div>
+      </div>
+      <div style="background:${getOklch(0.28, 0.013, hue)}; padding: 1rem; border-radius: 6px; border: 1px solid ${getOklch(0.42, 0.018, hue)};">
+        <div style="color:${getOklch(0.72, 0.018, hue)}; font-size: 0.85rem;">Input field on black100 with gray400 border (gray100 text)</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('darkDemo').innerHTML = darkHtml;
+}
+
+render();
+</script>
+
+</body>
+</html>

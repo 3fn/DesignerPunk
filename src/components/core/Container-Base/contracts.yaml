@@ -105,7 +105,8 @@ contracts:
     description: Visual feedback on hover when hoverable
     behavior: |
       When hoverable=true and pointer device hovers, darkens background
-      by blend.hoverDarker (8%). Transition uses motion.focusTransition.
+      subtly (OKLCH ΔL 0.02–0.05, chroma preserved). Transition uses
+      motion.focusTransition.
       Only applies with pointer devices.
     wcag: "1.4.13 Content on Hover or Focus"
     platforms: [web, ios, android]

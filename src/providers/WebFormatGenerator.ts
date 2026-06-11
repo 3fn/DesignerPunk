@@ -154,10 +154,6 @@ export class WebFormatGenerator extends BaseFormatProvider {
     }
 
     if (typeof value === 'string') {
-      // Check if it's an RGBA string - return as-is for CSS
-      if (value.startsWith('rgba(')) {
-        return value;
-      }
       // Font family or other string values
       return value;
     }
@@ -178,45 +174,20 @@ export class WebFormatGenerator extends BaseFormatProvider {
         return String(value);
       case 'hex':
         return String(value);
-      case 'rgba':
-        // For RGBA unit, the value should already be an RGBA string
-        return String(value);
       default:
         return String(value);
     }
   }
 
   /**
-   * Parse an RGBA string into its component values
-   * Input: 'rgba(184, 182, 200, 1)' or 'rgba(184, 182, 200, 0.48)'
-   * Output: { r: 184, g: 182, b: 200, a: 1 } or { r: 184, g: 182, b: 200, a: 0.48 }
-   * 
-   * @param rgbaString - RGBA color string
-   * @returns Object with r, g, b, a values or null if parsing fails
-   */
-  parseRgbaString(rgbaString: string): { r: number; g: number; b: number; a: number } | null {
-    const match = rgbaString.match(/rgba\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
-    if (!match) {
-      return null;
-    }
-    return {
-      r: parseInt(match[1], 10),
-      g: parseInt(match[2], 10),
-      b: parseInt(match[3], 10),
-      a: parseFloat(match[4])
-    };
-  }
-
-  /**
    * Format a color token value for CSS output
-   * Handles both RGBA strings and mode-aware color objects
+   * Handles OKLCH strings and mode-aware color objects
    * 
    * @param colorValue - Color value (string or mode-aware object)
    * @returns CSS-compatible color string
    */
   formatColorValue(colorValue: string | object): string {
     if (typeof colorValue === 'string') {
-      // Already an RGBA string, return as-is
       return colorValue;
     }
     
@@ -228,6 +199,22 @@ export class WebFormatGenerator extends BaseFormatProvider {
     
     // Fallback
     return JSON.stringify(colorValue);
+  }
+
+  /**
+   * Parse an RGBA string into component values.
+   * Still needed for opacity composition tokens that reference old ColorTokens.ts entries.
+   * @internal Remove once ColorTokens.ts is fully migrated to OKLCH channel primitives.
+   */
+  private parseRgbaString(rgbaString: string): { r: number; g: number; b: number; a: number } | null {
+    const match = rgbaString.match(/rgba\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
+    if (!match) return null;
+    return {
+      r: parseInt(match[1], 10),
+      g: parseInt(match[2], 10),
+      b: parseInt(match[3], 10),
+      a: parseFloat(match[4])
+    };
   }
 
   protected generateCategoryComment(category: string): string {
@@ -587,6 +574,38 @@ export class WebFormatGenerator extends BaseFormatProvider {
     lines.push('   * }');
     lines.push('   */');
     
+    return lines;
+  }
+
+  // --- OKLCH Output Methods (Spec 112) ---
+
+  /**
+   * Format a composed OKLCH color as a CSS custom property.
+   * Output: `--pink-300: oklch(0.65 0.242 10);`
+   */
+  formatOklchColor(name: string, l: number, c: number, h: number): string {
+    const tokenName = this.getTokenName(name, 'color');
+    return `  ${tokenName}: oklch(${l} ${c} ${h});`;
+  }
+
+  /**
+   * Generate channel custom properties for a color family.
+   * Output: `--pink-hue: 10;`, `--pink-l300: 0.65;`, `--pink-c300: 0.242;`
+   */
+  formatOklchChannels(
+    family: string,
+    hue: number,
+    lightness: Record<number, number>,
+    chroma: Record<number, number>,
+  ): string[] {
+    const lines: string[] = [];
+    lines.push(`  --${family}-hue: ${hue};`);
+    for (const [step, value] of Object.entries(lightness)) {
+      lines.push(`  --${family}-l${step}: ${value};`);
+    }
+    for (const [step, value] of Object.entries(chroma)) {
+      lines.push(`  --${family}-c${step}: ${value};`);
+    }
     return lines;
   }
 }

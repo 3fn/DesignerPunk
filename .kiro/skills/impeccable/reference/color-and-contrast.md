@@ -8,6 +8,21 @@ The OKLCH function takes three components: `oklch(lightness chroma hue)` where l
 
 The hue you pick is a brand decision and should not come from a default. Do not reach for blue (hue 250) or warm orange (hue 60) by reflex; those are the dominant AI-design defaults, not the right answer for any specific brand.
 
+### DesignerPunk Output Format
+
+DesignerPunk's generated CSS tokens use `oklch()` as the native color format. Primitive color tokens are emitted as:
+
+```css
+--purple-300: oklch(0.6 0.286 310);
+--cyan-200: oklch(0.87 0.108 202.5);
+--white-100: oklch(1 0 260);
+```
+
+The detector scripts handle `oklch(L C H)` and `oklch(L C H / alpha)` natively, converting to sRGB for contrast ratio calculations. When analyzing DesignerPunk pages, expect oklch in:
+- CSS custom property definitions (`:root` token declarations)
+- Inline gradient stops using design token values
+- Any CSS authored against the token system
+
 ## Building Functional Palettes
 
 ### Tinted Neutrals
@@ -76,6 +91,8 @@ Don't trust your eyes. Use tools:
 - [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
 - Browser DevTools → Rendering → Emulate vision deficiencies
 - [Polypane](https://polypane.app/) for real-time testing
+
+**OKLCH contrast note**: The Impeccable detector converts `oklch()` values to sRGB before computing WCAG contrast ratios. The OKLCH lightness channel (L) correlates with perceptual luminance but is NOT a direct substitute for the WCAG relative luminance formula, which requires linear sRGB values. Always use the full conversion pipeline for contrast checks.
 
 ## Theming: Light & Dark Mode
 
