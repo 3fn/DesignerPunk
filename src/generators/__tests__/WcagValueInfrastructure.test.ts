@@ -89,16 +89,16 @@ describe('WCAG Theme Override Infrastructure (Spec 080 Phase 2)', () => {
       const opts = wcagOptions();
       const base = opts.semanticTokens.find(t => t.name === 'color.action.primary');
       const wcag = opts.wcagSemanticTokens!.find(t => t.name === 'color.action.primary');
-      expect(base!.primitiveReferences).toEqual({ value: 'rgba(0, 240, 255, 1)' });
-      expect(wcag!.primitiveReferences).toEqual({ value: 'rgba(26, 83, 92, 1)' });
+      expect(base!.primitiveReferences).toEqual({ value: 'oklch(0.76 0.148 202.5)' });
+      expect(wcag!.primitiveReferences).toEqual({ value: 'oklch(0.52 0.08 209)' });
     });
 
     it('should resolve color.action.navigation from cyan500 to teal500 in wcag context', () => {
       const opts = wcagOptions();
       const base = opts.semanticTokens.find(t => t.name === 'color.action.navigation');
       const wcag = opts.wcagSemanticTokens!.find(t => t.name === 'color.action.navigation');
-      expect(base!.primitiveReferences).toEqual({ value: 'rgba(0, 136, 143, 1)' });
-      expect(wcag!.primitiveReferences).toEqual({ value: 'rgba(15, 46, 51, 1)' });
+      expect(base!.primitiveReferences).toEqual({ value: 'oklch(0.52 0.097 202.5)' });
+      expect(wcag!.primitiveReferences).toEqual({ value: 'oklch(0.28 0.045 209)' });
     });
   });
 

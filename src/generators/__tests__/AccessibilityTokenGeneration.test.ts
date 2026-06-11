@@ -48,8 +48,8 @@ describe('Accessibility Token Generation', () => {
       const result = generator.generateWebTokens(defaultSemanticOptions());
 
       expect(result.content).toContain('--accessibility-focus-color');
-      // Color tokens are now resolved to rgba values (Spec 080 D9 Option B)
-      expect(result.content).toMatch(/--accessibility-focus-color:\s*rgba\(/);
+      // Color tokens are now resolved to oklch values (OKLCH migration)
+      expect(result.content).toMatch(/--accessibility-focus-color:\s*oklch\(/);
     });
 
     it('should include WCAG comments when comments enabled', () => {
@@ -95,8 +95,8 @@ describe('Accessibility Token Generation', () => {
       const result = generator.generateiOSTokens(defaultSemanticOptions());
 
       expect(result.content).toContain('accessibilityFocusColor');
-      // Color tokens are now resolved to UIColor values (Spec 080 D9 Option B)
-      expect(result.content).toMatch(/accessibilityFocusColor.*UIColor\(/);
+      // Color tokens are now resolved to Color.oklch values (OKLCH migration)
+      expect(result.content).toMatch(/accessibilityFocusColor.*Color\.oklch\(/);
     });
 
     it('should include WCAG comments when comments enabled', () => {
@@ -142,8 +142,8 @@ describe('Accessibility Token Generation', () => {
       const result = generator.generateAndroidTokens(defaultSemanticOptions());
 
       expect(result.content).toContain('accessibility_focus_color');
-      // Color tokens are now resolved to Color.argb values (Spec 080 D9 Option B)
-      expect(result.content).toMatch(/accessibility_focus_color\s*=\s*Color\.argb\(/);
+      // Color tokens are now resolved to Oklch values (OKLCH migration)
+      expect(result.content).toMatch(/accessibility_focus_color\s*=\s*Oklch\(/);
     });
 
     it('should include WCAG comments when comments enabled', () => {
@@ -201,10 +201,10 @@ describe('Accessibility Token Generation', () => {
     it('should reference same primitive color token across platforms', () => {
       const results = generator.generateAll(defaultSemanticOptions());
 
-      // All platforms should output resolved color values (Spec 080 D9 Option B)
-      expect(results[0].content).toMatch(/--accessibility-focus-color:\s*rgba\(/);
-      expect(results[1].content).toMatch(/accessibilityFocusColor.*UIColor\(/);
-      expect(results[2].content).toMatch(/accessibility_focus_color\s*=\s*Color\.argb\(/);
+      // All platforms should output resolved color values (OKLCH migration)
+      expect(results[0].content).toMatch(/--accessibility-focus-color:\s*oklch\(/);
+      expect(results[1].content).toMatch(/accessibilityFocusColor.*Color\.oklch\(/);
+      expect(results[2].content).toMatch(/accessibility_focus_color\s*=\s*Oklch\(/);
     });
 
     it('should follow platform-specific naming conventions', () => {
@@ -265,8 +265,8 @@ describe('Accessibility Token Generation', () => {
       expect(result.content).toMatch(/--accessibility-focus-offset:\s*var\(--space-025\);/);
       expect(result.content).toMatch(/--accessibility-focus-width:\s*var\(--border-width-200\);/);
       
-      // Color tokens are resolved to rgba values (Spec 080 D9 Option B)
-      expect(result.content).toMatch(/--accessibility-focus-color:\s*rgba\(/);
+      // Color tokens are resolved to oklch values (OKLCH migration)
+      expect(result.content).toMatch(/--accessibility-focus-color:\s*oklch\(/);
     });
 
     it('should generate valid Swift syntax for iOS', () => {
@@ -279,8 +279,8 @@ describe('Accessibility Token Generation', () => {
       expect(result.content).toMatch(/public static let accessibilityFocusOffset\s*=\s*space025/);
       expect(result.content).toMatch(/public static let accessibilityFocusWidth\s*=\s*borderWidth200/);
       
-      // Color tokens are resolved to UIColor values (Spec 080 D9 Option B)
-      expect(result.content).toMatch(/accessibilityFocusColor.*UIColor\(/);
+      // Color tokens are resolved to Color.oklch values (OKLCH migration)
+      expect(result.content).toMatch(/accessibilityFocusColor.*Color\.oklch\(/);
     });
 
     it('should generate valid Kotlin syntax for Android', () => {
@@ -293,8 +293,8 @@ describe('Accessibility Token Generation', () => {
       expect(result.content).toMatch(/val accessibility_focus_offset\s*=\s*space_025/);
       expect(result.content).toMatch(/val accessibility_focus_width\s*=\s*border_width_200/);
       
-      // Color tokens are resolved to Color.argb values (Spec 080 D9 Option B)
-      expect(result.content).toMatch(/accessibility_focus_color\s*=\s*Color\.argb\(/);
+      // Color tokens are resolved to Oklch values (OKLCH migration)
+      expect(result.content).toMatch(/accessibility_focus_color\s*=\s*Oklch\(/);
     });
   });
 
