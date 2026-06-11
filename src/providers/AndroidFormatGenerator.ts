@@ -339,7 +339,18 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     // getPlatformTokenName will handle dot notation conversion (e.g., 'color.primary' -> 'color_primary')
     const semanticName = this.getTokenName(semantic.name, semantic.category);
     
-    // Check if the primitive reference is a baked-in RGBA value
+    // Check if the primitive reference is a baked-in RGBA or OKLCH value
+    if (typeof primitiveRef === 'string' && primitiveRef.startsWith('oklch(')) {
+      const match = primitiveRef.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/);
+      if (match) {
+        const [, l, c, h, alpha] = match;
+        const wcagComment = this.getWCAGComment(semantic);
+        let colorExpr = `Oklch(${l}f, ${c}f, ${h}f).toComposeColor()`;
+        if (alpha) colorExpr += `.copy(alpha = ${alpha}f)`;
+        const tokenLine = `    val ${semanticName} = ${colorExpr}`;
+        return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
+      }
+    }
     if (typeof primitiveRef === 'string' && primitiveRef.startsWith('rgba(')) {
       // Baked-in RGBA value - convert to Color.argb format
       const colorArgbValue = this.rgbaStringToColorArgb(primitiveRef);

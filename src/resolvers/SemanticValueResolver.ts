@@ -22,6 +22,15 @@ type Theme = 'base' | 'wcag';
  * Falls back to light if dark slot value is missing.
  */
 function resolveColorPrimitive(name: string, mode: Mode, theme: Theme = 'base'): string | null {
+  // OKLCH path: look up composed color
+  const { composedColorMap } = require('../tokens/color');
+  const composed = composedColorMap.get(name);
+  if (composed) {
+    const { l, c, h } = composed.resolved;
+    return `oklch(${l} ${c} ${h})`;
+  }
+
+  // Legacy fallback: old ColorTokens.ts RGBA path
   try {
     const token = getColorToken(name as any);
     const colorValue = token.platforms.web.value as ColorTokenValue;
@@ -53,16 +62,26 @@ export function resolveSemanticTokenValue(
   if (token.modifiers?.length) {
     const opacityMod = token.modifiers.find(m => m.type === 'opacity');
     const colorName = refs.value || refs.default;
-    if (opacityMod && colorName && typeof colorName === 'string' && !colorName.startsWith('rgba(')) {
-      const colorRgba = resolveColorPrimitive(colorName, mode, theme);
+    if (opacityMod && colorName && typeof colorName === 'string' && !colorName.startsWith('rgba(') && !colorName.startsWith('oklch(')) {
+      const colorResolved = resolveColorPrimitive(colorName, mode, theme);
       const opacityToken = getOpacityToken(opacityMod.reference);
-      if (colorRgba && opacityToken) {
-        const parsed = parseRgba(colorRgba);
+      if (colorResolved && opacityToken) {
+        // OKLCH path: oklch(L C H / alpha)
+        if (colorResolved.startsWith('oklch(')) {
+          const inner = colorResolved.slice(6, -1); // strip "oklch(" and ")"
+          return {
+            ...token,
+            primitiveReferences: { value: `oklch(${inner} / ${opacityToken.baseValue})` },
+            modifiers: [],
+          };
+        }
+        // Legacy RGBA path
+        const parsed = parseRgba(colorResolved);
         if (parsed) {
           return {
             ...token,
             primitiveReferences: { value: `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${opacityToken.baseValue})` },
-            modifiers: [] // Composition resolved — clear modifiers
+            modifiers: [],
           };
         }
       }
@@ -72,14 +91,23 @@ export function resolveSemanticTokenValue(
   // Opacity composition: { color: 'gray100', opacity: 'opacity048' } (exactly 2 keys)
   const refKeys = Object.keys(refs);
   if (refs.color && refs.opacity && refKeys.length === 2) {
-    const colorRgba = resolveColorPrimitive(refs.color, mode, theme);
+    const colorResolved = resolveColorPrimitive(refs.color, mode, theme);
     const opacityToken = getOpacityToken(refs.opacity);
-    if (colorRgba && opacityToken) {
-      const parsed = parseRgba(colorRgba);
+    if (colorResolved && opacityToken) {
+      // OKLCH path
+      if (colorResolved.startsWith('oklch(')) {
+        const inner = colorResolved.slice(6, -1);
+        return {
+          ...token,
+          primitiveReferences: { value: `oklch(${inner} / ${opacityToken.baseValue})` },
+        };
+      }
+      // Legacy RGBA path
+      const parsed = parseRgba(colorResolved);
       if (parsed) {
         return {
           ...token,
-          primitiveReferences: { value: `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${opacityToken.baseValue})` }
+          primitiveReferences: { value: `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${opacityToken.baseValue})` },
         };
       }
     }

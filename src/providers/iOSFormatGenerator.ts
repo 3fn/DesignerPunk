@@ -298,13 +298,24 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     // getPlatformTokenName will handle dot notation conversion (e.g., 'color.primary' -> 'colorPrimary')
     const semanticName = this.getTokenName(semantic.name, semantic.category);
     
-    // Check if the primitive reference is a baked-in RGBA value
+    // Check if the primitive reference is a baked-in RGBA or OKLCH value
     if (typeof primitiveRef === 'string' && primitiveRef.startsWith('rgba(')) {
       // Baked-in RGBA value - convert to UIColor format
       const uiColorValue = this.rgbaStringToUIColor(primitiveRef);
       const wcagComment = this.getWCAGComment(semantic);
       const tokenLine = `    public static let ${semanticName}: UIColor = ${uiColorValue}`;
       return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
+    }
+    if (typeof primitiveRef === 'string' && primitiveRef.startsWith('oklch(')) {
+      // OKLCH value — output via ChromaKit
+      const match = primitiveRef.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/);
+      if (match) {
+        const [, l, c, h, alpha] = match;
+        const wcagComment = this.getWCAGComment(semantic);
+        const colorExpr = alpha ? `Color.oklch(${l}, ${c}, ${h}, opacity: ${alpha})` : `Color.oklch(${l}, ${c}, ${h})`;
+        const tokenLine = `    static let ${semanticName} = ${colorExpr}`;
+        return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
+      }
     }
     
     // Convert primitive reference to appropriate format

@@ -259,9 +259,9 @@ export class WebFormatGenerator extends BaseFormatProvider {
     const semanticName = this.getTokenName(semantic.name, semantic.category);
     const cssSemanticName = semanticName.startsWith('--') ? semanticName : `--${semanticName}`;
     
-    // Check if the primitive reference is a baked-in RGBA value
-    if (typeof primitiveRef === 'string' && primitiveRef.startsWith('rgba(')) {
-      // Baked-in RGBA value - output directly
+    // Check if the primitive reference is a baked-in RGBA or OKLCH value
+    if (typeof primitiveRef === 'string' && (primitiveRef.startsWith('rgba(') || primitiveRef.startsWith('oklch('))) {
+      // Baked-in value - output directly
       const wcagComment = this.getWCAGComment(semantic);
       const tokenLine = `  ${cssSemanticName}: ${primitiveRef};`;
       return wcagComment ? `  ${wcagComment}\n${tokenLine}` : tokenLine;
