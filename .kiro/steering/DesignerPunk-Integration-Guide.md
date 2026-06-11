@@ -954,7 +954,7 @@ npx designerpunk sync --dry-run
 npx designerpunk sync
 
 # Factory reset — overwrite all files to match package (no prompts)
-npx designerpunk sync --force
+npx designerpunk sync --accept-all
 ```
 
 ### How Sync Works
@@ -985,10 +985,10 @@ src/tokens/MyCustomTokens.ts
 
 ### CI/CD Integration
 
-In non-interactive environments, sync automatically runs in dry-run mode. Use `--force` to apply changes in CI pipelines:
+In non-interactive environments, sync automatically runs in dry-run mode. Use `--accept-all` to apply changes in CI pipelines:
 
 ```bash
-npx designerpunk sync --force  # Applies all updates without prompting
+npx designerpunk sync --accept-all  # Applies all updates without prompting
 ```
 
 ### OKLCH Color Migration (v12+)

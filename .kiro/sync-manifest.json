@@ -1,0 +1,3478 @@
+{
+  "version": "12.0.2",
+  "syncedAt": "2026-06-11T02:39:10.444Z",
+  "files": {
+    ".kiro/steering/00-Steering Documentation Directional Priorities.md": {
+      "hash": "b468027255609f4f1e22a88b8531afa7a642d9cf4b9a0352453987dc1b7c01f4",
+      "managed": true
+    },
+    ".kiro/steering/A Vision of the Future.md": {
+      "hash": "ad5858dd77e994bc8bbdb173a967653d2aef75d05f3180f842c039991b968538",
+      "managed": true
+    },
+    ".kiro/steering/AI-Collaboration-Framework.md": {
+      "hash": "8be42a0d32fc5b8806158137819e8dc28f560c83c4e4035647463edb1a399358",
+      "managed": true
+    },
+    ".kiro/steering/AI-Collaboration-Principles.md": {
+      "hash": "5a723d9fceb598311228f3fa98bb5f5ec213209e432199136a7850254c1a5011",
+      "managed": true
+    },
+    ".kiro/steering/Agent-Directory.md": {
+      "hash": "dd657a9d8b4d92764093751e74866b107b7674a3f148a76965ea81fdcc202a25",
+      "managed": true
+    },
+    ".kiro/steering/BUILD-SYSTEM-SETUP.md": {
+      "hash": "d1496395da99dfb99829e0d9ac7a271ec861d6a6af76bf38abd64425559087de",
+      "managed": true
+    },
+    ".kiro/steering/Browser Distribution Guide.md": {
+      "hash": "c020c127eb468096c381c3d5a81d690bb0a4d6f5fffd51eb6710c7fae3c25116",
+      "managed": true
+    },
+    ".kiro/steering/Civitas-System-Overview.md": {
+      "hash": "7d8decfe3a9f94c3398caf9417533daca0940c39e938dbc0fd18750eccf61571",
+      "managed": true
+    },
+    ".kiro/steering/Completion Documentation Guide.md": {
+      "hash": "f7751decc029333b56dc6129ea5468ad5fca8205b50e8bf27a35f3ba34b30acd",
+      "managed": true
+    },
+    ".kiro/steering/Component-Development-Guide.md": {
+      "hash": "f3b9516f22fdc4b0a6044bc055d0221446635f51a28bb4aa790660c8749792d7",
+      "managed": true
+    },
+    ".kiro/steering/Component-Development-Standards.md": {
+      "hash": "21ddde1bd10bc939c7c417232c160950d03557fdf604a64a1cf373285b094048",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Avatar.md": {
+      "hash": "f404f5c7a7d5740503fb57f76d13307269c81bd971f4c46b1480c9ad2408a4f1",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Badge.md": {
+      "hash": "b92555ac65398da46beb9b7455f951576f3154dc8df1c3d387651418eb3d6540",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Button.md": {
+      "hash": "c1b51e2fbb2187f82c5f25944b4f00207938eced0f7d449dd34b39e1d6f22f14",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Chip.md": {
+      "hash": "1e83983b190437f9bb8eee7f13d42dc7a4f079e73a500e3fa844ec599d47c174",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Container.md": {
+      "hash": "747d6fd0d9745361f8ca253faa8b1b9e37946b693fa01e993b917190baeee3db",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Data-Display.md": {
+      "hash": "4068d7ff0ec58326317de6380947a7034f4bac15e8cb2f190a5052301995f8a5",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Divider.md": {
+      "hash": "e2e91900a08676be92edb28dfdad0a21bff8d4c54c560c6b17f3c6b7cc7b6ce5",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Form-Inputs.md": {
+      "hash": "23d13659edb689315ad693c7958c41b44c695ce69f7aea6df660360a1ecc44df",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Icon.md": {
+      "hash": "ca011c5690e9aba7069592bff4c7a68bef53258325630128b036c9b662d627d5",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Loading.md": {
+      "hash": "970f3d548d4c553ddf91b2fe4a77ae831c0a073c3251f01a0683706467f11812",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Modal.md": {
+      "hash": "6a6b6a1d6d2e4a269534a2bc3515f8c89adaa0752256cd47dfe6b1ce739a10a7",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Navigation.md": {
+      "hash": "9dcaa959ff9a2870bfeb37aeb25512695026e2c1b62e5f8350444165d9e66179",
+      "managed": true
+    },
+    ".kiro/steering/Component-Family-Progress.md": {
+      "hash": "0c74edf6ef5c24f99b51a2e09926012e24f41f9f0e49579769d217c51ce0b5c8",
+      "managed": true
+    },
+    ".kiro/steering/Component-Inheritance-Structures.md": {
+      "hash": "02d7d2415391004cf953a52306a8545bee07a28960ca1e9b8e2fc5ed02af19d0",
+      "managed": true
+    },
+    ".kiro/steering/Component-MCP-Document-Template.md": {
+      "hash": "5e22b287aad405b9c687de87113deb881f0b5d9c19fe2a89b05a6ae145f7295c",
+      "managed": true
+    },
+    ".kiro/steering/Component-Meta-Data-Shapes-Governance.md": {
+      "hash": "de084d88e77d56c86d03644080590dc58fafd6f3c1b34ede9d5c5b07b4e1ebbf",
+      "managed": true
+    },
+    ".kiro/steering/Component-Primitive-vs-Semantic-Philosophy.md": {
+      "hash": "ad87bf1a18ecda7194766b12bf6a9a520d57d8a80f8db6dd893693da4568d01a",
+      "managed": true
+    },
+    ".kiro/steering/Component-Quick-Reference.md": {
+      "hash": "90818862fc554b57449029e4d22e77ac1a6f329030b7509076210fc3856b28cf",
+      "managed": true
+    },
+    ".kiro/steering/Component-Readiness-Status.md": {
+      "hash": "05db360ef4da54f7f3fdeefe604beca96414ef216624a54ee2de130dc9a657d0",
+      "managed": true
+    },
+    ".kiro/steering/Component-Schema-Format.md": {
+      "hash": "5b6be30bc636e86437c7c914b1d7529de2871ed23c3e15bbde4e4b6b0193bc6c",
+      "managed": true
+    },
+    ".kiro/steering/Component-Templates.md": {
+      "hash": "29a1ec406f9d4ee3f0708ade2f756334e129fcf0ddb38ed7a1a4b9494a9c4581",
+      "managed": true
+    },
+    ".kiro/steering/Contract-System-Reference.md": {
+      "hash": "96631640c9bd96a6a0f2c4ee91ded17c66004162f8adcd687cf8a68a437ae113",
+      "managed": true
+    },
+    ".kiro/steering/Core Goals.md": {
+      "hash": "ed9459bdf8064d81a06a9e49b85c69de10c470cd1a8c62ad2fd3e18d79a66ffe",
+      "managed": true
+    },
+    ".kiro/steering/Cross-Platform vs Platform-Specific Decision Framework.md": {
+      "hash": "261e98d621b91da81d7df07dd4a62f2ab301bba3056829ecba259b35b9367d4e",
+      "managed": true
+    },
+    ".kiro/steering/DTCG-Integration-Guide.md": {
+      "hash": "0acaef4442f06a099993744082f3633330c1f12621905e035f4ae7d8f8287697",
+      "managed": true
+    },
+    ".kiro/steering/DesignerPunk-Integration-Guide.md": {
+      "hash": "e38f46b7a2834bed535fde08a00d8e428f6117939238fa416dc2b12f7dd795e1",
+      "managed": true
+    },
+    ".kiro/steering/DesignerPunk-Systems-Overview.md": {
+      "hash": "9d0f976aff5f522941b79ff3dedeff7e242e4e0945b996b6dc81660a3adfa0bb",
+      "managed": true
+    },
+    ".kiro/steering/Figma-Workflow-Guide.md": {
+      "hash": "c2c45e5bdffcb6a40106e1abe15dde5ad43ee3265e2eba5c23cc0411961d7cea",
+      "managed": true
+    },
+    ".kiro/steering/Layout-Specification-Vocabulary.md": {
+      "hash": "643cc5a5ccfb567e5e31f288559b6439fa68621c861fcd69c3799e9a95f47a41",
+      "managed": true
+    },
+    ".kiro/steering/MCP-Evolution-Roadmap.md": {
+      "hash": "a54ffc41087865df67593c2d9fa4cefe0046c8304b38566ce5111c29c773a2b3",
+      "managed": true
+    },
+    ".kiro/steering/MCP-Integration-Guide.md": {
+      "hash": "7c7e13f73be0e647e18927561a90f050ff4c875936aa4d6a1fe3620a9a4beba2",
+      "managed": true
+    },
+    ".kiro/steering/MCP-Relationship-Model.md": {
+      "hash": "a49f12a0f73d5e2989f7aaa44d6ee939572db9dcf9a8dc28d9ce69615ab37d68",
+      "managed": true
+    },
+    ".kiro/steering/Personal Note.md": {
+      "hash": "9fe0218fe380bc54a705e7ddca6780a750f99f4c0f43d282a117584d7e571364",
+      "managed": true
+    },
+    ".kiro/steering/Platform-Resource-Map.md": {
+      "hash": "c31cf961ca2f86aff0e74b26cb192e470402a6ba8abbb4508692ebf60ee290e1",
+      "managed": true
+    },
+    ".kiro/steering/Process-Cross-Reference-Standards.md": {
+      "hash": "aa709461881249b4b3fbe21c738da036fd525d570fa15cf646099c7105bb1b2d",
+      "managed": true
+    },
+    ".kiro/steering/Process-Development-Workflow.md": {
+      "hash": "44deef087c55d5dfa9e344bbee2c85c6404a5455031b2b1274ff9a9d1495e7ec",
+      "managed": true
+    },
+    ".kiro/steering/Process-File-Organization.md": {
+      "hash": "a44b1e9e7f7c5ee9c01e8281c21bd37cb3d829018c6bda09bb27784d09089b19",
+      "managed": true
+    },
+    ".kiro/steering/Process-Hook-Operations.md": {
+      "hash": "93e44918b97b3a9c9560238d0dc95338ce444f0d303e8fa37ab537ef14283532",
+      "managed": true
+    },
+    ".kiro/steering/Process-Integration-Methodology.md": {
+      "hash": "0f2b5554310acd1f629c6fc4ffc0a822e20dc1f9d0fea5bb7b6012db08c6afa7",
+      "managed": true
+    },
+    ".kiro/steering/Process-Spec-Planning.md": {
+      "hash": "7d01807f3b58704f8642716e25f201cc315509817b0827b14634cf3517d76de5",
+      "managed": true
+    },
+    ".kiro/steering/Process-Task-Type-Definitions.md": {
+      "hash": "df383538e66b24d5cb570379237511e0e532fa859aca39e8892df12acb8db8d2",
+      "managed": true
+    },
+    ".kiro/steering/Product-Handoff-Protocol.md": {
+      "hash": "1203a66618eaaf8eba70b250d8900a321650b06a77b355fcb670663d8aa52a9d",
+      "managed": true
+    },
+    ".kiro/steering/Product-Token-Governance.md": {
+      "hash": "16f6a257198ddc7e57fd3e9314f2ce778eb098e6d9b069f2dafcff09c32838ab",
+      "managed": true
+    },
+    ".kiro/steering/Release Management System.md": {
+      "hash": "3de58cab44f778d0b56dac822640ec1a8c451e6038675850b9abcfa4d8e68e42",
+      "managed": true
+    },
+    ".kiro/steering/Rosetta-System-Architecture.md": {
+      "hash": "d26d3171aa45da92f3be20ed9239f30dda903ae39ce3d577b5f4e2324ac37944",
+      "managed": true
+    },
+    ".kiro/steering/Spec-Feedback-Protocol.md": {
+      "hash": "2653d86e28c5febd64fc55fbe371c6695f90cb367b4f77573a0542630ec151e9",
+      "managed": true
+    },
+    ".kiro/steering/Start Up Tasks.md": {
+      "hash": "cb94037c3a2480c434e71379830975a76e71043d0503b24566e69657cfe6beb7",
+      "managed": true
+    },
+    ".kiro/steering/Technology Stack.md": {
+      "hash": "1c3debfcb37840eb54b13cc79c83fb6324a2bbd93526b3b0cdf090c1e6b2d2dd",
+      "managed": true
+    },
+    ".kiro/steering/Test-Behavioral-Contract-Validation.md": {
+      "hash": "c7820b3786ebc4ae0b0e3be39fa095763e0d62abcd11c93c87ee5d50330d8f75",
+      "managed": true
+    },
+    ".kiro/steering/Test-Development-Standards.md": {
+      "hash": "83d5a2d041759578203ccd9b2caed5d0e38fcba005d0c58638e20e239292f18f",
+      "managed": true
+    },
+    ".kiro/steering/Test-Failure-Audit-Methodology.md": {
+      "hash": "2e1b6b2f54c5300c5149cb48072dfde81b951ff83de5e221162bf639b77c44e6",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Accessibility.md": {
+      "hash": "d4c3875159e5e8899744388ff56a2bf8f365f876cda43025c8f54d4b85ad4d30",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Blend.md": {
+      "hash": "11ddd7bf33d8e956e2455dbe971476b43d86cb7966aaa011e063eb1d21f4fb3c",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Blur.md": {
+      "hash": "ca85663ea3bacbb5b68f640862416d8f8713244e7a2f3ededc072bc166d894b8",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Border.md": {
+      "hash": "a20df936669d68a3c363ebe88305fe8dcfad7c710f624955c62c40b4c4f95c11",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Color.md": {
+      "hash": "d7caf2f44b7da411e2f153b2a21c600709ee2ef8aef65b012f8e197f876286fa",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Glow.md": {
+      "hash": "eb49230621b842b94dab7ab5c24eec5e9959d261b14ebbe6d09031cda85f5f74",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Layering.md": {
+      "hash": "fa65d7547825ed4a56ee511bb73729b6f2cc6e46fc5755d7507d55dc0d480dc0",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Motion.md": {
+      "hash": "9f94d774182474648b0fdbc0a8d128dd8352ff2ee5842d8f19e723511e6744e9",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Opacity.md": {
+      "hash": "250db0f3f7394f08f618b19ffe292c9e78572d241b311689609b47efc38ff681",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Radius.md": {
+      "hash": "25804f47fa24502e74e7fb2b3dc455324dab92deee38fb72f687305f77fce022",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Responsive.md": {
+      "hash": "90fcfd549f4636fdb471a6c5dcfe8f5552a9c92505c1e19e644b1f949b71957b",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Shadow.md": {
+      "hash": "8618f68b5a7c79abe32b263d947971dbf6502ba6fc20ac67ff0219144609dedf",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Sizing.md": {
+      "hash": "9ee3c8855d76cd6e1d4e8e21922ccf452da09c51f0ef6ebafb2135f3dddf9f7c",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Spacing.md": {
+      "hash": "e05997bbfd2f29b79859384c338bed421a181dbf812f8bd4ca19a9b3d801a06e",
+      "managed": true
+    },
+    ".kiro/steering/Token-Family-Typography.md": {
+      "hash": "33d7e9d5c9052feb7af9e5cc91b2536a09b38f75257700be7f51f8aecd7b3c7b",
+      "managed": true
+    },
+    ".kiro/steering/Token-Governance.md": {
+      "hash": "dcbe930a35af2e5d130f0754181199ac5bb8e37c93748acf62a31bdce96289a7",
+      "managed": true
+    },
+    ".kiro/steering/Token-Quick-Reference.md": {
+      "hash": "50a32810f37463387119d3cc43c9d769db310e40ac053d5c915644a6acc18ac3",
+      "managed": true
+    },
+    ".kiro/steering/Token-Resolution-Patterns.md": {
+      "hash": "a89c346c8a3ff73d2f79bf4c260b3dbc741fabbadec5534cdb61e1ae78560025",
+      "managed": true
+    },
+    ".kiro/steering/Token-Semantic-Structure.md": {
+      "hash": "d8cf2c60a77e47337df046ad4ba2670fc7448a1d3a372f3d4e0c289bd47a061b",
+      "managed": true
+    },
+    ".kiro/steering/Transformer-Development-Guide.md": {
+      "hash": "75138410b9541429cada9d5c3978cd241627bd1f6a6e8490f06105de5dadd091",
+      "managed": true
+    },
+    ".kiro/steering/Web-Authoring-Standards.md": {
+      "hash": "9f255c0e8086dda61632a65c6a182e0b6305f52051648e7260d3bc2ef44b5600",
+      "managed": true
+    },
+    ".kiro/steering/component-mcp-query-guide.md": {
+      "hash": "bc3cd9b2e982ea28ce74aa602d3b2bb36b789ac9d276d0a6786d1151d341f998",
+      "managed": true
+    },
+    ".kiro/steering/component-meta-authoring-guide.md": {
+      "hash": "15fc23c831efc1c6f9c3b3c15f76d2d89206ae5036e46a41f7d51a56f2f4bfcb",
+      "managed": true
+    },
+    ".kiro/steering/component-metadata-schema-reference.md": {
+      "hash": "bd05926a04d9813bc736a0133f9c8af5502e858139d1e4b9cd7d5208779c7193",
+      "managed": true
+    },
+    ".kiro/steering/platform-implementation-guidelines.md": {
+      "hash": "c4f0109544cd8710b3da6f3e729b055c40ccf3edadf82a414e0f0aef6a4ef064",
+      "managed": true
+    },
+    ".kiro/steering/rosetta-system-principles.md": {
+      "hash": "ae5430931c956d616960685a7cd3ae3352709b189ccde8d7cb922d0fba193d07",
+      "managed": true
+    },
+    ".kiro/steering/stemma-system-principles.md": {
+      "hash": "aa006dc8a3c1b13c37a1a0a730aa3b5dbd86d241fbb2ceaeaa9996111c65c741",
+      "managed": true
+    },
+    ".kiro/agents/ada-prompt.md": {
+      "hash": "f3c4dcf311edf8c9784fa210f7efd17f70aa97f8f48fe8a15986ef022eb3e488",
+      "managed": true
+    },
+    ".kiro/agents/ada.json": {
+      "hash": "f1f6cf767a2aa6ca3ce5bb66f93278b1b193906c52cca01ba697ecad873dbeb2",
+      "managed": true
+    },
+    ".kiro/agents/data-prompt.md": {
+      "hash": "cc7dc8374d7fff0dfec3afed89577f6d2f41c1a801228baf8e24d2f7d81c5411",
+      "managed": true
+    },
+    ".kiro/agents/data.json": {
+      "hash": "f74831c58472f6408a57f0e31d31165fec3f150e5fad6e22216d0e26a5f15854",
+      "managed": true
+    },
+    ".kiro/agents/kenya-prompt.md": {
+      "hash": "57f15644acb6b5005365acdd5738f782ce3d6aa6f3ce52ae2ee270f89b4a4fac",
+      "managed": true
+    },
+    ".kiro/agents/kenya.json": {
+      "hash": "aa56a88a38c2118805da9015f421d03979fe9f6b068afb87be000508e4a8823a",
+      "managed": true
+    },
+    ".kiro/agents/leonardo-prompt.md": {
+      "hash": "a2241a50e642dfe897ac76a936bb0045a27e8c87de47ab179cb2e5e0ddcda2c6",
+      "managed": true
+    },
+    ".kiro/agents/leonardo.json": {
+      "hash": "3e66c21720f42f4aa9f6ab2069c30159a39fb48727684ceb831591ef6a318b51",
+      "managed": true
+    },
+    ".kiro/agents/lina-prompt.md": {
+      "hash": "9e5fe9da8a71f201454793d87f76327c1346ace5005e1d3c84808187fa13f1d7",
+      "managed": true
+    },
+    ".kiro/agents/lina.json": {
+      "hash": "d4da77bcd29538fc6022473ecee0c33cb24d69d247c3060b7ede1c114d89419d",
+      "managed": true
+    },
+    ".kiro/agents/sparky-prompt.md": {
+      "hash": "cdee6e5f874dbc2b157c15c2f9ab926d2356f6a3ddbedebd6c30eaa589b2dbdb",
+      "managed": true
+    },
+    ".kiro/agents/sparky.json": {
+      "hash": "bdcdb8e7230f5d6f44b1419292b66b37072edd7f60e9b5852a3da1bc62795ee2",
+      "managed": true
+    },
+    ".kiro/agents/stacy-prompt.md": {
+      "hash": "9d81a10000825dd64acd7d4501d2a0688204b855181c301ae7bfc845bdf80380",
+      "managed": true
+    },
+    ".kiro/agents/stacy.json": {
+      "hash": "94d4ac126aa73ddb2b0a3e03014df536d8a9c450809ea5052df5499fa3ab8a3f",
+      "managed": true
+    },
+    ".kiro/agents/thurgood-prompt.md": {
+      "hash": "1b5da0310366f4b3b7800a070ba8a88fbedeed68f5d454330d3952da32449839",
+      "managed": true
+    },
+    ".kiro/agents/thurgood.json": {
+      "hash": "bd631428bca7e8989bc2cd70e4d5cad04b902eeb36e96da37456b9de9c6beea4",
+      "managed": true
+    },
+    ".kiro/skills/android/SKILL.md": {
+      "hash": "cbe4c1a194e639554fc85c38603589f9544c48948af72319c04d0e0a224663ec",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/SKILL.md": {
+      "hash": "92a27203ecf29170ad69bd627a953ad4f72aa4fea5ecc0ee70a5e444787df38b",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/container-behavior.md": {
+      "hash": "d1fe7a371e05b8f4b0c4c1dc386234e8b6aa68c42024af5f5121a04365895785",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/get-started.md": {
+      "hash": "9cd2cbdb6213f20bea6d5945a67b17998b52c3fce5cb128401638ca5bad74418",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/index.md": {
+      "hash": "6323d0edb988ada38596508c520efc99ae8f9ab8f3954f5bfbfe8ee373e0afc7",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/item-behavior.md": {
+      "hash": "94e894a59857662ed784913774a4d0c5bcec7d16468c4c910962a7d806a0e562",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/container-properties.md": {
+      "hash": "bc016a956239a051db16fdc985b79bef49c4fb70819205ba0b98b21cb931fcdc",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/get-started.md": {
+      "hash": "306aff60d4662d45d5a100877211a85d0cb6b7014ab8ce3d024af9ec67063a83",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/index.md": {
+      "hash": "35070fa03f1ff35fa03d07d0e86b155d1552ef1d58b582cdef8cb870312588d1",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/item-properties.md": {
+      "hash": "2af103341e778c3a208ee9bd6866684d0f453cbd5386c2208ed585ee70bd9935",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/mediaquery/index.md": {
+      "hash": "8d04a0f42d587e98eff095a488dfe5f2525f16f11eb57ffcd5952d0e7cc9458f",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/develop/ui/compose/tooling/debug.md": {
+      "hash": "4c53fbdf8b993a1c234451cd59fa9d8c6d32b3b64c2dc2009974f8e4ecabdbdf",
+      "managed": true
+    },
+    ".kiro/skills/android/adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md": {
+      "hash": "e4781cf0fc691f92c202400a07ebc80424666681f9547e757f660388252cdb29",
+      "managed": true
+    },
+    ".kiro/skills/android/edge-to-edge/SKILL.md": {
+      "hash": "d071a6d8a97c99235f8cb05795c2dc83f0420be2221cecf0de3ef2495cf67324",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/SKILL.md": {
+      "hash": "7df20587187539edd13931f336dce32fe60ff7aacb2be47409c5a3189df480c0",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/index.md": {
+      "hash": "86a651d24ce227cdcec6c822ee48c80187a7ef501cac563d4aa77a56d2f698a8",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/migration-guide.md": {
+      "hash": "7b16b77fcf4f603435b01d4eb18efebc1b95bb7e3b544327133934d509901869",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/animations.md": {
+      "hash": "50c54d09fe14cb28f27d02cd9aaad4204dfe975a14bc8292b0bd40f61ad5300d",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/basic.md": {
+      "hash": "f96b02408f311d07c8df16c1867e25598c4bcc1794b52aaaa290a3b377727495",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/basicdsl.md": {
+      "hash": "d077507172cbf9ed6916899ef2d17b5f9aebcc9d3b46d51725d30166949daa14",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/basicsaveable.md": {
+      "hash": "93f01733db02f06a66c54bc5372a88688831bad14ded07ad181a16a12b848110",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/bottomsheet.md": {
+      "hash": "24ac29f14deb7912df58cc1bb504b65e9f31b30dd7daa35a3446f2682a8e57a5",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/common-ui.md": {
+      "hash": "835be092ff7114870543b4f7fb1f0893157c0ad07e00d70682a1256e95f5f3db",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/conditional.md": {
+      "hash": "1197b80637b7f670d7f7a426e1c5e47958139954888ddbe5cad68a82dda0fe2f",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/deeplinks-advanced.md": {
+      "hash": "b050cf8f47556bc74fa2f7f85891fcaaa48a59be9a3591c1c1b79aced2990808",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/deeplinks-basic.md": {
+      "hash": "862585bc618a93d5d8f59443053691fe34cadfdcecb79a9af8e88fd39427a11e",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/dialog.md": {
+      "hash": "b8ac45054125a6aed66c5df682200c74440336d0584d7e1894078954c719200a",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md": {
+      "hash": "e4781cf0fc691f92c202400a07ebc80424666681f9547e757f660388252cdb29",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/material-supportingpane.md": {
+      "hash": "f0dc47a8d0aaceeefc6a48bf73563b3f9449e608c2ef71140acd5dcd13377e6d",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/modular-hilt.md": {
+      "hash": "1c306c7f687148c9455d6df7be1f692dda9308b85f0ab40b400b9e0926a898a2",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/modular-koin.md": {
+      "hash": "6d8a7925dba9eb06d7e0fbcb9aa92f025cb58fdc09b42c0496f52cf77266f6cd",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/multiple-backstacks.md": {
+      "hash": "c2aff3debf2309db73921291b380021d14eb6965d171fde901dec3961b52f429",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/passingarguments.md": {
+      "hash": "bc53a9bbabb799865bf8bc3130faeae6e6d2b2838c3e44f48574443b6467e0a5",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/results-event.md": {
+      "hash": "6793ae1877a46c453ac8be09b327f6e0f232848017cf40d8405ef6e7c4329459",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/results-state.md": {
+      "hash": "bdc55eb6511b1a40682bdc5a15d35b5971d024e3fa16bdaa26175d3d1f514967",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/scenes-listdetail.md": {
+      "hash": "2a19b4d03973c179eb4e4be8f95f9b728af34b55015619dde73dcd72af916e8c",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/scenes-twopane.md": {
+      "hash": "d0cb99ae3054cf463a598fd348d3d9a07aa4b6805ab22121bdc11561a60b1f64",
+      "managed": true
+    },
+    ".kiro/skills/android/navigation-3/references/android/guide/navigation/type-safe-destinations.md": {
+      "hash": "ad5f13e3d5ee1bc849d2da5941d4f99a3e2a5748d52fcdfde96d1bc21bf47acb",
+      "managed": true
+    },
+    ".kiro/skills/android/theming/styles/SKILL.md": {
+      "hash": "db08388a4f9270a863589b1ee89b5e24239210f56b9a2bd492c9fee4991da124",
+      "managed": true
+    },
+    ".kiro/skills/android/theming/styles/references/android/develop/ui/compose/designsystems/custom.md": {
+      "hash": "80f55504d5ad0685a4c0f8d2b10866225998a42acd4677a5861bd55bab452d85",
+      "managed": true
+    },
+    ".kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/fundamentals.md": {
+      "hash": "704d7c741ffe505295dd1c0823ea46c6a793553a61abf59482ad35b331f37eb5",
+      "managed": true
+    },
+    ".kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/state-animations.md": {
+      "hash": "8bb347035e67dc4280c1dc60544317bc411f4ee0acd23bd6781f479285265a91",
+      "managed": true
+    },
+    ".kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/styles-vs-modifiers.md": {
+      "hash": "e4b7ebc1a9e33588587a7c377e70fc41f7c32163955a2790439566c5cfb9c2ea",
+      "managed": true
+    },
+    ".kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/theming.md": {
+      "hash": "eab2049ca3019be592794fb4272607ac4ed509778de91d04d6321934a8a8c382",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/SKILL.md": {
+      "hash": "1d0763e191d3e702b0d13b1187ef3dffe07b0173e467db1860d83e79e3aaa5fb",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/detector-exclusions.md": {
+      "hash": "d20aea640a41a03b5551f23a2d9c26685ddea731f6bccebbe94e0ab62e1b364a",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/adapt.md": {
+      "hash": "79984bf2223f7ffff03f8c8ccaa527d747b0cd1d083d99c2c781908413f1710a",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/animate.md": {
+      "hash": "4d37d6cad6b3ac253f7936fa58ac2d6cfde48d81aaa2f52079244367ca53711a",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/audit.md": {
+      "hash": "48beb00bf39128b77f6753ecca1cc03ba63021b7b8d10f14cbd36e0f711d7b15",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/bolder.md": {
+      "hash": "8e444cd0680bb04d871d5d68057e3d652a81980857d87898e76f4b0de2c2a452",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/brand-dp.md": {
+      "hash": "4a964a99b7dd563be2085ecd402bc9bd7fe2d2756024015b9ba1e4b001fca4f6",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/clarify.md": {
+      "hash": "76187c98eb6551a564284441d8df6fe2891d67ac8ef0426afb8dd7ee12549b4d",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/codex.md": {
+      "hash": "b96aad405d4729a9549580a5a3d2f1ae36657a33a3344628a33700d3f22a978d",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/cognitive-load.md": {
+      "hash": "944365dec799c122e89407c56a322a120c2401e27e41d745b57fbfbabe89da42",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/color-and-contrast.md": {
+      "hash": "d5ed095b9c16344358754f76506b5fe373cb3f1fa3e5015ede4d68f1ff8cbad2",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/colorize.md": {
+      "hash": "02aabe14eff8987d44017a0f5570aa0993e54093f1426050bcf780dc21be5717",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/craft.md": {
+      "hash": "fea8d68f4061de412624d3dab0897e130e8056bd2518bba7dcc844ecb3f03c03",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/critique.md": {
+      "hash": "3bdf3353912c795d843e305c9382d23632ad8c5959d6258d8686e6cdc4959fe3",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/delight.md": {
+      "hash": "ba921feae5a64b8122ea87b03957cdbb2e1bd70d90ba01ada738d748f030e5da",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/distill.md": {
+      "hash": "c5f7278c5e5eab035ca5db858cb087738a18ad25fb603d08949a7e29b92e4f76",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/extract-dp.md": {
+      "hash": "4809f0b14380d43c6b0f42b2eba56ad1996fc3510d7a577c180a3d32e73d48a3",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/harden.md": {
+      "hash": "c72525acf34d5a5e1999ed7c8d6d9589a3da0d3a9d9668bf36f897a732bd8dde",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/heuristics-scoring.md": {
+      "hash": "ab9df337000d79bd44da3ab29d8260a75e1ef3331ba7c2995d580979520a1bb9",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/interaction-design.md": {
+      "hash": "b11b318017acf39998e092a49b1a38c8fe44d7dd16dfa525d509cda2a25688a3",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/layout.md": {
+      "hash": "a984629af5b22df248d88788821872d791c283df910b848599b7ba87e3f3ecb5",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/live.md": {
+      "hash": "ddea5e53bf0945539c5b808ffd9e68e50c0a6ac7f41b9a633304f8ace76012dd",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/motion-design.md": {
+      "hash": "6c7697aa18887407f168fa72e65265e5d9857bffa8445e74d98ba1344b5e017d",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/onboard.md": {
+      "hash": "9a2c08ee2516d2ee87129e7ebe6a0895f9990c9852d1f6fa7e70be9a6a88a659",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/optimize.md": {
+      "hash": "73745e94cd4a42653165a89b8c512764a036daae8e5b6da1774b4ddc1659516d",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/overdrive.md": {
+      "hash": "761086faca62dd314cf31766d02239bb2bcdce7f7f5480ec171c5117482981e4",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/personas.md": {
+      "hash": "9fc13fe335c82672bc1a28dad01d1bafa6a304798afaa81dfa93b99c203cbe68",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/polish.md": {
+      "hash": "2a7c236e8c7433265b1c46fe899db1f2aad38a7cbf1740a260312ed6f1e542a1",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/product-dp.md": {
+      "hash": "4c221b67905ccf2b08a814532b28bd349dc020f3be05000a6e2020cc0b2a371a",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/quieter.md": {
+      "hash": "fe070cf34a5fbd6e03ac7e39ef6354b740d580354b9f2b44226f33cfd85397a1",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/responsive-design.md": {
+      "hash": "fefc1acaf1d293c74374c62c8c75629efa0660387315474d6302dc74b7f3ead0",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/shape.md": {
+      "hash": "0241e70fee5203c39b245b023ff46b0931be07d82a09008a5f47c930db4fded5",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/spatial-design.md": {
+      "hash": "6e104d26025d4fba99f7bb538f8479f0d34877ce7cdf94481d08aea6a352bb6b",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/typeset.md": {
+      "hash": "201d430d06efdb972e53bb392310798c03a27b8ae681863b9b85cc4264eb8a87",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/typography.md": {
+      "hash": "2f17b448cd82684ec4db37907a03567124698c3afa5f6bdc46b94d14430b817a",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/reference/ux-writing.md": {
+      "hash": "20be4fe822a77558e8e169514ac7e6685d51703537b899e262f542fe99ed6af9",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detect.mjs": {
+      "hash": "f5dfd05ca1e314acd8ed79c6301a20a1b844f2eb6691bd63e04116a8e7efb187",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/browser/injected/index.mjs": {
+      "hash": "c15e13202c56f85f7ef87b1e2d5954149bdfd5b8b25f9b8aca8e6f1530bcf57d",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/cli/main.mjs": {
+      "hash": "b671244032f3a0f01dab120cd15e2cef6f431a1dbd22945883facd747e37919b",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/detect-antipatterns-browser.js": {
+      "hash": "508a1abb254b4917c044b1f38597a5af6447899fa0f4fe25a37f2ac84da1673f",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/detect-antipatterns.mjs": {
+      "hash": "ba12095d2bd6b939fa19437197952795cf60e288595c10f4c57a440261a5eada",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/engines/browser/detect-url.mjs": {
+      "hash": "362531f03b40c75768122e5393dd10133c88482bf5e3be2010a87a8e0d6a6093",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/engines/regex/detect-text.mjs": {
+      "hash": "580cf53d83d65ec1f9a55b6d32f22169d3348850be5899663f2841d80d3665bb",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/engines/static-html/css-cascade.mjs": {
+      "hash": "1de9a3e83d7cea1de194698f6cded9ce083da4178f57f5aef5ea4ecb9e667b66",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/engines/static-html/detect-html.mjs": {
+      "hash": "6a1160d43b7e7380d16c5aeb6ddc571c98807f3ab1995bc6dd2e42973ce470c2",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/engines/visual/screenshot-contrast.mjs": {
+      "hash": "b4520b3f001079bd175bf20d46c5197b1b8ec5fb98fdf72c50a24c0b6598ee99",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/findings.mjs": {
+      "hash": "555330225cda4da2221e000c2d06abcbbd03c2c0246a5b066b5c81f8057ccce6",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/node/file-system.mjs": {
+      "hash": "58ba716e8f4e40634591b58f9e8603468d16153d16ad61236a79026cc2801981",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/profile/profiler.mjs": {
+      "hash": "5e201f3557360bd368a3977fecf925f376fd95f8a4dd6c4cc63fbd62848cda43",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/registry/antipatterns.mjs": {
+      "hash": "407cf343915ad0c40580904c7085367d956e614908aa2b2ccd44cd61ed8cba98",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/rules/checks.mjs": {
+      "hash": "18557a365a09f3fdb8cbef01f9495e87d28a186c45ebdcf47ebe9d1f49f50bd5",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/shared/color.mjs": {
+      "hash": "8d72c0a0b894a11d296115f587dc758d92fb9c4fd6207e1d69e099bf107fbbac",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/shared/constants.mjs": {
+      "hash": "2e61e0815e7216fe74ce89eccfff2761bb72268964d804ee89987119130e4edd",
+      "managed": true
+    },
+    ".kiro/skills/impeccable/scripts/detector/shared/page.mjs": {
+      "hash": "b4cef5548d84fa90d15e6b42b20be9ef74ed05e4e6e46076ec5acc61b343315c",
+      "managed": true
+    },
+    "src/tokens/BlendTokens.ts": {
+      "hash": "ad4b373455fc762c311e042e1313f38982e4a2eafa3c6c7b0d93bc2491e2f069",
+      "managed": false
+    },
+    "src/tokens/BlurTokens.ts": {
+      "hash": "8568493136dc63b08b8870794cef65eff082d1a75317681feea0551e3d31b136",
+      "managed": false
+    },
+    "src/tokens/BorderWidthTokens.ts": {
+      "hash": "bcd6a1dcecbd17f314436adb4d6b5f5f973e563c3bbc3d2619cd0ad35cec5155",
+      "managed": false
+    },
+    "src/tokens/BreakpointTokens.ts": {
+      "hash": "3faae74edb9ace9f777109565cdfbdfc84ba0c2797086ebd312e07e9984c062e",
+      "managed": false
+    },
+    "src/tokens/ColorTokens.ts": {
+      "hash": "901814fd816f5fe173feea8767f57373a5334fde8c65bf6c92be52262bcbd674",
+      "managed": false
+    },
+    "src/tokens/DensityTokens.ts": {
+      "hash": "034990513ab03939571e0414135cb4e6cc9044847a9c7aa4bbc244e31861cc3e",
+      "managed": false
+    },
+    "src/tokens/DurationTokens.ts": {
+      "hash": "d72a95af0fe438eb8338291113a1d6a8fb691bf28ef64a5365d751d8627493c5",
+      "managed": false
+    },
+    "src/tokens/EasingTokens.ts": {
+      "hash": "957e628fae584c5576383610f1aace83a11ba946c94891a25fc0e362e1570775",
+      "managed": false
+    },
+    "src/tokens/FontFamilyTokens.ts": {
+      "hash": "734fd7bbd50f5539ea58a7f027219400bebc9440553e1877d2767777976568c3",
+      "managed": false
+    },
+    "src/tokens/FontSizeTokens.ts": {
+      "hash": "9a91633fecc9aa8a7f6863299860f3edf5967c90c33342b48988d7b25d32f30d",
+      "managed": false
+    },
+    "src/tokens/FontWeightTokens.ts": {
+      "hash": "52423622380876c3c02853ffa86a39fd01f5fbff008b678515360b9aa7fd0b74",
+      "managed": false
+    },
+    "src/tokens/GlowOpacityTokens.ts": {
+      "hash": "e2c4f915d1e6216e5b51dba0bc8870b8855e49c57fe8b6f4b7b2a7772d656774",
+      "managed": false
+    },
+    "src/tokens/LetterSpacingTokens.ts": {
+      "hash": "070c55670adecd3c99b8147147e9c5a0d5fbb35ab138fc0a94d3f92425599657",
+      "managed": false
+    },
+    "src/tokens/LineHeightTokens.ts": {
+      "hash": "dd26ead6925c26638fe3942dadf5c3ce3d595919f3c5ab37e404994119996018",
+      "managed": false
+    },
+    "src/tokens/OpacityTokens.ts": {
+      "hash": "7715a6ecc95c40395c6b4cc1efb8cc3288a1bd6f73c5d69ae1ca1d62a49f9c6e",
+      "managed": false
+    },
+    "src/tokens/RadiusTokens.ts": {
+      "hash": "417aed77507738d01f7373de490510dd40ab96ff782ae8913f4cc85588cffa7f",
+      "managed": false
+    },
+    "src/tokens/ScaleTokens.ts": {
+      "hash": "f1b68d734624389acd723c0e910a4931842c954b7c0dd9c71a4a1720f6a0a139",
+      "managed": false
+    },
+    "src/tokens/ShadowOffsetTokens.ts": {
+      "hash": "161c8fb91e7543fbee6897819f6ac881eda8916f54d89a8001cf82259930cb07",
+      "managed": false
+    },
+    "src/tokens/ShadowOpacityTokens.ts": {
+      "hash": "f0bbb7cd419632469a4773b011c9f2ae5f5a75a91435b567cb0b65fd23f3696f",
+      "managed": false
+    },
+    "src/tokens/SizingTokens.ts": {
+      "hash": "b12861fc7dad07024c6aea9571344196059b938b02e20c890d8372f17792562d",
+      "managed": false
+    },
+    "src/tokens/SpacingTokens.ts": {
+      "hash": "23914694cdb1737a8d85b322ab6620c0b92132c17abb1550aa54231be0e349f9",
+      "managed": false
+    },
+    "src/tokens/TapAreaTokens.ts": {
+      "hash": "4ec84adf154caca466e8f4fe6a422df14bb576792f4b3160984cc3ff8d4424c6",
+      "managed": false
+    },
+    "src/tokens/color/channels/chroma/chromatic.ts": {
+      "hash": "bc275f508a9770a8a7589d6aa8f642ac53666a69da7a2e1c496ee0d76f2c3307",
+      "managed": false
+    },
+    "src/tokens/color/channels/chroma/neutral.ts": {
+      "hash": "0d71396cc22b86e203f948440418ad0af2655ac11512ff28d258b1a7730efe98",
+      "managed": false
+    },
+    "src/tokens/color/channels/hues.ts": {
+      "hash": "8292dc3bcf18f078b6dde896890423539bf3d8d888826835b5c716254bda8b27",
+      "managed": false
+    },
+    "src/tokens/color/channels/index.ts": {
+      "hash": "7d46bb2cb455565d7d41aca607ead7ada14ff594ac5647017005dd45df9ec352",
+      "managed": false
+    },
+    "src/tokens/color/channels/lightness/chromatic.ts": {
+      "hash": "74e633d1281568ec2e37c73a3e604566b90fab4a203f8e54f882d24477a996e4",
+      "managed": false
+    },
+    "src/tokens/color/channels/lightness/neutral.ts": {
+      "hash": "c6863f74a7d2a648f952e2827e2589b9ee3b87bcc1030a56e83d5e1825e96abc",
+      "managed": false
+    },
+    "src/tokens/color/index.ts": {
+      "hash": "59e60b0257955d7e88979cba384d6744485cf6a0d49dd72695fcb5c1a879781f",
+      "managed": false
+    },
+    "src/tokens/color/primitives/chromatic.ts": {
+      "hash": "8a3a23cb7ccea427c9b9a29f79dbdb0ad58f64d81e486697c3eee78e739ad249",
+      "managed": false
+    },
+    "src/tokens/color/primitives/neutral.ts": {
+      "hash": "9d08fcea075c1ebcfd8d6e8bb0fb243a4440dae40092ded6bf7a3e3fe9af662b",
+      "managed": false
+    },
+    "src/tokens/component/progress.ts": {
+      "hash": "8a79756527d8ff04edeacc14ba801cc11f89af034b4857078b9faba5c1133143",
+      "managed": false
+    },
+    "src/tokens/index.ts": {
+      "hash": "45f393347e626594e9df0a74f25f5d7dbf891365037d49983b05189e825b443d",
+      "managed": false
+    },
+    "src/tokens/platforms/android/MotionTokens.kt": {
+      "hash": "97a527cf2399702b5d34bf07cab32ad50af7cee689d99a5eccdf70894c4d2a41",
+      "managed": false
+    },
+    "src/tokens/platforms/android/MotionTokens.md": {
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "managed": false
+    },
+    "src/tokens/platforms/ios/MotionTokens.md": {
+      "hash": "a31bc86801c34d0a162d62f835b8f9540d22c36c653845e0814910ccd91f75ca",
+      "managed": false
+    },
+    "src/tokens/platforms/ios/MotionTokens.swift": {
+      "hash": "1cbaa689ade3f34f26f7bc1c5317e5304ef7000574ef5026932461132819d256",
+      "managed": false
+    },
+    "src/tokens/semantic/AccessibilityTokens.README.md": {
+      "hash": "6aee126496d61a7658fe637946c3e25dddd2d1e8919f17fc6cb1f5f2a6d8e612",
+      "managed": false
+    },
+    "src/tokens/semantic/AccessibilityTokens.ts": {
+      "hash": "3402417f764034976f16149ee9f28731d49fb34592802ae684e17f3f1c5abe58",
+      "managed": false
+    },
+    "src/tokens/semantic/BlendTokens.ts": {
+      "hash": "fe42900d1d42d0b7fbde26a0a7940c5d47bf0728a6f3c874d2aa138dc366aa10",
+      "managed": false
+    },
+    "src/tokens/semantic/BorderWidthTokens.ts": {
+      "hash": "5e45cf140b58a13f2a4a2624187f7977902bb11d35afd00f491ae0557af87750",
+      "managed": false
+    },
+    "src/tokens/semantic/ColorTokens.ts": {
+      "hash": "433c14c68341bcf268d068de3850893d6bf3e5db2821f163a5308cb97c9be88c",
+      "managed": false
+    },
+    "src/tokens/semantic/ElevationTokens.ts": {
+      "hash": "b25bd78688d2271f739620ff2a797ad4c1ebc4a3a4605c7a45aa5a892df7b52b",
+      "managed": false
+    },
+    "src/tokens/semantic/GridSpacingTokens.ts": {
+      "hash": "6a43a9996e355f34893a4ae985b42546ebe1490ce7384c6aabda30b1375fd772",
+      "managed": false
+    },
+    "src/tokens/semantic/IconTokens.ts": {
+      "hash": "a2d9f573804ac0d5fc598d12b81cd01eef83b4627547ffb629b370d48ad34241",
+      "managed": false
+    },
+    "src/tokens/semantic/LayeringTokens.ts": {
+      "hash": "1b3c442d776727616cfb92e47a5d236b5fae9a605d9b744efd443524f2341c23",
+      "managed": false
+    },
+    "src/tokens/semantic/MotionTokens.ts": {
+      "hash": "d19f6484565ac6e71b361c202a98cbe096f6b5ddcc2774a260d81d4e6b051753",
+      "managed": false
+    },
+    "src/tokens/semantic/OpacityTokens.ts": {
+      "hash": "7bf1e4251a89447ce8647efe85e8b59cd014280f132ca7b4ab9647df41b317a9",
+      "managed": false
+    },
+    "src/tokens/semantic/RadiusTokens.ts": {
+      "hash": "6c097a95b04403a542e5d2e167848a205607a663529589093d1dc952ee7f267f",
+      "managed": false
+    },
+    "src/tokens/semantic/ShadowTokens.ts": {
+      "hash": "1bb5e91ed3f3ed661b96ee8b955010a877bbe676c8cdc13a8032e8b5e447bcaa",
+      "managed": false
+    },
+    "src/tokens/semantic/SpacingTokens.ts": {
+      "hash": "a1aeea72059f575b6ed5eba83aaa88acd39b7b1b5259e7a7ec78f37d87e10922",
+      "managed": false
+    },
+    "src/tokens/semantic/StyleTokens.ts": {
+      "hash": "3bf2c6c428381251d0e02acf9effd5762b2fc9adfeb76b03bb37ac4b5492dfe9",
+      "managed": false
+    },
+    "src/tokens/semantic/TypographyTokens.ts": {
+      "hash": "37d249797b65bb74b8ddeef5ac6487b0306333ab28481c8888075da5f3ca2cfd",
+      "managed": false
+    },
+    "src/tokens/semantic/ZIndexTokens.ts": {
+      "hash": "e19eda02542577ab755c9ca26b67ad8636b97fae893e3d254be2b2c16f62b8d1",
+      "managed": false
+    },
+    "src/tokens/semantic/index.ts": {
+      "hash": "d7cd19fbb053263e196ec3cf2a100fca8671713eb010465b5aa08c0ea711c889",
+      "managed": false
+    },
+    "src/tokens/themes/dark/SemanticOverrides.ts": {
+      "hash": "c18502c0b6c81c8bb2deef80cd1970c362fc8f17fec08792f82d20820edd02f8",
+      "managed": false
+    },
+    "src/tokens/themes/dark-wcag/SemanticOverrides.ts": {
+      "hash": "7e6417e7254d8fdab684d4e6dec66340f4be3d6daf657558003e47fcdca472c8",
+      "managed": false
+    },
+    "src/tokens/themes/types.ts": {
+      "hash": "3c3e9c1f3bcba7de728df706d57631d410976fe002bc7028407c9d07941b47e1",
+      "managed": false
+    },
+    "src/tokens/themes/wcag/SemanticOverrides.ts": {
+      "hash": "7158f3f44441b51566cd3a0b0a2582094ab0b3b4798e468be0154c2b5e208b35",
+      "managed": false
+    },
+    "src/types/ComponentTypes.ts": {
+      "hash": "a151bddf8f77b7f43cb507b9e6cf99979f53c51da98a66ae9d498b2c3634b456",
+      "managed": false
+    },
+    "src/types/PrimitiveToken.ts": {
+      "hash": "3bd7cdbefa3585867147e5171edf3fe9fd0d2d85faf20444b5be03dcd02a146f",
+      "managed": false
+    },
+    "src/types/SemanticToken.ts": {
+      "hash": "5016b6d10b2ea2927167ccbbae6645a1964345fc4e2a09bc7253ac64f5aec15e",
+      "managed": false
+    },
+    "src/types/TranslationOutput.ts": {
+      "hash": "7ce59a71ac43f43c359987a346438c17524b4776604f0935d0425a858157ef53",
+      "managed": false
+    },
+    "src/types/ValidationResult.ts": {
+      "hash": "956a23e7c448c1e3300e6ccf561261686c72d7189050fe92c3bf2d2a8aed164f",
+      "managed": false
+    },
+    "src/types/css.d.ts": {
+      "hash": "f449d8ca8cc1b27d96a62f642f9fe8b73f43ecab7af009be5f81a118f1883baf",
+      "managed": false
+    },
+    "src/types/index.ts": {
+      "hash": "6b85f521369b9245cc5976997a3a279f3c63e26d5d9edf81acafb512fcb0d2df",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/Avatar-Base.schema.yaml": {
+      "hash": "67f47a803d79ae3f1723f24e3a43b853509891106f63ef4df6fec8c2655f31ee",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/README.md": {
+      "hash": "1aa1dbd0ade94981fe42975b3da2e59613375e75228d06af0bc7dcde8c9afc3e",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/avatar.tokens.ts": {
+      "hash": "3bb3f8a603b2704b28ecf368b2f3f39d37f0b8c0921508021217ff742e0841f8",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/component-meta.yaml": {
+      "hash": "0d7cfc57ace6452ebc69e115da99910231b4b8532525418b7d585da47b4a9fcd",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/contracts.yaml": {
+      "hash": "2ebe91e260c950046aeedd840debbaa04332be6040a1b28243567d661f71c71d",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/index.ts": {
+      "hash": "ff616e0fd83e784a7cbbe341024a4802a9a93c8dd27e8c077bd12a1bfe0c6649",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/android/.gitkeep": {
+      "hash": "adad14762374abb0ec6eabb289d4ee0cd8ec472788319792ed44f89986c81303",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/android/Avatar.android.kt": {
+      "hash": "101c196deff173b89274284093d86c339d4d528e021bf93f329c4fca9ada248b",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/android/AvatarPreview.kt": {
+      "hash": "0b89bef7e9eff5ea1e8a99efcf96aaa2cb5c3cb93e77d40a5b3404120d370854",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/android/HexagonShape.kt": {
+      "hash": "6629ddb2cbd6fca7c2aa6d3120491729de3120b2a2cc62e2e9986deb4716cc6b",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/ios/.gitkeep": {
+      "hash": "a9a76a38a401a931936828624e45e4f04d1d6f2dae33960d1562826f71010bcd",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift": {
+      "hash": "5157920a71e2107b908bed43f4455573412f1ad47b4e9ec2384d4a8aab224fb1",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/ios/AvatarPreview.swift": {
+      "hash": "8c7c5f1598600756b0dd717eb69325b7316586daa31ef89f247fb932097d6deb",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/ios/RoundedPointyTopHexagon.swift": {
+      "hash": "7debc54ced8928580a6232d17a1325b2887f34f2567de07a98c56a626177137d",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/web/.gitkeep": {
+      "hash": "002a16b1cd81a3857078c15307ca024064f9891298a630f9852ab902eaf75875",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/web/Avatar.styles.css": {
+      "hash": "ca87423ce70549d5d4aa079b1ab53d1341e03ecd81c468298c6d5869481ff889",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/web/Avatar.web.ts": {
+      "hash": "4545e7b5fa7f39f8cd91ab596b3d8c0b7eafe740c3ad7369484a30697f9a26f8",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/platforms/web/hexagon-clip.svg": {
+      "hash": "265b32fefd77218c913adac8ccb31fdafa4b23b66c4c36155ff45a7d7d418c5b",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/tokens/.gitkeep": {
+      "hash": "790528f6a217316e8ed0dece4304c01db8e2a37ac4d9445844f59e3272d5a8a7",
+      "managed": false
+    },
+    "src/components/core/Avatar-Base/types.ts": {
+      "hash": "267e0fe560e7f8bddafdfee92ca07b6812225878c472f16b9cec6adccb7a5ee3",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/Badge-Count-Base.schema.yaml": {
+      "hash": "947d099a3c23185af0d46a413fe59449ebaa63a8a10130e3cfd88798686bd085",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/README.md": {
+      "hash": "adea42d7d522d983f025c1bfbc028bb3d99c43a52e0afd76bea2ecebbd08b2df",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/component-meta.yaml": {
+      "hash": "37b1634b365d407452b23689d02f7ed7d1c754408439099ffbbcebbba4944eaf",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/contracts.yaml": {
+      "hash": "9927df7d942d8b862632360002b426c5c1aead7deb76f9b49c34c3325464d57e",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/index.ts": {
+      "hash": "41c7055bfbb82590ab96ecbb43259884f0da586cc58fd7ff3bd2b5bc946becd7",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/platforms/android/.gitkeep": {
+      "hash": "dd09708bfd3df19c11a021f8787a02cc8ce0f7d44bad1cb2d4cce1deaca2987e",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt": {
+      "hash": "d9d5b897a6b0799cafd6266ba35861f42abb1e62965d997d83737be7fe735c29",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/platforms/ios/.gitkeep": {
+      "hash": "1a5fee400f01f6089fc10d6d70634cb8d917bc3b8f1b279c34248babba1a2935",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift": {
+      "hash": "5570597d439e242f0fe752d4541964c0c03bc8990c1a32ded6c35fcb3f9f21d9",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/platforms/web/BadgeCountBase.styles.css": {
+      "hash": "e3146f23303960e890776733b67a86075edb726999da3ddefe7d1ebb0870deca",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/platforms/web/BadgeCountBase.web.ts": {
+      "hash": "726f7faef4bd37f7919f78cff9230285a6783c42a1ade171272be330cd640623",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Base/types.ts": {
+      "hash": "83b9e324bb37d0f96b2bfdb947a58aa8796a28300b52ea5e33f339ec4c16649c",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/Badge-Count-Notification.schema.yaml": {
+      "hash": "09f641c020a461a13a5b717b355b6b2f25d9321030a0c1e66a46f6139b559041",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/README.md": {
+      "hash": "0c60c9f59525d315258b1f9599126ebdc0425968c4499d613a0ea7b6c267829e",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/component-meta.yaml": {
+      "hash": "b5487731c79ecd348f54a27b09385c313a97d1e0a58c787d1ac714c2a807b0cf",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/contracts.yaml": {
+      "hash": "0fd57e16886accbe02fb9affd6d89ec8b17a1d9e302753073ef68131053cbf29",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/index.ts": {
+      "hash": "934f369b02c005adda2290bb6c5b75433858e47bd63611096305c8ec6f3dcb47",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/platforms/android/.gitkeep": {
+      "hash": "622ea780ddd76d906308d53593e589192cc78756944a08a00d599a7ac8071be5",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/platforms/android/BadgeCountNotification.android.kt": {
+      "hash": "d77808179507beaaedbe63a221aec26a1c2f7c50aa94b98ea900fdcf5b4455de",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift": {
+      "hash": "23160e588fab68f4a4390862c02aea2a06546b82ad8003892cac2f252153e1ec",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/platforms/web/BadgeCountNotification.styles.css": {
+      "hash": "e90f3fd75e0cf8189c6568c46d1dffd0fc5ce0f5bd88eafcae2c7ffe9b8bc546",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/platforms/web/BadgeCountNotification.web.ts": {
+      "hash": "9faca8a1e1c19fde0aa938c46b569a5154b5cc49380aad6f645b3664fb5bf10b",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/tokens.ts": {
+      "hash": "3453c1a74d903e943a3d6cc0f6f4c33d7efd14f700ee1ad31be8fcdf9fd4bd83",
+      "managed": false
+    },
+    "src/components/core/Badge-Count-Notification/types.ts": {
+      "hash": "fbf023485861dbb608cd10247b5a8c4a4c88186168b525528ba77e9b4cc572c6",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/Badge-Label-Base.schema.yaml": {
+      "hash": "74be40a1bd2e3e167ae04c7e07582fdb2d1a3260a3440aea5082f05eb4073f6e",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/README.md": {
+      "hash": "21d7101961331419807193bc62265343f6df369c0f711ec52e8b0d694e754bf0",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/component-meta.yaml": {
+      "hash": "7a0edd9eb2b6b2f2e4098a4aaabbf6545e5300c2d5449edaad908ebbc813ef41",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/contracts.yaml": {
+      "hash": "6dd26f369252559cca0c1c97d9745ec69e04d2aa46c769b7ed3d4bf0d8041071",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/index.ts": {
+      "hash": "d725d460b136c9ad208cea7112017a92bedd34346116f0b0c649e75fab809988",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt": {
+      "hash": "7fba972349f09d9550dfebdf8e832b809d5ad6203e532dff5eed5202d364e28d",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift": {
+      "hash": "0e0d8ab7b0412679f9ae415d6132d6efcae3cba2d6ddf383ec2b81ef0d703fb9",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/web/BadgeLabelBase.styles.css": {
+      "hash": "cb7a21879700ad48d351ca0e4f3ba202dd1abbfb8e386e9b56b9e9dd4c3e3bad",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/web/BadgeLabelBase.web.ts": {
+      "hash": "437d9fa650427ceea9cb5b31351b3be03bb0a29d47bc4968909a36950fdfcc92",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/tokens.ts": {
+      "hash": "ec6d10e834c089c524a1a5822ef5f89173c680429eaea845c663659ef1d18dce",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/types.ts": {
+      "hash": "343779ada6c2abc81b331b707319816d2b23831f7d41c2f648d45967011fa89e",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/Button-CTA.schema.yaml": {
+      "hash": "a65022ba9ad8c7440d4ecdb49a1039844b72425c4fb195f310fad927c282595a",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/Button-CTA.tokens.ts": {
+      "hash": "40ea1396c3e703790d7aff6beee9dcb94c673642a4c6d002e7509067f91cdd95",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/README.md": {
+      "hash": "b6ace3d6b819f3e049323accfe06eaa0c2223348430e30e01ca5aff4ba6eb1e2",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/component-meta.yaml": {
+      "hash": "137a2593e0ef5106df95087dc1208714c6fb8c774b1209ed3a4faf3161412aaf",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/contracts.yaml": {
+      "hash": "e1f1038ac723ddc20163b5e6e2bb677ecc83a11a63ef6260dc57d29aff7157f1",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/examples/BasicUsage.html": {
+      "hash": "5614b8bbadb18aeb4a5e51ff3671f6abde5a8f91fc7f4ceda284e35441ef01eb",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/examples/BasicUsage.tsx": {
+      "hash": "a8dc3aee31f1f334e6718a100381979900f982627caa59c28bc822a54c12614d",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/examples/Variants.html": {
+      "hash": "eea77ab2ffbcf5ff3f330bf5324d37c34c35e40838bf86139e9298deaffb36b0",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/examples/WithIcon.html": {
+      "hash": "35829daba90e9e4df5e764ac1c91f9d23958081de60f3afcfeec64e9e65bde68",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/index.ts": {
+      "hash": "999be2ab7d1b6c90e9c57dbb1489e464e6f6b046b5966f0a31c4137059eaf367",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/platforms/android/ButtonCTA.android.kt": {
+      "hash": "04e18e2a552179b1ba62ca45e27443e525a660f8161e7fbedf21e5ff23b4ffc5",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift": {
+      "hash": "e1820800ce5d14570b6a94e61111a63fd305c779ee34104c781677442e0b1aab",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/platforms/web/ButtonCTA.web.css": {
+      "hash": "8c26aee0e28388160b33b9fca8d2212b27f8d5c76f123d27b46c5191d3d15444",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/platforms/web/ButtonCTA.web.ts": {
+      "hash": "f9282f4e3f46150792d60e89b5bc987565e259ad0aeef3ebc2ffe76ee03d7855",
+      "managed": false
+    },
+    "src/components/core/Button-CTA/types.ts": {
+      "hash": "d116add70147bf4fe7d1fc5859de874222312476cbbc6813021ba35d566269c2",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/Button-Icon.schema.yaml": {
+      "hash": "b312478a3926bbe59314c206d16295043161d6e50be33442178fe0624915cd28",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/README.md": {
+      "hash": "8b5bdfcabc45e22a1a4f9ab8e3277d762a582500404c14ffce109efd13497863",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/buttonIcon.tokens.ts": {
+      "hash": "000700157d35c6ccea0993ff00d0b5f5ec141b3d4d037c25a2dd1fbb205261e4",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/component-meta.yaml": {
+      "hash": "27cfb7371c6c3be2ba98e6efb9cf557e4dddbf96980ae658b04ba3e73ad20a2f",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/contracts.yaml": {
+      "hash": "a2a0a8986819bd6497fb7a9e04f0ac990c088f560ce5140a78280a9889a306bb",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt": {
+      "hash": "90d2c85fbaab7bc42e6dacb7213f3125c097cc9b93ec165cec72a387e747ac26",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift": {
+      "hash": "72837d7bbac2fb0a1e9e3884de0fa04a1f21293cf04de54a489a8878e7afa1fd",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/web/.gitkeep": {
+      "hash": "a607b98124e5f4888daa9ab88dc7315157813b93b98699641f7ec1c1751cdb50",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/web/ButtonIcon.web.css": {
+      "hash": "a9f3b1c227d346a3a4fed89b3f478d37c8b15db76a5a393806fb4d6f7faa994b",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/web/ButtonIcon.web.ts": {
+      "hash": "e55d51fea4f325fb9fbabb190514c3540e7823910ad36b63641719da3cc0bf84",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/types.ts": {
+      "hash": "773c75c2b8db2e146f956ee7dfe569ca8b5a1546defd6afe358c44184c7b3ef5",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.schema.yaml": {
+      "hash": "8c6c9b1b438ee2a72e87e01851e20eb48222df47ceaa9846736e2ef335273742",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts": {
+      "hash": "61b269f645ab42639fa8a29c209c5b2a8afc6d9cf09359b43b2c5c6c910e6c42",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/README.md": {
+      "hash": "92af2b2167b682a055687ff77774c1592c56d4b7cfe9f0545e11dad0b5eb3d25",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/component-meta.yaml": {
+      "hash": "bc3878d519e8f347b2dcf0e2827e9abf9757a71836ca52dd00e57b0da19c77b3",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/contracts.yaml": {
+      "hash": "accb2e714218de967cb3b7d5040bb7a766daf27342758158069491fcf89c1c6d",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/index.ts": {
+      "hash": "aa5aa01555de35368eae87490f94e77e2592e48e4b6a9c1c572ce621430e18aa",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/android/.gitkeep": {
+      "hash": "5a76fa2c989bbef7197e84053cd80860e04e8e75ee5e45986c43d757e246a267",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt": {
+      "hash": "399150f99ea078244fc6fa17d7b01a75f7e9b28cf1eba8ab464a283b462b6f0b",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItemTest.kt": {
+      "hash": "1bcbd885b96384aaeec978abd946c702574d841c5b716adf1b25252fe0c27f75",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt": {
+      "hash": "23f072e566becdd78d46e5ff91bd9d877fd2cbaee8264358d0be277c9e7aad42",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/ios/.gitkeep": {
+      "hash": "e3ccc7d21332510533a6e910acf2ac644bd022c79a519dde9f3e0611a2ffba90",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift": {
+      "hash": "873a1b4dea131b5f1bbaa495c1cc38f312a17ceedfe86b9bede96265b1aa2e0d",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItemTests.swift": {
+      "hash": "db8bf9139e16fd852c1b1a56c1e6cd4a68d81035bc511e03c6b971fd94fe0a07",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift": {
+      "hash": "856f5a54378acd3906516e978e19b893a93e560d9b7772f7a97f5c2bba201ec7",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/web/.gitkeep": {
+      "hash": "727628cd2c7c239f1b278b4168009209c0891502ae24adf645406a932851042b",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/web/ButtonVerticalListItem.styles.css": {
+      "hash": "d009ff4640b1f1c52bf028fe59e9cffeb965e8ed718fab5f5a6391178887b604",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/web/ButtonVerticalListItem.web.ts": {
+      "hash": "db1ef4ad2d0bbb9c14a85dbb7ed47cc9d759d695a783e651d86d5e8c4f89d99d",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/platforms/web/visualStateMapping.ts": {
+      "hash": "9c4bec2250edc059e65ba5754314bada8399e183a27f15d6c5eaf9b8b8a59f72",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Item/types.ts": {
+      "hash": "22f27798e848594432bed8824b3daa8504294f6d597298c427a6477381804e37",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/Button-VerticalList-Set.schema.yaml": {
+      "hash": "6abad7292eea100cc5256463d0411a4376a20d3c19a2ec6d189e9983132578e6",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/README.md": {
+      "hash": "02d5b40844863f492cef13d7d47c61c8040f330721feea90292d8c94aa8fae40",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/component-meta.yaml": {
+      "hash": "e6767476c1744a53f92c76fd5deac2657adc5f93a751014319818648336c64b2",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/contracts.yaml": {
+      "hash": "4f6780a293867ad247f9d84571ccc10d68f1244b76e27b2e619fa98b26c71bdc",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/index.ts": {
+      "hash": "e2b1e39755259fba02e0b06c951eafd505014fa6c6f3eca8bcfa118547edb135",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/android/.gitkeep": {
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt": {
+      "hash": "6a6557b9b0d894b83ae5765d2eb0df1cd4df3a16d172acb25a6e7396127a3763",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSetPreview.kt": {
+      "hash": "cd3909466f559301cee49501e5c11d951bc485790ca5d3439a17c0c6390c9ade",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSetTest.kt": {
+      "hash": "d1b4a1feec85d648cc2e4aac8907f16c58ecc3ee627e8f17470c43d4cdfaea8c",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/ios/.gitkeep": {
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift": {
+      "hash": "568ebf0a54034be819682a183be3623e62e0c26cb71e956ce94dc00e615545e2",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetPreview.swift": {
+      "hash": "9ea78db20d6c8b0ae485b3d846931e63a3efbc1f8e15e279a90dfb69c77f6cd1",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetTests.swift": {
+      "hash": "4306f7a5fbd01ad333b6242da20a7227a27524d629226c89f1883598595ce344",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/web/.gitkeep": {
+      "hash": "e36e541aace562db98c2258b24dcafcadedfd5087caf05d55b7c07cca2408eaa",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/web/Button-VerticalList-Set.styles.css": {
+      "hash": "d9b8c9b952d2bcddc47db6074f702b41a8be91037b5548a056430ce2ae1c4b0a",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/platforms/web/ButtonVerticalListSet.web.ts": {
+      "hash": "5992d20e9637f0d52c0d25aaeaefcd23fc1b3f523cd79ca2c585e5a80a391b4a",
+      "managed": false
+    },
+    "src/components/core/Button-VerticalList-Set/types.ts": {
+      "hash": "52ac3e51e802931b15a7695b906ad0818289d2b6b1c8fe02ddac8fc1ed41dc74",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/Chip-Base.schema.yaml": {
+      "hash": "c3a64ed4e2728bdac31e39fb3d04383a4f51a2582316ec97812d33e6168b15a8",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/component-meta.yaml": {
+      "hash": "0abb61fa4a43122da1b3cb1319ddd274e751837f56a43ddae3d5ae6ffc0463b1",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/contracts.yaml": {
+      "hash": "6dd9b06f8ce817c6c3dbf46b31467351e10b4ee5e13b5e1d3583a087735799e0",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/index.ts": {
+      "hash": "79908cee6a65dba02b66f2424117537823b58b405f1b71d8c2d9f3b0dd8d4bb2",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/platforms/android/ChipBase.android.kt": {
+      "hash": "b7f81a08646eb997dd33535587d631367741f6f8986d32cb08179d8bdd5b75b6",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/platforms/ios/.gitkeep": {
+      "hash": "080a15762f732ee80dbd341b282c3b24770098e551c3c012d8be4e206eab7283",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift": {
+      "hash": "32ad455cac17682c385985a5ed68c7df716dc0a1db94996f5dba5bbd83e07383",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/platforms/web/.gitkeep": {
+      "hash": "a28cd39f71f49a6b81e24122e373a2f0158a10bb236e5c496cd3f10c315882cf",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/platforms/web/ChipBase.styles.css": {
+      "hash": "8bb817073bfb7919b5d6f82dd23c6117bd74246081feac2d7afd76166943ef51",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/platforms/web/ChipBase.web.ts": {
+      "hash": "21ac5992e25f1edba95350c823f9e69aed588365cefe4250ddbb6d789fc552bc",
+      "managed": false
+    },
+    "src/components/core/Chip-Base/types.ts": {
+      "hash": "e4f2a006062860ebed2f7702ac0fdd65668edf1bdf4d42039ca7efbf0befb401",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/Chip-Filter.schema.yaml": {
+      "hash": "3ff7955b1e95231aa9e1cd4bb13526c82d12c1b55d2b5332bb320f124ebe2fdb",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/component-meta.yaml": {
+      "hash": "c80d3289ba3e15b25ab9beb3a714901f3a25a3c7ddccec145677d9f42a8119ef",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/contracts.yaml": {
+      "hash": "c6cd5ce39f5b0e6d827cd0fcb5431dcab8d5e562e228814f48396c8f4b072802",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/index.ts": {
+      "hash": "6c237179d83599abc74e4eb7e6ed1d90b334849360a8ec909b8b550114436004",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt": {
+      "hash": "618c239cac5cb56e8a4f2dfb288cb5a02ffce27600141ca8bb0023d06cc9c420",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift": {
+      "hash": "c127b2cb7363adbff63c0019e5575fcd40e72479d8879df62e498710c43f3249",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/platforms/web/ChipFilter.styles.css": {
+      "hash": "d70156706f354cbcba185770956de4b7a523a5b9e03f629c4e77d00b16420c97",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/platforms/web/ChipFilter.web.ts": {
+      "hash": "dd3b2aa4746997bc83a0b4d9a8c1381fd260afaf7402b40df82037329bbff5f3",
+      "managed": false
+    },
+    "src/components/core/Chip-Filter/types.ts": {
+      "hash": "225542bf4edebaec3baef07de192d753da07b8a1f534f2051b91a48b9bf7895a",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/Chip-Input.schema.yaml": {
+      "hash": "117c9f522933527cc38cd46438460d1052a3814e0b3f6034b4042af9fafe2814",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/component-meta.yaml": {
+      "hash": "87d6208491170b0ff167ef49e78a16c6db7f2256eef0672b26e901e6775aa988",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/contracts.yaml": {
+      "hash": "7f55005146ea1ee0bb248c38eedcc7fb506bfd1ad5a27c837725e7f608b302e6",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/index.ts": {
+      "hash": "a3476b9fbd93068637b3a76f16f89ea52623fdba1285888846f4d805789e176a",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/platforms/android/.gitkeep": {
+      "hash": "e1234fd678275fc307d5d852e1e6d733475ec154cff2f3007b40414b284122ac",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/platforms/android/ChipInput.android.kt": {
+      "hash": "a2686f6fd16689a98f5b843297fadaf91dabe27ee3a1f0f83bc6ffa5447dd399",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/platforms/ios/.gitkeep": {
+      "hash": "c7d4dc7c0a9af501974283c26fd63384810b8e64def87a55daf85b1a326a2aff",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift": {
+      "hash": "484a7a72e245549a25818940f7a483efdbd6a6731bab5e6dc04f045985ebea73",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/platforms/web/ChipInput.styles.css": {
+      "hash": "4b4bd376f070f5c56686d0b165b29ebc2635ab7a71ca0c1957f22c0a0e5ee603",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/platforms/web/ChipInput.web.ts": {
+      "hash": "8778b7a456c9485866a791711accfb0ba14b8db64461c2a3a8323420697dccec",
+      "managed": false
+    },
+    "src/components/core/Chip-Input/types.ts": {
+      "hash": "15a080241b46881275518478d0ac69bd7e3c6eb01d85b044331ecc8ac79f81bf",
+      "managed": false
+    },
+    "src/components/core/Container-Base/Container-Base.schema.yaml": {
+      "hash": "0579d75aab572beead7cd53b4feb732c3610585ec36d89270096fbeb0b3ef047",
+      "managed": false
+    },
+    "src/components/core/Container-Base/README.md": {
+      "hash": "69071ed248d7af32718181f286879096aeaae5438caa82c0b08a2789914aae11",
+      "managed": false
+    },
+    "src/components/core/Container-Base/component-meta.yaml": {
+      "hash": "641fab2639422dffed8c3269dfeeb88c1099e342dff3af63d089d6f8d34619eb",
+      "managed": false
+    },
+    "src/components/core/Container-Base/contracts.yaml": {
+      "hash": "14e3839535e3ef4e7b3afb28d5037f928e83528c1b7630038be61040fc32e686",
+      "managed": false
+    },
+    "src/components/core/Container-Base/index.ts": {
+      "hash": "ec9700642c3d2ada6d0a90721083efa21909bd04733830bc4ac54fb9481c80ff",
+      "managed": false
+    },
+    "src/components/core/Container-Base/platforms/android/ContainerBase.android.kt": {
+      "hash": "4936b04a1c3516a99eb8d20ae56b9bfec8d444ef489d8f3762a093c6908f9884",
+      "managed": false
+    },
+    "src/components/core/Container-Base/platforms/android/TokenMapping.kt": {
+      "hash": "4590f6d7a9b2b21869a50c9ac6f18944c62999f3d4da14544fc139a056f741ed",
+      "managed": false
+    },
+    "src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift": {
+      "hash": "f1d0039b2ffb6671bee7fba9844f490cf93a17d86f59e27b8c6314cea022a1a4",
+      "managed": false
+    },
+    "src/components/core/Container-Base/platforms/ios/TokenMapping.swift": {
+      "hash": "0049cadac047dd4b28b060801c4fa303997735fadea0e8a2003e6f74e68f7092",
+      "managed": false
+    },
+    "src/components/core/Container-Base/platforms/web/ContainerBase.web.ts": {
+      "hash": "44f661db668baf4093fe48528d43e3c80d636775bfef1f0a18d854b8de4988c8",
+      "managed": false
+    },
+    "src/components/core/Container-Base/platforms/web/styles.css": {
+      "hash": "00ed7ed7031769ff793a016d941e8c12ac965b316ee71f95cfd15f199c1c030a",
+      "managed": false
+    },
+    "src/components/core/Container-Base/platforms/web/token-mapping.ts": {
+      "hash": "63f4f19e8bc3eb03a0deb3329ce30177457d58808a04b4fc9cafaee0844fffae",
+      "managed": false
+    },
+    "src/components/core/Container-Base/tokens.ts": {
+      "hash": "5ff30386e212d4b9080b829719be26b81e8905202094409e9b5362663ed8e2e0",
+      "managed": false
+    },
+    "src/components/core/Container-Base/types.ts": {
+      "hash": "1769bf1bfe0f67219e009bb63bdc95973952813930b628783667a2a86a6616d8",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/Container-Card-Base.schema.yaml": {
+      "hash": "abcb716ec32f28abd722612f6854d07c2cf32209f5404d651658c9f6c83b1a17",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/README.md": {
+      "hash": "93cc560343f72b2e2e00462e7ef1b44f2e686eca9c6771e1fd7c8d8ce263cbd0",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/component-meta.yaml": {
+      "hash": "9baab9dd588fe38a42cc63aa7ac4b2f25d9dd2a2b59b7c752d5897e3ddbdbed6",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/contracts.yaml": {
+      "hash": "b7089b1dca6180319463ee89f53ac7aee470003e3f72b3dfc2fd8dc0074bd842",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/index.ts": {
+      "hash": "afde5ace869be7ee2d075481c703994d7fef804c6ac5098361dd099faebcbb0f",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt": {
+      "hash": "561b0113e7f7b95a9e1b7b05dbe2e664d4be2163604575c7aa469ce4f335852d",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift": {
+      "hash": "5cea800a11100a947c23d0ad6428951a3f42e27be9b3fc8a4e2081b29b98706e",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/platforms/web/ContainerCardBase.web.ts": {
+      "hash": "ada675c0348949591a86ea66a5e1ee6b92c22dd164f5130bec9b4b08eab532b6",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/tokens.ts": {
+      "hash": "583bc3902a60eba4c3713106beaf884781780968f4cd6a2ad9aed621b9cb218f",
+      "managed": false
+    },
+    "src/components/core/Container-Card-Base/types.ts": {
+      "hash": "46293b3dbe059d6bcd33558e3fbc64f3d463b4ed1de7882b7ec10c662ad01a14",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/Icon-Base.schema.yaml": {
+      "hash": "fbbbe584990f29bbce78f3ab9ea9c32250e964fae0c9a2b6af2e4ac415b61233",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/README.md": {
+      "hash": "47aba6234d2c9cf3a046cf4b475724f0e5d039795bd3212e3ca6aa1a8b6af5f9",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/component-meta.yaml": {
+      "hash": "e7398c479aa775d152fe79d0f4078de3ab19e949b3c98ecf5ddbe94056507055",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/contracts.yaml": {
+      "hash": "9a3cd0d14d026b1f2fe0c5ee06776649e55992ce1164ab5124b7d7cb6da481a7",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/index.ts": {
+      "hash": "ba07610e2a27f508a96c49eaa2d039fa7b8e02d878b21076fd337394989c0f2c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/IconBase.android.kt": {
+      "hash": "dba1005aeb08aea0da767e73aeb1017f833537496553072b33b6da2b7d851ffa",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/README.md": {
+      "hash": "0492a1940f72e68a238381474c56159f607921d500613fda14ff71cdc197287c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/alert_circle.xml": {
+      "hash": "28d3d98bef44620300349c5e97210ee06a9ed86b32a3127ce43107ddf455028b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/arrow_down.xml": {
+      "hash": "ff1ed95e30f524056a4d36a3d1d8a70f73941fa2c87c7434d8a82114152eb77e",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/arrow_left.xml": {
+      "hash": "37e9df7e9875eebb14ee3dd2841f602204c3ebc52b4f010a0192c543941fdc62",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/arrow_right.xml": {
+      "hash": "17e6080d4293161cfd37f7dacf17039bac1431d7f134ef4f1eb0492d882b38a3",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/arrow_up.xml": {
+      "hash": "60b1ef2ed1b1cbf536ffbb965d7cb70461fbfb7fb6bc9bfa4e3a4f3d5920b245",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/award.xml": {
+      "hash": "5314f1ed21e66a60d0cc180bc0d09849b26613c8c8cdaab966d1fd7048908d4c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/bell.xml": {
+      "hash": "7d283354330501ea3bb663ec7482e1908ed01393aeba72efedbe62a4cae00847",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/briefcase.xml": {
+      "hash": "eeecd7c93585ad522ce72ccd9b4bd2407f0b7b4e6d71cf11365e0ef1d251ca80",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/calendar.xml": {
+      "hash": "cca265ee7213dd6142409f91b1ba37554d7a81ccbadcedea9a1f843761216684",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/check.xml": {
+      "hash": "bbb6ef99220e642fd82f7c215187353cfbe5702087827929fb070eb58dd52361",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/check_circle.xml": {
+      "hash": "bd9b9802ff280e05a94febc5325d62c9bbfd79e8fe6202690c55568cab4f01d7",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/chevron_down.xml": {
+      "hash": "eb91215d01b0fb8a689602c3375d787980c76002a4f34dbc184d1a6a90a2e4fa",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/chevron_left.xml": {
+      "hash": "879961ffd871ef7694106dff4adeaa1d86e02e652562a6718e7b5b68673d8470",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/chevron_right.xml": {
+      "hash": "4ded3c30a56754ceea1dbc769a949ce933b5250604bdbabd044ab6d04d3fb18e",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/circle.xml": {
+      "hash": "23bcd58d9d815c1f5da92ff4812ce47b1b80834111689b6348e056e9d6e386c6",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/clock.xml": {
+      "hash": "571f623fe78c0413a4a0f53d2fe30c8748019642ef1215a103e06c04bb75d3d3",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/credit_card.xml": {
+      "hash": "ec71644cffaac5f21d182c10ef22ab8b70b72d71e190e923685fda668337bfd1",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/dollar_sign.xml": {
+      "hash": "9ff4aa20e1b550da77e50954e120973ad92bb41eb1ca62f1480e8b4d918d1179",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/external_link.xml": {
+      "hash": "c7262fc50e34001f74ab1dc3068214ba09d03ea4d5c63a5d0904ae3b0371524c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/eye.xml": {
+      "hash": "b8ef0e02c73f3c5daccf2f13b0be3d255947e65fff86b8e236eb70402418ff62",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/eye_off.xml": {
+      "hash": "0b32580ccd637a025c1d293bae397da2b42f9836ec8219f228f9efe3b58b2ef5",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/file_text.xml": {
+      "hash": "52607ea18fb03b0e5f3356c35401754dc5c89073069565f8718a55a6830b4e80",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/filter.xml": {
+      "hash": "67e8a4f1b5c15f2e3abbc2d470d810a17cccd469b1068d57870734cea78cacb6",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/globe.xml": {
+      "hash": "fdb67409227da53fffbc81f7f38d3147c0d6b8b7aa17c519ecc5c62d37c1529c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/heart.xml": {
+      "hash": "c4373102d6231ae50ae933e6735b4cfd1656f7adf85e16987c35c2480244c261",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/info.xml": {
+      "hash": "18caba8cfa34e0e1f4a0a082aa9047ef45fb49402f7f4ec08eb43a1608e0570a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/mail.xml": {
+      "hash": "f09f3e2667f5a4435634ed2224e34993a55ab57c65720e5488c0330376f69456",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/map_pin.xml": {
+      "hash": "77ec6ddb335f53b3156e6c1047531b46b25b832b2e6c8a3847553a542bf4eb9b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/minus.xml": {
+      "hash": "c9e7b0e4783ea5d89fbf0114f52d58dfa5148e882ca87a2918759c2036b42720",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/more_horizontal.xml": {
+      "hash": "8b0f97bda464b79c6808c813ac9fa9bda9a8a38b1b94e7f7e06d7540e790bf9c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/more_vertical.xml": {
+      "hash": "d2c6e8650e828e6ef3363e658cff626d9568e21d680ebdd5900ada6142f87b30",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/phone.xml": {
+      "hash": "e6f382fc8e9f1007acc851d6cbe702578ad99a1524796926b5c84239708fa5a1",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/plus.xml": {
+      "hash": "9ff37211fae7e41729af607669d4388f028ce2686f897fbaa509ecc666a209ac",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/refresh_cw.xml": {
+      "hash": "938e31fb19160f11554ac0c2c1a7a50a459031d16831de6f47088d0b61a04ac8",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/save.xml": {
+      "hash": "a83bf9888f50fbadd040e3458f645b667dab6df1fe30daa75bea7a7d5985a551",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/search.xml": {
+      "hash": "ce5bfd5c327211c09b386c31f479bcd25ea1023ecbbbc60fb9ca974a2ea8fd28",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/settings.xml": {
+      "hash": "5a238cf8bda444262876dd125faf602382938fd87fa3e25cc227187597f1d839",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/share.xml": {
+      "hash": "cf4f39264fac1af8fcca770c4cb7bab70c0aca5b82ad1a9ec3d66fa9de179feb",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/share_2.xml": {
+      "hash": "401417a3367658365126a13dd62e09b27b9f425e834788e003eef96ef163f04a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/shield.xml": {
+      "hash": "6cee7733b32a679dd546ae4bef0f7758b73965d0139bb00bf7de1a9e30673862",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/smartphone.xml": {
+      "hash": "4d6fd228e054681f61f6741c95280ae35cc869bca875528870ee447a8e0c9c91",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/smile.xml": {
+      "hash": "177fba095c2ba97af75652b9ca226796a6629d7b838a3d693ae6afbadf14cc40",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/star.xml": {
+      "hash": "da27173fc803abb17a0d99c1666a62063076b71f6da80205638d4d252abf04f9",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/trending_up.xml": {
+      "hash": "9dbfbb8f199a841b69f66d401791b681d4f0f61158b46224c2421a4dbaf4ed14",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/user.xml": {
+      "hash": "cc51f63d910ce416fb4b80818e9a3a543eabfe3774e3c59d8efde8adeac0dbea",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/user_check.xml": {
+      "hash": "b8c5ebe4a0023f94185e2a88c6cd3a52aad939314f4d5afcd83417e0f93af94f",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/user_x.xml": {
+      "hash": "ba22e558b9383bdd366da5b30d845ebaecb32851c605d6b89fff92cb75512911",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/users.xml": {
+      "hash": "a157fe89da44c61ac3d89e3d53d4672d49fa1dc15e7ae807691f227202946b3c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/wifi.xml": {
+      "hash": "b12b174fe540385f0fe717818f960703760c5fd3bbc97e78f29a07fd7fd33bfb",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/android/res/drawable/x.xml": {
+      "hash": "c4b0e0ef3fecb803c2c0cae17097762ac29b249045856fefadc7dd59cd51a28d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/ASSET_CATALOG_SETUP.md": {
+      "hash": "1ac0d22bc8f6446a23de88b56e2cd4ad6729a69a0e6db3b27b8b68389a27491d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/IconBase.ios.swift": {
+      "hash": "b20f9dc6f15ccf91e150cf6ff3613280c4614e4d61697e836a26a1fd10f6f132",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Contents.json": {
+      "hash": "0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/Contents.json": {
+      "hash": "7a5a4baafa4056ebe5d4924557393780a62c698125ce3c42f665adc405f77993",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/alert-circle.imageset/Contents.json": {
+      "hash": "17013600bb62f0a90092a6a8f47861278901708690cc1060aa6a7126e2056c39",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/alert-circle.imageset/alert-circle.svg": {
+      "hash": "867d6903fe5f36d652053b23a886760e5d50fbd3b8ae5f4f96b14710bf3a5d7d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-down.imageset/Contents.json": {
+      "hash": "9585bfdcc3a35f74e1e2e9957b3ef5b9c561cb94b58a238484c298a838c42a8d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-down.imageset/arrow-down.svg": {
+      "hash": "523c5c6c2e581371dcad02fd44139204e3c0230ac95bd5404cfba5503f171b8d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-left.imageset/Contents.json": {
+      "hash": "410a8713f9a076b7ca7a903a41b7d32e8e42734b1d363d95496183a99b724ed1",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-left.imageset/arrow-left.svg": {
+      "hash": "0f365f8529b575e3ba9b073e9010af028291cf5d509c49685ea2c57ac872f6a8",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-right.imageset/Contents.json": {
+      "hash": "fce8fd51ad461369e913504f6180b48ac2b16857e59235a5b377d72fd693302f",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-right.imageset/arrow-right.svg": {
+      "hash": "88f86f0b3d3067d7c9cbe2a646a05c64737bf6c8acf8fe5e13ab8922cfd413ca",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-up.imageset/Contents.json": {
+      "hash": "b7ef0283779567aefc19158e16d483bbf38ac4fee7b28cd903cffea7d8428312",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/arrow-up.imageset/arrow-up.svg": {
+      "hash": "b9fd4c1e19a5b81328b3fb30397a660c394958480824a870f547108f9b9739a5",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/award.imageset/Contents.json": {
+      "hash": "682b64d8373b489e54aec23182960bab7bf6de6884d0ab42ae76f2ac4cc524de",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/award.imageset/award.svg": {
+      "hash": "17f2539d5b1269b7a74b1adbb20291715156105aa4a4d5256f86a66544197e93",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/bell.imageset/Contents.json": {
+      "hash": "cbb8a3633d8a9ec6992d5bea7456904d3a217904da05a5796faba6f35c29b459",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/bell.imageset/bell.svg": {
+      "hash": "e0541099fcee843ad7f2f07d39a7f08e812b82f0bf7311ebc4e7ca5640fe7e98",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/briefcase.imageset/Contents.json": {
+      "hash": "2a8c2579fa67e977b0fe5b8c8e068af78d8a1c84435901d03f7b934ff7a40f0a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/briefcase.imageset/briefcase.svg": {
+      "hash": "f99a3bf8f01c1ff5b0d9576122054b3f6a25cfe45703ea82e1e989606f4134ac",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/calendar.imageset/Contents.json": {
+      "hash": "75492c7c7cd49f9b5fe5482844d749ad713ba22db7448b80dea8d99f01136dc0",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/calendar.imageset/calendar.svg": {
+      "hash": "bbbcdcd7899b110d246b8d8473eaebe140e6f5cba266a36d936f5aba6a402bec",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/check-circle.imageset/Contents.json": {
+      "hash": "abad97ea960f7afe5b90060dc24eb7bccef4c7c8478d145e77d8269715118489",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/check-circle.imageset/check-circle.svg": {
+      "hash": "2196776e3552a9a5693ba589080759313f718b43c2328e67d4444ef646136fb3",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/check.imageset/Contents.json": {
+      "hash": "6676f496e3008ffb2d41a21e29d0ffcbc022f87129a3db8867c2615adca710ae",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/check.imageset/check.svg": {
+      "hash": "2365fb3bc9fa566945a647f69580bd92d7fd25920b0e14114d8593edff66363a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/chevron-down.imageset/Contents.json": {
+      "hash": "c0ec75aa997ae72401becd82bad4a9b3a4aa1d4d02ec940b87411b68242f2e7a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/chevron-down.imageset/chevron-down.svg": {
+      "hash": "152ec8d72f48d669ce1d71b0f0a1e78d3c24346a2c5240a8761945841b94dc15",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/chevron-left.imageset/Contents.json": {
+      "hash": "4d469966070b35003485118f6b2f4e5c4bbaa63aad686d29e873f498d62744a1",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/chevron-left.imageset/chevron-left.svg": {
+      "hash": "35728fc982141aa8d017eb1d59f90f989e56467bc5b960525e5820eda39f640c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/chevron-right.imageset/Contents.json": {
+      "hash": "b1a0253dcf3ccdfbc3f61d18d7a5af13425e790c2f541138d4c5e9dd54bf8afe",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/chevron-right.imageset/chevron-right.svg": {
+      "hash": "80459c677f0bbf72b394c9985b2be27266bb561c4a610f5408e7aaa1492effc1",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/circle.imageset/Contents.json": {
+      "hash": "88d4d2e62af333dfe957a2f3d5f8dc214e9308c84a6dec5f0d349a2b0a5e234b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/circle.imageset/circle.svg": {
+      "hash": "15570f4bcc10e5b544a48ac77385e632be18129646559e6cbdc8286e2e945b2e",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/clock.imageset/Contents.json": {
+      "hash": "e856cb93cbc6e93be61b3505bb6395f6716f5969861d7033edc20a7cdeaf4e3a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/clock.imageset/clock.svg": {
+      "hash": "cc63049c504b9516c9b84e68ddcb04f8b74db6015238fd73967857a96c95b27b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/credit-card.imageset/Contents.json": {
+      "hash": "92461714b5ca22acbd66d3250b766333a9f136cfcedfc9045b1ab17939156c03",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/credit-card.imageset/credit-card.svg": {
+      "hash": "4a7a40146a49ff61ce2339051eec91d1cb31ed972c59811edfe3044b2a9633a7",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/dollar-sign.imageset/Contents.json": {
+      "hash": "60cc65161e86e9ec028a1d2068fdba1f1b3bacfbca14bfb697ce9668e4768f1f",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/dollar-sign.imageset/dollar-sign.svg": {
+      "hash": "deae02f77cdca59843c0c957f3715336f7ad7aaf38f017868eea9d4dafeb19fd",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/external-link.imageset/Contents.json": {
+      "hash": "042fc525c0f858817dc7c7672f663d100c7f104991f288e48f796863d821bf98",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/external-link.imageset/external-link.svg": {
+      "hash": "a3fb50298000a40f383846a8968e6ada7709a1d8d9f945396e3131e074448fb5",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/eye-off.imageset/Contents.json": {
+      "hash": "49e86cbb33e7932a65b954cbdb26361bde8245a241c8836d8afd644507136066",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/eye-off.imageset/eye-off.svg": {
+      "hash": "6e7093e86378549143e2c6f8f5523114b76df995cae16862bd2e198302299c22",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/eye.imageset/Contents.json": {
+      "hash": "d6e0efa512217b8238f6f878525dba7bd83b5aa5b1c6fbafc44073759e8b080b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/eye.imageset/eye.svg": {
+      "hash": "0d3b729a87efe584b461f5de1db63f8a145b65186e44648254895c72e584bcc2",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/file-text.imageset/Contents.json": {
+      "hash": "1bdf986ba00b7173113f86d487ee95b15121b793ce50b0499c2d83639560598d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/file-text.imageset/file-text.svg": {
+      "hash": "fc90eb41c92f511b6e4076673d2da28476f140e4614522e85511e8215f9f530a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/filter.imageset/Contents.json": {
+      "hash": "286cabdaa26d43a7ba641999f601c019364662e530b6f36ce070bc7e27591263",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/filter.imageset/filter.svg": {
+      "hash": "7fdcd2dc09d97f5bbcb9df1c990295411032f4670488c8a1fd5a856bf37aebda",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/globe.imageset/Contents.json": {
+      "hash": "c452fe7f6c053b5ce0262988bdd599f505f22b326b971327911cbdb7c4998780",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/globe.imageset/globe.svg": {
+      "hash": "f51b23851b6422de2fcdd3b838a6c0c8efb7ef52d693c88b637439277f54bcaf",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/heart.imageset/Contents.json": {
+      "hash": "770efcb0cde17054f2f8052633049b178579e77c12ff2e4f869bd2f76e4a1736",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/heart.imageset/heart.svg": {
+      "hash": "a11a2221d2000747fae46e8216c5dd73f599fd73cc0828e27dfbbdf0cef4c568",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/info.imageset/Contents.json": {
+      "hash": "67e859aec5c2d6b77dcdb31adf4a8e76f0fe49bbe4a71e076272fd83da4c7f20",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/info.imageset/info.svg": {
+      "hash": "f49e14b5230773a871e3e945cc092ec4f33649e51345f0ccba5501128d1f77be",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/mail.imageset/Contents.json": {
+      "hash": "e1f1cb088aaa705af85af9c3d72e5249f34a6d72f6b21e23ffe2cca0b4c1014a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/mail.imageset/mail.svg": {
+      "hash": "12c012e83f3c1d5bcc255208a401ec1cda7d15afb2dc0cfdc414436b4576e806",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/map-pin.imageset/Contents.json": {
+      "hash": "732b71f4b5514bfa3ea443e06c350ca1986522e9f4db567d51df88c87eb9ad35",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/map-pin.imageset/map-pin.svg": {
+      "hash": "325c82ef11d0983b952bb79b073a9e16968a04e7f87cc27b22413ec6707d9c46",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/minus.imageset/Contents.json": {
+      "hash": "8cc2dd4ab59558489576fe40e172221d39f9b197af6c9a2b69e9e9f863588121",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/minus.imageset/minus.svg": {
+      "hash": "ff3bc84553f2be35046def5daf0f95e9fb7d5645c722024bbec0c2428e3775a4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/more-horizontal.imageset/Contents.json": {
+      "hash": "e3c9a0d559e9c883fcdb0907224177582a29bc83b368e63936792f71c469854e",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/more-horizontal.imageset/more-horizontal.svg": {
+      "hash": "81a78ac06109da3597d0ee8ce083cd9673c7cf4e0ee2789cedf2836f25365188",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/more-vertical.imageset/Contents.json": {
+      "hash": "cbaa0415d707111766b35a06db7fa4a30f4822f48a625d09fc7e90d20b8bedd8",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/more-vertical.imageset/more-vertical.svg": {
+      "hash": "49e732eff51ad9da1271641070c0d18969ee49402f07333d4a9d4b3455eeb452",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/phone.imageset/Contents.json": {
+      "hash": "aa191feb3afb4fe720178d312aa081b1ad4d9bd05a84b31c1f61af7b1bed9312",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/phone.imageset/phone.svg": {
+      "hash": "0149f0cb2327664f602d951b3b2504f6dac81c5880020a9825c5e704bb2bb259",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/plus.imageset/Contents.json": {
+      "hash": "6714e8a14760f7618331be114c8881281d214ebde49a2ca2ea03605ba129a767",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/plus.imageset/plus.svg": {
+      "hash": "bbdd3b2aa207053acc46a5a180b94498ee770796be9980191ef8fa8f8b7552f5",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/refresh-cw.imageset/Contents.json": {
+      "hash": "14045e1e7c2ada63dc70cbc7e563d566b0b7e03274a8c7d6e8ed466cbeb3d233",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/refresh-cw.imageset/refresh-cw.svg": {
+      "hash": "fa58747f96ba81cdae6b6c3e9cce141102c4ea994a7c8421243b7ae0bf03d4b4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/save.imageset/Contents.json": {
+      "hash": "4f73d55242b5b621d8bbccdbfad03d2dd4ce11dfa576c3cbf018c062d307872a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/save.imageset/save.svg": {
+      "hash": "84151475e6f922bb2282b86c5f8e8811d0b3e2522eef2518ae60fd7af304dc88",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/search.imageset/Contents.json": {
+      "hash": "8f54457d64c8cd521a42d839da971d36641d1c9bd9ac00fa04a22e2938429e77",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/search.imageset/search.svg": {
+      "hash": "24e3b3971d3fddce7a25b26ca41d3f959ffca737af076ceb653e80d788ab5648",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/settings.imageset/Contents.json": {
+      "hash": "d4fd00bfb823f33f606396fd0f232d7c16f49ad27ab7e0a84f26072b0ab61cec",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/settings.imageset/settings.svg": {
+      "hash": "6272c6980125e627ef7f985d379d5353793d9f46586f5ab3bf0630705233a216",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/share-2.imageset/Contents.json": {
+      "hash": "9a99bae816944f73e3b6c772b23c6692407c3c22a2987100a820073e2ae74a2d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/share-2.imageset/share-2.svg": {
+      "hash": "55d8525322717d968f65f01bbf2a4b1c1848016a64ba5255118488d3fcaa1002",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/share.imageset/Contents.json": {
+      "hash": "1a382c1bb8361a17ede4401997a40df95e3bc79a59a821256238b7da9ea66716",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/share.imageset/share.svg": {
+      "hash": "c51b2a9f735bdb39565b9e64f8d18a561dd4b2bdedee13b9b0b10a647fe27cf9",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/shield.imageset/Contents.json": {
+      "hash": "7c5a81cf320933ec724946cd77b108d4ae371818a2347fecb24284ae5f58d789",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/shield.imageset/shield.svg": {
+      "hash": "92f40e9c2b3ec144721126077538bd75d9e5574e272735907cebc6d17aa55f17",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/smartphone.imageset/Contents.json": {
+      "hash": "48762457e0dfcde3674554b1a880c2030a2dcf5c3f081e2d7af16fb4ff71b5e4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/smartphone.imageset/smartphone.svg": {
+      "hash": "0fdcc2b4fb91312a9280a925dcde6cbf1161482d1a2adf56c7d186f936994498",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/smile.imageset/Contents.json": {
+      "hash": "3f55677c762e230c1baa7a15bd23de05afc2e437fb67bc63e37e85fdeeea53a3",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/smile.imageset/smile.svg": {
+      "hash": "a3231ec612261972a24fd5e5f10cf5b29c2e84aa97afe6b65de8569fdd0685d4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/star.imageset/Contents.json": {
+      "hash": "82b65d5c29fe013f81a2111ca8465557f9773e9cf86edc7f294b41096b2902b4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/star.imageset/star.svg": {
+      "hash": "bb2b53231aecc8e749a201cc3ba300d28ef40601724bfce9276e683e2d9f5e25",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/trending-up.imageset/Contents.json": {
+      "hash": "1abc4466c83c5d0685b4e89e24552551489313a90cbc8c85bb2e4903b201a93e",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/trending-up.imageset/trending-up.svg": {
+      "hash": "6e15d79e280ba2be31785a9cdc0ff6c22f2cd00ef82f1866f819eaf464db991a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/user-check.imageset/Contents.json": {
+      "hash": "deb3faa00d2fd79446313522e9f2ce3c6d7ff9e6e624ca04f2140edd26faaf4c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/user-check.imageset/user-check.svg": {
+      "hash": "20d9f933616f9e376fbebe749170181d695d72f8068f22aab932f30e9e6bae4b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/user-x.imageset/Contents.json": {
+      "hash": "2979317a8638530d61e8dc70a873438872952b426d93b6b63e31906bc76e6b3c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/user-x.imageset/user-x.svg": {
+      "hash": "d7b351193465b26a5aae8584ddc18f87da494bd1157071ce34fd8fdc58485833",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/user.imageset/Contents.json": {
+      "hash": "ac613dfb6832cb8c0b4d17aa48e315376707812822a62d683cf7d79dd41227ad",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/user.imageset/user.svg": {
+      "hash": "7c7f08d9c49328e9e469915c0514a89fcdf462f7a56c7c7ee9617cb0d59e2b19",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/users.imageset/Contents.json": {
+      "hash": "1b20d88198e970b19c5d6cb48f66c66f186308913b7348ac61fcf6a7ec9174e4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/users.imageset/users.svg": {
+      "hash": "10e069f2f68b2544b4e667aa12aa2bb9279233f41ab80fb97ba7016f45730574",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/wifi.imageset/Contents.json": {
+      "hash": "93f0a670937394a26c605ed9b051cbef3a6d378d8964abf241d065b8f772bf31",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/wifi.imageset/wifi.svg": {
+      "hash": "0b6f9e3d038ed609f18173f3082be130504dfc102bbc3ecf6c94e683416e2274",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/x.imageset/Contents.json": {
+      "hash": "bbbfa2d957a9d5af4034a10f00951580226daaf9061d8c9eff3cca18700be27d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/ios/Icons.xcassets/Icons/x.imageset/x.svg": {
+      "hash": "891da901166c26a96c1bdc1d9be6415a856a722156fc548672629d564b549941",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/IconBase.web.ts": {
+      "hash": "9c504360c672c83d7b19171e38ea1415958b9e49b7cebf297cf23e8a2e8736fe",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/alert-circle.svg": {
+      "hash": "867d6903fe5f36d652053b23a886760e5d50fbd3b8ae5f4f96b14710bf3a5d7d",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/arrow-down.svg": {
+      "hash": "bcc48cf81c802bb14797765d2a2c0bbb0c18626ce8c4ecabb1281fdf2920c42f",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/arrow-left.svg": {
+      "hash": "a0d5e416e06ac5048e9d7669fbf4dbaa932686741f6e18aedb2b211774d61963",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/arrow-right.svg": {
+      "hash": "981fc2cacf00d4651f6d1ea67305fd090787a4e7e585ae9a0dd3bda631e754e8",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/arrow-up.svg": {
+      "hash": "1660a08676fc308490ef8601348c3bb47169fa2b7ec0f5c6f9f3823caf8d9ecc",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/award.svg": {
+      "hash": "17f2539d5b1269b7a74b1adbb20291715156105aa4a4d5256f86a66544197e93",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/bell.svg": {
+      "hash": "e0541099fcee843ad7f2f07d39a7f08e812b82f0bf7311ebc4e7ca5640fe7e98",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/briefcase.svg": {
+      "hash": "f99a3bf8f01c1ff5b0d9576122054b3f6a25cfe45703ea82e1e989606f4134ac",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/calendar.svg": {
+      "hash": "c0eca72cf02f5aa92b03091ebce0baa680216eb5f3911318b8bf02ae87018bc9",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/check-circle.svg": {
+      "hash": "2196776e3552a9a5693ba589080759313f718b43c2328e67d4444ef646136fb3",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/check.svg": {
+      "hash": "fe4cbc78500b78835e92c0df58d66e001e87f82b63cb826123c10546c27797e9",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/chevron-down.svg": {
+      "hash": "152ec8d72f48d669ce1d71b0f0a1e78d3c24346a2c5240a8761945841b94dc15",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/chevron-left.svg": {
+      "hash": "35728fc982141aa8d017eb1d59f90f989e56467bc5b960525e5820eda39f640c",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/chevron-right.svg": {
+      "hash": "2da133792caf419e12add4eae072228ad04f575f792d8485ae1f1e8ac2b15f1e",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/circle.svg": {
+      "hash": "15570f4bcc10e5b544a48ac77385e632be18129646559e6cbdc8286e2e945b2e",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/clock.svg": {
+      "hash": "cc63049c504b9516c9b84e68ddcb04f8b74db6015238fd73967857a96c95b27b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/credit-card.svg": {
+      "hash": "4a7a40146a49ff61ce2339051eec91d1cb31ed972c59811edfe3044b2a9633a7",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/dollar-sign.svg": {
+      "hash": "deae02f77cdca59843c0c957f3715336f7ad7aaf38f017868eea9d4dafeb19fd",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/external-link.svg": {
+      "hash": "a3fb50298000a40f383846a8968e6ada7709a1d8d9f945396e3131e074448fb5",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/eye-off.svg": {
+      "hash": "6e7093e86378549143e2c6f8f5523114b76df995cae16862bd2e198302299c22",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/eye.svg": {
+      "hash": "0d3b729a87efe584b461f5de1db63f8a145b65186e44648254895c72e584bcc2",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/file-text.svg": {
+      "hash": "fc90eb41c92f511b6e4076673d2da28476f140e4614522e85511e8215f9f530a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/filter.svg": {
+      "hash": "7fdcd2dc09d97f5bbcb9df1c990295411032f4670488c8a1fd5a856bf37aebda",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/globe.svg": {
+      "hash": "f51b23851b6422de2fcdd3b838a6c0c8efb7ef52d693c88b637439277f54bcaf",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/heart.svg": {
+      "hash": "a11a2221d2000747fae46e8216c5dd73f599fd73cc0828e27dfbbdf0cef4c568",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/info.svg": {
+      "hash": "f49e14b5230773a871e3e945cc092ec4f33649e51345f0ccba5501128d1f77be",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/mail.svg": {
+      "hash": "acc602293d2e8a0b5e4fa906ea2eb0fedfa466bc43c9280d2831e3ebb87ccc8b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/map-pin.svg": {
+      "hash": "325c82ef11d0983b952bb79b073a9e16968a04e7f87cc27b22413ec6707d9c46",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/minus.svg": {
+      "hash": "23ae1984c7e8d03a8e253cfd541067147e4615f60e13d01b2fbe9a61fbf6efed",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/more-horizontal.svg": {
+      "hash": "81a78ac06109da3597d0ee8ce083cd9673c7cf4e0ee2789cedf2836f25365188",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/more-vertical.svg": {
+      "hash": "49e732eff51ad9da1271641070c0d18969ee49402f07333d4a9d4b3455eeb452",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/phone.svg": {
+      "hash": "0149f0cb2327664f602d951b3b2504f6dac81c5880020a9825c5e704bb2bb259",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/plus.svg": {
+      "hash": "7607eb100b38e73cdbdba5aa0c8c8f9ac6a2aed0e0dc36615160bdc20025e2ca",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/refresh-cw.svg": {
+      "hash": "fa58747f96ba81cdae6b6c3e9cce141102c4ea994a7c8421243b7ae0bf03d4b4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/save.svg": {
+      "hash": "84151475e6f922bb2282b86c5f8e8811d0b3e2522eef2518ae60fd7af304dc88",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/search.svg": {
+      "hash": "24e3b3971d3fddce7a25b26ca41d3f959ffca737af076ceb653e80d788ab5648",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/settings.svg": {
+      "hash": "6272c6980125e627ef7f985d379d5353793d9f46586f5ab3bf0630705233a216",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/share-2.svg": {
+      "hash": "55d8525322717d968f65f01bbf2a4b1c1848016a64ba5255118488d3fcaa1002",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/share.svg": {
+      "hash": "c51b2a9f735bdb39565b9e64f8d18a561dd4b2bdedee13b9b0b10a647fe27cf9",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/shield.svg": {
+      "hash": "92f40e9c2b3ec144721126077538bd75d9e5574e272735907cebc6d17aa55f17",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/smartphone.svg": {
+      "hash": "0fdcc2b4fb91312a9280a925dcde6cbf1161482d1a2adf56c7d186f936994498",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/smile.svg": {
+      "hash": "a3231ec612261972a24fd5e5f10cf5b29c2e84aa97afe6b65de8569fdd0685d4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/star.svg": {
+      "hash": "bb2b53231aecc8e749a201cc3ba300d28ef40601724bfce9276e683e2d9f5e25",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/trending-up.svg": {
+      "hash": "6e15d79e280ba2be31785a9cdc0ff6c22f2cd00ef82f1866f819eaf464db991a",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/user-check.svg": {
+      "hash": "20d9f933616f9e376fbebe749170181d695d72f8068f22aab932f30e9e6bae4b",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/user-x.svg": {
+      "hash": "d7b351193465b26a5aae8584ddc18f87da494bd1157071ce34fd8fdc58485833",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/user.svg": {
+      "hash": "e7fa565f3e1032fe408a7a90769ae0b2d4de501a00275183034ff3a9812a00f4",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/users.svg": {
+      "hash": "10e069f2f68b2544b4e667aa12aa2bb9279233f41ab80fb97ba7016f45730574",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/wifi.svg": {
+      "hash": "0b6f9e3d038ed609f18173f3082be130504dfc102bbc3ecf6c94e683416e2274",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/assets/x.svg": {
+      "hash": "417aadd63e284d74cd3855e79e64d4cc7ef76c243aeb2a150bea8e5cc09660cc",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/platforms/web/styles.css": {
+      "hash": "f7dd18c545183ccec2d45bbe6ed03b3a7a4fa516bf2f4a7178716fb566425a8f",
+      "managed": false
+    },
+    "src/components/core/Icon-Base/types.ts": {
+      "hash": "f69fbe8459b31d29f4c3365d9749916d9afcb396b068232d5b8cf1086bd54282",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/Input-Checkbox-Base.schema.yaml": {
+      "hash": "9019c8b289dabd45e55ecf1118e24a7fc68289e5599bf8ef5dacc5e83e5da94c",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/README.md": {
+      "hash": "515acdac7b1e2e196df033f53a816573368f5e632352b15e1ff9a51877c00fa7",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/checkbox-sizing.tokens.ts": {
+      "hash": "bcb75885adb1b391348dc85e0da8a2ce69eadf7be2f248d4624c4c00e32b7484",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/component-meta.yaml": {
+      "hash": "72ba2e42f2e05949bf8c5b16dd48fc2481d32dd5a875a58af9b74fdf1651c169",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/contracts.yaml": {
+      "hash": "29f0c003764fc99f2b7d2102d7097309e660cf80617165c2c585139c082dcf15",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt": {
+      "hash": "38d10865b2a0d345f24998bd77e29e758a1f6b09a52d3073e4e5dc78915dc79a",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/platforms/ios/InputCheckboxBase.ios.swift": {
+      "hash": "0ae3aa9f546175f2e3f61919531225ed8810c7feaa6154c1ab1fe6a5c4a3a2b2",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/platforms/web/InputCheckboxBase.web.css": {
+      "hash": "3884eb6c25b410e55a2f8aaec5feafb3b6e7707a876e0088e11061a8da702f45",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/platforms/web/InputCheckboxBase.web.ts": {
+      "hash": "eb402afde6cca053c5943a35370769076c9a999bcf7a1daf9a4283a0571dfddf",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Base/types.ts": {
+      "hash": "696e1b1e19a16fd0c93ac22f9477bb1fb250ccad23756f6a87c5359bfdf5d35c",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/Input-Checkbox-Legal.schema.yaml": {
+      "hash": "74da5b1ebd6d024239b43eadd7da0ad191333e69272eeb365b75ac39e7777a1f",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/README.md": {
+      "hash": "c874ceea469b2d6d31bc55fe556bd08505112fb95e24bcb3fdcb16bca8b29ffe",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/component-meta.yaml": {
+      "hash": "9a8b017a7357ab001e344f76f613ecef4074a5c28bd1c56eaf71d54aa051cd38",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/contracts.yaml": {
+      "hash": "d33dc36685618ba363e82cef1115a2d70fe598b04c3415487554edd24ff3da72",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/platforms/android/.gitkeep": {
+      "hash": "2f87410942eb0311b99e69dc5d4222d476df6650139c2173aff7e9a49e35244d",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/platforms/android/InputCheckboxLegal.android.kt": {
+      "hash": "039cceb3bdf85150ae8ed2b55fb52cd95caaf267ef51a771cbb2373fd3620ecf",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/platforms/ios/.gitkeep": {
+      "hash": "95f1043290e1845092e69b86e1632eb4abeca9e4254423e6074210d21ec24bd7",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/platforms/ios/InputCheckboxLegal.ios.swift": {
+      "hash": "a745fbd568f209e8baaeb268c61147bb362a0159d4760b03346176dbe0503760",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/platforms/web/InputCheckboxLegal.web.css": {
+      "hash": "d0a461cde49ac2188a641ae688f8d228bbc6ee7964680961ded5c54021efac97",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/platforms/web/InputCheckboxLegal.web.ts": {
+      "hash": "497b80df0e4191512b601e62d683f8ca9ec5c2a9d9c332ae70a2dfd45ba7d2e0",
+      "managed": false
+    },
+    "src/components/core/Input-Checkbox-Legal/types.ts": {
+      "hash": "15616abe50c3494b15b5633f7098d565c7b36dcbb6a94d0f85ae77f7d47a17c4",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/.gitkeep": {
+      "hash": "73c954dbe98ed5cc6c4914c267a3e67b1a2f4a707381e7de868dced2d6332774",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/Input-Radio-Base.schema.yaml": {
+      "hash": "28f2e75fd001416c08507ab6bc70dddf14fec67c6c1a490e588f3bab60d06e94",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/README.md": {
+      "hash": "21cd6024f20c8c9069e71043898d41c9499ff7bebed4fd422acc3ea366661492",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/component-meta.yaml": {
+      "hash": "edd5543621a4c142d7231d94bced5e24adb1afc5599d20501555f0a3ac12bbd0",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/contracts.yaml": {
+      "hash": "376fa616860461b5051c1d96de515f4cb8817034833145e5c5d5e151403e6230",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt": {
+      "hash": "29795ddd44b2b5dafcbeadf386005144b3f5c2e6d69e02566ff9bfa718f51173",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/platforms/ios/.gitkeep": {
+      "hash": "670be3f7daa7b81e953f085730d50f3d457b2c054ad65a12f772960be43c8e6d",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/platforms/ios/InputRadioBase.ios.swift": {
+      "hash": "6344c39aa4b35c29594ec14b6731db3aceaa5637055f7b146ed664d243241a73",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/platforms/web/.gitkeep": {
+      "hash": "ced9adada0fdd3d6007a3110690b7320a73d0d98f028fe24d36ba24fc907147e",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/platforms/web/InputRadioBase.web.css": {
+      "hash": "df9b9c0d4b5414b21330d25986ad7a7505a387d3f81020e57f2ea209309e5a80",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/platforms/web/InputRadioBase.web.ts": {
+      "hash": "a50fa36fa0ba32d6332279e8161d341f8fdbcd04489323ddabd1ace1ea4d982c",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/radio-sizing.tokens.ts": {
+      "hash": "187cf0536ef26962cef8dbfe8f563e4ad9cc4e96dfa80e5a36b1968d8b4b909d",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Base/types.ts": {
+      "hash": "892db6d0a0dc78bd81f9b6cd41757d9a19108007ec5ca9c82a5a3b7a5c149c1e",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/Input-Radio-Set.schema.yaml": {
+      "hash": "e59e9c015e085d3ae16daf8312fddf9f2d6ede4ed811971f0714076045ead99d",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/README.md": {
+      "hash": "0d4a4578e205f042fe05c7ddcb52eeedb4fc28913704e0ca92938bac60490577",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/component-meta.yaml": {
+      "hash": "bbc810a41b57e38efc148d0c89e274d9a401930b51835a2ad400df37b18a220b",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/contracts.yaml": {
+      "hash": "c761bbc41ce5dba1af315d8a45977eb3b1207b5ca4e57c1fc7449af46e2a5562",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/platforms/android/.gitkeep": {
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/platforms/android/InputRadioSet.android.kt": {
+      "hash": "a95f249b698c2d15ea4c18a4726b12a8a51d2f8fc0b5b063b7c111408d23a470",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/platforms/ios/InputRadioSet.ios.swift": {
+      "hash": "698f72b5bd575931a4b01c86e3d5d271cdb75215c5cc40987848ce20dbcc9d7b",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/platforms/web/InputRadioSet.web.css": {
+      "hash": "9f9232a0dbfdd739dcc5587ad6405f604953928d312d4edf5780e0ed7fd227eb",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/platforms/web/InputRadioSet.web.ts": {
+      "hash": "27d3d85b9d9db041bfc427afae8fb7797653525115d073200b7835f29e834e0a",
+      "managed": false
+    },
+    "src/components/core/Input-Radio-Set/types.ts": {
+      "hash": "95a9561e55ed2547e4af4ee9396566adc9595636bef0466d6830f9bd5e4d269e",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/Input-Text-Base.schema.yaml": {
+      "hash": "83a0945805e92c02d34c819b759525e562e79dfbd1313589f6ccc3dcf99bede0",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/README.md": {
+      "hash": "075330514a16523e0536a236cca84d2aa57ca226f254ee4560771fca04025df8",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/component-meta.yaml": {
+      "hash": "c71775de2cdc01e7335a46c29bb7fa6c647e3e71ab40a83b64fbba2f300e5f17",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/contracts.yaml": {
+      "hash": "bda8e3a23a1cc53725233921e2b6120e9530a0c959e92d035bb147b42f04e441",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt": {
+      "hash": "ac8aa15fa9bac93397043b0629faece1dda12f7ebb0741815bd0640324dbfb5f",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/platforms/ios/InputTextBase.ios.swift": {
+      "hash": "c8e45fcf0c4b6a4c521095dc3959250c7a9c52117a8414cab1ac7b11978a1529",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/platforms/web/InputTextBase.browser.ts": {
+      "hash": "36eb79bbd40a0ddd069d2decb5f26c732f70f9edb786c232f12c512c911d7c6c",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/platforms/web/InputTextBase.web.css": {
+      "hash": "00a4bef1986fc73666d72d8b3ffe0ff925e8be8a9177d4645ca1b36e0f6c1f76",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/platforms/web/InputTextBase.web.ts": {
+      "hash": "579bc87c2d15cafd67ba3b27bcc807c381158e2ac8143a3ab6210b88c462eac3",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/stateManagement.ts": {
+      "hash": "760f491c16a786b9792d20b43c7c47d30acf13fc62b18767eda11ca8615337b8",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/tokens.ts": {
+      "hash": "7fcd65776c10e2d7babf9ee03d48cdf637eddf3a915b5a8f21cd911cb1171226",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Base/types.ts": {
+      "hash": "77d401aa6c7258d3a18a571b631e2585c5c9ae8d40412a91c341d75483b9c34b",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/Input-Text-Email.schema.yaml": {
+      "hash": "5031a85b62757f7ac23c2764b77c2e9a05a1cfcb7938856ee4bce3c6f60d74f3",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/README.md": {
+      "hash": "6fd56044e2e94f1b1bd6664a3e97dd28ab0ad3a31ab488b37913251fa96054eb",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/component-meta.yaml": {
+      "hash": "53b9d576758a035212399e36c83f1a43abef1c3ed8574f112e00589b74c33621",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/contracts.yaml": {
+      "hash": "5901a74b21f615cc369e7c78447dc0ead8717feb5ac92eabdf3b26eaa0b24bbc",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/platforms/android/InputTextEmail.android.kt": {
+      "hash": "ea483c7aa7559b60412bfaa1fe219f149d62e17590d3807355527e2724130d77",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/platforms/ios/InputTextEmail.ios.swift": {
+      "hash": "6e2d30dc73912d51472b61d6ef2391641012fc24611d72393042a3242e8e3423",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/platforms/web/InputTextEmail.browser.ts": {
+      "hash": "e2be6cbc0130f4c04701a38422826711b31f81ef889cf7bede6b9dc770c7f14c",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/platforms/web/InputTextEmail.web.ts": {
+      "hash": "047d9ecb9689b6f46d9b3ec282484735f0ba7cbd0e2a59109b3f04301511e7cc",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/stateManagement.ts": {
+      "hash": "83d360b4df6e1f12f0c9434124531e16a9617fa87b43753d46c2ed97df6ee8e3",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/tokens.ts": {
+      "hash": "ebab91d6acb97c8c85a6b62ba1032dcc05f08b8b2b06fbcebe32dd37affcde13",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/types.ts": {
+      "hash": "ebed8d9657544f8351ae0eb1687d509720a6663862347c64c7af3151c9c00318",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Email/validation.ts": {
+      "hash": "79e2d66c473c7105c93f764e4b07e3862e21225583d20f4d7a325f37382e43dd",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/Input-Text-Password.schema.yaml": {
+      "hash": "796d78b3c283cc0e23145f52c63db5c3778abd9d1215665a13d15429a9f62b99",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/README.md": {
+      "hash": "06dd99b1b069fa4a6656b57fa42e49bacea9c417247cdfaf8ce6e471b3fae7e1",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/component-meta.yaml": {
+      "hash": "1202635bacffeef88533e916dac62f075cdbacdad629cda289a83137326a7816",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/contracts.yaml": {
+      "hash": "77af258a665704a717877c3923058e6100b8bfc47d452d9504bbf5218c3e1def",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/platforms/android/InputTextPassword.android.kt": {
+      "hash": "b5639e9b3136859547156108c7496fadaffd77a5a5114f6cbeb9d19a7b9291e6",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/platforms/ios/InputTextPassword.ios.swift": {
+      "hash": "c04f85531a41bdaa7d72406f96a224ba13339cd80b0e8e6a8f891ae5ae0539f3",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/platforms/web/InputTextPassword.browser.ts": {
+      "hash": "08543ce6352bc3b26883ec0baeac6ef5f76c0a395dbc55843356135414dee4e0",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/platforms/web/InputTextPassword.web.ts": {
+      "hash": "f68cd7890d8d1e90174ab56bc1387436721d7485132fc2c296af84cc666ad7f9",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/stateManagement.ts": {
+      "hash": "f522025441808a537f7f95e77095026219f8283b8cfdc8be6f1baf48684341d6",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/tokens.ts": {
+      "hash": "670a07866a60a7496541990a4a4beb535ace633751d74b56a41c73f19d5ffaac",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/types.ts": {
+      "hash": "53092653a08f0cbd863cc493e17c4a0109e27a99d442a0677c3bcfd60080276f",
+      "managed": false
+    },
+    "src/components/core/Input-Text-Password/validation.ts": {
+      "hash": "ec17611d0f7c61ffd3ea6e193d516d55a4811ca6fa64b23ee13b900002ba55a9",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/Input-Text-PhoneNumber.schema.yaml": {
+      "hash": "fe4647adf84b48263423dc1a5005c6127c1f104977007ea93538926f3ed5d21e",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/README.md": {
+      "hash": "eccbe61e239dd638e568f31b1cd7b968d12f2aa891ddc7ac79c7d13dd7dbb2c7",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/component-meta.yaml": {
+      "hash": "b4d97bd843fdd663b8d36b83fbd5fb586f9be99f9f24a741241d8426bca17be7",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/contracts.yaml": {
+      "hash": "1a18a7d83f4c5ce28c8dd097f08d7b23b06c1f326f2552f202d9c97264f78d03",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/platforms/android/InputTextPhoneNumber.android.kt": {
+      "hash": "9f040dfcee9042a23a1a6c2bac9cbe7e366a1026a2a44faf4ea93dbd31de241b",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/platforms/ios/InputTextPhoneNumber.ios.swift": {
+      "hash": "811fddf9149888d73405c0633bff1b8aa853863a778b29987cdcc64de3452531",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/platforms/web/InputTextPhoneNumber.browser.ts": {
+      "hash": "935aca1261bb6fa3979f7622e5754a41e6120c2af3ad04588b99ebbedf3f5bf2",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/platforms/web/InputTextPhoneNumber.web.ts": {
+      "hash": "904f2a7d481b834b94828e11ef7052b5b2f862a295172fa2ea8b7dec58e39db1",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/stateManagement.ts": {
+      "hash": "bb149eab80b04ee38fbd9068eacc8b039e2bbbf2b5f0cdd616ae8d5b940f72f5",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/tokens.ts": {
+      "hash": "4fb42df3b70641ad50c530af79a2176188ff59c1bd0722d7948eb230e8788c71",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/types.ts": {
+      "hash": "71f71021e245c4fa9b4bbfcffe5a088d4b0ae5aaed43d0f272d11158cb2bf07c",
+      "managed": false
+    },
+    "src/components/core/Input-Text-PhoneNumber/validation.ts": {
+      "hash": "885d1d530e5a12fd166e734f7b378f524496cea2151ce06961e171b7b1496824",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/Nav-Header-App.schema.yaml": {
+      "hash": "cbaead9906a47f16bfb1a429ea472dc2a2c934a9d7c44b1e5103c049993058ad",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/README.md": {
+      "hash": "9a6d9c0fb7728a80e0ac9f6b5048fdcd2256fe8048d54303a675c46dca7b0934",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/component-meta.yaml": {
+      "hash": "6b340ac1624e44332df73f4623486089b160312b5b6d8d344dd9709ea2001929",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/contracts.yaml": {
+      "hash": "9ac2c2a37693d6a474e06c877a6a9f9825f0b170c5a57782e349ee9927ea7a21",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/index.ts": {
+      "hash": "c2a8e379aa697c63af7fc28ebaa175684e8a85299b6552a4a88eb5e349a0d872",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/platforms/android/NavHeaderApp.android.kt": {
+      "hash": "692726fa6d088ac432b0adb790bdac7a05b8dab67d2491af931226d30847665b",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/platforms/ios/NavHeaderApp.ios.swift": {
+      "hash": "a6ae2e770755095599fe2fe3da2e1faf99a9b0b61afbb29f56e1b969fb25c562",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/platforms/web/NavHeaderApp.web.ts": {
+      "hash": "b6d30dd4cb38a0b3cb5ca1a275a6be02d8f1a8922f618f55b8c8d034094b98e8",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-App/types.ts": {
+      "hash": "9f9086d61528e8bf6d0efb61f15540817a7c81595bf1910213259e06dbe5fab5",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/Nav-Header-Base.schema.yaml": {
+      "hash": "bb6fc24714ff01d198cdb95bfbb2756c373808b3bd641783c29708f82eecb9bf",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/README.md": {
+      "hash": "362fb608c098f4473c1577fd304504209772eab916687bd3c1b7a28a61fd27f7",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/component-meta.yaml": {
+      "hash": "78070e924c6b724b8b3360af879a3c3df091e9a1aad1590a3f8a2d78b4b58e9e",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/contracts.yaml": {
+      "hash": "8a44268ec094fa7886aeffd5143eecf87860e1549692920a03051228791f2a89",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/index.ts": {
+      "hash": "e21eab14475aa60ce548e010b108cda9c8d3742ebf818a002c9e90de506bf849",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/platforms/android/NavHeaderBase.android.kt": {
+      "hash": "f9ce0b2e784cb55f0af6ca1d584e13385c80774657f5c6ccb87d3fbfba58ffbc",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/platforms/ios/NavHeaderBase.ios.swift": {
+      "hash": "713190baa2db9a944ef0c3c4d7f46852afdaf20daa23c41a5efbf780073dcbe7",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/platforms/web/NavHeaderBase.styles.css": {
+      "hash": "338b171221bcf78a1d9b8ab776314b3b5ec9496db14024bf4af4cf489fec13b3",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/platforms/web/NavHeaderBase.web.ts": {
+      "hash": "ac2ef607d3940456e68b53c8f7524c4b69e040606bda908a6bb6dac01f5b9f91",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Base/types.ts": {
+      "hash": "fc1e92c113e3e7fc1e2c3a5131966387fe2d9877bb48d850bbdb6849a86de11b",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/Nav-Header-Page.schema.yaml": {
+      "hash": "20f0a2fef8854d1893101e173f7fbea28cf8eb53ef95a865e8f724665017f30c",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/README.md": {
+      "hash": "37f9865776bdb1c02af88ec0531812979026d82d9f5f6bf22337c172da23620b",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/component-meta.yaml": {
+      "hash": "a192fa2629e7d27871cd6fddc35b5164140463595a2c17c157770ed4a5befed4",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/contracts.yaml": {
+      "hash": "07155aa382836777b995d0e805830b3c8c7003ed0173636bac0679fc30304fd2",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/index.ts": {
+      "hash": "79681927091e312f390011f402626799da03c6d65e9972dbff641ebaef677028",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt": {
+      "hash": "bfadd18fcfb1045011861de6997dbe6c50d0a94c62bf70392bbc4527d8d7107e",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift": {
+      "hash": "bb7a936fe4da4b4015eb88dfd3fcbfdbe0b59b75f9ce20ce4fa64a08bdd8aed9",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/platforms/web/NavHeaderPage.styles.css": {
+      "hash": "42511d7e9351d276750ced8e9e234f0defdb2eedd93c2a5ab59df419ef8218d0",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/platforms/web/NavHeaderPage.web.ts": {
+      "hash": "90ac19367eb9956cafafd871dbee306be93e6ef83aa6fed768f30749e7b2cf4e",
+      "managed": false
+    },
+    "src/components/core/Nav-Header-Page/types.ts": {
+      "hash": "ebf21b4e70cec14804da8f1ed14bf424b03f95d8b59f748e9070b39c93a3a103",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/Nav-SegmentedChoice-Base.schema.yaml": {
+      "hash": "694c409a024b24377d0b91cb133814f7abb840be3b198b2ad9711b31c0a8103b",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/README.md": {
+      "hash": "2ef6d98bebba3347faea8d219900fb15fecfcad29f033b910ed75731265c92a8",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/component-meta.yaml": {
+      "hash": "d619422dd6f87823bd9316f5f0059fdb80afa540cbd6df2fb765f4226515df57",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/contracts.yaml": {
+      "hash": "76500367926b22c0754691d752e6c63271a4df40d9341403f11ebe5547b6bcb1",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/index.ts": {
+      "hash": "7aeb9e42c143c95d745a1f2867afe2c82a6246cd0c4e396354183faae49666c8",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/platforms/android/NavSegmentedChoiceBase.android.kt": {
+      "hash": "586f0b13abf6ea4a56238e569cfcb8f51546183e28025d688a8935c3bc8bfcec",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift": {
+      "hash": "8e760f303dbedb9dcb5c7490abee0f93a29e1b330af2cd2a042aa982e6ab759d",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/platforms/web/NavSegmentedChoiceBase.styles.css": {
+      "hash": "8ae228524a86ea52daa7c2c753073825e33e4cdf1e880894b5895d43f54d39d3",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/platforms/web/NavSegmentedChoiceBase.web.ts": {
+      "hash": "15d0d8deca997e41b8ab736d6d9e9239d6d91a6e8d12bc9f929e2381748371af",
+      "managed": false
+    },
+    "src/components/core/Nav-SegmentedChoice-Base/types.ts": {
+      "hash": "e49ccdd0cab8ad28f85cb1e1b3f6c5875778a2e1415c5b29d611cbe32db60bb4",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/Nav-TabBar-Base.schema.yaml": {
+      "hash": "89a91170c36c280e27b1ccc62ed82c7b3fb1c59ee1443ea745bc0434fb164bd4",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/README.md": {
+      "hash": "8cec85c10c4f34d027397f99c3ea004e663b5741ba2bb8361cd7dea9e74d33d3",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/component-meta.yaml": {
+      "hash": "d0afa0bb07a145d7993dc6b0c5cdc367152d9af8cdca408efecbf18c0dfae84d",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/contracts.yaml": {
+      "hash": "42299b015b3cc030c546c3c8622b221452383154e2b05bdd4a8f16a98524f063",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/examples/BasicUsage.html": {
+      "hash": "e36d685d71f5723e71f440f586d9ad889eaba007cd05c0a0d286d8b5be88184e",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/examples/BasicUsage.tsx": {
+      "hash": "370d68b7992ee1480f19308c9090f751980d9a3894f7206c524b9c28e2ce9227",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/index.ts": {
+      "hash": "6c3d78ad8a6c39e1323ef7a9312a5cca3bba9f235ed898e2450cd91516167f76",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/platforms/android/NavTabBarBase.android.kt": {
+      "hash": "78a4e496e993045c634d9916be8316180ebf1a0b7d1815e1c8c8944032ed7f23",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/platforms/ios/NavTabBarBase.ios.swift": {
+      "hash": "8bf6eece552d838daab192539723c3a51b9c01b183290788adbfa25a27854a02",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/platforms/web/NavTabBarBase.styles.css": {
+      "hash": "c5494b7b0d076c53bbeabd619a3a35b72535a843bcfe417c2249d886f5d33d52",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/platforms/web/NavTabBarBase.web.ts": {
+      "hash": "24d8bf75168dffdb125867f78bc37dcbf43cf88f4a9e7609ecaef42e8fc7c54a",
+      "managed": false
+    },
+    "src/components/core/Nav-TabBar-Base/types.ts": {
+      "hash": "b106e483d1be95f2a11cd8c6a9d9329664c5fcfd5b0b8ea4f304d3178b8849cd",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/Progress-Bar-Base.schema.yaml": {
+      "hash": "22f71acdddceada344d722e4a433cf17cbfdc9b64e1756a636a80230da43abaf",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/README.md": {
+      "hash": "a9b8180063cba98c42cbb0d71ec95e5c29d120fa510178de0fdb299561f3a7ff",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/component-meta.yaml": {
+      "hash": "654662313b175b4d141bead91b60c508f40356694f5544f2b64dc5c238667eca",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/contracts.yaml": {
+      "hash": "2ec8e9369441befd31368daa86d3e599f363fda2200f702ff937ef606b5141a5",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/index.ts": {
+      "hash": "101c661b499bdf08eea33b8e9c8c494decce9f86e2017dbaaa1d440005e86946",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt": {
+      "hash": "2a336a7cd6e5a1974e6f48782a738f5ff6be9e0e05fdfb5e0651a09f05136f11",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/platforms/ios/ProgressBarBase.ios.swift": {
+      "hash": "ce96d5a427271381abec953bcf993362b028addb4147c52c7b5359bec0eccf26",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/platforms/web/ProgressBarBase.styles.css": {
+      "hash": "8bad03b9444250a15eabf44f2929550411123332b9a99dfc368ceca6ffcc5a05",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/platforms/web/ProgressBarBase.web.ts": {
+      "hash": "85419fe82b84bfa33fd66abc35689e880d1ad1c570e2dc05378f8a376ba4907b",
+      "managed": false
+    },
+    "src/components/core/Progress-Bar-Base/types.ts": {
+      "hash": "b49032dfd1f3ae989f07380eaadb446b254a3c3593cb2e3c28c7a547f94b4794",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/Progress-Indicator-Connector-Base.schema.yaml": {
+      "hash": "58ff74a29070510841c79f29f7ffc3543cf3ca5294d929f802bca23635980fca",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/README.md": {
+      "hash": "cb373412e35e88636fd10cbcbe658f280088ade931082241eb99bbbb59eda6f7",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/component-meta.yaml": {
+      "hash": "11d510b41ff176b0654d9fbe77ba855197034fb355b3a40e8d3bc33a3d9d76c4",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/contracts.yaml": {
+      "hash": "9ba8955d55fcf7bb610fa66e6983fcf35a6d20c66dea10d6761beb57e18c9fa6",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/index.ts": {
+      "hash": "4adc7c5c528caf5285fd5061814c3de92a8301778d6aac67215509196a927498",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/platforms/android/ProgressIndicatorConnectorBase.android.kt": {
+      "hash": "f6e9a1a00e581ee58ac83699588fd5b323bc87d1b588b0f91fe45b38358a5353",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/platforms/ios/ProgressIndicatorConnectorBase.ios.swift": {
+      "hash": "0da192cde9c218995b85a2a7b9a317c5398e757f1300aba9eb42d10abde0abae",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/platforms/web/ProgressIndicatorConnectorBase.styles.css": {
+      "hash": "e7e36dc138af0aa81aa62750c83d94edd4a9f12932ab93839fd62dd7b2fa1983",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/platforms/web/ProgressIndicatorConnectorBase.web.ts": {
+      "hash": "d233a4114505b9b43c8d7b117ff3a5f9b072c8f74ecc5bdeecb79dcc4b2aebeb",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Connector-Base/types.ts": {
+      "hash": "967a03bcbb1dec4ad175d9a750257df792a7b9175512c0cd6be451f5ed30b947",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/Progress-Indicator-Label-Base.schema.yaml": {
+      "hash": "49ee21fa79c729129e8e3494ed866bd32f46d2bf38add2c9abaad982942b6561",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/README.md": {
+      "hash": "5c0030ba69d9e22136a49ca5ab82164d92ae4a665aead19c66b7cf061729411e",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/component-meta.yaml": {
+      "hash": "08cf048e9e99aa631da773903a839a5d1a3e9052075528da3adb9ee49ca5b29a",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/contracts.yaml": {
+      "hash": "ffb692104ab606f59acde06b730ed7c534dfb2c712022f046cbfad669ef0060b",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/index.ts": {
+      "hash": "88390bb0ece2970c640a8455a035c88fe2d1ca718cff6347e98d40717d5c1bd1",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/platforms/android/ProgressIndicatorLabelBase.android.kt": {
+      "hash": "b59ca9f6ec31673393ccafae181ae329a36280a55d36d075f9d95a1176776901",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/platforms/ios/ProgressIndicatorLabelBase.ios.swift": {
+      "hash": "692d99fa36bc186cd3b18d111ed9d82739b9a75f91c126ec457da01af99a7bab",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/platforms/web/ProgressIndicatorLabelBase.styles.css": {
+      "hash": "1e2d41a778f184170d51a2cd186cfc8db9d0da269cb3e67e7659a4415e3c34eb",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/platforms/web/ProgressIndicatorLabelBase.web.ts": {
+      "hash": "fac06f2d2a47d3515cdb26635183b93dfaa4d5b97dd71470bfde92385ff8d89e",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Label-Base/types.ts": {
+      "hash": "0f6d697b6e4d4dcc72c146af61151ec69536442c968bc6973ee25b708ca1ce84",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/Progress-Indicator-Node-Base.schema.yaml": {
+      "hash": "c582b0e6200d0e94f2e635688b57df1311903e94a8d951b05634ff2ac2587f67",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/README.md": {
+      "hash": "03ca3485ce5e3add3b0f560f378fcf51eaaac971ced8fc9d78c956e2efc7e56a",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/component-meta.yaml": {
+      "hash": "c7e15ed9242b7335b9aad76844e2939a5fa1e5a514ace47878c95623855bda59",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/contracts.yaml": {
+      "hash": "24765223c739245dd1dca31f57174ccd731ee2f10687ff95e5f3c76ee1ea2dbd",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/index.ts": {
+      "hash": "f48a7d2d5e4ed5951fe73487201298215f2efc6256e87128a4fa03e7fea14600",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt": {
+      "hash": "bf44d93d386940441d97cf00d1d72d79be9b627368f823278e429091e0fd4133",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/platforms/ios/ProgressIndicatorNodeBase.ios.swift": {
+      "hash": "3b8c2de2354f94704ff673281fdd7a721f1f24fb693cc0be2739ab57e929d929",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/platforms/web/ProgressIndicatorNodeBase.styles.css": {
+      "hash": "7693b5e07210409d985fde8d333caa70c6b8ed6292c90e1632c2e01d9d1269ba",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/platforms/web/ProgressIndicatorNodeBase.web.ts": {
+      "hash": "069ab5e207b210dfbe623544f1e9d7bda48c70ccfcaa1716e9f9fd994e603947",
+      "managed": false
+    },
+    "src/components/core/Progress-Indicator-Node-Base/types.ts": {
+      "hash": "73a09886a518574a85b4df3052e754cabaa9db61aeac48186df5cc8ec00527a2",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/Progress-Pagination-Base.schema.yaml": {
+      "hash": "ffd73cb859af90ade926c29513c2a8401a9de62e57ebe3cb8002e060f939e947",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/README.md": {
+      "hash": "e3a8244e991918e0a6735081e51007c95e3b0589daf4df46300d3e4ab37fa271",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/component-meta.yaml": {
+      "hash": "82ff34cb4ecb065fcceba04a975ba955e0c553a4325f9a08e0b06615fc4e739b",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/contracts.yaml": {
+      "hash": "91a5adfb208779f7fe5fc1f909cc01e3ef7f403d17725a5cd631a2807bac1960",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/index.ts": {
+      "hash": "ade255828c4d24b1c14b45794078bbbc362b0b861e284a60bf3c072bd109fe6d",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/platforms/android/ProgressPaginationBase.android.kt": {
+      "hash": "a2f813f3d146f0c1acb80399f63f3903e19d28fad18e98bf9a2c78777438c5f4",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/platforms/ios/ProgressPaginationBase.ios.swift": {
+      "hash": "43a4ffbdd40cdf5720915d05aa1d4b44f200a0b2134aac2278c7b17ec7d4f912",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/platforms/web/ProgressPaginationBase.styles.css": {
+      "hash": "827a65b38a63c7696f529a860d128677fcaaff455a3da93fff11fa45ba9e1d36",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/platforms/web/ProgressPaginationBase.web.ts": {
+      "hash": "6f643c62cb1b718734ed2639c48756877d1007e39055bbe69fe74a898c2e290b",
+      "managed": false
+    },
+    "src/components/core/Progress-Pagination-Base/types.ts": {
+      "hash": "c94252ee633413f48328e3affe74d5a8f1c663c3e89a4fb969d8f909533e5d9d",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/Progress-Stepper-Base.schema.yaml": {
+      "hash": "b090f41c2f8cc7d8715f40389a2e2392bc0674f450c8168298a3af26b6aafd85",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/README.md": {
+      "hash": "3e9e2f3b65f9322faa04380a9fd9c2acd11ed49693bd29e547ecf23dbdf8b215",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/component-meta.yaml": {
+      "hash": "9f50e858c4f96eafbe83d881f491abf7e62ca62cad55ce901a1151b650b25fe1",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/contracts.yaml": {
+      "hash": "a073e7164dcd4949dd3eb6042b0a422e3ad391bce94dc1bb7ae587581cca2982",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/index.ts": {
+      "hash": "2edcb726574271cd9df2938bd5d054606228ba5c1512c4fe69139869341fe4b5",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/platforms/android/ProgressStepperBase.android.kt": {
+      "hash": "756ad07a52fc6ac70f761f1171089c71031b1f0356bb0b3e232b8ade668a6c7b",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/platforms/ios/ProgressStepperBase.ios.swift": {
+      "hash": "8bbfc380e0dea64ca9d30604d3e6c1e9a7e3898492885e9f31b119cfd4a04778",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/platforms/web/ProgressStepperBase.styles.css": {
+      "hash": "3cb3f0069b98597cd635ca05ada6397e3844d048bcdf5808ac4d16c082b736b7",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/platforms/web/ProgressStepperBase.web.ts": {
+      "hash": "74df9b5d3194df68864b744a3dace6012fdc57021be1b5359d247ac1a8741adf",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Base/types.ts": {
+      "hash": "acf5df0a6461346c18d181a36e6917fbaf744b81a1e3ceb717cd700d5bef4854",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/Progress-Stepper-Detailed.schema.yaml": {
+      "hash": "2a842bb2e6347ab6df14a99ca8ea923e9ebd722db0989439a55cd513324969ce",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/README.md": {
+      "hash": "612687c37faad3323c5c66a589320e5febf67e754df8b1a73b2f91ae40ca6d0a",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/component-meta.yaml": {
+      "hash": "869e7a44cbfba5c726c203d7ca4a00705d369344db2b6edcd44fb93ce357d646",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/contracts.yaml": {
+      "hash": "c0dc41cf6621410b7fd7596997be95c36cc60878a7f9cfbeba8247e8936baa16",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/index.ts": {
+      "hash": "4d90fe278bc750b995a85c15f6e70bb2f0b7f4db2448e869e38cb4d319ddc754",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/platforms/android/ProgressStepperDetailed.android.kt": {
+      "hash": "af93eea6fe494c645eb451391765c7fd0fa3890b08d59418ed932a78835dbdab",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/platforms/ios/ProgressStepperDetailed.ios.swift": {
+      "hash": "0cf8565b944dfe7cc4219d47837609923d60456442246ce131c7e63d1a5a91c3",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/platforms/web/ProgressStepperDetailed.styles.css": {
+      "hash": "6e9baf2091ffbed939d8bf6d6acfcbca53efdd532af92c24489bed5fb24bb0ae",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/platforms/web/ProgressStepperDetailed.web.ts": {
+      "hash": "c07107d6c77652d0e66029435e67dbf7f298ec86540376c9437475e07a2fbedb",
+      "managed": false
+    },
+    "src/components/core/Progress-Stepper-Detailed/types.ts": {
+      "hash": "837394ec9d3bb2552931651f22d3d55f07d4ef195d6e0e2dd2d8c8bce802bd8e",
+      "managed": false
+    }
+  }
+}

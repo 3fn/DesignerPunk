@@ -346,7 +346,7 @@ async function runSyncCommand() {
   const flags = process.argv.slice(3);
   await runSync({
     dryRun: flags.includes('--dry-run'),
-    force: flags.includes('--force'),
+    force: flags.includes('--accept-all') || flags.includes('--force'),
     projectRoot: process.cwd(),
   });
 }
@@ -359,7 +359,7 @@ Usage:
   npx designerpunk init            Bootstrap a new product repo
   npx designerpunk sync            Detect and apply package updates
   npx designerpunk sync --dry-run  Preview what sync would do (no changes)
-  npx designerpunk sync --force    Apply all updates without prompting
+  npx designerpunk sync --accept-all    Accept all updates without prompting
   npx designerpunk generate        Generate token files from designerpunk.config.ts
   npx designerpunk generate --force              Regenerate all (skip staleness check)
   npx designerpunk generate --product-only       Skip system tokens, regenerate product only
