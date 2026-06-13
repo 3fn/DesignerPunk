@@ -1,0 +1,21 @@
+category: layout
+description: Structural layout constraints
+
+tokens:
+  contentMaxWidth:
+    value: 1336
+    unitType: logical
+    description: Maximum content column width
+    rationale: "Optimized for readability"
+    platforms: [web, ios, android]
+
+  contentIndent:
+    ref: space300
+    description: Left indent for section content
+
+  proseMeasureMax:
+    value: 48
+    unitType: ch
+    description: Maximum line length for body text
+    rationale: "Typographic best practice"
+    platforms: [web]

@@ -1,0 +1,8 @@
+category: visualization
+description: Data visualization tokens
+
+tokens:
+  dangerZoneBackground:
+    ref: color.feedback.info.text
+    description: Theme-varying color ref
+    platforms: [web, ios, android]

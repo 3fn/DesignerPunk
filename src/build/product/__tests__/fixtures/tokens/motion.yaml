@@ -1,0 +1,11 @@
+category: motion
+description: Product-specific motion
+
+tokens:
+  flipDuration:
+    ref: duration250
+    description: Card-to-modal expansion timing
+
+  flickerCurve:
+    ref: easeInOutCustom
+    description: Broken ref for testing

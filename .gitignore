@@ -5,7 +5,7 @@ node_modules/
 
 # Build outputs
 dist/
-build/
+/build/
 *.tsbuildinfo
 
 # Generated files
