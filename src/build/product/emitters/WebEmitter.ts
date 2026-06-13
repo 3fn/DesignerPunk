@@ -48,6 +48,8 @@ function formatCSSValue(value: number | string | null, unitType: string | null):
   switch (unitType) {
     case 'logical': return `${value}px`;
     case 'duration': return `${value}ms`;
+    case 'rem': return `${value}rem`;
+    case 'em': return `${value}em`;
     case 'ch': return `${value}ch`;
     case 'percent': return `${value}%`;
     case 'color':

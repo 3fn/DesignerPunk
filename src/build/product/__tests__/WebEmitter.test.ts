@@ -34,6 +34,15 @@ const categories: ResolvedCategory[] = [
       { name: 'iosOnly', value: 100, unitType: 'logical', ref: null, resolvedPlatformPath: null, themeVarying: false, description: 'iOS only', platforms: ['ios'] },
     ],
   },
+  {
+    name: 'typography',
+    description: 'Typography tokens',
+    tokens: [
+      { name: 'statsHeroSize', value: 8, unitType: 'rem', ref: null, resolvedPlatformPath: null, themeVarying: false, description: 'Hero stat size', platforms: ['web'] },
+      { name: 'easterEggDisplay', value: 4.5, unitType: 'rem', ref: null, resolvedPlatformPath: null, themeVarying: false, description: 'Easter egg display', platforms: ['web'] },
+      { name: 'letterSpacingLabel', value: 0.04, unitType: 'em', ref: null, resolvedPlatformPath: null, themeVarying: false, description: 'Label tracking', platforms: ['web'] },
+    ],
+  },
 ];
 
 describe('WebEmitter', () => {
@@ -60,6 +69,22 @@ describe('WebEmitter', () => {
 
   it('emits ch unit correctly', () => {
     expect(output).toContain('--product-layout-prose-measure-max: 48ch;');
+  });
+
+  // Regression: rem/em product tokens must emit with their unit suffix.
+  // Pre-fix these fell through formatCSSValue's default and emitted a bare
+  // number (e.g. "8"), producing invalid CSS the browser drops.
+  // See .kiro/issues/2026-06-12-product-generator-unit-drop.md
+  it('emits rem unit with suffix (integer value)', () => {
+    expect(output).toContain('--product-typography-stats-hero-size: 8rem;');
+  });
+
+  it('emits rem unit with suffix (fractional value)', () => {
+    expect(output).toContain('--product-typography-easter-egg-display: 4.5rem;');
+  });
+
+  it('emits em unit with suffix', () => {
+    expect(output).toContain('--product-typography-letter-spacing-label: 0.04em;');
   });
 
   it('emits ref token with var()', () => {
