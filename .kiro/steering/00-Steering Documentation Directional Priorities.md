@@ -63,12 +63,12 @@ If you are about to create or modify **ANY spec document** (design-outline.md, r
 These documents are always loaded but contain extensive conditional sections. **Read the "AI Agent Reading Priorities" section at the top FIRST** to understand what applies to your current task and what to skip.
 
 #### 1. Process-Development-Workflow
-**File**: #[[file:.kiro/steering/Process-Development-Workflow.md]]
+**File**: `.kiro/steering/Process-Development-Workflow.md`
 
 **How to use**: Read the "AI Agent Reading Priorities" section at the top to determine which sections apply to your current work. Most tasks only need the Task Completion Workflow and Quality Standards sections.
 
 #### 2. Process-File-Organization
-**File**: #[[file:.kiro/steering/Process-File-Organization.md]]
+**File**: `.kiro/steering/Process-File-Organization.md`
 
 **How to use**: Read the "AI Agent Reading Priorities" section at the top. If you're just completing a normal task, focus on the Required Metadata Fields and Organization Implementation sections.
 
@@ -77,32 +77,32 @@ These documents are always loaded but contain extensive conditional sections. **
 These documents are concise and should be read in full every time:
 
 #### 3. Personal Note
-**File**: #[[file:.kiro/steering/Personal Note.md]]
+**File**: `.kiro/steering/Personal Note.md`
 
 Simple, direct message from Peter about collaboration principles. Read completely.
 
 #### 4. Start Up Tasks
-**File**: #[[file:.kiro/steering/Start Up Tasks.md]]
+**File**: `.kiro/steering/Start Up Tasks.md`
 
 Essential checklist for every task (date check, Jest commands, test selection). Read completely.
 
 #### 5. Core Goals
-**File**: #[[file:.kiro/steering/Core Goals.md]]
+**File**: `.kiro/steering/Core Goals.md`
 
 Core project context and development practices. Read completely.
 
 #### 6. AI-Collaboration-Principles
-**File**: #[[file:.kiro/steering/AI-Collaboration-Principles.md]]
+**File**: `.kiro/steering/AI-Collaboration-Principles.md`
 
 Core skepticism and candid communication requirements. Read completely.
 
 #### 7. Spec-Feedback-Protocol
-**File**: #[[file:.kiro/steering/Spec-Feedback-Protocol.md]]
+**File**: `.kiro/steering/Spec-Feedback-Protocol.md`
 
 Structured protocol for multi-agent feedback during spec formalization. Defines stamp format, @ mention scanning, feedback checkpoints, and context for reviewers. Read completely.
 
 #### 8. DesignerPunk-Systems-Overview
-**File**: #[[file:.kiro/steering/DesignerPunk-Systems-Overview.md]]
+**File**: `.kiro/steering/DesignerPunk-Systems-Overview.md`
 
 Visual architecture overview of Rosetta (token), Stemma (component), and Civitas (governance) systems. Contains Mermaid diagrams. Read completely.
 
