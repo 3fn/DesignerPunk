@@ -10,6 +10,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
+import { TokenRefResolver } from './TokenRefResolver';
 
 export interface TokenIndexEntry {
   name: string;
@@ -17,13 +18,29 @@ export interface TokenIndexEntry {
   family?: string;
   category?: string;
   component?: string;
-  value: string | number;
+  // Optional (Spec 121 Task 1.1 / O3): primitives carry an entry-level `value`; semantics carry
+  // none (value lives nested in primitiveReferences). Loosened from `string | number` to match the
+  // already-correct runtime shape so semantic entries can be asserted to carry no `value` key.
+  value?: string | number;
   formula?: string;
   primitiveReferences?: Record<string, string>;
   themeVarying?: boolean;
   platforms: { web: string; ios: string; android: string };
   consumers?: string[];
 }
+
+/**
+ * Resolved-value triple (Spec 121 Req 2) — chain-resolves a token to its terminal value.
+ * Field names + null-contract adopted verbatim from the product MCP's TokenRefResolver (Req 2.5).
+ * Emitted ADDITIVELY on get_token_details alongside the unchanged `platforms{}` object.
+ */
+export interface ResolvedValueTriple {
+  resolvedValue: number | string | null;
+  resolvedUnitType: string | null;
+  resolutionDepth: 'full' | 'partial' | null;
+}
+
+export type TokenDetails = TokenIndexEntry & ResolvedValueTriple;
 
 export interface TokenConsumer {
   component: string;
@@ -42,6 +59,9 @@ export class TokenIndexer {
   private componentTokens = new Map<string, TokenIndexEntry>();
   private consumerIndex = new Map<string, string[]>();
   private warnings: string[] = [];
+  // Chain-resolver for the get_token_details resolved-value triple (Spec 121 Req 2). Reads the
+  // same token-index/*.yaml corpus as the tier maps; loaded alongside them in indexTokens().
+  private resolver: TokenRefResolver | undefined;
 
   async indexTokens(tokenIndexDir: string): Promise<void> {
     this.primitives.clear();
@@ -58,6 +78,9 @@ export class TokenIndexer {
     this.loadTier(path.join(tokenIndexDir, 'primitives.yaml'), 'primitive', this.primitives);
     this.loadTier(path.join(tokenIndexDir, 'semantics.yaml'), 'semantic', this.semantics);
     this.loadTier(path.join(tokenIndexDir, 'components.yaml'), 'component', this.componentTokens);
+
+    this.resolver = new TokenRefResolver(tokenIndexDir);
+    this.resolver.load();
 
     this.buildConsumerIndex();
   }
@@ -84,8 +107,33 @@ export class TokenIndexer {
     return results;
   }
 
-  getDetails(name: string): TokenIndexEntry | null {
-    return this.primitives.get(name) || this.semantics.get(name) || this.componentTokens.get(name) || null;
+  getDetails(name: string): TokenDetails | null {
+    const entry = this.primitives.get(name) || this.semantics.get(name) || this.componentTokens.get(name) || null;
+    if (!entry) return null;
+
+    // Additively attach the resolved-value triple (Spec 121 Req 2). Existing keys —
+    // including the unchanged platforms{} object and the absent `value` key on semantics —
+    // are preserved exactly; the triple is layered on top.
+    return { ...entry, ...this.resolveTriple(name) };
+  }
+
+  /**
+   * Map TokenRefResolver's ResolvedRef → the resolved-value triple (Req 2 null-contract, verbatim):
+   * - primitive → own value / 'full'
+   * - semantic|component single resolvable ref → chain-resolved terminal value / 'full'
+   * - multi-ref | literal | unresolvable → token self-name / 'partial'
+   * - no-ref-no-value (resolver returns null) → null / null / null
+   */
+  private resolveTriple(name: string): ResolvedValueTriple {
+    const resolved = this.resolver?.resolve(name) ?? null;
+    if (!resolved) {
+      return { resolvedValue: null, resolvedUnitType: null, resolutionDepth: null };
+    }
+    return {
+      resolvedValue: resolved.value,
+      resolvedUnitType: resolved.unitType,
+      resolutionDepth: resolved.depth,
+    };
   }
 
   getFamily(family: string): TokenIndexEntry[] {
