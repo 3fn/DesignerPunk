@@ -20,7 +20,10 @@ export interface DocumentMetadata {
   
   /** Last reviewed date */
   lastReviewed: string;
-  
+
+  /** Owning domain/agent from metadata (the find_docs `owner` source — Spec 121 Req 1.1) */
+  organization: string;
+
   /** H2 heading names */
   sections: string[];
   

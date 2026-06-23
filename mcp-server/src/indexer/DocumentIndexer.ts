@@ -108,6 +108,16 @@ export class DocumentIndexer {
   }
 
   /**
+   * Get all indexed document metadata entries
+   * Used by find_docs for concept search and paginated catalog enumeration
+   *
+   * Returns a stable-ordered array (insertion order, which follows filesystem scan order).
+   */
+  getAllDocuments(): DocumentMetadata[] {
+    return Array.from(this.documentMap.values());
+  }
+
+  /**
    * Get the complete documentation map (4-layer structure)
    * Returns metadata for all indexed documents
    */
@@ -343,6 +353,7 @@ export class DocumentIndexer {
       layer: metadata.layer,
       relevantTasks: metadata.relevantTasks,
       lastReviewed: metadata.lastReviewed || '',
+      organization: metadata.organization || '',
       sections,
       tokenCount
     };

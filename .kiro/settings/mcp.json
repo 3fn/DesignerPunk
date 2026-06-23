@@ -10,7 +10,7 @@
             },
             "disabled": false,
             "autoApprove": [
-                "get_documentation_map",
+                "find_docs",
                 "get_document_summary",
                 "get_document_full",
                 "get_section",

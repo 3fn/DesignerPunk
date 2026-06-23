@@ -41,7 +41,7 @@ DesignerPunk operates three MCP servers (two existing, one future) that form a k
 - How to apply the system to build products (Application MCP)
 - Product-specific context (Product MCP)
 
-**Tools**: `get_documentation_map`, `get_document_summary`, `get_document_full`, `get_section`, `list_cross_references`, `validate_metadata`, `get_index_health`, `rebuild_index`
+**Tools**: `find_docs`, `get_document_summary`, `get_document_full`, `get_section`, `list_cross_references`, `validate_metadata`, `get_index_health`, `rebuild_index`
 
 **Query pattern**: Progressive disclosure — map → summary → section → full doc
 

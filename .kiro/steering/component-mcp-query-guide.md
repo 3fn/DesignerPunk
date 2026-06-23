@@ -491,7 +491,7 @@ find_principles({ keyword: "dark-theme" })
 
 | Tool | Parameters | Purpose |
 |------|-----------|---------|
-| `get_documentation_map()` | none | All indexed documents |
+| `find_docs({ concept })` / `find_docs({ list: true })` | `concept` or `list`/`cursor`/`limit` (all optional) | Discover docs by concept, or list all (paginated) |
 | `get_document_summary({ path })` | `path` (required) | Document outline (~200 tokens) |
 | `get_document_full({ path })` | `path` (required) | Complete document content |
 | `get_section({ path, heading })` | `path`, `heading` (both required) | Specific section by heading |

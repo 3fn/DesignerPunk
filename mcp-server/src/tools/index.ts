@@ -1,17 +1,23 @@
 /**
  * MCP Tools Index
- * 
+ *
  * Exports all MCP tool definitions and handlers for registration with the MCP server.
+ *
+ * NOTE: get_documentation_map was removed in Spec 121 Task 3.3.
+ * It is superseded by find_docs (concept search + paginated list/catalog mode).
  */
 
-// get_documentation_map tool
+// find_docs tool (supersedes get_documentation_map — Spec 121 Req 4)
 export {
-  getDocumentationMapTool,
-  handleGetDocumentationMap,
-  createGetDocumentationMapHandler,
-  formatMcpResponse as formatGetDocumentationMapResponse,
-  GetDocumentationMapResult
-} from './get-documentation-map';
+  findDocsTool,
+  handleFindDocs,
+  createFindDocsHandler,
+  formatMcpResponse as formatFindDocsResponse,
+  FindDocsHandlerResult,
+  FindDocsResult,
+  FindDocsEntry,
+  FIND_DOCS_DEFAULT_LIMIT,
+} from './find-docs';
 
 // get_document_summary tool
 export {

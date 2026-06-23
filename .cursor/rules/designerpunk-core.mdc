@@ -34,6 +34,6 @@ DesignerPunk is a **True Native** cross-platform design system with mathematical
 ## MCP Documentation
 
 Query the MCP `documentation` server for detailed guidance:
-- `get_documentation_map()` - see all available steering docs
+- `find_docs({ concept })` - discover docs by concept/keyword; `find_docs({ list: true })` - list all steering docs (paginated)
 - `get_document_summary({ path })` - get doc outline
 - `get_section({ path, heading })` - get specific section

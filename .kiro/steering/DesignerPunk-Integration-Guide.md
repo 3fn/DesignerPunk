@@ -182,7 +182,7 @@ Create `.kiro/settings/mcp.json` at your project root (Kiro reads this file on a
       },
       "disabled": false,
       "autoApprove": [
-        "get_documentation_map",
+        "find_docs",
         "get_document_summary",
         "get_document_full",
         "get_section",
@@ -916,7 +916,7 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 
 | Query | Purpose |
 |-------|---------|
-| `get_documentation_map()` | All indexed documents |
+| `find_docs({ concept })` / `find_docs({ list: true })` | Discover docs by concept, or list all (paginated) |
 | `get_document_summary({ path })` | Document outline (~200 tokens) |
 | `get_document_full({ path })` | Complete document content |
 | `get_section({ path, heading })` | Specific section by heading |

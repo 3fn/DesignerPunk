@@ -7,7 +7,7 @@ description: Known gaps in the MCP knowledge layer and trigger conditions for wh
 # MCP Evolution Roadmap
 
 **Date**: 2026-03-11
-**Last Reviewed**: 2026-04-10
+**Last Reviewed**: 2026-06-23
 **Purpose**: Capture known MCP knowledge gaps, their assessed priority, and the conditions that trigger action
 **Organization**: process-standard
 **Scope**: cross-project
@@ -154,6 +154,33 @@ These were identified in the 071 design outline and explicitly deferred:
 | Token query capability | Deferred — needs Ada's design input | 071 design-outline Gap 2 |
 | Negative guidance system | Partially addressed via `discouragedPatterns` | 071 design-outline Gap 3 |
 | Cross-layer synthesis | Deferred — respect system/product boundary | 071 design-outline Gap 4 |
+
+---
+
+## Delivery-Layer Hardening (Spec 121) — Actioned
+
+Spec 121 ("MCP Delivery-Layer Hardening") actioned a set of delivery-layer findings surfaced by the portability + consumer-install dry-runs. Recorded here so the roadmap reflects what shipped (distinct from the future-gap and deferred sections above).
+
+### Findings actioned
+
+| Finding | Gap | Resolution | Status |
+|---------|-----|------------|--------|
+| F9 | `get_token_details` did not chain-resolve semantic/component tokens to a terminal value (primitives carry `value`; semantics carry only `primitiveReferences`) | Added the resolved-value triple (`resolvedValue` / `resolvedUnitType` / `resolutionDepth`), reusing the product MCP's `TokenRefResolver` contract verbatim — additive, `platforms{}` unchanged | ✅ Task 1 |
+| F11 + F12 | Discovery by concept/keyword absent across both MCPs — `find_components` matched structured taxonomy only; no `find_docs` | Tokenized keyword discovery on `find_components` (new optional `keyword` param; `when_to_use` now indexed) + new `find_docs` concept-search tool — both additive | ✅ Tasks 2 + 3 |
+| F10 | `get_documentation_map()` errored at ~78K chars (over the MCP token limit), breaking progressive-disclosure discovery | Superseded by `find_docs` paginated list/catalog mode (bounded pages, ~6K chars vs ~78K) | ✅ Task 3 (see Supersede below) |
+| F1 + F3 | `get_section` under-retrieves stub/sibling sections; ambiguous for non-unique headings | Section addressing by path+parent / stable IDs + summary-first rule | ⏳ Task 6 — planned, not yet shipped |
+
+### Supersede: `get_documentation_map` → `find_docs` (the one justified break)
+
+121's single intentional breaking change. The map was known-unusable-at-scale (F10) and redundant once `find_docs` exists (which provides both concept-search and a paginated catalog mode). Evidence showed **zero consumer code coupling** — the only references lived in doc/config/prompt artifacts, which refresh on upgrade + `sync`. Maintaining two discovery surfaces is debt; paying the supersede cost once is cleaner.
+
+- **Removed:** the `get_documentation_map` MCP tool; its pinned shape test was **rewritten** (explicit supersede, not a silent mutation) to target `find_docs` list mode.
+- **Reference sweep (first-party):** retargeted to `find_docs` across the verified set — 5 steering docs (`00-Steering Documentation Directional Priorities`, `Component-Quick-Reference`, `DesignerPunk-Integration-Guide`, `MCP-Relationship-Model`, `component-mcp-query-guide`), the Thurgood prompt (`.kiro/agents/thurgood-prompt.md`, `.claude/agents/thurgood.md`, `product-template/agents/thurgood-prompt.md`), the two MCP `autoApprove` configs (`.kiro/settings/mcp.json`, `.claude/settings.local.json`), the Cursor rules (`.cursor/rules/designerpunk-core.mdc`), and the `.claude/agents/{ada,lina,data}.md` tool grants. The ada/lina/data grants were swept **now** rather than deferred to Spec 122's generator, because they would otherwise dangle against a removed tool. Historical spec/completion docs were left as-is (record of their era).
+- **Watch (Spec 123, not 121):** if `sync` does not refresh dp-portfolio's vendored prompts/docs on upgrade, the swept consumer copies go stale — tracked in Spec 123.
+
+### Index-freshness test approach (Decision 4)
+
+The discovery tier-classification / recall-floor contract tests run against a **pinned fixture corpus**, plus a separate lightweight **live-smoke** check that asserts only that the named floor components/docs still exist. Rationale: testing tier classification against live metadata would couple component/doc authoring to MCP-test stability (a routine wording edit could flip a tier and break an unrelated MCP test). The pinned corpus decouples them; the live-smoke check still catches the "floor item was deleted/renamed" regression.
 
 ---
 

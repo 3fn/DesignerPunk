@@ -235,8 +235,9 @@ get_document_full({ path: ".kiro/steering/Component-Family-Button.md" })
 The `designerpunk-docs` server provides additional tools for documentation management:
 
 ```
-// Get complete documentation map with all documents organized by layer
-get_documentation_map()
+// Discover docs by concept, or list the full catalog (paginated)
+find_docs({ concept: "form inputs" })   // discover by concept/keyword
+find_docs({ list: true })               // full catalog, paginated
 
 // List cross-references in a document
 list_cross_references({ path: ".kiro/steering/Component-Family-Form-Inputs.md" })

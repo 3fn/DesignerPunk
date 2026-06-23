@@ -305,7 +305,7 @@ You have access to the DesignerPunk MCP documentation server (`@designerpunk-doc
 | Completion doc guidance | `get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Two-Document Workflow" })` |
 | Cross-reference standards | `get_section({ path: ".kiro/steering/Process-Cross-Reference-Standards.md", heading: "..." })` |
 | Hook operations | `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "..." })` |
-| Finding the right doc | `get_documentation_map()` |
+| Finding the right doc | `find_docs({ concept })` (discover by concept) or `find_docs({ list: true })` (full catalog, paginated) |
 
 ### Progressive Disclosure Workflow
 

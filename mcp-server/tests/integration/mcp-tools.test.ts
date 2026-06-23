@@ -17,7 +17,7 @@ import { DocumentIndexer } from '../../src/indexer/DocumentIndexer';
 import { QueryEngine } from '../../src/query/QueryEngine';
 import { FileWatcher } from '../../src/watcher/FileWatcher';
 import {
-  handleGetDocumentationMap,
+  handleFindDocs,
   handleGetDocumentSummary,
   handleGetDocumentFull,
   handleGetSection,
@@ -133,41 +133,48 @@ describe('MCP Server Integration Tests', () => {
     metricsLog = [];
   });
 
-  describe('Tool 1: get_documentation_map', () => {
-    it('should return documentation map with indexed documents', () => {
-      const result = handleGetDocumentationMap(queryEngine);
+  describe('Tool 1: find_docs (supersedes get_documentation_map)', () => {
+    it('should return catalog entries in list mode', () => {
+      const result = handleFindDocs(queryEngine, { list: true });
 
       expect(result).toBeDefined();
-      expect(result.documentationMap).toBeDefined();
-      expect(result.documentationMap.layers).toBeDefined();
+      expect(result.findDocs).toBeDefined();
+      expect(Array.isArray(result.findDocs.data)).toBe(true);
+      expect(result.findDocs.error).toBeNull();
     });
 
-    it('should include layer 2 documents', () => {
-      const result = handleGetDocumentationMap(queryEngine);
+    it('should include indexed documents in list mode', () => {
+      const result = handleFindDocs(queryEngine, { list: true });
 
-      // Our test documents are layer 2
-      expect(result.documentationMap.layers['2']).toBeDefined();
-      expect(result.documentationMap.layers['2'].documents.length).toBeGreaterThan(0);
+      expect(result.findDocs.data.length).toBeGreaterThan(0);
     });
 
-    it('should include document metadata in map', () => {
-      const result = handleGetDocumentationMap(queryEngine);
-      const layer2Docs = result.documentationMap.layers['2']?.documents || [];
-      
-      if (layer2Docs.length > 0) {
-        const doc = layer2Docs[0];
-        expect(doc.path).toBeDefined();
-        expect(doc.purpose).toBeDefined();
-        expect(doc.layer).toBe(2);
+    it('should include entry fields in list mode results', () => {
+      const result = handleFindDocs(queryEngine, { list: true });
+
+      if (result.findDocs.data.length > 0) {
+        const entry = result.findDocs.data[0];
+        expect(entry.path).toBeDefined();
+        expect(entry.summary).toBeDefined();
+        expect(entry.owner).toBeDefined();
+        expect(Array.isArray(entry.matchedOn)).toBe(true);
       }
     });
 
     it('should include metrics', () => {
-      const result = handleGetDocumentationMap(queryEngine);
-      
+      const result = handleFindDocs(queryEngine, { list: true });
+
       expect(result.metrics).toBeDefined();
       expect(result.metrics.responseTimeMs).toBeDefined();
-      expect(result.metrics.documentCount).toBeGreaterThan(0);
+      expect(result.metrics.resultCount).toBeGreaterThanOrEqual(0);
+    });
+
+    it('concept mode should return no-match contract for unknown concept', () => {
+      const result = handleFindDocs(queryEngine, { concept: 'xyzzy-nonexistent-concept' });
+
+      expect(result.findDocs.data).toEqual([]);
+      expect(result.findDocs.error).toBeNull();
+      expect(result.findDocs.matchConfidence).toBe('none');
     });
   });
 
@@ -480,12 +487,12 @@ This is new content.
   });
 
   describe('Performance Metrics Logging', () => {
-    it('should log metrics for documentation map query', () => {
+    it('should log metrics for find_docs query', () => {
       metricsLog = [];
-      handleGetDocumentationMap(queryEngine);
+      handleFindDocs(queryEngine, { list: true });
 
       expect(metricsLog.length).toBeGreaterThan(0);
-      expect(metricsLog[0].operation).toBe('get_documentation_map');
+      expect(metricsLog[0].operation).toBe('find_docs');
       expect(metricsLog[0].responseTimeMs).toBeDefined();
     });
 
@@ -509,19 +516,21 @@ This is new content.
   });
 
   describe('Response Format Verification', () => {
-    it('should return properly structured documentation map', () => {
-      const result = handleGetDocumentationMap(queryEngine);
+    it('should return properly structured find_docs response', () => {
+      const result = handleFindDocs(queryEngine, { list: true });
 
       // Verify structure
-      expect(result).toHaveProperty('documentationMap');
+      expect(result).toHaveProperty('findDocs');
       expect(result).toHaveProperty('metrics');
-      expect(typeof result.documentationMap.layers).toBe('object');
-      
-      // Each layer should have name and documents
-      Object.values(result.documentationMap.layers).forEach((layer: any) => {
-        expect(layer).toHaveProperty('name');
-        expect(layer).toHaveProperty('documents');
-        expect(Array.isArray(layer.documents)).toBe(true);
+      expect(Array.isArray(result.findDocs.data)).toBe(true);
+      expect(result.findDocs.error).toBeNull();
+
+      // Each entry should have required fields
+      result.findDocs.data.forEach((entry: any) => {
+        expect(entry).toHaveProperty('path');
+        expect(entry).toHaveProperty('summary');
+        expect(entry).toHaveProperty('owner');
+        expect(entry).toHaveProperty('matchedOn');
       });
     });
 

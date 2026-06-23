@@ -20,7 +20,7 @@ import { DocumentIndexer } from '../../src/indexer/DocumentIndexer';
 import { QueryEngine } from '../../src/query/QueryEngine';
 import { estimateTokenCount } from '../../src/utils/token-estimator';
 import {
-  handleGetDocumentationMap,
+  handleFindDocs,
   handleGetDocumentSummary,
   handleGetDocumentFull,
   handleGetSection,
@@ -286,9 +286,9 @@ describe('Token Efficiency Tests', () => {
     it('should measure MCP approach tokens (map + summary + section)', () => {
       let totalMCPTokens = 0;
 
-      // Step 1: Get documentation map
-      const mapResult = handleGetDocumentationMap(queryEngine);
-      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.documentationMap));
+      // Step 1: Discover docs via find_docs (supersedes get_documentation_map)
+      const mapResult = handleFindDocs(queryEngine, { list: true });
+      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.findDocs));
       totalMCPTokens += mapTokens;
 
       // Step 2: Get summary for one document (typical workflow)
@@ -311,7 +311,7 @@ describe('Token Efficiency Tests', () => {
       console.log('\n=== MCP Approach Token Measurement ===');
       console.log('Operation                         | Tokens');
       console.log('----------------------------------|--------');
-      console.log(`Documentation Map                 | ${mapTokens}`);
+      console.log(`find_docs (list, one page)        | ${mapTokens}`);
       console.log(`Document Summary                  | ${summaryTokens}`);
       console.log(`Section Content                   | ${sectionTokens}`);
       console.log('----------------------------------|--------');
@@ -335,9 +335,9 @@ describe('Token Efficiency Tests', () => {
         }
       }
 
-      // Calculate MCP approach (map + summary + section for typical workflow)
-      const mapResult = handleGetDocumentationMap(queryEngine);
-      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.documentationMap));
+      // Calculate MCP approach (find_docs + summary + section for typical workflow)
+      const mapResult = handleFindDocs(queryEngine, { list: true });
+      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.findDocs));
 
       const summaryResult = handleGetDocumentSummary(queryEngine, layer2Docs[0]);
       let summaryTokens = 0;
@@ -497,9 +497,9 @@ describe('Token Efficiency Tests', () => {
         }
       }
 
-      // Calculate MCP approach for typical workflow
-      const mapResult = handleGetDocumentationMap(queryEngine);
-      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.documentationMap));
+      // Calculate MCP approach for typical workflow (find_docs supersedes get_documentation_map)
+      const mapResult = handleFindDocs(queryEngine, { list: true });
+      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.findDocs));
 
       // Get summaries for all documents (progressive disclosure)
       let totalSummaryTokens = 0;

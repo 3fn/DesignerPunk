@@ -113,7 +113,7 @@ Add to your `.kiro/settings/mcp.json`:
       },
       "disabled": false,
       "autoApprove": [
-        "get_documentation_map",
+        "find_docs",
         "get_document_summary",
         "get_section"
       ]
@@ -128,46 +128,67 @@ Add to your `.kiro/settings/mcp.json`:
 
 The server provides 8 MCP tools organized by purpose:
 
+> **Spec 121 note:** `get_documentation_map` was superseded by `find_docs` in Task 3.3.
+> `find_docs` covers both concept/keyword discovery and paginated catalog enumeration,
+> fixing the ~78K-char oversized-payload issue (Finding 10).
+
 ### Core Tools (6)
 
-#### 1. `get_documentation_map`
+#### 1. `find_docs` *(supersedes `get_documentation_map`)*
 
-Get the complete documentation structure with metadata for all indexed documents.
+Discover docs by concept/keyword (ranked, concept mode) or enumerate the full catalog
+(paginated list mode).
 
-**Parameters**: None
+**Parameters**:
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `concept` | string | No | Concept/keyword to search (concept mode, returns ranked matches) |
+| `list` | boolean | No | List/catalog mode: enumerate all docs paginated |
+| `cursor` | string | No | Pagination cursor for list mode (from previous `nextCursor`) |
+| `limit` | number | No | Max results per page (default 20, bounded for token-limit safety) |
 
-**Returns**: Documentation map organized by layer (0-3)
-
-**Example Request**:
+**Concept mode example**:
 ```json
 {
-  "name": "get_documentation_map",
-  "arguments": {}
+  "name": "find_docs",
+  "arguments": { "concept": "spec planning" }
 }
 ```
 
-**Example Response**:
+**Response (concept mode — match)**:
 ```json
 {
-  "layers": {
-    "0": {
-      "name": "Meta-Guide",
-      "documents": []
-    },
-    "2": {
-      "name": "Frameworks and Patterns",
-      "documents": [
-        {
-          "path": ".kiro/steering/Spec Planning Standards.md",
-          "purpose": "Standards for creating specifications",
-          "layer": 2,
-          "relevantTasks": ["spec-creation"],
-          "sections": ["Requirements Document Format", "Design Document Format"],
-          "tokenCount": 15000
-        }
-      ]
-    }
+  "findDocs": {
+    "data": [
+      {
+        "path": ".kiro/steering/Process-Spec-Planning.md",
+        "summary": "Spec planning standards. Sections: Requirements Document Format, ...",
+        "owner": "Thurgood",
+        "matchedOn": ["purpose:spec", "purpose:planning"],
+        "rank": 1
+      }
+    ],
+    "error": null
   }
+}
+```
+
+**Response (concept mode — no match)**:
+```json
+{
+  "findDocs": {
+    "data": [],
+    "error": null,
+    "matchConfidence": "none"
+  }
+}
+```
+
+**List mode example**:
+```json
+{
+  "name": "find_docs",
+  "arguments": { "list": true, "cursor": "0", "limit": 20 }
 }
 ```
 

@@ -135,7 +135,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Verify discovery→retrieval composes: returned component name resolves via `get_component_summary` in one call (P6)
     - _Requirements: 1.5, 1.7, 1.10_
 
-- [ ] 3. `find_docs` Tool + Supersede `get_documentation_map` (Req 1 + Req 4)
+- [x] 3. `find_docs` Tool + Supersede `get_documentation_map` (Req 1 + Req 4)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -162,7 +162,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 3 Complete: find_docs + map supersede"` (runs release analysis automatically)
   - Verify: Check GitHub for committed changes
 
-  - [ ] 3.1 Implement `find_docs` concept-search mode
+  - [x] 3.1 Implement `find_docs` concept-search mode
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -171,7 +171,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Verify discovery→retrieval composes: returned `path` resolves via `get_section`/`get_document_summary` in one call (P6)
     - _Requirements: 1.1, 1.2, 1.10_
 
-  - [ ] 3.2 Implement `find_docs` paginated list/catalog mode
+  - [x] 3.2 Implement `find_docs` paginated list/catalog mode
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -180,7 +180,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - List mode is unranked enumeration — no `matchConfidence` tier (deterministic catalog, not relevance ranking)
     - _Requirements: 4.1, 4.2_
 
-  - [ ] 3.3 Remove `get_documentation_map` + rewrite its pinned test
+  - [x] 3.3 Remove `get_documentation_map` + rewrite its pinned test
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -189,7 +189,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - This is the one justified break (redundant-once-replaced + zero consumer code coupling)
     - _Requirements: 4.3_
 
-  - [ ] 3.4 Sweep first-party `get_documentation_map` references (ballot-measure)
+  - [x] 3.4 Sweep first-party `get_documentation_map` references (ballot-measure)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -202,7 +202,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Acceptance: `grep -rl get_documentation_map` over the canonical sweep set returns zero (the regenerated `.claude/agents/{ada,lina,data}.md` ports are excluded from this acceptance grep)
     - _Requirements: 4.4_
 
-  - [ ] 3.5 Record the supersede in `MCP-Evolution-Roadmap.md` (doc-as-requirement; ballot-measure)
+  - [x] 3.5 Record the supersede in `MCP-Evolution-Roadmap.md` (doc-as-requirement; ballot-measure)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

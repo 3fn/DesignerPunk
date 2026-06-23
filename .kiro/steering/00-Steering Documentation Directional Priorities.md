@@ -256,9 +256,10 @@ All paths are relative to `.kiro/steering/`. Use progressive disclosure:
 
 The MCP Documentation Server is the **primary source** for all Tier 2 steering documents. Use progressive disclosure:
 
-1. **Query documentation map** (~500 tokens)
+1. **Discover docs by concept, or list the catalog** (bounded/paginated)
    ```
-   get_documentation_map()
+   find_docs({ concept: "RTL support" })   // discover by concept/keyword
+   find_docs({ list: true })               // full catalog, paginated
    ```
 
 2. **Request document summary** (~200 tokens)
@@ -280,7 +281,7 @@ The MCP Documentation Server is the **primary source** for all Tier 2 steering d
 
 | Tool | Purpose |
 |------|---------|
-| `get_documentation_map` | List all documents with metadata |
+| `find_docs` | Discover docs by concept/keyword, or list all (paginated) |
 | `get_document_summary` | Get metadata + outline |
 | `get_document_full` | Get complete content |
 | `get_section` | Get specific section by heading |

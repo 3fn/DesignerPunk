@@ -15,7 +15,7 @@ import * as path from 'path';
 import { DocumentIndexer } from '../../src/indexer/DocumentIndexer';
 import { QueryEngine, QueryMetrics } from '../../src/query/QueryEngine';
 import {
-  handleGetDocumentationMap,
+  handleFindDocs,
   handleGetDocumentSummary,
   handleGetDocumentFull,
   handleGetSection,
@@ -155,30 +155,30 @@ describe('Performance Benchmarking Tests', () => {
     metricsLog = [];
   });
 
-  describe('get_documentation_map Performance', () => {
-    it('should complete within threshold', () => {
+  describe('find_docs Performance (supersedes get_documentation_map)', () => {
+    it('should complete within threshold for list mode', () => {
       const startTime = Date.now();
-      const result = handleGetDocumentationMap(queryEngine);
+      const result = handleFindDocs(queryEngine, { list: true });
       const duration = Date.now() - startTime;
 
       expect(result).toBeDefined();
       expect(duration).toBeLessThan(PERFORMANCE_THRESHOLDS.documentationMap);
-      
-      console.log(`get_documentation_map: ${duration}ms (threshold: ${PERFORMANCE_THRESHOLDS.documentationMap}ms)`);
+
+      console.log(`find_docs (list): ${duration}ms (threshold: ${PERFORMANCE_THRESHOLDS.documentationMap}ms)`);
     });
 
     it('should log performance metrics', () => {
-      handleGetDocumentationMap(queryEngine);
+      handleFindDocs(queryEngine, { list: true });
 
       expect(metricsLog.length).toBeGreaterThan(0);
       const metrics = metricsLog[0];
-      expect(metrics.operation).toBe('get_documentation_map');
+      expect(metrics.operation).toBe('find_docs');
       expect(metrics.responseTimeMs).toBeDefined();
       expect(typeof metrics.responseTimeMs).toBe('number');
     });
 
-    it('should include document count in metrics', () => {
-      const result = handleGetDocumentationMap(queryEngine);
+    it('should include result metrics', () => {
+      const result = handleFindDocs(queryEngine, { list: true });
 
       expect(result.metrics).toBeDefined();
       expect(result.metrics.responseTimeMs).toBeDefined();
@@ -413,8 +413,8 @@ describe('Performance Benchmarking Tests', () => {
 
       // Run all operations and collect timings
       let start = Date.now();
-      handleGetDocumentationMap(queryEngine);
-      results['get_documentation_map'] = Date.now() - start;
+      handleFindDocs(queryEngine, { list: true });
+      results['find_docs'] = Date.now() - start;
 
       start = Date.now();
       handleGetDocumentSummary(queryEngine, mediumDocPath);
@@ -444,7 +444,7 @@ describe('Performance Benchmarking Tests', () => {
       console.log('\n=== Performance Baseline Report ===');
       console.log('Operation                  | Time (ms) | Threshold (ms)');
       console.log('---------------------------|-----------|---------------');
-      console.log(`get_documentation_map      | ${results['get_documentation_map'].toString().padStart(9)} | ${PERFORMANCE_THRESHOLDS.documentationMap}`);
+      console.log(`find_docs (list)           | ${results['find_docs'].toString().padStart(9)} | ${PERFORMANCE_THRESHOLDS.documentationMap}`);
       console.log(`get_document_summary       | ${results['get_document_summary'].toString().padStart(9)} | ${PERFORMANCE_THRESHOLDS.documentSummary}`);
       console.log(`get_document_full          | ${results['get_document_full'].toString().padStart(9)} | ${PERFORMANCE_THRESHOLDS.documentFull}`);
       console.log(`get_section                | ${results['get_section'].toString().padStart(9)} | ${PERFORMANCE_THRESHOLDS.section}`);

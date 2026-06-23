@@ -20,7 +20,7 @@ import { DocumentIndexer } from '../../src/indexer/DocumentIndexer';
 import { QueryEngine } from '../../src/query/QueryEngine';
 import { estimateTokenCount } from '../../src/utils/token-estimator';
 import {
-  handleGetDocumentationMap,
+  handleFindDocs,
   handleGetDocumentSummary,
   handleGetDocumentFull,
   handleGetSection,
@@ -267,14 +267,14 @@ describe('End-to-End AI Agent Workflow Tests', () => {
         success: false,
       };
 
-      // Step 1: Get documentation map to discover available docs
-      const mapResult = handleGetDocumentationMap(queryEngine);
-      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.documentationMap));
+      // Step 1: Discover available docs via find_docs (supersedes get_documentation_map)
+      const mapResult = handleFindDocs(queryEngine, { list: true });
+      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.findDocs));
       execution.steps.push({
-        action: 'get_documentation_map',
+        action: 'find_docs',
         tokensUsed: mapTokens,
         result: 'success',
-        details: `Found ${Object.keys(mapResult.documentationMap.layers).length} layers with documents`,
+        details: `Discovered ${mapResult.findDocs.data.length} documents via find_docs list mode`,
       });
       execution.totalTokens += mapTokens;
 
@@ -349,11 +349,11 @@ describe('End-to-End AI Agent Workflow Tests', () => {
         success: false,
       };
 
-      // Step 1: Get documentation map
-      const mapResult = handleGetDocumentationMap(queryEngine);
-      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.documentationMap));
+      // Step 1: Discover available docs via find_docs (supersedes get_documentation_map)
+      const mapResult = handleFindDocs(queryEngine, { list: true });
+      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.findDocs));
       execution.steps.push({
-        action: 'get_documentation_map',
+        action: 'find_docs',
         tokensUsed: mapTokens,
         result: 'success',
         details: 'Discovered available documentation',
@@ -607,10 +607,10 @@ This document has incomplete metadata.
       const workflow: WorkflowStep[] = [];
       let totalTokens = 0;
 
-      // Step 1: Discover documentation
-      const mapResult = handleGetDocumentationMap(queryEngine);
-      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.documentationMap));
-      workflow.push({ action: 'discover_docs', tokensUsed: mapTokens, result: 'success', details: 'Got documentation map' });
+      // Step 1: Discover documentation (find_docs supersedes get_documentation_map)
+      const mapResult = handleFindDocs(queryEngine, { list: true });
+      const mapTokens = estimateTokenCount(JSON.stringify(mapResult.findDocs));
+      workflow.push({ action: 'discover_docs', tokensUsed: mapTokens, result: 'success', details: 'Got find_docs catalog' });
       totalTokens += mapTokens;
 
       // Step 2: Get summaries for relevant docs
@@ -675,9 +675,9 @@ This document has incomplete metadata.
       // MCP Workflow approach
       let mcpTokens = 0;
       
-      // Map + 2 summaries + 2 sections (typical workflow)
-      const mapResult = handleGetDocumentationMap(queryEngine);
-      mcpTokens += estimateTokenCount(JSON.stringify(mapResult.documentationMap));
+      // find_docs + 2 summaries + 2 sections (typical workflow)
+      const mapResult = handleFindDocs(queryEngine, { list: true });
+      mcpTokens += estimateTokenCount(JSON.stringify(mapResult.findDocs));
 
       for (const docPath of testDocs.slice(0, 2)) {
         const summaryResult = handleGetDocumentSummary(queryEngine, docPath);

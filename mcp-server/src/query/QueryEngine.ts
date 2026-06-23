@@ -14,6 +14,7 @@
 import { DocumentIndexer } from '../indexer/DocumentIndexer';
 import {
   DocumentationMap,
+  DocumentMetadata,
   DocumentSummary,
   DocumentFull,
   Section,
@@ -21,6 +22,37 @@ import {
   MetadataValidation,
   IndexHealth
 } from '../models';
+
+// ---------------------------------------------------------------------------
+// find_docs types (defined here to avoid circular QueryEngine ↔ tools imports)
+// ---------------------------------------------------------------------------
+
+/**
+ * A single document entry returned by find_docs.
+ * Task-5 fields are optional — populated by the Task-5 rubric, not in Task 3.
+ */
+export interface FindDocsEntry {
+  path: string;
+  summary: string;
+  owner: string;
+  matchedOn: string[];
+  matchConfidence?: 'strong' | 'partial' | 'none';
+  viability?: { placeholder: boolean; deprecated: boolean };
+  rank?: number;
+}
+
+/**
+ * Result envelope for find_docs.
+ * Empty concept-mode: { data: [], error: null, matchConfidence: 'none' }
+ * Populated concept-mode: { data: FindDocsEntry[], error: null }
+ * List-mode: { data: FindDocsEntry[], error: null, nextCursor? }
+ */
+export interface FindDocsResult {
+  data: FindDocsEntry[];
+  error: string | null;
+  matchConfidence?: 'none';
+  nextCursor?: string;
+}
 
 /**
  * Performance metrics for query operations
@@ -254,8 +286,54 @@ export class QueryEngine {
   }
 
   /**
+   * Find documents by concept/keyword search (concept mode) or enumerate all docs
+   * (list/catalog mode).
+   *
+   * Concept mode: tokenized keyword match against per-document metadata fields.
+   * List mode: unranked, paginated enumeration of the full doc set.
+   *
+   * Requirements: 1.1, 1.2, 4.1, 4.2
+   */
+  findDocs(params: {
+    concept?: string;
+    list?: boolean;
+    cursor?: string;
+    limit?: number;
+  }): QueryResult<FindDocsResult> {
+    const startTime = Date.now();
+    const { concept, list, cursor, limit } = params;
+
+    const allDocs = this.indexer.getAllDocuments();
+
+    let result: FindDocsResult;
+
+    if (list) {
+      // List/catalog mode: bounded, unranked enumeration
+      result = findDocsList(allDocs, { cursor, limit });
+    } else if (concept && concept.trim() !== '') {
+      // Concept search mode: ranked, tokenized keyword match
+      result = findDocsConcept(allDocs, concept.trim());
+    } else {
+      // Neither mode supplied — return empty no-match contract
+      result = {
+        data: [],
+        error: null,
+        matchConfidence: 'none' as const,
+      };
+    }
+
+    const metrics = this.createMetrics('find_docs', startTime, {
+      resultCount: result.data.length
+    });
+
+    this.logMetrics(metrics);
+
+    return { data: result, metrics };
+  }
+
+  /**
    * Rebuild the index from scratch
-   * 
+   *
    * @returns Index health after rebuild
    * Requirements: 9.1, 9.2, 9.5
    */
@@ -453,4 +531,183 @@ export class QueryEngine {
 
     return metadataTokens + outlineTokens + crossRefTokens;
   }
+}
+
+// =============================================================================
+// find_docs helpers (module-level, called by QueryEngine.findDocs)
+// =============================================================================
+
+/** Default page limit for list mode — bounded for MCP token-limit safety. */
+export const FIND_DOCS_DEFAULT_LIMIT = 20;
+
+/** Stop words that carry no match signal. */
+const FIND_DOCS_STOP_WORDS = new Set([
+  'a', 'an', 'the', 'and', 'or', 'of', 'in', 'on', 'at', 'to', 'for',
+  'is', 'are', 'was', 'be', 'by', 'with', 'this', 'that', 'from', 'as',
+  'it', 'its', 'all', 'any', 'each', 'if', 'not', 'no', 'but', 'so',
+  'do', 'how', 'when', 'which', 'who', 'will', 'can', 'has', 'have',
+  'had', 'may', 'per', 'via', 'vs', 'etc',
+]);
+
+/**
+ * Tokenize a string: split on whitespace / hyphens / underscores / slashes /
+ * dots and camelCase boundaries; lowercase; drop empty strings.
+ * Term-level, NOT substring (Req 1.3 / P3).
+ */
+function tokenizeQuery(text: string): string[] {
+  if (!text) return [];
+  const expanded = text.replace(/([a-z])([A-Z])/g, '$1 $2');
+  return expanded
+    .toLowerCase()
+    .split(/[\s\-_\/\.]+/)
+    .map((t) => t.replace(/[^a-z0-9]/g, ''))
+    .filter((t) => t.length > 0 && !FIND_DOCS_STOP_WORDS.has(t));
+}
+
+type SignalClass = 'purpose' | 'sections' | 'relevantTasks' | 'path';
+
+/** Build tokenized term sets for a document grouped by signal class. */
+function buildDocTokenSets(doc: DocumentMetadata): Map<SignalClass, Set<string>> {
+  const groups = new Map<SignalClass, Set<string>>();
+
+  const add = (cls: SignalClass, text: string) => {
+    if (!groups.has(cls)) groups.set(cls, new Set());
+    const base = text.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+    for (const t of base.split(/[\s\-_\/\.]+/).map((x) => x.replace(/[^a-z0-9]/g, '')).filter(Boolean)) {
+      groups.get(cls)!.add(t);
+    }
+  };
+
+  add('purpose', doc.purpose || '');
+  for (const s of doc.sections) add('sections', s);
+  for (const t of doc.relevantTasks) add('relevantTasks', t);
+  const basename = doc.path.replace(/^.*\//, '').replace(/\.md$/, '');
+  add('path', basename);
+
+  return groups;
+}
+
+/** Build a ~50-token summary string from document metadata. */
+function buildDocSummary(doc: DocumentMetadata): string {
+  const parts: string[] = [];
+  if (doc.purpose) parts.push(doc.purpose);
+  if (doc.sections.length > 0) {
+    const shown = doc.sections.slice(0, 5);
+    const more = doc.sections.length > 5 ? ` +${doc.sections.length - 5} more` : '';
+    parts.push(`Sections: ${shown.join(', ')}${more}`);
+  }
+  parts.push(`Layer: ${doc.layer}`);
+  return parts.join('. ');
+}
+
+/**
+ * Score a document against query tokens.
+ * High-signal (purpose, sections): 2 pts/hit.
+ * Low-signal (relevantTasks, path): 1 pt/hit.
+ * Returns null if no query tokens matched.
+ */
+function scoreDoc(
+  doc: DocumentMetadata,
+  queryTokens: string[],
+): { score: number; matchedOn: string[] } | null {
+  if (queryTokens.length === 0) return null;
+
+  const groups = buildDocTokenSets(doc);
+  const HIGH: SignalClass[] = ['purpose', 'sections'];
+  const LOW: SignalClass[] = ['relevantTasks', 'path'];
+
+  let score = 0;
+  const matchedOn: string[] = [];
+
+  for (const qt of queryTokens) {
+    let matched = false;
+    for (const cls of HIGH) {
+      if (groups.get(cls)?.has(qt)) {
+        score += 2;
+        matchedOn.push(`${cls}:${qt}`);
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      for (const cls of LOW) {
+        if (groups.get(cls)?.has(qt)) {
+          score += 1;
+          matchedOn.push(`${cls}:${qt}`);
+          break;
+        }
+      }
+    }
+  }
+
+  return score > 0 ? { score, matchedOn } : null;
+}
+
+/**
+ * Concept-search mode.
+ * No-match → pinned empty contract { data: [], error: null, matchConfidence: 'none' }.
+ */
+export function findDocsConcept(allDocs: DocumentMetadata[], concept: string): FindDocsResult {
+  const queryTokens = tokenizeQuery(concept);
+
+  if (queryTokens.length === 0) {
+    return { data: [], error: null, matchConfidence: 'none' };
+  }
+
+  const scored: Array<{ doc: DocumentMetadata; score: number; matchedOn: string[] }> = [];
+  for (const doc of allDocs) {
+    const r = scoreDoc(doc, queryTokens);
+    if (r !== null) scored.push({ doc, ...r });
+  }
+
+  if (scored.length === 0) {
+    return { data: [], error: null, matchConfidence: 'none' };
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+
+  const entries: FindDocsEntry[] = scored.map(({ doc, matchedOn }, idx) => ({
+    path: doc.path,
+    summary: buildDocSummary(doc),
+    owner: doc.organization || '',
+    matchedOn,
+    rank: idx + 1,
+  }));
+
+  return { data: entries, error: null };
+}
+
+/**
+ * List/catalog mode — unranked, bounded pagination.
+ * Cursor is the opaque string index of the next page start.
+ */
+export function findDocsList(
+  allDocs: DocumentMetadata[],
+  params: { cursor?: string; limit?: number },
+): FindDocsResult {
+  const rawLimit = params.limit && params.limit > 0 ? params.limit : FIND_DOCS_DEFAULT_LIMIT;
+  // Hard upper cap: 5× default (100 entries) to preserve growth headroom
+  const limit = Math.min(rawLimit, FIND_DOCS_DEFAULT_LIMIT * 5);
+
+  let startIndex = 0;
+  if (params.cursor) {
+    const parsed = parseInt(params.cursor, 10);
+    if (!isNaN(parsed) && parsed >= 0) startIndex = parsed;
+  }
+
+  const page = allDocs.slice(startIndex, startIndex + limit);
+
+  const entries: FindDocsEntry[] = page.map((doc) => ({
+    path: doc.path,
+    summary: buildDocSummary(doc),
+    owner: doc.organization || '',
+    matchedOn: [],
+  }));
+
+  const nextIndex = startIndex + page.length;
+  const hasMore = nextIndex < allDocs.length;
+
+  const result: FindDocsResult = { data: entries, error: null };
+  if (hasMore) result.nextCursor = String(nextIndex);
+  return result;
 }

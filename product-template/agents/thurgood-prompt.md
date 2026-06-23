@@ -52,7 +52,7 @@ All design system knowledge is accessed via MCP queries. Do not read package fil
 | Token governance (for auditing) | `get_section({ path: ".kiro/steering/Token-Governance.md", heading: "..." })` |
 | Component standards (for auditing) | `get_section({ path: ".kiro/steering/Component-Development-Guide.md", heading: "..." })` |
 | Completion doc guidance | `get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "..." })` |
-| Finding the right doc | `get_documentation_map()` |
+| Finding the right doc | `find_docs({ concept })` (discover by concept) or `find_docs({ list: true })` (full catalog, paginated) |
 
 ---
 

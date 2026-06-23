@@ -6,9 +6,9 @@
  * Uses mechanical parsing (not AI interpretation) to extract document structure.
  * 
  * Features:
- * - 8 MCP tools for documentation querying
+ * - 8 MCP tools for documentation querying (find_docs supersedes get_documentation_map)
  * - File watching for automatic re-indexing
- * - Progressive disclosure (map → summary → section)
+ * - Progressive disclosure (find_docs → summary → section)
  * - Token-efficient responses
  * 
  * Requirements: 1.1, 10.5, 15.1
@@ -28,9 +28,9 @@ import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
 
 // Import tool definitions and handlers
 import {
-  getDocumentationMapTool,
-  handleGetDocumentationMap,
-  formatGetDocumentationMapResponse,
+  findDocsTool,
+  handleFindDocs,
+  formatFindDocsResponse,
   getDocumentSummaryTool,
   handleGetDocumentSummary,
   formatGetDocumentSummaryResponse,
@@ -132,7 +132,7 @@ class MCPDocumentationServer {
     // Register tools list handler
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
       tools: [
-        getDocumentationMapTool,
+        findDocsTool,
         getDocumentSummaryTool,
         getDocumentFullTool,
         getSectionTool,
@@ -154,9 +154,15 @@ class MCPDocumentationServer {
 
       try {
         switch (name) {
-          case 'get_documentation_map': {
-            const result = handleGetDocumentationMap(this.queryEngine);
-            return formatGetDocumentationMapResponse(result);
+          case 'find_docs': {
+            const params = args as {
+              concept?: string;
+              list?: boolean;
+              cursor?: string;
+              limit?: number;
+            };
+            const result = handleFindDocs(this.queryEngine, params);
+            return formatFindDocsResponse(result);
           }
 
           case 'get_document_summary': {
@@ -225,7 +231,7 @@ class MCPDocumentationServer {
                     error: 'UnknownTool',
                     message: `Unknown tool: ${name}`,
                     availableTools: [
-                      'get_documentation_map',
+                      'find_docs',
                       'get_document_summary',
                       'get_document_full',
                       'get_section',
