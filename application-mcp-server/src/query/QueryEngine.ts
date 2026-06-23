@@ -8,7 +8,7 @@
  * @see .kiro/specs/064-component-metadata-schema/design.md — Requirements 3.1–3.6
  */
 
-import { ComponentIndexer } from '../indexer/ComponentIndexer';
+import { ComponentIndexer, tokenizeString } from '../indexer/ComponentIndexer';
 import { checkComposition, validateRequires, RequiresValidationResult } from '../indexer/CompositionChecker';
 import {
   ComponentMetadata,
@@ -24,6 +24,18 @@ import {
   LayoutTemplate,
   LayoutTemplateCatalogEntry,
 } from '../models';
+
+/**
+ * Evidence entry for keyword matching — records which signal class a matched term came from.
+ * Feeds Task 5's tier derivation + Layer-3 rank (Task 2.2, Spec 121).
+ * matchedOn is additive to ApplicationSummary — back-compat (Req 1.7).
+ */
+export interface MatchedOnEntry {
+  /** Signal class: 'highSignal' | 'lowSignal' | 'aliases' */
+  field: 'highSignal' | 'lowSignal' | 'aliases';
+  /** The matched term (lowercased) */
+  term: string;
+}
 
 export class ComponentQueryEngine {
   constructor(private indexer: ComponentIndexer) {}
@@ -127,10 +139,22 @@ export class ComponentQueryEngine {
     return { data: results, error: null, warnings: [], metrics: { responseTimeMs: Date.now() - start } };
   }
 
-  findComponents(filters: { category?: string; concept?: string; platform?: string; purpose?: string; context?: string }): QueryResult<ApplicationSummary[]> {
+  findComponents(filters: {
+    category?: string;
+    concept?: string;
+    platform?: string;
+    purpose?: string;
+    context?: string;
+    /** NEW (Task 2, Spec 121): free-text tokenized keyword discovery. Does NOT mutate
+     *  existing exact-match semantics of category/concept/context (Req 1.5 / Lina R1 P0). */
+    keyword?: string;
+    /** NEW optional limit (Task 2.3, Spec 121) */
+    limit?: number;
+  }): QueryResult<(ApplicationSummary & { matchedOn?: MatchedOnEntry[] })[]> {
     const start = Date.now();
     let candidates = Array.from(this.indexer.getIndex().values());
 
+    // --- Existing exact-match filters (semantics UNCHANGED — back-compat) ---
     if (filters.category) {
       candidates = candidates.filter(m =>
         Object.values(m.contracts.active).some(c => c.category === filters.category));
@@ -154,7 +178,83 @@ export class ComponentQueryEngine {
         m.annotations?.contexts?.includes(filters.context!) ?? false);
     }
 
-    const results = candidates.map(m => this.toApplicationSummary(m)).sort((a, b) => a.name.localeCompare(b.name));
+    // --- NEW: tokenized keyword filter (Task 2.2, Spec 121) ---
+    // Conjunctive with existing filters: keyword + category AND-narrows.
+    let keywordEvidence: Map<string, { matchedOn: MatchedOnEntry[]; matchedTokens: number; totalTokens: number }> | null = null;
+
+    if (filters.keyword) {
+      const queryTerms = tokenizeString(filters.keyword);
+      if (queryTerms.length > 0) {
+        keywordEvidence = new Map();
+        const kwIndex = this.indexer.getKeywordIndex();
+
+        candidates = candidates.filter(m => {
+          const entry = kwIndex.get(m.name);
+          if (!entry) return false;
+
+          const matchedOn: MatchedOnEntry[] = [];
+          let matchedCount = 0;
+
+          for (const term of queryTerms) {
+            let termMatched = false;
+
+            if (entry.highSignal.has(term)) {
+              matchedOn.push({ field: 'highSignal', term });
+              termMatched = true;
+            } else if (entry.lowSignal.has(term)) {
+              matchedOn.push({ field: 'lowSignal', term });
+              termMatched = true;
+            } else if (entry.aliases?.has(term)) {
+              matchedOn.push({ field: 'aliases', term });
+              termMatched = true;
+            }
+
+            if (termMatched) matchedCount++;
+          }
+
+          if (matchedCount === 0) return false;
+
+          keywordEvidence!.set(m.name, {
+            matchedOn,
+            matchedTokens: matchedCount,
+            totalTokens: queryTerms.length,
+          });
+          return true;
+        });
+      }
+    }
+
+    // Build result — existing ApplicationSummary shape UNCHANGED; matchedOn is additive
+    let results = candidates.map(m => {
+      const summary = this.toApplicationSummary(m);
+      if (keywordEvidence) {
+        const evidence = keywordEvidence.get(m.name);
+        if (evidence) {
+          return { ...summary, matchedOn: evidence.matchedOn };
+        }
+      }
+      return summary;
+    });
+
+    // Sort: when keyword is active, order by coverage (matchedTokens desc), then name
+    if (keywordEvidence) {
+      results = results.sort((a, b) => {
+        const aEv = keywordEvidence!.get(a.name);
+        const bEv = keywordEvidence!.get(b.name);
+        const aCov = aEv ? aEv.matchedTokens / aEv.totalTokens : 0;
+        const bCov = bEv ? bEv.matchedTokens / bEv.totalTokens : 0;
+        if (bCov !== aCov) return bCov - aCov;
+        return a.name.localeCompare(b.name);
+      });
+    } else {
+      results = results.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    // Apply optional limit
+    if (filters.limit && filters.limit > 0) {
+      results = results.slice(0, filters.limit);
+    }
+
     return { data: results, error: null, warnings: [], metrics: { responseTimeMs: Date.now() - start } };
   }
 

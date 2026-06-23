@@ -79,7 +79,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Reuse `TokenRefResolver` logic; do NOT add a `{platform}Accessor` field (Ada R1 P1 dropped)
     - _Requirements: 2.1, 2.2, 2.3, 2.5_
 
-- [ ] 2. Tokenized Keyword Discovery on `find_components` (Req 1)
+- [x] 2. Tokenized Keyword Discovery on `find_components` (Req 1)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -104,7 +104,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 2 Complete: Tokenized Keyword Discovery"` (runs release analysis automatically)
   - Verify: Check GitHub for committed changes
 
-  - [ ] 2.1 Build the auto-derived tokenized keyword index (signal-class grouped)
+  - [x] 2.1 Build the auto-derived tokenized keyword index (signal-class grouped)
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Lina
@@ -116,7 +116,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - **O2 confirmed (Lina):** signal-class field assignments match the Lina rubric in `discovery-confidence-rubric.md`
     - _Requirements: 1.3, 1.4, 1.8, 1.9_
 
-  - [ ] 2.2 Implement tokenized matching in `findComponents`
+  - [x] 2.2 Implement tokenized matching in `findComponents`
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -125,7 +125,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Keep filters conjunctive: `keyword` + `category` AND-narrows
     - _Requirements: 1.3, 1.6_
 
-  - [ ] 2.3 Add the new optional `keyword` param + routing (back-compat)
+  - [x] 2.3 Add the new optional `keyword` param + routing (back-compat)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina

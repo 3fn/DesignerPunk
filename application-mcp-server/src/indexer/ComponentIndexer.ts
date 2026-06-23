@@ -32,6 +32,48 @@ import { LayoutTemplateIndexer } from './LayoutTemplateIndexer';
 import { TokenIndexer } from './TokenIndexer';
 import { ModeClassifier } from './ModeClassifier';
 
+// ---------------------------------------------------------------------------
+// Keyword index structures (Task 2 — Spec 121)
+// ---------------------------------------------------------------------------
+
+/**
+ * Per-component tokenized keyword index, auto-derived at build time.
+ * Grouped by signal class per the Components rubric in discovery-confidence-rubric.md.
+ */
+export interface ComponentKeywordEntry {
+  /** High-signal: tokenized name, tokenized family, purpose, contract concept/category names */
+  highSignal: Set<string>;
+  /** Low-signal: whenToUse, contexts, alternatives[].reason, description */
+  lowSignal: Set<string>;
+  /** Optional reactive aliases — absence must not block auto-derived matching (Req 1.9) */
+  aliases?: Set<string>;
+}
+
+export type KeywordIndex = Map<string, ComponentKeywordEntry>;
+
+/**
+ * Tokenize a string: split on whitespace / camelCase / hyphen / punctuation; lowercase.
+ * Term-level, NOT substring — required by Req 1.3.
+ * E.g. "primary action button"          → ["primary", "action", "button"]
+ *      "Button-CTA"                      → ["button", "cta"]
+ *      "whenToUse"                       → ["when", "to", "use"]
+ *      "registration, login, or contact" → ["registration", "login", "or", "contact"]
+ */
+export function tokenizeString(input: string): string[] {
+  if (!input) return [];
+  // 1. Split on hyphens and underscores
+  // 2. Split camelCase: insert space before uppercase letters preceded by lowercase
+  // 3. Split on remaining whitespace
+  // 4. Strip leading/trailing punctuation from each token
+  // 5. Lowercase, filter empty
+  const dehyphenated = input.replace(/[-_]+/g, ' ');
+  const decameled = dehyphenated.replace(/([a-z])([A-Z])/g, '$1 $2');
+  return decameled
+    .split(/\s+/)
+    .map(t => t.replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '').toLowerCase())
+    .filter(t => t.length > 0);
+}
+
 export class ComponentIndexer {
   private index = new Map<string, ComponentMetadata>();
   private contractsCache = new Map<string, ParsedContracts>();
@@ -44,6 +86,8 @@ export class ComponentIndexer {
   private lastIndexTimeMs = 0;
   private indexWarnings: string[] = [];
   private dataDirs: string[] = [];
+  /** Keyword index built at index time — Task 2, Spec 121 */
+  private keywordIndex: KeywordIndex = new Map();
 
   /**
    * Scan component directories and build initial index.
@@ -57,6 +101,7 @@ export class ComponentIndexer {
   ): Promise<void> {
     this.index.clear();
     this.contractsCache.clear();
+    this.keywordIndex.clear();
     this.indexWarnings = [];
     this.dataDirs = [componentsDir, patternsDir, templatesDir, guidanceDir, tokenIndexDir].filter(Boolean) as string[];
 
@@ -158,6 +203,7 @@ export class ComponentIndexer {
     for (const [name, meta] of this.index) {
       if (meta.name === dir || path.basename(componentDir) === dir) {
         this.index.delete(name);
+        this.keywordIndex.delete(name);
         break;
       }
     }
@@ -322,6 +368,11 @@ export class ComponentIndexer {
     return this.index;
   }
 
+  /** Expose keyword index for query engine (Task 2, Spec 121) */
+  getKeywordIndex(): KeywordIndex {
+    return this.keywordIndex;
+  }
+
   // ---------------------------------------------------------------------------
   // Private
   // ---------------------------------------------------------------------------
@@ -409,6 +460,72 @@ export class ComponentIndexer {
     };
 
     this.index.set(schema.name, metadata);
+
+    // Build keyword index entry for this component (Task 2.1, Spec 121)
+    this.buildKeywordEntry(schema.name, metadata);
+  }
+
+  /**
+   * Build the per-component keyword index entry.
+   * Auto-derived from existing metadata at index-build time (Req 1.8).
+   * Grouped by signal class per the Components rubric (discovery-confidence-rubric.md).
+   *
+   * High-signal: tokenized name, tokenized family, purpose, contract concept/category names.
+   * Low-signal: whenToUse, contexts, alternatives[].reason, description.
+   * EXCLUDES whenNotToUse — negative-signal trap (Req 1.4 / Lina R1 Q1).
+   *
+   * O2b confirmed: reads parsed `whenToUse` (camelCase) — the indexer operates on the
+   * assembled ComponentMetadata where parsers.ts:198 has already mapped
+   * usage.when_to_use → whenToUse. The raw snake_case key is irrelevant here.
+   */
+  private buildKeywordEntry(name: string, meta: ComponentMetadata): void {
+    const highSignal = new Set<string>();
+    const lowSignal = new Set<string>();
+
+    // High-signal: tokenized component name
+    for (const t of tokenizeString(name)) highSignal.add(t);
+
+    // High-signal: tokenized family name
+    if (meta.family) {
+      for (const t of tokenizeString(meta.family)) highSignal.add(t);
+    }
+
+    // High-signal: purpose (already a string; tokenize it)
+    if (meta.annotations?.purpose) {
+      for (const t of tokenizeString(meta.annotations.purpose)) highSignal.add(t);
+    }
+
+    // High-signal: contract concept keys and category names
+    for (const [conceptKey, contract] of Object.entries(meta.contracts.active)) {
+      for (const t of tokenizeString(conceptKey)) highSignal.add(t);
+      if (contract.category) {
+        for (const t of tokenizeString(contract.category)) highSignal.add(t);
+      }
+    }
+
+    // Low-signal: whenToUse strings (O2b: reads parsed whenToUse on annotations.usage)
+    // parsers.ts:198 maps raw usage.when_to_use → annotations.usage.whenToUse
+    const whenToUse = meta.annotations?.usage?.whenToUse ?? [];
+    for (const phrase of whenToUse) {
+      for (const t of tokenizeString(phrase)) lowSignal.add(t);
+    }
+
+    // Low-signal: contexts array
+    for (const ctx of meta.annotations?.contexts ?? []) {
+      for (const t of tokenizeString(ctx)) lowSignal.add(t);
+    }
+
+    // Low-signal: alternatives[].reason
+    for (const alt of meta.annotations?.alternatives ?? []) {
+      for (const t of tokenizeString(alt.reason)) lowSignal.add(t);
+    }
+
+    // Low-signal: description
+    if (meta.description) {
+      for (const t of tokenizeString(meta.description)) lowSignal.add(t);
+    }
+
+    this.keywordIndex.set(name, { highSignal, lowSignal });
   }
 
   /**

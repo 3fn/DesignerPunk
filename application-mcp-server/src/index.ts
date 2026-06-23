@@ -62,7 +62,7 @@ const tools = [
   },
   {
     name: 'find_components',
-    description: 'Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive).',
+    description: 'Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. "primary action button", "login", "text input field").',
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -71,6 +71,8 @@ const tools = [
         platform: { type: 'string', description: 'Platform (e.g., "ios")' },
         purpose: { type: 'string', description: 'Purpose keyword search' },
         context: { type: 'string', description: 'Usage context — exact match (e.g., "form-footers", "onboarding-flows", "settings-screens")' },
+        keyword: { type: 'string', description: 'Free-text tokenized keyword discovery. Multi-word queries supported (e.g. "primary action button"). Term-level matching across name, family, purpose, contracts, whenToUse, contexts, alternatives, and description. Does NOT change exact-match semantics of category/concept/context.' },
+        limit: { type: 'number', description: 'Maximum number of results to return (optional).' },
       },
     },
   },
@@ -423,6 +425,9 @@ class ComponentMCPServer {
       platform: params.platform as string | undefined,
       purpose: params.purpose as string | undefined,
       context: params.context as string | undefined,
+      // Task 2.3 (Spec 121): new optional params — keyword and limit
+      keyword: params.keyword as string | undefined,
+      limit: params.limit as number | undefined,
     });
   }
 }
