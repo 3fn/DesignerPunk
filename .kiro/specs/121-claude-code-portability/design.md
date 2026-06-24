@@ -110,6 +110,8 @@ interface FindDocsResult {
 
 **Concept mode** = Layer-1 tiered (Thurgood docs rubric). **List/catalog mode** = unranked enumeration, bounded per page (Req 4.2) — no tier (it is a deterministic catalog, not relevance ranking; consistent with the §Collision exemption logic). Pagination is the fix for Finding 10 (the ~78K-char oversized payload).
 
+**Docs reactive `aliases` surface — extends Req 1.9 to docs (Task 5 finding; Peter-approved).** The `find_components` reactive `aliases` field (Req 1.9) is **generalized to `find_docs`**: an optional `aliases:` frontmatter field, indexed as a **high-signal** surface. Motivation: the RTL/internationalization acceptance fixture is a **semantic-synonym** case unreachable by literal tokenized metadata matching — `Web-Authoring-Standards.md` covers the concept as "logical properties" and never contains the literal term "RTL" (body included), so neither metadata nor body indexing could satisfy it. Rather than ship embedding/semantic ranking (explicitly deferred), a curated `aliases:` declaration ("this doc IS about RTL, internationalization, …") bridges the gap reactively — the same philosophy as component aliases (true synonym divergence), now available to docs. Because it is an explicit author declaration of relevance, an alias hit counts as **high-signal** for the docs rubric (so a tagged doc resolves `strong`, not merely non-empty). The steering-metadata validator does not enforce a closed field set, so `aliases:` requires no validator change; **author-facing documentation of the field is a separate doc-as-requirement** (see Documentation Requirements / Process-File-Organization metadata schema).
+
 ### 2. `find_components` keyword param (application MCP — additive)
 
 ```typescript

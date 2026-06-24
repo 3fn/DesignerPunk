@@ -37,6 +37,90 @@ export interface MatchedOnEntry {
   term: string;
 }
 
+/**
+ * Layer-1 Match tier (Spec 121 Req 6 / discovery-confidence-rubric.md).
+ * A graded TIER, not an opaque score — reconstructable from matchedOn + coverage.
+ * Lexically distinct from token `resolutionDepth: 'partial'` (Layer 2) — never collapse a bare `partial`.
+ */
+export type MatchConfidence = 'strong' | 'partial' | 'none';
+
+/**
+ * The three-layer discovery-confidence signal emitted on keyword-discovery results.
+ * ADDITIVE to ApplicationSummary — rides only on keyword-discovery results (Req 6.8, back-compat).
+ *
+ *  - Layer 1 (Match):     matchConfidence (this object) + matchedOn (on the summary)
+ *  - Layer 2 (Viability): readiness — already carried on ApplicationSummary; surfaced as the distinct gate
+ *  - Layer 3 (Usability): rank (ordinal) + matchedOn (auditability)
+ *
+ * matchConfidence ≠ readiness ≠ rank — three distinct fields, never collapsed (§Collision).
+ */
+export interface DiscoveryConfidenceSignal {
+  /** Layer 1 — Match tier, derived by the Components rubric from visible evidence. */
+  matchConfidence: MatchConfidence;
+  /** Layer 3 — ordinal rank within the result set (1-based; lower = stronger/better-covered). */
+  rank: number;
+}
+
+/**
+ * Components Layer-1 rubric (discovery-confidence-rubric.md → "Components — find_components (Lina)").
+ *
+ * Derives the match TIER purely from the emitted evidence (matchedOn + coverage), so an
+ * auditor can recompute it without trusting the label (Req 6.2 / P5 reconstructability).
+ *
+ * Tier rule (with the validated false-confidence fix):
+ *   - `strong`  = a high-signal-field hit
+ *                 OR ≥2-token full coverage where at least one matched field is high-signal.
+ *   - `partial` = at least one token matched but only in low-signal fields AND not the
+ *                 qualified-coverage case above (includes the single-low-signal-token case).
+ *   - `none`    = zero tokens matched.
+ *
+ * THE SIGNAL-CLASS-GATED ≥2-TOKEN GUARD (the dry-run fix): the ≥2-token coverage clause
+ * only reaches `strong` when at least one matched field is high-signal. Low-signal-ONLY
+ * coverage (e.g. two tokens both landing in a shared `contexts` value like `onboarding-flows`)
+ * caps at `partial`, NOT `strong`. Without this guard, low-cardinality shared fields would
+ * mass-produce false `strong`s.
+ *
+ * `aliases` are reactive true-synonym divergences (Req 1.9) — they stand in for the term an
+ * author chose NOT to put in a high-signal field, so they are treated as low-signal for tiering
+ * (they do not, on their own, lift a match to `strong`). High-signal must be earned by an
+ * actual high-signal-field hit.
+ *
+ * @param matchedOn signal-class-labeled evidence for the candidate (the matched terms)
+ * @param matchedTokens count of distinct query tokens that matched any field
+ * @param totalTokens   total query tokens (coverage denominator)
+ */
+export function deriveMatchConfidence(
+  matchedOn: MatchedOnEntry[],
+  matchedTokens: number,
+  totalTokens: number
+): MatchConfidence {
+  if (matchedTokens === 0) return 'none';
+
+  const hasHighSignal = matchedOn.some(e => e.field === 'highSignal');
+
+  // `strong` via a direct high-signal-field hit.
+  if (hasHighSignal && matchedTokens >= 1 && totalTokens >= 1) {
+    // Note: a single high-signal hit already qualifies as `strong` (the first clause of the
+    // rubric: "a high-signal-field hit"). The ≥2-token clause below is the SECOND path to
+    // `strong`; both are gated on at least one high-signal field.
+    return 'strong';
+  }
+
+  // `strong` via ≥2-token FULL coverage where at least one matched field is high-signal.
+  // (Unreachable in practice once the high-signal hit above returns, but kept explicit so the
+  //  rubric reads as written and the guard is legible: full coverage WITHOUT any high-signal
+  //  field falls through to `partial`.)
+  const fullCoverage = matchedTokens === totalTokens;
+  if (matchedTokens >= 2 && fullCoverage && hasHighSignal) {
+    return 'strong';
+  }
+
+  // Everything else with ≥1 matched token but NO high-signal field → `partial`.
+  // This is the guard's effect: low-signal-only coverage (including ≥2-token full coverage
+  // that is entirely low-signal/aliases) caps at `partial`, never `strong`.
+  return 'partial';
+}
+
 export class ComponentQueryEngine {
   constructor(private indexer: ComponentIndexer) {}
 
@@ -150,7 +234,7 @@ export class ComponentQueryEngine {
     keyword?: string;
     /** NEW optional limit (Task 2.3, Spec 121) */
     limit?: number;
-  }): QueryResult<(ApplicationSummary & { matchedOn?: MatchedOnEntry[] })[]> {
+  }): QueryResult<(ApplicationSummary & { matchedOn?: MatchedOnEntry[] } & Partial<DiscoveryConfidenceSignal>)[]> {
     const start = Date.now();
     let candidates = Array.from(this.indexer.getIndex().values());
 
@@ -224,19 +308,39 @@ export class ComponentQueryEngine {
       }
     }
 
-    // Build result — existing ApplicationSummary shape UNCHANGED; matchedOn is additive
-    let results = candidates.map(m => {
+    // Build result — existing ApplicationSummary shape UNCHANGED; the three-layer signal is
+    // ADDITIVE and rides ONLY on keyword-discovery results (Req 6.8 / §Collision).
+    //
+    //   Layer 1 (Match):     matchConfidence (derived below) + matchedOn (the evidence)
+    //   Layer 2 (Viability): readiness — already carried on ApplicationSummary; surfaced here as
+    //                        the DISTINCT gate signal (the caller gates on it; the tool does not).
+    //   Layer 3 (Usability): rank (assigned post-sort) + matchedOn (auditability)
+    //
+    // matchConfidence ≠ readiness ≠ rank. The tool emits all three and NEVER collapses them or
+    // asserts rank #1 = "the answer" — match-confidence alone never drives action.
+    type DiscoveryRow = ApplicationSummary & { matchedOn?: MatchedOnEntry[] } & Partial<DiscoveryConfidenceSignal>;
+
+    let results: DiscoveryRow[] = candidates.map(m => {
       const summary = this.toApplicationSummary(m);
       if (keywordEvidence) {
         const evidence = keywordEvidence.get(m.name);
         if (evidence) {
-          return { ...summary, matchedOn: evidence.matchedOn };
+          // Layer 1 — derive the match TIER from the visible evidence (reconstructable, P5).
+          const matchConfidence = deriveMatchConfidence(
+            evidence.matchedOn,
+            evidence.matchedTokens,
+            evidence.totalTokens
+          );
+          // readiness (Layer 2) already rides on `summary` via ApplicationSummary — left intact.
+          // rank (Layer 3) is assigned after the sort below so it reflects final ordering.
+          return { ...summary, matchedOn: evidence.matchedOn, matchConfidence };
         }
       }
       return summary;
     });
 
-    // Sort: when keyword is active, order by coverage (matchedTokens desc), then name
+    // Sort: when keyword is active, order by coverage (matchedTokens desc), then name.
+    // This is the Layer-3 usability ORDER — it does not assert rank #1 is "the answer".
     if (keywordEvidence) {
       results = results.sort((a, b) => {
         const aEv = keywordEvidence!.get(a.name);
@@ -250,9 +354,16 @@ export class ComponentQueryEngine {
       results = results.sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    // Apply optional limit
+    // Apply optional limit (before rank assignment so ranks are contiguous over the returned set)
     if (filters.limit && filters.limit > 0) {
       results = results.slice(0, filters.limit);
+    }
+
+    // Layer 3 — assign the ordinal rank (1-based) AFTER sort/limit, only on keyword-discovery rows.
+    // A `partial` row is still returned here (ranked, flagged with its tier) — NOT dropped. Only a
+    // zero-match query (matchConfidence: 'none') yields the empty contract { data: [], error: null }.
+    if (keywordEvidence) {
+      results = results.map((row, i) => ({ ...row, rank: i + 1 }));
     }
 
     return { data: results, error: null, warnings: [], metrics: { responseTimeMs: Date.now() - start } };

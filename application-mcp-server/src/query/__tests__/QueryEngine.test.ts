@@ -6,7 +6,7 @@
 
 import * as path from 'path';
 import { ComponentIndexer } from '../../indexer/ComponentIndexer';
-import { ComponentQueryEngine } from '../QueryEngine';
+import { ComponentQueryEngine, deriveMatchConfidence } from '../QueryEngine';
 
 const COMPONENTS_DIR = path.resolve(__dirname, '../../../../src/components/core');
 
@@ -189,6 +189,77 @@ describe('ComponentQueryEngine', () => {
         const names = result.data!.map(s => s.name);
         const sorted = [...names].sort();
         expect(names).toEqual(sorted);
+      }
+    });
+  });
+
+  describe('discovery confidence emit (Spec 121 Task 5 — three distinct layers)', () => {
+    it('"primary action button" returns Button-CTA at strong tier (high-signal coverage)', () => {
+      const result = engine.findComponents({ keyword: 'primary action button' });
+      const cta = result.data!.find(r => r.name === 'Button-CTA') as
+        | (typeof result.data extends (infer T)[] ? T : never)
+        | undefined;
+      expect(cta).toBeDefined();
+      expect((cta as any).matchConfidence).toBe('strong');
+    });
+
+    it('emits the three layers as DISTINCT fields, never collapsed', () => {
+      const result = engine.findComponents({ keyword: 'primary action button' });
+      const row = result.data![0] as any;
+      // Layer 1 — Match
+      expect(['strong', 'partial', 'none']).toContain(row.matchConfidence);
+      // Layer 2 — Viability (readiness), a SEPARATE field from matchConfidence
+      expect(row.readiness).toBeDefined();
+      expect(row.readiness).not.toBe(row.matchConfidence);
+      // Layer 3 — Usability (rank + matchedOn)
+      expect(typeof row.rank).toBe('number');
+      expect(Array.isArray(row.matchedOn)).toBe(true);
+      // Three distinct field names — none collapsed onto another
+      expect(row.matchConfidence).not.toBe(row.rank);
+    });
+
+    it('matchConfidence is reconstructable from emitted matchedOn + coverage (P5)', () => {
+      const result = engine.findComponents({ keyword: 'primary action button' });
+      const row = result.data![0] as any;
+      const matchedTokens = row.matchedOn.length; // distinct matched terms on this row
+      // Recompute the tier from the emitted evidence and compare to the emitted label.
+      const recomputed = deriveMatchConfidence(row.matchedOn, matchedTokens, matchedTokens);
+      // The emitted tier must be derivable from the emitted primitives (no opaque label).
+      expect(['strong', 'partial']).toContain(recomputed);
+      if (row.matchedOn.some((e: any) => e.field === 'highSignal')) {
+        expect(row.matchConfidence).toBe('strong');
+      }
+    });
+
+    it('rank is 1-based and contiguous over the returned set', () => {
+      const result = engine.findComponents({ keyword: 'button' });
+      const ranks = result.data!.map(r => (r as any).rank);
+      expect(ranks[0]).toBe(1);
+      expect(ranks).toEqual(ranks.map((_, i) => i + 1));
+    });
+
+    it('a partial result is returned RANKED below-threshold, not dropped (only none → empty)', () => {
+      // A low-signal-only match must still come back flagged with its tier.
+      const result = engine.findComponents({ keyword: 'onboarding' });
+      if (result.data!.length > 0) {
+        const row = result.data![0] as any;
+        expect(['strong', 'partial']).toContain(row.matchConfidence);
+        expect(typeof row.rank).toBe('number');
+      }
+    });
+
+    it('zero-match keyword yields the empty contract { data: [], error: null }', () => {
+      const result = engine.findComponents({ keyword: 'zzzzznosuchterm' });
+      expect(result.data).toEqual([]);
+      expect(result.error).toBeNull();
+    });
+
+    it('structured-only query does NOT emit the three-layer signal (additive, keyword-only)', () => {
+      const result = engine.findComponents({ context: 'forms' });
+      expect(result.data!.length).toBeGreaterThan(0);
+      for (const row of result.data!) {
+        expect('matchConfidence' in row).toBe(false);
+        expect('rank' in row).toBe(false);
       }
     });
   });

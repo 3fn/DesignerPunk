@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { extractMetadata } from './metadata-parser';
+import { extractFrontmatterInfo } from './frontmatter-parser';
 import { extractHeadingStructure } from './heading-parser';
 import { extractSection } from './section-parser';
 import { extractCrossReferences } from './cross-ref-parser';
@@ -339,6 +340,10 @@ export class DocumentIndexer {
     // Extract metadata
     const metadata = extractMetadata(content);
 
+    // Extract frontmatter (high-signal title/description) + doc-level viability
+    // gate (Spec 121 Req 6). Additive — undefined/all-false when no markers.
+    const frontmatter = extractFrontmatterInfo(content);
+
     // Extract heading structure for section list
     const outline = extractHeadingStructure(content);
     const sections = outline.map(s => s.heading);
@@ -355,7 +360,11 @@ export class DocumentIndexer {
       lastReviewed: metadata.lastReviewed || '',
       organization: metadata.organization || '',
       sections,
-      tokenCount
+      tokenCount,
+      title: frontmatter.title,
+      description: frontmatter.description,
+      aliases: frontmatter.aliases,
+      viability: frontmatter.viability,
     };
 
     this.documentMap.set(filePath, documentMetadata);

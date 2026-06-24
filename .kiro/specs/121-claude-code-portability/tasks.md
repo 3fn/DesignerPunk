@@ -281,7 +281,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Tighten the one noted vacuous docs-MCP integration assertion (`get_section` under `if (!isError)`)
     - _Requirements: 3.4, 3.5_
 
-- [ ] 5. Discovery Confidence Model — Three-Layer Emit (Req 6)
+- [x] 5. Discovery Confidence Model — Three-Layer Emit (Req 6)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -307,7 +307,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 5 Complete: Discovery Confidence Model"` (runs release analysis automatically)
   - Verify: Check GitHub for committed changes
 
-  - [ ] 5.1 Implement the versioned stop-word list module (Decision 3)
+  - [x] 5.1 Implement the versioned stop-word list module (Decision 3)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -316,7 +316,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - **O4 resolved (see Flags / Open Items F2):** placement is the docs-domain-owned versioned module above — no longer an open docs-constant-vs-shared-infra question
     - _Requirements: 6.7_
 
-  - [ ] 5.2 Implement per-domain Layer-1 rubric tier derivation
+  - [x] 5.2 Implement per-domain Layer-1 rubric tier derivation
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Lina (components rubric) + Thurgood (docs rubric)
@@ -326,7 +326,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Token tools EXEMPT (Req 6.6 bright line: predicate filter → no tier; relevance ranking → tier required)
     - _Requirements: 6.1, 6.2, 6.3_
 
-  - [ ] 5.3 Emit the three distinct fields additively on both discovery tools
+  - [x] 5.3 Emit the three distinct fields additively on both discovery tools
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina (find_components) + Thurgood (find_docs)
@@ -407,6 +407,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     **Agent**: Thurgood
     - In `MCP-Relationship-Model.md` + `MCP-Integration-Guide.md`: document `find_docs` (concept + list/catalog) and keyworded `find_components` (new optional param, tokenized matching, indexed field set, `ApplicationSummary` unchanged + optional `matchedOn`), incl. query/result shapes and the auto-index-first hybrid model
     - Document the three-layer confidence model referencing `discovery-confidence-rubric.md` as authoritative: tiers-not-scores; governing sequence; match-confidence-alone-never-acts; `partial` returns flagged ranked candidates vs `none` returns empty contract; token exemption + trigger; cross-ref to 119 Decision 4a
+    - **Document the docs `aliases:` surface (folded in from Task 5 — Peter-approved).** Two audiences: (i) consumer-facing — `find_docs` indexes an optional high-signal `aliases:` frontmatter field as a reactive semantic-synonym bridge (extends Req 1.9 to docs; see design.md find_docs §); (ii) **author-facing — add a short `aliases:` entry to the steering metadata schema in `Process-File-Organization.md`**: optional, comma-separated concept terms, added reactively when a doc is discoverable by a term absent from its title/description. (Validator needs no change — it does not enforce a closed field set.)
     - Acceptance (testable): metadata valid, cross-references resolve, examples run
     - Routes through ballot-measure model
     - _Requirements: Doc-Req 1, Doc-Req 4_
