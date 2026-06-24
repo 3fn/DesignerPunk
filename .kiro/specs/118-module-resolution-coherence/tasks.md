@@ -183,7 +183,7 @@
     - Draft the coherent-boundary documentation (exempt subsystems + rationale + ts-node dev-config principled exception); stage it for the Task-11 ballot measure and cross-reference.
     - _Requirements: 12.3, 12.4_
 
-- [ ] 6. Spec 117 Closeout (R11 — rides Increment-1 completion)
+- [x] 6. Spec 117 Closeout (R11 — rides Increment-1 completion) — **DONE: `117/findings/118-closeout-note.md` written (supersedes items 3 & 7; advises 117 to re-run its own Task 5.3; config-load-path-only trust). See `completion/task-6-completion.md`.**
 
   **Type**: Documentation
   **Validation**: Tier 2 - Standard
@@ -205,7 +205,7 @@
   **Primary Artifacts:** `.kiro/specs/117-token-index-generation-integrity/findings/118-closeout-note.md`; cross-reference entry in 117's decision-record.
   **Completion Documentation:** Detailed `.../completion/task-6-completion.md`; Summary `docs/specs/.../task-6-summary.md`.
 
-  - [ ] 6.1 Write the 117 guidance note (gated on Increment-1 completion)
+  - [x] 6.1 Write the 117 guidance note (gated on Increment-1 completion)
     **Type**: Documentation · **Validation**: Tier 2 · **Agent**: Thurgood
     - Author the note (supersedes item 3; advises 117 Task 5.3 re-run; scopes trust to config-load path only); cross-reference from 117's decision-record. Do NOT correct 117 in-place; do NOT lift 117's status on its behalf.
     - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5_
