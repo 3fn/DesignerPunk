@@ -212,7 +212,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Routes through ballot-measure model
     - _Requirements: 4.3, 4.5, Doc-Req 3_
 
-- [ ] 4. Application-MCP Tool-Boundary Contract Test (Req 3 — the H1 gap)
+- [x] 4. Application-MCP Tool-Boundary Contract Test (Req 3 — the H1 gap)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -237,7 +237,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 4 Complete: Tool-Boundary Contract Test"` (runs release analysis automatically)
   - Verify: Check GitHub for committed changes
 
-  - [ ] 4.1 Scaffold the `callTool`-level contract-test harness + fixture split (pinned corpus + live smoke)
+  - [x] 4.1 Scaffold the `callTool`-level contract-test harness + fixture split (pinned corpus + live smoke)
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
@@ -247,7 +247,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - _Prerequisite for 4.2–4.5 assertions_
     - _Requirements: 3.1_
 
-  - [ ] 4.2 Author `get_token_details` contract assertions (token-side)
+  - [x] 4.2 Author `get_token_details` contract assertions (token-side)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada
@@ -255,7 +255,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Assert the Req 2 resolved-value triple; assert an **exact key-set** (additive = enforced, not inferred — P1); pin **no `value` key on semantics** (P2; depends on Task 1.1)
     - _Requirements: 3.2, 3.4, 3.5_
 
-  - [ ] 4.3 Author `find_components` contract assertions (component-side)
+  - [x] 4.3 Author `find_components` contract assertions (component-side)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina
@@ -264,7 +264,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Do NOT pin result ordering unless ranking is implemented
     - _Requirements: 3.3, 3.4, 3.5_
 
-  - [ ] 4.4 Author tier-classification assertions from calibration fixtures (Req 6 at the boundary)
+  - [x] 4.4 Author tier-classification assertions from calibration fixtures (Req 6 at the boundary)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (docs fixtures) + Lina (component fixtures)
@@ -273,7 +273,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Include the **adversarial false-confidence guards**: low-signal-only ≥2-token coverage caps at `partial` not `strong`; an incidental high-field token caps at `partial` not `strong`
     - _Requirements: 3.6, 6.7_
 
-  - [ ] 4.5 Assert the breaking-change guard + tighten the noted vacuous docs-MCP assertion
+  - [x] 4.5 Assert the breaking-change guard + tighten the noted vacuous docs-MCP assertion
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

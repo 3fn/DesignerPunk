@@ -289,6 +289,9 @@ describe('MCP Server Integration Tests', () => {
       const testDocPath = path.join(TEST_FIXTURES_DIR, 'test-document.md');
       const result = handleGetSection(queryEngine, testDocPath, 'Section One');
 
+      // Task 4.5: tighten the vacuous assertion — assert the call succeeded
+      // unconditionally so a tool error fails the test rather than silently passing.
+      expect(isGetSectionError(result)).toBe(false);
       if (!isGetSectionError(result)) {
         expect(result.section.content).toContain('Content for section one');
       }
@@ -298,6 +301,9 @@ describe('MCP Server Integration Tests', () => {
       const testDocPath = path.join(TEST_FIXTURES_DIR, 'test-document.md');
       const result = handleGetSection(queryEngine, testDocPath, 'Overview');
 
+      // Task 4.5: tighten the vacuous assertion — assert the call succeeded
+      // unconditionally so a tool error fails the test rather than silently passing.
+      expect(isGetSectionError(result)).toBe(false);
       if (!isGetSectionError(result)) {
         expect(result.section.tokenCount).toBeDefined();
         expect(typeof result.section.tokenCount).toBe('number');

@@ -236,9 +236,48 @@ const STALENESS_EXEMPT_TOOLS = new Set([
   'rebuild_index',
 ]);
 
+/**
+ * Testable tool-dispatch boundary (Spec 121 Task 4 — additive export for the H1 contract test).
+ *
+ * The MCP protocol wraps handleTool's return in { content: [{type:'text', text: JSON.stringify(...)}] }.
+ * For contract tests we want to assert the *assembled data object* (not the transport envelope), so
+ * this interface surfaces handleTool directly as `callTool`.
+ *
+ * ADDITIVE ONLY — no behavior change; server.start() / MCP transport untouched.
+ */
+export interface TestableServer {
+  /** Call a tool by name end-to-end through the same dispatch path as the live MCP handler. */
+  callTool(name: string, args: Record<string, unknown>): Promise<unknown>;
+  /** Index components + tokens so the test server is ready to serve requests. */
+  initialize(): Promise<void>;
+}
+
+/**
+ * Create a `TestableServer` bound to the given data directories.
+ * Does NOT start the MCP stdio transport — safe to call in Jest.
+ * Call `initialize()` before `callTool(...)`.
+ *
+ * @param paths - same DataPaths contract as ComponentMCPServer; defaults match real-corpus layout
+ */
+export function createTestableServer(paths: DataPaths): TestableServer {
+  const server = new ComponentMCPServer(paths);
+  return {
+    initialize: () =>
+      server.indexer.indexComponents(
+        paths.componentsDir,
+        paths.patternsDir,
+        paths.templatesDir,
+        paths.guidanceDir,
+        paths.tokenIndexDir,
+      ),
+    callTool: (name: string, args: Record<string, unknown>) =>
+      server.handleTool(name, args),
+  };
+}
+
 class ComponentMCPServer {
   private server: Server;
-  private indexer: ComponentIndexer;
+  indexer: ComponentIndexer;
   private queryEngine: ComponentQueryEngine;
   private assemblyValidator: AssemblyValidator;
   private fileWatcher: FileWatcher;
@@ -343,7 +382,8 @@ class ComponentMCPServer {
     });
   }
 
-  private async handleTool(name: string, params: Record<string, unknown>): Promise<unknown> {
+  /** @internal Exposed via `createTestableServer` for the tool-boundary contract test (Spec 121 Task 4). */
+  async handleTool(name: string, params: Record<string, unknown>): Promise<unknown> {
     if (!STALENESS_EXEMPT_TOOLS.has(name)) {
       await this.stalenessGate.checkAndRebuildIfNeeded();
     }
@@ -432,18 +472,23 @@ class ComponentMCPServer {
   }
 }
 
-// Start server — read explicit paths from env vars, fall back to defaults
-const componentsDir = process.env.COMPONENTS_DIR || DEFAULT_COMPONENTS_DIR;
-const server = new ComponentMCPServer({
-  componentsDir,
-  patternsDir: process.env.PATTERNS_DIR,
-  templatesDir: process.env.TEMPLATES_DIR,
-  guidanceDir: process.env.GUIDANCE_DIR,
-  registryPath: process.env.REGISTRY_PATH,
-  tokenIndexDir: process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR,
-  designLanguagePath: process.env.DESIGN_LANGUAGE_PATH || 'design-language/design-philosophy.yaml',
-});
-server.start().catch((err) => {
-  console.error(`[${SERVER_NAME}] Fatal error:`, err);
-  process.exit(1);
-});
+// Start server — read explicit paths from env vars, fall back to defaults.
+// Guard: skip auto-start when this module is imported (e.g. by the tool-boundary contract test).
+// The `require.main === module` check is the standard Node.js "am I the entry point?" idiom.
+// ts-jest sets require.main to a different module, so this guard is safe in Jest.
+if (require.main === module) {
+  const componentsDir = process.env.COMPONENTS_DIR || DEFAULT_COMPONENTS_DIR;
+  const mainServer = new ComponentMCPServer({
+    componentsDir,
+    patternsDir: process.env.PATTERNS_DIR,
+    templatesDir: process.env.TEMPLATES_DIR,
+    guidanceDir: process.env.GUIDANCE_DIR,
+    registryPath: process.env.REGISTRY_PATH,
+    tokenIndexDir: process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR,
+    designLanguagePath: process.env.DESIGN_LANGUAGE_PATH || 'design-language/design-philosophy.yaml',
+  });
+  mainServer.start().catch((err) => {
+    console.error(`[${SERVER_NAME}] Fatal error:`, err);
+    process.exit(1);
+  });
+}
