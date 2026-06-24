@@ -7,7 +7,7 @@ description: File organization standards — metadata-driven organization, direc
 # File Organization Standards
 
 **Date**: 2025-01-10
-**Last Reviewed**: 2025-12-15
+**Last Reviewed**: 2026-06-23
 **Purpose**: Metadata-driven file organization system for sustainable project structure
 **Organization**: process-standard
 **Scope**: cross-project
@@ -111,6 +111,28 @@ All files use explicit metadata to declare organizational intent, enabling safe 
 ```
 get_section({ path: ".kiro/steering/Civitas-System-Overview.md", heading: "Governance Processes" })
 ```
+
+#### Optional: `aliases:` frontmatter field (steering docs)
+
+Steering documents may carry an optional `aliases:` field in their YAML frontmatter:
+```yaml
+---
+inclusion: manual
+name: Web-Authoring-Standards
+description: Web platform authoring standards — logical properties, responsive design, accessibility...
+aliases: RTL, bidirectional, internationalization, i18n
+---
+```
+
+**Purpose:** a reactive semantic-synonym bridge for concepts whose literal term is absent from a doc's title and description. The `find_docs` tool indexes `aliases:` as a high-signal field, so the doc is discoverable by the alias term even when that term does not appear in the title or body.
+
+**When to add it:** reactively — only when a real query term diverges from auto-derived metadata (title + description content). Do not pre-populate speculatively.
+
+**Format:** comma-separated concept terms. No quotes required.
+
+**Validator impact:** none — the metadata validator does not enforce a closed field set; `aliases:` is tolerated without any validator change.
+
+**Example use cases:** "RTL" → a doc that only says "logical properties"; "snackbar" → `Component-Family-Notification.md`; "dropdown" → `Component-Family-Form-Inputs.md`.
 
 ### Organization Field Values
 

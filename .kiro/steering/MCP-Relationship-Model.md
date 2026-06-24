@@ -7,7 +7,7 @@ description: Defines boundaries, information flow, access model, and interface c
 # MCP Relationship Model
 
 **Date**: 2026-03-20
-**Last Reviewed**: 2026-05-25
+**Last Reviewed**: 2026-06-23
 **Purpose**: Defines boundaries, information flow, access model, and interface contracts between DesignerPunk's three MCP servers
 **Organization**: process-standard
 **Scope**: cross-project
@@ -43,7 +43,13 @@ DesignerPunk operates three MCP servers (two existing, one future) that form a k
 
 **Tools**: `find_docs`, `get_document_summary`, `get_document_full`, `get_section`, `list_cross_references`, `validate_metadata`, `get_index_health`, `rebuild_index`
 
-**Query pattern**: Progressive disclosure — map → summary → section → full doc
+**Query pattern**: Progressive disclosure — discover (`find_docs`) → summary → section → full doc
+
+**Discovery tools:**
+- `find_docs({ concept })` — concept/keyword search returning ranked entries (`{ path, summary, owner, matchedOn, rank }`) with `matchConfidence` tiers. No-match returns `{ data: [], error: null, matchConfidence: 'none' }` — explicit, not a silent empty.
+- `find_docs({ list: true, cursor?, limit? })` — paginated list/catalog mode enumerating the full corpus in bounded pages (~6K chars/page; default `limit` 20, hard cap 100). Supersedes the former `get_documentation_map`, which was removed after hitting the MCP token limit at ~78K chars (Spec 121 Req 4).
+
+**Docs `aliases:` field:** `find_docs` indexes an optional high-signal `aliases:` frontmatter field as a reactive semantic-synonym bridge — for concepts whose literal term is absent from a doc's title and description (e.g., "RTL" → `Web-Authoring-Standards.md`, which says "logical properties"). Authors add `aliases:` only when a real query term diverges from auto-derived metadata; absence does not block auto-derived matching. See `Process-File-Organization.md` for the author-facing schema entry.
 
 ### Application MCP — "How to use the system"
 
@@ -65,7 +71,37 @@ DesignerPunk operates three MCP servers (two existing, one future) that form a k
 
 **Tools**: `get_component_catalog`, `get_component_summary`, `get_component_full`, `find_components`, `get_prop_guidance`, `get_experience_pattern`, `list_experience_patterns`, `validate_assembly`, `check_composition`, `get_component_health`
 
-**Query pattern**: Context-driven — find by purpose/context → get details → validate assembly
+**Query pattern**: Context-driven — find by purpose/keyword/context → get details → validate assembly
+
+**Discovery tools (`find_components`):**
+- `find_components({ keyword })` — new optional free-text parameter (Spec 121 Req 1). Uses **tokenized term matching** (split on whitespace / camelCase / hyphen; lowercase; term-level, not substring), so multi-word natural-language queries (e.g. `"primary action button"`) are matchable.
+- Indexed fields: tokenized `name`, tokenized `family`, `purpose`, contract concept/category names (high-signal); `whenToUse`, `contexts`, `alternatives[].reason`, `description` (low-signal). `whenNotToUse` is **excluded** (negative-signal trap).
+- `ApplicationSummary` shape **unchanged** — the existing exact-match semantics of `context`/`concept`/`category` are unchanged (back-compat); `keyword` is conjunctive with them. Results are optionally augmented with `matchedOn` (which fields matched, labeled by signal class) when `keyword` is supplied.
+- Auto-derived from existing metadata without hand-curated keyword lists. Optional `aliases:` on component metadata supports reactive synonym bridging (e.g. "select" → Dropdown-family components).
+
+**`get_token_details` additive triple (Spec 121 Req 2):**
+
+`get_token_details` returns three additive fields alongside the unchanged `platforms{}` object:
+
+| Field | Type | Meaning |
+|---|---|---|
+| `resolvedValue` | `number \| string \| object \| null` | Chain-resolved terminal value (or `null`) |
+| `resolvedUnitType` | `string \| null` | Unit type of the resolved value |
+| `resolutionDepth` | `'full' \| 'partial' \| null` | Depth of resolution achieved |
+
+**Null-contract:**
+- Primitive token → own value / `resolutionDepth: 'full'`
+- Semantic/component, single resolvable ref → chain-resolved terminal value / `'full'`
+- Multi-ref, literal, or unresolvable → token self-name / `'partial'`
+- No-ref-no-value → `null` / `resolutionDepth: null`
+
+**Hard rule: always read `resolutionDepth` before trusting `resolvedValue`.** When `resolutionDepth` is `'partial'`, `resolvedValue` is the token's self-name (not a resolved value) — do not use it as a concrete value without checking depth first.
+
+**Theme-varying caveat:** for theme-varying tokens, `resolvedValue` is a per-mode bundle object (e.g. `{ light: { base, wcag }, dark: { base, wcag } }`), still `resolutionDepth: 'full'`. It is not a scalar in that case.
+
+**Authoritative runtime values live in `dist/DesignTokens.*`.** The MCP triple is a convenience for selection and guidance; it does not eliminate the need to reference the shipped token files for code-generation or runtime use (per G6 — deferring the code-reference form to design.md, scoped to non-theme-varying tokens only).
+
+**Governance rule:** the triple is strictly additive — no existing field changes, semantic tokens still carry no `value` key. The Req-3 contract test enforces this: any change to an existing field breaks the test loud. `platforms{}` is unchanged.
 
 ### Product MCP — "What we're building"
 
@@ -187,6 +223,49 @@ For cross-MCP references to work, each MCP must maintain stable identifiers:
 | Product MCP | Product token names (e.g., `contentMaxWidth` in `layout` category), screen names, domain object names |
 
 Breaking changes to stable identifiers require coordination across MCPs.
+
+---
+
+## Discovery Confidence Model
+
+Both discovery tools (`find_docs` and keyworded `find_components`) emit a three-layer confidence signal. The authoritative model is in `.kiro/specs/121-claude-code-portability/discovery-confidence-rubric.md`; this section summarizes the contract.
+
+### Three Distinct Layers (never collapsed)
+
+| Layer | Field | Question | Owner |
+|---|---|---|---|
+| **1 — Match** | `matchConfidence: 'strong' \| 'partial' \| 'none'` | Did we find it, and how strongly? | tool (matcher) |
+| **2 — Viability** | `readiness` (components); `{ placeholder, deprecated }` (docs); `resolutionDepth` (tokens) | Can this result actually be used? | tool emits; caller gates |
+| **3 — Usability** | `rank` + `matchedOn` | Of the viable ones, which is best? | tool ranks; agent judges |
+
+The three fields are **lexically distinct** and never merged. `matchConfidence: 'partial'` (Layer 1 — weak match) must not be confused with `resolutionDepth: 'partial'` (Layer 2 token viability — resolved to self-name, not terminal value). These are orthogonal axes.
+
+### Tiers, Not Scores
+
+`matchConfidence` is a tier (`strong | partial | none`) derived by the per-domain rubric from **visible evidence** (`matchedOn` labeled by signal class + `matchedTokens`/`totalTokens` coverage). The tier is reconstructable from the emitted primitives — it is not an opaque float. Per-domain rubrics are in the rubric artifact; they are tunable by legible knobs (signal-class assignments, coverage thresholds, the versioned stop-word list).
+
+### Governing Sequence and Hard Rule
+
+`match → filter by viability → rank/judge usability`
+
+**Match-confidence alone never drives action.** A `strong` match may be non-viable (a placeholder doc, a deprecated component) or not the most usable candidate. The tool surfaces evidence; the agent judges; the human decides uncertain calls.
+
+### `partial` vs `none` Contracts
+
+- **`partial`** — at least one token matched but below the `strong` threshold (low-signal only, or incidental high-field hit). Returns ranked below-threshold candidates **flagged with their tier**. This is a flagged weak best-fit, not an empty result — a surfaced weak candidate beats a bare empty that hides it.
+- **`none`** — zero salient matches after stop-word normalization. Returns the empty contract:
+  - `find_components` → `{ data: [], error: null }`
+  - `find_docs` → `{ data: [], error: null, matchConfidence: 'none' }`
+
+`partial` and `none` are distinguishable from response shape alone.
+
+### When `matchConfidence` is `partial`
+
+The agent follows the **119 Decision 4a Certainty Calibration Protocol** — propose the best-fit candidate with confidence level and rationale for human go/no-go — rather than acting autonomously. (121 emits the signal; 119 defines the agent-side protocol that consumes a `partial`.)
+
+### Token Exemption
+
+Token tools (`search_tokens`, `get_token_details`, `get_token_family`, `get_token_consumers`) are **exempt** from the three-layer confidence model. They perform structured/predicate retrieval over a closed vocabulary with no relevance ranking — there is nothing for a tier to govern. **The trigger:** if a token tool is extended to accept open-ended natural-language input and return ranked/best-fit candidates, it inherits this model. Bright line: predicate filter → no tier; relevance ranking → tier required.
 
 ---
 

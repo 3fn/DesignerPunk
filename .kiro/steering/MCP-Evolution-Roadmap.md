@@ -159,6 +159,20 @@ Strategic gaps are easy to identify in conversation and easy to forget between s
 
 ---
 
+### Gap 8: `resolvedValue` Type Understates Theme-Varying Shape
+
+**What's missing**: Spec 121 Task 2's `get_token_details` resolved-value triple declares `resolvedValue: number | string | null` (adopted **verbatim** from the product MCP's `TokenRefResolver` contract — Req 2.5, to kill cross-MCP drift). But for a **theme-varying** token, the chain-resolved terminal value is a **per-mode bundle object** (`{ light: { base, wcag }, dark: { base, wcag } }`), still `resolutionDepth: 'full'`. So the declared TypeScript type understates the actual runtime shape — a consumer's type-checker that trusts the declared type would not expect an object. The MCP governance docs (MCP-Integration-Guide, MCP-Relationship-Model) document the runtime reality accurately; the **type** is the gap.
+
+**Where it lives**: Both the application MCP and the product MCP `TokenRefResolver` / `ResolvedValueTriple` types (the same understatement exists in both, by construction of the verbatim adoption).
+
+**Priority**: Low. The runtime behavior is correct and Peter-approved (Task 1 Option A — keep the bundle verbatim, do not flatten or relabel `partial`); the docs describe it accurately; the "read `resolutionDepth` first" rule already gates value use. The gap is purely the static type's precision.
+
+**Trigger**: A typed consumer (or a generated client) relies on the declared `resolvedValue` type and breaks or mis-handles a theme-varying token because it didn't expect an object. Resolve **both MCPs together** to preserve the single coherent cross-MCP contract (do not widen one side only — that reintroduces the drift the verbatim adoption avoided).
+
+**Possible approach**: Widen `resolvedValue` to `number | string | ThemeBundle | null` (with a shared `ThemeBundle` type) in **both** `TokenRefResolver` contracts simultaneously, OR — the durable fix — fold it into the shared resolver module already backlogged (Spec 121 design Decision 7), so the type lives in one place.
+
+---
+
 ## Deferred from Spec 071
 
 These were identified in the 071 design outline and explicitly deferred:

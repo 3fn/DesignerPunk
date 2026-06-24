@@ -376,7 +376,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Encode summary-first as a hard workflow rule in a form Spec 122 can propagate into generated agent prompts (this spec encodes; 122 propagates)
     - _Requirements: 5.3, 5.4, 5.5_
 
-- [ ] 7. MCP Governance Documentation Updates (Doc-as-Requirement; ballot-measure)
+- [x] 7. MCP Governance Documentation Updates (Doc-as-Requirement; ballot-measure)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -401,7 +401,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 7 Complete: MCP Governance Docs"` (runs release analysis automatically)
   - Verify: Check GitHub for committed changes
 
-  - [ ] 7.1 Document the discovery tools + confidence model
+  - [x] 7.1 Document the discovery tools + confidence model
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -412,7 +412,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Routes through ballot-measure model
     - _Requirements: Doc-Req 1, Doc-Req 4_
 
-  - [ ] 7.2 Document the additive `get_token_details` triple + governance rule
+  - [x] 7.2 Document the additive `get_token_details` triple + governance rule
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Ada (content) + Thurgood (governance/metadata)
@@ -422,7 +422,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - Routes through ballot-measure model
     - _Requirements: Doc-Req 2, Doc-Req 4_
 
-  - [ ] 7.3 Rebuild the docs-MCP index
+  - [x] 7.3 Rebuild the docs-MCP index
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
