@@ -2,7 +2,7 @@
 
 **Date**: 2026-06-13
 **Spec**: 117 - Token-Index Generation Integrity
-**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Tasks 3 (R3+R5 spine fix) and 4 (R4 loading gate + N2) COMPLETE 2026-06-24** — Task 4 also corrected the committed `components.yaml` baseline (27→33; 6 silently-dropped tokens recovered). Next actionable: **Task 5** (generation-integrity verification + documented-CLI trust gate) — now unblocked end-to-end; the R3+R5+R4 fixes are in and the documented CLI runs (Spec 118 Inc 1).
+**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Tasks 3, 4, 5 COMPLETE 2026-06-24.** Task 4 corrected the committed `components.yaml` baseline (27→33). Task 5: documented-CLI **trust gate MET** (all-equal re-diff; P3/P5 invariants hold; MCP serves corrected data; full suite 8969 green) — **non-provisional certification ready, pending Peter's ratification**. Next actionable: **Task 6** (ballot-measure steering proposals + clean-exit issue logging).
 **Dependencies**:
 - Spec 112 / 115 — Complete (this spec completes 112's token-index gap).
 - **Finding 2 (CLI tsx/ESM loader)** — **RESOLVED EXTERNALLY by Spec 118 Increment 1** (committed `041aaea8`). The one-line directory-import fix this spec originally folded in as Task 2 was empirically **false** (it only relocates the failure one hop down the barrel chain); the genuine unblock is 118's TS-aware config loader (Approach A) + a `require` condition on the `./config` export. The documented `generate` CLI now runs end-to-end, so Task 5.3's trust gate is **executable**. Authoritative correction: [`findings/118-closeout-note.md`](findings/118-closeout-note.md) (supersedes decision-record items 3 & 7). **Restored trust is config-load-path ONLY**; the raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until **118 Increment 3b** (out of 117's renewed scope).
@@ -128,10 +128,12 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
     - Both gates un-gated; source-presence trace + double-registration trace confirmed (single-path, 0 conflicts); 6 dropped tokens recovered; N2 dist populated. Verified full suite + tsc green.
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [ ] 5. Generation-Integrity Verification & End-to-End Re-Verification (R2 / R6)
+- [x] 5. Generation-Integrity Verification & End-to-End Re-Verification (R2 / R6) — ✅ COMPLETE (2026-06-24) — **TRUST GATE MET; pending Peter's certification ratification**
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
+
+  **Outcome:** Repeatable `GenerationIntegrityCheck` finalized + the P3/P5 absolute invariants added (`Invariants.ts`, with the anti-conflation sentinel). Manifest ratified **EMPTY** (baselines corrected in Tasks 3/4 → re-diff all-equal, nothing to forgive). Documented-CLI trust gate **met**: `node bin/designerpunk.js generate` reproduces committed (in-place regen leaves `token-index/` git-clean); full 14-artifact re-diff all-equal; P3 (rgba=4 shadows) + P5 (theme-varying=5 base keys) hold; runner verdict `via=documented-cli, provisional=false`. MCP reindexed (healthy, 33 component tokens) and serves OKLCH primitives + recovered component tokens + correct theme-varying. Full suite **8969 tests** + `tsc` green (re-verified in main loop). Detail → [`completion/task-5-completion.md`](completion/task-5-completion.md). **Certification (lifting `provisional`) is a governance act — Peter's ratification pending.**
 
   **Success Criteria:**
   - The repeatable `GenerationIntegrityCheck` passes: fresh generate semantically reproduces committed artifacts, OR every divergence is in the ratified `IntentionalDivergenceManifest`.
@@ -140,24 +142,23 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
 
   **Completion Documentation:** Detailed `.../completion/task-5-completion.md`; Summary `docs/specs/.../task-5-summary.md`.
 
-  - [ ] 5.1 Finalize the verification (manifest + normalization; repeatable check)
+  - [x] 5.1 Finalize the verification (manifest + normalization; repeatable check) — ✅ COMPLETE
     **Type**: Architecture · **Validation**: Tier 3 · **Agent**: Thurgood
-    - Finalize `NormalizationRule[]`; populate `IntentionalDivergenceManifest` (each entry `approvedBy`/`date`/`reason`).
-    - **Inventory note:** BlendUtilities removed (N1 deferred); confirm the manifest/inventory reflect the corrected set.
+    - Added `Invariants.ts` (P3 no-legacy-color scoped to the shadow allowlist; P5 theme-varying-base-scoped + named anti-conflation sentinel — the §4.1 automated guard). Manifest **ratified EMPTY** (corrected baselines → all-equal re-diff; shadows scoped in P3 not allowlisted; 6 recovered tokens fixed in baseline). Inventory confirmed (BlendUtilities removed; components.yaml=33; dist ComponentTokens present). Normalization rules carried from Task 1.1 (timestamps/`lastIndexTime`/ordering) confirmed sufficient.
     - _Requirements: 2.1, 2.2, 2.3, 2.5_
 
-  - [ ] 5.2 Consumer-repo fixture + package-mode warning test
+  - [x] 5.2 Consumer-repo fixture + package-mode warning test — ✅ COMPLETE
     **Type**: Implementation · **Validation**: Tier 2 · **Agent**: Thurgood
-    - Package-mode fixture declaring its own `componentTokens` (silent-failure half (a)); R4 AC3 "none found" warning test in **package mode** (half (b)). Sequence after Task 4.
+    - `consumer-package-mode.test.ts`: half (a) real fixture authoring its own componentTokens, loaded via the real `loadComponentTokens` in package mode; half (b) `runGenerate` package-mode "none found" warning. Both pass.
     - _Requirements: 4.3, 4.5_
 
-  - [ ] 5.3 End-to-end re-verification + documented-CLI trust gate
+  - [x] 5.3 End-to-end re-verification + documented-CLI trust gate — ✅ COMPLETE (trust gate met; certification pending Peter)
     **Type**: Architecture · **Validation**: Tier 3 · **Agent**: Thurgood + Ada
-    **Depends on**: **Spec 118 Increment 1** (committed `041aaea8`) — supplies the runnable documented CLI. Formerly a Finding-2 Blocked-Task gated on the retired Task 2; that blocker is now resolved externally. The trust gate is **executable**; 117 re-runs it to certify on its own behalf (118 does not lift 117's provisional status for it).
-    - Re-diff after all fixes; regenerate → reindex Application MCP → confirm OKLCH colors, component tier (+ dist ComponentTokens), theme-varying.
-    - Reproduce the baseline via the **documented CLI** (now runnable via 118 Increment 1) → lift `provisional`; certify **non-provisionally**.
-    - **Confirm `configLoadEquivalentToWorkaround` (migrated from the retired Task 2):** resolved config under the documented CLI matches the ts-node workaround (`tokenSourceMode: 'package'`, `themes: []`) — the equivalence that closes the audit's `provisional` ceiling.
-    - **Scope guard:** certify the documented-`generate` path only; do NOT extend certification to the raw-`.ts` exports (`./blend`/`./build`/`./types`), which are tracked to 118 Increment 3b.
+    **Depends on**: **Spec 118 Increment 1** (committed `041aaea8`) — supplies the runnable documented CLI.
+    - ✅ Documented CLI (`node bin/designerpunk.js generate`) reproduces committed (in-place regen → `token-index/` git-clean); full 14-artifact re-diff all-equal; runner verdict `via=documented-cli, provisional=false`. `configLoadEquivalentToWorkaround` confirmed (config resolves `tokenSourceMode: 'package'`, `themes: []`).
+    - ✅ Application MCP reindexed (healthy, 33 component tokens) — serves OKLCH primitives (`gray400`→`oklch(0.42 0.018 260)`), recovered component tokens (`inputcheckbox.box.md`), theme-varying flags (`color.structure.canvas`→true).
+    - **Scope guard honored:** documented-`generate` path only; raw-`.ts` exports (`./blend`/`./build`/`./types`) NOT certified — tracked to 118 Increment 3b.
+    - **Pending:** Peter's ratification to lift `provisional` (governance act).
     - _Requirements: 6.1, 6.2, 6.3, 2.4_
 
 - [ ] 6. Documentation & Clean-Exit (R7)

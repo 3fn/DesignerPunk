@@ -15,6 +15,11 @@
  *
  * Product tokens are `optional: true` — present only when a product configures
  * `productTokens` (Integration Guide); their absence on both sides is not a divergence.
+ *
+ * Task 5.1 confirmation: this inventory reflects the corrected post-Task-3/4 set —
+ * BlendUtilities removed (N1 deferred), components.yaml carries the corrected 33-token
+ * baseline, and dist/ComponentTokens.* are listed (N2 populated). The full-inventory
+ * re-diff against a documented-CLI fresh generate is ALL-EQUAL (Task 5.3).
  */
 
 import { ArtifactRef } from './types';

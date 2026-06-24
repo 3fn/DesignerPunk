@@ -6,10 +6,32 @@
  * is *repeatable* rather than re-judged each run. Every entry carries
  * `approvedBy` + `date` under ballot governance.
  *
- * Task 1.1 ships an EMPTY seed: until the baseline audit (Task 1.2) and the
- * checkpoint run, nothing is yet ratified as intentional — an empty manifest
- * means "no divergence is pre-approved," which is the correct starting posture.
- * The concrete entries are finalized during R2 harness completion (Task 5.1).
+ * Task 1.1 shipped an EMPTY seed: until the baseline audit (Task 1.2) and the
+ * checkpoint ran, nothing was yet ratified as intentional — an empty manifest
+ * means "no divergence is pre-approved," which was the correct starting posture.
+ *
+ * TASK 5.1 — RATIFIED END-STATE: the manifest stays EMPTY. This is not a
+ * not-yet-populated placeholder; it is the confirmed correct final state.
+ * Tasks 3 and 4 corrected the committed baselines to match a fresh generate
+ * (Task 3: token-index OKLCH + base-scoped theme-varying; Task 4: components.yaml
+ * 27→33, the 6 silently-dropped tokens recovered). With the baselines corrected,
+ * the full-inventory committed-vs-fresh re-diff comes back ALL-EQUAL (0
+ * divergences across all 14 artifacts — confirmed empirically in Task 5.3),
+ * so there is NO intentional divergence to ratify.
+ *
+ * Two candidate "exceptions" were deliberately kept OUT of this manifest:
+ *   - The shadow color family carrying rgba(): not a divergence at all (committed
+ *     == fresh == dist; the index faithfully reproduces dist). Scoped out in the
+ *     P3 invariant (see Invariants.ts), not allowlisted here. Tracked as a
+ *     token-foundation follow-on:
+ *     .kiro/issues/2026-06-24-oklch-shadow-color-family-not-migrated.md.
+ *   - The 6 recovered component tokens: the committed baseline was CORRECTED to
+ *     include them (Task 4), so committed == fresh — not an allowlisted exception.
+ *
+ * An empty-but-ratified manifest is the right outcome: a correct generation
+ * pipeline has nothing to forgive. If a genuine intentional divergence is ever
+ * introduced, add an entry here with `approvedBy` + `date` + `reason` under
+ * ballot governance.
  */
 
 import { minimatch } from 'minimatch';
