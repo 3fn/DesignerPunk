@@ -22,6 +22,10 @@ Net: I2 should be able to disposition both as **plausible-contributor: refuted**
 
 117 corrected the committed token-index: primitives now carry mode-aware **OKLCH** (rgba 216→16, the 16 being the un-migrated shadow family), `semantics.yaml` `themeVarying` is the base-scoped **5** keys, and `components.yaml` is **33** (6 recovered). Your parity is two-*fresh*-tree (ts-node vs tsx), so committed state is less central — but the artifact *shape* is now OKLCH/mode-aware.
 
+## 3b. ⚠ Increment-1 regression on `main` — fix before/with Increment 2
+
+Surfaced when 117's close-out push triggered the **first real CI run** of the consumer-guard: Approach-A `loadConfig` **tears down the ambient ts-node loader**, so `npm run build` dies in `prebuild` (`generate-platform-tokens.ts` → `require('src/tokens')` fails right after `loadConfig`). Decisive repro + mechanism + recommended fix (inject the ambient seam `loadConfig(cwd, (p) => import(p))` in the ts-node scripts) in **[`findings/increment-1-ambient-loader-regression.md`](findings/increment-1-ambient-loader-regression.md)**. It is concrete evidence that Approach A's "no ambient loader" assumption is already violated by the existing ts-node scripts — **Increment 2's entry-point inventory should sweep `loadConfig`-callers-under-ts-node as a defect class.** (Companion gap in the same doc: the consumer-guard packs without building.)
+
 ## 4. Cross-spec tie (reaffirm)
 
 117's restored trust is **config-load-path-only** until **118 Increment 3b** reconciles the raw-`.ts` exports (`./blend`/`./build`/`./types`). That tie survives 117's certification — your Increment 3b is what finally certifies 117's exports surface.
