@@ -149,7 +149,10 @@ describe('loadComponentTokens', () => {
       expect(result?.value).toBe(12);
     });
 
-    test('does NOT use allowOverwrite when tokenSourceMode is package', () => {
+    test('uses allowOverwrite when tokenSourceMode is package (Spec 117 R4)', () => {
+      // Spec 117 R4: allowOverwrite travels with the loader, not the mode. Package mode
+      // must tolerate double-registration (last-wins) exactly like local mode — the
+      // previous mode-gated behavior (throw in package mode) was the bug R4 fixes.
       fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
       ComponentTokenRegistry.register({
         name: 'pkg.conflict',
@@ -175,7 +178,10 @@ describe('loadComponentTokens', () => {
       ].join('\n'));
 
       const config = makeConfig({ tokenSourceMode: 'package' });
-      expect(() => loadComponentTokens(config)).toThrow(/already registered/);
+      // Should not throw despite double registration; last-wins.
+      expect(() => loadComponentTokens(config)).not.toThrow();
+      const result = ComponentTokenRegistry.get('pkg.conflict');
+      expect(result?.value).toBe(12);
     });
 
     test('resets allowOverwrite after loading completes', () => {

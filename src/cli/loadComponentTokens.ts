@@ -22,14 +22,16 @@ import type { RegisteredComponentToken } from '../registries/ComponentTokenRegis
  * Discover and load component token files from configured source.
  * Returns all registered component tokens for downstream consumers.
  *
- * When tokenSourceMode is 'local', uses allowOverwrite to prevent
- * double-registration conflicts with package-internal side-effect imports.
+ * `allowOverwrite` travels with the loader (it is the loader's own concern, NOT a
+ * mode concern — Spec 117 R4): enabled while loading regardless of tokenSourceMode.
+ * Harmless if there is a single registration path; benign last-wins if a dual-path
+ * (e.g. local copy + package `src` both required) re-registers the same token. R4's
+ * components.yaml semantic-reproduction check is the safety net against a wrong overwrite.
  */
 export function loadComponentTokens(config: ResolvedConfig): RegisteredComponentToken[] {
-  // Enable allowOverwrite in local mode to handle double-registration
-  if (config.tokenSourceMode === 'local') {
-    ComponentTokenRegistry.setDefaultAllowOverwrite(true);
-  }
+  // Enable allowOverwrite with the loader (mode-independent) to tolerate
+  // double-registration. Reset to default in the finally block.
+  ComponentTokenRegistry.setDefaultAllowOverwrite(true);
 
   try {
     // Source 1: Auto-discover from {tokenSourceRoot}/component/
@@ -48,10 +50,8 @@ export function loadComponentTokens(config: ResolvedConfig): RegisteredComponent
       scanForTokenFiles(dir);
     }
   } finally {
-    // Reset to default behavior
-    if (config.tokenSourceMode === 'local') {
-      ComponentTokenRegistry.setDefaultAllowOverwrite(false);
-    }
+    // Reset to default behavior (mode-independent — mirrors the enable above).
+    ComponentTokenRegistry.setDefaultAllowOverwrite(false);
   }
 
   return ComponentTokenRegistry.getAll();

@@ -70,11 +70,15 @@ describe('Backward Compatibility (Spec 114 R9)', () => {
       configDir: '/tmp',
     };
 
-    test('does not call loadComponentTokens (package mode skips local loading)', async () => {
+    test('calls loadComponentTokens in package mode (Spec 117 R4: source-presence, not mode)', async () => {
+      // Spec 117 R4: component-token loading is gated on source presence, NOT on
+      // tokenSourceMode. Package-mode consumers (and the shipped DesignerPunk config,
+      // which resolves to package mode) author component tokens via componentTokenDirs;
+      // the prior `tokenSourceMode === 'local'` gate silently zeroed them.
+      mockLoadComponentTokens.mockReturnValue([]);
       mockLoadConfig.mockResolvedValue(packageModeConfig);
       await runGenerate();
-      // loadComponentTokens is only called when tokenSourceMode === 'local'
-      expect(mockLoadComponentTokens).not.toHaveBeenCalled();
+      expect(mockLoadComponentTokens).toHaveBeenCalledWith(packageModeConfig);
     });
 
     test('generateTokenIndex still receives explicit token data', async () => {

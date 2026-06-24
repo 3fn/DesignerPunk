@@ -105,18 +105,21 @@ export async function runGenerate(force = false) {
   const config = await loadConfig(process.cwd());
   const tokens = resolveTokens(config);
 
-  // Load component tokens from local source when tokenSource is set
-  if (config.tokenSourceMode === 'local') {
-    const componentTokens = loadComponentTokens(config);
-    if (componentTokens.length === 0) {
-      console.warn(
-        `⚠️  No component token files found.\n` +
-        `   Searched: ${path.relative(process.cwd(), config.tokenSourceRoot)}/component/\n` +
-        `   And: ${config.componentTokenDirs.map(d => path.relative(process.cwd(), d)).join(', ') || '(none configured)'}\n` +
-        `   Component token output will be empty.\n` +
-        `   Run \`npx designerpunk init\` to copy component tokens locally.\n`
-      );
-    }
+  // Load component tokens from source presence (the convention dir
+  // {tokenSourceRoot}/component/ and configured componentTokenDirs), regardless of
+  // tokenSourceMode. Spec 117 R4: the prior `tokenSourceMode === 'local'` gate was the
+  // wrong axis — componentTokenDirs resolve to real source files in BOTH modes, so
+  // package-mode `generate` silently zeroed component tokens. Loading + the "none found"
+  // warning are now driven by source presence, fired in all modes.
+  const componentTokens = loadComponentTokens(config);
+  if (componentTokens.length === 0) {
+    console.warn(
+      `⚠️  No component token files found.\n` +
+      `   Searched: ${path.relative(process.cwd(), config.tokenSourceRoot)}/component/\n` +
+      `   And: ${config.componentTokenDirs.map(d => path.relative(process.cwd(), d)).join(', ') || '(none configured)'}\n` +
+      `   Component token output will be empty.\n` +
+      `   Run \`npx designerpunk init\` to copy component tokens locally.\n`
+    );
   }
 
   const relativePath = path.relative(process.cwd(), config.tokenSourceRoot);

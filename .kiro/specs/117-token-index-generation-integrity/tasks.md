@@ -2,7 +2,7 @@
 
 **Date**: 2026-06-13
 **Spec**: 117 - Token-Index Generation Integrity
-**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Task 3 (merged R3+R5 spine fix) COMPLETE 2026-06-24.** Next actionable: **Task 4** (R4 component-token loading gate + N2) — its premise was empirically confirmed during Task 3 (package-mode `generate` zeroes `components.yaml`).
+**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Tasks 3 (R3+R5 spine fix) and 4 (R4 loading gate + N2) COMPLETE 2026-06-24** — Task 4 also corrected the committed `components.yaml` baseline (27→33; 6 silently-dropped tokens recovered). Next actionable: **Task 5** (generation-integrity verification + documented-CLI trust gate) — now unblocked end-to-end; the R3+R5+R4 fixes are in and the documented CLI runs (Spec 118 Inc 1).
 **Dependencies**:
 - Spec 112 / 115 — Complete (this spec completes 112's token-index gap).
 - **Finding 2 (CLI tsx/ESM loader)** — **RESOLVED EXTERNALLY by Spec 118 Increment 1** (committed `041aaea8`). The one-line directory-import fix this spec originally folded in as Task 2 was empirically **false** (it only relocates the failure one hop down the barrel chain); the genuine unblock is 118's TS-aware config loader (Approach A) + a `require` condition on the `./config` export. The documented `generate` CLI now runs end-to-end, so Task 5.3's trust gate is **executable**. Authoritative correction: [`findings/118-closeout-note.md`](findings/118-closeout-note.md) (supersedes decision-record items 3 & 7). **Restored trust is config-load-path ONLY**; the raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until **118 Increment 3b** (out of 117's renewed scope).
@@ -98,11 +98,15 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
     - Mechanics design authored + ratified (Option B) → [`findings/task-3-mechanics.md`](findings/task-3-mechanics.md); the residual unknown was pinned by a live experiment (§4.1: registry-wide Set = stale 10; index requires a base-scoped 5-key set, pass-through unsafe). Implemented and verified (see parent outcome). The open "primitive-intrinsic vs override" question (line 81) resolved to **semantic-override**: OKLCH primitives are mode-invariant (resolver ignores `mode`), so mode variance lives at the semantic layer — the index reuses dist's semantic light-vs-dark diff.
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 4. Component-Token Loading Gated on Source Presence (R4) + dist ComponentTokens (N2)
+- [x] 4. Component-Token Loading Gated on Source Presence (R4) + dist ComponentTokens (N2) — ✅ COMPLETE (2026-06-24)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
   **Agent**: Ada (Lina consulted on loading semantics)
+
+  **Outcome:** Un-gated both `tokenSourceMode === 'local'` gates (call-site at `designerpunk.ts` + `allowOverwrite` at `loadComponentTokens.ts`); loading now keys on source presence. Un-gating alone populated the registry under the shipped package-mode config (sources resolve in both modes — confirmed by trace). **N2 resolved:** `components.yaml` AND `dist/ComponentTokens.{web,ios,android}` populated (0→33). Double-registration trace: package mode is single-path, 0 conflicts (confirms [LINA R2]). Full suite **8955 tests** + `tsc` green (re-verified in main loop). Detail → [`completion/task-4-completion.md`](completion/task-4-completion.md).
+
+  **Baseline correction (ratified by Peter 2026-06-24):** the fix reproduced all **27** committed tokens value-identical **AND recovered 6** the bug had silently dropped (`inputcheckbox.box.{sm,md,lg}`, `inputradio.box.{sm,md,lg}`) — source files committed 2026-04-03, predating the stale 2026-06-11 `components.yaml` regen, so the committed 27 were themselves a product of the silent failure. **Committed baseline corrected to the 33-token set** (not a manifest entry) → Task 5.3 re-diff will see committed == fresh == 33.
 
   **Success Criteria:**
   - With component-token sources present, `generate` loads/indexes them regardless of `tokenSourceMode`; warning fires in all modes.
@@ -119,8 +123,9 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
   **Primary Artifacts:** `src/cli/designerpunk.ts`, `src/cli/loadComponentTokens.ts`; regenerated `components.yaml` + `dist/ComponentTokens.*`.
   **Completion Documentation:** Detailed `.../completion/task-4-completion.md`; Summary `docs/specs/.../task-4-summary.md`.
 
-  - [ ] 4.1 _Mechanics authored by Ada from the audit findings (R4 loader fix + N2 dist coverage + double-registration trace)._
+  - [x] 4.1 _Mechanics authored by Ada from the audit findings (R4 loader fix + N2 dist coverage + double-registration trace)._ — ✅ COMPLETE
     **Type**: Implementation · **Validation**: Tier 2 · **Agent**: Ada
+    - Both gates un-gated; source-presence trace + double-registration trace confirmed (single-path, 0 conflicts); 6 dropped tokens recovered; N2 dist populated. Verified full suite + tsc green.
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
 - [ ] 5. Generation-Integrity Verification & End-to-End Re-Verification (R2 / R6)
