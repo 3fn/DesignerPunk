@@ -48,6 +48,16 @@ function makeComponentToken(name: string, component: string, primitiveRef: strin
   };
 }
 
+/** Minimal ModeResolvedTokens for the generator (Spec 117 Task 3 shared-source input). */
+function makeModeResolved(themeVaryingTokens = new Set<string>()) {
+  return {
+    resolvedLight: [],
+    resolvedDark: [],
+    themeVaryingTokens,
+    primitiveOklch: new Map(),
+  };
+}
+
 describe('generateTokenIndex', () => {
   let outputDir: string;
 
@@ -66,7 +76,7 @@ describe('generateTokenIndex', () => {
       primitiveTokens: [makePrimitive('space100')],
       semanticTokens: [],
       componentTokens: [],
-      themeVaryingTokens: new Set(),
+      modeResolved: makeModeResolved(),
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'primitives.yaml'), 'utf-8')) as any;
@@ -80,7 +90,7 @@ describe('generateTokenIndex', () => {
       primitiveTokens: [],
       semanticTokens: [makeSemantic('space.inset.normal', 'space100')],
       componentTokens: [],
-      themeVaryingTokens: new Set(),
+      modeResolved: makeModeResolved(),
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any;
@@ -93,7 +103,7 @@ describe('generateTokenIndex', () => {
       primitiveTokens: [],
       semanticTokens: [],
       componentTokens: [makeComponentToken('buttonicon.inset.large', 'ButtonIcon', 'space150')],
-      themeVaryingTokens: new Set(),
+      modeResolved: makeModeResolved(),
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'components.yaml'), 'utf-8')) as any;
@@ -110,7 +120,7 @@ describe('generateTokenIndex', () => {
         makeSemantic('color.structure.canvas', 'white100', 'color'),
       ],
       componentTokens: [],
-      themeVaryingTokens: new Set(['color.action.primary']),
+      modeResolved: makeModeResolved(new Set(['color.action.primary'])),
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any;
@@ -123,7 +133,7 @@ describe('generateTokenIndex', () => {
       primitiveTokens: [],
       semanticTokens: [makeSemantic('color.action.primary', 'cyan300', 'color')],
       componentTokens: [],
-      themeVaryingTokens: new Set(['color.action.primary']),
+      modeResolved: makeModeResolved(new Set(['color.action.primary'])),
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any;
@@ -137,7 +147,7 @@ describe('generateTokenIndex', () => {
       primitiveTokens: [makePrimitive('space100')],
       semanticTokens: [],
       componentTokens: [],
-      themeVaryingTokens: new Set(),
+      modeResolved: makeModeResolved(),
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'primitives.yaml'), 'utf-8')) as any;

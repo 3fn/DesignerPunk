@@ -93,31 +93,31 @@ tokens:
     category: color
     primitiveReferences:
       value: teal400
-    themeVarying: true
+    themeVarying: false
     platforms:
       web: '--color-feedback-info-text'
-      ios: theme.colorFeedbackInfoText
-      android: theme.color_feedback_info_text
+      ios: colorFeedbackInfoText
+      android: color_feedback_info_text
     consumers: []
   color.feedback.info.background:
     category: color
     primitiveReferences:
       value: teal100
-    themeVarying: true
+    themeVarying: false
     platforms:
       web: '--color-feedback-info-background'
-      ios: theme.colorFeedbackInfoBackground
-      android: theme.color_feedback_info_background
+      ios: colorFeedbackInfoBackground
+      android: color_feedback_info_background
     consumers: []
   color.feedback.info.border:
     category: color
     primitiveReferences:
       value: teal400
-    themeVarying: true
+    themeVarying: false
     platforms:
       web: '--color-feedback-info-border'
-      ios: theme.colorFeedbackInfoBorder
-      android: theme.color_feedback_info_border
+      ios: colorFeedbackInfoBorder
+      android: color_feedback_info_border
     consumers: []
   color.feedback.select.text.rest:
     category: color
@@ -223,11 +223,11 @@ tokens:
     category: color
     primitiveReferences:
       value: cyan300
-    themeVarying: true
+    themeVarying: false
     platforms:
       web: '--color-action-primary'
-      ios: theme.colorActionPrimary
-      android: theme.color_action_primary
+      ios: colorActionPrimary
+      android: color_action_primary
     consumers: []
   color.action.secondary:
     category: color
@@ -343,11 +343,11 @@ tokens:
     category: color
     primitiveReferences:
       value: black500
-    themeVarying: true
+    themeVarying: false
     platforms:
       web: '--color-contrast-on-action'
-      ios: theme.colorContrastOnAction
-      android: theme.color_contrast_on_action
+      ios: colorContrastOnAction
+      android: color_contrast_on_action
     consumers: []
   color.structure.canvas:
     category: color
@@ -1517,7 +1517,7 @@ tokens:
     category: icon
     primitiveReferences:
       fontSize: fontSize050
-      multiplier: 'custom:1.231'
+      multiplier: custom:1.231
     themeVarying: false
     platforms:
       web: '--icon-size-050'

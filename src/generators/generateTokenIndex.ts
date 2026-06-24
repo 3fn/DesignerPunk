@@ -18,6 +18,7 @@ import type { RegisteredComponentToken } from '../registries/ComponentTokenRegis
 import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
+import type { ModeResolvedTokens, PrimitiveOklchModes } from './ModeResolvedTokens';
 
 /**
  * Required input for token-index generation.
@@ -27,7 +28,34 @@ export interface TokenIndexInput {
   primitiveTokens: PrimitiveToken[];
   semanticTokens: SemanticToken[];
   componentTokens: RegisteredComponentToken[];
-  themeVaryingTokens: Set<string>;
+  /**
+   * The single shared mode-resolved truth from `generateTokenFiles` (Spec 117 Task 3).
+   * Carries the base-scoped theme-varying set AND per-primitive mode-resolved OKLCH, so the
+   * index emits the SAME values dist wrote rather than re-deriving (and drifting).
+   */
+  modeResolved: ModeResolvedTokens;
+}
+
+/** Build the mode-nested OKLCH value + sibling channel metadata for a color primitive. */
+function buildOklchEntry(modes: PrimitiveOklchModes): {
+  value: { light: { base: string; wcag: string }; dark: { base: string; wcag: string } };
+  oklch: Record<'light' | 'dark', { l: number; c: number; h: number; channels: { hue: string; lightness: string; chroma: string } }>;
+} {
+  // Match dist's exact OKLCH string format (WebFormatGenerator.formatOklchColor):
+  // `oklch(${l} ${c} ${h})`. No primitive-tier WCAG mechanism exists, so wcag === base.
+  const fmt = (m: PrimitiveOklchModes['light']) => `oklch(${m.oklch.l} ${m.oklch.c} ${m.oklch.h})`;
+  const lightStr = fmt(modes.light);
+  const darkStr = fmt(modes.dark);
+  return {
+    value: {
+      light: { base: lightStr, wcag: lightStr },
+      dark: { base: darkStr, wcag: darkStr },
+    },
+    oklch: {
+      light: { l: modes.light.oklch.l, c: modes.light.oklch.c, h: modes.light.oklch.h, channels: modes.light.channels },
+      dark: { l: modes.dark.oklch.l, c: modes.dark.oklch.c, h: modes.dark.oklch.h, channels: modes.dark.channels },
+    },
+  };
 }
 
 /** Build a map of token name → consuming component names from schema.yaml files. */
@@ -82,7 +110,8 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   const iosGen = new iOSFormatGenerator();
   const androidGen = new AndroidFormatGenerator('kotlin');
 
-  const themeVarying = input.themeVaryingTokens;
+  const themeVarying = input.modeResolved.themeVaryingTokens;
+  const primitiveOklch = input.modeResolved.primitiveOklch;
   const primitives = input.primitiveTokens;
   const semantics = input.semanticTokens;
 
@@ -112,9 +141,14 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
       androidPath = `${namespace}.${androidProp}`;
     }
 
-    primitivesIndex[token.name] = {
+    // R3: color primitives emit mode-resolved OKLCH (value + channels) from the shared
+    // source — never the collapsed rgba snapshot. Non-color primitives keep web.value.
+    const oklchModes = primitiveOklch.get(token.name);
+    const entry: Record<string, any> = {
       family: token.category,
-      value: token.platforms.web.value,
+      ...(oklchModes
+        ? buildOklchEntry(oklchModes)
+        : { value: token.platforms.web.value }),
       formula: token.mathematicalRelationship || null,
       platforms: {
         web: webGen.getTokenName(token.name, token.category),
@@ -122,6 +156,8 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
         android: androidPath,
       },
     };
+
+    primitivesIndex[token.name] = entry;
   }
 
   // Generate semantics index

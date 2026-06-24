@@ -19,16 +19,38 @@ import { ThemeRegistry } from '../themes/ThemeRegistry';
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
+import { composedColorMap } from '../tokens/color';
+import { getOklchMetadata } from './oklch/OklchTokenIndexMetadata';
+import type { ModeResolvedTokens } from './ModeResolvedTokens';
 import type { ResolvedConfig } from '../config/ConfigLoader';
 import type { TokenInput } from '../cli/resolveTokens';
 
 /**
+ * Empty mode-resolved result returned on early-abort paths (validation failures).
+ * Callers that wire the index will receive empty data and skip index population rather
+ * than re-deriving stale values.
+ */
+const EMPTY_MODE_RESOLVED: ModeResolvedTokens = {
+  resolvedLight: [],
+  resolvedDark: [],
+  themeVaryingTokens: new Set<string>(),
+  primitiveOklch: new Map(),
+};
+
+/**
  * Main generation function.
+ *
+ * Performs the single shared mode resolution (Spec 117 Task 3) and returns it as
+ * {@link ModeResolvedTokens} so the token index consumes the SAME resolved truth dist
+ * writes — eliminating the prior three-way drift between dist, the index's primitive
+ * values, and a separate theme-varying computation.
  *
  * @param tokens - Resolved token arrays (primitive and semantic) from the configured source.
  * @param config - Resolved config from ConfigLoader.
+ * @returns The mode-resolved truth (resolved light/dark sets, base-scoped theme-varying
+ *   set, per-primitive OKLCH). On validation-abort paths, an empty result.
  */
-export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): void {
+export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): ModeResolvedTokens {
   const effectiveOutputDir = config.outputDir;
   console.log('🚀 Starting token file generation...\n');
 
@@ -69,7 +91,7 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     }
     
     console.error('⚠️  Token generation aborted due to validation errors.\n');
-    return;
+    return EMPTY_MODE_RESOLVED;
   }
   
   if (validationResult.level === 'Warning') {
@@ -107,7 +129,7 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     console.error('❌ Semantic override validation failed:\n');
     overrideValidation.errors.forEach(err => console.error(`   ${err}`));
     console.error('\n⚠️  Token generation aborted due to override validation errors.\n');
-    return;
+    return EMPTY_MODE_RESOLVED;
   }
 
   // Register themes in the registry for downstream consumers (getThemeVaryingTokens, etc.)
@@ -136,7 +158,7 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     console.error('❌ Context override validation failed:\n');
     contextValidation.errors.forEach(err => console.error(`   ${err}`));
     console.error('\n⚠️  Token generation aborted due to override validation errors.\n');
-    return;
+    return EMPTY_MODE_RESOLVED;
   }
   console.log('✅ Semantic override validation passed\n');
 
@@ -154,7 +176,9 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     ...Object.keys(darkWcagSemanticOverrides),
   ]);
 
-  // Compute theme-varying tokens: overrides from registry + base light/dark differences
+  // Compute theme-varying tokens for the NON-WEB platform generators: registry overrides
+  // (unions ALL registered themes — dark AND wcag) ∪ base light/dark differences. This
+  // registry-wide Set (10 under the shipped config) is what the non-web generators consume.
   const themeVaryingTokens = themeRegistry.getThemeVaryingTokens();
   const darkMap = new Map(resolvedDark.map(t => [t.name, t]));
   for (const lt of resolvedLight) {
@@ -164,6 +188,35 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     const lv = lt.primitiveReferences?.value ?? '';
     const dv = dt.primitiveReferences?.value ?? '';
     if (lv !== dv) themeVaryingTokens.add(lt.name);
+  }
+
+  // BASE-SCOPED theme-varying set for the INDEX (Spec 117 §4.1) — seeded EMPTY, populated
+  // ONLY from the base light-vs-dark resolved value diff. This is the SAME predicate the
+  // web base `:root` block uses to decide `light-dark()` emission, so the index's
+  // `themeVarying` flag binds to dist's base CSS by construction. It excludes WCAG-only
+  // override keys (which differ across the wcag THEME, not across base light/dark MODE) and
+  // is therefore DISTINCT from the registry-wide `themeVaryingTokens` above. Do NOT merge
+  // these two sets — that re-introduces the R5 over-marking (committed's stale 10).
+  const baseThemeVaryingTokens = new Set<string>();
+  for (const lt of resolvedLight) {
+    if (lt.category !== 'color') continue;
+    const dt = darkMap.get(lt.name);
+    if (!dt) continue;
+    const lv = lt.primitiveReferences?.value ?? '';
+    const dv = dt.primitiveReferences?.value ?? '';
+    if (lv !== dv) baseThemeVaryingTokens.add(lt.name);
+  }
+
+  // Per-primitive mode-resolved OKLCH for the index's R3 value readout. For OKLCH color
+  // primitives light === dark (the OKLCH model has no primitive-tier mode variance), so
+  // both halves carry the same metadata; the nested shape preserves the MCP value contract.
+  const primitiveOklch = new Map<string, import('./ModeResolvedTokens').PrimitiveOklchModes>();
+  for (const token of primitiveTokens) {
+    if (token.category !== 'color') continue;
+    const composed = composedColorMap.get(token.name);
+    if (!composed) continue;
+    const metadata = getOklchMetadata(composed);
+    primitiveOklch.set(token.name, { light: metadata, dark: metadata });
   }
 
   const results = generator.generateAll({
@@ -271,4 +324,14 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   }
 
   console.log('\n✨ Token file generation complete!');
+
+  // Return the single shared mode-resolved truth for the index. Note `themeVaryingTokens`
+  // here is the BASE-SCOPED set (distinct from the registry-wide `themeVaryingTokens` local
+  // passed to the non-web generators above) — see ModeResolvedTokens doc-comment.
+  return {
+    resolvedLight,
+    resolvedDark,
+    themeVaryingTokens: baseThemeVaryingTokens,
+    primitiveOklch,
+  };
 }

@@ -48,11 +48,14 @@ describe('TokenIndexReader', () => {
     });
 
     it('returns semantic token with correct platform paths', () => {
-      const entry = reader.lookup('color.feedback.info.text');
+      // color.structure.canvas is base light/dark mode-varying via dark override (Spec 117 §4).
+      // (color.feedback.info.text is a WCAG-only override — theme-varying, NOT base-mode
+      // varying — so it is correctly themeVarying:false in the index.)
+      const entry = reader.lookup('color.structure.canvas');
       expect(entry).not.toBeNull();
       expect(entry!.themeVarying).toBe(true);
-      expect(entry!.platforms.ios).toBe('theme.colorFeedbackInfoText');
-      expect(entry!.platforms.android).toBe('theme.color_feedback_info_text');
+      expect(entry!.platforms.ios).toBe('theme.colorStructureCanvas');
+      expect(entry!.platforms.android).toBe('theme.color_structure_canvas');
     });
   });
 

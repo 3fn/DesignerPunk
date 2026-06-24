@@ -9,7 +9,6 @@ jest.mock('../generateProductTokens');
 jest.mock('../../config/ConfigLoader');
 jest.mock('../resolveTokens');
 jest.mock('../loadComponentTokens');
-jest.mock('../themeVarying');
 jest.mock('../staleness');
 jest.mock('../../registries/ComponentTokenRegistry', () => ({
   ComponentTokenRegistry: { getAll: () => [] },
@@ -21,7 +20,6 @@ import { generateProductTokens } from '../generateProductTokens';
 import { loadConfig } from '../../config/ConfigLoader';
 import { resolveTokens } from '../resolveTokens';
 import { loadComponentTokens } from '../loadComponentTokens';
-import { computeThemeVaryingTokens } from '../themeVarying';
 import { isProductTokenStale } from '../staleness';
 import { runGenerate } from '../designerpunk';
 
@@ -31,8 +29,15 @@ const mockGenerateProductTokens = generateProductTokens as jest.Mock;
 const mockLoadConfig = loadConfig as jest.Mock;
 const mockResolveTokens = resolveTokens as jest.Mock;
 const mockLoadComponentTokens = loadComponentTokens as jest.Mock;
-const mockComputeThemeVaryingTokens = computeThemeVaryingTokens as jest.Mock;
 const mockIsStale = isProductTokenStale as jest.Mock;
+
+/** Minimal valid ModeResolvedTokens for mocking generateTokenFiles' return. */
+const makeModeResolved = (themeVaryingTokens = new Set<string>()) => ({
+  resolvedLight: [],
+  resolvedDark: [],
+  themeVaryingTokens,
+  primitiveOklch: new Map(),
+});
 
 describe('Backward Compatibility (Spec 114 R9)', () => {
   beforeEach(() => {
@@ -44,8 +49,7 @@ describe('Backward Compatibility (Spec 114 R9)', () => {
 
     mockResolveTokens.mockReturnValue({ primitiveTokens: [], semanticTokens: [] });
     mockLoadComponentTokens.mockReturnValue([]);
-    mockComputeThemeVaryingTokens.mockReturnValue(new Set());
-    mockGenerateTokenFiles.mockImplementation(() => {});
+    mockGenerateTokenFiles.mockReturnValue(makeModeResolved());
     mockGenerateTokenIndex.mockImplementation(() => {});
     mockGenerateProductTokens.mockImplementation(() => {});
   });
@@ -77,7 +81,10 @@ describe('Backward Compatibility (Spec 114 R9)', () => {
       mockLoadConfig.mockResolvedValue(packageModeConfig);
       const tokens = { primitiveTokens: [{ name: 'space100' }], semanticTokens: [{ name: 'color.x' }] };
       mockResolveTokens.mockReturnValue(tokens);
-      mockComputeThemeVaryingTokens.mockReturnValue(new Set(['color.x']));
+      // The base-scoped theme-varying set now flows from generateTokenFiles' shared return
+      // (Spec 117 Task 3), not a separate computeThemeVaryingTokens call.
+      const modeResolved = makeModeResolved(new Set(['color.x']));
+      mockGenerateTokenFiles.mockReturnValue(modeResolved);
 
       await runGenerate();
 
@@ -87,7 +94,7 @@ describe('Backward Compatibility (Spec 114 R9)', () => {
           primitiveTokens: tokens.primitiveTokens,
           semanticTokens: tokens.semanticTokens,
           componentTokens: [],
-          themeVaryingTokens: new Set(['color.x']),
+          modeResolved,
         })
       );
     });

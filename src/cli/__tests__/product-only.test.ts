@@ -16,7 +16,6 @@ jest.mock('../generateProductTokens');
 jest.mock('../../config/ConfigLoader');
 jest.mock('../resolveTokens');
 jest.mock('../loadComponentTokens');
-jest.mock('../themeVarying');
 jest.mock('../staleness');
 jest.mock('../../registries/ComponentTokenRegistry', () => ({
   ComponentTokenRegistry: { getAll: () => [] },

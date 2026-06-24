@@ -2,7 +2,7 @@
 
 **Date**: 2026-06-13
 **Spec**: 117 - Token-Index Generation Integrity
-**Status**: Implementation Planning — **post-checkpoint restructure** (Task 1.3 DecisionRecord ratified 2026-06-13); **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). Next actionable: **Task 3** (merged R3+R5 spine fix).
+**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Task 3 (merged R3+R5 spine fix) COMPLETE 2026-06-24.** Next actionable: **Task 4** (R4 component-token loading gate + N2) — its premise was empirically confirmed during Task 3 (package-mode `generate` zeroes `components.yaml`).
 **Dependencies**:
 - Spec 112 / 115 — Complete (this spec completes 112's token-index gap).
 - **Finding 2 (CLI tsx/ESM loader)** — **RESOLVED EXTERNALLY by Spec 118 Increment 1** (committed `041aaea8`). The one-line directory-import fix this spec originally folded in as Task 2 was empirically **false** (it only relocates the failure one hop down the barrel chain); the genuine unblock is 118's TS-aware config loader (Approach A) + a `require` condition on the `./config` export. The documented `generate` CLI now runs end-to-end, so Task 5.3's trust gate is **executable**. Authoritative correction: [`findings/118-closeout-note.md`](findings/118-closeout-note.md) (supersedes decision-record items 3 & 7). **Restored trust is config-load-path ONLY**; the raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until **118 Increment 3b** (out of 117's renewed scope).
@@ -63,11 +63,17 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
 
   **Scope note (carried):** the `--force`-swallow CLI papercut (`2026-06-10-npx-force-flag-swallowed`) remains OUT of scope — 5.3 invokes `node bin/designerpunk.js generate` directly.
 
-- [ ] 3. Token-Index OKLCH Color + Theme-Varying — MERGED Spine Fix (R3 + R5)
+- [x] 3. Token-Index OKLCH Color + Theme-Varying — MERGED Spine Fix (R3 + R5) — ✅ COMPLETE (2026-06-24)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive
   **Agent**: Ada
+
+  **Outcome:** Implemented as **Option B** (single shared mode-resolution source — `generateTokenFiles` returns `ModeResolvedTokens`, consumed by the index). R3 ✅ (OKLCH in index, consistent with dist; `rgba(` 216→16, all shadow-family — see scope note); R5 ✅ (`themeVarying` = the 5 dist base-mode keys, not committed's stale 10). Dist provably unchanged; full suite **8955 tests** + `tsc` green (re-verified in main loop). Artifacts regenerated via the **documented CLI** (118-unblocked). Detail → [`completion/task-3-completion.md`](completion/task-3-completion.md).
+
+  **R3 criterion scoping (ratified by Peter 2026-06-24):** "no `rgba`" is scoped to **OKLCH-migrated** color primitives. The 16 residual rgba are the shadow color family, which Spec 112 never migrated to OKLCH (no channel tokens; dist emits them as rgba too — so the index *matches* dist; **not** a divergence, **not** a manifest entry). Logged as [`.kiro/issues/2026-06-24-oklch-shadow-color-family-not-migrated.md`](../../issues/2026-06-24-oklch-shadow-color-family-not-migrated.md) (token-foundation follow-on).
+
+  **Follow-ups for Task 5:** (1) Task 5.1 R3 harness assertion must scope "no rgba" to `composedColorMap`-backed primitives. (2) Add an automated anti-conflation guard for the two distinct theme-varying sets (registry-wide 10 vs base-scoped 5), currently doc-comment-guarded only.
 
   **Merge basis (`sharedRootCauseConfirmed: true`):** the token-index generation path reads the collapsed `platforms.web.value` (single-mode rgba) for BOTH the color value (R3) and the light/dark comparison (R5), while the dist path reads the correct OKLCH **mode-resolved** source. One spine fix — *route the token-index path to the mode-resolved OKLCH source* — with **two readouts** (color value; theme-varying). Frame as "fix the shared upstream source; verify both R3 and R5 from it" — not "do R5 inside R3's mechanics."
 
@@ -87,9 +93,9 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
   **Primary Artifacts:** `src/generators/generateTokenIndex.ts`, `src/cli/themeVarying.ts` (+ mode-resolution wiring); regenerated `token-index/{primitives,semantics}.yaml`.
   **Completion Documentation:** Detailed `.../completion/task-3-completion.md`; Summary `docs/specs/.../task-3-summary.md`.
 
-  - [ ] 3.1 _Mechanics authored by Ada from the audit findings (R3 + R5 spine fix)._
+  - [x] 3.1 _Mechanics authored by Ada from the audit findings (R3 + R5 spine fix)._ — ✅ COMPLETE
     **Type**: Architecture · **Validation**: Tier 3 · **Agent**: Ada
-    - **Mechanics design AUTHORED (2026-06-24)** → [`findings/task-3-mechanics.md`](findings/task-3-mechanics.md). Main-loop verified the three load-bearing claims against source (canvas dark = semantic override via `dark/SemanticOverrides.ts:163`; OKLCH resolver ignores `mode` per `SemanticValueResolver.ts:24-31`; dist base-mode theme-varying set = the 5 `darkSemanticOverrides` keys, not committed's 10). **Pending Peter's ratification before implementation**; one residual runtime unknown to pin first (scope of dist's in-memory `themeVaryingTokens` Set — whether it includes WCAG registry keys).
+    - Mechanics design authored + ratified (Option B) → [`findings/task-3-mechanics.md`](findings/task-3-mechanics.md); the residual unknown was pinned by a live experiment (§4.1: registry-wide Set = stale 10; index requires a base-scoped 5-key set, pass-through unsafe). Implemented and verified (see parent outcome). The open "primitive-intrinsic vs override" question (line 81) resolved to **semantic-override**: OKLCH primitives are mode-invariant (resolver ignores `mode`), so mode variance lives at the semantic layer — the index reuses dist's semantic light-vs-dark diff.
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 5.1, 5.2, 5.3, 5.4_
 
 - [ ] 4. Component-Token Loading Gated on Source Presence (R4) + dist ComponentTokens (N2)

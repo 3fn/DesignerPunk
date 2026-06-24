@@ -3,6 +3,6 @@ description: Data visualization tokens
 
 tokens:
   dangerZoneBackground:
-    ref: color.feedback.info.text
-    description: Theme-varying color ref
+    ref: color.structure.canvas
+    description: Theme-varying color ref (base light/dark mode-varying via dark override)
     platforms: [web, ios, android]

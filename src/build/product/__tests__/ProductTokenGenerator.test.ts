@@ -76,9 +76,10 @@ describe('ProductTokenGenerator', () => {
       const result = gen.generate();
       const viz = result.categories.find(c => c.name === 'visualization')!;
       const token = viz.tokens.find(t => t.name === 'dangerZoneBackground')!;
+      // color.structure.canvas is base light/dark mode-varying via dark override (Spec 117 §4).
       expect(token.themeVarying).toBe(true);
       expect(token.resolvedPlatformPath).not.toBeNull();
-      expect(token.resolvedPlatformPath!.web).toBe('--color-feedback-info-text');
+      expect(token.resolvedPlatformPath!.web).toBe('--color-structure-canvas');
     });
 
     it('defaults platforms to all when not specified', () => {

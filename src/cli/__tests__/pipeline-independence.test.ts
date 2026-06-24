@@ -9,7 +9,6 @@ jest.mock('../generateProductTokens');
 jest.mock('../../config/ConfigLoader');
 jest.mock('../resolveTokens');
 jest.mock('../loadComponentTokens');
-jest.mock('../themeVarying');
 jest.mock('../../registries/ComponentTokenRegistry', () => ({
   ComponentTokenRegistry: { getAll: () => [] },
 }));
@@ -19,7 +18,6 @@ import { generateProductTokens } from '../generateProductTokens';
 import { loadConfig } from '../../config/ConfigLoader';
 import { resolveTokens } from '../resolveTokens';
 import { loadComponentTokens } from '../loadComponentTokens';
-import { computeThemeVaryingTokens } from '../themeVarying';
 import { runGenerate } from '../designerpunk';
 
 const mockGenerateTokenFiles = generateTokenFiles as jest.Mock;
@@ -27,7 +25,14 @@ const mockGenerateProductTokens = generateProductTokens as jest.Mock;
 const mockLoadConfig = loadConfig as jest.Mock;
 const mockResolveTokens = resolveTokens as jest.Mock;
 const mockLoadComponentTokens = loadComponentTokens as jest.Mock;
-const mockComputeThemeVaryingTokens = computeThemeVaryingTokens as jest.Mock;
+
+/** Minimal valid ModeResolvedTokens for mocking generateTokenFiles' return. */
+const emptyModeResolved = {
+  resolvedLight: [],
+  resolvedDark: [],
+  themeVaryingTokens: new Set<string>(),
+  primitiveOklch: new Map(),
+};
 
 describe('Pipeline Independence (Spec 114 R3)', () => {
   let mockExit: jest.SpyInstance;
@@ -56,8 +61,7 @@ describe('Pipeline Independence (Spec 114 R3)', () => {
     mockLoadConfig.mockResolvedValue(baseConfig);
     mockResolveTokens.mockReturnValue({ primitiveTokens: [], semanticTokens: [] });
     mockLoadComponentTokens.mockReturnValue([]);
-    mockComputeThemeVaryingTokens.mockReturnValue(new Set());
-    mockGenerateTokenFiles.mockImplementation(() => {});
+    mockGenerateTokenFiles.mockReturnValue(emptyModeResolved);
     mockGenerateProductTokens.mockImplementation(() => {});
   });
 

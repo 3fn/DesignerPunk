@@ -225,7 +225,7 @@ tokens:
       android: font_family_mono
   fontFamilyDisplay:
     family: fontFamily
-    value: 'Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+    value: Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
     formula: N/A - Categorical value
     platforms:
       web: '--font-family-display'
@@ -233,7 +233,7 @@ tokens:
       android: font_family_display
   fontFamilyBody:
     family: fontFamily
-    value: 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+    value: Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
     formula: N/A - Categorical value
     platforms:
       web: '--font-family-body'
@@ -611,11 +611,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(178, 188, 196, 1)'
-        wcag: 'rgba(178, 188, 196, 1)'
+        base: oklch(0.72 0.018 260)
+        wcag: oklch(0.72 0.018 260)
       dark:
-        base: 'rgba(178, 188, 196, 1)'
-        wcag: 'rgba(178, 188, 196, 1)'
+        base: oklch(0.72 0.018 260)
+        wcag: oklch(0.72 0.018 260)
+    oklch:
+      light:
+        l: 0.72
+        c: 0.018
+        h: 260
+        channels: &ref_0
+          hue: neutralHue
+          lightness: grayLightness100
+          chroma: grayChroma100
+      dark:
+        l: 0.72
+        c: 0.018
+        h: 260
+        channels: *ref_0
     formula: Systematic gray scale progression - lightest
     platforms:
       web: '--gray-100'
@@ -625,11 +639,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(94, 112, 124, 1)'
-        wcag: 'rgba(94, 112, 124, 1)'
+        base: oklch(0.62 0.02 260)
+        wcag: oklch(0.62 0.02 260)
       dark:
-        base: 'rgba(94, 112, 124, 1)'
-        wcag: 'rgba(94, 112, 124, 1)'
+        base: oklch(0.62 0.02 260)
+        wcag: oklch(0.62 0.02 260)
+    oklch:
+      light:
+        l: 0.62
+        c: 0.02
+        h: 260
+        channels: &ref_1
+          hue: neutralHue
+          lightness: grayLightness200
+          chroma: grayChroma200
+      dark:
+        l: 0.62
+        c: 0.02
+        h: 260
+        channels: *ref_1
     formula: Systematic gray scale progression - medium-light
     platforms:
       web: '--gray-200'
@@ -639,11 +667,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(38, 50, 58, 1)'
-        wcag: 'rgba(38, 50, 58, 1)'
+        base: oklch(0.52 0.02 260)
+        wcag: oklch(0.52 0.02 260)
       dark:
-        base: 'rgba(38, 50, 58, 1)'
-        wcag: 'rgba(38, 50, 58, 1)'
+        base: oklch(0.52 0.02 260)
+        wcag: oklch(0.52 0.02 260)
+    oklch:
+      light:
+        l: 0.52
+        c: 0.02
+        h: 260
+        channels: &ref_2
+          hue: neutralHue
+          lightness: grayLightness300
+          chroma: grayChroma300
+      dark:
+        l: 0.52
+        c: 0.02
+        h: 260
+        channels: *ref_2
     formula: Systematic gray scale progression - medium
     platforms:
       web: '--gray-300'
@@ -653,11 +695,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(24, 34, 40, 1)'
-        wcag: 'rgba(24, 34, 40, 1)'
+        base: oklch(0.42 0.018 260)
+        wcag: oklch(0.42 0.018 260)
       dark:
-        base: 'rgba(24, 34, 40, 1)'
-        wcag: 'rgba(24, 34, 40, 1)'
+        base: oklch(0.42 0.018 260)
+        wcag: oklch(0.42 0.018 260)
+    oklch:
+      light:
+        l: 0.42
+        c: 0.018
+        h: 260
+        channels: &ref_3
+          hue: neutralHue
+          lightness: grayLightness400
+          chroma: grayChroma400
+      dark:
+        l: 0.42
+        c: 0.018
+        h: 260
+        channels: *ref_3
     formula: Systematic gray scale progression - dark
     platforms:
       web: '--gray-400'
@@ -667,11 +723,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(16, 22, 26, 1)'
-        wcag: 'rgba(16, 22, 26, 1)'
+        base: oklch(0.32 0.015 260)
+        wcag: oklch(0.32 0.015 260)
       dark:
-        base: 'rgba(16, 22, 26, 1)'
-        wcag: 'rgba(16, 22, 26, 1)'
+        base: oklch(0.32 0.015 260)
+        wcag: oklch(0.32 0.015 260)
+    oklch:
+      light:
+        l: 0.32
+        c: 0.015
+        h: 260
+        channels: &ref_4
+          hue: neutralHue
+          lightness: grayLightness500
+          chroma: grayChroma500
+      dark:
+        l: 0.32
+        c: 0.015
+        h: 260
+        channels: *ref_4
     formula: Systematic gray scale progression - darkest
     platforms:
       web: '--gray-500'
@@ -681,11 +751,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(58, 58, 69, 1)'
-        wcag: 'rgba(82, 82, 92, 1)'
+        base: oklch(0.28 0.013 260)
+        wcag: oklch(0.28 0.013 260)
       dark:
-        base: 'rgba(58, 58, 69, 1)'
-        wcag: 'rgba(82, 82, 92, 1)'
+        base: oklch(0.28 0.013 260)
+        wcag: oklch(0.28 0.013 260)
+    oklch:
+      light:
+        l: 0.28
+        c: 0.013
+        h: 260
+        channels: &ref_5
+          hue: neutralHue
+          lightness: blackLightness100
+          chroma: blackChroma100
+      dark:
+        l: 0.28
+        c: 0.013
+        h: 260
+        channels: *ref_5
     formula: Systematic black scale progression - lightest
     platforms:
       web: '--black-100'
@@ -695,11 +779,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(34, 34, 42, 1)'
-        wcag: 'rgba(46, 46, 56, 1)'
+        base: oklch(0.21 0.01 260)
+        wcag: oklch(0.21 0.01 260)
       dark:
-        base: 'rgba(34, 34, 42, 1)'
-        wcag: 'rgba(46, 46, 56, 1)'
+        base: oklch(0.21 0.01 260)
+        wcag: oklch(0.21 0.01 260)
+    oklch:
+      light:
+        l: 0.21
+        c: 0.01
+        h: 260
+        channels: &ref_6
+          hue: neutralHue
+          lightness: blackLightness200
+          chroma: blackChroma200
+      dark:
+        l: 0.21
+        c: 0.01
+        h: 260
+        channels: *ref_6
     formula: Systematic black scale progression - medium
     platforms:
       web: '--black-200'
@@ -709,11 +807,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(10, 10, 15, 1)'
-        wcag: 'rgba(10, 10, 15, 1)'
+        base: oklch(0.14 0.008 260)
+        wcag: oklch(0.14 0.008 260)
       dark:
-        base: 'rgba(10, 10, 15, 1)'
-        wcag: 'rgba(10, 10, 15, 1)'
+        base: oklch(0.14 0.008 260)
+        wcag: oklch(0.14 0.008 260)
+    oklch:
+      light:
+        l: 0.14
+        c: 0.008
+        h: 260
+        channels: &ref_7
+          hue: neutralHue
+          lightness: blackLightness300
+          chroma: blackChroma300
+      dark:
+        l: 0.14
+        c: 0.008
+        h: 260
+        channels: *ref_7
     formula: Systematic black scale progression - dark
     platforms:
       web: '--black-300'
@@ -723,11 +835,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(6, 6, 10, 1)'
-        wcag: 'rgba(6, 6, 10, 1)'
+        base: oklch(0.07 0.004 260)
+        wcag: oklch(0.07 0.004 260)
       dark:
-        base: 'rgba(6, 6, 10, 1)'
-        wcag: 'rgba(6, 6, 10, 1)'
+        base: oklch(0.07 0.004 260)
+        wcag: oklch(0.07 0.004 260)
+    oklch:
+      light:
+        l: 0.07
+        c: 0.004
+        h: 260
+        channels: &ref_8
+          hue: neutralHue
+          lightness: blackLightness400
+          chroma: blackChroma400
+      dark:
+        l: 0.07
+        c: 0.004
+        h: 260
+        channels: *ref_8
     formula: Systematic black scale progression - very dark
     platforms:
       web: '--black-400'
@@ -737,11 +863,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(0, 0, 0, 1)'
-        wcag: 'rgba(0, 0, 0, 1)'
+        base: oklch(0 0 260)
+        wcag: oklch(0 0 260)
       dark:
-        base: 'rgba(0, 0, 0, 1)'
-        wcag: 'rgba(0, 0, 0, 1)'
+        base: oklch(0 0 260)
+        wcag: oklch(0 0 260)
+    oklch:
+      light:
+        l: 0
+        c: 0
+        h: 260
+        channels: &ref_9
+          hue: neutralHue
+          lightness: blackLightness500
+          chroma: blackChroma500
+      dark:
+        l: 0
+        c: 0
+        h: 260
+        channels: *ref_9
     formula: Systematic black scale progression - pure black
     platforms:
       web: '--black-500'
@@ -751,11 +891,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(255, 255, 255, 1)'
-        wcag: 'rgba(255, 255, 255, 1)'
+        base: oklch(1 0 260)
+        wcag: oklch(1 0 260)
       dark:
-        base: 'rgba(255, 255, 255, 1)'
-        wcag: 'rgba(255, 255, 255, 1)'
+        base: oklch(1 0 260)
+        wcag: oklch(1 0 260)
+    oklch:
+      light:
+        l: 1
+        c: 0
+        h: 260
+        channels: &ref_10
+          hue: neutralHue
+          lightness: whiteLightness100
+          chroma: whiteChroma100
+      dark:
+        l: 1
+        c: 0
+        h: 260
+        channels: *ref_10
     formula: Systematic white scale progression - pure white
     platforms:
       web: '--white-100'
@@ -765,11 +919,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(245, 245, 250, 1)'
-        wcag: 'rgba(245, 245, 250, 1)'
+        base: oklch(0.95 0.006 260)
+        wcag: oklch(0.95 0.006 260)
       dark:
-        base: 'rgba(245, 245, 250, 1)'
-        wcag: 'rgba(245, 245, 250, 1)'
+        base: oklch(0.95 0.006 260)
+        wcag: oklch(0.95 0.006 260)
+    oklch:
+      light:
+        l: 0.95
+        c: 0.006
+        h: 260
+        channels: &ref_11
+          hue: neutralHue
+          lightness: whiteLightness200
+          chroma: whiteChroma200
+      dark:
+        l: 0.95
+        c: 0.006
+        h: 260
+        channels: *ref_11
     formula: Systematic white scale progression - near white
     platforms:
       web: '--white-200'
@@ -779,11 +947,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(232, 232, 240, 1)'
-        wcag: 'rgba(232, 232, 240, 1)'
+        base: oklch(0.9 0.01 260)
+        wcag: oklch(0.9 0.01 260)
       dark:
-        base: 'rgba(232, 232, 240, 1)'
-        wcag: 'rgba(232, 232, 240, 1)'
+        base: oklch(0.9 0.01 260)
+        wcag: oklch(0.9 0.01 260)
+    oklch:
+      light:
+        l: 0.9
+        c: 0.01
+        h: 260
+        channels: &ref_12
+          hue: neutralHue
+          lightness: whiteLightness300
+          chroma: whiteChroma300
+      dark:
+        l: 0.9
+        c: 0.01
+        h: 260
+        channels: *ref_12
     formula: Systematic white scale progression - light gray-white
     platforms:
       web: '--white-300'
@@ -793,11 +975,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(197, 197, 213, 1)'
-        wcag: 'rgba(197, 197, 213, 1)'
+        base: oklch(0.85 0.013 260)
+        wcag: oklch(0.85 0.013 260)
       dark:
-        base: 'rgba(197, 197, 213, 1)'
-        wcag: 'rgba(197, 197, 213, 1)'
+        base: oklch(0.85 0.013 260)
+        wcag: oklch(0.85 0.013 260)
+    oklch:
+      light:
+        l: 0.85
+        c: 0.013
+        h: 260
+        channels: &ref_13
+          hue: neutralHue
+          lightness: whiteLightness400
+          chroma: whiteChroma400
+      dark:
+        l: 0.85
+        c: 0.013
+        h: 260
+        channels: *ref_13
     formula: Systematic white scale progression - medium gray-white
     platforms:
       web: '--white-400'
@@ -807,11 +1003,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(153, 153, 171, 1)'
-        wcag: 'rgba(153, 153, 171, 1)'
+        base: oklch(0.8 0.015 260)
+        wcag: oklch(0.8 0.015 260)
       dark:
-        base: 'rgba(153, 153, 171, 1)'
-        wcag: 'rgba(153, 153, 171, 1)'
+        base: oklch(0.8 0.015 260)
+        wcag: oklch(0.8 0.015 260)
+    oklch:
+      light:
+        l: 0.8
+        c: 0.015
+        h: 260
+        channels: &ref_14
+          hue: neutralHue
+          lightness: whiteLightness500
+          chroma: whiteChroma500
+      dark:
+        l: 0.8
+        c: 0.015
+        h: 260
+        channels: *ref_14
     formula: Systematic white scale progression - dark gray-white
     platforms:
       web: '--white-500'
@@ -821,11 +1031,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(254, 251, 204, 1)'
-        wcag: 'rgba(254, 251, 204, 1)'
+        base: oklch(0.98 0.061 107)
+        wcag: oklch(0.98 0.061 107)
       dark:
-        base: 'rgba(254, 251, 204, 1)'
-        wcag: 'rgba(252, 246, 128, 1)'
+        base: oklch(0.98 0.061 107)
+        wcag: oklch(0.98 0.061 107)
+    oklch:
+      light:
+        l: 0.98
+        c: 0.061
+        h: 107
+        channels: &ref_15
+          hue: yellowHue
+          lightness: yellowLightness100
+          chroma: yellowChroma100
+      dark:
+        l: 0.98
+        c: 0.061
+        h: 107
+        channels: *ref_15
     formula: Systematic yellow scale progression - lightest
     platforms:
       web: '--yellow-100'
@@ -835,11 +1059,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(252, 246, 128, 1)'
-        wcag: 'rgba(252, 246, 128, 1)'
+        base: oklch(0.9 0.14 107)
+        wcag: oklch(0.9 0.14 107)
       dark:
-        base: 'rgba(252, 246, 128, 1)'
-        wcag: 'rgba(249, 240, 2, 1)'
+        base: oklch(0.9 0.14 107)
+        wcag: oklch(0.9 0.14 107)
+    oklch:
+      light:
+        l: 0.9
+        c: 0.14
+        h: 107
+        channels: &ref_16
+          hue: yellowHue
+          lightness: yellowLightness200
+          chroma: yellowChroma200
+      dark:
+        l: 0.9
+        c: 0.14
+        h: 107
+        channels: *ref_16
     formula: Systematic yellow scale progression - medium-light
     platforms:
       web: '--yellow-200'
@@ -849,11 +1087,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(249, 240, 2, 1)'
-        wcag: 'rgba(249, 240, 2, 1)'
+        base: oklch(0.8 0.2 107)
+        wcag: oklch(0.8 0.2 107)
       dark:
-        base: 'rgba(249, 240, 2, 1)'
-        wcag: 'rgba(199, 192, 2, 1)'
+        base: oklch(0.8 0.2 107)
+        wcag: oklch(0.8 0.2 107)
+    oklch:
+      light:
+        l: 0.8
+        c: 0.2
+        h: 107
+        channels: &ref_17
+          hue: yellowHue
+          lightness: yellowLightness300
+          chroma: yellowChroma300
+      dark:
+        l: 0.8
+        c: 0.2
+        h: 107
+        channels: *ref_17
     formula: Systematic yellow scale progression - bright
     platforms:
       web: '--yellow-300'
@@ -863,11 +1115,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(199, 192, 2, 1)'
-        wcag: 'rgba(199, 192, 2, 1)'
+        base: oklch(0.68 0.169 107)
+        wcag: oklch(0.68 0.169 107)
       dark:
-        base: 'rgba(199, 192, 2, 1)'
-        wcag: 'rgba(143, 139, 1, 1)'
+        base: oklch(0.68 0.169 107)
+        wcag: oklch(0.68 0.169 107)
+    oklch:
+      light:
+        l: 0.68
+        c: 0.169
+        h: 107
+        channels: &ref_18
+          hue: yellowHue
+          lightness: yellowLightness400
+          chroma: yellowChroma400
+      dark:
+        l: 0.68
+        c: 0.169
+        h: 107
+        channels: *ref_18
     formula: Systematic yellow scale progression - dark
     platforms:
       web: '--yellow-400'
@@ -877,11 +1143,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(143, 139, 1, 1)'
-        wcag: 'rgba(143, 139, 1, 1)'
+        base: oklch(0.56 0.133 107)
+        wcag: oklch(0.56 0.133 107)
       dark:
-        base: 'rgba(143, 139, 1, 1)'
-        wcag: 'rgba(143, 139, 1, 1)'
+        base: oklch(0.56 0.133 107)
+        wcag: oklch(0.56 0.133 107)
+    oklch:
+      light:
+        l: 0.56
+        c: 0.133
+        h: 107
+        channels: &ref_19
+          hue: yellowHue
+          lightness: yellowLightness500
+          chroma: yellowChroma500
+      dark:
+        l: 0.56
+        c: 0.133
+        h: 107
+        channels: *ref_19
     formula: Systematic yellow scale progression - darkest
     platforms:
       web: '--yellow-500'
@@ -891,11 +1171,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(255, 229, 220, 1)'
-        wcag: 'rgba(255, 243, 224, 1)'
+        base: oklch(0.94 0.031 39.5)
+        wcag: oklch(0.94 0.031 39.5)
       dark:
-        base: 'rgba(255, 229, 220, 1)'
-        wcag: 'rgba(255, 217, 163, 1)'
+        base: oklch(0.94 0.031 39.5)
+        wcag: oklch(0.94 0.031 39.5)
+    oklch:
+      light:
+        l: 0.94
+        c: 0.031
+        h: 39.5
+        channels: &ref_20
+          hue: orangeHue
+          lightness: orangeLightness100
+          chroma: orangeChroma100
+      dark:
+        l: 0.94
+        c: 0.031
+        h: 39.5
+        channels: *ref_20
     formula: Systematic orange scale progression - lightest
     platforms:
       web: '--orange-100'
@@ -905,11 +1199,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(255, 184, 160, 1)'
-        wcag: 'rgba(245, 158, 0, 1)'
+        base: oklch(0.84 0.089 39.5)
+        wcag: oklch(0.84 0.089 39.5)
       dark:
-        base: 'rgba(255, 184, 160, 1)'
-        wcag: 'rgba(255, 184, 77, 1)'
+        base: oklch(0.84 0.089 39.5)
+        wcag: oklch(0.84 0.089 39.5)
+    oklch:
+      light:
+        l: 0.84
+        c: 0.089
+        h: 39.5
+        channels: &ref_21
+          hue: orangeHue
+          lightness: orangeLightness200
+          chroma: orangeChroma200
+      dark:
+        l: 0.84
+        c: 0.089
+        h: 39.5
+        channels: *ref_21
     formula: Systematic orange scale progression - medium-light
     platforms:
       web: '--orange-200'
@@ -919,11 +1227,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(255, 107, 53, 1)'
-        wcag: 'rgba(184, 117, 0, 1)'
+        base: oklch(0.7 0.193 39.5)
+        wcag: oklch(0.7 0.193 39.5)
       dark:
-        base: 'rgba(255, 107, 53, 1)'
-        wcag: 'rgba(217, 149, 0, 1)'
+        base: oklch(0.7 0.193 39.5)
+        wcag: oklch(0.7 0.193 39.5)
+    oklch:
+      light:
+        l: 0.7
+        c: 0.193
+        h: 39.5
+        channels: &ref_22
+          hue: orangeHue
+          lightness: orangeLightness300
+          chroma: orangeChroma300
+      dark:
+        l: 0.7
+        c: 0.193
+        h: 39.5
+        channels: *ref_22
     formula: Systematic orange scale progression - bright
     platforms:
       web: '--orange-300'
@@ -933,11 +1255,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(204, 85, 41, 1)'
-        wcag: 'rgba(140, 90, 0, 1)'
+        base: oklch(0.6 0.162 39.5)
+        wcag: oklch(0.6 0.162 39.5)
       dark:
-        base: 'rgba(204, 85, 41, 1)'
-        wcag: 'rgba(166, 112, 0, 1)'
+        base: oklch(0.6 0.162 39.5)
+        wcag: oklch(0.6 0.162 39.5)
+    oklch:
+      light:
+        l: 0.6
+        c: 0.162
+        h: 39.5
+        channels: &ref_23
+          hue: orangeHue
+          lightness: orangeLightness400
+          chroma: orangeChroma400
+      dark:
+        l: 0.6
+        c: 0.162
+        h: 39.5
+        channels: *ref_23
     formula: Systematic orange scale progression - dark
     platforms:
       web: '--orange-400'
@@ -947,11 +1283,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(143, 60, 29, 1)'
-        wcag: 'rgba(77, 49, 0, 1)'
+        base: oklch(0.46 0.121 39.5)
+        wcag: oklch(0.46 0.121 39.5)
       dark:
-        base: 'rgba(143, 60, 29, 1)'
-        wcag: 'rgba(92, 61, 0, 1)'
+        base: oklch(0.46 0.121 39.5)
+        wcag: oklch(0.46 0.121 39.5)
+    oklch:
+      light:
+        l: 0.46
+        c: 0.121
+        h: 39.5
+        channels: &ref_24
+          hue: orangeHue
+          lightness: orangeLightness500
+          chroma: orangeChroma500
+      dark:
+        l: 0.46
+        c: 0.121
+        h: 39.5
+        channels: *ref_24
     formula: Systematic orange scale progression - darkest
     platforms:
       web: '--orange-500'
@@ -961,11 +1311,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(243, 224, 255, 1)'
-        wcag: 'rgba(243, 224, 255, 1)'
+        base: oklch(0.93 0.046 310)
+        wcag: oklch(0.93 0.046 310)
       dark:
-        base: 'rgba(243, 224, 255, 1)'
-        wcag: 'rgba(243, 224, 255, 1)'
+        base: oklch(0.93 0.046 310)
+        wcag: oklch(0.93 0.046 310)
+    oklch:
+      light:
+        l: 0.93
+        c: 0.046
+        h: 310
+        channels: &ref_25
+          hue: purpleHue
+          lightness: purpleLightness100
+          chroma: purpleChroma100
+      dark:
+        l: 0.93
+        c: 0.046
+        h: 310
+        channels: *ref_25
     formula: Systematic purple scale progression - lightest
     platforms:
       web: '--purple-100'
@@ -975,11 +1339,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(217, 138, 255, 1)'
-        wcag: 'rgba(217, 138, 255, 1)'
+        base: oklch(0.76 0.179 310)
+        wcag: oklch(0.76 0.179 310)
       dark:
-        base: 'rgba(217, 138, 255, 1)'
-        wcag: 'rgba(217, 138, 255, 1)'
+        base: oklch(0.76 0.179 310)
+        wcag: oklch(0.76 0.179 310)
+    oklch:
+      light:
+        l: 0.76
+        c: 0.179
+        h: 310
+        channels: &ref_26
+          hue: purpleHue
+          lightness: purpleLightness200
+          chroma: purpleChroma200
+      dark:
+        l: 0.76
+        c: 0.179
+        h: 310
+        channels: *ref_26
     formula: Systematic purple scale progression - medium-light
     platforms:
       web: '--purple-200'
@@ -989,11 +1367,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(176, 38, 255, 1)'
-        wcag: 'rgba(176, 38, 255, 1)'
+        base: oklch(0.6 0.286 310)
+        wcag: oklch(0.6 0.286 310)
       dark:
-        base: 'rgba(176, 38, 255, 1)'
-        wcag: 'rgba(176, 38, 255, 1)'
+        base: oklch(0.6 0.286 310)
+        wcag: oklch(0.6 0.286 310)
+    oklch:
+      light:
+        l: 0.6
+        c: 0.286
+        h: 310
+        channels: &ref_27
+          hue: purpleHue
+          lightness: purpleLightness300
+          chroma: purpleChroma300
+      dark:
+        l: 0.6
+        c: 0.286
+        h: 310
+        channels: *ref_27
     formula: Systematic purple scale progression - primary brand
     platforms:
       web: '--purple-300'
@@ -1003,11 +1395,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(141, 30, 204, 1)'
-        wcag: 'rgba(141, 30, 204, 1)'
+        base: oklch(0.51 0.241 310)
+        wcag: oklch(0.51 0.241 310)
       dark:
-        base: 'rgba(141, 30, 204, 1)'
-        wcag: 'rgba(141, 30, 204, 1)'
+        base: oklch(0.51 0.241 310)
+        wcag: oklch(0.51 0.241 310)
+    oklch:
+      light:
+        l: 0.51
+        c: 0.241
+        h: 310
+        channels: &ref_28
+          hue: purpleHue
+          lightness: purpleLightness400
+          chroma: purpleChroma400
+      dark:
+        l: 0.51
+        c: 0.241
+        h: 310
+        channels: *ref_28
     formula: Systematic purple scale progression - dark
     platforms:
       web: '--purple-400'
@@ -1017,11 +1423,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(99, 21, 143, 1)'
-        wcag: 'rgba(99, 21, 143, 1)'
+        base: oklch(0.4 0.183 310)
+        wcag: oklch(0.4 0.183 310)
       dark:
-        base: 'rgba(99, 21, 143, 1)'
-        wcag: 'rgba(99, 21, 143, 1)'
+        base: oklch(0.4 0.183 310)
+        wcag: oklch(0.4 0.183 310)
+    oklch:
+      light:
+        l: 0.4
+        c: 0.183
+        h: 310
+        channels: &ref_29
+          hue: purpleHue
+          lightness: purpleLightness500
+          chroma: purpleChroma500
+      dark:
+        l: 0.4
+        c: 0.183
+        h: 310
+        channels: *ref_29
     formula: Systematic purple scale progression - darkest
     platforms:
       web: '--purple-500'
@@ -1031,11 +1451,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(255, 218, 232, 1)'
-        wcag: 'rgba(252, 228, 236, 1)'
+        base: oklch(0.92 0.045 10)
+        wcag: oklch(0.92 0.045 10)
       dark:
-        base: 'rgba(255, 218, 232, 1)'
-        wcag: 'rgba(255, 179, 209, 1)'
+        base: oklch(0.92 0.045 10)
+        wcag: oklch(0.92 0.045 10)
+    oklch:
+      light:
+        l: 0.92
+        c: 0.045
+        h: 10
+        channels: &ref_30
+          hue: pinkHue
+          lightness: pinkLightness100
+          chroma: pinkChroma100
+      dark:
+        l: 0.92
+        c: 0.045
+        h: 10
+        channels: *ref_30
     formula: Systematic pink scale progression - lightest
     platforms:
       web: '--pink-100'
@@ -1045,11 +1479,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(255, 130, 180, 1)'
-        wcag: 'rgba(233, 30, 99, 1)'
+        base: oklch(0.76 0.16 10)
+        wcag: oklch(0.76 0.16 10)
       dark:
-        base: 'rgba(255, 130, 180, 1)'
-        wcag: 'rgba(255, 107, 163, 1)'
+        base: oklch(0.76 0.16 10)
+        wcag: oklch(0.76 0.16 10)
+    oklch:
+      light:
+        l: 0.76
+        c: 0.16
+        h: 10
+        channels: &ref_31
+          hue: pinkHue
+          lightness: pinkLightness200
+          chroma: pinkChroma200
+      dark:
+        l: 0.76
+        c: 0.16
+        h: 10
+        channels: *ref_31
     formula: Systematic pink scale progression - medium-light
     platforms:
       web: '--pink-200'
@@ -1059,11 +1507,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(255, 42, 109, 1)'
-        wcag: 'rgba(194, 24, 91, 1)'
+        base: oklch(0.65 0.242 10)
+        wcag: oklch(0.65 0.242 10)
       dark:
-        base: 'rgba(255, 42, 109, 1)'
-        wcag: 'rgba(230, 48, 117, 1)'
+        base: oklch(0.65 0.242 10)
+        wcag: oklch(0.65 0.242 10)
+    oklch:
+      light:
+        l: 0.65
+        c: 0.242
+        h: 10
+        channels: &ref_32
+          hue: pinkHue
+          lightness: pinkLightness300
+          chroma: pinkChroma300
+      dark:
+        l: 0.65
+        c: 0.242
+        h: 10
+        channels: *ref_32
     formula: Systematic pink scale progression - base
     platforms:
       web: '--pink-300'
@@ -1073,11 +1535,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(204, 34, 87, 1)'
-        wcag: 'rgba(136, 14, 79, 1)'
+        base: oklch(0.55 0.203 10)
+        wcag: oklch(0.55 0.203 10)
       dark:
-        base: 'rgba(204, 34, 87, 1)'
-        wcag: 'rgba(179, 38, 89, 1)'
+        base: oklch(0.55 0.203 10)
+        wcag: oklch(0.55 0.203 10)
+    oklch:
+      light:
+        l: 0.55
+        c: 0.203
+        h: 10
+        channels: &ref_33
+          hue: pinkHue
+          lightness: pinkLightness400
+          chroma: pinkChroma400
+      dark:
+        l: 0.55
+        c: 0.203
+        h: 10
+        channels: *ref_33
     formula: Systematic pink scale progression - dark
     platforms:
       web: '--pink-400'
@@ -1087,11 +1563,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(128, 21, 55, 1)'
-        wcag: 'rgba(77, 8, 41, 1)'
+        base: oklch(0.4 0.141 10)
+        wcag: oklch(0.4 0.141 10)
       dark:
-        base: 'rgba(128, 21, 55, 1)'
-        wcag: 'rgba(92, 26, 51, 1)'
+        base: oklch(0.4 0.141 10)
+        wcag: oklch(0.4 0.141 10)
+    oklch:
+      light:
+        l: 0.4
+        c: 0.141
+        h: 10
+        channels: &ref_34
+          hue: pinkHue
+          lightness: pinkLightness500
+          chroma: pinkChroma500
+      dark:
+        l: 0.4
+        c: 0.141
+        h: 10
+        channels: *ref_34
     formula: Systematic pink scale progression - darkest
     platforms:
       web: '--pink-500'
@@ -1101,11 +1591,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(230, 255, 245, 1)'
-        wcag: 'rgba(232, 245, 233, 1)'
+        base: oklch(0.97 0.029 154)
+        wcag: oklch(0.97 0.029 154)
       dark:
-        base: 'rgba(230, 255, 245, 1)'
-        wcag: 'rgba(179, 255, 179, 1)'
+        base: oklch(0.97 0.029 154)
+        wcag: oklch(0.97 0.029 154)
+    oklch:
+      light:
+        l: 0.97
+        c: 0.029
+        h: 154
+        channels: &ref_35
+          hue: greenHue
+          lightness: greenLightness100
+          chroma: greenChroma100
+      dark:
+        l: 0.97
+        c: 0.029
+        h: 154
+        channels: *ref_35
     formula: Systematic green scale progression - lightest
     platforms:
       web: '--green-100'
@@ -1115,11 +1619,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(128, 255, 187, 1)'
-        wcag: 'rgba(76, 175, 80, 1)'
+        base: oklch(0.88 0.149 154)
+        wcag: oklch(0.88 0.149 154)
       dark:
-        base: 'rgba(128, 255, 187, 1)'
-        wcag: 'rgba(102, 255, 102, 1)'
+        base: oklch(0.88 0.149 154)
+        wcag: oklch(0.88 0.149 154)
+    oklch:
+      light:
+        l: 0.88
+        c: 0.149
+        h: 154
+        channels: &ref_36
+          hue: greenHue
+          lightness: greenLightness200
+          chroma: greenChroma200
+      dark:
+        l: 0.88
+        c: 0.149
+        h: 154
+        channels: *ref_36
     formula: Systematic green scale progression - medium-light
     platforms:
       web: '--green-200'
@@ -1129,11 +1647,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(51, 255, 153, 1)'
-        wcag: 'rgba(56, 142, 60, 1)'
+        base: oklch(0.78 0.208 154)
+        wcag: oklch(0.78 0.208 154)
       dark:
-        base: 'rgba(51, 255, 153, 1)'
-        wcag: 'rgba(51, 224, 51, 1)'
+        base: oklch(0.78 0.208 154)
+        wcag: oklch(0.78 0.208 154)
+    oklch:
+      light:
+        l: 0.78
+        c: 0.208
+        h: 154
+        channels: &ref_37
+          hue: greenHue
+          lightness: greenLightness300
+          chroma: greenChroma300
+      dark:
+        l: 0.78
+        c: 0.208
+        h: 154
+        channels: *ref_37
     formula: Systematic green scale progression - bright
     platforms:
       web: '--green-300'
@@ -1143,11 +1675,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(0, 255, 136, 1)'
-        wcag: 'rgba(27, 94, 32, 1)'
+        base: oklch(0.66 0.18 154)
+        wcag: oklch(0.66 0.18 154)
       dark:
-        base: 'rgba(0, 255, 136, 1)'
-        wcag: 'rgba(38, 179, 38, 1)'
+        base: oklch(0.66 0.18 154)
+        wcag: oklch(0.66 0.18 154)
+    oklch:
+      light:
+        l: 0.66
+        c: 0.18
+        h: 154
+        channels: &ref_38
+          hue: greenHue
+          lightness: greenLightness400
+          chroma: greenChroma400
+      dark:
+        l: 0.66
+        c: 0.18
+        h: 154
+        channels: *ref_38
     formula: Systematic green scale progression - strong
     platforms:
       web: '--green-400'
@@ -1157,11 +1703,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(0, 204, 110, 1)'
-        wcag: 'rgba(13, 48, 16, 1)'
+        base: oklch(0.54 0.14 154)
+        wcag: oklch(0.54 0.14 154)
       dark:
-        base: 'rgba(0, 204, 110, 1)'
-        wcag: 'rgba(20, 89, 20, 1)'
+        base: oklch(0.54 0.14 154)
+        wcag: oklch(0.54 0.14 154)
+    oklch:
+      light:
+        l: 0.54
+        c: 0.14
+        h: 154
+        channels: &ref_39
+          hue: greenHue
+          lightness: greenLightness500
+          chroma: greenChroma500
+      dark:
+        l: 0.54
+        c: 0.14
+        h: 154
+        channels: *ref_39
     formula: Systematic green scale progression - darkest/glow
     platforms:
       web: '--green-500'
@@ -1171,11 +1731,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(204, 251, 255, 1)'
-        wcag: 'rgba(204, 251, 255, 1)'
+        base: oklch(0.96 0.048 202.5)
+        wcag: oklch(0.96 0.048 202.5)
       dark:
-        base: 'rgba(204, 251, 255, 1)'
-        wcag: 'rgba(204, 251, 255, 1)'
+        base: oklch(0.96 0.048 202.5)
+        wcag: oklch(0.96 0.048 202.5)
+    oklch:
+      light:
+        l: 0.96
+        c: 0.048
+        h: 202.5
+        channels: &ref_40
+          hue: cyanHue
+          lightness: cyanLightness100
+          chroma: cyanChroma100
+      dark:
+        l: 0.96
+        c: 0.048
+        h: 202.5
+        channels: *ref_40
     formula: Systematic cyan scale progression - lightest
     platforms:
       web: '--cyan-100'
@@ -1185,11 +1759,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(128, 246, 255, 1)'
-        wcag: 'rgba(128, 246, 255, 1)'
+        base: oklch(0.87 0.108 202.5)
+        wcag: oklch(0.87 0.108 202.5)
       dark:
-        base: 'rgba(128, 246, 255, 1)'
-        wcag: 'rgba(128, 246, 255, 1)'
+        base: oklch(0.87 0.108 202.5)
+        wcag: oklch(0.87 0.108 202.5)
+    oklch:
+      light:
+        l: 0.87
+        c: 0.108
+        h: 202.5
+        channels: &ref_41
+          hue: cyanHue
+          lightness: cyanLightness200
+          chroma: cyanChroma200
+      dark:
+        l: 0.87
+        c: 0.108
+        h: 202.5
+        channels: *ref_41
     formula: Systematic cyan scale progression - medium-light
     platforms:
       web: '--cyan-200'
@@ -1199,11 +1787,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(0, 240, 255, 1)'
-        wcag: 'rgba(0, 240, 255, 1)'
+        base: oklch(0.76 0.148 202.5)
+        wcag: oklch(0.76 0.148 202.5)
       dark:
-        base: 'rgba(0, 240, 255, 1)'
-        wcag: 'rgba(0, 240, 255, 1)'
+        base: oklch(0.76 0.148 202.5)
+        wcag: oklch(0.76 0.148 202.5)
+    oklch:
+      light:
+        l: 0.76
+        c: 0.148
+        h: 202.5
+        channels: &ref_42
+          hue: cyanHue
+          lightness: cyanLightness300
+          chroma: cyanChroma300
+      dark:
+        l: 0.76
+        c: 0.148
+        h: 202.5
+        channels: *ref_42
     formula: Systematic cyan scale progression - tech primary
     platforms:
       web: '--cyan-300'
@@ -1213,11 +1815,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(0, 192, 204, 1)'
-        wcag: 'rgba(0, 192, 204, 1)'
+        base: oklch(0.64 0.125 202.5)
+        wcag: oklch(0.64 0.125 202.5)
       dark:
-        base: 'rgba(0, 192, 204, 1)'
-        wcag: 'rgba(0, 192, 204, 1)'
+        base: oklch(0.64 0.125 202.5)
+        wcag: oklch(0.64 0.125 202.5)
+    oklch:
+      light:
+        l: 0.64
+        c: 0.125
+        h: 202.5
+        channels: &ref_43
+          hue: cyanHue
+          lightness: cyanLightness400
+          chroma: cyanChroma400
+      dark:
+        l: 0.64
+        c: 0.125
+        h: 202.5
+        channels: *ref_43
     formula: Systematic cyan scale progression - dark
     platforms:
       web: '--cyan-400'
@@ -1227,11 +1843,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(0, 136, 143, 1)'
-        wcag: 'rgba(0, 136, 143, 1)'
+        base: oklch(0.52 0.097 202.5)
+        wcag: oklch(0.52 0.097 202.5)
       dark:
-        base: 'rgba(0, 136, 143, 1)'
-        wcag: 'rgba(0, 136, 143, 1)'
+        base: oklch(0.52 0.097 202.5)
+        wcag: oklch(0.52 0.097 202.5)
+    oklch:
+      light:
+        l: 0.52
+        c: 0.097
+        h: 202.5
+        channels: &ref_44
+          hue: cyanHue
+          lightness: cyanLightness500
+          chroma: cyanChroma500
+      dark:
+        l: 0.52
+        c: 0.097
+        h: 202.5
+        channels: *ref_44
     formula: Systematic cyan scale progression - darkest
     platforms:
       web: '--cyan-500'
@@ -1241,11 +1871,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(217, 232, 234, 1)'
-        wcag: 'rgba(217, 232, 234, 1)'
+        base: oklch(0.92 0.035 209)
+        wcag: oklch(0.92 0.035 209)
       dark:
-        base: 'rgba(217, 232, 234, 1)'
-        wcag: 'rgba(217, 232, 234, 1)'
+        base: oklch(0.92 0.035 209)
+        wcag: oklch(0.92 0.035 209)
+    oklch:
+      light:
+        l: 0.92
+        c: 0.035
+        h: 209
+        channels: &ref_45
+          hue: tealHue
+          lightness: tealLightness100
+          chroma: tealChroma100
+      dark:
+        l: 0.92
+        c: 0.035
+        h: 209
+        channels: *ref_45
     formula: Systematic teal scale progression - lightest
     platforms:
       web: '--teal-100'
@@ -1255,11 +1899,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(77, 155, 165, 1)'
-        wcag: 'rgba(77, 155, 165, 1)'
+        base: oklch(0.72 0.1 209)
+        wcag: oklch(0.72 0.1 209)
       dark:
-        base: 'rgba(77, 155, 165, 1)'
-        wcag: 'rgba(77, 155, 165, 1)'
+        base: oklch(0.72 0.1 209)
+        wcag: oklch(0.72 0.1 209)
+    oklch:
+      light:
+        l: 0.72
+        c: 0.1
+        h: 209
+        channels: &ref_46
+          hue: tealHue
+          lightness: tealLightness200
+          chroma: tealChroma200
+      dark:
+        l: 0.72
+        c: 0.1
+        h: 209
+        channels: *ref_46
     formula: Systematic teal scale progression - medium-light
     platforms:
       web: '--teal-200'
@@ -1269,11 +1927,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(26, 83, 92, 1)'
-        wcag: 'rgba(26, 83, 92, 1)'
+        base: oklch(0.52 0.08 209)
+        wcag: oklch(0.52 0.08 209)
       dark:
-        base: 'rgba(26, 83, 92, 1)'
-        wcag: 'rgba(0, 240, 255, 1)'
+        base: oklch(0.52 0.08 209)
+        wcag: oklch(0.52 0.08 209)
+    oklch:
+      light:
+        l: 0.52
+        c: 0.08
+        h: 209
+        channels: &ref_47
+          hue: tealHue
+          lightness: tealLightness300
+          chroma: tealChroma300
+      dark:
+        l: 0.52
+        c: 0.08
+        h: 209
+        channels: *ref_47
     formula: Systematic teal scale progression - secondary UI
     platforms:
       web: '--teal-300'
@@ -1283,11 +1955,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(21, 66, 74, 1)'
-        wcag: 'rgba(21, 66, 74, 1)'
+        base: oklch(0.38 0.06 209)
+        wcag: oklch(0.38 0.06 209)
       dark:
-        base: 'rgba(21, 66, 74, 1)'
-        wcag: 'rgba(21, 66, 74, 1)'
+        base: oklch(0.38 0.06 209)
+        wcag: oklch(0.38 0.06 209)
+    oklch:
+      light:
+        l: 0.38
+        c: 0.06
+        h: 209
+        channels: &ref_48
+          hue: tealHue
+          lightness: tealLightness400
+          chroma: tealChroma400
+      dark:
+        l: 0.38
+        c: 0.06
+        h: 209
+        channels: *ref_48
     formula: Systematic teal scale progression - dark
     platforms:
       web: '--teal-400'
@@ -1297,11 +1983,25 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(15, 46, 51, 1)'
-        wcag: 'rgba(15, 46, 51, 1)'
+        base: oklch(0.28 0.045 209)
+        wcag: oklch(0.28 0.045 209)
       dark:
-        base: 'rgba(15, 46, 51, 1)'
-        wcag: 'rgba(15, 46, 51, 1)'
+        base: oklch(0.28 0.045 209)
+        wcag: oklch(0.28 0.045 209)
+    oklch:
+      light:
+        l: 0.28
+        c: 0.045
+        h: 209
+        channels: &ref_49
+          hue: tealHue
+          lightness: tealLightness500
+          chroma: tealChroma500
+      dark:
+        l: 0.28
+        c: 0.045
+        h: 209
+        channels: *ref_49
     formula: Systematic teal scale progression - darkest
     platforms:
       web: '--teal-500'
@@ -1311,12 +2011,12 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(0, 0, 0, 1)'
-        wcag: 'rgba(0, 0, 0, 1)'
+        base: rgba(0, 0, 0, 1)
+        wcag: rgba(0, 0, 0, 1)
       dark:
-        base: 'rgba(0, 0, 0, 1)'
-        wcag: 'rgba(0, 0, 0, 1)'
-    formula: 'Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic'
+        base: rgba(0, 0, 0, 1)
+        wcag: rgba(0, 0, 0, 1)
+    formula: Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic
     platforms:
       web: '--shadow-black-100'
       ios: shadowBlack100
@@ -1325,11 +2025,11 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(20, 25, 40, 1)'
-        wcag: 'rgba(20, 25, 40, 1)'
+        base: rgba(20, 25, 40, 1)
+        wcag: rgba(20, 25, 40, 1)
       dark:
-        base: 'rgba(20, 25, 40, 1)'
-        wcag: 'rgba(20, 25, 40, 1)'
+        base: rgba(20, 25, 40, 1)
+        wcag: rgba(20, 25, 40, 1)
     formula: Systematic shadow color family - blue-tinted gray for sunrise/sunset lighting - mode-agnostic
     platforms:
       web: '--shadow-blue-100'
@@ -1339,11 +2039,11 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(25, 20, 15, 1)'
-        wcag: 'rgba(25, 20, 15, 1)'
+        base: rgba(25, 20, 15, 1)
+        wcag: rgba(25, 20, 15, 1)
       dark:
-        base: 'rgba(25, 20, 15, 1)'
-        wcag: 'rgba(25, 20, 15, 1)'
+        base: rgba(25, 20, 15, 1)
+        wcag: rgba(25, 20, 15, 1)
     formula: Systematic shadow color family - warm-tinted gray for cool lighting environments - mode-agnostic
     platforms:
       web: '--shadow-orange-100'
@@ -1353,11 +2053,11 @@ tokens:
     family: color
     value:
       light:
-        base: 'rgba(15, 20, 30, 1)'
-        wcag: 'rgba(15, 20, 30, 1)'
+        base: rgba(15, 20, 30, 1)
+        wcag: rgba(15, 20, 30, 1)
       dark:
-        base: 'rgba(15, 20, 30, 1)'
-        wcag: 'rgba(15, 20, 30, 1)'
+        base: rgba(15, 20, 30, 1)
+        wcag: rgba(15, 20, 30, 1)
     formula: Systematic shadow color family - blue-gray for ambient/overcast conditions - mode-agnostic
     platforms:
       web: '--shadow-gray-100'
@@ -1797,7 +2497,7 @@ tokens:
       android: Duration.Duration350
   easingStandard:
     family: easing
-    value: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
+    value: cubic-bezier(0.4, 0.0, 0.2, 1)
     formula: 'Material Design standard curve: cubic-bezier(0.4, 0.0, 0.2, 1)'
     platforms:
       web: '--easing-standard'
@@ -1805,7 +2505,7 @@ tokens:
       android: Easing.EasingStandard
   easingDecelerate:
     family: easing
-    value: 'cubic-bezier(0.0, 0.0, 0.2, 1)'
+    value: cubic-bezier(0.0, 0.0, 0.2, 1)
     formula: 'Material Design deceleration curve: cubic-bezier(0.0, 0.0, 0.2, 1)'
     platforms:
       web: '--easing-decelerate'
@@ -1813,7 +2513,7 @@ tokens:
       android: Easing.EasingDecelerate
   easingAccelerate:
     family: easing
-    value: 'cubic-bezier(0.4, 0.0, 1, 1)'
+    value: cubic-bezier(0.4, 0.0, 1, 1)
     formula: 'Material Design acceleration curve: cubic-bezier(0.4, 0.0, 1, 1)'
     platforms:
       web: '--easing-accelerate'
@@ -1854,7 +2554,7 @@ tokens:
   scale100:
     family: scale
     value: 1
-    formula: 'base × 1 = 1.00 × 1 = 1.00 (baseline, no transformation)'
+    formula: base × 1 = 1.00 × 1 = 1.00 (baseline, no transformation)
     platforms:
       web: '--scale-100'
       ios: Scale.scale100

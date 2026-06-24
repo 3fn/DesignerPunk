@@ -24,7 +24,6 @@ import { runInit } from './init';
 import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
-import { computeThemeVaryingTokens } from './themeVarying';
 import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
 import { runSync } from './sync';
 
@@ -134,15 +133,15 @@ export async function runGenerate(force = false) {
 
   // --- System Pipeline ---
   try {
-    generateTokenFiles(tokens, config);
-
-    const themeVaryingTokens = computeThemeVaryingTokens(config, tokens.semanticTokens, tokens.primitiveTokens);
+    // Single shared mode resolution (Spec 117 Task 3): generateTokenFiles writes dist AND
+    // returns the resolved truth; the index consumes the SAME object — no re-derivation.
+    const modeResolved = generateTokenFiles(tokens, config);
 
     generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
-      themeVaryingTokens,
+      modeResolved,
     });
     console.log('✅ System tokens generated');
   } catch (err) {
