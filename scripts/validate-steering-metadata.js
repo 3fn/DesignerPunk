@@ -86,7 +86,9 @@ const ADDITIONAL_TASK_TYPES = [
   'token-creation',  // Spec 102: added for docs about token creation workflows (1 doc)
   'styling',  // Spec 102: added for Token-Quick-Reference (referenced during styling tasks)
   'integrations',  // Spec 102: added for docs about integration work (1 doc)
-  'accessibility-compliance'  // Spec 102: added for docs about accessibility compliance (1 doc)
+  'accessibility-compliance',  // Spec 102: added for docs about accessibility compliance (1 doc)
+  'screen-implementation',  // Implementation counterpart to screen-specification (parallel to component-implementation) — product-screen implementation work (the `data` agent's remit); used by Web-Authoring-Standards.md
+  'product-token-authoring'  // Product-side token authoring (Ada's product-token remit) — used by Token-Family-Color.md, Web-Authoring-Standards.md, platform-implementation-guidelines.md
 ];
 
 const ALL_TASK_TYPES = [...CORE_TASK_TYPES, ...ADDITIONAL_TASK_TYPES];
