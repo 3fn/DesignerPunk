@@ -3,7 +3,7 @@ import * as path from 'path';
 import { extractMetadata } from './metadata-parser';
 import { extractFrontmatterInfo } from './frontmatter-parser';
 import { extractHeadingStructure } from './heading-parser';
-import { extractSection } from './section-parser';
+import { resolveSection, SectionLookup } from './section-parser';
 import { extractCrossReferences } from './cross-ref-parser';
 import { estimateTokenCount } from '../utils/token-estimator';
 import { determineIndexHealth } from './index-health';
@@ -210,33 +210,83 @@ export class DocumentIndexer {
   }
 
   /**
-   * Get specific section by heading
-   * Returns section content with parent context
-   * 
+   * Get specific section by heading (back-compat signature).
+   * Returns section content with parent context, now additionally carrying the
+   * stable `sectionId` and `siblingHeadings` adjacency cue (Spec 121 Req 5).
+   *
+   * NOTE: this overload preserves the legacy "heading only" contract. For a
+   * NON-UNIQUE heading it throws an AmbiguousHeading error (the Finding-3 fix)
+   * rather than silently returning the first match. Use `getSectionAddressed`
+   * with `parent`/`sectionId` to disambiguate.
+   *
    * @param filePath - Path to document
    * @param heading - Section heading to retrieve
    */
   getSection(filePath: string, heading: string): Section {
-    const content = this.getDocumentContent(filePath);
-    const section = extractSection(content, heading, filePath);
+    return this.getSectionAddressed(filePath, { heading });
+  }
 
-    if (!section) {
-      // Section not found - provide helpful error with available sections
-      const outline = extractHeadingStructure(content);
-      const availableSections = outline.map(s => s.heading);
-      throw new Error(
-        `Section "${heading}" not found in ${filePath}. ` +
-        `Available sections: ${availableSections.join(', ')}`
-      );
+  /**
+   * Get specific section with optional disambiguation (Spec 121 Req 5).
+   *
+   * Resolution:
+   *   - `sectionId` (stable positional ID) — resolves a specific occurrence,
+   *     stable across heading-string drift (Req 5.2 / Finding 2).
+   *   - `heading` (+ optional `parent`) — disambiguates a non-unique heading by
+   *     parent context (Req 5.1). A non-unique heading with NO disambiguator
+   *     throws an AmbiguousHeading error listing candidate parents/sectionIds
+   *     instead of silently returning the first match (Req 5.1 / Finding 3).
+   *
+   * The returned Section carries `siblingHeadings` (Req 5.4 / Finding 1).
+   *
+   * @param filePath - Path to document
+   * @param opts - { heading?, parent?, sectionId? }
+   */
+  getSectionAddressed(
+    filePath: string,
+    opts: { heading?: string; parent?: string; sectionId?: string },
+  ): Section {
+    const content = this.getDocumentContent(filePath);
+    const lookup: SectionLookup = resolveSection(content, filePath, opts);
+
+    if (lookup.kind === 'section') {
+      return lookup.section;
     }
 
-    return {
-      path: filePath,
-      heading: section.heading,
-      content: section.content,
-      parentHeadings: section.parentHeadings,
-      tokenCount: section.tokenCount
-    };
+    if (lookup.kind === 'ambiguous') {
+      // Finding 3: signal ambiguity + list candidate occurrences rather than
+      // silently returning the first match.
+      const candidateLines = lookup.candidates
+        .map(
+          (c) =>
+            `  - sectionId: ${c.sectionId}` +
+            (c.parent ? ` (parent: "${c.parent}")` : ' (top-level, no parent)'),
+        )
+        .join('\n');
+      const error = new Error(
+        `Heading "${lookup.heading}" is ambiguous in ${filePath}: it occurs ` +
+        `${lookup.candidates.length} times. Disambiguate with "parent" or ` +
+        `"sectionId". Candidates:\n${candidateLines}`,
+      );
+      (error as any).errorType = 'AmbiguousHeading';
+      (error as any).heading = lookup.heading;
+      (error as any).candidates = lookup.candidates;
+      throw error;
+    }
+
+    // not_found — provide helpful error with available sections.
+    const outline = extractHeadingStructure(content);
+    const availableSections = outline.map((s) => s.heading);
+    const what = opts.sectionId
+      ? `Section id "${opts.sectionId}"`
+      : `Section "${opts.heading}"` + (opts.parent ? ` under parent "${opts.parent}"` : '');
+    const error = new Error(
+      `${what} not found in ${filePath}. ` +
+      `Available sections: ${availableSections.join(', ')}`,
+    );
+    (error as any).errorType = 'SectionNotFound';
+    (error as any).availableHeadings = availableSections;
+    throw error;
   }
 
   /**

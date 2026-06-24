@@ -29,6 +29,7 @@ import {
   isGetDocumentSummaryError,
   isGetDocumentFullError,
   isGetSectionError,
+  isGetSectionAmbiguous,
   isListCrossReferencesError,
   isValidateMetadataError,
 } from '../../src/tools';
@@ -296,7 +297,7 @@ describe('End-to-End AI Agent Workflow Tests', () => {
 
       // Step 3: Get specific section for component patterns
       const sectionResult = handleGetSection(queryEngine, componentGuide!, 'Component Patterns (Conditional Loading)');
-      if (!isGetSectionError(sectionResult)) {
+      if (!isGetSectionError(sectionResult) && !isGetSectionAmbiguous(sectionResult)) {
         execution.steps.push({
           action: 'get_section',
           tokensUsed: sectionResult.section.tokenCount,
@@ -308,7 +309,7 @@ describe('End-to-End AI Agent Workflow Tests', () => {
 
       // Step 4: Get token usage section
       const tokenSectionResult = handleGetSection(queryEngine, componentGuide!, 'Token Usage (Conditional Loading)');
-      if (!isGetSectionError(tokenSectionResult)) {
+      if (!isGetSectionError(tokenSectionResult) && !isGetSectionAmbiguous(tokenSectionResult)) {
         execution.steps.push({
           action: 'get_section',
           tokensUsed: tokenSectionResult.section.tokenCount,
@@ -378,7 +379,7 @@ describe('End-to-End AI Agent Workflow Tests', () => {
 
       // Step 3: Get spec planning section
       const sectionResult = handleGetSection(queryEngine, specStandards!, 'Spec Planning (Conditional Loading)');
-      if (!isGetSectionError(sectionResult)) {
+      if (!isGetSectionError(sectionResult) && !isGetSectionAmbiguous(sectionResult)) {
         execution.steps.push({
           action: 'get_section',
           tokensUsed: sectionResult.section.tokenCount,
@@ -632,7 +633,7 @@ This document has incomplete metadata.
       // Step 3: Get specific sections from each doc
       for (const docPath of relevantDocs) {
         const sectionResult = handleGetSection(queryEngine, docPath, 'Overview');
-        if (!isGetSectionError(sectionResult)) {
+        if (!isGetSectionError(sectionResult) && !isGetSectionAmbiguous(sectionResult)) {
           workflow.push({ 
             action: `section_${path.basename(docPath).slice(0, 15)}`, 
             tokensUsed: sectionResult.section.tokenCount, 
@@ -686,7 +687,7 @@ This document has incomplete metadata.
         }
 
         const sectionResult = handleGetSection(queryEngine, docPath, 'Overview');
-        if (!isGetSectionError(sectionResult)) {
+        if (!isGetSectionError(sectionResult) && !isGetSectionAmbiguous(sectionResult)) {
           mcpTokens += sectionResult.section.tokenCount;
         }
       }

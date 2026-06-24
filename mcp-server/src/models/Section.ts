@@ -16,7 +16,23 @@ export interface Section {
   
   /** Parent heading context (for nested sections) */
   parentHeadings: string[];
-  
+
   /** Section token count */
   tokenCount: number;
+
+  /**
+   * Stable, drift-resistant section ID (Spec 121 Req 5.2 / Finding 2).
+   * Positional address (`s{index}`) — survives heading-string rewording.
+   * See `makeSectionId` in section-parser.ts for the stability contract.
+   * Optional for back-compat with hand-constructed Section literals.
+   */
+  sectionId?: string;
+
+  /**
+   * Sibling headings under the same parent (Spec 121 Req 5.4 / Finding 1).
+   * Adjacency cue so a preamble/stub signals that substantive siblings exist,
+   * rather than returning a stub with no indication of incompleteness.
+   * Optional for back-compat with hand-constructed Section literals.
+   */
+  siblingHeadings?: string[];
 }

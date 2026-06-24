@@ -336,7 +336,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - When `matchConfidence` is `partial`, results resolve via the 119 Decision 4a propose-best-fit protocol (cross-spec consumer; 121 emits the signal, 119 acts)
     - _Requirements: 6.1, 6.4, 6.5, 6.8_
 
-- [ ] 6. Section Addressing by Path+Parent / Stable IDs + Summary-First (Req 5)
+- [x] 6. Section Addressing by Path+Parent / Stable IDs + Summary-First (Req 5)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -360,7 +360,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
   - Commit changes: `./.kiro/hooks/commit-task.sh "Task 6 Complete: Section Addressing"` (runs release analysis automatically)
   - Verify: Check GitHub for committed changes
 
-  - [ ] 6.1 Add `parent` + `sectionId` disambiguation to `get_section`
+  - [x] 6.1 Add `parent` + `sectionId` disambiguation to `get_section`
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -368,7 +368,7 @@ The official task-type taxonomy (`Process-Task-Type-Definitions.md`) is **Setup 
     - When a heading is non-unique and no disambiguator is supplied, signal ambiguity + list candidate parents rather than silently returning the first match (Finding 3)
     - _Requirements: 5.1, 5.2_
 
-  - [ ] 6.2 Add `siblingHeadings` adjacency cue + encode the summary-first rule
+  - [x] 6.2 Add `siblingHeadings` adjacency cue + encode the summary-first rule
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

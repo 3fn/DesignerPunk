@@ -145,6 +145,20 @@ Strategic gaps are easy to identify in conversation and easy to forget between s
 
 ---
 
+### Gap 7: Source-Embedded Stable Section IDs
+
+**What's missing**: Spec 121 Task 6 gave `get_section` stable IDs (`sectionId`), but they are **positional** (`s{index}` — the heading's order in the document). Positional IDs are stable to heading *rewording* (the named Finding 2 — `"Requirements Document Format"` → `"…(Conditional Loading)"`), but **not** to structural edits that shift order: inserting, deleting, or reordering a section before the target reassigns its index, so a previously-cached `sectionId` silently resolves to a different section. No *read-only* ID scheme can be stable to both rewording and reordering — only IDs **embedded in the source markdown** achieve that.
+
+**Where it lives**: Docs MCP (`section-parser` ID derivation) + a one-time mutation/migration of the steering corpus to embed durable per-heading anchors (e.g. an HTML comment anchor or a frontmatter-managed heading registry).
+
+**Priority**: Low. Positional IDs satisfy Req 5.2's named intent (heading-string drift); the failure mode (reorder/insert-before) is the less-common edit for a stable logical unit, and an agent re-running the summary-first step re-derives the current ID. The durable fix is a corpus-wide source mutation — deliberately scoped out of 121 as read-only-indexer territory.
+
+**Trigger**: Consumers (or Spec 122-generated agents) begin **persisting** `sectionId` values across sessions/edits and observe drift — i.e. a cached ID resolving to the wrong section after a doc is restructured. Also relevant if cross-references start addressing sections by ID rather than heading text.
+
+**Possible approach**: Embed a durable anchor per heading in the source markdown (an `<!-- sid:... -->` comment immediately under the heading, or a frontmatter-maintained heading→id registry), have `section-parser` prefer the embedded anchor over the positional fallback, and migrate the corpus once. Keep positional IDs as the fallback for un-anchored headings so the change stays additive. Note: source edits to steering docs route through the ballot-measure model.
+
+---
+
 ## Deferred from Spec 071
 
 These were identified in the 071 design outline and explicitly deferred:

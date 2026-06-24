@@ -338,10 +338,91 @@ describe('DocumentIndexer', () => {
     
     it('should throw error for non-existent document', async () => {
       await indexer.indexDirectory(testDir);
-      
+
       expect(() => {
         indexer.getSection('/non/existent/file.md', 'Overview');
       }).toThrow('Document not found');
+    });
+
+    it('should carry sectionId + siblingHeadings additively (Req 5.2/5.4)', async () => {
+      const file = path.join(testDir, 'doc.md');
+      fs.writeFileSync(file, SAMPLE_DOC_1);
+      await indexer.indexDirectory(testDir);
+
+      const section = indexer.getSection(file, 'Architecture');
+      expect(section.sectionId).toBeDefined();
+      // "Overview" and "Cross References" are sibling H2s of "Architecture".
+      expect(section.siblingHeadings).toEqual(
+        expect.arrayContaining(['Overview', 'Cross References']),
+      );
+    });
+  });
+
+  describe('getSectionAddressed (Spec 121 Req 5)', () => {
+    const AMBIG_DOC = `# Ambiguous Doc
+
+**Date**: 2025-12-16
+**Purpose**: Test ambiguity
+**Organization**: test-org
+**Scope**: test-scope
+**Layer**: 2
+**Relevant Tasks**: testing
+**Last Reviewed**: 2025-12-16
+
+## Phase One
+
+### Artifacts Created
+
+requirements.md
+
+## Phase Two
+
+### Artifacts Created
+
+tasks.md
+`;
+
+    it('throws AmbiguousHeading for a non-unique heading with no disambiguator (Finding 3)', async () => {
+      const file = path.join(testDir, 'ambig.md');
+      fs.writeFileSync(file, AMBIG_DOC);
+      await indexer.indexDirectory(testDir);
+
+      expect(() => indexer.getSection(file, 'Artifacts Created')).toThrow(/ambiguous/i);
+      try {
+        indexer.getSection(file, 'Artifacts Created');
+      } catch (e: any) {
+        expect(e.errorType).toBe('AmbiguousHeading');
+        expect(e.candidates).toHaveLength(2);
+        expect(e.candidates.map((c: any) => c.parent)).toEqual(['Phase One', 'Phase Two']);
+      }
+    });
+
+    it('disambiguates by parent (Req 5.1)', async () => {
+      const file = path.join(testDir, 'ambig.md');
+      fs.writeFileSync(file, AMBIG_DOC);
+      await indexer.indexDirectory(testDir);
+
+      const section = indexer.getSectionAddressed(file, {
+        heading: 'Artifacts Created',
+        parent: 'Phase Two',
+      });
+      expect(section.content).toContain('tasks.md');
+      expect(section.content).not.toContain('requirements.md');
+    });
+
+    it('disambiguates by stable sectionId, stable across heading rewording (Req 5.2)', async () => {
+      const file = path.join(testDir, 'ambig.md');
+      fs.writeFileSync(file, AMBIG_DOC);
+      await indexer.indexDirectory(testDir);
+
+      const before = indexer.getSectionAddressed(file, { sectionId: 's0' });
+      expect(before.heading).toBe('Phase One');
+
+      // Reword the heading and re-index; same sectionId resolves the same node.
+      fs.writeFileSync(file, AMBIG_DOC.replace('## Phase One', '## Phase One (Setup)'));
+      await indexer.reindexFile(file);
+      const after = indexer.getSectionAddressed(file, { sectionId: 's0' });
+      expect(after.heading).toBe('Phase One (Setup)');
     });
   });
   

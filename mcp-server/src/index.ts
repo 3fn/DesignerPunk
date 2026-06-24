@@ -184,12 +184,18 @@ class MCPDocumentationServer {
           }
 
           case 'get_section': {
-            const params = args as { path: string; heading: string };
-            const result = handleGetSection(
-              this.queryEngine,
-              params.path,
-              params.heading
-            );
+            const params = args as {
+              path: string;
+              heading: string;
+              parent?: string;
+              sectionId?: string;
+            };
+            const result = handleGetSection(this.queryEngine, {
+              path: params.path,
+              heading: params.heading,
+              parent: params.parent,
+              sectionId: params.sectionId,
+            });
             return formatGetSectionResponse(result);
           }
 
@@ -370,3 +376,15 @@ main().catch((error) => {
 
 // Export for testing
 export { MCPDocumentationServer };
+
+// Spec 121 Req 5.5: re-export the machine-consumable workflow-rule artifact so
+// the agent generator (Spec 122) can import and propagate it (esp. summary-first)
+// into generated agent prompts from a single source of truth.
+export {
+  WORKFLOW_RULES,
+  getWorkflowRule,
+  workflowRulesForTool,
+  type WorkflowRule,
+  type WorkflowRuleSeverity,
+  type WorkflowRuleAudience,
+} from './rules/workflow-rules';

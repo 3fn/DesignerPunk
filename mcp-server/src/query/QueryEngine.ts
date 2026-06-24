@@ -189,21 +189,39 @@ export class QueryEngine {
   }
 
   /**
-   * Get specific section by heading
-   * 
+   * Get specific section by heading, with optional disambiguation (Spec 121 Req 5).
+   *
    * @param path - Document path
    * @param heading - Section heading to retrieve
-   * @returns Section content with parent context
-   * Requirements: 4.1, 4.2, 4.3, 11.4
+   * @param opts - Optional disambiguation: { parent?, sectionId? }
+   * @returns Section content with parent context, `sectionId`, and `siblingHeadings`
+   * Requirements: 4.1, 4.2, 4.3, 11.4, 5.1, 5.2, 5.4
+   *
+   * Back-compat: `getSection(path, heading)` with a UNIQUE heading behaves
+   * exactly as before (now additionally carrying `sectionId` + `siblingHeadings`).
+   * A non-unique heading with no disambiguator throws an AmbiguousHeading error
+   * (Finding 3 fix) rather than silently returning the first match.
    */
-  getSection(path: string, heading: string): QueryResult<Section> {
+  getSection(
+    path: string,
+    heading: string,
+    opts?: { parent?: string; sectionId?: string },
+  ): QueryResult<Section> {
     const startTime = Date.now();
 
-    // Validate parameters
+    // Validate parameters.
     this.validatePath(path);
-    this.validateHeading(heading);
+    // A sectionId alone is sufficient addressing; only require a heading when no
+    // sectionId is supplied (back-compat: the heading-only path still validates).
+    if (!opts?.sectionId) {
+      this.validateHeading(heading);
+    }
 
-    const data = this.indexer.getSection(path, heading);
+    const data = this.indexer.getSectionAddressed(path, {
+      heading,
+      parent: opts?.parent,
+      sectionId: opts?.sectionId,
+    });
 
     const metrics = this.createMetrics('get_section', startTime, {
       tokenCounts: {

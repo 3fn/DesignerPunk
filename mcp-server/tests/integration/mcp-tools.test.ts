@@ -28,6 +28,7 @@ import {
   isGetDocumentSummaryError,
   isGetDocumentFullError,
   isGetSectionError,
+  isGetSectionAmbiguous,
   isListCrossReferencesError,
   isValidateMetadataError,
 } from '../../src/tools';
@@ -292,7 +293,7 @@ describe('MCP Server Integration Tests', () => {
       // Task 4.5: tighten the vacuous assertion — assert the call succeeded
       // unconditionally so a tool error fails the test rather than silently passing.
       expect(isGetSectionError(result)).toBe(false);
-      if (!isGetSectionError(result)) {
+      if (!isGetSectionError(result) && !isGetSectionAmbiguous(result)) {
         expect(result.section.content).toContain('Content for section one');
       }
     });
@@ -304,7 +305,7 @@ describe('MCP Server Integration Tests', () => {
       // Task 4.5: tighten the vacuous assertion — assert the call succeeded
       // unconditionally so a tool error fails the test rather than silently passing.
       expect(isGetSectionError(result)).toBe(false);
-      if (!isGetSectionError(result)) {
+      if (!isGetSectionError(result) && !isGetSectionAmbiguous(result)) {
         expect(result.section.tokenCount).toBeDefined();
         expect(typeof result.section.tokenCount).toBe('number');
       }
@@ -556,7 +557,7 @@ This is new content.
       const testDocPath = path.join(TEST_FIXTURES_DIR, 'test-document.md');
       const result = handleGetSection(queryEngine, testDocPath, 'Overview');
 
-      if (!isGetSectionError(result)) {
+      if (!isGetSectionError(result) && !isGetSectionAmbiguous(result)) {
         expect(result.section).toHaveProperty('path');
         expect(result.section).toHaveProperty('heading');
         expect(result.section).toHaveProperty('content');

@@ -27,6 +27,7 @@ import {
   isGetDocumentSummaryError,
   isGetDocumentFullError,
   isGetSectionError,
+  isGetSectionAmbiguous,
 } from '../../src/tools';
 
 // Test fixtures directory
@@ -303,7 +304,7 @@ describe('Token Efficiency Tests', () => {
       // Step 3: Get specific section (typical workflow)
       const sectionResult = handleGetSection(queryEngine, targetDoc, 'Overview');
       let sectionTokens = 0;
-      if (!isGetSectionError(sectionResult)) {
+      if (!isGetSectionError(sectionResult) && !isGetSectionAmbiguous(sectionResult)) {
         sectionTokens = sectionResult.section.tokenCount;
         totalMCPTokens += sectionTokens;
       }
@@ -347,7 +348,7 @@ describe('Token Efficiency Tests', () => {
 
       const sectionResult = handleGetSection(queryEngine, layer2Docs[0], 'Overview');
       let sectionTokens = 0;
-      if (!isGetSectionError(sectionResult)) {
+      if (!isGetSectionError(sectionResult) && !isGetSectionAmbiguous(sectionResult)) {
         sectionTokens = sectionResult.section.tokenCount;
       }
 
@@ -410,7 +411,7 @@ describe('Token Efficiency Tests', () => {
 
         for (const section of commonSections) {
           const result = handleGetSection(queryEngine, docPath, section);
-          if (!isGetSectionError(result)) {
+          if (!isGetSectionError(result) && !isGetSectionAmbiguous(result)) {
             sectionTokenCounts[docName][section] = result.section.tokenCount;
           }
         }
@@ -513,7 +514,7 @@ describe('Token Efficiency Tests', () => {
       // Get one section (typical single-section access)
       const sectionResult = handleGetSection(queryEngine, layer2Docs[0], 'Overview');
       let sectionTokens = 0;
-      if (!isGetSectionError(sectionResult)) {
+      if (!isGetSectionError(sectionResult) && !isGetSectionAmbiguous(sectionResult)) {
         sectionTokens = sectionResult.section.tokenCount;
       }
 

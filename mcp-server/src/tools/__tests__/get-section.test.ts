@@ -10,9 +10,12 @@ import {
   createGetSectionHandler,
   formatMcpResponse,
   isGetSectionError,
+  isGetSectionAmbiguous,
   GetSectionResult,
-  GetSectionError
+  GetSectionError,
+  GetSectionAmbiguous
 } from '../get-section';
+import { WORKFLOW_RULES, workflowRulesForTool, getWorkflowRule } from '../../rules/workflow-rules';
 import { QueryEngine, QueryResult } from '../../query/QueryEngine';
 import { Section } from '../../models';
 import { ErrorHandler } from '../../utils/error-handler';
@@ -70,11 +73,10 @@ describe('get_section tool', () => {
       };
       (mockQueryEngine.getSection as jest.Mock).mockReturnValue(mockResult);
 
-      const result = handleGetSection(
-        mockQueryEngine,
-        '.kiro/steering/Component Development Guide.md',
-        'Token Selection Decision Framework'
-      );
+      const result = handleGetSection(mockQueryEngine, {
+        path: '.kiro/steering/Component Development Guide.md',
+        heading: 'Token Selection Decision Framework',
+      });
 
       expect(isGetSectionError(result)).toBe(false);
       const successResult = result as GetSectionResult;
@@ -101,11 +103,10 @@ describe('get_section tool', () => {
       };
       (mockQueryEngine.getSection as jest.Mock).mockReturnValue(mockResult);
 
-      const result = handleGetSection(
-        mockQueryEngine,
-        '.kiro/steering/Component Development Guide.md',
-        'Step 1: Check Semantic Tokens First'
-      );
+      const result = handleGetSection(mockQueryEngine, {
+        path: '.kiro/steering/Component Development Guide.md',
+        heading: 'Step 1: Check Semantic Tokens First',
+      });
 
       expect(isGetSectionError(result)).toBe(false);
       const successResult = result as GetSectionResult;
@@ -130,7 +131,10 @@ describe('get_section tool', () => {
       };
       (mockQueryEngine.getSection as jest.Mock).mockReturnValue(mockResult);
 
-      const result = handleGetSection(mockQueryEngine, '.kiro/steering/test.md', 'Test Section');
+      const result = handleGetSection(mockQueryEngine, {
+        path: '.kiro/steering/test.md',
+        heading: 'Test Section',
+      });
 
       expect(isGetSectionError(result)).toBe(false);
       const successResult = result as GetSectionResult;
@@ -147,11 +151,10 @@ describe('get_section tool', () => {
         throw error;
       });
 
-      const result = handleGetSection(
-        mockQueryEngine,
-        '.kiro/steering/Component Development Guide.md',
-        'Nonexistent Section'
-      );
+      const result = handleGetSection(mockQueryEngine, {
+        path: '.kiro/steering/Component Development Guide.md',
+        heading: 'Nonexistent Section',
+      });
 
       expect(isGetSectionError(result)).toBe(true);
       const errorResult = result as GetSectionError;
@@ -169,11 +172,10 @@ describe('get_section tool', () => {
         throw error;
       });
 
-      const result = handleGetSection(
-        mockQueryEngine,
-        '.kiro/steering/nonexistent.md',
-        'Some Section'
-      );
+      const result = handleGetSection(mockQueryEngine, {
+        path: '.kiro/steering/nonexistent.md',
+        heading: 'Some Section',
+      });
 
       expect(isGetSectionError(result)).toBe(true);
       const errorResult = result as GetSectionError;
@@ -189,11 +191,10 @@ describe('get_section tool', () => {
         throw error;
       });
 
-      const result = handleGetSection(
-        mockQueryEngine,
-        '.kiro/steering/test.md',
-        ''
-      );
+      const result = handleGetSection(mockQueryEngine, {
+        path: '.kiro/steering/test.md',
+        heading: '',
+      });
 
       expect(isGetSectionError(result)).toBe(true);
       const errorResult = result as GetSectionError;
@@ -211,7 +212,7 @@ describe('get_section tool', () => {
       });
 
       expect(() => {
-        handleGetSection(mockQueryEngine, '.kiro/steering/test.md', 'Test');
+        handleGetSection(mockQueryEngine, { path: '.kiro/steering/test.md', heading: 'Test' });
       }).toThrow('Unexpected database error');
     });
   });
@@ -346,5 +347,111 @@ describe('get_section tool', () => {
 
       expect(isGetSectionError(successResult)).toBe(false);
     });
+  });
+
+  // ===========================================================================
+  // Spec 121 Req 5 — addressing params, ambiguity signal, sibling cue
+  // ===========================================================================
+
+  describe('section addressing (Req 5)', () => {
+    it('schema exposes optional parent + sectionId params', () => {
+      expect(getSectionTool.inputSchema.properties.parent).toBeDefined();
+      expect((getSectionTool.inputSchema.properties as any).sectionId).toBeDefined();
+      // Back-compat: still only path + heading required (additive params).
+      expect(getSectionTool.inputSchema.required).toEqual(['path', 'heading']);
+    });
+
+    it('description carries the summary-first cue (Req 5.3)', () => {
+      expect(getSectionTool.description.toLowerCase()).toContain('summary-first');
+    });
+
+    it('threads parent + sectionId through to the QueryEngine (Req 5.1/5.2)', () => {
+      const mockQueryEngine = createMockQueryEngine();
+      const mockSection: Section = {
+        path: 'spec.md',
+        heading: 'Artifacts Created',
+        content: '### Artifacts Created\n\ntasks.md',
+        parentHeadings: ['Phase Two'],
+        tokenCount: 20,
+        sectionId: 's6',
+        siblingHeadings: ['Implementation Details'],
+      };
+      (mockQueryEngine.getSection as jest.Mock).mockReturnValue({
+        data: mockSection,
+        metrics: { operation: 'get_section', responseTimeMs: 5 },
+      });
+
+      const result = handleGetSection(mockQueryEngine, {
+        path: 'spec.md',
+        heading: 'Artifacts Created',
+        parent: 'Phase Two',
+        sectionId: 's6',
+      });
+
+      expect(mockQueryEngine.getSection).toHaveBeenCalledWith('spec.md', 'Artifacts Created', {
+        parent: 'Phase Two',
+        sectionId: 's6',
+      });
+      expect(isGetSectionError(result)).toBe(false);
+      const ok = result as GetSectionResult;
+      expect(ok.section.sectionId).toBe('s6');
+      expect(ok.section.siblingHeadings).toEqual(['Implementation Details']);
+    });
+
+    it('returns an ambiguity signal (not an error) for a non-unique heading (Req 5.1 / Finding 3)', () => {
+      const mockQueryEngine = createMockQueryEngine();
+      const ambiguous = new Error('Heading "Artifacts Created" is ambiguous');
+      (ambiguous as any).errorType = 'AmbiguousHeading';
+      (ambiguous as any).candidates = [
+        { sectionId: 's3', parent: 'Phase One', index: 3 },
+        { sectionId: 's6', parent: 'Phase Two', index: 6 },
+      ];
+      (mockQueryEngine.getSection as jest.Mock).mockImplementation(() => {
+        throw ambiguous;
+      });
+
+      const result = handleGetSection(mockQueryEngine, {
+        path: 'spec.md',
+        heading: 'Artifacts Created',
+      });
+
+      // It is NOT an error — it is a structured disambiguation prompt.
+      expect(isGetSectionError(result)).toBe(false);
+      expect(isGetSectionAmbiguous(result)).toBe(true);
+      const amb = result as GetSectionAmbiguous;
+      expect(amb.ambiguous.candidates).toHaveLength(2);
+      expect(amb.ambiguous.candidates.map((c) => c.parent)).toEqual(['Phase One', 'Phase Two']);
+
+      // formatMcpResponse must NOT mark ambiguity as isError.
+      const response = formatMcpResponse(result);
+      expect(response.isError).toBeUndefined();
+      const parsed = JSON.parse(response.content[0].text);
+      expect(parsed.ambiguous.candidates).toHaveLength(2);
+    });
+  });
+});
+
+// =============================================================================
+// Spec 121 Req 5.5 — summary-first rule encoded for Spec 122 propagation
+// =============================================================================
+
+describe('workflow-rules artifact (Req 5.3/5.5)', () => {
+  it('exposes a stable summary-first hard rule', () => {
+    const rule = getWorkflowRule('summary-first');
+    expect(rule).toBeDefined();
+    expect(rule!.severity).toBe('hard');
+    expect(rule!.appliesToTools).toContain('get_section');
+    expect(rule!.statement.toLowerCase()).toContain('get_document_summary');
+    expect(rule!.requirements).toEqual(expect.arrayContaining(['5.3', '5.5']));
+  });
+
+  it('is propagatable by tool (Spec 122 helper)', () => {
+    const rules = workflowRulesForTool('get_section');
+    expect(rules.map((r) => r.id)).toContain('summary-first');
+  });
+
+  it('is a typed, importable constant (single source of truth)', () => {
+    expect(Array.isArray(WORKFLOW_RULES)).toBe(true);
+    expect(WORKFLOW_RULES.length).toBeGreaterThan(0);
   });
 });

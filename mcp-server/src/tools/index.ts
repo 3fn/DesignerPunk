@@ -48,8 +48,11 @@ export {
   createGetSectionHandler,
   formatMcpResponse as formatGetSectionResponse,
   isGetSectionError,
+  isGetSectionAmbiguous,
   GetSectionResult,
-  GetSectionError
+  GetSectionError,
+  GetSectionAmbiguous,
+  GetSectionArgs
 } from './get-section';
 
 // list_cross_references tool
