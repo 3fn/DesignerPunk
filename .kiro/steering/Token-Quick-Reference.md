@@ -12,7 +12,7 @@ description: Token documentation routing table — maps token types to their MCP
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, token-selection, styling
-**Last Reviewed**: 2026-05-06
+**Last Reviewed**: 2026-06-24
 
 ---
 
@@ -95,7 +95,12 @@ The **ThemeRegistry** manages all themes. `SemanticOverrideResolver.resolveForRe
 
 **Base vs product themes**: The paths in this section (`src/tokens/themes/dark/`, `wcag/`, `dark-wcag/`) are the base system's built-in theme files, shipped with `@3fn/core`. Product teams creating custom themes do NOT edit these files — they create their own `SemanticOverrides.ts` and register it in `designerpunk.config.ts`. See Token-Governance § "Theme Registry (Spec 094)" for product theme governance.
 
-**Theme-varying vs static tokens**: The registry computes the union of all overridden token names across registered themes. Tokens in that set are theme-varying (generated as protocol/data class properties on iOS/Android, `data-theme` scoped on web). Everything else stays as static constants.
+**Theme-varying vs static tokens** — two distinct computations; do not conflate them:
+
+- **Platform generators (iOS/Android/Web dist output)**: a token is theme-varying if its name appears in the registry-wide union of overridden tokens across *all* registered themes (generated as protocol/data-class properties on iOS/Android, `data-theme`-scoped on web). Everything else stays static.
+- **Token-index / MCP `themeVarying` field**: `true` iff the token's resolved value differs between base light and base dark — independent of `config.themes`, and excluding WCAG-only overrides that produce no base-mode light/dark variance.
+
+See Rosetta-System-Architecture § Stage 5: Generation for why these two definitions exist.
 
 ### Platform Theme Output
 

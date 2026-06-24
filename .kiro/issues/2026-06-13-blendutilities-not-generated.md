@@ -6,7 +6,8 @@
 **Severity**: Medium — a generator code path exists but is never exercised; no consumer-facing artifact is produced where one is implied
 **Type**: Pipeline / generation gap
 **Primary owner**: Ada (Rosetta pipeline)
-**Status**: Open — deferred (out of scope for Spec 117, which is token-index integrity)
+**Status**: Open — **split (2026-06-24)**: the **doc-accuracy** half (steering wrongly lists `dist/BlendUtilities.*` as outputs) is handled by Spec 117 ballot item **P3** (remove + note). The **code disposition** (delete the dormant generator vs activate/rebuild) is **absorbed into the holistic blend review** → [`2026-06-24-blend-system-architecture-and-oklch-alignment.md`](2026-06-24-blend-system-architecture-and-oklch-alignment.md) — it can't be settled before the OKLCH-blend and platform-delivery questions are (investigation found `OklchBlendCalculator` orphaned and the in-use path computing in RGB/HSL).
+> _Original (historical): Open — deferred (out of scope for Spec 117, which is token-index integrity)._
 
 ---
 

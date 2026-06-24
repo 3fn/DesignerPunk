@@ -2,7 +2,7 @@
 
 **Date**: 2026-06-13
 **Spec**: 117 - Token-Index Generation Integrity
-**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Tasks 1–5 COMPLETE; spec CERTIFIED non-provisionally (Peter, 2026-06-24).** Task 4 corrected the committed `components.yaml` baseline (27→33); Task 5 documented-CLI trust gate MET (all-equal re-diff; P3/P5 invariants; full suite 8969 green). **Task 6:** 6.2 clean-exit logging COMPLETE; 6.1 ballot proposals drafted, **pending Peter's item-by-item approval** (incl. the P3/BlendUtilities disposition decision) before Ada applies the steering edits.
+**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **ALL TASKS COMPLETE — spec CERTIFIED non-provisionally and CLOSED (Peter, 2026-06-24).** Tasks 1–5: R3/R5 OKLCH spine fix, R4 component-loading gate (+ baseline corrected 27→33), documented-CLI trust gate MET (all-equal re-diff; P3/P5 invariants; full suite 8969). Task 6: clean-exit logging done; steering docs updated via the ballot-measure process (proposed → consulted → re-architected → approved → applied + metadata + index rebuilt). Spun off for holistic review: the blend-system/OKLCH-alignment issue (`.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md`).
 **Dependencies**:
 - Spec 112 / 115 — Complete (this spec completes 112's token-index gap).
 - **Finding 2 (CLI tsx/ESM loader)** — **RESOLVED EXTERNALLY by Spec 118 Increment 1** (committed `041aaea8`). The one-line directory-import fix this spec originally folded in as Task 2 was empirically **false** (it only relocates the failure one hop down the barrel chain); the genuine unblock is 118's TS-aware config loader (Approach A) + a `require` condition on the `./config` export. The documented `generate` CLI now runs end-to-end, so Task 5.3's trust gate is **executable**. Authoritative correction: [`findings/118-closeout-note.md`](findings/118-closeout-note.md) (supersedes decision-record items 3 & 7). **Restored trust is config-load-path ONLY**; the raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until **118 Increment 3b** (out of 117's renewed scope).
@@ -161,7 +161,7 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
     - **Pending:** Peter's ratification to lift `provisional` (governance act).
     - _Requirements: 6.1, 6.2, 6.3, 2.4_
 
-- [~] 6. Documentation & Clean-Exit (R7) — 6.2 COMPLETE; 6.1 proposals drafted, **pending Peter's ballot approval**
+- [x] 6. Documentation & Clean-Exit (R7) — ✅ COMPLETE (2026-06-24)
 
   **Type**: Parent
   **Validation**: Tier 1 - Minimal
@@ -172,9 +172,9 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
 
   **Completion Documentation:** Detailed `.../completion/task-6-completion.md`; Summary `docs/specs/.../task-6-summary.md`.
 
-  - [~] 6.1 Ballot-measure steering-doc proposals — DRAFTED, pending Peter's approval
+  - [x] 6.1 Ballot-measure steering-doc proposals — ✅ COMPLETE (proposed → consulted → re-architected → approved → applied)
     **Type**: Documentation · **Validation**: Tier 1 · **Agent**: Ada → Peter
-    - 5 ballot items drafted (no steering file modified — ballot-measure governance) → [`completion/task-6-ballot-proposals.md`](completion/task-6-ballot-proposals.md): P1 RSA OKLCH-index entry (R3); P2 RSA Stage-5 token-index generator (R3/R5); P3 RSA Stage-6 BlendUtilities removal (N1 — **disposition decision needed**); P4 RSA component-loading gate (R4); P5 Token-Quick-Reference theme-varying split (R5). **Peter approves item-by-item; then Ada applies the approved edits.**
+    - v1 drafted ([`task-6-ballot-proposals.md`](completion/task-6-ballot-proposals.md)); density concern raised; **3 domain consults** (Ada/Lina/Leonardo) on lose/gain → Thurgood **re-architected** to v2 ([`task-6-ballot-proposals-v2.md`](completion/task-6-ballot-proposals-v2.md)) per the "orientation in diagrams, reference in prose (better MCP `get_section` retrieval)" principle. Peter approved all 5 + add-ons A1/A2 + accuracy fixes + metadata. **Ada applied** P1–P5 + A1 + A2 to `Rosetta-System-Architecture.md` + `Token-Quick-Reference.md` (by path+heading — v1 sectionIds were stale), updated `Last Reviewed`, rebuilt the docs index. Main-loop verified: metadata valid (0 issues), index serves the new content.
     - _Requirements: 7.1_
 
   - [x] 6.2 Issues-registry logging (clean-exit) — ✅ COMPLETE

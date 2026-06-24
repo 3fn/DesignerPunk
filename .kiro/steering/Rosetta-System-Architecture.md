@@ -12,7 +12,7 @@ description: Rosetta token pipeline architecture — subsystem entry points, tok
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: token-development, component-development, pipeline-integration
-**Last Reviewed**: 2026-05-06
+**Last Reviewed**: 2026-06-24
 
 ---
 
@@ -100,7 +100,7 @@ Color tokens use **OKLCH** (perceptually uniform color space) with a channel-pri
 │       ├── iOS: Color.oklch(L, C, H) via ChromaKit                          │
 │       ├── Android: Oklch(L, C, H).toComposeColor() via colormath           │
 │       ├── DTCG/Figma: OKLCH → sRGB hex conversion                          │
-│       └── Token-index: OKLCH metadata on composed entries                   │
+│       └── Token-index: mode-aware OKLCH (light + dark resolved values + channels) │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -115,6 +115,9 @@ Each platform generator transforms OKLCH channel values to native color formats:
 | **iOS** | `oklch(0.60, 0.316, 307)` | `Color.oklch()` via ChromaKit | `Color.oklch(0.60, 0.316, 307.0)` |
 | **Android** | `oklch(0.60, 0.316, 307)` | `Oklch().toComposeColor()` | `Oklch(0.60f, 0.316f, 307.0f).toComposeColor()` |
 | **DTCG/Figma** | `oklch(0.60, 0.316, 307)` | sRGB hex (converted) | `#b026ff` |
+| **Token-index** | `oklch(...)` mode-resolved | mode-aware OKLCH + channels per entry | `{ light, dark, hue, lightness, chroma }` |
+
+*Exception: the shadow family remains rgba in the token-index — it was never migrated to OKLCH (Spec 112). All other color families carry OKLCH channels.*
 
 ### Conversion Rules
 
@@ -344,6 +347,8 @@ Semantic color tokens are resolved into light and dark mode sets before generati
 - Mode parity audit: `src/validators/ModeParity.ts`
 - Theme file generator: `src/tools/ThemeFileGenerator.ts`
 
+`generateTokenFiles` returns `ModeResolvedTokens` — the shared resolved-value source consumed by both the platform generators and the token-index generator (see Stage 5).
+
 ### Stage 5: Generation
 
 Mode-resolved tokens are transformed into platform-specific formats. Generators receive pre-resolved light and dark token sets and produce mode-aware output when values differ between modes.
@@ -374,6 +379,9 @@ Mode-resolved tokens are transformed into platform-specific formats. Generators 
 │   ├── oklchToComposeColor(): Convert to Android Oklch().toComposeColor()    │
 │   └── formatColorValue(): Handle mode-aware color objects                   │
 │                                                                              │
+│   Token-Index Generator                                                      │
+│   └── Location: src/generators/generateTokenIndex.ts                         │
+│                                                                              │
 │   Utility Generators                                                         │
 │   ├── BlendUtilityGenerator: Blend functions per platform                   │
 │   └── Location: src/generators/BlendUtilityGenerator.ts                     │
@@ -386,6 +394,9 @@ Mode-resolved tokens are transformed into platform-specific formats. Generators 
 - Web generation: `src/providers/WebFormatGenerator.ts`
 - iOS generation: `src/providers/iOSFormatGenerator.ts`
 - Android generation: `src/providers/AndroidFormatGenerator.ts`
+- Token-index generation: `src/generators/generateTokenIndex.ts` — receives the same `ModeResolvedTokens` as the platform generators; data source for the Application MCP
+
+`BlendUtilityGenerator` is present but dormant — not exercised by `generate`. See `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md`.
 
 ### Stage 6: Platform Output
 
@@ -401,15 +412,14 @@ Generated files are written to the `dist/` directory for consumption.
 │   ├── DesignTokens.web.css      (CSS custom properties)                     │
 │   ├── DesignTokens.ios.swift    (Swift constants)                           │
 │   ├── DesignTokens.android.kt   (Kotlin constants)                          │
-│   ├── BlendUtilities.web.css    (Web blend functions)                       │
-│   ├── BlendUtilities.ios.swift  (iOS blend functions)                       │
-│   ├── BlendUtilities.android.kt (Android blend functions)                   │
 │   ├── ComponentTokens.web.css   (Component token CSS)                       │
 │   ├── ComponentTokens.ios.swift (Component token Swift)                     │
 │   └── ComponentTokens.android.kt(Component token Kotlin)                    │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+**Note — BlendUtilities**: `dist/BlendUtilities.*` are not produced by `generate`. The `BlendUtilityGenerator` code path exists but is dormant. Disposition (activate vs. remove) is tracked holistically in `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md`.
 
 **Entry Points**:
 - Output directory: `dist/`
@@ -491,6 +501,9 @@ export const ComponentNameTokens = defineComponentTokens({
 **Entry Points**:
 - Helper function: `src/build/tokens/defineComponentTokens.ts`
 - Component token registry: `src/registries/ComponentTokenRegistry.ts`
+- Loader (debugging): `src/cli/loadComponentTokens.ts` — sources discovered by presence (convention dir `{tokenSourceRoot}/component/` and/or `config.componentTokenDirs`), not `tokenSourceMode`; warns if none found
+
+**Loading behavior**: Component token sources are discovered by *presence*, not by `tokenSourceMode`. If the convention dir `{tokenSourceRoot}/component/` exists, or `config.componentTokenDirs` is set, those sources load in both package and local mode. If no sources are found, the loader emits a "No component token files found" warning and `ComponentTokens.*` output is empty.
 
 **Token Creation Governance**: Creating component tokens requires human approval. See [Token Governance Guide](./Token-Governance.md) for decision matrix and review requirements.
 
