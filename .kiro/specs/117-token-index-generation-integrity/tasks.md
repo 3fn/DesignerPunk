@@ -2,7 +2,7 @@
 
 **Date**: 2026-06-13
 **Spec**: 117 - Token-Index Generation Integrity
-**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Tasks 3, 4, 5 COMPLETE 2026-06-24.** Task 4 corrected the committed `components.yaml` baseline (27→33). Task 5: documented-CLI **trust gate MET** (all-equal re-diff; P3/P5 invariants hold; MCP serves corrected data; full suite 8969 green) — **non-provisional certification ready, pending Peter's ratification**. Next actionable: **Task 6** (ballot-measure steering proposals + clean-exit issue logging).
+**Status**: Implementation — **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). **Tasks 1–5 COMPLETE; spec CERTIFIED non-provisionally (Peter, 2026-06-24).** Task 4 corrected the committed `components.yaml` baseline (27→33); Task 5 documented-CLI trust gate MET (all-equal re-diff; P3/P5 invariants; full suite 8969 green). **Task 6:** 6.2 clean-exit logging COMPLETE; 6.1 ballot proposals drafted, **pending Peter's item-by-item approval** (incl. the P3/BlendUtilities disposition decision) before Ada applies the steering edits.
 **Dependencies**:
 - Spec 112 / 115 — Complete (this spec completes 112's token-index gap).
 - **Finding 2 (CLI tsx/ESM loader)** — **RESOLVED EXTERNALLY by Spec 118 Increment 1** (committed `041aaea8`). The one-line directory-import fix this spec originally folded in as Task 2 was empirically **false** (it only relocates the failure one hop down the barrel chain); the genuine unblock is 118's TS-aware config loader (Approach A) + a `require` condition on the `./config` export. The documented `generate` CLI now runs end-to-end, so Task 5.3's trust gate is **executable**. Authoritative correction: [`findings/118-closeout-note.md`](findings/118-closeout-note.md) (supersedes decision-record items 3 & 7). **Restored trust is config-load-path ONLY**; the raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until **118 Increment 3b** (out of 117's renewed scope).
@@ -161,7 +161,7 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
     - **Pending:** Peter's ratification to lift `provisional` (governance act).
     - _Requirements: 6.1, 6.2, 6.3, 2.4_
 
-- [ ] 6. Documentation & Clean-Exit (R7)
+- [~] 6. Documentation & Clean-Exit (R7) — 6.2 COMPLETE; 6.1 proposals drafted, **pending Peter's ballot approval**
 
   **Type**: Parent
   **Validation**: Tier 1 - Minimal
@@ -172,12 +172,14 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
 
   **Completion Documentation:** Detailed `.../completion/task-6-completion.md`; Summary `docs/specs/.../task-6-summary.md`.
 
-  - [ ] 6.1 Ballot-measure steering-doc proposals
+  - [~] 6.1 Ballot-measure steering-doc proposals — DRAFTED, pending Peter's approval
     **Type**: Documentation · **Validation**: Tier 1 · **Agent**: Ada → Peter
+    - 5 ballot items drafted (no steering file modified — ballot-measure governance) → [`completion/task-6-ballot-proposals.md`](completion/task-6-ballot-proposals.md): P1 RSA OKLCH-index entry (R3); P2 RSA Stage-5 token-index generator (R3/R5); P3 RSA Stage-6 BlendUtilities removal (N1 — **disposition decision needed**); P4 RSA component-loading gate (R4); P5 Token-Quick-Reference theme-varying split (R5). **Peter approves item-by-item; then Ada applies the approved edits.**
     - _Requirements: 7.1_
 
-  - [ ] 6.2 Issues-registry logging (clean-exit)
+  - [x] 6.2 Issues-registry logging (clean-exit) — ✅ COMPLETE
     **Type**: Documentation · **Validation**: Tier 1 · **Agent**: Thurgood
+    - Deferred findings logged: N1 BlendUtilities ✅; shadow OKLCH migration ✅ (`2026-06-24-oklch-shadow-color-family-not-migrated.md`); MCP semantic resolvedValue per-mode ✅ (`2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`). Originating issue `2026-06-13-token-index-generation-gaps.md` marked RESOLVED. N2 folded into R4 (fixed). The two-theme-varying-sets risk is closed by the automated anti-conflation guard (`Invariants.ts`), not an open issue.
     - _Requirements: 7.2_
 
 ---

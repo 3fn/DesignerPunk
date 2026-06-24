@@ -5,7 +5,7 @@
 **Type**: Parent / Architecture
 **Validation**: Tier 3 — Comprehensive
 **Agent**: Thurgood (verification harness + formalization) · Ada consulted (token interpretation) · main-loop verification (Claude)
-**Status**: Complete — **trust gate MET; ready to certify non-provisionally pending Peter's ratification**
+**Status**: Complete — **trust gate MET; spec CERTIFIED non-provisionally (ratified by Peter 2026-06-24, contingent on appropriate testing — full suite 8969 + tsc green + trust gate verified two ways)**
 
 ---
 

@@ -6,7 +6,8 @@
 **Severity**: High — the Application MCP serves incorrect (legacy RGBA) color data to all consuming agents, and the OKLCH migration is silently incomplete for the token-index
 **Type**: Pipeline / generation correctness
 **Primary owner**: Ada (Rosetta pipeline)
-**Status**: Open — diagnosed, no fix implemented (scoped as reviewed task), no commits made, working tree clean
+**Status**: ✅ RESOLVED (2026-06-24) — Spec 117 certified non-provisionally. R3 (token-index OKLCH), R5 (theme-varying), and R4 (component-token loading) all fixed and verified via the documented-CLI trust gate (all-equal re-diff; P3/P5 invariants automated; MCP serves OKLCH + corrected component tier + theme-varying). Branch `spec-117-token-index-generation-integrity` (commits 35d311f5, 17783614, c615b7c3). Deferred sub-findings tracked separately: shadow OKLCH migration (`2026-06-24-oklch-shadow-color-family-not-migrated.md`), BlendUtilities N1 (`2026-06-13-blendutilities-not-generated.md`), MCP semantic resolvedValue (`2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`).
+> _Original status (historical): Open — diagnosed, no fix implemented (scoped as reviewed task), no commits made, working tree clean._
 
 ---
 
