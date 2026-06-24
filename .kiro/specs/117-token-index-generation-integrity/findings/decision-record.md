@@ -55,3 +55,4 @@
 ## Findings Cross-References
 
 - **F-C1** (2026-06-22, fixed `f01a1491`): `js-yaml` was undeclared in dependencies — `npx designerpunk init` crashed on clean consumer install. A **DISTINCT** failure mode (packaging/missing-dependency) from item 3's config-load failure; distribution-layer fix is **Spec 123** scope.
+- **Spec 118 closeout** (2026-06-24): Spec 118 Increment 1 is complete. The **authoritative correction to items 3 & 7** lives at [`findings/118-closeout-note.md`](118-closeout-note.md). In short: the documented CLI is unblocked by 118's TS-aware config loader (Approach A) + a `require` condition on the `./config` export — **NOT** the one-line directory-import fix (which only relocates the failure). **Action: re-run this spec's own Task 5.3** to certify non-provisionally. Restored trust is **config-load-path-only**; the raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until **Spec 118 Increment 3b**.

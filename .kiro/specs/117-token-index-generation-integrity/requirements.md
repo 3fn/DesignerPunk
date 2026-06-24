@@ -6,7 +6,7 @@
 **Dependencies**:
 - Spec 112 (OKLCH migration) — Complete. This spec completes its token-index gap.
 - Spec 115 (post-OKLCH stabilization) — Complete.
-- Finding 2 (CLI tsx/ESM loader) — **Dependency, not owned here.** Status: open. Required for the documented-CLI trust gate (R2). Until resolved, baseline conclusions are *provisional*.
+- Finding 2 (CLI tsx/ESM loader) — **Dependency, not owned here. Status: RESOLVED by Spec 118 Increment 1** (committed `041aaea8`, 2026-06-24). Required for the documented-CLI trust gate (R2); now satisfied — the documented `generate` CLI runs end-to-end, so baseline conclusions are no longer categorically *provisional* (R1 AC6 condition resolves). The originally-assumed one-line fix was empirically false; the genuine unblock is 118's TS-aware config loader + a `require` condition on `./config`. See [`findings/118-closeout-note.md`](findings/118-closeout-note.md). Restored trust is **config-load-path only**; raw-`.ts` exports stay unverified until 118 Increment 3b (outside this spec's scope).
 - Spec 116 (sync/customization safety) — **Decoupled** (different priorities); no dependency.
 
 ---

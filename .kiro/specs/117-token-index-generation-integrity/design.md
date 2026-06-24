@@ -6,7 +6,7 @@
 **Dependencies**:
 - Spec 112 (OKLCH migration) — Complete; this spec completes its token-index gap.
 - Spec 115 (post-OKLCH stabilization) — Complete.
-- Finding 2 (CLI tsx/ESM loader) — Open; not owned here. Gates the documented-CLI trust gate; until resolved, baseline conclusions are *provisional*.
+- Finding 2 (CLI tsx/ESM loader) — **RESOLVED externally by Spec 118 Increment 1** (committed `041aaea8`, 2026-06-24); not owned here. The documented `generate` CLI now runs end-to-end, so the documented-CLI trust gate is executable and baseline conclusions are no longer categorically *provisional*. The originally-assumed one-line fix was empirically false; see [`findings/118-closeout-note.md`](findings/118-closeout-note.md). Restored trust is **config-load-path only** — raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until 118 Increment 3b (outside this spec's scope).
 - Spec 116 (sync/customization safety) — Decoupled; no dependency.
 
 ---
@@ -234,7 +234,7 @@ These are the invariants the verification asserts. They are the testable heart o
 
 ## Error Handling
 
-- **Documented CLI cannot run (Finding 2):** the check runs via the `ts-node` workaround, sets `generatedVia: 'ts-node-workaround'` and `provisional: true`, and additionally records `configLoadEquivalentToWorkaround` (verified / unverified). All downstream conclusions inherit `provisional`. Certification (P7) is blocked, not faked. In tasks.md this becomes a **Blocked-Task** (Process-Spec-Planning § Cross-Spec Coordination) on the Finding-2 dependency, so the block is tracked rather than silently gating exit.
+- **Documented CLI cannot run (Finding 2):** *(Historical — this fallback path applied while Finding 2 was open. Spec 118 Increment 1 has since made the documented CLI runnable; the trust gate now runs against it directly. Retained because the harness still implements this degraded mode for any future config-load regression.)* the check runs via the `ts-node` workaround, sets `generatedVia: 'ts-node-workaround'` and `provisional: true`, and additionally records `configLoadEquivalentToWorkaround` (verified / unverified). All downstream conclusions inherit `provisional`. Certification (P7) is blocked, not faked. In tasks.md this was a **Blocked-Task** (Process-Spec-Planning § Cross-Spec Coordination) on the Finding-2 dependency, so the block was tracked rather than silently gating exit.
 - **Missing artifact (committed or fresh):** surfaced as `missing-committed` / `missing-fresh` status — itself a divergence requiring classification (an emptied `components.yaml` is exactly this).
 - **Classification ambiguity:** a divergence that cannot be confidently bucketed is recorded with `bucket` best-effort + `correctTarget: 'unknown'` and escalated to the checkpoint — never silently resolved.
 - **Manifest gap:** an un-allowlisted divergence fails `allEqual`; the check does not pass by treating unknown divergences as acceptable.

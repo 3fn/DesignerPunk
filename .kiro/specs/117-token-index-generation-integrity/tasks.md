@@ -2,19 +2,19 @@
 
 **Date**: 2026-06-13
 **Spec**: 117 - Token-Index Generation Integrity
-**Status**: Implementation Planning — **post-checkpoint restructure** (Task 1.3 DecisionRecord ratified 2026-06-13)
+**Status**: Implementation Planning — **post-checkpoint restructure** (Task 1.3 DecisionRecord ratified 2026-06-13); **reconciled 2026-06-24** to reflect Spec 118 Increment 1 (Finding 2 resolved externally; Task 2 retired; Task 5.3 trust gate now executable — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md)). Next actionable: **Task 3** (merged R3+R5 spine fix).
 **Dependencies**:
 - Spec 112 / 115 — Complete (this spec completes 112's token-index gap).
-- **Finding 2 (CLI tsx/ESM loader)** — **FOLDED IN** as Task 2 (one-line fix; was an external dependency, now in scope per the DecisionRecord — it is the documented-CLI trust gate for Task 5.3).
+- **Finding 2 (CLI tsx/ESM loader)** — **RESOLVED EXTERNALLY by Spec 118 Increment 1** (committed `041aaea8`). The one-line directory-import fix this spec originally folded in as Task 2 was empirically **false** (it only relocates the failure one hop down the barrel chain); the genuine unblock is 118's TS-aware config loader (Approach A) + a `require` condition on the `./config` export. The documented `generate` CLI now runs end-to-end, so Task 5.3's trust gate is **executable**. Authoritative correction: [`findings/118-closeout-note.md`](findings/118-closeout-note.md) (supersedes decision-record items 3 & 7). **Restored trust is config-load-path ONLY**; the raw-`.ts` exports (`./blend`/`./build`/`./types`) remain unverified until **118 Increment 3b** (out of 117's renewed scope).
 - Spec 116 — Decoupled.
 
 ---
 
 ## Implementation Plan
 
-Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and produced a dated `DecisionRecord` (Task 1.3) ratifying: **R3 + R5 merge** (`sharedRootCauseConfirmed: true`), **Finding 2 folded in**, **N1 deferred** (tracked), **N2 folded into R4**. Tasks 2–4 below are the **rewritten** fix tasks (the informed placeholders, now concretized from the audit). Fix *mechanics* in R3/R5/R4 remain Ada's to finalize; this plan states the audit-grounded structure and the contracts the mechanics must satisfy.
+Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and produced a dated `DecisionRecord` (Task 1.3) ratifying: **R3 + R5 merge** (`sharedRootCauseConfirmed: true`), **Finding 2 folded in** *(since superseded — Finding 2 is resolved externally by Spec 118 Increment 1; see the Dependencies note and Task 2 below)*, **N1 deferred** (tracked), **N2 folded into R4**. Tasks 3–4 below are the **rewritten** fix tasks (the informed placeholders, now concretized from the audit). Fix *mechanics* in R3/R5/R4 remain Ada's to finalize; this plan states the audit-grounded structure and the contracts the mechanics must satisfy.
 
-**Agent ownership:** Thurgood — audit methodology + verification harness (test infra) + formalization. Ada — Finding-2 one-liner + the merged spine fix (R3/R5) + R4-loader mechanics + Rosetta interpretation. Lina — consulted on R4 loading semantics. Peter — checkpoint + ballot-measure approvals.
+**Agent ownership:** Thurgood — audit methodology + verification harness (test infra) + formalization. Ada — the merged spine fix (R3/R5) + R4-loader mechanics + Rosetta interpretation. Lina — consulted on R4 loading semantics. Peter — checkpoint + ballot-measure approvals. *(The Finding-2 CLI unblock, originally Ada's one-liner, is resolved externally by Spec 118 Increment 1 — no longer a 117 fix task.)*
 
 ---
 
@@ -33,7 +33,7 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
   - ✅ Post-investigation checkpoint → dated `DecisionRecord` with kept/revised/rescoped per R3–R5 + `sharedRootCauseConfirmed: true`. → `findings/decision-record.md`
   - ✅ No fix applied before this task completed.
 
-  **Audit outcome (drives the restructure below):** F1(R3) + F3b(R5) share a confirmed **code** root cause — both read the post-OKLCH-collapsed `platforms.web.value` while dist reads the correct mode-resolved OKLCH source → **merge** (Task 3). F3a(R4) confirmed; also manifests in `dist/ComponentTokens.*` (N2). Finding 2 = one-line directory-import fix (Task 2).
+  **Audit outcome (drives the restructure below):** F1(R3) + F3b(R5) share a confirmed **code** root cause — both read the post-OKLCH-collapsed `platforms.web.value` while dist reads the correct mode-resolved OKLCH source → **merge** (Task 3). F3a(R4) confirmed; also manifests in `dist/ComponentTokens.*` (N2). ~~Finding 2 = one-line directory-import fix (Task 2).~~ *(Superseded: the audit's one-line diagnosis was empirically false; Finding 2 is resolved externally by Spec 118 Increment 1 — see [`findings/118-closeout-note.md`](findings/118-closeout-note.md).)*
 
   **Primary Artifacts:** `src/tools/integrity/GenerationIntegrityCheck.ts`; `findings/{raw-divergences,classification,audit-report,decision-record}.md`.
   **Completion Documentation:** Detailed `.../completion/task-1-completion.md` ✅; Summary `docs/specs/.../task-1-summary.md` ✅.
@@ -53,30 +53,15 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
     - Ratified: merge R3+R5; fold in Finding 2; defer N1; fold N2 into R4; R3/R4/R5 kept with scope notes. → `findings/decision-record.md`
     - _Requirements: 1.8, 1.9_
 
-- [ ] 2. CLI Config-Import Fix (Finding 2 — folded in)
+- [~] 2. ~~CLI Config-Import Fix (Finding 2 — folded in)~~ — **SUPERSEDED; RESOLVED EXTERNALLY by Spec 118 Increment 1**
 
-  **Type**: Implementation
-  **Validation**: Tier 2 - Standard
-  **Agent**: Ada (resolved the April sibling `2026-04-08-cli-module-resolution`)
+  **Status**: Retired as a 117 fix task. No 117 action required. Retained as historical record (the closeout-note philosophy: supersede, don't erase).
 
-  **Why here:** the documented `generate` CLI cannot run *any* generation until this is fixed (confirmed: fails at config load even bypassing npx). It is the verification prerequisite for Task 5.3 and resolves the audit's `provisional` ceiling. Sequenced first so Tasks 3–4 can be verified via the documented CLI, not the workaround.
+  **Why retired:** This task's premise — that a one-line directory-import fix (`designerpunk.config.ts:16`, `'./src/config'` → `'./src/config/index.ts'`) unblocks the documented `generate` CLI — was confirmed **empirically false** by Spec 118 (resolution-matrix harness): the one-liner only relocates the failure one hop down the barrel chain. The genuine blocker was deeper (`loadConfig` did a raw `await import()` of the `.ts` config with no TS-aware resolution). **Spec 118 Increment 1** (committed `041aaea8`) fixed it: a TS-aware config loader (Approach A) + a `require` condition on the `./config` export. The documented consumer workflow now runs end-to-end (118's subprocess guard: `init` → config → `generate` → 217 tokens × 3 platforms). See [`findings/118-closeout-note.md`](findings/118-closeout-note.md).
 
-  **Success Criteria:**
-  - `node bin/designerpunk.js generate` (and `validate`) run without the directory-import error.
-  - Config resolves identically to the ts-node workaround (`tokenSourceMode: 'package'`, `themes: []`) — confirming the audit's findings hold under the documented CLI (closes `configLoadEquivalentToWorkaround`).
+  **What migrated to Task 5.3:** the `configLoadEquivalentToWorkaround` confirmation (resolved config under the documented CLI matches the ts-node workaround — `tokenSourceMode: 'package'`, `themes: []`) is now part of Task 5.3's trust gate, since the documented CLI itself is supplied by 118 rather than by a 117 fix.
 
-  **Known structural element (from diagnosis):** `designerpunk.config.ts:16` → `import { defineConfig } from './src/config'` is a directory import tsx ESM rejects; fix to `'./src/config/index.ts'` (the error's own suggestion; same class as the resolved April issue).
-
-  **Scope boundary:** ONLY the config-import resolution needed to run `generate`. The separate `--force`-swallow CLI papercut (`2026-06-10-npx-force-flag-swallowed`) stays OUT — we invoke `node bin/designerpunk.js generate` directly for verification.
-
-  **Completion Documentation:** Detailed `.../completion/task-2-completion.md`; Summary `docs/specs/.../task-2-summary.md`.
-
-  - [ ] 2.1 Fix the directory import; confirm documented CLI runs
-    **Type**: Implementation · **Validation**: Tier 2 · **Agent**: Ada
-    - Correct the `designerpunk.config.ts` directory import.
-    - Verify `node bin/designerpunk.js generate` runs end-to-end (in a disposable worktree first to avoid clobbering committed artifacts).
-    - Confirm resolved config matches the workaround (tokenSourceMode/themes) — record the equivalence that lifts `provisional`.
-    - _Requirements: 2.4, 6.3 (enables the documented-CLI trust gate)_
+  **Scope note (carried):** the `--force`-swallow CLI papercut (`2026-06-10-npx-force-flag-swallowed`) remains OUT of scope — 5.3 invokes `node bin/designerpunk.js generate` directly.
 
 - [ ] 3. Token-Index OKLCH Color + Theme-Varying — MERGED Spine Fix (R3 + R5)
 
@@ -104,6 +89,7 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
 
   - [ ] 3.1 _Mechanics authored by Ada from the audit findings (R3 + R5 spine fix)._
     **Type**: Architecture · **Validation**: Tier 3 · **Agent**: Ada
+    - **Mechanics design AUTHORED (2026-06-24)** → [`findings/task-3-mechanics.md`](findings/task-3-mechanics.md). Main-loop verified the three load-bearing claims against source (canvas dark = semantic override via `dark/SemanticOverrides.ts:163`; OKLCH resolver ignores `mode` per `SemanticValueResolver.ts:24-31`; dist base-mode theme-varying set = the 5 `darkSemanticOverrides` keys, not committed's 10). **Pending Peter's ratification before implementation**; one residual runtime unknown to pin first (scope of dist's in-memory `themeVaryingTokens` Set — whether it includes WCAG registry keys).
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 5.1, 5.2, 5.3, 5.4_
 
 - [ ] 4. Component-Token Loading Gated on Source Presence (R4) + dist ComponentTokens (N2)
@@ -139,7 +125,7 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
   **Success Criteria:**
   - The repeatable `GenerationIntegrityCheck` passes: fresh generate semantically reproduces committed artifacts, OR every divergence is in the ratified `IntentionalDivergenceManifest`.
   - Application MCP re-indexed; serves OKLCH primitive colors, full component-token tier, correct theme-varying flags.
-  - **Non-provisional certification achieved via documented-CLI reproduction** — now attainable because Task 2 fixes the documented CLI. **⚠ INHERITS decision-record item 3's superseded status (pending Spec 118):** Task 2 does NOT fix the documented CLI (it relocates the failure one hop down the barrel chain); the genuine unblock is 118 Increment 1. Not rewritten here — authoritative resolution rides a 118 subtask (Decision 4).
+  - **Non-provisional certification achieved via documented-CLI reproduction** — now attainable because **Spec 118 Increment 1** (not the retired Task 2 one-liner) makes the documented `generate` CLI run end-to-end. The decision-record item 3/7 superseded status is now **resolved**: its authoritative correction is [`findings/118-closeout-note.md`](findings/118-closeout-note.md). **Restored trust is config-load-path ONLY** — the raw-`.ts` exports (`./blend`/`./build`/`./types`) stay unverified until **118 Increment 3b** and are out of 117's renewed scope; 117's documented-`generate` path does not depend on those subpaths at runtime.
 
   **Completion Documentation:** Detailed `.../completion/task-5-completion.md`; Summary `docs/specs/.../task-5-summary.md`.
 
@@ -156,9 +142,11 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
 
   - [ ] 5.3 End-to-end re-verification + documented-CLI trust gate
     **Type**: Architecture · **Validation**: Tier 3 · **Agent**: Thurgood + Ada
-    **Depends on**: Task 2 (CLI fix) — formerly a Finding-2 Blocked-Task; the blocker is now in-scope and resolved by Task 2.
+    **Depends on**: **Spec 118 Increment 1** (committed `041aaea8`) — supplies the runnable documented CLI. Formerly a Finding-2 Blocked-Task gated on the retired Task 2; that blocker is now resolved externally. The trust gate is **executable**; 117 re-runs it to certify on its own behalf (118 does not lift 117's provisional status for it).
     - Re-diff after all fixes; regenerate → reindex Application MCP → confirm OKLCH colors, component tier (+ dist ComponentTokens), theme-varying.
-    - Reproduce the baseline via the **documented CLI** (enabled by Task 2) → lift `provisional`; certify.
+    - Reproduce the baseline via the **documented CLI** (now runnable via 118 Increment 1) → lift `provisional`; certify **non-provisionally**.
+    - **Confirm `configLoadEquivalentToWorkaround` (migrated from the retired Task 2):** resolved config under the documented CLI matches the ts-node workaround (`tokenSourceMode: 'package'`, `themes: []`) — the equivalence that closes the audit's `provisional` ceiling.
+    - **Scope guard:** certify the documented-`generate` path only; do NOT extend certification to the raw-`.ts` exports (`./blend`/`./build`/`./types`), which are tracked to 118 Increment 3b.
     - _Requirements: 6.1, 6.2, 6.3, 2.4_
 
 - [ ] 6. Documentation & Clean-Exit (R7)
@@ -185,12 +173,12 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
 ## Sequencing & Gates
 
 1. **Task 1 (audit) complete** — DecisionRecord ratified; fixes unlocked.
-2. **Task 2 (CLI one-liner) first** — restores the documented `generate` so Tasks 3–4 verify via the documented CLI (not the workaround) and Task 5.3's trust gate is attainable.
-3. **Task 3 = merged spine fix** (R3+R5) per `sharedRootCauseConfirmed: true` — one upstream-source correction, two verified readouts.
+2. **Task 2 RETIRED** — the documented `generate` CLI is restored externally by **Spec 118 Increment 1** (not a 117 one-liner). Tasks 3–4 verify via the documented CLI, and Task 5.3's trust gate is now attainable, without any 117 CLI fix.
+3. **Task 3 = merged spine fix** (R3+R5) per `sharedRootCauseConfirmed: true` — one upstream-source correction, two verified readouts. **Next actionable work.**
 4. **Task 4 (R4) + N2** — disjoint artifacts from Task 3 (`components.yaml`/`dist/ComponentTokens.*` vs `primitives/semantics.yaml`), so single-variable attribution holds without interleaved re-diff; Task 5.3 confirms the whole. Double-registration traced here (carried from 1.2).
-5. **Task 5.3** — now unblocked by Task 2; documented-CLI reproduction lifts `provisional`.
+5. **Task 5.3** — unblocked by **Spec 118 Increment 1**; documented-CLI reproduction lifts `provisional` (config-load path only; raw-`.ts` exports tracked to 118 Increment 3b).
 6. **Task 6** — clean-exit (N1 logged; ballot proposals).
 
 ## Validation-Tier Note
 
-Tier 3: audit, checkpoint, harness, merged spine fix, E2E. Tier 2: CLI one-liner, R4 loader, fixture. Tier 1: documentation.
+Tier 3: audit, checkpoint, harness, merged spine fix, E2E. Tier 2: R4 loader, fixture. Tier 1: documentation. *(The former Tier-2 CLI one-liner is retired — Finding 2 is resolved externally by Spec 118 Increment 1.)*
