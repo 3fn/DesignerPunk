@@ -1,0 +1,55 @@
+# Spec 118 Task 3.2 — Consumer-Guard CI Lane
+#
+# Standing CI home for Spec 118's guards. This is the FIRST test-running CI in this
+# repo (the only prior workflow, package-name-drift.yml, does not run any test suite).
+# New guards landing in Tasks 4 and 5 attach to this lane — not a separate workflow.
+#
+# Scope discipline: this lane runs `npm run test:consumer` only. It is the minimal
+# lane Spec 118's guards need. Wiring the full `npm test` suite into CI is a separate,
+# out-of-scope concern for a future decision.
+#
+# Making this a required check: enable via branch protection rules in GitHub repo
+# settings (Settings → Branches → main → Require status checks → add
+# "Consumer Guard / consumer-guard"). This workflow only defines the check;
+# branch protection is a repo-settings action Peter takes.
+#
+# @see Spec 118 Task 3.2
+# @see tests/consumer-integration.test.ts — the guard that runs here
+# @see tests/README.md — in-repo note on this lane
+
+name: Consumer Guard
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  consumer-guard:
+    name: Consumer Guard
+    runs-on: ubuntu-latest
+    # Generous timeout: pack → install → init → generate is slow (~3-4 min in CI).
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run consumer guard
+        # Runs the full consumer-integration test suite including:
+        #   - Spec 106 R8: pack → install → init → generate → validate → MCP smoke
+        #   - Spec 118 Task 3.1: faithful-consumer config subprocess guard
+        #     (ESM-authored + CJS-authored with transitive raw-.ts my-overrides)
+        run: npm run test:consumer

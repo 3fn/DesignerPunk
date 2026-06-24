@@ -12,7 +12,9 @@
 
 2. **`sharedRootCauseConfirmed: TRUE` → MERGE.** The R3 (token-index rgba) and R5 (theme-varying collapse) fixes merge into **one spine fix**: wire the token-index generation path to the OKLCH **mode-resolved** source the dist path uses. Two readouts from one source — color value (oklch + channels) and light/dark comparison (theme-varying).
 
-3. **Finding 2 (broken `generate` CLI) — FOLDED IN.** Confirmed root cause: a one-line directory import in `designerpunk.config.ts:16` (`'./src/config'` → `'./src/config/index.ts'`), same class as the resolved April issue. It is the **verification prerequisite** for Task 5.3 (the documented CLI cannot run *any* generation until fixed). Broader CLI-cluster polish (the `--force`-swallow, etc.) stays **out** of this spec.
+3. **⚠ SUPERSEDED PENDING SPEC 118** — item 3's premise is empirically false (the one-line fix relocates the failure one hop down the barrel chain; it does NOT unblock the documented CLI). See 118 § Relationship to 117. The authoritative correction rides a 118 subtask (Decision 4) — not rewritten here. *(Original text preserved below as historical record.)*
+
+   **Finding 2 (broken `generate` CLI) — FOLDED IN.** Confirmed root cause: a one-line directory import in `designerpunk.config.ts:16` (`'./src/config'` → `'./src/config/index.ts'`), same class as the resolved April issue. It is the **verification prerequisite** for Task 5.3 (the documented CLI cannot run *any* generation until fixed). Broader CLI-cluster polish (the `--force`-swallow, etc.) stays **out** of this spec.
 
 4. **N1 (BlendUtilities not generated) — DEFERRED.** Tracked at `.kiro/issues/2026-06-13-blendutilities-not-generated.md`. Out of scope (not token-index integrity; needs an intent decision). Inventory corrected.
 
@@ -22,7 +24,9 @@
    - **R5 correct target = dist's mode-resolved set**, not committed's 10. Reconcile the 10-vs-7 gap during the fix (likely WCAG-varying / non-`light-dark()` emission).
    - **R4 verification covers the dist side** (N2).
 
-7. **Provisional status resolves.** Once the Finding-2 one-liner lands, the documented CLI runs → Task 5.3's documented-CLI verification is executable → the spec can certify **non-provisionally**. Config-value equivalence (workaround vs documented CLI) is confirmed by inspection; empirical confirmation lands with the one-liner. The spec is **no longer permanently provisional**.
+7. **⚠ INHERITS ITEM 3'S SUPERSEDED STATUS (pending Spec 118).** This item's "once the Finding-2 one-liner lands" premise depends on item 3, which is superseded — the one-liner does not unblock the documented CLI. Not rewritten here; the authoritative resolution rides a 118 subtask (Decision 4).
+
+   **Provisional status resolves.** Once the Finding-2 one-liner lands, the documented CLI runs → Task 5.3's documented-CLI verification is executable → the spec can certify **non-provisionally**. Config-value equivalence (workaround vs documented CLI) is confirmed by inspection; empirical confirmation lands with the one-liner. The spec is **no longer permanently provisional**.
 
 ---
 
@@ -45,3 +49,9 @@
 - Task 1.2 (audit) complete; Task 1.3 (this checkpoint) ratified.
 - Next: rewrite `tasks.md` placeholders T2–T6 per the table above; recommend a brief Ada/Lina feedback pass since the merge changes the structure they originally reviewed.
 - Worktree `/tmp/dp117-audit`: retained until the documented-CLI verification runs (it's the reproduction harness); teardown after certification.
+
+---
+
+## Findings Cross-References
+
+- **F-C1** (2026-06-22, fixed `f01a1491`): `js-yaml` was undeclared in dependencies — `npx designerpunk init` crashed on clean consumer install. A **DISTINCT** failure mode (packaging/missing-dependency) from item 3's config-load failure; distribution-layer fix is **Spec 123** scope.

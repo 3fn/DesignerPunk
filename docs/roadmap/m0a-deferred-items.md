@@ -73,7 +73,7 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 | Kotlin package namespace from config | Generator produces `com.designerpunk.*`. Product-specific namespaces require generator change. | M0b Android activation |
 | Swift Package generation for local SPM | SPM could reference a local package — cleaner than file copy for iOS. | M0b iOS activation |
 | Tree-shaking / individual component exports | Full ESM bundle for M0a. Side-effect-free individual exports needed for mobile bundle size. | M0b scoping |
-| `"type": "module"` in package.json | May break existing CJS `require()` calls in tests or build scripts. Verify during Task 5.3 — only add if ESM resolution requires it. | Task 5.3 validation reveals it's needed |
+| `"type": "module"` in package.json | May break existing CJS `require()` calls in tests or build scripts. **Superseded — now owned by Spec 118's R4/R5 module-direction decision** (the `"type":"module"` flip is part of 118's CJS-vs-ESM commitment, made on Increment-2 evidence, not 117's Task 5.3). | **Spec 118 Task 8** direction decision (only if native ESM is committed) |
 | Personal Note template | Replace Peter's note with a template for other humans. Only one customer right now. | Second human customer |
 | Exclude "A Vision of the Future.md" | Peter's philosophical foundation, not reusable. | Second human customer |
 
@@ -106,3 +106,12 @@ These aren't deferred items — they're explicitly scheduled for the Phase 1→2
 |------|-----------|-------------------|
 | Storybook integration guidance | Storybook MCP under consideration for component showcase and AI-driven testing. Web Components compatibility needs verification first. | After Storybook adoption decision is finalized and Web Components renderer tested |
 | Troubleshooting section | Common issues (auth failures, server startup errors, pipeline errors) not documented. Will surface naturally during marketing site build. | After Phase 2 Block E (foundation) — capture real issues encountered during first product repo setup |
+
+## Spec 118: Module-Resolution Coherence
+
+| Item | Rationale | Activation Trigger |
+|------|-----------|-------------------|
+| **Repo-wide linting adoption** | Spec 118 introduced ESLint **scoped to only the module-resolution rule on web source**; the repo otherwise has no linting at all (no ESLint/Biome/oxlint config, deps, or scripts — verified 2026-06-24). Whether to adopt repo-wide code-quality linting (and which ruleset/config) is a separate decision 118 deliberately did NOT own — pulling it in would be scope creep. | A future tooling-standards decision / when repo-wide code-quality enforcement becomes a priority. |
+| **ESM-consolidation execution (Increment 3c, ESM variant)** | If 118's module-direction decision commits **native ESM** AND the Increment-2 cost (esp. the consumer-facing `@3fn/core/jest-preset` blast radius) is prohibitive, the ESM consolidation *execution* may spin into a dedicated follow-on spec via the fork escape-hatch. The *direction* is still decided in 118, which closes on a guard-certified coherent intermediate. | Spec 118 **Task 8** commits ESM **and** the escape-hatch is elected (prohibitive cost). |
+
+*Note: the `"type": "module"` deferral above (under Spec 095 / Block B) is now subsumed by 118's R4/R5 direction decision.*

@@ -43,21 +43,69 @@ const DEFAULTS = {
 };
 
 /**
+ * Loads a config module at runtime and returns its module namespace object
+ * (the caller unwraps `.default`). The injectable resolution seam for
+ * {@link loadConfig} — see {@link defaultConfigModuleLoader}.
+ */
+export type ConfigModuleLoader = (configPath: string) => unknown | Promise<unknown>;
+
+/**
+ * Default config-module loader — **Approach A** (Spec 118 Task 1 selection):
+ * `tsx/cjs/api` namespaced `register` + scoped synchronous `require`.
+ *
+ * `register()` mutates `module._resolveFilename` / `module._extensions` process-globally;
+ * the namespace scopes requests; `unregister()` (in `finally`) restores global state —
+ * load-bearing for the no-ambient-residue criterion. Do NOT drop the `finally`.
+ * (Task 1 finding: `findings/loader-selection.md`.)
+ *
+ * Constraint: this loader **cannot run inside a jest process** — tsx's scoped require
+ * appends a `?namespace=` tag that jest's module resolver rejects (ENOENT). In-process
+ * jest tests must inject a jest-compatible loader via `loadConfig`'s `loadModule`
+ * parameter (e.g. `(p) => import(p)`). Production (real-node) execution uses this default
+ * unconditionally — there is deliberately NO test-environment detection in this path.
+ */
+export const defaultConfigModuleLoader: ConfigModuleLoader = (configPath: string) => {
+  const { register } = require('tsx/cjs/api') as {
+    register: (opts: { namespace: string }) => {
+      require: (id: string, fromFile: string) => unknown;
+      unregister: () => void;
+    };
+  };
+  const ns = `dp-config-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const unregister = register({ namespace: ns });
+  try {
+    // ScopedRequire is synchronous — the function stays async for callers.
+    return unregister.require(configPath, __filename);
+  } finally {
+    // Mandatory: restores the global resolver hook (no ambient/global residue).
+    unregister.unregister();
+  }
+};
+
+/**
  * Load and resolve a DesignerPunk configuration.
  *
  * @param cwd - Working directory to search for config file. Defaults to process.cwd().
+ * @param loadModule - Injectable config-module loader (resolution seam). Defaults to
+ *   {@link defaultConfigModuleLoader} (Approach A). In-process jest tests inject a
+ *   jest-compatible loader because Approach A cannot run inside jest (see that loader's docs).
  * @returns Fully resolved configuration with absolute paths.
  */
-export async function loadConfig(cwd: string = process.cwd()): Promise<ResolvedConfig> {
+export async function loadConfig(
+  cwd: string = process.cwd(),
+  loadModule: ConfigModuleLoader = defaultConfigModuleLoader,
+): Promise<ResolvedConfig> {
   const configPath = path.resolve(cwd, 'designerpunk.config.ts');
   let userConfig: DesignerPunkConfig = {};
   let configDir = cwd;
 
   if (fs.existsSync(configPath)) {
     try {
-      // Dynamic import handles TypeScript via ts-node or similar loader
-      const loaded = await import(configPath);
-      userConfig = loaded.default || loaded;
+      // Resolution seam — production default is Approach A (tsx/cjs/api); see
+      // defaultConfigModuleLoader. In-process jest tests inject a jest-compatible
+      // loader. No test-environment detection lives in this path.
+      const loaded = await loadModule(configPath);
+      userConfig = (loaded as { default?: DesignerPunkConfig } & DesignerPunkConfig).default || (loaded as DesignerPunkConfig);
       configDir = path.dirname(configPath);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);

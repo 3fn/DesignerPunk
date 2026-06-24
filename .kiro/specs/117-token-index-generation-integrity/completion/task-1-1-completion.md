@@ -38,6 +38,7 @@ Layout mirrors the existing `src/tools/release/` tool (cli/pipeline/types/__test
 
 - **Scope split (1.1 vs 1.2):** 1.1 = comparison engine + inventory + manifest scaffold + normalization tests. The `DivergenceClassifier`, `AuditReport` assembly, and the real `FreshGenerator` are 1.2; their **types** are defined here so 1.2 implements against stable contracts.
 - **Dependencies:** `js-yaml` (confirmed used in production, incl. `generateTokenIndex.ts`), `minimatch` (confirmed dependency). No new deps; no external diff library (positional line-diff is dependency-free and correct for deterministic generated output).
+  - **⚠ CORRECTION (F-C1, fixed `f01a1491`):** the `js-yaml` "confirmed" above was **in-repo (hoist-luck) only** — it was satisfied transitively in this repo's node_modules and was **false on a clean consumer install** (`js-yaml` was undeclared in dependencies; `npx designerpunk init` crashed). Original line preserved above as historical record; distribution-layer fix is Spec 123 scope.
 - **Strict TS:** clean under the project's `strict: true` (LSP `get_diagnostics`: none).
 
 ## Validation (Tier 3: Comprehensive)
@@ -72,5 +73,6 @@ Layout mirrors the existing `src/tools/release/` tool (cli/pipeline/types/__test
 ## Lessons / Notes
 
 - Grounding in the real artifacts before writing paid off: confirmed token-index has no volatile header (simplified the YAML normalization), confirmed the `rgba(...)` mode-aware color shape (informs Ada's R3 `value`-shape decision), and confirmed `js-yaml`/`minimatch` availability (avoided a dependency rabbit hole).
+  - **⚠ CORRECTION (F-C1, fixed `f01a1491`):** the `js-yaml` availability "confirmed" here was **in-repo (hoist-luck) only** and **false on a clean consumer install** — `js-yaml` was undeclared in dependencies, so `npx designerpunk init` crashed. Original line preserved as historical record.
 - The engine deliberately does not run a real generate yet — keeping 1.1 a pure, fast, deterministic unit. This preserves the investigation-first gate: nothing actually generates or compares against the live repo until the audit (1.2) runs under the checkpoint discipline.
 - **Fail-loudly correction (Peter review):** the initial `readCommitted` swallowed *all* errors to `null`, conflating a missing file (legitimate `missing-committed`) with real I/O errors (which would masquerade as drift). Corrected to swallow ENOENT only and rethrow everything else, with a regression test (EISDIR propagates). Also removed a dead defensive `try/catch` + `??` fallback in `asString` (parsed YAML/JSON is always serializable — let it throw if that invariant breaks). The parse paths (`yaml.load`/`JSON.parse`) were already fail-loud. DI default parameters were retained — they wire production defaults and enable test injection; they are not value-fallbacks masking data.

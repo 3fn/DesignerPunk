@@ -76,6 +76,7 @@
     "./component-tokens.css": "./dist/ComponentTokens.web.css",
     "./config": {
       "import": "./dist/config/index.js",
+      "require": "./dist/config/index.js",
       "types": "./dist/config/index.d.ts"
     },
     "./types": {
@@ -128,6 +129,7 @@
     "test": "jest --testPathIgnorePatterns='performance/__tests__|__tests__/performance|PerformanceValidation'",
     "test:all": "jest",
     "test:consumer": "jest --roots='<rootDir>/tests' --testMatch='**/consumer-integration.test.ts' --runInBand --testTimeout=120000",
+    "test:resolution-matrix": "node src/config/__resolution-matrix__/run-matrix.js",
     "test:performance": "jest --testPathPatterns='performance/__tests__|__tests__/performance'",
     "test:performance:isolated": "jest --config jest.performance.config.js --runInBand",
     "test:quick": "jest --testPathIgnorePatterns='(performance|integration)'",

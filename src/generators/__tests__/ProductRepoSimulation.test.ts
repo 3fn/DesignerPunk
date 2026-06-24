@@ -10,6 +10,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import { loadConfig } from '../../config/ConfigLoader';
+import { jestConfigModuleLoader } from '../../__tests__/helpers/configModuleLoader';
 import { generateTokenFiles } from '../generateTokenFiles';
 import { resolveTokens } from '../../cli/resolveTokens';
 
@@ -26,7 +27,7 @@ describe('Product repo simulation (Spec 094)', () => {
   });
 
   test('generates token files with default config (no config file)', async () => {
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.name).toBe('DesignerPunk');
     expect(config.abbreviation).toBe('DP');
@@ -46,7 +47,7 @@ describe('Product repo simulation (Spec 094)', () => {
     const configContent = `module.exports = { name: 'TestProduct', abbreviation: 'TP', output: './dist' };`;
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
 
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.name).toBe('TestProduct');
     expect(config.abbreviation).toBe('TP');
@@ -58,7 +59,7 @@ describe('Product repo simulation (Spec 094)', () => {
     const configContent = `module.exports = { output: './build/tokens' };`;
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
 
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
     generateTokenFiles(resolveTokens(config), config);
 
     expect(fs.existsSync(path.join(customOut, 'DesignTokens.web.css'))).toBe(true);
@@ -67,7 +68,7 @@ describe('Product repo simulation (Spec 094)', () => {
   });
 
   test('generated CSS contains base theme at :root', async () => {
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
     generateTokenFiles(resolveTokens(config), config);
 
     const css = fs.readFileSync(path.join(config.outputDir, 'DesignTokens.web.css'), 'utf-8');
@@ -79,7 +80,7 @@ describe('Product repo simulation (Spec 094)', () => {
   });
 
   test('generated CSS contains WCAG theme block', async () => {
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
     generateTokenFiles(resolveTokens(config), config);
 
     const css = fs.readFileSync(path.join(config.outputDir, 'DesignTokens.web.css'), 'utf-8');

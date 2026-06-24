@@ -39,6 +39,7 @@
     ],
     "exclude": [
         "node_modules",
-        "dist"
+        "dist",
+        "src/config/__resolution-matrix__"
     ]
 }

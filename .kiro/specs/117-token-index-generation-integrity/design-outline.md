@@ -15,6 +15,22 @@
 
 ---
 
+> **⚠ FORWARD CONTEXT — captured note (not the substantive decision-record correction, which is gated on 118 Inc 1)**
+>
+> Spec 117 is **provisional**. The genuine unblock for **Task 5.3** is **Spec 118 Increment 1** (the TS-aware
+> config loader) — **NOT** 117's own Task 2 one-liner. The Task 2 one-liner only relocates the failure one hop
+> down the barrel chain; it does not make the documented-CLI config-load path certain.
+>
+> - **Closeout mechanism:** a 118 subtask writes the authoritative guidance note into 117's dir once 118 Inc 1
+>   makes the config-load path certain; 117 then re-runs its **own** Task 5.3.
+> - **Positioning:** 117 closes out right after 118 Increment 1, before 122/123.
+> - **Scope of restored trust:** scoped to the **config-load path** only. The **exports path stays unverified**
+>   until **118 Increment 3b**.
+> - **See:** `.kiro/specs/118-module-resolution-coherence/design-outline.md` § "Relationship to Spec 117" +
+>   Decision 4.
+
+---
+
 ## Guiding Principle — "Get it right" over "Get it right now" (Peter, 2026-06-13)
 
 Every decision in this spec must serve the **holistic, sustainable health of DesignerPunk** — not the fastest local patch. Short-term fix-its are precisely what produced this spec: silent drift accumulating unnoticed across three artifacts in two days. When a choice trades long-term integrity for speed, **long-term integrity wins.**

@@ -139,7 +139,7 @@ Investigation-first and gated. **Task 1 (the baseline audit) is COMPLETE** and p
   **Success Criteria:**
   - The repeatable `GenerationIntegrityCheck` passes: fresh generate semantically reproduces committed artifacts, OR every divergence is in the ratified `IntentionalDivergenceManifest`.
   - Application MCP re-indexed; serves OKLCH primitive colors, full component-token tier, correct theme-varying flags.
-  - **Non-provisional certification achieved via documented-CLI reproduction** — now attainable because Task 2 fixes the documented CLI.
+  - **Non-provisional certification achieved via documented-CLI reproduction** — now attainable because Task 2 fixes the documented CLI. **⚠ INHERITS decision-record item 3's superseded status (pending Spec 118):** Task 2 does NOT fix the documented CLI (it relocates the failure one hop down the barrel chain); the genuine unblock is 118 Increment 1. Not rewritten here — authoritative resolution rides a 118 subtask (Decision 4).
 
   **Completion Documentation:** Detailed `.../completion/task-5-completion.md`; Summary `docs/specs/.../task-5-summary.md`.
 

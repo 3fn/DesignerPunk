@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import { defineConfig } from '../defineConfig';
 import { loadConfig } from '../ConfigLoader';
+import { jestConfigModuleLoader } from '../../__tests__/helpers/configModuleLoader';
 
 describe('defineConfig', () => {
   test('returns the config object as-is', () => {
@@ -41,7 +42,7 @@ describe('ConfigLoader', () => {
   });
 
   test('returns defaults when no config file exists', async () => {
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.name).toBe('DesignerPunk');
     expect(config.abbreviation).toBe('DP');
@@ -51,13 +52,13 @@ describe('ConfigLoader', () => {
   });
 
   test('resolves output directory relative to config dir', async () => {
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.outputDir).toBe(path.resolve(tmpDir, 'dist'));
   });
 
   test('resolves token source root to package tokens path when tokenSource omitted', async () => {
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     // When tokenSource is not configured, resolves to package's src/tokens/
     expect(config.tokenSourceRoot).toBe(path.resolve(__dirname, '../../tokens'));
@@ -68,7 +69,7 @@ describe('ConfigLoader', () => {
     const configContent = `module.exports = { tokenSource: './src/tokens' };`;
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
 
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.tokenSourceRoot).toBe(path.resolve(tmpDir, './src/tokens'));
     expect(config.tokenSourceMode).toBe('local');
@@ -79,7 +80,7 @@ describe('ConfigLoader', () => {
     const configContent = `module.exports = { componentTokens: ['./src/components', './src/tokens/component'] };`;
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
 
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.componentTokenDirs).toEqual([
       path.resolve(tmpDir, './src/components'),
@@ -91,7 +92,7 @@ describe('ConfigLoader', () => {
     const configContent = `module.exports = { name: 'WrKingClass', abbreviation: 'WKC' };`;
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
 
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.name).toBe('WrKingClass');
     expect(config.abbreviation).toBe('WKC');
@@ -101,7 +102,7 @@ describe('ConfigLoader', () => {
     const configContent = `module.exports = { output: './build/tokens' };`;
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), configContent);
 
-    const config = await loadConfig(tmpDir);
+    const config = await loadConfig(tmpDir, jestConfigModuleLoader);
 
     expect(config.outputDir).toBe(path.resolve(tmpDir, './build/tokens'));
   });
@@ -109,6 +110,6 @@ describe('ConfigLoader', () => {
   test('throws on invalid config file', async () => {
     fs.writeFileSync(path.join(tmpDir, 'designerpunk.config.ts'), 'this is not valid javascript{{{');
 
-    await expect(loadConfig(tmpDir)).rejects.toThrow('Failed to load');
+    await expect(loadConfig(tmpDir, jestConfigModuleLoader)).rejects.toThrow('Failed to load');
   });
 });
