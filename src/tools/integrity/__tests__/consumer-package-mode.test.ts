@@ -23,8 +23,14 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import { loadComponentTokens } from '../../../cli/loadComponentTokens';
+import { jestTsModuleLoader } from '../../../__tests__/helpers/tsModuleLoader';
 import { ComponentTokenRegistry } from '../../../registries/ComponentTokenRegistry';
 import type { ResolvedConfig } from '../../../config/ConfigLoader';
+
+// Spec 118 Task 9.5: half (a) exercises the REAL loadComponentTokens, which now defaults to
+// the production scoped tsx loader (cannot run in jest). Inject the jest-compatible loader.
+// Half (b) jest.doMock's the module entirely, so no injection there. Real scoped resolution
+// in a packed install is certified by the consumer guard.
 
 const REGISTRY_PATH = require.resolve('../../../registries/ComponentTokenRegistry').replace(/\\/g, '/');
 
@@ -89,7 +95,7 @@ describe('Spec 117 R4 consumer blast radius — half (a): consumer authors own c
 
     // The corrected loader keys on SOURCE PRESENCE, not tokenSourceMode. In package mode
     // the consumer's componentTokenDirs must still be discovered + loaded.
-    const loaded = loadComponentTokens(config);
+    const loaded = loadComponentTokens(config, jestTsModuleLoader);
 
     const names = loaded.map((t) => t.name);
     expect(names).toContain('consumerwidget.inset.md');
@@ -112,7 +118,7 @@ describe('Spec 117 R4 consumer blast radius — half (a): consumer authors own c
     );
 
     const config = packageModeConfig({ componentTokenDirs: [path.join(fixtureDir, 'components')] });
-    const loaded = loadComponentTokens(config);
+    const loaded = loadComponentTokens(config, jestTsModuleLoader);
     const names = loaded.map((t) => t.name).sort();
     expect(names).toContain('consumerwidget.inset.md');
     expect(names).toContain('consumerpanel.gap.sm');

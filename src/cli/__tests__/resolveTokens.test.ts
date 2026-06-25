@@ -5,16 +5,22 @@
 
 import * as path from 'path';
 import { resolveTokens, verifyBarrelContract } from '../resolveTokens';
+import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import type { ResolvedConfig } from '../../config/ConfigLoader';
+
+// Spec 118 Task 9.5: resolveTokens/verifyBarrelContract default to the production scoped
+// tsx loader (Approach A), which cannot run inside jest (the `?namespace=` ENOENT). In-process
+// tests inject the jest-compatible loader. REAL scoped resolution is certified out-of-process
+// by the consumer guard (npm run test:consumer), not here.
 
 describe('verifyBarrelContract', () => {
   test('passes for valid token source (package src/tokens)', () => {
     const sourcePath = path.resolve(__dirname, '../../tokens');
-    expect(() => verifyBarrelContract(sourcePath)).not.toThrow();
+    expect(() => verifyBarrelContract(sourcePath, jestTsModuleLoader)).not.toThrow();
   });
 
   test('throws when path does not exist', () => {
-    expect(() => verifyBarrelContract('/nonexistent/path')).toThrow(
+    expect(() => verifyBarrelContract('/nonexistent/path', jestTsModuleLoader)).toThrow(
       'Token source not found at: /nonexistent/path'
     );
   });
@@ -23,7 +29,7 @@ describe('verifyBarrelContract', () => {
     // __dirname itself is a valid require path (resolves to __tests__/index if it existed)
     // but doesn't export getAllPrimitiveTokens — use a known module without that export
     const pathWithoutExport = path.resolve(__dirname, '../../config');
-    expect(() => verifyBarrelContract(pathWithoutExport)).toThrow(
+    expect(() => verifyBarrelContract(pathWithoutExport, jestTsModuleLoader)).toThrow(
       'does not export getAllPrimitiveTokens()'
     );
   });
@@ -34,7 +40,7 @@ describe('verifyBarrelContract', () => {
     const fakePath = '/fake/tokens';
     jest.doMock(fakePath, () => ({ getAllPrimitiveTokens: () => [] }), { virtual: true });
     
-    expect(() => verifyBarrelContract(fakePath)).toThrow(
+    expect(() => verifyBarrelContract(fakePath, jestTsModuleLoader)).toThrow(
       'Semantic token source not found at: /fake/tokens/semantic'
     );
 
@@ -47,7 +53,7 @@ describe('verifyBarrelContract', () => {
     jest.doMock(fakePath, () => ({ getAllPrimitiveTokens: () => [] }), { virtual: true });
     jest.doMock(fakeSemanticPath, () => ({ someOtherExport: true }), { virtual: true });
 
-    expect(() => verifyBarrelContract(fakePath)).toThrow(
+    expect(() => verifyBarrelContract(fakePath, jestTsModuleLoader)).toThrow(
       'does not export getAllSemanticTokens()'
     );
 
@@ -63,7 +69,7 @@ describe('resolveTokens', () => {
       tokenSourceMode: 'package',
     } as ResolvedConfig;
 
-    const result = resolveTokens(config);
+    const result = resolveTokens(config, jestTsModuleLoader);
 
     expect(result.primitiveTokens).toBeInstanceOf(Array);
     expect(result.primitiveTokens.length).toBeGreaterThan(0);
@@ -77,6 +83,6 @@ describe('resolveTokens', () => {
       tokenSourceMode: 'local',
     } as ResolvedConfig;
 
-    expect(() => resolveTokens(config)).toThrow('Token source not found');
+    expect(() => resolveTokens(config, jestTsModuleLoader)).toThrow('Token source not found');
   });
 });

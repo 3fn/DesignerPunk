@@ -15,6 +15,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type { ResolvedConfig } from '../config/ConfigLoader';
+import { scopedTsRequire, type TsModuleLoader } from '../config/scopedTsRequire';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
 import type { RegisteredComponentToken } from '../registries/ComponentTokenRegistry';
 
@@ -27,8 +28,18 @@ import type { RegisteredComponentToken } from '../registries/ComponentTokenRegis
  * Harmless if there is a single registration path; benign last-wins if a dual-path
  * (e.g. local copy + package `src` both required) re-registers the same token. R4's
  * components.yaml semantic-reproduction check is the safety net against a wrong overwrite.
+ *
+ * @param config - Resolved pipeline configuration.
+ * @param loadModule - Injectable runtime-TS resolution seam (Spec 118 Task 9.5). Defaults
+ *   to {@link scopedTsRequire} (Approach A scoped `tsx/cjs/api`) — the per-site scope that
+ *   makes this consumer-`.ts` load independent of the bin's global register. In-process
+ *   jest callers inject a jest-compatible loader; the build script injects the ambient tsx
+ *   loader (a plain `require`). See {@link scopedTsRequire} for why.
  */
-export function loadComponentTokens(config: ResolvedConfig): RegisteredComponentToken[] {
+export function loadComponentTokens(
+  config: ResolvedConfig,
+  loadModule: TsModuleLoader = scopedTsRequire,
+): RegisteredComponentToken[] {
   // Enable allowOverwrite with the loader (mode-independent) to tolerate
   // double-registration. Reset to default in the finally block.
   ComponentTokenRegistry.setDefaultAllowOverwrite(true);
@@ -40,14 +51,15 @@ export function loadComponentTokens(config: ResolvedConfig): RegisteredComponent
       const files = fs.readdirSync(componentSubdir)
         .filter(f => f.endsWith('.ts') && !f.endsWith('.test.ts') && !f.endsWith('.d.ts'));
       for (const file of files) {
-        require(path.join(componentSubdir, file));
+        // Scoped runtime-TS require (side-effect: defineComponentTokens registration).
+        loadModule(path.join(componentSubdir, file), __filename);
       }
     }
 
     // Source 2: Explicit componentTokens directories (*.tokens.ts pattern)
     for (const dir of config.componentTokenDirs) {
       if (!fs.existsSync(dir)) continue;
-      scanForTokenFiles(dir);
+      scanForTokenFiles(dir, loadModule);
     }
   } finally {
     // Reset to default behavior (mode-independent — mirrors the enable above).
@@ -58,17 +70,18 @@ export function loadComponentTokens(config: ResolvedConfig): RegisteredComponent
 }
 
 /**
- * Recursively scan a directory for *.tokens.ts files and require each.
+ * Recursively scan a directory for *.tokens.ts files and load each (side-effect:
+ * component-token registration) through the injected runtime-TS resolution seam.
  */
-function scanForTokenFiles(dir: string): void {
+function scanForTokenFiles(dir: string, loadModule: TsModuleLoader): void {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory() && entry.name !== '__tests__' && entry.name !== 'node_modules') {
-      scanForTokenFiles(fullPath);
+      scanForTokenFiles(fullPath, loadModule);
     } else if (entry.isFile() && (entry.name.endsWith('.tokens.ts') || entry.name === 'tokens.ts') && !entry.name.endsWith('.test.ts')) {
-      require(fullPath);
+      loadModule(fullPath, __filename);
     }
   }
 }

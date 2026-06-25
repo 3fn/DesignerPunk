@@ -56,13 +56,28 @@ async function main() {
     // loadConfig self-register) WILL reintroduce the Inc-1 ambient-loader teardown regression.
     // See findings/increment-1-ambient-loader-regression.md.
     const config = await loadConfig(process.cwd(), (p) => import(p));
+    // ⚠️ DO NOT REMOVE the injected `ambientTsRequire` loader passed to
+    // loadComponentTokens / resolveTokens below. ⚠️
+    // Spec 118 Task 9.5: resolveTokens + loadComponentTokens now carry their OWN scoped
+    // tsx seam (Approach A: namespaced register → require → unregister) as the production
+    // default — so a real-node consumer generate no longer depends on the bin's global
+    // register. But THIS script runs under tsx (`tsx <this file>`), where an ambient `.ts`
+    // loader is ALREADY present. Letting these sites self-engage Approach A here would
+    // register/UNREGISTER tsx mid-build, tearing down the ambient hook and breaking the
+    // subsequent `import('.ts')` calls in this same process (the Inc-1 ambient-loader
+    // teardown regression — identical to the loadConfig seam above, which injects the
+    // ambient loader for the same reason). So inject the ambient require: it resolves
+    // `.ts` via the process's existing tsx hook WITHOUT a register/unregister cycle.
+    // A future edit that drops these arguments WILL reintroduce the Inc-1 regression.
+    // See findings/increment-1-ambient-loader-regression.md and the bin header.
+    const ambientTsRequire = (id: string) => require(id);
     // Populate ComponentTokenRegistry via source-presence discovery (Spec 117 Task 4 / R4),
     // the same loader the documented CLI uses — so the build's component tier matches the CLI
-    // (all 33, not the hardcoded 27). Runs under the ambient tsx loader (loadConfig used
-    // the injected seam above, so import('.ts') still resolves here).
+    // (all 33, not the hardcoded 27). Runs under the ambient tsx loader (the injected seam
+    // keeps import('.ts')/require('.ts') resolving here).
     const { loadComponentTokens } = await import('../src/cli/loadComponentTokens');
-    loadComponentTokens(config);
-    const tokenInput = resolveTokens(config);
+    loadComponentTokens(config, ambientTsRequire);
+    const tokenInput = resolveTokens(config, ambientTsRequire);
     // Capture the single shared mode-resolved truth (Spec 117 Task 3) so the token-index
     // below is fed from the SAME source as the platform files — no divergent second path.
     const modeResolved = generateTokenFiles(tokenInput, config);

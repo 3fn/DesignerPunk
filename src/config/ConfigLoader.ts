@@ -11,6 +11,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import type { DesignerPunkConfig, ConfigTheme } from './defineConfig';
+import { scopedTsRequire } from './scopedTsRequire';
 
 /** Fully resolved configuration with absolute paths. */
 export interface ResolvedConfig {
@@ -53,34 +54,26 @@ export type ConfigModuleLoader = (configPath: string) => unknown | Promise<unkno
  * Default config-module loader — **Approach A** (Spec 118 Task 1 selection):
  * `tsx/cjs/api` namespaced `register` + scoped synchronous `require`.
  *
- * `register()` mutates `module._resolveFilename` / `module._extensions` process-globally;
- * the namespace scopes requests; `unregister()` (in `finally`) restores global state —
- * load-bearing for the no-ambient-residue criterion. Do NOT drop the `finally`.
- * (Task 1 finding: `findings/loader-selection.md`.)
+ * Spec 118 Task 9.5: this delegates to the SHARED {@link scopedTsRequire} primitive —
+ * the single runtime-TS resolution mechanism behind all three per-site scoped seams
+ * (config, `resolveTokens`, `loadComponentTokens`), replacing three inline copies of the
+ * register/require/unregister cycle. The mechanism is unchanged: `register()` mutates
+ * `module._resolveFilename` / `module._extensions` process-globally; the namespace scopes
+ * requests; `unregister()` (in `finally`, inside `scopedTsRequire`) restores global state —
+ * load-bearing for the no-ambient-residue criterion. (Task 1: `findings/loader-selection.md`.)
+ *
+ * Anchored at `__filename` so transitive relative imports inside the config resolve as
+ * before. Returns synchronously; the loader type stays `Promise`-compatible for callers.
  *
  * Constraint: this loader **cannot run inside a jest process** — tsx's scoped require
  * appends a `?namespace=` tag that jest's module resolver rejects (ENOENT). In-process
  * jest tests must inject a jest-compatible loader via `loadConfig`'s `loadModule`
- * parameter (e.g. `(p) => import(p)`). Production (real-node) execution uses this default
- * unconditionally — there is deliberately NO test-environment detection in this path.
+ * parameter (e.g. `(p) => import(p)`, `jestConfigModuleLoader`). Production (real-node)
+ * execution uses this default unconditionally — there is deliberately NO test-environment
+ * detection in this path.
  */
-export const defaultConfigModuleLoader: ConfigModuleLoader = (configPath: string) => {
-  const { register } = require('tsx/cjs/api') as {
-    register: (opts: { namespace: string }) => {
-      require: (id: string, fromFile: string) => unknown;
-      unregister: () => void;
-    };
-  };
-  const ns = `dp-config-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-  const unregister = register({ namespace: ns });
-  try {
-    // ScopedRequire is synchronous — the function stays async for callers.
-    return unregister.require(configPath, __filename);
-  } finally {
-    // Mandatory: restores the global resolver hook (no ambient/global residue).
-    unregister.unregister();
-  }
-};
+export const defaultConfigModuleLoader: ConfigModuleLoader = (configPath: string) =>
+  scopedTsRequire(configPath, __filename);
 
 /**
  * Load and resolve a DesignerPunk configuration.

@@ -7,8 +7,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import { loadComponentTokens } from '../loadComponentTokens';
+import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
 import type { ResolvedConfig } from '../../config/ConfigLoader';
+
+// Spec 118 Task 9.5: loadComponentTokens defaults to the production scoped tsx loader
+// (Approach A), which cannot run inside jest (the `?namespace=` ENOENT). In-process tests
+// inject the jest-compatible loader. REAL scoped resolution of consumer component `.ts` is
+// certified out-of-process by the consumer guard (npm run test:consumer), not here.
 
 describe('loadComponentTokens', () => {
   let tmpDir: string;
@@ -41,7 +47,7 @@ describe('loadComponentTokens', () => {
     test('returns RegisteredComponentToken[] (empty when no tokens registered)', () => {
       fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
       const config = makeConfig();
-      const result = loadComponentTokens(config);
+      const result = loadComponentTokens(config, jestTsModuleLoader);
       expect(Array.isArray(result)).toBe(true);
     });
 
@@ -56,7 +62,7 @@ describe('loadComponentTokens', () => {
         reasoning: 'test',
       });
       const config = makeConfig();
-      const result = loadComponentTokens(config);
+      const result = loadComponentTokens(config, jestTsModuleLoader);
       expect(result.length).toBe(1);
       expect(result[0].name).toBe('test.inset.sm');
     });
@@ -70,7 +76,7 @@ describe('loadComponentTokens', () => {
       fs.writeFileSync(path.join(componentDir, 'another.ts'), 'module.exports = {};');
 
       const config = makeConfig();
-      expect(() => loadComponentTokens(config)).not.toThrow();
+      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
     });
 
     test('excludes .test.ts and .d.ts files from component/', () => {
@@ -82,7 +88,7 @@ describe('loadComponentTokens', () => {
       fs.writeFileSync(path.join(componentDir, 'valid.d.ts'), 'throw new Error("should not load");');
 
       const config = makeConfig();
-      expect(() => loadComponentTokens(config)).not.toThrow();
+      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
     });
 
     test('discovers *.tokens.ts files recursively in componentTokenDirs', () => {
@@ -94,7 +100,7 @@ describe('loadComponentTokens', () => {
       fs.writeFileSync(path.join(compDir, 'Button-Icon', 'index.ts'), 'module.exports = {};');
 
       const config = makeConfig({ componentTokenDirs: [compDir] });
-      expect(() => loadComponentTokens(config)).not.toThrow();
+      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
     });
 
     test('skips __tests__ directories', () => {
@@ -103,13 +109,13 @@ describe('loadComponentTokens', () => {
       fs.writeFileSync(path.join(compDir, '__tests__', 'mock.tokens.ts'), 'throw new Error("should not load");');
 
       const config = makeConfig({ componentTokenDirs: [compDir] });
-      expect(() => loadComponentTokens(config)).not.toThrow();
+      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
     });
 
     test('skips non-existent componentTokenDirs gracefully', () => {
       fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
       const config = makeConfig({ componentTokenDirs: ['/nonexistent/path'] });
-      expect(() => loadComponentTokens(config)).not.toThrow();
+      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
     });
   });
 
@@ -143,7 +149,7 @@ describe('loadComponentTokens', () => {
 
       const config = makeConfig({ tokenSourceMode: 'local' });
       // Should not throw despite double registration
-      expect(() => loadComponentTokens(config)).not.toThrow();
+      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
       // Local version should win
       const result = ComponentTokenRegistry.get('test.inset.sm');
       expect(result?.value).toBe(12);
@@ -179,7 +185,7 @@ describe('loadComponentTokens', () => {
 
       const config = makeConfig({ tokenSourceMode: 'package' });
       // Should not throw despite double registration; last-wins.
-      expect(() => loadComponentTokens(config)).not.toThrow();
+      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
       const result = ComponentTokenRegistry.get('pkg.conflict');
       expect(result?.value).toBe(12);
     });
@@ -187,7 +193,7 @@ describe('loadComponentTokens', () => {
     test('resets allowOverwrite after loading completes', () => {
       fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
       const config = makeConfig({ tokenSourceMode: 'local' });
-      loadComponentTokens(config);
+      loadComponentTokens(config, jestTsModuleLoader);
 
       // After loadComponentTokens, registry should reject duplicates again
       ComponentTokenRegistry.register({

@@ -10,6 +10,7 @@
 import type { PrimitiveToken } from '../types/PrimitiveToken';
 import type { SemanticToken } from '../types/SemanticToken';
 import type { ResolvedConfig } from '../config/ConfigLoader';
+import { scopedTsRequire, type TsModuleLoader } from '../config/scopedTsRequire';
 
 /** Token data resolved from the configured source. */
 export interface TokenInput {
@@ -20,15 +21,26 @@ export interface TokenInput {
 /**
  * Resolve tokens from the configured source.
  * Verifies barrel contract, then loads token arrays.
+ *
+ * @param config - Resolved pipeline configuration.
+ * @param loadModule - Injectable runtime-TS resolution seam (Spec 118 Task 9.5). Defaults
+ *   to {@link scopedTsRequire} (Approach A scoped `tsx/cjs/api`) — the per-site scope that
+ *   makes this consumer-`.ts` load independent of the bin's global register. In-process
+ *   jest callers must inject a jest-compatible loader (Approach A cannot run inside jest;
+ *   see {@link scopedTsRequire}). The build script injects the AMBIENT tsx loader (a plain
+ *   `require`) so generation under `tsx <script>` does not tear down its ambient hook.
  */
-export function resolveTokens(config: ResolvedConfig): TokenInput {
+export function resolveTokens(
+  config: ResolvedConfig,
+  loadModule: TsModuleLoader = scopedTsRequire,
+): TokenInput {
   const sourcePath = config.tokenSourceRoot;
 
-  verifyBarrelContract(sourcePath);
+  verifyBarrelContract(sourcePath, loadModule);
 
-  // require() works cleanly with CJS (project uses module: commonjs)
-  const tokenBarrel = require(sourcePath);
-  const semanticBarrel = require(`${sourcePath}/semantic`);
+  // Scoped runtime-TS require of the consumer's token barrel (`.ts` in the consumer repo).
+  const tokenBarrel = loadModule(sourcePath, __filename) as any;
+  const semanticBarrel = loadModule(`${sourcePath}/semantic`, __filename) as any;
 
   return {
     primitiveTokens: tokenBarrel.getAllPrimitiveTokens(),
@@ -39,11 +51,18 @@ export function resolveTokens(config: ResolvedConfig): TokenInput {
 /**
  * Verify the token source directory exports the required barrel functions.
  * Throws with actionable error messages on failure.
+ *
+ * @param sourcePath - Resolved token source root.
+ * @param loadModule - Injectable runtime-TS resolution seam (see {@link resolveTokens}).
+ *   Defaults to {@link scopedTsRequire}.
  */
-export function verifyBarrelContract(sourcePath: string): void {
+export function verifyBarrelContract(
+  sourcePath: string,
+  loadModule: TsModuleLoader = scopedTsRequire,
+): void {
   let tokenBarrel: any;
   try {
-    tokenBarrel = require(sourcePath);
+    tokenBarrel = loadModule(sourcePath, __filename);
   } catch (err: any) {
     const msg = err?.message || String(err);
     // Distinguish "file not found" from "file found but has unresolved imports"
@@ -74,7 +93,7 @@ export function verifyBarrelContract(sourcePath: string): void {
 
   let semanticBarrel: any;
   try {
-    semanticBarrel = require(`${sourcePath}/semantic`);
+    semanticBarrel = loadModule(`${sourcePath}/semantic`, __filename);
   } catch (err: any) {
     const msg = err?.message || String(err);
     if (msg.includes('Cannot find module') && msg.includes(`${sourcePath}/semantic`)) {

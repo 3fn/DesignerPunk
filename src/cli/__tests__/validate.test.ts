@@ -6,6 +6,7 @@
 import * as path from 'path';
 import { reportResults } from '../validate';
 import { resolveTokens } from '../resolveTokens';
+import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import type { ResolvedConfig } from '../../config/ConfigLoader';
 
 describe('validate command', () => {
@@ -52,7 +53,9 @@ describe('validate command', () => {
         tokenSourceMode: 'package',
       } as ResolvedConfig;
 
-      const tokens = resolveTokens(config);
+      // Spec 118 Task 9.5: inject jest-compatible loader (production scoped tsx loader
+      // cannot run in jest). Real scoped resolution is certified by the consumer guard.
+      const tokens = resolveTokens(config, jestTsModuleLoader);
 
       // Import the check functions indirectly by requiring the module
       const validate = require('../validate');
