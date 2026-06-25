@@ -12,7 +12,7 @@
  *      to (1) because fresh reproduces committed (both legacy rgba); the defect
  *      is token-index-vs-dist-CSS, correctTarget = neither.
  *
- * Usage: npx ts-node --transpile-only src/tools/integrity/cli/run-audit.ts <worktree-path>
+ * Usage: npx tsx src/tools/integrity/cli/run-audit.ts <worktree-path>
  *
  * This runner does NOT classify (four-bucket / correctTarget / shared-root-cause)
  * — that is Ada's Rosetta-domain phase. It produces the raw evidence only.

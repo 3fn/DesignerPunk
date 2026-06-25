@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env tsx
 /**
  * Token Type Generation Script
  * 
@@ -12,7 +12,7 @@
  * 
  * Usage:
  *   npm run generate:types
- *   ts-node scripts/generate-token-types.ts
+ *   tsx scripts/generate-token-types.ts
  */
 
 import * as fs from 'fs';

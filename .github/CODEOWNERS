@@ -1,0 +1,29 @@
+# CODEOWNERS — review routing for sensitive surfaces.
+#
+# Created: Spec 118 Task 9.1 (Increment 3a — runtime unification).
+#
+# Scope discipline: this file intentionally covers ONLY the dependency-manifest
+# surface. It is NOT a repo-wide ownership map. Add paths deliberately.
+#
+# Enforcement note: CODEOWNERS is advisory until branch protection requires
+# code-owner review (Settings → Branches → main → Require review from Code Owners).
+# Enabling that is a repo-settings action Peter takes — consistent with how
+# .github/workflows/consumer-guard.yml documents the required-check toggle.
+
+# ── tsx pin-bump review gate (Spec 118 R6 AC4) ──────────────────────────────
+# tsx is the SOLE runtime TypeScript executor after Increment 3a (ts-node fully
+# retired; the CLI's ts-node fallback pruned). With no fallback executor, a tsx
+# version bump is a concentration risk: a minor/patch that changes transpile or
+# Node-loader behavior could silently break the bin bootstrap, the build-path
+# generators, and every tsx-invoked script at once. The pin is deliberately tight
+# (`~4.21.0` — patch-only; minor bumps blocked) so a `4.22+` bump cannot land
+# automatically. Any change to the dependency manifests routes to the named owner
+# below for an explicit pin-bump review.
+#
+# ⚠️ Ada could not verify Peter's GitHub handle (gh not authenticated in the agent
+# environment; commits carry a plain email, not a GitHub-noreply handle). The owner
+# below is the verifiable org. REPLACE with Peter's personal handle (e.g. @peter-...)
+# if individual ownership is preferred — an unresolvable CODEOWNERS entry silently
+# fails to route, so this must be confirmed against a real GitHub identity.
+package.json        @3fn
+package-lock.json   @3fn

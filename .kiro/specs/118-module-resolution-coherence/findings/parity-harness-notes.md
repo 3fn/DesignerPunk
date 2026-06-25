@@ -2,6 +2,8 @@
 
 **Date**: 2026-06-25 · **Author**: Ada · **Status**: investigation-only (no swaps/exports/migration)
 
+> **RETIRED in Increment 3a (Task 9.1, 2026-06-25):** the harness served its two-mechanism (ts-node vs tsx) purpose; with ts-node fully removed it has no second arm to compare against. `ParityOrchestrator.ts`, `ParityNormalizationRules.ts`, `__parity__/run-parity.js`, and their two unit-test suites were deleted; the `test:parity` npm script no longer exists. Evidence is preserved in this note + `evidence-table.md` (the all-green result and the volatile-only divergence set stand as the durable record).
+
 Durable record of the parity-harness mechanics, the raw observed divergences, and
 the post-normalization all-green result. The main loop assembles the formal
 `evidence-table.md` / `divergence-hypothesis.md` from this + the reported data.

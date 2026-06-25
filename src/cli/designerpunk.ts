@@ -4,8 +4,9 @@
  *
  * Entry point for `npx designerpunk generate`, `mcp:app`, and `mcp:docs`.
  *
- * TypeScript execution: Uses native `import()` in Phase 1 (ts-node in dev).
- * Block B (WS2 packaging) wires `tsx` as the bootstrap loader for product repos.
+ * TypeScript execution: `tsx` is the sole runtime TS loader (Spec 118 Increment 3a
+ * retired ts-node). The bin entry (bin/designerpunk.js) registers tsx before requiring
+ * this module; spawned TS server entry points are run via the tsx runner (resolveTsRunner).
  *
  * @see Spec 094 design.md § "Pipeline CLI"
  * @see Spec 095 design.md § "CLI MCP Commands"
@@ -283,7 +284,7 @@ async function runMcpProduct() {
   }, true);
 }
 
-/** Spawn a server as a child process. Uses node for bundled JS, tsx/ts-node for TypeScript. */
+/** Spawn a server as a child process. Uses node for bundled JS, tsx for TypeScript. */
 function spawnServer(entryPoint: string, envVars: Record<string, string>, bundled: boolean = false) {
   const runner = bundled ? 'node' : resolveTsRunner();
 
@@ -302,19 +303,21 @@ function spawnServer(entryPoint: string, envVars: Record<string, string>, bundle
   });
 }
 
-/** Find tsx or ts-node for running TypeScript server entry points. */
+/**
+ * Resolve the runtime TypeScript runner for spawning TS server entry points.
+ *
+ * Spec 118 Increment 3a: tsx is the SOLE runtime TS mechanism — ts-node is fully
+ * retired. The former ts-node fallback branch is pruned. tsx is a hard dependency
+ * (package.json `dependencies`), so this should always resolve; the fail-loud error
+ * is kept as a defensive guard in case the dependency tree is somehow broken.
+ */
 function resolveTsRunner(): string {
   try {
     require.resolve('tsx');
     return 'tsx';
   } catch {
-    try {
-      require.resolve('ts-node');
-      return 'ts-node';
-    } catch {
-      console.error('❌ Neither tsx nor ts-node found. Install tsx: npm install tsx');
-      process.exit(1);
-    }
+    console.error('❌ tsx not found. Reinstall dependencies (tsx is a required dependency): npm install');
+    process.exit(1);
   }
 }
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env tsx
 /**
  * Generate Platform-Specific Token Files
  * 
@@ -44,16 +44,22 @@ async function main() {
     const { generateTokenFiles } = await import('../src/generators/generateTokenFiles');
     const { resolveTokens } = await import('../src/cli/resolveTokens');
     const { loadConfig } = await import('../src/config/ConfigLoader');
-    // Spec 118: this script runs under ts-node, where an ambient `.ts` loader is ALREADY
-    // present. Inject it so loadConfig does NOT engage Approach A's global tsx
-    // register/unregister — that cycle clobbers ts-node's `.ts` resolution and breaks
-    // subsequent require('.ts') in this process (the prebuild regression).
-    // See findings/increment-1-ambient-loader-regression.md. Aligned with Increment 3a.
+    // ⚠️ DO NOT REMOVE the injected loader argument `(p) => import(p)` below. ⚠️
+    // Spec 118 (Increment 3a, tsx-standardized): this script runs under tsx, where an
+    // ambient `.ts` loader is ALREADY present (invoked as `tsx <this file>`; the bin/CLI
+    // also register tsx). Injecting the ambient loader makes loadConfig use THIS process's
+    // existing hook instead of engaging Approach A's own global tsx register/unregister
+    // cycle — that cycle tears down the ambient `.ts` hook and breaks subsequent
+    // `import('.ts')` in this same process (the Increment-1 prebuild regression).
+    // The seam is loader-AGNOSTIC: it protected ts-node's ambient hook before, and protects
+    // tsx's ambient hook now, identically. A future edit that drops the argument (letting
+    // loadConfig self-register) WILL reintroduce the Inc-1 ambient-loader teardown regression.
+    // See findings/increment-1-ambient-loader-regression.md.
     const config = await loadConfig(process.cwd(), (p) => import(p));
     // Populate ComponentTokenRegistry via source-presence discovery (Spec 117 Task 4 / R4),
     // the same loader the documented CLI uses — so the build's component tier matches the CLI
-    // (all 33, not the hardcoded 27). Runs under the ambient ts-node loader (loadConfig used
-    // the injected seam, so require('.ts') still resolves here).
+    // (all 33, not the hardcoded 27). Runs under the ambient tsx loader (loadConfig used
+    // the injected seam above, so import('.ts') still resolves here).
     const { loadComponentTokens } = await import('../src/cli/loadComponentTokens');
     loadComponentTokens(config);
     const tokenInput = resolveTokens(config);

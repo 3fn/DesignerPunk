@@ -104,7 +104,7 @@ function createTestProductData(): void {
 function runServer(productDir: string): string {
   try {
     return execSync(
-      `echo '' | npx ts-node product-mcp-server/src/index.ts 2>&1`,
+      `echo '' | npx tsx product-mcp-server/src/index.ts 2>&1`,
       { cwd: PROJECT_ROOT, timeout: 15000, encoding: 'utf-8', env: { ...process.env, PRODUCT_DIR: productDir } }
     );
   } catch (e: any) {

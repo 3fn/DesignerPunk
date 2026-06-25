@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env tsx
 
 /**
  * Test Categorization Script
@@ -6,7 +6,7 @@
  * Adds categorization metadata to all test files in the DesignerPunk test suite.
  * All tests are categorized as evergreen (permanent behavior verification).
  * 
- * Usage: ts-node scripts/categorize-tests.ts
+ * Usage: tsx scripts/categorize-tests.ts
  */
 
 import * as fs from 'fs';

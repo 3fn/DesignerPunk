@@ -1,0 +1,21 @@
+{
+    // Spec 118 Increment 3a (Task 9.1) — typecheck-gate-loss mitigation (R6 AC3).
+    // ts-node (run without transpileOnly) full-typechecked the scripts it ran;
+    // tsx never typechecks. The base tsconfig.json `include: ["src/**/*"]` excludes
+    // `scripts/**`, so once ts-node is retired this config is the ONLY thing that
+    // typechecks the generators. noEmit + widened rootDir so it is a pure check
+    // (scripts import ../src/* transitively, which is desired coverage).
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "rootDir": "."
+    },
+    "include": [
+        "scripts/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "src/config/__resolution-matrix__"
+    ]
+}

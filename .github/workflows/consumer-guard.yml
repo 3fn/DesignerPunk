@@ -64,6 +64,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Typecheck build-path scripts (Spec 118 Task 9.1 / Increment 3a)
+        # Restores the typecheck coverage ts-node provided for the scripts/** build-path
+        # generators (generate-token-types.ts, generate-platform-tokens.ts) once ts-node
+        # is retired for tsx (tsx never typechecks). tsconfig.scripts.json extends the base
+        # config (inheriting its excludes) and is the ONLY thing that typechecks scripts/**.
+        # Non-skippable, like the other guards — this is the R6 AC3 typecheck-gate.
+        # @see tsconfig.scripts.json
+        # @see Spec 118 Task 9.1 (Increment 3a — typecheck-gate FIRST, before the loader swap)
+        run: npm run typecheck:scripts
+
       - name: Lint web component source (Spec 118 Task 4.2)
         # ESLint scoped to src/components/**/*.{ts,tsx} ONLY.
         # This is NOT a repo-wide lint run — scope discipline is critical.
