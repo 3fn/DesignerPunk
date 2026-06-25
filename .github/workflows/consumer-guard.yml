@@ -1,20 +1,28 @@
 # Spec 118 Task 3.2 — Consumer-Guard CI Lane
+# Updated: Task 4.2 adds the static-lint step (scoped ESLint on web source)
 #
 # Standing CI home for Spec 118's guards. This is the FIRST test-running CI in this
 # repo (the only prior workflow, package-name-drift.yml, does not run any test suite).
 # New guards landing in Tasks 4 and 5 attach to this lane — not a separate workflow.
 #
-# Scope discipline: this lane runs `npm run test:consumer` only. It is the minimal
-# lane Spec 118's guards need. Wiring the full `npm test` suite into CI is a separate,
-# out-of-scope concern for a future decision.
+# Guards attached to this lane:
+#   Task 3.1 — consumer-config subprocess guard (ESM + CJS faithful fixtures)
+#   Task 4.1 — dynamic-import smoke test (preventive; runs inside npm test)
+#   Task 4.2 — static-lint step (scoped ESLint on web source; polarity deferred)
+#   Task 5   — MCP/browser boot/smoke guard (pending Task 5 execution)
+#
+# Scope discipline: this lane runs `npm run test:consumer` and `npm run lint`.
+# Wiring the full `npm test` suite into CI is a separate, out-of-scope concern.
 #
 # Making this a required check: enable via branch protection rules in GitHub repo
 # settings (Settings → Branches → main → Require status checks → add
 # "Consumer Guard / consumer-guard"). This workflow only defines the check;
 # branch protection is a repo-settings action Peter takes.
 #
-# @see Spec 118 Task 3.2
-# @see tests/consumer-integration.test.ts — the guard that runs here
+# @see Spec 118 Task 3.2 (CI lane creation)
+# @see Spec 118 Task 4.2 (lint step — polarity deferred to Group 9 / Task 8)
+# @see tests/consumer-integration.test.ts — the consumer guard that runs here
+# @see eslint.config.js — the scoped lint config (web source only)
 # @see tests/README.md — in-repo note on this lane
 
 name: Consumer Guard
@@ -46,6 +54,23 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Lint web component source (Spec 118 Task 4.2)
+        # ESLint scoped to src/components/**/*.{ts,tsx} ONLY.
+        # This is NOT a repo-wide lint run — scope discipline is critical.
+        # The rule (module-resolution import-specifier) is currently INERT:
+        # polarity is deferred to Group 9 after the Task 8 direction decision.
+        # The step runs now so the tooling is CI-wired before polarity is set.
+        # @see eslint.config.js — polarity-deferred config with scope detail
+        run: npm run lint
+
+      - name: Dynamic-import smoke guard (Spec 118 Task 4.1)
+        # PREVENTIVE: asserts no web component source introduces an extensionless
+        # or raw-.ts runtime dynamic import(). Scoped to src/components/**/*.{ts,tsx}.
+        # Verified baseline (2026-06-24): ZERO violations — this guards future regressions.
+        # Runs as a targeted jest invocation so it attaches to this lane without
+        # wiring the full npm test suite into CI (which is a separate, future decision).
+        run: npx jest --testPathPatterns='DynamicImportGuard' --no-coverage --runInBand
 
       - name: Run consumer guard
         # Runs the full consumer-integration test suite including:

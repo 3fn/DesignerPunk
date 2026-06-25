@@ -123,7 +123,7 @@
     - **Success criteria:** the workflow file exists and runs `test:consumer` as a required PR check on `main`; the consumer guard runs in it non-skippably; the lane is the host Tasks 4/5 guards also attach to; the in-repo lane note exists.
     - _Requirements: 3.2_
 
-- [ ] 4. Early Direction-Agnostic Guards (land early, NOT gated on the decision)
+- [x] 4. Early Direction-Agnostic Guards (land early, NOT gated on the decision) — **DONE: preventive dynamic-import smoke test (bites, verified) + scoped ESLint tooling (v10, inert rule, polarity → Group 9). Full sweep green. See `completion/task-4-completion.md`.**
 
   **Type**: Guard
   **Validation**: Tier 2 - Standard
@@ -140,12 +140,12 @@
   **Primary Artifacts:** dynamic-import smoke test (jest source-scan over web-component source); the static-lint rule scaffold (a minimal ESLint config + the new ESLint dev dependency, scoped to the module-resolution rule on web source) + CI wiring on the Task-3.2 lane (polarity left unset).
   **Completion Documentation:** Detailed `.../completion/task-4-completion.md`; Summary `docs/specs/.../task-4-summary.md`.
 
-  - [ ] 4.1 Dynamic-import smoke test (preventive — jest source-scan)
+  - [x] 4.1 Dynamic-import smoke test (preventive — jest source-scan)
     **Type**: Guard · **Validation**: Tier 2 · **Agent**: Lina
     - A **jest source-scan test** (presence assertion) asserting zero extensionless/raw-`.ts` runtime dynamic `import()` in web component source; name it preventive. No framework needed — rides existing jest infra and the Task-3.2 CI lane. Name its home in the web-component test tree.
     - _Requirements: 10.2_
 
-  - [ ] 4.2 Static-lint tooling scaffold (scoped ESLint add; polarity deferred to Group 9)
+  - [x] 4.2 Static-lint tooling scaffold (scoped ESLint add; polarity deferred to Group 9)
     **Type**: Guard · **Validation**: Tier 2 · **Agent**: Lina
     - Select + install ESLint scoped to just the module-resolution rule on web source (a minimal config — this is a **genuine framework add**, a new dev dependency to budget, since no linting exists today). Build the lint-rule scaffold + CI wiring (on the Task-3.2 lane) scoped to web source only; leave the polarity/policy unset pending the Task-8 decision; document that the polarity is gate-deferred (Group 9). **Scope discipline:** a minimal ESLint config scoped to the module-resolution rule on web source — NOT a repo-wide ESLint adoption (linting the whole existing codebase is a separate concern 118 does not own).
     - _Requirements: 10.1, 10.3, 10.4_
