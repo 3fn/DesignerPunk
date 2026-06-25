@@ -130,3 +130,18 @@ Triaged with Peter at the Task-8 milestone. None couple to the CJS-consistency e
 | 5 | RSA-doc "orchestrator" terminology overload (`.kiro/issues/2026-06-24-rsa-orchestrator-terminology-overload.md`) | **Later** | Low; doc-clarity polish (disambiguate Stage-4 vs Stage-5 by layer — do NOT unify; they are caller/callee). Cheap; batch with a future steering-touching ballot. |
 
 **Pattern to watch (roadmap-level):** three of these (the retired #2, blend #1, and — in spirit — validator #3) are the **same shape as the 117/118 root cause**: an incomplete migration leaving a *correct path orphaned while a legacy/stale path runs live* (cf. `getOklchMetadata`/rgba-in-index in 117; the config loader in 118; `OklchBlendCalculator` in #1). Worth naming as a recurring failure mode — incomplete migrations accumulate orphaned-correct/live-legacy pairs — and a candidate for a standing audit/guard practice rather than per-incident cleanup.
+
+**Sequencing into the plan (decided with Peter, 2026-06-25).** Sequenced by *coupling to the consumer-distribution thread (118→122→123)*, not by severity. The thread is NOT interrupted except by #3:
+
+```
+Remaining 118 (Increment 3 CJS exec + Task 11 governance)   ← #5 RSA rides the Task-11 ballot
+   → #3 validator (right after 118: closes 118's guard skip + the consumer-facing validate break)
+   → 122 Agent Generator
+   → 123 Consumer Distribution
+   → #1 blend/OKLCH (own Ada-led spec; flexible vs 119)
+   → 119 Steering progressive-disclosure
+   → ???
+#4 MCP resolvedValue → opportunistic rider on the next spec touching MCP/token serving (no fixed slot)
+```
+
+Rationale: #3 is the only issue with a critical-path claim (it un-skips a test in the consumer-guard lane 118 just built, and `validate` is consumer-facing-broken before 123 ships) — so it lands right after 118, before 122. #1 is independent of the distribution thread → post-123. #5 is a cheap steering-ballot rider → folds into 118 Task 11. #4 is a freebie whenever MCP/token-index work next happens.
