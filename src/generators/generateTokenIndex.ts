@@ -87,12 +87,20 @@ function buildConsumerMap(componentsDir: string): Map<string, string[]> {
         if (!schema?.tokens) continue;
 
         const componentName = schema.name || dir.name;
-        for (const tokenRef of Object.values(schema.tokens) as any[]) {
-          const tokenName = typeof tokenRef === 'string' ? tokenRef : tokenRef?.reference || tokenRef?.name;
-          if (tokenName) {
-            const consumers = map.get(tokenName) || [];
-            if (!consumers.includes(componentName)) consumers.push(componentName);
-            map.set(tokenName, consumers);
+        // `tokens:` is a map of group-name → token refs. The canonical (Stemma) form
+        // is an ARRAY of refs per group (e.g. `inherited: [color.action.primary, ...]`);
+        // earlier scalar/object forms are tolerated for back-compat. Flatten both.
+        // (Spec 118 Task 9.5.2: prior reader treated each group value as a single ref,
+        // so array groups were silently skipped — the consumers map was dead, 0/193.)
+        for (const groupValue of Object.values(schema.tokens) as any[]) {
+          const refs = Array.isArray(groupValue) ? groupValue : [groupValue];
+          for (const tokenRef of refs) {
+            const tokenName = typeof tokenRef === 'string' ? tokenRef : tokenRef?.reference || tokenRef?.name;
+            if (tokenName) {
+              const consumers = map.get(tokenName) || [];
+              if (!consumers.includes(componentName)) consumers.push(componentName);
+              map.set(tokenName, consumers);
+            }
           }
         }
       } catch {

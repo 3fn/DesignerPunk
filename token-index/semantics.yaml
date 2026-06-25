@@ -38,7 +38,13 @@ tokens:
       web: '--color-feedback-error-text'
       ios: colorFeedbackErrorText
       android: color_feedback_error_text
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Button-VerticalList-Set
+      - Input-Checkbox-Base
+      - Input-Checkbox-Legal
+      - Input-Radio-Base
+      - Input-Radio-Set
   color.feedback.error.background:
     category: color
     primitiveReferences:
@@ -48,7 +54,8 @@ tokens:
       web: '--color-feedback-error-background'
       ios: colorFeedbackErrorBackground
       android: color_feedback_error_background
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
   color.feedback.error.border:
     category: color
     primitiveReferences:
@@ -58,7 +65,9 @@ tokens:
       web: '--color-feedback-error-border'
       ios: colorFeedbackErrorBorder
       android: color_feedback_error_border
-    consumers: []
+    consumers:
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   color.feedback.warning.text:
     category: color
     primitiveReferences:
@@ -128,7 +137,9 @@ tokens:
       web: '--color-feedback-select-text-rest'
       ios: colorFeedbackSelectTextRest
       android: color_feedback_select_text_rest
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Chip-Filter
   color.feedback.select.text.default:
     category: color
     primitiveReferences:
@@ -138,7 +149,8 @@ tokens:
       web: '--color-feedback-select-text-default'
       ios: colorFeedbackSelectTextDefault
       android: color_feedback_select_text_default
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
   color.feedback.select.background.rest:
     category: color
     primitiveReferences:
@@ -148,7 +160,11 @@ tokens:
       web: '--color-feedback-select-background-rest'
       ios: colorFeedbackSelectBackgroundRest
       android: color_feedback_select_background_rest
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Chip-Filter
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   color.feedback.select.background.default:
     category: color
     primitiveReferences:
@@ -158,7 +174,8 @@ tokens:
       web: '--color-feedback-select-background-default'
       ios: colorFeedbackSelectBackgroundDefault
       android: color_feedback_select_background_default
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
   color.feedback.select.border.rest:
     category: color
     primitiveReferences:
@@ -168,7 +185,10 @@ tokens:
       web: '--color-feedback-select-border-rest'
       ios: colorFeedbackSelectBorderRest
       android: color_feedback_select_border_rest
-    consumers: []
+    consumers:
+      - Chip-Filter
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   color.feedback.select.border.default:
     category: color
     primitiveReferences:
@@ -178,7 +198,9 @@ tokens:
       web: '--color-feedback-select-border-default'
       ios: colorFeedbackSelectBorderDefault
       android: color_feedback_select_border_default
-    consumers: []
+    consumers:
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   color.feedback.notification.background:
     category: color
     primitiveReferences:
@@ -208,7 +230,8 @@ tokens:
       web: '--color-identity-human'
       ios: colorIdentityHuman
       android: color_identity_human
-    consumers: []
+    consumers:
+      - Avatar-Base
   color.identity.agent:
     category: color
     primitiveReferences:
@@ -218,7 +241,8 @@ tokens:
       web: '--color-identity-agent'
       ios: colorIdentityAgent
       android: color_identity_agent
-    consumers: []
+    consumers:
+      - Avatar-Base
   color.action.primary:
     category: color
     primitiveReferences:
@@ -228,7 +252,11 @@ tokens:
       web: '--color-action-primary'
       ios: colorActionPrimary
       android: color_action_primary
-    consumers: []
+    consumers:
+      - Button-Icon
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
   color.action.secondary:
     category: color
     primitiveReferences:
@@ -248,7 +276,11 @@ tokens:
       web: '--color-action-navigation'
       ios: theme.colorActionNavigation
       android: theme.color_action_navigation
-    consumers: []
+    consumers:
+      - Nav-Header-Base
+      - Nav-Header-Page
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   color.attention:
     category: color
     primitiveReferences:
@@ -298,7 +330,17 @@ tokens:
       web: '--color-text-default'
       ios: colorTextDefault
       android: color_text_default
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Checkbox-Base
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   color.text.muted:
     category: color
     primitiveReferences:
@@ -308,7 +350,15 @@ tokens:
       web: '--color-text-muted'
       ios: colorTextMuted
       android: color_text_muted
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Input-Checkbox-Base
+      - Input-Checkbox-Legal
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   color.text.subtle:
     category: color
     primitiveReferences:
@@ -328,7 +378,8 @@ tokens:
       web: '--color-contrast-on-light'
       ios: colorContrastOnLight
       android: color_contrast_on_light
-    consumers: []
+    consumers:
+      - Input-Checkbox-Base
   color.contrast.onDark:
     category: color
     primitiveReferences:
@@ -338,7 +389,10 @@ tokens:
       web: '--color-contrast-on-dark'
       ios: colorContrastOnDark
       android: color_contrast_on_dark
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Button-Icon
+      - Input-Checkbox-Base
   color.contrast.onAction:
     category: color
     primitiveReferences:
@@ -358,7 +412,11 @@ tokens:
       web: '--color-structure-canvas'
       ios: theme.colorStructureCanvas
       android: theme.color_structure_canvas
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Nav-Header-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   color.structure.surface:
     category: color
     primitiveReferences:
@@ -368,7 +426,11 @@ tokens:
       web: '--color-structure-surface'
       ios: colorStructureSurface
       android: color_structure_surface
-    consumers: []
+    consumers:
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Nav-SegmentedChoice-Base
   color.structure.surface.primary:
     category: color
     primitiveReferences:
@@ -378,7 +440,8 @@ tokens:
       web: '--color-structure-surface-primary'
       ios: colorStructureSurfacePrimary
       android: color_structure_surface_primary
-    consumers: []
+    consumers:
+      - Container-Card-Base
   color.structure.surface.secondary:
     category: color
     primitiveReferences:
@@ -388,7 +451,8 @@ tokens:
       web: '--color-structure-surface-secondary'
       ios: colorStructureSurfaceSecondary
       android: color_structure_surface_secondary
-    consumers: []
+    consumers:
+      - Container-Card-Base
   color.structure.surface.tertiary:
     category: color
     primitiveReferences:
@@ -398,7 +462,8 @@ tokens:
       web: '--color-structure-surface-tertiary'
       ios: colorStructureSurfaceTertiary
       android: color_structure_surface_tertiary
-    consumers: []
+    consumers:
+      - Container-Card-Base
   color.structure.border:
     category: color
     primitiveReferences:
@@ -408,7 +473,13 @@ tokens:
       web: '--color-structure-border'
       ios: colorStructureBorder
       android: color_structure_border
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Container-Card-Base
+      - Nav-SegmentedChoice-Base
   color.structure.border.subtle:
     category: color
     primitiveReferences:
@@ -419,7 +490,11 @@ tokens:
       web: '--color-structure-border-subtle'
       ios: theme.colorStructureBorderSubtle
       android: theme.color_structure_border_subtle
-    consumers: []
+    consumers:
+      - Container-Base
+      - Container-Card-Base
+      - Nav-Header-Base
+      - Nav-TabBar-Base
   color.background.primary.subtle:
     category: color
     primitiveReferences:
@@ -429,7 +504,9 @@ tokens:
       web: '--color-background-primary-subtle'
       ios: theme.colorBackgroundPrimarySubtle
       android: theme.color_background_primary_subtle
-    consumers: []
+    consumers:
+      - Button-Icon
+      - Nav-TabBar-Base
   color.icon.default:
     category: color
     primitiveReferences:
@@ -449,7 +526,8 @@ tokens:
       web: '--color-icon-navigation-inactive'
       ios: theme.colorIconNavigationInactive
       android: theme.color_icon_navigation_inactive
-    consumers: []
+    consumers:
+      - Nav-TabBar-Base
   color.print.default:
     category: color
     primitiveReferences:
@@ -459,7 +537,10 @@ tokens:
       web: '--color-print-default'
       ios: colorPrintDefault
       android: color_print_default
-    consumers: []
+    consumers:
+      - Icon-Base
+      - Input-Radio-Base
+      - Input-Radio-Set
   glow.neonPurple:
     category: color
     primitiveReferences:
@@ -519,7 +600,9 @@ tokens:
       web: '--color-progress-current-background'
       ios: colorProgressCurrentBackground
       android: color_progress_current_background
-    consumers: []
+    consumers:
+      - Progress-Bar-Base
+      - Progress-Indicator-Node-Base
   color.progress.current.text:
     category: color
     primitiveReferences:
@@ -529,7 +612,8 @@ tokens:
       web: '--color-progress-current-text'
       ios: colorProgressCurrentText
       android: color_progress_current_text
-    consumers: []
+    consumers:
+      - Progress-Indicator-Node-Base
   color.progress.pending.background:
     category: color
     primitiveReferences:
@@ -539,7 +623,9 @@ tokens:
       web: '--color-progress-pending-background'
       ios: colorProgressPendingBackground
       android: color_progress_pending_background
-    consumers: []
+    consumers:
+      - Progress-Bar-Base
+      - Progress-Indicator-Node-Base
   color.progress.pending.text:
     category: color
     primitiveReferences:
@@ -549,7 +635,8 @@ tokens:
       web: '--color-progress-pending-text'
       ios: colorProgressPendingText
       android: color_progress_pending_text
-    consumers: []
+    consumers:
+      - Progress-Indicator-Node-Base
   color.progress.pending.connector:
     category: color
     primitiveReferences:
@@ -559,7 +646,8 @@ tokens:
       web: '--color-progress-pending-connector'
       ios: colorProgressPendingConnector
       android: color_progress_pending_connector
-    consumers: []
+    consumers:
+      - Progress-Indicator-Connector-Base
   color.progress.completed.background:
     category: color
     primitiveReferences:
@@ -569,7 +657,9 @@ tokens:
       web: '--color-progress-completed-background'
       ios: colorProgressCompletedBackground
       android: color_progress_completed_background
-    consumers: []
+    consumers:
+      - Progress-Bar-Base
+      - Progress-Indicator-Node-Base
   color.progress.completed.text:
     category: color
     primitiveReferences:
@@ -579,7 +669,8 @@ tokens:
       web: '--color-progress-completed-text'
       ios: colorProgressCompletedText
       android: color_progress_completed_text
-    consumers: []
+    consumers:
+      - Progress-Indicator-Node-Base
   color.progress.completed.connector:
     category: color
     primitiveReferences:
@@ -589,7 +680,8 @@ tokens:
       web: '--color-progress-completed-connector'
       ios: colorProgressCompletedConnector
       android: color_progress_completed_connector
-    consumers: []
+    consumers:
+      - Progress-Indicator-Connector-Base
   color.progress.error.background:
     category: color
     primitiveReferences:
@@ -599,7 +691,8 @@ tokens:
       web: '--color-progress-error-background'
       ios: colorProgressErrorBackground
       android: color_progress_error_background
-    consumers: []
+    consumers:
+      - Progress-Indicator-Node-Base
   color.progress.error.text:
     category: color
     primitiveReferences:
@@ -609,7 +702,8 @@ tokens:
       web: '--color-progress-error-text'
       ios: colorProgressErrorText
       android: color_progress_error_text
-    consumers: []
+    consumers:
+      - Progress-Indicator-Node-Base
   color.scrim.standard:
     category: color
     primitiveReferences:
@@ -619,7 +713,8 @@ tokens:
       web: '--color-scrim-standard'
       ios: colorScrimStandard
       android: color_scrim_standard
-    consumers: []
+    consumers:
+      - Progress-Pagination-Base
   typography.bodySm:
     category: typography
     primitiveReferences:
@@ -633,7 +728,8 @@ tokens:
       web: '--typography-body-sm'
       ios: typographyBodySm
       android: typography_body_sm
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
   typography.bodyMd:
     category: typography
     primitiveReferences:
@@ -759,7 +855,14 @@ tokens:
       web: '--typography-caption'
       ios: typographyCaption
       android: typography_caption
-    consumers: []
+    consumers:
+      - Input-Checkbox-Legal
+      - Input-Radio-Base
+      - Input-Radio-Set
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   typography.legal:
     category: typography
     primitiveReferences:
@@ -801,7 +904,10 @@ tokens:
       web: '--typography-button-sm'
       ios: typographyButtonSm
       android: typography_button_sm
-    consumers: []
+    consumers:
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
   typography.buttonMd:
     category: typography
     primitiveReferences:
@@ -815,7 +921,8 @@ tokens:
       web: '--typography-button-md'
       ios: typographyButtonMd
       android: typography_button_md
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
   typography.buttonLg:
     category: typography
     primitiveReferences:
@@ -843,7 +950,11 @@ tokens:
       web: '--typography-input'
       ios: typographyInput
       android: typography_input
-    consumers: []
+    consumers:
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   typography.labelXs:
     category: typography
     primitiveReferences:
@@ -871,7 +982,8 @@ tokens:
       web: '--typography-label-sm'
       ios: typographyLabelSm
       android: typography_label_sm
-    consumers: []
+    consumers:
+      - Progress-Indicator-Label-Base
   typography.labelMd:
     category: typography
     primitiveReferences:
@@ -885,7 +997,13 @@ tokens:
       web: '--typography-label-md'
       ios: typographyLabelMd
       android: typography_label_md
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-Header-Page
   typography.labelMdFloat:
     category: typography
     primitiveReferences:
@@ -899,7 +1017,11 @@ tokens:
       web: '--typography-label-md-float'
       ios: typographyLabelMdFloat
       android: typography_label_md_float
-    consumers: []
+    consumers:
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   typography.labelLg:
     category: typography
     primitiveReferences:
@@ -913,7 +1035,8 @@ tokens:
       web: '--typography-label-lg'
       ios: typographyLabelLg
       android: typography_label_lg
-    consumers: []
+    consumers:
+      - Button-CTA
   typography.codeSm:
     category: typography
     primitiveReferences:
@@ -983,7 +1106,9 @@ tokens:
       web: '--shadow-container'
       ios: shadowContainer
       android: shadow_container
-    consumers: []
+    consumers:
+      - Container-Base
+      - Container-Card-Base
   shadow.navigation:
     category: shadow
     primitiveReferences:
@@ -997,7 +1122,8 @@ tokens:
       web: '--shadow-navigation'
       ios: shadowNavigation
       android: shadow_navigation
-    consumers: []
+    consumers:
+      - Container-Base
   shadow.dropdown:
     category: shadow
     primitiveReferences:
@@ -1011,7 +1137,8 @@ tokens:
       web: '--shadow-dropdown'
       ios: shadowDropdown
       android: shadow_dropdown
-    consumers: []
+    consumers:
+      - Container-Base
   shadow.modal:
     category: shadow
     primitiveReferences:
@@ -1025,7 +1152,8 @@ tokens:
       web: '--shadow-modal'
       ios: shadowModal
       android: shadow_modal
-    consumers: []
+    consumers:
+      - Container-Base
   shadow.toast:
     category: shadow
     primitiveReferences:
@@ -1039,7 +1167,8 @@ tokens:
       web: '--shadow-toast'
       ios: shadowToast
       android: shadow_toast
-    consumers: []
+    consumers:
+      - Container-Base
   shadow.tooltip:
     category: shadow
     primitiveReferences:
@@ -1053,7 +1182,8 @@ tokens:
       web: '--shadow-tooltip'
       ios: shadowTooltip
       android: shadow_tooltip
-    consumers: []
+    consumers:
+      - Container-Base
   shadow.fab:
     category: shadow
     primitiveReferences:
@@ -1095,7 +1225,8 @@ tokens:
       web: '--shadow-navigation-indicator'
       ios: shadowNavigationIndicator
       android: shadow_navigation_indicator
-    consumers: []
+    consumers:
+      - Nav-SegmentedChoice-Base
   shadow.sunrise:
     category: shadow
     primitiveReferences:
@@ -1195,7 +1326,8 @@ tokens:
       web: '--opacity-heavy'
       ios: opacityHeavy
       android: opacity_heavy
-    consumers: []
+    consumers:
+      - Avatar-Base
   opacity.ghost:
     category: interaction
     primitiveReferences:
@@ -1215,7 +1347,17 @@ tokens:
       web: '--blend-hover-darker'
       ios: blendHoverDarker
       android: blend_hover_darker
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Button-Icon
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Container-Base
+      - Container-Card-Base
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   blend.hoverLighter:
     category: interaction
     primitiveReferences:
@@ -1235,7 +1377,16 @@ tokens:
       web: '--blend-pressed-darker'
       ios: blendPressedDarker
       android: blend_pressed_darker
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Button-Icon
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Container-Card-Base
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   blend.pressedLighter:
     category: interaction
     primitiveReferences:
@@ -1245,7 +1396,8 @@ tokens:
       web: '--blend-pressed-lighter'
       ios: blendPressedLighter
       android: blend_pressed_lighter
-    consumers: []
+    consumers:
+      - Nav-TabBar-Base
   blend.focusSaturate:
     category: interaction
     primitiveReferences:
@@ -1255,7 +1407,8 @@ tokens:
       web: '--blend-focus-saturate'
       ios: blendFocusSaturate
       android: blend_focus_saturate
-    consumers: []
+    consumers:
+      - Input-Text-Base
   blend.disabledDesaturate:
     category: interaction
     primitiveReferences:
@@ -1265,7 +1418,8 @@ tokens:
       web: '--blend-disabled-desaturate'
       ios: blendDisabledDesaturate
       android: blend_disabled_desaturate
-    consumers: []
+    consumers:
+      - Button-CTA
   blend.containerHoverDarker:
     category: interaction
     primitiveReferences:
@@ -1275,7 +1429,8 @@ tokens:
       web: '--blend-container-hover-darker'
       ios: blendContainerHoverDarker
       android: blend_container_hover_darker
-    consumers: []
+    consumers:
+      - Nav-SegmentedChoice-Base
   color.icon.opticalBalance:
     category: interaction
     primitiveReferences:
@@ -1285,7 +1440,8 @@ tokens:
       web: '--color-icon-optical-balance'
       ios: colorIconOpticalBalance
       android: color_icon_optical_balance
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
   zIndex.container:
     category: layering
     primitiveReferences: null
@@ -1294,7 +1450,8 @@ tokens:
       web: '--z-index-container'
       ios: zIndexContainer
       android: z_index_container
-    consumers: []
+    consumers:
+      - Container-Base
   zIndex.navigation:
     category: layering
     primitiveReferences: null
@@ -1303,7 +1460,8 @@ tokens:
       web: '--z-index-navigation'
       ios: zIndexNavigation
       android: z_index_navigation
-    consumers: []
+    consumers:
+      - Container-Base
   zIndex.dropdown:
     category: layering
     primitiveReferences: null
@@ -1312,7 +1470,8 @@ tokens:
       web: '--z-index-dropdown'
       ios: zIndexDropdown
       android: z_index_dropdown
-    consumers: []
+    consumers:
+      - Container-Base
   zIndex.modal:
     category: layering
     primitiveReferences: null
@@ -1321,7 +1480,8 @@ tokens:
       web: '--z-index-modal'
       ios: zIndexModal
       android: z_index_modal
-    consumers: []
+    consumers:
+      - Container-Base
   zIndex.toast:
     category: layering
     primitiveReferences: null
@@ -1330,7 +1490,8 @@ tokens:
       web: '--z-index-toast'
       ios: zIndexToast
       android: z_index_toast
-    consumers: []
+    consumers:
+      - Container-Base
   zIndex.tooltip:
     category: layering
     primitiveReferences: null
@@ -1339,7 +1500,8 @@ tokens:
       web: '--z-index-tooltip'
       ios: zIndexTooltip
       android: z_index_tooltip
-    consumers: []
+    consumers:
+      - Container-Base
   elevation.none:
     category: layering
     primitiveReferences: null
@@ -1357,7 +1519,8 @@ tokens:
       web: '--elevation-container'
       ios: elevationContainer
       android: elevation_container
-    consumers: []
+    consumers:
+      - Container-Base
   elevation.navigation:
     category: layering
     primitiveReferences: null
@@ -1366,7 +1529,8 @@ tokens:
       web: '--elevation-navigation'
       ios: elevationNavigation
       android: elevation_navigation
-    consumers: []
+    consumers:
+      - Container-Base
   elevation.dropdown:
     category: layering
     primitiveReferences: null
@@ -1375,7 +1539,8 @@ tokens:
       web: '--elevation-dropdown'
       ios: elevationDropdown
       android: elevation_dropdown
-    consumers: []
+    consumers:
+      - Container-Base
   elevation.modal:
     category: layering
     primitiveReferences: null
@@ -1384,7 +1549,8 @@ tokens:
       web: '--elevation-modal'
       ios: elevationModal
       android: elevation_modal
-    consumers: []
+    consumers:
+      - Container-Base
   elevation.toast:
     category: layering
     primitiveReferences: null
@@ -1393,7 +1559,8 @@ tokens:
       web: '--elevation-toast'
       ios: elevationToast
       android: elevation_toast
-    consumers: []
+    consumers:
+      - Container-Base
   elevation.tooltip:
     category: layering
     primitiveReferences: null
@@ -1402,7 +1569,8 @@ tokens:
       web: '--elevation-tooltip'
       ios: elevationTooltip
       android: elevation_tooltip
-    consumers: []
+    consumers:
+      - Container-Base
   gridGutterXs:
     category: spacing
     primitiveReferences:
@@ -1512,7 +1680,8 @@ tokens:
       web: '--icon-stroke-width'
       ios: iconStrokeWidth
       android: icon_stroke_width
-    consumers: []
+    consumers:
+      - Icon-Base
   icon.size050:
     category: icon
     primitiveReferences:
@@ -1523,7 +1692,12 @@ tokens:
       web: '--icon-size-050'
       ios: iconSize050
       android: icon_size_050
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Button-Icon
+      - Icon-Base
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   icon.size075:
     category: icon
     primitiveReferences:
@@ -1534,7 +1708,16 @@ tokens:
       web: '--icon-size-075'
       ios: iconSize075
       android: icon_size_075
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Button-Icon
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Icon-Base
+      - Input-Checkbox-Base
+      - Input-Radio-Base
+      - Nav-Header-Page
   icon.size100:
     category: icon
     primitiveReferences:
@@ -1545,7 +1728,17 @@ tokens:
       web: '--icon-size-100'
       ios: iconSize100
       android: icon_size_100
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Button-CTA
+      - Button-Icon
+      - Icon-Base
+      - Input-Checkbox-Base
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   icon.size125:
     category: icon
     primitiveReferences:
@@ -1556,7 +1749,9 @@ tokens:
       web: '--icon-size-125'
       ios: iconSize125
       android: icon_size_125
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Icon-Base
   icon.size150:
     category: icon
     primitiveReferences:
@@ -1567,7 +1762,8 @@ tokens:
       web: '--icon-size-150'
       ios: iconSize150
       android: icon_size_150
-    consumers: []
+    consumers:
+      - Icon-Base
   icon.size200:
     category: icon
     primitiveReferences:
@@ -1578,7 +1774,8 @@ tokens:
       web: '--icon-size-200'
       ios: iconSize200
       android: icon_size_200
-    consumers: []
+    consumers:
+      - Icon-Base
   icon.size300:
     category: icon
     primitiveReferences:
@@ -1589,7 +1786,8 @@ tokens:
       web: '--icon-size-300'
       ios: iconSize300
       android: icon_size_300
-    consumers: []
+    consumers:
+      - Icon-Base
   icon.size400:
     category: icon
     primitiveReferences:
@@ -1600,7 +1798,8 @@ tokens:
       web: '--icon-size-400'
       ios: iconSize400
       android: icon_size_400
-    consumers: []
+    consumers:
+      - Icon-Base
   icon.size500:
     category: icon
     primitiveReferences:
@@ -1611,7 +1810,9 @@ tokens:
       web: '--icon-size-500'
       ios: iconSize500
       android: icon_size_500
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Icon-Base
   icon.size600:
     category: icon
     primitiveReferences:
@@ -1622,7 +1823,8 @@ tokens:
       web: '--icon-size-600'
       ios: iconSize600
       android: icon_size_600
-    consumers: []
+    consumers:
+      - Icon-Base
   icon.size700:
     category: icon
     primitiveReferences:
@@ -1633,7 +1835,8 @@ tokens:
       web: '--icon-size-700'
       ios: iconSize700
       android: icon_size_700
-    consumers: []
+    consumers:
+      - Icon-Base
   accessibility.focus.offset:
     category: accessibility
     primitiveReferences:
@@ -1643,7 +1846,21 @@ tokens:
       web: '--accessibility-focus-offset'
       ios: accessibilityFocusOffset
       android: accessibility_focus_offset
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Button-Icon
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-Header-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   accessibility.focus.width:
     category: accessibility
     primitiveReferences:
@@ -1653,7 +1870,21 @@ tokens:
       web: '--accessibility-focus-width'
       ios: accessibilityFocusWidth
       android: accessibility_focus_width
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Button-Icon
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-Header-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   accessibility.focus.color:
     category: accessibility
     primitiveReferences:
@@ -1663,7 +1894,21 @@ tokens:
       web: '--accessibility-focus-color'
       ios: accessibilityFocusColor
       android: accessibility_focus_color
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Button-Icon
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-Header-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   motion.floatLabel:
     category: interaction
     primitiveReferences:
@@ -1674,7 +1919,11 @@ tokens:
       web: '--motion-float-label'
       ios: motionFloatLabel
       android: motion_float_label
-    consumers: []
+    consumers:
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   motion.focusTransition:
     category: interaction
     primitiveReferences:
@@ -1685,7 +1934,14 @@ tokens:
       web: '--motion-focus-transition'
       ios: motionFocusTransition
       android: motion_focus_transition
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Container-Base
+      - Container-Card-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   motion.buttonPress:
     category: interaction
     primitiveReferences:
@@ -1696,7 +1952,10 @@ tokens:
       web: '--motion-button-press'
       ios: motionButtonPress
       android: motion_button_press
-    consumers: []
+    consumers:
+      - Button-Icon
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   motion.modalSlide:
     category: interaction
     primitiveReferences:
@@ -1718,7 +1977,13 @@ tokens:
       web: '--motion-selection-transition'
       ios: motionSelectionTransition
       android: motion_selection_transition
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   motion.settleTransition:
     category: interaction
     primitiveReferences:
@@ -1749,7 +2014,8 @@ tokens:
       web: '--border-default'
       ios: borderDefault
       android: border_default
-    consumers: []
+    consumers:
+      - Nav-SegmentedChoice-Base
   border.emphasis:
     category: border
     primitiveReferences:
@@ -1799,7 +2065,8 @@ tokens:
       web: '--radius-small'
       ios: radiusSmall
       android: radius_small
-    consumers: []
+    consumers:
+      - Nav-SegmentedChoice-Base
   radius.normal:
     category: layout
     primitiveReferences:
@@ -1809,7 +2076,8 @@ tokens:
       web: '--radius-normal'
       ios: radiusNormal
       android: radius_normal
-    consumers: []
+    consumers:
+      - Nav-SegmentedChoice-Base
   radius.large:
     category: layout
     primitiveReferences:
@@ -1829,7 +2097,11 @@ tokens:
       web: '--radius-full'
       ios: radiusFull
       android: radius_full
-    consumers: []
+    consumers:
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Progress-Pagination-Base
   radius.circle:
     category: layout
     primitiveReferences:
@@ -1849,7 +2121,8 @@ tokens:
       web: '--space-grouped-none'
       ios: spaceGroupedNone
       android: space_grouped_none
-    consumers: []
+    consumers:
+      - Nav-SegmentedChoice-Base
   space.grouped.minimal:
     category: spacing
     primitiveReferences:
@@ -1859,7 +2132,14 @@ tokens:
       web: '--space-grouped-minimal'
       ios: spaceGroupedMinimal
       android: space_grouped_minimal
-    consumers: []
+    consumers:
+      - Input-Checkbox-Legal
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-TabBar-Base
   space.grouped.tight:
     category: spacing
     primitiveReferences:
@@ -1869,7 +2149,18 @@ tokens:
       web: '--space-grouped-tight'
       ios: spaceGroupedTight
       android: space_grouped_tight
-    consumers: []
+    consumers:
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Checkbox-Legal
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-Header-Page
+      - Progress-Pagination-Base
   space.grouped.normal:
     category: spacing
     primitiveReferences:
@@ -1879,7 +2170,10 @@ tokens:
       web: '--space-grouped-normal'
       ios: spaceGroupedNormal
       android: space_grouped_normal
-    consumers: []
+    consumers:
+      - Input-Radio-Base
+      - Input-Radio-Set
+      - Progress-Pagination-Base
   space.grouped.loose:
     category: spacing
     primitiveReferences:
@@ -1889,7 +2183,8 @@ tokens:
       web: '--space-grouped-loose'
       ios: spaceGroupedLoose
       android: space_grouped_loose
-    consumers: []
+    consumers:
+      - Input-Radio-Base
   space.related.none:
     category: spacing
     primitiveReferences:
@@ -2019,7 +2314,19 @@ tokens:
       web: '--space-inset-100'
       ios: spaceInset100
       android: space_inset_100
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Container-Base
+      - Container-Card-Base
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-Header-Page
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
+      - Progress-Pagination-Base
   space.inset.150:
     category: spacing
     primitiveReferences:
@@ -2029,7 +2336,15 @@ tokens:
       web: '--space-inset-150'
       ios: spaceInset150
       android: space_inset_150
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Container-Base
+      - Container-Card-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   space.inset.200:
     category: spacing
     primitiveReferences:
@@ -2039,7 +2354,12 @@ tokens:
       web: '--space-inset-200'
       ios: spaceInset200
       android: space_inset_200
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Container-Base
+      - Container-Card-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   space.inset.300:
     category: spacing
     primitiveReferences:
@@ -2049,7 +2369,8 @@ tokens:
       web: '--space-inset-300'
       ios: spaceInset300
       android: space_inset_300
-    consumers: []
+    consumers:
+      - Container-Base
   space.inset.400:
     category: spacing
     primitiveReferences:
@@ -2059,7 +2380,8 @@ tokens:
       web: '--space-inset-400'
       ios: spaceInset400
       android: space_inset_400
-    consumers: []
+    consumers:
+      - Container-Base
   space.inset.none:
     category: spacing
     primitiveReferences:
@@ -2079,7 +2401,12 @@ tokens:
       web: '--space-inset-050'
       ios: spaceInset050
       android: space_inset_050
-    consumers: []
+    consumers:
+      - Container-Base
+      - Container-Card-Base
+      - Input-Radio-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   space.inset.075:
     category: spacing
     primitiveReferences:
@@ -2089,4 +2416,6 @@ tokens:
       web: '--space-inset-075'
       ios: spaceInset075
       android: space_inset_075
-    consumers: []
+    consumers:
+      - Input-Radio-Base
+      - Progress-Pagination-Base
