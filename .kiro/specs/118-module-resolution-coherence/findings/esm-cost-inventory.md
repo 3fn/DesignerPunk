@@ -59,7 +59,11 @@ Same five subpaths, same raw-`.ts` targets (the preset uses `pkgRoot`; init uses
 
 **Plus a third coupled artifact:** `init` also writes the consumer's `jest.config.js` (`src/cli/init.ts:119-123`): `module.exports = { ...require('@3fn/core/jest-preset'), roots: ['<rootDir>/src'] }`.
 
-**Lockstep obligation for 3b:** any change to where these 5 subpaths resolve must update **all three** in lockstep — the preset `moduleNameMapper` (a), the `init`-written `tsconfig.test.json` `paths` (b), and the `init`-written `jest.config.js` consumption form (c). This is Ada SF-5; carried into the Increment-3b decomposition (tasks.md Group 9 / Increment 3b explicitly lists it).
+**Lockstep obligation for 3b:** any change to where these 5 subpaths resolve must update the coupled artifacts in lockstep. This is Ada SF-5; carried into the Increment-3b decomposition (tasks.md Task 9.2).
+
+> **CORRECTION (2026-06-25, Ada+Lina Increment-3 task review) — the count was UNDER-stated, and the resolution target was wrong.**
+> **(1) More copies than "two/three".** The same 5-entry `@3fn/core/* → raw-.ts` mapping also lives in **the repo's own `jest.config.js:62-69`** AND **the repo's `tsconfig.json` `paths` (`:25-31`)** — first-party copies that drive the 376-suite test run + first-party typecheck. The full mapping-copy census is: preset `moduleNameMapper` (`jest-preset.ts:55-59`), repo `jest.config.js` (`:62-69`), repo `tsconfig.json` `paths` (`:25-31`), `init`-written `tsconfig.test.json` `paths` (`init.ts:139-145`). The `init`-written `jest.config.js` (`init.ts:119-123`) is a *consumption-form* (spreads the preset), not a mapping copy.
+> **(2) These test mappers STAY on `src` — they do NOT track the exports→`dist` move (load-bearing).** Tests resolve against source via ts-jest, and `modulePathIgnorePatterns: ['<rootDir>/dist/']` actively blocks dist resolution. So 3b's "reconcile to `dist`" applies to the **published `package.json` `exports`** only; the test mappers stay on `src` raw `.ts` and stay internally consistent across their (now four) copies. The published-exports target and the test-resolution target are intentionally decoupled. (Reflected in tasks.md Task 9.2.)
 
 ---
 
