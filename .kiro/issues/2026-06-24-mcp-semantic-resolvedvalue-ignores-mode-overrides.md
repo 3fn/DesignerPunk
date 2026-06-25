@@ -6,7 +6,7 @@
 **Severity**: Low — the `themeVarying` flag is correct; only the `resolvedValue` readout is incomplete for theme-varying semantics
 **Type**: Application MCP token resolution (NOT token-index generation)
 **Primary owner**: Application MCP / Rosetta (Ada consulted)
-**Status**: Open — deferred (out of scope for Spec 117, which is token-index *generation* integrity, not MCP semantic resolution)
+**Status**: Open — **LATER (triaged 2026-06-25, Task-8 milestone)**: low severity, documented workaround exists; needs a token-index-format / MCP-resolution design decision. Parked/opportunistic. Out of scope for Spec 117 (token-index *generation* integrity, not MCP semantic resolution). See `docs/roadmap/m0a-deferred-items.md` § "Issues surfaced during the 117/118 spec cluster".
 
 ---
 

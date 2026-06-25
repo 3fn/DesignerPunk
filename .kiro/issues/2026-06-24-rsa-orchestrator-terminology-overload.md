@@ -6,7 +6,7 @@
 **Severity**: Low — terminology-clarity issue, NOT a factual error; neither stage is wrong on its own
 **Type**: Steering-doc clarity (Rosetta-System-Architecture.md)
 **Primary owner**: Ada (Rosetta accuracy) — via the ballot-measure process (propose → Peter approves → apply)
-**Status**: Open — tracked for a future small doc-clarity ballot (deliberately NOT folded into closed Spec 117)
+**Status**: Open — **LATER (triaged 2026-06-25, Task-8 milestone)**: low-severity doc-clarity polish; cheap, batch with a future steering-touching ballot (disambiguate by layer — do NOT unify the two "orchestrator" labels). Deliberately NOT folded into closed Spec 117. See `docs/roadmap/m0a-deferred-items.md` § "Issues surfaced during the 117/118 spec cluster".
 
 ---
 

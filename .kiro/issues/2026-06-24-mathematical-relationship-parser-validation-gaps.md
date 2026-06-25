@@ -6,7 +6,7 @@
 **Severity**: Medium — the validator produces false failures against *correct* tokens; `npx designerpunk validate` exits 1 in any consumer/CI run, so the check provides no usable signal
 **Type**: Token validator / token-governance defect (NOT module resolution, NOT generation)
 **Primary owner**: Ada (Rosetta — token governance + validators)
-**Status**: Open — deferred (out of scope for Spec 118, which is module-resolution coherence)
+**Status**: Open — **SOON (triaged 2026-06-25, Task-8 milestone)**: highest-priority open issue — `validate` is consumer-facing-broken AND holds the skipped `validate passes` test in the new consumer-guard lane. Scheduled as its own focused effort / small spec **after Spec 118 closes** (needs per-token-family governance calls + parser work — not a slot-in). Out of scope for Spec 118 (module-resolution coherence). See `docs/roadmap/m0a-deferred-items.md` § "Issues surfaced during the 117/118 spec cluster".
 
 ---
 

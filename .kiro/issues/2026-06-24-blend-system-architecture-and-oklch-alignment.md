@@ -6,7 +6,7 @@
 **Severity**: Medium — interaction states render correctly, but are computed in the wrong color space relative to the OKLCH foundation (perceptual-consistency gap, not a runtime break)
 **Type**: Color foundation / blend architecture — OKLCH migration completeness
 **Primary owner**: Ada (Rosetta color foundation) — with Lina (component consumers) and Leonardo (cross-platform) consulted
-**Status**: Open — **captured for a holistic review (likely its own spec), explicitly out of scope for Spec 117**
+**Status**: Open — **SOON (triaged 2026-06-25, Task-8 milestone)**: scheduled as its own Ada-led spec (Lina/Leonardo consulted) — important-not-urgent (foundational OKLCH-consistency gap; not a runtime break). Captured for a holistic review, explicitly out of scope for Spec 117. See `docs/roadmap/m0a-deferred-items.md` § "Issues surfaced during the 117/118 spec cluster".
 
 ---
 

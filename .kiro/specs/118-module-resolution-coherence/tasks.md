@@ -210,7 +210,7 @@
     - Author the note (supersedes item 3; advises 117 Task 5.3 re-run; scopes trust to config-load path only); cross-reference from 117's decision-record. Do NOT correct 117 in-place; do NOT lift 117's status on its behalf.
     - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5_
 
-- [ ] 7. Increment 2 — Evidence Harness, Inventories, Divergence Test (investigation-only — NO swaps)
+- [x] 7. Increment 2 — Evidence Harness, Inventories, Divergence Test (investigation-only — NO swaps) — **DONE: parity harness (`ParityOrchestrator` + `npm run test:parity`, reuses 117's engine, two-roots seam, no `FreshGenerator`) → ALL-GREEN semantic parity across 11 artifacts (only divergence class = volatile timestamps); volatile-field set extended with 118 defensive rules + 17 unit tests; four inventories (`./config` now import+require, 13 ts-node scripts not 11, OQ-3 parking form EXISTS); divergence hypothesis REFUTED → clean exit (gaps routed out). Build/tsc/test all green; no production code touched. See `completion/task-7-completion.md` + `findings/evidence-table.md`.**
 
   **Type**: Investigation
   **Validation**: Tier 3 - Comprehensive
@@ -234,27 +234,27 @@
   **Primary Artifacts:** the new parity orchestrator (thin glue over reused `Normalizer`/`SemanticComparator`); extended `NormalizationRule[]` + per-rule unit tests; `findings/entry-point-inventory.md`, `findings/export-condition-inventory.md`, `findings/esm-cost-inventory.md` (incl. parking-form determination), `findings/divergence-hypothesis.md`, `findings/evidence-table.md`.
   **Completion Documentation:** Detailed `.../completion/task-7-completion.md`; Summary `docs/specs/.../task-7-summary.md`.
 
-  - [ ] 7.1 Build the parity orchestrator (reuse 117 engine; new two-fresh-tree seam)
+  - [x] 7.1 Build the parity orchestrator (reuse 117 engine; new two-fresh-tree seam)
     **Type**: Architecture · **Validation**: Tier 3 · **Agent**: Ada + Thurgood
     - Thin orchestrator over the **per-artifact** `Normalizer.normalize(raw, kind)` + `SemanticComparator.compare(artifact, A, B)` (NOT per-tree): iterate an artifact list (path + `ArtifactKind`), read each path from root A and root B, compare per-artifact. Borrow `INVENTORY: ArtifactRef[]` (`src/tools/integrity/inventory.ts:22`) as the reusable artifact-list driver. Read two fresh roots directly (NOT `GenerationIntegrityCheckImpl`); confirm whether two roots suffice without `FreshGenerator`.
     - _Requirements: 4.1, 4.3_
 
-  - [ ] 7.2 Enumerate + unit-test the volatile-field normalization set (OQ-2)
+  - [x] 7.2 Enumerate + unit-test the volatile-field normalization set (OQ-2)
     **Type**: Investigation · **Validation**: Tier 3 · **Agent**: Ada
     - Generate via both mechanisms; diff per-artifact; add each non-semantic divergence (rosettaVersion, embedded version, `extensions.themes` **conditional-presence + array-ordering**, duration, …) as a unit-tested rule; iterate until only semantic divergences remain. Volatile-field sources are under `src/generators/` (`DTCGFormatGenerator.ts` / `TokenFileGenerator.ts`).
     - _Requirements: 4.4_
 
-  - [ ] 7.3 Entry-point, export-condition, and ESM-cost (jest-preset + parking-form) inventories
+  - [x] 7.3 Entry-point, export-condition, and ESM-cost (jest-preset + parking-form) inventories
     **Type**: Investigation · **Validation**: Tier 3 · **Agent**: Ada
     - Produce the three inventories; name the preset `moduleNameMapper` raw-`.ts` coupling (`src/testing/jest-preset.ts:53-59`) to Group 8; determine the OQ-3 parking form (final confirmation deferred to a `.cjs`-under-`"type":"module"` boot through the Group-10 close-state guard).
     - _Requirements: 4.2, 4.5, 4.6_
 
-  - [ ] 7.4 Divergence-hypothesis test (falsifiable, clean-exit) + assemble the evidence table
+  - [x] 7.4 Divergence-hypothesis test (falsifiable, clean-exit) + assemble the evidence table
     **Type**: Investigation · **Validation**: Tier 3 · **Agent**: Ada + Thurgood
     - Establish correlation-not-causation; disposition plausible/refuted with a clean-exit routing finding if refuted; assemble the green/red table (incl. typecheck-coverage + hypothesis rows).
     - _Requirements: 4.7, 4.8_
 
-- [ ] 8. Module-Direction Decision Point (R5 — the gate that unblocks the deferred Increment-3 Groups 9/10 AND Specs 122/123)
+- [x] 8. Module-Direction Decision Point (R5 — the gate that unblocks the deferred Increment-3 Groups 9/10 AND Specs 122/123) — **DONE: committed CJS-consistency, executes in-spec, escape-hatch NOT elected (Group 10 does not fire). Evidence-decisive (jest-preset blast radius + current-CJS-surface + Task-1 ESM-loader failure all favor CJS; pro-ESM axes neutralize — consumers keep ESM-authoring via the dual loader). 122/123 verified to carry no latent ESM hard-requirement. ESM-modernization path sized + roadmapped for the future. Peter's commitment 2026-06-25; Ada interpreted; recorded. See `findings/direction-decision.md`.**
 
   **Type**: Investigation
   **Validation**: Tier 3 - Comprehensive
@@ -274,7 +274,7 @@
   **Primary Artifacts:** `findings/direction-decision.md` (the committed direction + rationale + escape-hatch disposition).
   **Completion Documentation:** Detailed `.../completion/task-8-completion.md`; Summary `docs/specs/.../task-8-summary.md`.
 
-  - [ ] 8.1 Commit one direction on the Increment-2 evidence; record rationale + escape-hatch disposition
+  - [x] 8.1 Commit one direction on the Increment-2 evidence; record rationale + escape-hatch disposition
     **Type**: Investigation · **Validation**: Tier 3 · **Agent**: Peter (decision); Thurgood (records)
     - Read the evidence table; commit CJS-consistency or native ESM; record rationale; if ESM + prohibitive cost, record the escape-hatch election (defer 3c execution to a follow-on spec, onto a Group-10 guard-certified close-state).
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_

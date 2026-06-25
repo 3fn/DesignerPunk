@@ -131,6 +131,7 @@
     "test:all": "jest",
     "test:consumer": "jest --roots='<rootDir>/tests' --testMatch='**/consumer-integration.test.ts' --runInBand --testTimeout=120000",
     "test:resolution-matrix": "node src/config/__resolution-matrix__/run-matrix.js",
+    "test:parity": "node src/tools/integrity/__parity__/run-parity.js",
     "test:performance": "jest --testPathPatterns='performance/__tests__|__tests__/performance'",
     "test:performance:isolated": "jest --config jest.performance.config.js --runInBand",
     "test:quick": "jest --testPathIgnorePatterns='(performance|integration)'",
