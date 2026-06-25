@@ -150,7 +150,7 @@
     - Select + install ESLint scoped to just the module-resolution rule on web source (a minimal config — this is a **genuine framework add**, a new dev dependency to budget, since no linting exists today). Build the lint-rule scaffold + CI wiring (on the Task-3.2 lane) scoped to web source only; leave the polarity/policy unset pending the Task-8 decision; document that the polarity is gate-deferred (Group 9). **Scope discipline:** a minimal ESLint config scoped to the module-resolution rule on web source — NOT a repo-wide ESLint adoption (linting the whole existing codebase is a separate concern 118 does not own).
     - _Requirements: 10.1, 10.3, 10.4_
 
-- [ ] 5. MCP/Browser Principled Exception + Paired Boot/Smoke Guard (R12 — single owner)
+- [x] 5. MCP/Browser Principled Exception + Paired Boot/Smoke Guard (R12 — single owner) — **DONE: MCP subprocess + browser jsdom boot/smoke guards (both bite-tested), exemption-boundary doc staged for Task 11. Full sweep green. See `completion/task-5-completion.md`.**
 
   **Type**: Guard
   **Validation**: Tier 2 - Standard
@@ -168,17 +168,17 @@
   **Primary Artifacts:** MCP boot/smoke guard (subprocess spawn over `dist/mcp/*.js`, stderr `running on stdio` sentinel); browser-bundle boot/smoke guard (jest-jsdom `import()` of `dist/browser/designerpunk.esm.js`, asserts a defined custom element); CI build-before-guard sequencing (`build:mcp` / `build:browser` first); the exemption-boundary note (its steering form proposed in Task 11).
   **Completion Documentation:** Detailed `.../completion/task-5-completion.md`; Summary `docs/specs/.../task-5-summary.md`.
 
-  - [ ] 5.1a MCP boot/smoke guard (subprocess spawn + stderr sentinel)
+  - [x] 5.1a MCP boot/smoke guard (subprocess spawn + stderr sentinel)
     **Type**: Guard · **Validation**: Tier 2 · **Agent**: Lina
     - Subprocess-spawn each bundled MCP server (`dist/mcp/*.js`, auto-start under `require.main === module`); wait for the `running on stdio` stderr sentinel (the `waitForReady`-on-stderr pattern in `consumer-integration.test.ts:121-132`); fail if the process exits/throws before the sentinel. Reaching `running on stdio` = booted far enough to catch a resolution error (verified `application-mcp-server/src/index.ts:362-388`). Depends on `build:mcp` having run.
     - _Requirements: 12.1_
 
-  - [ ] 5.1b Browser boot/smoke guard (jest-jsdom import)
+  - [x] 5.1b Browser boot/smoke guard (jest-jsdom import)
     **Type**: Guard · **Validation**: Tier 2 · **Agent**: Lina
     - A jest-jsdom test that `import()`s `dist/browser/designerpunk.esm.js` and asserts a custom element is defined (e.g. `customElements.get('button-cta')`), since the bundle calls `customElements.define` at module top-level and needs a DOM (jsdom IS installed). Do NOT `node dist/browser/...esm.js` in bare Node (`customElements` undefined → false signal). Depends on `build:browser` having run.
     - _Requirements: 12.2_
 
-  - [ ] 5.2 Document the exemption boundary + ts-node dev-config exception
+  - [x] 5.2 Document the exemption boundary + ts-node dev-config exception
     **Type**: Documentation · **Validation**: Tier 2 · **Agent**: Thurgood
     - Draft the coherent-boundary documentation (exempt subsystems + rationale + ts-node dev-config principled exception); stage it for the Task-11 ballot measure and cross-reference.
     - _Requirements: 12.3, 12.4_

@@ -1,5 +1,6 @@
 # Spec 118 Task 3.2 — Consumer-Guard CI Lane
 # Updated: Task 4.2 adds the static-lint step (scoped ESLint on web source)
+# Updated: Task 5 adds MCP/browser boot/smoke guards (build-before-guard sequencing)
 #
 # Standing CI home for Spec 118's guards. This is the FIRST test-running CI in this
 # repo (the only prior workflow, package-name-drift.yml, does not run any test suite).
@@ -9,10 +10,17 @@
 #   Task 3.1 — consumer-config subprocess guard (ESM + CJS faithful fixtures)
 #   Task 4.1 — dynamic-import smoke test (preventive; runs inside npm test)
 #   Task 4.2 — static-lint step (scoped ESLint on web source; polarity deferred)
-#   Task 5   — MCP/browser boot/smoke guard (pending Task 5 execution)
+#   Task 5.1a — MCP boot/smoke guard (subprocess spawn + stderr sentinel; build:mcp first)
+#   Task 5.1b — browser boot/smoke guard (jsdom eval + customElements.get; build:browser first)
 #
-# Scope discipline: this lane runs `npm run test:consumer` and `npm run lint`.
-# Wiring the full `npm test` suite into CI is a separate, out-of-scope concern.
+# Scope discipline: this lane runs `npm run test:consumer`, `npm run lint`, and the
+# targeted Task 5 guard invocations. Wiring the full `npm test` suite into CI is a
+# separate, out-of-scope concern.
+#
+# Build-before-guard sequencing (Task 5): the MCP and browser guards read BUILT bundles
+# from dist/mcp/ and dist/browser/. These steps build those bundles before the guards
+# run. The build steps are scoped (build:mcp + build:browser only) — NOT `npm run build`
+# (which includes tsc + build:validate, a heavier step not needed here).
 #
 # Making this a required check: enable via branch protection rules in GitHub repo
 # settings (Settings → Branches → main → Require status checks → add
@@ -39,8 +47,9 @@ jobs:
   consumer-guard:
     name: Consumer Guard
     runs-on: ubuntu-latest
-    # Generous timeout: pack → install → init → generate is slow (~3-4 min in CI).
-    timeout-minutes: 10
+    # Generous timeout: pack → install → init → generate + MCP/browser build is slow.
+    # Task 5 adds build:mcp (~30s) + build:browser (~30s) + guard spawns (~30s each).
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -78,3 +87,38 @@ jobs:
         #   - Spec 118 Task 3.1: faithful-consumer config subprocess guard
         #     (ESM-authored + CJS-authored with transitive raw-.ts my-overrides)
         run: npm run test:consumer
+
+      # ── Spec 118 Task 5: MCP/Browser Boot/Smoke Guards ──────────────────────────
+      # These guards depend on built bundles. Build them here, scoped to just the
+      # bundles needed — NOT the full `npm run build` (which includes tsc + build:validate).
+      # The guards run AFTER build; they skip cleanly when bundles are absent locally.
+
+      - name: Build MCP bundles (Spec 118 Task 5.1a prerequisite)
+        # esbuild bundles the three MCP servers → dist/mcp/{application,docs,product}-mcp.js
+        # Prerequisite for the MCP boot/smoke guard step below.
+        # @see build:mcp in package.json
+        run: npm run build:mcp
+
+      - name: Build browser bundle (Spec 118 Task 5.1b prerequisite)
+        # esbuild bundles the browser entry → dist/browser/designerpunk.esm.js (+ UMD/min)
+        # Prerequisite for the browser boot/smoke guard step below.
+        # @see build:browser in package.json
+        run: npm run build:browser
+
+      - name: MCP boot/smoke guard (Spec 118 Task 5.1a)
+        # Spawns each bundled MCP server as a subprocess, waits for its boot sentinel
+        # on stderr ("running on stdio" / "Server started"), fails if the process
+        # exits/errors before the sentinel (= a boot-time module-resolution error).
+        # Reaches the sentinel = booted far enough to catch a resolution error.
+        # Resolves Decision 2: bundled subsystems are exempt from the runtime-resolution
+        # contract, but the exemption is paired with this boot/smoke guard.
+        # @see tests/mcp-boot-smoke.test.ts
+        run: npx jest --roots='<rootDir>/tests' --testMatch='**/mcp-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000
+
+      - name: Browser bundle boot/smoke guard (Spec 118 Task 5.1b)
+        # Loads the ESM bundle in a jsdom environment (customElements defined) and
+        # asserts a custom element is registered (button-cta). The bundle calls
+        # customElements.define() at module top-level — reaching the assertion without
+        # throwing = the bundle resolved all its dependencies at build time.
+        # @see tests/browser-boot-smoke.test.ts
+        run: npx jest --roots='<rootDir>/tests' --testMatch='**/browser-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000
