@@ -138,11 +138,17 @@ async function main() {
     console.log('📊 Token Index Generation:\n');
     const { generateTokenIndex } = await import('../src/generators/generateTokenIndex');
     const { ComponentTokenRegistry } = await import('../src/registries/ComponentTokenRegistry');
+    // Class C′ (Spec 118 Task 9.5.2): resolve the component-schema scan root from the
+    // active config (default `<configDir>/src/components/core`) and pass it in, mirroring
+    // the CLI's runGenerate path — so the package's own build feeds the generator its own
+    // resolved root rather than the generator computing it from __dirname.
+    const componentSchemaDir = path.resolve(config.configDir, 'src/components/core');
     generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokenInput.primitiveTokens,
       semanticTokens: tokenInput.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
       modeResolved,
+      componentSchemaDir,
     });
 
     if (allComponentValid) {

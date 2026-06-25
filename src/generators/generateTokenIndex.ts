@@ -34,6 +34,17 @@ export interface TokenIndexInput {
    * index emits the SAME values dist wrote rather than re-deriving (and drifting).
    */
   modeResolved: ModeResolvedTokens;
+  /**
+   * Absolute path to the consumer's component-schema scan root — the directory whose
+   * `<Component>/*.schema.yaml` files seed the token→[components] consumer map
+   * (Spec 118 Task 9.5.2, Class C′; ratified default-only). This is resolved by the
+   * CALLER from the active config (default `<configDir>/src/components/core`) and passed
+   * in, so `generateTokenIndex` stays a pure function of its inputs — it no longer
+   * computes the scan root from `__dirname` (which hard-bound the scan to the PACKAGE's
+   * components, ignoring the schemas a consumer adds/edits in their own repo and the
+   * same source the application MCP already reads via `COMPONENTS_DIR`).
+   */
+  componentSchemaDir: string;
 }
 
 /** Build the mode-nested OKLCH value + sibling channel metadata for a color primitive. */
@@ -115,9 +126,13 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   const primitives = input.primitiveTokens;
   const semantics = input.semanticTokens;
 
-  // Build consumer map from ComponentTokenRegistry
-  const componentsDir = path.resolve(__dirname, '..', 'components', 'core');
-  const consumerMap = buildConsumerMap(componentsDir);
+  // Build consumer map from the consumer's component schemas (Spec 118 Task 9.5.2,
+  // Class C′). The scan root is resolved by the caller from the active config and
+  // passed in via `input.componentSchemaDir` — NOT computed from `__dirname` here.
+  // This aligns the relationship map with the consumer's design system (the same
+  // source the application MCP reads via COMPONENTS_DIR), so a consumer's added/edited
+  // component appears in their generated index.
+  const consumerMap = buildConsumerMap(input.componentSchemaDir);
 
   // Families that generate inside nested namespaces (enum/object) on iOS/Android.
   const NESTED_PRIMITIVE_FAMILIES = new Set([

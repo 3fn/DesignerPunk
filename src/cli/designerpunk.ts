@@ -27,6 +27,7 @@ import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
 import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
 import { runSync } from './sync';
+import { resolvePackageRoot } from './shared/resolvePackageRoot';
 
 async function main() {
   const command = process.argv[2];
@@ -74,17 +75,6 @@ async function main() {
       printHelp();
       process.exit(1);
   }
-}
-
-/** Resolve the DesignerPunk package root — relative to this CLI file, or cwd fallback. */
-function resolvePackageRoot(): string {
-  // The CLI lives at src/cli/designerpunk.ts (or bin/designerpunk.js).
-  // The package root is two levels up from src/cli/.
-  const fromCli = path.resolve(__dirname, '../..');
-  if (require('fs').existsSync(path.join(fromCli, 'package.json'))) {
-    return fromCli;
-  }
-  return process.cwd();
 }
 
 async function runValidateCommand() {
@@ -141,11 +131,20 @@ export async function runGenerate(force = false) {
     // returns the resolved truth; the index consumes the SAME object — no re-derivation.
     const modeResolved = generateTokenFiles(tokens, config);
 
+    // Class C′ (Spec 118 Task 9.5.2, ratified default-only): resolve the component-schema
+    // scan root from the consumer's config so the token-index's consumer map reflects the
+    // consumer's design system — the same source the application MCP reads. Default to
+    // `<configDir>/src/components/core` (the location `init` writes to and MCP's
+    // COMPONENTS_DIR points at). Resolved HERE (config in scope), passed into the
+    // generator, which stays a pure function of its inputs.
+    const componentSchemaDir = path.resolve(config.configDir, 'src/components/core');
+
     generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
       modeResolved,
+      componentSchemaDir,
     });
     console.log('✅ System tokens generated');
   } catch (err) {
@@ -219,7 +218,7 @@ export async function runProductOnly(force = false) {
 }
 
 async function runMcpApp() {
-  const pkgRoot = resolvePackageRoot();
+  const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/application-mcp.js');
   const componentsDir = path.join(pkgRoot, 'src/components/core');
   const patternsDir = path.join(pkgRoot, 'experience-patterns');
@@ -251,7 +250,7 @@ async function runMcpApp() {
 }
 
 async function runMcpDocs() {
-  const pkgRoot = resolvePackageRoot();
+  const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/docs-mcp.js');
   const steeringDir = path.join(pkgRoot, '.kiro/steering');
 
@@ -265,7 +264,7 @@ async function runMcpDocs() {
 }
 
 async function runMcpProduct() {
-  const pkgRoot = resolvePackageRoot();
+  const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/product-mcp.js');
   const productDir = process.env.PRODUCT_DIR || path.resolve(process.cwd(), 'product');
   const componentDir = path.join(pkgRoot, 'src/components/core');
@@ -323,7 +322,7 @@ function resolveTsRunner(): string {
 
 /** Run a figma CLI command by spawning the compiled JS file with remaining args. */
 async function runFigmaCommand(script: 'figma-push' | 'figma-extract') {
-  const pkgRoot = resolvePackageRoot();
+  const pkgRoot = resolvePackageRoot(__dirname);
   const scriptPath = path.join(pkgRoot, `dist/cli/${script}.js`);
 
   if (!require('fs').existsSync(scriptPath)) {

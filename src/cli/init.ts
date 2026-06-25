@@ -12,6 +12,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as readline from 'readline';
 import { rewriteBuildImports } from './shared/transforms';
+import { resolvePackageRoot } from './shared/resolvePackageRoot';
 
 interface InitOptions {
   name?: string;
@@ -35,7 +36,7 @@ export async function runInit(argv: string[]): Promise<void> {
     process.exit(1);
   }
 
-  const pkgRoot = resolvePackageRoot();
+  const pkgRoot = resolvePackageRoot(__dirname);
   const dest = process.cwd();
 
   // 1. .npmrc
@@ -214,14 +215,6 @@ function prompt(question: string): Promise<string> {
       resolve(answer.trim());
     });
   });
-}
-
-function resolvePackageRoot(): string {
-  const fromCli = path.resolve(__dirname, '../..');
-  if (fs.existsSync(path.join(fromCli, 'package.json'))) {
-    return fromCli;
-  }
-  return process.cwd();
 }
 
 function createFileIfNotExists(filePath: string, content: string, label: string): void {

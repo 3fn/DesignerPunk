@@ -99,6 +99,9 @@ describe('Backward Compatibility (Spec 114 R9)', () => {
           semanticTokens: tokens.semanticTokens,
           componentTokens: [],
           modeResolved,
+          // Spec 118 Task 9.5.2 (Class C′): runGenerate resolves the consumer schema
+          // root from config.configDir and passes it through TokenIndexInput.
+          componentSchemaDir: require('path').resolve('/tmp', 'src/components/core'),
         })
       );
     });

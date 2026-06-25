@@ -391,4 +391,86 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       TIMEOUT,
     );
   });
+
+  /**
+   * Spec 118 Task 9.5.2 — Consumer-Aware Catalog Arbiter (Class C′, ratified default-only)
+   *
+   * THE arbiter for Peter's ratified decision: the generated token-index's component→token
+   * relationship map SHALL reflect the CONSUMER's design system — including a component the
+   * consumer ADDS to their own `src/components/core` after init — not only the package's
+   * built-in components.
+   *
+   * This certifies the decision in a PACKED INSTALL (the only honest check; in-repo loads
+   * false-green per the task-3 lesson), exercising the real resolution path:
+   *   loadConfig → config.configDir → `<configDir>/src/components/core` → buildConsumerMap.
+   *
+   * Flow (reuses the outer tempDir, already pack→install→init'd):
+   *   1. Drop a custom `Pricing-Card/Pricing-Card.schema.yaml` with a SCALAR `tokens:` ref
+   *      under the consumer's `src/components/core`.
+   *   2. Run `npx designerpunk generate` (real-node subprocess, not in-process jest).
+   *   3. Assert `PricingCard` appears as a consumer of the referenced semantic token in the
+   *      generated `token-index/semantics.yaml`.
+   *
+   * Schema shape note: the `tokens:` map uses the SCALAR shape (`key: token.name`), which
+   * the current `buildConsumerMap` reader accepts (`generateTokenIndex.ts:79-80`). This is
+   * deliberate — the arbiter certifies the consumer-aware RESOLUTION (Peter's ratified
+   * decision), independent of the separately-flagged array-group reader bug. A consumer's
+   * one-off component declaring a scalar token ref is a faithful, minimal authoring case.
+   */
+  describe('Spec 118 Task 9.5.2 — consumer-aware catalog (Class C′)', () => {
+    // Reference a stable, always-present semantic token so the assertion is robust.
+    const REFERENCED_TOKEN = 'color.action.primary';
+
+    it(
+      'a consumer-added component schema appears in the generated token-index consumer map',
+      () => {
+        // The outer beforeAll + `init produces a working project` it() have already
+        // pack→install→init'd tempDir, so <tempDir>/src/components/core exists with the
+        // copied 34 schemas. Add a NEW component the package does not ship.
+        const pricingCardDir = path.join(tempDir, 'src', 'components', 'core', 'Pricing-Card');
+        fs.mkdirSync(pricingCardDir, { recursive: true });
+        fs.writeFileSync(
+          path.join(pricingCardDir, 'Pricing-Card.schema.yaml'),
+          [
+            '# Spec 118 Task 9.5.2 — consumer-added component (Class C′ arbiter fixture).',
+            '# A component the PACKAGE does not ship; lives only in the consumer repo.',
+            'name: PricingCard',
+            'tokens:',
+            `  surface: ${REFERENCED_TOKEN}`,
+          ].join('\n') + '\n',
+        );
+
+        // Run generate via the real bin subprocess (consumer-faithful path).
+        let stdout: string;
+        try {
+          stdout = execSync('npx designerpunk generate', {
+            cwd: tempDir,
+            encoding: 'utf-8',
+            timeout: 60_000,
+          });
+        } catch (err: unknown) {
+          const e = err as { stdout?: string; stderr?: string; message?: string };
+          throw new Error(
+            `Spec 118 Task 9.5.2 C′ arbiter: npx designerpunk generate exited non-zero.\n` +
+            [e.stdout && `stdout: ${e.stdout}`, e.stderr && `stderr: ${e.stderr}`, e.message]
+              .filter(Boolean).join('\n'),
+          );
+        }
+        expect(stdout).toContain('✅');
+
+        // Assert the consumer-added component appears as a consumer of the referenced
+        // semantic token in the CONSUMER's generated token-index. This is the certification
+        // that Peter's ratified consumer-aware decision works end-to-end in a packed install.
+        const semanticsPath = path.join(tempDir, 'token-index', 'semantics.yaml');
+        expect(fs.existsSync(semanticsPath)).toBe(true);
+        const semantics = require('js-yaml').load(fs.readFileSync(semanticsPath, 'utf-8')) as {
+          tokens: Record<string, { consumers?: string[] }>;
+        };
+        const entry = semantics.tokens[REFERENCED_TOKEN];
+        expect(entry).toBeDefined();
+        expect(entry.consumers ?? []).toContain('PricingCard');
+      },
+      TIMEOUT,
+    );
+  });
 });

@@ -58,6 +58,15 @@ function makeModeResolved(themeVaryingTokens = new Set<string>()) {
   };
 }
 
+/**
+ * Default component-schema scan root for tests that don't exercise the consumer map
+ * (Spec 118 Task 9.5.2, Class C′). Points at a non-existent dir — `buildConsumerMap`
+ * returns an empty map for a missing dir, so `consumers` arrays are empty (the
+ * behavior these fixtures assert against). The dedicated consumer-map test below
+ * provides a real schema dir.
+ */
+const NO_SCHEMA_DIR = path.join(os.tmpdir(), '__no_such_schema_dir__');
+
 describe('generateTokenIndex', () => {
   let outputDir: string;
 
@@ -77,6 +86,7 @@ describe('generateTokenIndex', () => {
       semanticTokens: [],
       componentTokens: [],
       modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'primitives.yaml'), 'utf-8')) as any;
@@ -91,6 +101,7 @@ describe('generateTokenIndex', () => {
       semanticTokens: [makeSemantic('space.inset.normal', 'space100')],
       componentTokens: [],
       modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any;
@@ -104,6 +115,7 @@ describe('generateTokenIndex', () => {
       semanticTokens: [],
       componentTokens: [makeComponentToken('buttonicon.inset.large', 'ButtonIcon', 'space150')],
       modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'components.yaml'), 'utf-8')) as any;
@@ -121,6 +133,7 @@ describe('generateTokenIndex', () => {
       ],
       componentTokens: [],
       modeResolved: makeModeResolved(new Set(['color.action.primary'])),
+      componentSchemaDir: NO_SCHEMA_DIR,
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any;
@@ -134,6 +147,7 @@ describe('generateTokenIndex', () => {
       semanticTokens: [makeSemantic('color.action.primary', 'cyan300', 'color')],
       componentTokens: [],
       modeResolved: makeModeResolved(new Set(['color.action.primary'])),
+      componentSchemaDir: NO_SCHEMA_DIR,
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any;
@@ -148,9 +162,43 @@ describe('generateTokenIndex', () => {
       semanticTokens: [],
       componentTokens: [],
       modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
     });
 
     const content = yaml.load(fs.readFileSync(path.join(outputDir, 'primitives.yaml'), 'utf-8')) as any;
     expect(Object.keys(content.tokens)).toEqual(['space100']);
+  });
+
+  // Spec 118 Task 9.5.2 (Class C′): the consumer map is built from the schema dir the
+  // CALLER passes in (`componentSchemaDir`), not from `__dirname`. This certifies the
+  // generator reads the provided root — the unit-level half of the consumer-aware change
+  // (the packed-consumer arbiter lives in tests/consumer-integration.test.ts).
+  it('populates semantic consumers from the provided componentSchemaDir (scalar tokens shape)', () => {
+    const schemaRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'schema-root-'));
+    const compDir = path.join(schemaRoot, 'Pricing-Card');
+    fs.mkdirSync(compDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(compDir, 'Pricing-Card.schema.yaml'),
+      [
+        'name: PricingCard',
+        'tokens:',
+        '  surface: color.action.primary',
+      ].join('\n') + '\n',
+    );
+
+    try {
+      generateTokenIndex(outputDir, {
+        primitiveTokens: [],
+        semanticTokens: [makeSemantic('color.action.primary', 'cyan300', 'color')],
+        componentTokens: [],
+        modeResolved: makeModeResolved(),
+        componentSchemaDir: schemaRoot,
+      });
+
+      const content = yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any;
+      expect(content.tokens['color.action.primary'].consumers).toContain('PricingCard');
+    } finally {
+      fs.rmSync(schemaRoot, { recursive: true, force: true });
+    }
   });
 });

@@ -24,6 +24,8 @@
     "dist/cli/figma-push.d.ts",
     "dist/cli/figma-extract.js",
     "dist/cli/figma-extract.d.ts",
+    "dist/cli/shared/*.js",
+    "dist/cli/shared/*.d.ts",
     "dist/figma/",
     "bin/",
     "dist/blend/*.js",

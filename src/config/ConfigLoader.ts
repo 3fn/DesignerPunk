@@ -12,6 +12,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import type { DesignerPunkConfig, ConfigTheme } from './defineConfig';
 import { scopedTsRequire } from './scopedTsRequire';
+import { resolvePackageRoot } from '../cli/shared/resolvePackageRoot';
 
 /** Fully resolved configuration with absolute paths. */
 export interface ResolvedConfig {
@@ -112,11 +113,17 @@ export async function loadConfig(
   const output = userConfig.output || DEFAULTS.output;
   const componentTokenPaths = userConfig.componentTokens || DEFAULTS.componentTokens;
 
-  // Resolve token source: configured local path or package's src/tokens/
+  // Resolve token source: configured local path or package's src/tokens/.
+  // Package-mode default routes through the shared resolvePackageRoot() (Spec 118 Task
+  // 9.5.2, Class C / B1) rather than `path.resolve(__dirname, '../tokens')`. The bare
+  // __dirname form breaks under compile-to-dist (dist/config → dist/tokens, where no raw
+  // .ts token source exists); resolving from the self-checking package root finds the
+  // package's `src/tokens` regardless of whether this module runs from `src/` (tsx) or
+  // `dist/` (compiled), so it survives the target model's compile-and-ship step.
   const tokenSourceMode: 'local' | 'package' = userConfig.tokenSource ? 'local' : 'package';
   const tokenSourceRoot = userConfig.tokenSource
     ? path.resolve(configDir, userConfig.tokenSource)
-    : path.resolve(__dirname, '../tokens');
+    : path.resolve(resolvePackageRoot(__dirname), 'src/tokens');
 
   // Resolve paths relative to config directory
   const outputDir = path.resolve(configDir, output);
