@@ -20,16 +20,12 @@ import { DTCGFormatGenerator } from '../src/generators/DTCGFormatGenerator';
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Import component token files to trigger registration with ComponentTokenRegistry
-// These imports cause defineComponentTokens() to execute, which registers tokens
-import '../src/components/core/Button-Icon/buttonIcon.tokens';
-import '../src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens';
-import '../src/components/core/Avatar-Base/avatar.tokens';
-import '../src/components/core/Badge-Label-Base/tokens';
-import '../src/tokens/component/progress';
-// Note: Chip-Base tokens import removed - file doesn't exist at expected location
-// TODO: Progress tokens are in src/tokens/component/ (family-shared) rather than component directory.
-//       Architectural decision needed: keep family-shared tokens centralized or move to component dirs?
+// Component tokens are loaded via loadComponentTokens(config) inside main() — source-presence
+// discovery (Spec 117 Task 4 / R4), NOT a hardcoded import subset. The previous hardcoded
+// side-effect imports registered only a partial set (27 of 33), silently dropping the
+// convention-dir/componentTokenDirs tokens that R4's discovery finds (e.g. inputcheckbox/
+// inputradio sizing). Using the same loader as the documented CLI keeps the build's
+// component tier in lockstep with the CLI and the committed token-index.
 
 async function main() {
   console.log('🚀 Generating platform-specific token files...\n');
@@ -48,8 +44,22 @@ async function main() {
     const { generateTokenFiles } = await import('../src/generators/generateTokenFiles');
     const { resolveTokens } = await import('../src/cli/resolveTokens');
     const { loadConfig } = await import('../src/config/ConfigLoader');
-    const config = await loadConfig(process.cwd());
-    generateTokenFiles(resolveTokens(config), config);
+    // Spec 118: this script runs under ts-node, where an ambient `.ts` loader is ALREADY
+    // present. Inject it so loadConfig does NOT engage Approach A's global tsx
+    // register/unregister — that cycle clobbers ts-node's `.ts` resolution and breaks
+    // subsequent require('.ts') in this process (the prebuild regression).
+    // See findings/increment-1-ambient-loader-regression.md. Aligned with Increment 3a.
+    const config = await loadConfig(process.cwd(), (p) => import(p));
+    // Populate ComponentTokenRegistry via source-presence discovery (Spec 117 Task 4 / R4),
+    // the same loader the documented CLI uses — so the build's component tier matches the CLI
+    // (all 33, not the hardcoded 27). Runs under the ambient ts-node loader (loadConfig used
+    // the injected seam, so require('.ts') still resolves here).
+    const { loadComponentTokens } = await import('../src/cli/loadComponentTokens');
+    loadComponentTokens(config);
+    const tokenInput = resolveTokens(config);
+    // Capture the single shared mode-resolved truth (Spec 117 Task 3) so the token-index
+    // below is fed from the SAME source as the platform files — no divergent second path.
+    const modeResolved = generateTokenFiles(tokenInput, config);
 
     // Generate component tokens (from ComponentTokenRegistry)
     console.log('📊 Component Token Generation Results:\n');
@@ -97,13 +107,22 @@ async function main() {
       console.log('   Platform token generation was not affected.\n');
     }
 
-    // --- Token Index Generation (Spec 096) ---
-    try {
-      const { execSync } = require('child_process');
-      execSync('npx ts-node scripts/generate-token-index.ts', { stdio: 'inherit', cwd: path.resolve(__dirname, '..') });
-    } catch (indexError) {
-      console.error('⚠️  Token index generation failed (non-blocking):', indexError instanceof Error ? indexError.message : indexError);
-    }
+    // --- Token Index Generation (Spec 096; Spec 117 Task 3) ---
+    // Generated INLINE from the same `modeResolved` that produced the platform files
+    // above — one shared source, so the token-index cannot drift from dist (the index's
+    // base-scoped theme-varying set + per-primitive OKLCH ride on `modeResolved`). This
+    // replaces the retired standalone scripts/generate-token-index.ts, which computed a
+    // divergent registry-wide theme-varying set (the stale "10" Spec 117 Task 3 fixed).
+    // Blocking by design: a failed/stale index must fail the build, not be swallowed.
+    console.log('📊 Token Index Generation:\n');
+    const { generateTokenIndex } = await import('../src/generators/generateTokenIndex');
+    const { ComponentTokenRegistry } = await import('../src/registries/ComponentTokenRegistry');
+    generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
+      primitiveTokens: tokenInput.primitiveTokens,
+      semanticTokens: tokenInput.semanticTokens,
+      componentTokens: ComponentTokenRegistry.getAll(),
+      modeResolved,
+    });
 
     if (allComponentValid) {
       console.log('✨ All platform files generated successfully!');

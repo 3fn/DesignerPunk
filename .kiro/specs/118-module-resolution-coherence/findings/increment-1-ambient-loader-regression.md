@@ -1,7 +1,7 @@
 # Increment-1 Regression: Approach-A `loadConfig` Breaks Ambient ts-node `.ts` Resolution
 
 **Date**: 2026-06-24
-**Status**: OPEN — regression on `main` (landed with Increment 1, `041aaea8`); surfaced by the first real CI run of the consumer-guard. Needs a 118 fix.
+**Status**: ✅ FIXED (2026-06-24) — see § Resolution. Both (A) and (B) resolved and verified end-to-end on the `spec-118-module-resolution-coherence` branch.
 **Owner**: Ada (loader) + Thurgood (verification)
 **Discovered during**: Spec 117 close-out / first push to `main` — the consumer-guard CI went red; verifying the fix uncovered this.
 
@@ -60,3 +60,21 @@ This is concrete evidence that **Approach A's "no ambient loader" assumption is 
 ## Current state
 
 `main` is red on the consumer-guard lane until both (A) and (B) are fixed. The lane is not yet a required branch-protection check, so it does not block pushes — but it should be greened before it's made required.
+
+---
+
+## Resolution (2026-06-24)
+
+Both issues fixed on the `spec-118-module-resolution-coherence` branch:
+
+- **(B)** `scripts/generate-platform-tokens.ts` (the *only* ts-node-hosted `loadConfig` caller — confirmed by grep) now injects the ambient loader: `loadConfig(process.cwd(), (p) => import(p))`. Approach A's global tsx register/unregister is bypassed in the ts-node context, so ts-node's `.ts` resolution survives for the subsequent `require('.ts')`. Uses 118's own injectable seam; aligned with Increment 3a (runtime-mechanism unification).
+- **(A)** `package.json` gained `"prepack": "npm run build"`, so `npm pack` (used by the consumer guard, in CI *and* locally) always ships a freshly-built `dist/`. This closes the stale-`dist/` false-positive **everywhere**, not just CI.
+
+**Verified (this time, fully):**
+- `npm run build` exits 0 — the prebuild regression is gone (`generate-platform-tokens.ts` reports `Successful: 3`).
+- Full `npm test`: **373 suites / 8969 tests green**.
+- Consumer guard under **clean `dist/`** (`rm -rf dist` → `test:consumer`, reproducing the clean-CI condition): the build runs during `npm pack`, the tarball is self-sufficient, suite **green** (6 pass, 1 skip).
+
+**Process note:** this slipped Increment 1 because verification ran `tsc` + `npm test` but **not `npm run build`**, and relied on a stale local `dist/`. A loader that mutates global module resolution plainly *could* affect the build — `npm run build` is now mandatory verification for any change to the loader / module-resolution / build path.
+
+**Pre-existing issue unmasked (NOT this regression, NOT fixed here):** `scripts/generate-token-index.ts:43` references `themeVaryingTokens`, which is not in `TokenIndexInput` (TS2353) — token-index regeneration fails non-blockingly (the build logs it and continues, exit 0). It was masked by (B) (the build died earlier). It is a token-index concern (Spec 117 domain) and should be triaged separately.
