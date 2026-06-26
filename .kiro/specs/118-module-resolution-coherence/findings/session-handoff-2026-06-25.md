@@ -1,5 +1,7 @@
 # Spec 118 — Session Handoff (2026-06-25): PAUSED at 9.5.3, pending the Option-1 prerequisite spec
 
+> **⬆ UPDATE 2026-06-26 — PREREQUISITE LANDED.** Spec 124 (Component-Token Return Contract) is **complete & committed** (`cb91e60c`); the delivery gate is closed. **118 Task 9.5.3 is UNBLOCKED — resume at step 2 of the plan below.** Full handback (what 124 proved vs. what 9.5.3 must still re-certify on the registerless bin, plus four impacts for 9.4/Task 11): see **`124-handback-2026-06-26.md`**.
+
 **Branch**: `spec-118-module-resolution-coherence` · **HEAD**: `a123f77c` (+ this handoff) · working tree clean
 **State**: 118 is **PAUSED on a clean, working, fully-documented coherent intermediate.** The register-keep interim works (consumer-guard-green). The final step (9.5.3 — retiring the global register) is BLOCKED on a component-token-architecture fix that is now its **own prerequisite spec** (Peter's call). Everything else is done + certified.
 

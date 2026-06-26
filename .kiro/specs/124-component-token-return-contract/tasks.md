@@ -148,19 +148,19 @@ The contract change, the harvest, and the test migration are **one atomic increm
     **Type**: Documentation · **Validation**: Tier 1 · **Agent**: Thurgood
     - _Requirements: 8.3_
 
-- [ ] 6. 118 handback — GATED (after delivery gate green; do NOT pre-write into 118)
+- [x] 6. 118 handback — DONE 2026-06-26 (delivery gate green; Peter authorized)
 
   **Type**: Documentation
   **Validation**: Tier 1 - Minimal
   **Agent**: Peter (authorizes); Thurgood communicates
 
-  **HOLD:** Do NOT edit, reference-as-ready, or stage any update to Spec 118 or its `session-handoff-2026-06-25.md` until the Task-4 delivery gate is green. 118 receives ONE verified update at delivery, not speculative progress.
+  **✅ EXECUTED 2026-06-26 (Peter authorized).** The hold held — nothing was written into 118 until the Task-4 delivery gate was green. Delivered `findings/124-handback-2026-06-26.md` into 118 (the four impacts + updated resume plan), added an UPDATE banner to its `session-handoff-2026-06-25.md`, and marked `9.5.3-component-registry-dual-instance-blocker.md` RESOLVED-by-124. _(Original hold, now satisfied: do NOT edit/stage 118 until the gate is green — 118 gets ONE verified update at delivery.)_
 
   **Success Criteria (only after the delivery gate is green):**
   - Communicate the four impacts to 118: (1) 9.5.3 step-2 reframe — state which dual-instance proof 124 achieved; (2) class-invariant lint → 9.4, brand-exception + invariant documentation → Task 11; (3) the C′ authoring-convention seed follow-up (coupled to 123); (4) the `--detectOpenHandles` clean-exit constraint if 124 shipped a harness.
   - Confirm the 118 resume order (124 → 9.5.3 → 9.3 → 9.4 → Task 11) and Risk-#2 dependency are unchanged.
 
-  - [ ] 6.1 Deliver the gated 118 handback
+  - [x] 6.1 Deliver the gated 118 handback
     **Type**: Documentation · **Validation**: Tier 1 · **Agent**: Peter (authorizes); Thurgood communicates
     - _Requirements: 9.1, 9.2, 9.3, 9.4_
 

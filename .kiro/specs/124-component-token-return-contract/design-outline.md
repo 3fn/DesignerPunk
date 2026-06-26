@@ -99,7 +99,7 @@ Lina (contract), Ada (harvest seam), and Thurgood (guards/formalization) each re
 
 **Certification consequence (drives the hold-back below):** brand-survival is *only* falsifiable on a real dual-instance lane — a same-process unit test passes for both the correct brand and a broken `Symbol()`. 124 therefore self-certifies on a real dual-instance harness or the packed-install arbiter; that pulls the dual-instance risk into 124 (where it belongs) and is what makes 118's resume step 2 a true re-run rather than the first real test.
 
-## Pending handback to 118 — HOLD until 124 is verified-delivered (2026-06-26, Peter's directive)
+## Pending handback to 118 — ✅ EXECUTED 2026-06-26 (was: HOLD until 124 verified-delivered)
 
 **Do NOT edit or notify Spec 118 (incl. `session-handoff-2026-06-25.md`) until the delivery gate below is green.** 118 receives a single verified update at delivery, not speculative progress. Captured here so the impacts don't evaporate:
 
@@ -126,7 +126,7 @@ Lina (contract), Ada (harvest seam), and Thurgood (guards/formalization) each re
 
 When 124 lands: 118 re-applies the (already-solved) registerless bin + the `files` build-tracking-glob broadening, re-runs the consumer guard (now N>0 via the return-value seam), and closes Risk #2. Then 118's 9.3 (3c) / 9.4 (lint) / Task 11 (governance).
 
-**⚠️ HOLD (Peter, 2026-06-26):** do not edit or notify 118 until 124 clears the delivery gate — see "Pending handback to 118" above. 118 gets one verified update at delivery, not speculative progress.
+**✅ HANDBACK DONE (Peter authorized, 2026-06-26):** 124 cleared the delivery gate; the single verified update was delivered to 118 — `findings/124-handback-2026-06-26.md` + the handoff UPDATE banner + the blocker marked RESOLVED-by-124. _(Original hold, now satisfied.)_
 
 ---
 
