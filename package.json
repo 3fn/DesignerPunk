@@ -30,6 +30,14 @@
     "bin/",
     "dist/blend/*.js",
     "dist/blend/*.d.ts",
+    "dist/build/tokens/*.js",
+    "dist/build/tokens/*.d.ts",
+    "dist/types/*.js",
+    "dist/types/*.d.ts",
+    "dist/registries/*.js",
+    "dist/registries/*.d.ts",
+    "dist/tokens/BlendTokens.js",
+    "dist/tokens/BlendTokens.d.ts",
     "dist/mcp/",
     "dist/DesignTokens.web.css",
     "dist/DesignTokens.ios.swift",
@@ -82,19 +90,19 @@
       "types": "./dist/config/index.d.ts"
     },
     "./types": {
-      "import": "./src/types/index.ts",
-      "require": "./src/types/index.ts",
-      "types": "./src/types/index.ts"
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
     },
     "./build": {
-      "import": "./src/build/tokens/index.ts",
-      "require": "./src/build/tokens/index.ts",
-      "types": "./src/build/tokens/index.ts"
+      "import": "./dist/build/tokens/index.js",
+      "require": "./dist/build/tokens/index.js",
+      "types": "./dist/build/tokens/index.d.ts"
     },
     "./blend": {
-      "import": "./src/blend/index.ts",
-      "require": "./src/blend/index.ts",
-      "types": "./src/blend/index.ts"
+      "import": "./dist/blend/index.js",
+      "require": "./dist/blend/index.js",
+      "types": "./dist/blend/index.d.ts"
     },
     "./jest-preset": {
       "require": "./dist/testing/jest-preset.js"

@@ -256,9 +256,9 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       // designerpunk.config.ts (ESM-authored): real `export default` + ESM-syntax import.
       // No `@3fn/core/config` dependency — ConfigLoader accepts any plain object via
       // `loaded.default || loaded`, and `defineConfig` is an identity function anyway.
-      // Using `@3fn/core/config` would fail here because the package exports `./config`
-      // as import-only (no `require` condition), and Approach A's CJS loader requires it.
-      // The guard's concern is the transitive ./my-overrides resolution, not defineConfig.
+      // (`./config` resolves under both `import` and `require` since Task 3 added the
+      // `require` condition; this fixture simply doesn't need it.) The guard's concern
+      // is the transitive ./my-overrides resolution, not defineConfig.
       fs.writeFileSync(
         path.join(esmFixtureDir, 'designerpunk.config.ts'),
         [
@@ -469,6 +469,105 @@ describe('Consumer Integration (Spec 106 R8)', () => {
         const entry = semantics.tokens[REFERENCED_TOKEN];
         expect(entry).toBeDefined();
         expect(entry.consumers ?? []).toContain('PricingCard');
+      },
+      TIMEOUT,
+    );
+  });
+
+  /**
+   * Spec 118 Task 9.2 (Increment 3b) — Reconciled-Trio Exports Resolution Arbiter
+   *
+   * THE arbiter for 3b: in a PACKED INSTALL, the three subpath exports `@3fn/core/build`,
+   * `@3fn/core/blend`, `@3fn/core/types` SHALL resolve — under BOTH `require` and `import` —
+   * to the COMPILED dist artifact (not raw `.ts`). In-repo loads false-green here: the jest
+   * moduleNameMapper rewrites `@3fn/core/build` → `src/build/tokens/index.ts`, so only a
+   * real-node subprocess against the installed tarball exercises the published exports map.
+   *
+   * Why this certifies 3b unblocks 9.5.3: 9.5.3 retires the bin's global TS register. A
+   * consumer's component `.tokens.ts` imports `from '../../../build/tokens'`, which `init`'s
+   * `rewriteBuildImports` rewrites to `@3fn/core/build`. After 3b that subpath resolves to
+   * compiled dist JS, so the transitive import needs NO global TS loader. We assert both the
+   * direct resolution (require + import → dist) AND that `generate` (which loads the
+   * consumer's component `.ts` → transitively `@3fn/core/build`) still works — already
+   * covered by the `generate produces output files` it() against the init'd tempLib.
+   *
+   * Resolution is verified by requiring/importing the subpath INSIDE a real-node subprocess
+   * run from the consumer tempDir, and asserting (a) it resolves without throwing, (b) the
+   * resolved module path lives under the installed package's `dist/` (compiled), not `src/`.
+   */
+  describe('Spec 118 Task 9.2 (3b) — reconciled-trio exports resolve to compiled dist', () => {
+    // A known export from each subpath's compiled barrel, used to prove the module loaded.
+    const SUBPATHS = [
+      { subpath: '@3fn/core/types', namedExport: 'TokenCategory' },
+      { subpath: '@3fn/core/build', namedExport: 'TokenIntegratorImpl' },
+      { subpath: '@3fn/core/blend', namedExport: 'BlendCalculator' },
+    ];
+
+    function runNode(script: string): string {
+      // Run a throwaway node script from inside tempDir so its require/import resolves
+      // against the INSTALLED node_modules/@3fn/core (the packed tarball), exercising the
+      // published exports map — not the repo source.
+      const scriptPath = path.join(tempDir, `__spec118-3b-probe-${Date.now()}.cjs`);
+      fs.writeFileSync(scriptPath, script);
+      try {
+        return execSync(`node ${JSON.stringify(scriptPath)}`, {
+          cwd: tempDir,
+          encoding: 'utf-8',
+          timeout: 30_000,
+        });
+      } finally {
+        fs.rmSync(scriptPath, { force: true });
+      }
+    }
+
+    it(
+      'require() of each reconciled subpath resolves to compiled dist (not src)',
+      () => {
+        for (const { subpath, namedExport } of SUBPATHS) {
+          // require.resolve gives the on-disk path the exports map selects under `require`.
+          const script = [
+            `const resolved = require.resolve(${JSON.stringify(subpath)});`,
+            `const mod = require(${JSON.stringify(subpath)});`,
+            `if (!(${JSON.stringify(namedExport)} in mod)) {`,
+            `  throw new Error('missing export ${namedExport} from ${subpath}: ' + Object.keys(mod).join(','));`,
+            `}`,
+            `process.stdout.write('RESOLVED:' + resolved);`,
+          ].join('\n');
+          const out = runNode(script);
+          const resolved = out.replace('RESOLVED:', '').trim();
+          // The `require` condition must select the compiled dist artifact, never raw .ts.
+          expect(resolved).toContain(`${path.sep}dist${path.sep}`);
+          expect(resolved.endsWith('.js')).toBe(true);
+          expect(resolved).not.toContain(`${path.sep}src${path.sep}`);
+        }
+      },
+      TIMEOUT,
+    );
+
+    it(
+      'dynamic import() of each reconciled subpath resolves to compiled dist (not src)',
+      () => {
+        for (const { subpath, namedExport } of SUBPATHS) {
+          // Exercise the `import` condition of the exports map via a real ESM dynamic import
+          // from a CJS host (import() is available in CJS). import.meta.resolve is not
+          // guaranteed, so we assert the module loads with its named export AND that
+          // require.resolve (import condition mirrors require here — both → dist) is dist.
+          const script = [
+            `(async () => {`,
+            `  const mod = await import(${JSON.stringify(subpath)});`,
+            `  if (!(${JSON.stringify(namedExport)} in mod)) {`,
+            `    throw new Error('missing export ${namedExport} from ${subpath} via import(): ' + Object.keys(mod).join(','));`,
+            `  }`,
+            `  const resolved = require.resolve(${JSON.stringify(subpath)});`,
+            `  process.stdout.write('RESOLVED:' + resolved);`,
+            `})().catch((e) => { console.error(e); process.exit(1); });`,
+          ].join('\n');
+          const out = runNode(script);
+          const resolved = out.replace('RESOLVED:', '').trim();
+          expect(resolved).toContain(`${path.sep}dist${path.sep}`);
+          expect(resolved.endsWith('.js')).toBe(true);
+          expect(resolved).not.toContain(`${path.sep}src${path.sep}`);
+        }
       },
       TIMEOUT,
     );

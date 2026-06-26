@@ -68,11 +68,28 @@ describe('Bundler Resolution', () => {
       expect(config.types).toBe('./dist/config/index.d.ts');
     });
 
-    it('should have blend export with types', () => {
+    // Spec 118 Task 9.2 (Increment 3b): the three raw-`.ts` subpath exports were
+    // reconciled to compiled dist (mirroring the `./config` precedent), so a packed
+    // consumer resolves them to JS without a TS loader. See findings + consumer guard.
+    it('should have blend export pointing to compiled dist', () => {
       const blend = packageJson.exports['./blend'];
-      expect(blend.import).toBe('./src/blend/index.ts');
-      expect(blend.require).toBe('./src/blend/index.ts');
-      expect(blend.types).toBe('./src/blend/index.ts');
+      expect(blend.import).toBe('./dist/blend/index.js');
+      expect(blend.require).toBe('./dist/blend/index.js');
+      expect(blend.types).toBe('./dist/blend/index.d.ts');
+    });
+
+    it('should have build export pointing to compiled dist', () => {
+      const build = packageJson.exports['./build'];
+      expect(build.import).toBe('./dist/build/tokens/index.js');
+      expect(build.require).toBe('./dist/build/tokens/index.js');
+      expect(build.types).toBe('./dist/build/tokens/index.d.ts');
+    });
+
+    it('should have types export pointing to compiled dist', () => {
+      const types = packageJson.exports['./types'];
+      expect(types.import).toBe('./dist/types/index.js');
+      expect(types.require).toBe('./dist/types/index.js');
+      expect(types.types).toBe('./dist/types/index.d.ts');
     });
 
     it('should have grid.css export', () => {
