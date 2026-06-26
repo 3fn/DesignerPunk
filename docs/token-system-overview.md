@@ -501,7 +501,7 @@ export const ComponentNameTokens = defineComponentTokens({
 - **Explicit component and family association**: Each token set declares its component and token family
 - **Required reasoning**: Every token must include a reasoning string explaining its purpose
 - **Primitive references preferred**: Tokens should reference existing primitives when possible
-- **Automatic registration**: Tokens are automatically registered with `ComponentTokenRegistry`
+- **Branded return value (no self-registration)**: `defineComponentTokens()` returns a backward-compatible flat value-map carrying a non-enumerable, value-survivable brand (the rich `RegisteredComponentToken[]`). It does **not** register with `ComponentTokenRegistry` itself. The build's `loadComponentTokens()` harvests the branded results from each token module's exports and is the **sole writer** to the registry. (Spec 124 Component-Token Return Contract: the prior import-side-effect registration was removed so component tokens survive the dual-instance module-resolution boundary.)
 
 ### Component Token Registry
 

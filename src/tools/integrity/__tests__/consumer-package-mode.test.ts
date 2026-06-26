@@ -32,7 +32,11 @@ import type { ResolvedConfig } from '../../../config/ConfigLoader';
 // Half (b) jest.doMock's the module entirely, so no injection there. Real scoped resolution
 // in a packed install is certified by the consumer guard.
 
-const REGISTRY_PATH = require.resolve('../../../registries/ComponentTokenRegistry').replace(/\\/g, '/');
+// Spec 124: fixtures author via defineComponentTokens (and EXPORT the result) so the
+// harvest — which iterates Object.values(mod) and collects branded results — picks them up.
+// A direct ComponentTokenRegistry.register(...) is NOT a branded export and would harvest
+// to zero (false-green); an unexported const likewise harvests to zero.
+const DEFINE_TOKENS_PATH = require.resolve('../../../build/tokens').replace(/\\/g, '/');
 
 /** A package-mode ResolvedConfig (no tokenSource → tokenSourceMode 'package'). */
 function packageModeConfig(overrides: Partial<ResolvedConfig>): ResolvedConfig {
@@ -65,24 +69,30 @@ describe('Spec 117 R4 consumer blast radius — half (a): consumer authors own c
   });
 
   /**
-   * Writes a consumer's own *.tokens.ts that registers a component token via the registry's
-   * side-effect API — the exact shape a real consumer's defineComponentTokens() produces.
+   * Writes a consumer's own *.tokens.ts that authors a component token via
+   * defineComponentTokens AND exports the result — the exact shape a real consumer
+   * authors, and the shape the branded-return harvest collects.
+   *
+   * `name` is the full token name (e.g. 'consumerwidget.inset.md'); the harvest lowercases
+   * the component, so the token key passed to defineComponentTokens is the suffix after the
+   * lowercased component prefix.
    */
   function writeConsumerComponentToken(name: string, value: number): string {
     const dir = path.join(fixtureDir, 'components', 'Consumer-Widget');
     fs.mkdirSync(dir, { recursive: true });
     const file = path.join(dir, 'consumerWidget.tokens.ts');
+    const tokenKey = name.replace(/^consumerwidget\./, '');
     fs.writeFileSync(
       file,
       [
         '// @ts-nocheck',
-        `const { ComponentTokenRegistry } = require('${REGISTRY_PATH}');`,
-        'ComponentTokenRegistry.register({',
-        `  name: '${name}',`,
+        `const { defineComponentTokens } = require('${DEFINE_TOKENS_PATH}');`,
+        'export const ConsumerWidgetTokens = defineComponentTokens({',
         "  component: 'ConsumerWidget',",
         "  family: 'spacing',",
-        `  value: ${value},`,
-        "  reasoning: 'consumer-authored component token',",
+        '  tokens: {',
+        `    '${tokenKey}': { value: ${value}, reasoning: 'consumer-authored component token' },`,
+        '  },',
         '});',
       ].join('\n'),
     );
@@ -112,8 +122,12 @@ describe('Spec 117 R4 consumer blast radius — half (a): consumer authors own c
       path.join(dir2, 'consumerPanel.tokens.ts'),
       [
         '// @ts-nocheck',
-        `const { ComponentTokenRegistry } = require('${REGISTRY_PATH}');`,
-        "ComponentTokenRegistry.register({ name: 'consumerpanel.gap.sm', component: 'ConsumerPanel', family: 'spacing', value: 8, reasoning: 'consumer' });",
+        `const { defineComponentTokens } = require('${DEFINE_TOKENS_PATH}');`,
+        'export const ConsumerPanelTokens = defineComponentTokens({',
+        "  component: 'ConsumerPanel',",
+        "  family: 'spacing',",
+        "  tokens: { 'gap.sm': { value: 8, reasoning: 'consumer' } },",
+        '});',
       ].join('\n'),
     );
 

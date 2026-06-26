@@ -11,7 +11,10 @@
  * ```typescript
  * import { defineComponentTokens } from '../../../build/tokens/defineComponentTokens';
  * import { spacingTokens } from '../../../tokens/SpacingTokens';
- * 
+ *
+ * // Authors export the result; the value-map is destructured for component use.
+ * // The rich token metadata rides back on a non-enumerable brand and is harvested
+ * // by loadComponentTokens — defineComponentTokens does NOT self-register.
  * export const ButtonIconTokens = defineComponentTokens({
  *   component: 'ButtonIcon',
  *   family: 'spacing',
@@ -27,14 +30,29 @@
  *   },
  * });
  * ```
- * 
+ *
  * @see Requirements 2.1-2.6 in .kiro/specs/037-component-token-generation-pipeline/requirements.md
+ * @see .kiro/specs/124-component-token-return-contract/design.md for the branded-return contract
  */
 
-import { ComponentTokenRegistry, RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
+import type { RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
 
 // Re-export RegisteredComponentToken for convenience
 export type { RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
+
+/**
+ * Frozen compatibility contract — the brand key under which the rich
+ * `RegisteredComponentToken[]` is carried back on a `defineComponentTokens` result.
+ *
+ * This is the SINGLE source of the brand string (Spec 124 caveat (a)): both the brand
+ * write (here) and the brand read ({@link getTokenContract} / the harvest) reference this
+ * const. The literal MUST NOT be duplicated. The string is a frozen compatibility
+ * contract — a parent must recognize results produced by older/newer `@3fn/core/build`
+ * copies, so it cannot change without a coordinated deprecation.
+ *
+ * @see .kiro/specs/124-component-token-return-contract/design.md (Decision 2, caveats a–d)
+ */
+export const TOKEN_CONTRACT_BRAND = '@3fn/dp:tokenContract';
 
 /**
  * Primitive token reference structure
@@ -125,26 +143,34 @@ function isTokenWithReference<T extends PrimitiveTokenReference>(
 
 /**
  * Define component tokens with explicit metadata.
- * 
+ *
  * This helper function provides a lightweight API for defining component tokens
  * while producing rich metadata for pipeline integration. It:
- * 
+ *
  * 1. Validates that all required fields are present
  * 2. Extracts values from primitive references or uses provided values
- * 3. Registers tokens with the global ComponentTokenRegistry
+ * 3. Brands the returned value-map with the rich `RegisteredComponentToken[]` under a
+ *    non-enumerable {@link TOKEN_CONTRACT_BRAND} key, so the metadata rides back on the
+ *    return value (recoverable via {@link getTokenContract})
  * 4. Returns usable token values for immediate component consumption
- * 
+ *
+ * It does NOT register with any global registry. The collection seam is the
+ * return-value harvest in `loadComponentTokens`, which is the sole writer to the
+ * canonical `ComponentTokenRegistry` (Spec 124, Decision 3). The brand is non-enumerable,
+ * so spread / `Object.keys` / `JSON.stringify` of the result are unchanged from the bare
+ * value-map; authors cannot accidentally depend on it (Spec 124, R1/R2).
+ *
  * @template T - Record type mapping token names to their definitions
  * @param config - Configuration object with component name, family, and token definitions
- * @returns Object mapping token names to their numeric values
- * 
+ * @returns Object mapping token names to their numeric values, branded with the rich tokens
+ *
  * @throws Error if component name is empty
  * @throws Error if family name is empty
  * @throws Error if no tokens are defined
- * 
+ *
  * @example
  * ```typescript
- * const tokens = defineComponentTokens({
+ * export const ButtonIconTokens = defineComponentTokens({
  *   component: 'ButtonIcon',
  *   family: 'spacing',
  *   tokens: {
@@ -154,9 +180,12 @@ function isTokenWithReference<T extends PrimitiveTokenReference>(
  *     },
  *   },
  * });
- * 
- * // Use the token value
- * const padding = tokens['inset.large']; // 12
+ *
+ * // Use the token value (the public enumerable surface is the flat value-map)
+ * const padding = ButtonIconTokens['inset.large']; // 12
+ *
+ * // The harvest (loadComponentTokens) recovers the rich tokens:
+ * const rich = getTokenContract(ButtonIconTokens); // RegisteredComponentToken[] | undefined
  * ```
  */
 export function defineComponentTokens<T extends Record<string, TokenDefinition>>(
@@ -211,8 +240,47 @@ export function defineComponentTokens<T extends Record<string, TokenDefinition>>
     }
   }
 
-  // Register with global registry
-  ComponentTokenRegistry.registerBatch(component, registeredTokens);
+  // Brand the value-map with the rich tokens (Spec 124, Decision 2 / caveats a–d):
+  // a non-enumerable, namespaced, string-keyed property carrying the
+  // RegisteredComponentToken[]. The brand survives the scoped-require module-duplication
+  // boundary by value-equal string key (not by shared object identity). Non-enumerability
+  // is load-bearing: spread / Object.keys / JSON.stringify of the result are unchanged.
+  // The hasOwnProperty guard + configurable:true make re-application idempotent.
+  // NO ComponentTokenRegistry registration — the harvest in loadComponentTokens is the
+  // sole writer to the canonical registry (R5 AC1).
+  if (!Object.prototype.hasOwnProperty.call(values, TOKEN_CONTRACT_BRAND)) {
+    Object.defineProperty(values, TOKEN_CONTRACT_BRAND, {
+      value: registeredTokens, // RegisteredComponentToken[]
+      enumerable: false,       // load-bearing (caveat b)
+      configurable: true,      // tolerate re-application (caveat c)
+      writable: false,
+    });
+  }
 
   return values as ComponentTokenValues<T>;
+}
+
+/**
+ * Recover the rich `RegisteredComponentToken[]` from a branded `defineComponentTokens`
+ * result — the only sanctioned way to read the brand (Spec 124, caveat d).
+ *
+ * Reads the brand by direct / `hasOwnProperty` access to the single
+ * {@link TOKEN_CONTRACT_BRAND} key — NEVER by enumerating the candidate's keys. Returns
+ * `undefined` for any non-object or any object without the brand (plain value-maps,
+ * getters, string consts, type aliases, etc. harvest to zero). This is the brand-read
+ * counterpart to the brand-write in {@link defineComponentTokens}; both reference the
+ * single frozen brand string so a result branded by one `@3fn/core/build` copy is
+ * recognized by another (caveat a).
+ *
+ * @param candidate - Any module export to inspect.
+ * @returns The rich tokens if `candidate` carries the brand, else `undefined`.
+ */
+export function getTokenContract(candidate: unknown): RegisteredComponentToken[] | undefined {
+  if (candidate == null || typeof candidate !== 'object') {
+    return undefined;
+  }
+  if (!Object.prototype.hasOwnProperty.call(candidate, TOKEN_CONTRACT_BRAND)) {
+    return undefined;
+  }
+  return (candidate as Record<string, unknown>)[TOKEN_CONTRACT_BRAND] as RegisteredComponentToken[];
 }

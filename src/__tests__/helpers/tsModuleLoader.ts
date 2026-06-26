@@ -11,8 +11,8 @@
  *
  * Architectural boundary (mirrors `configModuleLoader.ts`): in-process jest cannot
  * exercise the REAL scoped resolver — jest masks it. So in-process tests verify ONLY
- * non-resolution behavior (barrel-contract errors, discovery walk, allowOverwrite,
- * return shape). REAL scoped resolution of consumer `.ts` in a packed install is verified
+ * non-resolution behavior (barrel-contract errors, discovery walk, harvest of branded
+ * results, return shape). REAL scoped resolution of consumer `.ts` in a packed install is verified
  * out-of-process by the consumer guard (`npm run test:consumer`) — the sole arbiter.
  *
  * This loader lives entirely in TEST code — the production `resolveTokens` /

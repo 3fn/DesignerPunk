@@ -1,6 +1,6 @@
 /**
  * @category evergreen
- * @purpose Verify loadComponentTokens() discovery, return type, and allowOverwrite (Spec 104, 114)
+ * @purpose Verify loadComponentTokens() discovery and return type (Spec 104, 114, 124 harvest)
  */
 
 import * as fs from 'fs';
@@ -9,6 +9,7 @@ import * as os from 'os';
 import { loadComponentTokens } from '../loadComponentTokens';
 import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
+import { defineComponentTokens, getTokenContract } from '../../build/tokens';
 import type { ResolvedConfig } from '../../config/ConfigLoader';
 
 // Spec 118 Task 9.5: loadComponentTokens defaults to the production scoped tsx loader
@@ -119,97 +120,68 @@ describe('loadComponentTokens', () => {
     });
   });
 
-  describe('allowOverwrite', () => {
-    test('uses allowOverwrite when tokenSourceMode is local', () => {
-      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
-      // Pre-register a token that would conflict
-      ComponentTokenRegistry.register({
-        name: 'test.inset.sm',
-        component: 'Test',
-        family: 'spacing',
-        value: 8,
-        reasoning: 'original',
-      });
+  // Spec 124: the former `allowOverwrite` describe block (local/package double-registration
+  // tolerance + reset-after-load) is deleted. The harvest is now the SOLE writer to the
+  // canonical registry, so no double-registration path remains; setDefaultAllowOverwrite /
+  // the allowOverwrite option were retired with this change.
 
-      // Write a file that re-registers the same token via require
+  // Spec 124 Task 4.1 — Negative guard (R4): the brand is the SOLE inclusion criterion.
+  // An unbranded module — even one exporting a value-map structurally indistinguishable
+  // from a flat token value-map — harvests to ZERO. Safe same-process: the negative result
+  // does not depend on the dual-instance boundary. If branded-only inclusion ever regresses
+  // to structural detection, this REDS.
+  describe('negative guard: unbranded module harvests to zero (Spec 124 R4)', () => {
+    test('a module whose exports carry no brand harvests zero tokens', () => {
       const componentDir = path.join(tmpDir, 'tokens', 'component');
       fs.mkdirSync(componentDir, { recursive: true });
-      const registryPath = require.resolve('../../registries/ComponentTokenRegistry').replace(/\\/g, '/');
-      fs.writeFileSync(path.join(componentDir, 'reregister.ts'), [
-        `// @ts-nocheck`,
-        `const reg = require('${registryPath}');`,
-        `reg.ComponentTokenRegistry.register({`,
-        `  name: 'test.inset.sm',`,
-        `  component: 'Test',`,
-        `  family: 'spacing',`,
-        `  value: 12,`,
-        `  reasoning: 'local override',`,
-        `});`,
-      ].join('\n'));
+      // Plain value-maps + a string const + a getter — none branded. The first is
+      // structurally identical to a flat token value-map ({ key: number }).
+      fs.writeFileSync(
+        path.join(componentDir, 'plain.ts'),
+        [
+          "module.exports = {",
+          "  looksLikeTokens: { large: 12, small: 8 },", // structurally a flat value-map
+          "  someString: 'not-a-token',",
+          "  get derived() { return { medium: 10 }; },",
+          "};",
+        ].join('\n'),
+      );
 
-      const config = makeConfig({ tokenSourceMode: 'local' });
-      // Should not throw despite double registration
-      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
-      // Local version should win
-      const result = ComponentTokenRegistry.get('test.inset.sm');
-      expect(result?.value).toBe(12);
+      const config = makeConfig();
+      const result = loadComponentTokens(config, jestTsModuleLoader);
+
+      // Branded-only inclusion: the structurally-token-like map is NOT collected.
+      expect(result).toHaveLength(0);
+      expect(ComponentTokenRegistry.getAll()).toHaveLength(0);
     });
+  });
 
-    test('uses allowOverwrite when tokenSourceMode is package (Spec 117 R4)', () => {
-      // Spec 117 R4: allowOverwrite travels with the loader, not the mode. Package mode
-      // must tolerate double-registration (last-wins) exactly like local mode — the
-      // previous mode-gated behavior (throw in package mode) was the bug R4 fixes.
-      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
-      ComponentTokenRegistry.register({
-        name: 'pkg.conflict',
-        component: 'Pkg',
+  // Spec 124 Task 4.2 — Class-invariant guard (R8 AC2): loading a branded module in
+  // ISOLATION (without invoking the harvest) leaves the canonical ComponentTokenRegistry
+  // EMPTY. This pins P4 (sole writer): defineComponentTokens must NOT self-register. If
+  // someone re-adds a registerBatch/register side effect to defineComponentTokens, this
+  // REDS loudly — the 124-local fail-loud guard the design (§4 "class-invariant guard")
+  // mandates. (The broader lint codification is flagged for 118's 9.4 / Task 11, NOT here.)
+  describe('class-invariant guard: defineComponentTokens does not self-register (Spec 124 R8)', () => {
+    test('loading/invoking a branded module in isolation leaves the canonical registry empty', () => {
+      ComponentTokenRegistry.clear();
+      expect(ComponentTokenRegistry.getAll()).toHaveLength(0);
+
+      // Author a branded result exactly as a consumer .tokens.ts would — calling
+      // defineComponentTokens directly (the brand WRITE path) — WITHOUT running the harvest.
+      const branded = defineComponentTokens({
+        component: 'IsolationProbe',
         family: 'spacing',
-        value: 8,
-        reasoning: 'original',
+        tokens: {
+          'inset.sm': { value: 8, reasoning: 'class-invariant probe' },
+        },
       });
 
-      const componentDir = path.join(tmpDir, 'tokens', 'component');
-      fs.mkdirSync(componentDir, { recursive: true });
-      const registryPath = require.resolve('../../registries/ComponentTokenRegistry').replace(/\\/g, '/');
-      fs.writeFileSync(path.join(componentDir, 'conflict.ts'), [
-        `// @ts-nocheck`,
-        `const r = require('${registryPath}');`,
-        `r.ComponentTokenRegistry.register({`,
-        `  name: 'pkg.conflict',`,
-        `  component: 'Pkg',`,
-        `  family: 'spacing',`,
-        `  value: 12,`,
-        `  reasoning: 'conflict',`,
-        `});`,
-      ].join('\n'));
-
-      const config = makeConfig({ tokenSourceMode: 'package' });
-      // Should not throw despite double registration; last-wins.
-      expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
-      const result = ComponentTokenRegistry.get('pkg.conflict');
-      expect(result?.value).toBe(12);
-    });
-
-    test('resets allowOverwrite after loading completes', () => {
-      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
-      const config = makeConfig({ tokenSourceMode: 'local' });
-      loadComponentTokens(config, jestTsModuleLoader);
-
-      // After loadComponentTokens, registry should reject duplicates again
-      ComponentTokenRegistry.register({
-        name: 'after.test',
-        component: 'After',
-        family: 'spacing',
-        value: 8,
-        reasoning: 'first',
-      });
-      expect(() => ComponentTokenRegistry.register({
-        name: 'after.test',
-        component: 'After',
-        family: 'spacing',
-        value: 8,
-        reasoning: 'duplicate',
-      })).toThrow(/already registered/);
+      // The rich tokens rode back on the brand (proves the call did real work)...
+      expect(getTokenContract(branded)).toHaveLength(1);
+      // ...but the canonical registry is STILL empty — no self-registration side effect.
+      // If defineComponentTokens ever registers as a side effect again, this fails loud.
+      expect(ComponentTokenRegistry.getAll()).toHaveLength(0);
     });
   });
 });

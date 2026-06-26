@@ -34,12 +34,13 @@ export interface RegisteredComponentToken {
 }
 
 /**
- * Registration options for component tokens
+ * Registration options for component tokens.
+ *
+ * Spec 124 retired `allowOverwrite`: the harvest in `loadComponentTokens` is the sole
+ * writer to this registry, so no double-registration path remains and a duplicate token
+ * name is always a genuine conflict (thrown by `register`).
  */
-export interface ComponentTokenRegistrationOptions extends RegistrationOptions {
-  /** Allow overwriting existing tokens (default: false) */
-  allowOverwrite?: boolean;
-}
+export type ComponentTokenRegistrationOptions = RegistrationOptions;
 
 /**
  * Query options for component tokens
@@ -74,41 +75,25 @@ class ComponentTokenRegistryImpl implements IRegistry<RegisteredComponentToken> 
   /** Index by token family */
   private byFamily: Map<string, RegisteredComponentToken[]> = new Map();
 
-  /** Default allowOverwrite for register calls that don't specify it */
-  private defaultAllowOverwrite = false;
-
-  /**
-   * Set the default allowOverwrite flag for subsequent register/registerBatch calls.
-   * Used by loadComponentTokens in local mode to prevent double-registration conflicts.
-   */
-  setDefaultAllowOverwrite(allow: boolean): void {
-    this.defaultAllowOverwrite = allow;
-  }
-
   /**
    * Register a single component token
-   * 
+   *
    * Implements IRegistry.register() interface.
-   * 
+   *
    * @param token - The component token to register
-   * @param options - Registration options
-   * @throws Error if token with same name already exists (unless allowOverwrite is true)
+   * @param _options - Registration options (reserved; `allowOverwrite` retired in Spec 124)
+   * @throws Error if a token with the same name is already registered (genuine conflict —
+   *   the harvest is the sole writer, so a duplicate name means two components defined the
+   *   same token).
    */
-  register(token: RegisteredComponentToken, options: ComponentTokenRegistrationOptions = {}): void {
-    const { allowOverwrite = this.defaultAllowOverwrite } = options;
-
-    // Check for conflicts
-    if (this.tokens.has(token.name) && !allowOverwrite) {
+  register(token: RegisteredComponentToken, _options: ComponentTokenRegistrationOptions = {}): void {
+    // Check for conflicts (genuine duplicate-name guard; no overwrite path remains).
+    if (this.tokens.has(token.name)) {
       const existing = this.tokens.get(token.name)!;
       throw new Error(
         `Component token conflict: "${token.name}" already registered by ` +
         `${existing.component}. Attempted registration by ${token.component}.`
       );
-    }
-
-    // If overwriting, remove from indexes first
-    if (this.tokens.has(token.name)) {
-      this.removeFromIndexes(token.name);
     }
 
     // Store token

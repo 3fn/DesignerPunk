@@ -18,9 +18,13 @@
 
 import { TokenFileGenerator } from '../../generators/TokenFileGenerator';
 import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
+import { getTokenContract } from '../../build/tokens';
 
-// Import progress tokens to trigger registration
-import '../../tokens/component/progress';
+// Spec 124: defineComponentTokens no longer self-registers; the rich tokens ride back on
+// the branded return. We reproduce the production harvest here (recover via getTokenContract
+// + register into the canonical registry) so the real TokenFileGenerator pipeline — which
+// reads ComponentTokenRegistry.getAll() — has the Progress tokens to translate.
+import { ProgressTokens } from '../../tokens/component/progress';
 
 describe('Progress Token Cross-Platform Translation', () => {
   let generator: TokenFileGenerator;
@@ -29,6 +33,11 @@ describe('Progress Token Cross-Platform Translation', () => {
   let androidContent: string;
 
   beforeAll(() => {
+    ComponentTokenRegistry.clear();
+    for (const token of getTokenContract(ProgressTokens) ?? []) {
+      ComponentTokenRegistry.register(token);
+    }
+
     generator = new TokenFileGenerator();
     const results = generator.generateComponentTokens();
 
@@ -39,6 +48,10 @@ describe('Progress Token Cross-Platform Translation', () => {
     webContent = webResult?.content ?? '';
     iosContent = iosResult?.content ?? '';
     androidContent = androidResult?.content ?? '';
+  });
+
+  afterAll(() => {
+    ComponentTokenRegistry.clear();
   });
 
   // ==========================================================================

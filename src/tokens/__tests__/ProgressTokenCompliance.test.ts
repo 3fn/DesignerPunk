@@ -26,7 +26,14 @@ import {
   PROGRESS_COMPONENT_TOKEN_COUNT,
   progressComponentTokenNames,
 } from '../component/progress';
-import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
+import { getTokenContract } from '../../build/tokens';
+import type { RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
+
+// Spec 124: defineComponentTokens no longer self-registers into ComponentTokenRegistry;
+// the rich tokens ride back on the branded return and are recovered via getTokenContract.
+// (Was: reads of ComponentTokenRegistry.getByComponent('Progress') populated by the import
+// side effect — now empty/false-red.)
+const progressRegisteredTokens: RegisteredComponentToken[] = getTokenContract(ProgressTokens) ?? [];
 
 describe('Progress Token Compliance', () => {
   // ==========================================================================
@@ -51,9 +58,9 @@ describe('Progress Token Compliance', () => {
   // ==========================================================================
 
   describe('Component tokens use formulas or primitive references', () => {
-    const registeredTokens = ComponentTokenRegistry.getByComponent('Progress');
+    const registeredTokens = progressRegisteredTokens;
 
-    it('should have registered tokens in the ComponentTokenRegistry', () => {
+    it('should carry tokens on the branded return', () => {
       expect(registeredTokens.length).toBeGreaterThan(0);
     });
 
@@ -89,7 +96,7 @@ describe('Progress Token Compliance', () => {
     });
 
     describe('Component tokens', () => {
-      const registeredTokens = ComponentTokenRegistry.getByComponent('Progress');
+      const registeredTokens = progressRegisteredTokens;
 
       it.each(registeredTokens.map(t => [t.name, t] as const))(
         '%s should include a reasoning field',
@@ -113,8 +120,7 @@ describe('Progress Token Compliance', () => {
 
     it(`should have exactly ${PROGRESS_COMPONENT_TOKEN_COUNT} component tokens`, () => {
       expect(progressComponentTokenNames.length).toBe(PROGRESS_COMPONENT_TOKEN_COUNT);
-      const registeredTokens = ComponentTokenRegistry.getByComponent('Progress');
-      expect(registeredTokens.length).toBe(PROGRESS_COMPONENT_TOKEN_COUNT);
+      expect(progressRegisteredTokens.length).toBe(PROGRESS_COMPONENT_TOKEN_COUNT);
     });
   });
 

@@ -51,14 +51,70 @@ Option 1 is the only one where a green consumer guard means *actually robust* (n
 
 ## Key design considerations / open questions (for the design phase)
 
-1. **The collection convention.** The export surface is **heterogeneous**: of 14 component-token files, only 6 register via `defineComponentTokens`; 8 are plain CSS-var/literal maps (a *different* mechanism). How does the harvest cleanly identify `defineComponentTokens` results without false positives? (Lina's call — a tag/brand vs a registration-record return vs a naming convention.) And: do the 8 map-style files need any change, or are they orthogonal (they don't feed the registry today)?
-2. **Backward compatibility of the return.** Authors destructure the flat value-map today (`RadioSizingTokens['box.sm']`). The new shape must keep that ergonomic. Superset object? A value-map with a non-enumerable tagged sidecar? Type-checked so a breaking change fails loud.
-3. **Avoiding double-registration.** If `defineComponentTokens` still registers as a side effect *and* `loadComponentTokens` harvests-and-registers, ensure the canonical registry isn't double-populated or conflict-flagged. (Likely: harvest-and-register becomes the source of truth; the in-module side effect either stops or lands harmlessly in the discarded duplicate.)
-4. **Singleton retirement depth.** Fully eliminate the mutable global (return-value all the way through) vs. keep the registry as a populated-by-harvest store the existing read-consumers use. The latter is the smaller, safer step; the former is the cleaner end-state. Weigh per the "coherent intermediate on a mapped path" standard.
+1. **The collection convention.** The export surface is **heterogeneous** (verified 2026-06-25 — see Verified findings below): of **15** scan-reachable files, **8** register via `defineComponentTokens`; **7** are plain maps/getters/string-consts (a *different* mechanism). The heterogeneity is worse than a clean maps-vs-helper split — PLAIN files co-mingle multiple token objects, getter functions, bare string consts, type aliases, and re-export aliases — so structural detection is unworkable and **a brand is mandatory, not optional**. **DECISION LOCKED (Peter, 2026-06-26 — Option A):** the brand is a **non-enumerable, namespaced STRING-keyed property** (`Object.defineProperty(values, '@3fn/dp:tokenContract', { value: registered, enumerable: false })`) — survives the scoped-require boundary by value-equality, no process-global. `Symbol.for` was the runner-up (also survives, but adds a process-global-registry dependence under a no-globals North Star, and breaks under a true realm boundary — worker/vm/out-of-process loader — where string-key matching still holds). A plain `Symbol()` is excluded — it desyncs across the boundary exactly like the registry singleton, silently re-breaking the harvest. The 7 map-style files don't feed the registry today and need no change (orthogonal).
+2. **Backward compatibility of the return.** Authors destructure the flat value-map today (`RadioSizingTokens['box.sm']`). The new shape must keep that ergonomic — the non-enumerable string-keyed sidecar (Option A, locked) on the value map satisfies both the brand and the ergonomics in one move (invisible to destructure/spread/`Object.keys`/JSON). Type-checked so a breaking change fails loud. *Lower in-repo blast radius than feared:* the REGISTER files' exports are imported by nothing else in-repo (radio computes box size from `iconSize + inset`); the constraint exists chiefly to protect consumer-authored destructuring.
+3. **Avoiding double-registration — RESOLVED.** Make the harvest the **sole** registry writer and **drop `defineComponentTokens`'s side-effect registration entirely.** Verified safe: there are zero side-effect-only imports of `.tokens` files and no in-repo consumer of the registration besides `loadComponentTokens`'s scan. This eliminates double-registration in every path (production scoped, in-process jest single-instance, build-script plain-require). One thing to confirm in design: tests that import a `.tokens.ts` and expect the registry pre-populated by the side effect.
+4. **Singleton retirement depth — folds into #3.** Dropping the side effect lets `setDefaultAllowOverwrite` (and likely `allowOverwrite` itself) retire, removing the cross-test-pollution / order-dependence class in the same change. The registry remains as a harvest-populated store the existing rich-shape read-consumers use — the smaller, safer step *and* the clean end-state for the mutable-global aspect, in one move.
 
 ## Consumers that must keep working (the rich registry stays populated)
 
 `designerpunk.ts:145` (→ `generateTokenIndex` `componentTokens`), `TokenFileGenerator.ts:249` (per-platform component output — needs `family`/`value`/`primitiveReference`), `ValidationCoordinator.ts:764,724` (validation — needs `primitiveReference`), `generateTokenIndex.ts:30`. Plus the build script's `loadComponentTokens` path. Whatever 124 changes, these read the rich `RegisteredComponentToken[]` and must be unaffected.
+
+## Verified findings & design refinements (2026-06-26, main-loop sanity check + pressure test)
+
+Empirical pass over the actual code (Claude, main loop; grounded the cited file:line refs, then pressure-tested the approach). Three results that change or sharpen the design:
+
+1. **Inventory corrected: 15 / 8 / 7, not 14 / 6 / 8.** By the loader's own scan patterns (`*.tokens.ts`, `tokens.ts`, `component/*.ts`): 15 scan-reachable files, **8 REGISTER** (avatar, Badge-Count, Badge-Label, Button-Icon, Button-VerticalList-Item, checkbox-sizing, radio-sizing, `tokens/component/progress`), **7 PLAIN**. (Package-self set; the actual generate set is config-driven via `componentTokenDirs`/`tokenSourceRoot` — but this is the right set for the `git diff token-index/` reproducibility gate.)
+
+2. **⚠️ A plain `Symbol()` brand silently re-breaks the harvest — the brand must survive the boundary by value, not by object identity.** A module-level `const BRAND = Symbol(...)` in `defineComponentTokens.ts` is itself a module singleton — it desyncs across the scoped-require boundary exactly like `ComponentTokenRegistry` does. `defineComponentTokens` runs in the *duplicate* `@3fn/core/build` and brands with the duplicate copy's symbol; `loadComponentTokens` harvests in the *parent* and checks the canonical copy's symbol → mismatch → silent 0 tokens. **Same failure, relocated to the brand.** Two mechanisms survive (both compare by a value-equal string, not a shared object): `Symbol.for('…')` (process-global registry) and a non-enumerable string-keyed property. **DECISION (2026-06-26): Option A, the string key** — see the locked decision in open-question §1 (no process-global; realm-portable). Design must carry a test asserting brand identity holds across a *real* dual-instance boundary (a same-process unit test passes for both the correct brand AND a broken `Symbol()`, so it must ride the real dual-instance lane — see Thurgood's guard note).
+
+3. **Harvest-as-sole-writer is verified safe and collapses #3 + #4.** Zero side-effect-only imports of `.tokens` files exist; `RadioSizingTokens` and peers are imported by nothing else in-repo (platform impls compute box size from `iconSize + inset`). So `defineComponentTokens` can stop calling `registerBatch` with no static-importer breakage → harvest becomes the sole canonical-registry writer → no double-registration in any path → `setDefaultAllowOverwrite`/`allowOverwrite` retire. Confirm in design: tests relying on import-side-effect registry population.
+
+**Consumers verified (rich-shape reads, citations hold):** `ValidationCoordinator.ts:764` (`getAll`), `designerpunk.ts:145` (`getAll`), `TokenFileGenerator.ts:249` (`getAll`), `generateTokenIndex.ts:30` (`RegisteredComponentToken[]` param fed from `getAll`). `designerpunk.ts:105` calls `loadComponentTokens(config)` with no injected loader → default `scopedTsRequire` → the dual-instance path is the **live production path**.
+
+---
+
+## Three-lead review + health refinements (2026-06-26, Lina + Ada + Thurgood; Peter health check)
+
+Lina (contract), Ada (harvest seam), and Thurgood (guards/formalization) each reviewed the outline against the code; main loop verified the load-bearing claims. All three returned **GO to formalize — no architectural fork left open.** The refinements below are incorporated; three are "getting-it-right vs right-now" health calls Peter flagged.
+
+**Verified by all three (incorporated above):** `Symbol.for` reasoning is correct and the dual-instance vector is live (REGISTER files import via the `build/tokens` barrel — the duplicated specifier); harvest-as-sole-writer is safe and retires `allowOverwrite`; the consumer arbiter is `tests/consumer-integration.test.ts` (packed install) — distinct from the in-process `consumer-package-mode.test.ts`.
+
+**Test-migration surface (verified, 4 files — was understated as "confirm in design"):**
+- `src/components/core/Badge-Label-Base/__tests__/tokens.test.ts:46-69` — asserts registry populated by import side-effect → **false-red** when side-effect drops; re-point to the branded return. (Lina)
+- `src/build/tokens/__tests__/defineComponentTokens.test.ts` — 17 registry refs assert the side-effect *as the contract* → rewrite premise to the new return shape. (Lina)
+- `src/tools/integrity/__tests__/consumer-package-mode.test.ts:80,116` — fixtures call `ComponentTokenRegistry.register(...)` directly as a `defineComponentTokens` stand-in → **false-green risk** under branded-only harvest; rewrite to author via `defineComponentTokens`. (Ada/Thurgood)
+- `src/cli/__tests__/loadComponentTokens.test.ts:122-209` — tests `allowOverwrite`/reset behavior being deleted → delete. (Ada/Thurgood)
+
+**Decided refinements (incorporated):**
+- **Harvest inclusion contract = branded-only** (Ada + Thurgood). Cleaner, matches the production seam; forces the `consumer-package-mode` fixtures onto `defineComponentTokens` (more correct anyway).
+- **Negative guard** (all three): an unbranded `tokens.ts` MUST harvest to zero — pins "brand is the *sole* inclusion criterion." Safe same-process.
+- **Atomic increment** (Thurgood): contract + harvest + test-migration land together; any alone reds the suite (or conflict-throws once `allowOverwrite` is gone).
+- **Token-index ordering spike** (Ada): `getAll()` returns Map-insertion order; harvest order may differ from today's side-effect order and trip the `git diff token-index/` gate on *ordering* despite identical data. Resolve before tasks (check whether `TokenFileGenerator`/`generateTokenIndex` sort).
+
+**Health calls (Peter, "getting it right" not "right now"):**
+1. **Brand mechanism — RATIFIED (Peter, 2026-06-26): Option A, the non-enumerable namespaced string-keyed property.** `Symbol.for` was reopened and rejected as the default: it is a *process-global* under a North Star that minimizes globals (Option 3 was rejected partly on no-global-residue grounds), and it breaks under a true realm boundary (worker/vm/out-of-process loader) where a value-equal string key still matches. Option A (`Object.defineProperty(values, '@3fn/dp:tokenContract', { value: registered, enumerable: false })`) survives the module-duplication boundary by value equality — no symbol registry, loader/ESM/worker/realm-agnostic — and stays invisible to destructure/spread. Joint recommendation of main loop + Ada (Ada's seam analysis added the realm-portability argument). **Four caveats are normative in the design (Ada):** (a) the brand string is a **frozen compatibility contract** — a parent must recognize results from older/newer `@3fn/core/build` copies, so it cannot change without a coordinated deprecation; (b) **non-enumerability is load-bearing** — assert via test that `{...result}`/`Object.keys`/`JSON.stringify` are unchanged by branding; (c) **idempotent double-application** — branding must tolerate re-application (guard with `hasOwnProperty` or `configurable: true`) and the harvest must tolerate the dual-path double-load; (d) **the harvest checks the brand by direct/`hasOwnProperty` access, never by enumerating the candidate's keys.**
+2. **The class invariant, not just the instance.** `ComponentTokenRegistry` is the only **mutable-accumulate-then-read-back** singleton on the consumer-boundary path (verified: `unitConverter`/`transformerRegistry`/color `Map`s are stateless or immutable → benign when duplicated). The principled invariant is **"no mutable-accumulate-read-back state crosses the scoped boundary."** 124 SHALL state this invariant + ship a 124-local guard that fails loud if the side-effect is reintroduced; the broader lint codification is *flagged* for 118's 9.4/Task 11 (not actioned here — see hold-back below).
+3. **C′ authoring incoherence — tracked, not actioned.** Two token mechanisms (`defineComponentTokens` value-registration vs. semantic-ref maps) share the `tokens.ts` filename the loader scans. The brand makes the harvest correct regardless, but the *authoring model* stays fractured (a real C′ support question). Out of scope for 124; seeded as `findings/component-token-authoring-convention-seed.md` (Lina owner; coupled to Spec 123).
+
+**Certification consequence (drives the hold-back below):** brand-survival is *only* falsifiable on a real dual-instance lane — a same-process unit test passes for both the correct brand and a broken `Symbol()`. 124 therefore self-certifies on a real dual-instance harness or the packed-install arbiter; that pulls the dual-instance risk into 124 (where it belongs) and is what makes 118's resume step 2 a true re-run rather than the first real test.
+
+## Pending handback to 118 — HOLD until 124 is verified-delivered (2026-06-26, Peter's directive)
+
+**Do NOT edit or notify Spec 118 (incl. `session-handoff-2026-06-25.md`) until the delivery gate below is green.** 118 receives a single verified update at delivery, not speculative progress. Captured here so the impacts don't evaporate:
+
+**Delivery gate (all three required before any 118 update):**
+1. Brand-survival proven on a **real dual-instance lane** (124 harness or packed-install arbiter) — not a same-process test.
+2. Full `npm test` + `tsc` + `npm run build` green.
+3. `git diff token-index/` empty (value- *and* order-identical to committed).
+
+**What to hand back to 118 once the gate is green (the four impacts):**
+1. **Step 2 reframe:** 9.5.3's "re-run the consumer guard (now N>0)" is a *true acceptance gate* unless 124 self-certified the dual-instance path. State which 124 achieved, so 118 sizes step-2 risk correctly.
+2. **Scope into 9.4 / Task 11:** the class-invariant lint ("no mutable-accumulate-read-back state across the scoped boundary") → 9.4 (lint polarity); documenting the brand exception + the invariant → Task 11 (codify the contract).
+3. **New follow-up:** the C′ authoring-convention seed (above), coupled to Spec 123.
+4. **New constraint:** if 124 ships a dual-instance harness, it must exit clean under `--detectOpenHandles` so it doesn't add a second "Jest did not exit" alongside the tracked MCP-orphan leak.
+
+**Unchanged:** the 118 resume order (124 → 9.5.3 → 9.3 → 9.4 → Task 11) and Risk #2's dependency on 124 landing first.
 
 ## Verification
 
@@ -69,6 +125,8 @@ Option 1 is the only one where a green consumer guard means *actually robust* (n
 ## Resume linkage (118)
 
 When 124 lands: 118 re-applies the (already-solved) registerless bin + the `files` build-tracking-glob broadening, re-runs the consumer guard (now N>0 via the return-value seam), and closes Risk #2. Then 118's 9.3 (3c) / 9.4 (lint) / Task 11 (governance).
+
+**⚠️ HOLD (Peter, 2026-06-26):** do not edit or notify 118 until 124 clears the delivery gate — see "Pending handback to 118" above. 118 gets one verified update at delivery, not speculative progress.
 
 ---
 

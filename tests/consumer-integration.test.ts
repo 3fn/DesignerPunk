@@ -80,6 +80,22 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     const cssFile = path.join(distDir, 'DesignTokens.web.css');
     expect(fs.existsSync(cssFile)).toBe(true);
     expect(fs.statSync(cssFile).size).toBeGreaterThan(0);
+
+    // Spec 124 Task 4.3 — Dual-instance brand-survival arbiter (R7 AC1/AC2).
+    // This is the AUTHORITATIVE brand-survival proof: the packed install makes
+    // `scopedTsRequire` load a real SECOND copy of `@3fn/core/build`, so the consumer's
+    // component `.tokens.ts` brands its result in that copy and the parent harvest must
+    // recover it BY VALUE across the boundary. A broken brand (e.g. a plain Symbol()) would
+    // silently harvest zero here, so this is the lane where it is falsifiable (same-process
+    // tests pass for both correct and broken). Assert N>0 component tokens specifically
+    // containing `inputradio.box.sm` — the canonical recovered token from Spec 117's
+    // 33-token baseline. Spec 124 certifies on the current register-keep bin; the
+    // registerless re-cert is 118's 9.5.3 (R7 AC3).
+    const componentsYaml = path.join(tempDir, 'token-index', 'components.yaml');
+    expect(fs.existsSync(componentsYaml)).toBe(true);
+    const componentsRaw = fs.readFileSync(componentsYaml, 'utf-8');
+    expect(componentsRaw.trim().length).toBeGreaterThan(0); // N>0: not the empty silent-zero
+    expect(componentsRaw).toContain('inputradio.box.sm');
   }, TIMEOUT);
 
   // SKIPPED: `validate` fails its "Mathematical relationships" check — a pre-existing

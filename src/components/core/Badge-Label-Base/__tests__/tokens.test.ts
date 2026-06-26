@@ -11,11 +11,11 @@
  * @see Requirements 4.8, 9.3, 9.4, 9.5 in .kiro/specs/044-badge-base/requirements.md
  */
 
-import { ComponentTokenRegistry } from '../../../../registries/ComponentTokenRegistry';
-import { 
-  BadgeLabelBaseTokens, 
+import { getTokenContract } from '../../../../build/tokens';
+import {
+  BadgeLabelBaseTokens,
   getBadgeLabelMaxWidth,
-  BadgeLabelBaseTokenReferences 
+  BadgeLabelBaseTokenReferences
 } from '../tokens';
 
 describe('Badge-Label-Base Tokens', () => {
@@ -43,13 +43,20 @@ describe('Badge-Label-Base Tokens', () => {
     });
   });
 
-  describe('Registry Registration', () => {
-    test('should register maxWidth token with ComponentTokenRegistry', () => {
-      expect(ComponentTokenRegistry.has('badgelabelbase.maxWidth')).toBe(true);
+  describe('Branded Contract', () => {
+    // Spec 124: defineComponentTokens no longer self-registers; the rich tokens ride back
+    // on the non-enumerable brand and are recovered via getTokenContract. (Was: a
+    // Registry Registration block populated by the import side effect — now false-red.)
+    test('should carry the maxWidth token on the branded return', () => {
+      const tokens = getTokenContract(BadgeLabelBaseTokens);
+      expect(tokens).toBeDefined();
+      const token = tokens?.find(t => t.name === 'badgelabelbase.maxWidth');
+      expect(token).toBeDefined();
     });
 
-    test('should store correct metadata for maxWidth token', () => {
-      const token = ComponentTokenRegistry.get('badgelabelbase.maxWidth');
+    test('should carry correct metadata for the maxWidth token', () => {
+      const tokens = getTokenContract(BadgeLabelBaseTokens);
+      const token = tokens?.find(t => t.name === 'badgelabelbase.maxWidth');
       expect(token).toBeDefined();
       expect(token?.name).toBe('badgelabelbase.maxWidth');
       expect(token?.component).toBe('BadgeLabelBase');
@@ -59,16 +66,12 @@ describe('Badge-Label-Base Tokens', () => {
       expect(token?.reasoning).toContain('Maximum width for truncated badges');
     });
 
-    test('should be queryable by component name', () => {
-      const tokens = ComponentTokenRegistry.getByComponent('BadgeLabelBase');
+    test('should brand exactly the one BadgeLabelBase token', () => {
+      const tokens = getTokenContract(BadgeLabelBaseTokens);
       expect(tokens).toHaveLength(1);
-      expect(tokens[0].name).toBe('badgelabelbase.maxWidth');
-    });
-
-    test('should be queryable by family', () => {
-      const spacingTokens = ComponentTokenRegistry.getByFamily('spacing');
-      const badgeToken = spacingTokens.find(t => t.name === 'badgelabelbase.maxWidth');
-      expect(badgeToken).toBeDefined();
+      expect(tokens?.[0].name).toBe('badgelabelbase.maxWidth');
+      expect(tokens?.[0].component).toBe('BadgeLabelBase');
+      expect(tokens?.[0].family).toBe('spacing');
     });
   });
 

@@ -127,25 +127,9 @@ describe('ComponentTokenRegistry', () => {
       expect(retrieved?.component).toBe('ComponentA');
     });
 
-    test('should allow overwrite when explicitly enabled', () => {
-      const token1 = createMockToken({
-        name: 'shared.token.name',
-        component: 'ComponentA',
-        value: 8,
-      });
-      const token2 = createMockToken({
-        name: 'shared.token.name',
-        component: 'ComponentB',
-        value: 16,
-      });
-
-      ComponentTokenRegistry.register(token1);
-      ComponentTokenRegistry.register(token2, { allowOverwrite: true });
-
-      const retrieved = ComponentTokenRegistry.get('shared.token.name');
-      expect(retrieved?.value).toBe(16); // New value
-      expect(retrieved?.component).toBe('ComponentB');
-    });
+    // Spec 124: the "should allow overwrite when explicitly enabled" case is removed —
+    // the allowOverwrite option was retired. A duplicate token name is always a genuine
+    // conflict now that the harvest is the sole registry writer (asserted above).
   });
 
   describe('Token Retrieval - getAll()', () => {

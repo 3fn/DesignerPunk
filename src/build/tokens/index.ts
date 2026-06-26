@@ -35,7 +35,7 @@ export type {
   RegisteredComponentToken,
   ComponentTokenValues,
 } from './defineComponentTokens';
-export { defineComponentTokens } from './defineComponentTokens';
+export { defineComponentTokens, getTokenContract, TOKEN_CONTRACT_BRAND } from './defineComponentTokens';
 
 // Implementations
 export { TokenIntegratorImpl } from './TokenIntegrator';
