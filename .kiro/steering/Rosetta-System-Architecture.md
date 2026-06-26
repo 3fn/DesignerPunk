@@ -12,7 +12,7 @@ description: Rosetta token pipeline architecture — subsystem entry points, tok
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: token-development, component-development, pipeline-integration
-**Last Reviewed**: 2026-06-24
+**Last Reviewed**: 2026-06-26
 
 ---
 
@@ -446,7 +446,7 @@ Component tokens represent a third layer in the token hierarchy, sitting between
 │                              ▼                                               │
 │                                                                              │
 │   Component Token Registry                                                   │
-│   └── Automatic registration via defineComponentTokens()                    │
+│   └── Populated by loadComponentTokens() harvest (sole writer)              │
 │       └── Supports getByComponent(), getByFamily() queries                  │
 │                                                                              │
 │                              │                                               │
@@ -496,7 +496,7 @@ export const ComponentNameTokens = defineComponentTokens({
 - Explicit component and family association
 - Required reasoning for each token
 - References to primitive tokens (preferred) or family-conformant values
-- Automatic registration with ComponentTokenRegistry
+- Returns a branded value-map (no self-registration); loadComponentTokens() harvests the brand and is the sole writer to ComponentTokenRegistry (Spec 124)
 
 **Entry Points**:
 - Helper function: `src/build/tokens/defineComponentTokens.ts`
