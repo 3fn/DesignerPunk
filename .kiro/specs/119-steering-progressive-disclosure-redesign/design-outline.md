@@ -3,8 +3,28 @@
 **Date**: 2026-06-19
 **Spec**: 119 - Steering Progressive Disclosure Redesign
 **Author**: Thurgood
-**Status**: Design Outline (feedback incorporated — R1 from Ada, Lina, Leonardo, Sparky, Kenya, Data, Stacy)
+**Status**: Design Outline — **R2 delta review complete (2026-06-27); key decisions resolved.** See § "Direction & Objectives (post-R2)" immediately below for the authoritative through-line, § "R2 Review Resolutions & Decisions" for the decision record, and § "Pre-Formalization Decisions" for the 119-A/119-B split. (R1 reviewers: Ada, Lina, Leonardo, Sparky, Kenya, Data, Stacy; R2: Thurgood, Ada, Lina, Leonardo.)
 > **⚠️ Before formalizing, read § "Pre-Formalization Decisions & Inbound Reconciliation (2026-06-27)" near the end.** It records the decision to **split 119 into 119-A (foundation, sequenced before Specs 122/123) and 119-B (routing + measurement, after)**, plus what the inbound notes from Specs 117 / 118 / 121 require this spec to fold in. 118 is now complete (its gate on 122/123 is cleared).
+
+---
+
+## Direction & Objectives (post-R2 — authoritative summary, 2026-06-27)
+
+> **Read this first.** This outline grew by accretion — a 2026-06-19 base, then the 119-A/119-B split, then R2 review resolutions. The body sections below (especially "Proposed Architecture" and "Implementation Estimate") predate the split and R2; **where they conflict with this summary, the § "Pre-Formalization Decisions" and § "R2 Review Resolutions" sections win.** Read the body as design history — formalization rewrites it into clean requirements/design/tasks.
+
+**What 119 does.** Restore progressive disclosure: a minimal `always`-loaded identity layer (~9 docs, ~7.5K tokens) plus everything else served on demand via the Docs MCP, with activation logic in per-agent prompts. Portability-first (minimal Kiro-proprietary surface). The original context leak is already fixed (Phase 2, shipped `5489b6cf`).
+
+**Sequencing — split into two halves around Specs 122/123: `119-A → 122 → 123 → 119-B`.**
+- **119-A (foundation, before 122/123):** uniform per-doc `id` addressing at the Docs MCP (Phase 8.5) → filename normalization + mass-rename (Phase 8.6) → relocate non-identity docs `.kiro/steering/` → `governance/` + MCP rewiring (`MCP_STEERING_DIR`, `files[]`, `init`, `sync`) → lock the `always` identity layer → remove the meta-guide. **Exit gate:** every doc `id` referenced by the 8 agent prompts resolves via the MCP post-relocation.
+- **119-B (routing + measurement, after 123):** per-agent routing tables (incl. the `find_docs` discovery row + the Spec 118 Module-Resolution-Contract row) expressed as **Spec 122 canonical-source content**; the certainty-calibration protocol (Decision 4a, incl. `none`-handling); and the before/after measurement case study (the tail).
+
+**Settled decisions (authoritative; detail in § R2 Review Resolutions R1–R10):**
+- **Addressing:** uniform `id` on all 89 docs (kebab-slug; resolver `id` → legacy-path during transition). Doc-`id` and section-`id` are ONE coherent system (`docid#sectionid`, semantically inert, immutable) — the section half is roadmap Gap 7, deferred but not precluded.
+- **Mass-rename in-scope** (the 10 space-bearing filenames; establishes a kebab/no-spaces convention).
+- **Documentation Directory dropped** (agent-facing) — `find_docs` subsumes it; **SSOT = the MCP doc index.** Any human-facing TOC is a separate, generated, deferred artifact (→ 122).
+- **Content-staleness cleanup is OUT of 119-A** — Phase 0 does staleness *triage* (flag, don't fix) → a separate Thurgood-led audit.
+
+**Objectives** (full list in Goals / Success Criteria below): only identity docs always-loaded; every doc MCP-reachable + `find_docs`-discoverable; complete per-domain routing coverage; no effectiveness regression (first-attempt correctness within 10% of baseline); completion docs written without prompting; fully portable. *Benchmarks (measure, don't gate):* ~7.5K always-loaded tokens; ~95–98% reduction from the ~335K baseline.
 
 ---
 
@@ -557,6 +577,8 @@ The routing table handles governance and reference docs. Knowledge Bases handle 
 ---
 
 ## Implementation Estimate
+
+> **⚠️ PRE-SPLIT (superseded for sequencing).** This 14-phase table predates the 119-A/119-B split and the R2 resolutions. For authoritative sequencing read § "Phase → half mapping" and § "R2 Review Resolutions": Phase 2 shipped; **Phase 4 (Documentation Directory) is dropped**; **Phases 8.5 (uniform-`id` addressing) and 8.6 (filename normalization) are net-new in 119-A**; Phases 6 and 10 straddle the A/B line. The per-row effort/risk estimates remain useful; the linear ordering does not.
 
 | Phase | Effort | Risk | Dependency |
 |-------|--------|------|-----------|
