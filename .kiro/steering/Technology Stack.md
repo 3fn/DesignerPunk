@@ -7,7 +7,7 @@ description: Define technology choices for DesignerPunk cross-platform implement
 # Technology Stack
 
 **Date**: 2025-11-26
-**Last Reviewed**: 2025-12-15
+**Last Reviewed**: 2026-06-26
 **Purpose**: Define technology choices for DesignerPunk cross-platform implementation  
 **Organization**: process-standard  
 **Scope**: cross-project
@@ -85,6 +85,11 @@ ComponentName/
 ```
 
 Build-time platform separation (not runtime detection) enables platform-specific optimizations while maintaining cross-platform consistency through shared design tokens.
+
+## Build & Runtime Tooling
+
+- **Runtime TypeScript**: `tsx` is the **sole** runtime-TS mechanism on the non-bundled surface (Spec 118 Task 9.1). ts-node is retired from the governed surface (the MCP dev sub-packages keep their own ts-node by design — see the Rosetta-System-Architecture "MCP/Browser Exemption Boundary").
+- **ESLint** — present **only** for the module-resolution lint rule on web source (`src/components/**`): bans explicit `.js`/`.ts` extensions on relative imports (CJS-extensionless polarity, Spec 118 Task 9.4). **This is NOT repo-wide linting adoption** — the repo has no general code-quality linting. Repo-wide adoption is an undecided future decision (`docs/roadmap/m0a-deferred-items.md`).
 
 ---
 

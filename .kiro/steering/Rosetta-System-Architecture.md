@@ -323,7 +323,7 @@ Semantic color tokens are resolved into light and dark mode sets before generati
 │   ├── Handles the exception case (tokens needing different primitives)      │
 │   └── Resolved by: SemanticOverrideResolver                                │
 │                                                                              │
-│   Orchestration (generateTokenFiles.ts)                                      │
+│   Pipeline orchestration (generateTokenFiles.ts)                             │
 │   ├── Level 2 first: produces light + dark token name sets                  │
 │   ├── Level 1 second: resolves each set's names to OKLCH values            │
 │   ├── Passes both resolved sets to generators                               │
@@ -359,7 +359,7 @@ Mode-resolved tokens are transformed into platform-specific formats. Generators 
 │                         GENERATION SUBSYSTEM                                 │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
-│   TokenFileGenerator (Orchestrator)                                          │
+│   TokenFileGenerator (Platform-generation orchestration)                     │
 │   ├── Coordinates all generation activities                                 │
 │   ├── Receives pre-resolved light + dark semantic token sets                │
 │   └── Location: src/generators/TokenFileGenerator.ts                        │
@@ -390,7 +390,7 @@ Mode-resolved tokens are transformed into platform-specific formats. Generators 
 ```
 
 **Entry Points**:
-- Generation orchestration: `src/generators/TokenFileGenerator.ts`
+- Platform-generation orchestration: `src/generators/TokenFileGenerator.ts`
 - Web generation: `src/providers/WebFormatGenerator.ts`
 - iOS generation: `src/providers/iOSFormatGenerator.ts`
 - Android generation: `src/providers/AndroidFormatGenerator.ts`
@@ -507,6 +507,12 @@ export const ComponentNameTokens = defineComponentTokens({
 
 **Token Creation Governance**: Creating component tokens requires human approval. See [Token Governance Guide](./Token-Governance.md) for decision matrix and review requirements.
 
+### Cross-Boundary Invariant & the Brand Contract (Spec 124)
+
+**Class invariant:** *No mutable-accumulate-then-read-back state crosses the scoped (`scopedTsRequire`) boundary.* A singleton is dangerous across that boundary only if it is **written in one module copy and read back from another**; `scopedTsRequire` loads a second copy of `@3fn/core/build`, so any object compared by shared identity across it desyncs. `ComponentTokenRegistry` was the only such singleton (audit: `unitConverter` stateless, `transformerRegistry` populate-at-init/read-in-same-copy, color maps immutable — all benign when duplicated). It is now pinned by a source-scan guard (`src/build/tokens/__tests__/ClassInvariantGuard.test.ts`) that reds on any `*Registry.{register|registerBatch|add|set|push}(` write reintroduced to the authoring surface.
+
+**The brand contract (Option A):** component tokens cross the boundary **by value**. `defineComponentTokens()` brands its backward-compatible return value with a **non-enumerable string key** (`'@3fn/dp:tokenContract'`, recovered via `getTokenContract`); `loadComponentTokens()` harvests the branded exports and is the **sole writer** to the registry. Four load-bearing caveats: **(1)** the brand **key** is a constant namespaced **string** (`'@3fn/dp:tokenContract'`), value-equal across copies — so it survives the boundary where object identity would not (the brand *value* is the `RegisteredComponentToken[]`, written non-writable); **(2)** the key's **non-enumerability is load-bearing** (it must not leak into the flat value-map's enumeration / serialization); **(3)** brand re-application is **idempotent** (`hasOwnProperty`-guarded, `configurable`); **(4)** brand access is via **`hasOwnProperty`** (not prototype-chain lookup). `allowOverwrite` is retired.
+
 ---
 
 ## Subsystem Entry Points Summary
@@ -553,6 +559,45 @@ export default defineConfig({
 **Theme registration**: Themes are explicitly imported and registered in the config — no directory walking, no auto-discovery. The config IS the registry.
 
 See: `Token-Governance.md` § "Theme Registry (Spec 094)" for governance rules.
+
+---
+
+## Module-Resolution Contract (Spec 118)
+
+DesignerPunk resolves TypeScript at runtime under a single coherent contract. The contract is organized by **class of code**:
+
+| Class | Code | Resolution rule |
+|-------|------|-----------------|
+| **A — package OWN code** (CLI, generators, exports) | shipped in the package | **Compiled-and-shipped (`dist/`), run as compiled JS.** No runtime-TS loader. The bin invokes `require('../dist/cli/designerpunk.js')` under plain `node`. |
+| **B — the CONSUMER's `.ts`** (config, tokens, components, overrides) | lives in the consumer's repo | **A per-site SCOPED runtime-TS loader** (the Increment-1 Approach-A seam): register tsx scoped → load → unregister. No process-global register. Three seams: config, `resolveTokens`, `loadComponentTokens`. |
+| **C — `__dirname` / package-root assumptions** | package internals | **A single `resolvePackageRoot()` source of truth** (resolve up, self-check for `package.json`, fall back to cwd). All package-root derivations route through it; no bare `__dirname` for package-root. |
+| **C′ — the generated catalog** | token-index + the MCP it feeds | **Reflects the CONSUMER's design system** — components/schemas they add or edit, resolved from the active config/source, not `__dirname`. |
+| **D — the MCP-dev ts-node configs** | MCP servers' dev workflow | **A permanent documented exception** (see "MCP/Browser Exemption Boundary"). Bundled at ship time; no runtime-TS resolution. |
+
+**The one runtime-TS mechanism (non-bundled surface): `tsx`.** ts-node is retired from the governed surface. Component tokens cross the scoped boundary **by return value (branded harvest), not by a shared-singleton side effect.** Authoring is **extensionless CJS** (no explicit `.js`/`.ts` on relative specifiers); no `"type":"module"`.
+
+**Spec 118 is the single source of truth for module resolution.** Downstream questions route here; see `.kiro/specs/118-module-resolution-coherence/`.
+
+### Committed Direction & the ESM path
+
+**Direction (Spec 118 Task 8): CJS-consistency, executed in-spec. The escape-hatch was NOT elected** — Increment 3 (3a→3b→3c) executed fully; no `"type":"module"` flip; the `@3fn/core/jest-preset` was never touched. Rationale: the charter goal is to make the system *whole, not modern* — CJS-consistency is the lowest-incoherence end-state (it consolidates an already-CJS surface that works, with zero preset blast-radius), whereas native ESM, even in its best case, would close on a *deferred* execution. Evidence: `findings/direction-decision.md`.
+
+**No deferred cost is owed by this spec** (execution is complete). The future ESM-modernization path is a **deliberate, externally-triggered** migration — not pending work. Its triggers and inventoried cost are recorded on the roadmap: see `docs/roadmap/m0a-deferred-items.md` § "Full ESM modernization". CJS-consistency deliberately banks ~60–70% of the **structural** prep for that move — explicitly **excluding the two high-variance drivers (the loader-host re-investigation and the jest→ESM migration across the full suite), which that percentage does not cover** and which are where an ESM migration's real cost and risk live.
+
+---
+
+## MCP/Browser Exemption Boundary
+
+The module-resolution contract governs **non-bundled runtime TS**. Four subsystems are **exempt because bundling resolves their imports at build time** — there is no runtime-TS resolution to govern:
+
+| Subsystem | Bundle | Build |
+|-----------|--------|-------|
+| Application / Docs / Product MCP servers | `dist/mcp/*.js` | `npm run build:mcp` (esbuild, CJS) |
+| Browser bundle | `dist/browser/designerpunk.esm.js` (+UMD/min) | `npm run build:browser` (esbuild) |
+
+The exemption is **not silent**: each exempt subsystem has a **paired boot/smoke guard** (`tests/mcp-boot-smoke.test.ts`, `tests/browser-boot-smoke.test.ts`) wired into the consumer-guard CI lane — a broken bundle fails the lane.
+
+**Two MCP servers (application, docs) carry their own ts-node *dev* configs — a permanent documented exception** (Resolved Decision 2); product-mcp-server has none. They serve the servers' development workflow only, never load consumer configs, never touch `loadConfig`. At ship time all three servers run as bundles. This is NOT a reconciliation target and NOT a gap in the contract.
 
 ---
 

@@ -8,7 +8,7 @@ description: Build system configuration for DesignerPunk v2 — Jest setup, Type
 
 **Date**: 2025-10-25
 **Updated**: November 19, 2025  
-**Last Reviewed**: 2025-12-15
+**Last Reviewed**: 2026-06-26
 **Purpose**: Document the build system configuration for DesignerPunk v2  
 **Organization**: process-standard
 **Scope**: cross-project
@@ -55,7 +55,8 @@ description: Build system configuration for DesignerPunk v2 — Jest setup, Type
 **Note**: This section intentionally uses the same heading as other steering documents because each document provides an overview of its specific system or process. This structural pattern enables consistent navigation across documentation.
 
 This project uses a hybrid TypeScript compilation approach:
-- **Development**: Uses `ts-node` and `ts-jest` for direct TypeScript execution
+- **Development**: Uses **`tsx`** (the sole runtime-TS mechanism) and `ts-jest` for direct TypeScript execution. *(ts-node retired from the governed surface — Spec 118 Task 9.1. The MCP dev sub-packages keep their own ts-node by design — see the MCP/Browser Exemption Boundary.)*
+- **Linting (narrow)**: ESLint exists **only** for the web-source module-resolution rule (`src/components/**`, Spec 118 Task 9.4) — not repo-wide. `npm run lint` runs this single rule.
 - **Distribution**: Compiles to JavaScript in `dist/` for runtime usage
 
 ## Available Scripts
@@ -123,7 +124,7 @@ The `build:verify` script (`verify-build.js`) checks that:
 
 ### You DON'T need to build when:
 - Running tests with `npm test` (ts-jest handles compilation)
-- Using CLI tools that use ts-node (e.g., `npm run release:analyze`)
+- Using CLI tools that run via tsx (e.g., the release tool: `npx tsx src/tools/release/cli/release-tool.ts analyze`)
 - Making changes and running tests immediately
 
 ## Development Workflow
@@ -215,8 +216,8 @@ Create separate `tsconfig.json` files for different parts of the codebase:
 - `tsconfig.tokens.json` - Just token generation code
 - `tsconfig.release.json` - Release analysis code
 
-### Option 2: Go Full ts-node
-Remove `dist/` entirely and use ts-node everywhere (simpler but slower)
+### Module-resolution direction (settled — Spec 118)
+*(Supersedes the former "Go Full ts-node" option, which is moot: ts-node is retired from the governed surface.)* The settled direction is **compiled-`dist/` for package own code** (Class A — CLI, generators, exports run as compiled JS) and **scoped `tsx`** as the sole runtime-TS mechanism for consumer `.ts` (Class B). See the Rosetta-System-Architecture "Module-Resolution Contract (Spec 118)" for the full contract; full ESM modernization is a separate, externally-triggered future migration tracked in `docs/roadmap/m0a-deferred-items.md`.
 
 ## Related Files
 

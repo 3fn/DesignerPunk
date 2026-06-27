@@ -7,7 +7,7 @@ description: Sustainable test development practices — test categories, web com
 # Test Development Standards
 
 **Date**: 2025-12-17
-**Last Reviewed**: 2025-12-17
+**Last Reviewed**: 2026-06-26
 **Purpose**: Establish sustainable test development practices that support system evolution
 **Organization**: process-standard
 **Scope**: cross-project
@@ -1311,6 +1311,12 @@ it('should render icon at correct size', () => {
 | WCAG compliance | ✅ | ✅ | ✅ |
 | Cross-platform consistency | | ✅ | |
 | Token values are correct | | ✅ | |
+
+### CI-Enforced Guards (Spec 118)
+
+Behavioral and structural guards that protect a system invariant are **enforced via required CI**, not by convention. New guards of this kind **attach to the consumer-guard / test-CI lane** (`.github/workflows/consumer-guard.yml`) so they cannot be skipped. The packed-install consumer guard is the **arbiter** for module-resolution and packaging behavior — in-repo loads can false-green on those surfaces and must not be treated as certification.
+
+**Close-state integrity (Civitas process guard).** A module-resolution issue cannot close as "Resolved" on a workaround alone — closure requires the **non-skippable consumer-guard CI lane** (`.github/workflows/consumer-guard.yml`, the packed-install arbiter) to certify the end-state. In-repo loads false-green on resolution/packaging surprises and are NOT an acceptable arbiter (the Task-3 false-green lesson). **Spec 118 is the single source of truth for module resolution**; downstream readers are routed there rather than to ad-hoc workarounds.
 
 ### Complementary Validation Patterns
 
