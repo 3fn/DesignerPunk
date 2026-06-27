@@ -1,7 +1,7 @@
 # Inbound from Spec 118 (Module-Resolution Coherence) — for Spec 119
 
 **Date**: 2026-06-26
-**Status**: 118 Increment 3 complete & committed; Task 11 (governance) in progress. Decided with Peter (2026-06-26): Task 11 codifies the module-resolution contract **content** into steering; **119 owns how that content is consumed/served.** This note registers the two consumption hand-offs so 119 picks them up rather than 118 hand-wiring them now.
+**Status**: **Spec 118 COMPLETE (2026-06-26)** — Increment 3 + Task 11 (governance) done & committed. Decided with Peter: Task 11 codified the module-resolution contract **content** into steering, and it is **now APPLIED** — live in `Rosetta-System-Architecture.md` (the Module-Resolution Contract section + the Cross-Boundary-Invariant/Brand-Contract subsection + the Stage-4/5 relabels), `Test-Development-Standards.md` (CI-Enforced-Guards + Civitas close-state guard), `Technology Stack.md`, and `BUILD-SYSTEM-SETUP.md`; `Last Reviewed` bumped on all four; docs MCP rebuilt (healthy, 89 docs). **119 owns how that content is consumed/served.** When 119 relocates those four docs from `.kiro/steering/` to `governance/`, it moves the **already-updated** versions (119's scope is frontmatter+location, not content — no conflict). This note registers the two consumption hand-offs so 119 picks them up rather than 118 hand-wiring them now.
 
 ---
 
