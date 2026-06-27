@@ -4,6 +4,7 @@
 **Spec**: 119 - Steering Progressive Disclosure Redesign
 **Author**: Thurgood
 **Status**: Design Outline (feedback incorporated — R1 from Ada, Lina, Leonardo, Sparky, Kenya, Data, Stacy)
+> **⚠️ Before formalizing, read § "Pre-Formalization Decisions & Inbound Reconciliation (2026-06-27)" near the end.** It records the decision to **split 119 into 119-A (foundation, sequenced before Specs 122/123) and 119-B (routing + measurement, after)**, plus what the inbound notes from Specs 117 / 118 / 121 require this spec to fold in. 118 is now complete (its gate on 122/123 is cleared).
 
 ---
 
@@ -588,6 +589,38 @@ Based on agent feedback, use these 5 tasks (define exact prompts in Phase 1, reu
 3. **Token creation governance** (Ada): Propose new semantic token. Signal: follows Token-Governance flow without it pre-loaded.
 4. **Cross-domain query** (any agent): Question outside agent's domain. Signal: certainty calibration activates — agent researches rather than guessing.
 5. **Parent task completion** (any agent): Complete parent task end-to-end. Signal: Task Completion Protocol produces correct behavior without Process-Development-Workflow pre-loaded.
+
+---
+
+## Pre-Formalization Decisions & Inbound Reconciliation (2026-06-27)
+
+**Read this before formalizing 119.** It records (a) a structural decision that reshapes 119's scope and sequencing, and (b) what the inbound notes from Specs 117 / 118 / 121 require 119 to fold in. None of this is itself a requirement — it is the decided context the requirements pass must honor. Outline-level capture only; the formalization (requirements → feedback → design → tasks) is Thurgood-led, in a dedicated session, starting from this outline.
+
+### Decision: split 119 into 119-A (foundation) and 119-B (routing + measurement) — Peter, 2026-06-27
+
+119 is **not** sequenced as one block. Its two halves have opposite ordering pressures relative to Spec 122 (Agent Generator) and Spec 123 (Consumer Distribution):
+
+- **119-A — Relocation & Serving Contract (sequence BEFORE 122/123).** The foundation 122/123 build path-context on:
+  - Relocate non-identity docs `.kiro/steering/` → `governance/` (Req B) + update `MCP_STEERING_DIR` → `…/@3fn/core/governance` + the `files[]` / `init`-scaffold / `sync`-repair MCP wiring for the new location; the minimal `always` identity layer (Decision 2 inclusion assignments); remove the meta-guide.
+  - **Rationale:** this *defines where docs live and how the MCP is wired* — exactly what 122 generates path references against and what 123 distributes/wires (`init`, `sync`, `files[]`, `MCP_STEERING_DIR`). 123's distribution surface **overlaps** 119-A's relocation surface; if 122/123 precede it, they build against `.kiro/steering/` and 119 relocates underneath them — rework in 123's core domain + a regenerate pass on 122. (Relocation is also 119's own flagged highest-risk phase — better executed before dependents pile onto the old layout.)
+
+- **119-B — Routing Tables & Measurement (sequence AFTER 122; measurement LAST).**
+  - The per-agent routing tables (Phases 7–8) are **subsumed by Spec 122's generator** — agent prompts become generated outputs from a canonical source. Do NOT hand-edit 8 prompt files and let 122 regenerate over them; express the routing as **canonical-source content 122 generates**. (118's module-resolution-contract routing hand-off also lands here — see Inbound/118.)
+  - Certainty-calibration protocol (Decision 4a) — formalize against 121's shipped `matchConfidence: partial` signal (Inbound/121).
+  - The before/after measurement case study (Phases 1, 13–14) — needs the whole system in place + a stabilization window; it is the tail.
+
+- **Net sequence: 119-A → 122 → 123 → 119-B.** (123-after-122 is a hard consume-dependency; 119-A-before-122/123 removes path-context rework; 119-B trails because routing routes through 122 and measurement needs everything.)
+
+- **Boundary calls to settle AT formalization (flagged, NOT pre-decided here):**
+  - **Documentation Directory** — 121 Req 1 / Decision 4 recommends **dropping** it in favor of `find_docs` (which subsumes the removed `get_documentation_map`). It may not exist at all; reconcile before assigning it to either half.
+  - **Certainty calibration (4a)** — lives in the `always` identity layer (location = 119-A) but its content is independent of 122/123; can ride 119-A or stand alone. Decide at formalization; not a 122/123 dependency.
+  - **The "before" metrics baseline** — Phase 2's leak fix **already shipped** (commit `5489b6cf`), so the pristine ~335K-token "before" baseline may be unrecoverable. Acknowledge the confounder; the case study likely measures against a reconstructed or post-leak-fix baseline. Honest caveat for 119-B.
+
+### Inbound reconciliation — fold in when formalizing
+
+- **Spec 118** (`inbound-from-118.md`) — **COMPLETE; its gate on 122/123 is cleared.** (a) The module-resolution contract is now **live** in `Rosetta-System-Architecture.md` + `Test-Development-Standards.md` + `Technology Stack.md` + `BUILD-SYSTEM-SETUP.md`; 119-A relocates the **already-updated** versions (content rides the move — 119's scope is frontmatter+location). (b) The two consumption hand-offs **split across the halves**: the **identity-layer pointer** (one line in DesignerPunk-Systems-Overview, an `always` doc) is **119-A**; the **module-resolution-contract routing row** (Ada / Thurgood / Lina tables) is **119-B** (→ canonical source via 122).
+- **Spec 121** (`inbound-from-121.md`) — tightest coupling. (a) Formalize **Decision 4a against the shipped `matchConfidence: strong|partial|none` signal** (121 emits; 119 defines the agent response). (b) **Build on shipped blocks, don't re-spec:** `find_docs` (dual-mode; supersedes `get_documentation_map`), `get_section` `parent`+`sectionId`+`siblingHeadings`+ambiguity prompt, the importable `WORKFLOW_RULES` summary-first constant (119 propagates; 122 injects into generated prompts). (c) **Revisit the Documentation Directory** (above). (d) Caveat: positional `sectionId` not stable to reorder/insert (roadmap Gap 7).
+- **Spec 117** (`inbound-from-117.md`) — (a) **Address sections by path+heading/parent, not positional section ID** (IDs drift on every re-index — confirmed in 117's live field-test), reconciled with 121's `parent`+`sectionId`+`siblingHeadings` addressing. (b) The **"orientation in diagrams, reference in prose"** structural principle improves `get_section` retrieval — apply when restructuring docs. (c) **Redesign against the current `main` state** — RSA + Token-Quick-Reference were restructured by 117, and RSA + 3 others were just extended by 118 Task 11; start from current `main`, not a stale snapshot.
 
 ---
 
