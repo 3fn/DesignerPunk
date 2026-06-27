@@ -14,11 +14,11 @@ A product repo integrating `@designerpunk/core` needs:
 | Prerequisite | Why | Notes |
 |-------------|-----|-------|
 | Node.js | Pipeline and MCP servers are Node-based | Version TBD after Phase 1 |
-| `ts-node` | Pipeline config (`designerpunk.config.ts`) is TypeScript, loaded at runtime | Should ship as a dependency of `@designerpunk/core`, or be documented as a required dev dependency |
+| (runtime TS loading) | Pipeline config (`designerpunk.config.ts`) is TypeScript, loaded at runtime | **Resolved (Spec 118):** the package loads it via its own **internal scoped `tsx` seam** (`tsx` is `@3fn/core`'s dependency) — NOT a consumer prerequisite. The consumer installs no TS runtime; ts-node is retired. |
 | TypeScript | Theme overrides and config are TypeScript files | Version TBD |
 | npm / package manager | Install `@designerpunk/core` from GitHub Packages | |
 
-**Open**: Should `ts-node` be a dependency of `@designerpunk/core` (automatic) or a documented prerequisite (manual)? Automatic is friendlier. Manual avoids forcing a dev dependency on products that might use a different TS execution strategy (e.g., `tsx`, `bun`). Ada should address during Spec 094 implementation.
+**Resolved (Spec 118):** runtime TS execution is **not a consumer concern** — `@3fn/core` loads the consumer's `designerpunk.config.ts` (and other consumer `.ts`) through its own per-site **scoped `tsx`** seam (Class B of the Module-Resolution Contract). The package depends on `tsx` internally; the consumer does not install ts-node, tsx, or any TS runtime. ts-node is retired from the governed surface. See `.kiro/steering/Rosetta-System-Architecture.md` § "Module-Resolution Contract (Spec 118)".
 
 ---
 
@@ -115,7 +115,7 @@ These are coordination points between Phase 1 specs that affect the integration 
 
 ## Known Gaps (To Be Resolved During Phase 1)
 
-- Exact `ts-node` / TypeScript execution strategy for product repos
+- ~~Exact `ts-node` / TypeScript execution strategy for product repos~~ — **Resolved (Spec 118):** the package's internal scoped `tsx` seam loads consumer `.ts`; no consumer-side TS runtime. ts-node retired.
 - MCP server startup commands and configuration
 - Agent configuration for product context (how product agents find things)
 - Whether `@designerpunk/core` includes source TypeScript or only compiled JavaScript
