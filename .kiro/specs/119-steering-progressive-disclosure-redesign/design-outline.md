@@ -59,7 +59,7 @@ This redesign prioritizes **tool-agnostic architecture**. DesignerPunk may migra
 
 ### Requirement A: Complete Doc Inventory
 
-All steering docs must be accounted for in this migration — exact count established, each doc's role in the new system defined. The Documentation Directory serves as the single source of truth for "what exists." No doc should be orphaned or unaccounted for after migration.
+All steering docs must be accounted for in this migration — exact count established, each doc's role in the new system defined. The **MCP doc index** is the single source of truth for "what exists" (enumerable via `find_docs`); the dropped Documentation Directory no longer plays this role — see R2 Resolution R5. No doc should be orphaned or unaccounted for after migration.
 
 **Note**: Current estimates range from ~84 to ~90 docs. The exact count must be established as a first deliverable before planning the per-doc migration.
 
@@ -250,6 +250,8 @@ Considered and rejected:
 
 ### The Documentation Directory (Cross-Domain Awareness)
 
+> **⚠️ SUPERSEDED (2026-06-27) — do NOT build this as designed.** This section predates `find_docs` (Spec 121, shipped). The reconciliation in § "Pre-Formalization Decisions" **drops the agent-facing Documentation Directory** in favor of `find_docs({ concept })`; only a *human-facing, generated-not-curated* orientation artifact remains an open (non-blocking) question. Read the rest of this section as design history, not the plan.
+
 While activation logic lives in agent prompts and the meta-guide is removed, agents still need a way to discover context *outside* their domain. The Documentation Directory solves this as a **manual-inclusion doc queried only when needed** — not always-loaded.
 
 **What it is**: A human-curated table of contents (~800-1,000 tokens) organized by domain, listing key docs with their MCP paths and frontmatter `description` fields. No trigger conditions, no reading priorities, no file references — just "here's what exists, what it covers, and where to find it."
@@ -409,6 +411,8 @@ Raised during Spec 121 requirements review. The "uncertain"/"still uncertain" ti
 - **Dependency**: relies on **Spec 121, Requirement 6** (Low-Confidence / Empty Discovery Contract) surfacing ranked best-fit candidates with below-threshold confidence/match-strength flags. Without that tool-side signal, the agent cannot distinguish a weak match it should propose from a genuinely-empty result it should report as such. See `.kiro/specs/121-claude-code-portability/requirements.md` § Requirement 6.
 - **Status**: captured decision; to formalize into the three-tier protocol wording (and propagate to agent prompts per Decision 4a's home in AI-Collaboration-Principles) when 119 is actively worked.
 
+**Captured note (2026-06-27, R2) — extend 4a to cover `matchConfidence: none`, not just `partial`** *(to formalize with the above)*: the propose-best-fit→go/no-go refinement covers the **`partial`** case (a weak candidate exists). The **`none`** case — a genuinely empty discovery result, the ownerless/exploratory query (Open Question 5) whose vocabulary is in no doc's title/headings/description/`aliases` (and body prose is not indexed) — is the cliff 4a must also name: on `none`, the agent **exhausts cheap fallbacks first** (`find_docs({ list: true })` catalog → Grep) and only then escalates per tier 3, **with certainty explicitly downgraded** — never confident action on an empty result. This is an *extension* of 4a, not a new path. Upstream mitigation that makes `none` rarer = `aliases` seeding (R2 Resolution R8). See R2 Resolution R9.
+
 ### Decision 5: Migration Strategy
 
 **Phased** ← **Selected**
@@ -505,12 +509,12 @@ The routing table handles governance and reference docs. Knowledge Bases handle 
 
 **Hard criteria** (spec fails without these):
 1. Only identity docs loaded via steering system — all other docs served exclusively via Docs MCP
-2. All ~90 docs accounted for in Documentation Directory (single source of truth)
+2. All ~90 docs accounted for in the MCP doc index (single source of truth; enumerable via `find_docs`) — see R2 Resolution R5
 3. Each agent prompt has complete MCP routing for its domain (100% task-type coverage)
 4. No degradation in agent effectiveness — first-attempt correctness rate within 10% of baseline (or improves)
 5. Agents write completion docs meeting Tier requirements without prompting (tracked before/after)
 6. System is fully portable — works without Kiro-specific features beyond basic `always` inclusion
-7. No orphaned docs — every doc queryable via MCP, listed in Directory, reachable from at least one agent prompt
+7. No orphaned docs — every doc queryable via MCP (indexed + `find_docs`-discoverable), reachable from at least one agent prompt
 
 **Benchmarks** (measured and documented, not pass/fail):
 8. Always-loaded token count (target: ~7,500 — document actual)
@@ -523,7 +527,7 @@ The routing table handles governance and reference docs. Knowledge Bases handle 
 ## Scope Boundaries
 
 **In scope**:
-- Establishing exact doc inventory (single source of truth in Documentation Directory)
+- Establishing exact doc inventory (single source of truth = the MCP doc index; see R2 Resolution R5)
 - Capturing "before" metrics for case study (token counts, representative task runs)
 - Removing `#[[file:...]]` references from meta-guide (Phase 1)
 - Relocating ~75+ docs from `.kiro/steering/` to `governance/` at project root
@@ -602,19 +606,78 @@ Based on agent feedback, use these 5 tasks (define exact prompts in Phase 1, reu
 
 - **119-A — Relocation & Serving Contract (sequence BEFORE 122/123).** The foundation 122/123 build path-context on:
   - Relocate non-identity docs `.kiro/steering/` → `governance/` (Req B) + update `MCP_STEERING_DIR` → `…/@3fn/core/governance` + the `files[]` / `init`-scaffold / `sync`-repair MCP wiring for the new location; the minimal `always` identity layer (Decision 2 inclusion assignments); remove the meta-guide.
+  - **PREREQUISITE — location-independent doc addressing at the Docs MCP (added 2026-06-27, Peter-approved).** Before relocation, change the Docs MCP to resolve `get_section` (and the other path-taking tools) by a **stable per-doc `id`** — a uniform frontmatter `id` on all docs (identifier model **RESOLVED**, see R2 Resolution R1), **not the physical path**. *Why it's a hard prerequisite, not a nice-to-have:* the MCP currently does **exact-match path lookup** — `documentContent.get(filePath)` with no normalization (`mcp-server/src/indexer/DocumentIndexer.ts:430`), keyed on `MCP_STEERING_DIR + filename`. The 8 agent prompts contain **60 hardcoded `.kiro/steering/…md` references** (audited 2026-06-27; top hits: Token-Governance ×6, Process-Spec-Planning ×6, Component-Development-Guide ×4, RSA ×3 — all non-identity docs 119-A relocates). So a naive "relocate + repoint `MCP_STEERING_DIR`, fix prompts later in 119-B" opens a multi-week window where every non-identity routing query **404s** in the source repo. Logical addressing closes that window *permanently*: prompts reference docs by stable name, physical location becomes an MCP-internal detail, and 119-A can relocate freely while 119-B/122 does routing **design** on its own clock with zero breakage pressure. It also de-physical-izes 123's consumer story (`node_modules/@3fn/core/governance` vs `.kiro/steering` stops mattering to references). Identity docs (`always`-loaded, staying in `.kiro/steering/`) are unaffected either way — only MCP-served hardcoded-path rows are at risk. **122 consequence:** generated prompts must emit the stable identifier, not a physical `governance/…` path (registered in `122/inbound-from-119.md` §3).
   - **Rationale:** this *defines where docs live and how the MCP is wired* — exactly what 122 generates path references against and what 123 distributes/wires (`init`, `sync`, `files[]`, `MCP_STEERING_DIR`). 123's distribution surface **overlaps** 119-A's relocation surface; if 122/123 precede it, they build against `.kiro/steering/` and 119 relocates underneath them — rework in 123's core domain + a regenerate pass on 122. (Relocation is also 119's own flagged highest-risk phase — better executed before dependents pile onto the old layout.)
 
 - **119-B — Routing Tables & Measurement (sequence AFTER 122; measurement LAST).**
   - The per-agent routing tables (Phases 7–8) are **subsumed by Spec 122's generator** — agent prompts become generated outputs from a canonical source. Do NOT hand-edit 8 prompt files and let 122 regenerate over them; express the routing as **canonical-source content 122 generates**. (118's module-resolution-contract routing hand-off also lands here — see Inbound/118.)
+  - **`find_docs` routing row (concrete instance of the above).** Audited 2026-06-27: only Thurgood's prompt routes to `find_docs` (`.kiro/agents/thurgood-prompt.md:308`); the other 7 agents have **no** concept-discovery route (and none reference the removed `get_documentation_map` — that cleanup is already done). The fix is a `find_docs({ concept })` / `find_docs({ list: true })` routing row in **122's canonical source**, propagated to all 8 agents at generation time — NOT 7 hand-edits. The tool is live (121-shipped) and self-describing in every agent's tool list, so this is a reliability/activation gain (route at the right moment vs. hope the agent notices), not a blocker. This same row is what the dropped Documentation Directory's fallback line collapses into (see boundary call below).
   - Certainty-calibration protocol (Decision 4a) — formalize against 121's shipped `matchConfidence: partial` signal (Inbound/121).
   - The before/after measurement case study (Phases 1, 13–14) — needs the whole system in place + a stabilization window; it is the tail.
 
 - **Net sequence: 119-A → 122 → 123 → 119-B.** (123-after-122 is a hard consume-dependency; 119-A-before-122/123 removes path-context rework; 119-B trails because routing routes through 122 and measurement needs everything.)
 
 - **Boundary calls to settle AT formalization (flagged, NOT pre-decided here):**
-  - **Documentation Directory** — 121 Req 1 / Decision 4 recommends **dropping** it in favor of `find_docs` (which subsumes the removed `get_documentation_map`). It may not exist at all; reconcile before assigning it to either half.
+  - **Documentation Directory** — **RECONCILED (2026-06-27): drop the agent-facing artifact; it was never built** (confirmed — no `Documentation-Directory.md` exists; the only references are 121's docs and this spec, so "drop" = "don't create it," zero cost). Its designed job — agent cross-domain discovery — is now done better by `find_docs` (121-shipped: concept-indexed so no filename needed, portable, and a self-maintaining *index*), which retires the hand-curated drift surface 121 Req 1 / Decision 4 flagged. **Caveat (R2):** "self-maintaining" applies to the *index mechanics*, not *concept coverage* — `find_docs` matches title / headings / description / purpose / `aliases` / relevantTasks / basename but **NOT body prose** (verified, QueryEngine.ts:633), so coverage of un-titled concepts depends on seeded `aliases` (see R2 Resolution R8). **Consequences:** (1) remove it from the inclusion-mode table — a **119-A** cleanup; (2) replace the agent-prompt "query the Documentation Directory" fallback with `find_docs({ concept })` — **119-B**, via 122's canonical source (same row as the `find_docs` line item above). **Residual open question — human-facing, NOT on 119's critical path:** the read that the Directory is "human-supporting" is the right cut — `find_docs` is a query tool, not a curated, domain-grouped "lay of the land" a *person* reads to orient. IF we want that, it's a **separate onboarding artifact, separate owner, generated from the doc index — not hand-curated** (the drift objection applies to humans too; `find_docs({ list: true })` already yields a paginated catalog). Decide separately; do not block 119 on it.
   - **Certainty calibration (4a)** — lives in the `always` identity layer (location = 119-A) but its content is independent of 122/123; can ride 119-A or stand alone. Decide at formalization; not a 122/123 dependency.
   - **The "before" metrics baseline** — Phase 2's leak fix **already shipped** (commit `5489b6cf`), so the pristine ~335K-token "before" baseline may be unrecoverable. Acknowledge the confounder; the case study likely measures against a reconstructed or post-leak-fix baseline. Honest caveat for 119-B.
+
+### Phase → half mapping (against the 14-phase Implementation Estimate)
+
+The 14-phase plan was authored **pre-split**, so it does not partition cleanly: two phases (**6** and **10**) straddle the A/B line and must be **decomposed at formalization** (flagged below). Phase 2 already shipped; Phase 4 is dropped per the Documentation Directory reconciliation above. **Two net-new 119-A phases the original 14 didn't have** (both before Phase 9 relocation): **Phase 8.5 — uniform-`id` doc addressing at the Docs MCP** (resolve `get_section` by per-doc `id`, not physical path; backfill `id` on all 89 docs absorbed into the relocation pass — R2 Resolution R1) and **Phase 8.6 — steering-doc filename normalization** (establish a kebab-case/no-spaces convention; rename the 10 space-bearing files — R2 Resolution R2). 8.5 makes 8.6 safe (refs point at `id`, not filename) and both precede relocation. See the 119-A prerequisite bullet above for the addressing evidence (exact-match MCP lookup + 60 hardcoded prompt paths).
+
+| Phase | Half | Note |
+|-------|------|------|
+| 0. Establish exact doc inventory | **119-A** | Must know what's moving before relocating |
+| 1. Capture "before" metrics | **119-B** | Case-study tail; baseline confounded (leak fix already shipped) |
+| 2. Fix the leak | ✅ **SHIPPED** | `5489b6cf`, pre-split |
+| 3. Validate leak fixed | **119-A** | Validates foundation state (largely moot post-ship) |
+| 4. Create Documentation Directory | ❌ **DROPPED** | Superseded by `find_docs` — see reconciliation above |
+| 5. Task Completion Protocol + refocus Start Up Tasks | **119-A** | Edits the `always` identity layer |
+| 6. Certainty calibration → AI-Collaboration-Principles | **STRADDLES** | Protocol *text* into the `always` doc = 119-A; *formalize vs 121 `partial`* + propagate to prompts via 122 = 119-B |
+| 7a/7b. Routing tables (system + platform agents) | **119-B** | Subsumed by 122 generator |
+| 8. Finalize agent prompts | **119-B** | Subsumed by 122 generator |
+| Quality Gate (validate prompts) | **119-B** | Split **inverts** its order — now runs *after* relocation, not before |
+| 9. Relocate docs → `governance/` | **119-A** | Core of 119-A; 119's flagged highest-risk phase |
+| 10. Update MCP wiring + prompt paths (was "atomic") | **STRADDLES** | env var + `files[]` + `init` + `sync` wiring = 119-A; per-agent prompt path updates = 119-B via 122. The "atomic, same commit as Phase 9" assumption **no longer holds** — wiring rides 119-A, prompt paths ride 119-B |
+| 11. Update cross-references in active docs | **119-A** | Path churn from the move |
+| 12. Remove meta-guide | **119-A** | Removes the leak-source artifact |
+| 13. Capture "after" metrics + analysis | **119-B** | Measurement tail (post-stabilization) |
+| 14. Validation (rerun the 5 representative tasks) | **119-B** | Measurement tail |
+
+**Two structural consequences of the split worth carrying into formalization:** (a) Phase 10's original **atomicity guarantee dissolves** — relocation wiring (119-A) and prompt path updates (119-B) now land in different halves and different commits, so the "mixed-paths transition window" risk (Open Question 6) must be re-reasoned per-half rather than closed by a single atomic commit; (b) the **Quality Gate moves after relocation** — under the original plan prompts were validated *before* the risky move; post-split, 119-A relocates first and prompt validation happens in 119-B, so 119-A needs its own lighter relocation-integrity gate (MCP resolves all paths post-move) independent of prompt quality.
+
+### R2 Review Resolutions & Decisions (2026-06-27)
+
+A targeted R2 delta review (Thurgood + Ada + Lina + Leonardo, Opus, on the 2026-06-27 changes) plus follow-up decisions with Peter. All findings below were **verified in the main loop** against source before capture. These are decided context the requirements pass must honor.
+
+**R1 — Identifier model RESOLVED: uniform `id` on all 89 docs** (was an open "basename or `id`" disjunction; all four reviewers flagged it as the #1 issue). Every doc carries a unique frontmatter `id:` (convention: kebab-slug of title). Resolver: `id` → legacy full-path (transition-only fallback so the 60 existing refs resolve until swept; removable after the sweep). **Single indexed root** (Open Question 3 option (d) — Ada & Lina already preferred). **Build-time uniqueness guard** + a Thurgood metadata-validation hook enforcing the one-line invariant "every doc has a unique `id`." The 89-doc backfill is **absorbed into the relocation pass** (already opening every file). *Rejected:* slug-primary + opt-in `id` — its "small now" saving is mostly illusory (backfill rides relocation), the summary-first workflow moots slug guessability (agents *discover* addresses, not type them), and it carries a permanent rename footgun + dual-mode resolver + a likely messy hybrid end-state. Decisive coupling: the mass-rename (R2) requires identity decoupled from filename anyway.
+
+**R2 — Mass-rename IN-SCOPE for 119-A** (Phase 8.6). Establish a steering-doc **filename convention** (kebab-case, no spaces) and rename the **10 space-bearing files** (e.g. `Core Goals.md`, `Completion Documentation Guide.md`, `Cross-Platform vs Platform-Specific Decision Framework.md`). Safe because uniform `id` (R1, Phase 8.5) decouples identity from filename — refs point at `id`, the rename touches only the file. Note: no enforced steering-*filename* standard exists today (only completion-doc naming lives in `Completion Documentation Guide.md`), so this **establishes** one rather than resurrects.
+
+**R3 — Content-staleness cleanup is SEPARATE from 119-A.** Phase 0 inventory does staleness **triage** (flag, don't fix) feeding a parallel **Thurgood-led governance audit**; relocation must NOT be gated on content-correctness of 89 docs (avoids the scope-balloon reviewers warned of). *Example surfaced & fixed during R2:* the `component-meta-authoring-guide.md` `docs/`→`.kiro/steering/` misroute (stale since Spec 086) lived in 3 active files — fixed (`lina-prompt.md`, `Component-MCP-Document-Template.md`, `.claude/agents/lina.md`); ~20 historical spec/completion refs left as-is.
+
+**R4 — Doc-`id` ↔ roadmap Gap 7 (section IDs): design as ONE coherent addressing system.** The doc `id` is the document-level sibling of **MCP-Evolution-Roadmap Gap 7** (source-embedded stable *section* IDs). Lock the address **grammar** now so section IDs slot in later without rework — but do **NOT** implement section-ID embedding in 119-A (that stays deferred Gap 7; just don't preclude it):
+  - Composite address `docid#sectionid`; **doc id unique corpus-wide, section id unique within its doc** (HTML-anchor / URL-fragment scoping).
+  - **Same format both levels** (kebab-slug) and **semantically inert** — no taxonomy, numbering, ordering, or hierarchy encoded in the string. (Encoding meaning rebuilds Gap 7's positional-drift one level up. We are building *identification*, not Dewey-style *classification*.)
+  - Ids **immutable once assigned** — a rename changes the filename, not the `id`; a title edit never the `id`. `aliases` absorbs the rare forced id change + discovery synonyms.
+  - Section IDs will be **slugs, not positional** (the Gap 7 fix) — a design commitment, not 119-A work.
+  - **Addressing plane** (ids: stable, location-independent) stays **decoupled** from the **discovery/classification plane** (`find_docs` / `aliases` / domain grouping: semantic, evolves freely). Keeping these separate is the design win — it is precisely what Dewey fuses (call-number = address *and* classification) and we deliberately don't.
+  - **Action at formalization:** cross-link Gap 7 ↔ this in MCP-Evolution-Roadmap, and note Gap 7's own trigger ("122-generated agents persisting IDs / cross-refs addressing by ID") is now **firing**.
+
+**R5 — SSOT reassigned: the MCP doc index, not the (dropped) Documentation Directory.** Requirement A, Success Criteria 2 & 7, and the Scope line were edited in place (they literally still named the dropped Directory as "single source of truth for what exists" — a formalization blocker). Inventory deliverable re-expressed as "every doc indexed + reachable via `find_docs`/MCP."
+
+**R6 — 119-A relocation-integrity gate (named success criterion).** Closed-loop check: **enumerate every doc `id` referenced across the 8 prompts → resolve each via the MCP post-relocation → fail on any miss** (identity docs included). This is the concrete gate that replaces Phase 10's dissolved atomicity guarantee; a generic "MCP healthy / 89 indexed" is insufficient.
+
+**R7 — Hand-off 2 (the 118 identity-layer contract pointer) gets an explicit 119-A phase.** The one-line Module-Resolution Contract pointer in `DesignerPunk-Systems-Overview.md` (`always`) is **not yet present** (verified) and is the **sole in-window discoverability path** for the contract during 119-A→122→119-B. Give it a numbered 119-A phase so it can't fall between the prose bullet and the phase table. (The Ada/Thurgood/Lina routing *row* stays 119-B → 122 canonical source.)
+
+**R8 — `aliases` seeding owned by the 119-A relocation pass (owner: Civitas).** `find_docs` concept coverage = title/headings/description/purpose/`aliases`/relevantTasks/basename, **not body prose** (verified QueryEngine.ts:633) — so `aliases` is the cross-domain discovery backstop that replaced the Directory. As each non-identity doc relocates, seed `aliases` with the concepts a cross-domain agent would search that aren't already in title/description.
+
+**R9 — Decision 4a extended to cover `none`, not just `partial`** (captured under Decision 4a above). On a genuinely-empty discovery result: exhaust cheap fallbacks (`find_docs` list-mode → Grep) → escalate per tier 3 with certainty downgraded; never confident action on empty. An extension of the existing path, not a new one.
+
+**R10 — Doc-to-doc cross-refs go logical too (Phase 11).** Intra-doc cross-references migrate to doc `id`s (`docid`, later `docid#sectionid`), **not** new physical `governance/…` paths — else relocation re-physical-izes exactly what Phase 8.5 decoupled.
+
+*Two scope-clarity notes from R2:* relocation is **inert w.r.t. the Application MCP / component-schema layer** (those reference docs by concept, not steering paths — Lina G3); and 119-A scopes **document** addressing only — **section** addressing stays path+heading/parent until Gap 7 (Thurgood G3).
 
 ### Inbound reconciliation — fold in when formalizing
 
