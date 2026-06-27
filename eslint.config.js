@@ -7,21 +7,23 @@
  * massive noise from code that was never written with lint in mind. Extending
  * lint scope is a separate, future decision that Spec 118 does not own.
  *
- * PURPOSE: Module-resolution import-specifier rule scaffold (R10 AC3).
- * The rule is present, scoped, and wired to CI — but its POLARITY IS DEFERRED.
+ * PURPOSE: Module-resolution import-specifier rule (R10 AC3/AC4).
+ * The rule is present, scoped to web source, wired to CI — and its POLARITY IS
+ * NOW SET to the CJS branch (Task 9.4).
  *
- * POLARITY GATE: The extension policy inverts depending on the module direction
- * committed in Task 8 (Group 9 / second tasks pass):
- *   - CJS-consistency → BANS explicit extensions (extensionless is the norm)
- *   - Native ESM      → REQUIRES explicit .js extension (Node strict-ESM)
- * Polarity is set in Group 9 after the Task 8 direction decision.
- * Until then the rule scaffold is INERT (no selectors → never triggers).
+ * POLARITY (resolved): Task 8 committed CJS-consistency, executed in-spec, so the
+ * lint BANS explicit file extensions on relative imports (extensionless is the CJS
+ * norm). The ESM branch (which would REQUIRE explicit `.js`) was not taken. The
+ * scaffold was built polarity-deferred in Task 4.2; Task 9.4 set the polarity once
+ * Task 8 decided the direction and Task 9.3 (3c) converged the surface to
+ * extensionless — so the rule is green on activation and guards a future regression.
  *
  * Run: npm run lint
  * CI:  .github/workflows/consumer-guard.yml (lint step)
  *
- * @see Spec 118 Task 4.2 (R10 AC3 — static-lint tooling; polarity deferred to Group 9)
- * @see Spec 118 Task 8 (the module-direction decision that unblocks polarity)
+ * @see Spec 118 Task 9.4 (R10 AC3/AC4 — polarity set to CJS; prove-it-bites test)
+ * @see Spec 118 Task 4.2 (the polarity-deferred scaffold this activates)
+ * @see Spec 118 Task 8 (the module-direction decision that unblocked polarity)
  * @see .github/workflows/consumer-guard.yml — the CI lane this attaches to
  */
 
@@ -84,56 +86,50 @@ module.exports = [
 
     rules: {
       // -------------------------------------------------------------------
-      // MODULE-RESOLUTION IMPORT-SPECIFIER RULE SCAFFOLD
-      // Spec 118 Task 4.2 — R10 AC3
+      // MODULE-RESOLUTION IMPORT-SPECIFIER RULE — POLARITY SET: CJS
+      // Spec 118 Task 9.4 (R10 AC3/AC4) — activates the Task-4.2 scaffold.
       //
-      // STATUS: INERT — polarity is DEFERRED (Group 9 / Task 8 decision gate)
+      // STATUS: ACTIVE. Task 8 committed CJS-consistency (executed in-spec), so
+      // the polarity is the CJS branch: BAN explicit file extensions on relative
+      // imports (extensionless is the norm under CJS/tsc — the ESM branch, which
+      // would REQUIRE explicit `.js`, was not taken).
       //
-      // The rule is present here as a named scaffold so that:
-      //   1. The tooling (ESLint + this config) exists and runs in CI
-      //   2. The CI step already enforces the scoped target (web source only)
-      //   3. Activating the rule is a one-line change once polarity is decided
+      // SCOPE: web component source only (src/components/**, per the `files` clause
+      // and ignores above). The 3c convergence (Task 9.3) already left this surface
+      // at ZERO explicit-extension relative imports, so this rule is green on set
+      // and guards a future regression. The dynamic-import arm is defense-in-depth
+      // (R10 AC4) — legit lazy-loads resolve at build time via esbuild.
       //
-      // WHY INERT NOW: The extension policy inverts CJS↔ESM:
-      //   - CJS-consistency: bans explicit extensions
-      //   - Native ESM:      requires explicit .js
-      // Setting the wrong polarity now would either produce false positives
-      // (banning extensions in what turns out to be an ESM codebase) or false
-      // negatives (requiring extensions in what turns out to be CJS). The
-      // polarity is gated on the Task 8 direction decision (Group 9 deferred).
+      // ALLOWED extensions: only `.js|.ts|.mjs|.cjs` are banned. Asset imports
+      // (`.json`, `.css`, `.svg`, …) are NOT module specifiers in this sense and
+      // are intentionally not matched.
       //
-      // TO ACTIVATE (Group 9 task, post-Task-8):
-      //   CJS direction — replace this comment block with:
-      //     'no-restricted-syntax': ['error',
-      //       {
-      //         selector: 'ImportDeclaration > Literal[value=/^\\.\\.?\\//][value=/\\.(js|ts|mjs|cjs)$/]',
-      //         message: 'CJS: do not use explicit file extensions on relative imports.',
-      //       },
-      //       {
-      //         selector: 'CallExpression[callee.type="Import"] > Literal[value=/^\\.\\.?\\//][value=/\\.(js|ts|mjs|cjs)$/]',
-      //         message: 'CJS: do not use explicit file extensions on dynamic imports.',
-      //       },
-      //     ],
+      // PROVE-IT-BITES: src/components/__tests__/ExtensionLintPolicy.test.ts runs
+      // this config via the ESLint API on positive/negative snippets — a relative
+      // `import './y.ts'` reds; `'./y'` passes. The rule is verified to fire, not
+      // assumed (Review: the scaffold was left inert/unverified).
       //
-      //   ESM direction — replace this comment block with:
-      //     'no-restricted-syntax': ['error',
-      //       {
-      //         selector: 'ImportDeclaration > Literal[value=/^\\.\\.?\\//]:not([value=/\\.js$/]):not([value=/\\.mjs$/])',
-      //         message: 'ESM: relative imports must use explicit .js extension.',
-      //       },
-      //       {
-      //         selector: 'CallExpression[callee.type="Import"] > Literal[value=/^\\.\\.?\\//]:not([value=/\\.js$/]):not([value=/\\.mjs$/])',
-      //         message: 'ESM: relative dynamic imports must use explicit .js extension.',
-      //       },
-      //     ],
-      //
-      // GATE: Do NOT set polarity until Task 8 commits a direction.
+      // @see Spec 118 Task 9.4 (R10 AC3/AC4 — polarity set; prove-it-bites)
+      // @see Spec 118 Task 9.3 (3c — the extensionless convergence this locks in)
       // -------------------------------------------------------------------
       'no-restricted-syntax': [
         'error',
-        // POLARITY DEFERRED — no selectors until Group 9 (Task 8 direction decision)
-        // The rule is present but inert: zero selectors = never triggers.
-        // See TO ACTIVATE instructions above.
+        {
+          selector:
+            'ImportDeclaration > Literal[value=/^\\.\\.?\\//][value=/\\.(js|ts|mjs|cjs)$/]',
+          message:
+            'CJS: do not use explicit file extensions on relative imports (extensionless is the norm).',
+        },
+        {
+          // Dynamic import is an `ImportExpression` node under @typescript-eslint/parser
+          // (NOT `CallExpression[callee.type="Import"]` — that was the scaffold's unverified
+          // guess; the Task-9.4 prove-it-bites test caught it). The specifier is the direct
+          // child Literal (ImportExpression.source).
+          selector:
+            'ImportExpression > Literal[value=/^\\.\\.?\\//][value=/\\.(js|ts|mjs|cjs)$/]',
+          message:
+            'CJS: do not use explicit file extensions on relative dynamic imports.',
+        },
       ],
     },
   },
