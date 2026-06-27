@@ -7,6 +7,8 @@
 
 ---
 
+> ⚠️ **SUPERSEDED — pending review (2026-06-27).** This guide documents the pre-rebuild release CLI (`release:cli` / `ts-node src/release-analysis/…`) and source directories (`src/release/`, `src/release-analysis/`) that were **deleted** when the release system was rebuilt (Spec 065). There is also **no consumer-facing release command** today (the `designerpunk` CLI has no `release` verb), so the "add it to your project" workflow below is not available. **Do not follow these steps.** Tracked for review/rewrite (incl. the product decision to make release management consumer-facing) — see [`roadmap/release-system-review.md`](../../roadmap/release-system-review.md).
+
 ## Overview
 
 Learn how to add the Release Management System to an existing project without disrupting your current workflow.

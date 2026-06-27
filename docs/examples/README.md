@@ -8,6 +8,8 @@
 
 ---
 
+> ⚠️ **SUPERSEDED — pending review (2026-06-27).** These examples document the pre-rebuild release CLI (`release:cli plan` / `release auto`), replaced when the release system was rebuilt (Spec 065 — release-system-rebuild). The current internal tool is `analyze` / `notes` / `release` (`npm run release:analyze | notes | run`); there is **no consumer-facing release command yet**. **Do not follow these steps.** The whole release-management doc corpus is slated for review/rewrite — see [`roadmap/release-system-review.md`](../roadmap/release-system-review.md).
+
 ## Overview
 
 This directory contains example configurations, step-by-step tutorials, and integration examples for the Release Management System. Examples cover different project types, release strategies, and common scenarios.

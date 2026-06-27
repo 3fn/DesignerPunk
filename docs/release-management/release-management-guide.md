@@ -8,6 +8,8 @@
 
 ---
 
+> ⚠️ **SUPERSEDED — pending review (2026-06-27).** This guide documents the pre-rebuild release CLI (`release:cli plan` / `release auto`), replaced when the release system was rebuilt (Spec 065 — release-system-rebuild). The current internal tool is `analyze` / `notes` / `release` (`npm run release:analyze | notes | run` → `src/tools/release/cli/release-tool.ts`). **Do not rely on the commands below until this doc is updated.** The whole release-management doc corpus is slated for review/rewrite — see [`roadmap/release-system-review.md`](../roadmap/release-system-review.md).
+
 ## Table of Contents
 
 1. [Overview](#overview)
