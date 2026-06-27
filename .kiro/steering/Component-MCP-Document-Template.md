@@ -243,7 +243,7 @@ All components in this family inherit these foundational contracts:
 **Guidance**:
 - One block per implemented component in the family
 - Purpose should match the component-meta.yaml purpose field (single source)
-- Contexts MUST use values from the controlled vocabulary in `docs/component-meta-authoring-guide.md`
+- Contexts MUST use values from the controlled vocabulary in `.kiro/steering/component-meta-authoring-guide.md`
 - The extraction script reads these blocks to generate `component-meta.yaml` files
 
 ---

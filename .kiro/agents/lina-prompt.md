@@ -125,7 +125,7 @@ ComponentName/
 Write unit tests and behavioral contract tests that validate the component's interaction states, accessibility, and visual states.
 
 ### Step 6: Create or Review component-meta.yaml
-**For new components**: Author the semantic annotations file following `docs/component-meta-authoring-guide.md`. This provides agent-selection guidance (purpose, usage, contexts, alternatives). Check the data shapes trigger criteria if the component has complex array/object props.
+**For new components**: Author the semantic annotations file following `.kiro/steering/component-meta-authoring-guide.md`. This provides agent-selection guidance (purpose, usage, contexts, alternatives). Check the data shapes trigger criteria if the component has complex array/object props.
 
 **For component modifications**: Review `component-meta.yaml` for staleness. Does `purpose` include terms an architect would search for? Do `contexts` cover the UI regions where this component now appears? Do `alternatives` reflect the current component landscape? Do `when_to_use` / `when_not_to_use` cover scenarios revealed by the spec work? Update if stale.
 

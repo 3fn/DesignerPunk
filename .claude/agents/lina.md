@@ -127,7 +127,7 @@ ComponentName/
 Unit tests + behavioral contract tests validating interaction states, accessibility, and visual states.
 
 ### Step 6: Create or Review component-meta.yaml
-**New components**: author semantic annotations per `docs/component-meta-authoring-guide.md` (purpose, usage, contexts, alternatives); check data-shapes trigger criteria for complex array/object props. **Modifications**: review for staleness (does `purpose` include searchable terms? do `contexts` cover current UI regions? do `alternatives`/`when_to_use`/`when_not_to_use` reflect reality?). Update if stale.
+**New components**: author semantic annotations per `.kiro/steering/component-meta-authoring-guide.md` (purpose, usage, contexts, alternatives); check data-shapes trigger criteria for complex array/object props. **Modifications**: review for staleness (does `purpose` include searchable terms? do `contexts` cover current UI regions? do `alternatives`/`when_to_use`/`when_not_to_use` reflect reality?). Update if stale.
 
 ### Step 7: Create README
 Document purpose, usage, variants, props, and token dependencies.
