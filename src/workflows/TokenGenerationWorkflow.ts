@@ -7,9 +7,9 @@
  */
 
 import { TokenEngine } from '../TokenEngine';
-import { ValidationPipeline } from './ValidationPipeline.js';
-import { ConsistencyValidator } from './ConsistencyValidator.js';
-import { WorkflowErrorHandler } from './WorkflowErrorHandler.js';
+import { ValidationPipeline } from './ValidationPipeline';
+import { ConsistencyValidator } from './ConsistencyValidator';
+import { WorkflowErrorHandler } from './WorkflowErrorHandler';
 import type {
   PrimitiveToken,
   SemanticToken,

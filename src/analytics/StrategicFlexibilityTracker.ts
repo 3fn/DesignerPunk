@@ -10,7 +10,7 @@
  * and provides insights into appropriateness of individual usages.
  */
 
-import type { PrimitiveToken } from '../types/PrimitiveToken.js';
+import type { PrimitiveToken } from '../types/PrimitiveToken';
 
 /**
  * Usage context for strategic flexibility token usage

@@ -6,7 +6,7 @@
  * represent higher-level abstractions for specific design contexts.
  */
 
-import type { PrimitiveToken } from './PrimitiveToken.js';
+import type { PrimitiveToken } from './PrimitiveToken';
 
 /**
  * Semantic categories for contextual token organization

@@ -129,8 +129,8 @@ export {
  */
 export function getAllLayeringTokens() {
   // Import functions to avoid circular dependency issues
-  const { getAllZIndexTokens } = require('./ZIndexTokens.js');
-  const { getAllElevationTokens } = require('./ElevationTokens.js');
+  const { getAllZIndexTokens } = require('./ZIndexTokens');
+  const { getAllElevationTokens } = require('./ElevationTokens');
   
   return {
     zIndex: getAllZIndexTokens(),
@@ -157,8 +157,8 @@ export function getAllLayeringTokens() {
  */
 export function getLayeringTokensByPlatform(platform: 'web' | 'ios' | 'android') {
   // Import functions to avoid circular dependency issues
-  const { getAllZIndexTokens } = require('./ZIndexTokens.js');
-  const { getAllElevationTokens } = require('./ElevationTokens.js');
+  const { getAllZIndexTokens } = require('./ZIndexTokens');
+  const { getAllElevationTokens } = require('./ElevationTokens');
   
   if (platform === 'android') {
     return getAllElevationTokens();

@@ -5,10 +5,10 @@
  * for calculating strategic flexibility usage rates and overall token adoption.
  */
 
-import type { PrimitiveToken } from '../types/PrimitiveToken.js';
-import type { SemanticToken } from '../types/SemanticToken.js';
-import { TokenCategory } from '../types/PrimitiveToken.js';
-import { SemanticCategory } from '../types/SemanticToken.js';
+import type { PrimitiveToken } from '../types/PrimitiveToken';
+import type { SemanticToken } from '../types/SemanticToken';
+import { TokenCategory } from '../types/PrimitiveToken';
+import { SemanticCategory } from '../types/SemanticToken';
 
 /**
  * Token type for usage tracking

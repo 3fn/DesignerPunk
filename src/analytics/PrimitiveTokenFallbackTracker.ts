@@ -6,8 +6,8 @@
  * primitive token usage patterns and promotes semantic token adoption.
  */
 
-import type { PrimitiveToken } from '../types/PrimitiveToken.js';
-import { TokenCategory } from '../types/PrimitiveToken.js';
+import type { PrimitiveToken } from '../types/PrimitiveToken';
+import { TokenCategory } from '../types/PrimitiveToken';
 
 /**
  * Reason for using primitive token instead of semantic token

@@ -5,7 +5,7 @@
  * tokens to platform-specific formats while maintaining mathematical consistency.
  */
 
-import type { PlatformValues } from './PrimitiveToken.js';
+import type { PlatformValues } from './PrimitiveToken';
 
 /**
  * Supported target platforms for token translation
@@ -102,4 +102,4 @@ export interface PathOrganizationConfig {
 }
 
 // Re-export PlatformValues for convenience
-export type { PlatformValues } from './PrimitiveToken.js';
+export type { PlatformValues } from './PrimitiveToken';

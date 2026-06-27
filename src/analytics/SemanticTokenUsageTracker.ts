@@ -6,9 +6,9 @@
  * common primitive token usage patterns.
  */
 
-import type { SemanticToken } from '../types/SemanticToken.js';
-import type { PrimitiveToken } from '../types/PrimitiveToken.js';
-import { SemanticCategory } from '../types/SemanticToken.js';
+import type { SemanticToken } from '../types/SemanticToken';
+import type { PrimitiveToken } from '../types/PrimitiveToken';
+import { SemanticCategory } from '../types/SemanticToken';
 
 /**
  * Individual semantic token usage record

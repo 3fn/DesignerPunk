@@ -13,7 +13,7 @@ export {
   TokenType,
   type TokenUsage,
   type TokenUsageStats
-} from './TokenUsageTracker.js';
+} from './TokenUsageTracker';
 
 export {
   StrategicFlexibilityTracker,
@@ -21,22 +21,22 @@ export {
   UsageAppropriateness,
   type StrategicFlexibilityUsage,
   type StrategicFlexibilityStats
-} from './StrategicFlexibilityTracker.js';
+} from './StrategicFlexibilityTracker';
 
 export {
   SemanticTokenUsageTracker,
   type SemanticTokenUsage,
   type SemanticTokenStats
-} from './SemanticTokenUsageTracker.js';
+} from './SemanticTokenUsageTracker';
 
 export {
   PrimitiveTokenFallbackTracker,
   FallbackReason,
   type PrimitiveTokenFallback,
   type PrimitiveTokenFallbackStats
-} from './PrimitiveTokenFallbackTracker.js';
+} from './PrimitiveTokenFallbackTracker';
 
 export {
   UsagePatternAnalyzer,
   type UsagePatternAnalysis
-} from './UsagePatternAnalyzer.js';
+} from './UsagePatternAnalyzer';

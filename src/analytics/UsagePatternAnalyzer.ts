@@ -7,10 +7,10 @@
  * for semantic token adoption and primitive fallback patterns.
  */
 
-import { TokenUsageTracker } from './TokenUsageTracker.js';
-import { StrategicFlexibilityTracker } from './StrategicFlexibilityTracker.js';
-import { SemanticTokenUsageTracker } from './SemanticTokenUsageTracker.js';
-import { PrimitiveTokenFallbackTracker } from './PrimitiveTokenFallbackTracker.js';
+import { TokenUsageTracker } from './TokenUsageTracker';
+import { StrategicFlexibilityTracker } from './StrategicFlexibilityTracker';
+import { SemanticTokenUsageTracker } from './SemanticTokenUsageTracker';
+import { PrimitiveTokenFallbackTracker } from './PrimitiveTokenFallbackTracker';
 
 /**
  * Overall usage pattern analysis results
