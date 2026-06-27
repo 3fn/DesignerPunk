@@ -301,11 +301,11 @@
   **Primary Artifacts:** ballot-measure proposal(s) for the steering contract + direction decision + deferred-cost + Civitas process guard + the MCP/browser boundary + the two new-practices codifications (CI-enforced-guards → Test-Development-Standards.md; ESLint-exists tooling fact → Technology Stack.md / BUILD-SYSTEM-SETUP.md); post-approval docs-MCP rebuild.
   **Completion Documentation:** Detailed `.../completion/task-11-completion.md`; Summary `docs/specs/.../task-11-summary.md`.
 
-  - [ ] 11.1 Draft the ballot-measure steering proposal (contract + direction + deferred-cost + process guard)
+  - [~] 11.1 Draft the ballot-measure steering proposal (contract + direction + deferred-cost + process guard) — **DRAFTED (2026-06-26), pending Peter's approval to apply.** 7-item ballot: `findings/task-11-ballot-proposal.md` (contract-as-law, committed CJS direction + ESM→roadmap, MCP/browser exemption, Civitas close-state/single-source guard, two new-practices [CI-enforced-guards; narrow ESLint fact], class-invariant + brand-contract prose, RSA-orchestrator rider). Doc-coherence audit (Peter add-on): `findings/doc-coherence-audit-2026-06-26.md`. **Decided with Peter (2026-06-26): Task 11 codifies CONTENT; Spec 119 owns CONSUMPTION** — the ballot deliberately does NOT build a discoverability/routing mechanism; the two hand-offs (Ada+ routing-table row; identity-layer pointer in DesignerPunk-Systems-Overview) are registered as input at `.kiro/specs/119-steering-progressive-disclosure-redesign/inbound-from-118.md`. 119-aware: all 4 target docs relocate to `governance/` under 119 (content rides the move); ballot's earlier "RSA is `inclusion: always`-class" error corrected (RSA is `manual`; placement is content-fit). No new agent (119 rejected a shared coordinating artifact; Thurgood stays Civitas currency steward).
     **Type**: Governance · **Validation**: Tier 2 · **Agent**: Thurgood → Peter
     - _Requirements: 9.1, 9.2, 9.3, 9.4_
 
-  - [ ] 11.2 On approval, apply the steering change and rebuild the docs MCP index
+  - [ ] 11.2 On approval, apply the steering change and rebuild the docs MCP index — **PENDING Peter's approval of the revised ballot.** Recommended before apply: Ada accuracy pass on RSA items (1/2/6/7), Lina on the MCP/browser exemption (item 3). On apply: edit the approved text into the (still-current `.kiro/steering/`) docs, bump `Last Reviewed`, rebuild the docs MCP index.
     **Type**: Governance · **Validation**: Tier 2 · **Agent**: Thurgood (apply as approved) + Peter (approval)
     - _Requirements: 9.5_
 
