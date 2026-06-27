@@ -64,6 +64,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate token artifacts (prereq for typecheck:scripts)
+        # scripts/** (verify-opacity-types.ts) and src/types/index.ts import the GITIGNORED
+        # generated src/types/generated/TokenTypes.ts. `prebuild` (generate:types +
+        # generate:platform-tokens) produces it. typecheck:scripts is green locally only
+        # because a prior `npm run build` left the artifact in the working tree; a clean CI
+        # checkout has no generated file, so the typecheck below fails to resolve the module.
+        # test:consumer gets generation via `prepack: npm run build` (Increment 1), but
+        # typecheck:scripts runs earlier in this lane — this step fills that gap.
+        run: npm run prebuild
+
       - name: Typecheck build-path scripts (Spec 118 Task 9.1 / Increment 3a)
         # Restores the typecheck coverage ts-node provided for the scripts/** build-path
         # generators (generate-token-types.ts, generate-platform-tokens.ts) once ts-node
