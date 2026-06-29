@@ -82,6 +82,20 @@
 
 **Done when.** 122 regenerates `.claude/agents/*.md` from canonical source with `governance/` paths + accurate post-relocation notes, alongside the `.kiro` prompt sweep.
 
+## OB-7 — Claude Code always-layer delivery (the 9 identity docs) + retire the interim CLAUDE.md stopgap
+
+**Status**: OPEN · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A post-push review (2026-06-29)
+
+**What.** The 9 identity/always docs in `.kiro/steering/` (personal-note, core-goals, ai-collaboration-principles [incl. the 119-A certainty-calibration rule], spec-feedback-protocol, designerpunk-systems-overview, civitas-system-overview, start-up-tasks, task-completion-protocol, agent-directory) are delivered in Kiro by `inclusion: always`. **Claude Code has no equivalent**: verified 2026-06-29 there is no `CLAUDE.md`, the `.claude/agents/*.md` carry no path references to them, and they are deliberately NOT in the MCP index (governance-only) — so they are not `find_docs`-able and `get_document_summary('core-goals')` → FileNotFound. Only each agent's *role* content is inlined in its `.claude/agents/*.md`; the cross-cutting always-layer is not. **Concrete proof:** the 119-A calibration rule is absent from every `.claude/agents/*.md`. So in CC these important docs can be silently ignored.
+
+**Severity.** Real and live in CC. NOT a 119-A regression — it is a CC-portability gap (Spec 121/122 territory); 119-A worked within the Kiro always-load model, and the relocation is a net win for CC on the 80 governance docs (now MCP-reachable). Only the 9 identity docs are the CC blind spot.
+
+**Interim stopgap (added in 119-A wrap-up):** a project `CLAUDE.md` at repo root that `@import`s the 9 identity docs, providing the CC-native always-load. **Verified end-to-end (2026-06-29):** after a fresh session, a probe subagent received the inlined bodies of `personal-note`, `core-goals`, and `AI-Collaboration-Principles` (incl. the certainty-calibration rule) via the `CLAUDE.md` `@import` block — confirming `./CLAUDE.md` loads here, `@import` expands, and it reaches subagents (Explore/Plan excepted). Caveat: `CLAUDE.md` is snapshotted at session start, so edits to it (or its imports' membership) need a session restart to take effect. **This is INTERIM and MUST be retired/superseded by 122** — do not let two always-layer mechanisms (CLAUDE.md + 122-generated per-agent ambient) coexist past 122. Scope note: the stopgap covers in-repo DesignerPunk CC agents; consumer-side CC always-layer delivery is 122/123 territory.
+
+**Why 122 owns the real fix.** 122's agent generator delivers each agent's ambient/always layer **from canonical source**, fed by 119-A Task 9's per-agent five-class ambient design. That unifies the Kiro (`inclusion: always`) and Claude Code (CLAUDE.md / inlined) delivery into one generated source-of-truth.
+
+**Done when.** 122 generates the always-layer into each agent's CC context from canonical source AND removes the interim `CLAUDE.md` stopgap (or folds it into the generated output), so there is exactly one always-layer mechanism per runtime. (Related: OB-6 regenerates the `.claude/agents` role prompts; OB-7 is the always-*layer* that sits alongside them.)
+
 ---
 
 ## Informational notes for 119-B (NOT obligations — context the deferred work needs)
