@@ -610,7 +610,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Confirm the Task 11 relocation-integrity gate still passes (no referenced `id` depends on the removed meta-guide)
     - _Requirements: 13.4, 13.6_
 
-- [ ] 11. Relocation-Integrity Gate (119-A Exit Check)
+- [x] 11. Relocation-Integrity Gate (119-A Exit Check) — PASS: 54/54 prompt refs via legacy-fallback, 9 identity static-present, 7/7 must-fix couplings, 0 family-guidance warnings, AX design asserted, severable excluded
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
