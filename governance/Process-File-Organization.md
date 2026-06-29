@@ -2,6 +2,7 @@
 id: process-file-organization
 inclusion: manual
 name: Process-File-Organization
+aliases: steering doc metadata validation governance, steering document metadata validation, validating steering doc metadata governance standards
 description: File organization standards — metadata-driven organization, directory structure, required metadata fields, organization values, and cross-reference standards. Load when creating files, organizing documents, or understanding project directory structure.
 ---
 

@@ -2,6 +2,7 @@
 id: component-family-chip
 inclusion: manual
 name: Component-Family-Chip
+aliases: chip family work
 description: Chip component family — compact, interactive elements for filtering, selection, or input management (tags, toggles). Load when working with chip components, filter controls, or tag inputs.
 ---
 

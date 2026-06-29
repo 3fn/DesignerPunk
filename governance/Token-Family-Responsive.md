@@ -2,6 +2,7 @@
 id: token-family-responsive
 inclusion: manual
 name: Token-Family-Responsive
+aliases: responsive token work
 description: Responsive token family — breakpoint and density tokens for adaptive interfaces. Load when working with responsive layouts, viewport breakpoints, or density-based scaling.
 ---
 

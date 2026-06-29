@@ -2,6 +2,7 @@
 id: token-family-motion
 inclusion: manual
 name: Token-Family-Motion
+aliases: motion easing token work
 description: Motion token family — animation duration, easing curves, and scale primitives for consistent transitions. Load when working with animations, transitions, micro-interactions, or motion timing.
 ---
 

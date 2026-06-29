@@ -1,6 +1,7 @@
 ---
 id: a-vision-of-the-future
 inclusion: manual
+aliases: designerpunk vision context, designerpunk vision and context, vision context for designerpunk
 ---
 
 # A Vision of the Future

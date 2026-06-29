@@ -2,6 +2,7 @@
 id: mcp-relationship-model
 inclusion: manual
 name: MCP-Relationship-Model
+aliases: system architecture overview rosetta stemma civitas, rosetta stemma civitas system overview, three system architecture overview rosetta stemma civitas boundaries
 description: Defines boundaries, information flow, access model, and interface contracts between DesignerPunk's three MCP servers
 ---
 

@@ -175,4 +175,53 @@ describe('find_docs Layer-1 rubric derivation', () => {
       expect(res.data[0].viability).toEqual({ placeholder: true, deprecated: false });
     });
   });
+
+  // Spec 119-A Layer-3 RANK-only title tie-breaker (rank-only; matchConfidence untouched).
+  describe('title rank tie-breaker (Spec 119-A)', () => {
+    // Same coverage+tier for "color": one doc has it in the TITLE (IS about color),
+    // the other only in its DESCRIPTION (mentions color).
+    const colorFamily = doc({
+      path: '.kiro/steering/Token-Family-Color.md',
+      title: 'Token-Family-Color',
+      description: 'Color scale tokens.',
+      purpose: 'Color family token definitions',
+      sections: ['Scale'],
+    });
+    const mentionsColor = doc({
+      path: '.kiro/steering/Accessibility-Notes.md',
+      title: 'Accessibility-Notes',
+      description: 'Guidance on color contrast and legibility.',
+      purpose: 'Accessibility guidance',
+      sections: ['Contrast'],
+    });
+
+    it('a title hit out-ranks an equal-coverage description hit', () => {
+      // mentionsColor listed FIRST: without the tie-breaker, input/corpus order
+      // would rank it #1; the tie-breaker must actively reorder the title doc to #1.
+      const res = findDocsConcept([mentionsColor, colorFamily], 'color');
+      expect(res.data[0].path).toBe('.kiro/steering/Token-Family-Color.md');
+      expect(res.data[0].rank).toBe(1);
+    });
+
+    it('does NOT change the confidence tier — both remain strong (rank-only)', () => {
+      const res = findDocsConcept([mentionsColor, colorFamily], 'color');
+      expect(res.data.every((e) => e.matchConfidence === 'strong')).toBe(true);
+    });
+
+    it('only breaks EXACT ties — a higher-coverage non-title match still wins', () => {
+      // 2/2 tokens in description (score 6) must beat 1/2 in title (score ~3.5).
+      const twoTokenDesc = doc({
+        path: '.kiro/steering/Color-Theme-Overrides.md',
+        title: 'Theme-Overrides',
+        description: 'How color theme values are overridden per mode.',
+      });
+      const oneTokenTitle = doc({
+        path: '.kiro/steering/Color.md',
+        title: 'Color',
+        description: 'Generic notes.',
+      });
+      const res = findDocsConcept([oneTokenTitle, twoTokenDesc], 'color theme');
+      expect(res.data[0].path).toBe('.kiro/steering/Color-Theme-Overrides.md');
+    });
+  });
 });

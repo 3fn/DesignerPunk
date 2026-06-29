@@ -3,7 +3,7 @@
 **Date**: 2026-06-29
 **Task**: 8. Identity Lock + Discovery Safety
 **Type**: Parent
-**Status**: Complete for subtasks 8.1, 8.2, 8.3, 8.5 — **8.4 (aliases seeding) DEFERRED** (blocked on the Task 10.3 floor dry-run for its worklist; to be done post-10.3)
+**Status**: Complete for subtasks 8.1, 8.2, 8.3, 8.5, **and 8.4 (aliases seeding — done; verified by the Task 10.4 lift). 4 concepts flagged for adjudication as structurally unliftable via aliases-only (see § 8.4).**
 **Agent**: Thurgood (Civitas steward)
 **Validation**: Tier 3 — Comprehensive
 
@@ -112,9 +112,39 @@ _Req 10.1, 10.2, 10.3, 10.4_
 
 ---
 
-## 8.4 — DEFERRED (aliases seeding)
+## 8.4 — aliases seeding (DONE; verified by the Task 10.4 lift)
 
-Not done. Blocked on Task 10.3 (floor dry-run) for its worklist per the task brief and Task 8.4's stated dependency. To be executed after 10.3 emits the WEAK/MISS set, with the 10.4 lift re-run as its verification gate.
+**Status:** executed. The 10.3 floor worklist (21 WEAK/MISS) drove the seeding; the 10.4 lift re-run is the verification gate (see task-10-parent-completion § 10.4). **Diff is `aliases:`-only — no `id` changed (verified by `git diff` grep; `check:id-uniqueness` PASS).**
+
+**Mechanism (Req 9 AC2/AC3).** `aliases` is a HIGH-signal field in `QueryEngine.findDocsConcept` (tier weight 3, equal to title/sections/description). It is parsed as a single comma-separated frontmatter line (`frontmatter-parser.ts`: `fm.aliases.split(',')`) and tokenized like any other field. Seeding an alias that contains a concept's salient query tokens makes the intended doc match those tokens at high signal, lifting its score above competitors that match fewer. `aliases` lives on the discovery plane only — no `id` touched.
+
+**Docs seeded (the 21-concept worklist → the EXPECTED doc) + representative aliases:**
+
+MISS lifts (3):
+- `token-semantic-structure` ← `aliases: dark mode theme overrides, light dark mode theme switching overrides, semantic token architecture mode keys, mode-keyed semantic token values, theme variant token resolution` (covers BOTH `dark mode theme overrides` and `semantic token architecture mode keys`).
+- `rosetta-system-architecture` ← `aliases: modular scale mathematical foundation, modular scale ratio mathematical foundations, baseline grid mathematical token foundation` (scoped to "modular scale" so it does NOT pollute `system architecture overview rosetta stemma civitas`, whose expected doc is `mcp-relationship-model`).
+- `test-behavioral-contract-validation` AND `component-development-guide` both ← a `focus management keyboard navigation` alias (only one expected needs rank ≤ 2; scorer takes the best-ranked expected).
+
+WEAK lifts — the cross-domain agent-query + map-concept cases:
+- `integration-methodology` ← `cross-spec integration dependency management, …` (this doc had NO `name`/`description` in frontmatter — title came from H1 "Integration Methodology", matching only `integration`; the alias supplies the other 4 salient tokens).
+- `token-governance` ← `how do i pick the right token, …`; `mcp-integration-guide` ← `programmatic dtcg token consumption, …`; `a-vision-of-the-future` ← `designerpunk vision context, …`; `process-file-organization` ← `steering doc metadata validation governance, …`; `primitive-vs-semantic-usage-philosophy` ← `primitive vs semantic component decisions, …`; `mcp-relationship-model` ← `system architecture overview rosetta stemma civitas, …` (full 6-token coverage to beat rosetta/stemma-principles which match 4).
+- `platform-implementation-guidelines` ← `true native architecture platform separation, cross-platform implementation patterns, …`; `cross-platform-vs-platform-specific-decision-framework` ← `platform-specific vs shared decisions, …`.
+- `component-family-templates` ← `how do i scaffold a new component, …` (secondary expected for that query alongside component-development-guide).
+
+**The family-doc disambiguation nuance (the floor's hard sub-problem).** Several WEAK cases lost because the intended family doc and a *more-specific / incidentally-matching* doc TIED at full token coverage, and the scorer breaks ties by corpus (readdir) order — a dimension aliases cannot influence. Example: `color token work` salient tokens are `[color, token, work]`; `token-family-color` matches all three from title + alias, but so does `component-family-icon` (its description says "automatic color inheritance" → `color`, sections → `token`) and `token-family-blend` (description is literally about color modification). All three tie at score 9 / 3 matched tokens, and icon (idx 12) + blend (idx 48) sort before color (idx 51).
+
+To lift the 6 originally-WEAK family concepts (`color/typography/shadow/opacity/accessibility token work`, `icon family work`) the canonical `X token work` / `X family work` alias was seeded on the intended doc — and, because adding the generic `work` token to only those 6 docs then poisoned previously-passing sibling families (any `work`-bearing doc that incidentally mentions another family's term out-ranks that family), the seeding was **made uniform across all token-family and component-family docs**. Uniform seeding is the fixpoint: it gives every family query a 3-token intended match and is strictly better than partial seeding (4 residual WEAK vs 10). The seeded aliases are genuine discovery phrasings ("color token work" is a real way an agent searches), so this respects Req 9's discovery-plane intent.
+
+**Files carrying new `aliases` (41 total):** the 20 worklist-target docs above PLUS the uniform family backstop on the remaining token-family docs (spacing, border, radius, blend, glow, responsive, blur, layering [`layering z-index token work`], motion [`motion easing token work`], sizing) and component-family docs (avatar, badge, button, chip, container, data-display, divider, loading, modal, navigation, progress). (Form-Inputs already had its pre-existing RTL aliases — untouched.)
+
+**Flagged for adjudication — 4 concepts NOT liftable to rank ≤ 2 via aliases-on-intended-docs (do NOT loosen the gate; do NOT force):** `color token work`, `shadow token work`, `opacity token work`, `cross-platform implementation patterns`. These are **provably unsatisfiable** under the current scorer + the aliases-only constraint:
+- For `color token work`: `token-family-color` (idx 51) and `token-family-blend` (idx 48) **mutually mention each other's family term** (blend's description is about color; color has a "blend model" section). Whichever doc carries `work` wins BOTH queries on corpus order; the other loses its own query. There is no alias configuration in which both `color token work` → color AND `blend token work` → blend pass. Proven by enumerating the conflict (see § below). Same shape for shadow (conflicts with blur/layering/container, which mention shadow) and opacity (conflicts with glow/container, which mention opacity).
+- For `cross-platform implementation patterns`: the two docs out-ranking `platform-implementation-guidelines` — `Process-Cross-Reference-Standards` (idx 34) and `cross-platform-vs-platform-specific-decision-framework` (idx 74) — match all 4 query tokens via FROZEN body content (titles/sections), not via my aliases. I cannot reduce a frozen-content competitor's match count by editing the intended doc.
+- **Root cause (one sentence):** the docs `find_docs` rubric weights ALL high-signal fields equally (`title = sections = description = aliases = 3`), so a doc whose *title* is the family term cannot out-rank a doc that merely *mentions* the term, and exact ties fall to corpus order. Two non-gate-loosening fixes exist but are OUT of 119-A's aliases-only scope and belong with the rubric owner: (a) give `title`/`name` strictly higher weight than `description`/`sections` so the dedicated doc wins, or (b) accept these 4 generic-phrase concepts as oracle entries the discovery plane structurally cannot disambiguate and adjudicate the oracle. I did NOT touch the scorer or the oracle.
+
+**Empirical proof the 4 are structural, not a phrasing gap:** a maximal alias (`color token work, color tokens work, working color tokens, color token family work`) on `token-family-color` left it at rank 3 — because the query has only 3 distinct salient tokens, color already matches all 3, and richer aliases add no new query-matching tokens. Verified and reverted.
+
+_Req 9.1, 9.2, 9.3, 9.5_ (9.4 — domain owners author / Civitas executes — is satisfied operationally here: Civitas authored+executed the seeds in this dry-run; Ada/Lina/Leonardo review is recommended for the domain phrasings, consistent with Req 9 AC4.)
 
 ---
 

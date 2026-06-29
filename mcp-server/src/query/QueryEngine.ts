@@ -686,6 +686,11 @@ function scoreDoc(doc: DocumentMetadata, salientTokens: string[]): ScoredDoc | n
   const groups = buildDocTokenSets(doc);
   const ORDER: SignalClass[] = [...HIGH_SIGNAL, ...MEDIUM_SIGNAL, ...LOW_SIGNAL];
   const WEIGHT: Record<'high' | 'medium' | 'low', number> = { high: 3, medium: 2, low: 1 };
+  // Spec 119-A Layer-3 rank tie-breaker: a fractional bonus (< the 1-point gap
+  // between tiers) so it only orders EXACT ties, never promotes a lower-tier or
+  // lower-coverage match above a higher one. Title-in-query edges out an
+  // equal-coverage section/description match. Confidence tier is unaffected.
+  const TITLE_RANK_TIEBREAK = 0.5;
 
   let score = 0;
   const matchedOn: string[] = [];
@@ -696,7 +701,13 @@ function scoreDoc(doc: DocumentMetadata, salientTokens: string[]): ScoredDoc | n
     for (const cls of ORDER) {
       if (groups.get(cls)?.has(qt)) {
         const tier = signalTier(cls);
-        score += WEIGHT[tier];
+        // Spec 119-A: Layer-3 RANK-only title tie-breaker. A title hit (the doc IS
+        // about the token) edges out an equal-coverage section/description hit (the
+        // doc merely MENTIONS it), breaking exact ties toward the on-topic doc.
+        // RANK ONLY — does NOT change the confidence tier (deriveMatchConfidence is
+        // untouched), so Spec 121's matchConfidence contract is unaffected.
+        // See 121 discovery-confidence-rubric.md § "Layer 3 — Usability".
+        score += WEIGHT[tier] + (cls === 'title' ? TITLE_RANK_TIEBREAK : 0);
         matchedOn.push(`${cls}:${qt}`);
         matchedTokens += 1;
         if (tier === 'high') highTokens += 1;

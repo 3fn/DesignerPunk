@@ -1,6 +1,7 @@
 ---
 id: primitive-vs-semantic-usage-philosophy
 inclusion: manual
+aliases: primitive vs semantic component decisions, deciding primitive vs semantic components, primitive or semantic component usage decision
 ---
 
 # Primitive vs Semantic Usage Philosophy

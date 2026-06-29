@@ -2,6 +2,7 @@
 id: component-family-modal
 inclusion: manual
 name: Component-Family-Modal
+aliases: modal family work
 description: Modal component family (placeholder) — planned overlay components for focused user interactions with focus trapping, backdrop interactions, and accessible dismissal patterns. Load when planning modal components or reviewing family architecture.
 ---
 

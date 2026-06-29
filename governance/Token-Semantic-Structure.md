@@ -2,6 +2,7 @@
 id: token-semantic-structure
 inclusion: manual
 name: Token-Semantic-Structure
+aliases: dark mode theme overrides, light dark mode theme switching overrides, semantic token architecture mode keys, mode-keyed semantic token values, theme variant token resolution
 description: Semantic token structure guide — SemanticToken interface requirements, primitiveReferences field, usage patterns, and concept-based documentation approach. Load when creating or modifying semantic tokens, understanding semantic-to-primitive relationships, or reviewing token interface structure.
 ---
 

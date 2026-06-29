@@ -2,6 +2,7 @@
 id: cross-platform-vs-platform-specific-decision-framework
 inclusion: manual
 name: Cross-Platform-vs-Platform-Specific-Decision-Framework
+aliases: platform-specific vs shared decisions, platform specific versus shared code decisions, deciding platform specific or shared implementation
 description: Strategic guidance on when to use cross-platform patterns vs platform-specific idioms — decision framework, consistency vs native UX trade-offs, and context-based recommendations. Load when making platform implementation decisions or evaluating cross-platform vs native approaches.
 ---
 

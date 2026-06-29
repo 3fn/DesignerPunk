@@ -2,6 +2,7 @@
 id: rosetta-system-architecture
 inclusion: manual
 name: Rosetta-System-Architecture
+aliases: modular scale mathematical foundation, modular scale ratio mathematical foundations, baseline grid mathematical token foundation
 description: Rosetta token pipeline architecture — subsystem entry points, token flow from definition to platform output, component token integration, and debugging token generation. Load when understanding token pipeline flow, finding subsystem entry points, or debugging generation issues.
 ---
 

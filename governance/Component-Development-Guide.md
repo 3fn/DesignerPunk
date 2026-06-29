@@ -2,6 +2,7 @@
 id: component-development-guide
 inclusion: manual
 name: Component-Development-Guide
+aliases: how do i scaffold a new component, scaffold a new component from scratch, focus management keyboard navigation, keyboard navigation focus management component
 description: Guide for building components with appropriate token usage, True Native Architecture, demo maintenance, and effective collaboration practices. Load when implementing components, selecting tokens, integrating icons, or maintaining demo pages.
 ---
 

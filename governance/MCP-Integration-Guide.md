@@ -2,6 +2,7 @@
 id: mcp-integration-guide
 inclusion: manual
 name: MCP-Integration-Guide
+aliases: programmatic dtcg token consumption, consuming dtcg tokens programmatically, programmatic token consumption from dtcg output
 description: MCP integration guide — file loading, token traversal, path-based querying, transformer invocation. Load when building tooling, scripts, or MCP server resources that consume DTCG output.
 ---
 

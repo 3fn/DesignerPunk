@@ -2,6 +2,7 @@
 id: token-family-typography
 inclusion: manual
 name: Token-Family-Typography
+aliases: typography token work
 description: Typography token family — compositional typography tokens combining fontSize, lineHeight, fontFamily, fontWeight, and letterSpacing. Load when working with text styles, font selection, or typographic hierarchy.
 ---
 

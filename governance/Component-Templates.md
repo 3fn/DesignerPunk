@@ -1,6 +1,7 @@
 ---
 id: component-family-templates
 inclusion: manual
+aliases: how do i scaffold a new component, scaffold a new component template, new component scaffolding starter template
 ---
 
 # Component Family Templates

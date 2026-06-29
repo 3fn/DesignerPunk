@@ -2,6 +2,7 @@
 id: token-governance
 inclusion: manual
 name: Token-Governance
+aliases: how do i pick the right token, picking the right token selection, choose which token to use
 description: Token governance framework — selection matrix, usage autonomy levels, creation governance, prior acknowledgment, and decision examples. Load when making token selection decisions, evaluating token usage governance, or creating new tokens.
 ---
 

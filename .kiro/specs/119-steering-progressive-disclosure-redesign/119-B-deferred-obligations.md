@@ -36,4 +36,16 @@
 
 ---
 
+---
+
+## Informational notes for 119-B (NOT obligations — context the deferred work needs)
+
+### IN-1 — `find_docs` ranking improved mid-119-A (baseline for the measurement case study)
+
+119-A's discovery dry-run gate (Task 10.4) surfaced a `find_docs` ranking weakness and landed a **Layer-3 RANK-only title tie-breaker** in `scoreDoc` (`TITLE_RANK_TIEBREAK`): a query token hitting a doc's *title* edges out an equal-coverage *section/description* mention. **Rank-only — `matchConfidence` (Layer-1) is unchanged**, so nothing in 122/123/119-B that consumes the confidence signal is affected. Documented in `121 discovery-confidence-rubric.md` § "Layer 3" (attributed amendment) + pinned by a guard test.
+
+**Why 119-B needs this:** the deferred **before/after measurement case study** (119-B) must account for this change in its discovery baseline — the dry-run progression on the frozen oracle was **floor 54.2% → lift (aliases) → tie-breaker 94%** rank-1-strong. The 94% figure reflects the tie-breaker, not aliases alone. The frozen oracle (`119-A-.../scripts/__fixtures__/discovery-oracle.ts`) is the non-circular "before" anchor (Req 13 AC7); read this note alongside it so the case study doesn't misattribute the lift.
+
+---
+
 *Append execution-discovered 119-A→119-B obligations here as they surface. Design-phase deferrals live in `119-A-.../requirements.md` § "Deferred to 119-B".*

@@ -2,6 +2,7 @@
 id: platform-implementation-guidelines
 inclusion: manual
 name: Platform-Implementation-Guidelines
+aliases: true native architecture platform separation, cross-platform implementation patterns, true native architecture cross platform implementation patterns separation
 description: Guidelines for maintaining cross-platform behavioral consistency — behavioral contract compliance, platform-native patterns, web/iOS/Android implementation rules, and optimization boundaries. Load when implementing platform-specific component code or validating cross-platform consistency.
 ---
 

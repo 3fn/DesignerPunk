@@ -2,6 +2,7 @@
 id: token-family-sizing
 inclusion: manual
 name: Token-Family-Sizing
+aliases: sizing token work
 description: Sizing token family — component dimensions (width, height, box size). Separate from spacing (gaps). Load when working with component sizes, avatar dimensions, button sizes, or any component dimensional value.
 ---
 

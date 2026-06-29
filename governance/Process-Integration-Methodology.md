@@ -1,6 +1,7 @@
 ---
 id: integration-methodology
 inclusion: manual
+aliases: cross-spec integration dependency management, cross spec integration dependency coordination, managing dependencies across spec integrations
 ---
 
 # Integration Methodology
