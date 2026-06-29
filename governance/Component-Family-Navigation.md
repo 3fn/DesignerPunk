@@ -256,9 +256,9 @@ Nav-Header-Base (Primitive) [PLANNED]
 
 ## Related Documentation
 
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
-- [Component MCP Document Template](./Component-MCP-Document-Template.md) - Template for family docs
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
+- [Component MCP Document Template](mcp-component-family-document-template) - Template for family docs
 - [Nav-SegmentedChoice-Base README](../../src/components/core/Nav-SegmentedChoice-Base/README.md) - Component documentation
 - [Nav-TabBar-Base README](../../src/components/core/Nav-TabBar-Base/README.md) - Component documentation
 - [Spec 049 Requirements](../../.kiro/specs/049-nav-segmentedchoice-base/requirements.md) - SegmentedChoice spec

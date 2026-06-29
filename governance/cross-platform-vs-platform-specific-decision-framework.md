@@ -345,8 +345,8 @@ Button(
 
 ## Related Documentation
 
-- [Component Development Guide](./Component-Development-Guide.md) - Component implementation guidance with collaboration practices
-- [Token Resolution Patterns](./Token-Resolution-Patterns.md) - Strategic guidance on token type selection and validation
+- [Component Development Guide](component-development-guide) - Component implementation guidance with collaboration practices
+- [Token Resolution Patterns](token-resolution-patterns) - Strategic guidance on token type selection and validation
 - [True Native Architecture](../../preserved-knowledge/true-native-architecture-concepts.md) - Build-time platform separation principles
 
 ---

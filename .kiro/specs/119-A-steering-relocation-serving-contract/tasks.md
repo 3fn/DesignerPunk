@@ -418,7 +418,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Wiring correctness is verified by the Task 9 gate (the dissolved Phase 10 atomicity-with-prompts guarantee no longer holds)
     - _Requirements: 5.7, 1.7, 8.7_
 
-- [ ] 8. Identity Lock + Discovery Safety (Calibration Text, 118 Pointer, Aliases, Cross-Refs)
+- [~] 8. Identity Lock + Discovery Safety (Calibration Text, 118 Pointer, Aliases, Cross-Refs) — 8.1/8.2/8.3/8.5 done; 8.4 (aliases) deferred to post-Task-10.3 floor dry-run
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)

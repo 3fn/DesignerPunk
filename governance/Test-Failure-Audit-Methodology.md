@@ -1466,9 +1466,9 @@ This section captures institutional knowledge from Specs 025 (Test Suite Overhau
 
 ## Related Documentation
 
-- [Development Workflow](./Development%20Workflow.md) - Task completion and git practices
-- [File Organization Standards](./File%20Organization%20Standards.md) - Documentation organization
-- [Spec Planning Standards](./Spec%20Planning%20Standards.md) - Spec document formatting
+- [Development Workflow](process-development-workflow) - Task completion and git practices
+- [File Organization Standards](process-file-organization) - Documentation organization
+- [Spec Planning Standards](process-spec-planning) - Spec document formatting
 
 ---
 

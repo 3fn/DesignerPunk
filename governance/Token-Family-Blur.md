@@ -60,7 +60,7 @@ Shadow composites (`shadow.sm`, `shadow.md`, etc.) reference blur primitives as 
 | Subtle/hover | `blur125` | 20 | Diffuse, gentle edges |
 | Floating elements | `blur150` | 24 | Maximum shadow blur |
 
-See also: [Token-Family-Shadow.md](Token-Family-Shadow.md) for complete shadow composite documentation.
+See also: [Token-Family-Shadow.md](token-family-shadow) for complete shadow composite documentation.
 
 ### Glow Context
 
@@ -74,7 +74,7 @@ Glow effects use the upper range of the scale for radial spread. Larger blur amo
 | Intense glow | `blur200` | 32 | Hero elements, dramatic emphasis |
 | Maximum glow | `blur250` | 40 | Focal points, maximum emphasis |
 
-See also: [Token-Family-Glow.md](Token-Family-Glow.md) for glow color and opacity documentation.
+See also: [Token-Family-Glow.md](token-family-glow) for glow color and opacity documentation.
 
 ### Surface/Backdrop Context
 

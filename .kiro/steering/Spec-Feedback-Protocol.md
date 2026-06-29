@@ -232,11 +232,11 @@ The feedback document uses this structure:
 
 For the full protocol:
 ```
-get_document_full({ path: ".kiro/steering/Spec-Feedback-Protocol.md" })
+get_document_full({ path: "spec-feedback-protocol" })
 ```
 
 For specific sections:
 ```
-get_section({ path: ".kiro/steering/Spec-Feedback-Protocol.md", heading: "Stamp Format" })
-get_section({ path: ".kiro/steering/Spec-Feedback-Protocol.md", heading: "Mandatory @ Mention Scanning" })
+get_section({ path: "spec-feedback-protocol", heading: "Stamp Format" })
+get_section({ path: "spec-feedback-protocol", heading: "Mandatory @ Mention Scanning" })
 ```

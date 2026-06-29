@@ -506,7 +506,7 @@ export const ComponentNameTokens = defineComponentTokens({
 
 **Loading behavior**: Component token sources are discovered by *presence*, not by `tokenSourceMode`. If the convention dir `{tokenSourceRoot}/component/` exists, or `config.componentTokenDirs` is set, those sources load in both package and local mode. If no sources are found, the loader emits a "No component token files found" warning and `ComponentTokens.*` output is empty.
 
-**Token Creation Governance**: Creating component tokens requires human approval. See [Token Governance Guide](./Token-Governance.md) for decision matrix and review requirements.
+**Token Creation Governance**: Creating component tokens requires human approval. See [Token Governance Guide](token-governance) for decision matrix and review requirements.
 
 ### Cross-Boundary Invariant & the Brand Contract (Spec 124)
 
@@ -605,8 +605,8 @@ The exemption is **not silent**: each exempt subsystem has a **paired boot/smoke
 ## Related Documentation
 
 ### Rosetta System
-- [Rosetta System Principles](./rosetta-system-principles.md) - Mathematical foundations, naming conventions, governance
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation routing
+- [Rosetta System Principles](rosetta-system-principles) - Mathematical foundations, naming conventions, governance
+- [Token Quick Reference](token-quick-reference) - Token documentation routing
 - [Token Family Guides](./Token-Family-*.md) - Family-specific documentation
 
 ### Architecture
@@ -614,15 +614,15 @@ The exemption is **not silent**: each exempt subsystem has a **paired boot/smoke
 - [Registry-Validator Pattern](../../docs/architecture/registry-validator-pattern.md) - Validation patterns
 
 ### DTCG Integration
-- [DTCG Integration Guide](./DTCG-Integration-Guide.md) - Integrating DesignerPunk tokens with external design tools via DTCG format
-- [Figma Workflow Guide](./Figma-Workflow-Guide.md) - Bidirectional Figma integration: token push and design extraction
-- [Transformer Development Guide](./Transformer-Development-Guide.md) - Building custom token transformers for tool-specific formats
-- [MCP Integration Guide](./MCP-Integration-Guide.md) - Programmatic token loading, parsing, and querying
+- [DTCG Integration Guide](dtcg-integration-guide) - Integrating DesignerPunk tokens with external design tools via DTCG format
+- [Figma Workflow Guide](figma-workflow-guide) - Bidirectional Figma integration: token push and design extraction
+- [Transformer Development Guide](transformer-development-guide) - Building custom token transformers for tool-specific formats
+- [MCP Integration Guide](mcp-integration-guide) - Programmatic token loading, parsing, and querying
 
 ### Component Development
-- [Component Development Guide](./Component-Development-Guide.md) - Token selection and component patterns
-- [Stemma System Principles](./stemma-system-principles.md) - Component hierarchy and relationships
-- [Contract System Reference](./Contract-System-Reference.md) - Behavioral contracts that component tokens satisfy
+- [Component Development Guide](component-development-guide) - Token selection and component patterns
+- [Stemma System Principles](stemma-system-principles) - Component hierarchy and relationships
+- [Contract System Reference](contract-system-reference) - Behavioral contracts that component tokens satisfy
 
 ---
 

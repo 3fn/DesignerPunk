@@ -627,10 +627,10 @@ class InputTextBaseContractTest {
 
 ## Related Documentation
 
-- [Stemma System Principles](./stemma-system-principles.md) - Core behavioral contract definitions
-- [Component Schema Format Specification](./Component-Schema-Format.md) - Schema structure for contracts
-- [Component Development Guide](./Component-Development-Guide.md) - Component implementation guidance
-- [Test Development Standards](./Test-Development-Standards.md) - Testing methodology
+- [Stemma System Principles](stemma-system-principles) - Core behavioral contract definitions
+- [Component Schema Format Specification](component-schema-format) - Schema structure for contracts
+- [Component Development Guide](component-development-guide) - Component implementation guidance
+- [Test Development Standards](test-development-standards) - Testing methodology
 
 ---
 

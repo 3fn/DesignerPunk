@@ -24,8 +24,8 @@ The Component Readiness Status System provides standardized indicators that comm
 **Key Principle**: Readiness status must be consistent across all documentation surfaces—Component Quick Reference, MCP documentation, component schemas, and implementations.
 
 **Related Documentation**:
-- [Stemma System Principles](./stemma-system-principles.md) - Core principles and governance
-- [Component Schema Format Specification](./Component-Schema-Format.md) - Schema structure including readiness field
+- [Stemma System Principles](stemma-system-principles) - Core principles and governance
+- [Component Schema Format Specification](component-schema-format) - Schema structure including readiness field
 
 ---
 
@@ -651,9 +651,9 @@ When AI agents encounter readiness-related issues:
 
 ## Related Documentation
 
-- [Stemma System Principles](./stemma-system-principles.md) - Core principles and governance
-- [Component Schema Format Specification](./Component-Schema-Format.md) - Schema structure
-- [Component Quick Reference](./Component-Quick-Reference.md) - Component routing table
+- [Stemma System Principles](stemma-system-principles) - Core principles and governance
+- [Component Schema Format Specification](component-schema-format) - Schema structure
+- [Component Quick Reference](component-quick-reference) - Component routing table
 
 ---
 

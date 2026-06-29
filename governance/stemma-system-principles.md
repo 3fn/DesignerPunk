@@ -57,7 +57,7 @@ Family (e.g., Form Inputs)
 
 Each component guarantees consistent behaviors across platforms through explicit contracts documented in per-component `contracts.yaml` files.
 
-> For the complete contract system reference — taxonomy, naming convention, format specification, and classification rules — see [Contract-System-Reference.md](./Contract-System-Reference.md).
+> For the complete contract system reference — taxonomy, naming convention, format specification, and classification rules — see [Contract-System-Reference.md](contract-system-reference).
 
 **Contract Rules**:
 1. Contracts define WHAT behavior occurs, not HOW it's implemented
@@ -468,7 +468,7 @@ Name: Avatar-User-Profile
 3. Deprecation requires: migration path documented, replacement identified
 4. Status changes require Human-AI checkpoint
 
-**Detailed Guidance**: For comprehensive readiness status definitions, usage recommendations, transition checklists, and consistency requirements, see [Component Readiness Status System](./Component-Readiness-Status.md).
+**Detailed Guidance**: For comprehensive readiness status definitions, usage recommendations, transition checklists, and consistency requirements, see [Component Readiness Status System](component-readiness-status).
 
 
 
@@ -476,7 +476,7 @@ Name: Avatar-User-Profile
 
 ## Component Schema Format
 
-**Detailed Specification**: For the complete formal schema specification including validation rules, inheritance resolution, and tooling integration, see [Component Schema Format Specification](./Component-Schema-Format.md).
+**Detailed Specification**: For the complete formal schema specification including validation rules, inheritance resolution, and tooling integration, see [Component Schema Format Specification](component-schema-format).
 
 ### YAML Schema Structure
 
@@ -643,7 +643,7 @@ Input-Text-Email:
 
 ## Primitive vs Semantic Usage Philosophy
 
-**Detailed Guidance**: For comprehensive decision frameworks, examples, and anti-patterns, see [Primitive vs Semantic Usage Philosophy](./Component-Primitive-vs-Semantic-Philosophy.md).
+**Detailed Guidance**: For comprehensive decision frameworks, examples, and anti-patterns, see [Primitive vs Semantic Usage Philosophy](primitive-vs-semantic-usage-philosophy).
 
 ### Key Distinction from Token Philosophy
 
@@ -886,14 +886,14 @@ get_section({ path: ".kiro/steering/stemma-system-principles.md", heading: "Comp
 
 ## Related Documentation
 
-- [Civitas System Overview](./Civitas-System-Overview.md) - Governance foundation for operational consistency
-- [DesignerPunk Systems Overview](./DesignerPunk-Systems-Overview.md) - Visual architecture of all three systems
-- [Primitive vs Semantic Usage Philosophy](./Component-Primitive-vs-Semantic-Philosophy.md) - Comprehensive decision guidance for component selection
-- [Component Schema Format Specification](./Component-Schema-Format.md) - Formal schema structure and validation rules
-- [Component Readiness Status System](./Component-Readiness-Status.md) - Comprehensive readiness status definitions and transition guidelines
-- [Component Development Guide](./Component-Development-Guide.md) - Token selection and component patterns
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation routing
-- [Cross-Platform vs Platform-Specific Decision Framework](./Cross-Platform vs Platform-Specific Decision Framework.md) - Platform decision guidance
+- [Civitas System Overview](civitas-system-overview) - Governance foundation for operational consistency
+- [DesignerPunk Systems Overview](designerpunk-systems-overview) - Visual architecture of all three systems
+- [Primitive vs Semantic Usage Philosophy](primitive-vs-semantic-usage-philosophy) - Comprehensive decision guidance for component selection
+- [Component Schema Format Specification](component-schema-format) - Formal schema structure and validation rules
+- [Component Readiness Status System](component-readiness-status) - Comprehensive readiness status definitions and transition guidelines
+- [Component Development Guide](component-development-guide) - Token selection and component patterns
+- [Token Quick Reference](token-quick-reference) - Token documentation routing
+- [Cross-Platform vs Platform-Specific Decision Framework](cross-platform-vs-platform-specific-decision-framework) - Platform decision guidance
 
 ---
 

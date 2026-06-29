@@ -1,6 +1,6 @@
 ---
 id: process-development-workflow
-inclusion: always
+inclusion: manual
 name: Process-Development-Workflow
 description: Development workflow and task completion practices — task completion sequence, git practices, hook system usage, commit standards, and quality validation. Load when completing tasks, committing changes, or debugging hook issues.
 ---

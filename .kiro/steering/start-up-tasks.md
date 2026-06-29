@@ -2,14 +2,14 @@
 id: start-up-tasks
 inclusion: always
 name: Start-Up-Tasks
-description: Essential startup checklist — date verification, Jest test commands, test selection guidelines, and task completion sequence. Load when beginning any task execution, running tests, or completing tasks.
+description: Essential pre-task checklist — date verification, governance health check, Jest test commands, test selection guidelines, and authorization-to-start rules. Load when beginning any task execution or running tests. (End-of-task sequence lives in Task Completion Protocol.)
 ---
 
 # Start Up Tasks
 
 **Date**: 2025-10-20
 **Last Reviewed**: 2026-01-03
-**Purpose**: Essential checklist for every task (date check, Jest commands, test selection, completion sequence)
+**Purpose**: Essential pre-task checklist for every task (date check, governance health, Jest commands, test selection, authorization-to-start). End-of-task sequence: see Task Completion Protocol.
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 1
@@ -19,7 +19,7 @@ description: Essential startup checklist — date verification, Jest test comman
 
 2. **Civitas Governance Health Check**
    
-   IF it's been >30 days since last governance health check **[2026-05-03]**, THEN flag: "Governance health check overdue — switch to Thurgood (`ctrl+shift+t`) to run monthly health check before proceeding."
+   IF it's been >30 days since last governance health check **[2026-05-03]**, THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the monthly health check before proceeding."
    
    *Only Thurgood runs the health check. All agents check the date and flag if overdue.*
 
@@ -106,48 +106,8 @@ description: Essential startup checklist — date verification, Jest test comman
    
    **Default assumption**: Use `npm test` for parent tasks unless working on release tool or performance systems.
 
-6. **CRITICAL: Task Completion Sequence (MUST FOLLOW)**
+6. **Ending a task: see Task Completion Protocol**
    
-   **DO NOT mark tasks complete before completing the required steps for that task type.**
+   The end-of-task sequence (when to write completion docs, which tier, the parent-vs-subtask distinction, and the stop-and-wait-for-authorization rule) is **operational law in the always-loaded Task Completion Protocol** — it is already in context. Follow it when completing any task or subtask.
    
-   **📖 Query Completion Documentation Guide via MCP for detailed guidance:**
-   ```
-   get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Two-Document Workflow" })
-   get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Documentation Tiers" })
-   ```
-   
-   ---
-   
-   **For SUBTASKS:**
-   1. [ ] Run targeted tests relevant to the change (not full suite)
-   2. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-M-completion.md`
-   3. [ ] Mark subtask complete (use `taskStatus` tool)
-   4. [ ] **STOP** and wait for user authorization
-   
-   ---
-   
-   **For PARENT TASKS (Implementation or Architecture type):**
-   1. [ ] Run full validation (`npm test`) - see #4 for test command selection
-   2. [ ] Mark parent task complete (use `taskStatus` tool) **AFTER** validation passes
-   3. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md`
-   4. [ ] Create summary doc: `docs/specs/[spec]/task-N-summary.md`
-   5. [ ] Commit changes: `./.kiro/hooks/commit-task.sh "Task N Complete: Description"` (runs release analysis automatically)
-   6. [ ] **STOP** and wait for user authorization
-   
-   ---
-   
-   **For PARENT TASKS (Setup or Documentation type):**
-   1. [ ] Verify artifacts created/updated as specified
-   2. [ ] Mark parent task complete (use `taskStatus` tool)
-   3. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md`
-   4. [ ] Create summary doc: `docs/specs/[spec]/task-N-summary.md`
-   5. [ ] Commit changes: `./.kiro/hooks/commit-task.sh "Task N Complete: Description"` (runs release analysis automatically)
-   6. [ ] **STOP** and wait for user authorization
-   
-   ---
-   
-   **Key Rules:**
-   - **Implementation/Architecture tasks**: Validation MUST pass before marking complete
-   - **All parent tasks**: Create BOTH completion doc AND summary doc
-   - **All tasks**: STOP after completion - never auto-proceed to next task
-   - **Task types are defined in tasks.md** - check the `**Type**:` field
+   **One rule worth restating here at the start:** when you report a task complete, **STOP and wait for user authorization** before starting the next one (see #3 above). Task Completion Protocol owns the rest of the end-of-task sequence.

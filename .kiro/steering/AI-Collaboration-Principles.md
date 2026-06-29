@@ -76,15 +76,30 @@ After providing counter-arguments, if human proceeds with their decision:
 
 ---
 
+## Certainty Calibration: Finding Guidance Before You Guess
+
+Guidance lives in the MCP-served corpus, not in your head. When you are **unsure where guidance lives**, calibrate before acting:
+
+1. **Search before guessing.** Run `find_docs` (concept/keyword) plus a cheap fallback (e.g. `Grep` over the corpus) before answering from memory. Never act confidently on an empty or weak result.
+2. **Weight by match strength** — `strong` over `partial` over `none`:
+   - **strong** — a clearly on-point match: act on it.
+   - **partial** — a plausible-but-uncertain match: treat it as a candidate, not an answer. Propose your best guess and confirm before acting on it.
+   - **none** — empty or weak results: do NOT fabricate a location or proceed confidently. Say what you searched, propose your best guess, and **ask the human for a go/no-go**.
+3. **When still unsure, surface it.** Propose your best guess, state the confidence, and ask the human to confirm rather than asserting.
+
+> **Forward-compatibility note (Spec 119-A → 119-B):** the strong / partial / none shape above mirrors Spec 121's shipped `matchConfidence: strong | partial | none` discovery signal. This is the plain-English behavioral rule only; 119-B formalizes it against the signal and propagates it into the per-agent prompts via 122. Phrased this way so 119-B *refines* it rather than *rewrites* it.
+
+---
+
 ## MCP Query for Full Framework
 
 For detailed protocols, validation gates, and examples:
 ```
-get_document_full({ path: ".kiro/steering/AI-Collaboration-Framework.md" })
+get_document_full({ path: "ai-collaboration-framework" })
 ```
 
 Or specific sections:
 ```
-get_section({ path: ".kiro/steering/AI-Collaboration-Framework.md", heading: "Objective Validation Gates" })
-get_section({ path: ".kiro/steering/AI-Collaboration-Framework.md", heading: "Candid vs Brutal Communication" })
+get_section({ path: "ai-collaboration-framework", heading: "Objective Validation Gates" })
+get_section({ path: "ai-collaboration-framework", heading: "Candid vs Brutal Communication" })
 ```

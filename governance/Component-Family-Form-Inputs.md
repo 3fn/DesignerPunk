@@ -984,8 +984,8 @@ Form Inputs components resolve tokens through the Rosetta System's semantic-to-p
 
 ### Related Token Documentation
 
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token routing table
-- [Typography Tokens](./Token-Family-Typography.md) - Typography token details
+- [Token Quick Reference](token-quick-reference) - Token routing table
+- [Typography Tokens](token-family-typography) - Typography token details
 
 ---
 
@@ -1358,8 +1358,8 @@ All platforms implement the same behavioral contracts:
 ## Related Documentation
 
 - [Family Guidance (Machine-Queryable)](../family-guidance/form-inputs.yaml) - Companion YAML for Application MCP — **read-both protocol: read this doc before modifying the companion YAML, and vice versa**
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation
-- [MCP Component Family Document Template](./Component-MCP-Document-Template.md) - Template specification
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
+- [Token Quick Reference](token-quick-reference) - Token documentation
+- [MCP Component Family Document Template](mcp-component-family-document-template) - Template specification
 - [Input-Text-Base Schema](../../src/components/core/Input-Text-Base/Input-Text-Base.schema.yaml) - Full schema definition

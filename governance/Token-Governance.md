@@ -639,18 +639,18 @@ get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Creati
 
 ## Related Documentation
 
-- [Token-Family-Color](./Token-Family-Color.md) — Complete color token reference with concept-first organization
-- [Rosetta System Architecture](./Rosetta-System-Architecture.md) — Token pipeline architecture
-- [Rosetta System Principles](./rosetta-system-principles.md) — Mathematical foundations
-- [Token Quick Reference](./Token-Quick-Reference.md) — Token documentation routing
+- [Token-Family-Color](token-family-color) — Complete color token reference with concept-first organization
+- [Rosetta System Architecture](rosetta-system-architecture) — Token pipeline architecture
+- [Rosetta System Principles](rosetta-system-principles) — Mathematical foundations
+- [Token Quick Reference](token-quick-reference) — Token documentation routing
 - [Token Category Pattern Guide](../specs/token-system/token-category-pattern-guide.md) — Detailed primitive/semantic creation patterns
-- [Core Goals](./Core%20Goals.md) — Project principles including token-first approach
+- [Core Goals](core-goals) — Project principles including token-first approach
 - [Design Authority](../specs/051-semantic-token-naming-restructure/design-outline.md) — Semantic token naming restructure design
 
 ### DTCG Integration
-- [DTCG Integration Guide](./DTCG-Integration-Guide.md) — Integrating DesignerPunk tokens with external design tools via DTCG format
-- [Figma Workflow Guide](./Figma-Workflow-Guide.md) — Bidirectional Figma integration: token push and design extraction
-- [Transformer Development Guide](./Transformer-Development-Guide.md) — Building custom token transformers for tool-specific formats
+- [DTCG Integration Guide](dtcg-integration-guide) — Integrating DesignerPunk tokens with external design tools via DTCG format
+- [Figma Workflow Guide](figma-workflow-guide) — Bidirectional Figma integration: token push and design extraction
+- [Transformer Development Guide](transformer-development-guide) — Building custom token transformers for tool-specific formats
 
 ---
 

@@ -469,10 +469,10 @@ This produces `dist/DesignTokens.dtcg.json` which both push and extraction workf
 
 ## Related Documentation
 
-- [DTCG Integration Guide](./dtcg-integration-guide.md) — DTCG format details, token type mapping, Style Dictionary and Tokens Studio integration
-- [Token Governance](./../.kiro/steering/Token-Governance.md) — Token selection, usage, and creation governance; autonomy levels for different token types
-- [Component Development Guide](./../.kiro/steering/Component-Development-Guide.md) — Component implementation guidance, token selection decision framework
-- [Spec Planning Standards](./../.kiro/steering/Process-Spec-Planning.md) — Spec formalization process (requirements → design → tasks)
+- [DTCG Integration Guide](dtcg-integration-guide) — DTCG format details, token type mapping, Style Dictionary and Tokens Studio integration
+- [Token Governance](token-governance) — Token selection, usage, and creation governance; autonomy levels for different token types
+- [Component Development Guide](component-development-guide) — Component implementation guidance, token selection decision framework
+- [Spec Planning Standards](process-spec-planning) — Spec formalization process (requirements → design → tasks)
 - [Token System Overview](./token-system-overview.md) — Complete Rosetta token system documentation
 - [Spec 054a Design](./../.kiro/specs/054a-figma-token-push/design.md) — Token push architecture and implementation details
 - [Spec 054b Design](./../.kiro/specs/054b-figma-design-extract/design.md) — Design extraction architecture (054b) and hierarchical analysis (054d)

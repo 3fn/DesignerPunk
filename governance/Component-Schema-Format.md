@@ -46,18 +46,18 @@ description: Formal specification for Stemma System component schema YAML files 
 **WHEN understanding schema vs. contracts split THEN read:**
 1. ✅ **Overview** — schema YAML vs. contracts.yaml distinction
 2. ✅ **File Location** — directory structure
-3. ✅ Then query [Contract System Reference](./Contract-System-Reference.md) for the contracts side
+3. ✅ Then query [Contract System Reference](contract-system-reference) for the contracts side
 
 ---
 
 This document defines the YAML schema structure for Stemma System components. Each component has a `[Component].schema.yaml` file that defines its structural identity — what it is, what properties it exposes, and how it relates to other components.
 
-**Schema YAML vs. contracts.yaml**: Schema YAML defines structure (identity, properties, platform notes, composition). Behavioral contracts live in a separate `contracts.yaml` file. See [Contract System Reference](./Contract-System-Reference.md) for the contract format.
+**Schema YAML vs. contracts.yaml**: Schema YAML defines structure (identity, properties, platform notes, composition). Behavioral contracts live in a separate `contracts.yaml` file. See [Contract System Reference](contract-system-reference) for the contract format.
 
 **Related Documentation**:
-- [Contract System Reference](./Contract-System-Reference.md) — Behavioral contract format and taxonomy
-- [Stemma System Principles](./stemma-system-principles.md) — Core principles and governance
-- [Component Development Guide](./Component-Development-Guide.md) — Implementation guidance
+- [Contract System Reference](contract-system-reference) — Behavioral contract format and taxonomy
+- [Stemma System Principles](stemma-system-principles) — Core principles and governance
+- [Component Development Guide](component-development-guide) — Implementation guidance
 
 ---
 
@@ -124,7 +124,7 @@ Four component types exist in practice:
 readiness: production-ready | development | beta | placeholder | deprecated
 ```
 
-See [Component Readiness Status System](./Component-Readiness-Status.md) for detailed definitions and transition guidelines.
+See [Component Readiness Status System](component-readiness-status) for detailed definitions and transition guidelines.
 
 ---
 
@@ -372,8 +372,8 @@ Components follow `[Family]-[Type]-[Variant]`:
 
 ## Related Documentation
 
-- [Contract System Reference](./Contract-System-Reference.md) — Behavioral contract format (contracts.yaml)
-- [Stemma System Principles](./stemma-system-principles.md) — Core principles and governance
-- [Component Readiness Status System](./Component-Readiness-Status.md) — Readiness status definitions
-- [Component Development Guide](./Component-Development-Guide.md) — Implementation guidance
-- [Token Quick Reference](./Token-Quick-Reference.md) — Token documentation routing
+- [Contract System Reference](contract-system-reference) — Behavioral contract format (contracts.yaml)
+- [Stemma System Principles](stemma-system-principles) — Core principles and governance
+- [Component Readiness Status System](component-readiness-status) — Readiness status definitions
+- [Component Development Guide](component-development-guide) — Implementation guidance
+- [Token Quick Reference](token-quick-reference) — Token documentation routing

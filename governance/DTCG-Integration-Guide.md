@@ -503,7 +503,7 @@ Tokens Studio preserves `$extensions` metadata but doesn't display it in the UI 
 
 DesignerPunk supports bidirectional Figma integration: pushing tokens to Figma as Variables and Styles, and extracting validated designs back into design outlines. The DTCG file (`dist/DesignTokens.dtcg.json`) serves as the interchange format for both workflows.
 
-For complete Figma integration documentation — including MCP setup, Desktop Bridge configuration, CLI commands, drift detection, design extraction, troubleshooting, and authentication — see the [Figma Workflow Guide](./figma-workflow-guide.md).
+For complete Figma integration documentation — including MCP setup, Desktop Bridge configuration, CLI commands, drift detection, design extraction, troubleshooting, and authentication — see the [Figma Workflow Guide](figma-workflow-guide).
 
 ---
 
@@ -567,7 +567,7 @@ generator.writeToFile('dist/DesignTokens.resolved.dtcg.json');
 ## Related Documentation
 
 - [DTCG Format Module 2025.10 Specification](https://tr.designtokens.org/format/)
-- [Figma Workflow Guide](./figma-workflow-guide.md) — Complete Figma integration: token push, design extraction, MCP setup, Desktop Bridge, troubleshooting
+- [Figma Workflow Guide](figma-workflow-guide) — Complete Figma integration: token push, design extraction, MCP setup, Desktop Bridge, troubleshooting
 - [Token System Overview](./token-system-overview.md) — Complete Rosetta token system documentation
-- [Transformer Development Guide](./Transformer-Development-Guide.md) — Building custom transformers for tool-specific output
-- [MCP Integration Guide](./MCP-Integration-Guide.md) — Loading and querying DTCG tokens programmatically
+- [Transformer Development Guide](transformer-development-guide) — Building custom transformers for tool-specific output
+- [MCP Integration Guide](mcp-integration-guide) — Loading and querying DTCG tokens programmatically

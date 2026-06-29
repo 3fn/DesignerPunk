@@ -134,8 +134,8 @@ Loading-Base (Primitive) [PLANNED]
 
 ## Related Documentation
 
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
 
 ---
 

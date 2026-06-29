@@ -71,7 +71,7 @@ Vertical offsets scale with depth (all positive - shadows fall downward):
 
 ### Shadow Blur Tokens
 
-Shadow blur primitives are part of the unified Blur Token Family. See [Token-Family-Blur.md](Token-Family-Blur.md) for the complete blur primitive scale.
+Shadow blur primitives are part of the unified Blur Token Family. See [Token-Family-Blur.md](token-family-blur) for the complete blur primitive scale.
 
 Shadow composites reference these blur primitives:
 
@@ -745,12 +745,12 @@ Shadow values preferably align to the 4px baseline grid:
 
 ## Related Documentation
 
-- [Glow Token Documentation](./Token-Family-Glow.md) - Glow primitive tokens for emphasis effects
+- [Glow Token Documentation](token-family-glow) - Glow primitive tokens for emphasis effects
 - [Token System Overview](../../docs/token-system-overview.md) - Complete token system architecture
 - [Shadow and Glow Design Document](../../.kiro/specs/shadow-glow-token-system/design.md) - Detailed design decisions and rationale
 - [Shadow and Glow Requirements](../../.kiro/specs/shadow-glow-token-system/requirements.md) - System requirements and acceptance criteria
-- [Component Development Guide](./Component-Development-Guide.md) - Token usage in component development
-- [Token Resolution Patterns](./Token-Resolution-Patterns.md) - Strategic guidance on token type selection and validation
+- [Component Development Guide](component-development-guide) - Token usage in component development
+- [Token Resolution Patterns](token-resolution-patterns) - Strategic guidance on token type selection and validation
 
 ---
 

@@ -580,13 +580,13 @@ get_section({ path: ".kiro/steering/rosetta-system-principles.md", heading: "Mat
 
 ## Related Documentation
 
-- [Stemma System Principles](./stemma-system-principles.md) - Relational foundation for component development
-- [Civitas System Overview](./Civitas-System-Overview.md) - Governance foundation for operational consistency
-- [DesignerPunk Systems Overview](./DesignerPunk-Systems-Overview.md) - Visual architecture of all three systems
+- [Stemma System Principles](stemma-system-principles) - Relational foundation for component development
+- [Civitas System Overview](civitas-system-overview) - Governance foundation for operational consistency
+- [DesignerPunk Systems Overview](designerpunk-systems-overview) - Visual architecture of all three systems
 - [Token System Overview](../../docs/token-system-overview.md) - Master document mapping token files
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation routing
+- [Token Quick Reference](token-quick-reference) - Token documentation routing
 - [Token Architecture 2.0 Mathematics](../../preserved-knowledge/token-architecture-2-0-mathematics.md) - Detailed mathematical formulas
-- [Component Development Guide](./Component-Development-Guide.md) - Token selection and component patterns
+- [Component Development Guide](component-development-guide) - Token selection and component patterns
 
 ---
 

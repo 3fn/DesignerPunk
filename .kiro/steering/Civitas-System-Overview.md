@@ -124,11 +124,11 @@ The three systems form a complete design system ecosystem: Rosetta defines the v
 
 For the full document:
 ```
-get_document_full({ path: ".kiro/steering/Civitas-System-Overview.md" })
+get_document_full({ path: "civitas-system-overview" })
 ```
 
 For specific sections:
 ```
-get_section({ path: ".kiro/steering/Civitas-System-Overview.md", heading: "The Three-Layer Boundary" })
-get_section({ path: ".kiro/steering/Civitas-System-Overview.md", heading: "Relationship to Rosetta and Stemma" })
+get_section({ path: "civitas-system-overview", heading: "The Three-Layer Boundary" })
+get_section({ path: "civitas-system-overview", heading: "Relationship to Rosetta and Stemma" })
 ```

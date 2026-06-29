@@ -503,6 +503,6 @@ if (motionToken && typeof motionToken.$value === 'object') {
 
 ## Related Documentation
 
-- [DTCG Integration Guide](./dtcg-integration-guide.md) — DTCG format overview, token groups, extensions schema, tool integrations
-- [Transformer Development Guide](./transformer-development-guide.md) — Building custom transformers for tool-specific output
+- [DTCG Integration Guide](dtcg-integration-guide) — DTCG format overview, token groups, extensions schema, tool integrations
+- [Transformer Development Guide](transformer-development-guide) — Building custom transformers for tool-specific output
 - [DTCG Format Module 2025.10 Specification](https://tr.designtokens.org/format/)

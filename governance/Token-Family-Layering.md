@@ -673,11 +673,11 @@ Tokens are ordered from lowest to highest stacking order:
 
 ## Related Documentation
 
-- [Shadow Tokens](./Token-Family-Shadow.md) - Shadow token system that integrates with layering tokens
-- [Glow Tokens](./Token-Family-Glow.md) - Glow token system for visual effects
+- [Shadow Tokens](token-family-shadow) - Shadow token system that integrates with layering tokens
+- [Glow Tokens](token-family-glow) - Glow token system for visual effects
 - [Token System Overview](../../docs/token-system-overview.md) - Complete token system architecture
-- [Component Development Guide](./Component-Development-Guide.md) - Token usage in component development
-- [Token Resolution Patterns](./Token-Resolution-Patterns.md) - Strategic guidance on token type selection and validation
+- [Component Development Guide](component-development-guide) - Token usage in component development
+- [Token Resolution Patterns](token-resolution-patterns) - Strategic guidance on token type selection and validation
 
 ---
 

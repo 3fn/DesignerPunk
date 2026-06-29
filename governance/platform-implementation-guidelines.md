@@ -29,7 +29,7 @@ This document provides guidelines for implementing Stemma System components acro
 
 ### 1. Behavioral Contract Compliance
 
-Every platform implementation MUST honor all behavioral contracts defined in the component's `contracts.yaml` file (see [Contract System Reference](./Contract-System-Reference.md)).
+Every platform implementation MUST honor all behavioral contracts defined in the component's `contracts.yaml` file (see [Contract System Reference](contract-system-reference)).
 
 **Compliance Checklist**:
 ```yaml
@@ -805,12 +805,12 @@ Modifier.size(SizeVariant.MEDIUM.dp)  // .dp on enum property, not token
 
 ## Related Documentation
 
-- [Web Authoring Standards](./Web-Authoring-Standards.md) - Shared CSS quality rules for web platform work (logical properties, token priority, accessibility patterns, product token authoring)
-- [Behavioral Contract Validation Framework](./Test-Behavioral-Contract-Validation.md) - Validation criteria and checklists
-- [Stemma System Principles](./stemma-system-principles.md) - Core behavioral contract definitions
-- [Component Schema Format Specification](./Component-Schema-Format.md) - Schema structure for component definitions
-- [Contract System Reference](./Contract-System-Reference.md) - Behavioral contract format, taxonomy, and naming conventions
-- [Component Development Guide](./Component-Development-Guide.md) - Component implementation guidance
+- [Web Authoring Standards](web-authoring-standards) - Shared CSS quality rules for web platform work (logical properties, token priority, accessibility patterns, product token authoring)
+- [Behavioral Contract Validation Framework](test-behavioral-contract-validation) - Validation criteria and checklists
+- [Stemma System Principles](stemma-system-principles) - Core behavioral contract definitions
+- [Component Schema Format Specification](component-schema-format) - Schema structure for component definitions
+- [Contract System Reference](contract-system-reference) - Behavioral contract format, taxonomy, and naming conventions
+- [Component Development Guide](component-development-guide) - Component implementation guidance
 
 ---
 

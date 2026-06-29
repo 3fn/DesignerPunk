@@ -516,8 +516,8 @@ Button components resolve tokens through the Rosetta System's semantic-to-primit
 
 ### Related Token Documentation
 
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token routing table
-- [Blend Tokens](./Token-Family-Blend.md) - Blend token details
+- [Token Quick Reference](token-quick-reference) - Token routing table
+- [Blend Tokens](token-family-blend) - Blend token details
 
 ---
 
@@ -658,12 +658,12 @@ All platforms implement the same behavioral contracts:
 ## Related Documentation
 
 - [Family Guidance (Machine-Queryable)](../family-guidance/button.yaml) - Companion YAML for Application MCP — **read-both protocol: read this doc before modifying the companion YAML, and vice versa**
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation
-- [Token-Family-Color](./Token-Family-Color.md) - Color token reference including action, feedback, and contrast concepts
-- [Token Governance](./Token-Governance.md) - Token selection and usage governance
-- [MCP Component Family Document Template](./Component-MCP-Document-Template.md) - Template specification
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
+- [Token Quick Reference](token-quick-reference) - Token documentation
+- [Token-Family-Color](token-family-color) - Color token reference including action, feedback, and contrast concepts
+- [Token Governance](token-governance) - Token selection and usage governance
+- [MCP Component Family Document Template](mcp-component-family-document-template) - Template specification
 - [Button-CTA Schema](../../src/components/core/Button-CTA/Button-CTA.schema.yaml) - Full schema definition
 - [Button-VerticalList-Set README](../../src/components/core/Button-VerticalList-Set/README.md) - Set component documentation
 - [Button-VerticalList-Item README](../../src/components/core/Button-VerticalList-Item/README.md) - Item component documentation

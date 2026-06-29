@@ -26,9 +26,9 @@ This document provides copy-paste templates for creating new component families 
 **Usage**: Copy the appropriate template, replace placeholders (marked with `[PLACEHOLDER]`), and customize for your specific component.
 
 **Related Documentation**:
-- [Component Family Development Standards](./Component-Development-Standards.md) - Step-by-step process
-- [Stemma System Principles](./stemma-system-principles.md) - Core architecture
-- [MCP Component Family Document Template](./Component-MCP-Document-Template.md) - Documentation template
+- [Component Family Development Standards](component-development-standards) - Step-by-step process
+- [Stemma System Principles](stemma-system-principles) - Core architecture
+- [MCP Component Family Document Template](mcp-component-family-document-template) - Documentation template
 
 ---
 
@@ -1105,11 +1105,11 @@ renders_svg:
 
 ## Related Documentation
 
-- [Component Family Development Standards](./Component-Development-Standards.md) - Step-by-step process
-- [Stemma System Principles](./stemma-system-principles.md) - Core architecture and governance
-- [MCP Component Family Document Template](./Component-MCP-Document-Template.md) - Documentation template
-- [Component Family Inheritance Structures](./Component-Inheritance-Structures.md) - All family structures
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
+- [Component Family Development Standards](component-development-standards) - Step-by-step process
+- [Stemma System Principles](stemma-system-principles) - Core architecture and governance
+- [MCP Component Family Document Template](mcp-component-family-document-template) - Documentation template
+- [Component Family Inheritance Structures](component-inheritance-structures) - All family structures
+- [Component Quick Reference](component-quick-reference) - Family routing table
 - [Family Guidance Schema](../family-guidance/README.md) - YAML schema for family guidance files
 
 ---

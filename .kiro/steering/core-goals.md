@@ -60,8 +60,8 @@ DesignerPunk is a True Native cross-platform design system with mathematical fou
 
 **For detailed governance**, query Token Governance via MCP:
 ```
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Selection Matrix" })
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Usage Governance" })
+get_section({ path: "token-governance", heading: "Token Selection Matrix" })
+get_section({ path: "token-governance", heading: "Token Usage Governance" })
 ```
 
 **Token Selection Priority (MUST follow this order):**

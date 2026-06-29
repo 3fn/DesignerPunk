@@ -392,11 +392,11 @@ Create a semantic component when:
 
 ## Related Documentation
 
-- [Stemma System Principles](./stemma-system-principles.md) - Core component architecture principles
-- [Contract System Reference](./Contract-System-Reference.md) - Behavioral contracts and Concept Catalog
-- [Component Development Guide](./Component-Development-Guide.md) - Token selection framework
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation routing
-- [Component Schema Format](./Component-Schema-Format.md) - Component definition structure
+- [Stemma System Principles](stemma-system-principles) - Core component architecture principles
+- [Contract System Reference](contract-system-reference) - Behavioral contracts and Concept Catalog
+- [Component Development Guide](component-development-guide) - Token selection framework
+- [Token Quick Reference](token-quick-reference) - Token documentation routing
+- [Component Schema Format](component-schema-format) - Component definition structure
 
 ---
 

@@ -25,9 +25,9 @@ This document defines the standard structure for component family MCP documentat
 4. **Cross-Platform Coverage**: All platforms documented consistently
 
 **Related Documentation**:
-- [Component Quick Reference](./Component-Quick-Reference.md) - Routing table for all families
-- [Stemma System Principles](./stemma-system-principles.md) - Core architecture
-- [Component Schema Format](./Component-Schema-Format.md) - YAML schema specification
+- [Component Quick Reference](component-quick-reference) - Routing table for all families
+- [Stemma System Principles](stemma-system-principles) - Core architecture
+- [Component Schema Format](component-schema-format) - YAML schema specification
 
 ---
 
@@ -276,7 +276,7 @@ Components in this family consume these design tokens:
 
 ### Related Token Documentation
 
-- [Token Quick Reference](./Token-Quick-Reference.md)
+- [Token Quick Reference](token-quick-reference)
 - [Specific token guide if applicable]
 ```
 
@@ -379,10 +379,10 @@ Components in this family consume these design tokens:
 ```markdown
 ## Related Documentation
 
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
-- [Component Schema Format](./Component-Schema-Format.md) - YAML schema specification
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
+- [Component Schema Format](component-schema-format) - YAML schema specification
+- [Token Quick Reference](token-quick-reference) - Token documentation
 - [Specific related guide] - [Description]
 ```
 
@@ -646,8 +646,8 @@ inclusion: manual
 
 ## Related Documentation
 
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
 
 ---
 

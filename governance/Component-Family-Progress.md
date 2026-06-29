@@ -328,7 +328,7 @@ All values align to the 4px baseline grid.
 
 ### Related Token Documentation
 
-- [Token Quick Reference](./Token-Quick-Reference.md)
+- [Token Quick Reference](token-quick-reference)
 
 ---
 
@@ -469,10 +469,10 @@ Platform parity is verified by dedicated test suite (`src/__tests__/platform-par
 
 ## Related Documentation
 
-- [Component Quick Reference](./Component-Quick-Reference.md) — Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) — Architecture overview
-- [Component MCP Document Template](./Component-MCP-Document-Template.md) — Template this document follows
-- [Token Quick Reference](./Token-Quick-Reference.md) — Token documentation
+- [Component Quick Reference](component-quick-reference) — Family routing table
+- [Stemma System Principles](stemma-system-principles) — Architecture overview
+- [Component MCP Document Template](mcp-component-family-document-template) — Template this document follows
+- [Token Quick Reference](token-quick-reference) — Token documentation
 - [Node-Base README](../../src/components/core/Progress-Indicator-Node-Base/README.md) — Primitive node component
 - [Connector-Base README](../../src/components/core/Progress-Indicator-Connector-Base/README.md) — Primitive connector component
 - [Label-Base README](../../src/components/core/Progress-Indicator-Label-Base/README.md) — Primitive label component

@@ -130,9 +130,9 @@ AI agents should pause implementation and ask Peter for clarification when:
 - **Tooling will enforce this** through TypeScript types and tests
 - **If placeholders are needed during development**, pause and ask for guidance
 
-**For strategic guidance on cross-platform decisions**, see [Cross-Platform vs Platform-Specific Decision Framework](./Cross-Platform vs Platform-Specific Decision Framework.md)
+**For strategic guidance on cross-platform decisions**, see [Cross-Platform vs Platform-Specific Decision Framework](cross-platform-vs-platform-specific-decision-framework)
 
-**For strategic guidance on token resolution**, see [Token Resolution Patterns](./Token-Resolution-Patterns.md)
+**For strategic guidance on token resolution**, see [Token Resolution Patterns](token-resolution-patterns)
 
 ---
 
@@ -172,7 +172,7 @@ AI agents should pause implementation and ask Peter for clarification when:
 
 **Why this matters**: Token gaps often indicate design system opportunities. Pausing to discuss prevents premature decisions and helps the design system evolve intentionally.
 
-**For strategic guidance on token resolution**, see [Token Resolution Patterns](./Token-Resolution-Patterns.md)
+**For strategic guidance on token resolution**, see [Token Resolution Patterns](token-resolution-patterns)
 
 ### Step 3: Create Component-Level Tokens for Variants
 
@@ -916,7 +916,7 @@ Before implementing icons in a component, verify:
 - Sizing tokens vs platform accessibility requirements (44pt iOS touch targets)
 - Color tokens vs platform-specific UI conventions (system colors, semantic colors)
 
-**Decision framework**: See [Cross-Platform vs Platform-Specific Decision Framework](./Cross-Platform vs Platform-Specific Decision Framework.md) for strategic guidance on when to prioritize cross-platform consistency vs platform-appropriate UX.
+**Decision framework**: See [Cross-Platform vs Platform-Specific Decision Framework](cross-platform-vs-platform-specific-decision-framework) for strategic guidance on when to prioritize cross-platform consistency vs platform-appropriate UX.
 
 **Why this matters**: Platform idioms often provide superior UX, but deviating from tokens affects design system consistency. These decisions require design judgment, not assumptions.
 
@@ -1176,7 +1176,7 @@ const hoverColor = blendUtils.hoverColor(primaryColor);
 
 ### Related Documentation
 
-- [Blend Tokens Guide](Token-Family-Blend.md) - Complete blend token reference
+- [Blend Tokens Guide](token-family-blend) - Complete blend token reference
 - [Blend Infrastructure Design](../specs/031-blend-infrastructure-implementation/design.md) - Architecture decisions
 
 ---

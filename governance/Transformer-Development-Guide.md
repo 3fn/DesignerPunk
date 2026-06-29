@@ -484,7 +484,7 @@ return { content, filename, warnings };
 
 ## Related Documentation
 
-- [DTCG Integration Guide](./dtcg-integration-guide.md) — DTCG format overview, token groups, extensions schema, tool integrations, Figma token push workflow
-- [MCP Integration Guide](./mcp-integration-guide.md) — Loading and querying DTCG tokens programmatically
+- [DTCG Integration Guide](dtcg-integration-guide) — DTCG format overview, token groups, extensions schema, tool integrations, Figma token push workflow
+- [MCP Integration Guide](mcp-integration-guide) — Loading and querying DTCG tokens programmatically
 - [DTCG Format Module 2025.10 Specification](https://tr.designtokens.org/format/)
 - [Figma Token Push Design](../.kiro/specs/054a-figma-token-push/design.md) — Architecture and data models for the Figma sync workflow

@@ -1176,13 +1176,13 @@ Use this checklist to verify all integration requirements are met:
 
 ## Related Documentation
 
-- [Stemma System Principles](./stemma-system-principles.md) - Core architecture and governance
-- [Component Family Templates](./Component-Templates.md) - Ready-to-use schema, inheritance, and contract templates
-- [Component Family Inheritance Structures](./Component-Inheritance-Structures.md) - All family structures
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [MCP Component Family Document Template](./Component-MCP-Document-Template.md) - Documentation template
-- [Form Inputs Components](./Component-Family-Form-Inputs.md) - Reference implementation
-- [Behavioral Contract Validation Framework](./Test-Behavioral-Contract-Validation.md) - Contract validation criteria
+- [Stemma System Principles](stemma-system-principles) - Core architecture and governance
+- [Component Family Templates](component-family-templates) - Ready-to-use schema, inheritance, and contract templates
+- [Component Family Inheritance Structures](component-inheritance-structures) - All family structures
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [MCP Component Family Document Template](mcp-component-family-document-template) - Documentation template
+- [Form Inputs Components](component-family-form-inputs) - Reference implementation
+- [Behavioral Contract Validation Framework](test-behavioral-contract-validation) - Contract validation criteria
 
 ---
 

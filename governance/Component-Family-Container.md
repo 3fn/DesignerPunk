@@ -478,9 +478,9 @@ Container components resolve tokens through the Rosetta System's semantic-to-pri
 
 ### Related Token Documentation
 
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token routing table
-- [Shadow Tokens](./Token-Family-Shadow.md) - Shadow token details
-- [Layering Tokens](./Token-Family-Layering.md) - Layering token details
+- [Token Quick Reference](token-quick-reference) - Token routing table
+- [Shadow Tokens](token-family-shadow) - Shadow token details
+- [Layering Tokens](token-family-layering) - Layering token details
 
 ---
 
@@ -659,10 +659,10 @@ All platforms implement the same behavioral contracts:
 ## Related Documentation
 
 - [Family Guidance (Machine-Queryable)](../family-guidance/container.yaml) - Companion YAML for Application MCP — **read-both protocol: read this doc before modifying the companion YAML, and vice versa**
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation
-- [MCP Component Family Document Template](./Component-MCP-Document-Template.md) - Template specification
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
+- [Token Quick Reference](token-quick-reference) - Token documentation
+- [MCP Component Family Document Template](mcp-component-family-document-template) - Template specification
 - [Container-Base Schema](../../src/components/core/Container-Base/Container-Base.schema.yaml) - Full schema definition
 - [Container-Base README](../../src/components/core/Container-Base/README.md) - Container-Base documentation
 - [Container-Card-Base Schema](../../src/components/core/Container-Card-Base/Container-Card-Base.schema.yaml) - Card-Base schema definition

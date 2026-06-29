@@ -348,8 +348,8 @@ Badge components resolve tokens at render time using platform-appropriate mechan
 
 ### Related Token Documentation
 
-- [Token Quick Reference](./Token-Quick-Reference.md)
-- [Token-Family-Color.md](./Token-Family-Color.md) - Notification badge color tokens
+- [Token Quick Reference](token-quick-reference)
+- [Token-Family-Color.md](token-family-color) - Notification badge color tokens
 
 ---
 
@@ -470,9 +470,9 @@ All behavioral contracts are maintained across platforms through:
 
 ## Related Documentation
 
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
-- [Component Schema Format](./Component-Schema-Format.md) - YAML schema specification
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation
-- [Token-Family-Color.md](./Token-Family-Color.md) - Color token documentation including notification badge tokens
-- [Test Development Standards](./Test-Development-Standards.md) - Testing patterns for badge components
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
+- [Component Schema Format](component-schema-format) - YAML schema specification
+- [Token Quick Reference](token-quick-reference) - Token documentation
+- [Token-Family-Color.md](token-family-color) - Color token documentation including notification badge tokens
+- [Test Development Standards](test-development-standards) - Testing patterns for badge components

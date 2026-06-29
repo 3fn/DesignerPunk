@@ -27,7 +27,13 @@ DesignerPunk is built on three complementary foundation systems:
 
 This document provides visual diagrams showing how these systems work individually and how they integrate to create the complete design system.
 
-For detailed Civitas documentation, see [Civitas System Overview](./Civitas-System-Overview.md).
+For detailed Civitas documentation, see [Civitas System Overview](civitas-system-overview).
+
+---
+
+## Pointer 1: Module-Resolution Contract (Spec 118)
+
+Module resolution — runtime-TS loading, package exports, the bin, consumer `.ts`, and component tokens — is governed by the **Module-Resolution Contract**; pull it before touching those surfaces. See `rosetta-system-architecture` § "Module-Resolution Contract".
 
 ---
 
@@ -285,28 +291,28 @@ flowchart TB
 ## Related Documentation
 
 **Civitas System:**
-- [Civitas System Overview](./Civitas-System-Overview.md) — Governance layer definition, three-layer boundary, processes
+- [Civitas System Overview](civitas-system-overview) — Governance layer definition, three-layer boundary, processes
 
 **Rosetta System:**
-- [Rosetta System Principles](./rosetta-system-principles.md) — Mathematical foundation and token philosophy
-- [Rosetta System Architecture](./Rosetta-System-Architecture.md) — Detailed pipeline, generation subsystem, validation
+- [Rosetta System Principles](rosetta-system-principles) — Mathematical foundation and token philosophy
+- [Rosetta System Architecture](rosetta-system-architecture) — Detailed pipeline, generation subsystem, validation
 
 **Stemma System:**
-- [Stemma System Principles](./stemma-system-principles.md) — Component philosophy and inheritance patterns
-- [Contract System Reference](./Contract-System-Reference.md) — Behavioral contracts, Concept Catalog, classification rules
-- [Component Quick Reference](./Component-Quick-Reference.md) — Routing table for component family docs
+- [Stemma System Principles](stemma-system-principles) — Component philosophy and inheritance patterns
+- [Contract System Reference](contract-system-reference) — Behavioral contracts, Concept Catalog, classification rules
+- [Component Quick Reference](component-quick-reference) — Routing table for component family docs
 
 **Component Families:**
-- [Component-Family-Button.md](./Component-Family-Button.md)
-- [Component-Family-Form-Inputs.md](./Component-Family-Form-Inputs.md)
-- [Component-Family-Icon.md](./Component-Family-Icon.md)
-- [Component-Family-Container.md](./Component-Family-Container.md)
-- [Component-Family-Avatar.md](./Component-Family-Avatar.md)
-- [Component-Family-Badge.md](./Component-Family-Badge.md)
-- [Component-Family-Chip.md](./Component-Family-Chip.md)
-- [Component-Family-Progress.md](./Component-Family-Progress.md)
-- [Component-Family-Divider.md](./Component-Family-Divider.md) (placeholder)
-- [Component-Family-Loading.md](./Component-Family-Loading.md) (placeholder)
-- [Component-Family-Modal.md](./Component-Family-Modal.md) (placeholder)
-- [Component-Family-Navigation.md](./Component-Family-Navigation.md)
-- [Component-Family-Data-Display.md](./Component-Family-Data-Display.md) (placeholder)
+- [Component-Family-Button.md](component-family-button)
+- [Component-Family-Form-Inputs.md](component-family-form-inputs)
+- [Component-Family-Icon.md](component-family-icon)
+- [Component-Family-Container.md](component-family-container)
+- [Component-Family-Avatar.md](component-family-avatar)
+- [Component-Family-Badge.md](component-family-badge)
+- [Component-Family-Chip.md](component-family-chip)
+- [Component-Family-Progress.md](progress-indicator-components)
+- [Component-Family-Divider.md](component-family-divider) (placeholder)
+- [Component-Family-Loading.md](component-family-loading) (placeholder)
+- [Component-Family-Modal.md](component-family-modal) (placeholder)
+- [Component-Family-Navigation.md](component-family-navigation)
+- [Component-Family-Data-Display.md](component-family-data-display) (placeholder)

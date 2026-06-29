@@ -372,11 +372,11 @@ What are you building?
 
 ### Token System
 - [Token System Overview](../../docs/token-system-overview.md) - Complete token system architecture
-- [Rosetta System Architecture](./Rosetta-System-Architecture.md) - Token pipeline architecture
-- [Token Governance](./Token-Governance.md) - Token selection and creation governance
+- [Rosetta System Architecture](rosetta-system-architecture) - Token pipeline architecture
+- [Token Governance](token-governance) - Token selection and creation governance
 
 ### DTCG Integration
-- [DTCG Integration Guide](./DTCG-Integration-Guide.md) - Integrating DesignerPunk tokens with external design tools
-- [Figma Workflow Guide](./Figma-Workflow-Guide.md) - Bidirectional Figma integration: token push and design extraction
-- [Transformer Development Guide](./Transformer-Development-Guide.md) - Building custom token transformers
-- [MCP Integration Guide](./MCP-Integration-Guide.md) - Programmatic token loading and querying
+- [DTCG Integration Guide](dtcg-integration-guide) - Integrating DesignerPunk tokens with external design tools
+- [Figma Workflow Guide](figma-workflow-guide) - Bidirectional Figma integration: token push and design extraction
+- [Transformer Development Guide](transformer-development-guide) - Building custom token transformers
+- [MCP Integration Guide](mcp-integration-guide) - Programmatic token loading and querying

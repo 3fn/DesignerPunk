@@ -423,8 +423,8 @@ All behavioral contracts are maintained across platforms through:
 
 ## Related Documentation
 
-- [Component Quick Reference](./Component-Quick-Reference.md) - Family routing table
-- [Stemma System Principles](./stemma-system-principles.md) - Architecture overview
-- [Component Schema Format](./Component-Schema-Format.md) - YAML schema specification
-- [Token Quick Reference](./Token-Quick-Reference.md) - Token documentation
-- [Test Development Standards](./Test-Development-Standards.md) - Testing patterns for chip components
+- [Component Quick Reference](component-quick-reference) - Family routing table
+- [Stemma System Principles](stemma-system-principles) - Architecture overview
+- [Component Schema Format](component-schema-format) - YAML schema specification
+- [Token Quick Reference](token-quick-reference) - Token documentation
+- [Test Development Standards](test-development-standards) - Testing patterns for chip components
