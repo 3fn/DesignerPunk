@@ -34,7 +34,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
 
 ## Task List
 
-- [ ] 1. Doc Inventory + Comprehensive Steering-Path Coupling Sweep
+- [x] 1. Doc Inventory + Comprehensive Steering-Path Coupling Sweep
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
