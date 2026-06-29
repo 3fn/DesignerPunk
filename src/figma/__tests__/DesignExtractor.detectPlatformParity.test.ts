@@ -291,7 +291,7 @@ describe('DesignExtractor.detectPlatformParity', () => {
       const result = await extractor.detectPlatformParity(component);
 
       expect(mcpDocs.getSection).toHaveBeenCalledWith(
-        '.kiro/steering/platform-implementation-guidelines.md',
+        'governance/platform-implementation-guidelines.md',
         'State Management Consistency',
       );
       expect(result.interactions[0].recommendation).toContain(

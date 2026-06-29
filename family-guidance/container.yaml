@@ -1,10 +1,10 @@
 # Family Guidance: Containers
-# Companion to: .kiro/steering/Component-Family-Container.md
+# Companion to: governance/Component-Family-Container.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: Container
 displayName: "Containers"
-companion: ".kiro/steering/Component-Family-Container.md"
+companion: "governance/Component-Family-Container.md"
 
 whenToUse:
   - "Wrapping content or components that need a visual boundary that can evolve independently of its contents"

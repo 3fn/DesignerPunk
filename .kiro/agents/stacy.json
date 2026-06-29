@@ -24,16 +24,16 @@
     "file://.kiro/steering/personal-note.md",
     "file://.kiro/steering/Agent-Directory.md",
     "skill://.kiro/steering/start-up-tasks.md",
-    "skill://.kiro/steering/Process-Development-Workflow.md",
-    "skill://.kiro/steering/Process-File-Organization.md",
-    "skill://.kiro/steering/Process-Spec-Planning.md",
-    "skill://.kiro/steering/Process-Task-Type-Definitions.md",
-    "skill://.kiro/steering/Test-Development-Standards.md",
-    "skill://.kiro/steering/Test-Behavioral-Contract-Validation.md",
+    "skill://governance/Process-Development-Workflow.md",
+    "skill://governance/Process-File-Organization.md",
+    "skill://governance/Process-Spec-Planning.md",
+    "skill://governance/Process-Task-Type-Definitions.md",
+    "skill://governance/Test-Development-Standards.md",
+    "skill://governance/Test-Behavioral-Contract-Validation.md",
     "skill://.kiro/steering/Spec-Feedback-Protocol.md",
-    "skill://.kiro/steering/completion-documentation-guide.md",
-    "skill://.kiro/steering/Contract-System-Reference.md",
-    "skill://.kiro/steering/Product-Token-Governance.md"
+    "skill://governance/completion-documentation-guide.md",
+    "skill://governance/Contract-System-Reference.md",
+    "skill://governance/Product-Token-Governance.md"
   ],
   "hooks": {
     "agentSpawn": [

@@ -2,7 +2,7 @@
 
 Machine-queryable prop selection and family member guidance for the Application MCP (`get_prop_guidance` tool).
 
-Each YAML file is a companion to a Component-Family steering doc in `.kiro/steering/`. The family doc contains human-readable prose and rationale; the companion YAML contains structured, machine-parseable guidance.
+Each YAML file is a companion to a Component-Family steering doc in `governance/`. The family doc contains human-readable prose and rationale; the companion YAML contains structured, machine-parseable guidance.
 
 ---
 
@@ -29,7 +29,7 @@ If this convention proves insufficient — if overlapping guidance across famili
 
 ```yaml
 family: "Family-Name"                    # required — family name
-companion: ".kiro/steering/Component-Family-{Name}.md"  # required — path to paired family doc
+companion: "governance/Component-Family-{Name}.md"  # required — path to paired family doc
 
 whenToUse:                               # required — string array
   - "Use case description"

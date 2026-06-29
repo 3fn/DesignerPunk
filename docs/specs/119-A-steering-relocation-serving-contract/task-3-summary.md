@@ -7,7 +7,7 @@
 
 ## What Was Done
 
-Built the legacy-path forwarding manifest producer + froze its artifact + wired the re-seed. The producer (`scripts/generate-legacy-path-manifest.ts` over the testable core `mcp-server/src/legacy-path/generate-manifest.ts`) takes two inputs — the spaces-tolerant grep-extract of `.kiro/steering/…md` refs from the 8 prompts AND the literal Req-3 rename map (10 space-bearing originals) — derives each target's `id` via the resolver's own `extractFrontmatterInfo`, de-dupes, asserts every `legacyPath` is `..`-free (throws otherwise), and emits `LegacyPathManifest`. The frozen JSON lives at `mcp-server/src/legacy-path/legacy-path-manifest.json`. The re-seed is wired at the **tail of `DocumentIndexer.indexDirectory`** (the chokepoint every index-build path funnels through), so legacy refs keep resolving after every full re-scan / `rebuild_index`.
+Built the legacy-path forwarding manifest producer + froze its artifact + wired the re-seed. The producer (`scripts/generate-legacy-path-manifest.ts` over the testable core `mcp-server/src/legacy-path/generate-manifest.ts`) takes two inputs — the spaces-tolerant grep-extract of `.kiro/steering/…md` refs from the 8 prompts AND the literal Req-3 rename map (10 space-bearing originals) — derives each target's `id` via the resolver's own `extractFrontmatterInfo`, de-dupes, asserts every `legacyPath` is `..`-free (throws otherwise), and emits `LegacyPathManifest`. The frozen artifact lives at `mcp-server/src/legacy-path/legacy-path-manifest.ts` as the TS const `FROZEN_LEGACY_MANIFEST` (changed JSON→TS so it survives compilation — the docs MCP runs from tsc/esbuild output, which does NOT copy a runtime-read JSON; see Task 3 parent completion, Honest Note 6). The re-seed is wired at the **tail of `DocumentIndexer.indexDirectory`** (the chokepoint every index-build path funnels through), so legacy refs keep resolving after every full re-scan / `rebuild_index`.
 
 ## Why It Matters
 
@@ -30,5 +30,5 @@ This is the second hard prerequisite (with the Task 2 resolver) for any rename/r
 
 ## Next
 
-- **Not committed** — main loop re-runs both suites + tsc, spot-checks `legacy-path-manifest.json` + the re-seed wiring, and commits on `spec-119a-relocation`.
+- **Not committed** — main loop re-runs both suites + tsc, spot-checks `legacy-path-manifest.ts` + the re-seed wiring + the compiled-output proof, and commits on `spec-119a-relocation`.
 - This frozen artifact unblocks Tasks 5 (rename) and 6 (relocate).

@@ -164,7 +164,7 @@ describe('VariantAnalyzer', () => {
 
       // Verify correct doc path was queried
       expect(mcp.getDocumentFull).toHaveBeenCalledWith(
-        '.kiro/steering/Component-Family-Button.md',
+        'governance/Component-Family-Button.md',
       );
     });
 
@@ -178,7 +178,7 @@ describe('VariantAnalyzer', () => {
 
       expect(result).toBeNull();
       expect(mcp.getDocumentFull).toHaveBeenCalledWith(
-        '.kiro/steering/Component-Family-NonExistent.md',
+        'governance/Component-Family-NonExistent.md',
       );
     });
   });
@@ -209,7 +209,7 @@ describe('VariantAnalyzer', () => {
       });
 
       expect(mcp.getSection).toHaveBeenCalledWith(
-        '.kiro/steering/Component-Readiness-Status.md',
+        'governance/Component-Readiness-Status.md',
         'Individual Component Status',
       );
     });
@@ -509,7 +509,7 @@ describe('VariantAnalyzer', () => {
 
       // Verify MCP was queried
       expect(mcp.getDocumentFull).toHaveBeenCalledWith(
-        '.kiro/steering/Component-Family-Button.md',
+        'governance/Component-Family-Button.md',
       );
     });
 
@@ -626,7 +626,7 @@ describe('VariantAnalyzer', () => {
 
       // Should query for "Button" (stripped "Primary" suffix)
       expect(mcp.getDocumentFull).toHaveBeenCalledWith(
-        '.kiro/steering/Component-Family-Button.md',
+        'governance/Component-Family-Button.md',
       );
     });
   });

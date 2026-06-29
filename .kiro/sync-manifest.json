@@ -1,425 +1,425 @@
 {
   "version": "12.0.2",
-  "syncedAt": "2026-06-11T02:39:10.444Z",
+  "syncedAt": "2026-06-29T15:41:51.013Z",
   "files": {
-    ".kiro/steering/00-Steering Documentation Directional Priorities.md": {
-      "hash": "b468027255609f4f1e22a88b8531afa7a642d9cf4b9a0352453987dc1b7c01f4",
-      "managed": true
-    },
-    ".kiro/steering/A Vision of the Future.md": {
-      "hash": "ad5858dd77e994bc8bbdb173a967653d2aef75d05f3180f842c039991b968538",
-      "managed": true
-    },
-    ".kiro/steering/AI-Collaboration-Framework.md": {
-      "hash": "8be42a0d32fc5b8806158137819e8dc28f560c83c4e4035647463edb1a399358",
+    ".kiro/steering/00-steering-documentation-directional-priorities.md": {
+      "hash": "1cfb62faa0b2d2c1e4adcb33e5bfc55c5ddf14b46542ad44295dddb1c1ffcab7",
       "managed": true
     },
     ".kiro/steering/AI-Collaboration-Principles.md": {
-      "hash": "5a723d9fceb598311228f3fa98bb5f5ec213209e432199136a7850254c1a5011",
+      "hash": "28e635f06cc4fd8bc89fd5517907fe5f7d4fba6deea37ab35b560cfb142de38a",
       "managed": true
     },
     ".kiro/steering/Agent-Directory.md": {
-      "hash": "dd657a9d8b4d92764093751e74866b107b7674a3f148a76965ea81fdcc202a25",
-      "managed": true
-    },
-    ".kiro/steering/BUILD-SYSTEM-SETUP.md": {
-      "hash": "d1496395da99dfb99829e0d9ac7a271ec861d6a6af76bf38abd64425559087de",
-      "managed": true
-    },
-    ".kiro/steering/Browser Distribution Guide.md": {
-      "hash": "c020c127eb468096c381c3d5a81d690bb0a4d6f5fffd51eb6710c7fae3c25116",
+      "hash": "79564c2d6efbef4ffde0a0a28b7405e625efe09f1d6e2531e5048773e7841f02",
       "managed": true
     },
     ".kiro/steering/Civitas-System-Overview.md": {
-      "hash": "7d8decfe3a9f94c3398caf9417533daca0940c39e938dbc0fd18750eccf61571",
-      "managed": true
-    },
-    ".kiro/steering/Completion Documentation Guide.md": {
-      "hash": "f7751decc029333b56dc6129ea5468ad5fca8205b50e8bf27a35f3ba34b30acd",
-      "managed": true
-    },
-    ".kiro/steering/Component-Development-Guide.md": {
-      "hash": "f3b9516f22fdc4b0a6044bc055d0221446635f51a28bb4aa790660c8749792d7",
-      "managed": true
-    },
-    ".kiro/steering/Component-Development-Standards.md": {
-      "hash": "21ddde1bd10bc939c7c417232c160950d03557fdf604a64a1cf373285b094048",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Avatar.md": {
-      "hash": "f404f5c7a7d5740503fb57f76d13307269c81bd971f4c46b1480c9ad2408a4f1",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Badge.md": {
-      "hash": "b92555ac65398da46beb9b7455f951576f3154dc8df1c3d387651418eb3d6540",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Button.md": {
-      "hash": "c1b51e2fbb2187f82c5f25944b4f00207938eced0f7d449dd34b39e1d6f22f14",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Chip.md": {
-      "hash": "1e83983b190437f9bb8eee7f13d42dc7a4f079e73a500e3fa844ec599d47c174",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Container.md": {
-      "hash": "747d6fd0d9745361f8ca253faa8b1b9e37946b693fa01e993b917190baeee3db",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Data-Display.md": {
-      "hash": "4068d7ff0ec58326317de6380947a7034f4bac15e8cb2f190a5052301995f8a5",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Divider.md": {
-      "hash": "e2e91900a08676be92edb28dfdad0a21bff8d4c54c560c6b17f3c6b7cc7b6ce5",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Form-Inputs.md": {
-      "hash": "23d13659edb689315ad693c7958c41b44c695ce69f7aea6df660360a1ecc44df",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Icon.md": {
-      "hash": "ca011c5690e9aba7069592bff4c7a68bef53258325630128b036c9b662d627d5",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Loading.md": {
-      "hash": "970f3d548d4c553ddf91b2fe4a77ae831c0a073c3251f01a0683706467f11812",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Modal.md": {
-      "hash": "6a6b6a1d6d2e4a269534a2bc3515f8c89adaa0752256cd47dfe6b1ce739a10a7",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Navigation.md": {
-      "hash": "9dcaa959ff9a2870bfeb37aeb25512695026e2c1b62e5f8350444165d9e66179",
-      "managed": true
-    },
-    ".kiro/steering/Component-Family-Progress.md": {
-      "hash": "0c74edf6ef5c24f99b51a2e09926012e24f41f9f0e49579769d217c51ce0b5c8",
-      "managed": true
-    },
-    ".kiro/steering/Component-Inheritance-Structures.md": {
-      "hash": "02d7d2415391004cf953a52306a8545bee07a28960ca1e9b8e2fc5ed02af19d0",
-      "managed": true
-    },
-    ".kiro/steering/Component-MCP-Document-Template.md": {
-      "hash": "5e22b287aad405b9c687de87113deb881f0b5d9c19fe2a89b05a6ae145f7295c",
-      "managed": true
-    },
-    ".kiro/steering/Component-Meta-Data-Shapes-Governance.md": {
-      "hash": "de084d88e77d56c86d03644080590dc58fafd6f3c1b34ede9d5c5b07b4e1ebbf",
-      "managed": true
-    },
-    ".kiro/steering/Component-Primitive-vs-Semantic-Philosophy.md": {
-      "hash": "ad87bf1a18ecda7194766b12bf6a9a520d57d8a80f8db6dd893693da4568d01a",
-      "managed": true
-    },
-    ".kiro/steering/Component-Quick-Reference.md": {
-      "hash": "90818862fc554b57449029e4d22e77ac1a6f329030b7509076210fc3856b28cf",
-      "managed": true
-    },
-    ".kiro/steering/Component-Readiness-Status.md": {
-      "hash": "05db360ef4da54f7f3fdeefe604beca96414ef216624a54ee2de130dc9a657d0",
-      "managed": true
-    },
-    ".kiro/steering/Component-Schema-Format.md": {
-      "hash": "5b6be30bc636e86437c7c914b1d7529de2871ed23c3e15bbde4e4b6b0193bc6c",
-      "managed": true
-    },
-    ".kiro/steering/Component-Templates.md": {
-      "hash": "29a1ec406f9d4ee3f0708ade2f756334e129fcf0ddb38ed7a1a4b9494a9c4581",
-      "managed": true
-    },
-    ".kiro/steering/Contract-System-Reference.md": {
-      "hash": "96631640c9bd96a6a0f2c4ee91ded17c66004162f8adcd687cf8a68a437ae113",
-      "managed": true
-    },
-    ".kiro/steering/Core Goals.md": {
-      "hash": "ed9459bdf8064d81a06a9e49b85c69de10c470cd1a8c62ad2fd3e18d79a66ffe",
-      "managed": true
-    },
-    ".kiro/steering/Cross-Platform vs Platform-Specific Decision Framework.md": {
-      "hash": "261e98d621b91da81d7df07dd4a62f2ab301bba3056829ecba259b35b9367d4e",
-      "managed": true
-    },
-    ".kiro/steering/DTCG-Integration-Guide.md": {
-      "hash": "0acaef4442f06a099993744082f3633330c1f12621905e035f4ae7d8f8287697",
-      "managed": true
-    },
-    ".kiro/steering/DesignerPunk-Integration-Guide.md": {
-      "hash": "e38f46b7a2834bed535fde08a00d8e428f6117939238fa416dc2b12f7dd795e1",
+      "hash": "00f98818bb5d3cf69bcf1e8fdb271a7f7a4dc680848861d560ad7eaec12908a1",
       "managed": true
     },
     ".kiro/steering/DesignerPunk-Systems-Overview.md": {
-      "hash": "9d0f976aff5f522941b79ff3dedeff7e242e4e0945b996b6dc81660a3adfa0bb",
-      "managed": true
-    },
-    ".kiro/steering/Figma-Workflow-Guide.md": {
-      "hash": "c2c45e5bdffcb6a40106e1abe15dde5ad43ee3265e2eba5c23cc0411961d7cea",
-      "managed": true
-    },
-    ".kiro/steering/Layout-Specification-Vocabulary.md": {
-      "hash": "643cc5a5ccfb567e5e31f288559b6439fa68621c861fcd69c3799e9a95f47a41",
-      "managed": true
-    },
-    ".kiro/steering/MCP-Evolution-Roadmap.md": {
-      "hash": "a54ffc41087865df67593c2d9fa4cefe0046c8304b38566ce5111c29c773a2b3",
-      "managed": true
-    },
-    ".kiro/steering/MCP-Integration-Guide.md": {
-      "hash": "7c7e13f73be0e647e18927561a90f050ff4c875936aa4d6a1fe3620a9a4beba2",
-      "managed": true
-    },
-    ".kiro/steering/MCP-Relationship-Model.md": {
-      "hash": "a49f12a0f73d5e2989f7aaa44d6ee939572db9dcf9a8dc28d9ce69615ab37d68",
-      "managed": true
-    },
-    ".kiro/steering/Personal Note.md": {
-      "hash": "9fe0218fe380bc54a705e7ddca6780a750f99f4c0f43d282a117584d7e571364",
-      "managed": true
-    },
-    ".kiro/steering/Platform-Resource-Map.md": {
-      "hash": "c31cf961ca2f86aff0e74b26cb192e470402a6ba8abbb4508692ebf60ee290e1",
-      "managed": true
-    },
-    ".kiro/steering/Process-Cross-Reference-Standards.md": {
-      "hash": "aa709461881249b4b3fbe21c738da036fd525d570fa15cf646099c7105bb1b2d",
-      "managed": true
-    },
-    ".kiro/steering/Process-Development-Workflow.md": {
-      "hash": "44deef087c55d5dfa9e344bbee2c85c6404a5455031b2b1274ff9a9d1495e7ec",
-      "managed": true
-    },
-    ".kiro/steering/Process-File-Organization.md": {
-      "hash": "a44b1e9e7f7c5ee9c01e8281c21bd37cb3d829018c6bda09bb27784d09089b19",
-      "managed": true
-    },
-    ".kiro/steering/Process-Hook-Operations.md": {
-      "hash": "93e44918b97b3a9c9560238d0dc95338ce444f0d303e8fa37ab537ef14283532",
-      "managed": true
-    },
-    ".kiro/steering/Process-Integration-Methodology.md": {
-      "hash": "0f2b5554310acd1f629c6fc4ffc0a822e20dc1f9d0fea5bb7b6012db08c6afa7",
-      "managed": true
-    },
-    ".kiro/steering/Process-Spec-Planning.md": {
-      "hash": "7d01807f3b58704f8642716e25f201cc315509817b0827b14634cf3517d76de5",
-      "managed": true
-    },
-    ".kiro/steering/Process-Task-Type-Definitions.md": {
-      "hash": "df383538e66b24d5cb570379237511e0e532fa859aca39e8892df12acb8db8d2",
-      "managed": true
-    },
-    ".kiro/steering/Product-Handoff-Protocol.md": {
-      "hash": "1203a66618eaaf8eba70b250d8900a321650b06a77b355fcb670663d8aa52a9d",
-      "managed": true
-    },
-    ".kiro/steering/Product-Token-Governance.md": {
-      "hash": "16f6a257198ddc7e57fd3e9314f2ce778eb098e6d9b069f2dafcff09c32838ab",
-      "managed": true
-    },
-    ".kiro/steering/Release Management System.md": {
-      "hash": "3de58cab44f778d0b56dac822640ec1a8c451e6038675850b9abcfa4d8e68e42",
-      "managed": true
-    },
-    ".kiro/steering/Rosetta-System-Architecture.md": {
-      "hash": "d26d3171aa45da92f3be20ed9239f30dda903ae39ce3d577b5f4e2324ac37944",
+      "hash": "b11b0768860155a48093369e120245462e107c0bb96b257cce00f45392bb7c11",
       "managed": true
     },
     ".kiro/steering/Spec-Feedback-Protocol.md": {
-      "hash": "2653d86e28c5febd64fc55fbe371c6695f90cb367b4f77573a0542630ec151e9",
+      "hash": "92dc4409d332bdbf83da8bb0060a6d4ec794894d419f30a9dc13a06be18c807b",
       "managed": true
     },
-    ".kiro/steering/Start Up Tasks.md": {
-      "hash": "cb94037c3a2480c434e71379830975a76e71043d0503b24566e69657cfe6beb7",
+    ".kiro/steering/core-goals.md": {
+      "hash": "38cf97a1f73790cf5204b8f2130b4bbcbbf35d2d2f7ba4053b9ba5ba427435b0",
       "managed": true
     },
-    ".kiro/steering/Technology Stack.md": {
-      "hash": "1c3debfcb37840eb54b13cc79c83fb6324a2bbd93526b3b0cdf090c1e6b2d2dd",
+    ".kiro/steering/personal-note.md": {
+      "hash": "3afc25614ec680e15668d5fced089f0111a085d5997bcbee7854f021bcebe70a",
       "managed": true
     },
-    ".kiro/steering/Test-Behavioral-Contract-Validation.md": {
-      "hash": "c7820b3786ebc4ae0b0e3be39fa095763e0d62abcd11c93c87ee5d50330d8f75",
+    ".kiro/steering/start-up-tasks.md": {
+      "hash": "7167581b8f4552a74f85c56e1eff648127af64bb5fc60ca312981200ede4250a",
       "managed": true
     },
-    ".kiro/steering/Test-Development-Standards.md": {
-      "hash": "83d5a2d041759578203ccd9b2caed5d0e38fcba005d0c58638e20e239292f18f",
+    "governance/AI-Collaboration-Framework.md": {
+      "hash": "64b8e3f995422f3572eab254b456a2718637ab392dd4bab1ea241a2ef63b35f7",
       "managed": true
     },
-    ".kiro/steering/Test-Failure-Audit-Methodology.md": {
-      "hash": "2e1b6b2f54c5300c5149cb48072dfde81b951ff83de5e221162bf639b77c44e6",
+    "governance/BUILD-SYSTEM-SETUP.md": {
+      "hash": "6cc23b9948a3d260d99234328f9ed02139246d51258a07cf089662d7caa7f13a",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Accessibility.md": {
-      "hash": "d4c3875159e5e8899744388ff56a2bf8f365f876cda43025c8f54d4b85ad4d30",
+    "governance/Component-Development-Guide.md": {
+      "hash": "90ed2025c2d13b94c4ce037282f19ea392f097a6d4f7d4f9c60b1ecd970ad874",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Blend.md": {
-      "hash": "11ddd7bf33d8e956e2455dbe971476b43d86cb7966aaa011e063eb1d21f4fb3c",
+    "governance/Component-Development-Standards.md": {
+      "hash": "92c892a68f94d1eaaa4244b3bc2b4106fa38da16fe7da44e86eb3f5f6988aaca",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Blur.md": {
-      "hash": "ca85663ea3bacbb5b68f640862416d8f8713244e7a2f3ededc072bc166d894b8",
+    "governance/Component-Family-Avatar.md": {
+      "hash": "375346e9ba55160ea4aed5765313bce30994306e7102bdafe57d324f2f0c0ebb",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Border.md": {
-      "hash": "a20df936669d68a3c363ebe88305fe8dcfad7c710f624955c62c40b4c4f95c11",
+    "governance/Component-Family-Badge.md": {
+      "hash": "87486dfdfa9bb8a05c2b7b197a81391a9ab61856157e8c1f918b6374bb44dac3",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Color.md": {
-      "hash": "d7caf2f44b7da411e2f153b2a21c600709ee2ef8aef65b012f8e197f876286fa",
+    "governance/Component-Family-Button.md": {
+      "hash": "8691697c4cf2261b921ffb327841d425a2f783e56307b38b9bd8a56570d13cf6",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Glow.md": {
-      "hash": "eb49230621b842b94dab7ab5c24eec5e9959d261b14ebbe6d09031cda85f5f74",
+    "governance/Component-Family-Chip.md": {
+      "hash": "141b5de9ebf77f91f0a2aa08c1c1bfc2f59868aba364aec97bc0f5b7be4996c1",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Layering.md": {
-      "hash": "fa65d7547825ed4a56ee511bb73729b6f2cc6e46fc5755d7507d55dc0d480dc0",
+    "governance/Component-Family-Container.md": {
+      "hash": "346391a913491653de02690a0ff25b350bf1078818bf75f5cf432a186bf8dc0a",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Motion.md": {
-      "hash": "9f94d774182474648b0fdbc0a8d128dd8352ff2ee5842d8f19e723511e6744e9",
+    "governance/Component-Family-Data-Display.md": {
+      "hash": "e0e972715c383037665c3bcb1640117c6a0f3ab98a4545ef997d6ad5157dcf80",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Opacity.md": {
-      "hash": "250db0f3f7394f08f618b19ffe292c9e78572d241b311689609b47efc38ff681",
+    "governance/Component-Family-Divider.md": {
+      "hash": "bbbd7a52a5d3dd6c5547ce5e7393a085c968ffe3a0b1207c167e09eee369cf17",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Radius.md": {
-      "hash": "25804f47fa24502e74e7fb2b3dc455324dab92deee38fb72f687305f77fce022",
+    "governance/Component-Family-Form-Inputs.md": {
+      "hash": "180563f4dc147306e08eebb8b1cba5f7cd88b9d333f0d4de5f7f93c3f326aa59",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Responsive.md": {
-      "hash": "90fcfd549f4636fdb471a6c5dcfe8f5552a9c92505c1e19e644b1f949b71957b",
+    "governance/Component-Family-Icon.md": {
+      "hash": "6f9c19eafb059ce1532952b91e41d05ad39bc8d2aa9a7137abde000a667c06dd",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Shadow.md": {
-      "hash": "8618f68b5a7c79abe32b263d947971dbf6502ba6fc20ac67ff0219144609dedf",
+    "governance/Component-Family-Loading.md": {
+      "hash": "46382713b0a104cb7ca475fe3c9b6978fd83c2f4ed20c82aca778f7570010aa3",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Sizing.md": {
-      "hash": "9ee3c8855d76cd6e1d4e8e21922ccf452da09c51f0ef6ebafb2135f3dddf9f7c",
+    "governance/Component-Family-Modal.md": {
+      "hash": "5bbb37341dadf911564e13dd6cfcf2fd8a1bfa7404b1fd410b3aa8388d7125ca",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Spacing.md": {
-      "hash": "e05997bbfd2f29b79859384c338bed421a181dbf812f8bd4ca19a9b3d801a06e",
+    "governance/Component-Family-Navigation.md": {
+      "hash": "be2167e84a007ca1753e815e0c465db4cb2c70cf254ad1a053e570965f1b28be",
       "managed": true
     },
-    ".kiro/steering/Token-Family-Typography.md": {
-      "hash": "33d7e9d5c9052feb7af9e5cc91b2536a09b38f75257700be7f51f8aecd7b3c7b",
+    "governance/Component-Family-Progress.md": {
+      "hash": "83d3d6d0687d5121e199ed71e44675122e3ce308fa3723093e54e34d65a7d527",
       "managed": true
     },
-    ".kiro/steering/Token-Governance.md": {
-      "hash": "dcbe930a35af2e5d130f0754181199ac5bb8e37c93748acf62a31bdce96289a7",
+    "governance/Component-Inheritance-Structures.md": {
+      "hash": "7c82a0bce1813fb53bb42dee1d95fc07ea0384344faa84411389389ee37d5cd8",
       "managed": true
     },
-    ".kiro/steering/Token-Quick-Reference.md": {
-      "hash": "50a32810f37463387119d3cc43c9d769db310e40ac053d5c915644a6acc18ac3",
+    "governance/Component-MCP-Document-Template.md": {
+      "hash": "779780fbec4242cd6a6880b149e1a84d2ff96f6ae8255596a233d507ea836440",
       "managed": true
     },
-    ".kiro/steering/Token-Resolution-Patterns.md": {
-      "hash": "a89c346c8a3ff73d2f79bf4c260b3dbc741fabbadec5534cdb61e1ae78560025",
+    "governance/Component-Meta-Data-Shapes-Governance.md": {
+      "hash": "4fb7ee2d72fd0739452af79e4e714d28dfa1598f38d8138f0cf0f6c23e10b2e9",
       "managed": true
     },
-    ".kiro/steering/Token-Semantic-Structure.md": {
-      "hash": "d8cf2c60a77e47337df046ad4ba2670fc7448a1d3a372f3d4e0c289bd47a061b",
+    "governance/Component-Primitive-vs-Semantic-Philosophy.md": {
+      "hash": "292a94715c6232fa2be356b82ddbe61f4d957c2ca2d348c786018761b6d65610",
       "managed": true
     },
-    ".kiro/steering/Transformer-Development-Guide.md": {
-      "hash": "75138410b9541429cada9d5c3978cd241627bd1f6a6e8490f06105de5dadd091",
+    "governance/Component-Quick-Reference.md": {
+      "hash": "34017d60e8e9bbb4a41c1f4a244d5c481da8ad02dac93210e29b8a4547fc6f52",
       "managed": true
     },
-    ".kiro/steering/Web-Authoring-Standards.md": {
-      "hash": "9f255c0e8086dda61632a65c6a182e0b6305f52051648e7260d3bc2ef44b5600",
+    "governance/Component-Readiness-Status.md": {
+      "hash": "ccaaf51dd0914a2fcf4a2ab2c3b86caeb38ac8bd7a685ed49696d1d74bc4c2d6",
       "managed": true
     },
-    ".kiro/steering/component-mcp-query-guide.md": {
-      "hash": "bc3cd9b2e982ea28ce74aa602d3b2bb36b789ac9d276d0a6786d1151d341f998",
+    "governance/Component-Schema-Format.md": {
+      "hash": "3d3b565b5eafcaea2370b4bf92fb4fd42d684d4419983e715d915bc10ed68a41",
       "managed": true
     },
-    ".kiro/steering/component-meta-authoring-guide.md": {
-      "hash": "15fc23c831efc1c6f9c3b3c15f76d2d89206ae5036e46a41f7d51a56f2f4bfcb",
+    "governance/Component-Templates.md": {
+      "hash": "f50a2c976622890258ab76f2813101f4a53445384670a58de52b38933166463a",
       "managed": true
     },
-    ".kiro/steering/component-metadata-schema-reference.md": {
-      "hash": "bd05926a04d9813bc736a0133f9c8af5502e858139d1e4b9cd7d5208779c7193",
+    "governance/Contract-System-Reference.md": {
+      "hash": "660de977fba397f9fae7abb8ef420b988f87b37e2d094e15626ad3d5de89ae15",
       "managed": true
     },
-    ".kiro/steering/platform-implementation-guidelines.md": {
-      "hash": "c4f0109544cd8710b3da6f3e729b055c40ccf3edadf82a414e0f0aef6a4ef064",
+    "governance/DTCG-Integration-Guide.md": {
+      "hash": "22e75c154961d816697fa4e99a5ac5b85f2b16280a4c0aa1995cc5232c0231f4",
       "managed": true
     },
-    ".kiro/steering/rosetta-system-principles.md": {
-      "hash": "ae5430931c956d616960685a7cd3ae3352709b189ccde8d7cb922d0fba193d07",
+    "governance/DesignerPunk-Integration-Guide.md": {
+      "hash": "ae26c358d7cdd1c980e228c1fa64c1bdfdaae6fd4cd1cf71fe530c751d59a8ed",
       "managed": true
     },
-    ".kiro/steering/stemma-system-principles.md": {
-      "hash": "aa006dc8a3c1b13c37a1a0a730aa3b5dbd86d241fbb2ceaeaa9996111c65c741",
+    "governance/Figma-Workflow-Guide.md": {
+      "hash": "592c7d20958e1eab9213ed83ccc71e47506f62b283dfd6905c8cd85a0df2f9ad",
+      "managed": true
+    },
+    "governance/Layout-Specification-Vocabulary.md": {
+      "hash": "3422ce97331f140ca9fee35f9388193921cd6d22bbd180e2f33fe8c9f9ff64c2",
+      "managed": true
+    },
+    "governance/MCP-Evolution-Roadmap.md": {
+      "hash": "1208c7d89496675a55daab96b5c9811583f8417a4d53c716214f79b46f49efdf",
+      "managed": true
+    },
+    "governance/MCP-Integration-Guide.md": {
+      "hash": "87741a435d7fe4434497eb82b7b5bb307da6e61890155108d437579e339623be",
+      "managed": true
+    },
+    "governance/MCP-Relationship-Model.md": {
+      "hash": "6cdfed5e521f1d06f71d609aa5e74bed2a28696e8563acf8bcc570aa939055d9",
+      "managed": true
+    },
+    "governance/Platform-Resource-Map.md": {
+      "hash": "77a4f9a6ddb2a1bb943c62124172c2bcb57d0122a10b27d6b0624922b4077047",
+      "managed": true
+    },
+    "governance/Process-Cross-Reference-Standards.md": {
+      "hash": "4e8a535391edfa92169f476c279b1b6fb842b27f1cecf88b2b5d0302f3640a14",
+      "managed": true
+    },
+    "governance/Process-Development-Workflow.md": {
+      "hash": "e5b240804a1ac0317ac477d9218bf1d9451b927333488ccbb1227cb10788f62f",
+      "managed": true
+    },
+    "governance/Process-File-Organization.md": {
+      "hash": "ee549ee811c5b9efc8edd5e2ce8f2fd148298c7d362c2a32944f4e3628e77e94",
+      "managed": true
+    },
+    "governance/Process-Hook-Operations.md": {
+      "hash": "6ad67bba408edebc18920989e71b8fdd44e16920a5c870b9b546a4ffec09c3a8",
+      "managed": true
+    },
+    "governance/Process-Integration-Methodology.md": {
+      "hash": "86f9f5c9b112614fe976044b187f8a53d06bb0af9ba74c7af053ee8c97f9ad51",
+      "managed": true
+    },
+    "governance/Process-Spec-Planning.md": {
+      "hash": "331d09e5374c5abab22cca074edca5816eecb1d3defaa13b12358509cd632583",
+      "managed": true
+    },
+    "governance/Process-Task-Type-Definitions.md": {
+      "hash": "7f0c643c15ade3d274356fc7294827f531b2d2784a99da1605003a50faf106af",
+      "managed": true
+    },
+    "governance/Product-Handoff-Protocol.md": {
+      "hash": "cc1eaec7a97b16349b8d83014575328ec3134ac1d57ecdb441535a2793e5c46b",
+      "managed": true
+    },
+    "governance/Product-Token-Governance.md": {
+      "hash": "39940251de1baf681cba4832070dfdbf3af62560de938e1677991c34eed932c1",
+      "managed": true
+    },
+    "governance/Rosetta-System-Architecture.md": {
+      "hash": "8aad7e8fcd93b72248ad5b08aeb9c2932283d147eb05fe47adc72c096e65115d",
+      "managed": true
+    },
+    "governance/Test-Behavioral-Contract-Validation.md": {
+      "hash": "4536fd24fc9b4d0c17be823cb5968939266685f6731f4604539a8481b9b3e4b3",
+      "managed": true
+    },
+    "governance/Test-Development-Standards.md": {
+      "hash": "42742697b529a5c3cf96b1d5d7b7b18a2bf877d842a81e292899aacdb54080da",
+      "managed": true
+    },
+    "governance/Test-Failure-Audit-Methodology.md": {
+      "hash": "b2e613e55ae55043dff93008aff0447f2f736d807dda6f704c8cdf98d873336c",
+      "managed": true
+    },
+    "governance/Token-Family-Accessibility.md": {
+      "hash": "8a7246d352a6bba634748aec4cda9048aa1e734aaa595d9b5d0c7b25e2ea2771",
+      "managed": true
+    },
+    "governance/Token-Family-Blend.md": {
+      "hash": "6ddf8d65a6e2bd175f632312a6045d1121b0b2a764ca037f85a957010b0e4c59",
+      "managed": true
+    },
+    "governance/Token-Family-Blur.md": {
+      "hash": "ab3a3551881b1ba842b81ceb0153f247e477600e2a6f996886066b147cc96d5c",
+      "managed": true
+    },
+    "governance/Token-Family-Border.md": {
+      "hash": "2847f9eaf9ffe783b0a8dfeb7d8336dff9798d563b4a09f00e64cfbc84e936b9",
+      "managed": true
+    },
+    "governance/Token-Family-Color.md": {
+      "hash": "3cac0dfc6b7f8f049431154a49ec7da366fd972391d8c3694e0acdb42f03f929",
+      "managed": true
+    },
+    "governance/Token-Family-Glow.md": {
+      "hash": "dcabcbb441ff616c3889d1656b37137b0a8e99d2ec15785ca1ea88ff876a21e7",
+      "managed": true
+    },
+    "governance/Token-Family-Layering.md": {
+      "hash": "b3962c24a9c8cc1cfa2b536a4248626f1a6f554f92b68b8581d2135ba008f9b3",
+      "managed": true
+    },
+    "governance/Token-Family-Motion.md": {
+      "hash": "65e82c0491f1d17a1dc0b8b078ae7ee9f92f6ac60a7f55f1842839e68cb0c6be",
+      "managed": true
+    },
+    "governance/Token-Family-Opacity.md": {
+      "hash": "6abd2ee7b99ef86fdfa62d2a124f65d32f656301ad946352dcbeb9aa0c0d0558",
+      "managed": true
+    },
+    "governance/Token-Family-Radius.md": {
+      "hash": "101069e349b82137486376a76c0518dd7eaee226f84ee117ab73be1e63be9a30",
+      "managed": true
+    },
+    "governance/Token-Family-Responsive.md": {
+      "hash": "32ed8cf72e2bf92854ee85e5873cf88a76ec5d3f0e774e934d0be514ea14b46a",
+      "managed": true
+    },
+    "governance/Token-Family-Shadow.md": {
+      "hash": "2e7c9c5a4edac82dedac5b43e821f079786f92085a631ec2143fac4babd94223",
+      "managed": true
+    },
+    "governance/Token-Family-Sizing.md": {
+      "hash": "8094125c14f20a57dd149f0dc9bb423fccee93d04847aa26856ea9a3ac952ddc",
+      "managed": true
+    },
+    "governance/Token-Family-Spacing.md": {
+      "hash": "a224cb46984e2316cccd2b996d658e7f960f939931d9031019d9de1bc824ef21",
+      "managed": true
+    },
+    "governance/Token-Family-Typography.md": {
+      "hash": "7545ef171c4d4fb5a9f8b047fbe868d092b578c6c0d4a0c3cb8ff5dc75f5e8f8",
+      "managed": true
+    },
+    "governance/Token-Governance.md": {
+      "hash": "46f29e700020a92ff3605f9d4688fd9f11cb0bcc6c1fa9d297483377e4b07528",
+      "managed": true
+    },
+    "governance/Token-Quick-Reference.md": {
+      "hash": "54bea13cf619f1a0f28702ed00083300e5c5eef436b952c83d4acce7a98a85a9",
+      "managed": true
+    },
+    "governance/Token-Resolution-Patterns.md": {
+      "hash": "52cd5b8035542bacb4b2315f6c3d1c7510a8fed4172dcaa7dfc473d1d1728bb8",
+      "managed": true
+    },
+    "governance/Token-Semantic-Structure.md": {
+      "hash": "c35963515bbcf49712ed348375be0ec9d6c13c666fc510164d3419839502f27b",
+      "managed": true
+    },
+    "governance/Transformer-Development-Guide.md": {
+      "hash": "0e60d39c46dd30094c6f4b24208111ba01143ab394631ebe9d17cc545bee3405",
+      "managed": true
+    },
+    "governance/Web-Authoring-Standards.md": {
+      "hash": "d58feb86fed8d9cf2dadca39c0d773a945c4308d2f498f0e41c98fa260cb9270",
+      "managed": true
+    },
+    "governance/a-vision-of-the-future.md": {
+      "hash": "024f84f8c7a900fef4a646d838db6efd0a0a4f89e1a172e4cdb274ea2f7c963e",
+      "managed": true
+    },
+    "governance/browser-distribution-guide.md": {
+      "hash": "dcd3491ac8245e051a442de1fd289d22243f0656534f412e4080c67289db282f",
+      "managed": true
+    },
+    "governance/completion-documentation-guide.md": {
+      "hash": "61f657654b751fdff8021de60de0cc2d24b28383fef3bd76d001960a911674a1",
+      "managed": true
+    },
+    "governance/component-mcp-query-guide.md": {
+      "hash": "9a205b384affe07061159f8b8b80f8840c61a0567c59babd9c03f6c125fd67cb",
+      "managed": true
+    },
+    "governance/component-meta-authoring-guide.md": {
+      "hash": "369df26afea5ed03a574d17d6d9ee3e162cd59c3491bd31e2e9445f3d4555be3",
+      "managed": true
+    },
+    "governance/component-metadata-schema-reference.md": {
+      "hash": "62a21cd5dd445fdfe9fc68ff552244bb9b38d90fd504d2ddfa0e81e34cf6a10b",
+      "managed": true
+    },
+    "governance/cross-platform-vs-platform-specific-decision-framework.md": {
+      "hash": "0878526fa29b05222a60b7efa2c0276a5cd9673baecac45835f156cdb3d12f83",
+      "managed": true
+    },
+    "governance/platform-implementation-guidelines.md": {
+      "hash": "68d5dad506f0fd1cb7fcd70aeb499a8e6e49852acbb34232a6db8af20e666a39",
+      "managed": true
+    },
+    "governance/release-management-system.md": {
+      "hash": "f59debdd3b67cedf5d00f36374af4cfcb7b74601f296432106974c7426dd7d32",
+      "managed": true
+    },
+    "governance/rosetta-system-principles.md": {
+      "hash": "73f8d9310730e025492c67fad6fe4791b2cf900e5ebfd6a35b956ffa10013532",
+      "managed": true
+    },
+    "governance/stemma-system-principles.md": {
+      "hash": "d2e2f72a73196a2bf23b80aac97ba7e883f94df48b2343d2d14e5535cc8b6b9a",
+      "managed": true
+    },
+    "governance/technology-stack.md": {
+      "hash": "e632e4477b393144229d773f29ae6c26bee6b71b1ba655ed6677d005b5d20160",
       "managed": true
     },
     ".kiro/agents/ada-prompt.md": {
-      "hash": "f3c4dcf311edf8c9784fa210f7efd17f70aa97f8f48fe8a15986ef022eb3e488",
+      "hash": "33bc5a15f66f7ecbd9b5ddaf2979b690430dd1df1fe186c7e175061898e49074",
       "managed": true
     },
     ".kiro/agents/ada.json": {
-      "hash": "f1f6cf767a2aa6ca3ce5bb66f93278b1b193906c52cca01ba697ecad873dbeb2",
+      "hash": "2d2e01e252d1646e68da28d8cd494fdf960c51555432b618cafec0fad5383bfd",
       "managed": true
     },
     ".kiro/agents/data-prompt.md": {
-      "hash": "cc7dc8374d7fff0dfec3afed89577f6d2f41c1a801228baf8e24d2f7d81c5411",
+      "hash": "b975d6966f2cb433334970474f1efda1a06f20a38a00e93259ede3891bb31323",
       "managed": true
     },
     ".kiro/agents/data.json": {
-      "hash": "f74831c58472f6408a57f0e31d31165fec3f150e5fad6e22216d0e26a5f15854",
+      "hash": "ce907e28a7844054aa7becfd1d1a71346e81777017320c0c20de5c5eb00d0aa8",
       "managed": true
     },
     ".kiro/agents/kenya-prompt.md": {
-      "hash": "57f15644acb6b5005365acdd5738f782ce3d6aa6f3ce52ae2ee270f89b4a4fac",
+      "hash": "2726c945ef3370fc86b390bb4ddc15c9fade0019f006b402d20f74f5d2225cb6",
       "managed": true
     },
     ".kiro/agents/kenya.json": {
-      "hash": "aa56a88a38c2118805da9015f421d03979fe9f6b068afb87be000508e4a8823a",
+      "hash": "65aacf9f1d76132f3d4ce1283e34dd2138656d4e527dcb62a4e2820f8dd5c7e5",
       "managed": true
     },
     ".kiro/agents/leonardo-prompt.md": {
-      "hash": "a2241a50e642dfe897ac76a936bb0045a27e8c87de47ab179cb2e5e0ddcda2c6",
+      "hash": "5bd8bab8a36afac080f34576929b9700c47324bc49d03e90697abaa704c727b5",
       "managed": true
     },
     ".kiro/agents/leonardo.json": {
-      "hash": "3e66c21720f42f4aa9f6ab2069c30159a39fb48727684ceb831591ef6a318b51",
+      "hash": "08b8f4795183ea4ebef9e17a6a613d34c8eb686400326ebc38fea28fafee1a99",
       "managed": true
     },
     ".kiro/agents/lina-prompt.md": {
-      "hash": "9e5fe9da8a71f201454793d87f76327c1346ace5005e1d3c84808187fa13f1d7",
+      "hash": "f9930bee09cb2d65c388d3cd68c69ef171e6fb856a93863a7c9095f32d3a531d",
       "managed": true
     },
     ".kiro/agents/lina.json": {
-      "hash": "d4da77bcd29538fc6022473ecee0c33cb24d69d247c3060b7ede1c114d89419d",
+      "hash": "fa656e77477bda42607b75d239b523f5b2e3cb88a7d24fa422a099d02332feab",
       "managed": true
     },
     ".kiro/agents/sparky-prompt.md": {
-      "hash": "cdee6e5f874dbc2b157c15c2f9ab926d2356f6a3ddbedebd6c30eaa589b2dbdb",
+      "hash": "2717ba8452f9389b58cdb5b66ff414761221abbc6f48704c6b2fbc0e00581167",
       "managed": true
     },
     ".kiro/agents/sparky.json": {
-      "hash": "bdcdb8e7230f5d6f44b1419292b66b37072edd7f60e9b5852a3da1bc62795ee2",
+      "hash": "2d7fced0f767c6266af0ad736f9105567c028f3644b7e285e7e99874098916b0",
       "managed": true
     },
     ".kiro/agents/stacy-prompt.md": {
-      "hash": "9d81a10000825dd64acd7d4501d2a0688204b855181c301ae7bfc845bdf80380",
+      "hash": "624e0821f655d74da8a7a7fc9b252b576c14f97fb234698ae2041463ffd555c8",
       "managed": true
     },
     ".kiro/agents/stacy.json": {
-      "hash": "94d4ac126aa73ddb2b0a3e03014df536d8a9c450809ea5052df5499fa3ab8a3f",
+      "hash": "bc1ff2c3b8629c238f43317a6ea17b1f8462b74595a40e36470268be7c8e9973",
       "managed": true
     },
     ".kiro/agents/thurgood-prompt.md": {
-      "hash": "1b5da0310366f4b3b7800a070ba8a88fbedeed68f5d454330d3952da32449839",
+      "hash": "e9b6a5ca7a26b69b4e1f0506e0b8e9e955faeb34272d1babe890da29d4676c45",
       "managed": true
     },
     ".kiro/agents/thurgood.json": {
-      "hash": "bd631428bca7e8989bc2cd70e4d5cad04b902eeb36e96da37456b9de9c6beea4",
+      "hash": "9936a019c4d2e255109a9ebac82f76b66da0a6f7ec7dc8241deb914f65ddfba7",
       "managed": true
     },
     ".kiro/skills/android/SKILL.md": {
@@ -995,7 +995,7 @@
       "managed": false
     },
     "src/tokens/semantic/LayeringTokens.ts": {
-      "hash": "1b3c442d776727616cfb92e47a5d236b5fae9a605d9b744efd443524f2341c23",
+      "hash": "3f59c860e16c3ad8d7ce1ac5ce4d7a5bc7181b5fbc4a28dd43418b0cf5a18b6e",
       "managed": false
     },
     "src/tokens/semantic/MotionTokens.ts": {
@@ -1059,11 +1059,11 @@
       "managed": false
     },
     "src/types/SemanticToken.ts": {
-      "hash": "5016b6d10b2ea2927167ccbbae6645a1964345fc4e2a09bc7253ac64f5aec15e",
+      "hash": "7865718a04d02ca6bfb304d448c345754e700b3501b7b6e598ed1905463310f4",
       "managed": false
     },
     "src/types/TranslationOutput.ts": {
-      "hash": "7ce59a71ac43f43c359987a346438c17524b4776604f0935d0425a858157ef53",
+      "hash": "2c5231913b3ed957ea6b5e6869bf9a4e67ecbc8a83ac172afed086c15ec210d7",
       "managed": false
     },
     "src/types/ValidationResult.ts": {
@@ -1463,7 +1463,7 @@
       "managed": false
     },
     "src/components/core/Button-VerticalList-Item/platforms/web/ButtonVerticalListItem.styles.css": {
-      "hash": "d009ff4640b1f1c52bf028fe59e9cffeb965e8ed718fab5f5a6391178887b604",
+      "hash": "9cdb187bbd90db0d7447c9324d348d161769fc8b83a2464e99d3d20135d9e679",
       "managed": false
     },
     "src/components/core/Button-VerticalList-Item/platforms/web/ButtonVerticalListItem.web.ts": {
@@ -1535,7 +1535,7 @@
       "managed": false
     },
     "src/components/core/Button-VerticalList-Set/platforms/web/Button-VerticalList-Set.styles.css": {
-      "hash": "d9b8c9b952d2bcddc47db6074f702b41a8be91037b5548a056430ce2ae1c4b0a",
+      "hash": "ff76e4981b6aef24542114de114b66b24cac02e43c02d953e987e30906c18259",
       "managed": false
     },
     "src/components/core/Button-VerticalList-Set/platforms/web/ButtonVerticalListSet.web.ts": {
@@ -1755,7 +1755,7 @@
       "managed": false
     },
     "src/components/core/Container-Card-Base/platforms/web/ContainerCardBase.web.ts": {
-      "hash": "ada675c0348949591a86ea66a5e1ee6b92c22dd164f5130bec9b4b08eab532b6",
+      "hash": "e847f57786705bafb2e9d84d062ac316f4451756313cf1828739205843a41daf",
       "managed": false
     },
     "src/components/core/Container-Card-Base/tokens.ts": {
@@ -2919,11 +2919,11 @@
       "managed": false
     },
     "src/components/core/Input-Text-Password/platforms/web/InputTextPassword.browser.ts": {
-      "hash": "08543ce6352bc3b26883ec0baeac6ef5f76c0a395dbc55843356135414dee4e0",
+      "hash": "888426b7e5abafbb13a59a7cb0ec1713942a2a83ccab08fe3ba0c5d6783b86a7",
       "managed": false
     },
     "src/components/core/Input-Text-Password/platforms/web/InputTextPassword.web.ts": {
-      "hash": "f68cd7890d8d1e90174ab56bc1387436721d7485132fc2c296af84cc666ad7f9",
+      "hash": "37f3cecbe39e663fe7b662c8e01b7756a88bcbbaf8c836d968e0060d3e5bed7f",
       "managed": false
     },
     "src/components/core/Input-Text-Password/stateManagement.ts": {
@@ -3263,7 +3263,7 @@
       "managed": false
     },
     "src/components/core/Progress-Indicator-Connector-Base/platforms/web/ProgressIndicatorConnectorBase.styles.css": {
-      "hash": "e7e36dc138af0aa81aa62750c83d94edd4a9f12932ab93839fd62dd7b2fa1983",
+      "hash": "9afc115f4aa48e0cf0522270279993a622d6be2390c8f3039ee102c31e506377",
       "managed": false
     },
     "src/components/core/Progress-Indicator-Connector-Base/platforms/web/ProgressIndicatorConnectorBase.web.ts": {
@@ -3423,7 +3423,7 @@
       "managed": false
     },
     "src/components/core/Progress-Stepper-Base/platforms/web/ProgressStepperBase.styles.css": {
-      "hash": "3cb3f0069b98597cd635ca05ada6397e3844d048bcdf5808ac4d16c082b736b7",
+      "hash": "f9ceb500244993426e077a6189c5ec69a0135c4f8258f041436b8f214476cad9",
       "managed": false
     },
     "src/components/core/Progress-Stepper-Base/platforms/web/ProgressStepperBase.web.ts": {
@@ -3463,7 +3463,7 @@
       "managed": false
     },
     "src/components/core/Progress-Stepper-Detailed/platforms/web/ProgressStepperDetailed.styles.css": {
-      "hash": "6e9baf2091ffbed939d8bf6d6acfcbca53efdd532af92c24489bed5fb24bb0ae",
+      "hash": "d49ee060af28fcc8fba8cc2efdd245b7e74912a3391a7de32f1a9d0a8fb60e4e",
       "managed": false
     },
     "src/components/core/Progress-Stepper-Detailed/platforms/web/ProgressStepperDetailed.web.ts": {

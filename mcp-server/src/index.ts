@@ -57,7 +57,7 @@ import {
 // Server configuration
 const SERVER_NAME = 'mcp-documentation-server';
 const SERVER_VERSION = '0.1.0';
-const DEFAULT_STEERING_DIR = '.kiro/steering/';
+const DEFAULT_STEERING_DIR = 'governance/';
 const DEFAULT_LOGS_DIR = 'mcp-server/logs';
 
 /**

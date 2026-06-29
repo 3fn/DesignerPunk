@@ -1,10 +1,10 @@
 # Family Guidance: Progress Indicators
-# Companion to: .kiro/steering/Component-Family-Progress.md
+# Companion to: governance/Component-Family-Progress.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: ProgressIndicator
 displayName: "Progress Indicators"
-companion: ".kiro/steering/Component-Family-Progress.md"
+companion: "governance/Component-Family-Progress.md"
 
 whenToUse:
   - "Showing position in a carousel, onboarding flow, or swipeable content (Pagination-Base)"
@@ -52,7 +52,7 @@ discouragedPatterns:
 composesWithFamilies:
   - family: "Navigation"
     relationship: "Progress indicators and Navigation components serve complementary roles — Progress shows where the user is, Navigation enables movement. A stepper flow typically pairs a Progress indicator with navigation buttons (next/back)"
-    companion: ".kiro/steering/Component-Family-Navigation.md"
+    companion: "governance/Component-Family-Navigation.md"
 
 accessibilityNotes:
   - "Pagination uses role='group' with aria-label reflecting actual position (e.g., 'Page 26 of 50'), not the visible dot subset"

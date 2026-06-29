@@ -16,6 +16,7 @@ export interface ManagedDir {
 
 export const MANAGED_DIRS: ManagedDir[] = [
   { path: '.kiro/steering', tier: 'governance' },
+  { path: 'governance', tier: 'governance' },
   { path: '.kiro/agents', tier: 'governance' },
   { path: '.kiro/skills', tier: 'governance' },
   { path: 'src/tokens', tier: 'source', excludeDirs: ['__tests__'] },

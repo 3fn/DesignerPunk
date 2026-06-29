@@ -1,7 +1,7 @@
 /**
  * find_docs calibration fixtures — REAL corpus, TOOL-BOUNDARY path (Spec 121 Task 4.4)
  *
- * Indexes the REAL `.kiro/steering` corpus and drives `find_docs` through the
+ * Indexes the REAL served corpus (post Spec 119-A: `governance/`) and drives `find_docs` through the
  * tool-boundary handler (`handleFindDocs`) — mirroring exactly the path that
  * `callTool('find_docs', ...)` takes in the running MCP server. This is NOT a
  * call to `findDocsConcept` directly; it goes through:
@@ -50,9 +50,10 @@ import { handleFindDocs, FindDocsHandlerResult } from '../../tools/find-docs';
 
 /**
  * Absolute path to the real steering corpus.
- * This is the same directory the running MCP server indexes.
+ * This is the same directory the running MCP server indexes (post Spec 119-A:
+ * the served non-identity corpus lives in `governance/`, not `.kiro/steering/`).
  */
-const STEERING_DIR = path.resolve(__dirname, '../../../../.kiro/steering');
+const STEERING_DIR = path.resolve(__dirname, '../../../../governance');
 
 /**
  * Filename fragments for expected docs (used for path.includes() assertions so

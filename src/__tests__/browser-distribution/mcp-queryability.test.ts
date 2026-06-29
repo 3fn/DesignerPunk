@@ -28,7 +28,7 @@ import * as fs from 'fs';
 
 describe('MCP Queryability: Browser Distribution Guide', () => {
   const MCP_SERVER_DIR = path.join(process.cwd(), 'mcp-server');
-  const BROWSER_DISTRIBUTION_GUIDE_PATH = '.kiro/steering/browser-distribution-guide.md';
+  const BROWSER_DISTRIBUTION_GUIDE_PATH = 'governance/browser-distribution-guide.md';
 
   describe('Document Indexing Prerequisites', () => {
     /**
@@ -58,11 +58,11 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
     });
 
     /**
-     * Verify the document is in the steering directory (indexed by MCP).
-     * MCP server indexes documents from .kiro/steering/ directory.
+     * Verify the document is in the served governance directory (indexed by MCP).
+     * MCP server indexes documents from governance/ directory (Spec 119-A).
      */
-    it('should be in the steering directory for MCP indexing', () => {
-      expect(BROWSER_DISTRIBUTION_GUIDE_PATH).toMatch(/^\.kiro\/steering\//);
+    it('should be in the served governance directory for MCP indexing', () => {
+      expect(BROWSER_DISTRIBUTION_GUIDE_PATH).toMatch(/^governance\//);
     });
   });
 
@@ -179,7 +179,7 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
             const fs = require('fs');
             
             // Read the steering document directly
-            const docPath = path.join(process.cwd(), '.kiro/steering/browser-distribution-guide.md');
+            const docPath = path.join(process.cwd(), 'governance/browser-distribution-guide.md');
             const content = fs.readFileSync(docPath, 'utf-8');
             
             // Parse metadata
@@ -199,7 +199,7 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
             
             // Output result
             console.log(JSON.stringify({
-              path: '.kiro/steering/browser-distribution-guide.md',
+              path: 'governance/browser-distribution-guide.md',
               metadata: metadata,
               sections: sections,
               hasContent: content.length > 0
@@ -211,7 +211,7 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
         const parsed = JSON.parse(result.trim());
 
         // Verify the document was parsed correctly
-        expect(parsed.path).toBe('.kiro/steering/browser-distribution-guide.md');
+        expect(parsed.path).toBe('governance/browser-distribution-guide.md');
         expect(parsed.hasContent).toBe(true);
         expect(parsed.metadata.Purpose).toBeDefined();
         expect(parsed.metadata.Layer).toBeDefined();
@@ -235,12 +235,12 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
      * This simulates how the MCP server discovers documents.
      */
     it('should be discoverable by MCP server file scanning', () => {
-      const steeringDir = path.join(process.cwd(), '.kiro', 'steering');
+      const steeringDir = path.join(process.cwd(), 'governance');
 
-      // Verify steering directory exists
+      // Verify served governance directory exists
       expect(fs.existsSync(steeringDir)).toBe(true);
 
-      // Get all markdown files in steering directory
+      // Get all markdown files in the served governance directory
       const files = fs.readdirSync(steeringDir).filter((f) => f.endsWith('.md'));
 
       // Verify Browser Distribution Guide is in the list

@@ -15,7 +15,7 @@ import * as yaml from 'js-yaml';
 
 // --- Constants ---
 
-const STEERING_DIR = path.resolve(__dirname, '../.kiro/steering');
+const STEERING_DIR = path.resolve(__dirname, '../governance');
 const COMPONENTS_DIR = path.resolve(__dirname, '../src/components/core');
 const GUIDANCE_DIR = path.resolve(__dirname, '../family-guidance');
 

@@ -179,7 +179,7 @@ Create `.kiro/settings/mcp.json` at your project root (Kiro reads this file on a
         "./node_modules/@3fn/core/dist/mcp/docs-mcp.js"
       ],
       "env": {
-        "MCP_STEERING_DIR": "./node_modules/@3fn/core/.kiro/steering"
+        "MCP_STEERING_DIR": "./node_modules/@3fn/core/governance"
       },
       "disabled": false,
       "autoApprove": [

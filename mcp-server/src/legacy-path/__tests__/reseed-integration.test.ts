@@ -43,7 +43,6 @@ content.
 describe('legacy-path re-seed survives rebuild (Spec 119-A Task 3.2)', () => {
   let indexer: DocumentIndexer;
   let steeringDir: string;
-  let manifestPath: string;
 
   // The space-bearing original (Req-3 rename form) and a normal prompt ref.
   const SPACEY_LEGACY = '.kiro/steering/Cross-Platform vs Platform-Specific Decision Framework.md';
@@ -63,6 +62,8 @@ describe('legacy-path re-seed survives rebuild (Spec 119-A Task 3.2)', () => {
     );
     fs.writeFileSync(path.join(steeringDir, 'token-governance.md'), doc('Token Governance'));
 
+    // The override is now an OBJECT (build-survival fix: the frozen manifest is a
+    // compiled TS const, not a runtime JSON read), injected via setLegacyManifest.
     const manifest: LegacyPathManifest = {
       generatedAt: 'FIXED',
       transitionOnly: true,
@@ -71,11 +72,9 @@ describe('legacy-path re-seed survives rebuild (Spec 119-A Task 3.2)', () => {
         { legacyPath: NORMAL_LEGACY, id: 'token-governance' },
       ],
     };
-    manifestPath = path.join(root, 'frozen-manifest.json');
-    fs.writeFileSync(manifestPath, JSON.stringify(manifest), 'utf-8');
 
     indexer = new DocumentIndexer();
-    indexer.setLegacyManifestPath(manifestPath);
+    indexer.setLegacyManifest(manifest);
     await indexer.indexDirectory(steeringDir);
   });
 

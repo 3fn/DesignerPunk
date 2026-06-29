@@ -112,7 +112,7 @@ export class VariantAnalyzer {
    * recommendation to create the doc).
    */
   async queryFamilyPattern(familyName: string): Promise<FamilyPattern | null> {
-    const docPath = `.kiro/steering/Component-Family-${familyName}.md`;
+    const docPath = `governance/Component-Family-${familyName}.md`;
     const content = await this.mcp.getDocumentFull(docPath);
 
     if (content === null) {
@@ -143,7 +143,7 @@ export class VariantAnalyzer {
    * matching components.
    */
   async queryExistingComponents(familyName: string): Promise<ComponentStatus[]> {
-    const docPath = '.kiro/steering/Component-Readiness-Status.md';
+    const docPath = 'governance/Component-Readiness-Status.md';
     const section = await this.mcp.getSection(docPath, 'Individual Component Status');
 
     if (section === null) {

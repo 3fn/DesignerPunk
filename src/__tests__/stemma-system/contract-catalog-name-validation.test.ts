@@ -20,7 +20,7 @@ import * as path from 'path';
 import * as yaml from 'js-yaml';
 
 const COMPONENTS_DIR = path.join(process.cwd(), 'src/components/core');
-const CATALOG_PATH = path.join(process.cwd(), '.kiro/steering/Contract-System-Reference.md');
+const CATALOG_PATH = path.join(process.cwd(), 'governance/Contract-System-Reference.md');
 
 // Baseline: 116 concepts post-audit (Task 1 completion). Floor rises as concepts are added.
 const BASELINE_CONCEPT_COUNT = 116;

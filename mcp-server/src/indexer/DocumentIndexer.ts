@@ -536,22 +536,26 @@ export class DocumentIndexer {
   }
 
   /**
-   * Optional override of the frozen legacy-path-manifest location (Task 3.2).
-   * Production uses the checked-in default (`legacy-path/legacy-path-manifest.json`);
-   * tests point this at a fixture before indexing to exercise the re-seed path.
+   * Optional override of the frozen legacy-path manifest (Task 3.2). Production
+   * uses the checked-in default (the `FROZEN_LEGACY_MANIFEST` TS const); tests
+   * inject a fixture manifest OBJECT before indexing to exercise the re-seed path.
+   * Object-based (not path-based) because the artifact is now a compiled TS const,
+   * not a runtime JSON file (build-survival fix). `undefined` ⇒ use the frozen
+   * default.
    */
-  private legacyManifestPath: string | undefined;
-  setLegacyManifestPath(manifestPath: string | undefined): void {
-    this.legacyManifestPath = manifestPath;
+  private legacyManifestOverride: LegacyPathManifest | undefined;
+  setLegacyManifest(manifest: LegacyPathManifest | undefined): void {
+    this.legacyManifestOverride = manifest;
   }
 
   /**
    * Seed legacyPathIndex from the FROZEN manifest (Task 3.2 re-seed obligation).
    * Called at the tail of every indexDirectory so the seed survives full re-scans
-   * (rebuild_index / StalenessGate). No-op when the artifact is absent.
+   * (rebuild_index / StalenessGate). Falls back to the frozen default when no
+   * override is set.
    */
   private seedLegacyPaths(): void {
-    seedLegacyPathsFromFrozenManifest(this, this.legacyManifestPath);
+    seedLegacyPathsFromFrozenManifest(this, this.legacyManifestOverride);
   }
 
   /**

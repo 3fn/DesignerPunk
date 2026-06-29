@@ -17,7 +17,6 @@
  * hard failure (non-zero exit) for human adjudication.
  */
 
-import * as fs from 'fs';
 import * as path from 'path';
 import {
   backfillDocIds,
@@ -28,15 +27,9 @@ import {
   crossCheckManifestConsistency,
   ManifestEntry,
 } from '../mcp-server/src/id-guard/manifest-consistency';
+import { FROZEN_LEGACY_MANIFEST } from '../mcp-server/src/legacy-path/legacy-path-manifest';
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const MANIFEST_PATH = path.join(
-  PROJECT_ROOT,
-  'mcp-server',
-  'src',
-  'legacy-path',
-  'legacy-path-manifest.json',
-);
 
 function main(): void {
   const dryRun = process.argv.includes('--dry-run');
@@ -72,12 +65,10 @@ function main(): void {
   }
 
   // --- CRITICAL consistency cross-check against the frozen manifest ----------
-  if (!fs.existsSync(MANIFEST_PATH)) {
-    console.warn('\n  WARNING: frozen legacy-path manifest not found — skipping consistency cross-check.');
-    console.warn(`    (expected at ${path.relative(PROJECT_ROOT, MANIFEST_PATH)})`);
-  } else {
-    const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf-8'));
-    const entries: ManifestEntry[] = manifest.entries ?? [];
+  // The manifest is now the compiled TS const FROZEN_LEGACY_MANIFEST (build-survival
+  // fix), imported directly — no runtime JSON read / existence check needed.
+  {
+    const entries: ManifestEntry[] = FROZEN_LEGACY_MANIFEST.entries ?? [];
     // In dry-run the literal ids aren't on disk yet, so the cross-check would
     // report no-on-disk-id for derived docs; only meaningful post-apply.
     if (dryRun) {

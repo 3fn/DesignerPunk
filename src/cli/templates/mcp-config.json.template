@@ -6,11 +6,10 @@
         "./node_modules/@3fn/core/dist/mcp/docs-mcp.js"
       ],
       "env": {
-        "MCP_STEERING_DIR": "./node_modules/@3fn/core/.kiro/steering"
+        "MCP_STEERING_DIR": "./node_modules/@3fn/core/governance"
       },
       "disabled": false,
       "autoApprove": [
-        "get_documentation_map",
         "get_document_summary",
         "get_document_full",
         "get_section",

@@ -1,10 +1,10 @@
 # Family Guidance: Navigation
-# Companion to: .kiro/steering/Component-Family-Navigation.md
+# Companion to: governance/Component-Family-Navigation.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: Navigation
 displayName: "Navigation"
-companion: ".kiro/steering/Component-Family-Navigation.md"
+companion: "governance/Component-Family-Navigation.md"
 
 whenToUse:
   - "Switching between mutually exclusive content views within a single screen (Nav-SegmentedChoice-Base)"
@@ -67,10 +67,10 @@ discouragedPatterns:
 composesWithFamilies:
   - family: "Icons"
     relationship: "Nav-TabBar-Base composes Icon-Base internally for tab icons. Nav-SegmentedChoice-Base renders icons via Icon-Base for icon segments."
-    companion: ".kiro/steering/Component-Family-Icon.md"
+    companion: "governance/Component-Family-Icon.md"
   - family: "Badges"
     relationship: "Nav-TabBar-Base has a badge composition slot (empty in v1) for future notification count overlays on tabs"
-    companion: ".kiro/steering/Component-Family-Badge.md"
+    companion: "governance/Component-Family-Badge.md"
 
 accessibilityNotes:
   - "Both components use role='tablist' with role='tab' on each item and aria-selected for selection state"

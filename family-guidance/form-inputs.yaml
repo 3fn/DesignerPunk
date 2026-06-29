@@ -1,10 +1,10 @@
 # Family Guidance: Form Inputs
-# Companion to: .kiro/steering/Component-Family-Form-Inputs.md
+# Companion to: governance/Component-Family-Form-Inputs.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: FormInput
 displayName: "Form Inputs"
-companion: ".kiro/steering/Component-Family-Form-Inputs.md"
+companion: "governance/Component-Family-Form-Inputs.md"
 
 whenToUse:
   - "Collecting user data that requires validation (text, email, password, phone)"

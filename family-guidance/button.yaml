@@ -1,10 +1,10 @@
 # Family Guidance: Buttons
-# Companion to: .kiro/steering/Component-Family-Button.md
+# Companion to: governance/Component-Family-Button.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: Button
 displayName: "Buttons"
-companion: ".kiro/steering/Component-Family-Button.md"
+companion: "governance/Component-Family-Button.md"
 
 whenToUse:
   - "A clearly promoted action that needs visual emphasis (Button-CTA)"

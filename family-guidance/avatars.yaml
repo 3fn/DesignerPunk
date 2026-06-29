@@ -1,10 +1,10 @@
 # Family Guidance: Avatars
-# Companion to: .kiro/steering/Component-Family-Avatar.md
+# Companion to: governance/Component-Family-Avatar.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: Avatar
 displayName: "Avatars"
-companion: ".kiro/steering/Component-Family-Avatar.md"
+companion: "governance/Component-Family-Avatar.md"
 
 whenToUse:
   - "Representing user identity with optional profile image (type='human')"
@@ -32,10 +32,10 @@ discouragedPatterns:
 composesWithFamilies:
   - family: "Badges"
     relationship: "Badge-Count-Notification or Badge-Label-Base can overlay Avatar-Base for online status or notification indicators"
-    companion: ".kiro/steering/Component-Family-Badge.md"
+    companion: "governance/Component-Family-Badge.md"
   - family: "Icons"
     relationship: "Avatar-Base uses Icon-Base internally for fallback icons (person icon for human, bot icon for agent)"
-    companion: ".kiro/steering/Component-Family-Icon.md"
+    companion: "governance/Component-Family-Icon.md"
 
 accessibilityNotes:
   - "When decorative (adjacent to text identifying the person), set decorative=true to hide from screen readers"

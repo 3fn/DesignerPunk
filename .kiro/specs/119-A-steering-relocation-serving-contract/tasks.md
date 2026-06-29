@@ -303,7 +303,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Record kebab-case/no-spaces as the project steering-filename standard (feeds the Task 11 convention doc)
     - _Requirements: 3.1_
 
-- [ ] 6. Relocate Non-Identity Docs to `governance/` (Atomic with Companion Re-Point)
+- [x] 6. Relocate Non-Identity Docs to `governance/` (Atomic with Companion Re-Point)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -358,7 +358,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Confirm idempotency of the `id` backfill, the move, and the companion re-point (each re-runnable; partial failure safe to re-run rather than requiring a clean revert)
     - _Requirements: 4.5_
 
-- [ ] 7. Rewire the MCP and Packaging Surface to `governance/`
+- [x] 7. Rewire the MCP and Packaging Surface to `governance/`
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)

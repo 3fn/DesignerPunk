@@ -1,10 +1,10 @@
 # Family Guidance: Icons
-# Companion to: .kiro/steering/Component-Family-Icon.md
+# Companion to: governance/Component-Family-Icon.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: Icon
 displayName: "Icons"
-companion: ".kiro/steering/Component-Family-Icon.md"
+companion: "governance/Component-Family-Icon.md"
 
 whenToUse:
   - "Inline visual indicators alongside text in buttons, list items, or navigation"
@@ -56,13 +56,13 @@ platformVariants:
 composesWithFamilies:
   - family: "Buttons"
     relationship: "Icon-Base provides icon content for Button-Icon (icon-only buttons) and optional leading icons in Button-CTA"
-    companion: ".kiro/steering/Component-Family-Button.md"
+    companion: "governance/Component-Family-Button.md"
   - family: "Chips"
     relationship: "Icon-Base provides optional leading icons in Chip-Base and Chip-Filter, and the trailing X icon in Chip-Input"
-    companion: ".kiro/steering/Component-Family-Chip.md"
+    companion: "governance/Component-Family-Chip.md"
   - family: "Badges"
     relationship: "Icon-Base provides optional leading icons in Badge-Label-Base"
-    companion: ".kiro/steering/Component-Family-Badge.md"
+    companion: "governance/Component-Family-Badge.md"
 
 accessibilityNotes:
   - "Icons are decorative and hidden from assistive technology (aria-hidden=true). Parent elements must provide accessible labels"

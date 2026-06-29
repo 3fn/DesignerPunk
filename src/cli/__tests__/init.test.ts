@@ -111,7 +111,7 @@ describe('CLI init — integration', () => {
       const docs = config.mcpServers['designerpunk-docs'];
       expect(docs.command).toBe('node');
       expect(docs.args[0]).toContain('node_modules/@3fn/core/dist/mcp/docs-mcp.js');
-      expect(docs.env.MCP_STEERING_DIR).toContain('node_modules/@3fn/core/.kiro/steering');
+      expect(docs.env.MCP_STEERING_DIR).toContain('node_modules/@3fn/core/governance');
       expect(docs.autoApprove).toContain('get_document_full');
 
       // Application entry — includes TOKEN_INDEX_DIR (Gap 2 fix at template level)
@@ -138,8 +138,11 @@ describe('CLI init — integration', () => {
       expect(secondOutput).toContain('✓ type definitions:');
       expect(secondOutput).toContain('✓ token source:');
       expect(secondOutput).toContain('existing files preserved');
-      // 89 steering docs ship in the package
-      expect(secondOutput).toContain('✓ steering docs: 89 existing files preserved');
+      // Spec 119-A two-root split: 9 identity docs ship in .kiro/steering/
+      // (8 identity + the meta-guide, which is deleted later in 119-A Task 10),
+      // and the 80 relocated non-identity docs ship in governance/.
+      expect(secondOutput).toContain('✓ steering docs: 9 existing files preserved');
+      expect(secondOutput).toContain('✓ governance docs: 80 existing files preserved');
     });
 
     test('preserves existing files — no overwrites after second run', async () => {
@@ -182,18 +185,24 @@ describe('CLI init — integration', () => {
 
       const output = await runInitIn(scratchDir);
 
-      // Package contributed 88 new steering files (no conflict with designerpunk.md
-      // because the package doesn't have a file by that name)
-      expect(output).toContain('✓ steering docs: 89 new files');
+      // Spec 119-A two-root split: the package contributes 9 identity steering
+      // files (no conflict with designerpunk.md because the package doesn't have a
+      // file by that name) and 80 relocated docs into the separate governance/ dir.
+      expect(output).toContain('✓ steering docs: 9 new files');
+      expect(output).toContain('✓ governance docs: 80 new files');
 
       // Custom file preserved
       expect(
         fs.readFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), 'utf-8'),
       ).toBe('# Custom product steering\n');
 
-      // Plus 89 package files merged alongside it (total 90)
+      // Plus 9 package identity files merged alongside it (total 10)
       const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
-      expect(steeringFiles.length).toBe(90);
+      expect(steeringFiles.length).toBe(10);
+
+      // The 80 relocated docs land in governance/
+      const governanceFiles = fs.readdirSync(path.join(scratchDir, 'governance'));
+      expect(governanceFiles.length).toBe(80);
     });
   });
 

@@ -23,6 +23,7 @@
     "bin/",
     "src/cli/templates/",
     ".kiro/steering/",
+    "governance/",
     ".kiro/agents/",
     "product-template/",
     "mcp-server/src/",

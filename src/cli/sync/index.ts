@@ -14,6 +14,7 @@ import { classifyFiles } from './Classifier';
 import { displayReport } from './Reporter';
 import { resolveConflicts, confirmSourceUpdates } from './Prompter';
 import { applyGovernance, applySource, applyForce, applyFile } from './Applier';
+import { reportAndMaybeFixStaleSteeringDir } from './SteeringDirCheck';
 import type { SyncManifest } from './Manifest';
 
 export interface SyncOptions {
@@ -57,6 +58,10 @@ export async function runSync(options: SyncOptions): Promise<void> {
 
   // 7. Report
   displayReport(classified, { dryRun });
+
+  // 7b. Net-new: detect a stale MCP_STEERING_DIR (pre-119-A '.kiro/steering')
+  //     in the consumer's MCP config and prompt to repoint it at 'governance/'.
+  await reportAndMaybeFixStaleSteeringDir(projectRoot, { dryRun });
 
   // 8. Early exit for dry-run
   if (dryRun) return;

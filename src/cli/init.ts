@@ -103,12 +103,19 @@ export async function runInit(argv: string[]): Promise<void> {
     reportCopy('agent templates', agentsResult);
   }
 
-  // 7. Steering docs
+  // 7. Steering docs (identity docs — stay in .kiro/steering/ per Spec 119-A)
   const steeringResult = copyDir(
     path.join(pkgRoot, '.kiro/steering'),
     path.join(dest, '.kiro/steering'),
   );
   reportCopy('steering docs', steeringResult);
+
+  // 7b. Governance docs (relocated non-identity corpus — Spec 119-A two-root split)
+  const governanceResult = copyDir(
+    path.join(pkgRoot, 'governance'),
+    path.join(dest, 'governance'),
+  );
+  reportCopy('governance docs', governanceResult);
 
   // 8. .kiro/settings/mcp.json — scaffold MCP config from canonical template
   scaffoldMcpConfig(

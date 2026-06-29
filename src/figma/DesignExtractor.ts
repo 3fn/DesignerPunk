@@ -3042,7 +3042,7 @@ export class DesignExtractor {
     if (this.mcpDocs) {
       try {
         guidelinesContent = await this.mcpDocs.getSection(
-          '.kiro/steering/platform-implementation-guidelines.md',
+          'governance/platform-implementation-guidelines.md',
           'State Management Consistency',
         );
       } catch {

@@ -1,10 +1,10 @@
 # Family Guidance: Badges
-# Companion to: .kiro/steering/Component-Family-Badge.md
+# Companion to: governance/Component-Family-Badge.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: Badge
 displayName: "Badges"
-companion: ".kiro/steering/Component-Family-Badge.md"
+companion: "governance/Component-Family-Badge.md"
 
 whenToUse:
   - "Displaying categorization labels, status indicators, or metadata tags (Badge-Label-Base)"
@@ -45,10 +45,10 @@ discouragedPatterns:
 composesWithFamilies:
   - family: "Buttons"
     relationship: "Badge-Count-Notification commonly overlays Button-Icon for notification bell patterns (e.g., inbox icon with unread count)"
-    companion: ".kiro/steering/Component-Family-Button.md"
+    companion: "governance/Component-Family-Button.md"
   - family: "Chips"
     relationship: "Badges and Chips share compact pill shape but differ in interactivity — Badges are read-only, Chips are interactive. Selection between families is based on whether the element responds to user input"
-    companion: ".kiro/steering/Component-Family-Chip.md"
+    companion: "governance/Component-Family-Chip.md"
 
 accessibilityNotes:
   - "Badges are non-interactive and not in tab order — do not add tabindex or click handlers"

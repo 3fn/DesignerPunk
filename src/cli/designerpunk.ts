@@ -252,7 +252,7 @@ async function runMcpApp() {
 async function runMcpDocs() {
   const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/docs-mcp.js');
-  const steeringDir = path.join(pkgRoot, '.kiro/steering');
+  const steeringDir = path.join(pkgRoot, 'governance');
 
   console.error('DesignerPunk Docs MCP');
   console.error(`  Protocol: stdio`);

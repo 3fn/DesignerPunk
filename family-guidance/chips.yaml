@@ -1,10 +1,10 @@
 # Family Guidance: Chips
-# Companion to: .kiro/steering/Component-Family-Chip.md
+# Companion to: governance/Component-Family-Chip.md
 # Read-both protocol: Read the family doc before modifying this file.
 
 family: Chip
 displayName: "Chips"
-companion: ".kiro/steering/Component-Family-Chip.md"
+companion: "governance/Component-Family-Chip.md"
 
 whenToUse:
   - "Filtering displayed content by toggling criteria on/off (Chip-Filter)"
@@ -49,13 +49,13 @@ discouragedPatterns:
 composesWithFamilies:
   - family: "Form Inputs"
     relationship: "Chip-Input composes alongside text inputs in tag-style fields where the user types a value and it becomes a dismissible chip"
-    companion: ".kiro/steering/Component-Family-Form-Inputs.md"
+    companion: "governance/Component-Family-Form-Inputs.md"
   - family: "Buttons"
     relationship: "Filter bars may pair Chip-Filter groups with a Button-CTA for applying or clearing filters"
-    companion: ".kiro/steering/Component-Family-Button.md"
+    companion: "governance/Component-Family-Button.md"
   - family: "Badges"
     relationship: "Chips and Badges share compact pill shape but differ in interactivity — Chips are interactive, Badges are read-only. Selection between families is based on whether the element responds to user input"
-    companion: ".kiro/steering/Component-Family-Badge.md"
+    companion: "governance/Component-Family-Badge.md"
 
 accessibilityNotes:
   - "All chips meet tapAreaRecommended (48px) — do not constrain chip height below tapAreaMinimum"
