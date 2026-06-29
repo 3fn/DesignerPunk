@@ -662,7 +662,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Document the seam-as-teeth design (Req 8 AC8 + the seam invariant) and the gate's exclusions in the completion doc
     - _Requirements: 8.8, 8.9_
 
-- [ ] 12. Conventions Governance Doc (Req 12, ballot-measure)
+- [x] 12. Conventions Governance Doc (Req 12, ballot-measure) — Peter-approved as standalone governance/Steering-Addressing-Conventions.md (manual + discovery aliases); reciprocal bare-id cross-refs with Process-File-Organization; Gap 7 cross-link; prompt-routing deferred to 122 (OB-5)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)

@@ -159,7 +159,7 @@
       "managed": true
     },
     "governance/MCP-Evolution-Roadmap.md": {
-      "hash": "1208c7d89496675a55daab96b5c9811583f8417a4d53c716214f79b46f49efdf",
+      "hash": "574a91adf755159e3d9eb44c3cf74085ca915435910f448102099aa4241cd4bd",
       "managed": true
     },
     "governance/MCP-Integration-Guide.md": {
@@ -183,7 +183,7 @@
       "managed": true
     },
     "governance/Process-File-Organization.md": {
-      "hash": "ee549ee811c5b9efc8edd5e2ce8f2fd148298c7d362c2a32944f4e3628e77e94",
+      "hash": "03cfdaf789e77c3201cfbae8a880dabf2d80a93accdf67af7a57c74f451e16b7",
       "managed": true
     },
     "governance/Process-Hook-Operations.md": {
@@ -212,6 +212,10 @@
     },
     "governance/Rosetta-System-Architecture.md": {
       "hash": "8aad7e8fcd93b72248ad5b08aeb9c2932283d147eb05fe47adc72c096e65115d",
+      "managed": true
+    },
+    "governance/Steering-Addressing-Conventions.md": {
+      "hash": "8a7c008c0d8308bb5bef80ecc7688929fac5b1589b7135e8f6949e67d0da1ba6",
       "managed": true
     },
     "governance/Test-Behavioral-Contract-Validation.md": {

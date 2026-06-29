@@ -36,6 +36,52 @@
 
 ---
 
+## OB-3 — Prune redundant family-doc aliases now covered by the title rank tie-breaker
+
+**Status**: OPEN · **Owner**: Thurgood / Ada / Lina (domain alias owners) · **Surfaced**: 119-A Task 8.4 + 10.4 (2026-06-29)
+
+**What.** Task 8.4 seeded a **uniform family-doc alias backstop** (~15 token-/component-family docs got `X token work` / `X family work` aliases) to fix WEAK family-query ranking. Task 10.4 then landed a `find_docs` **title rank tie-breaker** that addresses the *same* failure mode (title-match out-ranks incidental mention). So some of those uniform aliases are now **redundant with the title** and with the tie-breaker.
+
+**Why deferred.** Pruning mid-119-A would risk re-opening the gate it just cleared. 119-B (discovery-quality/measurement) is the place to re-run the dry-run with candidate aliases removed and prune what the tie-breaker alone now covers — measured, not guessed.
+
+**Done when.** Redundant family aliases removed with a dry-run confirming the gate still clears (no WEAK/MISS) on the tie-breaker alone.
+
+---
+
+## OB-4 — Revisit the discovery-gate threshold (rank ≤ 2 vs reachable-at-strong)
+
+**Status**: OPEN · **Owner**: Thurgood · **Surfaced**: 119-A Task 10.4 (2026-06-29)
+
+**What.** Decision 4 set the hard gate at "correct doc rank ≤ 2 at ≥ partial." In 10.4, four concepts were `strong` but stuck at rank 3–4 — **reachable, not top-2** — which forced the title tie-breaker. Decision 4's own rationale emphasizes *reachability* and warns against "an arbitrary rank-quality number blocking a corpus that already resolves everything."
+
+**Why deferred.** The tie-breaker cleared the gate cleanly, so this is not blocking. But 119-B's measurement half should revisit whether the threshold should be reachability-based (strong at any rank) vs strict rank ≤ 2, informed by this experience — so the gate measures the real risk (unreachable) rather than a rank-quality proxy.
+
+**Done when.** 119-B records a deliberate threshold decision (keep rank ≤ 2, or move to reachability-at-strong) with rationale.
+
+---
+
+## OB-5 — Agent-prompt routing to the steering-addressing conventions doc
+
+**Status**: OPEN · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A Task 12 (2026-06-29)
+
+**What.** 119-A creates the standalone `governance/Steering-Addressing-Conventions.md` (the `id`/filename/`aliases`/grammar conventions) — discoverable via `find_docs` aliases, with enforcement already live (uniqueness guard + Thurgood metadata hook). What's missing is **active routing**: a triggered cue in the relevant agent prompts — `WHEN creating/modifying a steering doc THEN consult Steering-Addressing-Conventions` — so authors reach it proactively, not only by searching.
+
+**Why deferred.** Prompt routing / triggered-cue generation is 119-B/122's capability-catalog half by definition; doing it in 119-A would breach the severable seam (cf. OB-1's lesson). The interim gap is bounded: the metadata hook catches `id` violations regardless of author awareness, and the doc is `find_docs`-discoverable.
+
+**Done when.** 122 generates the triggered cue into the steering-doc-authoring agents' prompts from canonical source.
+
+## OB-6 — Regenerate the Claude Code agent-prompt port (`.claude/agents/*.md`) for the relocation
+
+**Status**: OPEN · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A post-Task-11 review (2026-06-29)
+
+**What.** The five `.claude/agents/*.md` files (ada, lina, thurgood, leonardo, data) are the **Claude Code port** of the canonical `.kiro/agents/*-prompt.md` (created in Spec 121; "the Kiro file is the source of truth — reconcile there"). They are **stale post-119-A**: their port-notes still say "no relocation yet" and their MCP-query examples use `.kiro/steering/…` paths for docs now in `governance/` (e.g. `get_section({ path: ".kiro/steering/Token-Governance.md" })`).
+
+**Severity — NOT a functional break (verified 2026-06-29).** Of the 25 distinct `.kiro/steering/*.md` refs across the five files: **22 resolve via the 119-A legacy fallback, 3 are template placeholders, 0 are uncovered.** Every real reference still resolves (the `.claude` refs overlap the `.kiro` prompts' refs, which seeded the manifest). The interim cost is **stale prose/paths**, plus the direct-`Read`-from-`.kiro/steering` fallback (last resort) now misses for relocated docs — the MCP path works.
+
+**Why deferred.** These are ported/generated artifacts whose canonical source is the Kiro prompt; regenerating them with `governance/` paths is 122's agent-generator job — the same sweep that handles the `.kiro/agents/*-prompt.md` deferrable refs (Task 1 Bucket B). Task 1's coupling sweep focused on `.kiro/agents` and under-named this `.claude` port surface; recording it here so 122 sweeps **both**.
+
+**Done when.** 122 regenerates `.claude/agents/*.md` from canonical source with `governance/` paths + accurate post-relocation notes, alongside the `.kiro` prompt sweep.
+
 ---
 
 ## Informational notes for 119-B (NOT obligations — context the deferred work needs)

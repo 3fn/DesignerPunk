@@ -136,6 +136,10 @@ aliases: RTL, bidirectional, internationalization, i18n
 
 **Example use cases:** "RTL" → a doc that only says "logical properties"; "snackbar" → `Component-Family-Notification.md`; "dropdown" → `Component-Family-Form-Inputs.md`.
 
+> **Steering-corpus addressing and naming conventions** (`id`, filename, `aliases`, the `docid#sectionid` grammar) are documented in [Steering Addressing Conventions](steering-addressing-conventions).
+
+---
+
 ### Organization Field Values
 
 #### Framework-Level Artifacts

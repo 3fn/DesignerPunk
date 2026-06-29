@@ -141,9 +141,10 @@ describe('CLI init — integration', () => {
       // Spec 119-A two-root split: 9 identity docs ship in .kiro/steering/
       // (8 identity + the NEW Task-Completion-Protocol added in Task 8; the
       // meta-guide was removed in 119-A Task 10.5 → back to 9),
-      // and the 80 relocated non-identity docs ship in governance/.
+      // and the 81 relocated non-identity docs ship in governance/
+      // (80 + Steering-Addressing-Conventions.md added in Task 12).
       expect(secondOutput).toContain('✓ steering docs: 9 existing files preserved');
-      expect(secondOutput).toContain('✓ governance docs: 80 existing files preserved');
+      expect(secondOutput).toContain('✓ governance docs: 81 existing files preserved');
     });
 
     test('preserves existing files — no overwrites after second run', async () => {
@@ -189,10 +190,11 @@ describe('CLI init — integration', () => {
       // Spec 119-A two-root split: the package contributes 9 identity steering
       // files (8 identity + the NEW Task-Completion-Protocol from Task 8; the
       // meta-guide was removed in Task 10.5; no conflict with designerpunk.md
-      // because the package doesn't have a file by that name) and 80 relocated
-      // docs into the separate governance/ dir.
+      // because the package doesn't have a file by that name) and 81 relocated
+      // docs into the separate governance/ dir
+      // (80 + Steering-Addressing-Conventions.md added in Task 12).
       expect(output).toContain('✓ steering docs: 9 new files');
-      expect(output).toContain('✓ governance docs: 80 new files');
+      expect(output).toContain('✓ governance docs: 81 new files');
 
       // Custom file preserved
       expect(
@@ -203,9 +205,10 @@ describe('CLI init — integration', () => {
       const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
       expect(steeringFiles.length).toBe(10);
 
-      // The 80 relocated docs land in governance/
+      // The 81 relocated docs land in governance/
+      // (80 + Steering-Addressing-Conventions.md added in Task 12)
       const governanceFiles = fs.readdirSync(path.join(scratchDir, 'governance'));
-      expect(governanceFiles.length).toBe(80);
+      expect(governanceFiles.length).toBe(81);
     });
   });
 

@@ -156,6 +156,8 @@ Strategic gaps are easy to identify in conversation and easy to forget between s
 
 **Trigger**: Consumers (or Spec 122-generated agents) begin **persisting** `sectionId` values across sessions/edits and observe drift — i.e. a cached ID resolving to the wrong section after a doc is restructured. Also relevant if cross-references start addressing sections by ID rather than heading text.
 
+**Trigger status (Spec 119-A, 2026-06-29 — now firing):** Spec 122-generated agents are the next planned deliverable after 119-A and will persist IDs and address cross-refs by ID — exactly the trigger condition above. The composite `docid#sectionid` addressing grammar (Req 2 AC7/AC8) is designed so as **not to preclude** section-`id` embedding; the grammar leaves the `#sectionid` slot open for Gap 7 to fill without a grammar change. Section-`id` embedding was explicitly excluded from Spec 119-A scope. This gap is therefore the next addressable item on the roadmap. Cross-link: `Steering-Addressing-Conventions.md` § "Convention 2: Composite `docid#sectionid` Addressing Grammar" (id: `steering-addressing-conventions`).
+
 **Possible approach**: Embed a durable anchor per heading in the source markdown (an `<!-- sid:... -->` comment immediately under the heading, or a frontmatter-maintained heading→id registry), have `section-parser` prefer the embedded anchor over the positional fallback, and migrate the corpus once. Keep positional IDs as the fallback for un-anchored headings so the change stays additive. Note: source edits to steering docs route through the ballot-measure model.
 
 ---
