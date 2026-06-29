@@ -173,6 +173,14 @@ Strategic gaps are easy to identify in conversation and easy to forget between s
 
 ---
 
+### Gap 9: Personalizable / Portable Documentation
+
+Personalizable documentation + cross-project portability of personalizations — let identity/personalization docs be customized per consumer and ported across projects; candidate home: onboarding. Surfaced during 119-A (identity-layer shipping decision).
+
+**Cross-link**: Spec 119-A (`.kiro/specs/119-A-steering-relocation-serving-contract/`). 119-A's decision to keep the `always`-loaded identity docs shipping in `@3fn/core` (status quo) is what surfaced this — identity/personalization docs ship the same content to every consumer today, with no per-consumer customization or portability path.
+
+---
+
 ## Deferred from Spec 071
 
 These were identified in the 071 design outline and explicitly deferred:
