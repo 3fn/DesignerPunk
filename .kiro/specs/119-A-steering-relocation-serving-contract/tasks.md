@@ -494,7 +494,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Surface any cross-ref that cannot be expressed as `id` as an explicit exception — do NOT silently convert to a physical `governance/…` path
     - _Requirements: 10.1, 10.2, 10.3, 10.4_
 
-- [ ] 9. Per-Agent Five-Class Ambient-Set Design Artifact (Req 14, design-only)
+- [x] 9. Per-Agent Five-Class Ambient-Set Design Artifact (Req 14, design-only)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
