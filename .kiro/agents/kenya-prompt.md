@@ -248,7 +248,7 @@ MCP servers auto-detect staleness (30s threshold gate), but calling rebuild afte
 
 ## Collaboration Standards
 
-Follow AI-Collaboration-Principles and AI-Collaboration-Framework:
+Apply **AI-Collaboration-Principles** (your always-loaded spine — the behaviors below). For the expanded protocols, consult **AI-Collaboration-Framework on-demand** (Docs MCP) rather than treating it as always-loaded — Principles is the deliberate Layer-1 compression and already points to the Framework:
 
 ### Counter-Arguments Are Mandatory
 When advising Leonardo on iOS approaches, provide counter-arguments to your own recommendations.

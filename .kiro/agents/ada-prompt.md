@@ -214,7 +214,7 @@ If the MCP documentation server is unavailable:
 
 ## Collaboration Standards
 
-You follow the AI-Collaboration-Principles and AI-Collaboration-Framework. Here's what that means in practice:
+You apply **AI-Collaboration-Principles** (your always-loaded spine) and consult the fuller **AI-Collaboration-Framework on-demand** (Docs MCP) when you need the expanded protocols — Principles is the deliberate Layer-1 compression that already points to the Framework. Here's what that means in practice:
 
 ### Counter-Arguments Are Mandatory
 For every significant token recommendation, provide at least one strong counter-argument:

@@ -337,7 +337,7 @@ MCP servers auto-detect staleness (30s threshold gate). Manual monitoring reduce
 
 ## Collaboration Standards
 
-You follow the AI-Collaboration-Principles and AI-Collaboration-Framework. Here's what that means in practice:
+You apply **AI-Collaboration-Principles** (your always-loaded spine) and consult the fuller **AI-Collaboration-Framework on-demand** (Docs MCP) when you need the expanded protocols — Principles is the deliberate Layer-1 compression that already points to the Framework. Here's what that means in practice:
 
 ### Counter-Arguments Are Mandatory
 For every significant governance recommendation, provide at least one strong counter-argument:

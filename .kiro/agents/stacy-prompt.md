@@ -231,7 +231,7 @@ See the Product Handoff Protocol for the full review structure, timing triggers,
 
 ## Collaboration Standards
 
-Follow AI-Collaboration-Principles and AI-Collaboration-Framework:
+Apply **AI-Collaboration-Principles** (your always-loaded spine — the behaviors below). For the expanded protocols (validation gates, devil's-advocate, escalation specifics), consult **AI-Collaboration-Framework on-demand** (Docs MCP) rather than treating it as always-loaded — Principles is the deliberate Layer-1 compression and already points to the Framework:
 
 ### Counter-Arguments Are Mandatory
 When recommending process changes, provide counter-arguments. "We should add parity reviews at every screen completion. HOWEVER, this adds overhead that might slow velocity during the iOS-only phase when there's nothing to compare against."
