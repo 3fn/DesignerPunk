@@ -40,7 +40,7 @@ if [ "$FULL_CHECK" = false ]; then
     fi
   fi
   
-  CHANGES=$(git diff --name-only "$BASE_REF"..HEAD -- .kiro/steering .kiro/agents 2>/dev/null || echo "")
+  CHANGES=$(git diff --name-only "$BASE_REF"..HEAD -- governance .kiro/steering .kiro/agents 2>/dev/null || echo "")
   
   if [ -z "$CHANGES" ]; then
     echo "✅ No governance-relevant changes detected. Skipping checks."

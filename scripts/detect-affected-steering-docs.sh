@@ -10,6 +10,10 @@
 
 set -euo pipefail
 
+# Spec 119-A health-check fix (N-1): both corpus roots are scanned.
+# governance/ holds the 81 MCP-served docs relocated in 119-A.
+# .kiro/steering/ holds the 9 always-loaded identity docs.
+GOVERNANCE_DIR="governance"
 STEERING_DIR=".kiro/steering"
 AGENTS_DIR=".kiro/agents"
 
@@ -23,8 +27,8 @@ else
   BASE_REF="HEAD~1"
 fi
 
-# Check for steering doc changes
-STEERING_CHANGES=$(git diff --name-only "$BASE_REF"..HEAD -- "$STEERING_DIR" 2>/dev/null || echo "")
+# Check for steering doc changes across both corpus roots
+STEERING_CHANGES=$(git diff --name-only "$BASE_REF"..HEAD -- "$GOVERNANCE_DIR" "$STEERING_DIR" 2>/dev/null || echo "")
 AGENT_CHANGES=$(git diff --name-only "$BASE_REF"..HEAD -- "$AGENTS_DIR" 2>/dev/null || echo "")
 
 if [ -z "$STEERING_CHANGES" ] && [ -z "$AGENT_CHANGES" ]; then

@@ -22,6 +22,8 @@
 
 **Done when.** `list_cross_references` returns the bare-`id` cross-refs for the migrated docs (validated against `idIndex`), with disambiguation rules that don't mis-extract non-doc links, and tests covering both.
 
+**Bundled here (health-check N-1, 2026-06-29):** also repoint `scripts/scan-cross-references.sh` to scan `governance/` (it still globs `.kiro/steering/*.md` only — its coverage shrank to 9 docs post-relocation). Deferred to *this* work rather than fixed during the N-1 metadata-validator repoint, because repointing the scanner before the parser is `id`-aware only produces OB-1 under-counts. (The metadata validator + `governance-check.sh` + `detect-affected-steering-docs.sh` WERE repointed to both roots in the N-1 fix; only the cross-ref scanner waits for parser id-awareness.)
+
 ---
 
 ## OB-2 — Sweep the 176 governance-corpus MCP-query `path:` snippets to `id`

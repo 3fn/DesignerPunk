@@ -396,25 +396,41 @@ function generateReport(results) {
 
 /**
  * Main execution
+ *
+ * Spec 119-A health-check fix (N-1): scan BOTH corpus roots so all 90 docs
+ * are validated — governance/ (81 MCP-served docs) AND .kiro/steering/ (9
+ * identity docs). Previously only .kiro/steering/ was scanned, silently
+ * dropping coverage to 9 after the 119-A relocation.
  */
 function main() {
-  const steeringDir = path.join(process.cwd(), '.kiro', 'steering');
-  
-  if (!fs.existsSync(steeringDir)) {
-    console.error(`Error: Steering directory not found at ${steeringDir}`);
+  const projectRoot = process.cwd();
+
+  // Both corpus roots — governance/ is the MCP-served corpus (81 docs);
+  // .kiro/steering/ holds the always-loaded identity layer (9 docs).
+  const scanRoots = [
+    path.join(projectRoot, 'governance'),
+    path.join(projectRoot, '.kiro', 'steering'),
+  ];
+
+  const existingRoots = scanRoots.filter(dir => fs.existsSync(dir));
+  if (existingRoots.length === 0) {
+    console.error(`Error: Neither scan root found (governance/ nor .kiro/steering/)`);
     process.exit(1);
   }
-  
-  // Get all markdown files in steering directory
-  const files = fs.readdirSync(steeringDir)
-    .filter(file => file.endsWith('.md'))
-    .map(file => path.join(steeringDir, file));
-  
+
+  // Collect markdown files from all existing roots
+  const files = existingRoots.flatMap(dir =>
+    fs.readdirSync(dir)
+      .filter(file => file.endsWith('.md'))
+      .map(file => path.join(dir, file))
+  );
+
   if (files.length === 0) {
-    console.log('No markdown files found in steering directory');
+    console.log('No markdown files found in scan roots');
     process.exit(0);
   }
-  
+
+  console.log(`Scan roots: ${existingRoots.map(d => path.relative(projectRoot, d)).join(', ')}`);
   console.log(`Found ${files.length} steering documents to validate\n`);
   
   // Validate all documents
