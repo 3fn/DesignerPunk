@@ -28,7 +28,7 @@ import * as fs from 'fs';
 
 describe('MCP Queryability: Browser Distribution Guide', () => {
   const MCP_SERVER_DIR = path.join(process.cwd(), 'mcp-server');
-  const BROWSER_DISTRIBUTION_GUIDE_PATH = '.kiro/steering/Browser Distribution Guide.md';
+  const BROWSER_DISTRIBUTION_GUIDE_PATH = '.kiro/steering/browser-distribution-guide.md';
 
   describe('Document Indexing Prerequisites', () => {
     /**
@@ -179,7 +179,7 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
             const fs = require('fs');
             
             // Read the steering document directly
-            const docPath = path.join(process.cwd(), '.kiro/steering/Browser Distribution Guide.md');
+            const docPath = path.join(process.cwd(), '.kiro/steering/browser-distribution-guide.md');
             const content = fs.readFileSync(docPath, 'utf-8');
             
             // Parse metadata
@@ -199,7 +199,7 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
             
             // Output result
             console.log(JSON.stringify({
-              path: '.kiro/steering/Browser Distribution Guide.md',
+              path: '.kiro/steering/browser-distribution-guide.md',
               metadata: metadata,
               sections: sections,
               hasContent: content.length > 0
@@ -211,7 +211,7 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
         const parsed = JSON.parse(result.trim());
 
         // Verify the document was parsed correctly
-        expect(parsed.path).toBe('.kiro/steering/Browser Distribution Guide.md');
+        expect(parsed.path).toBe('.kiro/steering/browser-distribution-guide.md');
         expect(parsed.hasContent).toBe(true);
         expect(parsed.metadata.Purpose).toBeDefined();
         expect(parsed.metadata.Layer).toBeDefined();
@@ -244,7 +244,7 @@ describe('MCP Queryability: Browser Distribution Guide', () => {
       const files = fs.readdirSync(steeringDir).filter((f) => f.endsWith('.md'));
 
       // Verify Browser Distribution Guide is in the list
-      expect(files).toContain('Browser Distribution Guide.md');
+      expect(files).toContain('browser-distribution-guide.md');
 
       console.log(`Found ${files.length} steering documents`);
       console.log(`Browser Distribution Guide is discoverable: ✓`);

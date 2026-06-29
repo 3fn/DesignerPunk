@@ -104,7 +104,7 @@ fi
 
 # Update governance health check date in Start Up Tasks if --full was used
 if [ "$FULL_CHECK" = true ]; then
-  STARTUP_FILE=".kiro/steering/Start Up Tasks.md"
+  STARTUP_FILE=".kiro/steering/start-up-tasks.md"
   TODAY=$(date +%Y-%m-%d)
   if [ -f "$STARTUP_FILE" ]; then
     sed -i '' "s/\*\*\[.*\]\*\*/\*\*\[$TODAY\]\*\*/" "$STARTUP_FILE" 2>/dev/null || \

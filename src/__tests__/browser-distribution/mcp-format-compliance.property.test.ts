@@ -31,7 +31,7 @@ describe('Property 4: MCP Documentation Format Compliance', () => {
     process.cwd(),
     '.kiro',
     'steering',
-    'Browser Distribution Guide.md'
+    'browser-distribution-guide.md'
   );
 
   /**
@@ -58,7 +58,7 @@ describe('Property 4: MCP Documentation Format Compliance', () => {
     // Ensure Browser Distribution Guide exists
     if (!fs.existsSync(BROWSER_DISTRIBUTION_GUIDE_PATH)) {
       throw new Error(
-        'Browser Distribution Guide not found at .kiro/steering/Browser Distribution Guide.md'
+        'Browser Distribution Guide not found at .kiro/steering/browser-distribution-guide.md'
       );
     }
 

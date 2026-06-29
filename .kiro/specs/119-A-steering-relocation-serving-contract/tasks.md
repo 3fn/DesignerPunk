@@ -261,7 +261,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Idempotent: a second run finds `id:` present and skips
     - _Requirements: 2.1, 2.5_
 
-- [ ] 5. Filename Normalization (Mass-Rename of 10 Space-Bearing Files)
+- [x] 5. Filename Normalization (Mass-Rename of 10 Space-Bearing Files)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
