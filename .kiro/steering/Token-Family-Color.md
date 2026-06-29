@@ -1,4 +1,5 @@
 ---
+id: token-family-color
 inclusion: manual
 name: Token-Family-Color
 description: Color token family — OKLCH channel-primitive architecture, palette structure, semantic color tokens, neutral partition, blend model, theme support, and WCAG compliance. Load when working with color tokens, color selection, theme variants, or color-related accessibility.

@@ -1,4 +1,5 @@
 ---
+id: stemma-system-principles
 inclusion: manual
 name: Stemma-System-Principles
 description: Foundational principles and governance for systematic component development — family inheritance patterns, behavioral contracts, cross-platform architecture, and Rosetta+Stemma integration. Load when working with component architecture, inheritance structures, or behavioral contract design.

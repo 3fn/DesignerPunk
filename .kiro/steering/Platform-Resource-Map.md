@@ -1,4 +1,5 @@
 ---
+id: platform-resource-map
 inclusion: manual
 name: Platform-Resource-Map
 description: Platform-specific file paths for component implementations, tokens, and shared artifacts. Load when navigating component source, verifying platform parity, or auditing test coverage.

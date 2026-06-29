@@ -1,4 +1,5 @@
 ---
+id: test-behavioral-contract-validation
 inclusion: manual
 name: Test-Behavioral-Contract-Validation
 description: Framework for validating behavioral contracts across web, iOS, and Android platforms — contract structure, validation patterns, cross-platform consistency checks, and test generation guidance. Load when auditing behavioral contract test coverage, validating cross-platform component behavior, or reviewing contract compliance.

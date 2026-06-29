@@ -1,4 +1,5 @@
 ---
+id: progress-indicator-components
 inclusion: manual
 ---
 

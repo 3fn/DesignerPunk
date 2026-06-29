@@ -1,4 +1,5 @@
 ---
+id: token-semantic-structure
 inclusion: manual
 name: Token-Semantic-Structure
 description: Semantic token structure guide — SemanticToken interface requirements, primitiveReferences field, usage patterns, and concept-based documentation approach. Load when creating or modifying semantic tokens, understanding semantic-to-primitive relationships, or reviewing token interface structure.

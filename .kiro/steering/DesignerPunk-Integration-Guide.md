@@ -1,4 +1,5 @@
 ---
+id: designerpunk-integration-guide
 inclusion: manual
 name: DesignerPunk-Integration-Guide
 description: Everything a product developer needs to integrate DesignerPunk into a product repo

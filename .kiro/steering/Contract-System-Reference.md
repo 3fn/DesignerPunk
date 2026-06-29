@@ -1,4 +1,5 @@
 ---
+id: contract-system-reference
 inclusion: manual
 name: Contract-System-Reference
 description: Uniform behavioral contract system reference — 10-category taxonomy with definitions, concept catalog with all 117 concepts, {category}_{concept} naming convention, canonical contracts.yaml format, exclusion format, inheritance and composition patterns, classification rules. Load when creating or modifying component contracts, auditing contract coverage, or building contract-consuming systems.

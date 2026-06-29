@@ -1,4 +1,5 @@
 ---
+id: rosetta-system-principles
 inclusion: manual
 name: rosetta-system-principles
 description: Rosetta System foundational principles — primitive-to-semantic hierarchy, mathematical foundations, naming conventions, cross-platform consistency, and Rosetta+Stemma integration. Load when working with token architecture, mathematical relationships, or cross-platform token strategy.

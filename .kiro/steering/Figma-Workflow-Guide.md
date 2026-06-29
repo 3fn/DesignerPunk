@@ -1,4 +1,5 @@
 ---
+id: figma-workflow-guide
 inclusion: manual
 name: Figma-Workflow-Guide
 description: Bidirectional Figma integration workflow — token push (054a) and design extraction (054b/054d). Covers MCP setup, CLI usage, ComponentAnalysis artifacts, troubleshooting. Load when working with Figma integration tasks.

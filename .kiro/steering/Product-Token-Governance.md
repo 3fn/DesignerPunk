@@ -1,4 +1,5 @@
 ---
+id: product-token-governance
 inclusion: manual
 name: Product-Token-Governance
 description: Product token authoring governance — scope model, naming conventions, litmus test, color governance, promotion signals, and authoring workflow. Load when authoring product tokens, reviewing product token quality, or evaluating promotion candidates.

@@ -1,4 +1,5 @@
 ---
+id: rosetta-system-architecture
 inclusion: manual
 name: Rosetta-System-Architecture
 description: Rosetta token pipeline architecture — subsystem entry points, token flow from definition to platform output, component token integration, and debugging token generation. Load when understanding token pipeline flow, finding subsystem entry points, or debugging generation issues.

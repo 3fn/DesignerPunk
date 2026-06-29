@@ -1,4 +1,5 @@
 ---
+id: process-spec-planning
 inclusion: manual
 name: Process-Spec-Planning
 description: Standards for creating spec documents — requirements format (EARS patterns, INCOSE quality rules), design document structure, tasks document format with task type classification, validation tiers, and completion documentation paths. Load when creating or updating requirements.md, design.md, or tasks.md.

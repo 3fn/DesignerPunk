@@ -1,4 +1,5 @@
 ---
+id: web-authoring-standards
 inclusion: manual
 name: Web-Authoring-Standards
 description: Shared CSS authoring rules for web platform work — logical properties, token priority, accessibility media queries, focus patterns, product token authoring, and naming schema. Load when writing CSS for components or product screens.

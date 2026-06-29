@@ -1,4 +1,5 @@
 ---
+id: product-handoff-protocol
 inclusion: manual
 name: Product-Handoff-Protocol
 description: Structured communication protocol for implementation-phase work between product agents

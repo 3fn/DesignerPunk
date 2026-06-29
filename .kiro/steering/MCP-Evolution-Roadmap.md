@@ -1,4 +1,5 @@
 ---
+id: mcp-evolution-roadmap
 inclusion: manual
 name: MCP-Evolution-Roadmap
 description: Known gaps in the MCP knowledge layer and trigger conditions for when to address them. Query when working on MCP-related specs or after product agent consumption reveals friction.

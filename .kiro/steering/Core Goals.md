@@ -1,4 +1,5 @@
 ---
+id: core-goals
 inclusion: always
 ---
 

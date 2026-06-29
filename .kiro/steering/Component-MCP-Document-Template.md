@@ -1,4 +1,5 @@
 ---
+id: mcp-component-family-document-template
 inclusion: manual
 ---
 

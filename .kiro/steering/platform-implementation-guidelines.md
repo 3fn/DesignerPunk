@@ -1,4 +1,5 @@
 ---
+id: platform-implementation-guidelines
 inclusion: manual
 name: Platform-Implementation-Guidelines
 description: Guidelines for maintaining cross-platform behavioral consistency — behavioral contract compliance, platform-native patterns, web/iOS/Android implementation rules, and optimization boundaries. Load when implementing platform-specific component code or validating cross-platform consistency.

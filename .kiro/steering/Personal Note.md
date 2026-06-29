@@ -1,4 +1,5 @@
 ---
+id: personal-note
 inclusion: always
 ---
 

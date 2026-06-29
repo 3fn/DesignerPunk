@@ -1,4 +1,5 @@
 ---
+id: component-inheritance-structures
 inclusion: manual
 name: Component-Inheritance-Structures
 description: Complete inheritance structures and behavioral contracts for all 13 component families — primitive bases, semantic variants, relationship diagrams, and contract definitions. Load when implementing component inheritance, verifying behavioral contracts, or checking family structures.

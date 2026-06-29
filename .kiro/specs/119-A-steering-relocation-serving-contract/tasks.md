@@ -207,7 +207,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Wire `loadLegacyPathManifest` (Task 2.3) to load this artifact at index build
     - _Requirements: 2.3, 4.5_
 
-- [ ] 4. Build-Time Uniqueness Guard + 89-Doc `id` Backfill Codemod
+- [x] 4. Build-Time Uniqueness Guard + 89-Doc `id` Backfill Codemod
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)

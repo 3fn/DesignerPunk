@@ -1,4 +1,5 @@
 ---
+id: a-vision-of-the-future
 inclusion: manual
 ---
 

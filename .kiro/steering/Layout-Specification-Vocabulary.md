@@ -1,4 +1,5 @@
 ---
+id: layout-specification-vocabulary
 inclusion: manual
 name: Layout-Specification-Vocabulary
 description: Layout specification vocabulary — responsive layout terms, grid system mental model, specification format, and platform translation patterns. Load when specifying screen layouts, working with layout templates, or translating layout intent to platform implementation.

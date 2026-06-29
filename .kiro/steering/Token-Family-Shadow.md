@@ -1,4 +1,5 @@
 ---
+id: token-family-shadow
 inclusion: manual
 name: Token-Family-Shadow
 description: Shadow token family — directional depth effects with compositional offset, blur, opacity, and color primitives. Load when working with elevation, depth, card shadows, or spatial hierarchy.

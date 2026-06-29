@@ -1,4 +1,5 @@
 ---
+id: component-family-icon
 inclusion: manual
 name: Component-Family-Icon
 description: Icon component family — inline SVG icons with automatic color inheritance and typography-aligned sizing across 11 size variants. Load when working with icon components, icon sizing, or icon color integration.

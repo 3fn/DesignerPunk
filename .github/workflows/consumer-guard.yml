@@ -93,6 +93,18 @@ jobs:
         # @see eslint.config.js — polarity-deferred config with scope detail
         run: npm run lint
 
+      - name: id uniqueness guard (Spec 119-A Task 4.2)
+        # Net-new CI backstop for the addressing-plane `id` invariant. Scans the
+        # on-disk steering corpus across both roots (governance/ + .kiro/steering/)
+        # and fails on any explicit-or-derived `id` collision, naming colliding
+        # paths. "One function, two callers": the SAME checkIdUniqueness runs here
+        # AND in the Thurgood metadata-validation hook (the day-to-day front line);
+        # this CI leg is the backstop. No existing steering build step existed to
+        # hang it on (design B1) — hence this net-new step + npm run check:id-uniqueness.
+        # @see scripts/check-id-uniqueness.ts
+        # @see mcp-server/src/id-guard/check-id-uniqueness.ts (the shared core)
+        run: npm run check:id-uniqueness
+
       - name: Dynamic-import smoke guard (Spec 118 Task 4.1)
         # PREVENTIVE: asserts no web component source introduces an extensionless
         # or raw-.ts runtime dynamic import(). Scoped to src/components/**/*.{ts,tsx}.

@@ -1,4 +1,5 @@
 ---
+id: component-family-container
 inclusion: manual
 name: Component-Family-Container
 description: Container component family — layout and content organization with granular styling props (padding, background, shadow, border, radius, opacity, layering) and semantic HTML support. Load when working with container components or layout composition.

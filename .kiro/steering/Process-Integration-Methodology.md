@@ -1,4 +1,5 @@
 ---
+id: integration-methodology
 inclusion: manual
 ---
 

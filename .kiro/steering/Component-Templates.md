@@ -1,4 +1,5 @@
 ---
+id: component-family-templates
 inclusion: manual
 ---
 

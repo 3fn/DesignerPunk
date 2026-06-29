@@ -1,4 +1,5 @@
 ---
+id: component-family-data-display
 inclusion: manual
 name: Component-Family-Data-Display
 description: Data Display component family (placeholder) — planned components for structured information presentation including text formatting, lists, tables, and media display. Load when planning data display components or reviewing family architecture.

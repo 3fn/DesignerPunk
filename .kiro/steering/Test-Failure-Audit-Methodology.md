@@ -1,4 +1,5 @@
 ---
+id: test-failure-audit-methodology
 inclusion: manual
 name: Test-Failure-Audit-Methodology
 description: Reusable methodology for conducting test failure audits — workflow steps, pattern identification, severity classification, clean exit audit requirements, and performance investigation protocol. Load when conducting test failure audits, completing specs with clean exit audits, or investigating performance issues.

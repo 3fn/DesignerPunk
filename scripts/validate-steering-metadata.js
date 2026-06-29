@@ -11,6 +11,35 @@
 
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
+
+/**
+ * Spec 119-A Task 4.2 — the Thurgood metadata-validation hook is the day-to-day
+ * front line for the `id`-uniqueness invariant ("one function, two callers": this
+ * hook AND the net-new CI npm script invoke the SAME checkIdUniqueness core in
+ * mcp-server/src/id-guard/). This hook runs under `node` (not tsx), so it invokes
+ * the shared TypeScript core through the same CLI the CI leg uses — there is no
+ * second copy of the uniqueness logic. Returns the guard's exit code (0 = unique).
+ */
+function runIdUniquenessGuard() {
+  const projectRoot = process.cwd();
+  const cli = path.join(projectRoot, 'scripts', 'check-id-uniqueness.ts');
+  if (!fs.existsSync(cli)) {
+    console.log('\n⚠️  id-uniqueness guard CLI not found — skipping (scripts/check-id-uniqueness.ts).');
+    return 0;
+  }
+  console.log('\n=== id Uniqueness Guard (Spec 119-A, via shared core) ===');
+  const res = spawnSync('npx', ['tsx', cli], {
+    cwd: projectRoot,
+    stdio: 'inherit',
+    encoding: 'utf-8',
+  });
+  if (res.error) {
+    console.log(`⚠️  Could not run id-uniqueness guard (${res.error.message}) — not blocking metadata validation.`);
+    return 0;
+  }
+  return res.status === null ? 1 : res.status;
+}
 
 // Standardized task vocabulary (expanded from original 14 core types)
 const CORE_TASK_TYPES = [
@@ -392,8 +421,13 @@ function main() {
   const results = files.map(validateDocument);
   
   // Generate and display report
-  const exitCode = generateReport(results);
-  process.exit(exitCode);
+  const metadataExitCode = generateReport(results);
+
+  // Spec 119-A Task 4.2: the id-uniqueness guard is part of the metadata hook's
+  // front-line enforcement — doc create/modify blocks on an id collision. Block
+  // if EITHER metadata validation OR the uniqueness guard fails.
+  const idGuardExitCode = runIdUniquenessGuard();
+  process.exit(metadataExitCode !== 0 ? metadataExitCode : idGuardExitCode);
 }
 
 // Run if executed directly
@@ -404,6 +438,7 @@ if (require.main === module) {
 module.exports = {
   parseMetadata,
   validateDocument,
+  runIdUniquenessGuard,
   CORE_TASK_TYPES,
   ALL_TASK_TYPES
 };

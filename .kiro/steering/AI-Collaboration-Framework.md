@@ -1,4 +1,5 @@
 ---
+id: ai-collaboration-framework
 inclusion: manual
 name: AI-Collaboration-Framework
 description: Detailed protocols for AI-human collaboration — mandatory bias mitigation, candid communication, objective validation gates, devil's advocate protocols, and disagreement resolution. Load when needing detailed collaboration protocols beyond the always-loaded AI-Collaboration-Principles summary.

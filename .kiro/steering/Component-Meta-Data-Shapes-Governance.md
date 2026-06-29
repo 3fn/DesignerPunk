@@ -1,4 +1,5 @@
 ---
+id: component-meta-data-shapes-governance
 inclusion: manual
 name: Component-Meta-Data-Shapes-Governance
 description: Governance criteria for adding data_shapes to component-meta.yaml. Load when creating new components with complex data props, reviewing component-meta.yaml files, or auditing component metadata completeness.

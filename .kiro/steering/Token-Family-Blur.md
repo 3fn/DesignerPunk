@@ -1,4 +1,5 @@
 ---
+id: token-family-blur
 inclusion: manual
 name: Token-Family-Blur
 description: Unified blur token family — single primitive scale for shadow edge softness, glow radial spread, and surface/backdrop blur. Load when working with shadows, glows, translucent surfaces, or any blur effect.

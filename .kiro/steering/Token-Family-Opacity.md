@@ -1,4 +1,5 @@
 ---
+id: token-family-opacity
 inclusion: manual
 name: Token-Family-Opacity
 description: Opacity token family — transparency tokens with 8% base increment system and 14-token percentage-based scale (opacity000–opacity100). Load when working with transparency effects, disabled states, overlays, or visual hierarchy through opacity.

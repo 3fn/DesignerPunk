@@ -1,4 +1,5 @@
 ---
+id: component-mcp-query-guide
 inclusion: manual
 name: component-mcp-query-guide
 description: MCP tool reference — all tools across Application, Product, and Docs MCPs with parameters, response shapes, and usage patterns. Load when querying any MCP server or building MCP integrations.

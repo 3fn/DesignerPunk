@@ -1,4 +1,5 @@
 ---
+id: ai-collaboration-principles
 inclusion: always
 ---
 

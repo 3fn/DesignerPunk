@@ -1,4 +1,5 @@
 ---
+id: process-cross-reference-standards
 inclusion: manual
 name: Process-Cross-Reference-Standards
 description: Cross-reference standards for documentation — formatting rules, common cross-reference patterns, anti-patterns to avoid, and maintenance guidelines. Load when adding cross-references to documentation, linking related docs, or reviewing cross-reference quality.

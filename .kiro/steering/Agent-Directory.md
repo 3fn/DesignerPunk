@@ -1,4 +1,5 @@
 ---
+id: agent-directory
 inclusion: always
 ---
 

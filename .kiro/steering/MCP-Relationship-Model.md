@@ -1,4 +1,5 @@
 ---
+id: mcp-relationship-model
 inclusion: manual
 name: MCP-Relationship-Model
 description: Defines boundaries, information flow, access model, and interface contracts between DesignerPunk's three MCP servers

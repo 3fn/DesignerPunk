@@ -1,4 +1,5 @@
 ---
+id: completion-documentation-guide
 inclusion: manual
 name: Completion-Documentation-Guide
 description: Comprehensive completion and summary documentation guide — two-document workflow, documentation tiers, naming conventions, document templates, and cross-references. Load when creating completion docs, writing summary docs, or completing parent tasks.

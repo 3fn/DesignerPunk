@@ -1,4 +1,5 @@
 ---
+id: token-quick-reference
 inclusion: manual
 name: Token-Quick-Reference
 description: Token documentation routing table — maps token types to their MCP document paths and common usage patterns. Load when selecting tokens, finding token documentation, or routing to the right token family guide.

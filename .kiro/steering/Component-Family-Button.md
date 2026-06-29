@@ -1,4 +1,5 @@
 ---
+id: component-family-button
 inclusion: manual
 name: Component-Family-Button
 description: Button component family — ButtonCTA variants, sizes, icon support, interaction states, and platform implementations. Load when working with button components or button behavioral contracts.

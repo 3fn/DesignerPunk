@@ -1,4 +1,5 @@
 ---
+id: build-system-setup
 inclusion: manual
 name: BUILD-SYSTEM-SETUP
 description: Build system configuration for DesignerPunk v2 — Jest setup, TypeScript compilation, build scripts, and validation commands. Load when debugging build issues, running validation, resolving TypeScript errors, or understanding project build infrastructure.

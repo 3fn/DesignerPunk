@@ -1,4 +1,5 @@
 ---
+id: transformer-development-guide
 inclusion: manual
 name: Transformer-Development-Guide
 description: Transformer development guide — ITokenTransformer interface, TransformerRegistry usage, implementation examples. Load when building custom transformers or extending DTCG output for new tools.

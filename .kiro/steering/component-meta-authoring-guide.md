@@ -1,4 +1,5 @@
 ---
+id: component-meta-authoring-guide
 inclusion: manual
 name: component-meta-authoring-guide
 description: Guide for authoring component-meta.yaml files — field descriptions, examples, controlled vocabulary, and new component checklist. Load when creating or editing component metadata.

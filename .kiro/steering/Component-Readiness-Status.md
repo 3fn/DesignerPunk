@@ -1,4 +1,5 @@
 ---
+id: component-readiness-status
 inclusion: manual
 name: Component-Readiness-Status
 description: Readiness status definitions, usage recommendations, and transition guidelines for Stemma System components — production ready, beta, and placeholder status indicators. Load when evaluating component maturity or making component usage decisions.

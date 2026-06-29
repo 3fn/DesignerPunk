@@ -1,4 +1,5 @@
 ---
+id: start-up-tasks
 inclusion: always
 name: Start-Up-Tasks
 description: Essential startup checklist — date verification, Jest test commands, test selection guidelines, and task completion sequence. Load when beginning any task execution, running tests, or completing tasks.

@@ -1,4 +1,5 @@
 ---
+id: test-development-standards
 inclusion: manual
 name: Test-Development-Standards
 description: Sustainable test development practices — test categories, web component testing patterns, linting and testing integration, behavioral contract testing, and integrated workflow examples. Load when writing tests, debugging test failures, understanding test patterns, or using Stemma System validators.

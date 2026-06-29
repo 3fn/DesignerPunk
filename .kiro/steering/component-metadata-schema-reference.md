@@ -1,4 +1,5 @@
 ---
+id: component-metadata-schema-reference
 inclusion: manual
 name: component-metadata-schema-reference
 description: Complete field reference for assembled ComponentMetadata JSON — all fields, types, and response shapes. Load when understanding MCP response data or debugging metadata issues.

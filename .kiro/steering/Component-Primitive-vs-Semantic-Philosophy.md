@@ -1,4 +1,5 @@
 ---
+id: primitive-vs-semantic-usage-philosophy
 inclusion: manual
 ---
 

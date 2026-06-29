@@ -1,4 +1,5 @@
 ---
+id: technology-stack
 inclusion: manual
 name: Technology-Stack
 description: Define technology choices for DesignerPunk cross-platform implementation

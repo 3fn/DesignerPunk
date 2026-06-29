@@ -1,4 +1,5 @@
 ---
+id: component-family-navigation
 inclusion: manual
 name: Component-Family-Navigation
 description: Navigation component family — wayfinding and view-switching components including segmented controls and tab bars. Load when building navigation components or reviewing family architecture.

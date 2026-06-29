@@ -1,4 +1,5 @@
 ---
+id: process-task-type-definitions
 inclusion: manual
 name: Process-Task-Type-Definitions
 description: Task type definitions for the three-tier validation and documentation system — Setup, Implementation, Architecture, and Documentation task types with validation tier requirements and completion documentation expectations. Load when classifying tasks, determining validation tiers, or understanding task completion requirements.

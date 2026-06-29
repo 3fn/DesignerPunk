@@ -128,6 +128,7 @@
     "figma:extract": "npx tsx src/cli/figma-extract.ts",
     "figma:generate-component": "npx tsx scripts/figma-component-generator.ts",
     "check:drift": "node scripts/check-package-name-drift.js",
+    "check:id-uniqueness": "tsx scripts/check-id-uniqueness.ts",
     "prepack": "npm run build",
     "prepublishOnly": "npm run build && npm run check:drift",
     "postpublish": "git diff --quiet token-index/ || (git add token-index/ && git commit -m 'Regenerate token-index (post-publish)' && git push origin main)"

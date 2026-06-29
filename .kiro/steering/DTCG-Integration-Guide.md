@@ -1,4 +1,5 @@
 ---
+id: dtcg-integration-guide
 inclusion: manual
 name: DTCG-Integration-Guide
 description: Tool-agnostic DTCG format specification and integration patterns. Covers token structure, format details, and how to consume DTCG in design tools. Load when working with DTCG format or tool integrations.

@@ -1,4 +1,5 @@
 ---
+id: component-family-badge
 inclusion: manual
 name: Component-Family-Badge
 description: Badge component family — read-only, non-interactive visual indicators for status, category, or metadata display. Load when working with badge components, status indicators, or notification counts.

@@ -1,4 +1,5 @@
 ---
+id: component-schema-format
 inclusion: manual
 name: Component-Schema-Format
 description: Formal specification for Stemma System component schema YAML files — identity fields, property definitions, type system, inheritance declarations, composition declarations, platform notes, and validation rules. Load when creating or modifying component schema YAML files, validating schema structure, or understanding the relationship between schema YAML and contracts.yaml.
