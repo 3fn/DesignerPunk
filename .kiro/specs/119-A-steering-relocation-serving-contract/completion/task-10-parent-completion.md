@@ -1,10 +1,10 @@
-# Task 10 — Parent Completion (PARTIAL: 10.1 / 10.2 / 10.3 / 10.4)
+# Task 10 — Parent Completion (COMPLETE: 10.1 / 10.2 / 10.3 / 10.4 / 10.5 / 10.6)
 
 **Date**: 2026-06-29
 **Spec**: 119-A — Steering Relocation & Serving Contract
 **Task**: 10 — Discovery Dry-Run + Frozen Map-Oracle, then Gated Meta-Guide Removal
 **Author**: Thurgood (Civitas steward)
-**Status**: PARTIAL — subtasks 10.1, 10.2, 10.3, **10.4 (lift) complete. The hard gate did NOT clear: 79 PASS / 4 WEAK / 0 MISS, `clearsThreshold: false` — 4 concepts flagged as structurally unliftable via aliases-only (see § 10.4).** 10.5 (gated removal) **remains BLOCKED** by the unclear gate; 10.6 (no-regression) follows once the gate is resolved.
+**Status**: COMPLETE — subtasks 10.1, 10.2, 10.3, 10.4 (lift) complete; the hard gate CLEARED (83 PASS / 0 WEAK / 0 MISS, `clearsThreshold: true`) via the main-loop title-rank tie-breaker (see § "Gate resolution"). **10.5 (gated meta-guide removal) executed — removal was PERMITTED only because the gate cleared. 10.6 (no-regression dry-run) re-ran the SAME frozen oracle post-removal and confirmed no regression: 83 / 0 / 0, `clearsThreshold: true`.** The meta-guide is `git rm`'d; the corpus is now 89 (9 steering / 80 governance); the MCP index stays 80 (governance-only — the meta-guide was never served).
 
 > **Scope discipline.** 10.4–10.6 are deliberately NOT done here. The meta-guide
 > (`00-steering-documentation-directional-priorities.md`, renamed, still present,
@@ -209,3 +209,61 @@ The floor→lift seeding got to **79 / 4 / 0** with 4 concepts stuck WEAK (`colo
 **Dependency analysis (122 / 123 / 119-B):** all downstream references key off the Layer-1 `matchConfidence` signal (unchanged), NOT rank ordering — verified by broad sweep (the only rank dependents are 119-A's own gate, which the change *satisfies*). 121 does not pin the flat-tier weighting as a requirement. **No external dependent on rank-order; no contract violated.** A 119-B informational note is recorded in `119-B-deferred-obligations.md` so the deferred measurement case study's baseline accounts for the floor(54.2%)→lift→tie-breaker(94%) history.
 
 **10.5 (meta-guide removal) is now UNBLOCKED** (gate cleared).
+
+---
+
+## 10.5 — Remove the meta-guide + drop the Documentation Directory (GATED — gate CLEARED, removal PERMITTED) (Req 11 AC1, AC2, AC3, AC5 / Req 13 AC6)
+
+The hard gate cleared (10.4: 83 PASS / 0 WEAK / 0 MISS, `clearsThreshold: true`), so Req 11 AC5 / Req 13 AC6 permit removal. Executed.
+
+**Removal:**
+- `git rm .kiro/steering/00-steering-documentation-directional-priorities.md` — the leak-source artifact (its `#[[file:]]` bulk-load was already removed in `5489b6cf`; this removes the now-purposeless file). Git retains it for rollback (Req 11 AC5).
+- **Corpus now 89:** `.kiro/steering/` = **9** (the locked always-set: AI-Collaboration-Principles, Agent-Directory, Civitas-System-Overview, DesignerPunk-Systems-Overview, Spec-Feedback-Protocol, Task-Completion-Protocol, core-goals, personal-note, start-up-tasks), `governance/` = **80**, total = **89**. The MCP index (governance-only) stays **80** — the meta-guide was never in the served index.
+
+**Reference sweep (Req 11 AC3 / the exit-gate precondition — "no referenced `id` may depend on the removed meta-guide"):**
+Grepped the repo for the meta-guide's `id` (`steering-documentation-directional-priorities`), its current path (`.kiro/steering/00-steering-documentation-directional-priorities.md`), AND its old pre-rename path (`00-Steering Documentation Directional Priorities`). Classification:
+
+- **Functional refs that would break — NONE.** Confirmed (Task 5 established, re-confirmed this session) the meta-guide is in **no agent `resources[]`** (no hits in `.kiro/agents/`, `.cursor/`, `.claude/` agent-definitions for the id or either path form). No config, active-doc cross-ref, or code resolves the meta-guide as a live target. The init CLI copies from the on-disk `.kiro/steering/` tree (now 9 files) — no hardcoded meta-guide reference (the knock-on is a count, handled below).
+- **Historical / by-design refs — left as-is (expected):** prior-spec summaries (`docs/specs/036-...`, `070-...`), the 119-A completion docs (tasks 3/4/5/6/8/10), the design/requirements describing the removal, and the frozen oracle's header comment (`scripts/__fixtures__/discovery-oracle.ts` — documents its own provenance from the now-removed map; correct, it is the extracted fixture). The `.claude/settings.local.json` Bash-allowlist entries are R3-scope-out (Req 1 AC7) historical permissions — not functional refs.
+- **Frozen legacy-path manifest — left untouched (self-disables by design):** `mcp-server/src/legacy-path/legacy-path-manifest.ts` (`FROZEN_LEGACY_MANIFEST`) carries a meta-guide entry (`legacyPath: '.kiro/steering/00-Steering Documentation Directional Priorities.md'` → `id: steering-documentation-directional-priorities`). Verified: `loadLegacyPathManifest` skips any entry whose target `id` is not in `idIndex` (DocumentIndexer.ts:528-533). The meta-guide lived in the identity root `.kiro/steering/`, which is NOT in the governance-only served index — so its `id` was **already absent from `idIndex` before this removal**, meaning the manifest entry was **already self-disabled today**. Removing the file changes nothing about manifest behavior: the old path correctly 404s, which IS the intended "removed" behavior. The producer reference (`generate-manifest.ts:65-66`) is the frozen producer's input record; both are frozen-by-design (Task 3) and left as-is. **Do not edit the frozen manifest.**
+
+**Knock-ons (handled + verified each passes):**
+- `src/cli/__tests__/init.test.ts`: package identity steering count **10 → 9** (lines 145 `'✓ steering docs: 9 ...'`, 193 `'✓ steering docs: 9 new files'`) and the post-merge readdir count **11 → 10** (custom `designerpunk.md` + 9 package identity files). Comments updated; counts re-derived from the actual tree. The full root `npm test` (which runs `init.test` against the live tree) passes — this was the most likely break point and it is green.
+- `.kiro/sync-manifest.json`: the `.kiro/steering/00-steering-documentation-directional-priorities.md` entry **removed**.
+- `checkIdUniqueness` / `npm run check:id-uniqueness`: **no code/test change needed** — `totalDocs` is derived dynamically (no hardcoded `90`), and the id-guard unit tests use fixture corpora (totalDocs 2/3/1), not the real count. The script now reports **89** (was 90), PASS, 0 derived.
+
+**Drop the Documentation Directory (Req 11 AC2):** it was never built, so "drop" = "do not create it" (zero-cost). One-line record: the inclusion model recognizes only the locked `always` ambient core (Req 6 AC1, 9 docs) + the governance-only MCP-served set; **no Documentation Directory artifact exists or will be created**. No Documentation Directory artifact was authored (Req 1 AC3 / Req 11 AC2 both forbid one).
+
+**Oracle is NOT a living fallback (Req 11 AC5 / Req 13 AC1):** `scripts/__fixtures__/discovery-oracle.ts` stays a test fixture (consumed only by the discovery dry-run harness). Confirmed it is not wired anywhere as navigation/routing — no agent prompt, config, or runtime path loads it as a fallback map. Git retains the meta-guide for rollback; the oracle is the separate, extracted, test-only mapping.
+
+---
+
+## 10.6 — No-regression dry-run (post-removal) (Req 13 AC4, AC6 / the exit-gate precondition)
+
+Re-ran `npx tsx scripts/discovery-dry-run.ts no-regression` (point: `no-regression`) against the SAME frozen oracle, post-removal.
+
+**No-regression result:**
+- 83 concepts: **83 PASS / 0 WEAK / 0 MISS** — identical to the 10.4 cleared lift.
+- **clearsThreshold (HARD gate): `true`** — no regression vs the 10.4 lift.
+- **rank1StrongRate (SIGNAL): 94.0% (78/83)** — identical to 10.4.
+
+This is exactly as predicted: the meta-guide was never in the governance-served `find_docs` index, so removing it cannot change discovery. Nothing regressed; nothing was papered over.
+
+**Exit-gate preconditions confirmed (for Task 11):**
+- `checkIdUniqueness`: **PASS at 89 docs**, 0 derived.
+- Req 13 AC6 / exit-gate precondition: **no referenced `id` depends on the removed meta-guide** — the 10.5 reference sweep is clean for functional refs (zero), so the Task 11 relocation-integrity gate has no meta-guide dependency to resolve.
+
+---
+
+## 10.5 / 10.6 Verification (run by Thurgood)
+
+- **No-regression `DryRunResult`:** `clearsThreshold: true`, 83 PASS / 0 WEAK / 0 MISS, `rank1StrongRate: 0.940`.
+- **`check:id-uniqueness`:** **PASS — 89 docs** across both roots (was 90), 0 derived.
+- **Root `tsc --noEmit`:** exit 0. **`typecheck:scripts`:** exit 0.
+- **Root `npm test`:** **377 suites / 8990 tests, all pass** (incl. the modified `init.test.ts`).
+- **mcp-server `tsc --noEmit`:** exit 0.
+- **mcp-server `npx jest --runInBand`:** **36 suites / 601 tests, all pass** (the known property-parsing flake did not surface this run).
+- **MCP index rebuild:** healthy, **80 documents** indexed (governance-only, unchanged — confirms the meta-guide was never served).
+- **`git status`:** meta-guide deleted (`D`), `.kiro/sync-manifest.json` + `src/cli/__tests__/init.test.ts` modified (`M`); no stray files from this task (the untracked `scratchpad/` predates this task — Task 8.4 working files).
+
+**Task 10 is COMPLETE.** The gate cleared, the meta-guide is removed, discovery did not regress, and the corpus is 89 (9 / 80). Task 11 (relocation-integrity gate = 119-A exit check) is unblocked.

@@ -138,11 +138,11 @@ describe('CLI init — integration', () => {
       expect(secondOutput).toContain('✓ type definitions:');
       expect(secondOutput).toContain('✓ token source:');
       expect(secondOutput).toContain('existing files preserved');
-      // Spec 119-A two-root split: 10 identity docs ship in .kiro/steering/
-      // (8 identity + the NEW Task-Completion-Protocol added in Task 8 + the
-      // meta-guide, which is deleted later in 119-A Task 10 → back to 9 then),
+      // Spec 119-A two-root split: 9 identity docs ship in .kiro/steering/
+      // (8 identity + the NEW Task-Completion-Protocol added in Task 8; the
+      // meta-guide was removed in 119-A Task 10.5 → back to 9),
       // and the 80 relocated non-identity docs ship in governance/.
-      expect(secondOutput).toContain('✓ steering docs: 10 existing files preserved');
+      expect(secondOutput).toContain('✓ steering docs: 9 existing files preserved');
       expect(secondOutput).toContain('✓ governance docs: 80 existing files preserved');
     });
 
@@ -186,11 +186,12 @@ describe('CLI init — integration', () => {
 
       const output = await runInitIn(scratchDir);
 
-      // Spec 119-A two-root split: the package contributes 10 identity steering
-      // files (8 identity + the NEW Task-Completion-Protocol from Task 8; no
-      // conflict with designerpunk.md because the package doesn't have a file by
-      // that name) and 80 relocated docs into the separate governance/ dir.
-      expect(output).toContain('✓ steering docs: 10 new files');
+      // Spec 119-A two-root split: the package contributes 9 identity steering
+      // files (8 identity + the NEW Task-Completion-Protocol from Task 8; the
+      // meta-guide was removed in Task 10.5; no conflict with designerpunk.md
+      // because the package doesn't have a file by that name) and 80 relocated
+      // docs into the separate governance/ dir.
+      expect(output).toContain('✓ steering docs: 9 new files');
       expect(output).toContain('✓ governance docs: 80 new files');
 
       // Custom file preserved
@@ -198,9 +199,9 @@ describe('CLI init — integration', () => {
         fs.readFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), 'utf-8'),
       ).toBe('# Custom product steering\n');
 
-      // Plus 10 package identity files merged alongside it (total 11)
+      // Plus 9 package identity files merged alongside it (total 10)
       const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
-      expect(steeringFiles.length).toBe(11);
+      expect(steeringFiles.length).toBe(10);
 
       // The 80 relocated docs land in governance/
       const governanceFiles = fs.readdirSync(path.join(scratchDir, 'governance'));
