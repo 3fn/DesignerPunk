@@ -16,8 +16,27 @@ import {
   CrossReference,
   MetadataValidation,
   ValidationIssue,
-  IndexHealth
+  IndexHealth,
+  LegacyPathManifest
 } from '../models';
+
+/**
+ * How a ref resolved to its indexed key (Spec 119-A Component 3).
+ *   - 'id'             — matched the stable `id` index (the primary case).
+ *   - 'indexed-key'    — matched a known indexed (relative) key directly.
+ *   - 'legacy-fallback'— matched an original pre-rename `.kiro/steering/…` string
+ *                        via the transition-only legacy-path manifest.
+ */
+export type ResolutionStrategy = 'id' | 'indexed-key' | 'legacy-fallback';
+
+/** The outcome of resolving a ref (Spec 119-A Component 3). */
+export interface ResolvedRef {
+  /** The indexed (relative) key documentContent is keyed on. */
+  indexedKey: string;
+  strategy: ResolutionStrategy;
+  /** The doc's stable id (always known post-resolution; '' for an unaddressed doc). */
+  id: string;
+}
 
 /**
  * DocumentIndexer - Core indexing class for MCP Documentation Server
@@ -34,6 +53,17 @@ import {
 export class DocumentIndexer {
   private documentMap: Map<string, DocumentMetadata> = new Map();
   private documentContent: Map<string, string> = new Map();
+
+  /**
+   * Spec 119-A addressing plane. Both map to the SAME indexed (relative) key
+   * `documentContent` is keyed on (`path.join(dirPath, entry.name)`), NEVER an
+   * absolute path. Maintained on every path that touches `documentContent`:
+   * cleared in `indexDirectory`, populated in `indexFile`, and pruned in
+   * `reindexFile`'s delete branch (see the index-maintenance invariant).
+   */
+  private idIndex: Map<string, string> = new Map();          // id → indexedKey
+  private legacyPathIndex: Map<string, string> = new Map();  // normalizedLegacyPath → indexedKey
+
   private lastIndexTime: string | undefined;
   private directoryPath: string | undefined;
   private logsDirectory: string;
@@ -65,9 +95,22 @@ export class DocumentIndexer {
     // Log state change
     this.logIndexStateChange('indexing_started', { directoryPath });
 
-    // Clear existing index
+    // Clear existing index. The Spec 119-A addressing maps MUST be cleared
+    // alongside documentMap/documentContent on a full re-scan, or a removed doc
+    // leaves a stale id/legacy entry (index-maintenance invariant, design-verified
+    // DocumentIndexer.ts:69-70).
     this.documentMap.clear();
     this.documentContent.clear();
+    this.idIndex.clear();
+    this.legacyPathIndex.clear();
+    // RE-SEED OBLIGATION (Task 3.2): legacyPathIndex is seeded out-of-band from a
+    // build-time manifest via loadLegacyPathManifest — it is NOT derived from
+    // on-disk scanning (the original `.kiro/steering/…` paths no longer exist
+    // post-relocation, so they cannot be discovered here). Because a full re-scan
+    // (incl. rebuildIndex) clears it per the invariant above, the index-build
+    // wiring MUST call loadLegacyPathManifest AFTER indexDirectory/rebuildIndex.
+    // Until Task 3 wires the artifact, this map is simply empty — correct, since
+    // there is nothing to forward yet (every ref resolves via id or indexed-key).
 
     // Scan directory for markdown files
     const files = this.scanDirectory(directoryPath);
@@ -96,14 +139,18 @@ export class DocumentIndexer {
   async reindexFile(filePath: string): Promise<void> {
     // Verify file exists
     if (!fs.existsSync(filePath)) {
-      // File was deleted - remove from index
+      // File was deleted - remove from index, INCLUDING the Spec 119-A addressing
+      // maps that point at this now-vanished key (index-maintenance invariant,
+      // design-verified DocumentIndexer.ts:96-101). Without this, a renamed/deleted
+      // doc leaves a stale id/legacy entry resolving to a key that no longer exists.
+      this.pruneAddressingEntriesForKey(filePath);
       this.documentMap.delete(filePath);
       this.documentContent.delete(filePath);
       this.lastIndexTime = new Date().toISOString();
       return;
     }
 
-    // Re-index the file
+    // Re-index the file (the re-add branch repopulates idIndex via indexFile).
     await this.indexFile(filePath);
     this.lastIndexTime = new Date().toISOString();
   }
@@ -401,9 +448,15 @@ export class DocumentIndexer {
     // Estimate token count
     const tokenCount = estimateTokenCount(content);
 
+    // Resolve the doc's stable addressing id (Spec 119-A). Derived at read time
+    // when no on-disk `id:` exists; '' for the rare unaddressable doc (no `id:`,
+    // `name:`, or H1) — those are NOT added to idIndex (an empty id is not a key).
+    const id = frontmatter.id ?? '';
+
     // Store metadata in index
     const documentMetadata: DocumentMetadata = {
       path: filePath,
+      id,
       purpose: metadata.purpose,
       layer: metadata.layer,
       relevantTasks: metadata.relevantTasks,
@@ -418,27 +471,159 @@ export class DocumentIndexer {
     };
 
     this.documentMap.set(filePath, documentMetadata);
+
+    // Build the id index (id → indexed key). First drop any PRIOR id forward-entry
+    // that still points at this same key — covers an in-place id rewrite (reindexFile
+    // re-add branch with NO delete event), which would otherwise leave a stale
+    // old-id → key entry. A doc with no id contributes nothing.
+    for (const [existingId, existingKey] of this.idIndex) {
+      if (existingKey === filePath && existingId !== id) this.idIndex.delete(existingId);
+    }
+    if (id) {
+      this.idIndex.set(id, filePath);
+    }
+    // legacyPathIndex is NOT populated here — it is seeded from the build-time
+    // manifest (loadLegacyPathManifest), not derived from the current tree.
   }
 
   /**
-   * Get document content from index
-   * 
-   * @param filePath - Path to document
-   * @returns Document content
+   * Remove any addressing-map entries that point at `indexedKey` (Spec 119-A
+   * index-maintenance invariant, delete branch). Scans by value because the
+   * forward maps are id→key / legacyPath→key; on a delete we only know the key.
    */
-  private getDocumentContent(filePath: string): string {
-    const content = this.documentContent.get(filePath);
-    
-    if (!content) {
-      // Provide helpful error with available documents
-      const availableDocs = Array.from(this.documentMap.keys());
-      throw new Error(
-        `Document not found: ${filePath}. ` +
-        `Available documents: ${availableDocs.join(', ')}`
-      );
+  private pruneAddressingEntriesForKey(indexedKey: string): void {
+    for (const [id, key] of this.idIndex) {
+      if (key === indexedKey) this.idIndex.delete(id);
+    }
+    for (const [legacyPath, key] of this.legacyPathIndex) {
+      if (key === indexedKey) this.legacyPathIndex.delete(legacyPath);
+    }
+  }
+
+  /**
+   * Seed the legacy-path forwarding manifest into legacyPathIndex (Spec 119-A
+   * Component 3 / Data Models). Idempotent and re-callable: each entry's
+   * normalized legacyPath maps to the indexed key its target id currently
+   * resolves to. Entries whose target id is not (yet) indexed are skipped — the
+   * manifest is transition-only and a missing target is a normal post-sweep miss.
+   *
+   * MUST be called AFTER indexDirectory/rebuildIndex (which clear the map), per
+   * the re-seed obligation in indexDirectory. Until Task 3 wires the artifact,
+   * this is simply never called and the map stays empty (correct — nothing to
+   * forward yet).
+   */
+  loadLegacyPathManifest(manifest: LegacyPathManifest): void {
+    for (const entry of manifest.entries) {
+      const indexedKey = this.idIndex.get(entry.id);
+      if (!indexedKey) {
+        // Target id not indexed (e.g. identity doc, not in the served corpus, or
+        // a not-yet-migrated id). Skip — it resolves as a normal miss if probed.
+        continue;
+      }
+      this.legacyPathIndex.set(this.normalizeRef(entry.legacyPath), indexedKey);
+    }
+  }
+
+  /**
+   * Resolve an incoming reference (id | indexed key | legacy steering path) to
+   * the indexed (relative) key documentContent is keyed on (Spec 119-A
+   * Component 3 / Design Decision 1). This is the SINGLE chokepoint all five
+   * path-taking tools route through (via getDocumentContent), so they inherit
+   * id-resolution without per-tool changes.
+   *
+   * Resolution order (Req 2 AC2/AC3/AC9):
+   *   1. id index           — the primary, stable case.
+   *   2. indexed key        — a known indexed (relative) key (ref normalized first).
+   *   3. legacy-path fallback — original pre-rename `.kiro/steering/…` string.
+   * Throws DocumentNotResolved (errorType, carrying ref + tried strategies; the
+   * message preserves the legacy "Document not found" substring) on a miss.
+   *
+   * Guard-ordering invariant: QueryEngine.validatePath runs BEFORE this and
+   * rejects any ref containing `..`. The legacy keyspace is `..`-free by
+   * construction, so normalization stays AFTER the guard — do not move it ahead.
+   */
+  resolveRef(ref: string): ResolvedRef {
+    // Strategy 1: id index (probe the raw ref — ids are not path-normalized).
+    const idHit = this.idIndex.get(ref);
+    if (idHit !== undefined) {
+      return { indexedKey: idHit, strategy: 'id', id: ref };
     }
 
-    return content;
+    // Normalize ONCE; shared by strategy 2 and strategy 3 (single helper).
+    const key = this.normalizeRef(ref);
+
+    // Strategy 2: known indexed (relative) key. MUST normalize before the probe,
+    // or a ref with a stray './' or trailing slash silently skips this strategy.
+    if (this.documentContent.has(key)) {
+      return {
+        indexedKey: key,
+        strategy: 'indexed-key',
+        id: this.documentMap.get(key)?.id ?? '',
+      };
+    }
+
+    // Strategy 3: legacy-path fallback (transition-only), keyed on the SAME
+    // normalized form.
+    const legacyHit = this.legacyPathIndex.get(key);
+    if (legacyHit !== undefined) {
+      return {
+        indexedKey: legacyHit,
+        strategy: 'legacy-fallback',
+        id: this.documentMap.get(legacyHit)?.id ?? '',
+      };
+    }
+
+    // Strategy 4: miss.
+    throw this.documentNotResolved(ref, ['id', 'indexed-key', 'legacy-fallback']);
+  }
+
+  /**
+   * The single normalization used by BOTH strategy 2 and strategy 3 of
+   * resolveRef (Spec 119-A Component 3). Brings a ref to the indexed-key form
+   * documentContent is keyed on: trim, strip a leading `./`, normalize backslashes
+   * to forward slashes, collapse repeated slashes, and strip a trailing slash.
+   * Does NOT touch `..` (that is the guard's job, which runs earlier).
+   */
+  private normalizeRef(ref: string): string {
+    let r = ref.trim();
+    r = r.replace(/\\/g, '/');     // OS backslashes → '/'
+    r = r.replace(/^\.\//, '');    // strip a single leading './'
+    r = r.replace(/\/{2,}/g, '/'); // collapse repeated '/'
+    r = r.replace(/\/+$/, '');     // strip trailing slash(es)
+    return r;
+  }
+
+  /**
+   * Build the DocumentNotResolved error (Spec 119-A Error Handling). Carries the
+   * ref + tried strategies for gate attribution, and preserves the legacy
+   * "Document not found" message substring so existing callers/tests still match.
+   */
+  private documentNotResolved(ref: string, triedStrategies: ResolutionStrategy[]): Error {
+    const availableDocs = Array.from(this.documentContent.keys());
+    const error = new Error(
+      `Document not found: ${ref} could not be resolved ` +
+      `(tried: ${triedStrategies.join(', ')}). ` +
+      `Available documents: ${availableDocs.join(', ')}`
+    );
+    (error as any).errorType = 'DocumentNotResolved';
+    (error as any).ref = ref;
+    (error as any).triedStrategies = triedStrategies;
+    return error;
+  }
+
+  /**
+   * Get document content from index, routing the incoming ref through the
+   * Spec 119-A resolver chokepoint (Design Decision 1). All five path-taking
+   * tools funnel through here, so they all inherit id/legacy resolution.
+   *
+   * @param ref - id, indexed key, or legacy `.kiro/steering/…` path
+   * @returns Document content
+   */
+  private getDocumentContent(ref: string): string {
+    const { indexedKey } = this.resolveRef(ref);
+    // resolveRef only returns a key that hit one of the indexes, so this get is
+    // guaranteed present; the `!` documents that post-resolution invariant.
+    return this.documentContent.get(indexedKey)!;
   }
 
   /**

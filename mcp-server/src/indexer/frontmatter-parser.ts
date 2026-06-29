@@ -31,6 +31,53 @@ export interface FrontmatterInfo {
   aliases?: string[];
   /** Layer-2 viability gate derived from doc-level markers. */
   viability: { placeholder: boolean; deprecated: boolean };
+
+  /**
+   * Stable per-doc addressing id (Spec 119-A Req 2). Location-independent,
+   * immutable, semantically inert. Read from frontmatter `id:` when present;
+   * otherwise DERIVED as the kebab-slug of `name:`, falling back to the first
+   * H1; `undefined` only when the doc has none of those (an unaddressable doc).
+   *
+   * The derivation happens ONCE here (read-time); the 119-A backfill codemod
+   * (Task 4) freezes the derived slug onto disk as a literal `id:` so it is
+   * never re-derived thereafter.
+   */
+  id?: string;
+
+  /**
+   * Where `id` came from — retained for the build-time uniqueness guard and the
+   * backfill codemod (Spec 119-A Req 2 AC9 / Req 12):
+   *   - 'frontmatter'  — an explicit on-disk `id:` (already frozen).
+   *   - 'derived-name' — slug of frontmatter `name:` (needs backfill).
+   *   - 'derived-h1'   — slug of the first H1 (needs backfill; the 14-doc path
+   *                      flagged by Task 1: docs lacking a `name:` field).
+   *   - 'none'         — no `id:`, no `name:`, no H1 — unaddressable; surfaced
+   *                      as an explicit exception, never silently slugged to ''.
+   * The guard treats a `derived-*` collision identically to a 'frontmatter' one.
+   */
+  idSource: 'frontmatter' | 'derived-name' | 'derived-h1' | 'none';
+}
+
+/**
+ * Kebab-slug a title to an `id` (Spec 119-A Component 1):
+ *   - lowercase
+ *   - spaces and underscores → `-`
+ *   - strip every character not in `[a-z0-9-]`
+ *   - collapse runs of `-` to a single `-`
+ *   - trim leading/trailing `-`
+ *
+ * Examples:
+ *   "Token Governance"                                   → "token-governance"
+ *   "Cross-Platform vs Platform-Specific Decision …"     → "cross-platform-vs-platform-specific-decision-…"
+ *   "AI_Collaboration  Principles"                       → "ai-collaboration-principles"
+ */
+export function slugifyTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[\s_]+/g, '-')      // spaces/underscores → '-'
+    .replace(/[^a-z0-9-]/g, '')   // strip non-[a-z0-9-]
+    .replace(/-+/g, '-')          // collapse repeated '-'
+    .replace(/^-+|-+$/g, '');     // trim leading/trailing '-'
 }
 
 /**
@@ -104,11 +151,32 @@ function deriveDeprecated(content: string, fm: Record<string, string>): boolean 
 export function extractFrontmatterInfo(content: string): FrontmatterInfo {
   const fm = extractFrontmatterBlock(content);
 
-  const title = fm.name || extractFirstH1(content);
+  const h1 = extractFirstH1(content);
+  const title = fm.name || h1;
   const description = fm.description || undefined;
   const aliases = fm.aliases
     ? fm.aliases.split(',').map((s) => s.trim()).filter(Boolean)
     : undefined;
+
+  // id resolution (Spec 119-A Req 2 AC9): explicit `id:` → slug of `name:` →
+  // slug of H1 → none. A derived slug that collapses to empty (e.g. a title of
+  // only punctuation) is treated as no usable id, not as id ''.
+  let id: string | undefined;
+  let idSource: FrontmatterInfo['idSource'];
+  const explicitId = fm.id ? fm.id.trim() : '';
+  if (explicitId) {
+    id = explicitId;
+    idSource = 'frontmatter';
+  } else if (fm.name && slugifyTitle(fm.name)) {
+    id = slugifyTitle(fm.name);
+    idSource = 'derived-name';
+  } else if (h1 && slugifyTitle(h1)) {
+    id = slugifyTitle(h1);
+    idSource = 'derived-h1';
+  } else {
+    id = undefined;
+    idSource = 'none';
+  }
 
   return {
     title: title || undefined,
@@ -118,5 +186,7 @@ export function extractFrontmatterInfo(content: string): FrontmatterInfo {
       placeholder: derivePlaceholder(content, fm),
       deprecated: deriveDeprecated(content, fm),
     },
+    id,
+    idSource,
   };
 }

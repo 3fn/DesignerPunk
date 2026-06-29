@@ -216,6 +216,8 @@ describe('DocumentIndexer', () => {
       const doc = map.layers['2'].documents[0];
       
       expect(doc.path).toBe(file);
+      // Spec 119-A: id is populated during indexFile (derived from H1 here).
+      expect(doc.id).toBe('sample-document-1');
       expect(doc.purpose).toBe('Test document for indexer');
       expect(doc.layer).toBe(2);
       expect(doc.relevantTasks).toEqual(['testing', 'indexing']);

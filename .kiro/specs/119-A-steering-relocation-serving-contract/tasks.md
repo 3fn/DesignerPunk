@@ -96,7 +96,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Record which 9 top-level are gate-visible (FamilyGuidanceIndexer parses only top-level) vs the 13 nested correctness-only/gate-blind — feeds Task 6.x re-point + Task 9 family-guidance axis
     - _Requirements: 1.6_
 
-- [ ] 2. Frontmatter `id` Addressing Plane: Reader + Type + Resolver
+- [x] 2. Frontmatter `id` Addressing Plane: Reader + Type + Resolver
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)

@@ -6,9 +6,21 @@
  */
 
 export interface DocumentMetadata {
-  /** File path relative to project root */
+  /**
+   * Indexed key for this doc — the relative string `path.join(dirPath, name)`
+   * the indexer keys `documentContent` on (e.g. ".kiro/steering/token-governance.md").
+   * NOT an absolute path. This is the SAME key `resolveRef` resolves to.
+   */
   path: string;
-  
+
+  /**
+   * Stable addressing id (Spec 119-A Req 2). Present on every indexed doc
+   * (derived at index time when the doc has no on-disk `id:` yet). Empty string
+   * only for the rare unaddressable doc with no `id:`, `name:`, or H1.
+   * Location-independent: survives relocation/rename of `path`.
+   */
+  id: string;
+
   /** Purpose from metadata */
   purpose: string;
   

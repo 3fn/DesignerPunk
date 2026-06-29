@@ -24,6 +24,7 @@ import { DocumentMetadata } from '../../models';
 function doc(overrides: Partial<DocumentMetadata>): DocumentMetadata {
   return {
     path: '.kiro/steering/Fixture.md',
+    id: 'fixture',
     purpose: '',
     layer: 2,
     relevantTasks: [],

@@ -5,6 +5,7 @@
  */
 
 export * from './DocumentationMap';
+export * from './LegacyPathManifest';
 export * from './DocumentSummary';
 export * from './DocumentFull';
 export * from './Section';
