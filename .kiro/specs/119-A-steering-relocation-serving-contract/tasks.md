@@ -531,7 +531,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Document the design decisions + the seam boundary (design = 119-A; build/generation = severable) in the completion doc
     - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5, 14.6, 4.8_
 
-- [ ] 10. Discovery Dry-Run + Frozen Map-Oracle, then Gated Meta-Guide Removal
+- [~] 10. Discovery Dry-Run + Frozen Map-Oracle, then Gated Meta-Guide Removal — 10.1/10.2/10.3 done (oracle + harness + floor); 10.4 (lift) after Task 8.4; 10.5 (removal)/10.6 (no-regression) follow
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
