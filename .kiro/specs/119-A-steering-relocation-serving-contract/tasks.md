@@ -164,7 +164,7 @@ The parent tasks are ordered to honor the design's hard sequencing (design.md §
     - Document the chokepoint design decision (Design Decision 1) and the keyspace invariant in the completion doc
     - _Requirements: 2.2, 2.3, 2.9_
 
-- [ ] 3. Legacy-Path Forwarding Manifest (Producer + Frozen Artifact)
+- [x] 3. Legacy-Path Forwarding Manifest (Producer + Frozen Artifact)
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)

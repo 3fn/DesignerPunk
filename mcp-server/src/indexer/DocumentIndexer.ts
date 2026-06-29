@@ -7,6 +7,7 @@ import { resolveSection, SectionLookup } from './section-parser';
 import { extractCrossReferences } from './cross-ref-parser';
 import { estimateTokenCount } from '../utils/token-estimator';
 import { determineIndexHealth } from './index-health';
+import { seedLegacyPathsFromFrozenManifest } from '../legacy-path';
 import {
   DocumentationMap,
   DocumentMetadata,
@@ -119,6 +120,16 @@ export class DocumentIndexer {
     for (const filePath of files) {
       await this.indexFile(filePath);
     }
+
+    // RE-SEED (Task 3.2): legacyPathIndex was cleared above, and idIndex is now
+    // fully populated, so seed the frozen legacy-path manifest HERE — at the tail
+    // of indexDirectory, the single chokepoint every index-build path funnels
+    // through (startup, StalenessGate rebuild, rebuild_index). This honors the
+    // re-seed obligation in one place: legacy refs keep resolving after EVERY
+    // full re-scan, not just the first index. No-op when the frozen artifact is
+    // absent (pre-Task-3 / deployment without it) — the resolver then simply has
+    // no legacy fallback (correct degraded behavior).
+    this.seedLegacyPaths();
 
     // Update last index time
     this.lastIndexTime = new Date().toISOString();
@@ -522,6 +533,25 @@ export class DocumentIndexer {
       }
       this.legacyPathIndex.set(this.normalizeRef(entry.legacyPath), indexedKey);
     }
+  }
+
+  /**
+   * Optional override of the frozen legacy-path-manifest location (Task 3.2).
+   * Production uses the checked-in default (`legacy-path/legacy-path-manifest.json`);
+   * tests point this at a fixture before indexing to exercise the re-seed path.
+   */
+  private legacyManifestPath: string | undefined;
+  setLegacyManifestPath(manifestPath: string | undefined): void {
+    this.legacyManifestPath = manifestPath;
+  }
+
+  /**
+   * Seed legacyPathIndex from the FROZEN manifest (Task 3.2 re-seed obligation).
+   * Called at the tail of every indexDirectory so the seed survives full re-scans
+   * (rebuild_index / StalenessGate). No-op when the artifact is absent.
+   */
+  private seedLegacyPaths(): void {
+    seedLegacyPathsFromFrozenManifest(this, this.legacyManifestPath);
   }
 
   /**
