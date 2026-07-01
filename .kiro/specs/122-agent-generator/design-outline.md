@@ -67,6 +67,13 @@ Per `inbound-from-119.md` §2 — these are instances of "agent prompts become g
 - **Module-Resolution Contract row (Spec 118)** — `get_section` on the contract, for Ada (primary) / Thurgood / Lina. Per `inbound-from-118.md`, this row lives in canonical source so regeneration *preserves* it rather than clobbering 119's hand-wiring.
 - **Steering-Addressing-Conventions routing (OB-5)** — a triggered cue `WHEN creating/modifying a steering doc THEN consult Steering-Addressing-Conventions`, generated into the steering-doc-authoring agents' prompts.
 
+**Routing spans ALL THREE MCPs, not just Docs (Peter, 2026-06-29).** The rows above are Docs-MCP-centric because that's what 119-A handed forward — but the capability-catalog's job is to route *every* tool an agent uses, and for the **consumer/product agents the Application MCP and Product MCP are the *primary* surface, not Docs.** 122 must generate per-agent **activation cues + routing** across all three:
+- **Application MCP** — `find_components` / `get_component_full` / `get_component_catalog` / `get_component_health` / `validate_assembly` / `check_composition` / `get_prop_guidance` / `get_experience_pattern` (components), and `search_tokens` / `get_token_details` / `get_token_family` / `get_token_consumers` (tokens). Primary for **Lina** (owner), **Ada** (tokens), and the **consumers** (Leonardo/Sparky/Kenya/Data) who select + consume components and tokens.
+- **Product MCP** — `find_screens` / `get_screen_spec` / `get_product_tokens` / `list_experience_map` / `get_screen_state_model`. Primary for **Leonardo** (screen/flow specification) and the **platform agents** building against product screens. (Maturity caveat: Product MCP is the least-mature of the three — its per-agent availability needs a requirements check.)
+- **Docs MCP** — `find_docs` + the routing rows above.
+
+**Scope discipline (same reference-don't-copy rule):** tool *schemas* auto-surface in each agent's tool list, so 122 does NOT re-list them — it generates the **triggered cues** (WHEN to reach for which tool), the per-agent tool *subset*, and deferred-tool-awareness (`ToolSearch`), pointing at the live MCPs. A Docs-only 122 would under-serve exactly the consumer/product agents whose day-to-day is App/Product-MCP, not `find_docs`.
+
 ### 2.3 Per-tool transforms (the runtime deltas)
 The transforms encode the per-tool deltas the 121 dry-run catalogued:
 - MCP query syntax → namespaced tool names (e.g. `mcp__designerpunk-docs__get_section`).
