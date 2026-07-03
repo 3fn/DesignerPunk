@@ -385,8 +385,9 @@ describe('MCP Component Integration: Component Quick Reference', () => {
       console.log(`Metadata fields: ${Object.keys(metadata).length}`);
       console.log(`Sections: ${sections.length}`);
 
-      // Should parse quickly (under 100ms)
-      expect(parseTime).toBeLessThan(100);
+      // Parse time is logged for information only. No wall-clock assertion:
+      // timing bounds in the default lane flake under parallel worker load —
+      // timing assertions belong in the performance lane (npm run test:performance).
       expect(Object.keys(metadata).length).toBeGreaterThan(3);
       expect(sections.length).toBeGreaterThan(3);
     });
@@ -413,8 +414,7 @@ describe('MCP Component Integration: Component Quick Reference', () => {
       console.log(`Total parse time for all ${COMPONENT_FAMILY_DOCS.length} family docs: ${parseTime}ms`);
       console.log(`Total sections across all docs: ${totalSections}`);
 
-      // Should parse all docs quickly (under 500ms)
-      expect(parseTime).toBeLessThan(500);
+      // Parse time is logged for information only — see note in the test above.
       expect(totalSections).toBeGreaterThan(30);
     });
   });

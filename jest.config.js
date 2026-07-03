@@ -38,14 +38,14 @@ module.exports = {
   ],
   
   // Exclude patterns (F1, F3)
+  // NOTE: performance-test exclusion lives in the npm `test` script's CLI flag,
+  // NOT here. Config-level ignores also apply when `test:performance` selects by
+  // pattern, which silently reduced that lane (and `test:all`) to zero perf tests.
   testPathIgnorePatterns: [
     '/node_modules/',           // Standard exclusion
     '/dist/',                   // Prevent duplicate execution (F1)
     '/coverage/',               // Exclude coverage reports
-    '\\.d\\.ts$',               // Explicit .d.ts exclusion (F3)
-    'performance/__tests__',    // Performance tests (run separately)
-    '__tests__/performance',    // Alternative performance test location
-    'PerformanceValidation'     // Performance validation tests (run with test:performance:isolated)
+    '\\.d\\.ts$'                // Explicit .d.ts exclusion (F3)
   ],
   
   // Prevent module resolution from dist/ (F1)

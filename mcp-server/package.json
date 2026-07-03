@@ -6,8 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest --testPathIgnorePatterns='tests/performance'",
+    "test:performance": "jest --testPathPattern='tests/performance'",
+    "test:watch": "jest --watch --testPathIgnorePatterns='tests/performance'",
     "dev": "ts-node src/index.ts"
   },
   "keywords": [

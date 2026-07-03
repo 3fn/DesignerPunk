@@ -131,13 +131,18 @@ describe('ParallelExecutor Integration', () => {
   });
 
   describe('Performance Characteristics', () => {
-    it('should execute builds in parallel (faster than sequential)', async () => {
+    it('should execute builds in parallel (all builds in flight concurrently)', async () => {
       const executor = new ParallelExecutor();
       const platforms: Platform[] = ['ios', 'android', 'web'];
-      const buildDuration = 100;
+      const buildDuration = 50;
+      let inFlight = 0;
+      let maxInFlight = 0;
 
       const buildFn = async (platform: Platform): Promise<BuildResult> => {
+        inFlight++;
+        maxInFlight = Math.max(maxInFlight, inFlight);
         await new Promise(resolve => setTimeout(resolve, buildDuration));
+        inFlight--;
 
         return {
           platform,
@@ -149,15 +154,13 @@ describe('ParallelExecutor Integration', () => {
         };
       };
 
-      const startTime = Date.now();
       const result = await executor.execute(platforms, buildFn);
-      const totalTime = Date.now() - startTime;
 
-      // Parallel execution should take roughly the time of the longest build
-      // (not the sum of all builds)
-      expect(totalTime).toBeLessThan(buildDuration * 2);
-      expect(totalTime).toBeGreaterThanOrEqual(buildDuration);
-      
+      // Parallel execution: all builds were in flight at the same time.
+      // Asserted via concurrency counter, not elapsed wall-clock time —
+      // timing bounds flake under parallel Jest worker load.
+      expect(maxInFlight).toBe(3);
+
       expect(result.successCount).toBe(3);
     });
 

@@ -23,16 +23,15 @@ describe('ParallelExecutor', () => {
       const executor = new ParallelExecutor();
       const platforms: Platform[] = ['ios', 'android', 'web'];
       
-      const buildTimes: Record<Platform, number> = {
-        ios: 0,
-        android: 0,
-        web: 0,
-      };
+      let inFlight = 0;
+      let maxInFlight = 0;
 
       const buildFn = async (platform: Platform): Promise<BuildResult> => {
-        buildTimes[platform] = Date.now();
+        inFlight++;
+        maxInFlight = Math.max(maxInFlight, inFlight);
         await new Promise(resolve => setTimeout(resolve, 50));
-        
+        inFlight--;
+
         return {
           platform,
           success: true,
@@ -57,10 +56,10 @@ describe('ParallelExecutor', () => {
       expect(builtPlatforms).toContain('android');
       expect(builtPlatforms).toContain('web');
 
-      // Builds should start at roughly the same time (parallel execution)
-      const startTimes = Object.values(buildTimes);
-      const maxTimeDiff = Math.max(...startTimes) - Math.min(...startTimes);
-      expect(maxTimeDiff).toBeLessThan(20); // Should start within 20ms of each other
+      // All builds were in flight at the same time (parallel execution).
+      // Asserted via concurrency counter, not start-time deltas — wall-clock
+      // comparisons flake under parallel Jest worker load.
+      expect(maxInFlight).toBe(3);
     });
 
     it('should aggregate results from all builds', async () => {

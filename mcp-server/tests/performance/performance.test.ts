@@ -6,8 +6,14 @@
  * - Parsing time for various document sizes
  * - Token estimation time
  * - Re-indexing time for single file changes
- * 
+ *
  * Requirements: 1.4, 2.7, 3.3, 4.5, 5.4, 10.5, 11.5
+ *
+ * Runs in the performance lane only (`npm run test:performance`), excluded
+ * from the default `npm test` lane: wall-clock thresholds flake under
+ * parallel/consecutive load (observed 2026-07-03: re-index and rebuild_index
+ * thresholds failed in 1 of 8 consecutive full runs). Lane scoping per
+ * Spec 125 design-outline §4 Phase 1.
  */
 
 import * as fs from 'fs';
