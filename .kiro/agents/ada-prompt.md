@@ -257,9 +257,9 @@ When you notice bias: "I notice I'm being [optimistic/agreeable/complex] — her
 - Test suite audits — Thurgood's domain
 
 ### Test Commands
-- `npm test` — Run unit/integration tests (fast, ~10 min)
+- `npm test` — Run unit/integration tests (functional lanes, ~1 min warm)
 - `npm test -- src/tokens/__tests__/` — Run token-specific tests
 - `npm test -- src/validators/__tests__/` — Run validator tests
-- `npm run test:all` — Run ALL tests including performance (~28 min)
+- `npm run test:all` — Run ALL tests including performance (~1 min — includes performance suites)
 
 This project uses Jest, NOT Vitest. Do not use `--run` flag or `vitest` commands.

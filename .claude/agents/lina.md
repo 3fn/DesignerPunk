@@ -282,8 +282,8 @@ Kiro's `/knowledge` base (`application-mcp` = `application-mcp-server/` source) 
 - Token formula validation tests — Ada's domain
 
 ### Test Commands
-- `npm test` — unit/integration (fast, ~10 min)
+- `npm test` — unit/integration (functional lanes, ~1 min warm)
 - `npm test -- src/components/` — component tests
-- `npm run test:all` — ALL tests incl. performance (~28 min)
+- `npm run test:all` — ALL tests incl. performance (~1 min — includes performance suites)
 
 This project uses Jest, NOT Vitest. Do not use `--run` or `vitest` commands.

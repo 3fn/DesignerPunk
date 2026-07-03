@@ -8,7 +8,7 @@ description: Essential pre-task checklist — date verification, governance heal
 # Start Up Tasks
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-01-03
+**Last Reviewed**: 2026-07-03
 **Purpose**: Essential pre-task checklist for every task (date check, governance health, Jest commands, test selection, authorization-to-start). End-of-task sequence: see Task Completion Protocol.
 **Organization**: process-standard
 **Scope**: cross-project
@@ -57,13 +57,16 @@ description: Essential pre-task checklist — date verification, governance heal
    
    **WHEN running tests THEN you MUST use Jest commands (NOT Vitest commands)**
    
-   ✅ **CORRECT Jest commands:**
-   - `npm test` - Run unit/integration tests (fast, ~10 min)
-   - `npm run test:all` - Run ALL tests including performance (~28 min)
-   - `npm run test:performance` - Run only performance tests (~20 min)
+   ✅ **CORRECT Jest commands** (durations measured 2026-07-03, warm cache, dev machine — first/cold runs are slower):
+   - `npm test` - Run unit/integration tests (functional lanes only, timing-assertion-free; ~1 min)
+   - `npm run test:all` - Run ALL tests including performance (~1 min — no longer a costlier lane)
+   - `npm run test:performance` - Run the performance-lane suites (seconds)
+   - `npm run test:performance:isolated` - Run the serialized PerformanceValidation suite (seconds). **NOT included in `test:performance`** — full performance validation requires BOTH commands (or `test:all`)
    - `npm test -- <test-file-path>` - Run specific test file
    - `npm run test:watch` - Run tests in watch mode
    - `npm run test:coverage` - Run tests with coverage
+   
+   > **Lane semantics reworked 2026-07-03** (commit `29bba7de`; Spec 125 design-outline addendum): default lanes are timing-assertion-free and deterministic; wall-clock assertions live only in the performance lanes. Historical note: `test:performance`/`test:all` silently selected ZERO performance tests from ~May 2026 (Spec 025 config interaction) until this rework — treat any pre-July-2026 lane-duration claim as void.
    
    ❌ **WRONG - These are Vitest commands that will FAIL:**
    - `npm test -- --run` - Jest doesn't have a `--run` flag
@@ -75,18 +78,16 @@ description: Essential pre-task checklist — date verification, governance heal
    
    **WHEN validating regular task completion THEN:**
    - Use `npm test` (default - excludes performance tests)
-   - Fast feedback loop (~10 minutes)
+   - Fast, deterministic feedback loop (~1 minute warm)
    - Sufficient for most development validation
    
    **WHEN validating parent task completion THEN:**
-   - **Default**: Use `npm test` (comprehensive functional validation, ~10 min)
-   - **If task modifies release tool**: Use `npm run test:all` (~28 min)
-   - **If task is performance-critical**: Use `npm run test:all` (~28 min)
+   - **Default**: Use `npm test` (comprehensive functional validation)
+   - **If task modifies release tool or is performance-critical**: Use `npm run test:all` (adds the performance suites; the cost difference is now seconds, so when in doubt, run `test:all`)
    
    **WHEN task involves performance changes THEN:**
-   - Use `npm run test:performance` (performance validation only)
-   - Validates performance characteristics (~20 minutes)
-   - Use for performance optimization tasks
+   - Run BOTH `npm run test:performance` AND `npm run test:performance:isolated` (perf coverage is split across the two lanes), or simply `npm run test:all`
+   - Performance assertions are wall-clock-sensitive: run them on an otherwise-idle machine, not concurrently with other suites
    
    **Decision tree:**
    ```
@@ -95,13 +96,13 @@ description: Essential pre-task checklist — date verification, governance heal
    │   ├─ YES → npm run test:all (includes performance regression tests)
    │   └─ NO → npm test (comprehensive functional validation)
    └─ NO → Does task involve performance changes?
-       ├─ YES → npm run test:performance
+       ├─ YES → npm run test:performance + test:performance:isolated (or test:all)
        └─ NO → npm test (default)
    ```
    
    **Key distinction:**
-   - `npm test` validates all functionality including release analysis (functional tests only)
-   - `npm run test:all` adds 20 minutes of performance regression tests for release analysis
+   - `npm test` validates all functionality (functional lanes only; timing-assertion-free)
+   - `npm run test:all` additionally runs the performance suites (seconds of extra cost, but wall-clock-sensitive — avoid under heavy machine load)
    - Most parent tasks only need functional validation
    
    **Default assumption**: Use `npm test` for parent tasks unless working on release tool or performance systems.

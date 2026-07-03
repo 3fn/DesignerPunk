@@ -398,9 +398,10 @@ Run `/knowledge show` to verify what's indexed. Run `/knowledge update` if test 
 - Component unit tests — Lina's domain
 
 ### Test Commands
-- `npm test` — Run unit/integration tests (fast, ~10 min)
-- `npm run test:all` — Run ALL tests including performance (~28 min)
-- `npm run test:performance` — Run only performance tests (~20 min)
+- `npm test` — Run unit/integration tests (functional lanes, ~1 min warm)
+- `npm run test:all` — Run ALL tests including performance (~1 min — includes performance suites)
+- `npm run test:performance` — Run performance-lane suites (seconds; perf coverage is split — pair with test:performance:isolated)
+- `npm run test:performance:isolated` — Run the serialized PerformanceValidation suite (seconds; NOT included in test:performance)
 - `npm test -- <test-file-path>` — Run specific test file
 
 This project uses Jest, NOT Vitest. Do not use `--run` flag or `vitest` commands.
