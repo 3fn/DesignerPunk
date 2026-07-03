@@ -37,6 +37,7 @@
     "layout-templates/",
     "token-index/",
     "family-registry.yaml",
+    "design-language/",
     "designerpunk.config.ts"
   ],
   "exports": {
@@ -99,7 +100,8 @@
     "build": "tsc --skipLibCheck && npm run build:validate && npm run build:browser && npm run build:mcp",
     "typecheck:scripts": "tsc -p tsconfig.scripts.json",
     "build:browser": "node scripts/build-browser-bundles.js",
-    "build:mcp": "npx esbuild application-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/application-mcp.js && npx esbuild mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/docs-mcp.js && npx esbuild product-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/product-mcp.js",
+    "build:mcp": "npm run build:mcp-shared && npx esbuild application-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/application-mcp.js && npx esbuild mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/docs-mcp.js && npx esbuild product-mcp-server/src/index.ts --bundle --platform=node --format=cjs --outfile=dist/mcp/product-mcp.js",
+    "build:mcp-shared": "npx esbuild src/cli/shared/resolvePackageRoot.ts src/cli/shared/mcpDataRoots.ts --outdir=dist/cli/shared --platform=node --format=cjs --sourcemap",
     "build:watch": "tsc --watch --skipLibCheck",
     "build:verify": "node verify-build.js",
     "build:validate": "npx tsx src/validators/buildValidation.ts",

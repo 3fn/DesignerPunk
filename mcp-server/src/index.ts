@@ -359,10 +359,59 @@ class MCPDocumentationServer {
   }
 }
 
+/**
+ * Shared data-root resolution (Spec 121 F-C2 patch).
+ *
+ * Single source of truth: src/cli/shared/mcpDataRoots.ts (root package). Consumed
+ * via the ROOT-COMPILED dist artifact — a static TS import would cross this
+ * sub-package's tsc rootDir boundary (see that file's "CONSUMPTION CONTRACT").
+ * The esbuild bundle (dist/mcp/docs-mcp.js) inlines the require at build time;
+ * the tsc artifact (mcp-server/dist/index.js) resolves it at runtime.
+ * Types are declared locally (shape-only, no logic) so the sub-package typecheck
+ * has no dependency on the root dist being built.
+ */
+interface ResolvedDataRoot {
+  path: string;
+  source: 'env' | 'cwd' | 'package';
+}
+interface McpDataRootsModule {
+  resolvePackageRoot(fromDir: string): string;
+  resolvePackageOwnedRoot(opts: {
+    envValue?: string;
+    packageRoot: string;
+    relPath: string;
+  }): ResolvedDataRoot;
+  resolveConsumerOwnedRoot(opts: {
+    envValue?: string;
+    relPath: string;
+    packageRoot?: string;
+  }): ResolvedDataRoot;
+}
+
 // Main entry point
 async function main(): Promise<void> {
-  // Get steering directory from environment or use default
-  const steeringDir = process.env.MCP_STEERING_DIR || DEFAULT_STEERING_DIR;
+  // Resolve the steering data root (Spec 121 F-C2): PACKAGE-OWNED — env var →
+  // package-relative. The governance corpus ships with the package; a consumer's
+  // coincidental cwd `governance/` dir is not it. Absolute path required by
+  // FileWatcher + StalenessGate (its /node_modules/ check needs absolute paths).
+  let steeringDir: string = process.env.MCP_STEERING_DIR || DEFAULT_STEERING_DIR;
+  try {
+    const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
+    const packageRoot = shared.resolvePackageRoot(__dirname);
+    const steering = shared.resolvePackageOwnedRoot({
+      envValue: process.env.MCP_STEERING_DIR,
+      packageRoot,
+      relPath: DEFAULT_STEERING_DIR,
+    });
+    steeringDir = steering.path;
+    console.error(`[MCP Server] Data root steering: ${steering.path} (source: ${steering.source})`);
+  } catch {
+    // Root dist not built (dev-repo edge; in-repo cwd == package root, so the
+    // legacy cwd-relative default still lands on the right corpus).
+    console.error(
+      '[MCP Server] WARNING: shared data-root resolution unavailable (root dist not built?) — using legacy env/cwd-relative steering dir'
+    );
+  }
 
   const server = new MCPDocumentationServer(steeringDir);
   await server.start();

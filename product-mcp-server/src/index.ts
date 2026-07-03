@@ -166,9 +166,9 @@ class ProductMCPServer {
   private stalenessGate: StalenessGate;
   private fileWatcher: fs.FSWatcher | null = null;
 
-  constructor(productDir: string, componentDir: string) {
+  constructor(productDir: string, componentDir: string, tokenIndexDir: string = DEFAULT_TOKEN_INDEX_DIR) {
     this.productDir = productDir;
-    this.indexer = new ProductIndexer(productDir, componentDir, DEFAULT_TOKEN_INDEX_DIR);
+    this.indexer = new ProductIndexer(productDir, componentDir, tokenIndexDir);
     this.server = new Server(
       { name: SERVER_NAME, version: SERVER_VERSION },
       { capabilities: { tools: {} } }
@@ -437,11 +437,87 @@ class ProductMCPServer {
   }
 }
 
-// Start server
-const productDir = process.env.PRODUCT_DIR || DEFAULT_PRODUCT_DIR;
-const componentDir = process.env.COMPONENT_DIR || DEFAULT_COMPONENT_DIR;
-const server = new ProductMCPServer(productDir, componentDir);
-server.start().catch((err) => {
-  console.error(`[${SERVER_NAME}] Fatal error:`, err);
-  process.exit(1);
-});
+/**
+ * Shared data-root resolution (Spec 121 F-C2 patch).
+ *
+ * Single source of truth: src/cli/shared/mcpDataRoots.ts (root package). Consumed
+ * via the ROOT-COMPILED dist artifact (see that file's "CONSUMPTION CONTRACT") —
+ * the esbuild bundle (dist/mcp/product-mcp.js) inlines the require at build time.
+ * Types are declared locally (shape-only, no logic).
+ */
+interface ResolvedDataRoot {
+  path: string;
+  source: 'env' | 'cwd' | 'package';
+}
+interface McpDataRootsModule {
+  resolvePackageRoot(fromDir: string): string;
+  resolveConsumerOwnedRoot(opts: {
+    envValue?: string;
+    relPath: string;
+    packageRoot?: string;
+  }): ResolvedDataRoot;
+}
+
+// Start server — resolve data roots (Spec 121 F-C2), then boot.
+// Guard: skip auto-start when this module is imported (standard Node.js entry-point
+// idiom; keeps root resolution out of any future test import of this module).
+if (require.main === module) {
+  const logRoot = (label: string, root: ResolvedDataRoot, note = ''): void => {
+    console.error(`[${SERVER_NAME}] Data root ${label}: ${root.path} (source: ${root.source})${note}`);
+  };
+
+  let productDir: string = process.env.PRODUCT_DIR || DEFAULT_PRODUCT_DIR;
+  let componentDir: string = process.env.COMPONENT_DIR || DEFAULT_COMPONENT_DIR;
+  let tokenIndexDir: string = process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR;
+  try {
+    const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
+    const packageRoot = shared.resolvePackageRoot(__dirname);
+
+    // CONSUMER-OWNED roots (env → cwd non-empty → package fallback), with one
+    // exception: `product/` gets NO package fallback — it is consumer-owned by
+    // definition, and an empty index there is expected/correct (the server's
+    // "starting with empty data" path).
+    const product = shared.resolveConsumerOwnedRoot({
+      envValue: process.env.PRODUCT_DIR,
+      relPath: DEFAULT_PRODUCT_DIR,
+    });
+    const component = shared.resolveConsumerOwnedRoot({
+      envValue: process.env.COMPONENT_DIR,
+      relPath: DEFAULT_COMPONENT_DIR,
+      packageRoot,
+    });
+    const tokenIndex = shared.resolveConsumerOwnedRoot({
+      envValue: process.env.TOKEN_INDEX_DIR,
+      relPath: DEFAULT_TOKEN_INDEX_DIR,
+      packageRoot,
+    });
+
+    // Boot log: one stderr line per data root, BEFORE the startup sentinel.
+    // NEVER stdout — stdout is the JSON-RPC channel.
+    logRoot('product', product);
+    logRoot('components', component);
+    logRoot(
+      'token-index',
+      tokenIndex,
+      tokenIndex.source === 'package'
+        ? " — package token snapshot in use; if this project customizes tokens, run 'npx designerpunk generate' to build a local token-index"
+        : ''
+    );
+
+    productDir = product.path;
+    componentDir = component.path;
+    tokenIndexDir = tokenIndex.path;
+  } catch {
+    // Root dist not built (dev-repo edge; in-repo cwd == package root, so the
+    // legacy env/cwd-relative defaults still land on the right data).
+    console.error(
+      `[${SERVER_NAME}] WARNING: shared data-root resolution unavailable (root dist not built?) — using legacy env/cwd-relative defaults`
+    );
+  }
+
+  const server = new ProductMCPServer(productDir, componentDir, tokenIndexDir);
+  server.start().catch((err) => {
+    console.error(`[${SERVER_NAME}] Fatal error:`, err);
+    process.exit(1);
+  });
+}

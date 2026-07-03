@@ -24,14 +24,21 @@
  * Locally, if dist/mcp/ is absent, the tests skip with a clear message rather than
  * failing with a misleading error.
  *
+ * Spec 121 F-C2/F-C6 extension (2026-07-03): a second describe block boots each
+ * bundle from an ISOLATED temp cwd (no reachable node_modules, no data-root env
+ * vars) and asserts the package-relative data-root fallback serves a non-empty
+ * index (docs + application) while the product server correctly starts empty.
+ *
  * @see Spec 118 Task 5.1a
  * @see Spec 118 design.md § MCP/Browser Principled Exception
  * @see Resolved Decision 2 (bundled subsystems exempt; this guard is the paired proof)
  * @see .github/workflows/consumer-guard.yml — where this guard runs in CI
+ * @see .kiro/specs/121-claude-code-portability/consumer-dry-run-findings.md § A (F-C2/F-C6)
  */
 
 import { spawn, ChildProcess } from 'child_process';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 
 const PKG_ROOT = path.resolve(__dirname, '..');
@@ -141,5 +148,177 @@ if (!distMcpExists) {
         30_000, // generous timeout: each server indexes/loads data on boot
       );
     }
+  });
+
+  /**
+   * Spec 121 F-C2 / F-C6 — isolated-cwd boot guard (standing).
+   *
+   * Boots each bundle from a temp dir with NO reachable node_modules on the
+   * resolution path and NO data-root env vars. This proves two things at once:
+   *
+   * 1. F-C6 self-containedness: the bundles reach their sentinels with zero
+   *    external modules resolvable (the ajv/ajv-formats require-looking matches
+   *    in product-mcp.js are ajv codegen STRING LITERALS, not call sites —
+   *    empirically disproven as a dependency gap; this guard keeps it that way).
+   *
+   * 2. F-C2 package-relative fallback: with no env vars and a cwd that has none
+   *    of the data, the docs and application servers must fall back to
+   *    PACKAGE-relative data roots and serve a NON-EMPTY index. From a temp cwd
+   *    the bundle's __dirname is still <repo>/dist/mcp, so the package fallback
+   *    resolves to the repo — that is the point. The product server's `product/`
+   *    root deliberately has NO package fallback (consumer-owned by definition):
+   *    it must boot with its "starting with empty data" message.
+   *
+   * @see .kiro/specs/121-claude-code-portability/consumer-dry-run-findings.md § A
+   * @see src/cli/shared/mcpDataRoots.ts — the ownership-based resolution order
+   */
+  describe('Spec 121 F-C2/F-C6 — isolated-cwd boot (package fallback + self-containedness)', () => {
+    /** Env vars that override MCP data roots — stripped so defaults are exercised. */
+    const DATA_ROOT_ENV_VARS = [
+      'MCP_STEERING_DIR',
+      'COMPONENTS_DIR',
+      'TOKEN_INDEX_DIR',
+      'PATTERNS_DIR',
+      'TEMPLATES_DIR',
+      'GUIDANCE_DIR',
+      'REGISTRY_PATH',
+      'DESIGN_LANGUAGE_PATH',
+      'PRODUCT_DIR',
+      'COMPONENT_DIR',
+      'WORKSPACE_ROOT',
+    ];
+
+    let isolatedCwd: string;
+
+    beforeAll(() => {
+      // os.tmpdir() has no node_modules anywhere on its ancestor chain (macOS
+      // /var/folders, Linux /tmp) — nothing is resolvable from here.
+      isolatedCwd = fs.mkdtempSync(path.join(os.tmpdir(), 'mcp-isolated-cwd-'));
+    });
+
+    afterAll(() => {
+      fs.rmSync(isolatedCwd, { recursive: true, force: true });
+    });
+
+    function spawnIsolated(file: string): { child: ChildProcess; stderr: () => string } {
+      const env: NodeJS.ProcessEnv = { ...process.env, NODE_ENV: 'test' };
+      for (const key of DATA_ROOT_ENV_VARS) delete env[key];
+      const child = spawn('node', [file], {
+        cwd: isolatedCwd,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env,
+      });
+      let stderrBuf = '';
+      child.stderr!.on('data', (data: Buffer) => {
+        stderrBuf += data.toString();
+      });
+      return { child, stderr: () => stderrBuf };
+    }
+
+    /**
+     * Minimal JSON-RPC over stdio: initialize handshake + one tool call.
+     * Pattern reused from tests/consumer-integration.test.ts (sendJsonRpc).
+     */
+    function sendJsonRpc(child: ChildProcess, id: number, method: string, params: object): Promise<any> {
+      const request = JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n';
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`JSON-RPC timeout on ${method}`)), 15_000);
+        let buffer = '';
+        const onData = (data: Buffer) => {
+          buffer += data.toString();
+          for (const line of buffer.split('\n')) {
+            if (!line.trim()) continue;
+            try {
+              const parsed = JSON.parse(line);
+              if (parsed.id === id) {
+                clearTimeout(timeout);
+                child.stdout!.off('data', onData);
+                resolve(parsed.result ?? parsed);
+              }
+            } catch {
+              /* partial line */
+            }
+          }
+        };
+        child.stdout!.on('data', onData);
+        child.stdin!.write(request);
+      });
+    }
+
+    async function initializeMcp(child: ChildProcess): Promise<void> {
+      await sendJsonRpc(child, 1, 'initialize', {
+        protocolVersion: '2024-11-05',
+        capabilities: {},
+        clientInfo: { name: 'mcp-boot-smoke', version: '1.0' },
+      });
+    }
+
+    /** Unwrap the MCP text-content envelope: content[0].text is JSON. */
+    function parseToolResult(result: any): any {
+      expect(result).toBeDefined();
+      expect(Array.isArray(result.content)).toBe(true);
+      return JSON.parse(result.content[0].text);
+    }
+
+    it(
+      'docs-mcp serves a NON-EMPTY index from the package fallback',
+      async () => {
+        const { child, stderr } = spawnIsolated(path.join(DIST_MCP, 'docs-mcp.js'));
+        try {
+          await waitForSentinel(child, 'Server started');
+          // The steering root must have come from the package, not cwd/env.
+          expect(stderr()).toContain('Data root steering:');
+          expect(stderr()).toContain('(source: package)');
+
+          await initializeMcp(child);
+          const health = parseToolResult(
+            await sendJsonRpc(child, 2, 'tools/call', { name: 'get_index_health', arguments: {} }),
+          );
+          // Non-empty index = the package fallback actually served data (F-C2).
+          expect(health.metrics.documentsIndexed).toBeGreaterThan(0);
+        } finally {
+          child.kill('SIGTERM');
+        }
+      },
+      30_000,
+    );
+
+    it(
+      'application-mcp serves a NON-EMPTY index from the package fallback (and recommends regenerating the token-index)',
+      async () => {
+        const { child, stderr } = spawnIsolated(path.join(DIST_MCP, 'application-mcp.js'));
+        try {
+          await waitForSentinel(child, 'running on stdio');
+          expect(stderr()).toContain('Data root components:');
+          expect(stderr()).toContain('(source: package)');
+          // Package token snapshot won → the boot log must recommend regenerating.
+          expect(stderr()).toContain('npx designerpunk generate');
+
+          await initializeMcp(child);
+          const health = parseToolResult(
+            await sendJsonRpc(child, 2, 'tools/call', { name: 'get_component_health', arguments: {} }),
+          );
+          expect(health.componentsIndexed).toBeGreaterThan(0);
+        } finally {
+          child.kill('SIGTERM');
+        }
+      },
+      30_000,
+    );
+
+    it(
+      'product-mcp boots with its empty-data message (product/ has NO package fallback — expected, correct)',
+      async () => {
+        const { child, stderr } = spawnIsolated(path.join(DIST_MCP, 'product-mcp.js'));
+        try {
+          await waitForSentinel(child, 'running on stdio');
+          expect(stderr()).toContain('Product directory not found');
+          expect(stderr()).toContain('starting with empty data');
+        } finally {
+          child.kill('SIGTERM');
+        }
+      },
+      30_000,
+    );
   });
 }

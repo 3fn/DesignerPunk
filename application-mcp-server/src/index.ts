@@ -472,21 +472,134 @@ class ComponentMCPServer {
   }
 }
 
-// Start server — read explicit paths from env vars, fall back to defaults.
+/**
+ * Shared data-root resolution (Spec 121 F-C2 patch).
+ *
+ * Single source of truth: src/cli/shared/mcpDataRoots.ts (root package). Consumed
+ * via the ROOT-COMPILED dist artifact — a static TS import would cross this
+ * sub-package's tsc rootDir boundary (see that file's "CONSUMPTION CONTRACT").
+ * The esbuild bundle (dist/mcp/application-mcp.js) inlines the require at build
+ * time; the tsc artifact (application-mcp-server/dist/index.js) resolves it at
+ * runtime. Types are declared locally (shape-only, no logic) so the sub-package
+ * typecheck has no dependency on the root dist being built.
+ */
+interface ResolvedDataRoot {
+  path: string;
+  source: 'env' | 'cwd' | 'package';
+}
+interface McpDataRootsModule {
+  resolvePackageRoot(fromDir: string): string;
+  resolvePackageOwnedRoot(opts: {
+    envValue?: string;
+    packageRoot: string;
+    relPath: string;
+  }): ResolvedDataRoot;
+  resolveConsumerOwnedRoot(opts: {
+    envValue?: string;
+    relPath: string;
+    packageRoot?: string;
+  }): ResolvedDataRoot;
+}
+
+// Start server — resolve data roots (Spec 121 F-C2), then boot.
 // Guard: skip auto-start when this module is imported (e.g. by the tool-boundary contract test).
 // The `require.main === module` check is the standard Node.js "am I the entry point?" idiom.
 // ts-jest sets require.main to a different module, so this guard is safe in Jest.
+// Root resolution stays INSIDE this guard so importing this module never executes it.
 if (require.main === module) {
-  const componentsDir = process.env.COMPONENTS_DIR || DEFAULT_COMPONENTS_DIR;
-  const mainServer = new ComponentMCPServer({
-    componentsDir,
-    patternsDir: process.env.PATTERNS_DIR,
-    templatesDir: process.env.TEMPLATES_DIR,
-    guidanceDir: process.env.GUIDANCE_DIR,
-    registryPath: process.env.REGISTRY_PATH,
-    tokenIndexDir: process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR,
-    designLanguagePath: process.env.DESIGN_LANGUAGE_PATH || 'design-language/design-philosophy.yaml',
-  });
+  const logRoot = (label: string, root: ResolvedDataRoot, note = ''): void => {
+    console.error(`[${SERVER_NAME}] Data root ${label}: ${root.path} (source: ${root.source})${note}`);
+  };
+
+  let dataPaths: DataPaths;
+  try {
+    const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
+    const packageRoot = shared.resolvePackageRoot(__dirname);
+
+    // CONSUMER-OWNED roots: env → cwd (exists AND non-empty) → package fallback.
+    // The consumer's own regenerated data wins when present (Spec 118 Class C′).
+    const components = shared.resolveConsumerOwnedRoot({
+      envValue: process.env.COMPONENTS_DIR,
+      relPath: DEFAULT_COMPONENTS_DIR,
+      packageRoot,
+    });
+    const tokenIndex = shared.resolveConsumerOwnedRoot({
+      envValue: process.env.TOKEN_INDEX_DIR,
+      relPath: DEFAULT_TOKEN_INDEX_DIR,
+      packageRoot,
+    });
+
+    // PACKAGE-OWNED roots: env → package-relative (no cwd preference — these ship
+    // with the package; a consumer's coincidental dir is not this data).
+    const patterns = shared.resolvePackageOwnedRoot({
+      envValue: process.env.PATTERNS_DIR,
+      packageRoot,
+      relPath: 'experience-patterns',
+    });
+    const templates = shared.resolvePackageOwnedRoot({
+      envValue: process.env.TEMPLATES_DIR,
+      packageRoot,
+      relPath: 'layout-templates',
+    });
+    const guidance = shared.resolvePackageOwnedRoot({
+      envValue: process.env.GUIDANCE_DIR,
+      packageRoot,
+      relPath: 'family-guidance',
+    });
+    const registry = shared.resolvePackageOwnedRoot({
+      envValue: process.env.REGISTRY_PATH,
+      packageRoot,
+      relPath: 'family-registry.yaml',
+    });
+    const designLanguage = shared.resolvePackageOwnedRoot({
+      envValue: process.env.DESIGN_LANGUAGE_PATH,
+      packageRoot,
+      relPath: 'design-language/design-philosophy.yaml',
+    });
+
+    // Boot log: one stderr line per data root, BEFORE the startup sentinel.
+    // NEVER stdout — stdout is the JSON-RPC channel.
+    logRoot('components', components);
+    logRoot(
+      'token-index',
+      tokenIndex,
+      tokenIndex.source === 'package'
+        ? " — package token snapshot in use; if this project customizes tokens, run 'npx designerpunk generate' to build a local token-index"
+        : ''
+    );
+    logRoot('experience-patterns', patterns);
+    logRoot('layout-templates', templates);
+    logRoot('family-guidance', guidance);
+    logRoot('family-registry', registry);
+    logRoot('design-language', designLanguage);
+
+    dataPaths = {
+      componentsDir: components.path,
+      patternsDir: patterns.path,
+      templatesDir: templates.path,
+      guidanceDir: guidance.path,
+      registryPath: registry.path,
+      tokenIndexDir: tokenIndex.path,
+      designLanguagePath: designLanguage.path,
+    };
+  } catch {
+    // Root dist not built (dev-repo edge; in-repo cwd == package root, so the
+    // legacy env/cwd-relative defaults still land on the right data).
+    console.error(
+      `[${SERVER_NAME}] WARNING: shared data-root resolution unavailable (root dist not built?) — using legacy env/cwd-relative defaults`
+    );
+    dataPaths = {
+      componentsDir: process.env.COMPONENTS_DIR || DEFAULT_COMPONENTS_DIR,
+      patternsDir: process.env.PATTERNS_DIR,
+      templatesDir: process.env.TEMPLATES_DIR,
+      guidanceDir: process.env.GUIDANCE_DIR,
+      registryPath: process.env.REGISTRY_PATH,
+      tokenIndexDir: process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR,
+      designLanguagePath: process.env.DESIGN_LANGUAGE_PATH || 'design-language/design-philosophy.yaml',
+    };
+  }
+
+  const mainServer = new ComponentMCPServer(dataPaths);
   mainServer.start().catch((err) => {
     console.error(`[${SERVER_NAME}] Fatal error:`, err);
     process.exit(1);
