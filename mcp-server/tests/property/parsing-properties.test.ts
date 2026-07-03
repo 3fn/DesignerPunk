@@ -29,10 +29,14 @@ const contentLineArb = fc.stringOf(
   { minLength: 0, maxLength: 100 }
 );
 
+// Metadata values must contain at least one non-whitespace character: the metadata
+// contract treats a whitespace-only value as missing (extractMetadata trims values,
+// so '**Purpose**:   ' extracts as ''). Whitespace-only strings are therefore
+// invalid-by-contract, not a parser gap — see the whitespace-only regression case below.
 const metadataValueArb = fc.stringOf(
   fc.constantFrom(...'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_,'.split('')),
   { minLength: 1, maxLength: 50 }
-);
+).filter(s => s.trim().length > 0);
 
 // Generate a valid metadata block
 const metadataBlockArb = fc.record({
@@ -132,6 +136,33 @@ describe('Property-Based Parsing Tests', () => {
         { numRuns: 20 }
       );
     });
+
+    // Regression: fast-check counterexample (seed -132582795, shrunk to purpose = ' ').
+    // A whitespace-only metadata value trims to '' — the parser treats it as missing,
+    // which is the contract. The generator above is filtered to exclude this class;
+    // this case pins the parser's behavior on it deterministically.
+    it('should treat a whitespace-only metadata value as missing', () => {
+      const doc = `# Document Title
+
+**Date**: 2025-01-01
+**Purpose**:  ${''}
+**Organization**: process-standard
+**Scope**: cross-project
+**Layer**: 1
+**Relevant Tasks**: coding
+
+---
+
+## Content
+
+MUST READ: Load all related files`;
+
+      const result = extractMetadata(doc);
+
+      expect(result.purpose).toBe('');
+      expect(result.date).toBe('2025-01-01');
+      expect(result.organization).toBe('process-standard');
+    });
   });
 
   describe('Property 2: Section boundaries correctly identified', () => {
@@ -179,10 +210,16 @@ describe('Property-Based Parsing Tests', () => {
               // where the first section naturally extends to the duplicate heading)
               if (firstHeading !== secondHeading) {
                 const firstSection = extractSection(doc, firstHeading, 'test.md');
-                
+
                 if (firstSection) {
-                  // First section should not contain second section's heading
-                  expect(firstSection.content).not.toContain(`## ${secondHeading}`);
+                  // First section should not contain second section's heading as an
+                  // actual H2 heading line. A raw substring check false-positives when
+                  // a legitimate H3 subsection line happens to contain '## <heading>'
+                  // as a substring (e.g. '### Za' contains '## Z').
+                  const escapedHeading = secondHeading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                  expect(firstSection.content).not.toMatch(
+                    new RegExp(`^##\\s+${escapedHeading}\\s*$`, 'm')
+                  );
                 }
               }
             }
@@ -192,6 +229,22 @@ describe('Property-Based Parsing Tests', () => {
         ),
         { numRuns: 30 }
       );
+    });
+
+    // Regression: fast-check counterexample (seed 1456563402, shrunk to sections
+    // ['## a' with subsection '### Za', '## Z', ...]). The extracted first section
+    // correctly includes its own '### Za' subsection, whose text contains '## Z' as a
+    // substring — the boundary is right; only a substring assertion would flag it.
+    it('should include own H3 subsections even when their text contains a later H2 heading as a substring', () => {
+      const doc = '## a\n\ncontent\n\n### Za\n\nsub content\n\n## Z\n\nother content\n';
+
+      const section = extractSection(doc, 'a', 'test.md');
+
+      expect(section).not.toBeNull();
+      expect(section!.content).toContain('### Za');
+      // Must not contain the second section's actual heading line
+      expect(section!.content).not.toMatch(/^##\s+Z\s*$/m);
+      expect(section!.content).not.toContain('other content');
     });
   });
 
