@@ -25,6 +25,7 @@ This spec is a **STUB** capturing a 2026-07-02 working session (Peter + Claude) 
 **Dependencies on prior artifacts:**
 - Verified inventory rests on `.github/workflows/consumer-guard.yml`, `package.json` scripts, `tsconfig*.json`, and the Stemma test files → § "2"
 - 122's §3a / §5(e) / §6 for the shared-artifact coupling
+- 2026-07-03 evidence (commit `29bba7de`): default lanes de-flaked/deterministic (Phase 1 precondition), and the root `test:performance` lane found silently empty since May → design-outline.md § "Addendum — 2026-07-03 evidence"
 
 ### Stakeholders (Spec-Feedback-Protocol § "Stakeholder Identification")
 

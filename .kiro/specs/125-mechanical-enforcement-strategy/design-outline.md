@@ -145,6 +145,23 @@ This is the artifact 125 owns and its central deliverable. For **every** enforce
 
 ---
 
+## Addendum — 2026-07-03 evidence: default lanes de-flaked; the root perf lane was silently EMPTY
+
+*(Recorded from de-flake work landed in commit `29bba7de`, outside this spec but load-bearing for it.)*
+
+**What changed (the de-flake itself):** all wall-clock timing assertions were removed from the default (functional) test lanes, per this outline's §4 Phase 1 scoped-lane direction:
+- Root: ComponentTokenValidation's NFR 3 timing tests moved to `src/integration/__tests__/performance/`; parse-time bounds dropped from `mcp-component-integration.test.ts`; ParallelExecutor's elapsed-time/start-delta assertions replaced with load-insensitive concurrency counters.
+- `mcp-server`: gained its own lane split (`npm test` excludes `tests/performance/`; new `npm run test:performance`); FileWatcher tests got a watch-stream warmup barrier (macOS FSEvents starts async — a fixed sleep can never fix that race).
+- Verified: full root `npm test` green; mcp-server `npm test` 10/10 consecutive green (previously ~1-in-8 flaky, and mid-fix as bad as 4-in-8).
+
+**The finding that matters for §1's thesis:** root `npm run test:performance` had been selecting **zero tests** since Spec 025 Task 2.1 (`4145d13e`, ~May 2026) baked the perf-exclusion patterns into `jest.config.js` — config-level `testPathIgnorePatterns` also apply to `--testPathPatterns`-selected runs, so the selection flag and the config exclusion annihilated each other. `test:all` likewise silently excluded all performance tests. Nobody noticed for ~2 months because nothing gates on these lanes.
+
+This is a sharper failure mode than §2's "authored-but-unarmed": a lane can be authored, *invoked*, exit green, **and be empty**. Two implications for formalization:
+1. **"Armed" must include "verified non-empty."** When Phase 1 wires a lane to a blocking gate, the gate should assert the lane selected a plausible test count (e.g., a `--listTests` floor), or an empty-selection regression reads as a pass forever.
+2. **Precondition now met for §9's scoped-lane question:** the default lanes are timing-assertion-free and demonstrated deterministic, which is what makes promoting them to *blocking* tolerable — a flaky blocking gate teaches agents (and humans) to override gates.
+
+---
+
 ## Cross-References
 - Polar Orbit article: https://polar.sh/blog/orbit-llm-safe-design-system
 - `.github/workflows/consumer-guard.yml` — the current armed guard set
