@@ -1,176 +1,88 @@
 # Kiro Task Completion Hooks
 
-This directory contains hooks and automation for task completion workflows, specifically addressing the automatic commit requirement identified in the task completion process.
+This directory contains the task-completion tooling for the PR-gated workflow and the file-organization hooks.
+
+**The direct-commit flow is retired** (ratified workflow-law ballot, Spec 125-A Task 1, RATIFIED Peter, 2026-07-05). Tasks complete via **branch → PR → required checks → merge**: agents open PRs, Peter merges on green, and direct pushes to `main` are rejected by branch protection — admins included. Canonical law: `.kiro/steering/Task-Completion-Protocol.md` § "Completion State in the PR Flow".
 
 ---
 
-## Problem Identified
+## Task Completion: `complete-task.sh`
 
-During Task 6 completion, we discovered that tasks specify "Post-Complete: Commit with message" but this doesn't happen automatically when using the `taskStatus` tool. This creates a workflow gap between task completion and version control.
+**Purpose**: One completion command, two context-aware modes (ballot Item 11a)
+**Usage**: `./.kiro/hooks/complete-task.sh [OPTIONS] "MESSAGE"`
 
----
+### Parent mode (default)
 
-## Solution Components
+Commits on the task branch, pushes it, **opens the task PR**, prints the PR URL, and stops. Never merges — the task is complete when Peter merges on green.
 
-### 1. Task Completion Commit Script (`task-completion-commit.sh`)
-**Purpose**: Automatically commit and push changes when a task is completed  
-**Usage**: `./.kiro/hooks/task-completion-commit.sh [tasks-file] "[task-name]"`
-
-**Features**:
-- Detects uncommitted changes
-- Extracts commit message from task's "Post-Complete" instruction
-- Commits all changes with appropriate message
-- Pushes to GitHub automatically
-- Handles errors gracefully
-
-### 2. Simple Wrapper (`commit-task.sh`)
-**Purpose**: Easy-to-use wrapper for task completion commits  
-**Usage**: `./.kiro/hooks/commit-task.sh "Task Name"`
-
-**Features**:
-- Simplified interface for common use case
-- Automatically uses the current spec's tasks.md file
-- Clear error messages and usage instructions
-
-### 3. Agent Hook Configuration (`task-completion-agent-hook.md`)
-**Purpose**: Documentation for setting up automatic Kiro agent hooks  
-**Status**: Documentation ready, implementation pending
-
-**Features**:
-- File change monitoring for tasks.md
-- Automatic trigger on task status changes
-- Integration with Kiro's hook system
-
----
-
-## Current Workflow
-
-### Manual Process (Current)
-1. Complete task work
-2. Use `taskStatus` tool to mark task as completed
-3. **Manually run**: `./.kiro/hooks/commit-task.sh "Task Name"`
-4. Changes are automatically committed and pushed
-
-### Example Usage
 ```bash
-# After completing "6. Create Strategic Framework Documentation Package"
-./.kiro/hooks/commit-task.sh "6. Create Strategic Framework Documentation Package"
+./.kiro/hooks/complete-task.sh "Task 2 Complete: Rework task tooling for PR flow (125-A)"
 ```
 
-### Future Automated Process (Goal)
-1. Complete task work
-2. Use `taskStatus` tool to mark task as completed
-3. **Automatic**: Kiro hook detects completion and runs commit script
-4. Changes are automatically committed and pushed
+The MESSAGE becomes both the commit message and the PR title, and squash-merge makes the PR title the `main` commit subject — so it MUST follow the standard: `Task <N> Complete: <Description> (<spec>)`.
 
----
+### Subtask mode (`--subtask`)
 
-## Integration with Kiro
+Commits on the task branch with a plain message and pushes the branch. **No PR opens**; no required checks fire until parent completion. Subtasks never open PRs.
 
-### Current Integration
-- **Manual Trigger**: Scripts can be run manually after task completion
-- **Git Integration**: Full git add, commit, and push automation
-- **Message Extraction**: Parses task files to extract proper commit messages
-
-### Future Integration Opportunities
-- **File Watching**: Monitor tasks.md for status changes
-- **Kiro Agent Hooks**: Integrate with Kiro's native hook system
-- **Steering Integration**: Use Kiro steering to customize commit behavior
-- **Notification Integration**: Notify team members of task completion
-
----
-
-## Testing and Validation
-
-### Tested Scenarios ✅
-- Manual script execution with task name
-- Git operations (add, commit, push)
-- Commit message extraction from tasks
-- Error handling for missing changes
-
-### Validation Results ✅
-- Scripts execute successfully
-- Commits appear on GitHub with correct messages
-- Push operations work correctly
-- Error handling prevents workflow disruption
-
----
-
-## Workflow Improvements Identified
-
-### 1. Commit Message Extraction
-**Issue**: Script needs better parsing of task-specific commit messages  
-**Solution**: Enhanced AWK parsing to find correct task section  
-**Status**: Implemented in updated script
-
-### 2. Selective Staging
-**Issue**: Currently stages all changes, not just task-related files  
-**Solution**: Could implement selective staging based on task artifacts  
-**Status**: Future enhancement
-
-### 3. Branch Management
-**Issue**: All commits go to main branch  
-**Solution**: Could create feature branches for tasks  
-**Status**: Future enhancement
-
-### 4. Integration with taskStatus Tool
-**Issue**: Manual step required after using taskStatus  
-**Solution**: Integrate commit script with taskStatus workflow  
-**Status**: Requires Kiro integration
-
----
-
-## Next Steps
-
-### Immediate (Manual Process)
-1. ✅ **Scripts Created**: Task completion commit automation ready
-2. ✅ **Testing Complete**: Scripts validated with real task completion
-3. ✅ **Documentation**: Usage instructions and workflow documented
-
-### Short Term (Semi-Automated)
-1. **Kiro Hook Setup**: Configure Kiro agent hook for file monitoring
-2. **Workflow Integration**: Integrate with existing task completion process
-3. **Team Training**: Document process for team members
-
-### Long Term (Fully Automated)
-1. **Native Integration**: Integrate with Kiro's taskStatus tool
-2. **Advanced Features**: Branch management, selective staging, notifications
-3. **Process Refinement**: Continuous improvement based on usage
-
----
-
-## Usage Examples
-
-### Basic Task Completion
 ```bash
-# Complete your task work, then:
-./.kiro/hooks/commit-task.sh "1. Create North Star Vision Document"
+./.kiro/hooks/complete-task.sh --subtask "Task 2.1: add credential preflight"
 ```
 
-### Advanced Usage
-```bash
-# For different specs or custom task files:
-./.kiro/hooks/task-completion-commit.sh path/to/tasks.md "Task Name"
-```
+### Conventions (ballot Item 1b)
 
-### Integration with Current Workflow
-```bash
-# After using taskStatus tool:
-# 1. Mark task complete (already done)
-# 2. Commit the completion:
-./.kiro/hooks/commit-task.sh "6. Create Strategic Framework Documentation Package"
-```
+- **`<spec>`** = the spec ID (`125-A` from `125-A-pr-gate-mechanical-arming`). Branch names and PR titles use the spec ID; the PR body's `Spec:` field carries the full directory name.
+- **Branch names**: `task/<spec>-<task-number>-<short-slug>` (e.g., `task/125-A-2-tooling-rework`); `fix/<slug>` or `chore/<slug>` for non-spec work.
+- **PR title**: `Task <N> Complete: <Description> (<spec>)` — title discipline IS commit-message discipline under squash-merge.
+- **PR body**: `Spec:` / `Task:` / `Agent:` / completion-doc path(s) on the branch / one-line validation note. The script derives these from a conventional MESSAGE; override with `--spec-dir`, `--agent`, `--completion-doc`, `--validation`.
+
+### Options
+
+- `--subtask` — subtask mode (see above)
+- `--branch NAME` — task branch to create/use when currently on `main`
+- `--agent NAME` — authoring agent for the PR body (default: `$DP_AGENT` or `Peter`)
+- `--spec-dir NAME` / `--completion-doc PATH` / `--validation NOTE` — PR body fields
+- `--organize` / `--validate-metadata` — run `organize-by-metadata.sh` before staging (folded in from the retired organized-commit script, ballot Item 11c)
+- `-h, --help` — full usage
+
+### Failure modes (all fail LOUD — Req 4.3, no silent fallback)
+
+- **Missing/under-scoped credentials**: preflights `gh` auth and repo push permission BEFORE any git mutation; names the missing PAT scopes (`Contents: write`, `Pull requests: write`). There is NO direct-push fallback.
+- **On `main` with no derivable task branch**: refuses before touching git.
+- **Never pushes to `main`** in any mode or failure path: refuses on `main`, re-asserts branch != `main` before commit AND before push, and pins the push refspec to the task branch.
+- **PR creation fails after push**: reports the cause (usually PAT missing `Pull requests: write`); re-running reuses the pushed branch.
+- **Open PR already exists for the branch** (change-request resume, ballot 1d.7): pushes and re-reports the existing PR URL — no duplicate PR.
+
+### Release analysis
+
+Release analysis no longer runs at completion. It runs **post-merge on `main`** (non-blocking, informational) via `.github/workflows/release-analysis.yml` (ballot Item 1e). Run `npm run release:analyze` for on-demand local detail.
 
 ---
 
-*This hook system addresses the workflow gap identified during Task 6 completion, providing both immediate manual solutions and a path toward full automation integration with Kiro's task management system.*
--
---
+## Retired tooling (tombstones — DO NOT DELETE)
+
+The following scripts implemented the retired direct-commit flow and are now **hard-fail tombstones**: each prints a redirect to `complete-task.sh` and exits 1, performing no git action (ballot Item 1g).
+
+- `commit-task.sh` — RETIRED (was: commit + push to `main` + release analysis)
+- `task-completion-commit.sh` — RETIRED (was: the helper that pushed to `main`)
+- `commit-task-organized.sh` — RETIRED (was: commit + push with optional organization; its `--organize`/`--validate-metadata` options live on as `complete-task.sh` flags)
+
+**The tombstones are load-bearing, not dead code**: ~31 specs with unchecked tasks still carry Post-Completion blocks instructing the retired scripts (ballot Item 13, RECORDS class). The hard-fail redirect is what keeps those stale instruction paths disarmed. They stay until the last pre-gate spec closes — deleting them as "unused" re-arms those stale paths.
+
+`task-completion-agent-hook.md` (the auto-commit-on-completion agent hook concept) is deprecated for the same reason — structurally incompatible with the gate (ballot Item 11b); retained as a record under its deprecation header.
+
+---
+
+## Release Flow
+
+See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the `prepublishOnly` token-index gate, and the post-merge analysis workflow).
+
+---
 
 ## File Organization Hooks
 
 ### Metadata-Driven Organization (`organize-by-metadata.sh`)
-**Purpose**: Organize files based on **Organization** metadata in file headers  
+**Purpose**: Organize files based on **Organization** metadata in file headers
 **Usage**: `./.kiro/hooks/organize-by-metadata.sh [OPTIONS]`
 
 **Features**:
@@ -204,33 +116,7 @@ During Task 6 completion, we discovered that tasks specify "Post-Complete: Commi
 ./.kiro/hooks/organize-by-metadata.sh --dry-run
 ```
 
-### Enhanced Task Commit with Organization (`commit-task-organized.sh`)
-**Purpose**: Commit task completion with optional file organization  
-**Usage**: `./.kiro/hooks/commit-task-organized.sh "Task Name" [OPTIONS]`
-
-**Features**:
-- Optional file organization before commit
-- Metadata validation before commit
-- Standard task completion commit workflow
-- Interactive confirmation for organization and commit
-- Automatic cross-reference updates
-
-**Options**:
-- `--organize`: Run file organization before commit
-- `--validate-metadata`: Validate metadata before commit
-- `--help`: Show detailed usage information
-
-**Examples**:
-```bash
-# Standard task completion
-./.kiro/hooks/commit-task-organized.sh "7. Validate Strategic Framework"
-
-# With file organization
-./.kiro/hooks/commit-task-organized.sh "7. Validate Strategic Framework" --organize
-
-# With metadata validation and organization
-./.kiro/hooks/commit-task-organized.sh "7. Validate Strategic Framework" --validate-metadata --organize
-```
+**During task completion**: pass `--organize` and/or `--validate-metadata` to `complete-task.sh` to run organization/validation before staging.
 
 ---
 

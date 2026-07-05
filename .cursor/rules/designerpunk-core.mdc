@@ -29,7 +29,7 @@ DesignerPunk is a **True Native** cross-platform design system with mathematical
 
 - **STOP after completing a task** - wait for user authorization before starting the next
 - Use Jest, NOT Vitest: `npm test` for standard tests, `npm run test:all` for full suite
-- Follow hook system: `./.kiro/hooks/commit-task.sh "Task Name"`
+- Complete tasks via the PR flow: `./.kiro/hooks/complete-task.sh "Task Name"` opens the task PR; the task is complete when Peter merges — never push to `main`
 
 ## MCP Documentation
 

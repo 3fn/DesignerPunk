@@ -8,7 +8,7 @@ description: Development workflow and task completion practices — task complet
 # Development Workflow and Task Completion Practices
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-07-03
+**Last Reviewed**: 2026-07-05
 **Purpose**: Task completion workflow and git practices for all development work
 **Organization**: process-standard
 **Scope**: cross-project
@@ -82,8 +82,8 @@ description: Development workflow and task completion practices — task complet
 3. **[MANUAL]** **Create Detailed Completion Document**: For parent tasks, create comprehensive completion doc at `.kiro/specs/[spec-name]/completion/task-N-parent-completion.md` (Tier 3)
 4. **[MANUAL]** **Create Summary Document**: For parent tasks, create concise summary doc at `docs/specs/[spec-name]/task-N-summary.md`
 5. **[MANUAL]** **Mark Task Complete**: Use `taskStatus` tool to update task status to "completed" when finished
-6. **[MANUAL]** **Commit Changes**: Run `./.kiro/hooks/commit-task.sh "Task Name"` to automatically commit, push, and run release analysis
-7. **[MANUAL]** **Verify on GitHub**: Confirm changes appear in repository with correct commit message
+6. **[MANUAL]** **Open the Task PR**: Run `./.kiro/hooks/complete-task.sh "Task Name"` to commit on the task branch, push, and open the PR; report the PR URL and STOP
+7. **[MANUAL]** **Merge = completion**: Peter merges on green — the merge accepts the work into `main` (no separate GitHub verification step; the merged PR is the verification). Release analysis runs post-merge on `main`.
 
 **Why use `taskStatus` tool?**
 - Triggers agent hooks for automatic file organization
@@ -113,9 +113,9 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 ### Alternative Process (Script-based without Automation)
 1. **Complete Task Work**: Implement all requirements and create specified artifacts
 2. **Manually update tasks.md**: Change task status from `[ ]` to `[x]`
-3. **Commit Changes**: Run `./.kiro/hooks/commit-task.sh "Task Name"` to automatically commit and push
-4. **Verify on GitHub**: Confirm changes appear in repository with correct commit message
-5. **[OPTIONAL]** **Release Analysis**: Run `npm run release:analyze` if you want detailed release analysis beyond what commit-task.sh provides
+3. **Open the Task PR**: Run `./.kiro/hooks/complete-task.sh "Task Name"` to commit on the task branch, push, and open the PR
+4. **Merge = completion**: Peter merges on green; the merged PR is the verification
+5. **[OPTIONAL]** **Release Analysis**: Run `npm run release:analyze` for detailed local analysis (the standing analysis runs post-merge on `main`)
 
 **When to use this approach:**
 - Quick fixes or minor changes
@@ -132,9 +132,9 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 
 ### Git Practices
 - **Repository**: https://github.com/3fn/DesignerPunkv2
-- **Branch**: All work on `main` branch (single-branch workflow for now)
-- **Commits**: Atomic commits per task completion with descriptive messages
-- **Push**: Always push immediately after commit to maintain synchronization
+- **Branch**: All work on task branches (`task/<spec>-<N>-<slug>`); `main` is protected — direct pushes are rejected, admins included
+- **Commits**: Atomic commits per subtask on the branch; squash-merge yields one `main` commit per task with the PR title as its subject
+- **PRs**: Title = `Task <N> Complete: <Description> (<spec>)`; body carries Spec / Task / Agent / completion-doc path / validation note
 
 ## Spec Planning (Conditional Loading)
 
@@ -167,17 +167,13 @@ See **Spec Planning Standards** (`.kiro/steering/Process-Spec-Planning.md`) for 
 ## Hook System Usage
 
 ### Available Tools
-- **`.kiro/hooks/commit-task.sh`**: Simple wrapper for task completion commits
-- **`.kiro/hooks/task-completion-commit.sh`**: Full automation script with message extraction
+- **`.kiro/hooks/complete-task.sh`**: Task-completion PR tooling — branch, commit, push, PR-open, URL report
 - **`.kiro/hooks/README.md`**: Complete documentation and usage examples
 
 ### Usage Examples
 ```bash
-# Standard task completion commit
-./.kiro/hooks/commit-task.sh "1. Create North Star Vision Document"
-
-# For different specs or custom task files
-./.kiro/hooks/task-completion-commit.sh path/to/tasks.md "Task Name"
+# Standard task completion — opens the task PR
+./.kiro/hooks/complete-task.sh "Task N Complete: Description (spec)"
 ```
 
 ---
@@ -255,9 +251,9 @@ get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Quick
 - **Hook script errors**: Ensure scripts have execute permissions (`chmod +x`)
 
 **Quick Reference - Error Recovery**:
-- If commit fails: Fix issues and re-run hook script
-- If push fails: Run `git push origin main` manually
-- If wrong message: Use `git commit --amend -m "Correct Message"` then force push
+- If commit fails: Fix issues and re-run the tooling
+- If push fails: Push the TASK BRANCH manually (`git push -u origin <branch>`) — never `main`
+- If the PR title is wrong: Edit the PR title on GitHub (squash-merge takes the title as the commit subject)
 
 
 ---

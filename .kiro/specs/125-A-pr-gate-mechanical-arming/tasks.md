@@ -17,12 +17,12 @@
   **Validation**: Tier 2
   **Builds and proves — does NOT activate** [T-A9]: the reworked script's behavioral cutover lands in Task 4's atomic window with the doc surfaces, avoiding a half-migrated-corpus window. Scope: branch creation, commit, push, PR open (documented title/body convention), PR URL reported; merge behavior per the ratified ballot; actionable failure when credentials are absent or under-scoped (NEVER silent fallback to direct push). **First checklist item: PAT scope remediation** (Contents: write + Pull requests: write; Administration for Task 3 or Peter clicks) — verified blocker, recorded in completion docs [T-A3]. Release-flow reconciliation per Req 4.4's two forms, with a reconciliation smoke proven BEFORE Task 3 (the postpublish mid-publish hard-fail) [T-A4, S].
 
-- [ ] **3. Enable branch protection + required checks v1**
+- [x] **3. Enable branch protection + required checks v1** ✅ COMPLETE (protection LIVE on `main`, 2026-07-05; admin-credential rejection proven)
   **Type**: Setup
   **Validation**: Tier 1
   **BLOCKED ON**: Req 4.4 reconciliation proven (Task 2) AND Task 4 staged to land back-to-back — the platform must not reject what the law still instructs, and publishes must not hard-fail mid-flight [T-A4, T-A9]. Protect `main`: required status checks = the currently-green armed set (consumer-guard jobs + drift detection); enforce for administrators; no required reviews; no path-filtered required contexts (Req 2.3). Needs repo-admin permission — Peter clicks Settings → Branches, or the PAT gains Administration (see Task 2's remediation). Record the check-set baseline per Req 2.2 and the documented emergency procedure per Req 1.4.
 
-- [ ] **4. Apply the ratified law + prove the flow end-to-end**
+- [x] **4. Apply the ratified law + prove the flow end-to-end** ✅ COMPLETE at merge (applied 2026-07-05 on `task/125-A-4-apply-workflow-law`; sweep PASS; this task's own PR is the acceptance proof)
   **Type**: Implementation
   **Validation**: Tier 2
   The atomic window [T-A9]: apply the ballot's law edits across ALL surfaces (record-first: only after committed RATIFIED status) AND land Task 2's script cutover together, ending with the ballot-defined residual-instruction sweep (Req 3.1) and Thurgood's cross-surface consistency check; then run ONE real task through the full new flow — branch, PR, checks, merge — as the acceptance proof. Verify a direct push to `main` is rejected **using an admin credential, stated in the proof record** — a non-admin rejection proves nothing about the bypass Req 1.1 closes [S].

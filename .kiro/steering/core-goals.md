@@ -6,7 +6,7 @@ inclusion: always
 # Core Goals
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-01-05
+**Last Reviewed**: 2026-07-05
 **Purpose**: Core project context and development practices for DesignerPunk design system
 **Organization**: process-standard
 **Scope**: cross-project
@@ -38,8 +38,8 @@ DesignerPunk is a True Native cross-platform design system with mathematical fou
 
 **Task Completion:**
 - Follow systematic workflow with automated git integration
-- Use hook system: `./.kiro/hooks/commit-task.sh "Task Name"`
-- Repository: https://github.com/3fn/DesignerPunkv2 (single-branch workflow on main)
+- Complete tasks via the PR flow: `./.kiro/hooks/complete-task.sh "Task Name"` opens the task PR; Peter merges on green — the merge is the authorization act (see Task-Completion-Protocol)
+- Repository: https://github.com/3fn/DesignerPunkv2 (PR-gated workflow: branch protection on `main`, admins included)
 
 **For detailed workflow guidance, see:**
 - Task completion: `Process-Development-Workflow.md` (Layer 2)

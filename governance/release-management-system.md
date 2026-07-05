@@ -6,7 +6,7 @@ inclusion: manual
 # Release Management System
 
 **Date**: 2026-02-28
-**Last Reviewed**: 2026-02-28
+**Last Reviewed**: 2026-07-05
 **Last Updated**: 2026-02-28
 **Purpose**: Mental model of the release management system for AI agents
 **Organization**: process-standard
@@ -82,7 +82,7 @@ Must be `docs/specs/[spec-name]/task-N-summary.md` — the scanner looks here vi
 
 ## Post-Commit Analysis
 
-`commit-task.sh` runs `release:analyze` after each task commit (non-blocking, fails silently). This provides immediate feedback on accumulated change significance. Skip with `--no-analyze` flag.
+`release:analyze` runs post-merge on `main` (non-blocking, informational) — merged history is the analysis's correct input. Run `npm run release:analyze` locally for on-demand detail.
 
 ---
 

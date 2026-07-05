@@ -1,172 +1,28 @@
-# Release Analysis Hook Integration
+# Release Analysis Placement
 
-This directory contains hook scripts for automatic release analysis after task completion commits.
+> **UPDATED (2026-07-05, ballot 125-A Task 1, Item 11e)**: the commit-time analysis integration this document described is retired with the direct-commit flow. Release analysis now runs **post-merge on `main`**. The sections below describe the current placement; the original commit-hook integration content is retained only as a historical record at the bottom.
 
-## Hook Scripts
+## Current Placement (ballot Item 1e)
 
-### Git Hook: `analyze-after-commit.sh`
+**Release analysis runs post-merge on `main`** — merged history is the analysis's correct input (it answers "what has accumulated on the release line since the last release" by scanning summary docs via git log; a branch-side run would count unmerged work and re-count on every push).
 
-**Purpose**: Automatically runs release analysis after Git commits
+- **Mechanism**: `.github/workflows/release-analysis.yml` — a **non-required** workflow job triggered on push to `main` (i.e., after a PR merges) runs `release:analyze` and surfaces output in the workflow run summary. Non-blocking and informational, preserving the old fails-silently semantics.
+- **On-demand detail**: `npm run release:analyze` locally, any time.
+- **The completion tooling does not run analysis**: `complete-task.sh` commits, pushes, and opens the PR — analysis fires when Peter's merge lands the work on `main`. (The old `--no-analyze` flag retired with `commit-task.sh`.)
 
-**Features**:
-- Quick analysis mode (completes in <10 seconds)
-- Graceful failure handling (doesn't block commits)
-- Concurrent request handling (prevents multiple analyses running simultaneously)
-- Lock file mechanism to avoid conflicts
-- Colored output for better visibility
+## Where to Look
 
-**Usage**:
+- Analysis output: the `release-analysis` workflow run summary on GitHub (Actions tab), one run per merge to `main`.
+- Release sequence under the PR gate: `.kiro/hooks/RELEASE-FLOW.md`.
+- The law: `.kiro/steering/Task-Completion-Protocol.md` § "Completion State in the PR Flow".
 
-```bash
-# Manual execution
-./.kiro/hooks/analyze-after-commit.sh
+---
 
-# Automatic execution (integrate with commit-task.sh)
-# The HookIntegrationManager can automatically integrate this
-```
+## Historical Record — retired commit-time integration
 
-**Configuration**:
-- `QUICK_MODE`: Set to `--quick` for fast analysis
-- `TIMEOUT`: Maximum time in seconds (default: 10)
-- `FAIL_SILENTLY`: Set to `true` to not block commits on failure
-- `CACHE_RESULTS`: Set to `true` to cache results for later review
+*Everything below described the pre-gate design (analysis triggered by `commit-task.sh` after direct commits to `main`, with an optional Kiro agent hook). The scripts it references (`analyze-after-commit.sh` in `.kiro/hooks/` and `.kiro/agent-hooks/`) were part of that design; `commit-task.sh` is now a hard-fail tombstone. This is a record, not instruction — do not wire analysis back into commit time.*
 
-### Agent Hook: `analyze-after-commit.sh`
-
-**Purpose**: Automatically runs release analysis via Kiro agent hooks
-
-**Location**: `.kiro/agent-hooks/analyze-after-commit.sh`
-
-**Configuration**: `.kiro/agent-hooks/release-analysis-on-task-completion.json`
-
-**Features**:
-- Triggered on task completion events
-- Silent operation (no output unless errors)
-- Concurrent request handling
-- Automatic timeout and failure recovery
-
-**Enabling the Agent Hook**:
-
-1. Edit `.kiro/agent-hooks/release-analysis-on-task-completion.json`
-2. Set `"enabled": true`
-3. Restart Kiro or reload agent hooks
-
-## Concurrent Request Handling
-
-Both hooks implement concurrent request handling using a lock file mechanism:
-
-- **Lock File**: `.kiro/release-analysis/.analysis-lock`
-- **Max Lock Age**: 30 seconds (stale locks are automatically removed)
-- **Behavior**: If another analysis is running, subsequent requests are skipped
-
-This prevents multiple analyses from running simultaneously during rapid commits.
-
-## Graceful Failure Handling
-
-Both hooks are configured to fail gracefully:
-
-- **Non-blocking**: Failures don't prevent commits from completing
-- **Timeout Protection**: Analysis is killed after 10 seconds
-- **Error Suppression**: Errors are logged but don't propagate
-- **Lock Cleanup**: Lock files are always removed, even on failure
-
-## Integration with Task Completion Workflow
-
-The Git hook can be automatically integrated with the existing `commit-task.sh` workflow:
-
-```bash
-# Using HookIntegrationManager
-npm run release:hooks:install git
-
-# This will:
-# 1. Create the analyze-after-commit.sh script
-# 2. Integrate it with commit-task.sh
-# 3. Make it executable
-# 4. Validate the installation
-```
-
-## Manual Integration
-
-To manually integrate with `commit-task.sh`, add this before the final success message:
-
-```bash
-# Release Analysis Integration
-if [ -f ".kiro/hooks/analyze-after-commit.sh" ]; then
-    echo "🔍 Analyzing changes for release..."
-    ".kiro/hooks/analyze-after-commit.sh" || echo "⚠️  Release analysis failed (non-blocking)"
-fi
-```
-
-## Testing the Hooks
-
-### Test Git Hook
-
-```bash
-# Run manually
-./.kiro/hooks/analyze-after-commit.sh
-
-# Expected output:
-# 🔍 Running release analysis...
-# [analysis output]
-# ✅ Release analysis complete
-```
-
-### Test Agent Hook
-
-```bash
-# Run manually
-./.kiro/agent-hooks/analyze-after-commit.sh
-
-# Expected: Silent execution (no output unless errors)
-```
-
-### Test Concurrent Handling
-
-```bash
-# Start first analysis
-./.kiro/hooks/analyze-after-commit.sh &
-
-# Immediately start second analysis
-./.kiro/hooks/analyze-after-commit.sh
-
-# Expected: Second analysis skips with warning about concurrent execution
-```
-
-## Troubleshooting
-
-### Hook Not Running
-
-1. Check if hook is executable: `ls -la .kiro/hooks/analyze-after-commit.sh`
-2. Make executable if needed: `chmod +x .kiro/hooks/analyze-after-commit.sh`
-3. Check if npm script exists: `npm run release:analyze --help`
-
-### Analysis Timing Out
-
-1. Increase `TIMEOUT` value in hook script
-2. Check if repository is very large
-3. Consider using `--quick` mode for faster analysis
-
-### Concurrent Lock Issues
-
-1. Check for stale lock file: `ls -la .kiro/release-analysis/.analysis-lock`
-2. Remove manually if needed: `rm .kiro/release-analysis/.analysis-lock`
-3. Lock files older than 30 seconds are automatically removed
-
-### Agent Hook Not Triggering
-
-1. Check if hook is enabled in configuration
-2. Verify Kiro agent hooks are loaded
-3. Check Kiro logs for hook execution errors
-4. Ensure hook script is executable
-
-## Requirements Addressed
-
-- **9.1**: Automatic analysis triggered after task completion commits
-- **9.4**: Graceful failure handling (don't block commits)
-- **9.6**: Concurrent request handling for rapid commits
-
-## Related Files
-
-- `src/release-analysis/hooks/HookIntegrationManager.ts` - Hook installation and management
-- `src/release-analysis/cli/quick-analyze.ts` - Quick analysis implementation
-- `.kiro/hooks/commit-task.sh` - Task completion commit workflow
+- The Git-hook variant ran quick analysis (<10s) after each task-completion commit, non-blocking, with a lock file (`.kiro/release-analysis/.analysis-lock`, 30s max age) to prevent concurrent runs during rapid commits.
+- The agent-hook variant (`.kiro/agent-hooks/release-analysis-on-task-completion.json`) triggered on task-completion events, silent unless erroring.
+- `HookIntegrationManager` (`src/release-analysis/hooks/HookIntegrationManager.ts`) installed the integration via `npm run release:hooks:install git`.
+- Requirements it addressed: 9.1 (automatic analysis after task-completion commits), 9.4 (graceful failure), 9.6 (concurrent request handling) — the post-merge workflow preserves 9.4's non-blocking semantics; 9.1's trigger moved from commit-time to merge-time; 9.6 is moot (one run per merge).
