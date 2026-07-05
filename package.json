@@ -133,8 +133,9 @@
     "check:drift": "node scripts/check-package-name-drift.js",
     "check:id-uniqueness": "tsx scripts/check-id-uniqueness.ts",
     "prepack": "npm run build",
-    "prepublishOnly": "npm run build && npm run check:drift",
-    "postpublish": "git diff --quiet token-index/ || (git add token-index/ && git commit -m 'Regenerate token-index (post-publish)' && git push origin main)"
+    "verify:token-index-clean": "git diff --quiet token-index/ || (echo '✖ token-index/ is stale relative to the committed state. Regenerate and commit it on the RELEASE BRANCH (it traverses the PR gate with the version bump) before publishing. See .kiro/hooks/RELEASE-FLOW.md.' && exit 1)",
+    "prepublishOnly": "npm run build && npm run check:drift && npm run verify:token-index-clean",
+    "postpublish": "git diff --quiet token-index/ || echo '⚠️  token-index/ changed during publish — commit it via a PR (main is branch-protected; never push it directly). See .kiro/hooks/RELEASE-FLOW.md.'"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
