@@ -10,7 +10,7 @@
 - [ ] **1. Draft the workflow-law ballot**
   **Type**: Documentation
   **Validation**: Tier 2 (conjunctive criterion met: the ballot carries SHALL/SHALL NOT contract content AND this spec's downstream tasks depend on it)
-  Draft the ballot proposing exact before→after edits to Task-Completion-Protocol (and any other law doc that bakes in direct commit-to-main), the PR-flow sequence agents follow, the merge-on-green rule, and the branch/PR conventions. Route per `.kiro/docs/ballots/README.md`; review round per ballot conventions; Peter ratifies. (First planned use of the record-first protocol.)
+  Draft the ballot proposing exact before→after edits for ALL ELEVEN surfaces enumerated in `../125-mechanical-enforcement-strategy/inbound-from-122.md` §3 (2 always-loaded steering + 6 governance docs + 3 hook docs/scripts), moved atomically: the PR-flow sequence agents follow, the merge rule (recommended: agents open PRs, Peter merges or delegates merge-on-green), branch/PR conventions, where release analysis moves, and the prune-with-arm what/why splits (recorded as 125-B map seed entries). Route per `.kiro/docs/ballots/README.md`; Peter ratifies. (First planned use of the record-first protocol.)
 
 - [ ] **2. Rework `commit-task.sh` + task tooling for branch → PR → merge**
   **Type**: Implementation
@@ -25,7 +25,7 @@
 - [ ] **4. Apply the ratified law + prove the flow end-to-end**
   **Type**: Implementation
   **Validation**: Tier 2
-  Apply the ballot's law edits (record-first: only after committed RATIFIED status); then run ONE real task through the full new flow — branch, PR, checks, merge — as the acceptance proof. Verify a direct push to `main` is rejected (prove-the-gate-bites).
+  Apply the ballot's law edits (record-first: only after committed RATIFIED status) across all eleven surfaces atomically, ending with the mechanical residual-instruction sweep (Req 3.1) and Thurgood's cross-surface consistency check; then run ONE real task through the full new flow — branch, PR, checks, merge — as the acceptance proof. Verify a direct push to `main` is rejected (prove-the-gate-bites).
 
 - [ ] **5. BAKE-IN GATE (blocking checkpoint — not a task to rush)**
   **Type**: Documentation
@@ -52,4 +52,4 @@
 - [ ] **9. Closeout: completion docs + handbacks**
   **Type**: Documentation
   **Validation**: Tier 1
-  Completion + summary docs per Task-Completion-Protocol (as amended by this very spec — eat the dogfood). Handbacks: inbound note to **122** ("the gate is armed; your diff-guard blocks now; required-check baseline attached") and seed note to **125-B** (deferred items: warn→fail candidates observed during arming, CODEOWNERS layer, any ergonomics findings routed forward). Update the umbrella 125 outline's status.
+  Completion + summary docs per Task-Completion-Protocol (as amended by this very spec — eat the dogfood). Handbacks: inbound note to **122** ("the gate is armed and OPEN for your registrants — diff-guard, canonical-vs-truth, sweeps, tool-boot smoke; required-check baseline attached") and seed note to **125-B** (deferred: warn→fail candidates observed during arming, CODEOWNERS layer, the tool-boot smoke arming once 122's registry exists, the map seed entries from Task 1's what/why splits, any ergonomics findings). Update the umbrella 125 outline's status.

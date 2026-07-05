@@ -19,21 +19,24 @@
 **Acceptance criteria**:
 1. The initial required checks SHALL be exactly the existing armed lanes (the consumer-guard workflow's jobs and package-name drift detection) — no new checks in Phase 0.
 2. WHEN the gate goes live THEN the required-check set SHALL be recorded (names + workflow file refs) in this spec's completion docs, as the baseline Phase 1a extends.
+3. The required-check mechanism SHALL accommodate adding checks without redesign — the set is OPEN by construction. Known future registrants (per `../125-mechanical-enforcement-strategy/inbound-from-122.md` §1): Phase 1a's lanes, then 122's regenerate-and-diff guard, canonical-vs-truth check, the seven input-fidelity sweeps, and the tool-boot smoke. Phase 0 builds the gate they plug into, not the checks.
 
 ## Requirement 3 — The workflow law changes via the record-first ratification protocol
 
 **User story**: As the project lead, I want the Task-Completion-Protocol change drafted, recorded, and ratified per `.kiro/docs/ballots/README.md`, so the first operational-law change under the new protocol demonstrates it.
 
 **Acceptance criteria**:
-1. A ballot SHALL propose the exact before→after edits to `.kiro/steering/Task-Completion-Protocol.md` (and any other law doc baking in direct-commit, e.g. Start Up Tasks references) replacing direct `commit-task.sh` commit-to-main with branch → PR → checks → merge.
+1. A ballot SHALL propose the exact before→after edits for **all eleven grep-verified surfaces** enumerated in `../125-mechanical-enforcement-strategy/inbound-from-122.md` §3 (2 always-loaded steering docs, 6 governance-corpus docs, 3 hook docs/scripts), replacing direct `commit-task.sh` commit-to-main with branch → PR → checks → merge. The eleven SHALL move **atomically** — a half-migrated corpus tells agents two different completion flows. Application SHALL end with a mechanical sweep for residual direct-commit instruction (not trust in the enumerated list — the `.web.tsx` 9-vs-2 datapoint, inbound §6).
 2. The law edits SHALL NOT be applied before the ballot's committed status is `RATIFIED (Peter, <date>)`.
-3. WHEN the law is applied THEN the ballot's application record, metadata validation, and (for MCP-served docs) index rebuild SHALL be completed per the ballot's own mechanics.
+3. WHEN the law is applied THEN the ballot's application record, metadata validation, and (for MCP-served docs) index rebuild SHALL be completed per the ballot's own mechanics; Thurgood's cross-surface consistency check SHALL cover the sweep (inbound §3).
+4. **Prune-with-arm, applied reflexively** (inbound §4): where the gate now mechanically owns a *what* (e.g., checks run on every PR), the rewritten prose SHALL shift that text from instruction to context (*why/when*) rather than leaving imperative prose to coexist with the barrier — and the ballot SHALL record each what/why split it makes as seed entries for 125-B's classification map.
+5. The ballot SHALL decide where `commit-task.sh`'s release-analysis step moves in the PR flow (e.g., at merge) — inbound §3's hooks note.
 
 ## Requirement 4 — `commit-task.sh` (and task tooling) produce the PR flow
 
 **Acceptance criteria**:
 1. WHEN an agent completes a task THEN the tooling SHALL create a branch, commit, push, open a PR (title/body per a documented convention), and report the PR URL — not push to `main`.
-2. WHEN required checks pass THEN the documented flow SHALL define who/what merges (auto-merge on green vs explicit human/agent merge — reviewer decision point).
+2. WHEN required checks pass THEN the documented flow SHALL define who/what merges — reviewer decision point, with the recommended answer from `inbound-from-122.md` §5: agents open branches/PRs (composing cleanly with the existing "never push to main without asking" rule); Peter merges on green or explicitly delegates merge-on-green.
 3. The tooling SHALL work with the credential setup actually present on the dev machine (`gh` authenticated via the `.env` token or equivalent); WHEN credentials are missing THEN it SHALL fail with an actionable message, not fall back to direct push.
 4. The release flow (`release:run`, npm publish steps) SHALL be reconciled with branch protection (version-bump commits and `postpublish` token-index pushes must traverse the gate or be explicitly exempted — reviewer decision point).
 

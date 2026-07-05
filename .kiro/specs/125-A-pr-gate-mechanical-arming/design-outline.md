@@ -26,6 +26,7 @@ Exactly the umbrella outline's §4 "Phase 0 (GREENLIT shape)" + "Phase 1a" (the 
 - CODEOWNERS / required-review on `governance/` (ratification layer 2) → **125-B** (Phase 2); Phase 0 is checks-only
 - Consumer-side reach → **Spec 123** (Phase 3)
 - The elective autonomy dial → parked with its activation trigger (Phase 1 closeout review)
+- The tool-boot smoke (122 enumerates the registry, 125 arms the smoke; declared+responds, never returns-data) → **125-B**, blocked on 122's master tool registry existing (`../125-mechanical-enforcement-strategy/inbound-from-122.md` §2)
 
 ## Exit criteria
 
@@ -36,4 +37,5 @@ The gate is live and unbypassed; the full mechanical check set blocks merges; th
 - `../125-mechanical-enforcement-strategy/design-outline.md` — the umbrella (§4 = this spec's design; §8 decisions; inbound notes)
 - `.kiro/docs/ballots/README.md` — record-first ratification (the Phase 0 law change is its first planned use)
 - `../125-mechanical-enforcement-strategy/inbound-from-2026-07-05-lane-viability.md` — the measurements behind Phase 1a
+- `../125-mechanical-enforcement-strategy/inbound-from-122.md` — extensible-check-set requirement; the eleven protocol surfaces (atomic move); prune-with-arm reflexive application; self-merge recommendation; the tool-boot-smoke handoff
 - `.kiro/specs/119-steering-progressive-disclosure-redesign/` — the A/B split precedent
