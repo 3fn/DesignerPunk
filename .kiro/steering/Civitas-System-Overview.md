@@ -6,7 +6,7 @@ inclusion: always
 # Civitas System Overview
 
 **Date**: 2026-05-03
-**Last Reviewed**: 2026-05-03
+**Last Reviewed**: 2026-07-05
 **Purpose**: Define Civitas — the governance layer of DesignerPunk
 **Organization**: process-standard
 **Scope**: cross-project
@@ -27,15 +27,15 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 
 ## What Civitas Contains
 
-**Steering documentation** (86 docs across 4 layers):
+**Steering documentation** (90 docs across 4 layers; 81 MCP-served + 9 always-loaded identity docs):
 - Layer 0: Meta-guide for the steering system itself
 - Layer 1: Foundation docs loaded by all agents (Core Goals, Agent Directory, this document)
 - Layer 2: Frameworks and patterns queryable via MCP (governance, architecture, process standards)
 - Layer 3: Specific implementations (token family docs, component family docs, platform guides)
 
 **MCP servers** (3):
-- Docs MCP: serves steering documentation with progressive disclosure (86 docs, 2,753 sections, 332 cross-references)
-- Application MCP: serves component metadata and token metadata (34 components, 437 tokens, 9 experience patterns)
+- Docs MCP: serves steering documentation with progressive disclosure (81 docs, 2,759 sections, 115 cross-references)
+- Application MCP: serves component metadata and token metadata (34 components, 443 tokens, 9 experience patterns)
 - Product MCP: serves product-specific context (conceptual — specs 081, 096, 097)
 
 **Agent configurations** (8 agents):
@@ -52,7 +52,7 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 - Covers component source, token source, test infrastructure, spec history
 
 **Spec infrastructure**:
-- 97+ specs encoding institutional decisions and implementation history
+- 125+ specs encoding institutional decisions and implementation history
 - Spec workflow: design outline → feedback → requirements → design → tasks → execution
 - Feedback protocol, formalization gates, completion documentation system
 

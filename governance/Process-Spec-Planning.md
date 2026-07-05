@@ -9,7 +9,7 @@ description: Standards for creating spec documents — requirements format (EARS
 
 **Date**: 2025-01-10
 **Updated**: October 20, 2025
-**Last Reviewed**: 2025-12-15
+**Last Reviewed**: 2026-07-05
 **Purpose**: Standards for creating requirements, design, and task documents for feature specifications
 **Organization**: process-standard
 **Scope**: cross-project
@@ -46,8 +46,8 @@ description: Standards for creating spec documents — requirements format (EARS
 
 **MCP Queries**:
 ```
-get_section({ path: ".kiro/steering/Component-Templates.md", heading: "Behavioral Contract Templates" })
-get_section({ path: ".kiro/steering/Component-Quick-Reference.md", heading: "Naming Convention" })
+get_section({ path: "component-templates", heading: "Behavioral Contract Templates" })
+get_section({ path: "component-quick-reference", heading: "Naming Convention" })
 ```
 
 **Why**: Component specs need behavioral contracts for interaction states, accessibility patterns, and platform-specific behaviors that generic spec guidance doesn't cover.
@@ -60,7 +60,7 @@ get_section({ path: ".kiro/steering/Component-Quick-Reference.md", heading: "Nam
 ### WHEN Creating Tasks Document THEN Read:
 1. ✅ **Tasks Document Format** (MUST READ)
 2. ✅ **Task Type Classification System** (MUST READ - understand Setup/Implementation/Architecture)
-3. ✅ **Reference: Task Type Definitions** (`.kiro/steering/Process-Task-Type-Definitions.md` - if unclear on classification)
+3. ✅ **Reference: Task Type Definitions** (`governance/Process-Task-Type-Definitions.md` - if unclear on classification)
 4. ✅ **Spec Workflow: Phase 3** (scroll to Spec Workflow section)
 5. ❌ **SKIP**: Detailed validation tiers, detailed documentation tiers, rationale sections
 
@@ -811,7 +811,7 @@ When encountering a task pattern not covered by existing definitions:
 
 For detailed task type definitions with comprehensive examples, see:
 
-**Task Type Definitions**: `.kiro/steering/Process-Task-Type-Definitions.md`
+**Task Type Definitions**: `governance/Process-Task-Type-Definitions.md`
 
 This living document provides:
 - Detailed definitions for each task type
@@ -1112,9 +1112,9 @@ The three validation tiers (Minimal, Standard, Comprehensive) align with task ty
 **For detailed tier definitions**, including required checks, validation examples, and failure handling, query Task-Type-Definitions via MCP:
 
 ```
-get_section({ path: ".kiro/steering/Process-Task-Type-Definitions.md", heading: "Setup Tasks" })
-get_section({ path: ".kiro/steering/Process-Task-Type-Definitions.md", heading: "Implementation Tasks" })
-get_section({ path: ".kiro/steering/Process-Task-Type-Definitions.md", heading: "Architecture Tasks" })
+get_section({ path: "process-task-type-definitions", heading: "Setup Tasks" })
+get_section({ path: "process-task-type-definitions", heading: "Implementation Tasks" })
+get_section({ path: "process-task-type-definitions", heading: "Architecture Tasks" })
 ```
 
 **Quick Reference**:
@@ -2400,9 +2400,22 @@ When creating cross-references, calculate relative paths based on the source doc
 
 ## Spec Workflow
 
-### Phase 1: Requirements
+### Phase 0: Design Outline
 
-**For component development**: Consider creating a design outline before requirements to explore variants, token usage, and platform considerations. See Component Development Guide for component-specific spec methodology.
+**Current practice (standard since early 2026)**: specs begin with a design outline (`design-outline.md` in the spec directory) that explores the problem, options, and scope before any formal document is written. Recent specs (121–125) all follow this pattern.
+
+1. Create `design-outline.md` in `.kiro/specs/[spec-name]/`
+2. Create the feedback document(s) alongside it — a single `feedback.md` or a split-by-phase `feedback/` directory (e.g., `feedback/design-outline.md`). Both structures are defined in the **Spec Feedback Protocol** (Layer 1, always loaded), which is the authority for feedback structure, stamp format (`[AGENT R#]`), directed questions, and incorporation passes
+3. Request feedback rounds from identified stakeholders; incorporate feedback into the outline body as a coherent revision (woven, not appended), recording session decisions and incorporation notes in the feedback doc
+4. Proceed to requirements only after outline feedback is incorporated and the project lead approves
+
+**STUB outlines for gated specs**: When formalization is blocked on an upstream decision, a design outline may be created as an explicit **STUB** — capturing scope, dependencies, and cross-references only, with a clear "do not formalize until [gate]" marker and no architecture decisions (which would pre-empt the upstream spec). Precedents: Specs 123 (gated on 118) and 125.
+
+**Sequential formalization gates**: requirements → design → tasks each pause for agent feedback before proceeding, unless the project lead explicitly waives the gate. See Spec Feedback Protocol § "Sequential Formalization Gate" — this document defers to it.
+
+**For component development**: the Component Development Guide adds component-specific design-outline methodology (variants, token usage, platform considerations).
+
+### Phase 1: Requirements
 
 1. Generate initial requirements based on feature idea
 2. Use EARS format for acceptance criteria
@@ -2426,7 +2439,7 @@ When creating cross-references, calculate relative paths based on the source doc
    - Assess complexity and risk (low vs medium vs high)
    - Assign task type (Setup, Implementation, or Architecture)
    - Add **Type** and **Validation** metadata to each subtask
-   - Reference **Task Type Definitions** (`.kiro/steering/Process-Task-Type-Definitions.md`) for classification guidance
+   - Reference **Task Type Definitions** (`governance/Process-Task-Type-Definitions.md`) for classification guidance
    - Prompt human for clarification if task type is ambiguous
 4. Add success criteria at primary task level
 5. Include artifacts and completion documentation paths
@@ -2633,6 +2646,20 @@ When your spec depends on another spec, declare dependencies explicitly in the h
   - Integration point: ButtonCTA web component with shadow DOM
   - **BLOCKER**: Cannot write integration tests until ButtonCTA works in test environment
 ```
+
+#### Handoff Notes (`inbound-from-*.md`)
+
+**Current practice**: when one spec (or a named analysis) produces decisions, findings, or obligations that a different spec must consume, a handoff note is written into the receiving spec's directory:
+
+```
+.kiro/specs/[receiving-spec]/inbound-from-[source].md
+```
+
+- The source may be a spec number (`inbound-from-118.md`) or a named analysis (`inbound-from-wordpress-thesis.md`)
+- Handoff notes capture what the receiving spec must honor or evaluate during formalization — they are inputs to the design outline, not spec artifacts themselves
+- During formalization, the spec author reconciles all inbound notes into the outline and formal documents
+
+Precedents in the spec record: 118, 119, 122, 123, 124, and 125 all carry inbound handoff notes.
 
 #### When to Check Dependencies
 
