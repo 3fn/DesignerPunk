@@ -7,7 +7,7 @@
 
 ## Task Group 1 — Phase 0: the PR gate
 
-- [ ] **1. Draft the workflow-law ballot**
+- [x] **1. Draft the workflow-law ballot** ✅ COMPLETE — RATIFIED (Peter, 2026-07-05)
   **Type**: Documentation
   **Validation**: Tier 2 (conjunctive criterion met: the ballot carries SHALL/SHALL NOT contract content AND **other specs' decisions depend on it** — 125-B's classification map consumes the what/why seed entries, and 122's first-generation ratchet consumes the ratified protocol) [grounds corrected per T-A1]
   Draft the ballot for ALL live instruction surfaces carrying the direct-commit flow — **re-grep at draft time with per-surface counts** (the enumeration has been wrong twice: 11 → 12; latest known set = inbound-from-122 §3's eleven + `.cursor/rules/designerpunk-core.mdc:32`), moved atomically. Ballot contents: the PR-flow sequence; the **completion-state definition** (task complete at merge; taskStatus/docs/stop-and-wait placement — Req 3.6); the merge rule (agents open PRs, Peter merges on green; governance-law carve-out; delegation only as a recorded rule); branch/PR conventions; where release analysis moves; the residual-sweep pattern set + instruction-vs-historical scope split; the prune-with-arm what/why splits (handoff seeds for 125-B, not ratified rows); the Cursor rules file migrated or deprecated per **Peter's runtime decision (open input)**. Route per `.kiro/docs/ballots/README.md`; Peter ratifies. (First planned use of the record-first protocol.)
