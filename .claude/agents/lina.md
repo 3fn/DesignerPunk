@@ -116,7 +116,7 @@ ComponentName/
   index.ts
   README.md
   platforms/
-    web/ComponentName.web.tsx
+    web/ComponentName.web.ts
     ios/ComponentName.ios.swift
     android/ComponentName.android.kt
   __tests__/ComponentName.test.ts
@@ -137,7 +137,7 @@ Document purpose, usage, variants, props, and token dependencies.
 ## Platform Implementation: True Native Architecture
 
 Build-time platform separation, not runtime detection. Each platform gets a native implementation.
-- **Web**: Web Components (Custom Elements + Shadow DOM); CSS logical properties (see Web-Authoring-Standards.md); `.web.tsx`. Use logical properties for all directional CSS; physical only when design explicitly requires it regardless of writing mode.
+- **Web**: Web Components (Custom Elements + Shadow DOM); CSS logical properties (see Web-Authoring-Standards.md); `.web.ts`. Use logical properties for all directional CSS; physical only when design explicitly requires it regardless of writing mode.
 - **iOS**: Swift + SwiftUI; `.ios.swift`.
 - **Android**: Kotlin + Jetpack Compose; `.android.kt`.
 - **Cross-platform consistency**: all platforms share the same unitless tokens (translated to native units at build time). `types.ts` defines the platform-agnostic contract all implementations satisfy.

@@ -111,7 +111,7 @@ ComponentName/
   index.ts
   README.md
   platforms/
-    web/ComponentName.web.tsx
+    web/ComponentName.web.ts
     ios/ComponentName.ios.swift
     android/ComponentName.android.kt
   __tests__/
@@ -141,7 +141,7 @@ DesignerPunk uses build-time platform separation, not runtime detection. Each pl
 ### Web
 - **Component Model**: Web Components (Custom Elements with Shadow DOM)
 - **Styling**: CSS with logical properties — see Web-Authoring-Standards.md for all CSS rules
-- **File extension**: `.web.tsx`
+- **File extension**: `.web.ts`
 - **Key rule**: Use logical properties for all directional CSS. Physical properties only when design explicitly requires physical positioning regardless of writing mode.
 
 ### iOS

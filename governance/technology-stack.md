@@ -80,7 +80,7 @@ Components follow True Native Architecture with separate platform implementation
 ```
 ComponentName/
   platforms/
-    web/ComponentName.web.tsx
+    web/ComponentName.web.ts
     ios/ComponentName.ios.swift
     android/ComponentName.android.kt
 ```

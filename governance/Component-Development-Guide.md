@@ -224,7 +224,7 @@ export const buttonCTATokens = {
 
 **True Native Architecture**
 - **Meaning**: Build-time platform separation (not runtime detection)
-- **Implementation**: Separate files per platform (Button.web.tsx, Button.ios.swift, Button.android.kt)
+- **Implementation**: Separate files per platform (Button.web.ts, Button.ios.swift, Button.android.kt)
 - **Benefit**: No runtime overhead, platform-specific optimizations
 
 **Semantic Tokens**
@@ -465,7 +465,7 @@ src/components/
       examples/                  # Usage examples
       platforms/                 # Platform-specific implementations
         web/
-          [ComponentName].web.tsx
+          [ComponentName].web.ts
         ios/
           [ComponentName].ios.swift
         android/
@@ -577,7 +577,7 @@ Each platform implementation uses **generated platform-specific tokens** from th
 
 **Web**: CSS custom properties
 ```typescript
-// platforms/web/ButtonCTA.web.tsx
+// platforms/web/ButtonCTA.web.ts
 static styles = css`
   :host {
     padding: var(--space-inset-tight) var(--space-inset-normal);

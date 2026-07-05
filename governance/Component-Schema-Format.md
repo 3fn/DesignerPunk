@@ -314,7 +314,7 @@ platforms: [web, ios, android]
 platform_notes:
   web:
     implementation: Web Component (Custom Element)
-    file: platforms/web/ComponentName.web.tsx
+    file: platforms/web/ComponentName.web.ts
     notes: |
       Platform-specific implementation details
   ios:
