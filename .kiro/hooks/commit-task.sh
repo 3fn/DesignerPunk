@@ -1,123 +1,27 @@
 #!/bin/bash
 
-# Simple wrapper for task completion commits with release analysis integration
-# Usage: ./commit-task.sh "Task Name" [--no-analyze]
+# TOMBSTONE — hard-fail redirect. DO NOT RESTORE. DO NOT DELETE.
+#
+# The direct-commit flow this script implemented was RETIRED by the ratified
+# workflow-law ballot (Spec 125-A Task 1, RATIFIED Peter, 2026-07-05 — Item 1g).
+# This tombstone never forwards silently (Req 4.3: no silent fallback) and
+# performs NO git action of any kind.
+#
+# LOAD-BEARING, not dead code (ballot Item 1g / Item 13 RECORDS): ~31 specs with
+# unchecked tasks still carry Post-Completion blocks instructing this script.
+# This hard-fail redirect is what keeps those stale instruction paths disarmed.
+# It stays until the last pre-gate spec closes — a cleanup that deletes it as
+# "unused" re-arms 31 stale instruction paths.
 
-set -e
-
-# Display usage information
-show_usage() {
-  cat << EOF
-Usage: commit-task.sh [OPTIONS] "TASK_NAME"
-
-Commit task completion with automatically extracted commit message.
-
-ARGUMENTS:
-  TASK_NAME    Name of the completed task (must match task in tasks.md)
-
-OPTIONS:
-  -h, --help   Display this help message and exit
-
-EXAMPLES:
-  # Commit task completion
-  ./commit-task.sh "1. Create North Star Vision Document"
-  
-  # Display help
-  ./commit-task.sh --help
-  ./commit-task.sh -h
-
-DESCRIPTION:
-  This script automates the commit process for task completions by:
-  1. Extracting the commit message from the task name
-  2. Adding all changes to git
-  3. Committing with the extracted message
-  4. Pushing to the remote repository
-
-  The task name must match a task in tasks.md exactly.
-
-SEE ALSO:
-  - Development Workflow: .kiro/steering/Development Workflow.md
-  - Task completion process documentation
-
-EOF
-}
-
-# Check for help flags before processing arguments
-if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
-    show_usage
-    exit 0
-fi
-
-# Check if task name provided
-if [ -z "$1" ]; then
-    echo "❌ Error: Task name required"
-    echo ""
-    show_usage
-    exit 1
-fi
-
-TASK_NAME="$1"
-TASKS_FILE=".kiro/specs/fresh-repository-roadmap-refinement/tasks.md"
-NO_ANALYZE=false
-
-# Parse arguments
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        --no-analyze)
-            NO_ANALYZE=true
-            shift
-            ;;
-        *)
-            if [ -z "$TASK_NAME" ]; then
-                TASK_NAME="$1"
-            fi
-            shift
-            ;;
-    esac
-done
-
-echo "🚀 Committing completion of: $TASK_NAME"
-./.kiro/hooks/task-completion-commit.sh "$TASKS_FILE" "$TASK_NAME"
-
-# Check if release analysis should run
-if [ "$NO_ANALYZE" = false ]; then
-    # Check if release analysis is enabled in config
-    ANALYSIS_ENABLED=true
-    CONFIG_FILE=".kiro/release-config.json"
-    
-    if [ -f "$CONFIG_FILE" ]; then
-        # Check if hooks.taskCompletionAnalysis.enabled is false
-        if grep -q '"taskCompletionAnalysis"[[:space:]]*:[[:space:]]*{' "$CONFIG_FILE"; then
-            if grep -A 10 '"taskCompletionAnalysis"' "$CONFIG_FILE" | grep -q '"enabled"[[:space:]]*:[[:space:]]*false'; then
-                ANALYSIS_ENABLED=false
-            fi
-        # Fallback to old detection.taskCompletionTrigger setting
-        elif grep -q '"taskCompletionTrigger"[[:space:]]*:[[:space:]]*false' "$CONFIG_FILE"; then
-            ANALYSIS_ENABLED=false
-        fi
-    fi
-    
-    if [ "$ANALYSIS_ENABLED" = true ]; then
-        echo ""
-        echo "📊 Running release analysis..."
-        echo "   (This provides immediate feedback on change significance)"
-        
-        if command -v npx &> /dev/null && [ -f "src/tools/release/cli/release-tool.ts" ]; then
-            npx ts-node src/tools/release/cli/release-tool.ts analyze 2>/dev/null || {
-                echo "⚠️  Release analysis failed (non-blocking)"
-                echo "   Run 'npm run release:analyze' for detailed analysis"
-            }
-        else
-            echo "ℹ️  Release analysis not available (release-tool.ts not found)"
-        fi
-        
-        echo ""
-        echo "💡 Tip: Run 'npm run release:analyze' for detailed analysis anytime"
-        echo "   Or use '--no-analyze' flag to skip: ./commit-task.sh \"Task\" --no-analyze"
-    else
-        echo "ℹ️  Release analysis disabled in configuration"
-        echo "   Enable in .kiro/release-config.json: hooks.taskCompletionAnalysis.enabled = true"
-    fi
-else
-    echo "ℹ️  Release analysis skipped (--no-analyze flag)"
-fi
+echo "" >&2
+echo "❌ RETIRED: the direct-commit flow was retired by ballot 2026-07-05 (Spec 125-A); use complete-task.sh" >&2
+echo "" >&2
+echo "   Tasks now complete via branch → PR → merge. Direct pushes to main are" >&2
+echo "   rejected by branch protection, admins included." >&2
+echo "" >&2
+echo "   Parent task:  ./.kiro/hooks/complete-task.sh \"Task <N> Complete: <Description> (<spec>)\"" >&2
+echo "   Subtask:      ./.kiro/hooks/complete-task.sh --subtask \"<message>\"" >&2
+echo "" >&2
+echo "   Law: .kiro/steering/Task-Completion-Protocol.md (Completion State in the PR Flow)" >&2
+echo "" >&2
+exit 1

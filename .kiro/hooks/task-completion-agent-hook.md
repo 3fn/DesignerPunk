@@ -1,3 +1,5 @@
+> **DEPRECATED (2026-07-05, ballot 125-A Task 1, Item 11b)**: the auto-commit-and-push-on-task-completion concept this file describes is structurally incompatible with the PR gate — its instruction block tells agents to `git push origin main`, which branch protection now rejects (admins included). This file is retained as a record and no longer tracks current law — the task-completion flow described below is retired, and the helper it references (`task-completion-commit.sh`) is a hard-fail tombstone. Canonical law: `.kiro/steering/Task-Completion-Protocol.md`.
+
 # Task Completion Auto-Commit Agent Hook
 
 **Hook Name**: Task Completion Auto-Commit  
