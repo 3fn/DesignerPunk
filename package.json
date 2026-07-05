@@ -154,7 +154,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.26.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@octokit/rest": "^20.0.0",
     "@types/uuid": "^10.0.0",
     "diff": "^7.0.0",
