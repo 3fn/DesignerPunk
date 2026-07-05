@@ -92,7 +92,7 @@ performance-*.json
 docs/presentations/
 
 #Reference projects
-wrkingClass-project/
+wrkingClass-c003/
 
 # Claude Code local MCP config (machine-specific absolute paths — relativize before committing)
 .mcp.json
