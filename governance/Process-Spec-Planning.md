@@ -466,8 +466,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
   
   **Post-Completion:**
   - Mark complete: Use `taskStatus` tool to update task status
-  - Commit changes: `./.kiro/hooks/commit-task.sh "Task 1 Complete: Build System Foundation"` (runs release analysis automatically)
-  - Verify: Check GitHub for committed changes
+  - Open the task PR: `./.kiro/hooks/complete-task.sh "Task 1 Complete: Build System Foundation (spec)"` — report the PR URL and STOP; complete at merge
 
   - [ ] 1.1 Create directory structure
     **Type**: Setup
@@ -569,8 +568,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
   
   **Post-Completion:**
   - Mark complete: Use `taskStatus` tool to update task status
-  - Commit changes: `./.kiro/hooks/commit-task.sh "Task 5 Complete: Token Generation System"` (runs release analysis automatically)
-  - Verify: Check GitHub for committed changes
+  - Open the task PR: `./.kiro/hooks/complete-task.sh "Task 5 Complete: Token Generation System (spec)"` — report the PR URL and STOP; complete at merge
 
   - [ ] 5.1 Set up generator directory structure
     **Type**: Setup
@@ -2244,7 +2242,7 @@ Developers can now:
 
 **Forward-Looking Note**: This summary document workflow applies to new specs going forward. Existing completion documents don't need changes.
 
-**Release Analysis**: The release tool (`src/tools/release/`) scans summary documents via git log to generate release notes. `commit-task.sh` runs release analysis automatically after each commit.
+**Release Analysis**: The release tool (`src/tools/release/`) scans summary documents via git log to generate release notes. Release analysis runs post-merge on `main` (non-blocking); run `npm run release:analyze` for on-demand detail.
 
 **Format Template**:
 
@@ -2488,8 +2486,8 @@ When creating cross-references, calculate relative paths based on the source doc
    - **Tier 1 (Setup)**: Minimal format - artifacts, notes, validation
    - **Tier 2 (Implementation)**: Standard format - artifacts, details, validation, requirements
    - **Tier 3 (Architecture/Parent)**: Comprehensive format - artifacts, decisions, algorithm, validation, lessons, integration
-6. **Commit changes**: Run `./.kiro/hooks/commit-task.sh "Task Name"` to commit and push
-7. Verify all validation checks passed before moving to next task
+6. **Open the task PR**: Run `./.kiro/hooks/complete-task.sh "Task Name"` — commit on the task branch, push, open the PR, report the URL, STOP
+7. The task completes at merge (Peter merges on green); required checks must pass on the PR before it is mergeable
 
 **Two Workflow Paths:**
 

@@ -8,7 +8,7 @@ description: Comprehensive completion and summary documentation guide — two-do
 # Completion Documentation Guide
 
 **Date**: 2026-01-03
-**Last Reviewed**: 2026-02-28
+**Last Reviewed**: 2026-07-05
 **Purpose**: Comprehensive guide for creating completion and summary documentation
 **Organization**: process-standard
 **Scope**: cross-project
@@ -288,7 +288,7 @@ Detailed completion documents can optionally link to the summary document:
 
 ### Automatic Analysis
 
-`commit-task.sh` runs release analysis automatically after each task commit. For on-demand analysis:
+Release analysis runs post-merge on `main` (non-blocking). For on-demand analysis:
 
 ```bash
 npm run release:analyze
@@ -351,8 +351,8 @@ If AI agent created the summary document, you MUST run:
 - [ ] Create summary doc: `docs/specs/[spec-name]/task-N-summary.md`
 - [ ] Trigger release detection: `./.kiro/hooks/release-manager.sh auto`
 - [ ] Mark parent task complete using `taskStatus` tool
-- [ ] Commit changes: `./.kiro/hooks/commit-task.sh "Task N Complete: Description"`
-- [ ] STOP and wait for user authorization
+- [ ] Open the task PR: `./.kiro/hooks/complete-task.sh "Task N Complete: Description (<spec>)"` — completion and summary docs travel on the branch
+- [ ] STOP — report the PR URL and wait; the task is complete when Peter merges
 
 ---
 

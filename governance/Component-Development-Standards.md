@@ -13,7 +13,7 @@ description: Step-by-step guidelines for creating new component families in the 
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, architecture, spec-planning
-**Last Reviewed**: 2026-01-02
+**Last Reviewed**: 2026-07-05
 
 ---
 
@@ -1121,7 +1121,7 @@ test_integration:
 #### Completion Documentation
 
 1. **Create Summary Document**: `docs/specs/[spec-name]/task-N-summary.md`
-2. **Commit Changes**: `./.kiro/hooks/commit-task.sh "Task N Complete: Description"` (runs release analysis automatically)
+2. **Open the Task PR**: `./.kiro/hooks/complete-task.sh "Task N Complete: Description (<spec>)"` — complete at merge; release analysis runs post-merge on `main`
 
 #### Version Impact
 

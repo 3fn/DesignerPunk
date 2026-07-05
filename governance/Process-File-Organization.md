@@ -9,7 +9,7 @@ description: File organization standards — metadata-driven organization, direc
 # File Organization Standards
 
 **Date**: 2025-01-10
-**Last Reviewed**: 2026-06-23
+**Last Reviewed**: 2026-07-05
 **Purpose**: Metadata-driven file organization system for sustainable project structure
 **Organization**: process-standard
 **Scope**: cross-project
@@ -194,7 +194,7 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 - Summary docs are ONLY for parent tasks (not subtasks)
 - Naming pattern: `task-N-summary.md` (e.g., `task-1-summary.md`)
 - Hook pattern: `**/task-*-summary.md`
-- AI workflows: `commit-task.sh` runs release analysis automatically after commit
+- AI workflows: release analysis runs post-merge on `main` (summary docs traverse the PR gate with the work)
 
 **For detailed guidance** on summary document templates, cross-references, and the two-document workflow, query Completion Documentation Guide via MCP:
 
@@ -388,7 +388,7 @@ After moving files, update any cross-reference links to reflect new locations.
 
 #### Enhanced Commit Hook
 ```bash
-# .kiro/hooks/commit-task-organized.sh "Task Name" [--organize]
+# .kiro/hooks/complete-task.sh "Task Name" [--organize]   (organization option folded into the PR-flow tooling)
 # Optional organization during task completion
 # Human-controlled with hook assistance
 # Maintains fallback to current behavior
