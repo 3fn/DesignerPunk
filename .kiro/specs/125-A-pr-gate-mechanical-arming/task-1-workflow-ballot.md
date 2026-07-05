@@ -3,7 +3,7 @@
 **Date**: 2026-07-05 (v2 — revised same day after the review round; all feedback incorporated, none declined)
 **Author**: Thurgood (Civitas steward)
 **Origin**: Spec 125-A Task 1 (Req 3, Req 4.2, Req 1.4) — first planned use of the record-first ratification protocol (`.kiro/docs/ballots/README.md`)
-**Status**: **DRAFT** — law docs untouched; nothing below is applied until this Status reads `RATIFIED (Peter, <date>)` in a committed record
+**Status**: **RATIFIED (Peter, 2026-07-05)** — ratified unmodified, both strike-options resolved to their defaults: **Item 10 = MIGRATE** the Cursor rules file; **Item 1g = RENAME stands** (`complete-task.sh` + hard-fail tombstones). Ratification delivered directly to the main-loop session and committed here FIRST per the record-first protocol (`.kiro/docs/ballots/README.md`). **Law docs remain untouched at ratification by design** — application is Task 4's atomic window, gated behind Task 2 (tooling + PAT scopes + release-flow reconciliation) and Task 3 (branch protection), per the 125-A spec.
 **Placement note**: Measure arises from a spec, so it lives as a spec artifact per the ballots README convention (precedent: 118 Task 11, 117 Task 6).
 
 ---
