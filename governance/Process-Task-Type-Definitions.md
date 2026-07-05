@@ -23,7 +23,7 @@ description: Task type definitions for the three-tier validation and documentati
 
 ### WHEN Creating Tasks Document (Planning Phase) THEN Read:
 1. ✅ **Overview** (MUST READ - understand task type purpose)
-2. ✅ **All Task Type Definitions** (Setup, Implementation, Architecture)
+2. ✅ **All Task Type Definitions** (Setup, Implementation, Architecture, Documentation)
 3. ✅ **Characteristics and Examples** for each type
 4. ✅ **Validation and Documentation Tiers** for each type
 5. ❌ **SKIP**: Update History (unless encountering new patterns)
@@ -57,7 +57,7 @@ description: Task type definitions for the three-tier validation and documentati
 
 **Note**: This section intentionally uses the same heading as other steering documents because each document provides an overview of its specific system or process. This structural pattern enables consistent navigation across documentation.
 
-This document defines the three task types used in the Spec Planning Standards to determine appropriate validation depth and completion documentation detail. Task types are determined during the planning phase and guide execution practices.
+This document defines the four task types used in the Spec Planning Standards to determine appropriate validation depth and completion documentation detail. Task types are determined during the planning phase and guide execution practices.
 
 **Layer Context**: This is a Layer 2 (Frameworks and Patterns) document that provides reusable classification framework for spec planning. It works with Spec Planning Standards to enable consistent task type assignment across all specs.
 
@@ -302,6 +302,74 @@ Architecture tasks use comprehensive documentation to capture design decisions a
 
 ---
 
+## Documentation Tasks
+
+### Definition
+
+Documentation tasks are **writing work that produces or updates documentation artifacts** — completion documentation, cross-spec handoffs and closeout notes, issues-registry entries, consumer-facing guides, and drafts or spec-authorized updates of governance/steering content. They change what the project knows and records, not what the code does: no production code, test, or configuration behavior is modified.
+
+### Characteristics
+
+- **Artifact-producing**: Creates or updates documentation files; success is measured by artifact existence and content matching stated acceptance criteria
+- **Content acceptance criteria**: Well-formed Documentation tasks state what the artifact SHALL contain (and, where relevant, SHALL NOT contain)
+- **No runtime risk**: Cannot break builds, tests, or shipped behavior; the risk is informational — inaccuracy, staleness, broken cross-references
+- **The output decides the classification**: Documentation applies only to tasks whose *entire* output is documentation artifacts — content read by humans and agents, not executed or consumed by tooling. Two corollaries: a task that modifies code AND documentation is classified by the code work (Implementation or Architecture); and metadata artifacts consumed by tooling (component schemas, `component-meta.yaml`) are Implementation, not Documentation — writing work that changes shipped-tool behavior fails the "no configuration behavior" test
+- **Governance routing**: When the target is governance *law* (task taxonomy, process standards, steering content whose change is not already authorized by an approved spec), the task produces a *proposal* — the edit routes through the ballot-measure model (agent drafts, Peter ratifies). Steering-doc updates that an approved spec explicitly authorizes proceed under that spec's authority (precedent: Spec 102 Task 1.8; Specs 020 and 036 are entire steering-doc specs). Either way, rebuild the affected MCP index after application
+- **Artifact-based validation**: Validated by artifact and content checks (files exist, criteria met, cross-references resolve, metadata valid), not by test suites
+
+### Examples
+
+1. **Author completion documentation**
+   - Write detailed completion doc + concise summary doc for a parent task
+   - Record decisions, deferred items, and out-of-scope routing
+   (Precedent: Spec 124 Task 5)
+
+2. **Deliver a cross-spec handback or closeout note**
+   - Write a guidance note into another spec's directory with defined SHALL/SHALL NOT content
+   - Cross-reference it from the receiving spec's decision record
+   (Precedent: Spec 124 Task 6; Spec 118 Task 6)
+
+3. **Draft ballot-measure steering proposals**
+   - Draft proposed steering-doc changes with before/after text for Peter's ratification
+   (Precedent: Spec 117 Task 6.1; Spec 118 Task 5.2)
+
+4. **Log deferred findings in the issues registry**
+   - Record out-of-scope findings with rationale; mark superseded issues resolved
+   (Precedent: Spec 117 Task 6.2)
+
+5. **Write or update consumer-facing documentation**
+   - README, onboarding, and usage guides
+   (Precedent: Specs 101, 102, 077)
+
+6. **Spec-authorized steering-doc updates**
+   - Apply steering-doc changes an approved spec explicitly authorizes; rebuild the affected MCP index
+   (Precedent: Spec 102 Task 1.8; Specs 020, 036)
+
+### Validation Tier
+
+**Tier 1: Minimal (default)**
+
+Documentation tasks default to minimal validation because they carry no runtime risk and have artifact-based success criteria:
+
+- Verify all specified artifacts were created or updated
+- Verify content satisfies the task's stated success criteria
+- Verify cross-references resolve
+- For governance/steering artifacts: metadata validates (`scripts/validate-steering-metadata.js`) and the affected MCP index is rebuilt after application
+
+**Escalation to Tier 2 - Standard (planner's option)**: Escalate only when BOTH conditions hold — the artifact carries SHALL/SHALL NOT contract semantics, AND another spec's decisions depend on the artifact. The criterion is conjunctive: cross-spec dependency alone does not escalate (Spec 124 Task 6 — a gated cross-spec handback without contract semantics — stayed Tier 1), and neither does "this document is important." (Precedent for escalation: Spec 118 Tasks 5.2 and 6, which had both properties.)
+
+**What Tier 2 means for a Documentation task**: all Tier 1 checks, PLUS per-criterion verification that each stated SHALL is satisfied and each stated SHALL NOT is absent from the artifact, PLUS verification that the receiving spec's cross-reference exists and resolves. (Grounded in Spec 118 Tasks 5.2/6 practice.)
+
+### Documentation Tier
+
+**Tier 1: Minimal**
+
+Documentation tasks use minimal completion documentation:
+
+- **Artifacts Created/Updated**: List of documentation files created or changed
+- **Implementation Notes**: Brief description of what was written and any routing (ballot staging, MCP index rebuild)
+- **Validation**: Document Tier 1 validation results (or Tier 2, if escalated)
+
 ## Update History
 
 This section tracks updates to task type definitions as new patterns emerge through human-AI collaborative decision-making.
@@ -314,7 +382,7 @@ Each update should follow this format:
 ### [Date] - [Pattern Name]
 
 **Pattern**: [Brief description of the new task pattern or edge case]
-**Classification Decision**: [Setup / Implementation / Architecture]
+**Classification Decision**: [Setup / Implementation / Architecture / Documentation]
 **Rationale**: [Why this classification was chosen]
 **Decided By**: [Human name] + [AI Agent]
 **Examples**: [Specific examples of this pattern]
@@ -376,3 +444,11 @@ Each update should follow this format:
 ---
 
 *This document provides clear task type definitions with examples to enable consistent classification during spec planning and execution.*
+
+### July 5, 2026 - Documentation Task Type Ratified
+
+**Pattern**: Tasks that produce or update documentation artifacts (completion docs, cross-spec handbacks, ballot proposals, issues-registry entries, consumer docs, spec-authorized steering updates) with no production code changes.
+**Classification Decision**: Documentation (new task type)
+**Rationale**: Practice used `Type: Documentation` in 123 tasks across 23 specs while this document defined only three types; Task-Completion-Protocol (Layer 1) already enumerated four. Ratified via ballot measure (2026-07-05, from the A9 governance review; reviewed by Stacy, Ada, Lina) to reconcile law with practice. Default Tier 1 - Minimal; escalate to Tier 2 only when the artifact BOTH carries SHALL/SHALL NOT contract semantics AND other specs' decisions depend on it (precedent: Spec 118 Tasks 5.2, 6; counterexample: Spec 124 Task 6 stayed Tier 1). Classification follows the output: mixed code+doc tasks are classified by the code work; tooling-consumed metadata is Implementation.
+**Decided By**: Peter Michaels Allen + Thurgood
+**Examples**: Spec 124 Tasks 5, 6; Spec 118 Tasks 5.2, 6; Spec 117 Tasks 6.1, 6.2; Spec 102 Task 1.8; Specs 101/077 doc tasks.

@@ -59,7 +59,7 @@ get_section({ path: "component-quick-reference", heading: "Naming Convention" })
 
 ### WHEN Creating Tasks Document THEN Read:
 1. ✅ **Tasks Document Format** (MUST READ)
-2. ✅ **Task Type Classification System** (MUST READ - understand Setup/Implementation/Architecture)
+2. ✅ **Task Type Classification System** (MUST READ - understand Setup/Implementation/Architecture/Documentation)
 3. ✅ **Reference: Task Type Definitions** (`governance/Process-Task-Type-Definitions.md` - if unclear on classification)
 4. ✅ **Spec Workflow: Phase 3** (scroll to Spec Workflow section)
 5. ❌ **SKIP**: Detailed validation tiers, detailed documentation tiers, rationale sections
@@ -366,7 +366,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
   - [Path to completion doc]
 
   - [ ] [N.1] [Sub-task Title]
-    **Type**: [Setup | Implementation | Architecture]
+    **Type**: [Setup | Implementation | Architecture | Documentation]
     **Validation**: [Tier 1: Minimal | Tier 2: Standard | Tier 3: Comprehensive]
     **Agent**: [Agent name]
     - [Implementation step 1]
@@ -374,7 +374,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
     - _Requirements: [Requirement IDs]_
 
   - [ ] [N.2] [Sub-task Title]
-    **Type**: [Setup | Implementation | Architecture]
+    **Type**: [Setup | Implementation | Architecture | Documentation]
     **Validation**: [Tier 1: Minimal | Tier 2: Standard | Tier 3: Comprehensive]
     **Agent**: [Agent name]
     - [Implementation step 1]
@@ -614,7 +614,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
 
 ### Overview
 
-The Task Type Classification System provides a three-tier approach to categorizing tasks based on their complexity, risk, and nature of work. Task types are determined during the planning phase (when creating tasks.md) and guide the appropriate level of validation and completion documentation during execution.
+The Task Type Classification System provides a structured approach to categorizing tasks based on their complexity, risk, and nature of work. Task types are determined during the planning phase (when creating tasks.md) and guide the appropriate level of validation and completion documentation during execution.
 
 This classification system enables:
 - **Objective task categorization** based on clear characteristics
@@ -622,7 +622,7 @@ This classification system enables:
 - **Proportional documentation detail** aligned with task type
 - **Consistent AI agent execution** through unambiguous task metadata
 
-### Three Task Types
+### Task Types
 
 #### Setup Tasks
 
@@ -691,6 +691,28 @@ This classification system enables:
 
 **Validation & Documentation**: Tier 3 - Comprehensive
 
+#### Documentation Tasks
+
+**Definition**: Writing work that produces or updates documentation artifacts
+
+**Characteristics**:
+- Produces or updates documentation files; no production code, test, or configuration behavior changes
+- Applies only when the *entire* output is documentation artifacts: mixed code+doc tasks are classified by the code work (Implementation/Architecture), and tooling-consumed metadata (component schemas, `component-meta.yaml`) is Implementation, not Documentation
+- Success measured by artifact existence and content acceptance criteria (SHALL/SHALL NOT where relevant)
+- No runtime risk; risk is informational (inaccuracy, staleness, broken cross-references)
+- Governance-*law* targets route through the ballot-measure model (agent drafts, Peter ratifies); spec-authorized steering updates proceed under the spec's authority; rebuild the affected MCP index after application either way
+- Validated by artifact and content checks, not test suites
+
+**Examples**:
+- Author completion and summary documentation
+- Deliver cross-spec handback or closeout notes
+- Draft ballot-measure steering proposals
+- Log deferred findings in the issues registry
+- Write or update consumer-facing guides
+- Apply spec-authorized steering-doc updates
+
+**Validation & Documentation**: Tier 1 - Minimal (default; escalate to Tier 2 - Standard only when the artifact BOTH carries SHALL/SHALL NOT contract semantics AND other specs' decisions depend on it)
+
 #### Parent Tasks
 
 **Definition**: Container tasks that encompass multiple subtasks and define overall success criteria
@@ -716,7 +738,7 @@ Task types are determined during **Phase 3: Tasks** of the spec workflow, when c
 2. **Identify task characteristics** (structural vs coding vs design work)
 3. **Assess complexity and risk** (low vs medium vs high)
 4. **Determine validation needs** (minimal vs standard vs comprehensive)
-5. **Assign task type** (Setup, Implementation, or Architecture)
+5. **Assign task type** (Setup, Implementation, Architecture, or Documentation)
 6. **Add type metadata** to task in tasks.md
 
 #### Classification Decision Examples
@@ -787,7 +809,7 @@ Document decision in tasks.md for future reference
 #### Clear Classification
 
 When task type is obvious from characteristics:
-1. Assign appropriate type (Setup, Implementation, Architecture)
+1. Assign appropriate type (Setup, Implementation, Architecture, Documentation)
 2. Add type metadata to task
 3. Proceed with task creation
 
@@ -826,7 +848,7 @@ Task type metadata is included in the tasks.md format:
 
 ```markdown
 - [ ] [N.1] [Sub-task Title]
-  **Type**: [Setup | Implementation | Architecture]
+  **Type**: [Setup | Implementation | Architecture | Documentation]
   **Validation**: [Tier 1: Minimal | Tier 2: Standard | Tier 3: Comprehensive]
   - [Implementation step 1]
   - [Implementation step 2]
@@ -1085,7 +1107,7 @@ This document provides:
 
 ### Overview
 
-The Three-Tier Validation System aligns validation depth with task complexity and risk. Each task type (Setup, Implementation, Architecture, Parent) has a corresponding validation tier that specifies the checks required before marking a task complete.
+The Three-Tier Validation System aligns validation depth with task complexity and risk. Each task type (Setup, Implementation, Architecture, Documentation, Parent) has a corresponding validation tier that specifies the checks required before marking a task complete.
 
 This validation system ensures:
 - **Appropriate error detection** matched to task complexity
@@ -1107,7 +1129,7 @@ This validation system ensures:
 
 ### Validation Tier Definitions
 
-The three validation tiers (Minimal, Standard, Comprehensive) align with task types (Setup, Implementation, Architecture/Parent). Each tier specifies the required checks before marking a task complete.
+The three validation tiers (Minimal, Standard, Comprehensive) align with task types (Setup/Documentation, Implementation, Architecture/Parent). Each tier specifies the required checks before marking a task complete.
 
 **For detailed tier definitions**, including required checks, validation examples, and failure handling, query Task-Type-Definitions via MCP:
 
@@ -1115,10 +1137,11 @@ The three validation tiers (Minimal, Standard, Comprehensive) align with task ty
 get_section({ path: "process-task-type-definitions", heading: "Setup Tasks" })
 get_section({ path: "process-task-type-definitions", heading: "Implementation Tasks" })
 get_section({ path: "process-task-type-definitions", heading: "Architecture Tasks" })
+get_section({ path: "process-task-type-definitions", heading: "Documentation Tasks" })
 ```
 
 **Quick Reference**:
-- **Tier 1 (Setup)**: Syntax validation, artifact verification, basic structure check
+- **Tier 1 (Setup/Documentation)**: Syntax validation, artifact verification, basic structure check
 - **Tier 2 (Implementation)**: Syntax, functional correctness, integration, requirements compliance
 - **Tier 3 (Architecture/Parent)**: All Tier 2 checks plus design soundness, system integration, edge cases, success criteria verification
 
@@ -1220,7 +1243,7 @@ get_section({ path: "process-task-type-definitions", heading: "Architecture Task
 
 ### Overview
 
-The Three-Tier Completion Documentation System aligns documentation detail with task complexity and type. Each task type (Setup, Implementation, Architecture, Parent) has a corresponding documentation tier that specifies the required sections and level of detail for completion documentation.
+The Three-Tier Completion Documentation System aligns documentation detail with task complexity and type. Each task type (Setup, Implementation, Architecture, Documentation, Parent) has a corresponding documentation tier that specifies the required sections and level of detail for completion documentation.
 
 This documentation system ensures:
 - **Appropriate documentation depth** matched to task complexity
@@ -1240,12 +1263,12 @@ This documentation system ensures:
 
 ---
 
-### Tier 1: Minimal Documentation (Setup Tasks)
+### Tier 1: Minimal Documentation (Setup and Documentation Tasks)
 
 **📖 CONDITIONAL SECTION - Read only when needed**
 
 **Load when**:
-- Documenting Setup task completion (Tier 1)
+- Documenting Setup or Documentation task completion (Tier 1)
 - Need to understand minimal documentation requirements
 - Creating completion docs for structural work
 - Need template for Setup task documentation
@@ -1261,6 +1284,7 @@ This documentation system ensures:
 
 **When to Apply**:
 - Setup tasks (directory creation, configuration files, dependency installation)
+- Documentation tasks (completion docs, handbacks, guides — Tier 1 default)
 - Low complexity, low risk work
 - Straightforward operations with clear outcomes
 
@@ -2693,7 +2717,7 @@ When a task cannot proceed due to external dependencies, mark it as blocked with
 
 ```markdown
 - [ ] X.Y Task Name
-  **Type**: [Setup | Implementation | Architecture]
+  **Type**: [Setup | Implementation | Architecture | Documentation]
   **Validation**: [Tier 1 | Tier 2 | Tier 3]
   **Status**: BLOCKED
   **Blocker**: [Spec XXX Task Y.Z] - [Specific reason]

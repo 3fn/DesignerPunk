@@ -3,8 +3,17 @@
 **Date**: 2026-07-05 (v2 — revised same day after review round)
 **Author**: Thurgood (Civitas steward)
 **Origin**: 2026-07-05 A9 governance review, finding F1
-**Status**: DRAFT v2 — review round complete (verdicts below); awaiting Peter's ratification
+**Status**: **RATIFIED** (Peter, 2026-07-05, unmodified) — applied same day; see Ratification Record below
 **Placement note**: Prior ballots were spec artifacts (`118/findings/task-11-ballot-proposal.md`, `117/completion/task-6-ballot-proposals.md`). This measure arises from a governance review, not a spec, so it lives here per the loose-convention fallback.
+
+---
+
+## Ratification Record
+
+- **Ratified**: Peter, 2026-07-05, unmodified ("Ballot measure approved," delivered directly in the main-loop session).
+- **Applied**: 2026-07-05 by the main loop (Peter's ratification was firsthand there; Thurgood correctly declined to execute on relayed authority — see governance note below). Items 1–3 applied exactly as written via a count-asserted scripted pass; metadata validation PASS; docs MCP index rebuilt; straggler sweep zero.
+- **F2 rider (applied, Peter informed with veto open)**: Thurgood's pre-application verification found a FOURTH occurrence of the `**Type**:` template (PSP § "Blocked Tasks → Blocked Task Format", ~line 2696, 2-space indent) — missed by v1, by STACY-A2's count of three, and by v2. Same before→after as occurrence 3, applied under the measure's plain intent ("every enumeration gains Documentation"). Meta-note for the record: the enumerated-edit-list form missed a site even after a dedicated straggler hunt — the same lesson as Spec 122's §8 (hand-lists drift; sweeps catch what lists miss), which is why application ended with a mechanical zero-straggler grep rather than trusting the list.
+- **Governance note**: Thurgood refused to apply on a coordinator-relayed claim of ratification, holding that law edits require Peter's own confirmation. The refusal was correct per the ballot-measure model and is preserved here as precedent: relayed authority is not authority for law changes; the main loop (which held Peter's direct ratification) executed instead.
 
 ---
 
