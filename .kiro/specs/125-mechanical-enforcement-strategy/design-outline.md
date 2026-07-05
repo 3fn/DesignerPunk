@@ -3,7 +3,13 @@
 **Date**: 2026-07-02
 **Spec**: 125 — Mechanical Enforcement Strategy
 **Author**: (to be assigned — Thurgood-led; see §7 Ownership)
-**Status**: **STUB** — captures a 2026-07-02 working session (Peter + Claude) triggered by the Polar "Orbit" LLM-safe design system article. This PROPOSES scope and records verified findings; it has NOT been through the Spec Feedback Protocol and is NOT requirements/design/tasks. Its purpose is to keep the session's analysis from being lost and to give the barrier-vs-suggestion decision a home.
+**Status**: **STUB + directional update (2026-07-05)** — the 2026-07-02 stub, updated with the decisions and measurements accumulated since (Peter-directed, main-loop session 2026-07-05). **Phase 0 is GREENLIT as a right-sized increment and is the project's next active work** — ahead of Spec 122's formalization. Phases 1–3 still await the Spec Feedback Protocol; this remains an outline, not requirements/design/tasks.
+
+> **Inbound inputs folded into this update (read alongside — they are the evidence, this outline is the synthesis):**
+> 1. `inbound-from-2026-07-05-lane-viability.md` — the full functional suite is now CI-gateable wholesale (~53s warm); sub-package suites must be named; "armed = verified non-empty AND correct scope."
+> 2. `inbound-from-ratification-protocol.md` — record-first ratification (Peter, all three layers); 125 owns layer 2 (PR-approval-as-ratification) + the classification-map entry.
+> 3. `inbound-from-wordpress-thesis.md` — Phase 0/1 pulled ahead of 122; execution-loop reframing; kill-switch; the elective autonomy dial.
+> 4. `docs/roadmap/2026-07-04-full-project-audit.md` § 1 — independent re-confirmation of the enforcement gap (A8).
 
 > **Trigger:** Polar's *Orbit: An LLM-Safe Design System* (https://polar.sh/blog/orbit-llm-safe-design-system). Core Orbit claim: *"Docs are a suggestion. CI is a contract... making the wrong thing fail to compile is the only instruction we've found that survives an LLM's fresh context window."* This spec is DesignerPunk's answer to that critique — not by adopting Orbit wholesale, but by deciding, per rule, what should be a mechanical **barrier** vs. what stays an **educational** rule delivered via the MCP/steering learning layer.
 
@@ -61,16 +67,27 @@ Three read-only probes (token, CI/hooks, component/lint) established the current
 ### Phase 0 — PR-flow adoption (the critical-path unlock; pull out front)
 Feature-branch → PR → required checks → merge. Branch protection on `main`. This is a **process + tooling change**, not a settings toggle: it updates the always-loaded **Task-Completion-Protocol** (which currently bakes in direct `commit-task.sh`), and it changes how every agent completes a task. It also arms **122's own** diff-guard / canonical-vs-truth checks (they only *block* if there is a gate) — so Phase 0 de-risks 122 as a side effect. Highest leverage; smallest surface.
 
+**GREENLIT as a right-sized increment (Peter, 2026-07-05) — the decided shape:**
+1. **Branch protection on `main`; required checks = the currently-armed, currently-green set** (the consumer-guard lane incl. the boot smokes and packed-install guard, plus drift detection). No new checks in Phase 0 — the gate must be livable from day one; a gate that annoys teaches bypass.
+2. **Task-Completion-Protocol + `commit-task.sh` move to branch → PR → checks → merge.** This is an operational-law change to an always-loaded doc: it is drafted, recorded, and ratified via the **record-first ratification protocol** (`.kiro/docs/ballots/README.md`) — the protocol's first planned use.
+3. **Checks-only at first — no required human review** (PROPOSED, leaning): agents' PRs merge when green, preserving solo-flow speed. The `governance/`-requires-Peter's-approval layer (ratification layer 2: branch protection + CODEOWNERS) is **pre-wired here, landed in Phase 2** as the governance diff-gate — Phase 0 should not block on it.
+4. **Bake-in week**: run ordinary work through the gate before 122's formalization merges through it — debug the ergonomics on low-stakes commits, not during a cutover.
+5. **Third job acquired 2026-07-05**: Phase 0 is the platform substrate for **PR-approval-as-ratification** (see `inbound-from-ratification-protocol.md`) — once gated, "Peter ratified" becomes his platform-verified PR approval for law changes, superseding the manual record-first step for gated surfaces.
+
 ### Phase 1 — Arm what is already authored (the cheap real win)
 Move existing checks into required, appropriately-scoped **blocking** lanes:
-- Full-project typecheck (component + token unions).
+- Full-project typecheck (component + token unions; measured ~1 min).
 - `build:validate` (token raw-value validator).
-- A **scoped, fast** Stemma-governance lane (contract-existence, composition-compliance) — NOT the whole ~10-min suite; mirror the `test:consumer` scoped-lane pattern.
+- **The ENTIRE functional suite — wholesale, not carved** *(updated 2026-07-05: the stub's "scoped fast lane vs ~10-min suite" framing is void — post-de-flake, full `npm test` = ~53s warm / 8,987 tests, deterministic; see `inbound-from-2026-07-05-lane-viability.md`)*. Re-measure on cold-cache CI runners before promising, but the order of magnitude changed: the Stemma contract/composition gates ride in for free.
+- **The sub-package suites, named explicitly**: `mcp-server` (622 tests incl. the relocation-integrity gate — currently armed nowhere) and `application-mcp-server` (320 tests incl. the tool-boundary contract test) run only via their own `npm test`; root-green proves nothing about them.
+- **"Armed" = verified non-empty AND correct scope** (the 2026-07-03 empty-lane lesson + the 2026-07-03 wrong-cwd incident): a blocking lane asserts a plausible selection floor (`--listTests`) and that it ran the intended selection — an empty or mis-scoped green reads as a pass forever.
 - Per-check **warn→fail** promotions are a *deliberate strictness decision*, not a default (e.g., block a PR for a missing WCAG ref?).
+- Chore rider: bump `actions/checkout@v4` / `setup-node@v4` (Node-20 deprecation nags) while touching CI.
 
 ### Phase 2 — Targeted net-new checks (deferrable)
 - `no-hardcoded-color` (and siblings) — scoped like the existing component ESLint config.
 - Governance **diff-gates** — e.g., "fail if a diff adds a token file without an approval marker" (mechanizes "no autonomous token creation"; presupposes Phase 0's PR flow).
+- **Ratification layer 2 (added 2026-07-05, DECIDED as direction)**: `governance/`-law changes require **Peter's PR approval** — branch protection + CODEOWNERS on `governance/` → platform-verified ratification, the diff-gate form of "governance-law changes require Peter's ratification." The record-first protocol (layer 1, in force now) remains for artifacts outside the gate's reach.
 
 ### Phase 3 — Consumer-side reach (Spec 123 territory; explicitly future)
 Teeth stop at DesignerPunk's own repo boundary. You cannot force a downstream product's CI to run your rules. Getting enforcement to the consumer's point-of-use is **harder** than arming your own CI and belongs with **Spec 123 (Consumer Distribution)** — 125 *feeds* 123 the way 122 does.
@@ -94,6 +111,8 @@ This is the artifact 125 owns and its central deliverable. For **every** enforce
 **Pruning obligation:** arming a check obligates *deleting* the prose that was compensating for its absence. "Complement" is really "complement **and prune**," or you get coexistence bloat.
 
 **Honesty guard:** the "educate-only" bucket is tempting as a way to avoid hard mechanization. Several rules that *sound* like judgment are actually diff-gateable ("component tokens require approval," "no autonomous creation"). Default a rule to prose ONLY after confirming it is truly unmechanizable, not merely hard.
+
+**Map entry decided 2026-07-05 (the authority dimension — the map's first ratified row):** *"governance-law changes require Peter's ratification"* → **barrier** (PR-approval gate, Phase 2 layer 2) for gated surfaces; **record-check** (committed ballot status per `.kiro/docs/ballots/README.md`) for ungated artifacts; prose keeps only the *why*. Origin: the 2026-07-05 relayed-authority incident — an agent forced into a trust-or-refuse judgment because authority existed only as a message claim; friction without protection. The lesson generalizes the map's whole premise: *claims are suggestions; records are contracts.* Coordinate wording with 122 (which propagates the agent-facing verify-the-record rule) so the rule is neither double-owned nor orphaned — the exact §5 failure modes.
 
 ---
 
@@ -128,20 +147,25 @@ This is the artifact 125 owns and its central deliverable. For **every** enforce
 
 ---
 
-## 8. Decisions on record (this session)
+## 8. Decisions on record
 
+*2026-07-02 session:*
 - **Adopt a PR-gated workflow** — DECIDED, Peter, 2026-07-02.
 - **This is its own spec, not latched to 122** — DECIDED (scope orthogonality, cross-domain ownership, standing-infra lifecycle; matches 122's own §6 severability logic).
 - **Stub now; `.kiro/specs/` extraction from `.kiro` is a separate future concern** — noted (Peter), fine for now.
 - **The classification map (§5) is the spine** — DECIDED.
 
-## 9. Open questions (for formalization)
+*2026-07-05 update:*
+- **Phase 0 ships NOW as a standalone right-sized increment, ahead of formalizing Phases 1–3 AND ahead of Spec 122's formalization** — DECIDED, Peter, 2026-07-05 (resolves two §9 open questions; consistent with the wordpress-thesis inbound's Adjustment 1 and its three compounding reasons).
+- **Record-first ratification protocol adopted, all three layers** — DECIDED, Peter, 2026-07-05. 125 owns layer 2 (PR-approval-as-ratification, Phase 2) and the classification-map authority entry (§5); layer 1 (committed-record check) is in force now via `.kiro/docs/ballots/README.md`; layer 3 (prompt rule) is 122's.
+- **The scoped-lane question is DISSOLVED by measurement** — the full functional suite is ~53s warm post-de-flake; Phase 1 gates it wholesale rather than carving lanes (see §4 Phase 1 update + the lane-viability inbound). Pending only a cold-cache CI re-measure.
 
-- Exact PR-flow mechanics for agents: how `commit-task.sh` / Task-Completion-Protocol change; solo-dev PR ergonomics (self-merge policy, required-check set).
-- Which existing checks graduate to blocking in Phase 1, and the warn→fail promotion list.
-- Scoped-lane design: how to carve fast Stemma-governance and full-typecheck lanes without dragging the whole ~10-min suite into CI.
-- Whether Phase 0 (PR-flow) should ship as a standalone lightweight increment ahead of formalizing Phases 1–3.
-- Confirm before formalizing: is a full design-outline→requirements→design→tasks warranted for Phase 0+1, or is a right-sized tasks-only increment better (over-process guard)?
+## 9. Open questions (for the Phase 0 increment + later formalization)
+
+- **Phase 0 increment (design-now):** exact `commit-task.sh` / Task-Completion-Protocol mechanics for the branch → PR → checks → merge flow; self-merge policy (leaning **checks-only, no required human review** initially — required review arrives with Phase 2's CODEOWNERS layer); branch-naming and PR-body conventions for agent-authored PRs.
+- **Phase 1 (formalization):** the warn→fail promotion list (which warning-only assertions graduate); cold-cache CI timing for the wholesale suite; how the sub-package suites wire in (one workflow vs separate lanes).
+- **Phases 1–3 formalization shape:** Phase 0 is decided as increment-first; whether Phases 1–3 warrant the full design-outline→requirements→design→tasks pipeline or a compressed form remains open (over-process guard stands).
+- **The elective autonomy dial** (wordpress-thesis inbound §3): revisit at Phase 1 closeout per its own activation trigger — not before.
 
 ---
 
@@ -164,9 +188,14 @@ This is a sharper failure mode than §2's "authored-but-unarmed": a lane can be 
 
 ## Cross-References
 - Polar Orbit article: https://polar.sh/blog/orbit-llm-safe-design-system
-- `.github/workflows/consumer-guard.yml` — the current armed guard set
+- `.github/workflows/consumer-guard.yml` — the current armed guard set (= Phase 0's initial required-check set)
 - `governance/Token-Governance.md` — autonomy levels (prose)
 - `.kiro/opportunities/2026-06-16-atlassian-design-md-insights.md` — aspirational `no-hardcoded-color`
 - `.kiro/specs/122-agent-generator/design-outline.md` §3a, §5(e), §6 — the shared-artifact coupling
 - `.kiro/specs/078-contract-governance-enforcement/` — precedent/consumer
 - `.kiro/specs/123-consumer-distribution/` — Phase 3 home
+- `inbound-from-2026-07-05-lane-viability.md` — the measurements behind the §4 Phase 1 update
+- `inbound-from-ratification-protocol.md` — layer 2 + the §5 authority map entry
+- `inbound-from-wordpress-thesis.md` — sequencing (Phase 0/1 before 122), kill-switch, autonomy dial
+- `.kiro/docs/ballots/README.md` — the record-first ratification protocol (layer 1, in force)
+- `docs/roadmap/2026-07-04-wordpress-thesis-strategy.md` + `2026-07-04-full-project-audit.md` — strategy + audit context
