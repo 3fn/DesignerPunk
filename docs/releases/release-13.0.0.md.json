@@ -1,0 +1,1526 @@
+{
+  "version": "13.0.0",
+  "previousVersion": "12.0.5",
+  "date": "2026-07-05",
+  "changes": [
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Task 11 Summary (COMPLETE): Relocation-Integrity Gate (119-A Exit Check)",
+        "taskType": "Unknown",
+        "whatWasDone": "Built the 119-A closed-loop exit gate (design Component 5 / Req 8): a testable core at `mcp-server/src/relocation-integrity-gate/relocation-integrity-gate.ts` + a thin runner at `scripts/relocation-integrity-gate.ts` (`npx tsx scripts/relocation-integrity-gate.ts`), with 21 unit tests. The gate builds a real `DocumentIndexer` over `governance/` (the frozen legacy-path manifest auto-seeds at the tail of `indexDirectory`) and asserts four axes + a scope assertion, then was **RUN → full PASS**.",
+        "whyItMatters": "The dissolved Phase-10 \"wiring lands atomically with the prompt edits\" guarantee no longer holds (the prompts keep their legacy paths through the window). This gate replaces it (Req 8 AC9) with a **per-reference / per-surface** proof that relocation broke nothing on the critical path — and gives the severable seam its teeth (Req 8 AC8): it passes on the Critical (119-A) rows ALONE, excluding the manifest build / catalog generation.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "breaking",
+      "deliverableType": "Component"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Per-Agent Five-Class Ambient-Set Design Artifact (Req 14, design-only)",
+        "taskType": "Unknown",
+        "whatWasDone": "Produced `.kiro/specs/119-A-steering-relocation-serving-contract/per-agent-ambient-design.md` — the typed `PerAgentAmbientDesign[]` design artifact (122's canonical input) covering **all 8 agents**. For each agent, every ambient member is assigned to one of the five AXA classes (formative / reflexive-principle / governance-as-law / ground-truth-manifest / capability-catalog) using the Component-7 shape (`design.md` §7): `agent`, `agentType`, `members[]` with `ref` / `class` / `rationale` / `status119A`. Content was sourced from `per-agent-ax-assessments.md` (input-of-record, Req 14 AC5) and captured as a design appendix — not re-derived. This is the **design half** only; manifest *build* and catalog *generation* stay behind the severable seam. **No running code introduced.**",
+        "whyItMatters": "122 cannot generate each agent's ambient composition without a canonical per-agent design to generate *from* — this artifact IS that input (Req 14). The seam is encoded **per-member** via `status119A`: ground-truth-manifest members are `design-only-build-deferred`, capability-catalog members are `design-only-gen-deferred`, and only formative / reflexive-principle / governance-as-law members are `locked-always`. So the Req 8 AC8 gate can assert \"the design exists\" without ever requiring a manifest to be built or a catalog generated — the seam working as designed.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "breaking",
+      "deliverableType": "Component"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Relocate Non-Identity Docs to `governance/` (Atomic with Companion Re-Point)",
+        "taskType": "Unknown",
+        "whatWasDone": "Moved the **80** relocated-role steering docs from `.kiro/steering/` to a new project-root `governance/` directory (79 via `git mv` with history preserved; 1, `Component-Schema-Format.md`, staged as a tracked rename after resolving a pre-existing case-mismatch between git's lowercase-tracked name and the on-disk capital name). The **9** docs that stay (8 identity + the removed-role meta-guide, deleted later in Task 10) remain in `.kiro/steering/`. Relocated-doc content is byte-unchanged: 76 of 80 are `R100` (byte-identical), and the only 4 with edits (`R099`) carry ONLY their intended single-line change (3 reverse-link depth fixes + 1 Integration-Guide MCP-config repoint). Atomically (subtask 6.2) re-pointed all **22** family-guidance `companion:` values (9 top-level + 13 nested) + the README template + the 3 reverse-coupling `../../family-guidance/` links (depth shortened to `../`) to the `governance/` form. Recorded the rollback + idempotency contract (6.3).",
+        "whyItMatters": "Relocation is the spec's highest-risk op: it physically removes the original paths, so it depends on the resolver + frozen legacy-path manifest being live first. Landing the move + companion re-point as one atomic unit prevents a transient window where a relocated Component-Family doc with a lagged companion would fire `FamilyGuidanceIndexer` warnings. Byte-unchanged content keeps the move a pure relocation (identity is the immutable `id`; only location changes), and the legacy-path fallback means references resolve in both rolled-forward and rolled-back states — no orphan window.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "breaking",
+      "deliverableType": "Component"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "MCP + Packaging Rewiring to `governance/`",
+        "taskType": "Unknown",
+        "whatWasDone": "Rewired every MUST-FIX coupling surface (coupling-sweep Bucket A) from `.kiro/steering/` to `governance/`, landed atomically with the Task 6 move. MCP dir: `DEFAULT_STEERING_DIR` (`mcp-server/src/index.ts`) + `.cursor/mcp.json` `MCP_STEERING_DIR` → `governance/` (env var name retained as a stable contract). Packaging: `package.json files[]` ADDED `governance/`, KEPT `.kiro/steering/`. Init: template repointed + dead `get_documentation_map` stripped from its `autoApprove`; `init.ts` ADDED a `governance/` copyDir alongside the kept `.kiro/steering` copy; `init.test.ts` full assertion set re-derived for the two-root split. Sync: `MANAGED_DIRS` gained `{ path: 'governance', tier: 'governance' }`; added a net-new stale-`MCP_STEERING_DIR` detector (`SteeringDirCheck.ts`) wired into `runSync`. Regenerated `.kiro/sync-manifest.json` via the canonical generator. Repointed the agent `resources` arrays (120 relocating entries across `file://` + `skill://`, identity left), figma (`VariantAnalyzer`, `DesignExtractor`), `extract-component-meta.ts`, and `designerpunk.ts`. Fixed all test fallout from the move.",
+        "whyItMatters": "Bucket A surfaces have **no MCP fallback** — relocation functionally breaks each unless repointed (these are the Task 11 / Req 8 AC7 gate's must-fix axis). The `resources` repoint is the highest-leverage: 120 entries span BOTH schemes (a `file://`-only pass would leave ~68 `skill://` refs pointing at vanished paths), and identity entries must stay put. Keeping `.kiro/steering/` in `files[]` + the init copyDir preserves identity-doc shipping to consumers; the sync `MANAGED_DIRS` split + stale-detector keep consumers reconcilable across the move.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "breaking",
+      "deliverableType": "Component"
+    },
+    {
+      "change": {
+        "specName": "124-component-token-return-contract",
+        "taskTitle": "Spec Ratification & Pre-Change Baseline",
+        "taskType": "Unknown",
+        "whatWasDone": "Ratified requirements + design and captured the pre-change baseline. Peter ratified on 2026-06-26 after a two-lead pre-ratification review (Lina + Ada, both CONDITIONAL GO); three mechanical block items were resolved in spec text first (dedup the frozen brand string; add JSDoc-update work to Task 3.1; add the 5th migration file). Baseline captured in the Task 2 spike: `tsc` + `build` green; `generate` emitted \"Component tokens: 0\".",
+        "whyItMatters": "The baseline \"0 component tokens\" / non-empty `git diff` is not a healthy green-before state — it is the exact 118 dual-instance defect Spec 124 fixes (side-effect registration lands in a different registry instance than `getAll()` reads). The committed 33-token `components.yaml` (produced under Spec 117 with a single registry) is the order/value target the Task 3 harvest must reproduce, so R6's clean-diff gate only becomes meaningful after Task 3.",
+        "keyChanges": [
+          "`requirements.md`, `design.md`, `tasks.md` — ratified; locked decisions encoded, no architectural fork left open.",
+          "Baseline recorded in `findings/r6-ordering-spike.md` §5."
+        ],
+        "impact": [
+          "Spec ratified; 3 pre-ratification block items resolved in spec text.",
+          "Baseline captured: `tsc` green, `build` green (pre-existing export-condition warnings only).",
+          "Baseline `generate` = 0 component tokens (the 118 dual-instance defect 124 fixes), so R6 is not yet reproducible — expected, consistent with the 118 PAUSE."
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Component"
+    },
+    {
+      "change": {
+        "specName": "124-component-token-return-contract",
+        "taskTitle": "Token-Index Ordering Spike",
+        "taskType": "Unknown",
+        "whatWasDone": "Identified the committed `token-index/components.yaml` ordering rule and decided where deterministic order is imposed for the harvest, so the regenerated index reproduces the committed file (R6). The rule is **directory-scan order, NOT a sort**: Source 1 (`progress.ts`) first, then Source 2 (`src/components/core` scan in `readdirSync` order), brand-filtered, with authored intra-file array order preserved.",
+        "whyItMatters": "The R6 gate is `git diff token-index/` empty. If the harvest sorted the array, the regenerated file would reorder to alphabetical and the diff would never be empty. The spike proved (by falsifying alphabetical and component+name candidates against the committed sequence) that the committed order is the scan/traversal order itself — so the harvest must preserve it and introduce no sort key.",
+        "keyChanges": [],
+        "impact": [
+          "Ordering rule confirmed exact against the committed file; `readdirSync` verified stable (and lexicographic on this filesystem).",
+          "Watch item to Task 3: multi-call files now order intra-file by `Object.values(mod)` enumeration; the R6 diff catches any shift.",
+          "Seeded latent follow-up: scan-order ties the committed file to `readdirSync`/filesystem order — a canonical sorted order would be portable but needs a deliberate re-baseline (not 124)."
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "124-component-token-return-contract",
+        "taskTitle": "Component-Token Return Contract — the Atomic Increment",
+        "taskType": "Unknown",
+        "whatWasDone": "Converted the last side-effect seam to a **return-value seam**. `defineComponentTokens` now brands its (backward-compatible) flat value-map with a non-enumerable, string-keyed sidecar (`'@3fn/dp:tokenContract'`) carrying the rich `RegisteredComponentToken[]`; `loadComponentTokens` harvests that brand from each loaded module's exports and is the **sole** writer to the canonical registry; the mutable-global `allowOverwrite` machinery is retired. Shipped as one atomic increment (contract + harvest + 7-file test migration), verified green, not yet committed.",
+        "whyItMatters": "The component-token registry was the only consumer-`.ts` seam still relying on a shared-singleton **side effect** across the tsx boundary — which silently zeroed component tokens when the scoped require split the registry into two instances (the Spec 118 dual-instance blocker). Harvesting a **value-survivable brand** from the return removes the cross-boundary singleton entirely — the ratified target-model end-state (\"seams consume return values, no shared mutable singleton across the boundary\"). The registry becomes a harvest-populated store with a single writer, so `allowOverwrite` and the cross-test-pollution class retire *with* the change. This is the spine fix, not a leaf patch. The brand is a non-enumerable **string key** (not `Symbol.for`) deliberately, so no process-global is introduced and it stays portable across realms/loaders.",
+        "keyChanges": [
+          "`src/build/tokens/defineComponentTokens.ts` — branded return (Option A); side-effect registration removed; exported `getTokenContract` accessor + single `TOKEN_CONTRACT_BRAND`; JSDoc rewritten.",
+          "`src/build/tokens/index.ts` — barrel-exports the brand + accessor.",
+          "`src/cli/loadComponentTokens.ts` — return-value harvest, sole writer, directory-scan order preserved (no sort), `allowOverwrite` dance removed.",
+          "`src/registries/ComponentTokenRegistry.ts` — `setDefaultAllowOverwrite` + `allowOverwrite` option removed; conflict-throw and `clear()` kept.",
+          "7 test files migrated (5 predicted + 2 surfaced by the full suite)."
+        ],
+        "impact": [
+          "`generate` **0 → 33 component tokens**; `git diff token-index/` empty (R6 — value AND order identical to committed).",
+          "Full `npm test` **8973/8973**, `tsc` clean, `build` ok — verified **twice** (implementer + main loop); nothing skipped.",
+          "Backward-compatible flat return preserved; brand invisible to spread / `Object.keys` / `JSON.stringify` (asserted).",
+          "No process-global introduced (string-key brand, not `Symbol.for`); the real harvest path is exercised same-process (`consumer-package-mode`, `loadComponentTokens` tests).",
+          "**R7 dual-instance brand survival NOT yet certified** — rides Task 4 (packed-install arbiter); the one remaining delivery-gate condition. Same-process green can't prove cross-boundary survival.",
+          "Likely closes the `component-token-double-registration` issue (confirm in Task 5); seeds two pre-existing items (`package.json` `\"types\"`-condition ordering; token-index filesystem-ordering portability).",
+          "**Not committed** — Peter reviews the diff. 118 untouched (hold-back intact)."
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "124-component-token-return-contract",
+        "taskTitle": "Spec-Level Synthesis — Component-Token Return Contract",
+        "taskType": "Unknown",
+        "whatWasDone": "Authored the spec-level completion synthesis and logged all deferred/out-of-scope items. Spec 124 converted the last side-effect seam (component-token registration) into a return-value seam: `defineComponentTokens` returns a non-enumerable, value-survivable branded value-map; `loadComponentTokens` harvests it as the **sole** registry writer; `allowOverwrite` is retired.",
+        "whyItMatters": "This is the spine fix for the Spec 118 dual-instance blocker: the component-token registry was the only consumer-`.ts` seam relying on a shared-singleton side effect across the tsx boundary, which silently zeroed tokens when the scoped require split the registry into two instances. Harvesting a value-survivable brand removes the cross-boundary singleton entirely — the ratified target-model end-state.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "Increment 2 — Evidence Harness, Inventories, Divergence Test",
+        "taskType": "Unknown",
+        "whatWasDone": "Increment 2's **investigation-only** evidence pass (no swaps). Built a parity harness that generates two fresh token trees by running the same generator under **ts-node** vs **tsx** and compares them semantically by reusing Spec 117's normalization engine (no second engine; `GenerationIntegrityCheckImpl` bypassed). Enumerated and unit-tested the volatile-field set, produced the four inventories (entry-point, export-condition, ESM-cost + jest-preset parking form), refuted the divergence hypothesis, and assembled the green/red evidence table Task 8 reads.",
+        "whyItMatters": "The April→June→117 cycle was caused by *assuming* the module-direction answer. Task 8 commits CJS-vs-ESM **on evidence** — and this is that evidence. The result: the two runtime mechanisms produce **semantically identical** token output, so the loader is not a source of generation divergence; the generation gaps are decoupled and routed out; and the ESM cost (jest-preset blast radius) and exports incoherences are inventoried for the decision. The table **informs but does not pre-decide** the direction (R4 AC8).",
+        "keyChanges": [
+          "Parity harness: `src/tools/integrity/ParityOrchestrator.ts` + `__parity__/run-parity.js` + `npm run test:parity` (reuses 117's `Normalizer`/`SemanticComparator`/`INVENTORY` directly; two-roots seam, no `FreshGenerator`).",
+          "Volatile rules: `ParityNormalizationRules.ts` (`PARITY_NORMALIZATION_RULES` = 117 defaults + 118 defensive additions for `rosettaVersion`/`version`/`extensions.themes`) + 17 unit tests.",
+          "Findings: `evidence-table.md`, `divergence-hypothesis.md`, `entry-point-inventory.md`, `export-condition-inventory.md`, `esm-cost-inventory.md`, `parity-harness-notes.md`."
+        ],
+        "impact": [
+          "**All-green parity** across 11 non-optional artifacts — only divergence class is volatile timestamps (neutralized by 117's existing rules).",
+          "**Divergence hypothesis REFUTED → clean exit** — gaps routed to the blend review / already-closed-by-117; not absorbed into 118.",
+          "**OQ-3 parking form EXISTS** → the ESM escape-hatch defer branch is available.",
+          "Inventories surface the design-table staleness (`./config` now import+require; 13 ts-node scripts not 11).",
+          "Full suite green (build exit 0; tsc clean; 376/8989 tests; token-index clean) — zero regression; no production code touched.",
+          "**Unblocks Task 8** (direction decision) with a fully assembled evidence table.",
+          "--",
+          "For detailed implementation notes, see [task-7-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-7-completion.md)*"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "Early Direction-Agnostic Guards",
+        "taskType": "Unknown",
+        "whatWasDone": "Added two direction-agnostic guards that don't wait on the CJS-vs-ESM decision: a **preventive dynamic-import smoke test** (asserts no web component source uses extensionless/raw-`.ts` runtime `import()`) and the **scoped-ESLint tooling** for the module-resolution rule (rule scaffolded but inert; polarity set later in Group 9). Both wired into the consumer-guard CI lane.",
+        "whyItMatters": "These are defense-before-erosion: the smoke test guards a future regression class, and the ESLint infrastructure is ready so that when the direction decision lands, activating the lint policy is a config flip rather than a from-scratch build.",
+        "keyChanges": [
+          "`DynamicImportGuard.test.ts` — preventive jest source-scan guard (web component source only).",
+          "`eslint.config.js` + `lint` script + `eslint@10` / `@typescript-eslint/parser` dev deps — minimal config scoped to `src/components` only (not a repo-wide lint adoption); rule inert pending Task-8 polarity.",
+          "CI lane gained lint + dynamic-import-guard steps."
+        ],
+        "impact": [
+          "Dynamic-import regression class is guarded (verified to bite on both violation forms).",
+          "ESLint tooling ready; polarity deferred to Group 9 — honest \"tooling early, policy after the decision.\"",
+          "Full sweep green: `npm test` 374/8972, `npm run build` exit 0, lint clean and scoped.",
+          "--",
+          "For detailed implementation notes, see [task-4-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-4-completion.md)*"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Component"
+    },
+    {
+      "change": {
+        "specName": "117-token-index-generation-integrity",
+        "taskTitle": "Documentation & Clean-Exit (R7)",
+        "taskType": "Unknown",
+        "whatWasDone": "Updated the steering docs to match Spec 117's behavior changes (OKLCH-in-index, theme-varying rule, component-loading gate, the `ModeResolvedTokens` data flow) via the ballot-measure process, and completed clean-exit issue logging. Closes Spec 117.",
+        "whyItMatters": "Steering docs are the source of truth agents retrieve via the docs MCP; leaving them describing the *old* behavior would re-introduce the exact \"served-data is wrong\" problem this spec fixed. The ballot cycle also produced a reusable principle: in MCP-served docs, keep diagrams for orientation and push reference detail to prose — it reads lighter *and* retrieves better via `get_section`.",
+        "keyChanges": [
+          "`Rosetta-System-Architecture.md` + `Token-Quick-Reference.md` — behavioral-accuracy edits applied via ballot (P1–P5 + A1/A2), by path+heading; `Last Reviewed` bumped; docs index rebuilt + metadata validated",
+          "v2 ballot ([`task-6-ballot-proposals-v2.md`](../../../.kiro/specs/117-token-index-generation-integrity/completion/task-6-ballot-proposals-v2.md)) — re-architected after 3 domain consults (Ada/Lina/Leonardo) flagged density",
+          "Clean-exit issues logged; originating issue marked RESOLVED"
+        ],
+        "impact": [
+          "**R7 AC1/AC2**: steering accurate to shipped behavior; all deferred findings logged",
+          "Ballot-measure governance honored end-to-end (propose → approve → apply); main-loop verified (metadata valid, index serves new content)",
+          "**Spun off for holistic review**: blend-system/OKLCH-alignment issue — investigation found `OklchBlendCalculator` orphaned and the in-use blend path computing in RGB/HSL (same orphaned-OKLCH pattern as 117's findings, in the blend subsystem)",
+          "Flagged (out of scope): pre-existing Stage-4/Stage-5 orchestrator-naming inconsistency",
+          "**Spec 117 CLOSED** — certified non-provisionally; all 6 tasks complete"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "117-token-index-generation-integrity",
+        "taskTitle": "Component-Token Loading Gated on Source Presence (R4) + dist ComponentTokens (N2)",
+        "taskType": "Unknown",
+        "whatWasDone": "Removed the `tokenSourceMode === 'local'` gating from component-token loading (two gates on the same wrong axis — the call site and `allowOverwrite`), keying it on **source presence** instead. The shipped config is package mode, so the gates had been silently dropping the entire component tier under the documented `generate`.",
+        "whyItMatters": "Same systemic failure as R3/R5: a mode flag conflated with a separate concern (where component tokens are authored vs whether they should be indexed), producing a silent drop with no error signal. The fix not only reproduces the committed component set but **recovered 6 component tokens** (`inputcheckbox.box.*`, `inputradio.box.*`) the bug had been dropping — proving the committed \"baseline\" was itself a product of the bug.",
+        "keyChanges": [
+          "`src/cli/designerpunk.ts` — removed the call-site `local` gate (load + warn now fire on source presence, all modes)",
+          "`src/cli/loadComponentTokens.ts` — `allowOverwrite` un-gated from mode (travels with the loader)",
+          "`token-index/components.yaml` — corrected 33-token baseline (27 preserved value-identical + 6 recovered)",
+          "`dist/ComponentTokens.{web,ios,android}` (gitignored) — N2 populated, no longer empty"
+        ],
+        "impact": [
+          "**R4**: component tokens load regardless of `tokenSourceMode`; gate keys on source presence",
+          "**N2**: dist ComponentTokens populated across web/iOS/Android (0 → 33)",
+          "**Baseline corrected** (ratified by Peter): committed 27 were stale-wrong; 6 recovered tokens are source-backed since 2026-04-03, predating the stale 2026-06-11 regen — fresh (33) is correct",
+          "Full suite **8955 tests** + `tsc` green (re-verified in main loop); local-mode unregressed",
+          "Task 5.2 (Thurgood) — package-mode consumer fixture + AC3 warning test (reachability verified here); Task 5.3 re-diff will see committed == fresh == 33",
+          "Sibling-but-unrelated: the `validate` math-relationship parser false-fails (`.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`) — same \"untrustworthy token-pipeline signal\" family, opposite symptom (loud false-fail vs silent drop), different subsystem; correctly its own Ada-owned issue"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "117-token-index-generation-integrity",
+        "taskTitle": "Token-Index OKLCH Color + Theme-Varying — Merged Spine Fix (R3 + R5)",
+        "taskType": "Unknown",
+        "whatWasDone": "Fixed the token-index OKLCH color values (R3) and theme-varying flags (R5) with one **shared mode-resolution source** (ratified Option B). `generateTokenFiles` now returns a `ModeResolvedTokens` object that the token-index generator consumes, so the index reads the **same resolved truth dist writes** instead of re-deriving it — collapsing the three parallel resolutions that had silently drifted.",
+        "whyItMatters": "The root cause was duplication: \"resolve a color per mode\" and \"decide what varies by theme\" were each computed in two places, so the OKLCH migration updated the dist path and left the index path behind. Option B removes the duplication rather than patching both copies — the index now **cannot** drift from dist, because it consumes dist's own computation. This is the spine fix the guiding principle calls for (one source, two readouts), not a leaf patch.",
+        "keyChanges": [
+          "`src/generators/ModeResolvedTokens.ts` (new) — shared mode-resolved interface with an anti-conflation doc-guard",
+          "`src/generators/generateTokenFiles.ts` — returns the shared source (resolved light/dark, base-scoped theme-varying, per-primitive OKLCH); dist-feeding path untouched",
+          "`src/generators/generateTokenIndex.ts` — emits mode-aware OKLCH + base-scoped `themeVarying`",
+          "`src/cli/designerpunk.ts` — threads the shared source; `src/cli/themeVarying.ts` deleted",
+          "Regenerated `token-index/{primitives,semantics}.yaml`"
+        ],
+        "impact": [
+          "**R3**: color primitives carry OKLCH consistent with dist; `rgba(` 216 → 16 (the 16 = un-migrated shadow family, logged as an issue, not a divergence)",
+          "**R5**: `themeVarying` = the 5 dist base-mode keys, not committed's stale 10",
+          "Dist output provably unchanged; full suite **8955 tests** + `tsc` green (re-verified in main loop)",
+          "Artifacts regenerated via the **documented CLI** (unblocked by Spec 118) — early signal for the Task 5.3 trust gate",
+          "Surfaced & routed: shadow OKLCH migration (Spec 112 follow-on issue); package-mode `components.yaml` emptying (this spec's Task 4 / R4)",
+          "Carry-forward: the two distinct theme-varying sets are guarded by doc-comments only — Task 5 should add an automated guard"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "121-claude-code-portability",
+        "taskTitle": "MCP Governance Documentation Updates",
+        "taskType": "Unknown",
+        "whatWasDone": "Brought the MCP governance docs in line with the shipped model:\n- `MCP-Relationship-Model.md` + `MCP-Integration-Guide.md` now document `find_docs` (concept + paginated list, superseding `get_documentation_map`), keyworded `find_components` (tokenized matching), the `get_token_details` resolved-value triple, and the three-layer Discovery Confidence Model (tiers-not-scores, the governing sequence, partial-vs-none contracts, token exemption, the 119 Decision 4a cross-ref).\n- `Process-File-Organization.md` documents the new optional `aliases:` frontmatter field for doc authors.\n- The docs-MCP index was rebuilt so the documented model is discoverable through the tools it describes.\n- All steering-doc edits ran through the ballot-measure model (drafted → presented → Peter-approved → applied).",
+        "whyItMatters": "A delivery layer whose docs lag the code re-creates the discovery problem 121 set out to fix — agents reason about a model that no longer matches reality. Task 7 closes that loop: the shipped contracts (discovery tools, the additive token triple, the confidence tiers, the docs aliases) are now documented accurately, and the index rebuild means an agent can *discover* this documentation through `find_docs` itself. Two accuracy guards during review — a corrected theme-varying example and a roadmap entry for a real doc-vs-type gap — kept the docs honest rather than merely complete.",
+        "keyChanges": [
+          "3 steering docs updated + `Last Reviewed` bumped (honestly — they were reviewed).",
+          "Roadmap Gap 8 records the `resolvedValue` type-vs-runtime gap for a future cross-MCP fix.",
+          "`rebuild_index` → healthy (89 docs, 0 errors)."
+        ],
+        "impact": [
+          "Documented model now matches shipped model (discovery tools, token triple, confidence model, aliases)",
+          "Examples accurate (theme-varying bundle corrected); cross-refs resolve; metadata valid",
+          "Index rebuilt — the docs are discoverable via the tools they describe",
+          "**Completes Spec 121** — all 7 parent tasks done",
+          "--",
+          "For detailed implementation notes, see [task-7-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-7-parent-completion.md)*"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "121-claude-code-portability",
+        "taskTitle": "Discovery Confidence Model — Three-Layer Emit",
+        "taskType": "Unknown",
+        "whatWasDone": "Turned the raw match evidence from Tasks 2 and 3 into the three-layer discovery confidence model on both discovery tools:\n- Each result now emits **Match** (`matchConfidence: strong|partial|none` — a tier derived by a per-domain rubric, not an opaque score), **Viability** (components `readiness`; docs `{ placeholder, deprecated }`), and **Usability** (`rank` + `matchedOn`) as three distinct fields, never collapsed.\n- Implemented the validated false-confidence guards (components: signal-class-gated coverage; docs: incidental high-field token) so weak matches can't masquerade as strong.\n- Added a versioned, docs-domain-owned stop-word module as a legible tuning knob.\n- Closed the RTL/internationalization recall-floor gap by generalizing the reactive `aliases:` mechanism from components to docs (Peter-approved).",
+        "whyItMatters": "A search result is three questions, not one: did we find it, can it be used, and is it the best fit? Collapsing those into a single score is how an agent mistakes a top match for a usable answer — the model's headline example is a placeholder doc (`Component-Family-Modal`) that's a textbook `strong` match but must never be auto-acted-on. Emitting the three signals separately, with the tier reconstructable from visible evidence, lets the agent gate on viability and judge usability instead of trusting a label. The docs-aliases bridge keeps the recall floor meetable for semantic-synonym queries without shipping deferred embedding ranking.",
+        "keyChanges": [
+          "`find_components` + `find_docs` now emit `matchConfidence` / viability / `rank` as distinct fields (additive).",
+          "New `mcp-server/src/query/stop-words.ts` (versioned) and `frontmatter-parser.ts` (high-signal `title`/`description`/`aliases` + viability).",
+          "Docs `aliases:` indexed as high-signal; `Web-Authoring-Standards.md` + `Component-Family-Form-Inputs.md` tagged for RTL discovery."
+        ],
+        "impact": [
+          "Three orthogonal signals, never collapsed; tier reconstructable from `matchedOn` + coverage",
+          "False-confidence guards verified on both sides; placeholder docs flagged via the distinct viability field",
+          "RTL recall floor now satisfied at `strong` (real-corpus verified)",
+          "Fully additive — tsc clean; 249 (components) + 471 (docs) tests pass",
+          "Author-facing `aliases:` doc folded into Task 7.1; Task 4 pins these tiers at the tool boundary",
+          "--",
+          "For detailed implementation notes, see [task-5-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-5-parent-completion.md)*"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "121-claude-code-portability",
+        "taskTitle": "`find_docs` + Supersede `get_documentation_map`",
+        "taskType": "Unknown",
+        "whatWasDone": "Added `find_docs` to the docs MCP and retired the broken `get_documentation_map` — 121's one justified breaking change:\n- `find_docs` ships dual-mode: concept/keyword discovery + a paginated list/catalog mode that fully subsumes the old map.\n- `get_documentation_map` (the tool) removed; its pinned test rewritten to target `find_docs` list mode.\n- Closed a Req 1.1 gap: `owner` now populates from `organization` metadata (it was parsed but never carried to the model `find_docs` reads).\n- Swept every first-party `get_documentation_map` reference to `find_docs` (steering docs, Thurgood prompts, agent tool grants, MCP/Cursor configs) and recorded the supersede in `MCP-Evolution-Roadmap.md` — both via the ballot-measure model with Peter's approval.",
+        "whyItMatters": "`get_documentation_map()` errored at ~78K chars (over the MCP token limit), so cross-domain discovery was broken — the exact failure that motivated 121's discovery work. `find_docs` fixes it structurally: bounded ~6K-char pages instead of one oversized payload, plus concept search the map never had. Retiring the map rather than keeping two discovery surfaces removes debt; the evidence showed zero consumer *code* coupling, making it a safe, justified break.",
+        "keyChanges": [
+          "`mcp-server/src/tools/find-docs.ts` (new) + `QueryEngine`/`DocumentIndexer`/`DocumentationMap` model wiring; `get-documentation-map.ts` removed.",
+          "`DocumentMetadata` gains `organization` so `find_docs` `owner` is real.",
+          "13 first-party files swept `get_documentation_map` → `find_docs`; `MCP-Evolution-Roadmap.md` records the supersede, sweep, and Decision 4."
+        ],
+        "impact": [
+          "Finding 10 structurally fixed (bounded pages, regression-guarded by test)",
+          "Concept + catalog discovery in one tool; discovery→retrieval composes",
+          "Fully additive except the one justified break; tsc clean, 452/452 docs-MCP tests pass (serial)",
+          "Acceptance grep over the swept set returns zero; all edited steering docs validate clean",
+          "Section addressing (F1/F3) remains Task 6; tier derivation for populated `find_docs` results remains Task 5",
+          "--",
+          "For detailed implementation notes, see [task-3-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-3-parent-completion.md)*"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Breaking change"
+    },
+    {
+      "change": {
+        "specName": "121-claude-code-portability",
+        "taskTitle": "Tokenized Keyword Discovery on `find_components`",
+        "taskType": "Unknown",
+        "whatWasDone": "Added tokenized free-text keyword discovery to the application MCP's `find_components`, so agents can find components by natural-language concept instead of only exact taxonomy:\n- Built an auto-derived, signal-class-grouped keyword index over existing component metadata (high-signal: name/family/purpose/contract names; low-signal: `whenToUse`/contexts/alternatives/description; `whenNotToUse` excluded).\n- Implemented term-level (not substring) tokenized matching, computing `matchedOn` evidence + coverage for each candidate.\n- Added a new optional `keyword` param (plus `limit`) that AND-narrows with the existing exact-match filters, which are unchanged.",
+        "whyItMatters": "This is the fix for the single systemic delivery-layer gap 121 was built around: agents previously got `data: []` for queries like `\"login\"`, `\"text input field\"`, or `\"primary action button\"` even though matching components existed, because the query terms lived in `when_to_use` (unindexed) and matching was exact-array. Tokenized matching makes multi-word natural-language queries satisfiable — `\"primary action button\"` is unsatisfiable under substring no matter what's indexed. Everything is additive: no existing response shape or filter semantics changed.",
+        "keyChanges": [
+          "`ComponentIndexer.ts` — keyword index build + `tokenizeString()` (with punctuation stripping for comma-separated `when_to_use` values).",
+          "`QueryEngine.ts` — tokenized matching, `matchedOn`/coverage evidence, conjunctive narrowing, coverage sort, optional `limit`.",
+          "`index.ts` — new optional `keyword`/`limit` params on the tool."
+        ],
+        "impact": [
+          "All three recall-floor fixtures return non-empty (`login`, `text input field`, `primary action button`)",
+          "Fully additive — `tsc` clean, 232/232 tests pass, exact-match filters and `ApplicationSummary` unchanged",
+          "Computes the `matchedOn` + coverage evidence that Task 5's three-layer confidence tiers will consume",
+          "Precision (false-positive filtering) deferred to Task 5 by design — recall floor, not precision ceiling",
+          "--",
+          "For detailed implementation notes, see [task-2-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-2-parent-completion.md)*"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Component"
+    },
+    {
+      "change": {
+        "specName": "121-claude-code-portability",
+        "taskTitle": "Application-MCP Additive Foundation",
+        "taskType": "Unknown",
+        "whatWasDone": "Hardened the application MCP's `get_token_details` so it chain-resolves a token to its terminal value, additively:\n- Loosened `TokenIndexEntry.value` to optional (`value?`) so semantic tokens can be asserted to carry no `value` key (O3 — confirmed 0/193 at runtime).\n- Ported the product MCP's `TokenRefResolver` verbatim into the application MCP (a cross-package import is blocked by the missing `package.json` + the `rootDir` pin; the durable shared-module fix is deferred as Decision 7).\n- Added the resolved-value triple — `resolvedValue` / `resolvedUnitType` / `resolutionDepth` — to `getDetails()`, using the product MCP's field names and null-contract verbatim.",
+        "whyItMatters": "Agents consuming a token via MCP previously had to chase semantic→primitive references by hand and read generated token files to learn a token's actual value. The triple chain-resolves that in one call. Adopting the product MCP's contract verbatim means there is **one** cross-MCP token-resolution vocabulary, not two that drift. Every change is additive — no existing response shape breaks — which is the no-regret spine 121 is built on.",
+        "keyChanges": [
+          "New `application-mcp-server/src/indexer/TokenRefResolver.ts` (faithful port; algorithm byte-identical to the product original).",
+          "`application-mcp-server/src/indexer/TokenIndexer.ts` — `value?` type fix, `ResolvedValueTriple` + `TokenDetails`, additive `getDetails()` merge.",
+          "`design.md` — recorded the Peter-confirmed Option A decision for theme-varying tokens (`resolvedValue` is a per-mode bundle, kept verbatim)."
+        ],
+        "impact": [
+          "`get_token_details` resolves tokens to terminal value in one call (theme-varying tokens return a per-mode bundle, by design)",
+          "Single coherent cross-MCP token contract (no divergent third shape)",
+          "Fully additive — `tsc` clean, 232/232 app-MCP tests pass, `platforms{}` untouched",
+          "Unblocks the Task 4 tool-boundary contract test (the \"no `value` on semantics\" exact-key-set assertion)",
+          "--",
+          "For detailed implementation notes, see [task-1-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-1-parent-completion.md)*"
+        ]
+      },
+      "priority": "breaking",
+      "deliverableType": "Token"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Task 10 Summary (COMPLETE): Discovery Dry-Run + Frozen Map-Oracle, then Gated Meta-Guide Removal",
+        "taskType": "Unknown",
+        "whatWasDone": "Captured the meta-guide's \"Tier 2: MCP-Only Documents\" concept→doc map as a frozen, human-validated test oracle (`scripts/__fixtures__/discovery-oracle.ts`, `OracleEntry[]`) BEFORE removal (Req 11 AC4); built the discovery dry-run harness (`mcp-server/src/discovery-dry-run/discovery-dry-run.ts` + `scripts/discovery-dry-run.ts` + 16 unit tests); ran the three-point baseline (FLOOR pre-aliases → LIFT post-aliases → NO-REGRESSION post-removal) against the same oracle. The LIFT gate cleared at **83 / 0 / 0** after a main-loop title-rank tie-breaker resolved 4 structurally-unliftable concepts. With the gate cleared, **10.5 removed the meta-guide** (`git rm`, gated) and **10.6 confirmed no discovery regression** post-removal.",
+        "whyItMatters": "The meta-guide was the only always-loaded navigational map; removing it before its `find_docs` discovery replacement demonstrably works was 119-A's scariest step. The frozen oracle (captured while the map still existed) + the dry-run gate proved discovery reaches every map-covered concept BEFORE removal was permitted (Req 13). Removal is now done with that proof in hand, and the post-removal re-run confirms the leak-source artifact is gone with zero discovery cost.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "prominent",
+      "deliverableType": "MCP"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Identity Lock + Discovery Safety",
+        "taskType": "Unknown",
+        "whatWasDone": "Subtasks 8.1, 8.2, 8.3, 8.5 — **8.4 (aliases seeding) deferred** (blocked on the Task 10.3 floor dry-run for its worklist).\n\n- **8.1 — Identity lock.** Created the new always-loaded operational-law doc `.kiro/steering/Task-Completion-Protocol.md` (`id: task-completion-protocol`, the end-of-task sequence moved out of Start Up Tasks). Refocused `start-up-tasks.md` to the pre-task checklist (date/governance-health/Jest/authorization) + a pointer to the new doc. Demoted `Process-Development-Workflow` + `Process-File-Organization` (in `governance/`) from `inclusion: always` → `manual`. Asserted no doc outside the 9-doc AC1 set is `always` (grep both roots — meta-guide is the only extra, pending Task 10). Recorded the AXA five-class overlay (non-binding) + the Agent-Directory → capability-catalog 119-B/122 forward-reference. Knock-ons: `init.test.ts` steering counts 9→10 (readdir 10→11); new `.kiro/sync-manifest.json` entry for the doc.\n- **8.2 — Calibration text.** Added the certainty-calibration behavioral rule to `AI-Collaboration-Principles.md`, phrased in the strong/partial/none shape of Spec 121's `matchConfidence` signal. Text only; formalization + prompt propagation deferred to 119-B.\n- **8.3 — 118 pointer.** Added a distinct numbered surface (`## Pointer 1: Module-Resolution Contract (Spec 118)`) to `DesignerPunk-Systems-Overview.md`, referencing RSA § Module-Resolution Contract by id.\n- **8.5 — Cross-ref migration.** Migrated 226 active-doc markdown-link cross-refs across 43 docs to **bare doc `id`s** (resolver-strategy-1 consistent), via an auditable codemod. Fixed stale refs in passing (`./Core%20Goals.md` → `core-goals`; 3 doubly-stale Figma traversal refs). Migrated the 11 always-loaded identity-doc MCP-query `path:` examples by hand. 115 out-of-corpus targets surfaced as exceptions (NOT silently physical-pathed). Historical docs untouched.",
+        "whyItMatters": "The always-set is now the locked 9-doc identity core (operational law split cleanly: Start Up Tasks owns the *start*, Task Completion Protocol owns the *end*), with the two stray process docs demoted — satisfying Req 6 AC4 (\"no doc outside the AC1 set is `always`\"). The calibration text + 118 pointer make guidance discoverable during the 119-A→122→119-B window when the always-loaded meta-guide map is gone. Cross-ref migration to bare `id`s re-decouples references from physical location (the spec's core win) — a relocation or rename no longer breaks them.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "prominent",
+      "deliverableType": "Agent"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Filename Normalization (Mass-Rename of 10 Space-Bearing Files)",
+        "taskType": "Unknown",
+        "whatWasDone": "Renamed (via `git mv`, history preserved) the 10 verified space-bearing steering files in `.kiro/steering/` to kebab-case/no-spaces, the sequencing step that runs after the Task 2 resolver + Task 3 frozen legacy-path manifest are live and before Task 6 relocation. Each file's Task-4-frozen frontmatter `id:` is byte-unchanged (the rename touches only the filename). Updated the functional `always`-inclusion wiring keyed on the renamed filenames: the agent-definition `resources[]` arrays across all 8 agent JSONs (`file://`/`skill://` entries repointed by filename, schemes + directory preserved) and `scripts/governance-check.sh`'s `STARTUP_FILE` constant. Recorded the kebab-case/no-spaces filename standard as input for the Task 12 conventions doc. Also fixed 2 Thurgood-domain test-infra files (`src/__tests__/browser-distribution/`) that hardcoded the old `Browser Distribution Guide.md` path.",
+        "whyItMatters": "Filenames become tool- and shell-safe and decoupled from document identity (identity is the immutable `id`; a rename changes only the filename). Critically, the agent `resources[]` `file://`/`skill://` wiring is loaded by Kiro's resource loader, which is NOT covered by the Docs-MCP legacy-path fallback — so a rename that ignored those entries would silently break per-session ambient context. Old space-bearing path references elsewhere (prose, prompts) keep resolving via the frozen manifest's `legacy-fallback` during the transition window.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "prominent",
+      "deliverableType": "Agent"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Build-Time Uniqueness Guard + 89-Doc `id` Backfill Codemod",
+        "taskType": "Unknown",
+        "whatWasDone": "Built the build-time `id`-uniqueness guard + the 89-doc backfill codemod, the third leg of the addressing-plane integrity machinery (with the Task 2 resolver + the Task 3 frozen manifest). `checkIdUniqueness(roots)` (core in `mcp-server/src/id-guard/check-id-uniqueness.ts`) scans the on-disk corpus across BOTH `governance/` (empty pre-relocation, handled gracefully) and `.kiro/steering/`, returning `{ ok, collisions, derived, totalDocs, exceptions }` — a derived collision is treated identically to an explicit one. It is wired \"one function, two callers\": the net-new `npm run check:id-uniqueness` CI step (backstop) AND the Thurgood metadata-validation hook (`scripts/validate-steering-metadata.js`, front line) invoke the SAME core. The codemod (`backfill-doc-ids.ts`) writes the derived slug as a literal `id:` into frontmatter (frontmatter-only, body untouched), HALTS on any derived collision before writing, is idempotent, and surfaces `idSource:'none'` docs as exceptions rather than writing `id: ''`. id derivation reuses the resolver's `extractFrontmatterInfo` exactly.",
+        "whyItMatters": "The literal `id:` freezes each doc's stable address on disk so the resolver never re-derives it, and the guard prevents two docs from ever claiming the same id. Critically, every backfilled id MUST equal the id Task 3 froze into the legacy-path manifest — otherwise a legacy prompt ref would silently 404 during the relocation transition window. The codemod cross-checks this after applying.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "prominent",
+      "deliverableType": "MCP"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Legacy-Path Forwarding Manifest (Producer + Frozen Artifact)",
+        "taskType": "Unknown",
+        "whatWasDone": "Built the legacy-path forwarding manifest producer + froze its artifact + wired the re-seed. The producer (`scripts/generate-legacy-path-manifest.ts` over the testable core `mcp-server/src/legacy-path/generate-manifest.ts`) takes two inputs — the spaces-tolerant grep-extract of `.kiro/steering/…md` refs from the 8 prompts AND the literal Req-3 rename map (10 space-bearing originals) — derives each target's `id` via the resolver's own `extractFrontmatterInfo`, de-dupes, asserts every `legacyPath` is `..`-free (throws otherwise), and emits `LegacyPathManifest`. The frozen artifact lives at `mcp-server/src/legacy-path/legacy-path-manifest.ts` as the TS const `FROZEN_LEGACY_MANIFEST` (changed JSON→TS so it survives compilation — the docs MCP runs from tsc/esbuild output, which does NOT copy a runtime-read JSON; see Task 3 parent completion, Honest Note 6). The re-seed is wired at the **tail of `DocumentIndexer.indexDirectory`** (the chokepoint every index-build path funnels through), so legacy refs keep resolving after every full re-scan / `rebuild_index`.",
+        "whyItMatters": "This is the second hard prerequisite (with the Task 2 resolver) for any rename/relocation. After Tasks 5/6 the original `.kiro/steering/…` strings vanish from disk and cannot be recovered — the frozen JSON is the only record. It is a one-way gate: it MUST be frozen + checked in before Tasks 5/6. Without the re-seed wiring, legacy refs would silently stop resolving after the first `rebuild_index` (the exact regression Task 2 flagged).",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "prominent",
+      "deliverableType": "MCP"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "`id` Addressing Plane — Reader + Type + Resolver",
+        "taskType": "Unknown",
+        "whatWasDone": "Landed the net-new Docs-MCP addressing plane: a frontmatter `id`/`idSource` reader + `slugifyTitle`, `DocumentMetadata.id`, the `idIndex`/`legacyPathIndex` maps with full index maintenance, the `LegacyPathManifest` type + loader, and `resolveRef` — the single chokepoint (`getDocumentContent`) all five path-taking tools funnel through. Resolution order: **id → indexed-key → legacy-fallback → DocumentNotResolved**, with one shared `normalizeRef` used by both the indexed-key and legacy probes.",
+        "whyItMatters": "This is the hard prerequisite (with Task 3) for any rename/relocation: it makes doc addressing location-independent so the 8 prompts' 60 legacy `.kiro/steering/…` paths keep resolving through the transition window via the fallback, while every doc is reachable by its stable `id`. Design Decision 1 fixed the resolver at one chokepoint — all five tools inherit id-resolution with zero per-tool change.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "prominent",
+      "deliverableType": "MCP"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "MCP/Browser Principled Exception + Boot/Smoke Guard",
+        "taskType": "Unknown",
+        "whatWasDone": "Paired the bundled-subsystem exemption (the 3 MCP servers + the browser bundle are exempt from the runtime-resolution contract because bundling resolves imports at build time) with a **boot/smoke guard**, so the exemption is a coherent, enforced boundary rather than a silent corner. Added an MCP guard (subprocess spawn → stderr ready sentinel) and a browser guard (jsdom execution → custom-element registration), wired into the consumer-guard CI lane after a bundle build. Staged the exemption-boundary documentation for the Task-11 governance ballot.",
+        "whyItMatters": "R12's whole point: an exemption that isn't guarded is a silent corner where a bundled subsystem could break unnoticed. These guards make the exempt subsystems fail loudly on a boot-time resolution error, completing the direction-agnostic guard set.",
+        "keyChanges": [
+          "`tests/mcp-boot-smoke.test.ts` + `tests/browser-boot-smoke.test.ts` — the paired boot/smoke guards (bite-tested).",
+          "`consumer-guard.yml` — `build:mcp`/`build:browser` + the two guard steps.",
+          "`findings/mcp-browser-exemption-boundary.md` — staged boundary doc (ts-node dev configs documented per Decision 2; steering form rides Task 11)."
+        ],
+        "impact": [
+          "Bundled-subsystem exemption is now guarded (both guards verified to bite on broken bundles).",
+          "R12 single-owner guard set complete; direction-agnostic guards (Tasks 4 + 5) done.",
+          "Full sweep green: `npm run build` exit 0, `npm test` 374/8972, token-index unchanged.",
+          "--",
+          "For detailed implementation notes, see [task-5-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-5-completion.md)*"
+        ]
+      },
+      "priority": "prominent",
+      "deliverableType": "MCP"
+    },
+    {
+      "change": {
+        "specName": "117-token-index-generation-integrity",
+        "taskTitle": "Generation-Integrity Verification & Documented-CLI Trust Gate (R2 / R6)",
+        "taskType": "Unknown",
+        "whatWasDone": "Finalized the repeatable generation-integrity verification and ran the documented-CLI trust gate end-to-end. Added the absolute correctness-property invariants (P3 no-legacy-color, P5 theme-varying-base-scoped with an anti-conflation sentinel), built the R4 consumer-blast-radius regression tests, ratified the intentional-divergence manifest as empty, upgraded the runner to report honest provenance + a trust-gate verdict, and verified the Application MCP serves the corrected data.",
+        "whyItMatters": "This is the recurrence-prevention deliverable: the re-diff catches drift, and the new invariants catch the *absolute* defects the re-diff is blind to — exactly how Finding 1 (rgba in both committed and fresh) and the §4.1 theme-varying re-break could otherwise slip through. The trust gate confirms the whole chain works through the **documented CLI** (not a workaround), which is what lifts the audit's `provisional` ceiling.",
+        "keyChanges": [
+          "`src/tools/integrity/Invariants.ts` (new) — P3/P5 absolute assertions + the named anti-conflation sentinel",
+          "`src/tools/integrity/__tests__/consumer-package-mode.test.ts` (new) — R4 consumer blast radius, both halves, in package mode",
+          "`manifest.ts` — ratified EMPTY end-state (baselines corrected → nothing to forgive)",
+          "`cli/run-audit.ts` — honest provenance (documented-cli/non-provisional) + invariants + trust-gate VERDICT + exit code"
+        ],
+        "impact": [
+          "**Trust gate MET**: documented CLI regenerates in place → `token-index/` git-clean; full-inventory re-diff all-equal (14/14); P3 + P5 hold; verdict `provisional=false`",
+          "**R6 AC2**: MCP reindexed (healthy, 33 component tokens); serves OKLCH primitives (`gray400` → `oklch(0.42 0.018 260)`), the recovered component tokens (`inputcheckbox.box.md`), and correct theme-varying flags",
+          "Full suite **8969 tests** (14 new) + `tsc` green (re-verified in main loop)",
+          "**Ready to certify non-provisionally** — pending Peter's ratification (certification is a governance act)",
+          "Minor follow-on noted: MCP semantic `resolvedValue` doesn't apply per-mode overrides (token-index format limitation; out of 117 scope)"
+        ]
+      },
+      "priority": "prominent",
+      "deliverableType": "MCP"
+    },
+    {
+      "change": {
+        "specName": "121-claude-code-portability",
+        "taskTitle": "Section Addressing + Summary-First",
+        "taskType": "Unknown",
+        "whatWasDone": "Fixed the highest-severity behavioral risk the dry-run found — `get_section` silently under-retrieving a stub when the substance lives under a sibling heading:\n- `get_section` gains optional `parent` and a stable `sectionId` so a non-unique heading is addressable to a specific occurrence; a non-unique heading with no disambiguator now returns a disambiguation prompt (candidate parents + IDs) instead of silently picking the first match.\n- `sectionId` is positional (`s{index}`) — stable to heading *rewording* (the named Finding 2 case); the durable source-embedded alternative is captured as a roadmap gap.\n- `get_section` now returns `siblingHeadings` so a stub carries a cue that more exists.\n- The summary-first workflow rule is encoded as an importable typed constant (`WORKFLOW_RULES`) that Spec 122's generator can propagate into every agent prompt from one source of truth.",
+        "whyItMatters": "Finding 1 — a single-query agent retrieving a preamble stub and returning it as if complete, with no signal that the real content is one heading over — is the confident-wrong failure that reproduced *during this very spec's formalization*. The `siblingHeadings` cue + the hard summary-first rule close it. Findings 2 (heading-string drift) and 3 (ambiguous non-unique headings) are closed by the stable `sectionId` and the ambiguity signal. All additive: unique-heading retrieval is unchanged.",
+        "keyChanges": [
+          "`mcp-server/src/indexer/section-parser.ts` — structural heading tree, positional `sectionId`, sibling computation, `resolveSection`.",
+          "`mcp-server/src/rules/workflow-rules.ts` (new) — `WORKFLOW_RULES` summary-first artifact.",
+          "`get_section` gains `parent`/`sectionId` params + `siblingHeadings` + structured ambiguity result.",
+          "Roadmap Gap 7 records the source-embedded-ID future enhancement."
+        ],
+        "impact": [
+          "Finding 1 (stub under-retrieval) — sibling cue + hard summary-first rule",
+          "Finding 2 (heading drift) — positional `sectionId` stable to rewording",
+          "Finding 3 (ambiguous heading) — disambiguation prompt, not silent first-match",
+          "Summary-first encoded for Spec 122 to propagate",
+          "Additive; tsc clean; 520 docs-MCP tests pass",
+          "Note: positional IDs drift on reorder/insert-before → roadmap Gap 7 (source-embedded IDs) for the durable fix",
+          "--",
+          "For detailed implementation notes, see [task-6-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-6-parent-completion.md)*"
+        ]
+      },
+      "priority": "prominent",
+      "deliverableType": "Agent"
+    },
+    {
+      "change": {
+        "specName": "121-claude-code-portability",
+        "taskTitle": "Application-MCP Tool-Boundary Contract Test",
+        "taskType": "Unknown",
+        "whatWasDone": "Built the end-to-end contract test that makes 121's additive guarantee enforceable instead of aspirational (the \"H1 gap\"):\n- A `callTool`-level harness drives `get_token_details` and `find_components` through the real `handleTool` response-assembly boundary (not the QueryEngine/indexer underneath).\n- Exact-key-set assertions on both tools so any field add/remove/rename fails loud; the resolved-value triple, theme-varying bundle, \"no `value` on semantics\", and `ApplicationSummary` shape are all pinned.\n- Calibration fixtures assert the Task-5 confidence tiers at the boundary for both tools — including the now-satisfiable RTL recall floor (`strong` via the docs aliases).\n- Tightened two vacuous `get_section` assertions that silently passed on error.",
+        "whyItMatters": "Req 3 existed because no test imported `application-mcp-server/src/index.ts`, so the emitted shapes of the two tools — the contracts Tasks 1, 2, and 5 depend on — were never enforced end-to-end. Now a breaking change to either tool's shape fails the suite loudly, the additive guarantee is verifiable, and the discovery confidence tiers (down to the adversarial false-confidence guards and the RTL semantic-synonym floor) are asserted at the tool boundary. Building the harness also surfaced and fixed a latent bug: `index.ts` was auto-starting the production server on import.",
+        "keyChanges": [
+          "`application-mcp-server/src/__tests__/tool-boundary.contract.test.ts` (+71 tests) + additive `createTestableServer`/`callTool` export + `require.main` guard in `index.ts`.",
+          "`mcp-server/src/query/__tests__/find-docs-calibration.test.ts` (+25 tests) driving `find_docs` through `handleFindDocs`.",
+          "Two tightened `get_section` integration assertions."
+        ],
+        "impact": [
+          "Additive guarantee enforced (exact key-set; breaking = loud)",
+          "Token triple / theme-varying bundle / no-`value`-on-semantics / `ApplicationSummary` / empty contract all pinned",
+          "Tier calibration fixtures for both tools at the boundary; RTL floor satisfied (`strong`)",
+          "tsc clean; 320 (app) + 496 (docs) tests pass",
+          "Latent production-auto-start-on-import bug fixed",
+          "Note: `null` resolutionDepth is unreachable via `callTool` (covered at unit level); \"spec planning\" ranks the target doc #2 within `strong` (Layer-3, not pinned)",
+          "--",
+          "For detailed implementation notes, see [task-4-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-4-parent-completion.md)*"
+        ]
+      },
+      "priority": "prominent",
+      "deliverableType": "Tool"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Steering Addressing Conventions — Standalone Doc",
+        "taskType": "Unknown",
+        "whatWasDone": "",
+        "whyItMatters": "",
+        "keyChanges": [],
+        "impact": [
+          "Governance corpus: 80 → 81 docs (init.test.ts updated; sync-manifest entry added).",
+          "`find_docs({ concept: \"doc id convention\" })` → new doc ranks 1st, `matchConfidence: strong`.",
+          "Relocation-integrity gate: PASS, Axis 3 confirms `governance/ keys=81 (≥80)`.",
+          "All 377 test suites green; root tsc + typecheck:scripts clean; MCP server tsc clean.",
+          "id-uniqueness guard: PASS, 90 total docs, 0 collisions.",
+          "The two docs are now bidirectionally cross-referenced in bare-id form (OB-1 durable)."
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "119-A-steering-relocation-serving-contract",
+        "taskTitle": "Doc Inventory + Comprehensive Steering-Path Coupling Sweep",
+        "taskType": "Unknown",
+        "whatWasDone": "Produced the two foundation artifacts for 119-A: a complete 89-doc inventory with post-migration roles (`doc-inventory.md`), and a comprehensive, classified sweep of every surface coupling to a `.kiro/steering/…` path (`coupling-sweep.md`). No code introduced, no document content modified. These artifacts are the authoritative count-source the Task 11 / Req 8 relocation-integrity gate asserts against.",
+        "whyItMatters": "Relocation breaks every surface that addresses docs by physical path. This inventory is what lets the move proceed safely: it names each must-fix coupling (so nothing silently 404s) and separates it from surfaces the legacy-path fallback rescues. It is the per-surface input to the Severable Seam Partition — the MUST-FIX bucket *is* the gate's must-fix axis.",
+        "keyChanges": [],
+        "impact": []
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "124-component-token-return-contract",
+        "taskTitle": "Guards, Negative Case, Isolation Audit & Dual-Instance Certification",
+        "taskType": "Unknown",
+        "whatWasDone": "Closed the delivery gate. Added the negative guard (unbranded module harvests to zero), the class-invariant guard (isolated `defineComponentTokens` leaves the registry empty — proves sole writer), and a constructed dual-instance brand-survival test via `jest.isolateModules`. Ran the packed-install arbiter and the isolation audit. All three delivery-gate conditions met.",
+        "whyItMatters": "Same-process green can't prove cross-boundary brand survival — it passes for both the correct value-survivable string-key brand AND a broken per-copy `Symbol()`. Task 4 supplies the falsifiable proof: the dual-instance test was shown to have **teeth** (a temporary plain-`Symbol()` variant went RED on 3/4 cases; reverted byte-clean), and the packed-install arbiter proves end-to-end survival across a real second copy of `@3fn/core/build`.",
+        "keyChanges": [],
+        "impact": [
+          "Delivery gate CLOSED: dual-instance proof green; `npm test` **375 suites / 8979 tests / 0 failed**; `tsc` clean; `build` ok; `git diff token-index/` empty (value AND order).",
+          "Deferred to 118's 9.5.3: the registerless-bin dual-instance re-cert (124 proves the register-keep bin; 118 becomes a re-run).",
+          "Task 6 (118 handback) unblocked, pending Peter's authorization.",
+          "Double-registration issue plausibly closed (confirm in Task 5)."
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "Module-Direction Decision Point",
+        "taskType": "Unknown",
+        "whatWasDone": "Committed the module-resolution direction on the assembled Increment-2 evidence: **CJS-consistency, executed fully in-spec, escape-hatch NOT elected.** Ada interpreted the evidence independently; the 122/123 no-ESM-hard-requirement pre-check was cleared; Peter committed. Recorded in `findings/direction-decision.md`, with the future ESM-modernization path sized and roadmapped.",
+        "whyItMatters": "The April→June→117 cycle was caused by *assuming* this answer. Task 8 makes it **on evidence**: three independent axes (the shipped jest-preset blast radius, the surface being CJS top-to-bottom today, and the Task-1 finding that the ESM-native loader fails from the CJS host) point to CJS; the pro-ESM axes neutralize because the loader already resolves consumer configs of *both* styles, so internal direction is decoupled from consumer authoring. CJS-consistency is the lowest-incoherence end-state and lets 118 close on an *executed* coherent system — coherence-by-consolidation, not coherence-by-disruption.",
+        "keyChanges": [
+          "`findings/direction-decision.md` — the committed direction + rationale + escape-hatch disposition (not elected) + ESM-modernization sizing + 122/123 clearance.",
+          "`tasks.md` — Task 8 / 8.1 marked done.",
+          "`docs/roadmap/m0a-deferred-items.md` — ESM-modernization path + the surfaced-issue triage recorded."
+        ],
+        "impact": [
+          "**Direction committed** — unblocks the Groups 9/10 second tasks pass (Group 9 = CJS branch of 3a/3b/3c + lint polarity bans explicit extensions; Group 10 does not fire) AND Specs 122/123 formalization.",
+          "**118 closes on an executed end-state** — no escape-hatch, the consumer jest-preset never touched.",
+          "**Forward-compat preserved** — consumers keep authoring ESM configs; the ESM door stays open with the migration path already mapped.",
+          "**Next:** Task 11 (governance codification) + the second tasks pass for Increment 3 (CJS execution).",
+          "--",
+          "For detailed notes, see [task-8-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-8-completion.md)*"
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "Spec 117 Closeout",
+        "taskType": "Unknown",
+        "whatWasDone": "Wrote the authoritative guidance note into Spec 117's directory (the Decision-4 closeout mechanism), now that Spec 118 Increment 1 makes the documented config-load path certain. The note supersedes 117's empirically-false decision-record item 3, advises 117 to re-run its own Task 5.3 trust gate, and scopes restored trust to the config-load path.",
+        "whyItMatters": "117 had been parked provisional with a known-false decision-record (the \"one-liner unblocks the CLI\" claim). This note records the real unblock (118's loader + the `./config` export fix) and hands 117 a clear, scoped path to certify non-provisionally — closing the dormant regression risk without 118 overreaching into 117's own gate.",
+        "keyChanges": [
+          "`.kiro/specs/117-…/findings/118-closeout-note.md` — the guidance note (supersedes items 3 & 7; advises Task 5.3 re-run; config-load-path-only trust).",
+          "Cross-reference added in 117's decision-record."
+        ],
+        "impact": [
+          "117's authoritative correction is on record; 117 can re-run Task 5.3 and certify.",
+          "Restored trust scoped honestly to the config-load path; raw-`.ts` exports remain pending Increment 3b.",
+          "Completes the Increment-1 critical path (Tasks 1, 2, 3, 6).",
+          "--",
+          "For detailed implementation notes, see [task-6-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-6-completion.md)*"
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "Empirical Loader Selection",
+        "taskType": "Unknown",
+        "whatWasDone": "Built a resolver-faithful test harness and empirically selected the TS-aware loader for `loadConfig` by exercising three candidate approaches against the failing resolution matrix, in both ESM- and CJS-authored config directions. **Approach A** (`tsx/cjs/api` namespaced `register` + scoped `require` + `unregister()`) was selected; **approach B (`tsImport`) failed** all rows from the CommonJS host; jiti was not needed.",
+        "whyItMatters": "The recurring `.ts`-config-resolution bug had been \"fixed\" twice by assumption and regressed both times. This task decided the loader on **evidence, not assumption** — and the evidence overturned the design's initial lean, catching a non-working approach *before* it shipped.",
+        "keyChanges": [
+          "New resolution-matrix harness (`src/config/__resolution-matrix__/`, real `node` subprocesses, not jest) + `npm run test:resolution-matrix`.",
+          "Decision record `findings/loader-selection.md`: approach A selected, with accept-criteria evidence and the OQ-1 (CJS-host/ESM-loader boundary) result.",
+          "No production code changed yet — the permanent swap into `loadConfig` is Task 2."
+        ],
+        "impact": [
+          "Loader choice settled empirically (A); OQ-1 resolved.",
+          "A non-working approach (B from a CJS host) was caught before implementation.",
+          "A's known cost (global mutation + mandatory `unregister()`) is documented and will be guarded by the Task-3 subprocess guard.",
+          "--",
+          "For detailed implementation notes, see [task-1-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-1-completion.md)*"
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Other"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "Contract-Preserving Swap inside `loadConfig`",
+        "taskType": "Unknown",
+        "whatWasDone": "Replaced the broken `await import()` in `loadConfig` with the empirically-selected loader (Approach A: `tsx/cjs/api` namespaced `register` + scoped `require` + `unregister()`), so consumer `.ts` configs and their transitive relative raw-`.ts` imports now resolve at runtime. Introduced an **injectable loader seam** so the production path carries no test-environment detection; in-process jest tests inject a jest-compatible loader explicitly.",
+        "whyItMatters": "This is the production fix for the recurring config-load failure — and the genuine prerequisite that unblocks Spec 117. The seam design avoided shipping a `JEST_WORKER_ID` fork that would have re-introduced the broken resolver path conditionally into any jest environment, including consuming products'.",
+        "keyChanges": [
+          "`src/config/ConfigLoader.ts`: Approach A swap + exported `ConfigModuleLoader` seam (`loadConfig(cwd, loadModule = defaultConfigModuleLoader)`).",
+          "`src/config/__tests__/ConfigLoader.test.ts`: tests inject a jest-compatible loader explicitly.",
+          "Real-`node` verification confirms the production `loadConfig` resolves a faithful consumer config."
+        ],
+        "impact": [
+          "The documented config-load path works (matrix green; real `loadConfig` resolves a faithful config).",
+          "No test-environment detection in the shipped loader; production is unconditionally Approach A.",
+          "Contract preserved: all five callers unaffected; fail-loud behavior intact.",
+          "Unblocks Spec 117's closeout (Task 6).",
+          "--",
+          "For detailed implementation notes, see [task-2-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-2-completion.md)*"
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Process"
+    },
+    {
+      "change": {
+        "specName": "118-module-resolution-coherence",
+        "taskTitle": "Consumer-Config Subprocess Guard + CI Lane",
+        "taskType": "Unknown",
+        "whatWasDone": "Added a faithful-consumer subprocess guard that exercises the documented config-load workflow through the real `npx designerpunk generate` bin path (ESM- and CJS-authored configs, sentinel via a transitive raw-`.ts` override), and created the repo's first test-running CI lane (`consumer-guard.yml`) to run it. Reaching a green lane surfaced and resolved the real exports barrier behind the documented config.",
+        "whyItMatters": "This is the guard that ends the silent-regression cycle — and it validated Spec 118's config-load fix end-to-end: the full documented consumer workflow (`init` → config importing `@3fn/core/config` → `generate` → 217 tokens × 3 platforms) now runs, where before it couldn't even load the config.",
+        "keyChanges": [
+          "Faithful-consumer subprocess guard (real bin path, not in-process jest) — both authoring directions, positive sentinel assertion.",
+          "`consumer-guard.yml` CI lane (minimal; the standing home for the spec's guards).",
+          "`exports[\"./config\"]` gained a `require` condition (completes the documented config-load path; distinct from Increment-3b raw-`.ts` reconciliation).",
+          "Two pre-existing consumer-test issues triaged: a stale `generate` assertion (fixed → `dist/tokens/`) and a `MathematicalRelationshipParser` validator defect (skipped + tracked in `.kiro/issues/`, out of scope)."
+        ],
+        "impact": [
+          "Consumer-guard lane green (6 passed, 1 skipped, 0 failed); documented workflow runs end-to-end.",
+          "Increment-1/bin-hook coexistence certified by the real-subprocess guard.",
+          "Increment 1 (Tasks 1–3) complete → unblocks the Spec 117 closeout (Task 6).",
+          "Branch protection (making the lane a required check) is a repo-settings action for Peter.",
+          "--",
+          "For detailed implementation notes, see [task-3-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-3-completion.md)*"
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Process"
+    },
+    {
+      "change": {
+        "specName": "117-token-index-generation-integrity",
+        "taskTitle": "Investigation & Baseline Audit",
+        "taskType": "Unknown",
+        "whatWasDone": "Built a semantic-equality generation-integrity engine and ran a complete committed-vs-fresh baseline audit of the token-index/dist surface. Classified every divergence into four provenance buckets, confirmed a shared code root cause behind the OKLCH color and theme-varying findings, and ran a human checkpoint producing a dated DecisionRecord that re-shaped the fix plan before any code change.",
+        "whyItMatters": "The token-index drift was the third silent-generation-drift incident in two days. The audit converts \"discovered by accident\" into \"detectable by design\" and establishes — on evidence, not inference — that three symptoms share two causes, so the fixes target roots rather than leaves.",
+        "keyChanges": [
+          "`src/tools/integrity/` — `GenerationIntegrityCheck` engine (semantic-equality normalization; 22 tests, strict-clean)",
+          "`findings/{raw-divergences,classification,audit-report,decision-record}.md` — full audit + ratified decisions",
+          "DecisionRecord: **merge R3+R5** (`sharedRootCauseConfirmed: true`), **fold in Finding 2**, **defer N1**, **fold N2 into R4**",
+          "Issue logs: N1 deferred; originating issue updated with the confirmed Finding-2 diagnosis"
+        ],
+        "impact": [
+          "Fix plan rests on evidence (single-variable attribution preserved — no fix before the audit completed)",
+          "The audit engine doubles as the recurrence-preventing verification (reused in Task 5)",
+          "Both light passes (Ada, Lina) confirmed the rewritten plan clean; the audit's one honest gap (double-registration) was carried forward into a *better* fix framing"
+        ],
+        "deliverables": [
+          {
+            "priority": "🔵",
+            "type": "Infrastructure",
+            "description": "generation-integrity audit engine + verification foundation"
+          },
+          {
+            "priority": "🔵",
+            "type": "Governance",
+            "description": "dated DecisionRecord + clean-exit issue logging"
+          }
+        ]
+      },
+      "priority": "context",
+      "deliverableType": "Infrastructure"
+    }
+  ],
+  "recommendation": {
+    "currentVersion": "12.0.5",
+    "recommendedVersion": "13.0.0",
+    "bumpType": "major",
+    "rationale": "37 changes: 18 breaking, 10 prominent, 9 context",
+    "confidence": 0.9,
+    "changes": [
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Task 11 Summary (COMPLETE): Relocation-Integrity Gate (119-A Exit Check)",
+          "taskType": "Unknown",
+          "whatWasDone": "Built the 119-A closed-loop exit gate (design Component 5 / Req 8): a testable core at `mcp-server/src/relocation-integrity-gate/relocation-integrity-gate.ts` + a thin runner at `scripts/relocation-integrity-gate.ts` (`npx tsx scripts/relocation-integrity-gate.ts`), with 21 unit tests. The gate builds a real `DocumentIndexer` over `governance/` (the frozen legacy-path manifest auto-seeds at the tail of `indexDirectory`) and asserts four axes + a scope assertion, then was **RUN → full PASS**.",
+          "whyItMatters": "The dissolved Phase-10 \"wiring lands atomically with the prompt edits\" guarantee no longer holds (the prompts keep their legacy paths through the window). This gate replaces it (Req 8 AC9) with a **per-reference / per-surface** proof that relocation broke nothing on the critical path — and gives the severable seam its teeth (Req 8 AC8): it passes on the Critical (119-A) rows ALONE, excluding the manifest build / catalog generation.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "breaking",
+        "deliverableType": "Component"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Per-Agent Five-Class Ambient-Set Design Artifact (Req 14, design-only)",
+          "taskType": "Unknown",
+          "whatWasDone": "Produced `.kiro/specs/119-A-steering-relocation-serving-contract/per-agent-ambient-design.md` — the typed `PerAgentAmbientDesign[]` design artifact (122's canonical input) covering **all 8 agents**. For each agent, every ambient member is assigned to one of the five AXA classes (formative / reflexive-principle / governance-as-law / ground-truth-manifest / capability-catalog) using the Component-7 shape (`design.md` §7): `agent`, `agentType`, `members[]` with `ref` / `class` / `rationale` / `status119A`. Content was sourced from `per-agent-ax-assessments.md` (input-of-record, Req 14 AC5) and captured as a design appendix — not re-derived. This is the **design half** only; manifest *build* and catalog *generation* stay behind the severable seam. **No running code introduced.**",
+          "whyItMatters": "122 cannot generate each agent's ambient composition without a canonical per-agent design to generate *from* — this artifact IS that input (Req 14). The seam is encoded **per-member** via `status119A`: ground-truth-manifest members are `design-only-build-deferred`, capability-catalog members are `design-only-gen-deferred`, and only formative / reflexive-principle / governance-as-law members are `locked-always`. So the Req 8 AC8 gate can assert \"the design exists\" without ever requiring a manifest to be built or a catalog generated — the seam working as designed.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "breaking",
+        "deliverableType": "Component"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Relocate Non-Identity Docs to `governance/` (Atomic with Companion Re-Point)",
+          "taskType": "Unknown",
+          "whatWasDone": "Moved the **80** relocated-role steering docs from `.kiro/steering/` to a new project-root `governance/` directory (79 via `git mv` with history preserved; 1, `Component-Schema-Format.md`, staged as a tracked rename after resolving a pre-existing case-mismatch between git's lowercase-tracked name and the on-disk capital name). The **9** docs that stay (8 identity + the removed-role meta-guide, deleted later in Task 10) remain in `.kiro/steering/`. Relocated-doc content is byte-unchanged: 76 of 80 are `R100` (byte-identical), and the only 4 with edits (`R099`) carry ONLY their intended single-line change (3 reverse-link depth fixes + 1 Integration-Guide MCP-config repoint). Atomically (subtask 6.2) re-pointed all **22** family-guidance `companion:` values (9 top-level + 13 nested) + the README template + the 3 reverse-coupling `../../family-guidance/` links (depth shortened to `../`) to the `governance/` form. Recorded the rollback + idempotency contract (6.3).",
+          "whyItMatters": "Relocation is the spec's highest-risk op: it physically removes the original paths, so it depends on the resolver + frozen legacy-path manifest being live first. Landing the move + companion re-point as one atomic unit prevents a transient window where a relocated Component-Family doc with a lagged companion would fire `FamilyGuidanceIndexer` warnings. Byte-unchanged content keeps the move a pure relocation (identity is the immutable `id`; only location changes), and the legacy-path fallback means references resolve in both rolled-forward and rolled-back states — no orphan window.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "breaking",
+        "deliverableType": "Component"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "MCP + Packaging Rewiring to `governance/`",
+          "taskType": "Unknown",
+          "whatWasDone": "Rewired every MUST-FIX coupling surface (coupling-sweep Bucket A) from `.kiro/steering/` to `governance/`, landed atomically with the Task 6 move. MCP dir: `DEFAULT_STEERING_DIR` (`mcp-server/src/index.ts`) + `.cursor/mcp.json` `MCP_STEERING_DIR` → `governance/` (env var name retained as a stable contract). Packaging: `package.json files[]` ADDED `governance/`, KEPT `.kiro/steering/`. Init: template repointed + dead `get_documentation_map` stripped from its `autoApprove`; `init.ts` ADDED a `governance/` copyDir alongside the kept `.kiro/steering` copy; `init.test.ts` full assertion set re-derived for the two-root split. Sync: `MANAGED_DIRS` gained `{ path: 'governance', tier: 'governance' }`; added a net-new stale-`MCP_STEERING_DIR` detector (`SteeringDirCheck.ts`) wired into `runSync`. Regenerated `.kiro/sync-manifest.json` via the canonical generator. Repointed the agent `resources` arrays (120 relocating entries across `file://` + `skill://`, identity left), figma (`VariantAnalyzer`, `DesignExtractor`), `extract-component-meta.ts`, and `designerpunk.ts`. Fixed all test fallout from the move.",
+          "whyItMatters": "Bucket A surfaces have **no MCP fallback** — relocation functionally breaks each unless repointed (these are the Task 11 / Req 8 AC7 gate's must-fix axis). The `resources` repoint is the highest-leverage: 120 entries span BOTH schemes (a `file://`-only pass would leave ~68 `skill://` refs pointing at vanished paths), and identity entries must stay put. Keeping `.kiro/steering/` in `files[]` + the init copyDir preserves identity-doc shipping to consumers; the sync `MANAGED_DIRS` split + stale-detector keep consumers reconcilable across the move.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "breaking",
+        "deliverableType": "Component"
+      },
+      {
+        "change": {
+          "specName": "124-component-token-return-contract",
+          "taskTitle": "Spec Ratification & Pre-Change Baseline",
+          "taskType": "Unknown",
+          "whatWasDone": "Ratified requirements + design and captured the pre-change baseline. Peter ratified on 2026-06-26 after a two-lead pre-ratification review (Lina + Ada, both CONDITIONAL GO); three mechanical block items were resolved in spec text first (dedup the frozen brand string; add JSDoc-update work to Task 3.1; add the 5th migration file). Baseline captured in the Task 2 spike: `tsc` + `build` green; `generate` emitted \"Component tokens: 0\".",
+          "whyItMatters": "The baseline \"0 component tokens\" / non-empty `git diff` is not a healthy green-before state — it is the exact 118 dual-instance defect Spec 124 fixes (side-effect registration lands in a different registry instance than `getAll()` reads). The committed 33-token `components.yaml` (produced under Spec 117 with a single registry) is the order/value target the Task 3 harvest must reproduce, so R6's clean-diff gate only becomes meaningful after Task 3.",
+          "keyChanges": [
+            "`requirements.md`, `design.md`, `tasks.md` — ratified; locked decisions encoded, no architectural fork left open.",
+            "Baseline recorded in `findings/r6-ordering-spike.md` §5."
+          ],
+          "impact": [
+            "Spec ratified; 3 pre-ratification block items resolved in spec text.",
+            "Baseline captured: `tsc` green, `build` green (pre-existing export-condition warnings only).",
+            "Baseline `generate` = 0 component tokens (the 118 dual-instance defect 124 fixes), so R6 is not yet reproducible — expected, consistent with the 118 PAUSE."
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Component"
+      },
+      {
+        "change": {
+          "specName": "124-component-token-return-contract",
+          "taskTitle": "Token-Index Ordering Spike",
+          "taskType": "Unknown",
+          "whatWasDone": "Identified the committed `token-index/components.yaml` ordering rule and decided where deterministic order is imposed for the harvest, so the regenerated index reproduces the committed file (R6). The rule is **directory-scan order, NOT a sort**: Source 1 (`progress.ts`) first, then Source 2 (`src/components/core` scan in `readdirSync` order), brand-filtered, with authored intra-file array order preserved.",
+          "whyItMatters": "The R6 gate is `git diff token-index/` empty. If the harvest sorted the array, the regenerated file would reorder to alphabetical and the diff would never be empty. The spike proved (by falsifying alphabetical and component+name candidates against the committed sequence) that the committed order is the scan/traversal order itself — so the harvest must preserve it and introduce no sort key.",
+          "keyChanges": [],
+          "impact": [
+            "Ordering rule confirmed exact against the committed file; `readdirSync` verified stable (and lexicographic on this filesystem).",
+            "Watch item to Task 3: multi-call files now order intra-file by `Object.values(mod)` enumeration; the R6 diff catches any shift.",
+            "Seeded latent follow-up: scan-order ties the committed file to `readdirSync`/filesystem order — a canonical sorted order would be portable but needs a deliberate re-baseline (not 124)."
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "124-component-token-return-contract",
+          "taskTitle": "Component-Token Return Contract — the Atomic Increment",
+          "taskType": "Unknown",
+          "whatWasDone": "Converted the last side-effect seam to a **return-value seam**. `defineComponentTokens` now brands its (backward-compatible) flat value-map with a non-enumerable, string-keyed sidecar (`'@3fn/dp:tokenContract'`) carrying the rich `RegisteredComponentToken[]`; `loadComponentTokens` harvests that brand from each loaded module's exports and is the **sole** writer to the canonical registry; the mutable-global `allowOverwrite` machinery is retired. Shipped as one atomic increment (contract + harvest + 7-file test migration), verified green, not yet committed.",
+          "whyItMatters": "The component-token registry was the only consumer-`.ts` seam still relying on a shared-singleton **side effect** across the tsx boundary — which silently zeroed component tokens when the scoped require split the registry into two instances (the Spec 118 dual-instance blocker). Harvesting a **value-survivable brand** from the return removes the cross-boundary singleton entirely — the ratified target-model end-state (\"seams consume return values, no shared mutable singleton across the boundary\"). The registry becomes a harvest-populated store with a single writer, so `allowOverwrite` and the cross-test-pollution class retire *with* the change. This is the spine fix, not a leaf patch. The brand is a non-enumerable **string key** (not `Symbol.for`) deliberately, so no process-global is introduced and it stays portable across realms/loaders.",
+          "keyChanges": [
+            "`src/build/tokens/defineComponentTokens.ts` — branded return (Option A); side-effect registration removed; exported `getTokenContract` accessor + single `TOKEN_CONTRACT_BRAND`; JSDoc rewritten.",
+            "`src/build/tokens/index.ts` — barrel-exports the brand + accessor.",
+            "`src/cli/loadComponentTokens.ts` — return-value harvest, sole writer, directory-scan order preserved (no sort), `allowOverwrite` dance removed.",
+            "`src/registries/ComponentTokenRegistry.ts` — `setDefaultAllowOverwrite` + `allowOverwrite` option removed; conflict-throw and `clear()` kept.",
+            "7 test files migrated (5 predicted + 2 surfaced by the full suite)."
+          ],
+          "impact": [
+            "`generate` **0 → 33 component tokens**; `git diff token-index/` empty (R6 — value AND order identical to committed).",
+            "Full `npm test` **8973/8973**, `tsc` clean, `build` ok — verified **twice** (implementer + main loop); nothing skipped.",
+            "Backward-compatible flat return preserved; brand invisible to spread / `Object.keys` / `JSON.stringify` (asserted).",
+            "No process-global introduced (string-key brand, not `Symbol.for`); the real harvest path is exercised same-process (`consumer-package-mode`, `loadComponentTokens` tests).",
+            "**R7 dual-instance brand survival NOT yet certified** — rides Task 4 (packed-install arbiter); the one remaining delivery-gate condition. Same-process green can't prove cross-boundary survival.",
+            "Likely closes the `component-token-double-registration` issue (confirm in Task 5); seeds two pre-existing items (`package.json` `\"types\"`-condition ordering; token-index filesystem-ordering portability).",
+            "**Not committed** — Peter reviews the diff. 118 untouched (hold-back intact)."
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "124-component-token-return-contract",
+          "taskTitle": "Spec-Level Synthesis — Component-Token Return Contract",
+          "taskType": "Unknown",
+          "whatWasDone": "Authored the spec-level completion synthesis and logged all deferred/out-of-scope items. Spec 124 converted the last side-effect seam (component-token registration) into a return-value seam: `defineComponentTokens` returns a non-enumerable, value-survivable branded value-map; `loadComponentTokens` harvests it as the **sole** registry writer; `allowOverwrite` is retired.",
+          "whyItMatters": "This is the spine fix for the Spec 118 dual-instance blocker: the component-token registry was the only consumer-`.ts` seam relying on a shared-singleton side effect across the tsx boundary, which silently zeroed tokens when the scoped require split the registry into two instances. Harvesting a value-survivable brand removes the cross-boundary singleton entirely — the ratified target-model end-state.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "Increment 2 — Evidence Harness, Inventories, Divergence Test",
+          "taskType": "Unknown",
+          "whatWasDone": "Increment 2's **investigation-only** evidence pass (no swaps). Built a parity harness that generates two fresh token trees by running the same generator under **ts-node** vs **tsx** and compares them semantically by reusing Spec 117's normalization engine (no second engine; `GenerationIntegrityCheckImpl` bypassed). Enumerated and unit-tested the volatile-field set, produced the four inventories (entry-point, export-condition, ESM-cost + jest-preset parking form), refuted the divergence hypothesis, and assembled the green/red evidence table Task 8 reads.",
+          "whyItMatters": "The April→June→117 cycle was caused by *assuming* the module-direction answer. Task 8 commits CJS-vs-ESM **on evidence** — and this is that evidence. The result: the two runtime mechanisms produce **semantically identical** token output, so the loader is not a source of generation divergence; the generation gaps are decoupled and routed out; and the ESM cost (jest-preset blast radius) and exports incoherences are inventoried for the decision. The table **informs but does not pre-decide** the direction (R4 AC8).",
+          "keyChanges": [
+            "Parity harness: `src/tools/integrity/ParityOrchestrator.ts` + `__parity__/run-parity.js` + `npm run test:parity` (reuses 117's `Normalizer`/`SemanticComparator`/`INVENTORY` directly; two-roots seam, no `FreshGenerator`).",
+            "Volatile rules: `ParityNormalizationRules.ts` (`PARITY_NORMALIZATION_RULES` = 117 defaults + 118 defensive additions for `rosettaVersion`/`version`/`extensions.themes`) + 17 unit tests.",
+            "Findings: `evidence-table.md`, `divergence-hypothesis.md`, `entry-point-inventory.md`, `export-condition-inventory.md`, `esm-cost-inventory.md`, `parity-harness-notes.md`."
+          ],
+          "impact": [
+            "**All-green parity** across 11 non-optional artifacts — only divergence class is volatile timestamps (neutralized by 117's existing rules).",
+            "**Divergence hypothesis REFUTED → clean exit** — gaps routed to the blend review / already-closed-by-117; not absorbed into 118.",
+            "**OQ-3 parking form EXISTS** → the ESM escape-hatch defer branch is available.",
+            "Inventories surface the design-table staleness (`./config` now import+require; 13 ts-node scripts not 11).",
+            "Full suite green (build exit 0; tsc clean; 376/8989 tests; token-index clean) — zero regression; no production code touched.",
+            "**Unblocks Task 8** (direction decision) with a fully assembled evidence table.",
+            "--",
+            "For detailed implementation notes, see [task-7-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-7-completion.md)*"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "Early Direction-Agnostic Guards",
+          "taskType": "Unknown",
+          "whatWasDone": "Added two direction-agnostic guards that don't wait on the CJS-vs-ESM decision: a **preventive dynamic-import smoke test** (asserts no web component source uses extensionless/raw-`.ts` runtime `import()`) and the **scoped-ESLint tooling** for the module-resolution rule (rule scaffolded but inert; polarity set later in Group 9). Both wired into the consumer-guard CI lane.",
+          "whyItMatters": "These are defense-before-erosion: the smoke test guards a future regression class, and the ESLint infrastructure is ready so that when the direction decision lands, activating the lint policy is a config flip rather than a from-scratch build.",
+          "keyChanges": [
+            "`DynamicImportGuard.test.ts` — preventive jest source-scan guard (web component source only).",
+            "`eslint.config.js` + `lint` script + `eslint@10` / `@typescript-eslint/parser` dev deps — minimal config scoped to `src/components` only (not a repo-wide lint adoption); rule inert pending Task-8 polarity.",
+            "CI lane gained lint + dynamic-import-guard steps."
+          ],
+          "impact": [
+            "Dynamic-import regression class is guarded (verified to bite on both violation forms).",
+            "ESLint tooling ready; polarity deferred to Group 9 — honest \"tooling early, policy after the decision.\"",
+            "Full sweep green: `npm test` 374/8972, `npm run build` exit 0, lint clean and scoped.",
+            "--",
+            "For detailed implementation notes, see [task-4-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-4-completion.md)*"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Component"
+      },
+      {
+        "change": {
+          "specName": "117-token-index-generation-integrity",
+          "taskTitle": "Documentation & Clean-Exit (R7)",
+          "taskType": "Unknown",
+          "whatWasDone": "Updated the steering docs to match Spec 117's behavior changes (OKLCH-in-index, theme-varying rule, component-loading gate, the `ModeResolvedTokens` data flow) via the ballot-measure process, and completed clean-exit issue logging. Closes Spec 117.",
+          "whyItMatters": "Steering docs are the source of truth agents retrieve via the docs MCP; leaving them describing the *old* behavior would re-introduce the exact \"served-data is wrong\" problem this spec fixed. The ballot cycle also produced a reusable principle: in MCP-served docs, keep diagrams for orientation and push reference detail to prose — it reads lighter *and* retrieves better via `get_section`.",
+          "keyChanges": [
+            "`Rosetta-System-Architecture.md` + `Token-Quick-Reference.md` — behavioral-accuracy edits applied via ballot (P1–P5 + A1/A2), by path+heading; `Last Reviewed` bumped; docs index rebuilt + metadata validated",
+            "v2 ballot ([`task-6-ballot-proposals-v2.md`](../../../.kiro/specs/117-token-index-generation-integrity/completion/task-6-ballot-proposals-v2.md)) — re-architected after 3 domain consults (Ada/Lina/Leonardo) flagged density",
+            "Clean-exit issues logged; originating issue marked RESOLVED"
+          ],
+          "impact": [
+            "**R7 AC1/AC2**: steering accurate to shipped behavior; all deferred findings logged",
+            "Ballot-measure governance honored end-to-end (propose → approve → apply); main-loop verified (metadata valid, index serves new content)",
+            "**Spun off for holistic review**: blend-system/OKLCH-alignment issue — investigation found `OklchBlendCalculator` orphaned and the in-use blend path computing in RGB/HSL (same orphaned-OKLCH pattern as 117's findings, in the blend subsystem)",
+            "Flagged (out of scope): pre-existing Stage-4/Stage-5 orchestrator-naming inconsistency",
+            "**Spec 117 CLOSED** — certified non-provisionally; all 6 tasks complete"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "117-token-index-generation-integrity",
+          "taskTitle": "Component-Token Loading Gated on Source Presence (R4) + dist ComponentTokens (N2)",
+          "taskType": "Unknown",
+          "whatWasDone": "Removed the `tokenSourceMode === 'local'` gating from component-token loading (two gates on the same wrong axis — the call site and `allowOverwrite`), keying it on **source presence** instead. The shipped config is package mode, so the gates had been silently dropping the entire component tier under the documented `generate`.",
+          "whyItMatters": "Same systemic failure as R3/R5: a mode flag conflated with a separate concern (where component tokens are authored vs whether they should be indexed), producing a silent drop with no error signal. The fix not only reproduces the committed component set but **recovered 6 component tokens** (`inputcheckbox.box.*`, `inputradio.box.*`) the bug had been dropping — proving the committed \"baseline\" was itself a product of the bug.",
+          "keyChanges": [
+            "`src/cli/designerpunk.ts` — removed the call-site `local` gate (load + warn now fire on source presence, all modes)",
+            "`src/cli/loadComponentTokens.ts` — `allowOverwrite` un-gated from mode (travels with the loader)",
+            "`token-index/components.yaml` — corrected 33-token baseline (27 preserved value-identical + 6 recovered)",
+            "`dist/ComponentTokens.{web,ios,android}` (gitignored) — N2 populated, no longer empty"
+          ],
+          "impact": [
+            "**R4**: component tokens load regardless of `tokenSourceMode`; gate keys on source presence",
+            "**N2**: dist ComponentTokens populated across web/iOS/Android (0 → 33)",
+            "**Baseline corrected** (ratified by Peter): committed 27 were stale-wrong; 6 recovered tokens are source-backed since 2026-04-03, predating the stale 2026-06-11 regen — fresh (33) is correct",
+            "Full suite **8955 tests** + `tsc` green (re-verified in main loop); local-mode unregressed",
+            "Task 5.2 (Thurgood) — package-mode consumer fixture + AC3 warning test (reachability verified here); Task 5.3 re-diff will see committed == fresh == 33",
+            "Sibling-but-unrelated: the `validate` math-relationship parser false-fails (`.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`) — same \"untrustworthy token-pipeline signal\" family, opposite symptom (loud false-fail vs silent drop), different subsystem; correctly its own Ada-owned issue"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "117-token-index-generation-integrity",
+          "taskTitle": "Token-Index OKLCH Color + Theme-Varying — Merged Spine Fix (R3 + R5)",
+          "taskType": "Unknown",
+          "whatWasDone": "Fixed the token-index OKLCH color values (R3) and theme-varying flags (R5) with one **shared mode-resolution source** (ratified Option B). `generateTokenFiles` now returns a `ModeResolvedTokens` object that the token-index generator consumes, so the index reads the **same resolved truth dist writes** instead of re-deriving it — collapsing the three parallel resolutions that had silently drifted.",
+          "whyItMatters": "The root cause was duplication: \"resolve a color per mode\" and \"decide what varies by theme\" were each computed in two places, so the OKLCH migration updated the dist path and left the index path behind. Option B removes the duplication rather than patching both copies — the index now **cannot** drift from dist, because it consumes dist's own computation. This is the spine fix the guiding principle calls for (one source, two readouts), not a leaf patch.",
+          "keyChanges": [
+            "`src/generators/ModeResolvedTokens.ts` (new) — shared mode-resolved interface with an anti-conflation doc-guard",
+            "`src/generators/generateTokenFiles.ts` — returns the shared source (resolved light/dark, base-scoped theme-varying, per-primitive OKLCH); dist-feeding path untouched",
+            "`src/generators/generateTokenIndex.ts` — emits mode-aware OKLCH + base-scoped `themeVarying`",
+            "`src/cli/designerpunk.ts` — threads the shared source; `src/cli/themeVarying.ts` deleted",
+            "Regenerated `token-index/{primitives,semantics}.yaml`"
+          ],
+          "impact": [
+            "**R3**: color primitives carry OKLCH consistent with dist; `rgba(` 216 → 16 (the 16 = un-migrated shadow family, logged as an issue, not a divergence)",
+            "**R5**: `themeVarying` = the 5 dist base-mode keys, not committed's stale 10",
+            "Dist output provably unchanged; full suite **8955 tests** + `tsc` green (re-verified in main loop)",
+            "Artifacts regenerated via the **documented CLI** (unblocked by Spec 118) — early signal for the Task 5.3 trust gate",
+            "Surfaced & routed: shadow OKLCH migration (Spec 112 follow-on issue); package-mode `components.yaml` emptying (this spec's Task 4 / R4)",
+            "Carry-forward: the two distinct theme-varying sets are guarded by doc-comments only — Task 5 should add an automated guard"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "121-claude-code-portability",
+          "taskTitle": "MCP Governance Documentation Updates",
+          "taskType": "Unknown",
+          "whatWasDone": "Brought the MCP governance docs in line with the shipped model:\n- `MCP-Relationship-Model.md` + `MCP-Integration-Guide.md` now document `find_docs` (concept + paginated list, superseding `get_documentation_map`), keyworded `find_components` (tokenized matching), the `get_token_details` resolved-value triple, and the three-layer Discovery Confidence Model (tiers-not-scores, the governing sequence, partial-vs-none contracts, token exemption, the 119 Decision 4a cross-ref).\n- `Process-File-Organization.md` documents the new optional `aliases:` frontmatter field for doc authors.\n- The docs-MCP index was rebuilt so the documented model is discoverable through the tools it describes.\n- All steering-doc edits ran through the ballot-measure model (drafted → presented → Peter-approved → applied).",
+          "whyItMatters": "A delivery layer whose docs lag the code re-creates the discovery problem 121 set out to fix — agents reason about a model that no longer matches reality. Task 7 closes that loop: the shipped contracts (discovery tools, the additive token triple, the confidence tiers, the docs aliases) are now documented accurately, and the index rebuild means an agent can *discover* this documentation through `find_docs` itself. Two accuracy guards during review — a corrected theme-varying example and a roadmap entry for a real doc-vs-type gap — kept the docs honest rather than merely complete.",
+          "keyChanges": [
+            "3 steering docs updated + `Last Reviewed` bumped (honestly — they were reviewed).",
+            "Roadmap Gap 8 records the `resolvedValue` type-vs-runtime gap for a future cross-MCP fix.",
+            "`rebuild_index` → healthy (89 docs, 0 errors)."
+          ],
+          "impact": [
+            "Documented model now matches shipped model (discovery tools, token triple, confidence model, aliases)",
+            "Examples accurate (theme-varying bundle corrected); cross-refs resolve; metadata valid",
+            "Index rebuilt — the docs are discoverable via the tools they describe",
+            "**Completes Spec 121** — all 7 parent tasks done",
+            "--",
+            "For detailed implementation notes, see [task-7-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-7-parent-completion.md)*"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "121-claude-code-portability",
+          "taskTitle": "Discovery Confidence Model — Three-Layer Emit",
+          "taskType": "Unknown",
+          "whatWasDone": "Turned the raw match evidence from Tasks 2 and 3 into the three-layer discovery confidence model on both discovery tools:\n- Each result now emits **Match** (`matchConfidence: strong|partial|none` — a tier derived by a per-domain rubric, not an opaque score), **Viability** (components `readiness`; docs `{ placeholder, deprecated }`), and **Usability** (`rank` + `matchedOn`) as three distinct fields, never collapsed.\n- Implemented the validated false-confidence guards (components: signal-class-gated coverage; docs: incidental high-field token) so weak matches can't masquerade as strong.\n- Added a versioned, docs-domain-owned stop-word module as a legible tuning knob.\n- Closed the RTL/internationalization recall-floor gap by generalizing the reactive `aliases:` mechanism from components to docs (Peter-approved).",
+          "whyItMatters": "A search result is three questions, not one: did we find it, can it be used, and is it the best fit? Collapsing those into a single score is how an agent mistakes a top match for a usable answer — the model's headline example is a placeholder doc (`Component-Family-Modal`) that's a textbook `strong` match but must never be auto-acted-on. Emitting the three signals separately, with the tier reconstructable from visible evidence, lets the agent gate on viability and judge usability instead of trusting a label. The docs-aliases bridge keeps the recall floor meetable for semantic-synonym queries without shipping deferred embedding ranking.",
+          "keyChanges": [
+            "`find_components` + `find_docs` now emit `matchConfidence` / viability / `rank` as distinct fields (additive).",
+            "New `mcp-server/src/query/stop-words.ts` (versioned) and `frontmatter-parser.ts` (high-signal `title`/`description`/`aliases` + viability).",
+            "Docs `aliases:` indexed as high-signal; `Web-Authoring-Standards.md` + `Component-Family-Form-Inputs.md` tagged for RTL discovery."
+          ],
+          "impact": [
+            "Three orthogonal signals, never collapsed; tier reconstructable from `matchedOn` + coverage",
+            "False-confidence guards verified on both sides; placeholder docs flagged via the distinct viability field",
+            "RTL recall floor now satisfied at `strong` (real-corpus verified)",
+            "Fully additive — tsc clean; 249 (components) + 471 (docs) tests pass",
+            "Author-facing `aliases:` doc folded into Task 7.1; Task 4 pins these tiers at the tool boundary",
+            "--",
+            "For detailed implementation notes, see [task-5-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-5-parent-completion.md)*"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "121-claude-code-portability",
+          "taskTitle": "`find_docs` + Supersede `get_documentation_map`",
+          "taskType": "Unknown",
+          "whatWasDone": "Added `find_docs` to the docs MCP and retired the broken `get_documentation_map` — 121's one justified breaking change:\n- `find_docs` ships dual-mode: concept/keyword discovery + a paginated list/catalog mode that fully subsumes the old map.\n- `get_documentation_map` (the tool) removed; its pinned test rewritten to target `find_docs` list mode.\n- Closed a Req 1.1 gap: `owner` now populates from `organization` metadata (it was parsed but never carried to the model `find_docs` reads).\n- Swept every first-party `get_documentation_map` reference to `find_docs` (steering docs, Thurgood prompts, agent tool grants, MCP/Cursor configs) and recorded the supersede in `MCP-Evolution-Roadmap.md` — both via the ballot-measure model with Peter's approval.",
+          "whyItMatters": "`get_documentation_map()` errored at ~78K chars (over the MCP token limit), so cross-domain discovery was broken — the exact failure that motivated 121's discovery work. `find_docs` fixes it structurally: bounded ~6K-char pages instead of one oversized payload, plus concept search the map never had. Retiring the map rather than keeping two discovery surfaces removes debt; the evidence showed zero consumer *code* coupling, making it a safe, justified break.",
+          "keyChanges": [
+            "`mcp-server/src/tools/find-docs.ts` (new) + `QueryEngine`/`DocumentIndexer`/`DocumentationMap` model wiring; `get-documentation-map.ts` removed.",
+            "`DocumentMetadata` gains `organization` so `find_docs` `owner` is real.",
+            "13 first-party files swept `get_documentation_map` → `find_docs`; `MCP-Evolution-Roadmap.md` records the supersede, sweep, and Decision 4."
+          ],
+          "impact": [
+            "Finding 10 structurally fixed (bounded pages, regression-guarded by test)",
+            "Concept + catalog discovery in one tool; discovery→retrieval composes",
+            "Fully additive except the one justified break; tsc clean, 452/452 docs-MCP tests pass (serial)",
+            "Acceptance grep over the swept set returns zero; all edited steering docs validate clean",
+            "Section addressing (F1/F3) remains Task 6; tier derivation for populated `find_docs` results remains Task 5",
+            "--",
+            "For detailed implementation notes, see [task-3-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-3-parent-completion.md)*"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Breaking change"
+      },
+      {
+        "change": {
+          "specName": "121-claude-code-portability",
+          "taskTitle": "Tokenized Keyword Discovery on `find_components`",
+          "taskType": "Unknown",
+          "whatWasDone": "Added tokenized free-text keyword discovery to the application MCP's `find_components`, so agents can find components by natural-language concept instead of only exact taxonomy:\n- Built an auto-derived, signal-class-grouped keyword index over existing component metadata (high-signal: name/family/purpose/contract names; low-signal: `whenToUse`/contexts/alternatives/description; `whenNotToUse` excluded).\n- Implemented term-level (not substring) tokenized matching, computing `matchedOn` evidence + coverage for each candidate.\n- Added a new optional `keyword` param (plus `limit`) that AND-narrows with the existing exact-match filters, which are unchanged.",
+          "whyItMatters": "This is the fix for the single systemic delivery-layer gap 121 was built around: agents previously got `data: []` for queries like `\"login\"`, `\"text input field\"`, or `\"primary action button\"` even though matching components existed, because the query terms lived in `when_to_use` (unindexed) and matching was exact-array. Tokenized matching makes multi-word natural-language queries satisfiable — `\"primary action button\"` is unsatisfiable under substring no matter what's indexed. Everything is additive: no existing response shape or filter semantics changed.",
+          "keyChanges": [
+            "`ComponentIndexer.ts` — keyword index build + `tokenizeString()` (with punctuation stripping for comma-separated `when_to_use` values).",
+            "`QueryEngine.ts` — tokenized matching, `matchedOn`/coverage evidence, conjunctive narrowing, coverage sort, optional `limit`.",
+            "`index.ts` — new optional `keyword`/`limit` params on the tool."
+          ],
+          "impact": [
+            "All three recall-floor fixtures return non-empty (`login`, `text input field`, `primary action button`)",
+            "Fully additive — `tsc` clean, 232/232 tests pass, exact-match filters and `ApplicationSummary` unchanged",
+            "Computes the `matchedOn` + coverage evidence that Task 5's three-layer confidence tiers will consume",
+            "Precision (false-positive filtering) deferred to Task 5 by design — recall floor, not precision ceiling",
+            "--",
+            "For detailed implementation notes, see [task-2-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-2-parent-completion.md)*"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Component"
+      },
+      {
+        "change": {
+          "specName": "121-claude-code-portability",
+          "taskTitle": "Application-MCP Additive Foundation",
+          "taskType": "Unknown",
+          "whatWasDone": "Hardened the application MCP's `get_token_details` so it chain-resolves a token to its terminal value, additively:\n- Loosened `TokenIndexEntry.value` to optional (`value?`) so semantic tokens can be asserted to carry no `value` key (O3 — confirmed 0/193 at runtime).\n- Ported the product MCP's `TokenRefResolver` verbatim into the application MCP (a cross-package import is blocked by the missing `package.json` + the `rootDir` pin; the durable shared-module fix is deferred as Decision 7).\n- Added the resolved-value triple — `resolvedValue` / `resolvedUnitType` / `resolutionDepth` — to `getDetails()`, using the product MCP's field names and null-contract verbatim.",
+          "whyItMatters": "Agents consuming a token via MCP previously had to chase semantic→primitive references by hand and read generated token files to learn a token's actual value. The triple chain-resolves that in one call. Adopting the product MCP's contract verbatim means there is **one** cross-MCP token-resolution vocabulary, not two that drift. Every change is additive — no existing response shape breaks — which is the no-regret spine 121 is built on.",
+          "keyChanges": [
+            "New `application-mcp-server/src/indexer/TokenRefResolver.ts` (faithful port; algorithm byte-identical to the product original).",
+            "`application-mcp-server/src/indexer/TokenIndexer.ts` — `value?` type fix, `ResolvedValueTriple` + `TokenDetails`, additive `getDetails()` merge.",
+            "`design.md` — recorded the Peter-confirmed Option A decision for theme-varying tokens (`resolvedValue` is a per-mode bundle, kept verbatim)."
+          ],
+          "impact": [
+            "`get_token_details` resolves tokens to terminal value in one call (theme-varying tokens return a per-mode bundle, by design)",
+            "Single coherent cross-MCP token contract (no divergent third shape)",
+            "Fully additive — `tsc` clean, 232/232 app-MCP tests pass, `platforms{}` untouched",
+            "Unblocks the Task 4 tool-boundary contract test (the \"no `value` on semantics\" exact-key-set assertion)",
+            "--",
+            "For detailed implementation notes, see [task-1-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-1-parent-completion.md)*"
+          ]
+        },
+        "priority": "breaking",
+        "deliverableType": "Token"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Task 10 Summary (COMPLETE): Discovery Dry-Run + Frozen Map-Oracle, then Gated Meta-Guide Removal",
+          "taskType": "Unknown",
+          "whatWasDone": "Captured the meta-guide's \"Tier 2: MCP-Only Documents\" concept→doc map as a frozen, human-validated test oracle (`scripts/__fixtures__/discovery-oracle.ts`, `OracleEntry[]`) BEFORE removal (Req 11 AC4); built the discovery dry-run harness (`mcp-server/src/discovery-dry-run/discovery-dry-run.ts` + `scripts/discovery-dry-run.ts` + 16 unit tests); ran the three-point baseline (FLOOR pre-aliases → LIFT post-aliases → NO-REGRESSION post-removal) against the same oracle. The LIFT gate cleared at **83 / 0 / 0** after a main-loop title-rank tie-breaker resolved 4 structurally-unliftable concepts. With the gate cleared, **10.5 removed the meta-guide** (`git rm`, gated) and **10.6 confirmed no discovery regression** post-removal.",
+          "whyItMatters": "The meta-guide was the only always-loaded navigational map; removing it before its `find_docs` discovery replacement demonstrably works was 119-A's scariest step. The frozen oracle (captured while the map still existed) + the dry-run gate proved discovery reaches every map-covered concept BEFORE removal was permitted (Req 13). Removal is now done with that proof in hand, and the post-removal re-run confirms the leak-source artifact is gone with zero discovery cost.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "prominent",
+        "deliverableType": "MCP"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Identity Lock + Discovery Safety",
+          "taskType": "Unknown",
+          "whatWasDone": "Subtasks 8.1, 8.2, 8.3, 8.5 — **8.4 (aliases seeding) deferred** (blocked on the Task 10.3 floor dry-run for its worklist).\n\n- **8.1 — Identity lock.** Created the new always-loaded operational-law doc `.kiro/steering/Task-Completion-Protocol.md` (`id: task-completion-protocol`, the end-of-task sequence moved out of Start Up Tasks). Refocused `start-up-tasks.md` to the pre-task checklist (date/governance-health/Jest/authorization) + a pointer to the new doc. Demoted `Process-Development-Workflow` + `Process-File-Organization` (in `governance/`) from `inclusion: always` → `manual`. Asserted no doc outside the 9-doc AC1 set is `always` (grep both roots — meta-guide is the only extra, pending Task 10). Recorded the AXA five-class overlay (non-binding) + the Agent-Directory → capability-catalog 119-B/122 forward-reference. Knock-ons: `init.test.ts` steering counts 9→10 (readdir 10→11); new `.kiro/sync-manifest.json` entry for the doc.\n- **8.2 — Calibration text.** Added the certainty-calibration behavioral rule to `AI-Collaboration-Principles.md`, phrased in the strong/partial/none shape of Spec 121's `matchConfidence` signal. Text only; formalization + prompt propagation deferred to 119-B.\n- **8.3 — 118 pointer.** Added a distinct numbered surface (`## Pointer 1: Module-Resolution Contract (Spec 118)`) to `DesignerPunk-Systems-Overview.md`, referencing RSA § Module-Resolution Contract by id.\n- **8.5 — Cross-ref migration.** Migrated 226 active-doc markdown-link cross-refs across 43 docs to **bare doc `id`s** (resolver-strategy-1 consistent), via an auditable codemod. Fixed stale refs in passing (`./Core%20Goals.md` → `core-goals`; 3 doubly-stale Figma traversal refs). Migrated the 11 always-loaded identity-doc MCP-query `path:` examples by hand. 115 out-of-corpus targets surfaced as exceptions (NOT silently physical-pathed). Historical docs untouched.",
+          "whyItMatters": "The always-set is now the locked 9-doc identity core (operational law split cleanly: Start Up Tasks owns the *start*, Task Completion Protocol owns the *end*), with the two stray process docs demoted — satisfying Req 6 AC4 (\"no doc outside the AC1 set is `always`\"). The calibration text + 118 pointer make guidance discoverable during the 119-A→122→119-B window when the always-loaded meta-guide map is gone. Cross-ref migration to bare `id`s re-decouples references from physical location (the spec's core win) — a relocation or rename no longer breaks them.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "prominent",
+        "deliverableType": "Agent"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Filename Normalization (Mass-Rename of 10 Space-Bearing Files)",
+          "taskType": "Unknown",
+          "whatWasDone": "Renamed (via `git mv`, history preserved) the 10 verified space-bearing steering files in `.kiro/steering/` to kebab-case/no-spaces, the sequencing step that runs after the Task 2 resolver + Task 3 frozen legacy-path manifest are live and before Task 6 relocation. Each file's Task-4-frozen frontmatter `id:` is byte-unchanged (the rename touches only the filename). Updated the functional `always`-inclusion wiring keyed on the renamed filenames: the agent-definition `resources[]` arrays across all 8 agent JSONs (`file://`/`skill://` entries repointed by filename, schemes + directory preserved) and `scripts/governance-check.sh`'s `STARTUP_FILE` constant. Recorded the kebab-case/no-spaces filename standard as input for the Task 12 conventions doc. Also fixed 2 Thurgood-domain test-infra files (`src/__tests__/browser-distribution/`) that hardcoded the old `Browser Distribution Guide.md` path.",
+          "whyItMatters": "Filenames become tool- and shell-safe and decoupled from document identity (identity is the immutable `id`; a rename changes only the filename). Critically, the agent `resources[]` `file://`/`skill://` wiring is loaded by Kiro's resource loader, which is NOT covered by the Docs-MCP legacy-path fallback — so a rename that ignored those entries would silently break per-session ambient context. Old space-bearing path references elsewhere (prose, prompts) keep resolving via the frozen manifest's `legacy-fallback` during the transition window.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "prominent",
+        "deliverableType": "Agent"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Build-Time Uniqueness Guard + 89-Doc `id` Backfill Codemod",
+          "taskType": "Unknown",
+          "whatWasDone": "Built the build-time `id`-uniqueness guard + the 89-doc backfill codemod, the third leg of the addressing-plane integrity machinery (with the Task 2 resolver + the Task 3 frozen manifest). `checkIdUniqueness(roots)` (core in `mcp-server/src/id-guard/check-id-uniqueness.ts`) scans the on-disk corpus across BOTH `governance/` (empty pre-relocation, handled gracefully) and `.kiro/steering/`, returning `{ ok, collisions, derived, totalDocs, exceptions }` — a derived collision is treated identically to an explicit one. It is wired \"one function, two callers\": the net-new `npm run check:id-uniqueness` CI step (backstop) AND the Thurgood metadata-validation hook (`scripts/validate-steering-metadata.js`, front line) invoke the SAME core. The codemod (`backfill-doc-ids.ts`) writes the derived slug as a literal `id:` into frontmatter (frontmatter-only, body untouched), HALTS on any derived collision before writing, is idempotent, and surfaces `idSource:'none'` docs as exceptions rather than writing `id: ''`. id derivation reuses the resolver's `extractFrontmatterInfo` exactly.",
+          "whyItMatters": "The literal `id:` freezes each doc's stable address on disk so the resolver never re-derives it, and the guard prevents two docs from ever claiming the same id. Critically, every backfilled id MUST equal the id Task 3 froze into the legacy-path manifest — otherwise a legacy prompt ref would silently 404 during the relocation transition window. The codemod cross-checks this after applying.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "prominent",
+        "deliverableType": "MCP"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Legacy-Path Forwarding Manifest (Producer + Frozen Artifact)",
+          "taskType": "Unknown",
+          "whatWasDone": "Built the legacy-path forwarding manifest producer + froze its artifact + wired the re-seed. The producer (`scripts/generate-legacy-path-manifest.ts` over the testable core `mcp-server/src/legacy-path/generate-manifest.ts`) takes two inputs — the spaces-tolerant grep-extract of `.kiro/steering/…md` refs from the 8 prompts AND the literal Req-3 rename map (10 space-bearing originals) — derives each target's `id` via the resolver's own `extractFrontmatterInfo`, de-dupes, asserts every `legacyPath` is `..`-free (throws otherwise), and emits `LegacyPathManifest`. The frozen artifact lives at `mcp-server/src/legacy-path/legacy-path-manifest.ts` as the TS const `FROZEN_LEGACY_MANIFEST` (changed JSON→TS so it survives compilation — the docs MCP runs from tsc/esbuild output, which does NOT copy a runtime-read JSON; see Task 3 parent completion, Honest Note 6). The re-seed is wired at the **tail of `DocumentIndexer.indexDirectory`** (the chokepoint every index-build path funnels through), so legacy refs keep resolving after every full re-scan / `rebuild_index`.",
+          "whyItMatters": "This is the second hard prerequisite (with the Task 2 resolver) for any rename/relocation. After Tasks 5/6 the original `.kiro/steering/…` strings vanish from disk and cannot be recovered — the frozen JSON is the only record. It is a one-way gate: it MUST be frozen + checked in before Tasks 5/6. Without the re-seed wiring, legacy refs would silently stop resolving after the first `rebuild_index` (the exact regression Task 2 flagged).",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "prominent",
+        "deliverableType": "MCP"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "`id` Addressing Plane — Reader + Type + Resolver",
+          "taskType": "Unknown",
+          "whatWasDone": "Landed the net-new Docs-MCP addressing plane: a frontmatter `id`/`idSource` reader + `slugifyTitle`, `DocumentMetadata.id`, the `idIndex`/`legacyPathIndex` maps with full index maintenance, the `LegacyPathManifest` type + loader, and `resolveRef` — the single chokepoint (`getDocumentContent`) all five path-taking tools funnel through. Resolution order: **id → indexed-key → legacy-fallback → DocumentNotResolved**, with one shared `normalizeRef` used by both the indexed-key and legacy probes.",
+          "whyItMatters": "This is the hard prerequisite (with Task 3) for any rename/relocation: it makes doc addressing location-independent so the 8 prompts' 60 legacy `.kiro/steering/…` paths keep resolving through the transition window via the fallback, while every doc is reachable by its stable `id`. Design Decision 1 fixed the resolver at one chokepoint — all five tools inherit id-resolution with zero per-tool change.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "prominent",
+        "deliverableType": "MCP"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "MCP/Browser Principled Exception + Boot/Smoke Guard",
+          "taskType": "Unknown",
+          "whatWasDone": "Paired the bundled-subsystem exemption (the 3 MCP servers + the browser bundle are exempt from the runtime-resolution contract because bundling resolves imports at build time) with a **boot/smoke guard**, so the exemption is a coherent, enforced boundary rather than a silent corner. Added an MCP guard (subprocess spawn → stderr ready sentinel) and a browser guard (jsdom execution → custom-element registration), wired into the consumer-guard CI lane after a bundle build. Staged the exemption-boundary documentation for the Task-11 governance ballot.",
+          "whyItMatters": "R12's whole point: an exemption that isn't guarded is a silent corner where a bundled subsystem could break unnoticed. These guards make the exempt subsystems fail loudly on a boot-time resolution error, completing the direction-agnostic guard set.",
+          "keyChanges": [
+            "`tests/mcp-boot-smoke.test.ts` + `tests/browser-boot-smoke.test.ts` — the paired boot/smoke guards (bite-tested).",
+            "`consumer-guard.yml` — `build:mcp`/`build:browser` + the two guard steps.",
+            "`findings/mcp-browser-exemption-boundary.md` — staged boundary doc (ts-node dev configs documented per Decision 2; steering form rides Task 11)."
+          ],
+          "impact": [
+            "Bundled-subsystem exemption is now guarded (both guards verified to bite on broken bundles).",
+            "R12 single-owner guard set complete; direction-agnostic guards (Tasks 4 + 5) done.",
+            "Full sweep green: `npm run build` exit 0, `npm test` 374/8972, token-index unchanged.",
+            "--",
+            "For detailed implementation notes, see [task-5-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-5-completion.md)*"
+          ]
+        },
+        "priority": "prominent",
+        "deliverableType": "MCP"
+      },
+      {
+        "change": {
+          "specName": "117-token-index-generation-integrity",
+          "taskTitle": "Generation-Integrity Verification & Documented-CLI Trust Gate (R2 / R6)",
+          "taskType": "Unknown",
+          "whatWasDone": "Finalized the repeatable generation-integrity verification and ran the documented-CLI trust gate end-to-end. Added the absolute correctness-property invariants (P3 no-legacy-color, P5 theme-varying-base-scoped with an anti-conflation sentinel), built the R4 consumer-blast-radius regression tests, ratified the intentional-divergence manifest as empty, upgraded the runner to report honest provenance + a trust-gate verdict, and verified the Application MCP serves the corrected data.",
+          "whyItMatters": "This is the recurrence-prevention deliverable: the re-diff catches drift, and the new invariants catch the *absolute* defects the re-diff is blind to — exactly how Finding 1 (rgba in both committed and fresh) and the §4.1 theme-varying re-break could otherwise slip through. The trust gate confirms the whole chain works through the **documented CLI** (not a workaround), which is what lifts the audit's `provisional` ceiling.",
+          "keyChanges": [
+            "`src/tools/integrity/Invariants.ts` (new) — P3/P5 absolute assertions + the named anti-conflation sentinel",
+            "`src/tools/integrity/__tests__/consumer-package-mode.test.ts` (new) — R4 consumer blast radius, both halves, in package mode",
+            "`manifest.ts` — ratified EMPTY end-state (baselines corrected → nothing to forgive)",
+            "`cli/run-audit.ts` — honest provenance (documented-cli/non-provisional) + invariants + trust-gate VERDICT + exit code"
+          ],
+          "impact": [
+            "**Trust gate MET**: documented CLI regenerates in place → `token-index/` git-clean; full-inventory re-diff all-equal (14/14); P3 + P5 hold; verdict `provisional=false`",
+            "**R6 AC2**: MCP reindexed (healthy, 33 component tokens); serves OKLCH primitives (`gray400` → `oklch(0.42 0.018 260)`), the recovered component tokens (`inputcheckbox.box.md`), and correct theme-varying flags",
+            "Full suite **8969 tests** (14 new) + `tsc` green (re-verified in main loop)",
+            "**Ready to certify non-provisionally** — pending Peter's ratification (certification is a governance act)",
+            "Minor follow-on noted: MCP semantic `resolvedValue` doesn't apply per-mode overrides (token-index format limitation; out of 117 scope)"
+          ]
+        },
+        "priority": "prominent",
+        "deliverableType": "MCP"
+      },
+      {
+        "change": {
+          "specName": "121-claude-code-portability",
+          "taskTitle": "Section Addressing + Summary-First",
+          "taskType": "Unknown",
+          "whatWasDone": "Fixed the highest-severity behavioral risk the dry-run found — `get_section` silently under-retrieving a stub when the substance lives under a sibling heading:\n- `get_section` gains optional `parent` and a stable `sectionId` so a non-unique heading is addressable to a specific occurrence; a non-unique heading with no disambiguator now returns a disambiguation prompt (candidate parents + IDs) instead of silently picking the first match.\n- `sectionId` is positional (`s{index}`) — stable to heading *rewording* (the named Finding 2 case); the durable source-embedded alternative is captured as a roadmap gap.\n- `get_section` now returns `siblingHeadings` so a stub carries a cue that more exists.\n- The summary-first workflow rule is encoded as an importable typed constant (`WORKFLOW_RULES`) that Spec 122's generator can propagate into every agent prompt from one source of truth.",
+          "whyItMatters": "Finding 1 — a single-query agent retrieving a preamble stub and returning it as if complete, with no signal that the real content is one heading over — is the confident-wrong failure that reproduced *during this very spec's formalization*. The `siblingHeadings` cue + the hard summary-first rule close it. Findings 2 (heading-string drift) and 3 (ambiguous non-unique headings) are closed by the stable `sectionId` and the ambiguity signal. All additive: unique-heading retrieval is unchanged.",
+          "keyChanges": [
+            "`mcp-server/src/indexer/section-parser.ts` — structural heading tree, positional `sectionId`, sibling computation, `resolveSection`.",
+            "`mcp-server/src/rules/workflow-rules.ts` (new) — `WORKFLOW_RULES` summary-first artifact.",
+            "`get_section` gains `parent`/`sectionId` params + `siblingHeadings` + structured ambiguity result.",
+            "Roadmap Gap 7 records the source-embedded-ID future enhancement."
+          ],
+          "impact": [
+            "Finding 1 (stub under-retrieval) — sibling cue + hard summary-first rule",
+            "Finding 2 (heading drift) — positional `sectionId` stable to rewording",
+            "Finding 3 (ambiguous heading) — disambiguation prompt, not silent first-match",
+            "Summary-first encoded for Spec 122 to propagate",
+            "Additive; tsc clean; 520 docs-MCP tests pass",
+            "Note: positional IDs drift on reorder/insert-before → roadmap Gap 7 (source-embedded IDs) for the durable fix",
+            "--",
+            "For detailed implementation notes, see [task-6-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-6-parent-completion.md)*"
+          ]
+        },
+        "priority": "prominent",
+        "deliverableType": "Agent"
+      },
+      {
+        "change": {
+          "specName": "121-claude-code-portability",
+          "taskTitle": "Application-MCP Tool-Boundary Contract Test",
+          "taskType": "Unknown",
+          "whatWasDone": "Built the end-to-end contract test that makes 121's additive guarantee enforceable instead of aspirational (the \"H1 gap\"):\n- A `callTool`-level harness drives `get_token_details` and `find_components` through the real `handleTool` response-assembly boundary (not the QueryEngine/indexer underneath).\n- Exact-key-set assertions on both tools so any field add/remove/rename fails loud; the resolved-value triple, theme-varying bundle, \"no `value` on semantics\", and `ApplicationSummary` shape are all pinned.\n- Calibration fixtures assert the Task-5 confidence tiers at the boundary for both tools — including the now-satisfiable RTL recall floor (`strong` via the docs aliases).\n- Tightened two vacuous `get_section` assertions that silently passed on error.",
+          "whyItMatters": "Req 3 existed because no test imported `application-mcp-server/src/index.ts`, so the emitted shapes of the two tools — the contracts Tasks 1, 2, and 5 depend on — were never enforced end-to-end. Now a breaking change to either tool's shape fails the suite loudly, the additive guarantee is verifiable, and the discovery confidence tiers (down to the adversarial false-confidence guards and the RTL semantic-synonym floor) are asserted at the tool boundary. Building the harness also surfaced and fixed a latent bug: `index.ts` was auto-starting the production server on import.",
+          "keyChanges": [
+            "`application-mcp-server/src/__tests__/tool-boundary.contract.test.ts` (+71 tests) + additive `createTestableServer`/`callTool` export + `require.main` guard in `index.ts`.",
+            "`mcp-server/src/query/__tests__/find-docs-calibration.test.ts` (+25 tests) driving `find_docs` through `handleFindDocs`.",
+            "Two tightened `get_section` integration assertions."
+          ],
+          "impact": [
+            "Additive guarantee enforced (exact key-set; breaking = loud)",
+            "Token triple / theme-varying bundle / no-`value`-on-semantics / `ApplicationSummary` / empty contract all pinned",
+            "Tier calibration fixtures for both tools at the boundary; RTL floor satisfied (`strong`)",
+            "tsc clean; 320 (app) + 496 (docs) tests pass",
+            "Latent production-auto-start-on-import bug fixed",
+            "Note: `null` resolutionDepth is unreachable via `callTool` (covered at unit level); \"spec planning\" ranks the target doc #2 within `strong` (Layer-3, not pinned)",
+            "--",
+            "For detailed implementation notes, see [task-4-parent-completion.md](../../../.kiro/specs/121-claude-code-portability/completion/task-4-parent-completion.md)*"
+          ]
+        },
+        "priority": "prominent",
+        "deliverableType": "Tool"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Steering Addressing Conventions — Standalone Doc",
+          "taskType": "Unknown",
+          "whatWasDone": "",
+          "whyItMatters": "",
+          "keyChanges": [],
+          "impact": [
+            "Governance corpus: 80 → 81 docs (init.test.ts updated; sync-manifest entry added).",
+            "`find_docs({ concept: \"doc id convention\" })` → new doc ranks 1st, `matchConfidence: strong`.",
+            "Relocation-integrity gate: PASS, Axis 3 confirms `governance/ keys=81 (≥80)`.",
+            "All 377 test suites green; root tsc + typecheck:scripts clean; MCP server tsc clean.",
+            "id-uniqueness guard: PASS, 90 total docs, 0 collisions.",
+            "The two docs are now bidirectionally cross-referenced in bare-id form (OB-1 durable)."
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "119-A-steering-relocation-serving-contract",
+          "taskTitle": "Doc Inventory + Comprehensive Steering-Path Coupling Sweep",
+          "taskType": "Unknown",
+          "whatWasDone": "Produced the two foundation artifacts for 119-A: a complete 89-doc inventory with post-migration roles (`doc-inventory.md`), and a comprehensive, classified sweep of every surface coupling to a `.kiro/steering/…` path (`coupling-sweep.md`). No code introduced, no document content modified. These artifacts are the authoritative count-source the Task 11 / Req 8 relocation-integrity gate asserts against.",
+          "whyItMatters": "Relocation breaks every surface that addresses docs by physical path. This inventory is what lets the move proceed safely: it names each must-fix coupling (so nothing silently 404s) and separates it from surfaces the legacy-path fallback rescues. It is the per-surface input to the Severable Seam Partition — the MUST-FIX bucket *is* the gate's must-fix axis.",
+          "keyChanges": [],
+          "impact": []
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "124-component-token-return-contract",
+          "taskTitle": "Guards, Negative Case, Isolation Audit & Dual-Instance Certification",
+          "taskType": "Unknown",
+          "whatWasDone": "Closed the delivery gate. Added the negative guard (unbranded module harvests to zero), the class-invariant guard (isolated `defineComponentTokens` leaves the registry empty — proves sole writer), and a constructed dual-instance brand-survival test via `jest.isolateModules`. Ran the packed-install arbiter and the isolation audit. All three delivery-gate conditions met.",
+          "whyItMatters": "Same-process green can't prove cross-boundary brand survival — it passes for both the correct value-survivable string-key brand AND a broken per-copy `Symbol()`. Task 4 supplies the falsifiable proof: the dual-instance test was shown to have **teeth** (a temporary plain-`Symbol()` variant went RED on 3/4 cases; reverted byte-clean), and the packed-install arbiter proves end-to-end survival across a real second copy of `@3fn/core/build`.",
+          "keyChanges": [],
+          "impact": [
+            "Delivery gate CLOSED: dual-instance proof green; `npm test` **375 suites / 8979 tests / 0 failed**; `tsc` clean; `build` ok; `git diff token-index/` empty (value AND order).",
+            "Deferred to 118's 9.5.3: the registerless-bin dual-instance re-cert (124 proves the register-keep bin; 118 becomes a re-run).",
+            "Task 6 (118 handback) unblocked, pending Peter's authorization.",
+            "Double-registration issue plausibly closed (confirm in Task 5)."
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "Module-Direction Decision Point",
+          "taskType": "Unknown",
+          "whatWasDone": "Committed the module-resolution direction on the assembled Increment-2 evidence: **CJS-consistency, executed fully in-spec, escape-hatch NOT elected.** Ada interpreted the evidence independently; the 122/123 no-ESM-hard-requirement pre-check was cleared; Peter committed. Recorded in `findings/direction-decision.md`, with the future ESM-modernization path sized and roadmapped.",
+          "whyItMatters": "The April→June→117 cycle was caused by *assuming* this answer. Task 8 makes it **on evidence**: three independent axes (the shipped jest-preset blast radius, the surface being CJS top-to-bottom today, and the Task-1 finding that the ESM-native loader fails from the CJS host) point to CJS; the pro-ESM axes neutralize because the loader already resolves consumer configs of *both* styles, so internal direction is decoupled from consumer authoring. CJS-consistency is the lowest-incoherence end-state and lets 118 close on an *executed* coherent system — coherence-by-consolidation, not coherence-by-disruption.",
+          "keyChanges": [
+            "`findings/direction-decision.md` — the committed direction + rationale + escape-hatch disposition (not elected) + ESM-modernization sizing + 122/123 clearance.",
+            "`tasks.md` — Task 8 / 8.1 marked done.",
+            "`docs/roadmap/m0a-deferred-items.md` — ESM-modernization path + the surfaced-issue triage recorded."
+          ],
+          "impact": [
+            "**Direction committed** — unblocks the Groups 9/10 second tasks pass (Group 9 = CJS branch of 3a/3b/3c + lint polarity bans explicit extensions; Group 10 does not fire) AND Specs 122/123 formalization.",
+            "**118 closes on an executed end-state** — no escape-hatch, the consumer jest-preset never touched.",
+            "**Forward-compat preserved** — consumers keep authoring ESM configs; the ESM door stays open with the migration path already mapped.",
+            "**Next:** Task 11 (governance codification) + the second tasks pass for Increment 3 (CJS execution).",
+            "--",
+            "For detailed notes, see [task-8-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-8-completion.md)*"
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "Spec 117 Closeout",
+          "taskType": "Unknown",
+          "whatWasDone": "Wrote the authoritative guidance note into Spec 117's directory (the Decision-4 closeout mechanism), now that Spec 118 Increment 1 makes the documented config-load path certain. The note supersedes 117's empirically-false decision-record item 3, advises 117 to re-run its own Task 5.3 trust gate, and scopes restored trust to the config-load path.",
+          "whyItMatters": "117 had been parked provisional with a known-false decision-record (the \"one-liner unblocks the CLI\" claim). This note records the real unblock (118's loader + the `./config` export fix) and hands 117 a clear, scoped path to certify non-provisionally — closing the dormant regression risk without 118 overreaching into 117's own gate.",
+          "keyChanges": [
+            "`.kiro/specs/117-…/findings/118-closeout-note.md` — the guidance note (supersedes items 3 & 7; advises Task 5.3 re-run; config-load-path-only trust).",
+            "Cross-reference added in 117's decision-record."
+          ],
+          "impact": [
+            "117's authoritative correction is on record; 117 can re-run Task 5.3 and certify.",
+            "Restored trust scoped honestly to the config-load path; raw-`.ts` exports remain pending Increment 3b.",
+            "Completes the Increment-1 critical path (Tasks 1, 2, 3, 6).",
+            "--",
+            "For detailed implementation notes, see [task-6-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-6-completion.md)*"
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "Empirical Loader Selection",
+          "taskType": "Unknown",
+          "whatWasDone": "Built a resolver-faithful test harness and empirically selected the TS-aware loader for `loadConfig` by exercising three candidate approaches against the failing resolution matrix, in both ESM- and CJS-authored config directions. **Approach A** (`tsx/cjs/api` namespaced `register` + scoped `require` + `unregister()`) was selected; **approach B (`tsImport`) failed** all rows from the CommonJS host; jiti was not needed.",
+          "whyItMatters": "The recurring `.ts`-config-resolution bug had been \"fixed\" twice by assumption and regressed both times. This task decided the loader on **evidence, not assumption** — and the evidence overturned the design's initial lean, catching a non-working approach *before* it shipped.",
+          "keyChanges": [
+            "New resolution-matrix harness (`src/config/__resolution-matrix__/`, real `node` subprocesses, not jest) + `npm run test:resolution-matrix`.",
+            "Decision record `findings/loader-selection.md`: approach A selected, with accept-criteria evidence and the OQ-1 (CJS-host/ESM-loader boundary) result.",
+            "No production code changed yet — the permanent swap into `loadConfig` is Task 2."
+          ],
+          "impact": [
+            "Loader choice settled empirically (A); OQ-1 resolved.",
+            "A non-working approach (B from a CJS host) was caught before implementation.",
+            "A's known cost (global mutation + mandatory `unregister()`) is documented and will be guarded by the Task-3 subprocess guard.",
+            "--",
+            "For detailed implementation notes, see [task-1-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-1-completion.md)*"
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Other"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "Contract-Preserving Swap inside `loadConfig`",
+          "taskType": "Unknown",
+          "whatWasDone": "Replaced the broken `await import()` in `loadConfig` with the empirically-selected loader (Approach A: `tsx/cjs/api` namespaced `register` + scoped `require` + `unregister()`), so consumer `.ts` configs and their transitive relative raw-`.ts` imports now resolve at runtime. Introduced an **injectable loader seam** so the production path carries no test-environment detection; in-process jest tests inject a jest-compatible loader explicitly.",
+          "whyItMatters": "This is the production fix for the recurring config-load failure — and the genuine prerequisite that unblocks Spec 117. The seam design avoided shipping a `JEST_WORKER_ID` fork that would have re-introduced the broken resolver path conditionally into any jest environment, including consuming products'.",
+          "keyChanges": [
+            "`src/config/ConfigLoader.ts`: Approach A swap + exported `ConfigModuleLoader` seam (`loadConfig(cwd, loadModule = defaultConfigModuleLoader)`).",
+            "`src/config/__tests__/ConfigLoader.test.ts`: tests inject a jest-compatible loader explicitly.",
+            "Real-`node` verification confirms the production `loadConfig` resolves a faithful consumer config."
+          ],
+          "impact": [
+            "The documented config-load path works (matrix green; real `loadConfig` resolves a faithful config).",
+            "No test-environment detection in the shipped loader; production is unconditionally Approach A.",
+            "Contract preserved: all five callers unaffected; fail-loud behavior intact.",
+            "Unblocks Spec 117's closeout (Task 6).",
+            "--",
+            "For detailed implementation notes, see [task-2-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-2-completion.md)*"
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Process"
+      },
+      {
+        "change": {
+          "specName": "118-module-resolution-coherence",
+          "taskTitle": "Consumer-Config Subprocess Guard + CI Lane",
+          "taskType": "Unknown",
+          "whatWasDone": "Added a faithful-consumer subprocess guard that exercises the documented config-load workflow through the real `npx designerpunk generate` bin path (ESM- and CJS-authored configs, sentinel via a transitive raw-`.ts` override), and created the repo's first test-running CI lane (`consumer-guard.yml`) to run it. Reaching a green lane surfaced and resolved the real exports barrier behind the documented config.",
+          "whyItMatters": "This is the guard that ends the silent-regression cycle — and it validated Spec 118's config-load fix end-to-end: the full documented consumer workflow (`init` → config importing `@3fn/core/config` → `generate` → 217 tokens × 3 platforms) now runs, where before it couldn't even load the config.",
+          "keyChanges": [
+            "Faithful-consumer subprocess guard (real bin path, not in-process jest) — both authoring directions, positive sentinel assertion.",
+            "`consumer-guard.yml` CI lane (minimal; the standing home for the spec's guards).",
+            "`exports[\"./config\"]` gained a `require` condition (completes the documented config-load path; distinct from Increment-3b raw-`.ts` reconciliation).",
+            "Two pre-existing consumer-test issues triaged: a stale `generate` assertion (fixed → `dist/tokens/`) and a `MathematicalRelationshipParser` validator defect (skipped + tracked in `.kiro/issues/`, out of scope)."
+          ],
+          "impact": [
+            "Consumer-guard lane green (6 passed, 1 skipped, 0 failed); documented workflow runs end-to-end.",
+            "Increment-1/bin-hook coexistence certified by the real-subprocess guard.",
+            "Increment 1 (Tasks 1–3) complete → unblocks the Spec 117 closeout (Task 6).",
+            "Branch protection (making the lane a required check) is a repo-settings action for Peter.",
+            "--",
+            "For detailed implementation notes, see [task-3-completion.md](../../../.kiro/specs/118-module-resolution-coherence/completion/task-3-completion.md)*"
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Process"
+      },
+      {
+        "change": {
+          "specName": "117-token-index-generation-integrity",
+          "taskTitle": "Investigation & Baseline Audit",
+          "taskType": "Unknown",
+          "whatWasDone": "Built a semantic-equality generation-integrity engine and ran a complete committed-vs-fresh baseline audit of the token-index/dist surface. Classified every divergence into four provenance buckets, confirmed a shared code root cause behind the OKLCH color and theme-varying findings, and ran a human checkpoint producing a dated DecisionRecord that re-shaped the fix plan before any code change.",
+          "whyItMatters": "The token-index drift was the third silent-generation-drift incident in two days. The audit converts \"discovered by accident\" into \"detectable by design\" and establishes — on evidence, not inference — that three symptoms share two causes, so the fixes target roots rather than leaves.",
+          "keyChanges": [
+            "`src/tools/integrity/` — `GenerationIntegrityCheck` engine (semantic-equality normalization; 22 tests, strict-clean)",
+            "`findings/{raw-divergences,classification,audit-report,decision-record}.md` — full audit + ratified decisions",
+            "DecisionRecord: **merge R3+R5** (`sharedRootCauseConfirmed: true`), **fold in Finding 2**, **defer N1**, **fold N2 into R4**",
+            "Issue logs: N1 deferred; originating issue updated with the confirmed Finding-2 diagnosis"
+          ],
+          "impact": [
+            "Fix plan rests on evidence (single-variable attribution preserved — no fix before the audit completed)",
+            "The audit engine doubles as the recurrence-preventing verification (reused in Task 5)",
+            "Both light passes (Ada, Lina) confirmed the rewritten plan clean; the audit's one honest gap (double-registration) was carried forward into a *better* fix framing"
+          ],
+          "deliverables": [
+            {
+              "priority": "🔵",
+              "type": "Infrastructure",
+              "description": "generation-integrity audit engine + verification foundation"
+            },
+            {
+              "priority": "🔵",
+              "type": "Governance",
+              "description": "dated DecisionRecord + clean-exit issue logging"
+            }
+          ]
+        },
+        "priority": "context",
+        "deliverableType": "Infrastructure"
+      }
+    ]
+  }
+}
