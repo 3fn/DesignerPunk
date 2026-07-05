@@ -1,0 +1,227 @@
+==============================================================================
+BALLOT ITEM 13 RESIDUAL-INSTRUCTION SWEEP — 2026-07-05 (Spec 125-A Task 4)
+==============================================================================
+
+### CONSUMER — 5 file(s)
+  docs/examples/integrations/github-actions.yml  [push to main=1]
+  docs/examples/tutorials/01-first-release.md  [push origin main=1]
+  docs/examples/tutorials/06-ci-cd-integration.md  [push origin main=1]
+  docs/release-management/environment-configuration-guide.md  [push origin main=1]
+  docs/release-management/security-best-practices.md  [push origin main=1]
+
+### MIGRATED (context-class hits reviewed — no instruction) — 6 file(s)
+  .kiro/hooks/README.md  [commit-task=2, direct(ly) push/commit=1, task-completion-commit=1]
+  .kiro/hooks/RELEASE-FLOW.md  [commit* directly=1, push origin main=1]
+  .kiro/hooks/analyze-after-commit-README.md  [commit-task=2, direct(ly) push/commit=1]
+  .kiro/hooks/complete-task.sh  [commit-task=2, direct(ly) push/commit=4]
+  .kiro/steering/Task-Completion-Protocol.md  [commit-task=1, direct(ly) push/commit=1, push origin main=1]
+  governance/Process-Development-Workflow.md  [direct(ly) push/commit=1]
+
+### MIGRATED (new-flow tooling — context-class, reviewed) — 1 file(s)
+  .github/workflows/release-analysis.yml  [commit-task=1, push to main=1]
+
+### RECORD — 162 file(s)
+  .kiro/audits/issues-registry-audit-2025-11-16.md  [commit-task=4]
+  .kiro/audits/phase-1-infrastructure-report.md  [commit-task=4, task-completion-commit=1]
+  .kiro/audits/phase-1-issues-registry.md  [commit-task=17]
+  .kiro/specs/010-container-component/tasks.md  [commit-task=8]
+  .kiro/specs/013-text-input-field/tasks.md  [commit-task=8]
+  .kiro/specs/014-motion-token-system/tasks.md  [commit-task=7]
+  .kiro/specs/016-component-showcase/tasks.md  [commit-task=5]
+  .kiro/specs/017-component-code-quality-sweep/tasks.md  [commit-task=15]
+  .kiro/specs/018-release-analysis-performance-optimization/tasks.md  [commit-task=6]
+  .kiro/specs/020-steering-documentation-refinement/design-outline.md  [single-branch workflow=1]
+  .kiro/specs/020-steering-documentation-refinement/steering-structure-map.md  [commit-task=1]
+  .kiro/specs/020-steering-documentation-refinement/structure-map-file-organization.md  [commit-task=1]
+  .kiro/specs/021-mcp-documentation-server/tasks.md  [commit-task=7]
+  .kiro/specs/023-component-token-compliance-audit/completion/task-10-parent-completion.md  [commit-task=1]
+  .kiro/specs/023-component-token-compliance-audit/completion/task-2-fix-parent-completion.md  [commit-task=1]
+  .kiro/specs/023-component-token-compliance-audit/completion/task-5-parent-completion.md  [commit-task=1]
+  .kiro/specs/023-component-token-compliance-audit/completion/task-6-parent-completion.md  [commit-task=1]
+  .kiro/specs/023-component-token-compliance-audit/tasks.md  [commit-task=11]
+  .kiro/specs/024-blend-token-infrastructure-audit/tasks.md  [commit-task=4]
+  .kiro/specs/025-test-suite-overhaul/completion/task-2-parent-completion.md  [commit-task=1]
+  .kiro/specs/025-test-suite-overhaul/tasks.md  [commit-task=7]
+  .kiro/specs/026-test-failure-resolution/completion/task-3-6-3-completion.md  [direct(ly) push/commit=1]
+  .kiro/specs/027-textinputfield-animation-refactor/tasks.md  [commit-task=5]
+  .kiro/specs/028-web-component-browser-distribution/tasks.md  [commit-task=8]
+  .kiro/specs/031-blend-infrastructure-implementation/tasks.md  [commit-task=3]
+  .kiro/specs/032-documentation-architecture-audit/tasks.md  [commit-task=10]
+  .kiro/specs/034-component-architecture-system/tasks.md  [commit-task=12]
+  .kiro/specs/035-button-icon-component/tasks.md  [commit-task=6]
+  .kiro/specs/036-steering-documentation-audit/audit-artifacts/rollback-strategy.md  [push origin main=4]
+  .kiro/specs/038-vertical-list-buttons/tasks.md  [commit-task=10]
+  .kiro/specs/039-deprecated-component-names-removal/tasks.md  [commit-task=1]
+  .kiro/specs/041-vertical-list-buttons-pattern/tasks.md  [commit-task=11]
+  .kiro/specs/042-avatar-component/tasks.md  [commit-task=10]
+  .kiro/specs/043-container-card-base/tasks.md  [commit-task=3]
+  .kiro/specs/044-badge-base/tasks.md  [commit-task=8]
+  .kiro/specs/045-chip-base/tasks.md  [commit-task=4]
+  .kiro/specs/046-input-checkbox-base/tasks.md  [commit-task=8]
+  .kiro/specs/047-input-radio-base/tasks.md  [commit-task=10]
+  .kiro/specs/048-progress-family/tasks.md  [commit-task=7]
+  .kiro/specs/049-nav-segmentedchoice-base/tasks.md  [commit-task=5]
+  .kiro/specs/050-nav-tabbar-base/tasks.md  [commit-task=6]
+  .kiro/specs/052-semantic-token-naming-implementation/tasks.md  [commit-task=9]
+  .kiro/specs/054a-figma-token-push/tasks.md  [commit-task=8]
+  .kiro/specs/054b-figma-design-extract/tasks.md  [commit-task=5]
+  .kiro/specs/054d-hierarchical-design-extraction/tasks.md  [commit-task=3]
+  .kiro/specs/055-semantic-radius-pill-rename/tasks.md  [commit-task=1]
+  .kiro/specs/058-component-token-architecture-cleanup/tasks.md  [commit-task=4]
+  .kiro/specs/060-custom-agent-system/ada-agent/tasks.md  [commit-task=4]
+  .kiro/specs/060-custom-agent-system/lina-agent/tasks.md  [commit-task=4]
+  .kiro/specs/060-custom-agent-system/thurgood-agent/tasks.md  [commit-task=4]
+  .kiro/specs/062-stemma-catalog-readiness-audit/tasks.md  [commit-task=3]
+  .kiro/specs/063-uniform-contract-system/tasks.md  [commit-task=3]
+  .kiro/specs/064-component-metadata-schema/tasks.md  [commit-task=4]
+  .kiro/specs/065-release-system-rebuild/completion/task-4-2-completion.md  [commit-task=1]
+  .kiro/specs/065-release-system-rebuild/completion/task-4-parent-completion.md  [commit-task=2]
+  .kiro/specs/065-release-system-rebuild/completion/task-5-2-completion.md  [commit-task=2]
+  .kiro/specs/065-release-system-rebuild/completion/task-5-3-completion.md  [commit-task=1]
+  .kiro/specs/065-release-system-rebuild/completion/task-5-parent-completion.md  [commit-task=1]
+  .kiro/specs/065-release-system-rebuild/design-outline.md  [commit-task=1, single-branch workflow=1]
+  .kiro/specs/065-release-system-rebuild/tasks.md  [commit-task=5]
+  .kiro/specs/066-schema-completion/tasks.md  [commit-task=4]
+  .kiro/specs/067-application-mcp/tasks.md  [commit-task=4]
+  .kiro/specs/068-family-guidance-indexer/tasks.md  [commit-task=4]
+  .kiro/specs/069-layout-templates/tasks.md  [commit-task=3]
+  .kiro/specs/070-agent-architecture/tasks.md  [commit-task=6]
+  .kiro/specs/071-application-mcp-completeness/tasks.md  [commit-task=6]
+  .kiro/specs/072-pagination-container-styling/tasks.md  [commit-task=1]
+  .kiro/specs/073-opacity-architecture-evolution/tasks.md  [commit-task=1]
+  .kiro/specs/074-pagination-animation/tasks.md  [commit-task=3]
+  .kiro/specs/075-mcp-coverage-enforcement/tasks.md  [commit-task=1]
+  .kiro/specs/076-primary-action-color-migration/tasks.md  [commit-task=4]
+  .kiro/specs/077-dtcg-figma-wcagvalue-support/tasks.md  [commit-task=4]
+  .kiro/specs/078-contract-governance-enforcement/tasks.md  [commit-task=4]
+  .kiro/specs/079-token-compliance-and-motion-build-fix/tasks.md  [commit-task=4]
+  .kiro/specs/080-rosetta-mode-architecture/tasks.md  [commit-task=10]
+  .kiro/specs/081-product-mcp-design/tasks.md  [commit-task=2]
+  .kiro/specs/082-application-mcp-consistency/tasks.md  [commit-task=4]
+  .kiro/specs/083-application-mcp-guidance-completeness/tasks.md  [commit-task=3]
+  .kiro/specs/084-github-pages-showcase/design-outline.md  [push to main=1]
+  .kiro/specs/084-github-pages-showcase/feedback.md  [push to main=1]
+  .kiro/specs/084-github-pages-showcase/requirements.md  [push to main=1]
+  .kiro/specs/084-github-pages-showcase/tasks.md  [commit-task=3]
+  .kiro/specs/085-container-card-base-composition/tasks.md  [commit-task=3]
+  .kiro/specs/086-component-meta-extraction-pipeline/tasks.md  [commit-task=5]
+  .kiro/specs/088-top-bar-component/tasks.md  [commit-task=4]
+  .kiro/specs/089-unified-blur-token-family/tasks.md  [commit-task=1]
+  .kiro/specs/090-linear-progress-bar/tasks.md  [commit-task=2]
+  .kiro/specs/091-native-readiness-sweep/tasks.md  [commit-task=4]
+  .kiro/specs/092-sizing-token-family/tasks.md  [commit-task=3]
+  .kiro/specs/093-native-implementation-modernization/tasks.md  [commit-task=4]
+  .kiro/specs/094-portable-pipeline-and-theme-registry/tasks.md  [commit-task=5]
+  .kiro/specs/095-ecosystem-package-assembly/tasks.md  [commit-task=3]
+  .kiro/specs/096-mcp-infrastructure-for-products/tasks.md  [commit-task=2]
+  .kiro/specs/097-product-mcp-intelligence-layer/tasks.md  [commit-task=3]
+  .kiro/specs/098-civitas-readiness-audit/findings/surface-area-inventory.md  [commit-task=2, task-completion-commit=1]
+  .kiro/specs/098-civitas-readiness-audit/tasks.md  [commit-task=4]
+  .kiro/specs/099-civitas-formalization/design-outline.md  [commit-task=1]
+  .kiro/specs/099-civitas-formalization/design.md  [commit-task=1]
+  .kiro/specs/099-civitas-formalization/tasks.md  [commit-task=6]
+  .kiro/specs/101-package-publish-readiness/completion/task-1-8-completion.md  [direct(ly) push/commit=1]
+  .kiro/specs/101-package-publish-readiness/feedback.md  [commit-task=1]
+  .kiro/specs/101-package-publish-readiness/tasks.md  [commit-task=3]
+  .kiro/specs/102-consumer-onboarding-completion/tasks.md  [commit-task=2]
+  .kiro/specs/103-pipeline-dx-source-resolution/tasks.md  [commit-task=3]
+  .kiro/specs/104-token-source-portability/tasks.md  [commit-task=3]
+  .kiro/specs/105-component-test-preset/tasks.md  [commit-task=3]
+  .kiro/specs/106-consumer-contract-testing/feedback.md  [commit-task=1]
+  .kiro/specs/106-consumer-contract-testing/tasks.md  [commit-task=6]
+  .kiro/specs/111-sync-command/tasks.md  [commit-task=5]
+  .kiro/specs/112-oklch-color-migration/tasks.md  [commit-task=7]
+  .kiro/specs/114-generation-pipeline-data-flow/tasks.md  [commit-task=5]
+  .kiro/specs/119-A-steering-relocation-serving-contract/completion/task-12-parent-completion.md  [commit-task=1]
+  .kiro/specs/119-A-steering-relocation-serving-contract/tasks.md  [commit-task=12]
+  .kiro/specs/121-claude-code-portability/tasks.md  [commit-task=7]
+  .kiro/specs/125-A-pr-gate-mechanical-arming/design-outline.md  [commit-task=1]
+  .kiro/specs/125-A-pr-gate-mechanical-arming/feedback.md  [commit* directly=1, commit-task=3, push origin main=1, push to main=1]
+  .kiro/specs/125-A-pr-gate-mechanical-arming/requirements.md  [commit* directly=1, commit-task=3, direct(ly) push/commit=2, push to main=1, push* directly=1]
+  .kiro/specs/125-A-pr-gate-mechanical-arming/task-1-workflow-ballot.md  [commit* directly=1, commit-task=42, direct(ly) push/commit=4, push origin main=10, push to main=3, push* directly=2, single-branch workflow=6, task-completion-commit=7]
+  .kiro/specs/125-A-pr-gate-mechanical-arming/tasks.md  [commit-task=1, direct(ly) push/commit=2]
+  .kiro/specs/125-mechanical-enforcement-strategy/design-outline.md  [commit-task=3]
+  .kiro/specs/125-mechanical-enforcement-strategy/inbound-from-122.md  [commit-task=3, direct(ly) push/commit=1]
+  .kiro/specs/infrastructure-automation-fixes/completion/task-3-3-completion.md  [commit-task=9]
+  .kiro/specs/infrastructure-automation-fixes/design.md  [commit-task=8]
+  .kiro/specs/infrastructure-automation-fixes/requirements.md  [commit-task=8]
+  .kiro/specs/infrastructure-automation-fixes/tasks.md  [commit-task=4]
+  .kiro/specs/issue-fix-infrastructure-usability/completion/task-1-4-completion.md  [commit-task=5, task-completion-commit=2]
+  .kiro/specs/issue-fix-infrastructure-usability/completion/task-1-parent-completion.md  [commit-task=14, task-completion-commit=2]
+  .kiro/specs/issue-fix-infrastructure-usability/design.md  [commit-task=18]
+  .kiro/specs/issue-fix-infrastructure-usability/requirements.md  [commit-task=9]
+  .kiro/specs/issue-fix-infrastructure-usability/tasks.md  [commit-task=4]
+  .kiro/specs/phase-1-discovery-audit/completion/task-2-2-completion.md  [commit-task=6, single-branch workflow=2, task-completion-commit=2]
+  .kiro/specs/phase-1-discovery-audit/completion/task-2-completion.md  [commit-task=1]
+  .kiro/specs/release-analysis-system/completion/task-7-4-completion.md  [commit-task=5]
+  .kiro/specs/release-analysis-system/completion/task-7-5-completion.md  [commit-task=3]
+  .kiro/specs/release-analysis-system/completion/task-7-completion.md  [commit-task=6]
+  .kiro/specs/release-analysis-system/completion/task-7.1-completion.md  [commit-task=4]
+  .kiro/specs/release-analysis-system/completion/task-7.3-completion.md  [commit-task=2]
+  .kiro/specs/release-analysis-system/tasks.md  [commit-task=1]
+  .kiro/specs/release-detection-infrastructure-investigation/completion/task-4-3-completion.md  [commit-task=1]
+  .kiro/specs/release-detection-infrastructure-investigation/completion/task-5-1-completion.md  [commit-task=8, task-completion-commit=1]
+  .kiro/specs/release-detection-infrastructure-investigation/completion/task-5-3-completion.md  [commit-task=1]
+  .kiro/specs/release-detection-infrastructure-investigation/completion/task-5-4-completion.md  [commit-task=8]
+  .kiro/specs/release-detection-infrastructure-investigation/completion/task-5-completion.md  [commit-task=8]
+  .kiro/specs/release-detection-infrastructure-investigation/design.md  [commit-task=2]
+  .kiro/specs/release-detection-infrastructure-investigation/investigation-notes.md  [commit-task=28, direct(ly) push/commit=3, push origin main=2, task-completion-commit=1]
+  .kiro/specs/release-detection-infrastructure-investigation/requirements.md  [commit-task=4]
+  .kiro/specs/release-detection-infrastructure-investigation/root-cause-analysis.md  [commit-task=2]
+  .kiro/specs/release-detection-infrastructure-investigation/tasks.md  [commit-task=2]
+  .kiro/specs/release-detection-infrastructure-investigation/tests/test-workflow-dependencies.sh  [commit-task=2]
+  .kiro/specs/release-detection-trigger-fix/completion/task-3-parent-completion.md  [commit-task=1]
+  .kiro/specs/release-detection-trigger-fix/design.md  [commit-task=1]
+  .kiro/specs/release-management-system/completion/task-2-3-completion.md  [commit-task=2]
+  .kiro/specs/release-management-system/completion/task-6-completion.md  [commit-task=1]
+  .kiro/specs/release-management-system/completion/task-9-1-completion.md  [commit-task=2]
+  .kiro/specs/release-management-system/completion/task-9-completion.md  [commit-task=1]
+  .kiro/specs/release-management-system/requirements.md  [commit-task=1]
+  .kiro/specs/remaining-test-failures-fixes/completion/task-1-parent-completion.md  [commit-task=2]
+  .kiro/specs/test-failure-analysis/test-execution-output.txt  [commit-task=22, single-branch workflow=1, task-completion-commit=4]
+  docs/specs/065-release-system-rebuild/task-4-summary.md  [commit-task=1]
+  docs/specs/065-release-system-rebuild/task-5-summary.md  [commit-task=2]
+  docs/specs/125-A-pr-gate-mechanical-arming/task-1-summary.md  [commit-task=1]
+  docs/specs/issue-fix-infrastructure-usability/task-1-summary.md  [commit-task=2]
+
+### RECORD (deprecation-headed, retained below header) — 1 file(s)
+  .kiro/hooks/task-completion-agent-hook.md  [push origin main=2, task-completion-commit=5]
+
+### TOMBSTONE — 3 file(s)
+  .kiro/hooks/commit-task-organized.sh  [direct(ly) push/commit=1]
+  .kiro/hooks/commit-task.sh  [direct(ly) push/commit=1]
+  .kiro/hooks/task-completion-commit.sh  [commit-task=1, direct(ly) push/commit=1, push origin main=1]
+
+### FILENAME SWEEP — 7 hit(s)
+  .kiro/agent-hooks/auto-organize-on-task-completion.md  -> RECORD (filename matches the task-completion TRIGGER, not the retired commit flow; zero content-pattern hits — bare `git push` scope is executables-only)
+  .kiro/hooks/archive/organize-after-task-completion.json  -> RECORD (archived hook config)
+  .kiro/hooks/archive/task-completion-organization.json  -> RECORD (archived hook config)
+  .kiro/hooks/commit-task-organized.sh  -> TOMBSTONE
+  .kiro/hooks/commit-task.sh  -> TOMBSTONE
+  .kiro/hooks/task-completion-agent-hook.md  -> RECORD (deprecation-headed)
+  .kiro/hooks/task-completion-commit.sh  -> TOMBSTONE
+
+==============================================================================
+Total files with content hits: 178
+Classes: CONSUMER=5, MIGRATED (context-class hits reviewed — no instruction)=6, MIGRATED (new-flow tooling — context-class, reviewed)=1, RECORD=162, RECORD (deprecation-headed, retained below header)=1, TOMBSTONE=3
+MIGRATE-scope files with UNREVIEWED hits (potential instruction-class): 0
+Unclassified: 0
+
+Context-class adjudications (per-file rationale):
+  .github/workflows/release-analysis.yml:
+    ballot 1e plumbing (Task 2): comment recording the relocation from commit-task.sh; 'push to main' is the post-merge TRIGGER description, not an instruction
+  .kiro/hooks/README.md:
+    ballot 11d-mandated retired-listing of the tombstones + retirement statement
+  .kiro/hooks/RELEASE-FLOW.md:
+    new-flow doc (Task 2/Req 4.4): past-tense description of the reconciled postpublish push + before/after table quoting the RETIRED lifecycle line
+  .kiro/hooks/analyze-after-commit-README.md:
+    ballot 11e historical-record marking: retired integration described as record, explicit 'do not wire analysis back into commit time'
+  .kiro/hooks/complete-task.sh:
+    new-flow tooling (Task 2): 'NEVER falls back to a direct push' prohibitions + ballot-11c fold-in provenance comments naming the retired script
+  .kiro/steering/Task-Completion-Protocol.md:
+    ballot after-text verbatim: 1b example branch name (task/125-A-2-commit-task-rework), 1f rollback quote of the REJECTED `git push origin main`, 1a.7 prohibition
+  governance/Process-Development-Workflow.md:
+    ballot 4c after-text: 'direct pushes are rejected' — prohibition, not instruction
+
+SWEEP PASS CONDITION MET: every hit carries exactly one classification;
+zero unclassified hits; zero instruction-class hits in MIGRATE scope.
