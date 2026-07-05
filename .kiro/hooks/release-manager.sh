@@ -17,4 +17,4 @@ cd "$PROJECT_ROOT"
 COMMAND="${1:-analyze}"
 shift 2>/dev/null || true
 
-exec npx ts-node src/tools/release/cli/release-tool.ts "$COMMAND" "$@"
+exec npx tsx src/tools/release/cli/release-tool.ts "$COMMAND" "$@"
