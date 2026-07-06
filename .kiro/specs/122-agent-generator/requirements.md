@@ -2,7 +2,7 @@
 
 **Date**: 2026-07-05
 **Spec**: 122 — Agent Generator
-**Status**: **DRAFT — round 1 (full roster, 7/7 approve-with-amendments, 38 items) incorporated 2026-07-05; pending Peter's ratification of requirements + the OB-1 decision (Requirement 25.2)**
+**Status**: **RATIFIED (Peter, 2026-07-05)** — round 1 (full roster, 7/7 approve-with-amendments, 38 items) incorporated same day; ratified unmodified. The OB-1 decision (Requirement 25.2) is DECIDED: route to the OB-1 owner. The Sequential Formalization Gate advances: design.md may begin.
 **Author**: Thurgood (Civitas steward, formalization lead)
 **Dependencies**: Spec 118 (consumed — runtime direction), Spec 119-A (consumed — five-class ambient design, id-addressing), Spec 121 (consumed — WORKFLOW_RULES, find_docs), Spec 125-A Phase 0 (landed — the PR gate 122's checks register onto). Feeds 119-B (routing + measurement) and 123 (consumer distribution).
 
@@ -334,7 +334,7 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 **Acceptance criteria**:
 1. This spec SHALL NOT build: the human-facing doc-TOC (DROPPED, not deferred — Peter 2026-07-01); any standing ground-truth manifest (the schema rationale stands: a token is a per-theme set, not one value — the reason there is no standing token-manifest); the token source→index divergence audit (a genuine build owned by Ada's Rosetta pipeline, named so "build-nothing-standing" doesn't imply it doesn't exist); OB-1's parent (cross-ref parser id-awareness — Docs-MCP infra).
-2. The OB-1 **scanner repoint** (`scripts/scan-cross-references.sh` → `governance/`) is the one open ride-along question. It is NOT decided by the feedback round (the round surfaced that no reviewer owns the call): it stands as an **explicit Peter decision point at requirements ratification** — bundle into 122 vs route to the OB-1 owner. Carried for the decision: Ada's lean is route-to-OB-1-owner (negative-scope discipline), with the counter-argument recorded (the fix is trivial; the coordination hop has real cost); no token-law stake either way. The decision SHALL be recorded with ratification, not silently absorbed.
+2. The OB-1 **scanner repoint** (`scripts/scan-cross-references.sh` → `governance/`) — **DECIDED (Peter, 2026-07-05, at requirements ratification): route to the OB-1 owner** (the Docs-MCP infrastructure lane), NOT bundled into 122. Rationale as ratified: 122's negative-scope discipline is worth more than the coordination hop it costs (Ada's lean, coordinator concurrence); the counter-argument (trivial fix, real hop cost) was heard and declined. Recorded in the 119-B deferred-obligations ledger under OB-1; 122 SHALL NOT touch the scanner.
 3. WHEN out-of-scope work is discovered mid-execution THEN it SHALL be routed to its owner via inbound note, not absorbed.
 
 **Source**: design-outline §5(a), §5(d) buckets 2–3, §5(b), §6 (Out-of-122 boundary); STACY R1 S7 ≡ ADA R1 A5 (feedback/requirements.md — OB-1 routed to Peter at ratification).
@@ -355,4 +355,4 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 ---
 
-*Requirements draft, round 1 incorporated (2026-07-05; 7/7 approve-with-amendments, 38 items, zero outline conflicts). Sequential Formalization Gate holds: pending Peter's ratification of requirements — including the OB-1 decision (Requirement 25 AC2) — before design.md begins. EARS patterns per Process-Spec-Planning; every requirement traceable to its Source line.*
+*Requirements RATIFIED (Peter, 2026-07-05; round 1: 7/7 approve-with-amendments, 38 items, zero outline conflicts; OB-1 routed out per Requirement 25 AC2). The Sequential Formalization Gate advances to design.md. EARS patterns per Process-Spec-Planning; every requirement traceable to its Source line.*

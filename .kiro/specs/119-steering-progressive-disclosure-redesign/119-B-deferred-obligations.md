@@ -24,6 +24,8 @@
 
 **Bundled here (health-check N-1, 2026-06-29):** also repoint `scripts/scan-cross-references.sh` to scan `governance/` (it still globs `.kiro/steering/*.md` only — its coverage shrank to 9 docs post-relocation). Deferred to *this* work rather than fixed during the N-1 metadata-validator repoint, because repointing the scanner before the parser is `id`-aware only produces OB-1 under-counts. (The metadata validator + `governance-check.sh` + `detect-affected-steering-docs.sh` WERE repointed to both roots in the N-1 fix; only the cross-ref scanner waits for parser id-awareness.)
 
+**Routing DECIDED (Peter, 2026-07-05, at 122 requirements ratification):** the scanner repoint stays HERE with OB-1 — the 122 ride-along was declined (122 Requirement 25 AC2; Ada's negative-scope lean, ratified). 122 will not touch the scanner; this entry remains the single home for both the parser work and the repoint.
+
 ---
 
 ## OB-2 — Sweep the 176 governance-corpus MCP-query `path:` snippets to `id`
