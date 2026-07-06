@@ -2,7 +2,7 @@
 
 **Date**: 2026-07-05
 **Spec**: 122 — Agent Generator
-**Status**: **DRAFT — pending the requirements feedback round (full roster) per the Sequential Formalization Gate**
+**Status**: **DRAFT — round 1 (full roster, 7/7 approve-with-amendments, 38 items) incorporated 2026-07-05; pending Peter's ratification of requirements + the OB-1 decision (Requirement 25.2)**
 **Author**: Thurgood (Civitas steward, formalization lead)
 **Dependencies**: Spec 118 (consumed — runtime direction), Spec 119-A (consumed — five-class ambient design, id-addressing), Spec 121 (consumed — WORKFLOW_RULES, find_docs), Spec 125-A Phase 0 (landed — the PR gate 122's checks register onto). Feeds 119-B (routing + measurement) and 123 (consumer distribution).
 
@@ -12,7 +12,7 @@
 
 One canonical agent definition → per-tool configs, generated, never curated. 122 applies the Rosetta token-pipeline pattern to agents: a composition pipeline that resolves corpus references by `id` and passes hand-authored prose through verbatim, emitting every per-tool agent artifact for Kiro and Claude Code from canonical source, protected by a regenerate-and-diff guard and a canonical-vs-truth check registered on the live PR gate.
 
-**Traceability**: every requirement carries a **Source** line citing the design outline section and/or inbound note it formalizes. The outline (`design-outline.md`, R4 incorporation) is the settled scope record; the §5 scope decisions and the gap-#7 composition rule are decided — this document does not re-open them.
+**Traceability**: every requirement carries a **Source** line citing the design outline section and/or inbound note it formalizes. The outline (`design-outline.md`, R4 incorporation) is the settled scope record; the §5 scope decisions and the gap-#7 composition rule are decided — this document does not re-open them. Round-1 amendments are cited as `[AGENT R1 item]` against `feedback/requirements.md` (the round record); incorporation notes live there under `[THURGOOD R2]`.
 
 **Requirements altitude**: these requirements state WHAT must be true and how it is verified. Sweep pass/fail algorithms, adapter internals, and canonical-source schemas are design/tasks matters — the obligation is named here; the mechanism is not.
 
@@ -27,10 +27,11 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 **Acceptance criteria**:
 1. Governance-as-law content, routing rows, and doc pointers in generated output SHALL be resolved from the governance corpus by `id` at generate-time; they SHALL NOT be re-authored into canonical agent source and SHALL NOT be snapshotted into a self-contained prompt.
 2. Hand-authored prose classes (formative, reflexive-principle, role-specific prose) SHALL travel through the pipeline verbatim; the generator SHALL NOT synthesize, summarize, or rewrite pass-through prose.
-3. WHEN a generated output is inspected THEN every piece of its content SHALL be attributable to exactly one of the two pipeline operations: a resolved reference or pass-through prose — no third, generator-invented content class exists.
-4. WHEN corpus content changes THEN regeneration SHALL pick up the change without any edit to canonical agent source (the corpus-copy drift mode is structurally impossible, not merely guarded).
+3. WHEN a generated output is inspected THEN every piece of its content SHALL be attributable to exactly one of **three** pipeline operations: (a) a resolved reference, (b) pass-through prose, or (c) **deterministic rendering of structured canonical fields** (template glue: rendered `WORKFLOW_RULES`, write-scope notes derived from `allowedPaths`, headings) — rendering that derives mechanically from canonical structured fields and introduces no substance of its own. No generator-invented content class exists; the no-invented-substance invariant is preserved because class (c) can only restate what a canonical field already carries.
+4. Attributability SHALL be mechanically inspectable: the generator SHALL emit a provenance mechanism (provenance markers or an attribution manifest — the form is a design matter) sufficient to check AC3's invariant per output, rather than leaving it to human reading.
+5. WHEN corpus content changes THEN regeneration SHALL pick up the change without any edit to canonical agent source (the corpus-copy drift mode is structurally impossible, not merely guarded).
 
-**Source**: design-outline §1 ("The generator is a composition pipeline"); ADA R1 item 1 (feedback/design-outline.md); §3a mitigation 1.
+**Source**: design-outline §1 ("The generator is a composition pipeline"); ADA R1 item 1 (feedback/design-outline.md); §3a mitigation 1; ADA R1 A3 + STACY R1 S8 (feedback/requirements.md — third content class + attributability inspector).
 
 ### Requirement 2 — Canonical source structure tracks silent-failure risk per class
 
@@ -50,10 +51,10 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 **Acceptance criteria**:
 1. Generated prompts SHALL reference docs by **`id`**, never by physical `governance/...` path, so relocation/rename stays transparent to generated output.
-2. The address grammar SHALL be forward-shaped for section addressing (`docid#sectionid`): doc-level `id` is emitted now, and section-level addressing SHALL slot in later without a change to how output is regenerated.
+2. The address grammar SHALL be forward-shaped for section addressing (`docid#sectionid`): doc-level `id` is emitted now, and section-level addressing SHALL slot in later without a change to how output is regenerated. WHERE a requirement targets a *section* (e.g., Requirement 5 AC3), the **interim address form SHALL be doc-`id` plus verbatim heading string**, upgraded to `docid#sectionid` when section addressing lands; sweep 1 and the canonical-vs-truth check SHALL resolve the interim form as: the `id` resolves AND the heading exists in the resolved doc.
 3. Generated output SHALL emit `find_docs` as the discovery tool and SHALL NOT emit the removed `get_documentation_map` from any template or source.
 
-**Source**: design-outline §2.4, §2.5; inbound-from-119 §3; inbound-from-121 §2.
+**Source**: design-outline §2.4, §2.5; inbound-from-119 §3; inbound-from-121 §2; ADA R1 A1 (feedback/requirements.md — interim section-address form).
 
 ### Requirement 4 — `WORKFLOW_RULES` propagate from the single encoded source
 
@@ -73,9 +74,9 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 **Acceptance criteria**:
 1. Generated output SHALL assume: CJS-consistency (no `"type":"module"` flip); `tsx` as the sole runtime-TS mechanism; package own code as compiled `dist/` under plain `node`; consumer `.ts` via per-site scoped-tsx seams; extensionless CJS authoring; MCP servers + browser bundle as the exempt bundled surface.
 2. Generated output SHALL NOT emit ts-node in any config or script (the MCP dev sub-packages' own ts-node is the documented exception and is not generator-emitted).
-3. Generated prompts that reference the contract SHALL point at the Module-Resolution Contract section by `id` (per Requirement 3), for the agents the routing rows assign (Ada primary; Thurgood; Lina).
+3. Generated prompts that reference the contract SHALL point at the Module-Resolution Contract section via the Requirement 3 AC2 interim form (doc-`id` + verbatim heading string, upgraded to `docid#sectionid` when section addressing lands), for the agents the routing rows assign (Ada primary; Thurgood; Lina).
 
-**Source**: design-outline §3 (runtime assumptions); inbound-from-118.
+**Source**: design-outline §3 (runtime assumptions); inbound-from-118; ADA R1 A1 (feedback/requirements.md).
 
 ---
 
@@ -87,10 +88,10 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 **Acceptance criteria**:
 1. The master tool registry (Requirement 7) and the skills pipeline (Requirement 8) SHALL be generated and emitted through BOTH the Kiro adapter and the CC adapter, with the regenerate-and-diff guard (Requirement 17) proven against them, BEFORE any agent-prompt generation begins. This is a hard phase gate, not a preference.
-2. WHEN the substrate gate has not passed THEN no agent-prompt generation task SHALL start; the gate's passage SHALL be recorded (committed evidence: generated artifacts + a diff-guard run that fails on an induced hand-edit and passes clean).
+2. WHEN the substrate gate has not passed THEN no agent-prompt generation task SHALL start; the gate's passage SHALL be recorded (committed evidence: generated artifacts + a diff-guard run that fails on an induced hand-edit and passes clean + **a sweep-2 skills round-trip run over the relocated skills** — the round-trip guards the substrate's own crux content; "substrate proven" without it is incomplete closure).
 3. 122 SHALL remain one spec; whether execution later splits at the substrate↔agent seam is an execution call made after design coherence, not a requirements commitment.
 
-**Source**: design-outline §3 ("The substrate→agent seam"); Session decisions #3/#4 (feedback/design-outline.md).
+**Source**: design-outline §3 ("The substrate→agent seam"); Session decisions #3/#4 (feedback/design-outline.md); STACY R1 S6 (feedback/requirements.md — sweep 2 in substrate closure).
 
 ### Requirement 7 — Master tool registry: declaration-keyed, index-agnostic, generated, diff-guarded
 
@@ -101,21 +102,21 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 2. WHEN an MCP's tools are declared but its index is empty (e.g., Product MCP in the design-system-source repo) THEN those tools SHALL still appear in the registry and SHALL still drive per-agent cue generation.
 3. The registry SHALL be a generated output under the regenerate-and-diff guard: an MCP adding/removing/renaming a tool or changing a description SHALL make committed ≠ fresh-generate and fail the guard.
 4. The registry SHALL NOT be injected ambiently into any agent; each agent SHALL receive its relevant tool *subset* plus triggered cues, with the remainder discoverable on demand.
-5. WHEN a new tool appears in the registry THEN the inherent-vs-discoverable routing decision SHALL be owned by the relevant domain owner, with un-routed tools caught by the coverage-of-coverage instrument (Requirement 22).
+5. WHEN a new tool appears in the registry THEN the inherent-vs-discoverable routing decision SHALL be owned by the relevant domain owner — where "relevant domain owner" is named per the **membership-vs-substance seam**: for consumer/product agents, the consuming agent's seat owns its subset and routing decisions (MEMBERSHIP); the tool's/doc's declaring owner owns SUBSTANCE; Thurgood consistency-checks. "Relevant domain owner" is NOT system-agent-only — Product-MCP cue adjudication does not stall for lack of a named owner. Un-routed tools are caught by the coverage-of-coverage instrument (Requirement 22).
 
-**Source**: design-outline §2.2 (master tool registry bullets); LEONARDO R1 + STACY R2 declaration-keying convergence; THURGOOD R4 directed-question closure.
+**Source**: design-outline §2.2 (master tool registry bullets); LEONARDO R1 + STACY R2 declaration-keying convergence; THURGOOD R4 directed-question closure; LEONARDO R1 LE4 ≡ KENYA R1 K4 (feedback/requirements.md — membership/substance ownership).
 
 ### Requirement 8 — Skills pipeline: explicit mapping table, transformed references, neutral root
 
 **User story**: As the Android platform agent whose crux skill is `theming-styles`, I want skill relocation driven by an explicit round-trip-resolvable mapping table and skill references transformed per runtime, so no skill silently resolves nowhere after generation.
 
 **Acceptance criteria**:
-1. Skill relocation SHALL be driven by an explicit **`kiro_path → cc_path` mapping table** in canonical source — NOT a regex/prefix swap. Every Kiro skill SHALL have a row; every row's `cc_path` SHALL exist (round-trip resolvable; enforced by sweep 2, Requirement 19).
-2. `skill://` references SHALL be transformed to the CC Skill-tool form for CC output, never copied verbatim.
+1. Skill relocation SHALL be driven by an explicit **`canonical_path → per-target path` mapping table** in canonical source, keyed by the neutral canonical location — NOT `kiro_path → cc_path` (under the neutral `skills/` root, `.kiro/skills/` is a generated output too; Kiro-as-source keying would leave Kiro breakage silent) and NOT a regex/prefix swap. Every skill SHALL have a row; every row's per-target path SHALL be **resolvable per that target runtime's skill-discovery contract** (CC: flat directory + `SKILL.md` + intact activation description — bare file-existence passes a skill that resolves nowhere at runtime), for **every emitted target** (round-trip; enforced by sweep 2, Requirement 19). An agent with legitimately zero skills (the current iOS seat) SHALL register as a sweep-2 PASS, not as a coverage hole.
+2. `skill://` references SHALL be transformed to the CC Skill-tool form for CC output, never copied verbatim; the transformed reference SHALL satisfy the same discovery-contract resolvability as AC1.
 3. Skills SHALL live in a neutral top-level `skills/` root (sibling to `governance/`), with the generator copying/repointing into each tool's location; bundled scripts SHALL travel as-is.
 4. The skills pipeline SHALL be substrate (shared knowledge-architecture infrastructure, reusable across agents), behind the Requirement 6 phase gate.
 
-**Source**: design-outline §2.5, §5(e); DATA R1 items (a)/(b); Session decision #2 (skills = substrate).
+**Source**: design-outline §2.5, §5(e); DATA R1 items (a)/(b); Session decision #2 (skills = substrate); DATA R1 D1/D2 + KENYA R1 named-gaps (feedback/requirements.md — canonical keying, discovery-contract resolvability, zero-skills pass).
 
 ---
 
@@ -140,36 +141,38 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 1. For each of the 8 agents, the generator SHALL emit the ambient layer assembled from the five AXA classes per `per-agent-ambient-design.md`, with the `design-only-build-deferred` and `design-only-gen-deferred` members built/generated by 122.
 2. Ground-truth-manifest verdicts SHALL be honored as designed: none-standing/MCP-served (Ada; web/iOS/Android consumers, with stale `dist/*` snapshots trimmed), `get_component_catalog`-IS-the-manifest (Lina), collapses-into-catalog/computed (Thurgood, Stacy), empty-by-design (Leonardo). No standing manifest SHALL be built; any manifest/audit surface wired SHALL point at tools that compute fresh at use-time, never a baked-in snapshot.
 3. Manifest cues SHALL carry the right verbs: Lina's cue SHALL carry the assembly-grain faithfulness verbs (`get_component_full` + `get_component_health`), not mere `get_component_catalog` enumeration.
-4. Capability-catalog routing SHALL span **all three MCPs** — Application and Product MCP cues are primary for consumer/product agents, not Docs-only — generating triggered cues (WHEN to reach for which tool), the per-agent tool subset, and deferred-tool awareness, without re-listing tool schemas that auto-surface.
+4. Capability-catalog routing SHALL span **all three MCPs** — Application and Product MCP cues are primary for consumer/product agents, not Docs-only — generating triggered cues (WHEN to reach for which tool), the per-agent tool subset, and deferred-tool awareness, without re-listing tool schemas that auto-surface. "Primary" SHALL have a verifiable form: each consumer agent's generated catalog SHALL contain its designed Application/Product-MCP cues per that agent's Task-9 block in `per-agent-ambient-design.md` (set-inclusion, checked via the sweep-4 machinery).
 5. Leonardo's generated catalog SHALL preserve the **inter-agent handoff routing table** (absorbed `agent-directory` routing: route Peter to platform agents; escalate to system agents), not only doc/tool-routing cues.
 6. The `find_docs` discovery row SHALL be propagated to all 8 agents from canonical source.
 
-**Source**: design-outline §2.1, §2.2, §5(d) three buckets; per-agent-ambient-design.md (all 8 blocks); LINA R1 item 1; LEONARDO R1 (§7 sharpening).
+**Source**: design-outline §2.1, §2.2, §5(d) three buckets; per-agent-ambient-design.md (all 8 blocks); LINA R1 item 1; LEONARDO R1 (§7 sharpening); LEONARDO R1 LE2 (feedback/requirements.md — "primary" as set-inclusion).
 
 ### Requirement 11 — Per-tool transforms carry every runtime delta with a declared disposition
 
 **User story**: As the reviewer of a generated CC port, I want every Kiro-to-CC delta handled by a declared transform — including config fields with no CC equivalent — so nothing is silently dropped or hand-approximated per agent.
 
 **Acceptance criteria**:
-1. Transforms SHALL include at minimum: MCP query syntax → namespaced tool names; `resources:`/`skill://` injection → per-class destination routing (identity/always vs MCP-served on-demand, per port-recon D1/D2 classification signals); `/knowledge` → grep/MCP fallback note; hotkeys removed.
+1. Transforms SHALL include at minimum: MCP query syntax → namespaced tool names; `resources:`/`skill://` injection → per-class destination routing (identity/always vs MCP-served on-demand, per port-recon D1/D2 classification signals); `/knowledge` → a **per-agent-domain** grep/MCP fallback note emitted from each agent's canonical knowledge-base declarations, not shared boilerplate; hotkeys removed.
 2. Every Kiro config field with no CC equivalent SHALL have an explicit declared disposition — **carry / transform / drop-with-reason** — never a silent drop (`agentSpawn`, `keyboardShortcut`, `welcomeMessage` are the known instances); enforced by sweep 7 (Requirement 19).
 3. The write-scope behavioral note SHALL be **driven by the source `toolsSettings.write.allowedPaths` field** — a different agent's allowed paths SHALL yield a different note; a hand-copied paragraph fails this requirement.
-4. Coarse server-level tool grants SHALL be transformed to explicit per-agent tool subsets drawn from the master tool registry (Requirement 7), with the subset decision owned by the domain owner.
+4. Coarse server-level tool grants SHALL be transformed to explicit per-agent tool subsets drawn from the master tool registry (Requirement 7), with the subset decision owned per the membership-vs-substance seam (Requirement 7 AC5: the consuming agent's seat owns membership; the declaring owner owns substance; Thurgood consistency-checks). Cue-to-grant coherence per runtime is asserted by Requirement 18 AC2(c).
 5. Runtime-specific tool references in governance docs that generated prompts point at (e.g., `getDiagnostics`/`taskStatus` in Process-Spec-Planning — Kiro-runtime tools) SHALL have a declared per-runtime disposition in the transform layer, not only references in prompts themselves.
 
-**Source**: design-outline §2.3; port-recon-stacy.md D1–D6; STACY R2 item 6(b); inbound-from-2026-07-05-gate-clearance §3.
+**Source**: design-outline §2.3; port-recon-stacy.md D1–D6; STACY R2 item 6(b); inbound-from-2026-07-05-gate-clearance §3; DATA R1 D6 + LEONARDO R1 LE4 + LINA R1 L3 (feedback/requirements.md).
 
 ### Requirement 12 — Generated-output quality: replacements, run-context, and the shared completion tooling
 
 **User story**: As an agent whose always-layer is being trimmed, I want every removal to tell me where to get the content now and every command to tell me where it runs, so the generated output is usable rather than merely smaller.
 
 **Acceptance criteria**:
-1. **Every removal from the always-layer SHALL emit a positive where-to-get-it-now replacement cue**, whether the removed thing was a stale snapshot (e.g., `WHEN you need Android token values THEN use get_token_details — do NOT read dist/android/`) or a demoted doc (e.g., Leonardo's ~60% on-demand trim each emitting its MCP replacement: `get_component_health` / `get_component_catalog` / `get_prop_guidance`).
-2. Every generated command whose run-context is not this repo SHALL carry a run-context annotation (e.g., `run from the product app's android/ dir, not this repo`).
-3. **Every generated capability catalog SHALL include the shared task-completion tooling** (`.kiro/hooks/complete-task.sh` — the PR-flow tool that superseded `commit-task.sh` under the ratified 125-A workflow ballot) with its activation cue, so no agent regenerates without the current completion flow.
-4. Where the 125 classification map designates a rule as a CI barrier, generated prose SHALL deliver the *why* as context and SHALL NOT present the *what* as an instruction that duplicates the barrier (kept soft: a re-classification is a canonical-source edit + regeneration; 122 never waits on the map).
+1. **Every removal from the always-layer SHALL emit a positive where-to-get-it-now replacement cue**, whether the removed thing was a stale snapshot (e.g., `WHEN you need Android token values THEN use get_token_details — do NOT read dist/android/`) or a demoted doc (e.g., Leonardo's ~60% on-demand trim each emitting its MCP replacement: `get_component_health` / `get_component_catalog` / `get_prop_guidance`). To make this verifiable, the generator SHALL emit the **demotion delta** — the machine-readable removal set (old ambient vs new) that cue-completeness is checked against (the demotion-diff check, Requirement 19 AC1 check 8).
+2. Replacement cues SHALL answer the seat's actual question, with three quality criteria: (a) where the removed artifact is stale/orphaned, the cue SHALL be a **hard negative plus positive** (`do NOT read dist/*.swift — use get_token_details`), emitted for EACH trimmed artifact individually (verbs may differ per artifact — e.g., the component-token file may route to `get_component_full`); "prefer the MCP" is insufficient where the artifact is wrong, not merely stale; (b) for theme-varying tokens the cue's route SHALL return the **per-theme SET** (a token is a per-theme set, not one value — the iOS stale-snapshot failure was single-value flattening; it SHALL NOT be re-imported at the prose layer); (c) the cue's tool SHALL resolve the seat's **platform form** (web: `--space-300` / `var()` chains via platform-web values — a resolved unitless value still strands the seat).
+3. **Run-context SHALL be a data field in canonical source** (parallel to Requirement 11 AC3's write-scope rule), enumerable over exactly three values: `this-repo` / `consumer-repo` / `per-product` (the third honestly marked "authored per product"), so annotation checking is mechanical — never hand-copied prose. Every generated command whose run-context is not this repo SHALL carry the rendered annotation (e.g., `run from the product app's android/ dir, not this repo`).
+4. **Every generated capability catalog SHALL include the shared task-completion tooling** (`.kiro/hooks/complete-task.sh` — the PR-flow tool that superseded `commit-task.sh` under the ratified 125-A workflow ballot) with its activation cue, so no agent regenerates without the current completion flow.
+5. Where the 125 classification map designates a rule as a CI barrier, generated prose SHALL deliver the *why* as context and SHALL NOT present the *what* as an instruction that duplicates the barrier (kept soft: a re-classification is a canonical-source edit + regeneration; 122 never waits on the map).
+6. **Authoring prohibition — volatile facts**: volatile system facts (component counts, doc counts, version numbers, inventory figures) SHALL NOT be embedded in pass-through prose in canonical source — pass-through prose is the one content class NO guard inspects (the diff-guard blesses it; canonical-vs-truth never reads it; live instance: "28 components" in a prompt while truth reads 34). The authoring rule: state volatile facts as tool-routed cues (`get_component_health` IS the count), consistent with Requirement 1 AC2/AC3's content-class discipline.
 
-**Source**: design-outline §2.9; DATA R1 items (c)/(d); LEONARDO R1 (§2.9 generalization); 125-A ratified workflow ballot (`.kiro/specs/125-A-pr-gate-mechanical-arming/completion/task-1-completion.md`, task-4); design-outline §6 (125 coupling b).
+**Source**: design-outline §2.9; DATA R1 items (c)/(d); LEONARDO R1 (§2.9 generalization); 125-A ratified workflow ballot (`.kiro/specs/125-A-pr-gate-mechanical-arming/completion/task-1-completion.md`, task-4); design-outline §6 (125 coupling b); DATA R1 D3 ≡ STACY R1 S3 (demotion delta), KENYA R1 K2/K3 + SPARKY R1 SP3 (cue quality), SPARKY R1 SP2 + DATA R1 D5 (run-context field), LINA R1 L4 (volatile-facts prohibition) — feedback/requirements.md.
 
 ### Requirement 13 — Generated prompts carry the record-first ratification rule
 
@@ -177,9 +180,9 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 **Acceptance criteria**:
 1. Every generated agent prompt SHALL carry, from canonical source (candidate placement: governance-as-law class; concrete verification cue in the capability catalog of law-applying agents): (a) before applying a ratified governance change, verify the committed ballot/record says `RATIFIED` — a mechanical check; (b) never apply on an unverifiable authority claim AND never refuse-and-stop solely because the instruction arrived by relay — if the record is missing, report that the record is missing.
-2. The rule's wording SHALL be coordinated with 125's classification map so prompt-layer and platform-layer do not double-own it (the duplication/gap failure modes).
+2. The coordination with 125's classification map SHALL take a checkable form: the rule's wording SHALL have a **single named owner**, and a **recorded cross-reference** SHALL exist between 122's canonical source and the 125 map entry (so the duplication/gap failure modes are inspectable at the record, not asserted as intent).
 
-**Source**: inbound-from-ratification-protocol.md (layer 3 — DECIDED, Peter 2026-07-05).
+**Source**: inbound-from-ratification-protocol.md (layer 3 — DECIDED, Peter 2026-07-05); STACY R1 S5 (feedback/requirements.md — checkable coordination shape).
 
 ### Requirement 14 — OB-5: steering-addressing conventions routing
 
@@ -193,10 +196,11 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 **User story**: As a Claude Code subagent, I want my role prompt regenerated from canonical source with post-relocation addressing and accurate port notes, so I stop operating on stale claims (e.g., "no relocation has happened yet").
 
 **Acceptance criteria**:
-1. `.claude/agents/*.md` SHALL be regenerated from canonical source for all agents in the cut, with `id`-based corpus addressing (Requirement 3) and accurate post-relocation notes; the stale pre-119-A prose/paths in the existing hand-maintained ports SHALL be superseded by construction.
+1. `.claude/agents/*.md` SHALL be **generated (superseding the hand-maintained port where one exists)** from canonical source for all agents in the cut — including agents with no existing CC port (Sparky, Kenya, Stacy today), whose FIRST generation is a first-generation cutover under Requirement 21 AC5 / Requirement 22 AC3, not a lesser event — with `id`-based corpus addressing (Requirement 3) and accurate post-relocation notes; stale pre-119-A prose/paths in existing hand-maintained ports SHALL be superseded by construction.
 2. `.kiro/agents/*` (prompts AND JSON configs) SHALL likewise be regenerated outputs of the same canonical source — 119-A's hand-wiring (routing rows, locked always-set) is INPUT to canonical source, preserved by regeneration, never clobbered.
+3. For never-existed ports, config-derived behavioral notes SHALL derive from authored canonical fields per Requirement 11 AC3, never hand-approximated (live instance: Sparky's port SHALL carry the specs-only in-repo write scope from `sparky.json` `toolsSettings.write.allowedPaths` = `.kiro/specs/**` + `docs/specs/**`).
 
-**Source**: 119-B-deferred-obligations OB-6; design-outline §2.7, §4; inbound-from-118 (consumption chain); inbound-from-2026-07-05-gate-clearance §3 (live OB-6 evidence); port-recon D3.
+**Source**: 119-B-deferred-obligations OB-6; design-outline §2.7, §4; inbound-from-118 (consumption chain); inbound-from-2026-07-05-gate-clearance §3 (live OB-6 evidence); port-recon D3; KENYA R1 K5 + SPARKY R1 SP4 (feedback/requirements.md).
 
 ### Requirement 16 — OB-7: one always-layer mechanism per runtime; the CLAUDE.md stopgap retires
 
@@ -232,30 +236,35 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 **Acceptance criteria**:
 1. A canonical-vs-truth check SHALL verify that every referenced corpus `id`/section resolves against the running corpus AND that every routing cue points at a live tool. It SHALL run alongside the diff-guard and SHALL be registered on the gate (Requirement 20) — it is mandatory, not optional, because the diff-guard cannot see this failure mode.
-2. The check SHALL implement two assertion classes: (a) **governance-integrity** — a law reference resolves to a section that still states the *substance* claimed (the `token-governance` autonomy-level case: "component tokens require explicit approval" must still say so), not merely resolves as a string; (b) **live-tool** — "live tool" means *introspected from the running MCP's declarations*, index-agnostic, not *named in canonical source* (the phantom-route case); a declared-but-index-empty tool SHALL NOT be flagged.
-3. WHEN the check flags a substance mismatch THEN adjudication of truth SHALL belong to the domain owner (Ada rules token-governance substance; Lina rules component substance) — the check runs anywhere; the owner rules.
+2. The check SHALL implement **five assertion classes**:
+   (a) **governance-integrity, with the predicate materialized** — a law reference resolves to a section that still states the *substance* claimed (the `token-governance` autonomy-level case: "component tokens require explicit approval" must still say so), not merely resolves as a string. Each governance-as-law reference in canonical source SHALL carry its **declared substance assertion as a pinned, checkable expectation** — the claimed predicate is itself canonical content under the diff-guard. Without the materialized predicate the check silently degrades to id-resolution.
+   (b) **agent-routes** — routing rows pointing at AGENTS SHALL resolve: the target exists as a generated agent on the target runtime, OR the row carries an explicit **not-yet-ported disposition** (live instance: the 5/8 CC-port gap — Leonardo's CC prompt routes to Sparky/Kenya/Stacy, absent in CC).
+   (c) **per-runtime grants** — every generated cue's tool SHALL be a member of that agent's generated tool subset for that runtime: declared-by-server ≠ granted-to-this-agent's-config (live instance: Lina's Kiro config historically Docs-MCP-only while her law carries App-MCP verbs). Composes with Requirement 11 AC4 and sweep 6.
+   (d) **command-string currency** — generated command strings SHALL verify against `package.json` scripts at regeneration; command strings are snapshots too (live precedents: lane semantics changed 2026-07-03; the completion command changed 2026-07-05).
+   (e) **live-tool** — "live tool" means *introspected from the running MCP's declarations*, index-agnostic, not *named in canonical source* (the phantom-route case); a declared-but-index-empty tool SHALL NOT be flagged (the carve-out, complete across all three homes).
+3. WHEN the check flags a substance mismatch THEN adjudication of truth SHALL belong to the domain owner (Ada rules token-governance substance; Lina rules component substance) — the check runs anywhere; the owner rules. For consumer-agent ambient/routing deltas, adjudication follows the membership-vs-substance seam (Requirement 7 AC5).
 
-**Source**: design-outline §3a mitigation 2; ADA R2 (governance-integrity sharpening); LEONARDO R1 / STACY R2 (live-tool + carve-out); §4a owner-adjudicates-truth.
+**Source**: design-outline §3a mitigation 2; ADA R2 (governance-integrity sharpening); LEONARDO R1 / STACY R2 (live-tool + carve-out); §4a owner-adjudicates-truth; ADA R1 A2 ≡ STACY R1 S4 (materialized predicates), LEONARDO R1 LE1 (agent-routes), LINA R1 L3 (per-runtime grants), SPARKY R1 SP1 (command-string currency) — feedback/requirements.md, Theme A.
 
-### Requirement 19 — The seven input-fidelity sweeps run mechanically before cutover
+### Requirement 19 — The mechanical check set (seven input-fidelity sweeps + the demotion-diff check) runs before cutover
 
 **User story**: As the steward of the one-way ratchet, I want the pre-cutover audit performed as mechanical per-agent sweeps rather than a hand-enumerated defect list, so first generation cannot enshrine a defect the list-form provably misses.
 
 **Acceptance criteria**:
-1. The seven sweeps SHALL exist as mechanical, CI-run checks, each executed (or its flagged deltas adjudicated) BEFORE first generation makes the generator SSOT for any agent: (1) reference-resolution (bidirectional, declaration-keyed); (2) skills mapping-table round-trip; (3) resources-array double-load; (4) Task-9 ambient-block vs `*.json` set-difference; (5) known-content-defect fixes; (6) phantom-route/declaration-diff (bidirectional, declaration-keyed, with the declared-but-empty carve-out); (7) config-field disposition.
-2. Sweeps SHALL run mechanically in the pipeline's CI; each flagged delta SHALL be adjudicated by the relevant **domain owner** (never auto-resolved and never resolved by the sweep runner).
-3. **Stacy SHALL own coverage-of-coverage over the sweep set**: that the set is complete and that each sweep actually ran at cutover — the recursion that makes her validation lane operable (Requirement 22).
-4. The sweeps SHALL be pre-cutover *gates*, and they remain standing checks post-cutover where applicable (reference-resolution, round-trip, declaration-diff are properties of every regeneration, not one-time fixes).
+1. The check set SHALL exist as mechanical, CI-run checks, each executed (or its flagged deltas adjudicated) BEFORE first generation makes the generator SSOT for any agent: (1) reference-resolution (bidirectional, declaration-keyed, resolving the Requirement 3 AC2 interim section form); (2) skills mapping-table round-trip (canonical-keyed, covering every emitted target, zero-skills agents passing legitimately — Requirement 8 AC1); (3) resources-array double-load; (4) Task-9 ambient-block vs `*.json` set-difference; (5) known-content-defect fixes — this sweep SHALL assert the corrected state **HOLDS at cutover** (mechanically: zero `.web.tsx` references in canonical source; a single consistent contract-concept count), not merely that a fix was once made, so a re-entered defect cannot pass a done-precondition reading; it is a pre-cutover gate and does NOT stand post-cutover as a growing per-defect list (a standing per-defect list is the hand-list anti-pattern re-imported — Lina's recorded counter-argument, adopted; post-cutover re-entry protection belongs to the class-based standing checks of AC4); (6) phantom-route/declaration-diff (bidirectional, declaration-keyed, with the declared-but-empty carve-out); (7) config-field disposition; (8) **demotion-diff** — old ambient vs new, against the generator-emitted demotion delta (Requirement 12 AC1): every removal SHALL have a matching replacement cue.
+2. Checks SHALL run mechanically in the pipeline's CI; each flagged delta SHALL be adjudicated by the relevant **domain owner** (never auto-resolved and never resolved by the sweep runner) — for consumer-agent ambient/routing deltas, per the membership-vs-substance seam (Requirement 7 AC5: the seat adjudicates membership; the doc owner adjudicates substance). **Each check SHALL be demonstrated against a known positive before it is trusted at cutover** (prove-it-bites, mirroring Requirement 17 AC4; sweep 3's free positives: the verified `leonardo.json` double-load and `kenya.json`'s `Product-Token-Governance` double-load at `file://` line 30 + `skill://` line 42).
+3. **Stacy SHALL own coverage-of-coverage over the check set**: that the set is complete and that each check actually ran at cutover — the recursion that makes her validation lane operable (Requirement 22). Each cutover SHALL leave a **recorded run-artifact** (CI run reference or committed sweep report on the cutover PR) plus recorded owner adjudications — coverage-of-coverage audits records, never verbal assertion.
+4. The checks SHALL be pre-cutover *gates*, and they remain standing checks post-cutover where applicable (reference-resolution, round-trip, declaration-diff, and demotion-diff are properties of every regeneration, not one-time fixes; sweep 5 is the named exception per AC1).
 5. Cleared-state note (record, not obligation): the three §6 Input-Fidelity Gates are CLEARED as of 2026-07-05 — 117/136 reconciled at 136 (`3dd50f94`), `.web.tsx`→`.web.ts` fixed at nine sites (`3dd50f94`), Data's `start-up-tasks` drop adjudicated assessment-gap (`b7c3c148`). The 9-vs-2 undercount is standing evidence for AC1's mechanical form. First-generation cutover SHALL ratchet against the current corrected baseline (13.0.0 published; post-Phase-0 PR-flow protocol), never a retired state.
 
-**Source**: design-outline §8 (seven sweeps + ownership model), §3b, §6 (Input-Fidelity Gates); inbound-from-2026-07-05-gate-clearance §1/§4; R2 synthesis meta-finding.
+**Source**: design-outline §8 (seven sweeps + ownership model), §3b, §6 (Input-Fidelity Gates); inbound-from-2026-07-05-gate-clearance §1/§4; R2 synthesis meta-finding; DATA R1 D3 ≡ STACY R1 S3 (check 8), LINA R1 L1 (sweep-5 corrected-state-holds, counter-argument adjudicated), LEONARDO R1 LE3 (prove-it-bites), STACY R1 S2 (run-artifact evidence), LEONARDO R1 LE4 ≡ KENYA R1 K4 (adjudication seam + kenya.json positive) — feedback/requirements.md.
 
 ### Requirement 20 — Every 122 check registers on the gate: unfiltered trigger + fast no-op
 
 **User story**: As the operator of the Phase 0 required-check gate, I want every 122 check to trigger unfiltered on every PR and complete cheaply when irrelevant, so no required context ever sits "Expected" forever and the gate's latency budget holds.
 
 **Acceptance criteria**:
-1. Every CI check 122 delivers (the regenerate-and-diff guard, the canonical-vs-truth check, each of the seven sweeps, and the tool-boot smoke manifest it enumerates for 125) SHALL be a required-check-compatible job whose trigger is **NOT path-filtered** — this is decided law from 125-A (Req 2.3: a filtered required context that never triggers blocks the merge forever; the remedy for latency is caching/parallelism, NEVER path-filtering).
+1. Every CI check 122 delivers (the regenerate-and-diff guard, the canonical-vs-truth check, each of the Requirement 19 mechanical checks — the seven sweeps plus the demotion-diff check — and the tool-boot smoke manifest it enumerates for 125) SHALL be a required-check-compatible job whose trigger is **NOT path-filtered** — this is decided law from 125-A (Req 2.3: a filtered required context that never triggers blocks the merge forever; the remedy for latency is caching/parallelism, NEVER path-filtering).
 2. WHEN a PR's diff does not touch a check's surface THEN the check SHALL still run and SHALL complete as a **fast no-op** (internal early-exit on an unchanged surface), drawing acceptably against the recorded wall-clock headroom budget (~10-minute cold-cache ceiling per 125-A Req 6.3).
 3. Registering each check SHALL require only a named status context + one protection-list entry (the open-set contract) — 122 SHALL NOT require gate redesign.
 4. 122 SHALL deliver the master tool registry as the manifest the 125 tool-boot smoke consumes (122 enumerates; 125 arms), asserting declared-and-responds, never returns-data.
@@ -271,12 +280,13 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 **User story**: As the human lead reviewing each agent's cutover, I want no catalog generated around unauthored content and each agent's cutover to arrive as an independently reviewable PR, so the ratchet advances agent-by-agent on real content with real review.
 
 **Acceptance criteria**:
-1. An agent's capability catalog SHALL NOT be generated until that agent's command/skill content is authored (Sparky, Kenya, and Stacy currently lack authored command content). Command strings SHALL be extracted from real sources (`package.json`) or authored by the owning agent — never fabricated by the generator or the spec author.
-2. "Complete for all 8" SHALL be expressed per-agent over time, and each per-agent first-generation cutover SHALL be delivered as an independently reviewable, PR-sized change through the gate (not one atomic all-8 ship).
-3. **The generator's content-agnosticism SHALL be proven, not asserted**: a deliberately-minimal 8th-agent fixture SHALL run the full pipeline (canonical source → transforms → both adapters → diff-guard) cleanly end-to-end. The fixture passing is the acceptance evidence that "complete for all 8" is demonstrated; its shape is a design/tasks matter.
-4. Each agent's cutover SHALL satisfy the Stacy involvement trigger (Requirement 22 AC3 — every first-generation cutover is mandatory-involvement).
+1. An agent's capability catalog SHALL NOT be generated until that agent's command/skill content is authored. Command strings SHALL be extracted from real sources (`package.json`) or authored by the owning agent — never fabricated by the generator or the spec author — and SHALL remain current per Requirement 18 AC2(d). **A verified named gap IS valid authored content** for this gate (live instances: no in-repo iOS build/test exists — the honest fill is a run-context-annotated consumer-repo command class plus in-repo pipeline commands; no web dev server exists — `build:watch` is tsc-only, so a dev-server cue is never generated); the gate SHALL never pressure the fabrication this AC forbids.
+2. **Content already authored by an owning agent in a spec round record SHALL be carried into canonical source at catalog authoring, traceably** — round records are input-of-record, not a home; nothing regenerates from a feedback doc. In scope of this obligation now: Sparky's 8 verified commands + 3 named gaps, Kenya's 4 verified commands + 4 named gaps (both in `feedback/requirements.md`), and Data's JOB-1 (outline round record). After this carry, Stacy is the remaining seat lacking authored command content.
+3. "Complete for all 8" SHALL be expressed per-agent over time, and each per-agent first-generation cutover SHALL be delivered as an independently reviewable, PR-sized change through the gate (not one atomic all-8 ship).
+4. **The generator's content-agnosticism SHALL be proven, not asserted**: a deliberately-minimal 8th-agent fixture SHALL run the full pipeline (canonical source → transforms → both adapters → diff-guard) cleanly end-to-end. The fixture SHALL be a **standing pipeline test**, re-run on every pipeline change (the same standing logic as Requirement 19 AC4), not one-time acceptance evidence; its first pass is the acceptance evidence that "complete for all 8" is demonstrated. Its shape is a design/tasks matter.
+5. Each agent's cutover — **including the FIRST generation of a never-ported agent, which IS a cutover** (Requirement 15 AC1) — SHALL satisfy the Stacy involvement trigger (Requirement 22 AC3 — every first-generation cutover is mandatory-involvement).
 
-**Source**: design-outline §2.8, §3b; STACY R2 item 4 (binary withdrawn, fixture caveat held); 125-A ratified subtask-flow amendment (PR-sized granularity).
+**Source**: design-outline §2.8, §3b; STACY R2 item 4 (binary withdrawn, fixture caveat held); 125-A ratified subtask-flow amendment (PR-sized granularity); KENYA R1 K1/K5, DATA R1 D4, LINA R1 L5, SPARKY R1 input-of-record — feedback/requirements.md, Theme C.
 
 ### Requirement 22 — Roles: Thurgood verifies, Stacy validates — with her means provisioned first
 
@@ -286,22 +296,23 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 1. **Thurgood = verification** (runs the checks; confirms green: MCP/index health, metadata, cross-references, diff-guard runs). **Stacy = validation** (independent skeptic of the green — the check-lied mode via independent re-derivation, and the no-check-existed mode via coverage-of-coverage). She SHALL NOT be a second runner of the same checks.
 2. The seam SHALL follow the object-under-audit discriminator with the existence-before-agreement tie-break: first-order "does an instrument/route exist?" is Stacy's; second-order "given it exists, do the surfaces agree?" is Thurgood's.
 3. Stacy's involvement SHALL be triggered by: **(mandatory)** any agent's first-generation cutover, and any regen touching shared canonical source (master tool registry, skills mapping table, locked always-set, a governance-as-law lock); **(on-flag)** any regen where Thurgood's verification surfaces an anomaly; **(skip)** single-agent prose/command regens with a green diff-guard and no shared-source change.
-4. **Provisioning is a hard precondition, structural in three parts**: (a) the catalog scope carries her audit-command slots alongside the platform build-command slots; (b) tasks.md SHALL carry a task whose acceptance criterion is "**Stacy's audit commands are named AND her coverage map is emitted**"; (c) UNTIL that task completes, §4a's independent re-derivation leg SHALL be flagged non-operable and SHALL NOT be claimed as available.
+4. **Provisioning is a hard precondition, structural in three parts**: (a) the catalog scope carries her audit-command slots alongside the platform build-command slots; (b) tasks.md SHALL carry a task whose acceptance criterion is "**Stacy's audit commands are named AND her coverage map is emitted**" — where the coverage map's **minimum content is defined**: every guarded surface mapped to the check that guards it, such that an unguarded surface is visible as a blank row (an emitted-but-contentless map does not satisfy the criterion); (c) UNTIL that task completes, §4a's independent re-derivation leg SHALL be flagged non-operable and SHALL NOT be claimed as available.
 5. Content-correctness adjudication stays with domain owners (Ada: token substance; Lina: component substance); content-consistency and tool/index/metadata health stay with Thurgood — Stacy SHALL NOT duplicate either.
 
-**Source**: design-outline §4a (requirements-ready status + three-part precondition); STACY R2 items 1a/1b; THURGOOD R3 discriminator/tie-break.
+**Source**: design-outline §4a (requirements-ready status + three-part precondition); STACY R2 items 1a/1b; THURGOOD R3 discriminator/tie-break; STACY R1 S1 (feedback/requirements.md — coverage-map minimum content).
 
 ### Requirement 23 — First-generation acceptance signals are measurable
 
 **User story**: As the reviewer of the first generated outputs, I want the banked decomposition signals expressed as measurable criteria, so the diff-guard's first real test has numbers, not vibes.
 
 **Acceptance criteria**:
-1. Ada's generated ambient layer SHALL shrink her force-loaded resources from 27 to approximately 3 (the five-class decomposition signal); the exact post-decomposition count SHALL be recorded at cutover and the shrink verified against the generated output.
-2. Lina's generated governance-as-law lock SHALL reduce to `contract-system-reference` (+ the consumer/auditor core), with the ~29 `skill://` family/standards docs becoming on-demand routes, not ambient — recorded and verified the same way.
-3. The minimal-fixture pipeline pass (Requirement 21 AC3) SHALL be recorded as the content-agnosticism acceptance evidence.
-4. WHEN a recorded signal misses its expected shape THEN the delta SHALL be adjudicated (intentional design change vs generation defect) before cutover proceeds for that agent.
+1. Ada's generated ambient layer SHALL shrink her force-loaded resources from 27 to approximately 3 (the five-class decomposition signal). The measurement surface is pinned: **ambient-membership cardinality per Requirement 9's union**, measured on BOTH emitted targets, which SHALL agree; the exact post-decomposition count SHALL be recorded at cutover and the shrink verified against the generated output.
+2. Lina's generated governance-as-law lock SHALL reduce to `contract-system-reference` plus the consumer/auditor core, where the expected lock-set is pinned **by reference to `per-agent-ambient-design.md` § Lina** (not left as prose); the ~29→on-demand claim SHALL be verified as **zero `skill://` family/standards docs in the generated ambient layer** — recorded and verified the same way.
+3. Leonardo's generated output SHALL provide the consumer-side signal: his ~60% ambient demotion with a replacement cue present per demotion (Requirement 12 AC1 / check 8), and the known `leonardo.json` double-load resolved — recorded and verified the same way.
+4. The minimal-fixture pipeline pass (Requirement 21 AC4) SHALL be recorded as the content-agnosticism acceptance evidence.
+5. WHEN a recorded signal misses its expected shape THEN the delta SHALL be adjudicated (intentional design change vs generation defect) before cutover proceeds for that agent.
 
-**Source**: ADA R1 (27→~3, banked in THURGOOD R2 "not changed" note); LINA R2 (§8 item 1 verified + signal); STACY R2 item 4; design-outline §8 closing parenthetical.
+**Source**: ADA R1 (27→~3, banked in THURGOOD R2 "not changed" note); LINA R2 (§8 item 1 verified + signal); STACY R2 item 4; design-outline §8 closing parenthetical; ADA R1 A4 + LINA R1 L2 + LEONARDO R1 consumer-signal (feedback/requirements.md — measurement surfaces pinned).
 
 ---
 
@@ -323,17 +334,18 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 **Acceptance criteria**:
 1. This spec SHALL NOT build: the human-facing doc-TOC (DROPPED, not deferred — Peter 2026-07-01); any standing ground-truth manifest (the schema rationale stands: a token is a per-theme set, not one value — the reason there is no standing token-manifest); the token source→index divergence audit (a genuine build owned by Ada's Rosetta pipeline, named so "build-nothing-standing" doesn't imply it doesn't exist); OB-1's parent (cross-ref parser id-awareness — Docs-MCP infra).
-2. The OB-1 **scanner repoint** (`scripts/scan-cross-references.sh` → `governance/`) is the one open ride-along question — it SHALL be decided (bundle vs OB-1 owner) during this feedback round, not silently absorbed.
+2. The OB-1 **scanner repoint** (`scripts/scan-cross-references.sh` → `governance/`) is the one open ride-along question. It is NOT decided by the feedback round (the round surfaced that no reviewer owns the call): it stands as an **explicit Peter decision point at requirements ratification** — bundle into 122 vs route to the OB-1 owner. Carried for the decision: Ada's lean is route-to-OB-1-owner (negative-scope discipline), with the counter-argument recorded (the fix is trivial; the coordination hop has real cost); no token-law stake either way. The decision SHALL be recorded with ratification, not silently absorbed.
 3. WHEN out-of-scope work is discovered mid-execution THEN it SHALL be routed to its owner via inbound note, not absorbed.
 
-**Source**: design-outline §5(a), §5(d) buckets 2–3, §5(b), §6 (Out-of-122 boundary).
+**Source**: design-outline §5(a), §5(d) buckets 2–3, §5(b), §6 (Out-of-122 boundary); STACY R1 S7 ≡ ADA R1 A5 (feedback/requirements.md — OB-1 routed to Peter at ratification).
 
 ---
 
 ## Cross-References
 
 - `.kiro/specs/122-agent-generator/design-outline.md` — the settled scope record (R4 incorporation).
-- `.kiro/specs/122-agent-generator/feedback/design-outline.md` — the round record (R1/R2/Stacy-native/R4).
+- `.kiro/specs/122-agent-generator/feedback/design-outline.md` — the outline round record (R1/R2/Stacy-native/R4).
+- `.kiro/specs/122-agent-generator/feedback/requirements.md` — the requirements round record (7 verbatim reviews + synthesis + `[THURGOOD R2]` incorporation notes; Sparky's and Kenya's input-of-record command tables live here pending the Requirement 21 AC2 carry).
 - `.kiro/specs/119-A-steering-relocation-serving-contract/per-agent-ambient-design.md` — the spine (incl. the RATIFIED gap-#7 composition rule).
 - `.kiro/specs/122-agent-generator/inbound-from-{118,119,121,wordpress-thesis,2026-07-05-gate-clearance,ratification-protocol}.md` — formalization inputs.
 - `.kiro/specs/122-agent-generator/port-recon-stacy.md` — transform deltas D1–D6.
@@ -343,4 +355,4 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 
 ---
 
-*Requirements draft only. Sequential Formalization Gate holds: the full-roster requirements feedback round precedes design.md. EARS patterns per Process-Spec-Planning; every requirement traceable to its Source line.*
+*Requirements draft, round 1 incorporated (2026-07-05; 7/7 approve-with-amendments, 38 items, zero outline conflicts). Sequential Formalization Gate holds: pending Peter's ratification of requirements — including the OB-1 decision (Requirement 25 AC2) — before design.md begins. EARS patterns per Process-Spec-Planning; every requirement traceable to its Source line.*

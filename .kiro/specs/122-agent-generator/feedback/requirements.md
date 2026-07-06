@@ -120,3 +120,57 @@ No REJECT. No outline-level conflict found by any reviewer. Full review texts fo
 **For Peter (one decision surfaced)**: the OB-1 scanner-repoint call (Req 25.2) — bundle into 122 vs route to the OB-1 owner. Ada's lean: route out (negative-scope discipline); counter-argument recorded (trivial fix vs coordination hop). Lands at incorporation or ratification.
 
 **Command content received and banked** (Sparky: 8 commands + 3 named gaps; Kenya: 4 commands + 4 named gaps; Data's JOB-1 from the outline round) — all subject to D4's carry-into-canonical obligation.
+
+---
+
+#### [THURGOOD R2] — incorporation notes (all 38 items; nothing silently declined)
+
+**Incorporated as a woven revision of requirements.md, 2026-07-05.** Landing sites per item; adjudications called out explicitly. AC numbers below are POST-incorporation (several requirements renumbered — noted where it matters).
+
+**Theme A — Req 18 grew to five assertion classes** (Req 18 AC2(a)–(e)):
+- A2 ≡ S4 → Req 18 AC2(a), single edit: governance-integrity now requires the **materialized substance predicate** — each governance-as-law reference in canonical source carries its declared assertion as a pinned, checkable expectation, itself canonical content under the diff-guard. Ada's held-firm item, landed in full.
+- LE1 → Req 18 AC2(b): **agent-routes** resolve on the target runtime or carry an explicit not-yet-ported disposition (the 5/8 CC-port gap cited as live instance).
+- L3 → Req 18 AC2(c): **per-runtime grants** — cue's tool ∈ that agent's generated subset for that runtime; composes with Req 11 AC4 and sweep 6 as asked.
+- SP1 → Req 18 AC2(d): **command-string currency** vs `package.json` at regeneration, with both live precedents cited; cross-referenced from Req 21 AC1.
+- Existing live-tool class → Req 18 AC2(e), carve-out language retained verbatim.
+- L4 → Req 12 AC6 (new): the **authoring prohibition on volatile facts in pass-through prose**, cross-referencing Req 1 AC2/AC3, with her "28 vs 34" live instance. Landed in Req 12 (the generated-output-quality home) rather than Req 1, since it's an authoring rule for canonical source, not a pipeline invariant.
+
+**Theme B — verifiers and evidence artifacts:**
+- D3 ≡ S3 → **adjudicated: the eighth mechanical check in Req 19's set** (Req 19 AC1 check 8, demotion-diff), NOT assignment to Stacy's 22.3. Rationale: Req 22 AC1 just settled the seam — checks run mechanically and Thurgood verifies green; Stacy validates the green. Making Stacy the primary runner of a cue-coverage check would make her a check-runner, the exact thing 22.1 forbids. She still sees every cutover through the mandatory trigger, now validating a recorded check result instead of substituting for a missing one. S3's precondition (the generator emits the removal delta) landed in Req 12 AC1; Req 20 AC1 updated so check 8 registers on the gate like the seven sweeps.
+- LE3 → Req 19 AC2: prove-it-bites per check before trusted at cutover; sweep 3's free positives now name BOTH the `leonardo.json` double-load and (per K4) `kenya.json`'s Product-Token-Governance `file://`+`skill://` double-load.
+- S2 → Req 19 AC3: recorded run-artifact per cutover (CI run ref or committed sweep report on the cutover PR) + recorded owner adjudications — "coverage-of-coverage audits records, never verbal assertion."
+- S1 → Req 22 AC4(b): coverage-map minimum content — every guarded surface mapped to its check; unguarded surface visible as a blank row; emitted-but-contentless does not satisfy.
+- L5 → Req 21 AC4: the minimal fixture is a **standing pipeline test** re-run on every pipeline change (same standing logic as 19 AC4); first pass remains the acceptance evidence.
+- S6 → Req 6 AC2: substrate-gate committed evidence now includes a sweep-2 round-trip run over the relocated skills.
+
+**Theme C — content gate:**
+- K1 → Req 21 AC1: **a verified named gap IS valid authored content**, with both live instances (iOS consumer-repo class; no web dev server / build:watch caveat); the gate never pressures fabrication.
+- D4 → Req 21 AC2 (new): carry-into-canonical obligation, explicitly scoping Sparky's 8+3, Kenya's 4+4, and Data's JOB-1; notes Stacy is the remaining unauthored seat after the carry. (Req 21 renumbered: old AC2/3/4 → AC3/4/5.)
+- SP2 + D5 → Req 12 AC3: run-context is a **data field in canonical source**, three enumerable values (`this-repo`/`consumer-repo`/`per-product`, third marked authored-per-product), mechanical checking, never hand-copied prose.
+- Kenya's zero-skills gap note → Req 8 AC1 + Req 19 AC1 check 2: zero-skills agents register as a sweep-2 PASS.
+
+**Theme D — ownership seams:**
+- LE4 ≡ K4 → single seam, stated once in Req 7 AC5 (**membership = consuming agent's seat; substance = declaring owner; Thurgood consistency-checks**; "relevant domain owner" is explicitly not system-agent-only) and referenced from Req 11 AC4, Req 18 AC3, and Req 19 AC2 rather than restated.
+
+**Precision set:**
+- A1 → Req 3 AC2 + Req 5 AC3: interim section-address form = doc-`id` + verbatim heading string, upgraded when `#sectionid` lands; sweep 1 and canonical-vs-truth resolve it as id-resolves AND heading-exists.
+- A3 + S8 → Req 1 AC3 (three content classes, adding **deterministic rendering of structured canonical fields**) + Req 1 AC4 (new): attributability mechanically inspectable via a generator-emitted provenance mechanism. **Adjudication on S8**: Stacy offered it as "consider, lower priority"; I upgraded the mechanism's *existence* to SHALL (form stays a design matter) because A3's third class makes attributability the load-bearing invariant of Req 1 — an uninspectable invariant is Theme B's exact finding. (Req 1 old AC4 → AC5.)
+- A4 → Req 23 AC1: measurement surface pinned — ambient-membership cardinality per Req 9's union, both targets, must agree.
+- L2 → Req 23 AC2: lock-set pinned by reference to `per-agent-ambient-design.md` § Lina; ~29→on-demand verified as zero `skill://` family/standards docs in the generated ambient layer.
+- LE-optional → Req 23 AC3 (new): Leonardo's consumer-side signal included (~60% demotion + cue-per-demotion + double-load resolved). Offered as optional; included because it is the only consumer-seat acceptance signal and costs one AC. (Req 23 old AC3/AC4 → AC4/AC5; fixture ref updated to Req 21 AC4.)
+- L1 → Req 19 AC1 check 5, **adjudicated both halves explicitly**: sweep 5 asserts the corrected state HOLDS at cutover (her primary ask — mechanically: zero `.web.tsx` in canonical source; single consistent concept-count), AND her recorded counter-argument WINS on the post-cutover question: sweep 5 does NOT stand post-cutover as a growing per-defect list (the hand-list anti-pattern re-imported); post-cutover re-entry protection belongs to the class-based standing checks (AC4 names sweep 5 as the exception). Said so in the AC, as she requested.
+- D1 → Req 8 AC1: mapping table re-keyed `canonical_path → per-target path`; Kiro-breakage-silent rationale carried; round-trip covers every emitted target.
+- D2 → Req 8 AC1 + AC2: resolvability sharpened to the target runtime's skill-discovery contract (CC: flat dir + `SKILL.md` + intact activation description); transformed `skill://` references held to the same bar. D1/D2's altitude self-check accepted as stated — these change what the ACs assert, and they land as assertions, not mechanisms.
+- D6 → Req 11 AC1: `/knowledge` fallback per-agent-domain, emitted from canonical knowledge-base declarations.
+- K2/K3 + SP3 → Req 12 AC2 (new): cue-quality criteria — (a) hard negative-plus-positive per trimmed artifact, verbs may differ (`do NOT read dist/*.swift`); (b) per-theme SET for theme-varying tokens; (c) resolve the seat's platform form (`--space-300`/`var()` chains). **Partial adjudication on SP3's second half** ("Req 18's check should validate the cue answers the seat's actual question"): the mechanically checkable parts DID land in Req 18 (tool membership = AC2(c); command currency = AC2(d)); "answers the actual question" is a substance judgment, so it lands as Req 12 AC2's authored criteria, verified by check 8 (presence) + the mandatory cutover review (adequacy) — a string-check in Req 18 can't judge whether a cue answers a question, and pretending it can would be exactly the silent-degrade S4 warned about. (Req 12 renumbered: old AC2/3/4 → AC3/4/5.)
+- K5 → Req 15 AC1 reworded ("generated, superseding the hand-maintained port where one exists"; never-ported first generation IS a cutover) + Req 21 AC5 confirms the mandatory Stacy trigger catches it.
+- SP4 → Req 15 AC3 (new): never-existed ports derive config-derived notes from authored canonical fields per 11.3, with his specs-only write scope as the named live instance.
+- LE2 → Req 10 AC4: "primary" verified by set-inclusion against the Task-9 per-agent blocks via sweep-4 machinery.
+- S5 → Req 13 AC2, **adjudicated toward the checkable shape** (not demotion to design guidance): single named owner of the rule's wording + recorded cross-reference between 122 canonical source and the 125 map entry. A requirements-level obligation with a record beats deleting the obligation.
+- SP5 → no document change (the 23-vs-25 erratum is recorded in this round record's header; the document carried 25 throughout).
+- S7 ≡ A5 → Req 25 AC2, **not decided, as instructed**: restated as an explicit Peter decision point at requirements ratification (bundle vs OB-1 owner), carrying Ada's lean (route out — negative-scope discipline) and the recorded counter-argument (trivial fix vs coordination hop); decision to be recorded with ratification.
+- Ada's self-calibration note: accepted as offered — A3/A4 landed as polish-level edits; A2 landed at full strength as the held-firm item.
+
+**Renumbering summary** (for reviewers citing old ACs): Req 1 AC4→AC5 (new AC4 = provenance); Req 12 old AC2/3/4 → AC3/4/5 (new AC2 = cue quality, new AC6 = volatile-facts prohibition); Req 21 old AC2/3/4 → AC3/4/5 (new AC2 = carry obligation); Req 23 old AC3/AC4 → AC4/AC5 (new AC3 = Leonardo signal). Req 19's title now names the check set as "seven input-fidelity sweeps + the demotion-diff check."
+
+**Header/status**: requirements.md remains DRAFT — round 1 incorporated 2026-07-05; pending Peter's ratification of requirements + the OB-1 decision (Req 25 AC2). Sequential gate holds: design.md does not begin until ratification.
