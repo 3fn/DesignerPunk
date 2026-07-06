@@ -3,7 +3,7 @@
 **Date**: 2026-06-29
 **Spec**: 122 — Agent Generator (formerly "121-B")
 **Author**: Thurgood (Civitas steward)
-**Status**: **Design Outline** — collaborative pre-formalization through-line per the Spec Feedback Protocol. This PROPOSES scope for refinement; it is NOT requirements/design/tasks. The gate that kept this a stub (Spec 118's runtime direction decision) is **CLEARED** — see `inbound-from-118.md`.
+**Status**: **Design Outline — SETTLED; formalization begun 2026-07-05.** The feedback round is complete (see `feedback/design-outline.md`) and requirements.md is drafted under the live PR gate (125-A Phase 0). Post-round inputs consumed at formalization, not folded into this text: `inbound-from-2026-07-05-gate-clearance.md` (input-fidelity gates CLEARED; the gap-#7 composition rule RATIFIED as decided law), `inbound-from-ratification-protocol.md`, and `inbound-from-125-A-phase-0.md` (the no-path-filter constraint et al.). This outline stands as the settled scope record; refinements land in requirements.md via its own feedback round.
 
 > **Authoritative inputs (read these — 122 consolidates them, it does not re-derive them):**
 > 1. `119-A-steering-relocation-serving-contract/per-agent-ambient-design.md` — **the spine.** Task 9's per-agent five-class ambient design for all 8 agents. This is 122's canonical input for *what each agent's always-layer contains*.
