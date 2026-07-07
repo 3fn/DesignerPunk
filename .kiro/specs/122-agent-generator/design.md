@@ -466,10 +466,10 @@ The generator enumerates surfaces mechanically (so a new surface appears as a bl
 | `npm run test:coverage` | this-repo | confirmed live in `package.json` |
 | `governance-check.sh` | this-repo | confirmed live (script path; C7(d) exists+executable) |
 | `verify-gate-registration.sh` | this-repo | provisioned by C9 (script path) |
-| `npm run audit:mode-parity` | this-repo | **unconfirmed — re-classed**: not verified present in `package.json`; provisioned by C12 or marked `gap` until it exists (per C7(d), a `this-repo` command absent from `package.json` FAILs) |
-| `npm run audit:theme-drift` | this-repo | **unconfirmed — re-classed**: same disposition as `audit:mode-parity` |
+| `npm run audit:mode-parity` | this-repo | **VERIFIED PRESENT** (`package.json:125`, main-loop grep 2026-07-06 — corrects the round's "unconfirmed" re-class): live `this-repo` command, C7(d) currency check applies normally |
+| `npm run audit:theme-drift` | this-repo | **VERIFIED PRESENT** (`package.json:126`, same verification): live `this-repo` command, C7(d) applies normally |
 
-The two unconfirmed commands (`audit:mode-parity`, `audit:theme-drift`) are provisioned to a runnable form by C12 or explicitly carry a `gap:` annotation until they exist — they do NOT read as commands Stacy already has. **tasks.md carries the provisioning task** with the AC "Stacy's audit commands are named AND runnable-or-gap-annotated AND her coverage map is emitted (zero-blank-row or adjudicated)." Provisioning is **gated into the C13 substrate closure** (item 6), so the §4a re-derivation leg is operable from the first cutover; the cutover report still renders `NON-OPERABLE — C12 pending` as committed text as an edge-case safety (Req 22 AC4(c), S-D4).
+Both audit commands were verified present in `package.json` (main loop, 2026-07-06) after the round marked them unconfirmed — the S-D2 re-class is REVERSED for these two; the still-unprovisioned slot is `npm run audit:coverage-map` (the one C12 invents), which the provisioning task creates. **tasks.md carries the provisioning task** with the AC "Stacy's audit commands are named AND runnable-or-gap-annotated AND her coverage map is emitted (zero-blank-row or adjudicated)." Provisioning is **gated into the C13 substrate closure** (item 6), so the §4a re-derivation leg is operable from the first cutover; the cutover report still renders `NON-OPERABLE — C12 pending` as committed text as an edge-case safety (Req 22 AC4(c), S-D4).
 
 ### C13 — Substrate phase gate closure evidence
 
