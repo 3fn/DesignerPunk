@@ -158,3 +158,27 @@ All 8 convergences + the precision set woven into design.md (round-1 incorporate
 **Header/footer** updated to DRAFT-round-1-incorporated; § Flagged items 1–2 updated (item 1 → RESOLVED-conditional + erratum block; item 2 → 27→30 corrected). No faithfulness break introduced; every landing traces to a RATIFIED requirement via the existing `Traces to:` lines.
 
 **Two ratification items for Peter:** (1) confirm the S-D3 closure fix (C6/DD7) is the operative precondition for the Req 1×16 bless; (2) sanction the Req 1 AC1 erratum (§ Flagged item 1, verbatim block).
+
+---
+
+#### [THURGOOD R3 + CLAUDE main-loop] — CC-model reframe (2026-07-07)
+
+**Provenance (honest):** Thurgood (Opus) authored the reframe's header, the § Rosetta-framing / two-channel / two-level framing section, and C11 lane 1 (shared → generated CLAUDE.md), then hit an API error mid-pass. The main loop (Opus) completed the reconciliation and verified coherence — because the partial state was internally *contradictory* (the new framing section stated CC's finding while C11 lane 2 / DD12 / Flagged-item-1 still carried the now-dead probe/fallback machinery).
+
+**Trigger:** the `cc-agent-model.md` characterization (committed this branch; claude-code-guide against current CC docs + issue #5914, main-loop-verified: CLAUDE.md = 9 @-imports, 6/6 agent ports inline / 0 imports). **CC has no per-agent import channel** — a platform fact, not a design choice.
+
+**What changed:**
+- **C11 lane 2 (per-agent):** deleted the probe + primary/fallback selection. Per-agent members are **generated inline** in the agent body (CC's native per-agent format), guarded by the closure-complete diff-guard. **Lane 1 (shared) unchanged** — CLAUDE.md @-imports, a live reference.
+- **DD12:** two-channel native format, no probe.
+- **C6 operative note (line ~357):** reframed from "the probe-first embed fallback is operative only with the closure fix" to "the CC per-agent *inline* is non-drifting only with the closure fix" — Stacy's S-D3/S-D6 is *more* load-bearing now (the inline IS resolved corpus content).
+- **Flagged item 1 + erratum:** reshaped from the reviewers' exception-form ("no *unattributed/unguarded* snapshot") to Peter's **bright-line** form ("generated-and-guarded native-format content is generation, not a snapshot; hand-maintained or unguarded remains prohibited"). This is the more durable governance — a category boundary that can't slide, not an exception that erodes.
+- **Write-scope transform:** CC has no declarative per-agent write-path (facet 7); the note names PreToolUse-hook / worktree as the enforcement options rather than emitting a declarative scope.
+
+**Reviewer reconciliation:**
+- **Leonardo LE-D2** ("drop the probe if imports don't load"): his contingency is **realized by fact** — imports don't load per-agent, so the probe is dropped exactly as he sanctioned. Honored, not overridden.
+- **Leonardo LE-D1** (routes prose→frontmatter): unaffected, holds.
+- **Stacy S-D3/S-D6** (closure includes governance): unaffected and reaffirmed as MORE load-bearing.
+- **Lina L1, Data D-A1, Ada A-D1/2/3**, and the rest of the round's amendments: unaffected — preserved.
+- **No ratified requirement re-opened.** The reframe encodes a platform fact + Peter's confirmed framing; it sharpens the round's 5–0 tension vote rather than overturning it.
+
+**Two ratification items for Peter (unchanged in kind, sharpened in content):** (1) the S-D3 closure fix is landed and is the operative precondition for the inline to be non-drifting; (2) sanction the reshaped Req 1 AC1 clarification (bright-line form, scoped to per-agent inline only).
