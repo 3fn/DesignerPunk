@@ -13,6 +13,8 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 **Merge units (the merge-on-coherent-unit structure — 2026-07-07 ballot).** This spec is large, so its tasks.md **declares its coherent merge units** up front (the ballot's R3 — units are named here, never judged at merge time). One branch per unit; subtasks commit+push the branch; parent completions inside a multi-parent unit commit their docs on the branch (no PR); the **unit's completion opens the PR**; Peter merges (squash). The declared units:
 
+> Per-parent **`**Unit**:`** fields (added alongside each parent's `**Type**:` line, R3a format) are now the source of truth for task→unit membership; the table below is retained as a human-orientation summary.
+
 | Merge unit | Tasks | Branch | PR opens at |
 |-----------|-------|--------|-------------|
 | **U1 — Substrate** (multi-parent) | 1–8 | `task/122-substrate` | Task 8 completion (the phase-gate PR) |
@@ -54,6 +56,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 1. Canonical source root, schema, and shared substrate files
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -111,6 +114,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 2. The pipeline engine: resolve, render, pass-through, attribution
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -174,6 +178,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 3. Skills pipeline: neutral-root relocation + skills-map round-trip
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -214,6 +219,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 4. Registry generator (C5) — declaration-keyed, index-agnostic
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -246,6 +252,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 5. Target adapters (C4) — CC first, then Kiro
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -293,6 +300,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 6. The regenerate-and-diff guard (C6) + canonical-vs-truth check (C7)
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -347,6 +355,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 7. The eight sweeps (C8) + gate registration (C9)
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -400,6 +409,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 8. ⛔ SUBSTRATE PHASE GATE — closure evidence (C13), fixture (C10.3), Stacy provisioning (C12)
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   > **THIS IS THE HARD SEQUENCING BOUNDARY (design §3 / Req 6) AND the substrate unit's (U1) PR-opening event.** Task 8's completion opens U1's PR — the whole substrate (Tasks 1–8) accumulated on `task/122-substrate` merges as ONE PR here. No Group 2 unit (Task 9+) starts until U1's PR is **merged**. C12's provisioning is gated INSIDE this parent (design §C13 item 6 / L4 ≡ K-D4 ≡ S-D4): Stacy's re-derivation leg must be operable from the first cutover forward. **The phase gate IS U1's merge** — the two are the same event.
@@ -497,6 +507,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 9. Cutover: Ada (Rosetta token specialist) — **U2, the FIRST CC cutover** (RATIFIED Peter 2026-07-07; mechanically forced — the diff-against-baseline gate needs a real committed baseline, which excludes the never-ported seats); already-ported system agent, debut-safe
 
   **Type**: Parent
+  **Unit**: U2
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -541,6 +552,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 10. Cutover: Lina (Stemma component specialist)
 
   **Type**: Parent
+  **Unit**: U3
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -582,6 +594,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 11. Cutover: Thurgood (Civitas steward)
 
   **Type**: Parent
+  **Unit**: U4
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -617,6 +630,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 12. Cutover: Leonardo (product architect) — the consumer-signal cutover — **U6, cutover position 5**
 
   **Type**: Parent
+  **Unit**: U6
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -654,6 +668,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 13. Cutover: Data (Android platform engineer) — **U7, cutover position 6**
 
   **Type**: Parent
+  **Unit**: U7
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -690,6 +705,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 14. Cutover: Sparky (web platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog — **U5, cutover position 4** (moved early per Peter's 2026-07-07 order to surface first-generation risk with runway)
 
   **Type**: Parent
+  **Unit**: U5
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -729,6 +745,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 15. Cutover: Kenya (iOS platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog
 
   **Type**: Parent
+  **Unit**: U8
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -766,6 +783,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 16. Cutover: Stacy (product governance & QA) — FIRST-GENERATION (never-ported); content-before-catalog
 
   **Type**: Parent
+  **Unit**: U9
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -810,6 +828,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 17. OB-7: generate the CC always-layer (both lanes) + retire the interim CLAUDE.md
 
   **Type**: Parent
+  **Unit**: U10
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -855,6 +874,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 18. Closeout: handbacks to 119-B and 123, umbrella/deferred-obligation updates
 
   **Type**: Parent
+  **Unit**: U11
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
