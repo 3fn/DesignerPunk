@@ -1,8 +1,8 @@
 # Implementation Plan: 122 — Agent Generator
 
-**Date**: 2026-07-07 (v2 — regrouped to the merge-on-coherent-unit structure per the 2026-07-07 ballot)
+**Date**: 2026-07-07 (v3 — tasks round 1 incorporated: Stacy APPROVE-WITH-AMENDMENTS ×6 folded; Peter's two decisions applied — first CC cutover = Ada, cutover order Ada→Lina→Thurgood→Sparky→Leonardo→Data→Kenya→Stacy)
 **Spec**: 122 — Agent Generator
-**Status**: Implementation Planning (DRAFT — pending tasks feedback round)
+**Status**: **RATIFIED (Peter, 2026-07-07)** — tasks round 1 incorporated + cutover order ratified (Sparky-at-4); per-parent Unit fields conform to the coherent-unit ballot's R3a. Requirements RATIFIED 2026-07-05; design RATIFIED 2026-07-07. **Formalization COMPLETE — the build (U1 substrate, CC-first) is authorized.**
 **Dependencies**: requirements.md (RATIFIED 2026-07-05), design.md (RATIFIED 2026-07-07 — CC-model reframe enacted, Req 1 AC1 bright-line applied), cc-agent-model.md (CC adapter format spec), 125-A Phase 0 (the live PR gate 122's checks register onto). Feeds 119-B (routing + measurement) and 123 (consumer distribution).
 
 ---
@@ -13,25 +13,29 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 **Merge units (the merge-on-coherent-unit structure — 2026-07-07 ballot).** This spec is large, so its tasks.md **declares its coherent merge units** up front (the ballot's R3 — units are named here, never judged at merge time). One branch per unit; subtasks commit+push the branch; parent completions inside a multi-parent unit commit their docs on the branch (no PR); the **unit's completion opens the PR**; Peter merges (squash). The declared units:
 
+> Per-parent **`**Unit**:`** fields (added alongside each parent's `**Type**:` line, R3a format) are now the source of truth for task→unit membership; the table below is retained as a human-orientation summary.
+
 | Merge unit | Tasks | Branch | PR opens at |
 |-----------|-------|--------|-------------|
 | **U1 — Substrate** (multi-parent) | 1–8 | `task/122-substrate` | Task 8 completion (the phase-gate PR) |
-| **U2 — Cutover: Ada** | 9 | `task/122-cutover-ada` | Task 9 completion |
+| **U2 — Cutover: Ada** (FIRST CC cutover) | 9 | `task/122-cutover-ada` | Task 9 completion |
 | **U3 — Cutover: Lina** | 10 | `task/122-cutover-lina` | Task 10 completion |
 | **U4 — Cutover: Thurgood** | 11 | `task/122-cutover-thurgood` | Task 11 completion |
-| **U5 — Cutover: Leonardo** | 12 | `task/122-cutover-leonardo` | Task 12 completion |
-| **U6 — Cutover: Data** | 13 | `task/122-cutover-data` | Task 13 completion |
-| **U7 — Cutover: Sparky** | 14 | `task/122-cutover-sparky` | Task 14 completion |
-| **U8 — Cutover: Kenya** | 15 | `task/122-cutover-kenya` | Task 15 completion |
+| **U5 — Cutover: Sparky** (never-ported, first-generation) | 14 | `task/122-cutover-sparky` | Task 14 completion |
+| **U6 — Cutover: Leonardo** | 12 | `task/122-cutover-leonardo` | Task 12 completion |
+| **U7 — Cutover: Data** | 13 | `task/122-cutover-data` | Task 13 completion |
+| **U8 — Cutover: Kenya** (never-ported, first-generation) | 15 | `task/122-cutover-kenya` | Task 15 completion |
 | **U9 — Cutover: Stacy** | 16 | `task/122-cutover-stacy` | Task 16 completion |
 | **U10 — OB-7 retirement** | 17 | `task/122-ob7-claude-md` | Task 17 completion |
 | **U11 — Closeout** | 18 | `task/122-closeout` | Task 18 completion |
+
+> **Cutover ORDER = merge/review-attention order (RATIFIED — Peter, 2026-07-07): Ada → Lina → Thurgood → Sparky → Leonardo → Data → Kenya → Stacy.** Sparky moved to position 4 (U5) to surface first-generation / content-completeness risk **early, with runway** — rather than discovering a generator gap on a never-ported seat late (the counter-risk flagged in the tasks-round). **First CC cutover = Ada (U2), mechanically forced**: the per-cutover diff-against-baseline gate needs a real committed baseline to diff, which excludes the never-ported seats (Sparky, Kenya) from the debut slot regardless of order. Task NUMBERS stay bound to content (Task 12 = Leonardo, 13 = Data, 14 = Sparky); the U-number encodes cutover order, so U5 = Task 14 (Sparky), U6 = Task 12 (Leonardo), U7 = Task 13 (Data).
 
 **Task groups (tracking/sequencing structure — orthogonal to merge units):**
 
 - **Group 1 — Substrate** (Tasks 1–8) = **one merge unit (U1)**: everything agent-content-independent. The 8 parents remain for tracking and sequencing, but they **accumulate on one branch (`task/122-substrate`) and merge once** — the phase-gate merge IS the substrate unit's merge. Parents 1–7 complete on the branch (docs + `taskStatus`, no PR); Task 8's completion opens U1's PR.
 - **⛔ PHASE GATE** (Task 8): the blocking parent AND U1's PR-opening event. No Group 2 unit starts until U1's PR (the C13 closure-evidence bundle) is merged. C12's provisioning is gated *inside* this parent (design §C13 item 6 / L4 ≡ K-D4 ≡ S-D4).
-- **Group 2 — Per-agent cutovers** (Tasks 9–16) = **U2–U9, one merge unit per agent** (individual PR — this is where Peter's per-cutover diff-against-baseline verification lives). PR-sized by construction (C10.1). Content-authoring-before-catalog for the three seats lacking authored command content (Sparky, Kenya, Stacy — Req 21 AC2); Stacy validation triggered at each cutover.
+- **Group 2 — Per-agent cutovers** (Tasks 9–16) = **U2–U9, one merge unit per agent** (individual PR — this is where Peter's per-cutover diff-against-baseline verification lives). PR-sized by construction (C10.1). Cutover ORDER (= U-number = merge/review-attention order, RATIFIED Peter 2026-07-07): **Ada → Lina → Thurgood → Sparky → Leonardo → Data → Kenya → Stacy**. Content-authoring-before-catalog for the three seats lacking authored command content (Sparky, Kenya, Stacy — Req 21 AC2); Stacy validation triggered at each cutover.
 - **Group 3 — OB-7 retirement** (Task 17) = **U10**: generate the CLAUDE.md always-lane + per-agent inline bodies; retire the interim CLAUDE.md via the record-first ratification ballot.
 - **Closeout** (Task 18) = **U11**: handbacks to 119-B and 123; umbrella / deferred-obligation ledger updates.
 
@@ -52,6 +56,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 1. Canonical source root, schema, and shared substrate files
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -109,6 +114,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 2. The pipeline engine: resolve, render, pass-through, attribution
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -172,6 +178,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 3. Skills pipeline: neutral-root relocation + skills-map round-trip
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -212,6 +219,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 4. Registry generator (C5) — declaration-keyed, index-agnostic
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -244,6 +252,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 5. Target adapters (C4) — CC first, then Kiro
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -291,6 +300,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 6. The regenerate-and-diff guard (C6) + canonical-vs-truth check (C7)
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -345,6 +355,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 7. The eight sweeps (C8) + gate registration (C9)
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -398,6 +409,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 8. ⛔ SUBSTRATE PHASE GATE — closure evidence (C13), fixture (C10.3), Stacy provisioning (C12)
 
   **Type**: Parent
+  **Unit**: U1
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   > **THIS IS THE HARD SEQUENCING BOUNDARY (design §3 / Req 6) AND the substrate unit's (U1) PR-opening event.** Task 8's completion opens U1's PR — the whole substrate (Tasks 1–8) accumulated on `task/122-substrate` merges as ONE PR here. No Group 2 unit (Task 9+) starts until U1's PR is **merged**. C12's provisioning is gated INSIDE this parent (design §C13 item 6 / L4 ≡ K-D4 ≡ S-D4): Stacy's re-derivation leg must be operable from the first cutover forward. **The phase gate IS U1's merge** — the two are the same event.
@@ -441,16 +453,19 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Add `npm run audit:coverage-map` (the one audit C12 invents) as a real `package.json` script; assert zero blank rows or an adjudicated exception per blank.
     - Confirm the remaining audit slots' status per the C12 table (`audit:mode-parity`/`audit:theme-drift` VERIFIED present `package.json:125/126`; `test:coverage`, `governance-check.sh`, `verify-gate-registration.sh` live).
     - Acceptance criterion (Req 22 AC4(b)): **Stacy's audit commands are named AND runnable-or-gap-annotated AND her coverage map is emitted (zero-blank-row or adjudicated).**
+    - **Stacy's confirmed coverage-map is a NAMED OUTPUT of this subtask (feeds Task 8.3's closure gate, amendment 6):** Stacy records her sign-off on the coverage-map (zero-blank-row or adjudicated-per-blank) on the PR; that confirmation — not merely a green `audit:coverage-map` run — is what Task 8.3 cites to close the C13 bundle.
     - _Requirements: 19.3, 22.1, 22.2, 22.4, 22.5_
 
   - [ ] 8.3 Assemble and commit the C13 substrate-gate closure-evidence bundle
     **Type**: Documentation
     **Validation**: Tier 2 - Standard
-    **Agent**: Thurgood
+    **Agent**: Thurgood (+ Stacy sign-off on the coverage-map, see done-condition)
     - Write the substrate-gate completion doc referencing all six C13 items with committed evidence + recorded run URLs (registry through both adapters; both skill trees emitted; the three diff-guard runs incl. the embedded-section prove-it-bites; the sweep-2 round-trip report; the fixture's first clean pass; C12 provisioning complete).
-    - This doc is the recorded passage of the Req 6 phase gate — its existence is the precondition Group 2 tasks check.
+    - **U1 review-load mitigation — reviewer's reading-order (Stacy amendment 2):** this doc SHALL include a **per-parent completion-doc index** — a reviewer's reading-order over Tasks 1–8's completion docs (the recommended sequence + a one-line "what to look for" per parent) — so U1's single large PR (all of Tasks 1–8) is navigable for Peter, who merges it. The index is part of the closure bundle, not a separate artifact.
+    - **Closure gates on Stacy's CONFIRMED coverage-map (Stacy amendment 6):** the C13-bundle done-condition SHALL cite **Stacy's *confirmed* coverage-map from Task 8.2** — zero-blank-row OR adjudicated-per-blank, with **her recorded sign-off on the PR** (her coverage-of-coverage seat) — NOT merely that Task 8.2's `audit:coverage-map` script ran. A green script run without Stacy's confirmation does not close the bundle.
+    - This doc is the recorded passage of the Req 6 phase gate — its existence (with the reading-order index AND Stacy's confirmed coverage-map) is the precondition Group 2 tasks check.
     - Tier 2 rationale (conjunctive escalation): the artifact carries SHALL/SHALL-NOT gate semantics (the phase gate) AND downstream tasks' start-conditions depend on it — both properties hold.
-    - _Requirements: 6.1, 6.2, 6.3_
+    - _Requirements: 6.1, 6.2, 6.3, 22.4_
 
 ---
 
@@ -464,24 +479,35 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 > **Each cutover is its own coherent merge unit** (U2–U9) — an individual PR, branch `task/122-cutover-<agent>`. Single-parent units, so the mechanics equal 125-A/single-parent behavior: the parent's completion opens the PR. This is where Peter's per-cutover diff-against-baseline verification lives (below).
 >
-> **Cutover sequence discipline** (C10.1 / C11 L5): the FIRST CC cutover must NOT be the highest-risk agent — sequence a low-blast-radius agent first so the generated-inline emission is validated on a cheap surface before a load-bearing agent rides it. Recommended debut: a low-blast-radius system agent (or run the fixture as the dry-run, already done at Task 8). Each cutover PR follows the C10.1 eight-step sequence: content readiness (+ migrate inter-agent routes prose→`routes.agents`, LE-D1) → baseline capture (degrades to Kiro-side set for never-ported agents, D-A4) → generate both targets → checks run → sweep report committed → **classified diff-against-baseline artifact committed** (below) → Stacy validation (mandatory) → acceptance signals measured → PR → Peter merges → agent enters the cutover ledger.
+> **Cutover ORDER (RATIFIED — Peter, 2026-07-07): Ada → Lina → Thurgood → Sparky → Leonardo → Data → Kenya → Stacy** (= the U2–U9 numbering). Sparky sits at position 4 (U5) to surface first-generation / content-completeness risk early, with runway. First CC cutover = **Ada (U2)** — mechanically forced: the diff-against-baseline gate needs a real committed baseline, which excludes the never-ported seats (Sparky, Kenya).
+>
+> **Cutover sequence discipline** (C10.1 / C11 L5): the FIRST CC cutover must NOT be the highest-risk agent — sequence a low-blast-radius agent first so the generated-inline emission is validated on a cheap surface before a load-bearing agent rides it. Debut = **Ada** (already-ported system agent, real diff baseline, low blast radius; the fixture already ran as the dry-run at Task 8). Each cutover PR follows the C10.1 eight-step sequence: content readiness (+ migrate inter-agent routes prose→`routes.agents`, LE-D1) → baseline capture (degrades to Kiro-side set for never-ported agents, D-A4) → generate both targets → checks run → sweep report committed → **classified diff-against-baseline artifact committed** (below) → Stacy validation (mandatory; independent second-reviewer signature required — see below) → acceptance signals measured → PR → Peter merges → agent enters the cutover ledger.
+>
+> **`Stacked-on:` discipline for the cutover PRs (U2–U9) — PARALLELIZABLE FROM `main` POST-U1 (Stacy amendment 3).** Each cutover authors a DIFFERENT agent's canonical source and generated artifacts; the cutovers are branch-INDEPENDENT of one another. Once U1 (the substrate) merges, **every cutover branches from `main`** — there is NO branch dependency chain between cutovers, so NO `Stacked-on:` declaration is required for them. **The ratified order (Ada → … → Stacy) is a review-ATTENTION sequence, not a branch dependency**: it governs the order Peter reviews/merges to front-load risk (never-ported early via Sparky at U5), not what each branch forks from. Exception carve-out is the general one: if Peter explicitly directs a cutover to branch from another cutover's branch (e.g., to build on an un-merged content-authoring carry), that PR declares `Stacked-on: #<PR>` and merges base-first (Task-Completion-Protocol § Completion State in the PR Flow, point 3). Absent that direction, cutovers do not stack.
 >
 > **Per-cutover diff-against-baseline acceptance artifact (Peter's verification, added to EACH cutover's done-condition).** Each cutover PR carries a **classified diff of the generated CC agent vs the current agent**, every difference bucketed:
 > - **improvement** — the generated output fixes a known defect in the current agent (e.g., a missing MCP grant now present).
 > - **channel-move** — content that relocated to the generated `CLAUDE.md` always-layer (or per-agent inline body) but is still delivered — not lost, just delivered through the generator's channel.
 > - **regression** — the current agent has a capability the generated one lacks.
 >
-> **Merge gate: ZERO unexplained regressions.** Every diff line lands in exactly one bucket; any `regression` bucket entry must be explicitly adjudicated (accepted-with-reason or fixed-before-merge) — an unexplained regression blocks the merge.
+> **RULE OF THE `channel-move` BUCKET — binding, stated here so it cannot be relaxed at a pressured cutover (Stacy amendment 1, the gameability-seam fix).** A diff line MAY be classified **channel-move ONLY IF its corresponding replacement cue passes the C7 canonical-vs-truth resolution** (the cue's doc `id` resolves / the tool it names is declared in the live registry). **If the replacement cue does NOT pass C7 resolution, the line is a `regression`, not a channel-move** — content asserted to be "still delivered through the generator's channel" that resolves to nothing is content LOST, and must be adjudicated as a regression. This binds the softest bucket to a passing resolution check, closing the seam where a demotion is waved through as a channel-move without a working replacement. **High-exposure case: Leonardo's ~60% trim (his cutover, U6) is the largest channel-move surface in the spec** — every one of those trimmed docs must carry a replacement cue that C7 resolves, or it counts against his zero-unexplained-regressions gate.
+>
+> **Merge gate: ZERO unexplained regressions.** Every diff line lands in exactly one bucket; any `regression` bucket entry (including a `channel-move` demoted to `regression` by the rule above) must be explicitly adjudicated (accepted-with-reason or fixed-before-merge) — an unexplained regression blocks the merge.
+>
+> **Regression-adjudication RECORD LOCATION — named so presence-of-adjudication is itself checkable (Stacy amendment 5).** "Zero unexplained regressions" permits accepted-with-reason entries; that adjudication record lives in a **dedicated `## Regression adjudications` section of each cutover's `cutover/<agent>-diff-vs-baseline.md` artifact** — one row per `regression`-bucket (or channel-move-demoted-to-regression) line, each with: the diff line, the disposition (`accepted-with-reason` | `fixed-before-merge`), the reason/fix reference, and the adjudicating owner. A `regression` line present in the bucket table with NO matching row in the adjudications section is itself the failure signal (an unexplained regression). This makes "was it adjudicated?" a mechanical presence-check, not a judgment call.
 >
 > **This artifact PAIRS WITH the canonical-vs-truth checks (C7), it does not replace them.** The diff catches differences *between* current and generated. It is blind to defects present in **BOTH** current and generated (e.g., Lina's current config granting no `@designerpunk-application` server — the diff sees no change because both are wrong). The canonical-vs-truth checks catch those (L1: the server-grant leg is a first-class FAIL). Diff = "did we change anything for the worse?"; canonical-vs-truth = "is it correct against ground truth?" — both gates must pass.
 >
-> **Never-ported seats have no current CC port to diff (Sparky, Kenya).** For these two there is no existing `.claude/agents/<agent>.md` baseline, so the diff-against-baseline artifact is replaced by a **content-completeness check**: the generated CC output is verified for completeness against (a) canonical source and (b) their supplied command content (the 8+3 / 4+4 input-of-record). Same merge gate in spirit — zero unexplained *omissions* vs the authored input.
+> **Independent-validation signature is the DEFAULT done-condition (Stacy amendment 4).** Stacy validation is mandatory at every cutover — but for **Stacy's OWN cutover (U9, Task 16)** a QA seat validating its own generated catalog is a self-review conflict. The **independent second-reviewer path is therefore the DEFAULT merge-gate done-condition, not a fallback**: every cutover's merge gate requires an **independent validation signature** (Thurgood verifies + a second reviewer per Peter's routing for the Stacy-authored case; the owning-seat-plus-Stacy pairing for the other seats). A cutover PR without a recorded independent validation signature is not mergeable.
+>
+> **Never-ported seats have no current CC port to diff (Sparky, Kenya).** For these two there is no existing `.claude/agents/<agent>.md` baseline, so the diff-against-baseline artifact is replaced by a **content-completeness check**: the generated CC output is verified for completeness against (a) canonical source and (b) their supplied command content (the 8+3 / 4+4 input-of-record). Same merge gate in spirit — zero unexplained *omissions* vs the authored input. The `channel-move`-bucket rule does not apply to these two (no diff buckets); the omissions gate + C7 + the independent validation signature govern.
 >
 > **Content-before-catalog** (Req 21 AC1/AC2): the three seats lacking authored command content — **Sparky, Kenya, Stacy** — carry their input-of-record content into canonical source BEFORE their catalog generates. Named gaps ARE valid authored content. Each such cutover's first subtask is the content-authoring subtask. (Note: Stacy WAS ported to CC, so she gets the diff artifact; Sparky and Kenya were never ported, so they get the content-completeness check.)
 
-- [ ] 9. Cutover: Ada (Rosetta token specialist) — an already-ported system agent, debut-safe
+- [ ] 9. Cutover: Ada (Rosetta token specialist) — **U2, the FIRST CC cutover** (RATIFIED Peter 2026-07-07; mechanically forced — the diff-against-baseline gate needs a real committed baseline, which excludes the never-ported seats); already-ported system agent, debut-safe
 
   **Type**: Parent
+  **Unit**: U2
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -500,9 +526,9 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Detailed: `.kiro/specs/122-agent-generator/completion/task-9-parent-completion.md`
   - Summary: `docs/specs/122-agent-generator/task-9-summary.md`
 
-  **Post-Completion (UNIT U2 — Cutover: Ada — single-parent unit, opens its PR):**
+  **Post-Completion (UNIT U2 — Cutover: Ada — single-parent unit, opens its PR; the FIRST CC cutover — first live exercise of the per-cutover diff-against-baseline merge gate):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-ada` branch)
-  - Open U2's PR: `./.kiro/hooks/complete-task.sh "Task 9 Complete: Cutover Ada (122)"` — report the PR URL and STOP; complete at merge (Peter merges — governance-law carve-out on agent prompts/configs). PR body carries `Unit: U2 — Cutover: Ada`. **Merge gate: zero unexplained regressions in `cutover/ada-diff-vs-baseline.md` AND C7 green/adjudicated.**
+  - Open U2's PR: `./.kiro/hooks/complete-task.sh "Task 9 Complete: Cutover Ada — first CC cutover (122)"` — report the PR URL and STOP; complete at merge (Peter merges — governance-law carve-out on agent prompts/configs). PR body carries `Unit: U2 — Cutover: Ada (first CC cutover)`. **Merge gate: zero unexplained regressions in `cutover/ada-diff-vs-baseline.md` (any channel-move line honors the rule-of-the-bucket: its replacement cue passes C7 resolution, else it is a `regression`; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
   - [ ] 9.1 Author Ada's canonical source + capture baseline
     **Type**: Implementation
@@ -517,7 +543,8 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy (Stacy: independent re-derivation + coverage-of-coverage, recorded in the report)
     - Generate both targets on the branch; commit outputs + manifests + attribution + demotion-delta. Run C6–C8; every flagged delta gets a recorded owner adjudication.
-    - **Commit the classified diff-against-baseline artifact** `cutover/ada-diff-vs-baseline.md`: generated `.claude/agents/ada.md` vs the current CC agent, every line bucketed improvement / channel-move / regression; every `regression` adjudicated (accepted-with-reason or fixed) — zero unexplained regressions is the merge gate. This is separate from and paired with C7 (C7 catches defects in BOTH; the diff catches only differences).
+    - **Commit the classified diff-against-baseline artifact** `cutover/ada-diff-vs-baseline.md`: generated `.claude/agents/ada.md` vs the current CC agent, every line bucketed improvement / channel-move / regression. A line is `channel-move` ONLY IF its replacement cue passes C7 resolution (rule of the bucket, Group 2 preamble); otherwise it is a `regression`. Every `regression` (and every channel-move demoted to regression) adjudicated in a `## Regression adjudications` section of this artifact (one row: line + `accepted-with-reason`|`fixed-before-merge` + reason/fix ref + owner) — a regression with no matching adjudication row IS the failure signal. Zero unexplained regressions is the merge gate. Separate from and paired with C7 (C7 catches defects in BOTH; the diff catches only differences).
+    - Record the **independent validation signature** (Thurgood + owning seat / a second reviewer per Peter's routing) in the cutover report — the default done-condition for every cutover (amendment 4).
     - Commit `cutover/ada-cutover-report.md` (per-check result + CI run URL + adjudications + Stacy's recorded entry).
     - Measure the Req 23 AC1 signal per C10.2 (observed baseline 30; member + union both recorded; both targets agree); adjudicate any missed shape (design-change vs defect) before merge.
     - _Requirements: 15.1, 18.1, 19.3, 21.3, 21.5, 22.3, 23.1, 23.5_
@@ -525,6 +552,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 10. Cutover: Lina (Stemma component specialist)
 
   **Type**: Parent
+  **Unit**: U3
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -544,7 +572,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
   **Post-Completion (UNIT U3 — Cutover: Lina — single-parent unit, opens its PR):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-lina` branch)
-  - Open U3's PR: `./.kiro/hooks/complete-task.sh "Task 10 Complete: Cutover Lina (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U3 — Cutover: Lina`. **Merge gate: zero unexplained regressions in `cutover/lina-diff-vs-baseline.md` AND C7 green/adjudicated (the L1 server-grant leg — a defect in BOTH current and generated the diff CANNOT see, so C7 is load-bearing here).**
+  - Open U3's PR: `./.kiro/hooks/complete-task.sh "Task 10 Complete: Cutover Lina (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U3 — Cutover: Lina`. **Merge gate: zero unexplained regressions in `cutover/lina-diff-vs-baseline.md` (channel-move lines honor the rule-of-the-bucket; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated (the L1 server-grant leg — a defect in BOTH current and generated the diff CANNOT see, so C7 is load-bearing here) AND an independent validation signature recorded.**
 
   - [ ] 10.1 Author Lina's canonical source + capture baseline
     **Type**: Implementation
@@ -559,13 +587,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy
     - Generate both targets; run checks; commit `cutover/lina-cutover-report.md`; Stacy validation recorded.
-    - **Commit `cutover/lina-diff-vs-baseline.md`** (classified diff vs the current CC agent; buckets improvement / channel-move / regression; zero unexplained regressions). NOTE the pairing: the `lina.json` missing-App-MCP-grant is a defect in BOTH current and generated — the diff shows no change; C7's class-(c) server-grant FAIL is what catches it (L1). Both gates required.
+    - **Commit `cutover/lina-diff-vs-baseline.md`** (classified diff vs the current CC agent; buckets improvement / channel-move / regression — channel-move only if the replacement cue passes C7 resolution else `regression`; regressions adjudicated in this artifact's `## Regression adjudications` section; zero unexplained regressions). NOTE the pairing: the `lina.json` missing-App-MCP-grant is a defect in BOTH current and generated — the diff shows no change; C7's class-(c) server-grant FAIL is what catches it (L1). Both gates required, plus the independent validation signature (amendment 4).
     - Measure the Req 23 AC2 signal (lock-set == pinned set; zero family/standards ids; member + union recorded); adjudicate any missed shape before merge.
     - _Requirements: 18.1, 19.3, 21.3, 21.5, 22.3, 23.2, 23.5_
 
 - [ ] 11. Cutover: Thurgood (Civitas steward)
 
   **Type**: Parent
+  **Unit**: U4
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -582,7 +611,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
   **Post-Completion (UNIT U4 — Cutover: Thurgood — single-parent unit, opens its PR):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-thurgood` branch)
-  - Open U4's PR: `./.kiro/hooks/complete-task.sh "Task 11 Complete: Cutover Thurgood (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U4 — Cutover: Thurgood`. **Merge gate: zero unexplained regressions in `cutover/thurgood-diff-vs-baseline.md` AND C7 green/adjudicated.**
+  - Open U4's PR: `./.kiro/hooks/complete-task.sh "Task 11 Complete: Cutover Thurgood (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U4 — Cutover: Thurgood`. **Merge gate: zero unexplained regressions in `cutover/thurgood-diff-vs-baseline.md` (channel-move lines honor the rule-of-the-bucket; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
   - [ ] 11.1 Author Thurgood's canonical source + capture baseline
     **Type**: Implementation
@@ -595,12 +624,13 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy
-    - Generate both targets; run checks; commit `cutover/thurgood-cutover-report.md`; **commit `cutover/thurgood-diff-vs-baseline.md`** (classified diff vs the current CC agent; zero unexplained regressions; paired with C7); Stacy validation recorded; adjudicate any missed shape before merge.
+    - Generate both targets; run checks; commit `cutover/thurgood-cutover-report.md`; **commit `cutover/thurgood-diff-vs-baseline.md`** (classified diff vs the current CC agent; channel-move only if the replacement cue passes C7 resolution else `regression`; regressions adjudicated in this artifact's `## Regression adjudications` section; zero unexplained regressions; paired with C7); Stacy validation recorded; record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 18.1, 19.3, 21.3, 21.5, 22.3_
 
-- [ ] 12. Cutover: Leonardo (product architect) — the consumer-signal cutover
+- [ ] 12. Cutover: Leonardo (product architect) — the consumer-signal cutover — **U6, cutover position 5**
 
   **Type**: Parent
+  **Unit**: U6
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -616,9 +646,9 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Detailed: `.kiro/specs/122-agent-generator/completion/task-12-parent-completion.md`
   - Summary: `docs/specs/122-agent-generator/task-12-summary.md`
 
-  **Post-Completion (UNIT U5 — Cutover: Leonardo — single-parent unit, opens its PR):**
+  **Post-Completion (UNIT U6 — Cutover: Leonardo — single-parent unit, opens its PR):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-leonardo` branch)
-  - Open U5's PR: `./.kiro/hooks/complete-task.sh "Task 12 Complete: Cutover Leonardo (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U5 — Cutover: Leonardo`. **Merge gate: zero unexplained regressions in `cutover/leonardo-diff-vs-baseline.md` (his ~60% trim must classify as channel-move, NOT regression — content relocated to on-demand MCP with a replacement cue is delivered, not lost) AND C7 green/adjudicated.**
+  - Open U6's PR: `./.kiro/hooks/complete-task.sh "Task 12 Complete: Cutover Leonardo (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U6 — Cutover: Leonardo`. **Merge gate: zero unexplained regressions in `cutover/leonardo-diff-vs-baseline.md` — his ~60% trim classifies as channel-move ONLY where each trimmed doc's replacement cue passes C7 resolution (the rule of the channel-move bucket, Group 2 preamble); any trimmed doc without a C7-resolving replacement cue is a `regression`, adjudicated in the artifact's `## Regression adjudications` section — AND C7 green/adjudicated AND an independent validation signature recorded. This is the spec's highest-exposure channel-move surface.**
 
   - [ ] 12.1 Author Leonardo's canonical source + capture baseline
     **Type**: Implementation
@@ -631,13 +661,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy
-    - Generate both targets; run checks; commit `cutover/leonardo-cutover-report.md`; **commit `cutover/leonardo-diff-vs-baseline.md`** (classified diff vs the current CC agent; his ~60% demotion classifies as channel-move given each carries a replacement cue — an uncued demotion is a regression; zero unexplained regressions; paired with C7); Stacy validation recorded.
+    - Generate both targets; run checks; commit `cutover/leonardo-cutover-report.md`; **commit `cutover/leonardo-diff-vs-baseline.md`** (classified diff vs the current CC agent; his ~60% demotion — the spec's highest-exposure channel-move surface — classifies as channel-move ONLY where each trimmed doc's replacement cue passes C7 resolution (rule of the bucket); an uncued OR unresolving demotion is a `regression`, adjudicated in this artifact's `## Regression adjudications` section; zero unexplained regressions; paired with C7); Stacy validation recorded; record the independent validation signature (amendment 4).
     - Measure the Req 23 AC3 signal (demotion count ≈ 60% as member figure; check 8 green; sweep 3 green); adjudicate any missed shape before merge.
     - _Requirements: 12.1, 18.1, 19.3, 21.3, 21.5, 22.3, 23.3, 23.5_
 
-- [ ] 13. Cutover: Data (Android platform engineer)
+- [ ] 13. Cutover: Data (Android platform engineer) — **U7, cutover position 6**
 
   **Type**: Parent
+  **Unit**: U7
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -653,9 +684,9 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Detailed: `.kiro/specs/122-agent-generator/completion/task-13-parent-completion.md`
   - Summary: `docs/specs/122-agent-generator/task-13-summary.md`
 
-  **Post-Completion (UNIT U6 — Cutover: Data — single-parent unit, opens its PR):**
+  **Post-Completion (UNIT U7 — Cutover: Data — single-parent unit, opens its PR):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-data` branch)
-  - Open U6's PR: `./.kiro/hooks/complete-task.sh "Task 13 Complete: Cutover Data (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U6 — Cutover: Data`. **Merge gate: zero unexplained regressions in `cutover/data-diff-vs-baseline.md` (his per-artifact trims must classify as channel-move — each `dist/android/*.kt` trim carries a hard-negative-plus-positive cue) AND C7 green/adjudicated.**
+  - Open U7's PR: `./.kiro/hooks/complete-task.sh "Task 13 Complete: Cutover Data (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U7 — Cutover: Data`. **Merge gate: zero unexplained regressions in `cutover/data-diff-vs-baseline.md` — his per-artifact trims classify as channel-move ONLY where each `dist/android/*.kt` trim's hard-negative-plus-positive cue passes C7 resolution (rule of the channel-move bucket); any uncued/unresolving trim is a `regression`, adjudicated in the artifact's `## Regression adjudications` section — AND C7 green/adjudicated AND an independent validation signature recorded.**
 
   - [ ] 13.1 Author Data's canonical source (carry JOB-1) + capture baseline
     **Type**: Implementation
@@ -668,12 +699,13 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy
-    - Generate both targets; run checks (sweep 8 exercises artifact-path removals; the `start-up-tasks` re-run shows no-delta post-union); commit `cutover/data-cutover-report.md`; **commit `cutover/data-diff-vs-baseline.md`** (classified diff vs the current CC agent; artifact-path trims classify as channel-move given their cues; zero unexplained regressions; paired with C7); Stacy validation recorded; adjudicate any missed shape before merge.
+    - Generate both targets; run checks (sweep 8 exercises artifact-path removals; the `start-up-tasks` re-run shows no-delta post-union); commit `cutover/data-cutover-report.md`; **commit `cutover/data-diff-vs-baseline.md`** (classified diff vs the current CC agent; artifact-path trims classify as channel-move ONLY where each trim's cue passes C7 resolution (rule of the bucket) else `regression`; regressions adjudicated in this artifact's `## Regression adjudications` section; zero unexplained regressions; paired with C7); Stacy validation recorded; record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 12.1, 12.2, 18.1, 19.3, 21.3, 21.5, 22.3_
 
-- [ ] 14. Cutover: Sparky (web platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog
+- [ ] 14. Cutover: Sparky (web platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog — **U5, cutover position 4** (moved early per Peter's 2026-07-07 order to surface first-generation risk with runway)
 
   **Type**: Parent
+  **Unit**: U5
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -689,9 +721,9 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Detailed: `.kiro/specs/122-agent-generator/completion/task-14-parent-completion.md`
   - Summary: `docs/specs/122-agent-generator/task-14-summary.md`
 
-  **Post-Completion (UNIT U7 — Cutover: Sparky — single-parent unit, opens its PR; NEVER-PORTED seat):**
+  **Post-Completion (UNIT U5 — Cutover: Sparky — single-parent unit, opens its PR; NEVER-PORTED seat, first-generation risk surfaced EARLY at position 4 per Peter's 2026-07-07 order):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-sparky` branch)
-  - Open U7's PR: `./.kiro/hooks/complete-task.sh "Task 14 Complete: Cutover Sparky — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U7 — Cutover: Sparky (first-generation, never-ported)`. **Merge gate: `cutover/sparky-content-completeness.md` shows zero unexplained omissions vs canonical + his 8+3 input-of-record (NO diff-against-baseline — no current CC port exists) AND C7 green/adjudicated.**
+  - Open U5's PR: `./.kiro/hooks/complete-task.sh "Task 14 Complete: Cutover Sparky — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U5 — Cutover: Sparky (first-generation, never-ported)`. **Merge gate: `cutover/sparky-content-completeness.md` shows zero unexplained omissions vs canonical + his 8+3 input-of-record (NO diff-against-baseline — no current CC port exists; the channel-move-bucket rule does not apply) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
   - [ ] 14.1 Carry Sparky's input-of-record content into canonical source (content-before-catalog)
     **Type**: Implementation
@@ -707,12 +739,13 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Agent**: Thurgood + Stacy
     - Generate both targets (his first CC port — a first-generation cutover); run checks; commit `cutover/sparky-cutover-report.md`; Stacy validation recorded (mandatory first-generation trigger).
     - **Commit `cutover/sparky-content-completeness.md`** (content-completeness check, NOT a diff — no current CC baseline exists): verify the generated CC output covers canonical source + his 8 verified commands + 3 named gaps with zero unexplained omissions; a named gap present-as-gap is complete, not an omission.
-    - Record dev-server absence as intentional-and-unguarded in his acceptance signals (SP-D2); adjudicate any missed shape before merge.
+    - Record dev-server absence as intentional-and-unguarded in his acceptance signals (SP-D2); record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 15.1, 15.3, 18.1, 19.3, 21.1, 21.3, 21.5, 22.3_
 
 - [ ] 15. Cutover: Kenya (iOS platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog
 
   **Type**: Parent
+  **Unit**: U8
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -730,7 +763,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
   **Post-Completion (UNIT U8 — Cutover: Kenya — single-parent unit, opens its PR; NEVER-PORTED seat):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-kenya` branch)
-  - Open U8's PR: `./.kiro/hooks/complete-task.sh "Task 15 Complete: Cutover Kenya — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U8 — Cutover: Kenya (first-generation, never-ported)`. **Merge gate: `cutover/kenya-content-completeness.md` shows zero unexplained omissions vs canonical + his 4+4 input-of-record + standingFacts (NO diff-against-baseline — no current CC port exists) AND C7 green/adjudicated.**
+  - Open U8's PR: `./.kiro/hooks/complete-task.sh "Task 15 Complete: Cutover Kenya — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U8 — Cutover: Kenya (first-generation, never-ported)`. **Merge gate: `cutover/kenya-content-completeness.md` shows zero unexplained omissions vs canonical + his 4+4 input-of-record + standingFacts (NO diff-against-baseline — no current CC port exists; the channel-move-bucket rule does not apply) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
   - [ ] 15.1 Carry Kenya's input-of-record content into canonical source (content-before-catalog)
     **Type**: Implementation
@@ -744,18 +777,19 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy
-    - Generate both targets (first CC port — first-generation cutover); run checks (zero-skills = sweep-2 PASS; orphaned-artifact negative fires); commit `cutover/kenya-cutover-report.md`; **commit `cutover/kenya-content-completeness.md`** (content-completeness check, NOT a diff — no current CC baseline): verify generated CC output covers canonical + 4 verified commands + 4 named gaps + standingFacts with zero unexplained omissions; Stacy validation recorded (mandatory); adjudicate any missed shape before merge.
+    - Generate both targets (first CC port — first-generation cutover); run checks (zero-skills = sweep-2 PASS; orphaned-artifact negative fires); commit `cutover/kenya-cutover-report.md`; **commit `cutover/kenya-content-completeness.md`** (content-completeness check, NOT a diff — no current CC baseline): verify generated CC output covers canonical + 4 verified commands + 4 named gaps + standingFacts with zero unexplained omissions; Stacy validation recorded (mandatory); record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 8.1, 15.1, 18.1, 19.3, 21.1, 21.3, 21.5, 22.3_
 
 - [ ] 16. Cutover: Stacy (product governance & QA) — FIRST-GENERATION (never-ported); content-before-catalog
 
   **Type**: Parent
+  **Unit**: U9
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
   - Stacy's command content is authored into canonical source BEFORE her catalog generates (Req 21 AC2 — she was the remaining seat lacking authored command content after the Sparky/Kenya carry; her audit commands were provisioned at Task 8/C12 and are carried here as her canonical catalog).
   - **Stacy WAS CC-ported (`stacy.md` exists), so she gets the diff-against-baseline artifact** — NOT the content-completeness variant (that is only for the two never-ported seats, Sparky/Kenya). The two properties are orthogonal: "lacking authored command content" (→ content-before-catalog) is a different axis from "never CC-ported" (→ content-completeness instead of diff). Stacy is the first, not the second.
-  - Her FIRST fully-GENERATED CC catalog is a first-generation-catalog cutover (mandatory Stacy self-validation trigger — she validates her own cutover per the role seam, or Thurgood verifies + a second reviewer per Peter's routing); the ambient baseline degrades to the Kiro-side set (D-A4), but her CC-agent diff has a real `stacy.md` baseline.
+  - Her FIRST fully-GENERATED CC catalog is a first-generation-catalog cutover. **Because a QA seat validating its own generated catalog is a self-review conflict (Stacy amendment 4), the independent second-reviewer path is the DEFAULT done-condition here, NOT the fallback**: the merge gate requires an **independent validation signature** — Thurgood verifies AND a second reviewer per Peter's routing sign off; Stacy's own self-validation does not, by itself, satisfy the gate for her own cutover. The ambient baseline degrades to the Kiro-side set (D-A4), but her CC-agent diff has a real `stacy.md` baseline.
   - Her collapses-into-catalog/computed manifest verdict honored; the coverage-of-coverage audit commands (incl. `npm run audit:coverage-map`) appear in her generated catalog.
 
   **Primary Artifacts:**
@@ -768,7 +802,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
   **Post-Completion (UNIT U9 — Cutover: Stacy — single-parent unit, opens its PR; the final cutover):**
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-stacy` branch)
-  - Open U9's PR: `./.kiro/hooks/complete-task.sh "Task 16 Complete: Cutover Stacy — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U9 — Cutover: Stacy`. **Merge gate: zero unexplained regressions in `cutover/stacy-diff-vs-baseline.md` (she was ported — real baseline) AND C7 green/adjudicated.**
+  - Open U9's PR: `./.kiro/hooks/complete-task.sh "Task 16 Complete: Cutover Stacy — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U9 — Cutover: Stacy`. **Merge gate: zero unexplained regressions in `cutover/stacy-diff-vs-baseline.md` (she was ported — real baseline; channel-move lines honor the rule-of-the-bucket; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated AND — because this is the QA seat's OWN cutover (self-review conflict) — an INDEPENDENT validation signature (Thurgood + a second reviewer per Peter's routing) is the DEFAULT done-condition, not a fallback (Stacy amendment 4).**
 
   - [ ] 16.1 Author Stacy's canonical source (carry provisioned audit catalog) + capture baseline
     **Type**: Implementation
@@ -777,11 +811,13 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Author `canonical/agents/stacy.md`; carry her audit-command catalog (provisioned at Task 8/C12: `audit:coverage-map`, `audit:mode-parity`, `audit:theme-drift`, `test:coverage`, `governance-check.sh`, `verify-gate-registration.sh`) with run-context; migrate routes prose→`routes.agents`; capture baseline degrading to Kiro-side (D-A4).
     - _Requirements: 15.3, 21.1, 21.2, 22.1_
 
-  - [ ] 16.2 Generate both targets, run checks, commit sweep report, validation
+  - [ ] 16.2 Generate both targets, run checks, commit sweep report, independent validation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
-    **Agent**: Thurgood + Stacy
-    - Generate both targets (first fully-generated catalog — first-generation-catalog cutover); run checks; commit `cutover/stacy-cutover-report.md`; **commit `cutover/stacy-diff-vs-baseline.md`** (classified diff vs the current `stacy.md`; zero unexplained regressions; paired with C7); validation recorded (mandatory first-generation trigger); adjudicate any missed shape before merge.
+    **Agent**: Thurgood + Stacy + independent second reviewer (per Peter's routing — Stacy's own cutover cannot be self-validated; amendment 4)
+    - Generate both targets (first fully-generated catalog — first-generation-catalog cutover); run checks; commit `cutover/stacy-cutover-report.md`; **commit `cutover/stacy-diff-vs-baseline.md`** (classified diff vs the current `stacy.md`; channel-move lines honor the rule-of-the-bucket — replacement cue passes C7 else `regression`; zero unexplained regressions recorded in the artifact's `## Regression adjudications` section; paired with C7).
+    - **Independent validation signature (DEFAULT, not fallback — amendment 4):** Thurgood verifies AND a second reviewer per Peter's routing signs off; record the independent signature in the cutover report. Stacy's self-validation alone does not satisfy her own cutover's gate.
+    - Adjudicate any missed shape before merge.
     - With Stacy's cutover, "complete for all 8" is demonstrated per-agent over time (Req 21 AC3); the fixture's first pass (Task 8) remains the content-agnosticism acceptance evidence (Req 23 AC4).
     - _Requirements: 15.1, 18.1, 19.3, 21.1, 21.3, 21.5, 22.3_
 
@@ -792,6 +828,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 17. OB-7: generate the CC always-layer (both lanes) + retire the interim CLAUDE.md
 
   **Type**: Parent
+  **Unit**: U10
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -837,6 +874,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 - [ ] 18. Closeout: handbacks to 119-B and 123, umbrella/deferred-obligation updates
 
   **Type**: Parent
+  **Unit**: U11
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
 
   **Success Criteria:**
@@ -873,11 +911,12 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 ---
 
-## Notes for the tasks feedback round
+## Notes (post-incorporation — tasks round 1)
 
-- **Design gaps surfaced (not papered over)** — see `feedback/tasks.md` § Context for Reviewers for the two places design under-specifies a clean done-condition (fixture-first vs a real debut agent as the first CC cutover; and the Group 2 cutover ORDER, which design constrains only by "first ≠ highest-risk" — the sequence Ada→Lina→Thurgood→Leonardo→Data→Sparky→Kenya→Stacy is my proposed reading, open to reviewer challenge).
+- **The two flagged design under-specifications are RESOLVED by Peter's 2026-07-07 decisions** (see `feedback/tasks.md` § THURGOOD R2). (1) First CC cutover = **Ada** (mechanically forced — the diff-against-baseline gate needs a real committed baseline, excluding the never-ported seats). (2) Group 2 cutover ORDER = **Ada → Lina → Thurgood → Sparky → Leonardo → Data → Kenya → Stacy** (Sparky moved to position 4 / U5 to surface first-generation risk early, with runway). The unit numbering is remapped accordingly (Sparky U5, Leonardo U6, Data U7); task numbers stay bound to content.
+- **Stacy's 6 amendments are folded in** (see `feedback/tasks.md` § STACY R1 + THURGOOD R2): (1) channel-move bucket bound to a passing C7 resolution check — the rule of the bucket, in the Group 2 preamble + each ported cutover; (2) Task 8.3 reviewer's reading-order index for U1's large PR; (3) `Stacked-on:` discipline stated — cutovers parallelize from `main` post-U1, order is review-attention not branch dependency; (4) independent-validation signature is the DEFAULT done-condition (esp. Stacy's own cutover U9); (5) regression-adjudication record location named — `## Regression adjudications` in each cutover's diff artifact; (6) Task 8.3 closure gates on Stacy's CONFIRMED coverage-map, not merely a green script run.
 - **Agent field is a recommendation** — most substrate tasks are Thurgood's (governance/generator machinery); cutover content-authoring subtasks pair Thurgood with the owning seat, who confirms carried content on the PR. Peter may route differently.
 
 ---
 
-*Tasks draft (v2 — regrouped to merge-on-coherent-unit) — pending the tasks feedback round per the Spec-Feedback-Protocol Sequential Formalization Gate. Task types per the ratified four-type taxonomy; validation tiers assigned. **Merge units DECLARED** (U1 Substrate = one PR at the phase gate; U2–U9 = one PR per cutover; U10 OB-7; U11 Closeout) per the 2026-07-07 merge-on-coherent-unit ballot (`.kiro/docs/ballots/2026-07-07-merge-on-coherent-unit.md` — separate ratification path). The substrate phase gate (Task 8) is the hard sequencing boundary AND U1's merge. Each cutover carries a per-cutover diff-against-baseline (ported seats) or content-completeness (never-ported Sparky/Kenya) merge-gate artifact, paired with the C7 canonical-vs-truth checks. Every subtask carries Type + Validation + Agent + Requirements traceability.*
+*Tasks — round 1 incorporated + cutover order ratified (v3). Task types per the ratified four-type taxonomy; validation tiers assigned. **Merge units DECLARED and cutover ORDER RATIFIED** (U1 Substrate = one PR at the phase gate; U2 Ada → U3 Lina → U4 Thurgood → U5 Sparky → U6 Leonardo → U7 Data → U8 Kenya → U9 Stacy = one PR per cutover; U10 OB-7; U11 Closeout) — the merge-on-coherent-unit structure per the 2026-07-07 ballot (`.kiro/docs/ballots/2026-07-07-merge-on-coherent-unit.md` — separate ratification path); the cutover order per Peter's 2026-07-07 decision. The substrate phase gate (Task 8) is the hard sequencing boundary AND U1's merge. Each cutover carries a per-cutover diff-against-baseline (ported seats) or content-completeness (never-ported Sparky/Kenya) merge-gate artifact — with the channel-move bucket bound to C7 resolution, regressions adjudicated in a named artifact section, and an independent validation signature required — paired with the C7 canonical-vs-truth checks. **PENDING PETER'S RATIFICATION** — the last formalization gate before the build. Every subtask carries Type + Validation + Agent + Requirements traceability.*
