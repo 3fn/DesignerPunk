@@ -2,7 +2,7 @@
 
 **Date**: 2026-07-07 (v3 — tasks round 1 incorporated: Stacy APPROVE-WITH-AMENDMENTS ×6 folded; Peter's two decisions applied — first CC cutover = Ada, cutover order Ada→Lina→Thurgood→Sparky→Leonardo→Data→Kenya→Stacy)
 **Spec**: 122 — Agent Generator
-**Status**: Implementation Planning — **tasks round 1 incorporated 2026-07-07; PENDING PETER'S RATIFICATION** (the last formalization gate before the build). Requirements RATIFIED 2026-07-05; design RATIFIED 2026-07-07.
+**Status**: **RATIFIED (Peter, 2026-07-07)** — tasks round 1 incorporated + cutover order ratified (Sparky-at-4); per-parent Unit fields conform to the coherent-unit ballot's R3a. Requirements RATIFIED 2026-07-05; design RATIFIED 2026-07-07. **Formalization COMPLETE — the build (U1 substrate, CC-first) is authorized.**
 **Dependencies**: requirements.md (RATIFIED 2026-07-05), design.md (RATIFIED 2026-07-07 — CC-model reframe enacted, Req 1 AC1 bright-line applied), cc-agent-model.md (CC adapter format spec), 125-A Phase 0 (the live PR gate 122's checks register onto). Feeds 119-B (routing + measurement) and 123 (consumer distribution).
 
 ---
