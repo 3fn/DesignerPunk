@@ -469,7 +469,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
   
   **Post-Completion:**
   - Mark complete: Use `taskStatus` tool to update task status
-  - Open the task PR: `./.kiro/hooks/complete-task.sh "Task 1 Complete: Build System Foundation (spec)"` — report the PR URL and STOP; complete at merge
+  - Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "Task 1 Complete: Build System Foundation (spec)"`. If this parent IS its own merge unit → the tooling opens the PR; report the URL and STOP. If it is one of several in a declared multi-parent unit → docs commit on the branch (no PR); the PR opens at unit completion. **Accepted when the UNIT merges.**
 
   - [ ] 1.1 Create directory structure
     **Type**: Setup
@@ -571,7 +571,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
   
   **Post-Completion:**
   - Mark complete: Use `taskStatus` tool to update task status
-  - Open the task PR: `./.kiro/hooks/complete-task.sh "Task 5 Complete: Token Generation System (spec)"` — report the PR URL and STOP; complete at merge
+  - Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "Task 5 Complete: Token Generation System (spec)"`. If this parent IS its own merge unit → the tooling opens the PR; report the URL and STOP. If it is one of several in a declared multi-parent unit → docs commit on the branch (no PR); the PR opens at unit completion. **Accepted when the UNIT merges.**
 
   - [ ] 5.1 Set up generator directory structure
     **Type**: Setup
