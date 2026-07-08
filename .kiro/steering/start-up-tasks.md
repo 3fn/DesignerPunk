@@ -107,7 +107,17 @@ description: Essential pre-task checklist — date verification, governance heal
    
    **Default assumption**: Use `npm test` for parent tasks unless working on release tool or performance systems.
 
-6. **Ending a task: see Task Completion Protocol**
+6. **Model-tier calibration — when this task will delegate to subagents**
+   
+   Before delegating to a subagent, choose its model tier by the task's cognitive demand — do NOT let it silently inherit the session model:
+   - **Implementing** an already-settled design/spec/contract → the cheaper capable tier (currently **Sonnet**).
+   - **Deciding** — architecture, consequential/hard-to-reverse calls, cross-cutting tradeoffs, multiple failure modes → the higher tier (currently **Opus**). An escalation on a concrete signal, not a default-when-unsure.
+   - Calibrate in BOTH directions relative to the session model: **downgrade** for implementation, **upgrade** for a decide task. Omitting the tier inherits the session's — a silent default, so decide it consciously.
+   - **Always independently verify subagent output** before trusting it — delegate-then-verify is the guardrail, not the tier.
+   
+   Full policy + per-harness field mechanics: query `process-orchestration-model-selection` via the docs MCP.
+
+7. **Ending a task: see Task Completion Protocol**
    
    The end-of-task sequence (when to write completion docs, which tier, the parent-vs-subtask distinction, and the stop-and-wait-for-authorization rule) is **operational law in the always-loaded Task Completion Protocol** — it is already in context. Follow it when completing any task or subtask.
    

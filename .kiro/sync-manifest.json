@@ -23,7 +23,7 @@
       "managed": true
     },
     ".kiro/steering/Task-Completion-Protocol.md": {
-      "hash": "7b176dcf2407c7fa888610a9626a489e299074aca67c7bda034fd2edcaa2a283",
+      "hash": "d2e325ab76bd91a82baff3d09d7d996b2df343c3ebb2d625554dbae0f48fd89f",
       "managed": true
     },
     ".kiro/steering/core-goals.md": {
@@ -35,7 +35,7 @@
       "managed": true
     },
     ".kiro/steering/start-up-tasks.md": {
-      "hash": "7167581b8f4552a74f85c56e1eff648127af64bb5fc60ca312981200ede4250a",
+      "hash": "139861bb950e32cb11f09ce16012976b2be4fe6bd321b0505f352a8dde3883c5",
       "managed": true
     },
     "governance/AI-Collaboration-Framework.md": {
@@ -195,11 +195,11 @@
       "managed": true
     },
     "governance/Process-Spec-Planning.md": {
-      "hash": "331d09e5374c5abab22cca074edca5816eecb1d3defaa13b12358509cd632583",
+      "hash": "10dd9e47c6bdc5a737272c9c4d31cd535ceef50d9381600da8f33bab4d974f46",
       "managed": true
     },
     "governance/Process-Task-Type-Definitions.md": {
-      "hash": "7f0c643c15ade3d274356fc7294827f531b2d2784a99da1605003a50faf106af",
+      "hash": "0e3688cfed573f0c82d658308ec7cb752db6e0b47701ed8c4a97af5a33e2804a",
       "managed": true
     },
     "governance/Product-Handoff-Protocol.md": {
@@ -323,7 +323,7 @@
       "managed": true
     },
     "governance/completion-documentation-guide.md": {
-      "hash": "61f657654b751fdff8021de60de0cc2d24b28383fef3bd76d001960a911674a1",
+      "hash": "640a999b5133ebe77a028d1a5ebb68264bea6f17250d7725410b9d82a9cda0d6",
       "managed": true
     },
     "governance/component-mcp-query-guide.md": {
@@ -3477,6 +3477,10 @@
     "src/components/core/Progress-Stepper-Detailed/types.ts": {
       "hash": "837394ec9d3bb2552931651f22d3d55f07d4ef195d6e0e2dd2d8c8bce802bd8e",
       "managed": false
+    },
+    "governance/Process-Orchestration-Model-Selection.md": {
+      "hash": "2b4dd0fc740bf967d54fbbf2c38d63529cd16c68622033198939e91d2373ee07",
+      "managed": true
     }
   }
 }

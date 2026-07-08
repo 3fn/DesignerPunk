@@ -166,6 +166,7 @@ docs/specs/[spec-name]/                   # Public-facing documentation (TRIGGER
 **Task**: N.M [Task description from tasks.md]
 **Type**: Implementation
 **Status**: Complete
+**Delegated-tier** _(optional — include ONLY if the executing agent/model diverged from the task's planned `**Agent**: <agent> (<Model>)`)_: planned `<agent> (<Model>)` → actual `<agent> (<Model>)` — <one-line reason; flag whether it was agent-evolution (routing/scope) or model-evolution (cognitive-demand)>. See `process-orchestration-model-selection`.
 
 ---
 

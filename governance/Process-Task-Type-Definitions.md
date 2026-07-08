@@ -57,7 +57,7 @@ description: Task type definitions for the three-tier validation and documentati
 
 **Note**: This section intentionally uses the same heading as other steering documents because each document provides an overview of its specific system or process. This structural pattern enables consistent navigation across documentation.
 
-This document defines the four task types used in the Spec Planning Standards to determine appropriate validation depth and completion documentation detail. Task types are determined during the planning phase and guide execution practices.
+This document defines the four task types used in the Spec Planning Standards to determine appropriate validation depth and completion documentation detail. Task types are determined during the planning phase and guide execution practices. Task type also informs the **recommended model tier** for delegated work (Architecture → *decide* / higher tier; Setup / Implementation / Documentation → *implement* / cheaper tier) — see `process-orchestration-model-selection`.
 
 **Layer Context**: This is a Layer 2 (Frameworks and Patterns) document that provides reusable classification framework for spec planning. It works with Spec Planning Standards to enable consistent task type assignment across all specs.
 

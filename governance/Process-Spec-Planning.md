@@ -368,7 +368,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
   - [ ] [N.1] [Sub-task Title]
     **Type**: [Setup | Implementation | Architecture | Documentation]
     **Validation**: [Tier 1: Minimal | Tier 2: Standard | Tier 3: Comprehensive]
-    **Agent**: [Agent name]
+    **Agent**: [Agent name (Model)]
     - [Implementation step 1]
     - [Implementation step 2]
     - _Requirements: [Requirement IDs]_
@@ -376,7 +376,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
   - [ ] [N.2] [Sub-task Title]
     **Type**: [Setup | Implementation | Architecture | Documentation]
     **Validation**: [Tier 1: Minimal | Tier 2: Standard | Tier 3: Comprehensive]
-    **Agent**: [Agent name]
+    **Agent**: [Agent name (Model)]
     - [Implementation step 1]
     - [Implementation step 2]
     - _Requirements: [Requirement IDs]_
@@ -427,6 +427,9 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
 - Indicates the optimal agent based on domain boundaries (Ada: tokens/pipeline, Lina: components/tests, Thurgood: governance/specs)
 - For cross-domain tasks, use `Agent A + Agent B` with rationale
 - Agent field is a recommendation — Peter may route differently based on context
+- **Recommended model rides the Agent field, per task**: `**Agent**: Thurgood (Sonnet)` — agent, then model in parentheses. The model is the *task's* tier, not the agent's — the same agent may carry different models on different tasks (implement-work → the cheaper tier; a decide task → the higher tier). Cross-domain: `Agent A (Model) + Agent B (Model)`.
+- The model is a **concrete name and advisory as of authoring, never a binding** — the executing orchestrator re-checks it against the current model lineup (delegate-then-verify is the net). It jumpstarts tier calibration even when the always-loaded cue is absent; a stale or rote stamp is re-derived at delegation, never treated as permission to skip calibration.
+- When the recommended tier **diverges from what the task's Type implies** (an Architecture task run at the cheaper tier because design already settled the calls, or the reverse), add a one-line reason. See `process-orchestration-model-selection` for the decide-vs-implement axis.
 - Parent tasks use Type: Parent with Tier 3: Comprehensive validation
 - Type determines which validation tier and documentation tier to apply
 
