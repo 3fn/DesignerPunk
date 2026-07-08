@@ -5,8 +5,9 @@
 **Origin**: Peter's proposal (2026-07-07) — "commit on parent completion, merge on spec completion" — reshaped in analysis to **merge on coherent-unit completion**, which subsumes his proposal as the small-spec special case.
 **Type**: Governance-law amendment (general workflow law; applies to every spec's completion flow).
 **Amends**: The RATIFIED 125-A PR-gated workflow law. Source of the amended text: `.kiro/specs/125-A-pr-gate-mechanical-arming/task-1-workflow-ballot.md` (RATIFIED Peter, 2026-07-05), as applied into `.kiro/steering/Task-Completion-Protocol.md` § "The Sequence by Task Scope", § "Completion State in the PR Flow", § "The Merge Rule", and the branch/PR conventions.
-**Status**: **DRAFT — pending review (Stacy, required) then Peter's ratification via the record-first protocol (`.kiro/docs/ballots/README.md`).** No law edit is applied until the committed Status reads `RATIFIED`.
+**Status**: **RATIFIED (Peter, 2026-07-08)** — Stacy's required review incorporated (APPROVE-WITH-AMENDMENTS, `[STACY R1]`; B1/B2/B3/M1/M3/M4/L2 folded), OQ-1 resolved (a) (see § "Review"). Ratified record-first per the README protocol: this record is committed **before** the law edits are applied. Application proceeds per Item 7.
 **Refinements folded in (2026-07-07, pre-review, Peter-directed)**: (A) subtask commits become optional/judgment-based (amends R4; Items 1c, 2a-bis, 2b); (B) branch cleanup added as R8 (Item 2f + config action for Peter + monthly-health-check stale sweep). Both fold in *before* Stacy's review so she reviews the complete measure — see Item 8 (e)/(f).
+**Stacy R1 incorporated (2026-07-07, `[THURGOOD R2]`)**: verdict APPROVE-WITH-AMENDMENTS (3 Blocking + 3 Medium). Folded: **B1** → new **R3a** (unit-declaration format as law) in § "The Rule"; **B2** → new **Item 1e** (unit-conditional for the completion-guide parent checklist); **B3** → new **Item 5b** (unit-conditional for the two Process-Spec-Planning Post-Completion worked examples); **M1** → apply-time line-anchor caveat in Item 7 + stale "~311"→136 correction; **M3** → residual-risk sentence named in R4's rationale; **M4** → Item 7.5 (interim-then-durable Thurgood-prompt handoff). Count 11 → **13** law edits; Item 6 sweep scope widened. **One open question flagged for Peter** (M3's mandatory session/handoff push — NOT resolved here). See § "Review".
 **Placement note**: This measure arises from a standalone Peter directive (not from a spec task), so it lives here in the ballots directory per the ballots README convention (`YYYY-MM-DD-<slug>.md`).
 
 ---
@@ -43,7 +44,7 @@ Per the ballots README edit discipline (hand lists are floors; the grep is the a
 | 4 | `.kiro/steering/Task-Completion-Protocol.md` § "Completion State" — point 4 (line ~72) | "At parent-task (or standalone-task) completion, the tooling ... opens a PR" |
 | 5 | `.kiro/steering/Task-Completion-Protocol.md` § "Completion State" — the Item-1d definition block, points 3–5 (lines ~81–83) | "the task is complete at merge" — needs the intra-unit-parent clarification |
 | 6 | `.kiro/steering/Task-Completion-Protocol.md` § "Key Rules" (lines ~???) | "parents get ... a PR" |
-| 7 | `governance/Process-Development-Workflow.md` Git Practices — Commits bullet (line ~311) | "one `main` commit per task" framing |
+| 7 | `governance/Process-Development-Workflow.md` Git Practices — Commits bullet (line ~136; draft mis-stated ~311, corrected per Stacy M1) | "one `main` commit per task" framing |
 
 ### Live law surfaces — Refinement-A (subtask commit → optional/judgment-based) and Refinement-B (branch cleanup)
 
@@ -63,9 +64,13 @@ Added 2026-07-07 (Peter's two refinements folded in before Stacy's review). Fres
 
 ### Live law surfaces — generic (say "at task completion, open the PR"; NOT parent-bound; NO edit needed)
 
-`core-goals.md:41`, `governance/Process-Development-Workflow.md:85/116/175`, `governance/Process-Spec-Planning.md:469/571/2489`, `governance/completion-documentation-guide.md:354`, `governance/Component-Development-Standards.md:1124`. These read "complete tasks via the PR flow" / "open the task PR" generically — they do not assert *per-parter* granularity and remain correct after this amendment (the completion tooling stays the PR-opening mechanism; only *when* it opens changes, which the tooling itself decides context-aware). **Left unedited by design**; the Item-6 sweep confirms none newly contradict the unit rule.
+`core-goals.md:41` (L1-confirmed generic), `governance/Process-Development-Workflow.md:85/116/175`, `governance/Process-Spec-Planning.md:2492` (Path-A generic step 6 — B3-assessed, delegates PR timing to the tooling), `governance/Component-Development-Standards.md:1124` (L1-confirmed generic). These read "complete tasks via the PR flow" / "open the task PR" generically — they do not assert *per-parent* granularity and remain correct after this amendment (the completion tooling stays the PR-opening mechanism; only *when* it opens changes, which the tooling itself decides context-aware). **Left unedited by design**; the Item-6 sweep (scope now includes `completion-documentation-guide.md` and `Process-Spec-Planning.md`) confirms none newly contradict the unit rule.
 
-**Count**: 11 law edits in `.kiro/steering/**`/`governance/**` — the original 7 (granularity: Items 1a/1b, 2b-orig/2c/2d, 3a, 5a) plus 4 from the two refinements (Items 1c, 2a-bis, 2b-refined, 2f). All but one land in the always-loaded Task-Completion-Protocol; one is the Process-Development-Workflow governance echo. One further surface — the monthly-health-check step list — lives in Thurgood's prompt (carve-out application, not a steering edit; see the cross-surface note above).
+**Reclassified OUT of "generic" by Stacy R1 (now amended — see Items 1e, 5b):** `governance/completion-documentation-guide.md` "### For Parent Tasks" checklist (was mis-cited `:354`; live ~355–356) is a concrete parent-completion checklist → **Item 1e** (B2). `governance/Process-Spec-Planning.md` "**Post-Completion:**" worked examples (was mis-cited `:469/571`; live 472/574) are parent-bound examples → **Item 5b** (B3). These were draft-time false-negatives in the "generic" set; the exact-verbatim before-texts still matched (M1), only the classification and line anchors were wrong.
+
+**Count**: **13 law edits** in `.kiro/steering/**`/`governance/**` (was 11 pre-Stacy; +2 from B2/B3) — the original 7 (granularity: Items 1a/1b, 2b-orig/2c/2d, 3a, 5a), plus 4 from the two refinements (Items 1c, 2a-bis, 2b-refined, 2f), plus **2 from Stacy R1** (Item 1e — completion-documentation-guide parent checklist, B2; Item 5b — the two Process-Spec-Planning Post-Completion worked examples counted as one governance-echo edit, B3). Most land in the always-loaded Task-Completion-Protocol; the governance echoes are Process-Development-Workflow (Item 5a), Process-Spec-Planning (Item 5b), and completion-documentation-guide (Item 1e). One further surface — the monthly-health-check step list — lives in Thurgood's prompt (carve-out application, not a steering edit; see the cross-surface note above and Item 7.5).
+
+*(Counting note: B3 amends two identical worked-example blocks in one file under one Item (5b); counted as a single law edit for the "13" tally. If Peter prefers per-block counting the tally reads 14 — flagged for transparency, not a substantive difference.)*
 
 ---
 
@@ -85,8 +90,15 @@ Added 2026-07-07 (Peter's two refinements folded in before Stacy's review). Fres
 
 **R3 — Large spec: units are DECLARED by the spec's own tasks.md grouping.** When a spec is too large to review as one diff, its tasks.md **declares** its internal coherent units as an explicit task grouping (e.g., 122: the substrate group / each per-agent cutover / OB-7 / closeout). The tasks doc **names** the units; it is not an ad-hoc judgment made at merge time. Declaring the units is a decomposition decision, reviewed in the tasks feedback round.
 
+**R3a — Unit-declaration format (the format sub-requirement — makes "which unit is task N?" a field read, never a merge-time judgment).** A spec that declares multiple units under R3 declares them in a fixed, machine-legible format so unit membership is looked up, not adjudicated. Three carriers, all required:
+- **Per-parent-task field.** Each parent task in tasks.md carries a `**Unit**: <unit-id>` field beside its existing `**Type**:` line. This is the authoritative membership record for that task.
+- **Preamble unit table.** The tasks.md preamble carries a unit table (`unit-id → description → member tasks`) for orientation — the roster the per-task fields index into.
+- **Per-PR field.** Each unit's PR body carries a `Unit:` field (already required by R7 / Item 4) naming the declared unit it merges.
+
+A single-unit (small) spec need not declare units explicitly (R2's default presumption stands — the whole spec is the one unit); the format applies once R3 is in force. *This ratifies as law the format 122's already-RATIFIED tasks.md uses — it is not a new invention. It is the format authority RATIFIED `122/tasks.md` cites (its lines 5, 16 reference "R3a"); B1 flagged that the citation had no target until now.*
+
 **R4 — Within a unit's branch.** One branch per unit. On that branch:
-- **Subtasks** — commits are **optional and judgment-based**, NOT mechanical-per-subtask. When you do commit, **commit AND push the branch** (the two stay coupled — the push is the off-machine backup guarantee; a local-only commit is not backed up). Commit-and-push at a **checkpoint** (work that is delicate or potentially breaking, so a known-good restore point is worth having before the next step), when **backup-worthy work has accumulated** (a coherent-unit branch is longer-lived than a single task, so more unpushed work sits at risk between merges — push before that pile grows), or at a **session/handoff boundary**. Do NOT open a PR (unchanged from 125-A). *Rationale: mandatory-per-subtask is ceremony when the work is trivial — the unit squash-merges anyway, so subtask granularity is cosmetic to `main`'s history — but the backup habit must survive the longer-lived unit branch, which is exactly why commit and push stay coupled and the trigger includes "backup-worthy accumulation," not only "delicate/breaking."*
+- **Subtasks** — commits are **optional and judgment-based**, NOT mechanical-per-subtask. When you do commit, **commit AND push the branch** (the two stay coupled — the push is the off-machine backup guarantee; a local-only commit is not backed up). Commit-and-push at a **checkpoint** (work that is delicate or potentially breaking, so a known-good restore point is worth having before the next step), when **backup-worthy work has accumulated** (a coherent-unit branch is longer-lived than a single task, so more unpushed work sits at risk between merges — push before that pile grows), or at a **session/handoff boundary**. Do NOT open a PR (unchanged from 125-A). *Rationale: mandatory-per-subtask is ceremony when the work is trivial — the unit squash-merges anyway, so subtask granularity is cosmetic to `main`'s history — but the backup habit must survive the longer-lived unit branch, which is exactly why commit and push stay coupled and the trigger includes "backup-worthy accumulation," not only "delicate/breaking." **Named residual risk (Stacy M1):** making commits judgment-based on a MORE-exposed branch (the unit branch is longer-lived than a single task) means an agent under completion bias can under-fire the soft "backup-worthy accumulation" trigger and let unpushed work pile up unbacked — the mirror of the fuzziness counter-argument above, and stated here rather than buried. The coupling (commit AND push together) bounds the blast radius but does not by itself force the trigger to fire; whether to add a HARD backup floor (a mandatory session/handoff-boundary push) is an open question flagged for Peter at ratification — see § "Review", THURGOOD R2, open question OQ-1.*
 - **Parent completions** commit on the branch (completion doc + summary doc + `taskStatus` all land on the branch) — **no PR** when the parent is one of several in the unit.
 - **The unit's completion opens the PR** — the completion of the unit's final/gating parent runs the PR-opening tooling.
 - **Peter merges** (squash) — the merge accepts the whole unit.
@@ -149,6 +161,19 @@ After:
 After:
 ```markdown
 4. [ ] **Commit is optional and judgment-based — not mechanical per subtask.** When you commit, **commit AND push the unit branch** (`task/<spec>-<unit-slug>` or `task/<spec>-<N>-<slug>`, created at the first subtask — `git switch -c` or the completion tooling's equivalent); the two stay coupled because the push is the off-machine backup guarantee (a local-only commit is not backed up). Commit-and-push at a **checkpoint** (delicate or potentially-breaking work — a restore point worth having), when **backup-worthy work has accumulated** (a unit branch is longer-lived than a single task, so more unpushed work sits at risk between merges — push before the pile grows), or at a **session/handoff boundary**. Do NOT commit mechanically after every trivial subtask — the unit squash-merges anyway, so subtask granularity is cosmetic to `main`'s history. No PR opens and no required checks fire until unit completion. Subtasks do NOT open PRs. Never commit to `main`.
+```
+
+**1e. `governance/completion-documentation-guide.md` § "Workflow Checklist" → "### For Parent Tasks" (Stacy B2 — a concrete parent-completion checklist that encodes PR-at-every-parent; the draft mis-classified it "generic / left unedited").** This checklist ends "Open the task PR ... STOP ... complete when Peter merges" — parent-bound, not generic — so it gets the same unit-conditional as Items 1a/1b. Before (last two checklist items, string-located; live at ~355–356, anchors are draft-time):
+```markdown
+- [ ] Open the task PR: `./.kiro/hooks/complete-task.sh "Task N Complete: Description (<spec>)"` — completion and summary docs travel on the branch
+- [ ] STOP — report the PR URL and wait; the task is complete when Peter merges
+```
+After:
+```markdown
+- [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."` — completion and summary docs travel on the branch.
+   - **If this parent IS its own merge unit** (a standalone task, or a small single-unit spec): the tooling opens the PR.
+   - **If this parent is one of several in a declared multi-parent unit** (spec's tasks.md unit grouping): the tooling commits the docs on the branch — **no PR yet**; the PR opens at UNIT completion.
+- [ ] STOP — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. The task is **accepted when the UNIT merges**.
 ```
 
 ---
@@ -271,6 +296,28 @@ After:
 
 *(This is the only governance echo that asserts per-task `main`-commit granularity. The other governance surfaces enumerated above say "open the task PR" generically and stay correct — the completion tooling opens the PR at unit completion, which those generic instructions already delegate to.)*
 
+**5b. `governance/Process-Spec-Planning.md` — the two `**Post-Completion:**` worked-example blocks (Stacy B3).** These are worked task examples whose last line is parent-bound ("Open the task PR ... report the PR URL and STOP; complete at merge"), NOT generic — the draft's enumeration cited off-by-~3 anchors (469/571) and mis-set them "generic." **Decision: amend, not declare-stale.** Rationale (one line, consistency with 1a/1b): the ballot amends *every* parent→PR mechanism it finds normative, and these examples are the copy-paste source an author transcribes into a real tasks.md — leaving them as-is would seed the stale per-parent rule downstream, exactly what 1a/1b exist to prevent. Both blocks are identical in shape; amend each. Before-text is per-example (verbatim, string-located; live at 472 and 574, anchors are draft-time):
+
+Example 1 (Build System Foundation, live ~472):
+```markdown
+  - Open the task PR: `./.kiro/hooks/complete-task.sh "Task 1 Complete: Build System Foundation (spec)"` — report the PR URL and STOP; complete at merge
+```
+After:
+```markdown
+  - Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "Task 1 Complete: Build System Foundation (spec)"`. If this parent IS its own merge unit → the tooling opens the PR; report the URL and STOP. If it is one of several in a declared multi-parent unit → docs commit on the branch (no PR); the PR opens at unit completion. **Accepted when the UNIT merges.**
+```
+
+Example 2 (Token Generation System, live ~574):
+```markdown
+  - Open the task PR: `./.kiro/hooks/complete-task.sh "Task 5 Complete: Token Generation System (spec)"` — report the PR URL and STOP; complete at merge
+```
+After:
+```markdown
+  - Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "Task 5 Complete: Token Generation System (spec)"`. If this parent IS its own merge unit → the tooling opens the PR; report the URL and STOP. If it is one of several in a declared multi-parent unit → docs commit on the branch (no PR); the PR opens at unit completion. **Accepted when the UNIT merges.**
+```
+
+**Third surface assessed — `Process-Spec-Planning.md:2492` (Stacy B3, "assess it too").** This is step 6 of the generic numbered completion checklist under "Path A" ("**Open the task PR**: Run `./.kiro/hooks/complete-task.sh "Task Name"` — commit on the task branch, push, open the PR, report the URL, STOP"). It is the **generic Path-A mechanic**, not a parent-bound worked example: it delegates *when* the PR opens to the completion tooling (context-aware, per Item 2b's hook ergonomics), the same as the other generic "open the task PR" surfaces. **Left unedited by design** and correctly classified generic — it stays in the not-parent-bound set below. Added to the Item 6 sweep scope so this classification is re-confirmed mechanically at application, not trusted.
+
 ---
 
 ## Item 6 — Residual sweep (application ends mechanically)
@@ -285,6 +332,8 @@ subtasks? commit .*and push the branch      # Refinement A: catch any surviving 
 ```
 **Pass condition (granularity + Refinement A)**: zero hits asserting per-parent-task PR/merge granularity, and zero hits mandating a commit+push on *every* subtask (judgment-based phrasing is the target), in `.kiro/steering/**` and `governance/**` (MIGRATE scope). Generic "open the task PR" instructions are NOT hits (they delegate timing to the tooling). Records (`.kiro/specs/**`, `.kiro/docs/ballots/**` — including the 125-A ballot this amends, quoted as before-text by design) are left untouched.
 
+**Sweep scope now explicitly includes `governance/completion-documentation-guide.md` and `governance/Process-Spec-Planning.md` (Stacy B2/B3/L2).** Both were false-negatives in the draft's "generic / unedited" set and are now amended (Items 1e, 5b); the sweep must re-confirm (a) their amended blocks no longer assert per-parent granularity and (b) no OTHER parent-bound "Open the task PR ... STOP ... complete when Peter merges" phrasing survives in either file — the draft's classification of these two files is no longer trusted, it is mechanically re-verified. `Process-Spec-Planning.md:2492` (Path-A generic step 6) is expected to remain (correctly generic); confirm it reads as tooling-delegated timing, not per-parent assertion.
+
 **Refinement B (branch cleanup) has no residual sweep** — the draft-time grep returned zero existing branch-delete/prune hits, so there is no pre-existing phrasing to reconcile; Item 2f is a pure insertion.
 
 ---
@@ -292,11 +341,17 @@ subtasks? commit .*and push the branch      # Refinement A: catch any surviving 
 ## Item 7 — Application mechanics (record-first)
 
 1. **No edit before the record**: this ballot's Status is updated to `RATIFIED (Peter, <date>)` and **committed** before any law edit (ballots README protocol). Any applying agent verifies the committed RATIFIED status — nothing else — before applying.
-2. Apply Items 1–5 exactly as written — this now includes the Refinement-A sub-edits (Items 1c, 2a-bis, 2b-refined) and the Refinement-B insertion (Item 2f, the "### Branch Cleanup" subsection, plus the added Coherent-Units cleanup bullet). A before-text mismatch stops on that block and is reported, never adapted silently (ballots README edit discipline). Item 2f is a pure insertion (no before-text). Run the Item 6 sweep; record its output in the applying task's completion doc.
+2. Apply Items 1–5 exactly as written — this now includes the Refinement-A sub-edits (Items 1c, 2a-bis, 2b-refined), the Refinement-B insertion (Item 2f, the "### Branch Cleanup" subsection, plus the added Coherent-Units cleanup bullet), and the Stacy-R1 edits (Item 1e — B2; Item 5b's two blocks — B3). A before-text mismatch stops on that block and is reported, never adapted silently (ballots README edit discipline). Item 2f is a pure insertion (no before-text). Run the Item 6 sweep; record its output in the applying task's completion doc.
+   - **Line-anchor caveat (Stacy M1).** ALL line anchors in this ballot are draft-time and have already drifted (verified drift: `completion-documentation-guide.md:354`→live 355; `Process-Spec-Planning.md:469/571`→live 472/574; the enumeration table's Process-Development-Workflow Commits bullet "~311"→live 136). **Locate every before-block by its quoted string, never by its line number**, and abort per the ballots README if the quoted string is absent — do not "find the nearest match."
 3. Post-edit: bump `Last Reviewed` on `Task-Completion-Protocol.md` and `Process-Development-Workflow.md`; `scripts/validate-steering-metadata.js` passes; docs MCP `rebuild_index` runs and reports healthy (Task-Completion-Protocol is always-loaded; both docs are MCP-served).
 4. **Ratification-time config action Peter performs (Refinement B).** Enable GitHub's **"Automatically delete head branches"** setting (Settings → General) so every squash-merge deletes its own remote branch. This is a repo Settings toggle — like the branch-protection and squash-only settings 125-A relied on — and **cannot be committed by an agent**; it is Peter's to flip at ratification. (Repo-config parity with 125-A's arming actions.)
 5. **Carve-out application — monthly-health-check step + tooling (Refinement B, R8).** Folding the stale-branch sweep into the monthly Civitas health check touches **Thurgood's prompt** (Civitas Steward mode) and optionally `scripts/governance-check.sh` — agent-prompt/tooling surfaces, Peter-merged carve-outs, whose durable home is the 122 agent generator. Applied alongside the law edit, not as part of the steering-doc set. The optional `complete-task.sh` local-branch auto-prune (R8) is a **tooling follow-up**, tracked but not gating this ballot's application.
 6. **Companion, non-law application** (does not require ratification of THIS ballot, but is the reason it exists now): 122's `tasks.md` is regrouped to the declared-unit structure in the same landing — see the accompanying 122 tasks revision (its own tasks feedback round ratifies the decomposition; this ballot ratifies the general law it relies on).
+
+**Item 7.5 — Interim-then-durable placement of R8's stale-branch sweep (Stacy M4).** R8 makes the monthly stale/unmerged-branch sweep ratified law, but its only enforcement mechanism (the sweep step in the monthly Civitas health check) lives in **Thurgood's prompt** — whose durable home is flagged as the 122 agent generator. Left implicit, that creates a window where R8 is law but unenforced until 122 regenerates the prompt. To close it, application is **interim-then-durable**, tracked explicitly like OB-7:
+- **Interim (at THIS ballot's application, mandatory):** the stale-branch sweep step is added to the **CURRENT** Thurgood prompt's monthly-health-check step list **now**, as part of landing this ballot — NOT deferred to 122. This makes R8 enforceable the moment it is law. Because the prompt is a Peter-merged carve-out surface, this edit rides the same carve-out application as the rest of the prompt/tooling changes (Item 7 point 5).
+- **Durable (later, at 122):** when the 122 agent generator regenerates Thurgood's prompt from canonical source, the sweep step must be carried into the generated prompt so the interim hand-edit is not lost in regeneration. Tracked as a 122 handoff obligation, the same interim-then-durable pattern OB-7 uses for the always-layer.
+- **Verification:** the applying task's completion doc records that the interim prompt edit landed (not just the steering-doc edits), so "R8 ratified but unenforced" cannot pass silently.
 
 ---
 
@@ -310,4 +365,38 @@ subtasks? commit .*and push the branch      # Refinement A: catch any surviving 
 
 ---
 
-*Drafted by Thurgood, 2026-07-07. Amends the RATIFIED 125-A workflow law (right-sizes the merge granularity; makes subtask commits judgment-based; adds branch cleanup — all other 125-A guarantees preserved). Two Peter-directed refinements (subtask-commit optionality; branch cleanup) folded in 2026-07-07 before Stacy's review. Law docs remain untouched until the committed Status reads RATIFIED.*
+---
+
+## Review
+
+Per the ballots README lifecycle (step 2) and the Spec-Feedback-Protocol stamp format. Review is woven into the Rule/Items above; this section records the round and the incorporation trail.
+
+#### [STACY R1] — Process-quality review. Verdict: **APPROVE-WITH-AMENDMENTS** (3 Blocking + 3 Medium + 2 Low)
+
+- **B1 (Blocking)** — R3 had no format sub-requirement, yet RATIFIED `122/tasks.md` (lines 5, 16) cites "R3a" as its format authority; `R3a` appeared 0× in the ballot. → § "The Rule". *Fix: add R3a specifying the unit-declaration format as law — per-parent `**Unit**:` field beside `**Type**:`, a preamble unit table (id → description → tasks), and a per-PR `Unit:` field, so "which unit is task N?" is a field read, never a merge-time judgment. Ratifies the format 122/tasks.md already uses — not a new invention.*
+- **B2 (Blocking)** — `governance/completion-documentation-guide.md` "### For Parent Tasks" checklist (live ~355–357) is a concrete parent-completion checklist ("Open the task PR ... STOP ... complete when Peter merges") that encodes PR-at-every-parent, contradicting R4/R5/Item 2c; the ballot (line ~66) mis-classified it "generic / left unedited." → new amendment Item + Item 6 sweep scope. *Fix: unit-aware conditional mirroring Item 1a/1b; terminal "complete when Peter merges" → "accepted when the UNIT merges." Re-locate before-text by string.*
+- **B3 (Blocking)** — `Process-Spec-Planning.md:472` and `:574` are `**Post-Completion:**` worked examples ("Open the task PR ... STOP; complete at merge"), parent-bound not generic; ballot's cited anchors (469/571) off by ~3. Third surface at `:2492` ("6. Open the task PR ...") to assess too. → amend the Post-Completion examples OR declare non-normative with stated reason; add file to Item 6 sweep. *Author's call on amend-vs-declare, justified in one line.*
+- **M1 (Medium)** — All amended before-texts match live verbatim (good), but line anchors drifted: `completion-documentation-guide.md:354`→355; `Process-Spec-Planning.md:469/571`→472/574; enumeration table's Process-Development-Workflow Commits bullet "~311"→136. → Item 7 apply-time instruction: locate by quoted string, not line number, abort if string absent; correct stale "~311"→136.
+- **M3 (Medium)** — Refinement A removes the forced-backup habit on a branch the ballot argues is MORE exposed. Coupling (commit AND push) preserved (good), but the residual risk (agent under completion bias under-fires the soft "backup-worthy accumulation" trigger) should be NAMED in R4's rationale, not buried. Stacy also offers a stronger option — make the session/handoff-boundary push MANDATORY (a hard backup floor). → **Fold "name the residual risk" unconditionally; do NOT decide the stronger option** — it changes the teeth of the mandate Peter personally set (his Refinement A made commits optional). Flag it as a pending decision for Peter.
+- **M4 (Medium)** — R8's stale-branch sweep lives only in Thurgood's prompt, whose durable home is the 122 agent generator — creating a window where R8 is ratified law but unenforced until 122 regenerates the prompt. → Item 7.5: make explicit the sweep step is added to the CURRENT Thurgood prompt at THIS ballot's application (interim), independent of 122, stated as an interim-then-durable handoff like OB-7.
+- **L1 (Low)** — `core-goals.md:41` and `Component-Development-Standards.md:1124` correctly classified generic (confirmed). No change.
+- **L2 (Low)** — the "Count: 11 law edits" line (line ~68) moves once B2/B3 land; update count + Item 6 sweep scope.
+
+#### [THURGOOD R2] — Incorporation notes
+
+- **B1 folded** → added **R3a** to § "The Rule" (three required carriers: per-parent `**Unit**:` field, preamble unit table, per-PR `Unit:` field). Framed as ratifying-the-format-122-already-uses, and explicitly named as the target 122/tasks.md's "R3a" citation was missing.
+- **B2 folded** → new **Item 1e** amends the completion-documentation-guide "### For Parent Tasks" checklist with the Item-1a/1b unit conditional; before-text re-read live and quoted verbatim (last two checklist items). File added to the Item 6 sweep scope; removed from the "generic / unedited" set.
+- **B3 folded** → new **Item 5b**. **Deviation from Stacy's either/or, justified:** I chose **amend** (not declare-stale) for both Post-Completion examples. One-line reason: the ballot amends *every* normative parent→PR mechanism (Items 1a/1b), and these worked examples are the copy-paste source an author transcribes into a real tasks.md — declaring them non-normative would seed the stale rule downstream. Both before-texts re-read live (472/574) and quoted verbatim. The **third surface `:2492`** I assessed and classify **generic** (Path-A step 6, delegates PR timing to the tooling) — left unedited, but added to the Item 6 sweep to re-confirm mechanically.
+- **M1 folded** → Item 7 point 2 gains the line-anchor caveat (locate by string, abort if absent); enumeration-table row 7 corrected "~311"→136 (I independently re-confirmed the Commits bullet is live at 136 before writing the correction). Note: I did NOT rewrite every anchor inline (they remain draft-time by design per the ballots README); instead the apply-time rule makes anchors advisory and strings authoritative.
+- **M3 folded (partial, as directed)** → R4's rationale now NAMES the residual risk (completion-bias under-firing the soft accumulation trigger on a more-exposed branch). I did **NOT** decide the mandatory-session-push — flagged as **open question OQ-1** for Peter (see below). This is the deliberate non-decision Stacy and the task both asked for.
+- **M4 folded** → new **Item 7.5** makes the interim prompt edit mandatory at this ballot's application (independent of 122), with a durable-at-122 handoff and a completion-doc verification hook, patterned on OB-7.
+- **L1** → confirmed; the two surfaces stay in the "generic / unedited" set (now the only members besides the assessed-generic `:2492` and the Process-Development-Workflow generic lines).
+- **L2 folded** → count updated 11 → **13** (B2 = Item 1e; B3 = Item 5b, its two blocks counted as one file-level edit — per-block counting would read 14, flagged for Peter). Item 6 sweep scope widened to name both files.
+
+**Open question for Peter at ratification (OQ-1) — RESOLVED (Peter, 2026-07-08): option (a), keep subtask commits fully judgment-based (no rule change).** Stacy's M3 stronger option was to make the **session/handoff-boundary push mandatory** (a hard backup floor per session). Peter rejected it after analysis, on a mechanical-soundness ground: a mandatory push at a **session/handoff boundary** can only fire if the agent *detects* the boundary — and the boundary that most needs a backup floor (abrupt context loss: window fills, crash, app/network drop) is **undetectable**, so the mandate would harden only the graceful-stop case a thoughtful agent already handles and give nothing for the case that actually strands work. A mandate the agent cannot mechanically keep is weaker than an honest judgment-based rule and erodes the law's credibility. **The real backup guarantee is mechanical, not a mandate** — judgment-independent tooling auto-push (fires on cadence/commit regardless of boundary detection). This is the same mechanical-over-judgment principle the rest of 125-A and the record-first protocol run on. **Disposition:** (1) subtask commits stay fully judgment-based exactly as drafted (R4 / Items 1c, 2a-bis unchanged); (2) R4's named residual risk stays folded; (3) **R8's optional `complete-task.sh` auto-push is elevated from "optional" to a tracked tooling obligation** — the durable mitigation, carried as a follow-up (its natural durable home is the 122 agent-generator tooling / `complete-task.sh` rework). No R4/Item edit is required by this resolution.
+
+**Status: `RATIFIED (Peter, 2026-07-08)`** — ratified record-first per the README protocol (this record committed before any law edit). Application proceeds per Item 7 (OQ-1 requires no rule edit; the auto-push obligation in the disposition above is a tracked tooling follow-up, not part of the steering-law application).
+
+---
+
+*Drafted by Thurgood, 2026-07-07. Stacy's required process-quality review (APPROVE-WITH-AMENDMENTS) incorporated 2026-07-07 (`[THURGOOD R2]`) — B1/B2/B3/M1/M3(partial)/M4/L2 folded. OQ-1 (M3 mandatory session-push) resolved by Peter 2026-07-08: option (a), keep judgment-based; the real mitigation is mechanical tooling auto-push, tracked as a follow-up. **RATIFIED (Peter, 2026-07-08)** record-first. Amends the RATIFIED 125-A workflow law (right-sizes the merge granularity; makes subtask commits judgment-based; adds branch cleanup; adds the R3a unit-declaration format — all other 125-A guarantees preserved).*
