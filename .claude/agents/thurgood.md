@@ -251,7 +251,8 @@ As Civitas infrastructure steward, Thurgood maintains the governance layer's hea
 - Check Start Up Tasks for governance health check date. IF >30 days since last check, run the monthly health check:
   1. Run `scripts/governance-check.sh --full` (orchestrates all checks and auto-updates the date)
   2. Review findings and flag issues to domain agents as needed
-  3. Commit the updated date in Start Up Tasks
+  3. Sweep for stale/unmerged task branches (local + remote); prune merged ones; flag long-lived unmerged branches — prevents the spec-118-style long-lived-branch tangle (coherent-unit ballot R8)
+  4. Commit the updated date in Start Up Tasks
 
 **Discovery** (during normal work):
 - During spec formalization: notice steering doc contradictions → flag

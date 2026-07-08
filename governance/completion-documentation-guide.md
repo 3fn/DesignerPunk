@@ -352,8 +352,10 @@ If AI agent created the summary document, you MUST run:
 - [ ] Create summary doc: `docs/specs/[spec-name]/task-N-summary.md`
 - [ ] Trigger release detection: `./.kiro/hooks/release-manager.sh auto`
 - [ ] Mark parent task complete using `taskStatus` tool
-- [ ] Open the task PR: `./.kiro/hooks/complete-task.sh "Task N Complete: Description (<spec>)"` — completion and summary docs travel on the branch
-- [ ] STOP — report the PR URL and wait; the task is complete when Peter merges
+- [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."` — completion and summary docs travel on the branch.
+   - **If this parent IS its own merge unit** (a standalone task, or a small single-unit spec): the tooling opens the PR.
+   - **If this parent is one of several in a declared multi-parent unit** (spec's tasks.md unit grouping): the tooling commits the docs on the branch — **no PR yet**; the PR opens at UNIT completion.
+- [ ] STOP — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. The task is **accepted when the UNIT merges**.
 
 ---
 

@@ -8,7 +8,7 @@ description: Development workflow and task completion practices — task complet
 # Development Workflow and Task Completion Practices
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-07-05
+**Last Reviewed**: 2026-07-08
 **Purpose**: Task completion workflow and git practices for all development work
 **Organization**: process-standard
 **Scope**: cross-project
@@ -133,7 +133,7 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 ### Git Practices
 - **Repository**: https://github.com/3fn/DesignerPunkv2
 - **Branch**: All work on task branches (`task/<spec>-<N>-<slug>`); `main` is protected — direct pushes are rejected, admins included
-- **Commits**: Atomic commits per subtask on the branch; squash-merge yields one `main` commit per task with the PR title as its subject
+- **Commits**: Atomic commits per subtask on the branch; squash-merge yields one `main` commit per **merge unit** with the PR title as its subject (a unit is the whole spec for small specs, or a tasks.md-declared grouping for large specs — see Task-Completion-Protocol § Coherent Units)
 - **PRs**: Title = `Task <N> Complete: <Description> (<spec>)`; body carries Spec / Task / Agent / completion-doc path / validation note
 
 ## Spec Planning (Conditional Loading)
