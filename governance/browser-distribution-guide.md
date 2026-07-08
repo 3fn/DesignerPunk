@@ -8,7 +8,7 @@ description: Guide for loading and using DesignerPunk web components in browsers
 # Browser Distribution Guide
 
 **Date**: 2025-12-23
-**Last Reviewed**: 2025-12-23
+**Last Reviewed**: 2026-07-08
 **Purpose**: Guide for loading and using DesignerPunk web components directly in browsers
 **Organization**: process-standard
 **Scope**: cross-project

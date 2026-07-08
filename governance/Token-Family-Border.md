@@ -9,7 +9,7 @@ description: Border token family — border width tokens with doubling progressi
 # Border Tokens Guide
 
 **Date**: 2025-12-30
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-07-08
 **Purpose**: Complete reference for border width tokens with numeric naming convention and mathematical relationships
 **Organization**: token-documentation
 **Scope**: cross-project

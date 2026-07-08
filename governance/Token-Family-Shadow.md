@@ -9,7 +9,7 @@ description: Shadow token family — directional depth effects with compositiona
 # Shadow Token Usage Documentation
 
 **Date**: 2025-10-24
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-07-08
 **Purpose**: Shadow token reference and usage guide
 **Organization**: token-documentation
 **Scope**: cross-project

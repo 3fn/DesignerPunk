@@ -14,7 +14,7 @@ description: Icon component family — inline SVG icons with automatic color inh
 **Scope**: cross-project
 **Layer**: 3
 **Relevant Tasks**: component-development, ui-composition, component-implementation
-**Last Reviewed**: 2026-01-02
+**Last Reviewed**: 2026-07-08
 
 ---
 

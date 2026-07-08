@@ -9,7 +9,7 @@ description: Semantic token structure guide — SemanticToken interface requirem
 # Semantic Token Structure Guide
 
 **Date**: 2025-11-17
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-07-08
 **Purpose**: Document SemanticToken interface requirements and usage patterns
 **Organization**: token-documentation
 **Scope**: cross-project

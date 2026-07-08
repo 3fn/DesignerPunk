@@ -9,7 +9,7 @@ description: Glow token family — radial emphasis and energy effects with zero-
 # Glow Token Usage Documentation
 
 **Date**: 2025-10-24
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-07-08
 **Purpose**: Glow token reference and usage guide
 **Organization**: token-documentation
 **Scope**: cross-project

@@ -12,7 +12,7 @@ aliases: primitive vs semantic component decisions, deciding primitive vs semant
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, component-selection, architecture
-**Last Reviewed**: 2026-01-01
+**Last Reviewed**: 2026-07-08
 
 ---
 

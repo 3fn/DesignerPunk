@@ -13,7 +13,7 @@ description: How an orchestrating agent picks a model tier for delegated subagen
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 2
-**Relevant Tasks**: any task that delegates work to a subagent
+**Relevant Tasks**: agent-architecture, general-task-execution
 
 ---
 

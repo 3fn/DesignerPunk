@@ -9,7 +9,7 @@ description: Typography token family — compositional typography tokens combini
 # Typography Tokens Guide
 
 **Date**: 2025-12-09
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-07-08
 **Purpose**: Complete reference for typography tokens with font family usage and weight mapping guidance
 **Organization**: token-documentation
 **Scope**: cross-project

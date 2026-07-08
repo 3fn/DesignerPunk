@@ -14,7 +14,7 @@ description: Framework for validating behavioral contracts across web, iOS, and 
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, cross-platform-validation, testing
-**Last Reviewed**: 2026-01-02
+**Last Reviewed**: 2026-07-08
 
 ---
 

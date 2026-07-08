@@ -12,7 +12,7 @@ aliases: how do i scaffold a new component, scaffold a new component template, n
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, architecture, spec-planning
-**Last Reviewed**: 2026-01-02
+**Last Reviewed**: 2026-07-08
 
 ---
 
