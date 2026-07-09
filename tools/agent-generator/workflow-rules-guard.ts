@@ -26,42 +26,34 @@
  *   TypeScript-source level for editors/ts-node, resolved the same way schema.ts's sibling
  *   files resolve within this package.
  *
- * KNOWN HAZARD (flagged, not fixed here — out of this task's write scope):
- * `mcp-server/src/index.ts` calls `main().catch(...)` at MODULE TOP LEVEL with no
- * `require.main === module` guard, so importing the package entry (`dist/index.js` or
- * `src/index.ts`) as a library — not spawning it as a process — starts the MCP server
- * (indexes the corpus, starts a file watcher, binds stdio) as a side effect. Verified by
- * direct `require()` in this task. To avoid that side effect while still importing from
- * the real package-entry re-export surface (not bypassing it via the internal
- * `rules/workflow-rules` module, which would defeat the point of the Task 6 re-export),
- * this module imports `WORKFLOW_RULES`'s TYPE eagerly (a type-only import erases at compile
- * time, so it does not trigger the runtime side effect) and the VALUE lazily via a
- * `getWorkflowRules()` accessor that `require()`s the entry only when actually called. The
- * pipeline's real render step (Task 2/C3) — which runs as part of `generate`, a context
- * where starting the MCP server as a side effect is likely tolerable or even already
- * running — can call `getWorkflowRules()` directly. This guard function, which only needs
- * rule `id` STRINGS (not the live array) to scan canonical bodies, uses the hard-coded
- * `KNOWN_WORKFLOW_RULE_IDS` list below instead of invoking the accessor, so the guard never
- * pays the side-effect cost. `KNOWN_WORKFLOW_RULE_IDS` is verified against the live import
- * in this package's test file (see `__tests__/workflow-rules-guard.test.ts`), so drift
- * between the hard-coded list and the real `WORKFLOW_RULES` array fails the test suite
- * rather than silently going stale.
+ * SIDE-EFFECT HAZARD — RESOLVED (PR #36, merged 2026-07-09):
+ * `mcp-server/src/index.ts` previously called `main().catch(...)` at MODULE TOP LEVEL with
+ * no `require.main === module` guard, so importing the package entry (`dist/index.js`) as a
+ * library — not spawning it as a process — started the MCP server (indexed the corpus,
+ * started a file watcher, bound stdio) as a side effect. That top-level call is now wrapped
+ * in `if (require.main === module)`, so importing the entry as a library is side-effect-free,
+ * and both `getWorkflowRules()` here and the test file reach `WORKFLOW_RULES` through the
+ * real package-entry re-export surface (per 121 Task 6, design C2.4) — not the internal
+ * `rules/workflow-rules` module.
  *
- * This side-effect hazard is a real gap in `mcp-server/src/index.ts`, out of scope for this
- * task (write scope is `canonical/shared/**` + `tools/agent-generator/**` only). Flagged in
- * the Task 1.3 completion report for Ada/Thurgood follow-up (adding a
- * `require.main === module` guard to `mcp-server/src/index.ts` is the standard fix).
+ * The VALUE import stays LAZY nonetheless — now by DESIGN, not necessity: `getWorkflowRules()`
+ * `require()`s the entry only when called, so importing THIS module (the lightweight
+ * validate-stage guard) does not require `mcp-server/dist` to be built at all. The guard
+ * function only needs rule `id` STRINGS to scan canonical bodies, so it uses the hard-coded
+ * `KNOWN_WORKFLOW_RULE_IDS` list below and never loads the entry; only a caller that actually
+ * needs the live array (the pipeline's render step, Task 2/C3) pays the dist dependency.
+ * `KNOWN_WORKFLOW_RULE_IDS` is verified against the live import in this package's test file
+ * (see `__tests__/workflow-rules-guard.test.ts`, which now imports from the package entry
+ * `dist/index`), so drift between the hard-coded list and the real `WORKFLOW_RULES` array
+ * fails the test suite rather than silently going stale.
  *
  * TYPE IMPORT PATH NOTE: the type import below targets `mcp-server/dist/index` (the
  * COMPILED package entry, a build artifact), not `mcp-server/src/...`. Importing any file
  * under `mcp-server/src/` fails this package's `tsconfig.json` `rootDir: "."` check (TS6059
  * — verified: `mcp-server/src/rules/workflow-rules.ts` is not under this package's rootDir).
- * `mcp-server/dist/index.d.ts` is `.gitignore`d build output, present because `npm run
- * build:mcp` (or the mcp-server package's own `build`) has already run in this checkout —
- * a real, if slightly indirect, dependency: this package's typecheck now implicitly depends
- * on `mcp-server/dist` being built first. Flagged for Task 2 (the pipeline engine, which
- * will need mcp-server's dist for real MCP-session use anyway) rather than solved with a
- * project-reference/rootDir change here, which is out of this task's narrow scope.
+ * `mcp-server/dist/index.d.ts` is `.gitignore`d build output, present because the mcp-server
+ * package's `build` has already run in this checkout — this package's typecheck implicitly
+ * depends on `mcp-server/dist` being built first.
  */
 
 import type { WorkflowRule } from '../../mcp-server/dist/index';

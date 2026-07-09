@@ -5,17 +5,16 @@
  *          mcp-server package-entry re-export, and guardNoWorkflowRuleDuplication rejects
  *          canonical bodies that hand-restate an encoded rule while accepting clean prose.
  *
- * Imports WORKFLOW_RULES from `mcp-server/dist/rules/workflow-rules` (compiled build
- * output, side-effect-free — unlike `mcp-server/dist/index`, which runs the MCP server's
- * main() at import time; see workflow-rules-guard.ts's file header) rather than
- * `mcp-server/src/...`, which would violate this package's tsconfig.json `rootDir: "."`
- * (TS6059). This is still the real, live WORKFLOW_RULES array — the same one re-exported
- * from the package entry per 121 Task 6 — just reached via the compiled sibling module
- * instead of the entry file, to avoid both the rootDir violation and the main() side effect
- * in a single import.
+ * Imports WORKFLOW_RULES from the compiled package entry `mcp-server/dist/index` — the real
+ * 121-Task-6 re-export surface the design specifies (C2.4) — rather than the internal
+ * `rules/workflow-rules` sibling. The entry became safe to import statically once PR #36
+ * (merged 2026-07-09) wrapped its top-level `main()` in `require.main === module`, so the
+ * import no longer starts the MCP server as a side effect. (`mcp-server/src/...` is still
+ * off-limits — it violates this package's tsconfig.json `rootDir: "."`, TS6059 — so the
+ * COMPILED entry `dist/index` is the resolvable form.)
  */
 
-import { WORKFLOW_RULES } from '../../../mcp-server/dist/rules/workflow-rules';
+import { WORKFLOW_RULES } from '../../../mcp-server/dist/index';
 import {
   KNOWN_WORKFLOW_RULE_IDS,
   guardNoWorkflowRuleDuplication,
