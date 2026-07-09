@@ -33,11 +33,14 @@ describe('Avatar Component Image Handling', () => {
   beforeEach(async () => {
     // Wait for custom element to be defined
     await customElements.whenDefined('avatar-base');
+    // Suppress expected "alt required with src" warning for tests that don't assert on it
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   afterEach(() => {
     // Clean up any created elements
     cleanupDOM();
+    jest.restoreAllMocks();
   });
 
   // ============================================================================

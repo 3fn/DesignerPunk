@@ -31,9 +31,15 @@ describe('Avatar Component Core API', () => {
     }
   });
 
+  beforeEach(() => {
+    // Suppress expected "alt required with src" warning for tests that don't assert on it
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
+  });
+
   afterEach(() => {
     // Clean up any created elements
     cleanupDOM();
+    jest.restoreAllMocks();
   });
 
   // ============================================================================

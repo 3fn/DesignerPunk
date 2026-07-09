@@ -12,10 +12,17 @@ const MOCK_COMPONENTS = path.join(FIXTURE_DIR, 'mock-components');
 
 describe('ProductIndexer walk integration', () => {
   let indexer: ProductIndexer;
+  let consoleErrorSpy: jest.SpyInstance;
 
   beforeAll(async () => {
+    // ProductIndexer.index() logs an indexing summary via console.error (informational, not a failure)
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     indexer = new ProductIndexer(FIXTURE_DIR, MOCK_COMPONENTS);
     await indexer.index();
+  });
+
+  afterAll(() => {
+    consoleErrorSpy.mockRestore();
   });
 
   describe('reverse indexes — components', () => {

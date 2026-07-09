@@ -13,6 +13,14 @@ import { createBuildError } from '../BuildError';
 import { BuildResultSummary } from '../ErrorReporter';
 
 describe('ErrorHandler - ErrorReporter Integration', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('generateReport', () => {
     it('should generate report from logged errors', () => {
       const handler = new ErrorHandler();

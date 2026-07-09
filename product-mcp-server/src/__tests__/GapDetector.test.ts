@@ -48,13 +48,22 @@ describe('GapDetector', () => {
   });
 
   describe('with missing component directory', () => {
+    beforeEach(() => {
+      // GapDetector logs "gap detection disabled" via console.error when the dir is missing;
+      // only the first test below asserts on it — silence it for the others.
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
     it('logs warning and leaves catalog empty', () => {
       const spy = jest.spyOn(console, 'error').mockImplementation();
       const detector = new GapDetector('/nonexistent/path', new Set());
       detector.loadCatalog();
       expect(detector.getCatalogSize()).toBe(0);
       expect(spy).toHaveBeenCalledWith(expect.stringContaining('gap detection disabled'));
-      spy.mockRestore();
     });
 
     it('returns not-found for all components when catalog is empty', () => {

@@ -16,6 +16,22 @@ const PHILOSOPHY_PATH = path.resolve(__dirname, '../../../design-language/design
 const PRODUCT_FIXTURES = path.resolve(__dirname, '../../../product-mcp-server/src/__tests__/fixtures');
 
 describe('Spec 107 Integration: Design Language Context', () => {
+  let consoleErrorSpy: jest.SpyInstance;
+
+  beforeAll(() => {
+    // ProductIndexer logs indexing summaries via console.error (informational, not a failure).
+    // Installed in beforeAll (not beforeEach) so it's active before nested beforeAll hooks
+    // that construct/index a ProductIndexer run.
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterAll(() => {
+    consoleErrorSpy.mockRestore();
+  });
+
+  beforeEach(() => {
+    consoleErrorSpy.mockClear();
+  });
 
   describe('Application MCP — Design Philosophy', () => {
     let indexer: any;

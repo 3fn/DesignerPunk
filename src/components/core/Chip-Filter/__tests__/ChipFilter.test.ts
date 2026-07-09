@@ -42,11 +42,14 @@ describe('Chip-Filter Web Component', () => {
   beforeEach(async () => {
     // Wait for custom element to be defined
     await customElements.whenDefined('chip-filter');
+    // Suppress expected blend-color warning (fires async via rAF; no real CSS in jsdom)
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   afterEach(() => {
     // Clean up any created elements
     cleanupDOM();
+    jest.restoreAllMocks();
   });
 
   // ============================================================================
