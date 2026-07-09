@@ -70,6 +70,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Fresh-checkout prerequisite (lane-timing run #1 finding): src/types/generated/** is
+      # GITIGNORED generated source (scripts/generate-token-types.ts emits TokenTypes.ts;
+      # package.json's `prebuild` runs it). It exists on dev machines but never on a clean
+      # CI checkout, so the full typecheck fails with TS2307 without this step. Its cost is
+      # deliberately part of this lane's measured wall-clock — it is the honest fresh-checkout
+      # cost of typechecking this repo.
+      - name: Generate token types (gitignored generated source)
+        run: npm run generate:types
+
       - name: Typecheck (full, no skipLibCheck)
         run: npx tsc --noEmit
 
@@ -133,6 +142,18 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      # Fresh-checkout prerequisite (lane-timing run #1 finding): the root functional suite
+      # is NOT self-contained on a clean tree — the export-contract tests (Spec 106 R7)
+      # require() the BUILT package per the package.json exports map (dist/testing,
+      # dist/browser/designerpunk.esm.js, dist/config, ...), and src/types imports the
+      # gitignored generated TokenTypes. `npm run build` covers both: its `prebuild` runs
+      # generate:types + generate:platform-tokens, then tsc + build:validate + build:browser
+      # + build:mcp. The build is deliberately part of this lane's measured wall-clock —
+      # that IS the honest fresh-checkout cost of running the root suite as a future
+      # required check (and exactly the hidden-prerequisite class Task 6 exists to surface).
+      - name: Build (prebuild generates + tsc + bundles — required by export-contract tests)
+        run: npm run build
 
       - name: Run functional test suite
         run: npm test
@@ -205,12 +226,15 @@ jobs:
           node-version: '22'
 
       # Prerequisite investigation (Task 6): application-mcp-server/jest.config.js
-      # uses the same `preset: 'ts-jest'` + `roots: ['<rootDir>/src', '<rootDir>/tests']`
-      # pattern as mcp-server (plus moduleNameMapper stubs for the ESM-only
-      # @modelcontextprotocol/sdk so ts-jest/CJS can load it) — tests run directly
-      # against TypeScript source, no dist/ build required. package.json's "test"
-      # script is plain `jest` (no pretest/build step). No root `npm ci` is needed:
-      # this sub-package's own package-lock.json supplies everything its tests use.
+      # uses `preset: 'ts-jest'` with src-only roots (plus moduleNameMapper stubs for
+      # the ESM-only @modelcontextprotocol/sdk so ts-jest/CJS can load it) — tests run
+      # directly against TypeScript source, no dist/ build required. package.json's
+      # "test" script is plain `jest` (no pretest/build step). No root `npm ci` is
+      # needed: this sub-package's own package-lock.json supplies everything its tests
+      # use. Run #1 finding: the config previously declared a '<rootDir>/tests' root
+      # pointing at an EMPTY, untracked dir — present on dev machines, absent on a
+      # fresh CI checkout (git tracks no empty dirs), so jest failed with "roots[1]
+      # not found". Fixed in application-mcp-server/jest.config.js (roots now src-only).
       - name: Install dependencies (application-mcp-server)
         run: npm ci
 
