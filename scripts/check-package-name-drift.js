@@ -7,7 +7,9 @@
  * the scope declared in package.json. Exits non-zero if drift is detected.
  *
  * Surfaces scanned (per Spec 101 design-outline):
- *   - .kiro/steering/   — steering docs (Civitas-governed)
+ *   - governance/       — MCP-served steering corpus (81 docs; relocated here
+ *                         from .kiro/steering/ by Spec 119-A)
+ *   - .kiro/steering/   — always-loaded identity docs (9 docs remaining post-119-A)
  *   - src/              — functional source code and component READMEs
  *   - product-template/ — consumer-facing agent prompts
  *   - .kiro/agents/     — local development agent prompts
@@ -50,7 +52,8 @@ const colors = {
  * Directories to scan for drift. Paths relative to repo root.
  */
 const SCAN_DIRS = [
-  '.kiro/steering',
+  'governance',      // MCP-served steering corpus (relocated from .kiro/steering by Spec 119-A)
+  '.kiro/steering',  // always-loaded identity docs remaining post-119-A
   'src',
   'product-template',
   '.kiro/agents',
