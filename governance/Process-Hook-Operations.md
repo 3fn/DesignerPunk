@@ -8,7 +8,7 @@ description: Agent hook operational guidance — dependency chains, execution or
 # Hook Operations Guide
 
 **Date**: 2026-01-04
-**Last Reviewed**: 2026-01-04
+**Last Reviewed**: 2026-07-09
 **Purpose**: Comprehensive operational guidance for agent hook dependency chains, troubleshooting, and best practices
 **Organization**: process-standard
 **Scope**: cross-project
@@ -18,6 +18,16 @@ description: Agent hook operational guidance — dependency chains, execution or
 ## Overview
 
 This document provides detailed operational guidance for working with Kiro agent hooks. It covers dependency chain behavior, troubleshooting procedures, and best practices for reliable automation.
+
+> ## ⚠️ Scope & runtime — read before applying any of this
+>
+> **1. This describes a Kiro-IDE-only mechanism.** The "agent hooks" here are the Kiro event-hook runtime — `.kiro/agent-hooks/*.json` configs fired by the Kiro IDE on `taskStatusChange` events. **Claude Code has no equivalent event-hook system** (the same runtime gap that the always-layer has under CC — see 122 / OB-7). Under Claude Code none of these hooks fire; file organization and any release steps are performed by explicit tooling/CLI steps, not by IDE events. Read every "hooks fire on task completion" statement below as *Kiro-runtime behavior*, not a cross-runtime guarantee.
+>
+> **2. "Task completion" now means merge (125-A PR-gate).** Since the ratified 125-A workflow, a task is accepted when its unit's **PR is merged** — not when a local status flips. The completion tool is `./.kiro/hooks/complete-task.sh` (opens the PR), which **superseded** the old commit-on-completion tooling. Work reaches `main` only through a merged, branch-protected PR. So the troubleshooting guidance below that frames "direct git commits" as *bypassing hooks* (versus using the `taskStatus` tool) is **Kiro-IDE-specific and predates the branch→PR→merge flow** — under the current workflow, committing and pushing a branch is a *correct, expected* step, not an error to avoid.
+>
+> **3. Release detection here is historical.** As the frontmatter notes, the release system was rebuilt in Spec 065 into an on-demand CLI (`src/tools/release/`); the release-detection-on-task-completion hook content below is retained for Kiro-hook operational history. See [Release Management System](release-management-system) for the current architecture.
+>
+> This doc is preserved for Kiro-runtime hook operations and history. A cross-runtime rework belongs with the 122 agent-generator work (OB-7), not here.
 
 **When to use this document**:
 - Debugging hook issues or automation failures
@@ -508,6 +518,8 @@ ls -la .kiro/release-triggers/
    # Wrong approach (bypasses hooks)
    # git commit -m "message" && git push
    ```
+
+   > **Kiro-runtime framing only (see the Scope banner).** "`git commit && push` bypasses hooks" is true *only* of the Kiro IDE event mechanism. Under the 125-A PR-gate workflow, committing and pushing a branch is the **correct** step — subtask/parent work reaches `main` through a merged PR, and `taskStatus` marks completion *on the branch*. This "wrong approach" label applies to Kiro hook-triggering, not to the git workflow itself.
 
 2. **Verify task status changed**: Check tasks.md to confirm task is marked `[x]`
 
