@@ -43,3 +43,17 @@ Durable fix is upstream: place worktrees as **siblings** (outside the repo), not
 nested — then nothing above a worktree is another repo and all three symptoms vanish.
 That's a Claude Code harness behavior (feedback request to Anthropic). 122 mitigates
 via guidance; it does not own the root cause.
+
+---
+
+## Disposition (2026-07-09, Peter-approved — split into content-now / generation-in-122)
+
+The ask splits into two separable pieces; only the generation half is 122 scope, and it needs **no 122 artifact amendment** — it rides the existing always-set carry mechanism (see below). **No 122 re-ratification.**
+
+**Piece 1 — cue content AUTHORED NOW (done, outside the 122 build).** The placement-verify rule now exists as canonical always-layer content, so sessions are protected immediately (via the interim CLAUDE.md always-layer) rather than only when the build reaches its ambient tasks:
+- **Full rule + CC symptom** → `governance/Process-Orchestration-Model-Selection.md` § "The real guardrail: delegate-then-verify" — extends delegate-then-verify from *content* to *content AND placement*; carries the CC nested-worktree symptom and the sibling-worktrees root-cause pointer.
+- **Always-loaded touchpoint** → `.kiro/steering/start-up-tasks.md` item 6 (sibling to the model-tier cue) — terse "verify placement, not just content; hand over absolute paths; confirm the edit landed." Because `start-up-tasks.md` is (per the ratified design) an always-set member, 122 will carry this cue **for free**, the same path it carries the tiering cue.
+
+**Piece 2 — per-harness generation DEFERRED to 122's ambient / OB-7 cutover tasks.** No design change requested. When those tasks execute, resolve one **open design-fit question**: does the ratified five-class ambient design express *"symptom text emitted in the CC generation only, omitted from Kiro"* cleanly (harness-differentiated cue), or does the cue simply ride inside the always-set doc as-is (harmless, but the CC symptom text also reaches Kiro)? If harness-differentiation is wanted and not already expressible, that is a small design note for Thurgood at that point — **not** a re-ratification trigger. Flagged here so the ambient-task executor picks it up.
+
+**Must-carry (unchanged, now satisfiable):** the cue content now EXISTS to be carried; U10 (OB-7 CLAUDE.md retirement) must carry it into the superseding always-layer alongside the tiering cue. Add to U10's must-carry checklist.
