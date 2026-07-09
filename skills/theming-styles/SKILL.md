@@ -1,5 +1,5 @@
 ---
-name: styles
+name: theming-styles
 description: Use this skill to integrate the Jetpack Compose Styles API into an Android
   project. This skill guides you through upgrading dependencies, setting up component
   themes, making custom components styleable, and migrating existing layout properties
