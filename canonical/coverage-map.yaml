@@ -1,0 +1,9 @@
+# coverage-map.yaml — the check coverage map (Req 22 AC4(b); C12).
+#
+# PLACEHOLDER. The generated skeleton (rows keyed by check/sweep id) plus the authored
+# "check" column is produced by Stacy's provisioning task (Task 8.2, C12) and regenerated
+# thereafter. Committed and diff-guarded once populated.
+#
+# Left as a stub in Task 1.1 so the file path exists for the layout; do not hand-author
+# rows here — Task 8.2 (`npm run audit:coverage-map`) owns its content.
+checks: []

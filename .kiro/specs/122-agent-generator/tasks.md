@@ -79,7 +79,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 1 Complete: Canonical source root, schema, and shared substrate files (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 1.1 Create the `canonical/` root and `skills/` neutral root
+  - [x] 1.1 Create the `canonical/` root and `skills/` neutral root
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
@@ -87,7 +87,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Create the top-level `skills/` root (sibling to `governance/`) — empty; the relocation of `.kiro/skills/**` content is Task 3.
     - _Requirements: 2.1, 8.3_
 
-  - [ ] 1.2 Define the canonical agent schema and its five validate-stage rules
+  - [x] 1.2 Define the canonical agent schema and its five validate-stage rules
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
