@@ -8,7 +8,7 @@ description: Cross-reference standards for documentation — formatting rules, c
 # Process-Cross-Reference-Standards
 
 **Date**: 2026-01-03
-**Last Reviewed**: 2026-01-03
+**Last Reviewed**: 2026-07-09
 **Purpose**: Comprehensive guide for creating and maintaining cross-references in documentation
 **Organization**: process-standard
 **Scope**: cross-project
@@ -34,7 +34,7 @@ Cross-references MUST be used in the following documentation types:
 - **Completion Documents**: Task completion documentation in `.kiro/specs/[spec-name]/completion/`
 - **README Files**: Project and directory README files that provide navigation and context
 - **Overview Documents**: Master documents that map components to their documentation (e.g., `docs/token-system-overview.md`)
-- **Process Documentation**: Standards and methodology documents in `.kiro/steering/` and `docs/processes/`
+- **Process Documentation**: Standards and methodology documents in the MCP-served governance corpus (`governance/`), the always-loaded identity docs (`.kiro/steering/`), and `docs/processes/`
 
 **Rationale**: These are documentation artifacts where cross-references add value by helping readers discover related information and navigate between connected concepts.
 
@@ -113,11 +113,24 @@ export const TypographyTokens = {
 
 ## How to Format Cross-References
 
-Cross-references should follow consistent formatting patterns to ensure clarity and maintainability.
+Cross-references should follow consistent formatting patterns to ensure clarity and maintainability. **Which pattern applies depends on what you are linking to** — there are two reference classes:
+
+### Two Reference Classes (pick by target)
+
+| Target | How to reference | Example |
+|--------|------------------|---------|
+| **Steering / governance corpus** — an MCP-served doc that carries an `id:` (the docs under `governance/`, plus the 9 identity docs under `.kiro/steering/`) | **Bare-`id`** markdown link: `[Human Label](doc-id)` — the target's `id`, no path, no `.md` | `[Token Governance](token-governance)` |
+| **Spec-local / repo-file** — spec artifacts (requirements/design/tasks/completion docs, spec guides), READMEs, and other repo files that are **not** `id`-indexed | **Relative path** markdown link (see "Relative Path Usage" below) | `[Design Decisions](../design.md#design-decisions)` |
+
+**Why the split.** Spec 119-A gave every doc in the MCP-served corpus a stable, relocation-independent `id` and made bare-`id` the addressing form (226 intra-corpus refs migrated). An `id`-addressed link survives file moves because the `id` — not the path — is the address. Spec artifacts and loose repo files carry no `id`, so relative paths remain their correct form.
+
+**The addressing grammar is owned elsewhere — do not re-derive it here.** The canonical source for the `id` form, the composite `docid#sectionid` section grammar, kebab-case filenames, and `aliases` is [Steering Addressing Conventions](steering-addressing-conventions). This document governs cross-reference *practice* (when to link, link-text quality, anti-patterns, maintenance); it defers the *grammar* to that doc so the two never drift.
+
+> **Tooling caveat (119-B OB-1).** Bare-`id` cross-refs **resolve** correctly (resolver strategy-1), but the cross-reference *parser* still only enumerates `.md`-suffixed targets, so `list_cross_references` and the `crossReferences` map currently under-count bare-`id` links. Enumeration parity is deferred to 119-B OB-1. Until then, do not treat an empty `list_cross_references` result as proof a doc has no inbound links.
 
 ### Relative Path Usage
 
-Always use relative paths from the current document location. Relative paths ensure links remain valid when the repository structure changes or when viewing documentation in different contexts.
+For **spec-local and repo-file references** (the second class above), use relative paths from the current document location. Relative paths ensure these links remain valid when viewed across different contexts. (For steering/governance-corpus targets, use the bare-`id` form instead — see the table above.)
 
 **Pattern**: Use `../` to navigate up directories and `./` for same-directory references
 
@@ -611,7 +624,7 @@ Strategic Flexibility Guide.
 
 When files are moved during organization:
 
-1. Update all cross-reference links to reflect new locations
+1. **Bare-`id` references to steering/governance-corpus docs need no update** — the `id` is the address, so it survives the move (this move-resilience is the reason 119-A adopted `id`-addressing). Update the *relative-path* references (spec-local / repo-file links) to reflect new locations.
 2. Verify bidirectional links remain consistent
 3. Test navigation by clicking links in rendered markdown
 4. Document any broken links and fix them immediately
@@ -621,9 +634,11 @@ When files are moved during organization:
 Periodically validate cross-reference integrity:
 
 - Verify all links resolve to existing documents
-- Check that relative paths are correct from document location
+- Check that relative paths are correct from document location (bare-`id` links resolve by `id`, not path, so there is no path to verify — confirm the `id` exists)
 - Confirm section anchors exist in target documents
 - Test navigation efficiency (related docs reachable in 2 clicks or less)
+
+> **Caveat (119-B OB-1):** automated link-graph tooling built on `list_cross_references` currently under-counts bare-`id` links (the parser enumerates only `.md`-suffixed targets). Until OB-1 lands, supplement automated enumeration with a text search for bare-`id` targets when auditing a doc's inbound/outbound links.
 
 ### Navigation as Aid, Not Dependency
 
@@ -654,12 +669,14 @@ Cross-references should be navigation aids, not content dependencies:
 
 ## Related Documentation
 
-- **File Organization Standards** - Metadata and directory structure
-- **Completion Documentation Guide** - Completion doc cross-reference patterns
-- **Development Workflow** - Task completion workflow
+- [Steering Addressing Conventions](steering-addressing-conventions) - **Canonical** `id` / `docid#sectionid` grammar, filename and `aliases` conventions (this doc defers the grammar there)
+- [Process File Organization](process-file-organization) - Metadata and directory structure
+- [Completion Documentation Guide](completion-documentation-guide) - Completion doc cross-reference patterns
+- [Process Development Workflow](process-development-workflow) - Task completion workflow
 
-**MCP Queries**:
+**MCP Queries** (bare-`id` in the `path` argument — the resolver addresses by `id`):
 ```
-get_section({ path: ".kiro/steering/Process-File-Organization.md", heading: "Required Metadata Fields" })
-get_document_full({ path: ".kiro/steering/Completion Documentation Guide.md" })
+get_section({ path: "steering-addressing-conventions", heading: "Convention 2: Composite `docid#sectionid` Addressing Grammar" })
+get_section({ path: "process-file-organization", heading: "Required Metadata Fields" })
+get_document_full({ path: "completion-documentation-guide" })
 ```
