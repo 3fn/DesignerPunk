@@ -42,42 +42,42 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/browser/designerpunk.esm.js",
-      "types": "./dist/browser-entry.d.ts"
+      "types": "./dist/browser-entry.d.ts",
+      "import": "./dist/browser/designerpunk.esm.js"
     },
     "./components": {
-      "import": "./dist/browser/designerpunk.esm.js",
-      "types": "./dist/browser-entry.d.ts"
+      "types": "./dist/browser-entry.d.ts",
+      "import": "./dist/browser/designerpunk.esm.js"
     },
     "./tokens.css": "./dist/DesignTokens.web.css",
     "./component-tokens.css": "./dist/ComponentTokens.web.css",
     "./config": {
+      "types": "./dist/config/index.d.ts",
       "import": "./dist/config/index.js",
-      "require": "./dist/config/index.js",
-      "types": "./dist/config/index.d.ts"
+      "require": "./dist/config/index.js"
     },
     "./types": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/types/index.js",
-      "require": "./dist/types/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/types/index.js"
     },
     "./build": {
+      "types": "./dist/build/tokens/index.d.ts",
       "import": "./dist/build/tokens/index.js",
-      "require": "./dist/build/tokens/index.js",
-      "types": "./dist/build/tokens/index.d.ts"
+      "require": "./dist/build/tokens/index.js"
     },
     "./blend": {
+      "types": "./dist/blend/index.d.ts",
       "import": "./dist/blend/index.js",
-      "require": "./dist/blend/index.js",
-      "types": "./dist/blend/index.d.ts"
+      "require": "./dist/blend/index.js"
     },
     "./jest-preset": {
       "require": "./dist/testing/jest-preset.js"
     },
     "./testing": {
+      "types": "./dist/testing/index.d.ts",
       "import": "./dist/testing/index.js",
-      "require": "./dist/testing/index.js",
-      "types": "./dist/testing/index.d.ts"
+      "require": "./dist/testing/index.js"
     },
     "./grid.css": "./src/styles/responsive-grid.css",
     "./fonts/inter.css": "./src/assets/fonts/inter/inter.css",
