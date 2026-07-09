@@ -13,7 +13,7 @@ description: Complete inheritance structures and behavioral contracts for all 13
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, architecture, spec-planning
-**Last Reviewed**: 2026-01-02
+**Last Reviewed**: 2026-07-09
 
 ---
 
@@ -22,35 +22,43 @@ description: Complete inheritance structures and behavioral contracts for all 13
 This document defines the complete inheritance structures for all 13 component families in the Stemma System. Each family section includes primitive component definition, semantic variants, behavioral contracts, and relationship diagrams.
 
 **Status Legend**:
-- 🟢 **Production Ready**: Fully implemented, tested, documented
-- 🟡 **Beta**: Implemented but may have minor issues  
-- 🔴 **Placeholder**: Structural definition only - do NOT use
+- 🟢 **Production Ready**: Fully implemented, tested, documented across ALL declared platforms (web, iOS, Android)
+- 🟡 **Web-ready, mobile-scaffold**: Shipping — web is production-ready; iOS and Android are scaffold (structure present, not yet test-covered). Safe on web; treat mobile as not-yet-ready. (This is the current state of most shipped families; per-component per-platform detail lives in `Component-Readiness-Status.md` § "Individual Component Status".)
+- 🔴 **Placeholder**: Structural definition only — no components ship, do NOT use
+
+> **Note on planned inheritance names**: several family sections below describe the *planned* inheritance architecture using aspirational primitive names (e.g., `Badge-Base`, `Nav-Base`) that predate the shipped components. Where a family ships, its **Component Summary** table reflects the actual shipped components and their status; the inheritance diagram may still show the originally-planned shape. The shipped catalog is authoritative — see `Component-Readiness-Status.md` and the Application MCP.
 
 ---
 
 ## Family Status Summary
 
-| Family | Primitive Base | Status | Semantic Variants |
-|--------|----------------|--------|-------------------|
-| Form Inputs | Input-Text-Base | 🟢 | Email, Password, PhoneNumber |
-| Buttons | Button-CTA | 🟢 | Standalone (styling via props) |
-| Containers | Container-Base | 🟢 | Card, Panel, Hero (planned) |
-| Icons | Icon-Base | 🟢 | Status, Action, Navigation (planned) |
+All 13 families are listed. 🟡/🟢 families ship; 🔴 families are genuine placeholders (no components ship).
+
+| Family | Primitive Base | Status | Shipped / Planned Variants |
+|--------|----------------|--------|----------------------------|
+| Form Inputs | Input-Text-Base | 🟡 | Checkbox (Base, Legal), Radio (Base, Set), Text (Email, Password, PhoneNumber) |
+| Buttons | Button-CTA | 🟢 | CTA, Icon, VerticalList-Item, VerticalList-Set |
+| Containers | Container-Base | 🟡 | Card (shipped); Panel, Hero (planned) |
+| Icons | Icon-Base | 🟡 | Base shipped; Status, Action, Navigation (planned) |
+| Avatars | Avatar-Base | 🟡 | Base shipped; User, Group, Entity (planned) |
+| Badges and Tags | Badge-Count-Base | 🟡 | Count-Base, Count-Notification, Label-Base |
+| Chips | Chip-Base | 🟡 | Base, Filter, Input |
+| Navigation | Nav-Header-Base | 🟡 | Header-Page, Header-App, SegmentedChoice-Base, TabBar-Base |
+| Progress Indicators | Progress-Indicator-Node-Base | 🟡 | Bar-Base, Indicator-Node/Connector/Label-Base, Pagination-Base, Stepper-Base, Stepper-Detailed |
 | Modals | Modal-Base | 🔴 | Dialog, Sheet, Drawer, Popover |
-| Avatars | Avatar-Base | 🔴 | User, Group, Entity |
-| Badges and Tags | Badge-Base | 🔴 | Status, Tag, Notification, Label |
 | Data Displays | Display-Base | 🔴 | Text, List, Table, Media, Empty |
 | Dividers | Divider-Base | 🔴 | Horizontal, Vertical |
 | Loading | Loading-Base | 🔴 | Spinner, Progress, Skeleton |
-| Navigation | Nav-Base | 🔴 | Tabs, Breadcrumb, List, Bar |
 
 ---
 
 ## 1. Form Inputs Family
 
-**Status**: 🟢 Production Ready
+**Status**: 🟡 Web-ready, mobile-scaffold
 **Shared Need**: Data collection and validation
 **Primitive Base**: Input-Text-Base
+
+> Beyond the Text inputs detailed below, this family also ships **Checkbox** (Input-Checkbox-Base, Input-Checkbox-Legal) and **Radio** (Input-Radio-Base, Input-Radio-Set) — all web 🟢 / iOS·Android scaffold. See `Component-Readiness-Status.md` for the full per-component list.
 
 ### Inheritance Structure
 
@@ -61,10 +69,10 @@ Input-Text-Base (Primitive) │ ├── Input-Text-Email (Semantic) │ └─
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| Input-Text-Base | Primitive | 🟢 | Foundational text input with float label pattern |
-| Input-Text-Email | Semantic | 🟢 | Email validation + autocomplete |
-| Input-Text-Password | Semantic | 🟢 | Secure input + password toggle |
-| Input-Text-PhoneNumber | Semantic | 🟢 | Phone formatting + international validation |
+| Input-Text-Base | Primitive | 🟡 | Foundational text input with float label pattern (web 🟢; iOS/Android scaffold) |
+| Input-Text-Email | Semantic | 🟡 | Email validation + autocomplete (web 🟢; iOS/Android scaffold) |
+| Input-Text-Password | Semantic | 🟡 | Secure input + password toggle (web 🟢; iOS/Android scaffold) |
+| Input-Text-PhoneNumber | Semantic | 🟡 | Phone formatting + international validation (web 🟢; iOS/Android scaffold) |
 
 ### Behavioral Contracts
 
@@ -109,14 +117,21 @@ Input-Text-Base (Primitive) │ ├── Input-Text-Email (Semantic) │ └─
 
 ### Inheritance Structure
 
-Button-CTA (Standalone) │ └── Styling via props (variant: primary | secondary | tertiary) └── No behavioral variants - single component with styling props
+Button-CTA (Standalone) — styling via props (variant: primary | secondary | tertiary)
+Button-Icon (Primitive) — compact icon-only button
+Button-VerticalList-Item (Primitive) → Button-VerticalList-Set (Pattern) — vertical action menu
 
 
 ### Component Summary
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| Button-CTA | Standalone | 🟢 | Call-to-action button with variant prop for styling |
+| Button-CTA | Standalone | 🟡 | Call-to-action button with variant prop (web 🟢; iOS/Android scaffold) |
+| Button-Icon | Primitive | 🟡 | Compact icon-only button (web 🟢; iOS/Android scaffold) |
+| Button-VerticalList-Item | Primitive | 🟢 | Single action item in a vertical list menu (production-ready all platforms) |
+| Button-VerticalList-Set | Pattern | 🟢 | Groups VerticalList-Item into a mode-driven action menu (production-ready all platforms) |
+
+**Family status note**: the Buttons family is marked 🟢 in the summary table because it contains all-platform-production components (VerticalList-Item/Set). Its CTA and Icon members are themselves web-ready/mobile-scaffold (🟡).
 
 ### Naming Convention Note
 
@@ -155,7 +170,7 @@ Button-CTA uses the `[Family]-[Type]` pattern (not `[Family]-[Type]-Base`) becau
 
 ## 3. Containers Family
 
-**Status**: 🟢 Production Ready
+**Status**: 🟡 Web-ready, mobile-scaffold
 **Shared Need**: Layout and content organization
 **Primitive Base**: Container-Base
 
@@ -168,8 +183,8 @@ Container-Base (Primitive) │ ├── Container-Card (Semantic) [Planned] │
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| Container-Base | Primitive | 🟢 | Foundational layout container |
-| Container-Card | Semantic | 🔴 Planned | Elevated card with shadow |
+| Container-Base | Primitive | 🟡 | Foundational layout container (web 🟢; iOS/Android scaffold) |
+| Container-Card-Base | Type-Primitive | 🟡 | Elevated card for dashboards/stat cards/previews (web 🟢; iOS/Android scaffold) |
 | Container-Panel | Semantic | 🔴 Planned | Flat panel for sections |
 | Container-Hero | Semantic | 🔴 Planned | Full-width hero section |
 
@@ -209,7 +224,7 @@ Container-Base uses the `[Family]-Base` pattern because:
 
 ## 4. Icons Family
 
-**Status**: 🟢 Production Ready
+**Status**: 🟡 Web-ready, mobile-scaffold
 **Shared Need**: Visual communication
 **Primitive Base**: Icon-Base
 
@@ -222,7 +237,7 @@ Icon-Base (Primitive) │ ├── Icon-Status (Semantic) [Planned] │ └─�
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| Icon-Base | Primitive | 🟢 | Foundational icon component |
+| Icon-Base | Primitive | 🟡 | Foundational inline SVG icon, inherits parent text color (web 🟢; iOS/Android scaffold) |
 | Icon-Status | Semantic | 🔴 Planned | Status indicator icons |
 | Icon-Action | Semantic | 🔴 Planned | Action icons |
 | Icon-Navigation | Semantic | 🔴 Planned | Navigation icons |
@@ -312,25 +327,25 @@ Modal-Base (Primitive) [Placeholder] │ ├── Modal-Dialog (Semantic) [Plac
 
 ## 6. Avatars Family
 
-**Status**: 🔴 Placeholder
+**Status**: 🟡 Web-ready, mobile-scaffold
 **Shared Need**: Identity representation
 **Primitive Base**: Avatar-Base
 
 ### Inheritance Structure
 
-Avatar-Base (Primitive) [Placeholder] │ ├── Avatar-User (Semantic) [Placeholder] │ └── User profile avatar with image/initials fallback │ ├── Avatar-Group (Semantic) [Placeholder] │ └── Stacked group of avatars │ └── Avatar-Entity (Semantic) [Placeholder] └── Organization/brand avatar
+Avatar-Base (Primitive) [Shipped] │ ├── Avatar-User (Semantic) [Planned] │ └── User profile avatar with image/initials fallback │ ├── Avatar-Group (Semantic) [Planned] │ └── Stacked group of avatars │ └── Avatar-Entity (Semantic) [Planned] └── Organization/brand avatar
 
 
 ### Component Summary
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| Avatar-Base | Primitive | 🔴 | Foundational avatar component |
-| Avatar-User | Semantic | 🔴 | User profile avatar |
-| Avatar-Group | Semantic | 🔴 | Stacked group of avatars |
-| Avatar-Entity | Semantic | 🔴 | Organization/brand avatar |
+| Avatar-Base | Primitive | 🟡 | Foundational avatar (web 🟢; iOS/Android scaffold) — image, initials fallback, human/AI shape differentiation |
+| Avatar-User | Semantic | 🔴 Planned | User profile avatar |
+| Avatar-Group | Semantic | 🔴 Planned | Stacked group of avatars |
+| Avatar-Entity | Semantic | 🔴 Planned | Organization/brand avatar |
 
-### Behavioral Contracts (Planned)
+### Behavioral Contracts
 
 **Base Contracts**:
 - `displays_image` - Renders image when available
@@ -344,7 +359,9 @@ Avatar-Base (Primitive) [Placeholder] │ ├── Avatar-User (Semantic) [Plac
 - **Group**: `stacks_avatars`, `shows_overflow_count`
 - **Entity**: `supports_logo`, `supports_badge`
 
-### Token Dependencies (Planned)
+> Base contracts reflect the shipped Avatar-Base; extended per-variant contracts are planned. The shipped component's authoritative contract set is in the Application MCP (`get_component_full({ name: "Avatar-Base" })`).
+
+### Token Dependencies
 
 | Category | Tokens |
 |----------|--------|
@@ -362,26 +379,30 @@ Avatar-Base (Primitive) [Placeholder] │ ├── Avatar-User (Semantic) [Plac
 
 ## 7. Badges and Tags Family
 
-**Status**: 🔴 Placeholder
+**Status**: 🟡 Web-ready, mobile-scaffold
 **Shared Need**: Status and labeling
-**Primitive Base**: Badge-Base
+**Primitive Base**: Badge-Count-Base (shipped); the originally-planned `Badge-Base` roll-up primitive was not built
 
 ### Inheritance Structure
 
-Badge-Base (Primitive) [Placeholder] │ ├── Badge-Status (Semantic) [Placeholder] │ └── Status indicators (success, error, warning, info) │ ├── Badge-Tag (Semantic) [Placeholder] │ └── Removable tags for categorization │ ├── Badge-Notification (Semantic) [Placeholder] │ └── Notification count badges │ └── Badge-Label (Semantic) [Placeholder] └── Static labels for metadata
+Badge-Count-Base (type-primitive) [Shipped] │ └── Badge-Count-Notification (Semantic) [Shipped] └── Notification count with live-region announcements
+
+Badge-Label-Base (type-primitive) [Shipped] └── Text label badge for categorization/status
+
+Planned (not shipped): a Badge-Status semantic variant, removable Badge-Tag.
 
 
 ### Component Summary
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| Badge-Base | Primitive | 🔴 | Foundational badge component |
-| Badge-Status | Semantic | 🔴 | Status indicators |
-| Badge-Tag | Semantic | 🔴 | Removable tags |
-| Badge-Notification | Semantic | 🔴 | Notification count badges |
-| Badge-Label | Semantic | 🔴 | Static labels |
+| Badge-Count-Base | Type-Primitive | 🟡 | Numeric count indicator (web 🟢; iOS/Android scaffold) |
+| Badge-Count-Notification | Semantic | 🟡 | Notification count badge with live-region announcements (web 🟢; iOS/Android scaffold) |
+| Badge-Label-Base | Type-Primitive | 🟡 | Text label badge for categorization/status/tagging (web 🟢; iOS/Android scaffold) |
+| Badge-Status | Semantic | 🔴 Planned | Status indicators |
+| Badge-Tag | Semantic | 🔴 Planned | Removable tags |
 
-### Behavioral Contracts (Planned)
+### Behavioral Contracts
 
 **Base Contracts**:
 - `displays_text` - Renders text content
@@ -395,7 +416,9 @@ Badge-Base (Primitive) [Placeholder] │ ├── Badge-Status (Semantic) [Plac
 - **Notification**: `displays_count`, `supports_max_count`, `supports_dot_mode`
 - **Label**: `static_display`, `supports_truncation`
 
-### Token Dependencies (Planned)
+> Contracts above blend shipped and planned behavior. Authoritative shipped-contract sets are in the Application MCP (`get_component_full({ name: "Badge-Count-Base" })`, etc.).
+
+### Token Dependencies
 
 | Category | Tokens |
 |----------|--------|
@@ -559,26 +582,34 @@ Loading-Base (Primitive) [Placeholder] │ ├── Loading-Spinner (Semantic) 
 
 ## 11. Navigation Family
 
-**Status**: 🔴 Placeholder
+**Status**: 🟡 Web-ready, mobile-scaffold
 **Shared Need**: Wayfinding
-**Primitive Base**: Nav-Base
+**Primitive Base**: Nav-Header-Base (internal-only structural primitive)
 
 ### Inheritance Structure
 
-Nav-Base (Primitive) [Placeholder] │ ├── Nav-Tabs (Semantic) [Placeholder] │ └── Tab navigation for content switching │ ├── Nav-Breadcrumb (Semantic) [Placeholder] │ └── Breadcrumb trail for hierarchical navigation │ ├── Nav-List (Semantic) [Placeholder] │ └── Vertical navigation list │ └── Nav-Bar (Semantic) [Placeholder] └── Horizontal navigation bar
+Nav-Header-Base (Primitive, internal only) [Shipped] │ ├── Nav-Header-Page (Semantic) [Shipped] │ └── Page-level nav bar: back/close, h1 title, trailing actions, collapse-on-scroll │ └── Nav-Header-App (Semantic) [Shipped] └── Permissive app-level header scaffold (safe area, landmark semantics)
+
+Nav-SegmentedChoice-Base (Primitive) [Shipped] └── Switch between mutually exclusive content views (connected segments)
+
+Nav-TabBar-Base (Primitive) [Shipped] └── Persistent bottom tab bar for top-level destinations
+
+Planned (not shipped): Nav-Breadcrumb, Nav-List.
 
 
 ### Component Summary
 
 | Component | Type | Status | Description |
 |-----------|------|--------|-------------|
-| Nav-Base | Primitive | 🔴 | Foundational navigation component |
-| Nav-Tabs | Semantic | 🔴 | Tab navigation |
-| Nav-Breadcrumb | Semantic | 🔴 | Breadcrumb trail |
-| Nav-List | Semantic | 🔴 | Vertical navigation list |
-| Nav-Bar | Semantic | 🔴 | Horizontal navigation bar |
+| Nav-Header-Base | Primitive | 🟡 | Internal-only header primitive — safe area, layout regions, landmark semantics (all platforms scaffold; use Nav-Header-Page/App) |
+| Nav-Header-Page | Semantic | 🟡 | Page-level nav bar (web 🟢; iOS/Android scaffold) |
+| Nav-Header-App | Semantic | 🟡 | Permissive app-level header scaffold (all platforms scaffold by design) |
+| Nav-SegmentedChoice-Base | Primitive | 🟡 | Segmented control for content switching (web 🟢; iOS/Android scaffold) |
+| Nav-TabBar-Base | Primitive | 🟡 | Bottom tab bar for top-level destinations (web 🟢; iOS/Android scaffold) |
+| Nav-Breadcrumb | Semantic | 🔴 Planned | Breadcrumb trail |
+| Nav-List | Semantic | 🔴 Planned | Vertical navigation list |
 
-### Behavioral Contracts (Planned)
+### Behavioral Contracts
 
 **Base Contracts**:
 - `manages_active_state` - Tracks and displays active item
@@ -592,7 +623,9 @@ Nav-Base (Primitive) [Placeholder] │ ├── Nav-Tabs (Semantic) [Placeholde
 - **List**: `supports_nesting`, `supports_collapsible`, `supports_badges`
 - **Bar**: `supports_responsive`, `supports_dropdown`, `supports_search`
 
-### Token Dependencies (Planned)
+> Contracts above describe the originally-planned Tabs/Breadcrumb/List/Bar shape. The shipped Navigation components (Header, SegmentedChoice, TabBar) carry their own authoritative contract sets — query the Application MCP (`get_component_full({ name: "Nav-TabBar-Base" })`, etc.).
+
+### Token Dependencies
 
 | Category | Tokens |
 |----------|--------|
@@ -605,6 +638,80 @@ Nav-Base (Primitive) [Placeholder] │ ├── Nav-Tabs (Semantic) [Placeholde
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Navigation.md`
 - **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Navigation.md" })`
+
+---
+
+## 12. Chips Family
+
+**Status**: 🟡 Web-ready, mobile-scaffold
+**Shared Need**: Selection, filtering, and input tokens
+**Primitive Base**: Chip-Base
+
+### Inheritance Structure
+
+Chip-Base (Primitive) [Shipped] │ ├── Chip-Filter (Semantic) [Shipped] │ └── Toggle a content filter on/off in a filter bar │ └── Chip-Input (Semantic) [Shipped] └── User-entered value (tag/selection) dismissible via remove action
+
+
+### Component Summary
+
+| Component | Type | Status | Description |
+|-----------|------|--------|-------------|
+| Chip-Base | Primitive | 🟡 | Compact interactive element for selections/filters/actions (web 🟢; iOS/Android scaffold) |
+| Chip-Filter | Semantic | 🟡 | Toggle a content filter on/off in a filter bar (web 🟢; iOS/Android scaffold) |
+| Chip-Input | Semantic | 🟡 | Dismissible user-entered value (tag/selection) (web 🟢; iOS/Android scaffold) |
+
+### Behavioral Contracts
+
+Chip-Base is focusable and selectable; Chip-Filter adds toggle semantics; Chip-Input adds a remove affordance. Authoritative per-component contract sets are in the Application MCP (`get_component_full({ name: "Chip-Base" })`, etc.).
+
+### MCP Documentation
+
+- **Full Documentation**: `.kiro/steering/Component-Family-Chip.md`
+- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Chip.md" })`
+
+---
+
+## 13. Progress Indicators Family
+
+**Status**: 🟡 Web-ready, mobile-scaffold
+**Shared Need**: Progress and step indication
+**Primitive Base**: Progress-Indicator-Node-Base
+
+> Distinct from the (placeholder) **Loading** family in §10. Progress Indicators ships determinate/step-based indicators (bar, nodes, pagination, steppers); Loading remains an unbuilt placeholder for spinner/skeleton-style indicators.
+
+### Inheritance Structure
+
+Progress-Bar-Base (Primitive) [Shipped] — continuous percentage bar (determinate/indeterminate)
+
+Progress-Indicator-Node-Base (Primitive) [Shipped]
+Progress-Indicator-Connector-Base (Primitive) [Shipped — all-platform scaffold]
+Progress-Indicator-Label-Base (Primitive) [Shipped — all-platform scaffold]
+│ (compose into)
+├── Progress-Pagination-Base (Semantic) [Shipped] — dot-based position within a sequence
+├── Progress-Stepper-Base (Semantic) [Shipped] — labeled multi-step workflow
+└── Progress-Stepper-Detailed (Semantic) [Shipped] — steppers with descriptions + connectors
+
+
+### Component Summary
+
+| Component | Type | Status | Description |
+|-----------|------|--------|-------------|
+| Progress-Bar-Base | Primitive | 🟡 | Continuous percentage bar, determinate/indeterminate (web 🟢; iOS/Android scaffold) |
+| Progress-Indicator-Node-Base | Primitive | 🟡 | Single step-indicator node (web 🟢; iOS/Android scaffold) |
+| Progress-Indicator-Connector-Base | Primitive | 🟡 | Connector line between nodes (all platforms scaffold) |
+| Progress-Indicator-Label-Base | Primitive | 🟡 | Text label for a node (all platforms scaffold) |
+| Progress-Pagination-Base | Semantic | 🟡 | Dot-based pagination indicator (web 🟢; iOS/Android scaffold) |
+| Progress-Stepper-Base | Semantic | 🟡 | Labeled multi-step workflow (web 🟢; iOS/Android scaffold) |
+| Progress-Stepper-Detailed | Semantic | 🟡 | Stepper with descriptions + connectors (web 🟢; iOS/Android scaffold) |
+
+### Behavioral Contracts
+
+Node/bar/pagination/stepper components carry step-state and progress-value contracts. Authoritative per-component contract sets are in the Application MCP (`get_component_full({ name: "Progress-Stepper-Base" })`, etc.).
+
+### MCP Documentation
+
+- **Full Documentation**: `.kiro/steering/Component-Family-Progress.md`
+- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Progress.md" })`
 
 ---
 
@@ -632,28 +739,38 @@ Nav-Base (Primitive) [Placeholder] │ ├── Nav-Tabs (Semantic) [Placeholde
 
 ```mermaid
 graph TB
-    subgraph "Production Ready 🟢"
+    subgraph "Production Ready 🟢 (all platforms)"
+        BVLI[Button-VerticalList-Item]
+        BVLS[Button-VerticalList-Set]
+        BVLI --> BVLS
+    end
+
+    subgraph "Shipping 🟡 (web-ready, mobile-scaffold)"
         ITB[Input-Text-Base]
         ITE[Input-Text-Email]
         ITP[Input-Text-Password]
         ITPN[Input-Text-PhoneNumber]
         BC[Button-CTA]
+        BI[Button-Icon]
         CB[Container-Base]
+        CCB[Container-Card-Base]
         IB[Icon-Base]
-        
+        AVB[Avatar-Base]
+        BADGE[Badge-Count-Base / Badge-Label-Base]
+        CHIP[Chip-Base]
+        NAV[Nav-Header/SegmentedChoice/TabBar]
+        PROG[Progress-Bar/Node/Stepper/Pagination]
+
         ITB --> ITE
         ITB --> ITP
         ITB --> ITPN
     end
-    
-    subgraph "Placeholder 🔴"
+
+    subgraph "Placeholder 🔴 (no components ship)"
         MB[Modal-Base]
-        AB[Avatar-Base]
-        BB[Badge-Base]
         DB[Display-Base]
         DVB[Divider-Base]
         LB[Loading-Base]
-        NB[Nav-Base]
     end
     
     subgraph "Cross-Family Composition"
