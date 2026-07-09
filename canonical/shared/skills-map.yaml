@@ -1,0 +1,35 @@
+# skills-map.yaml — the explicit canonical-keyed skill mapping table (C2.2;
+# design.md § "C2 — Shared substrate files"; Req 8 AC1/AC2).
+#
+# SKELETON. This file establishes the row shape only; Task 3 fills in real rows as skills
+# relocate under the neutral top-level `skills/` root. As of this task, `skills/` exists but
+# is EMPTY (verified: `find skills -maxdepth 3 -type d` returns only the root) — the skill
+# directories referenced in .kiro/agents/data.json (`.kiro/skills/android/edge-to-edge`,
+# `.kiro/skills/android/adaptive`, `.kiro/skills/android/navigation-3`,
+# `.kiro/skills/android/theming/styles`) have not yet been relocated to `skills/<name>` by
+# Task 3. Authoring a "real" row now, before relocation, would create a row with no
+# corresponding `skills/` directory — failing sweep 2's round-trip check in the wrong
+# direction. So this file is left with ZERO rows rather than a fabricated one.
+#
+# Round-trip check (sweep 2, Req 19): every directory under `skills/` has exactly one row
+# below, and every row below has a corresponding directory under `skills/`. With `skills/`
+# currently empty and `rows: []` below, this is trivially round-trip-consistent (0 ↔ 0) —
+# NOT a coverage hole; Task 3 grows both sides together as each skill relocates.
+#
+# Row shape (per design.md §C2.2, reproduced verbatim as the authoring template — do not
+# add rows without this exact shape):
+#
+#   - canonical: skills/theming-styles          # the neutral-root home; SKILL.md + bundled scripts inside
+#     targets:
+#       cc:   .claude/skills/theming-styles     # flat dir + SKILL.md + activation description intact
+#       kiro: .kiro/skills/android/theming/styles
+#     owners: [data]
+#
+# `.kiro/skills/**` is a GENERATED OUTPUT of this table, same as `.claude/skills/**` — Kiro
+# is not the source. Agents reference skills by row `canonical:` key only (C1 `skills:`),
+# never by path; adapters resolve key -> per-target path + per-target reference syntax
+# (`skill://<kiro path>` vs the CC Skill-tool naming).
+#
+# Traces to: Req 4, Req 8, Req 9, Req 11 AC2/AC5, Req 12 AC4, Req 13 AC2, Req 14.
+
+rows: []

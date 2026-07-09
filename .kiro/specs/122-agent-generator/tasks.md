@@ -53,7 +53,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 ## Group 1 — Substrate
 
-- [ ] 1. Canonical source root, schema, and shared substrate files
+- [x] 1. Canonical source root, schema, and shared substrate files
 
   **Type**: Parent
   **Unit**: U1
@@ -100,7 +100,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Write unit tests (Jest, functional lane) for each rule: at minimum one positive + one violating input per rule; volatile-fact lint positive + `volatile-ok` exemption; permissive-pattern lint reject; membership-hygiene reject.
     - _Requirements: 1.3, 2.2, 2.3, 2.4, 9.2, 12.3, 12.6, 18.2_
 
-  - [ ] 1.3 Author the four shared substrate files and wire WORKFLOW_RULES
+  - [x] 1.3 Author the four shared substrate files and wire WORKFLOW_RULES
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

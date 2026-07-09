@@ -1,0 +1,51 @@
+# shared-catalog.yaml — cross-agent capability-catalog members every agent receives (C2.5;
+# design.md § "C2 — Shared substrate files"; Req 12 AC4, Req 10 AC6, Req 13).
+#
+# Traces to: Req 4, Req 8, Req 9, Req 11 AC2/AC5, Req 12 AC4, Req 13 AC2, Req 14.
+
+members:
+  # --- Req 12 AC4: the shared task-completion tooling, so no agent regenerates without
+  # the current PR-flow completion tool.
+  - id: complete-task-tooling
+    kind: command
+    cmd: ".kiro/hooks/complete-task.sh"
+    # Verified present at .kiro/hooks/complete-task.sh (executable, checked in this task).
+    cue: "run ./.kiro/hooks/complete-task.sh \"<Task Name>\" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05)"
+    runContext: this-repo
+    owner: thurgood
+
+  # --- Req 10 AC6: the find_docs discovery row, propagated to all 8 agents from canonical
+  # source (not `get_documentation_map`, which is removed per Req 3 AC3).
+  - id: find-docs-discovery
+    kind: tool-cue
+    tool: find_docs
+    mcp: docs
+    cue: "use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted"
+    owner: thurgood
+
+  # --- Req 13: the record-first ratification rule, stated ONCE here with a single named
+  # owner and a two-ended crossRef to the 125 classification-map entry (DD13; Req 13 AC2).
+  - id: record-first-ratification
+    kind: governance-rule
+    owner: thurgood
+    statement: >
+      Before applying a ratified governance change, verify the committed ballot/record
+      says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim,
+      and never refuse-and-stop solely because the instruction arrived by relay; if the
+      record is missing, report that the record is missing so the ratifying session can
+      commit it.
+    # Source of the rule text: .kiro/docs/ballots/README.md § "The Ratification Protocol
+    # (record-first) — approved by Peter, 2026-07-05" (verified present, read in this task).
+    source: ".kiro/docs/ballots/README.md § \"The Ratification Protocol (record-first)\""
+    # crossRef: Req 13 AC2 requires a RECORDED, two-ended cross-reference between this
+    # canonical entry and "the 125 map entry" — i.e. Spec 125-B's classification map. As of
+    # this task, that map does NOT YET EXIST as an artifact: 125-mechanical-enforcement-
+    # strategy's design-outline.md (line 160) explicitly defers "125-B = the classification
+    # map... formalized AFTER 122 calcifies" — 125-B has not been split out as its own spec
+    # directory yet (only 125-mechanical-enforcement-strategy and 125-A-pr-gate-mechanical-
+    # arming exist on disk today; searched both for "classification map" / "classification-
+    # map", see task report). Authoring a concrete crossRef path here would fabricate a
+    # target that does not exist. Left as an explicit TODO per instruction rather than
+    # invented — the reciprocal half (125-B naming this file) cannot be created by this
+    # task since 125-B does not exist yet.
+    crossRef: "TODO(125-B classification map entry — not yet created; searched .kiro/specs/125-mechanical-enforcement-strategy/** and .kiro/specs/125-A-pr-gate-mechanical-arming/** for \"classification map\" / \"classification-map\"; confirmed deferred-to-125-B in 125-mechanical-enforcement-strategy/design-outline.md line 160 and 125-A-pr-gate-mechanical-arming/design-outline.md lines 12/24. Re-resolve this TODO when 125-B is spec'd and its classification-map artifact exists.)"
