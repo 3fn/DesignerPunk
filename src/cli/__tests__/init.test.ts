@@ -23,10 +23,44 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import { runInit } from '../init';
+import { resolvePackageRoot } from '../shared/resolvePackageRoot';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+/**
+ * Count files recursively under `dir`, matching `copyDir()`'s counting semantics
+ * in init.ts (files only, descending into subdirectories).
+ *
+ * Used to DERIVE the expected governance-doc count from the same source `init`
+ * copies from, rather than hard-coding a literal. The governance corpus is the
+ * relocated non-identity docs (Spec 119-A) and grows by design — a hard-coded
+ * count drifts (and repeatedly HAS drifted, e.g. 80 → 81 → 82) every time a doc
+ * is added, with no relation to the behavior under test. Deriving from source
+ * keeps the real check — "init copies EVERY governance doc, dropping none" —
+ * while decoupling it from the corpus's exact size.
+ */
+function countFilesRecursive(dir: string): number {
+  let count = 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    count += entry.isDirectory()
+      ? countFilesRecursive(path.join(dir, entry.name))
+      : entry.isFile()
+        ? 1
+        : 0;
+  }
+  return count;
+}
+
+// The package root `init` copies from is resolved by `resolvePackageRoot(<init's
+// dir>)` = two levels up from `src/cli/`. This test file lives one level deeper
+// (`src/cli/__tests__/`), so pass its parent (`src/cli/`) to resolve the SAME root.
+const PKG_ROOT = resolvePackageRoot(path.join(__dirname, '..'));
+
+// Expected governance-doc count, derived from source (see countFilesRecursive).
+// NOT hard-coded: governance/ grows as the corpus grows.
+const GOVERNANCE_DOC_COUNT = countFilesRecursive(path.join(PKG_ROOT, 'governance'));
 
 /**
  * Create a unique scratch directory under the OS temp dir.
@@ -140,11 +174,12 @@ describe('CLI init — integration', () => {
       expect(secondOutput).toContain('existing files preserved');
       // Spec 119-A two-root split: 9 identity docs ship in .kiro/steering/
       // (8 identity + the NEW Task-Completion-Protocol added in Task 8; the
-      // meta-guide was removed in 119-A Task 10.5 → back to 9),
-      // and the 81 relocated non-identity docs ship in governance/
-      // (80 + Steering-Addressing-Conventions.md added in Task 12).
+      // meta-guide was removed in 119-A Task 10.5 → back to 9). The identity set
+      // is a LOCKED always-set — asserted as exactly 9 on purpose, so a change to
+      // it is a signal worth catching. The governance corpus, by contrast, grows
+      // routinely, so its count is derived from source (GOVERNANCE_DOC_COUNT).
       expect(secondOutput).toContain('✓ steering docs: 9 existing files preserved');
-      expect(secondOutput).toContain('✓ governance docs: 81 existing files preserved');
+      expect(secondOutput).toContain(`✓ governance docs: ${GOVERNANCE_DOC_COUNT} existing files preserved`);
     });
 
     test('preserves existing files — no overwrites after second run', async () => {
@@ -190,11 +225,11 @@ describe('CLI init — integration', () => {
       // Spec 119-A two-root split: the package contributes 9 identity steering
       // files (8 identity + the NEW Task-Completion-Protocol from Task 8; the
       // meta-guide was removed in Task 10.5; no conflict with designerpunk.md
-      // because the package doesn't have a file by that name) and 81 relocated
-      // docs into the separate governance/ dir
-      // (80 + Steering-Addressing-Conventions.md added in Task 12).
+      // because the package doesn't have a file by that name) and the relocated
+      // non-identity docs into the separate governance/ dir. Steering is the
+      // locked 9; governance is derived from source (grows with the corpus).
       expect(output).toContain('✓ steering docs: 9 new files');
-      expect(output).toContain('✓ governance docs: 81 new files');
+      expect(output).toContain(`✓ governance docs: ${GOVERNANCE_DOC_COUNT} new files`);
 
       // Custom file preserved
       expect(
@@ -205,10 +240,9 @@ describe('CLI init — integration', () => {
       const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
       expect(steeringFiles.length).toBe(10);
 
-      // The 81 relocated docs land in governance/
-      // (80 + Steering-Addressing-Conventions.md added in Task 12)
+      // The relocated docs land in governance/ — every one init copied from source.
       const governanceFiles = fs.readdirSync(path.join(scratchDir, 'governance'));
-      expect(governanceFiles.length).toBe(81);
+      expect(governanceFiles.length).toBe(GOVERNANCE_DOC_COUNT);
     });
   });
 
