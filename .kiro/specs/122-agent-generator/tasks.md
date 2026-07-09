@@ -175,7 +175,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit test: attribution-totality checker (positive + a gap + an overlap + a bad op).
     - _Requirements: 1.3, 1.4_
 
-- [ ] 3. Skills pipeline: neutral-root relocation + skills-map round-trip
+- [x] 3. Skills pipeline: neutral-root relocation + skills-map round-trip
 
   **Type**: Parent
   **Unit**: U1
@@ -199,7 +199,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 3 Complete: Skills pipeline — neutral-root relocation + round-trip (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 3.1 Relocate `.kiro/skills/**` into the neutral `skills/` root and populate skills-map
+  - [x] 3.1 Relocate `.kiro/skills/**` into the neutral `skills/` root and populate skills-map
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood + Lina (Lina/domain owners confirm each relocated skill's activation description is intact)
@@ -207,7 +207,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Fill one `skills-map.yaml` row per skill: `canonical` path + per-target (`cc`, `kiro`) paths + `owners`.
     - _Requirements: 8.1, 8.3_
 
-  - [ ] 3.2 Implement SkillsMap resolution and per-target skill-tree emit
+  - [x] 3.2 Implement SkillsMap resolution and per-target skill-tree emit
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
