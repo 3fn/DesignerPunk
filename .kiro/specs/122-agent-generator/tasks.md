@@ -111,7 +111,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Wire the `WORKFLOW_RULES` import (`import { WORKFLOW_RULES }` from the mcp-server package entry re-export, per 121 Task 6); add the validate-stage grep that fails on hand-restated rule variants in canonical bodies (Req 4 AC3).
     - _Requirements: 4.1, 4.3, 8.1, 10.6, 11.2, 11.5, 12.4, 13.1, 13.2_
 
-- [ ] 2. The pipeline engine: resolve, render, pass-through, attribution
+- [x] 2. The pipeline engine: resolve, render, pass-through, attribution
 
   **Type**: Parent
   **Unit**: U1
@@ -137,7 +137,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 2 Complete: Pipeline engine — resolve, render, pass-through, attribution (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 2.1 Implement the corpus resolver (C3.1) against the running docs MCP
+  - [x] 2.1 Implement the corpus resolver (C3.1) against the running docs MCP
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -147,7 +147,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit tests: id-resolution, interim-section-form pass/fail, missing-heading failure names id+heading.
     - _Requirements: 1.1, 3.1, 3.2, 5.3_
 
-  - [ ] 2.2 Implement render (class-c) and pass-through (class-b) operations
+  - [x] 2.2 Implement render (class-c) and pass-through (class-b) operations
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -157,7 +157,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit tests: write-scope renderer (two different `allowedPaths` yield two different notes); run-context renderer; WORKFLOW_RULES filter-and-render.
     - _Requirements: 1.2, 1.3, 4.1, 4.2, 11.3, 12.3_
 
-  - [ ] 2.3 Implement ambient composition (C3.2) and the ambient-manifest emitter
+  - [x] 2.3 Implement ambient composition (C3.2) and the ambient-manifest emitter
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -166,7 +166,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit test: union composition asserts P3 (manifest ⊇ always-set) on a fixture input.
     - _Requirements: 9.1, 9.3, 10.1, 10.2, 10.3, 10.4_
 
-  - [ ] 2.4 Implement the attribution sidecar (C3.3) and totality checker
+  - [x] 2.4 Implement the attribution sidecar (C3.3) and totality checker
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
