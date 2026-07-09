@@ -9,7 +9,7 @@ description: Spacing token family — layout and component spacing on 8-unit bas
 # Spacing Tokens Guide
 
 **Date**: 2025-11-26
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-07-08
 **Purpose**: Complete reference for spacing tokens with numeric naming convention and mathematical relationships
 **Organization**: token-documentation
 **Scope**: cross-project

@@ -9,7 +9,7 @@ description: Radius token family — corner rounding tokens on 8-unit baseline g
 # Radius Tokens Guide
 
 **Date**: 2025-12-30
-**Last Reviewed**: 2025-12-30
+**Last Reviewed**: 2026-07-08
 **Purpose**: Complete reference for radius tokens with numeric naming convention and mathematical relationships
 **Organization**: token-documentation
 **Scope**: cross-project

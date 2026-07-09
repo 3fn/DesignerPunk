@@ -9,7 +9,7 @@ description: Strategic guidance on when to use cross-platform patterns vs platfo
 # Cross-Platform vs Platform-Specific Decision Framework
 
 **Date**: 2025-12-19
-**Last Reviewed**: 2025-12-19
+**Last Reviewed**: 2026-07-08
 **Purpose**: Strategic guidance on when to use cross-platform patterns vs platform-specific idioms
 **Organization**: process-standard
 **Scope**: cross-project

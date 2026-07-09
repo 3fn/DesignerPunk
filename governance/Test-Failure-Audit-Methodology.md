@@ -8,7 +8,7 @@ description: Reusable methodology for conducting test failure audits — workflo
 # Test Failure Audit Methodology
 
 **Date**: 2025-12-26
-**Last Reviewed**: 2025-12-26
+**Last Reviewed**: 2026-07-08
 **Purpose**: Reusable methodology guidance for conducting test failure audits, including workflow steps, pattern identification, and lessons learned from Specs 025/026/029
 **Organization**: process-standard
 **Scope**: cross-project
