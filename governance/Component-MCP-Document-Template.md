@@ -11,7 +11,7 @@ inclusion: manual
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, mcp-documentation, architecture
-**Last Reviewed**: 2026-01-02
+**Last Reviewed**: 2026-07-09
 
 ---
 
@@ -45,7 +45,7 @@ For families with production-ready components (Form Inputs, Buttons, Containers,
 
 ### Placeholder Family Documents
 
-For families without implemented components (Modals, Avatars, Badges, etc.):
+For families without implemented components (Modals, Dividers, Loading, Data-Displays, etc.):
 
 - **Structural documentation** with planned architecture
 - **Readiness status**: 🔴 Placeholder
