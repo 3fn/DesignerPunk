@@ -8,7 +8,7 @@ description: Essential pre-task checklist — date verification, governance heal
 # Start Up Tasks
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-07-03
+**Last Reviewed**: 2026-07-09
 **Purpose**: Essential pre-task checklist for every task (date check, governance health, Jest commands, test selection, authorization-to-start). End-of-task sequence: see Task Completion Protocol.
 **Organization**: process-standard
 **Scope**: cross-project
@@ -114,6 +114,7 @@ description: Essential pre-task checklist — date verification, governance heal
    - **Deciding** — architecture, consequential/hard-to-reverse calls, cross-cutting tradeoffs, multiple failure modes → the higher tier (currently **Opus**). An escalation on a concrete signal, not a default-when-unsure.
    - Calibrate in BOTH directions relative to the session model: **downgrade** for implementation, **upgrade** for a decide task. Omitting the tier inherits the session's — a silent default, so decide it consciously.
    - **Always independently verify subagent output** before trusting it — delegate-then-verify is the guardrail, not the tier.
+   - **Verify placement, not just content**, when you delegate a **file edit**: hand the subagent **absolute paths** to the intended tree, and after it reports done **confirm the edit landed there** (a subagent can act on a different working tree and still report success — in Claude Code, nested worktrees let its relative paths resolve into the parent repo).
    
    Full policy + per-harness field mechanics: query `process-orchestration-model-selection` via the docs MCP.
 

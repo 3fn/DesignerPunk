@@ -8,8 +8,8 @@ description: How an orchestrating agent picks a model tier for delegated subagen
 # Orchestration Model Selection
 
 **Date**: 2026-07-07
-**Last Reviewed**: 2026-07-07
-**Purpose**: How an orchestrating agent chooses the model tier for delegated subagent work, and why verification — not the tier — is the guardrail
+**Last Reviewed**: 2026-07-09
+**Purpose**: How an orchestrating agent chooses the model tier for delegated subagent work, and why verification — not the tier — is the guardrail (content AND placement)
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 2
@@ -48,6 +48,10 @@ Inherit is the right default because it **fails expensive, not wrong**: forgetti
 ## The real guardrail: delegate-then-verify
 
 **The safety mechanism is independent verification by the main loop, NOT the model tier.** Every subagent's output is re-checked before it is trusted: re-run the relevant tests and type-check, read the actual diff, spot-check against the contract. That review layer is what catches problems — including from capable tiers (a subagent once wrote a contrast *ratio* into a field expecting a color *value*; the main-loop review caught it, not the tier). The rule holds regardless of which tier ran the work: a higher tier is never a substitute for verifying; a cheaper tier under verification is safe *because* it is verified.
+
+**Verification covers placement, not just content.** When you delegate a **file edit**, the check is two-part: the content is correct AND the edit landed **where you intended** — in the intended working tree, on the intended branch. A subagent can silently act on a *different* working tree than you meant and report success anyway, because relative paths resolve from *its* working directory, not yours. Defend against it on both ends: **hand the subagent absolute paths to the intended tree** when you delegate, and **after it reports done, confirm the change is where you expect** (`git status`/`git diff` in the intended tree, or read the file at its absolute path) before you trust or commit it. This extends the content-verification rule above to *placement*; a "done" report is a claim about content, never a guarantee about location.
+
+- **Claude Code symptom (harness-specific).** CC nests worktrees *inside* the repo (`.claude/worktrees/<name>/`), so upward path or module resolution from a subagent (`../../../`) can cross the worktree boundary into the **parent repo** — a delegated edit lands on the parent-repo copy instead of the worktree branch, esbuild reads the parent's `package.json`, etc. Observed 3× in one session. The placement check above is the mitigation; the durable fix is upstream (place worktrees as *siblings* of the repo, not nested — a Claude Code harness-behavior request), which this guardrail does not own. Other harnesses carry this symptom note only if they reproduce the nesting condition.
 
 ## Escalation, not default-when-unsure
 
