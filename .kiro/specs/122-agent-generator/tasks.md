@@ -216,7 +216,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Named unit test: the `theming/styles` → `theming-styles` transform.
     - _Requirements: 8.1, 8.2, 8.3_
 
-- [ ] 4. Registry generator (C5) — declaration-keyed, index-agnostic
+- [x] 4. Registry generator (C5) — declaration-keyed, index-agnostic
 
   **Type**: Parent
   **Unit**: U1
@@ -239,7 +239,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 4 Complete: Registry generator — declaration-keyed, index-agnostic (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 4.1 Implement MCP introspection and the registry emitter
+  - [x] 4.1 Implement MCP introspection and the registry emitter
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
