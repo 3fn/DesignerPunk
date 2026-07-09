@@ -417,11 +417,19 @@ async function main(): Promise<void> {
   await server.start();
 }
 
-// Run the server
-main().catch((error) => {
-  console.error('[MCP Server] Fatal error:', error);
-  process.exit(1);
-});
+// Run the server ONLY when this module is the process entry point (executed
+// directly — `node mcp-server/dist/index.js`, or the esbuild `dist/mcp/docs-mcp.js`
+// bundle a consumer launches). Importing this module as a LIBRARY (Spec 122 imports
+// the re-exported WORKFLOW_RULES from the package entry) must NOT start the server;
+// the previous unconditional call started an MCP server as an import side effect.
+// This module is CommonJS (tsconfig `module: commonjs`), so `require.main === module`
+// is the correct entry check — verified to still fire under the esbuild CJS bundle.
+if (require.main === module) {
+  main().catch((error) => {
+    console.error('[MCP Server] Fatal error:', error);
+    process.exit(1);
+  });
+}
 
 // Export for testing
 export { MCPDocumentationServer };
