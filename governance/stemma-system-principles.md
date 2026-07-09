@@ -13,7 +13,7 @@ description: Foundational principles and governance for systematic component dev
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, architecture, spec-planning
-**Last Reviewed**: 2026-01-01
+**Last Reviewed**: 2026-07-09
 
 ---
 
@@ -127,7 +127,7 @@ Behavioral contracts work uniformly across web, iOS, and Android:
 | **Data Displays** | Information presentation | DataDisplay-Base | Placeholder |
 | **Dividers** | Visual separation | Divider-Base | Placeholder |
 | **Loading** | Progress indication | Loading-Base | Placeholder |
-| **Navigation** | Wayfinding | Nav-Base | Placeholder |
+| **Navigation** | Wayfinding | Nav-Header-Base | Active |
 
 ### Family Inheritance Structure
 

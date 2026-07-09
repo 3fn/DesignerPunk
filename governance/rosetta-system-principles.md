@@ -13,7 +13,7 @@ description: Rosetta System foundational principles — primitive-to-semantic hi
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: token-development, architecture, spec-planning
-**Last Reviewed**: 2026-01-03
+**Last Reviewed**: 2026-07-09
 
 ---
 
@@ -142,6 +142,8 @@ Mathematical foundation allows documented exceptions for design requirements:
 | **Blend** | Color modification | blend100, blend200 | blend.hoverDarker, blend.focusSaturate |
 | **Border** | Edge definition | borderWidth100, borderWidth200 | border.input, border.focus |
 | **Motion** | Animation timing | duration250, easingStandard | motion.floatLabel |
+| **Sizing** | Component dimensions (width, height, box size) | size100, size300 | - |
+| **Blur** | Edge softness, radial spread, backdrop obscuring (composed into Shadow, Glow) | blur100, blur200 | - |
 | **Layering** | Stacking order | - | zIndex.modal, elevation.card |
 | **Accessibility** | WCAG compliance | tapArea44, tapArea48 | accessibility.touchTarget |
 
