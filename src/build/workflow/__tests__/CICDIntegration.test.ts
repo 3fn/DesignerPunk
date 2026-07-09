@@ -490,9 +490,20 @@ describe('CICDIntegration', () => {
   
   describe('Environment Detection', () => {
     const originalEnv = process.env;
-    
+
     beforeEach(() => {
       process.env = { ...originalEnv };
+      // Neutralize the HOST's own CI environment before each scenario. On a real CI
+      // runner (e.g. GitHub Actions) the ambient GITHUB_ACTIONS/CI vars leak into the
+      // copied env and win detectCICDEnvironment()'s precedence order, so the GitLab
+      // and generic-CI scenarios detected 'github' instead — these tests only ever
+      // passed on laptops because laptops aren't CI (125-A Task 6, lane-timing run #2
+      // finding). Each scenario sets exactly the vars it means to test.
+      delete process.env.GITHUB_ACTIONS;
+      delete process.env.GITHUB_WORKFLOW;
+      delete process.env.GITLAB_CI;
+      delete process.env.CI_PIPELINE_ID;
+      delete process.env.CI;
     });
     
     afterEach(() => {

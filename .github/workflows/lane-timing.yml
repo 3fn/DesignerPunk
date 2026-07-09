@@ -155,6 +155,14 @@ jobs:
       - name: Build (prebuild generates + tsc + bundles — required by export-contract tests)
         run: npm run build
 
+      # Run #2 finding: two suites (mcp-queryability, mcp-component-integration) assert the
+      # mcp-server SUB-PACKAGE is built (`fs.existsSync(mcp-server/dist/index.js)`), which
+      # the root `npm run build` does not produce (build:mcp emits the esbuild bundles to
+      # the root dist/mcp/, not the sub-package's own tsc dist/). Build it here — also
+      # deliberately part of the measured wall-clock.
+      - name: Build mcp-server sub-package (asserted by mcp-queryability tests)
+        run: npm ci --prefix mcp-server && npm run build --prefix mcp-server
+
       - name: Run functional test suite
         run: npm test
 
