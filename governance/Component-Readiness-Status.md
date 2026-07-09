@@ -13,7 +13,7 @@ description: Readiness status definitions, usage recommendations, and transition
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, architecture, spec-planning
-**Last Reviewed**: 2026-01-01
+**Last Reviewed**: 2026-07-09
 
 ---
 
@@ -544,17 +544,21 @@ get_section({
 | Component Family | Shared Need/Purpose | Status | MCP Document Path |
 |------------------|---------------------|--------|-------------------|
 | Buttons | User interaction and actions | 🟢 | `.kiro/steering/Component-Family-Button.md` |
-| Form Inputs | Data collection and validation | 🟢 | `.kiro/steering/Component-Family-Form-Inputs.md` |
-| Containers | Layout and content organization | 🟢 | `.kiro/steering/Component-Family-Container.md` |
-| Icons | Visual communication | 🔴 | `.kiro/steering/Component-Family-Icon.md` |
+| Form Inputs | Data collection and validation | 🟡 | `.kiro/steering/Component-Family-Form-Inputs.md` |
+| Containers | Layout and content organization | 🟡 | `.kiro/steering/Component-Family-Container.md` |
+| Icons | Visual communication | 🟡 | `.kiro/steering/Component-Family-Icon.md` |
+| Avatars | Identity representation | 🟡 | `.kiro/steering/Component-Family-Avatar.md` |
+| Badges & Tags | Status and labeling | 🟡 | `.kiro/steering/Component-Family-Badge.md` |
+| Chips | Selection, filtering, and input tokens | 🟡 | `.kiro/steering/Component-Family-Chip.md` |
+| Navigation | Wayfinding | 🟡 | `.kiro/steering/Component-Family-Navigation.md` |
+| Progress Indicators | Progress and step indication | 🟡 | `.kiro/steering/Component-Family-Progress.md` |
 | Modals | Overlay interactions | 🔴 | `.kiro/steering/Component-Family-Modal.md` |
-| Avatars | Identity representation | 🔴 | `.kiro/steering/Component-Family-Avatar.md` |
-| Badges & Tags | Status and labeling | 🔴 | `.kiro/steering/Component-Family-Badge.md` |
 | Data Displays | Information presentation | 🔴 | `.kiro/steering/Component-Family-Data-Display.md` |
 | Dividers | Visual separation | 🔴 | `.kiro/steering/Component-Family-Divider.md` |
 | Loading | Progress indication | 🔴 | `.kiro/steering/Component-Family-Loading.md` |
-| Navigation | Wayfinding | 🔴 | `.kiro/steering/Component-Family-Navigation.md` |
 ```
+
+> **🟡 in this table = "shipping, web production-ready, iOS/Android scaffold"** — the family has usable web implementations but has not reached the strict all-platform 🟢 bar. Per-component per-platform detail is in the Individual Component Status table below. Buttons is 🟢 only because it contains all-platform-production components (Button-VerticalList-Item/Set); its CTA/Icon members are themselves web-ready/mobile-scaffold. 🔴 families are genuine placeholders (no components ship).
 
 ---
 
@@ -562,36 +566,48 @@ get_section({
 
 This section lists all implemented components with their readiness status and implementation paths. Used by extraction workflows to check component existence and status.
 
-| Component | Family | Status | Implementation Path |
-|-----------|--------|--------|---------------------|
-| Avatar | Avatars | 🟡 Beta | `src/components/core/Avatar/` |
-| BadgeCountBase | Badges & Tags | 🟢 Production Ready | `src/components/core/Badge-Count-Base/` |
-| BadgeCountNotification | Badges & Tags | 🟢 Production Ready | `src/components/core/Badge-Count-Notification/` |
-| BadgeLabelBase | Badges & Tags | 🟢 Production Ready | `src/components/core/Badge-Label-Base/` |
-| ButtonCTA | Buttons | 🟢 Production Ready | `src/components/core/Button-CTA/` |
-| ButtonIcon | Buttons | 🟢 Production Ready | `src/components/core/Button-Icon/` |
-| ButtonVerticalListItem | Buttons | 🟢 Production Ready | `src/components/core/Button-VerticalList-Item/` |
-| ButtonVerticalListSet | Buttons | 🟢 Production Ready | `src/components/core/Button-VerticalList-Set/` |
-| ChipBase | Badges & Tags | 🟢 Production Ready | `src/components/core/Chip-Base/` |
-| ChipFilter | Badges & Tags | 🟢 Production Ready | `src/components/core/Chip-Filter/` |
-| ChipInput | Badges & Tags | 🟢 Production Ready | `src/components/core/Chip-Input/` |
-| ContainerBase | Containers | 🟢 Production Ready | `src/components/core/Container-Base/` |
-| ContainerCardBase | Containers | 🟢 Production Ready | `src/components/core/Container-Card-Base/` |
-| IconBase | Icons | 🟢 Production Ready | `src/components/core/Icon-Base/` |
-| InputCheckboxBase | Form Inputs | 🟢 Production Ready | `src/components/core/Input-Checkbox-Base/` |
-| InputCheckboxLegal | Form Inputs | 🟢 Production Ready | `src/components/core/Input-Checkbox-Legal/` |
-| InputRadioBase | Form Inputs | 🟢 Production Ready | `src/components/core/Input-Radio-Base/` |
-| InputRadioSet | Form Inputs | 🟢 Production Ready | `src/components/core/Input-Radio-Set/` |
-| InputTextBase | Form Inputs | ⚠️ Deprecated | `src/components/core/Input-Text-Base/` |
-| InputTextEmail | Form Inputs | 🟢 Production Ready | `src/components/core/Input-Text-Email/` |
-| InputTextPassword | Form Inputs | 🟢 Production Ready | `src/components/core/Input-Text-Password/` |
-| InputTextPhoneNumber | Form Inputs | 🟢 Production Ready | `src/components/core/Input-Text-PhoneNumber/` |
-| ProgressIndicatorConnectorBase | Loading | 🟢 Production Ready | `src/components/core/Progress-Indicator-Connector-Base/` |
-| ProgressIndicatorLabelBase | Loading | 🟢 Production Ready | `src/components/core/Progress-Indicator-Label-Base/` |
-| ProgressIndicatorNodeBase | Loading | 🟢 Production Ready | `src/components/core/Progress-Indicator-Node-Base/` |
-| ProgressPaginationBase | Loading | 🟢 Production Ready | `src/components/core/Progress-Pagination-Base/` |
-| ProgressStepperBase | Loading | 🟢 Production Ready | `src/components/core/Progress-Stepper-Base/` |
-| ProgressStepperDetailed | Loading | 🟢 Production Ready | `src/components/core/Progress-Stepper-Detailed/` |
+**Per-platform status convention**: readiness is tracked per platform (web / iOS / Android). The **Status** column carries a single roll-up indicator; the **Platform Readiness** column shows the honest per-platform breakdown so no component's mobile immaturity is hidden behind a green light.
+
+- 🟢 **Production Ready** — production-ready across ALL declared platforms (web, iOS, Android), per the strict definition above. Currently only Button-VerticalList-Item and Button-VerticalList-Set meet this bar.
+- 🟡 **Web-ready, mobile-scaffold** — web is production-ready (implemented, tested, documented) but iOS and Android are scaffold (structure present, not test-covered). Safe to consume on web; treat mobile as not-yet-ready.
+- 🟡 **Scaffold (all platforms)** — structure present on all platforms but none production-ready; intentional for permissive/internal primitives (noted inline).
+
+| Component | Family | Status | Platform Readiness (web / iOS / Android) | Implementation Path |
+|-----------|--------|--------|------------------------------------------|---------------------|
+| Avatar-Base | Avatar | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Avatar-Base/` |
+| Badge-Count-Base | Badge | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Badge-Count-Base/` |
+| Badge-Count-Notification | Badge | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Badge-Count-Notification/` |
+| Badge-Label-Base | Badge | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Badge-Label-Base/` |
+| Button-CTA | Button | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Button-CTA/` |
+| Button-Icon | Button | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Button-Icon/` |
+| Button-VerticalList-Item | Button | 🟢 | 🟢 / 🟢 / 🟢 | `src/components/core/Button-VerticalList-Item/` |
+| Button-VerticalList-Set | Button | 🟢 | 🟢 / 🟢 / 🟢 | `src/components/core/Button-VerticalList-Set/` |
+| Chip-Base | Chip | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Chip-Base/` |
+| Chip-Filter | Chip | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Chip-Filter/` |
+| Chip-Input | Chip | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Chip-Input/` |
+| Container-Base | Container | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Container-Base/` |
+| Container-Card-Base | Container | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Container-Card-Base/` |
+| Icon-Base | Icon | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Icon-Base/` |
+| Input-Checkbox-Base | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Checkbox-Base/` |
+| Input-Checkbox-Legal | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Checkbox-Legal/` |
+| Input-Radio-Base | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Radio-Base/` |
+| Input-Radio-Set | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Radio-Set/` |
+| Input-Text-Base | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Text-Base/` |
+| Input-Text-Email | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Text-Email/` |
+| Input-Text-Password | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Text-Password/` |
+| Input-Text-PhoneNumber | Form Inputs | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Input-Text-PhoneNumber/` |
+| Nav-Header-Page | Navigation | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Nav-Header-Page/` |
+| Nav-SegmentedChoice-Base | Navigation | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Nav-SegmentedChoice-Base/` |
+| Nav-TabBar-Base | Navigation | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Nav-TabBar-Base/` |
+| Nav-Header-App | Navigation | 🟡 | scaffold / scaffold / scaffold — permissive scaffold by design | `src/components/core/Nav-Header-App/` |
+| Nav-Header-Base | Navigation | 🟡 | scaffold / scaffold / scaffold — internal-only primitive | `src/components/core/Nav-Header-Base/` |
+| Progress-Bar-Base | Progress Indicators | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Progress-Bar-Base/` |
+| Progress-Indicator-Node-Base | Progress Indicators | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Progress-Indicator-Node-Base/` |
+| Progress-Pagination-Base | Progress Indicators | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Progress-Pagination-Base/` |
+| Progress-Stepper-Base | Progress Indicators | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Progress-Stepper-Base/` |
+| Progress-Stepper-Detailed | Progress Indicators | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Progress-Stepper-Detailed/` |
+| Progress-Indicator-Connector-Base | Progress Indicators | 🟡 | scaffold / scaffold / scaffold | `src/components/core/Progress-Indicator-Connector-Base/` |
+| Progress-Indicator-Label-Base | Progress Indicators | 🟡 | scaffold / scaffold / scaffold | `src/components/core/Progress-Indicator-Label-Base/` |
 
 **Usage:**
 
