@@ -64,3 +64,19 @@ Structure sound; negative scope mostly holds; gate-bites proofs real. But the su
 #### [CLAUDE R1] — Incorporation (main loop)
 
 All amendments from both reviewers incorporated into requirements.md + tasks.md same day — none declined; convergences (A5+fresh-grep→draft-time re-grep mandatory; A7+wall-clock; A4+publish-window; merge-rule positions) folded as single edits. Task 4 A9 resolution: Task 2 builds-and-proves without activating; Task 4's atomic window lands script cutover + all doc surfaces + admin-credential gate proof — Task 4 stays **Implementation** (its output includes the script cutover). Open for Peter at spec-go: the Cursor-runtime decision (feeds Task 1's ballot), and ratifying the three decision-point recommendations (both reviewers converge on all three).
+
+---
+
+## Tasks 6–9 Feedback (Group 2 — mechanical arming; round run per Peter's 2026-07-10 decision, waiver declined)
+
+### Context for Reviewers
+- Review object: tasks.md § "Task Group 2 — Phase 1a" (Tasks 6–9, still DRAFT) → tasks.md lines ~35–55
+- Ratified constraint set: requirements Req 6.3 (timing, ~10-min cold ceiling), Req 7 (selection floors + scope guards), Req 8 (action bumps) — not re-opened by this round
+- **Reality since drafting — Task 6 is substantially EXECUTED already**: the lane-timing workflow merged as PR #38 (2026-07-10), five lanes as non-required jobs. Its three PR runs surfaced and fixed: three lanes not self-contained on fresh checkout (gitignored generated TokenTypes → `generate:types` step; export-contract tests require the built package → full `npm run build` + the mcp-server sub-package build added into `lane-functional-root`'s measured wall-clock; app-mcp jest `roots` pointing at an empty untracked dir → src-only), plus a real env-leak test bug (CICDIntegration detection tests never cleared the host's CI vars — fixed in #39). Steady-state samples: typecheck 37s · build-validate 26s · mcp-server 23s · app-mcp 24s · functional-root ~3m54s (incl. full build). Cold-cache run pending (workflow_dispatch requires Peter's click — session PAT lacks Actions write scope).
+- The Node-20 deprecation warnings on `actions/checkout@v4`/`setup-node@v4` are live on every run — the Task 7 rider (Req 8) is already earning its place.
+- Known drafting inconsistency for the round to resolve: Task 7's title says "the four lanes"; its body (and the shipped workflow) has FIVE.
+- Task 5 (bake-in) closure PR #41 is open; Group 2 is authorized at its merge, with this round preceding execution.
+
+**Reviewers**: Thurgood (spec standards: task types/tiers, EARS, testability; test-governance substance of the lanes), Stacy (process quality: selection-floor/scope-guard instruments, prove-it-bites evidence form, coverage-of-coverage). Peter ratifies.
+
+[Reviewer rounds below]
