@@ -54,7 +54,7 @@
   **Validation**: Tier 1
   *(v2 — per-lane gate-bites + set-assertion, RATIFIED Peter 2026-07-10.)* Add the five lane contexts to branch protection's required set. **Per-lane gate-bites proof**: one deliberate-failure PR per promoted lane (type error → `lane-typecheck`; a build-validate assertion failure; one failing test seeded in EACH of the three suites' scopes), each shown BLOCKED at the platform; record = the five PR URLs in the Task-9 closeout completion doc (STACY R1 items 2–3). **Set-assertion at promotion** (STACY R1 item 5): record the promoted required-context set (the five names) and paste the `gh api` branch-protection read into the record; Task 9 hands the five names to 122's `verify-gate-registration.sh` so the monthly count-assert covers them standing.
 
-- [ ] **9. Closeout: completion docs + handbacks**
+- [x] **9. Closeout: completion docs + handbacks**
   **Type**: Documentation
   **Validation**: Tier 1
   *(v2 — deferred-list amendments per THURGOOD R1 T4a/T4b [registry identification corrected in SESSION R2] + STACY R1 items 4–5, RATIFIED Peter 2026-07-10.)* Completion + summary docs per Task-Completion-Protocol (as amended by this very spec — eat the dogfood). Handbacks:
