@@ -129,6 +129,21 @@ export interface AdapterContext {
   sharedCatalog: readonly SharedCatalogMember[];
   /** Repo root, for adapters that must compute id→path at emit time (Kiro resources). */
   repoRoot: string;
+  /**
+   * Pre-fetched resolved corpus text for per-agent ambient members, keyed by doc `id` (C11
+   * lane 2 — the CC adapter inlines these into each agent body since CC has no per-agent
+   * `@`-import channel). Supplied by the generation entry point so adapters stay pure (they
+   * never resolve corpus refs themselves). A per-agent member with no entry here is a
+   * generator-entry-point bug, not a silently-empty embed — the CC adapter throws naming the
+   * missing id rather than emitting nothing.
+   */
+  embeds?: Readonly<Record<string, string>>;
+  /**
+   * Doc id → repo-relative file path, for adapters that emit `@`-import lines (C11 lane 1 —
+   * the CC adapter's generated `CLAUDE.md`). Supplied by the generation entry point (it knows
+   * the steering corpus's on-disk layout); adapters never guess a path from an id.
+   */
+  steeringIdToPath?: Readonly<Record<string, string>>;
 }
 
 // ============================================================================
