@@ -18,6 +18,7 @@ import { colorTokens } from '../tokens/semantic/ColorTokens';
 /**
  * Validation result summary for build output
  */
+throw new Error('DELIBERATE gate-bites validation failure (125-A Task 8) — DO NOT MERGE');
 interface BuildValidationSummary {
   totalChecks: number;
   passCount: number;
