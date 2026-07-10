@@ -646,7 +646,7 @@ echo "NPM_TOKEN=npm_your_token_here" >> .env
 - **Configuration Reference**: See `docs/configuration-reference.md`
 - **Troubleshooting Guide**: See `docs/troubleshooting-guide.md`
 - **API Documentation**: See `docs/api-reference.md`
-- **GitHub Repository**: https://github.com/3fn/DesignerPunkv2
+- **GitHub Repository**: https://github.com/3fn/DesignerPunk
 
 ---
 
@@ -654,8 +654,8 @@ echo "NPM_TOKEN=npm_your_token_here" >> .env
 
 For issues, questions, or contributions:
 
-1. **GitHub Issues**: https://github.com/3fn/DesignerPunkv2/issues
-2. **Documentation**: https://github.com/3fn/DesignerPunkv2/tree/main/docs
+1. **GitHub Issues**: https://github.com/3fn/DesignerPunk/issues
+2. **Documentation**: https://github.com/3fn/DesignerPunk/tree/main/docs
 3. **Spec Documents**: `.kiro/specs/release-management-system/`
 
 ---

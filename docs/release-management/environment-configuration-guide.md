@@ -80,7 +80,7 @@ Development environment is for local development, testing, and experimentation. 
   "verbose": true,
   "github": {
     "owner": "3fn",
-    "repo": "DesignerPunkv2",
+    "repo": "DesignerPunk",
     "token": "${GITHUB_TOKEN_DEV}",
     "createRelease": false,
     "uploadArtifacts": false,
@@ -365,7 +365,7 @@ Production environment is for live releases to users. It requires strict validat
   "verbose": false,
   "github": {
     "owner": "3fn",
-    "repo": "DesignerPunkv2",
+    "repo": "DesignerPunk",
     "token": "${GITHUB_TOKEN}",
     "createRelease": true,
     "uploadArtifacts": true,
@@ -428,7 +428,7 @@ RELEASE_VERBOSE=false
 
 # Production-specific settings
 GITHUB_OWNER=3fn
-GITHUB_REPO=DesignerPunkv2
+GITHUB_REPO=DesignerPunk
 NPM_TAG=latest
 ```
 
@@ -655,7 +655,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: production
-      url: https://github.com/3fn/DesignerPunkv2/releases
+      url: https://github.com/3fn/DesignerPunk/releases
     steps:
       - uses: actions/checkout@v3
         with:
@@ -769,7 +769,7 @@ production:
   image: node:${NODE_VERSION}
   environment:
     name: production
-    url: https://github.com/3fn/DesignerPunkv2/releases
+    url: https://github.com/3fn/DesignerPunk/releases
   variables:
     NODE_ENV: production
   script:

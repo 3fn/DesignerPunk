@@ -65,7 +65,7 @@
  * }
  * ```
  * 
- * @see {@link https://github.com/3fn/DesignerPunkv2/blob/main/.kiro/specs/011-inset-token-renaming/design.md | Inset Token Renaming Design}
+ * @see {@link https://github.com/3fn/DesignerPunk/blob/main/.kiro/specs/011-inset-token-renaming/design.md | Inset Token Renaming Design}
  */
 export type InsetPadding = 
   | 'inset050' 

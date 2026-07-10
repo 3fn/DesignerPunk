@@ -159,7 +159,7 @@ describe('ReleasePipeline', () => {
     });
 
     it('should skip GitHub publish when GITHUB_TOKEN is not set', async () => {
-      const configWithRepo = JSON.stringify({ npmPublishEnabled: false, repoUrl: 'https://github.com/3fn/DesignerPunkv2', outputDir: 'docs/releases' });
+      const configWithRepo = JSON.stringify({ npmPublishEnabled: false, repoUrl: 'https://github.com/3fn/DesignerPunk', outputDir: 'docs/releases' });
       mockedReadFileSync.mockImplementation((p: any) => {
         if (String(p).includes('release-config.json')) return configWithRepo;
         return FIXTURE_SUMMARY;

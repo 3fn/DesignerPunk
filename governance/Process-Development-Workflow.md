@@ -131,7 +131,7 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 - Example: "Task 6 Complete: Strategic Framework Documentation Package"
 
 ### Git Practices
-- **Repository**: https://github.com/3fn/DesignerPunkv2
+- **Repository**: https://github.com/3fn/DesignerPunk
 - **Branch**: All work on task branches (`task/<spec>-<N>-<slug>`); `main` is protected — direct pushes are rejected, admins included
 - **Commits**: Atomic commits per subtask on the branch; squash-merge yields one `main` commit per **merge unit** with the PR title as its subject (a unit is the whole spec for small specs, or a tasks.md-declared grouping for large specs — see Task-Completion-Protocol § Coherent Units)
 - **PRs**: Title = `Task <N> Complete: <Description> (<spec>)`; body carries Spec / Task / Agent / completion-doc path / validation note

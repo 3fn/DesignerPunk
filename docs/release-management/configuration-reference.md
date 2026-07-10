@@ -54,7 +54,7 @@ Configuration is loaded in this order (later sources override earlier):
   "verbose": false,
   "github": {
     "owner": "3fn",
-    "repo": "DesignerPunkv2",
+    "repo": "DesignerPunk",
     "token": "${GITHUB_TOKEN}",
     "createRelease": true,
     "uploadArtifacts": true
@@ -153,7 +153,7 @@ GitHub repository name.
 
 **Example:**
 ```bash
-export GITHUB_REPO=DesignerPunkv2
+export GITHUB_REPO=DesignerPunk
 ```
 
 #### `NPM_REGISTRY`
@@ -291,7 +291,7 @@ npm run release:cli release auto --verbose
 ```json
 {
   "github": {
-    "repo": "DesignerPunkv2"
+    "repo": "DesignerPunk"
   }
 }
 ```
@@ -622,7 +622,7 @@ Configuration for monorepo with synchronized versions:
 {
   "github": {
     "owner": "3fn",
-    "repo": "DesignerPunkv2",
+    "repo": "DesignerPunk",
     "token": "${GITHUB_TOKEN}"
   },
   "npm": {
@@ -717,7 +717,7 @@ Configuration for local development with dry run:
   "verbose": true,
   "github": {
     "owner": "3fn",
-    "repo": "DesignerPunkv2",
+    "repo": "DesignerPunk",
     "token": "${GITHUB_TOKEN}",
     "createRelease": false,
     "uploadArtifacts": false

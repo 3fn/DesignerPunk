@@ -139,7 +139,7 @@ In-house specialist for managing and executing the firm's Marketing and Technolo
 ## Projects
 
 ### DesignerPunk
-*2025 – Present · [github.com/3fn/DesignerPunkv2](https://github.com/3fn/DesignerPunkv2)*
+*2025 – Present · [github.com/3fn/DesignerPunk](https://github.com/3fn/DesignerPunk)*
 
 True Native cross-platform design system with mathematical foundations, built for Human-AI collaboration.
 

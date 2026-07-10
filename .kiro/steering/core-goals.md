@@ -39,7 +39,7 @@ DesignerPunk is a True Native cross-platform design system with mathematical fou
 **Task Completion:**
 - Follow systematic workflow with automated git integration
 - Complete tasks via the PR flow: `./.kiro/hooks/complete-task.sh "Task Name"` opens the task PR; Peter merges on green — the merge is the authorization act (see Task-Completion-Protocol)
-- Repository: https://github.com/3fn/DesignerPunkv2 (PR-gated workflow: branch protection on `main`, admins included)
+- Repository: https://github.com/3fn/DesignerPunk (PR-gated workflow: branch protection on `main`, admins included)
 
 **For detailed workflow guidance, see:**
 - Task completion: `Process-Development-Workflow.md` (Layer 2)

@@ -82,7 +82,7 @@
   "publishing": {
     "github": {
       "owner": "3fn",
-      "repository": "DesignerPunkv2",
+      "repository": "DesignerPunk",
       "tokenEnvVar": "GITHUB_TOKEN",
       "createReleases": true,
       "createTags": true,
