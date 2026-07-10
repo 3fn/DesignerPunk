@@ -34,7 +34,7 @@ import type { AmbientManifest } from '../compose';
 import type { CanonicalAgentDoc, GroundTruthManifestTrim } from '../schema';
 import { parseCanonicalAgentSource } from '../source';
 import { canonicalStringify, type JsonValue } from '../canonical-json';
-import { readAmbientManifests } from './sweep-4-ambient';
+import { readAmbientManifests, MANIFESTS_ROOT } from './sweep-4-ambient';
 import {
   type SweepFinding,
   type SweepReport,
@@ -43,9 +43,30 @@ import {
   readFileIfExists,
   listCanonicalAgentFiles,
   exitWithReport,
+  CC_AGENTS_ROOT,
 } from './common';
 
 export const SWEEP_8 = '122-sweep-8-demotion';
+
+/**
+ * S-D1 shared constants (Stacy's Task 8.2 routed item 1 — hoisted from `surfaceGlobs()`
+ * literals so the reader code and the coverage manifest consume ONE symbol each):
+ * {@link BASELINES_ROOT} drives {@link readBaselines}; `CC_AGENTS_ROOT` (imported from
+ * common.ts — shared with sweep-4's cue-inclusion leg) drives the K-D1 emitted-text read in
+ * `main()`; the manifests root is imported from sweep-4 (whose {@link readAmbientManifests}
+ * this sweep reuses).
+ */
+export const BASELINES_ROOT = 'canonical/baselines';
+
+/**
+ * The `122-sweep-8-demotion` check's surface globs (C12, S-D1): the committed pre-cutover
+ * baselines, the fresh ambient manifests (+ this sweep's own `demotion-delta.json` output),
+ * `canonical/agents/**` (the `replaces`/`trims` cue source), and the emitted CC agent text
+ * the K-D1 negative-cue leg checks.
+ */
+export function surfaceGlobs(): string[] {
+  return [`${BASELINES_ROOT}/**`, `${MANIFESTS_ROOT}/**`, 'canonical/agents/**', `${CC_AGENTS_ROOT}/**`];
+}
 
 /**
  * A committed pre-cutover ambient baseline (C10.1 step 2). `members` spans BOTH namespace
@@ -142,7 +163,7 @@ export function serializeDemotionDeltas(deltas: DemotionDelta[]): string {
 
 /** Read `canonical/baselines/*.ambient-baseline.json` ([] when none committed). */
 export function readBaselines(repoRoot: string): AmbientBaseline[] {
-  const dir = path.join(repoRoot, 'canonical', 'baselines');
+  const dir = path.join(repoRoot, BASELINES_ROOT);
   let files: string[];
   try {
     files = fs.readdirSync(dir).filter((f) => f.endsWith('.ambient-baseline.json'));
@@ -179,7 +200,7 @@ function main(): void {
     const doc = docsByAgent.get(agent);
     const agentManifests = manifests.filter((m) => m.agent === agent);
     const freshMemberIds = [...new Set(agentManifests.flatMap((m: AmbientManifest) => m.members.map((x) => x.id)))];
-    const emittedText = readFileIfExists(path.join(repoRoot, '.claude', 'agents', `${agent}.md`)) ?? '';
+    const emittedText = readFileIfExists(path.join(repoRoot, CC_AGENTS_ROOT, `${agent}.md`)) ?? '';
     return {
       agent,
       baseline,
@@ -192,7 +213,7 @@ function main(): void {
 
   const { report, deltas } = runSweep8({ agents });
   if (agents.length > 0) {
-    const outPath = path.join(repoRoot, 'canonical', 'manifests', 'demotion-delta.json');
+    const outPath = path.join(repoRoot, MANIFESTS_ROOT, 'demotion-delta.json');
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, serializeDemotionDeltas(deltas));
     console.log(`demotion-delta.json written (${deltas.length} agent(s))`);

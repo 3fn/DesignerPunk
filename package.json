@@ -123,6 +123,7 @@
     "diagnose:release-issues": "node scripts/diagnose-release-issues.js",
     "audit:tokens": "node scripts/audit-component-tokens.js",
     "audit:tokens:detailed": "node scripts/audit-component-tokens.js -- --detailed",
+    "audit:coverage-map": "npx tsx tools/agent-generator/coverage-map.ts",
     "audit:mode-parity": "npx tsx src/validators/ModeParity.ts",
     "audit:theme-drift": "npx tsx src/tools/ThemeFileGenerator.ts > /tmp/theme-skeleton-check.ts && diff -u src/tokens/themes/dark/SemanticOverrides.ts /tmp/theme-skeleton-check.ts || echo '⚠️  Theme file drift detected — regenerate with: npm run generate:theme-skeleton'",
     "generate:theme-skeleton": "npx tsx src/tools/ThemeFileGenerator.ts",

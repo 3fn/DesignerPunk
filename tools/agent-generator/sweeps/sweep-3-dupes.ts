@@ -116,12 +116,24 @@ export function runSweep3(inputs: Sweep3Inputs): SweepReport {
 // CLI wiring
 // ============================================================================
 
+/**
+ * The Kiro agent-configs directory, repo-relative — exported so the coverage-map
+ * generator's {@link surfaceGlobs} shares the SAME constant {@link readConfigResources}
+ * reads (S-D1).
+ */
+export const KIRO_AGENTS_ROOT = '.kiro/agents';
+
 /** Read one `.kiro/agents/<agent>.json`'s resources (absent config/resources → []). */
 export function readConfigResources(repoRoot: string, agent: string): KiroConfigResources {
-  const text = readFileIfExists(path.join(repoRoot, '.kiro', 'agents', `${agent}.json`));
+  const text = readFileIfExists(path.join(repoRoot, KIRO_AGENTS_ROOT, `${agent}.json`));
   if (!text) return { agent, resources: [] };
   const parsed = JSON.parse(text) as { resources?: KiroResourceEntry[] };
   return { agent, resources: parsed.resources ?? [] };
+}
+
+/** The `122-sweep-3-dupes` check's surface globs (C12, S-D1). */
+export function surfaceGlobs(): string[] {
+  return [`${KIRO_AGENTS_ROOT}/*.json`];
 }
 
 function main(): void {
@@ -133,7 +145,7 @@ function main(): void {
     // Bite-recording / diagnostic mode: every hand config, regardless of ledger membership.
     try {
       agents = fs
-        .readdirSync(path.join(repoRoot, '.kiro', 'agents'))
+        .readdirSync(path.join(repoRoot, KIRO_AGENTS_ROOT))
         .filter((f) => f.endsWith('.json'))
         .map((f) => f.replace(/\.json$/, ''))
         .sort();

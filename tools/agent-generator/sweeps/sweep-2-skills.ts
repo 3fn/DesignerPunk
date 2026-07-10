@@ -123,13 +123,13 @@ export function runSweep2(inputs: Sweep2Inputs): SweepReport {
   const rows = inputs.skillsMap.rows;
 
   // --- Direction A: skills/ tree ↔ map rows, exactly-one each way.
-  const dirNames = inputs.fs.listDirs('skills');
+  const dirNames = inputs.fs.listDirs(SKILLS_ROOT);
   for (const dir of dirNames) {
-    const matching = rows.filter((r) => r.canonical === `skills/${dir}`);
+    const matching = rows.filter((r) => r.canonical === `${SKILLS_ROOT}/${dir}`);
     if (matching.length !== 1) {
       findings.push({
         verdict: 'FAIL',
-        path: `skills/${dir}`,
+        path: `${SKILLS_ROOT}/${dir}`,
         observed: `${matching.length} skills-map rows reference this directory`,
         expected: 'every skills/ directory has EXACTLY one skills-map row',
         owner: 'thurgood',
@@ -154,7 +154,8 @@ export function runSweep2(inputs: Sweep2Inputs): SweepReport {
     const rowPath = `skills-map rows[${ri}] (${skillKey(row)})`;
 
     const ccRel = row.targets.cc;
-    const flat = /^\.claude\/skills\/[^/]+$/.test(ccRel);
+    // Flat-dir check anchored to CC_SKILLS_ROOT (the S-D1 shared constant, not a parallel literal).
+    const flat = new RegExp(`^${CC_SKILLS_ROOT.replace(/[.\\/]/g, '\\$&')}/[^/]+$`).test(ccRel);
     if (!flat) {
       findings.push({
         verdict: 'FAIL',
@@ -286,9 +287,35 @@ export function extractKiroSkillRefs(configText: string): string[] {
   return (parsed.resources ?? []).filter((r) => r.startsWith('skill://'));
 }
 
+/**
+ * The skills-map path, repo-relative — exported so the coverage-map generator's
+ * {@link surfaceGlobs} shares the SAME constant `main()` reads (S-D1).
+ */
+export const SKILLS_MAP_PATH = 'canonical/shared/skills-map.yaml';
+
+/**
+ * The three skill-tree roots this sweep reads (S-D1 shared constants — Stacy's Task 8.2
+ * routed item 1: hoisted from `surfaceGlobs()` literals so the reader code and the
+ * coverage manifest consume ONE symbol each). `SKILLS_ROOT` drives Direction A's tree scan
+ * (`listDirs`); the two target roots anchor Direction B's discovery-contract checks
+ * (`CC_SKILLS_ROOT` in the flat-dir regex; `KIRO_SKILLS_ROOT` via the skills-map targets).
+ */
+export const SKILLS_ROOT = 'skills';
+export const CC_SKILLS_ROOT = '.claude/skills';
+export const KIRO_SKILLS_ROOT = '.kiro/skills';
+
+/**
+ * The `122-sweep-2-skills` check's surface globs (C12, S-D1): the neutral `skills/` root
+ * (Direction A tree scan), both emitted target roots (Direction B), {@link SKILLS_MAP_PATH},
+ * and `canonical/agents/**` (the declared-key + `skills: []` recorded-PASS leg).
+ */
+export function surfaceGlobs(): string[] {
+  return [`${SKILLS_ROOT}/**`, `${CC_SKILLS_ROOT}/**`, `${KIRO_SKILLS_ROOT}/**`, SKILLS_MAP_PATH, 'canonical/agents/**'];
+}
+
 function main(): void {
   const repoRoot = repoRootFromHere();
-  const mapText = readFileIfExists(path.join(repoRoot, 'canonical', 'shared', 'skills-map.yaml'));
+  const mapText = readFileIfExists(path.join(repoRoot, SKILLS_MAP_PATH));
   const skillsMap = mapText ? parseSkillsMap(mapText) : { rows: [] };
   const docs = listCanonicalAgentFiles(repoRoot).map((f) =>
     parseCanonicalAgentSource(readFileIfExists(f) ?? '', f)

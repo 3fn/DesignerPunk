@@ -192,11 +192,25 @@ export async function runSweep1(inputs: Sweep1Inputs): Promise<SweepReport> {
 // CLI wiring (require.main only)
 // ============================================================================
 
+/**
+ * The (dir, endsWith-suffixes, glob) triples `collectScanFiles` reads — exported so the
+ * coverage-map generator's {@link surfaceGlobs} derives from the SAME scope this sweep's
+ * reader consumes (S-D1). `suffixes` drives the reader's `name.endsWith(...)` filter exactly
+ * as before; `glob` is the equivalent one-level glob for the coverage-map join (the reader
+ * is non-recursive — `fs.readdirSync` on the dir only — so no `**` is needed here).
+ */
+export const SCAN_SCOPE: ReadonlyArray<{ dir: string; suffixes: readonly string[]; glob: string }> = [
+  { dir: 'canonical/agents', suffixes: ['.md'], glob: 'canonical/agents/*.md' },
+  { dir: 'canonical/shared', suffixes: ['.yaml'], glob: 'canonical/shared/*.yaml' },
+  { dir: 'tools/agent-generator', suffixes: ['render.ts'], glob: 'tools/agent-generator/*render.ts' },
+  { dir: 'tools/agent-generator/adapters', suffixes: ['.ts'], glob: 'tools/agent-generator/adapters/*.ts' },
+];
+
 /** Collect the production retired-name scan scope (authored canonical + templates). */
 export function collectScanFiles(repoRoot: string): Record<string, string> {
   const fs = require('fs') as typeof import('fs');
   const out: Record<string, string> = {};
-  const addDir = (relDir: string, exts: string[]): void => {
+  const addDir = (relDir: string, suffixes: readonly string[]): void => {
     const abs = path.join(repoRoot, relDir);
     let entries: string[];
     try {
@@ -205,16 +219,23 @@ export function collectScanFiles(repoRoot: string): Record<string, string> {
       return;
     }
     for (const name of entries) {
-      if (exts.some((e) => name.endsWith(e))) {
+      if (suffixes.some((e) => name.endsWith(e))) {
         out[`${relDir}/${name}`] = fs.readFileSync(path.join(abs, name), 'utf8');
       }
     }
   };
-  addDir('canonical/agents', ['.md']);
-  addDir('canonical/shared', ['.yaml']);
-  addDir('tools/agent-generator', ['render.ts']);
-  addDir('tools/agent-generator/adapters', ['.ts']);
+  for (const scope of SCAN_SCOPE) addDir(scope.dir, scope.suffixes);
   return out;
+}
+
+/**
+ * The `122-sweep-1-refs` check's surface globs (C12, S-D1): every {@link SCAN_SCOPE} glob
+ * PLUS `canonical/shared/shared-catalog.yaml` (already covered by the `canonical/shared`
+ * scope's glob, named explicitly here too since this sweep's crossRef leg (leg 2) reads it
+ * for a DIFFERENT purpose than the retired-name scan — the design's stated requirement).
+ */
+export function surfaceGlobs(): string[] {
+  return [...SCAN_SCOPE.map((scope) => scope.glob), 'canonical/shared/shared-catalog.yaml'];
 }
 
 async function main(): Promise<void> {

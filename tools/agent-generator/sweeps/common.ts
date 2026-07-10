@@ -201,6 +201,13 @@ function defaultReadFile(absPath: string): string | undefined {
 // Shared production readers (CLI wiring; each tolerates substrate emptiness)
 // ============================================================================
 
+/**
+ * The emitted CC agents root (S-D1 shared constant, home here because BOTH sweep-4's
+ * cue-inclusion leg and sweep-8's K-D1 leg read it and neither can import the other without
+ * a cycle). Consumed by each sweep's reader AND its `surfaceGlobs()`.
+ */
+export const CC_AGENTS_ROOT = '.claude/agents';
+
 /** Repo root, resolved from this module's location (tools/agent-generator/sweeps/). */
 export function repoRootFromHere(): string {
   return path.resolve(__dirname, '..', '..', '..');

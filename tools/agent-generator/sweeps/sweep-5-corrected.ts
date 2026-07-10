@@ -29,9 +29,21 @@ import {
   readFileIfExists,
   exitWithReport,
 } from './common';
-import { collectScanFiles } from './sweep-1-refs';
+import { collectScanFiles, SCAN_SCOPE } from './sweep-1-refs';
 
 export const SWEEP_5 = '122-sweep-5-corrected-state';
+
+/** The `contract-system-reference` doc path this sweep reads directly (assertion 2). */
+export const CONTRACT_REFERENCE_PATH = 'governance/Contract-System-Reference.md';
+
+/**
+ * The `122-sweep-5-corrected-state` check's surface globs (C12, S-D1): sweep-1's
+ * {@link SCAN_SCOPE} globs (this sweep's `.web.tsx` scan reuses `collectScanFiles`, the SAME
+ * reader sweep 1 uses) plus {@link CONTRACT_REFERENCE_PATH} (the concept-count assertion).
+ */
+export function surfaceGlobs(): string[] {
+  return [...SCAN_SCOPE.map((scope) => scope.glob), CONTRACT_REFERENCE_PATH];
+}
 
 /** L3 historical-context line exclusion (design C8 row 5, verbatim pattern set). */
 export const HISTORICAL_LINE = /Originally|historical|migration|source names/;
@@ -113,8 +125,7 @@ export function runSweep5(inputs: Sweep5Inputs): SweepReport {
 
 function main(): void {
   const repoRoot = repoRootFromHere();
-  const contractReferenceText =
-    readFileIfExists(path.join(repoRoot, 'governance', 'Contract-System-Reference.md')) ?? '';
+  const contractReferenceText = readFileIfExists(path.join(repoRoot, CONTRACT_REFERENCE_PATH)) ?? '';
   if (contractReferenceText === '') {
     console.error('[sweep-5] governance/Contract-System-Reference.md not found — cannot assert');
     process.exit(1);

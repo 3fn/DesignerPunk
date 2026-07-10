@@ -102,8 +102,26 @@ export function runSweep7(inputs: Sweep7Inputs): SweepReport {
 // CLI wiring
 // ============================================================================
 
+/**
+ * The Kiro agent-configs directory, repo-relative — exported so the coverage-map
+ * generator's {@link surfaceGlobs} shares the SAME constant {@link readAllAgentConfigs}
+ * reads (S-D1). (This mirrors sweep-3's `KIRO_AGENTS_ROOT` — kept local per-sweep rather
+ * than cross-imported, since each sweep's reader is the actual join target, not the other
+ * sweep's copy of the same literal.)
+ */
+export const KIRO_AGENTS_ROOT = '.kiro/agents';
+
+/**
+ * The `122-sweep-7-dispositions` check's surface globs (C12, S-D1): every
+ * `.kiro/agents/*.json` (the full config population this sweep enumerates) plus
+ * `canonical/shared/field-dispositions.yaml` (the disposition table it checks against).
+ */
+export function surfaceGlobs(): string[] {
+  return [`${KIRO_AGENTS_ROOT}/*.json`, 'canonical/shared/field-dispositions.yaml'];
+}
+
 export function readAllAgentConfigs(repoRoot: string): AgentConfig[] {
-  const dir = path.join(repoRoot, '.kiro', 'agents');
+  const dir = path.join(repoRoot, KIRO_AGENTS_ROOT);
   let files: string[];
   try {
     files = fs.readdirSync(dir).filter((f) => f.endsWith('.json'));

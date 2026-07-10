@@ -444,7 +444,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Confirm the fixture sits inside C6's guarded surface → standing pipeline test re-run on every PR (Req 21 AC4).
     - _Requirements: 21.4, 23.4_
 
-  - [ ] 8.2 Provision Stacy's coverage map + audit commands (C12) — gated into the gate
+  - [x] 8.2 Provision Stacy's coverage map + audit commands (C12) — gated into the gate
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy (Stacy owns coverage-of-coverage; confirms the map's minimum content on the PR)

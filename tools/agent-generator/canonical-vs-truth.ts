@@ -803,9 +803,25 @@ function readScripts(repoRoot: string): Record<string, string> {
   return pkg.scripts ?? {};
 }
 
+/**
+ * The canonical agent docs directory, repo-relative. Exported so the coverage-map
+ * generator's `surfaceGlobs()` derives from the SAME constant this reader consumes
+ * (S-D1) — the manifest cannot drift from what this check actually reads.
+ */
+export const CANONICAL_AGENTS_ROOT = 'canonical/agents';
+
+/**
+ * The `122-canonical-vs-truth` check's surface globs (C12, S-D1) — derived from
+ * {@link CANONICAL_AGENTS_ROOT}, the SAME constant {@link readCanonicalAgentDocs} joins
+ * on. Imported by the coverage-map generator; never hand-duplicated.
+ */
+export function surfaceGlobs(): string[] {
+  return [`${CANONICAL_AGENTS_ROOT}/**`];
+}
+
 /** Read + parse every `canonical/agents/*.md` into CanonicalAgentDocs. */
 function readCanonicalAgentDocs(repoRoot: string): CanonicalAgentDoc[] {
-  const dir = path.join(repoRoot, 'canonical', 'agents');
+  const dir = path.join(repoRoot, CANONICAL_AGENTS_ROOT);
   let files: string[];
   try {
     files = fs.readdirSync(dir).filter((f) => f.endsWith('.md'));

@@ -45,6 +45,23 @@ import {
 
 export const SWEEP_6 = '122-sweep-6-declarations';
 
+/**
+ * The `122-sweep-6-declarations` check's surface globs (C12, S-D1): `canonical/agents/**`
+ * (canonical docs' cue leg), `canonical/shared/shared-catalog.yaml` (shared tool-cue
+ * members), `canonical/registry/**` (the live-registry-derived declarations), the cutover
+ * ledger (the leg-2 fleet population), and `canonical/adjudications.yaml` (the un-routed
+ * covering-ruling leg).
+ */
+export function surfaceGlobs(): string[] {
+  return [
+    'canonical/agents/**',
+    'canonical/shared/shared-catalog.yaml',
+    'canonical/registry/**',
+    'canonical/cutover-ledger.yaml',
+    'canonical/adjudications.yaml',
+  ];
+}
+
 export interface Sweep6Inputs {
   docs: CanonicalAgentDoc[];
   sharedCatalog: readonly SharedCatalogMember[];

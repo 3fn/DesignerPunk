@@ -1,9 +1,865 @@
-# coverage-map.yaml — the check coverage map (Req 22 AC4(b); C12).
+# coverage-map.yaml — GENERATED. Do not hand-edit (Req 22 AC4(b); C12 / Task 8.2).
 #
-# PLACEHOLDER. The generated skeleton (rows keyed by check/sweep id) plus the authored
-# "check" column is produced by Stacy's provisioning task (Task 8.2, C12) and regenerated
-# thereafter. Committed and diff-guarded once populated.
+# Every generated/canonical surface -> the check context(s) that guard it, joined from
+# coverage-manifest.yaml's derived globs. A row with `checks: []` is a BLANK ROW: a surface
+# with no guarding check — VISIBLE by construction, never silently unlisted. Stacy's audit
+# (`npm run audit:coverage-map`) asserts zero blank rows, or a recorded adjudication per
+# blank in canonical/adjudications.yaml (sweep: audit:coverage-map, key: <surface path>).
 #
-# Left as a stub in Task 1.1 so the file path exists for the layout; do not hand-author
-# rows here — Task 8.2 (`npm run audit:coverage-map`) owns its content.
-checks: []
+# Regenerate: npx tsx tools/agent-generator/coverage-map.ts (also runs as part of
+# `npx tsx tools/agent-generator/generate.ts`). Guarded by the C6 diff-guard.
+- surface: .claude/skills/_fixture-skill/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/container-behavior.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/get-started.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/item-behavior.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/container-properties.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/get-started.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/item-properties.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/layouts/adaptive/mediaquery/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/develop/ui/compose/tooling/debug.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/edge-to-edge/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/detector-exclusions.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/adapt.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/animate.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/audit.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/bolder.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/brand-dp.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/clarify.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/codex.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/cognitive-load.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/color-and-contrast.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/colorize.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/craft.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/critique.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/delight.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/distill.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/extract-dp.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/harden.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/heuristics-scoring.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/interaction-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/layout.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/live.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/motion-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/onboard.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/optimize.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/overdrive.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/personas.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/polish.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/product-dp.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/quieter.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/responsive-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/shape.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/spatial-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/typeset.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/typography.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/reference/ux-writing.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detect.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/browser/injected/index.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/cli/main.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/detect-antipatterns-browser.js
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/detect-antipatterns.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/engines/browser/detect-url.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/engines/regex/detect-text.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/engines/static-html/css-cascade.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/engines/static-html/detect-html.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/engines/visual/screenshot-contrast.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/findings.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/node/file-system.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/profile/profiler.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/registry/antipatterns.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/rules/checks.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/shared/color.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/shared/constants.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/impeccable/scripts/detector/shared/page.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/migration-guide.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/animations.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/basic.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/basicdsl.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/basicsaveable.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/bottomsheet.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/common-ui.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/conditional.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/deeplinks-advanced.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/deeplinks-basic.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/dialog.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/material-supportingpane.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/modular-hilt.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/modular-koin.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/multiple-backstacks.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/passingarguments.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/results-event.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/results-state.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/scenes-listdetail.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/navigation-3/recipes/scenes-twopane.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/navigation-3/references/android/guide/navigation/type-safe-destinations.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/theming-styles/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/theming-styles/references/android/develop/ui/compose/designsystems/custom.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/theming-styles/references/android/develop/ui/compose/styles/fundamentals.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/theming-styles/references/android/develop/ui/compose/styles/state-animations.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/theming-styles/references/android/develop/ui/compose/styles/styles-vs-modifiers.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .claude/skills/theming-styles/references/android/develop/ui/compose/styles/theming.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/_fixture-skill/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/container-behavior.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/get-started.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/item-behavior.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/container-properties.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/get-started.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/grid/item-properties.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/layouts/adaptive/mediaquery/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/develop/ui/compose/tooling/debug.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/edge-to-edge/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/index.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/migration-guide.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/animations.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/basic.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/basicdsl.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/basicsaveable.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/bottomsheet.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/common-ui.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/conditional.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/deeplinks-advanced.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/deeplinks-basic.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/dialog.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/material-supportingpane.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/modular-hilt.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/modular-koin.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/multiple-backstacks.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/passingarguments.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/results-event.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/results-state.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/scenes-listdetail.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/navigation-3/recipes/scenes-twopane.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/navigation-3/references/android/guide/navigation/type-safe-destinations.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/theming/styles/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/theming/styles/references/android/develop/ui/compose/designsystems/custom.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/fundamentals.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/state-animations.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/styles-vs-modifiers.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/android/theming/styles/references/android/develop/ui/compose/styles/theming.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/SKILL.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/detector-exclusions.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/adapt.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/animate.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/audit.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/bolder.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/brand-dp.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/clarify.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/codex.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/cognitive-load.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/color-and-contrast.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/colorize.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/craft.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/critique.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/delight.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/distill.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/extract-dp.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/harden.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/heuristics-scoring.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/interaction-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/layout.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/live.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/motion-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/onboard.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/optimize.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/overdrive.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/personas.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/polish.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/product-dp.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/quieter.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/responsive-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/shape.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/spatial-design.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/typeset.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/typography.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/reference/ux-writing.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detect.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/browser/injected/index.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/cli/main.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/detect-antipatterns-browser.js
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/detect-antipatterns.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/engines/browser/detect-url.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/engines/regex/detect-text.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/engines/static-html/css-cascade.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/engines/static-html/detect-html.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/engines/visual/screenshot-contrast.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/findings.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/node/file-system.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/profile/profiler.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/registry/antipatterns.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/rules/checks.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/shared/color.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/shared/constants.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: .kiro/skills/impeccable/scripts/detector/shared/page.mjs
+  checks:
+    - 122-diff-guard
+    - 122-sweep-2-skills
+- surface: canonical/_fixture-output/cc/.claude/agents/_fixture.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_fixture-output/cc/.claude/agents/_fixture.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_fixture-output/cc/ambient-manifest.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_fixture-output/kiro/.kiro/agents/_fixture-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_fixture-output/kiro/.kiro/agents/_fixture-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_fixture-output/kiro/.kiro/agents/_fixture.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_fixture-output/kiro/.kiro/agents/_fixture.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_fixture-output/kiro/ambient-manifest.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/adjudications.yaml
+  checks:
+    - 122-sweep-4-ambient
+    - 122-sweep-6-declarations
+- surface: canonical/agents/_fixture.md
+  checks:
+    - 122-canonical-vs-truth
+    - 122-sweep-1-refs
+    - 122-sweep-2-skills
+    - 122-sweep-5-corrected-state
+    - 122-sweep-6-declarations
+    - 122-sweep-8-demotion
+- surface: canonical/coverage-manifest.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/coverage-map.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/cutover-ledger.yaml
+  checks:
+    - 122-sweep-6-declarations
+- surface: canonical/generated.lock
+  checks: []
+- surface: canonical/registry/tool-registry.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-6-declarations
+- surface: canonical/shared/always-set.yaml
+  checks:
+    - 122-sweep-1-refs
+    - 122-sweep-4-ambient
+    - 122-sweep-5-corrected-state
+- surface: canonical/shared/field-dispositions.yaml
+  checks:
+    - 122-sweep-1-refs
+    - 122-sweep-5-corrected-state
+    - 122-sweep-7-dispositions
+- surface: canonical/shared/shared-catalog.yaml
+  checks:
+    - 122-sweep-1-refs
+    - 122-sweep-5-corrected-state
+    - 122-sweep-6-declarations
+- surface: canonical/shared/skills-map.yaml
+  checks:
+    - 122-sweep-1-refs
+    - 122-sweep-2-skills
+    - 122-sweep-5-corrected-state

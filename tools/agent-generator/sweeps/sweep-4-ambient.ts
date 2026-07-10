@@ -40,6 +40,7 @@ import {
   readAdjudications,
   listCanonicalAgentFiles,
   exitWithReport,
+  CC_AGENTS_ROOT,
 } from './common';
 
 export const SWEEP_4 = '122-sweep-4-ambient';
@@ -187,9 +188,34 @@ export function runSweep4(inputs: Sweep4Inputs): SweepReport {
 export const AMBIENT_DESIGN_DOC =
   '.kiro/specs/119-A-steering-relocation-serving-contract/per-agent-ambient-design.md';
 
+/**
+ * The `122-sweep-4-ambient` check's surface globs (C12, S-D1): `canonical/manifests/**`
+ * (the emitted ambient manifests this sweep reads via {@link readAmbientManifests}),
+ * `canonical/shared/always-set.yaml` (the locked always-set leg), {@link AMBIENT_DESIGN_DOC}
+ * (the designed-block source), and `canonical/adjudications.yaml` (the covering-ruling leg).
+ */
+export function surfaceGlobs(): string[] {
+  return [
+    `${MANIFESTS_ROOT}/**`,
+    'canonical/shared/always-set.yaml',
+    AMBIENT_DESIGN_DOC,
+    'canonical/adjudications.yaml',
+    // The Req 10 AC4 cue-inclusion leg reads emitted CC agent bodies (main() below) — listed
+    // so the manifest covers everything this check actually reads (Stacy Task 8.2 review).
+    `${CC_AGENTS_ROOT}/**`,
+  ];
+}
+
+/**
+ * The emitted-ambient-manifests root (S-D1 shared constant — Stacy's Task 8.2 routed
+ * item 1): consumed by BOTH {@link readAmbientManifests} and {@link surfaceGlobs} (here and
+ * in sweep-8, which reads the same tree).
+ */
+export const MANIFESTS_ROOT = 'canonical/manifests';
+
 /** Scan `canonical/manifests/*.json` and keep everything that parses as an AmbientManifest. */
 export function readAmbientManifests(repoRoot: string): AmbientManifest[] {
-  const dir = path.join(repoRoot, 'canonical', 'manifests');
+  const dir = path.join(repoRoot, MANIFESTS_ROOT);
   let files: string[];
   try {
     files = fs.readdirSync(dir).filter((f) => f.endsWith('.json'));
@@ -224,7 +250,7 @@ function main(): void {
     const agent = doc.frontmatter.agent;
     const cues = doc.frontmatter.routes?.cues ?? [];
     if (cues.length === 0) continue;
-    const emitted = readFileIfExists(path.join(repoRoot, '.claude', 'agents', `${agent}.md`));
+    const emitted = readFileIfExists(path.join(repoRoot, CC_AGENTS_ROOT, `${agent}.md`));
     if (emitted !== undefined) cueInclusion.push({ agent, cues, catalogText: emitted });
   }
 

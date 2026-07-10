@@ -24,5 +24,15 @@
 # Empty today: Data's start-up-tasks adjudication (b7c3c148) was resolved by FIXING the
 # designed input (gap #7's union rule — the delta no longer exists post-union), which is the
 # preferred resolution; rows land here only for deltas that legitimately PERSIST.
+#
+# `sweep: audit:coverage-map` rows (Task 8.2, C12): the coverage-map generator's OWN blank-row
+# audit reuses this same file + machinery, keyed under a dedicated non-C8 sweep context. A
+# blank row here means a generated/canonical surface matches NO check's derived glob (Req 22
+# AC4(b)) — same visible-not-silent principle as the C8 ADJUDICATE state.
 
-adjudications: []
+adjudications:
+  - sweep: audit:coverage-map
+    key: canonical/generated.lock
+    ruling: intentional-trim
+    owner: thurgood
+    record: ".kiro/specs/122-agent-generator/completion/task-8-2-completion.md § 'Blank-row adjudication' (input/lock artifact — content integrity via the C6 input-closure lock + PR review, not a content check; Stacy's fail-safe analysis recorded there)"

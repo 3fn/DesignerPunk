@@ -96,6 +96,23 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
   // runtime ever loads them. Inside C6's guarded surface → re-run on every PR (Req 21 AC4).
   outputs.push(...(await generateFixture(repoRoot, ctx, adapters)));
 
+  // 4a. The coverage map + manifest (C12, Stacy's provisioning, Task 8.2). Lazy-required
+  // (not a top-level import) to avoid an import cycle: coverage-map.ts imports guardedRoots
+  // FROM this module, so this module cannot statically import coverage-map.ts back — the
+  // same lazy-require idiom the sweeps already use for the reverse direction (parseCutoverLedger).
+  const {
+    buildCoverageManifest,
+    enumerateSurfaces,
+    buildCoverageMap,
+    serializeCoverageManifest,
+    serializeCoverageMap,
+  } = require('./coverage-map') as typeof import('./coverage-map');
+  const coverageManifest = buildCoverageManifest();
+  const coverageSurfaces = enumerateSurfaces(repoRoot);
+  const coverageRows = buildCoverageMap(coverageSurfaces, coverageManifest);
+  outputs.push({ path: 'canonical/coverage-manifest.yaml', content: serializeCoverageManifest(coverageManifest) });
+  outputs.push({ path: 'canonical/coverage-map.yaml', content: serializeCoverageMap(coverageRows) });
+
   // 4. Per-agent artifacts for every ledger agent (none until the first cutover, U2).
   const ledger = parseCutoverLedger(
     fs.readFileSync(path.join(repoRoot, 'canonical', 'cutover-ledger.yaml'), 'utf8')
@@ -303,7 +320,18 @@ export function writeOutputs(root: string, outputs: readonly GeneratedOutput[], 
 
 /** The guarded surface ROOTS the diff-guard compares bidirectionally (dir-level). */
 export function guardedRoots(): string[] {
-  return ['canonical/registry', '.claude/skills', '.kiro/skills', 'canonical/manifests', 'canonical/_fixture-output'];
+  return [
+    'canonical/registry',
+    '.claude/skills',
+    '.kiro/skills',
+    'canonical/manifests',
+    'canonical/_fixture-output',
+    // C12 (Task 8.2): the coverage map + manifest are generated outputs like any other —
+    // listFilesUnder treats a file-path root as a single-file root, so these two individual
+    // files ride the same bidirectional compare (a stale map FAILS the diff-guard).
+    'canonical/coverage-map.yaml',
+    'canonical/coverage-manifest.yaml',
+  ];
 }
 
 /** Serialize any JSON-ish guard report deterministically. */
