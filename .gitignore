@@ -97,5 +97,5 @@ wrkingClass-c003/
 # Claude Code local MCP config (machine-specific absolute paths — relativize before committing)
 .mcp.json
 
-# Claude Code derived skill copies (verbatim duplicates of .kiro/skills — dry-run artifacts pending a generator)
-.claude/skills/
+# .claude/skills/ is GENERATED, COMMITTED, diff-guarded output of the agent generator —
+# the prior ignore's "pending a generator" condition is fulfilled (Spec 122 Task 6; Req 17 AC1/AC2).

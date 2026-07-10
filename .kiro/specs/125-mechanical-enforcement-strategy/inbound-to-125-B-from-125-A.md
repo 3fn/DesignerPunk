@@ -30,4 +30,5 @@
 ## 5. Ergonomics findings routed forward
 
 - **PAT scope asymmetry**: the repo-root `.env` PAT can PATCH branch protection but CANNOT dispatch workflows (`workflow_dispatch` → 403). Cold-cache runs need Peter's UI click. Either scope the PAT deliberately (record the decision) or accept the manual step as the norm.
+  - **RESOLVED (Peter, 2026-07-10 — deliberate scoping, recorded per this item's own ask):** the fine-grained PAT gained **Workflows: Read and write** (verified: a workflow-bearing ref push that had been rejected that morning succeeded) and **Actions: Read and write** (verified: `workflow_dispatch` on lane-timing.yml → HTTP 204). Both legs of the asymmetry are closed; 125-B can drop this item.
 - **Sub-package jest major-version split** (root jest 30, both sub-packages jest 29): discovered when a jest-30 CLI flag was silently ignored by jest 29 during Task 7's bites (masking an intended selection-emptying). Not currently harmful; a quiet interop hazard for any future cross-package test tooling.

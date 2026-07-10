@@ -1,0 +1,113 @@
+# always-set.yaml — the locked always-set (C2.1; design.md § "C2 — Shared substrate files").
+#
+# Members are the 9 identity docs under .kiro/steering/**, each carrying its doc `id`
+# (read from that doc's own frontmatter — never guessed from filename), a per-doc CLASS
+# annotation, and a per-target DELIVERY hint (the D1/D2 classification signal: `file` vs
+# `skill` delivery — these are always-on docs, so `file` for every member and every target).
+#
+# The class values are NOT invented here — they are the per-doc AXA classification recorded
+# as the authoritative overlay in 119-A's requirements.md Req 6 AC1 (the "locked always-set
+# (~9 docs)" enumeration), cross-checked against per-agent-ambient-design.md and
+# agent-experience-architecture.md §3.7. Two docs (DesignerPunk-Systems-Overview,
+# Civitas-System-Overview) are recorded there as an EXPLICITLY UNRESOLVED "orientation
+# reference" class — not one of the five canonical AXA classes (formative /
+# reflexive-principle / governance-as-law / ground-truth-manifest / capability-catalog) —
+# carried through here as-is rather than silently resolved.
+#
+# The composition rule (Req 9, RATIFIED 2026-07-05, `9d8070ae`): ambient(agent) =
+# alwaysSet ∪ agent.ambient members. The union is computed in C3.2; C1 rule 5 (membership
+# hygiene, tools/agent-generator/schema.ts validateMembershipHygiene) makes the other
+# reading — an always-set doc re-appearing under a per-agent ambient.governanceAsLaw block
+# as if it were an opt-out surface — a validation ERROR.
+#
+# Traces to: Req 4, Req 8, Req 9, Req 11 AC2/AC5, Req 12 AC4, Req 13 AC2, Req 14.
+
+alwaysSet:
+  - id: personal-note
+    class: formative
+    # Source: 119-A requirements.md Req 6 AC1 ("Personal Note (formative)").
+    classSource: "119-A requirements.md Req 6 AC1"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: core-goals
+    class: formative
+    # Source: 119-A requirements.md Req 6 AC1 lists "Core Goals (formative/operational)" —
+    # the formative-vs-operational cut is recorded there as an OPEN RE-CUT (AXA §8.5,
+    # per-agent-ambient-design.md line 250), resolved for authoring purposes as `formative`
+    # (the §3.1 reading) but flagged, not silently hardened.
+    classSource: "119-A requirements.md Req 6 AC1; open re-cut flagged in per-agent-ambient-design.md (AXA §8.5) — resolved here as formative, not silently hardened"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: ai-collaboration-principles
+    class: reflexive-principle
+    # Source: 119-A requirements.md Req 6 AC1 ("AI-Collaboration-Principles (reflexive-principle)").
+    classSource: "119-A requirements.md Req 6 AC1"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: spec-feedback-protocol
+    class: reflexive-principle
+    # Source: 119-A requirements.md Req 6 AC1 ("Spec-Feedback-Protocol (reflexive-principle)").
+    classSource: "119-A requirements.md Req 6 AC1"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: start-up-tasks
+    class: operational
+    # Source: 119-A requirements.md Req 6 AC1 ("Start Up Tasks (refocused — operational law)").
+    # Note: per-agent-ambient-design.md line 134 separately labels this `governance-as-law`
+    # under the five-class AXA taxonomy ("operational law (pre-task checklist)... Req 6 AC1
+    # the operational checklists are governance-as-law overlaid") — the two sources agree on
+    # substance (operational law) but differ on which named bucket it sits in; requirements.md
+    # Req 6 AC1's own enumeration of this exact 9-doc set is used as the more specific source.
+    classSource: "119-A requirements.md Req 6 AC1"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: task-completion-protocol
+    class: operational
+    # Source: 119-A requirements.md Req 6 AC1 ("Task Completion Protocol (new — operational law)").
+    classSource: "119-A requirements.md Req 6 AC1"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: agent-directory
+    class: capability-routing
+    # Source: 119-A requirements.md Req 6 AC1 ("Agent-Directory (capability-routing — `always`
+    # in 119-A, migrates in 119-B)"). Req 6 AC6 records the migration of this routing table
+    # into the GENERATED capability catalog as an explicit 119-B/122 forward-reference; 122
+    # (this generator) is that consumer, but this substrate file does not itself perform the
+    # migration — it only carries the doc through the locked always-set as authored.
+    classSource: "119-A requirements.md Req 6 AC1 / AC6"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: designerpunk-systems-overview
+    class: orientation-reference
+    # Source: 119-A requirements.md Req 6 AC1 ("DesignerPunk-Systems-Overview (orientation
+    # reference, retained ambient)"). agent-experience-architecture.md §3.7 records this class
+    # as an EXPLICITLY UNRESOLVED boundary case — it maps to none of the five canonical AXA
+    # classes cleanly; retained ambient pending a "sixth class or trim" decision that has not
+    # been made. Carried through here as authored, not resolved by this file.
+    classSource: "119-A requirements.md Req 6 AC1; unresolved boundary case per agent-experience-architecture.md §3.7"
+    delivery:
+      cc: file
+      kiro: file
+
+  - id: civitas-system-overview
+    class: orientation-reference
+    # Source: 119-A requirements.md Req 6 AC1 ("Civitas-System-Overview (orientation reference,
+    # retained ambient)"). Same unresolved §3.7 boundary case as designerpunk-systems-overview.
+    classSource: "119-A requirements.md Req 6 AC1; unresolved boundary case per agent-experience-architecture.md §3.7"
+    delivery:
+      cc: file
+      kiro: file

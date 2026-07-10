@@ -1,0 +1,59 @@
+# coverage-manifest.yaml — GENERATED. Do not hand-edit (Spec 122 C12 / Task 8.2).
+#
+# Check context -> the surface globs that check's OWN reader code derives from (S-D1). Each
+# glob here is imported from the check module's exported `surfaceGlobs()` (or the
+# guardedRoots()-derived equivalent for 122-diff-guard) — never hand-declared independently,
+# so this manifest cannot drift from what each check actually reads.
+#
+# Regenerate: npx tsx tools/agent-generator/coverage-map.ts (also runs as part of
+# `npx tsx tools/agent-generator/generate.ts`). Guarded by the C6 diff-guard.
+122-canonical-vs-truth:
+  - canonical/agents/**
+122-diff-guard:
+  - .claude/skills/**
+  - .kiro/skills/**
+  - canonical/_fixture-output/**
+  - canonical/coverage-manifest.yaml
+  - canonical/coverage-map.yaml
+  - canonical/manifests/**
+  - canonical/registry/**
+122-sweep-1-refs:
+  - canonical/agents/*.md
+  - canonical/shared/*.yaml
+  - canonical/shared/shared-catalog.yaml
+  - tools/agent-generator/*render.ts
+  - tools/agent-generator/adapters/*.ts
+122-sweep-2-skills:
+  - .claude/skills/**
+  - .kiro/skills/**
+  - canonical/agents/**
+  - canonical/shared/skills-map.yaml
+  - skills/**
+122-sweep-3-dupes:
+  - .kiro/agents/*.json
+122-sweep-4-ambient:
+  - .claude/agents/**
+  - .kiro/specs/119-A-steering-relocation-serving-contract/per-agent-ambient-design.md
+  - canonical/adjudications.yaml
+  - canonical/manifests/**
+  - canonical/shared/always-set.yaml
+122-sweep-5-corrected-state:
+  - canonical/agents/*.md
+  - canonical/shared/*.yaml
+  - governance/Contract-System-Reference.md
+  - tools/agent-generator/*render.ts
+  - tools/agent-generator/adapters/*.ts
+122-sweep-6-declarations:
+  - canonical/adjudications.yaml
+  - canonical/agents/**
+  - canonical/cutover-ledger.yaml
+  - canonical/registry/**
+  - canonical/shared/shared-catalog.yaml
+122-sweep-7-dispositions:
+  - .kiro/agents/*.json
+  - canonical/shared/field-dispositions.yaml
+122-sweep-8-demotion:
+  - .claude/agents/**
+  - canonical/agents/**
+  - canonical/baselines/**
+  - canonical/manifests/**

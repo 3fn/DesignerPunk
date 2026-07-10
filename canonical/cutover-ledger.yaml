@@ -1,0 +1,8 @@
+# cutover-ledger.yaml — which agents the generator is SSOT for (design §"Repository layout").
+#
+# An agent is added to this ledger ONLY when its cutover PR lands (C10). Membership
+# drives check coverage: the sweeps, diff-guard, and canonical-vs-truth checks apply
+# to ledger members. An agent NOT in the ledger is still hand-authored and exempt.
+#
+# Empty until the first cutover (Task 9, U2 — Ada). The substrate (U1) adds no agents.
+agents: []

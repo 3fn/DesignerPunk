@@ -1,0 +1,85 @@
+# field-dispositions.yaml — per-target field/tool-ref dispositions (C2.3;
+# design.md § "C2 — Shared substrate files"; Req 11 AC2/AC5).
+#
+# configFields: one row per Kiro config field OBSERVED in .kiro/agents/*.json, enumerated
+# by inspecting the union of top-level keys across all 8 configs (ada, data, kenya,
+# leonardo, lina, sparky, stacy, thurgood). Sweep 7 fails on any unlisted field, so
+# completeness matters more than tidiness — every top-level key found is listed below,
+# including ones whose "disposition" is that they are NOT dropped/transformed (they map to
+# an existing C1 frontmatter class and are handled by that class's own adapter logic, not
+# by this file) — those rows carry `cc: handled-elsewhere` with the owning class named, so
+# the field is not silently absent from this table.
+#
+# runtimeToolRefs: one row per runtime-specific tool reference found used in Kiro-native
+# governance prose (Task-Completion-Protocol.md and related process docs use `taskStatus`;
+# `getDiagnostics` is the paired Kiro-native IDE diagnostics tool). `/knowledge` is a
+# distinct case: it is a Kiro CONFIG surface (`allowedTools: ["knowledge", ...]` +
+# per-agent `knowledgeBases` declarations), not a tool ref embedded in routed doc prose, so
+# it is carried as a configFields-style disposition via the existing `knowledgeBases`
+# frontmatter class (schema.ts CONTENT_CLASS_REGISTRY.knowledgeBases) rather than duplicated
+# here as a runtimeToolRefs row — flagged so the omission reads as a considered placement,
+# not a gap.
+#
+# Traces to: Req 4, Req 8, Req 9, Req 11 AC2/AC5, Req 12 AC4, Req 13 AC2, Req 14.
+
+configFields:
+  - field: keyboardShortcut
+    cc: drop-with-reason
+    reason: "CC has no agent-swap hotkeys; routing note rendered instead"
+
+  - field: welcomeMessage
+    cc: drop-with-reason
+    reason: "CC subagents have no greeting surface"
+
+  - field: hooks.agentSpawn
+    cc: transform
+    into: "behavioral pre-flight note rendered into prompt"
+
+  - field: toolsSettings.write.allowedPaths
+    cc: transform
+    into: "write-scope behavioral note (field-driven render) — CC has no declarative per-agent write-path field (cc-agent-model.md facet 7: path rules are session-global, not per-agent); a per-agent PreToolUse hook or isolation:worktree are the documented enforcement options named in the note, not emitted as a declarative scope"
+
+  - field: includeMcpJson
+    cc: drop-with-reason
+    reason: "CC reads .mcp.json globally"
+
+  - field: name
+    cc: handled-elsewhere
+    reason: "maps to C1 frontmatter `agent` (identity class); not a disposition candidate on its own"
+
+  - field: description
+    cc: handled-elsewhere
+    reason: "maps to C1 frontmatter `description` (identity class), rendered into the CC subagent frontmatter description field"
+
+  - field: prompt
+    cc: handled-elsewhere
+    reason: "a Kiro file:// pointer to the prompt markdown; superseded by the generator emitting the CC/Kiro prompt bodies directly from canonical source (C1 body), not carried as a disposition-table field"
+
+  - field: tools
+    cc: handled-elsewhere
+    reason: "Kiro's own coarse ['*'] grant; the checkable object is the finer-grained `allowedTools` row below plus canonical `toolSubset`, not this field"
+
+  - field: allowedTools
+    cc: transform
+    into: "explicit per-agent namespaced CC tool list, resolved from canonical `toolSubset` against the tool registry (C5) intersected per agent (Req 11 AC4) — not copied verbatim, since CC's namespacing differs from Kiro's server-level `@designerpunk-*` grant grammar"
+
+  - field: resources
+    cc: transform
+    into: "per-class destination routing — `file://` always-set members become CC always-layer delivery (C11); `skill://` corpus docs become MCP-served on-demand routing cues; `skill://` skill refs become CC Skill-tool references via skills-map.yaml (C2.2); embedded knowledgeBase resource objects become the per-agent `/knowledge` fallback note (Req 11 AC1)"
+
+  - field: hooks
+    cc: handled-elsewhere
+    reason: "container key; the only populated sub-field observed across all 8 configs is `hooks.agentSpawn` (own row above) — no other `hooks.*` sub-field is present in any config, so no additional row is authored for an unobserved sub-field"
+
+  - field: toolsSettings
+    cc: handled-elsewhere
+    reason: "container key; the only populated sub-field observed across all 8 configs is `toolsSettings.write.allowedPaths` (own row above) — no other `toolsSettings.*` sub-field is present in any config"
+
+runtimeToolRefs:
+  - ref: taskStatus
+    kiro: native
+    cc: "edit the tasks.md checkbox directly"
+
+  - ref: getDiagnostics
+    kiro: native
+    cc: "run tsc/lint via Bash"

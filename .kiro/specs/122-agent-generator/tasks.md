@@ -53,7 +53,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 ## Group 1 — Substrate
 
-- [ ] 1. Canonical source root, schema, and shared substrate files
+- [x] 1. Canonical source root, schema, and shared substrate files
 
   **Type**: Parent
   **Unit**: U1
@@ -79,7 +79,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 1 Complete: Canonical source root, schema, and shared substrate files (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 1.1 Create the `canonical/` root and `skills/` neutral root
+  - [x] 1.1 Create the `canonical/` root and `skills/` neutral root
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
@@ -87,7 +87,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Create the top-level `skills/` root (sibling to `governance/`) — empty; the relocation of `.kiro/skills/**` content is Task 3.
     - _Requirements: 2.1, 8.3_
 
-  - [ ] 1.2 Define the canonical agent schema and its five validate-stage rules
+  - [x] 1.2 Define the canonical agent schema and its five validate-stage rules
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
@@ -100,7 +100,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Write unit tests (Jest, functional lane) for each rule: at minimum one positive + one violating input per rule; volatile-fact lint positive + `volatile-ok` exemption; permissive-pattern lint reject; membership-hygiene reject.
     - _Requirements: 1.3, 2.2, 2.3, 2.4, 9.2, 12.3, 12.6, 18.2_
 
-  - [ ] 1.3 Author the four shared substrate files and wire WORKFLOW_RULES
+  - [x] 1.3 Author the four shared substrate files and wire WORKFLOW_RULES
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -111,7 +111,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Wire the `WORKFLOW_RULES` import (`import { WORKFLOW_RULES }` from the mcp-server package entry re-export, per 121 Task 6); add the validate-stage grep that fails on hand-restated rule variants in canonical bodies (Req 4 AC3).
     - _Requirements: 4.1, 4.3, 8.1, 10.6, 11.2, 11.5, 12.4, 13.1, 13.2_
 
-- [ ] 2. The pipeline engine: resolve, render, pass-through, attribution
+- [x] 2. The pipeline engine: resolve, render, pass-through, attribution
 
   **Type**: Parent
   **Unit**: U1
@@ -137,7 +137,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 2 Complete: Pipeline engine — resolve, render, pass-through, attribution (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 2.1 Implement the corpus resolver (C3.1) against the running docs MCP
+  - [x] 2.1 Implement the corpus resolver (C3.1) against the running docs MCP
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -147,7 +147,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit tests: id-resolution, interim-section-form pass/fail, missing-heading failure names id+heading.
     - _Requirements: 1.1, 3.1, 3.2, 5.3_
 
-  - [ ] 2.2 Implement render (class-c) and pass-through (class-b) operations
+  - [x] 2.2 Implement render (class-c) and pass-through (class-b) operations
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -157,7 +157,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit tests: write-scope renderer (two different `allowedPaths` yield two different notes); run-context renderer; WORKFLOW_RULES filter-and-render.
     - _Requirements: 1.2, 1.3, 4.1, 4.2, 11.3, 12.3_
 
-  - [ ] 2.3 Implement ambient composition (C3.2) and the ambient-manifest emitter
+  - [x] 2.3 Implement ambient composition (C3.2) and the ambient-manifest emitter
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -166,7 +166,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit test: union composition asserts P3 (manifest ⊇ always-set) on a fixture input.
     - _Requirements: 9.1, 9.3, 10.1, 10.2, 10.3, 10.4_
 
-  - [ ] 2.4 Implement the attribution sidecar (C3.3) and totality checker
+  - [x] 2.4 Implement the attribution sidecar (C3.3) and totality checker
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -175,7 +175,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Unit test: attribution-totality checker (positive + a gap + an overlap + a bad op).
     - _Requirements: 1.3, 1.4_
 
-- [ ] 3. Skills pipeline: neutral-root relocation + skills-map round-trip
+- [x] 3. Skills pipeline: neutral-root relocation + skills-map round-trip
 
   **Type**: Parent
   **Unit**: U1
@@ -199,7 +199,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 3 Complete: Skills pipeline — neutral-root relocation + round-trip (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 3.1 Relocate `.kiro/skills/**` into the neutral `skills/` root and populate skills-map
+  - [x] 3.1 Relocate `.kiro/skills/**` into the neutral `skills/` root and populate skills-map
     **Type**: Setup
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood + Lina (Lina/domain owners confirm each relocated skill's activation description is intact)
@@ -207,7 +207,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Fill one `skills-map.yaml` row per skill: `canonical` path + per-target (`cc`, `kiro`) paths + `owners`.
     - _Requirements: 8.1, 8.3_
 
-  - [ ] 3.2 Implement SkillsMap resolution and per-target skill-tree emit
+  - [x] 3.2 Implement SkillsMap resolution and per-target skill-tree emit
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -216,7 +216,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Named unit test: the `theming/styles` → `theming-styles` transform.
     - _Requirements: 8.1, 8.2, 8.3_
 
-- [ ] 4. Registry generator (C5) — declaration-keyed, index-agnostic
+- [x] 4. Registry generator (C5) — declaration-keyed, index-agnostic
 
   **Type**: Parent
   **Unit**: U1
@@ -239,7 +239,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 4 Complete: Registry generator — declaration-keyed, index-agnostic (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 4.1 Implement MCP introspection and the registry emitter
+  - [x] 4.1 Implement MCP introspection and the registry emitter
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -249,7 +249,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Verify the Product-MCP `indexed:false` case generates identically (index-agnostic).
     - _Requirements: 7.1, 7.2, 7.3, 20.4_
 
-- [ ] 5. Target adapters (C4) — CC first, then Kiro
+- [x] 5. Target adapters (C4) — CC first, then Kiro
 
   **Type**: Parent
   **Unit**: U1
@@ -274,14 +274,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 5 Complete: Target adapters — CC first, then Kiro (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 5.1 Define the `TargetAdapter` interface
+  - [x] 5.1 Define the `TargetAdapter` interface
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
     - Define the C4 interface: `emitAgent`, `emitSkills`, `emitAlwaysLayer`, `toolRef`, `skillRef`, `renderWriteScope`, `dispositions`. Establish the extensibility contract (Req 24 AC3) so a third target is additive.
     - _Requirements: 11.1, 15.1, 24.3_
 
-  - [ ] 5.2 Implement the CC adapter (built first)
+  - [x] 5.2 Implement the CC adapter (built first)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -289,7 +289,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Implement every row of the C4 Kiro→CC transform table: MCP syntax → namespaced names; `resources` identity/always → always-layer (C11, Task 6); `resources` corpus → MCP on-demand routing cues; `skill://` → CC Skill-tool form; `/knowledge` → per-agent grep/Glob fallback from `knowledgeBases`; hotkeys/`welcomeMessage` → drop-with-reason; `hooks.agentSpawn` → behavioral pre-flight note; `allowedPaths` → behavioral write-scope note naming PreToolUse-hook/worktree (facet 7); server-grants → explicit per-agent namespaced subset; Kiro-runtime tool refs → per-runtime disposition rows.
     - _Requirements: 11.1, 11.3, 11.4, 11.5, 15.1, 15.3, 24.1, 24.2_
 
-  - [ ] 5.3 Implement the Kiro adapter (built second — forces the canonical/adapter seam honest)
+  - [x] 5.3 Implement the Kiro adapter (built second — forces the canonical/adapter seam honest)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -297,7 +297,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - CONFIRM Req 24 AC3: the Kiro adapter lands with NO change to the pipeline engine (Tasks 2–4) — record this as the extensibility-contract verification.
     - _Requirements: 11.1, 15.2, 24.1, 24.3_
 
-- [ ] 6. The regenerate-and-diff guard (C6) + canonical-vs-truth check (C7)
+- [x] 6. The regenerate-and-diff guard (C6) + canonical-vs-truth check (C7)
 
   **Type**: Parent
   **Unit**: U1
@@ -321,7 +321,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 6 Complete: Diff-guard + canonical-vs-truth check (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 6.1 Implement the regenerate-and-diff guard and the input-closure lock
+  - [x] 6.1 Implement the regenerate-and-diff guard and the input-closure lock
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
@@ -330,7 +330,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Record the whole-root-closure decision (DD7 — chosen over embed-span hashing).
     - _Requirements: 17.1, 17.2, 20.1, 20.2_
 
-  - [ ] 6.2 Record BOTH diff-guard prove-it-bites forms
+  - [x] 6.2 Record BOTH diff-guard prove-it-bites forms
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -338,7 +338,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Edit-an-embedded-section form (S-D3 prove-it-bites): edit one embedded `governance/**` (or `.kiro/steering/**`) section with NO other closure-root change; assert the no-op lock forces a full run and the guard FAILs on the re-derived stale embed. Record the run. (This is the standing proof the resolve-by-id roots are in the closure.)
     - _Requirements: 17.4, 20.2_
 
-  - [ ] 6.3 Implement the canonical-vs-truth check (five assertion classes)
+  - [x] 6.3 Implement the canonical-vs-truth check (five assertion classes)
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
@@ -352,7 +352,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Failure output grouped by adjudicator with flagged entry + truth observed + canonical claim.
     - _Requirements: 3.2, 5.3, 12.3, 18.1, 18.2, 18.3_
 
-- [ ] 7. The eight sweeps (C8) + gate registration (C9)
+- [x] 7. The eight sweeps (C8) + gate registration (C9)
 
   **Type**: Parent
   **Unit**: U1
@@ -377,7 +377,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 7 Complete: Eight sweeps + gate registration (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 7.1 Implement sweeps 1–4 with prove-it-bites
+  - [x] 7.1 Implement sweeps 1–4 with prove-it-bites
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -387,7 +387,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Sweep 4 (ambient set-difference): `designed = Task-9 block ∪ always-set` vs `generated = ambient-manifest`; both differences reported; each delta needs a recorded adjudication; same machinery runs Req 10 AC4 set-inclusion. Prove-it-bites: Data's adjudicated `start-up-tasks` drop (`b7c3c148`).
     - _Requirements: 3.2, 3.3, 5.2, 8.1, 8.2, 10.4, 19.1, 19.2_
 
-  - [ ] 7.2 Implement sweeps 5–8 with prove-it-bites
+  - [x] 7.2 Implement sweeps 5–8 with prove-it-bites
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -397,7 +397,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Sweep 8 (demotion-diff): `removals = baseline ∖ fresh ambient-manifest`, namespace includes artifact-path members (D-A1); every removal needs a `replaces:` cue else FAIL; `fires: unconditional` trims emit negatives for orphaned artifacts (K-D1). Prove-it-bites: remove a doc from a fixture agent's ambient without a `replaces` cue.
     - _Requirements: 12.1, 19.1, 19.2, 19.4_
 
-  - [ ] 7.3 Register all ten check contexts on the 125-A Phase 0 gate
+  - [x] 7.3 Register all ten check contexts on the 125-A Phase 0 gate
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -406,7 +406,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Implement `verify-gate-registration.sh`: query the branch-protection API, assert the expected 122 context set present, count-asserted (N recorded); run at each cutover + monthly health check.
     - _Requirements: 17.3, 18.1, 20.1, 20.2, 20.3_
 
-- [ ] 8. ⛔ SUBSTRATE PHASE GATE — closure evidence (C13), fixture (C10.3), Stacy provisioning (C12)
+- [x] 8. ⛔ SUBSTRATE PHASE GATE — closure evidence (C13), fixture (C10.3), Stacy provisioning (C12)
 
   **Type**: Parent
   **Unit**: U1
@@ -435,7 +435,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Open U1's PR: `./.kiro/hooks/complete-task.sh "Substrate: canonical source, pipeline, adapters, checks, gate (122)"` — this is the **substrate unit's PR** carrying all of Tasks 1–8. Report the PR URL and STOP; the substrate is accepted when Peter merges (governance-law carve-out — Peter merges). **Group 2 does not begin until this PR merges (the phase gate).**
   - PR body: `Spec: 122-agent-generator` / `Unit: U1 — Substrate (Tasks 1–8)` / `Agent: Thurgood` / completion-doc paths for Tasks 1–8 / validation note.
 
-  - [ ] 8.1 Build the minimal-fixture standing pipeline test (C10.3)
+  - [x] 8.1 Build the minimal-fixture standing pipeline test (C10.3)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -444,7 +444,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Confirm the fixture sits inside C6's guarded surface → standing pipeline test re-run on every PR (Req 21 AC4).
     - _Requirements: 21.4, 23.4_
 
-  - [ ] 8.2 Provision Stacy's coverage map + audit commands (C12) — gated into the gate
+  - [x] 8.2 Provision Stacy's coverage map + audit commands (C12) — gated into the gate
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy (Stacy owns coverage-of-coverage; confirms the map's minimum content on the PR)
@@ -456,7 +456,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - **Stacy's confirmed coverage-map is a NAMED OUTPUT of this subtask (feeds Task 8.3's closure gate, amendment 6):** Stacy records her sign-off on the coverage-map (zero-blank-row or adjudicated-per-blank) on the PR; that confirmation — not merely a green `audit:coverage-map` run — is what Task 8.3 cites to close the C13 bundle.
     - _Requirements: 19.3, 22.1, 22.2, 22.4, 22.5_
 
-  - [ ] 8.3 Assemble and commit the C13 substrate-gate closure-evidence bundle
+  - [x] 8.3 Assemble and commit the C13 substrate-gate closure-evidence bundle
     **Type**: Documentation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (+ Stacy sign-off on the coverage-map, see done-condition)
