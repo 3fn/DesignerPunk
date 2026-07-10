@@ -387,7 +387,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Sweep 4 (ambient set-difference): `designed = Task-9 block ∪ always-set` vs `generated = ambient-manifest`; both differences reported; each delta needs a recorded adjudication; same machinery runs Req 10 AC4 set-inclusion. Prove-it-bites: Data's adjudicated `start-up-tasks` drop (`b7c3c148`).
     - _Requirements: 3.2, 3.3, 5.2, 8.1, 8.2, 10.4, 19.1, 19.2_
 
-  - [ ] 7.2 Implement sweeps 5–8 with prove-it-bites
+  - [x] 7.2 Implement sweeps 5–8 with prove-it-bites
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
