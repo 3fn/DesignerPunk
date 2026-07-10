@@ -297,7 +297,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - CONFIRM Req 24 AC3: the Kiro adapter lands with NO change to the pipeline engine (Tasks 2–4) — record this as the extensibility-contract verification.
     - _Requirements: 11.1, 15.2, 24.1, 24.3_
 
-- [ ] 6. The regenerate-and-diff guard (C6) + canonical-vs-truth check (C7)
+- [x] 6. The regenerate-and-diff guard (C6) + canonical-vs-truth check (C7)
 
   **Type**: Parent
   **Unit**: U1
@@ -321,7 +321,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 6 Complete: Diff-guard + canonical-vs-truth check (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 6.1 Implement the regenerate-and-diff guard and the input-closure lock
+  - [x] 6.1 Implement the regenerate-and-diff guard and the input-closure lock
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
@@ -330,7 +330,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Record the whole-root-closure decision (DD7 — chosen over embed-span hashing).
     - _Requirements: 17.1, 17.2, 20.1, 20.2_
 
-  - [ ] 6.2 Record BOTH diff-guard prove-it-bites forms
+  - [x] 6.2 Record BOTH diff-guard prove-it-bites forms
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -338,7 +338,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Edit-an-embedded-section form (S-D3 prove-it-bites): edit one embedded `governance/**` (or `.kiro/steering/**`) section with NO other closure-root change; assert the no-op lock forces a full run and the guard FAILs on the re-derived stale embed. Record the run. (This is the standing proof the resolve-by-id roots are in the closure.)
     - _Requirements: 17.4, 20.2_
 
-  - [ ] 6.3 Implement the canonical-vs-truth check (five assertion classes)
+  - [x] 6.3 Implement the canonical-vs-truth check (five assertion classes)
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
