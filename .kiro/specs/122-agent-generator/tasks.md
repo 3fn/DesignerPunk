@@ -406,7 +406,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Implement `verify-gate-registration.sh`: query the branch-protection API, assert the expected 122 context set present, count-asserted (N recorded); run at each cutover + monthly health check.
     - _Requirements: 17.3, 18.1, 20.1, 20.2, 20.3_
 
-- [ ] 8. ⛔ SUBSTRATE PHASE GATE — closure evidence (C13), fixture (C10.3), Stacy provisioning (C12)
+- [x] 8. ⛔ SUBSTRATE PHASE GATE — closure evidence (C13), fixture (C10.3), Stacy provisioning (C12)
 
   **Type**: Parent
   **Unit**: U1
@@ -456,7 +456,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - **Stacy's confirmed coverage-map is a NAMED OUTPUT of this subtask (feeds Task 8.3's closure gate, amendment 6):** Stacy records her sign-off on the coverage-map (zero-blank-row or adjudicated-per-blank) on the PR; that confirmation — not merely a green `audit:coverage-map` run — is what Task 8.3 cites to close the C13 bundle.
     - _Requirements: 19.3, 22.1, 22.2, 22.4, 22.5_
 
-  - [ ] 8.3 Assemble and commit the C13 substrate-gate closure-evidence bundle
+  - [x] 8.3 Assemble and commit the C13 substrate-gate closure-evidence bundle
     **Type**: Documentation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (+ Stacy sign-off on the coverage-map, see done-condition)
