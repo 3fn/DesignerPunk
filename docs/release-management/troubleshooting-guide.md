@@ -314,7 +314,7 @@ Error: Configuration validation failed
 3. **Set missing values:**
    ```bash
    export GITHUB_OWNER=3fn
-   export GITHUB_REPO=DesignerPunkv2
+   export GITHUB_REPO=DesignerPunk
    ```
 
 4. **Create configuration file:**
@@ -322,7 +322,7 @@ Error: Configuration validation failed
    {
      "github": {
        "owner": "3fn",
-       "repo": "DesignerPunkv2",
+       "repo": "DesignerPunk",
        "token": "${GITHUB_TOKEN}"
      }
    }
@@ -1006,7 +1006,7 @@ tail -50 .kiro/logs/release-manager.log
 
 - **Usage Guide**: `docs/release-management/release-management-guide.md`
 - **Configuration Reference**: `docs/release-management/configuration-reference.md`
-- **GitHub Issues**: https://github.com/3fn/DesignerPunkv2/issues
+- **GitHub Issues**: https://github.com/3fn/DesignerPunk/issues
 - **Spec Documents**: `.kiro/specs/release-management-system/`
 
 ### Reporting Issues
@@ -1030,7 +1030,7 @@ Configuration:
 {
   "github": {
     "owner": "3fn",
-    "repo": "DesignerPunkv2"
+    "repo": "DesignerPunk"
   }
 }
 

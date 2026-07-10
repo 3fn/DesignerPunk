@@ -284,7 +284,7 @@
     {
       "name": "DesignerPunk",
       "description": "True Native cross-platform design system with mathematical foundations, built for Human-AI collaboration. Features 310+ tokens, 24 production-ready components, 8,200+ tests, and an MCP Documentation Server.",
-      "url": "https://github.com/3fn/DesignerPunkv2",
+      "url": "https://github.com/3fn/DesignerPunk",
       "startDate": "2025",
       "roles": ["Creator", "Architect", "Maintainer"],
       "type": "application",
@@ -377,7 +377,7 @@
     }
   ],
   "meta": {
-    "canonical": "https://raw.githubusercontent.com/3fn/DesignerPunkv2/main/resume.json",
+    "canonical": "https://raw.githubusercontent.com/3fn/DesignerPunk/main/resume.json",
     "version": "v1.0.0",
     "lastModified": "2026-02-23"
   }

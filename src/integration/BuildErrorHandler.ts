@@ -268,7 +268,7 @@ export class BuildErrorHandler {
         'Validate configuration against schema'
       ],
       documentation: [
-        'https://github.com/3fn/DesignerPunkv2/docs/build-integration.md'
+        'https://github.com/3fn/DesignerPunk/docs/build-integration.md'
       ]
     };
   }
@@ -293,7 +293,7 @@ export class BuildErrorHandler {
         'Ensure platform files are generated correctly'
       ],
       documentation: [
-        `https://github.com/3fn/DesignerPunkv2/docs/platforms/${platform}.md`
+        `https://github.com/3fn/DesignerPunk/docs/platforms/${platform}.md`
       ]
     };
   }
