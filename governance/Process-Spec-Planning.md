@@ -2495,12 +2495,12 @@ When creating cross-references, calculate relative paths based on the source doc
 **Two Workflow Paths:**
 
 **Path A (Recommended - IDE-based with automation)**:
-- Use `taskStatus` tool → Triggers agent hooks → Auto organization → Auto release detection → Manual commit
+- Use `taskStatus` tool → Triggers agent hooks → Auto organization → Auto release detection → `complete-task.sh` (commits on the task branch; opens the unit PR at unit completion)
 - **Benefit**: Automated file organization and release detection
 - **Use when**: Working within Kiro IDE on spec tasks
 
 **Path B (Manual - Script-based)**:
-- Manual task status updates → Manual commit via script → No agent hooks triggered
+- Manual task status updates → `complete-task.sh` on the task branch → No agent hooks triggered
 - **Benefit**: Simpler, direct control
 - **Use when**: Quick fixes, non-spec work, or when agent hooks aren't needed
 - **Note**: Run `npm run release:analyze` for on-demand release analysis

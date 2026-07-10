@@ -13,7 +13,12 @@ describe('ErrorHandler', () => {
   let errorHandler: ErrorHandler;
 
   beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
     errorHandler = new ErrorHandler();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('constructor', () => {

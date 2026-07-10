@@ -353,8 +353,11 @@ describe('Progress-Stepper-Detailed', () => {
     });
 
     it('throws error when size="sm" (Req 8.10)', () => {
-      // jsdom's custom element lifecycle is async, so we need to catch the error differently
-      const errorHandler = jest.fn();
+      // jsdom's custom element lifecycle is async, so we need to catch the error differently.
+      // preventDefault() marks the error HANDLED, which stops jsdom's default reporter from
+      // printing an "Uncaught [Error: ...]" console.error block for this expected throw
+      // (CI-log noise; the assertion below still receives the event first).
+      const errorHandler = jest.fn((event: ErrorEvent) => event.preventDefault());
       window.addEventListener('error', errorHandler);
 
       createStepperDetailed({

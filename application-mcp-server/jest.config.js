@@ -1,8 +1,13 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  roots: ['<rootDir>/src', '<rootDir>/tests'],
-  testMatch: ['**/__tests__/**/*.test.ts', '**/tests/**/*.test.ts'],
+  // roots deliberately src-only: every test in this package lives under src/**/__tests__/.
+  // A '<rootDir>/tests' root previously listed here pointed at an EMPTY, untracked directory —
+  // it existed on local machines (so jest tolerated it) but not on a fresh CI checkout (git
+  // does not track empty dirs), making `npm test` fail with "Directory ... in the roots[1]
+  // option was not found" the first time the suite ran in CI (125-A Task 6, lane-timing run #1).
+  roots: ['<rootDir>/src'],
+  testMatch: ['**/__tests__/**/*.test.ts'],
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.d.ts',

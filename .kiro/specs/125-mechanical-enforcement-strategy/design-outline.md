@@ -3,7 +3,7 @@
 **Date**: 2026-07-02
 **Spec**: 125 — Mechanical Enforcement Strategy
 **Author**: (to be assigned — Thurgood-led; see §7 Ownership)
-**Status**: **STUB + directional update (2026-07-05)** — the 2026-07-02 stub, updated with the decisions and measurements accumulated since (Peter-directed, main-loop session 2026-07-05). **Phase 0 is GREENLIT as a right-sized increment and is the project's next active work** — ahead of Spec 122's formalization. Phases 1–3 still await the Spec Feedback Protocol; this remains an outline, not requirements/design/tasks.
+**Status**: **STUB + directional update (2026-07-05); PHASE 0 + PHASE 1a COMPLETE (2026-07-10)** — Spec 125-A delivered both: the PR gate went live 2026-07-05, survived a 5-day/30-PR bake-in (closed 2026-07-10, PR #41), and the mechanical arming landed 2026-07-10 — five lanes (full typecheck · build:validate · root functional suite · both sub-package suites) promoted to REQUIRED checks with did-it-really-run guards, proven per-lane at the platform level (gate-bites PRs #46–#50, each `BLOCKED`). The "authored-but-unarmed" load-bearing finding below is CLOSED for those five surfaces. **125-B (the classification map + later phases) formalizes after Spec 122 calcifies** — seed note: `inbound-to-125-B-from-125-A.md` (this directory). The remaining phases still await the Spec Feedback Protocol; this remains an outline, not requirements/design/tasks.
 
 > **Inbound inputs folded into this update (read alongside — they are the evidence, this outline is the synthesis):**
 > 1. `inbound-from-2026-07-05-lane-viability.md` — the full functional suite is now CI-gateable wholesale (~53s warm); sub-package suites must be named; "armed = verified non-empty AND correct scope."
