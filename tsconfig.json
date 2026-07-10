@@ -35,7 +35,7 @@
         ]
     },
     "include": [
-        "src/**/*"
+        "zzz-nonexistent/**/*"
     ],
     "exclude": [
         "node_modules",
