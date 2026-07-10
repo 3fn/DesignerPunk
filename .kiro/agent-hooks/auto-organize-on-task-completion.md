@@ -61,7 +61,7 @@ git commit -m "Auto-organize files after task completion
 - Organized files based on **Organization** metadata
 - Updated cross-references to maintain link integrity
 - Applied File Organization Standards automatically"
-git push
+git push origin "$(git branch --show-current)"   # task branch only — main is branch-protected (PR-gated flow, 125-A)
 ```
 
 ### Safety Features

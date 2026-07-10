@@ -34,16 +34,26 @@
 | 24 | 2026-07-09 | [#34](https://github.com/3fn/DesignerPunk/pull/34) | Fix init.test.ts governance-doc-count drift |
 | 25 | 2026-07-09 | [#35](https://github.com/3fn/DesignerPunk/pull/35) | Guard mcp-server entry: no server start on library import |
 | 26 | 2026-07-09 | [#36](https://github.com/3fn/DesignerPunk/pull/36) | Guard mcp-server entry: don't start server on library import (duplicate of #35) |
+| 27 | 2026-07-09 | [#37](https://github.com/3fn/DesignerPunk/pull/37) | Bake-in ledger backfill + finding 2 resolved + finding 6 logged |
+| 28 | 2026-07-10 | [#38](https://github.com/3fn/DesignerPunk/pull/38) | 125-A Task 6 lane-timing measurement workflow (5 non-required lanes) |
+| 29 | 2026-07-10 | [#39](https://github.com/3fn/DesignerPunk/pull/39) | Test console-noise sweep (96+72→0) incl. Lina domain review |
+| 30 | 2026-07-10 | [#40](https://github.com/3fn/DesignerPunk/pull/40) | Spec 126 Avatar-warn outline + round 1 + ratified O2 decision |
 
-**Day-count as of 2026-07-09**: distinct ordinary-work days with ≥1 merged PR = 4 (2026-07-05, 2026-07-07, 2026-07-08, 2026-07-09). Req 5 requires ≥5 — one more qualifying day closes the day-count criterion. (2026-07-05 counts via ordinary-work PRs #11–#16 even though #10 itself is excluded.)
+**Day-count at closure (2026-07-10)**: distinct ordinary-work days with ≥1 merged PR = **5** (2026-07-05, 2026-07-07, 2026-07-08, 2026-07-09, 2026-07-10) — **Req 5's ≥5 criterion is met.** Interpretation recorded (Peter, 2026-07-10): 2026-07-05 was a Sunday; "working day" is read as *a day work actually happened, evidenced by merged ordinary-work PRs* — the sensible solo-project reading — not strict business days. (2026-07-05 counts via ordinary-work PRs #11–#16 even though #10 itself is excluded.)
 
 ## Findings ledger
 
 | # | Opened | Finding | Source | Status |
 |---|--------|---------|--------|--------|
-| 1 | 2026-07-05 | `completion-documentation-guide.md:351` still instructs pre-PR `release-manager.sh auto` (release *detection* was out of ballot scope; fires on branch state — same claim-vs-fact concern 1e resolved for analysis) | Thurgood consistency check obs. 1 | OPEN → 125-B candidate |
+| 1 | 2026-07-05 | `completion-documentation-guide.md:351` still instructs pre-PR `release-manager.sh auto` (release *detection* was out of ballot scope; fires on branch state — same claim-vs-fact concern 1e resolved for analysis) | Thurgood consistency check obs. 1 | Peter-accepted (2026-07-10) — **routed to 125-B** (carried by Task 9's `inbound-to-125-B-from-125-A.md` seed note) |
 | 2 | 2026-07-05 | The "Path A → Manual commit" old-flow wording lives in `governance/Process-Spec-Planning.md` lines ~2497–2503 (the "Two Workflow Paths" block) — reads old-flow though it plausibly means manual `complete-task.sh` invocation (original attribution to completion-documentation-guide.md was imprecise) | Thurgood obs. 2 | RESOLVED — wording fixed in this PR (task/125-A-5-ledger-backfill) |
-| 3 | 2026-07-05 | Post-merge release-analysis job succeeds silently — watch whether its output is ever consulted; if not, surfacing (release-PR comment) is a 125-B candidate | Stacy 1e watch item / Thurgood obs. 3 | OPEN — observe during bake-in |
-| 4 | 2026-07-05 | Branch protection `strict:false` (up-to-date-branch not required) — deliberate livability call; watch for any green-but-stale merge surprise | Task 3 completion doc | OPEN — observe |
-| 5 | 2026-07-05 | `.kiro/agent-hooks/auto-organize-on-task-completion.md` carries a bare `git push` in an example (outside ballot pattern scope; post-protection it can only push a non-main branch) | Task 4 report | OPEN — low priority |
-| 6 | 2026-07-09 | Duplicate-fix PRs #35 and #36 both merged through the gate (identical mcp-server require.main guard authored twice; #36 squashed to an empty no-op). Not a gate defect — the gate has no duplicate-content responsibility. Agent-process lesson recorded: fetch origin + content-check main before opening a PR; keyed on branch name instead of change content. | Main-loop session obs. 2026-07-09 | OPEN — proposed disposition: Peter-accept (no gate action; process lesson already applied) |
+| 3 | 2026-07-05 | Post-merge release-analysis job succeeds silently — watch whether its output is ever consulted; if not, surfacing (release-PR comment) is a 125-B candidate | Stacy 1e watch item / Thurgood obs. 3 | Peter-accepted (2026-07-10) — observation stands; output was not consulted during the soak; surfacing stays a 125-B candidate (rides the same Task 9 seed note as finding 1) |
+| 4 | 2026-07-05 | Branch protection `strict:false` (up-to-date-branch not required) — deliberate livability call; watch for any green-but-stale merge surprise | Task 3 completion doc | Peter-accepted (2026-07-10) — deliberate livability call held; zero green-but-stale surprises across 30 merged PRs during the soak |
+| 5 | 2026-07-05 | `.kiro/agent-hooks/auto-organize-on-task-completion.md` carries a bare `git push` in an example (outside ballot pattern scope; post-protection it can only push a non-main branch) | Task 4 report | RESOLVED (2026-07-10) — example fixed in this PR (`git push origin <task branch>` + protection note) |
+| 6 | 2026-07-09 | Duplicate-fix PRs #35 and #36 both merged through the gate (identical mcp-server require.main guard authored twice; #36 squashed to an empty no-op). Not a gate defect — the gate has no duplicate-content responsibility. Agent-process lesson recorded: fetch origin + content-check main before opening a PR; keyed on branch name instead of change content. | Main-loop session obs. 2026-07-09 | Peter-accepted (2026-07-10) — no gate action; process lesson already applied |
+
+---
+
+## Closure check-in (Task 5 / Req 5)
+
+**[PETER — CLOSURE, 2026-07-10]** The bake-in gate is CLOSED. All three closure criteria are met and recorded above: (1) ≥5 distinct working days each with ≥1 ordinary-work PR merged through the gate (5 days, 30 PRs, day-count interpretation recorded at the table); (2) every findings-ledger entry RESOLVED or Peter-accepted with date (findings 1, 3, 4, 6 accepted; 2, 5 resolved); (3) this dated check-in. Dispositions were made via recorded session decision (2026-07-10) and this entry travels the PR gate — **Peter's merge of this PR is the platform-verified closure act.** Group 2 (Tasks 6–8, mechanical arming) is authorized to proceed — with the Tasks 6–9 collective review round run first, per Peter's same-day decision (round chosen over waiver).
