@@ -249,7 +249,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Verify the Product-MCP `indexed:false` case generates identically (index-agnostic).
     - _Requirements: 7.1, 7.2, 7.3, 20.4_
 
-- [ ] 5. Target adapters (C4) — CC first, then Kiro
+- [x] 5. Target adapters (C4) — CC first, then Kiro
 
   **Type**: Parent
   **Unit**: U1
@@ -274,14 +274,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 5 Complete: Target adapters — CC first, then Kiro (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 5.1 Define the `TargetAdapter` interface
+  - [x] 5.1 Define the `TargetAdapter` interface
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood
     - Define the C4 interface: `emitAgent`, `emitSkills`, `emitAlwaysLayer`, `toolRef`, `skillRef`, `renderWriteScope`, `dispositions`. Establish the extensibility contract (Req 24 AC3) so a third target is additive.
     - _Requirements: 11.1, 15.1, 24.3_
 
-  - [ ] 5.2 Implement the CC adapter (built first)
+  - [x] 5.2 Implement the CC adapter (built first)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -289,7 +289,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Implement every row of the C4 Kiro→CC transform table: MCP syntax → namespaced names; `resources` identity/always → always-layer (C11, Task 6); `resources` corpus → MCP on-demand routing cues; `skill://` → CC Skill-tool form; `/knowledge` → per-agent grep/Glob fallback from `knowledgeBases`; hotkeys/`welcomeMessage` → drop-with-reason; `hooks.agentSpawn` → behavioral pre-flight note; `allowedPaths` → behavioral write-scope note naming PreToolUse-hook/worktree (facet 7); server-grants → explicit per-agent namespaced subset; Kiro-runtime tool refs → per-runtime disposition rows.
     - _Requirements: 11.1, 11.3, 11.4, 11.5, 15.1, 15.3, 24.1, 24.2_
 
-  - [ ] 5.3 Implement the Kiro adapter (built second — forces the canonical/adapter seam honest)
+  - [x] 5.3 Implement the Kiro adapter (built second — forces the canonical/adapter seam honest)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

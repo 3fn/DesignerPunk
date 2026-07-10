@@ -144,6 +144,19 @@ export interface AdapterContext {
    * the steering corpus's on-disk layout); adapters never guess a path from an id.
    */
   steeringIdToPath?: Readonly<Record<string, string>>;
+  /**
+   * Doc id → repo-relative file path, for the Kiro adapter's `resources` array (design C4:
+   * "id→path at emit time"). Covers BOTH resolve-by-id roots (`.kiro/steering/**` AND
+   * `governance/**`) — Kiro's ambient manifest membership spans both the identity docs and
+   * the corpus docs, unlike CC's lane-1 `steeringIdToPath`, which only ever needs to resolve
+   * the locked always-set (`.kiro/steering/**` identity docs) for `CLAUDE.md` `@`-imports.
+   * Deliberately a SEPARATE field rather than a reused `steeringIdToPath`: the two maps have
+   * different coverage requirements (CC lane 1's is a strict subset — always-set ids only;
+   * Kiro's must resolve every ambient-manifest member, shared AND per-agent) and conflating
+   * them would either under-cover Kiro or force CC's map wider than it needs. Supplied by the
+   * generation entry point; the Kiro adapter never guesses a path from an id.
+   */
+  docIdToPath?: Readonly<Record<string, string>>;
 }
 
 // ============================================================================
