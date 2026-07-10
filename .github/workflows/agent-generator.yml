@@ -53,6 +53,10 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            mcp-server/package-lock.json
+            application-mcp-server/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -61,16 +65,30 @@ jobs:
         id: probe
         run: npx tsx tools/agent-generator/sweeps/noop-probe.ts | tee -a "$GITHUB_OUTPUT"
 
-      - name: Build MCP dist (shared artifact — only on a full run)
+      # The three MCPs boot from HETEROGENEOUS artifacts (registry.ts serverTable, mirroring
+      # .mcp.json truth): docs + application from their SUB-PACKAGE tsc dists
+      # (mcp-server/dist, application-mcp-server/dist — NOT the esbuild bundles), product
+      # from the root bundle (dist/mcp/product-mcp.js). Shipping only dist/mcp/ was the
+      # first live run's failure mode (PR #54: MODULE_NOT_FOUND mcp-server/dist/index.js).
+      # workflow-rules-guard.ts additionally requires mcp-server/dist at module load, so
+      # every generate.ts importer needs it too.
+      - name: Build MCP dists (shared artifact — only on a full run)
         if: steps.probe.outputs.noop != 'true'
-        run: npm run build:mcp
+        run: |
+          (cd mcp-server && npm ci && npm run build)
+          (cd application-mcp-server && npm ci && npm run build)
+          npm run build:mcp
 
       - name: Upload MCP dist artifact
         if: steps.probe.outputs.noop != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: mcp-dist
-          path: dist/mcp/
+          path: |
+            dist/mcp/
+            dist/cli/shared/
+            mcp-server/dist/
+            application-mcp-server/dist/
           retention-days: 1
 
   check:
@@ -130,17 +148,29 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            mcp-server/package-lock.json
+            application-mcp-server/package-lock.json
 
       - name: Install dependencies
         if: needs.setup.outputs.noop != 'true'
         run: npm ci
+
+      # The sub-package dists are tsc builds (NOT bundles) — they resolve their runtime
+      # deps from each sub-package's own node_modules, so MCP-booting jobs install them.
+      - name: Install MCP sub-package dependencies
+        if: needs.setup.outputs.noop != 'true' && matrix.mcp
+        run: |
+          (cd mcp-server && npm ci)
+          (cd application-mcp-server && npm ci)
 
       - name: Download MCP dist artifact
         if: needs.setup.outputs.noop != 'true' && matrix.mcp
         uses: actions/download-artifact@v4
         with:
           name: mcp-dist
-          path: dist/mcp/
+          path: .
 
       - name: Run ${{ matrix.context }}
         if: needs.setup.outputs.noop != 'true'
