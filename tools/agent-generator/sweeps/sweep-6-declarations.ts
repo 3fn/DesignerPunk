@@ -11,9 +11,13 @@
  *     tools (ADJUDICATE): declared capability no agent is routed to. Owner per Req 7 AC5's
  *     membership-vs-substance seam — no consuming seat exists for an un-routed tool, so the
  *     finding routes to the DECLARING owner (`declaring-owner:<server>`), mirroring C7(c)
- *     leg 2. The declarations-diff leg only means something once agents exist: with an
- *     empty cutover ledger it records a vacuous PASS rather than an ADJUDICATE storm over
- *     43 tools no generated agent could yet route.
+ *     leg 2. The declarations-diff leg runs over the CUTOVER-LEDGER population (the real
+ *     fleet), not mere canonical-file presence: un-routed-tool adjudication is a statement
+ *     about what the generated fleet routes, and the `_fixture` pseudo-agent (present in
+ *     canonical/agents/ from Task 8, never in the ledger) must not activate an ADJUDICATE
+ *     storm over 43 tools no runtime agent could yet route. With zero ledger agents it
+ *     records a vacuous PASS. The phantom-route cue leg ALWAYS runs over every canonical
+ *     doc, fixture included — a fixture cue naming a dead tool is a real failure.
  *
  * Prove-it-bites (Req 19 AC2): induce a cue naming a nonexistent tool — see
  * __tests__/sweep-6-declarations.test.ts.
@@ -45,6 +49,12 @@ export interface Sweep6Inputs {
   docs: CanonicalAgentDoc[];
   sharedCatalog: readonly SharedCatalogMember[];
   registry: ToolRegistry;
+  /**
+   * The cutover-ledger agent names — the population whose toolSubsets the un-routed
+   * declarations-diff (leg 2) runs over. Canonical docs NOT in the ledger (the `_fixture`
+   * pseudo-agent) still get leg 1's phantom-route cue checks but never activate leg 2.
+   */
+  cutoverLedger?: string[];
   /**
    * Tools deliberately left to on-demand discovery (Req 7 AC4's "remainder discoverable on
    * demand") — exempt from the un-routed diff. Empty until a cutover declares one.
@@ -90,18 +100,21 @@ export function runSweep6(inputs: Sweep6Inputs): SweepReport {
     }
   });
 
-  // --- Leg 2: declarations ∖ (∪ toolSubsets ∪ deferred) = un-routed (ADJUDICATE).
-  if (inputs.docs.length === 0) {
+  // --- Leg 2: declarations ∖ (∪ LEDGER agents' toolSubsets ∪ deferred) = un-routed
+  // (ADJUDICATE). Population = the cutover ledger, never mere canonical-file presence.
+  const ledger = new Set(inputs.cutoverLedger ?? []);
+  const fleetDocs = inputs.docs.filter((d) => ledger.has(d.frontmatter.agent));
+  if (fleetDocs.length === 0) {
     findings.push({
       verdict: 'INFO',
       path: 'declarations-diff',
-      observed: 'recorded vacuous PASS: 0 canonical agents — the un-routed diff activates at the first cutover',
-      expected: 'declarations ∖ (∪ subsets ∪ deferred) runs per-agent-population',
+      observed: 'recorded vacuous PASS: 0 cutover-ledger agents — the un-routed diff activates at the first cutover',
+      expected: 'declarations ∖ (∪ ledger subsets ∪ deferred) runs over the generated fleet',
       owner: 'thurgood',
     });
   } else {
     const routed = new Set<string>(inputs.deferredDiscoverable ?? []);
-    for (const doc of inputs.docs) {
+    for (const doc of fleetDocs) {
       const subset = doc.frontmatter.toolSubset ?? {};
       for (const server of Object.keys(subset) as Array<keyof ToolSubset>) {
         for (const tool of subset[server] ?? []) routed.add(tool);
@@ -145,10 +158,21 @@ async function main(): Promise<void> {
   }
   const registry = assembleRegistry(results);
 
+  const { parseCutoverLedger } = require('../generate') as typeof import('../generate');
+  let cutoverLedger: string[] = [];
+  try {
+    cutoverLedger = parseCutoverLedger(
+      readFileIfExists(path.join(repoRoot, 'canonical', 'cutover-ledger.yaml')) ?? ''
+    );
+  } catch {
+    cutoverLedger = [];
+  }
+
   const report = runSweep6({
     docs,
     sharedCatalog,
     registry,
+    cutoverLedger,
     adjudications: readAdjudications(repoRoot),
   });
   exitWithReport(report);

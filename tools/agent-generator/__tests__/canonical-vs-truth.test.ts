@@ -138,6 +138,14 @@ describe('parseScriptName', () => {
     expect(parseScriptName('build')).toBe('build');
     expect(parseScriptName('scripts/foo.sh')).toBeUndefined();
   });
+
+  it('parses npm BUILTIN aliases (`npm test` ≡ `npm run test` — the fixture-caught live form, Task 8.1)', () => {
+    expect(parseScriptName('npm test')).toBe('test');
+    expect(parseScriptName('npm test -- --watch')).toBe('test');
+    expect(parseScriptName('npm start')).toBe('start');
+    // `npm testx` is NOT a builtin alias — falls through to unparseable.
+    expect(parseScriptName('npm testx')).toBeUndefined();
+  });
 });
 
 // ============================================================================

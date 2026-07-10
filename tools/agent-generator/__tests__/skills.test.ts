@@ -25,9 +25,11 @@ import {
 const REAL_MAP_PATH = path.resolve(__dirname, '..', '..', '..', 'canonical', 'shared', 'skills-map.yaml');
 
 describe('parseSkillsMap — against the real committed substrate', () => {
-  it('parses skills-map.yaml to 5 rows, each canonical path existing on disk with a SKILL.md', () => {
+  it('parses skills-map.yaml to 6 rows, each canonical path existing on disk with a SKILL.md', () => {
+    // 5 real skills + the Spec 122 C10.3 standing-fixture row (`skills/_fixture-skill`,
+    // added Task 8.1 — an inert round-trip specimen, owner thurgood).
     const map = parseSkillsMap(fs.readFileSync(REAL_MAP_PATH, 'utf8'));
-    expect(map.rows).toHaveLength(5);
+    expect(map.rows).toHaveLength(6);
 
     const repoRoot = path.resolve(__dirname, '..', '..', '..');
     for (const row of map.rows) {

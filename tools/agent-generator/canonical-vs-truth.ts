@@ -518,11 +518,17 @@ function checkCommandStringCurrency(
   });
 }
 
-/** Parse the script name from "npm run X" / "npm run X -- ..." or a bare script token. */
+/**
+ * Parse the script name from "npm run X" / "npm run X -- ...", an npm BUILTIN alias
+ * (`npm test` ≡ `npm run test` — the form core-goals mandates repo-wide; caught live by the
+ * fixture's C7 run, Task 8.1), or a bare script token.
+ */
 export function parseScriptName(cmd: string): string | undefined {
   const trimmed = cmd.trim();
   const npmRun = trimmed.match(/^npm\s+run\s+(\S+)/);
   if (npmRun) return npmRun[1];
+  const npmBuiltin = trimmed.match(/^npm\s+(test|start|stop|restart)(?:\s|$)/);
+  if (npmBuiltin) return npmBuiltin[1];
   // A bare single-token script name (no spaces, no slash).
   if (!/\s/.test(trimmed) && !trimmed.includes('/')) return trimmed;
   return undefined;

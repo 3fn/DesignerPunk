@@ -53,3 +53,11 @@ rows:
       cc: .claude/skills/impeccable
       kiro: .kiro/skills/impeccable
     owners: [leonardo]
+  # The Spec 122 C10.3 standing-fixture row — an inert skill whose only purpose is to give
+  # sweep 2 + the diff-guard a live round-trip specimen on every PR. Its activation
+  # description says "do not invoke"; it carries no capability. Owner: thurgood (pipeline).
+  - canonical: skills/_fixture-skill
+    targets:
+      cc: .claude/skills/_fixture-skill
+      kiro: .kiro/skills/_fixture-skill
+    owners: [thurgood]

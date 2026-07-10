@@ -65,6 +65,7 @@ describe('sweep 6 — phantom-route / declaration-diff', () => {
       docs: [docWithCue('ada', 'find_docs', { 'designerpunk-docs': ['find_docs', 'get_section'] })],
       sharedCatalog: [],
       registry,
+      cutoverLedger: ['ada'],
     });
     expect(report.pass).toBe(false);
     const adj = report.findings.find((f) => f.verdict === 'ADJUDICATE');
@@ -77,9 +78,29 @@ describe('sweep 6 — phantom-route / declaration-diff', () => {
       docs: [docWithCue('ada', 'find_docs', { 'designerpunk-docs': ['find_docs', 'get_section'] })],
       sharedCatalog: [],
       registry,
+      cutoverLedger: ['ada'],
       deferredDiscoverable: ['find_components'],
     });
     expect(report.pass).toBe(true);
+  });
+
+  it('a NON-ledger canonical doc (the _fixture pseudo-agent) gets cue checks but never activates the declarations-diff', () => {
+    const report = runSweep6({
+      docs: [docWithCue('_fixture', 'get_section', { 'designerpunk-docs': ['get_section'] })],
+      sharedCatalog: [],
+      registry,
+      cutoverLedger: [], // fixture is never in the ledger
+    });
+    expect(report.pass).toBe(true); // no ADJUDICATE storm over unrouted declarations
+    expect(report.findings.find((f) => f.verdict === 'INFO')?.path).toBe('declarations-diff');
+    // …but a fixture cue naming a dead tool is still a phantom-route FAIL:
+    const phantom = runSweep6({
+      docs: [docWithCue('_fixture', 'dead_tool')],
+      sharedCatalog: [],
+      registry,
+      cutoverLedger: [],
+    });
+    expect(phantom.pass).toBe(false);
   });
 
   it('a recorded adjudication covers an un-routed delta', () => {
@@ -87,6 +108,7 @@ describe('sweep 6 — phantom-route / declaration-diff', () => {
       docs: [docWithCue('ada', 'find_docs', { 'designerpunk-docs': ['find_docs', 'get_section'] })],
       sharedCatalog: [],
       registry,
+      cutoverLedger: ['ada'],
       adjudications: [
         {
           sweep: '122-sweep-6-declarations',

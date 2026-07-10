@@ -435,7 +435,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Open U1's PR: `./.kiro/hooks/complete-task.sh "Substrate: canonical source, pipeline, adapters, checks, gate (122)"` — this is the **substrate unit's PR** carrying all of Tasks 1–8. Report the PR URL and STOP; the substrate is accepted when Peter merges (governance-law carve-out — Peter merges). **Group 2 does not begin until this PR merges (the phase gate).**
   - PR body: `Spec: 122-agent-generator` / `Unit: U1 — Substrate (Tasks 1–8)` / `Agent: Thurgood` / completion-doc paths for Tasks 1–8 / validation note.
 
-  - [ ] 8.1 Build the minimal-fixture standing pipeline test (C10.3)
+  - [x] 8.1 Build the minimal-fixture standing pipeline test (C10.3)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

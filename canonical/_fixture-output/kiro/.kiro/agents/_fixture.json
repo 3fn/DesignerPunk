@@ -1,0 +1,46 @@
+{
+  "allowedTools": [
+    "read",
+    "knowledge",
+    "@designerpunk-docs",
+    "@designerpunk-application",
+    "@designerpunk-product"
+  ],
+  "description": "Standing pipeline fixture (Spec 122 C10.3) — exercises one member of every content class and transform disposition; emitted only under canonical/_fixture-output; no runtime ever loads it.",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "echo fixture-spawn-hook",
+        "timeout_ms": 1000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+0",
+  "name": "_fixture",
+  "prompt": "file://./_fixture-prompt.md",
+  "resources": [
+    "file://.kiro/steering/Agent-Directory.md",
+    "file://.kiro/steering/AI-Collaboration-Principles.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
+    "file://.kiro/steering/core-goals.md",
+    "file://.kiro/steering/DesignerPunk-Systems-Overview.md",
+    "file://.kiro/steering/personal-note.md",
+    "file://.kiro/steering/Spec-Feedback-Protocol.md",
+    "file://.kiro/steering/start-up-tasks.md",
+    "file://.kiro/steering/Task-Completion-Protocol.md",
+    "file://governance/Token-Governance.md",
+    "skill://.kiro/skills/_fixture-skill/SKILL.md"
+  ],
+  "tools": [
+    "*"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "canonical/_fixture-output/**"
+      ]
+    }
+  },
+  "welcomeMessage": "Fixture pseudo-agent — pipeline standing test; not a working seat."
+}
