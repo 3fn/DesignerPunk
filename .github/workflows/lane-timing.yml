@@ -197,7 +197,7 @@ jobs:
       # re-derive on legitimate large suite removals.
       - name: Selection floor — resolved test files ≥ 300
         run: |
-          npx jest --listTests --testPathPatterns='zzz-no-such-test' > resolved-tests.txt
+          npx jest --listTests --testPathIgnorePatterns='.*' > resolved-tests.txt
           COUNT=$(wc -l < resolved-tests.txt | tr -d ' ')
           echo "jest resolved $COUNT test files (floor: 300; derived from 377 on 2026-07-10)"
           echo "--- sample of resolved selection ---"; head -15 resolved-tests.txt
@@ -249,7 +249,7 @@ jobs:
       # files on 2026-07-10.
       - name: Selection floor — resolved test files ≥ 25
         run: |
-          npx jest --listTests --testPathPatterns='zzz-no-such-test' > resolved-tests.txt
+          npx jest --listTests --testPathIgnorePatterns='.*' > resolved-tests.txt
           COUNT=$(wc -l < resolved-tests.txt | tr -d ' ')
           echo "jest resolved $COUNT test files (floor: 25; derived from 36 on 2026-07-10)"
           echo "--- sample of resolved selection ---"; head -15 resolved-tests.txt
@@ -303,7 +303,7 @@ jobs:
       # root auditable rather than silently green.
       - name: Selection floor — resolved test files ≥ 15
         run: |
-          npx jest --listTests --testPathPatterns='zzz-no-such-test' > resolved-tests.txt
+          npx jest --listTests --testPathIgnorePatterns='.*' > resolved-tests.txt
           COUNT=$(wc -l < resolved-tests.txt | tr -d ' ')
           echo "jest resolved $COUNT test files (floor: 15; derived from 23 on 2026-07-10)"
           echo "--- sample of resolved selection ---"; head -15 resolved-tests.txt
