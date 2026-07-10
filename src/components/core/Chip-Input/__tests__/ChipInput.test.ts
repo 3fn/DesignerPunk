@@ -41,8 +41,15 @@ describe('Chip-Input Web Component', () => {
   beforeEach(async () => {
     // Wait for custom element to be defined
     await customElements.whenDefined('chip-input');
-    // Suppress expected blend-color warning (fires async via rAF; no real CSS in jsdom)
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    // Silence ONLY the known environmental warn ("Could not calculate blend colors",
+    // fired async via rAF): jsdom never applies real CSS, so the token lookup cannot
+    // succeed here and the component's designed fallback fires every run, forever.
+    // Anything ELSE passes through to the real console — a NEW warn class stays audible.
+    const realWarn = console.warn.bind(console);
+    jest.spyOn(console, 'warn').mockImplementation((...args: unknown[]) => {
+      if (typeof args[0] === 'string' && args[0].includes('Could not calculate blend colors')) return;
+      realWarn(...args);
+    });
   });
 
   afterEach(() => {

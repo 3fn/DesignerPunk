@@ -33,14 +33,11 @@ describe('Avatar Component Accessibility', () => {
   beforeEach(async () => {
     // Wait for custom element to be defined
     await customElements.whenDefined('avatar-base');
-    // Suppress expected "alt required with src" warning for tests that don't assert on it
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   afterEach(() => {
     // Clean up any created elements
     cleanupDOM();
-    jest.restoreAllMocks();
   });
 
   // ============================================================================
@@ -215,17 +212,24 @@ describe('Avatar Component Accessibility', () => {
     });
 
     it('should apply empty alt when alt is empty string', async () => {
+      // This fixture DELIBERATELY uses alt='' (the decorative-image pattern this test
+      // asserts). The component's Req 5.4 check is `src && !alt`, which treats '' as
+      // missing and warns — a known tension between Req 5.4 and the decorative pattern
+      // (Req 9.2), flagged for Lina to adjudicate at the component level. Locally
+      // silence the expected warn; do NOT change the fixture (it IS the test).
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
       avatar.type = 'human';
       avatar.src = 'https://example.com/profile.jpg';
       avatar.alt = '';
       document.body.appendChild(avatar);
-      
+
       await new Promise(resolve => setTimeout(resolve, 0));
-      
+
       const img = avatar.shadowRoot?.querySelector('.avatar__image');
       expect(img).toBeTruthy();
       expect(img?.getAttribute('alt')).toBe('');
+      warnSpy.mockRestore();
     });
 
     it('should update alt when alt attribute changes', async () => {

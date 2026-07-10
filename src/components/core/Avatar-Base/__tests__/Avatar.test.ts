@@ -31,15 +31,9 @@ describe('Avatar Component Core API', () => {
     }
   });
 
-  beforeEach(() => {
-    // Suppress expected "alt required with src" warning for tests that don't assert on it
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
-  });
-
   afterEach(() => {
     // Clean up any created elements
     cleanupDOM();
-    jest.restoreAllMocks();
   });
 
   // ============================================================================
@@ -224,27 +218,33 @@ describe('Avatar Component Core API', () => {
   // ============================================================================
   
   describe('Src Prop', () => {
+    // Fixtures set `alt` alongside `src` so they honor the component's own a11y
+    // contract (Req 5.4: alt is required with src) — otherwise the component
+    // rightly warns, polluting CI logs. The assertions below are about src only.
     it('should accept src value', () => {
       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
       avatar.src = 'https://example.com/image.jpg';
+      avatar.alt = 'Test avatar';
       document.body.appendChild(avatar);
-      
+
       expect(avatar.src).toBe('https://example.com/image.jpg');
       expect(avatar.getAttribute('src')).toBe('https://example.com/image.jpg');
     });
 
     it('should update src via attribute', () => {
       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
+      avatar.alt = 'Test avatar';
       document.body.appendChild(avatar);
-      
+
       avatar.setAttribute('src', 'https://example.com/new-image.jpg');
       expect(avatar.src).toBe('https://example.com/new-image.jpg');
     });
 
     it('should update src via property', () => {
       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
+      avatar.alt = 'Test avatar';
       document.body.appendChild(avatar);
-      
+
       avatar.src = 'https://example.com/profile.png';
       expect(avatar.getAttribute('src')).toBe('https://example.com/profile.png');
     });
@@ -252,8 +252,9 @@ describe('Avatar Component Core API', () => {
     it('should remove src attribute when set to null', () => {
       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
       avatar.src = 'https://example.com/image.jpg';
+      avatar.alt = 'Test avatar';
       document.body.appendChild(avatar);
-      
+
       avatar.src = null;
       expect(avatar.src).toBeNull();
       expect(avatar.hasAttribute('src')).toBe(false);
@@ -572,8 +573,9 @@ describe('Avatar Component Core API', () => {
 
     it('should reflect src property to attribute', () => {
       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
+      avatar.alt = 'Test avatar'; // honor the alt-with-src contract (Req 5.4)
       document.body.appendChild(avatar);
-      
+
       avatar.src = 'https://example.com/test.jpg';
       expect(avatar.getAttribute('src')).toBe('https://example.com/test.jpg');
     });
@@ -635,8 +637,9 @@ describe('Avatar Component Core API', () => {
     it('should read src attribute as property', () => {
       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
       avatar.setAttribute('src', 'https://example.com/img.png');
+      avatar.setAttribute('alt', 'Test avatar'); // honor the alt-with-src contract (Req 5.4)
       document.body.appendChild(avatar);
-      
+
       expect(avatar.src).toBe('https://example.com/img.png');
     });
 
