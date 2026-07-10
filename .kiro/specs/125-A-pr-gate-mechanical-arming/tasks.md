@@ -39,7 +39,7 @@
   **Validation**: Tier 1
   *(v2 — re-scoped to the residual per THURGOOD R1 T1; the five lanes merged as non-required jobs in PR #38 (2026-07-10), with three PR-runs' findings fixed in-flight — see `lane-timing.yml` inline comments + feedback.md round context.)* Residual: (a) dispatch the `workflow_dispatch cold: true` run — **requires Peter's Actions-write click** (session PATs lack the scope); (b) record BOTH cold-cache AND cached steady-state wall-clock PER LANE (Req 6.3), plus the head-push→all-green wall-clock (felt latency — NOT sum-of-lanes); (c) assert the ~10-min cold ceiling — IF breached THEN pause for Peter's latency acceptance. **Cold-cache recording is a COMPLETION BLOCKER** (STACY R1): steady-state alone does not satisfy Req 6.3. Steady-state samples to date: typecheck 37s · build-validate 26s · mcp-server 23s · app-mcp 24s · functional-root ~3m54s (incl. full build). The recorded baseline is the headroom budget for 122's future registrants [S].
 
-- [ ] **7. Wire the FIVE lanes with did-it-really-run guards**
+- [x] **7. Wire the FIVE lanes with did-it-really-run guards**
   **Type**: Implementation
   **Validation**: Tier 2
   *(v2 — five lanes, not four; per-lane guard mapping per THURGOOD R1 T2 + STACY R1 items 1–2; the two non-jest guards are a scope extension RATIFIED by Peter 2026-07-10.)*
