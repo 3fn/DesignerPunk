@@ -1,7 +1,7 @@
 # Tasks: 125-A — PR Gate + Mechanical Arming
 
 **Date**: 2026-07-05
-**Status**: DRAFT — pending the collective review round; task types per the ratified four-type taxonomy (ballot 2026-07-05)
+**Status**: Tasks 1–5 COMPLETE (Task 5 bake-in closed 2026-07-10, PR #41). **Group 2 (Tasks 6–9): round 1 run + incorporated + RATIFIED (Peter, 2026-07-10** — Thurgood R1 AWA + Stacy R1 AWA in feedback.md § "Tasks 6–9 Feedback"; three decision points ratified: non-jest lane guards adopted, per-lane gate-bites adopted, inverse-drift handback recorded**)**. Task types per the ratified four-type taxonomy (ballot 2026-07-05).
 
 ---
 
@@ -34,22 +34,30 @@
 
 ## Task Group 2 — Phase 1a: mechanical arming (blocked on Task 5)
 
-- [ ] **6. Measure cold-cache CI timing for the candidate lanes**
+- [ ] **6. Record the lane timing measurements (residual — the lanes themselves SHIPPED early, PR #38)**
   **Type**: Setup
   **Validation**: Tier 1
-  Run full `tsc --noEmit`, `build:validate`, root `npm test`, and both sub-package suites as non-required workflow jobs; record **wall-clock to all-green** in both cold-cache and cached steady-state forms (Req 6.3) [T-A7]. IF cold-cache wall-clock exceeds ~10 min THEN pause for Peter's latency acceptance. The baseline is the headroom budget recorded for 122's future registrants [S].
+  *(v2 — re-scoped to the residual per THURGOOD R1 T1; the five lanes merged as non-required jobs in PR #38 (2026-07-10), with three PR-runs' findings fixed in-flight — see `lane-timing.yml` inline comments + feedback.md round context.)* Residual: (a) dispatch the `workflow_dispatch cold: true` run — **requires Peter's Actions-write click** (session PATs lack the scope); (b) record BOTH cold-cache AND cached steady-state wall-clock PER LANE (Req 6.3), plus the head-push→all-green wall-clock (felt latency — NOT sum-of-lanes); (c) assert the ~10-min cold ceiling — IF breached THEN pause for Peter's latency acceptance. **Cold-cache recording is a COMPLETION BLOCKER** (STACY R1): steady-state alone does not satisfy Req 6.3. Steady-state samples to date: typecheck 37s · build-validate 26s · mcp-server 23s · app-mcp 24s · functional-root ~3m54s (incl. full build). The recorded baseline is the headroom budget for 122's future registrants [S].
 
-- [ ] **7. Wire the four lanes with selection-floor + scope guards**
+- [ ] **7. Wire the FIVE lanes with did-it-really-run guards**
   **Type**: Implementation
   **Validation**: Tier 2
-  Workflow jobs for: full typecheck, `build:validate`, root functional suite, `mcp-server` suite, `application-mcp-server` suite. Each test lane: explicit cwd/config, `--listTests` selection floor, and a recorded prove-it-bites run (artificially emptied selection → lane fails) per Req 7. Rider: bump `actions/checkout` / `actions/setup-node` (Req 8).
+  *(v2 — five lanes, not four; per-lane guard mapping per THURGOOD R1 T2 + STACY R1 items 1–2; the two non-jest guards are a scope extension RATIFIED by Peter 2026-07-10.)*
+  - **Three test lanes** (`lane-functional-root`, `lane-mcp-server-suite`, `lane-application-mcp-server-suite`): explicit cwd/config; `--listTests` selection floor (recorded floor value + derivation + date); prove-it-bites (artificially emptied selection → lane FAILS) per Req 7.
+  - **`lane-typecheck`** (non-jest): compiled-file-count floor — assert `tsc --listFilesOnly` count ≥ a recorded floor, so a silently-narrowed tsconfig cannot green.
+  - **`lane-build-validate`** (non-jest): execution assertion — non-zero validated-token count / explicit success sentinel asserted in output; "ran and validated" is checkable, not assumed.
+  - **Evidence form (STACY R1 — scope auditable, not asserted)**: each lane's record = the CI run URL **plus the resolved selection output** (`--listTests` file list or count+path-sample for test lanes; file-count / sentinel output for the other two), committed in `task-7-completion.md`. The floor proves non-empty; the recorded list proves correct-scope.
+  - Rider: bump `actions/checkout` / `actions/setup-node` (Req 8 — the Node-20 deprecation warnings are live on every current run).
 
 - [ ] **8. Promote the lanes to required checks**
   **Type**: Setup
   **Validation**: Tier 1
-  Add the Group-2 lanes to branch protection's required set. Verify a PR with a deliberate type error and a PR with a deliberate test failure are both blocked (gate-bites proof at the platform level).
+  *(v2 — per-lane gate-bites + set-assertion, RATIFIED Peter 2026-07-10.)* Add the five lane contexts to branch protection's required set. **Per-lane gate-bites proof**: one deliberate-failure PR per promoted lane (type error → `lane-typecheck`; a build-validate assertion failure; one failing test seeded in EACH of the three suites' scopes), each shown BLOCKED at the platform; record = the five PR URLs in the Task-9 closeout completion doc (STACY R1 items 2–3). **Set-assertion at promotion** (STACY R1 item 5): record the promoted required-context set (the five names) and paste the `gh api` branch-protection read into the record; Task 9 hands the five names to 122's `verify-gate-registration.sh` so the monthly count-assert covers them standing.
 
 - [ ] **9. Closeout: completion docs + handbacks**
   **Type**: Documentation
   **Validation**: Tier 1
-  Completion + summary docs per Task-Completion-Protocol (as amended by this very spec — eat the dogfood). Handbacks: inbound note to **122** ("the gate is armed and OPEN for your registrants — diff-guard, canonical-vs-truth, sweeps, tool-boot smoke; required-check baseline + latency headroom attached") and seed note to **125-B**, physically located in the umbrella dir as `../125-mechanical-enforcement-strategy/inbound-to-125-B-from-125-A.md` [S] (deferred: warn→fail candidates observed during arming, CODEOWNERS layer + PR-approval-as-ratification, the tool-boot smoke once 122's registry exists, the map seed entries from Task 1's what/why splits — handoff records, not ratified rows — and any ergonomics findings routed forward). Update the umbrella 125 outline's status.
+  *(v2 — deferred-list amendments per THURGOOD R1 T4a/T4b [registry identification corrected in SESSION R2] + STACY R1 items 4–5, RATIFIED Peter 2026-07-10.)* Completion + summary docs per Task-Completion-Protocol (as amended by this very spec — eat the dogfood). Handbacks:
+  - Inbound note to **122**: "the gate is armed and OPEN for your registrants — diff-guard, canonical-vs-truth, sweeps, tool-boot smoke; required-check baseline + latency headroom attached" — **plus the five promoted context names, to fold into `verify-gate-registration.sh`'s asserted set** (converts Task 8's one-time set-assertion into standing monthly coverage).
+  - Seed note to **125-B** at `../125-mechanical-enforcement-strategy/inbound-to-125-B-from-125-A.md` [S], carrying: **bake-in findings 1 and 3 cited BY LEDGER NUMBER** (the two OPEN→125-B items; findings 4/5/6 are dispositioned at closure and NOT carried — no over-handing); warn→fail candidates observed during arming; CODEOWNERS layer + PR-approval-as-ratification; **the tool-boot smoke — 122's manifest (`canonical/registry/tool-registry.json`, 122 Task 4) EXISTS on `task/122-substrate` pending U1's merge, a live candidate rather than a wait-for-existence deferral**; the map seed entries from Task 1's what/why splits (handoff records, not ratified rows); **the inverse-drift observation (STACY R1 item 4): armed lanes rebuild-from-clean — incremental-path integrity and stale-artifact masking are unguarded, future-check candidate**; and any ergonomics findings routed forward.
+  - Update the umbrella 125 outline's status.
