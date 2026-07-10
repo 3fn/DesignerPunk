@@ -112,3 +112,7 @@ None of these are token/formula tests; all are component behavioral-contract tes
 - §7: PR #39 merge as explicit precondition; concrete non-regression signal (existing human-typed warn test survives unchanged) → design-outline.md § 7
 - iOS/Android warn parity stays named-but-untracked per LINA R1 (adopted only if Peter wants parity).
 - **AWAITING: Peter's recorded option choice (O1/O2) below — per THURGOOD R1, that record IS the ratification of the settled edge semantics.**
+
+#### [PETER — DECISION, 2026-07-09]
+- **O2 RATIFIED.** The settled edge semantics: warn iff `type === 'human' && src && alt == null && !decorative` — per design-outline.md v2 §4, with the round's amendments (operative fix is `!decorative`; six-test matrix incl. attribute-form empty-alt; Thurgood's alt-first message wording; contracts.yaml + schema notes ride the change; PR #39 merge is an explicit precondition for the interim-spy removal). This record is the ratification of the edge semantics per THURGOOD R1's process ruling.
+- iOS/Android warn parity: stays named-but-untracked (per LINA R1) — not adopted.
