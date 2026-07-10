@@ -13,10 +13,17 @@ const TOKEN_INDEX = path.join(__dirname, 'fixtures', 'token-index');
 
 describe('Spec 108: Product Tokens Integration', () => {
   let indexer: ProductIndexer;
+  let consoleErrorSpy: jest.SpyInstance;
 
   beforeAll(async () => {
+    // ProductIndexer.index() logs an indexing summary via console.error (informational, not a failure)
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     indexer = new ProductIndexer(FIXTURE_DIR, MOCK_COMPONENTS, TOKEN_INDEX);
     await indexer.index();
+  });
+
+  afterAll(() => {
+    consoleErrorSpy.mockRestore();
   });
 
   describe('get_product_tokens response shape', () => {

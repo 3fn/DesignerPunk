@@ -42,11 +42,24 @@ describe('Chip-Filter Web Component', () => {
   beforeEach(async () => {
     // Wait for custom element to be defined
     await customElements.whenDefined('chip-filter');
+    // Silence ONLY the known environmental warn ("Could not calculate blend colors",
+    // fired async via rAF): jsdom never applies real CSS, so the token lookup cannot
+    // succeed here and the component's designed fallback fires every run, forever.
+    // Anything ELSE passes through to the real console — a NEW warn class stays audible.
+    const realWarn = console.warn.bind(console);
+    jest.spyOn(console, 'warn').mockImplementation((...args: unknown[]) => {
+      // Component-prefixed match (Lina review, PR #39): the bare substring is shared by
+      // Button components too — prefix-matching prevents accidentally swallowing a
+      // cross-component warn if this suite ever composes a Button.
+      if (typeof args[0] === 'string' && args[0].includes('ChipFilter: Could not calculate blend colors')) return;
+      realWarn(...args);
+    });
   });
 
   afterEach(() => {
     // Clean up any created elements
     cleanupDOM();
+    jest.restoreAllMocks();
   });
 
   // ============================================================================
