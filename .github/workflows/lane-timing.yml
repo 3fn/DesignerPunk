@@ -23,10 +23,13 @@
 # required). A lane that blows the ceiling needs scope/parallelization rework,
 # not a silent promotion.
 #
-# LIFECYCLE: Task 7 adds selection-floor + scope guards to these same jobs.
-# Task 8 promotes some/all of them into the branch-protection required-checks
-# list. Job ids/names below are chosen to be durable across both later tasks —
-# do not rename without updating the (future) required-checks configuration.
+# LIFECYCLE: Task 7 (landed 2026-07-10, ratified v2) added the per-lane
+# did-it-really-run guards: --listTests selection floors on the three jest lanes,
+# a resolved-project-file floor on lane-typecheck, and an execution assertion on
+# lane-build-validate — each printing its resolved selection so scope is auditable
+# (floor proves non-empty; the printed list proves correct-scope). Task 8 promotes
+# these jobs into the branch-protection required-checks list. Job ids/names are
+# durable — do not rename without updating the required-checks configuration.
 #
 # @see .kiro/specs/125-A-pr-gate-mechanical-arming/requirements.md (Req 6.3)
 # @see .github/workflows/consumer-guard.yml (prior-art conventions this file follows)
@@ -50,20 +53,20 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Two setup-node steps guarded by `if:` — `cache:` cannot be conditionally
       # disabled inline, so cold-cache dispatch runs use the cache-free variant.
       - name: Setup Node.js (cached)
         if: ${{ github.event.inputs.cold != 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'
 
       - name: Setup Node.js (cold, no cache)
         if: ${{ github.event.inputs.cold == 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -79,6 +82,19 @@ jobs:
       - name: Generate token types (gitignored generated source)
         run: npm run generate:types
 
+      # Did-it-really-run guard (Task 7; ratified scope extension, Peter 2026-07-10): a
+      # silently-narrowed tsconfig cannot green. Floor 400 ≈ half of the 818 project files
+      # resolved at derivation (2026-07-10) — re-derive if the project legitimately shrinks.
+      # The printed sample is the correct-scope evidence (STACY R1): the floor proves
+      # non-empty; the recorded list proves the RIGHT files are in scope.
+      - name: Selection floor — resolved project files ≥ 400
+        run: |
+          npx tsc --noEmit --listFilesOnly | grep -v node_modules > resolved-files.txt
+          COUNT=$(wc -l < resolved-files.txt | tr -d ' ')
+          echo "tsc resolved $COUNT project files (floor: 400; derived from 818 on 2026-07-10)"
+          echo "--- sample of resolved files ---"; head -15 resolved-files.txt
+          [ "$COUNT" -ge 400 ]
+
       - name: Typecheck (full, no skipLibCheck)
         run: npx tsc --noEmit
 
@@ -89,18 +105,18 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js (cached)
         if: ${{ github.event.inputs.cold != 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'
 
       - name: Setup Node.js (cold, no cache)
         if: ${{ github.event.inputs.cold == 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -115,8 +131,19 @@ jobs:
       # TS transpilation, so no prior `tsc`/`build:browser`/`build:mcp` step is
       # required for this script to execute correctly. No prerequisite build step
       # is included in this job's measured wall-clock as a result.
-      - name: Build validation (accessibility token validation)
-        run: npm run build:validate
+      # Execution assertion (Task 7; ratified scope extension, Peter 2026-07-10): "ran and
+      # validated" is checkable, not assumed — the lane FAILS unless the success sentinel is
+      # present AND the reported Total checks count is non-zero. Sentinel derived from the
+      # script's real output on 2026-07-10 ("Total checks: 3 … Accessibility token
+      # validation passed!").
+      - name: Build validation (accessibility token validation) — with execution assertion
+        run: |
+          set -o pipefail
+          npm run build:validate 2>&1 | tee build-validate.out
+          grep -q "Accessibility token validation passed!" build-validate.out
+          CHECKS=$(grep -oE "Total checks: [0-9]+" build-validate.out | grep -oE "[0-9]+" | head -1)
+          echo "validated checks: ${CHECKS:-0} (must be ≥ 1)"
+          [ "${CHECKS:-0}" -ge 1 ]
 
   # ── Lane 3: root functional test suite ──────────────────────────────────
   lane-functional-root:
@@ -125,18 +152,18 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js (cached)
         if: ${{ github.event.inputs.cold != 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'
 
       - name: Setup Node.js (cold, no cache)
         if: ${{ github.event.inputs.cold == 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -163,6 +190,19 @@ jobs:
       - name: Build mcp-server sub-package (asserted by mcp-queryability tests)
         run: npm ci --prefix mcp-server && npm run build --prefix mcp-server
 
+      # Selection floor + correct-scope evidence (Task 7 / Req 7): the floor proves the
+      # selection is non-empty; the printed resolved LIST proves it is the RIGHT selection
+      # (STACY R1 — a mis-pointed config can pass a bare count). Pattern mirrors package.json's
+      # `test` script exactly. Floor 300, derived from 377 resolved test files on 2026-07-10 —
+      # re-derive on legitimate large suite removals.
+      - name: Selection floor — resolved test files ≥ 300
+        run: |
+          npx jest --listTests --testPathIgnorePatterns='performance/__tests__|__tests__/performance|PerformanceValidation' > resolved-tests.txt
+          COUNT=$(wc -l < resolved-tests.txt | tr -d ' ')
+          echo "jest resolved $COUNT test files (floor: 300; derived from 377 on 2026-07-10)"
+          echo "--- sample of resolved selection ---"; head -15 resolved-tests.txt
+          [ "$COUNT" -ge 300 ]
+
       - name: Run functional test suite
         run: npm test
 
@@ -176,11 +216,11 @@ jobs:
         working-directory: mcp-server
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js (cached)
         if: ${{ github.event.inputs.cold != 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'
@@ -188,7 +228,7 @@ jobs:
 
       - name: Setup Node.js (cold, no cache)
         if: ${{ github.event.inputs.cold == 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -204,6 +244,17 @@ jobs:
       - name: Install dependencies (mcp-server)
         run: npm ci
 
+      # Selection floor + correct-scope evidence (Task 7 / Req 7). Pattern mirrors
+      # mcp-server/package.json's `test` script. Floor 25, derived from 36 resolved test
+      # files on 2026-07-10.
+      - name: Selection floor — resolved test files ≥ 25
+        run: |
+          npx jest --listTests --testPathIgnorePatterns='tests/performance' > resolved-tests.txt
+          COUNT=$(wc -l < resolved-tests.txt | tr -d ' ')
+          echo "jest resolved $COUNT test files (floor: 25; derived from 36 on 2026-07-10)"
+          echo "--- sample of resolved selection ---"; head -15 resolved-tests.txt
+          [ "$COUNT" -ge 25 ]
+
       - name: Run mcp-server test suite
         run: npm test
 
@@ -217,11 +268,11 @@ jobs:
         working-directory: application-mcp-server
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js (cached)
         if: ${{ github.event.inputs.cold != 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'
@@ -229,7 +280,7 @@ jobs:
 
       - name: Setup Node.js (cold, no cache)
         if: ${{ github.event.inputs.cold == 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -245,6 +296,18 @@ jobs:
       # not found". Fixed in application-mcp-server/jest.config.js (roots now src-only).
       - name: Install dependencies (application-mcp-server)
         run: npm ci
+
+      # Selection floor + correct-scope evidence (Task 7 / Req 7). Floor 15, derived from
+      # 23 resolved test files on 2026-07-10. Note this suite's jest roots are src-only
+      # (the run-#1 empty-roots finding) — the printed sample makes a future mis-pointed
+      # root auditable rather than silently green.
+      - name: Selection floor — resolved test files ≥ 15
+        run: |
+          npx jest --listTests > resolved-tests.txt
+          COUNT=$(wc -l < resolved-tests.txt | tr -d ' ')
+          echo "jest resolved $COUNT test files (floor: 15; derived from 23 on 2026-07-10)"
+          echo "--- sample of resolved selection ---"; head -15 resolved-tests.txt
+          [ "$COUNT" -ge 15 ]
 
       - name: Run application-mcp-server test suite
         run: npm test
