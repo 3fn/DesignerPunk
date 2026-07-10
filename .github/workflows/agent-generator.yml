@@ -1,0 +1,147 @@
+# Spec 122 Task 7.3 — the ten 122 check contexts on the 125-A Phase 0 gate (C9 / Req 20).
+#
+# One job per check → one named status context (the open-set contract: named context + one
+# branch-protection entry each):
+#   122-diff-guard · 122-canonical-vs-truth · 122-sweep-1-refs · 122-sweep-2-skills ·
+#   122-sweep-3-dupes · 122-sweep-4-ambient · 122-sweep-5-corrected-state (PRE-CUTOVER
+#   WINDOW ONLY — its removal after the last cutover is a recorded protection-list change,
+#   keeping verify-gate-registration.sh's count assertion honest) · 122-sweep-6-declarations ·
+#   122-sweep-7-dispositions · 122-sweep-8-demotion
+#
+# TRIGGER: `on: pull_request` with NO path filter — decided law (125-A Req 2.3, operative
+# via inbound-from-125-A-arming.md §1): a path-filtered REQUIRED context that never triggers
+# sits "Expected" forever and blocks every merge. Every job instead early-exits green in
+# seconds via the shared C6 no-op lock (DD7): the setup job runs the noop probe
+# (tools/agent-generator/sweeps/noop-probe.ts — prints both hash pairs as evidence), and
+# each check job SKIPS its expensive steps when noop=true while STILL REPORTING a genuine
+# success context (step-level `if:`, never job-level skip — a skipped job's context
+# semantics are murkier than a reported success; the printed hashes are the
+# did-it-really-run evidence for the early-exit path).
+#
+# SHARED SETUP: checkout + node 22 + npm cache + `npm ci`; jobs that boot MCPs
+# (diff-guard, canonical-vs-truth, sweep-1, sweep-6) download the built MCP dist artifact
+# the setup job uploads (built once per run — never per job).
+#
+# Latency remedy, if ever needed, is caching/parallelism — NEVER path-filtering (C9).
+#
+# Registration: each context is added to the branch-protection required list (one entry
+# each) — verified count-asserted by tools/agent-generator/verify-gate-registration.sh at
+# each cutover + the monthly governance health check.
+#
+# @see .kiro/specs/122-agent-generator/design.md § "C9 — Gate registration"
+# @see .github/workflows/lane-timing.yml (did-it-really-run prior art, 125-A Task 7)
+# @see tools/agent-generator/diff-guard.ts (the C6 lock this workflow's no-op path reads)
+
+name: Agent Generator (122)
+
+on:
+  pull_request:
+
+jobs:
+  setup:
+    name: 122-setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      noop: ${{ steps.probe.outputs.noop }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: C6 no-op probe (prints both hash pairs as evidence)
+        id: probe
+        run: npx tsx tools/agent-generator/sweeps/noop-probe.ts | tee -a "$GITHUB_OUTPUT"
+
+      - name: Build MCP dist (shared artifact — only on a full run)
+        if: steps.probe.outputs.noop != 'true'
+        run: npm run build:mcp
+
+      - name: Upload MCP dist artifact
+        if: steps.probe.outputs.noop != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mcp-dist
+          path: dist/mcp/
+          retention-days: 1
+
+  check:
+    name: ${{ matrix.context }}
+    needs: setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # cmd = the check CLI; mcp = whether the job needs the built MCP dist artifact.
+          - context: 122-diff-guard
+            cmd: npx tsx tools/agent-generator/diff-guard.ts
+            mcp: true
+          - context: 122-canonical-vs-truth
+            cmd: npx tsx tools/agent-generator/canonical-vs-truth.ts
+            mcp: true
+          - context: 122-sweep-1-refs
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-1-refs.ts
+            mcp: true
+          - context: 122-sweep-2-skills
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-2-skills.ts
+            mcp: false
+          - context: 122-sweep-3-dupes
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-3-dupes.ts
+            mcp: false
+          - context: 122-sweep-4-ambient
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-4-ambient.ts
+            mcp: false
+          # PRE-CUTOVER WINDOW ONLY (Req 19 AC1 named exception) — removal after the last
+          # cutover is a recorded protection-list change.
+          - context: 122-sweep-5-corrected-state
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-5-corrected.ts
+            mcp: false
+          - context: 122-sweep-6-declarations
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-6-declarations.ts
+            mcp: true
+          - context: 122-sweep-7-dispositions
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-7-dispositions.ts
+            mcp: false
+          - context: 122-sweep-8-demotion
+            cmd: npx tsx tools/agent-generator/sweeps/sweep-8-demotion.ts
+            mcp: false
+    steps:
+      - name: Early-exit green (C6 no-op lock matched — hashes printed by 122-setup)
+        if: needs.setup.outputs.noop == 'true'
+        run: echo "no-op — generated surface untouched by this PR (input-closure + output hashes match canonical/generated.lock; see the 122-setup job log for both hash pairs)"
+
+      - name: Checkout
+        if: needs.setup.outputs.noop != 'true'
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        if: needs.setup.outputs.noop != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: needs.setup.outputs.noop != 'true'
+        run: npm ci
+
+      - name: Download MCP dist artifact
+        if: needs.setup.outputs.noop != 'true' && matrix.mcp
+        uses: actions/download-artifact@v4
+        with:
+          name: mcp-dist
+          path: dist/mcp/
+
+      - name: Run ${{ matrix.context }}
+        if: needs.setup.outputs.noop != 'true'
+        run: ${{ matrix.cmd }}

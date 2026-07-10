@@ -352,7 +352,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Failure output grouped by adjudicator with flagged entry + truth observed + canonical claim.
     - _Requirements: 3.2, 5.3, 12.3, 18.1, 18.2, 18.3_
 
-- [ ] 7. The eight sweeps (C8) + gate registration (C9)
+- [x] 7. The eight sweeps (C8) + gate registration (C9)
 
   **Type**: Parent
   **Unit**: U1
@@ -397,7 +397,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Sweep 8 (demotion-diff): `removals = baseline ∖ fresh ambient-manifest`, namespace includes artifact-path members (D-A1); every removal needs a `replaces:` cue else FAIL; `fires: unconditional` trims emit negatives for orphaned artifacts (K-D1). Prove-it-bites: remove a doc from a fixture agent's ambient without a `replaces` cue.
     - _Requirements: 12.1, 19.1, 19.2, 19.4_
 
-  - [ ] 7.3 Register all ten check contexts on the 125-A Phase 0 gate
+  - [x] 7.3 Register all ten check contexts on the 125-A Phase 0 gate
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
