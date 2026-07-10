@@ -1,0 +1,78 @@
+{
+  "artifact": ".claude/agents/_fixture.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        9
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        10,
+        20
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/_fixture.md#body"
+    },
+    {
+      "lines": [
+        21,
+        22
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        23,
+        113
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:token-governance"
+    },
+    {
+      "lines": [
+        114,
+        117
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        118,
+        124
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        125,
+        135
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        136,
+        139
+      ],
+      "op": "render",
+      "source": "writeScope"
+    },
+    {
+      "lines": [
+        140,
+        145
+      ],
+      "op": "render",
+      "source": "kiro.hooks.agentSpawn"
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "servers": [
+    {
+      "entry": "application-mcp-server/dist/index.js",
+      "name": "designerpunk-application",
+      "tools": [
+        {
+          "description": "Check if a parent component can contain a child component, with optional prop context.",
+          "inputSchemaHash": "sha256:98792936c453bd4651dc6b436786a3460693f96a37134cc5bc77c4fa418390ac",
+          "name": "check_composition"
+        },
+        {
+          "description": "Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. \"primary action button\", \"login\", \"text input field\").",
+          "inputSchemaHash": "sha256:fdee0907c5962e27e7c5faef1d46af0c311b89bdbd8d6259663dd9a6a2aa7f2f",
+          "name": "find_components"
+        },
+        {
+          "description": "Get color strategy vocabulary (Restrained/Committed/Full/Drenched) with usage guidance. Optionally filter by tier.",
+          "inputSchemaHash": "sha256:84daa56a5e09c6505e7f76a6cae7b292ee9ab503282fc4ae574194fed681432c",
+          "name": "get_color_strategy"
+        },
+        {
+          "description": "Get lightweight catalog of all components with name, type, family, purpose, and readiness. ~50 tokens per component.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "get_component_catalog"
+        },
+        {
+          "description": "Get complete assembled metadata including all contracts, composition rules, and token relationships.",
+          "inputSchemaHash": "sha256:76f5ae4fb23979ea2b7e484f43340962966b2c698838e0c684e7fa42c22ffac0",
+          "name": "get_component_full"
+        },
+        {
+          "description": "Get index health: status, component count, pattern count, warnings, gaps.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "get_component_health"
+        },
+        {
+          "description": "Get component summary: identity, contract categories, token count, annotations. ~200 tokens.",
+          "inputSchemaHash": "sha256:e70c7002a6daf668c1b99db1ccadf3f4cee8c41c3ef8b7f4e2f19055231b6f59",
+          "name": "get_component_summary"
+        },
+        {
+          "description": "Get design do's and don'ts as categorized directives. Optionally filter by category.",
+          "inputSchemaHash": "sha256:7b86582a4f12f0c502a6885eef0d3776761349e06b5f77d08d9deef23fa4f6b4",
+          "name": "get_design_guidance"
+        },
+        {
+          "description": "Get the design system's creative north star, aesthetic philosophy, and key characteristics.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "get_design_philosophy"
+        },
+        {
+          "description": "Get named design rules as structured data (name, constraint, rationale).",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "get_design_rules"
+        },
+        {
+          "description": "Get full experience pattern by name: steps, components with roles and hints, accessibility notes, and alternatives.",
+          "inputSchemaHash": "sha256:5dd7718504cc8c153d53adf14b5d459839bb63b24ceeefaa7b71f08ddf048d6e",
+          "name": "get_experience_pattern"
+        },
+        {
+          "description": "Get full layout template by name: regions with grid behavior per breakpoint, stacking rules, and token references.",
+          "inputSchemaHash": "sha256:90ec5bc3fbe21db53f64bbe47325a1fd56a71defc8f259ab434206ba11018285",
+          "name": "get_layout_template"
+        },
+        {
+          "description": "Get prop selection and family member guidance for a component or family. Returns whenToUse, whenNotToUse, selectionRules (scenario→recommendation with optional props), accessibilityNotes, and family-scoped patterns. Query by component name (returns its family guidance) or family name.",
+          "inputSchemaHash": "sha256:c821035bf408819e4340ca7a5afa29553761d7ed556adf3d4a982715b6e6fc9c",
+          "name": "get_prop_guidance"
+        },
+        {
+          "description": "Get all components that reference a token.",
+          "inputSchemaHash": "sha256:df997933343ffa2684745ae5393b7e51319fbc5cc35ad8a3e496da16e30d0f9b",
+          "name": "get_token_consumers"
+        },
+        {
+          "description": "Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers.",
+          "inputSchemaHash": "sha256:3f62c5ed4ea631bdf9d6f2a57e5f8c9fe63d78e97ac8828b6ce946af9c5fd476",
+          "name": "get_token_details"
+        },
+        {
+          "description": "Get all tokens in a family across all tiers.",
+          "inputSchemaHash": "sha256:199ae61515137deb2775fbc096a9b559ce4ff5953eefc2786140b4b4e8a6c1ea",
+          "name": "get_token_family"
+        },
+        {
+          "description": "List all experience patterns with name, description, category, tags, step count, and component count.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "list_experience_patterns"
+        },
+        {
+          "description": "List all layout templates with name, description, category, tags, and region count.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "list_layout_templates"
+        },
+        {
+          "description": "Rebuild the component index from scratch. Use when index is stale or out of sync. Returns new health status after reindex.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "rebuild_index"
+        },
+        {
+          "description": "Search tokens by family, tier (primitive/semantic/component), or name. All parameters optional and combinable.",
+          "inputSchemaHash": "sha256:a01e2ef1d58291c844756db2202bc6b129af68caec9bf4be4f78755eb12ecfbc",
+          "name": "search_tokens"
+        },
+        {
+          "description": "Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths.",
+          "inputSchemaHash": "sha256:e531446e76a814981cda5eee246688346d05ecfeb417d535599f49cd04e3e4b8",
+          "name": "validate_assembly"
+        }
+      ]
+    },
+    {
+      "entry": "mcp-server/dist/index.js",
+      "name": "designerpunk-docs",
+      "tools": [
+        {
+          "description": "Discover docs by concept/keyword (concept mode, ranked), or enumerate the full catalog (list mode, paginated). Supersedes get_documentation_map.",
+          "inputSchemaHash": "sha256:41368aad650bc3fba9e6f7eb29e471f76b9cb74c7f4180bb7bad35ca6418b27b",
+          "name": "find_docs"
+        },
+        {
+          "description": "Get complete document content with metadata. Use when summaries are insufficient and full content is needed.",
+          "inputSchemaHash": "sha256:c01476dcbfa21327651e348c615d8c7e33287a98f7b57accab616c26a1425757",
+          "name": "get_document_full"
+        },
+        {
+          "description": "Get document summary with metadata and outline. Returns ~200 tokens to enable informed decisions about loading full content.",
+          "inputSchemaHash": "sha256:c01476dcbfa21327651e348c615d8c7e33287a98f7b57accab616c26a1425757",
+          "name": "get_document_summary"
+        },
+        {
+          "description": "Get the health status of the document index. Returns status (healthy/degraded/failed), errors, warnings, and metrics including document count, section count, cross-reference count, and index size.",
+          "inputSchemaHash": "sha256:d220ea291dfcd6d949de71469cbe7018436dbb1de31e0941f76eba92ffc0f0d7",
+          "name": "get_index_health"
+        },
+        {
+          "description": "Get specific document section by heading. Returns section content with parent context, a stable sectionId, and siblingHeadings (adjacent sections under the same parent — a cue that more may exist). For a heading that occurs more than once, pass \"parent\" or \"sectionId\" to disambiguate; otherwise the response lists the candidate occurrences. RULE: when retrieving a multi-section logical unit, call get_document_summary first (summary-first) so sibling sections are discoverable rather than silently omitted.",
+          "inputSchemaHash": "sha256:f756993a9ee9d71183d2be148daf21879a4b46f573431134a6f7e30c5e057a16",
+          "name": "get_section"
+        },
+        {
+          "description": "List cross-references in a document. Returns all referenced documents with context, source section, and line number.",
+          "inputSchemaHash": "sha256:c01476dcbfa21327651e348c615d8c7e33287a98f7b57accab616c26a1425757",
+          "name": "list_cross_references"
+        },
+        {
+          "description": "Rebuild the documentation index from scratch. Use this when the index is corrupted or out of sync. Returns the new index health status after rebuild.",
+          "inputSchemaHash": "sha256:d220ea291dfcd6d949de71469cbe7018436dbb1de31e0941f76eba92ffc0f0d7",
+          "name": "rebuild_index"
+        },
+        {
+          "description": "Validate document metadata schema. Checks for required fields (Date, Purpose, Organization, Scope, Layer, Relevant Tasks) and returns specific error messages for each issue.",
+          "inputSchemaHash": "sha256:c01476dcbfa21327651e348c615d8c7e33287a98f7b57accab616c26a1425757",
+          "name": "validate_metadata"
+        }
+      ]
+    },
+    {
+      "entry": "dist/mcp/product-mcp.js",
+      "name": "designerpunk-product",
+      "tools": [
+        {
+          "description": "Find design principles by keyword.",
+          "inputSchemaHash": "sha256:0cb5d17b092928a9fdb1c92e2fc0344d062ceef903e25255991766ad7094f523",
+          "name": "find_principles"
+        },
+        {
+          "description": "Find screens by component usage, token usage, domain object usage, status, platform, or context. All filters are conjunctive (AND). No params returns all screens.",
+          "inputSchemaHash": "sha256:9c470a3cdda7d1cbe2956566bcf80c8d88663023977be82a23649dd3fd8b2421",
+          "name": "find_screens"
+        },
+        {
+          "description": "Find product templates by category or by which screen uses them.",
+          "inputSchemaHash": "sha256:809ab5e951af0d49dd3fd1ba025307a69ebe2716f26ec5d3aad9ed9b48dfb169",
+          "name": "find_templates"
+        },
+        {
+          "description": "Get product brand identity: personality, voice, tone, anti-references, register. Returns structured \"not configured\" response if brand fields are absent.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "get_brand_context"
+        },
+        {
+          "description": "Get domain object definition and list of screens that reference it.",
+          "inputSchemaHash": "sha256:61145d70e967e93a3a97fbeb60a9dfbd96bd4a620c6169373f0936aa0fdb1bc4",
+          "name": "get_domain_object"
+        },
+        {
+          "description": "Get a product-specific (one-off) component by name — schema, contracts, and composition details.",
+          "inputSchemaHash": "sha256:26942b63a9ea8b8da1fe65d26992b2b0b7bde3fb2444c91e7bcd0845a86b173b",
+          "name": "get_product_component"
+        },
+        {
+          "description": "Get index status, data counts, reverse index sizes, gap counts, and warnings.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "get_product_health"
+        },
+        {
+          "description": "Get product context, configuration, and principles.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "get_product_overview"
+        },
+        {
+          "description": "Get product tokens by category, name, or platform. Returns structured values with resolved system token references. All filters optional and conjunctive.",
+          "inputSchemaHash": "sha256:f4f3c7398e557877808046aecaf8e3bd64b29287730a7e53954444f8b35f4987",
+          "name": "get_product_tokens"
+        },
+        {
+          "description": "Get full spec for a screen (UI tree, state model, data sources, accessibility, status). Includes _componentGaps for unmatched components. Optional platform filter.",
+          "inputSchemaHash": "sha256:6ed1194529b4efaa7f42304b1c70b7769a6b405395b0bff6c51dc3d625d52902",
+          "name": "get_screen_spec"
+        },
+        {
+          "description": "Get just the state model of a screen (data, states, actions, transitions) without the full spec.",
+          "inputSchemaHash": "sha256:0b535eaa894b24c9f3b161f288a69537c5eac2d90f23ade3bca7c7aafea69a27",
+          "name": "get_screen_state_model"
+        },
+        {
+          "description": "List experience map entries with referenced components, domain objects, and blocked reasons. Supports same filters as find_screens.",
+          "inputSchemaHash": "sha256:9c470a3cdda7d1cbe2956566bcf80c8d88663023977be82a23649dd3fd8b2421",
+          "name": "list_experience_map"
+        },
+        {
+          "description": "List all product-specific layout and content patterns.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "list_product_templates"
+        },
+        {
+          "description": "Re-index all product data. Returns new health status.",
+          "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
+          "name": "rebuild_product_index"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "artifact": ".kiro/agents/_fixture-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        11
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/_fixture.md#body"
+    },
+    {
+      "lines": [
+        12,
+        15
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        16,
+        22
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        23,
+        33
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        34,
+        37
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}

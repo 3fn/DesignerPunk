@@ -1,0 +1,63 @@
+# skills-map.yaml — the explicit canonical-keyed skill mapping table (C2.2;
+# design.md § "C2 — Shared substrate files"; Req 8 AC1/AC2).
+#
+# POPULATED (Task 3.1). The 5 canonical skills have been relocated under the neutral
+# top-level `skills/` root (`git mv` from `.kiro/skills/**`), and this table now carries one
+# canonical-keyed row per skill. `.kiro/skills/android/SKILL.md` (an index/umbrella, not a
+# skill — referenced by zero agent configs) was deleted rather than migrated; the table below
+# supersedes it as the authoritative index. `.claude/skills/**` is untouched by this task —
+# Task 3.2 emits both `.claude/skills/**` and `.kiro/skills/**` FROM this table.
+#
+# Round-trip check (sweep 2, Req 19): every directory under `skills/` has exactly one row
+# below, and every row below has a corresponding directory under `skills/`. This is now 5 ↔ 5.
+#
+# Row shape (per design.md §C2.2, reproduced verbatim as the authoring template — do not
+# add rows without this exact shape):
+#
+#   - canonical: skills/theming-styles          # the neutral-root home; SKILL.md + bundled scripts inside
+#     targets:
+#       cc:   .claude/skills/theming-styles     # flat dir + SKILL.md + activation description intact
+#       kiro: .kiro/skills/android/theming/styles
+#     owners: [data]
+#
+# `.kiro/skills/**` is a GENERATED OUTPUT of this table, same as `.claude/skills/**` — Kiro
+# is not the source. Agents reference skills by row `canonical:` key only (C1 `skills:`),
+# never by path; adapters resolve key -> per-target path + per-target reference syntax
+# (`skill://<kiro path>` vs the CC Skill-tool naming).
+#
+# Traces to: Req 4, Req 8, Req 9, Req 11 AC2/AC5, Req 12 AC4, Req 13 AC2, Req 14.
+
+rows:
+  - canonical: skills/adaptive
+    targets:
+      cc: .claude/skills/adaptive
+      kiro: .kiro/skills/android/adaptive
+    owners: [data]
+  - canonical: skills/edge-to-edge
+    targets:
+      cc: .claude/skills/edge-to-edge
+      kiro: .kiro/skills/android/edge-to-edge
+    owners: [data]
+  - canonical: skills/navigation-3
+    targets:
+      cc: .claude/skills/navigation-3
+      kiro: .kiro/skills/android/navigation-3
+    owners: [data]
+  - canonical: skills/theming-styles
+    targets:
+      cc: .claude/skills/theming-styles
+      kiro: .kiro/skills/android/theming/styles
+    owners: [data]
+  - canonical: skills/impeccable
+    targets:
+      cc: .claude/skills/impeccable
+      kiro: .kiro/skills/impeccable
+    owners: [leonardo]
+  # The Spec 122 C10.3 standing-fixture row — an inert skill whose only purpose is to give
+  # sweep 2 + the diff-guard a live round-trip specimen on every PR. Its activation
+  # description says "do not invoke"; it carries no capability. Owner: thurgood (pipeline).
+  - canonical: skills/_fixture-skill
+    targets:
+      cc: .claude/skills/_fixture-skill
+      kiro: .kiro/skills/_fixture-skill
+    owners: [thurgood]
