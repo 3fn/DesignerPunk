@@ -1,0 +1,28 @@
+# adjudications.yaml — recorded owner rulings the sweeps consume (C8; Spec 122 Task 7).
+#
+# design.md § C8: flagged deltas are NEVER auto-resolved — a sweep fails with an ADJUDICATE:
+# block naming the owner until the delta is either FIXED (input/design reconciled) or RULED
+# here. A row here does not hide the delta: the sweep report still lists it, marked
+# `[adjudicated:<ruling>]`, so a standing ruled delta stays visible on every run.
+#
+# INTERPRETATION NOTE (Task 7.1, flagged for review): C10.2 records adjudications in the
+# per-cutover sweep REPORT (prose, human-readable). A STANDING mechanical check additionally
+# needs a machine-readable record to distinguish a ruled delta from an unruled one — an
+# `intentional-trim` delta REMAINS a set-difference forever, and without this file the sweep
+# would fail every PR after the ruling. This file is that record; the cutover report cites
+# the same ruling in prose. "Authority is a record": every row MUST cite a `record` (commit
+# sha / report path / feedback-round stamp) where the ruling was made — a row without a
+# citable record does not count as a ruling.
+#
+# Row shape:
+#   - sweep: 122-sweep-4-ambient          # the check context the ruling applies to
+#     key: data/designed-minus-generated/start-up-tasks   # the finding's adjudicationKey
+#     ruling: intentional-trim | assessment-gap | design-change
+#     owner: data                         # who ruled (the seat/owner the finding routes to)
+#     record: "b7c3c148"                  # citable record of the ruling
+#
+# Empty today: Data's start-up-tasks adjudication (b7c3c148) was resolved by FIXING the
+# designed input (gap #7's union rule — the delta no longer exists post-union), which is the
+# preferred resolution; rows land here only for deltas that legitimately PERSIST.
+
+adjudications: []

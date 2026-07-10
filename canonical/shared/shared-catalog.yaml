@@ -15,11 +15,13 @@ members:
     owner: thurgood
 
   # --- Req 10 AC6: the find_docs discovery row, propagated to all 8 agents from canonical
-  # source (not `get_documentation_map`, which is removed per Req 3 AC3).
+  # source. retired-mention-ok(negation context — this comment names the removed tool per Req 3 AC3)
+  # (not `get_documentation_map`, which is removed per Req 3 AC3).
   - id: find-docs-discovery
     kind: tool-cue
     tool: find_docs
     mcp: docs
+    # retired-mention-ok(a demotion-style cue must NAME the tool it retires — sweep 1 exempts by this annotation only)
     cue: "use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted"
     owner: thurgood
 
@@ -38,14 +40,15 @@ members:
     # (record-first) — approved by Peter, 2026-07-05" (verified present, read in this task).
     source: ".kiro/docs/ballots/README.md § \"The Ratification Protocol (record-first)\""
     # crossRef: Req 13 AC2 requires a RECORDED, two-ended cross-reference between this
-    # canonical entry and "the 125 map entry" — i.e. Spec 125-B's classification map. As of
-    # this task, that map does NOT YET EXIST as an artifact: 125-mechanical-enforcement-
-    # strategy's design-outline.md (line 160) explicitly defers "125-B = the classification
-    # map... formalized AFTER 122 calcifies" — 125-B has not been split out as its own spec
-    # directory yet (only 125-mechanical-enforcement-strategy and 125-A-pr-gate-mechanical-
-    # arming exist on disk today; searched both for "classification map" / "classification-
-    # map", see task report). Authoring a concrete crossRef path here would fabricate a
-    # target that does not exist. Left as an explicit TODO per instruction rather than
-    # invented — the reciprocal half (125-B naming this file) cannot be created by this
-    # task since 125-B does not exist yet.
-    crossRef: "TODO(125-B classification map entry — not yet created; searched .kiro/specs/125-mechanical-enforcement-strategy/** and .kiro/specs/125-A-pr-gate-mechanical-arming/** for \"classification map\" / \"classification-map\"; confirmed deferred-to-125-B in 125-mechanical-enforcement-strategy/design-outline.md line 160 and 125-A-pr-gate-mechanical-arming/design-outline.md lines 12/24. Re-resolve this TODO when 125-B is spec'd and its classification-map artifact exists.)"
+    # canonical entry and "the 125 map entry" — i.e. Spec 125-B's classification map. That
+    # map does NOT YET EXIST as an artifact (125-B formalizes after 122 calcifies —
+    # 125-mechanical-enforcement-strategy/design-outline.md line 160). INTERIM TARGET
+    # (approved by Peter, 2026-07-10): the ratification-protocol section of the ballots
+    # README — a real, resolvable target sweep 1 verifies — instead of a fabricated path
+    # or a sweep-blinding TODO. crossRefStatus marks the interim machine-readably; sweep 1
+    # enumerates interim crossRefs in every run report so this cannot rot silently. The
+    # re-point obligation is recorded at the decision point 125-B's formalization MUST
+    # read: .kiro/specs/125-mechanical-enforcement-strategy/inbound-to-125-B-from-122.md.
+    crossRef: ".kiro/docs/ballots/README.md § \"The Ratification Protocol (record-first) — approved by Peter, 2026-07-05\""
+    crossRefStatus: interim
+    crossRefResolveWhen: "125-B's classification-map artifact exists — re-point crossRef at its record-first-ratification entry and create the reciprocal half (map entry naming this file), per inbound-to-125-B-from-122.md"

@@ -377,7 +377,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-substrate` branch)
   - Complete on the branch: `./.kiro/hooks/complete-task.sh "Task 7 Complete: Eight sweeps + gate registration (122)"` — commits the completion+summary docs on the branch, **no PR** (U1's PR opens at Task 8). Report the on-branch completion and STOP.
 
-  - [ ] 7.1 Implement sweeps 1–4 with prove-it-bites
+  - [x] 7.1 Implement sweeps 1–4 with prove-it-bites
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

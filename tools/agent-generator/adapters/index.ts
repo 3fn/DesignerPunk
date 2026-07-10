@@ -103,6 +103,15 @@ export interface SharedCatalogMember {
   owner?: string;
   source?: string;
   crossRef?: string;
+  /**
+   * `interim` marks a crossRef pointing at a stand-in target because the designed target
+   * does not exist yet (e.g. record-first-ratification → ballots README until 125-B's
+   * classification map lands). Sweep 1 resolves interim targets like any other ref AND
+   * enumerates them in every run report so the stand-in cannot become silently permanent.
+   */
+  crossRefStatus?: 'interim';
+  /** Human-readable re-point condition for an interim crossRef. */
+  crossRefResolveWhen?: string;
 }
 
 /** Parse `canonical/shared/shared-catalog.yaml` text (pure). */
