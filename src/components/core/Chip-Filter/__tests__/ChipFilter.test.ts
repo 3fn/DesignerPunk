@@ -48,7 +48,10 @@ describe('Chip-Filter Web Component', () => {
     // Anything ELSE passes through to the real console — a NEW warn class stays audible.
     const realWarn = console.warn.bind(console);
     jest.spyOn(console, 'warn').mockImplementation((...args: unknown[]) => {
-      if (typeof args[0] === 'string' && args[0].includes('Could not calculate blend colors')) return;
+      // Component-prefixed match (Lina review, PR #39): the bare substring is shared by
+      // Button components too — prefix-matching prevents accidentally swallowing a
+      // cross-component warn if this suite ever composes a Button.
+      if (typeof args[0] === 'string' && args[0].includes('ChipFilter: Could not calculate blend colors')) return;
       realWarn(...args);
     });
   });
