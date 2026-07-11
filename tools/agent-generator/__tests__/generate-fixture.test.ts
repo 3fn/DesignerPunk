@@ -10,7 +10,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import { buildDocIdToPath, buildEmbeds, extractSectionContent } from '../generate';
+import { buildDocIdToPath, buildEmbeds, extractSectionContent, writeOutputs } from '../generate';
 import type { CorpusClient, CorpusToolResult } from '../resolve';
 import type { CanonicalAgentDoc } from '../schema';
 
@@ -116,5 +116,32 @@ describe('buildEmbeds', () => {
       body: '',
     };
     expect(await buildEmbeds(doc, fakeCorpus({}))).toEqual({});
+  });
+});
+
+describe('writeOutputs — root guard (U5 foot-gun fix)', () => {
+  const OUTPUTS = [{ path: 'a/b.txt', content: 'x' }];
+
+  it('throws naming the function on an empty-string root (no silent relative scatter)', () => {
+    expect(() => writeOutputs('', OUTPUTS)).toThrow(/writeOutputs: "root" must be a non-empty string/);
+  });
+
+  it('throws on a whitespace-only root', () => {
+    expect(() => writeOutputs('   ', OUTPUTS)).toThrow(/non-empty string/);
+  });
+
+  it('throws on an undefined root (the stray `undefined/` dir cause)', () => {
+    expect(() => writeOutputs(undefined as unknown as string, OUTPUTS)).toThrow(/non-empty string/);
+  });
+
+  it('still writes under a valid root', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wo-root-'));
+    try {
+      const written = writeOutputs(root, OUTPUTS);
+      expect(written).toEqual(['a/b.txt']);
+      expect(fs.readFileSync(path.join(root, 'a/b.txt'), 'utf8')).toBe('x');
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
   });
 });
