@@ -13,7 +13,9 @@ import {
   renderRunContextAnnotation,
   renderToolCue,
   renderDocRoute,
+  renderGroundTruthFaithfulness,
 } from '../render';
+import type { GroundTruthDirective } from '../compose';
 import type { WorkflowRule } from '../workflow-rules-guard';
 
 function rule(overrides: Partial<WorkflowRule> & Pick<WorkflowRule, 'id' | 'appliesToTools' | 'statement'>): WorkflowRule {
@@ -119,5 +121,25 @@ describe('cue / route sentences — assembled from fields (P4)', () => {
       'WHEN touching runtime-TS loading THEN consult rosetta-system-architecture § "Module-Resolution Contract (Spec 118)"'
     );
     expect(out).not.toContain('governance/');
+  });
+});
+
+describe('renderGroundTruthFaithfulness (Req 10 AC3) — verdicts honored as data', () => {
+  it('renders the assembly-grain faithfulness cue from faithfulnessVerbs, tool names via the caller', () => {
+    const directive: GroundTruthDirective = {
+      verdict: 'catalog-is-manifest',
+      emitArtifactRefs: true,
+      faithfulnessVerbs: ['get_component_full', 'get_component_health'],
+    };
+    const out = renderGroundTruthFaithfulness(directive, (t) => `mcp__designerpunk-application__${t}`);
+    expect(out).toContain('assembly-grain, not catalog enumeration');
+    expect(out).toContain('`mcp__designerpunk-application__get_component_full`');
+    expect(out).toContain('`mcp__designerpunk-application__get_component_health`');
+    expect(out).toContain('never a standing snapshot');
+  });
+
+  it('returns undefined when the directive carries no faithfulness verbs (none-standing et al.)', () => {
+    const directive: GroundTruthDirective = { verdict: 'none-standing', emitArtifactRefs: true };
+    expect(renderGroundTruthFaithfulness(directive, (t) => t)).toBeUndefined();
   });
 });

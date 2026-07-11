@@ -1,0 +1,94 @@
+{
+  "artifact": ".claude/agents/lina.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        25
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        26,
+        293
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#body"
+    },
+    {
+      "lines": [
+        294,
+        295
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        296,
+        337
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:contract-system-reference"
+    },
+    {
+      "lines": [
+        338,
+        341
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        342,
+        345
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        346,
+        397
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        398,
+        407
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        408,
+        411
+      ],
+      "op": "render",
+      "source": "knowledgeBases"
+    },
+    {
+      "lines": [
+        412,
+        415
+      ],
+      "op": "render",
+      "source": "writeScope"
+    },
+    {
+      "lines": [
+        416,
+        421
+      ],
+      "op": "render",
+      "source": "kiro.hooks.agentSpawn"
+    }
+  ]
+}

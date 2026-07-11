@@ -9,3 +9,6 @@ agents:
   # entry forward the generator is SSOT for ada; her runtime artifacts
   # (.claude/agents/ada.md, .kiro/agents/ada.{json,-prompt.md}) are diff-guarded surfaces.
   - ada
+  # U3 — Lina (Task 10). Generator-SSOT from this entry forward; her runtime artifacts
+  # (.claude/agents/lina.md, .kiro/agents/lina.{json,-prompt.md}) are diff-guarded surfaces.
+  - lina

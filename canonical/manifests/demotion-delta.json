@@ -23,5 +23,37 @@
       "token-resolution-patterns",
       "token-semantic-structure"
     ]
+  },
+  {
+    "agent": "lina",
+    "removals": [
+      "component-development-standards",
+      "component-family-avatar",
+      "component-family-badge",
+      "component-family-button",
+      "component-family-chip",
+      "component-family-container",
+      "component-family-data-display",
+      "component-family-divider",
+      "component-family-form-inputs",
+      "component-family-icon",
+      "component-family-loading",
+      "component-family-modal",
+      "component-family-navigation",
+      "component-family-progress",
+      "component-inheritance-structures",
+      "component-meta-authoring-guide",
+      "component-quick-reference",
+      "component-readiness-status",
+      "component-schema-format",
+      "cross-platform-vs-platform-specific-decision-framework",
+      "platform-implementation-guidelines",
+      "process-development-workflow",
+      "process-file-organization",
+      "stemma-system-principles",
+      "token-governance",
+      "token-quick-reference",
+      "web-authoring-standards"
+    ]
   }
 ]
