@@ -468,4 +468,55 @@ describe('CcAdapter.emitAgent — ground truth faithfulness cue', () => {
     });
     expect(() => adapter.emitAgent(agent, ctx())).toThrow(/not declared by any server/);
   });
+
+  it('renders the none-trim-stale-snapshots trim negatives VERBATIM with a namespaced replacement tool', () => {
+    const agent = withGroundTruth(
+      {
+        verdict: 'none-trim-stale-snapshots',
+        emitArtifactRefs: false,
+        trims: [
+          {
+            artifact: 'dist/web/DesignTokens.web.css',
+            fires: 'unconditional',
+            cue: {
+              negative: 'do NOT read dist/web/DesignTokens.web.css (a stale build snapshot)',
+              tool: 'get_token_details',
+              mcp: 'application',
+              replaces: 'dist/web/DesignTokens.web.css',
+            },
+          },
+        ],
+      },
+      {
+        'designerpunk-docs': ['find_docs', 'get_section'],
+        // get_component_full satisfies the fixture's built-in routes.cue; get_token_details is the trim's tool.
+        'designerpunk-application': ['get_component_full', 'get_token_details'],
+      }
+    );
+    const [file] = adapter.emitAgent(agent, ctx());
+    expect(file.content).toContain('## Ground truth');
+    // The verbatim negative sweep-8 K-D1 asserts:
+    expect(file.content).toContain('do NOT read dist/web/DesignTokens.web.css (a stale build snapshot)');
+    expect(file.content).toContain('`mcp__designerpunk-application__get_token_details`');
+  });
+
+  it('throws loud when a trim replacement tool is not granted by the subset', () => {
+    const agent = withGroundTruth({
+      verdict: 'none-trim-stale-snapshots',
+      emitArtifactRefs: false,
+      trims: [
+        {
+          artifact: 'dist/web/DesignTokens.web.css',
+          fires: 'unconditional',
+          cue: {
+            negative: 'do NOT read dist/web/DesignTokens.web.css',
+            tool: 'search_tokens', // fixture subset does not grant it
+            mcp: 'application',
+            replaces: 'dist/web/DesignTokens.web.css',
+          },
+        },
+      ],
+    });
+    expect(() => adapter.emitAgent(agent, ctx())).toThrow(/not declared by any server/);
+  });
 });

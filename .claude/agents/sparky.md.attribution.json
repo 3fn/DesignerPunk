@@ -1,0 +1,104 @@
+{
+  "artifact": ".claude/agents/sparky.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        32
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        33,
+        284
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#body"
+    },
+    {
+      "lines": [
+        285,
+        286
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        287,
+        310
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:contract-system-reference"
+    },
+    {
+      "lines": [
+        311,
+        363
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:product-token-governance"
+    },
+    {
+      "lines": [
+        364,
+        509
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:web-authoring-standards"
+    },
+    {
+      "lines": [
+        510,
+        516
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        517,
+        520
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        521,
+        545
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        546,
+        563
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        564,
+        567
+      ],
+      "op": "render",
+      "source": "writeScope"
+    },
+    {
+      "lines": [
+        568,
+        573
+      ],
+      "op": "render",
+      "source": "kiro.hooks.agentSpawn"
+    }
+  ]
+}

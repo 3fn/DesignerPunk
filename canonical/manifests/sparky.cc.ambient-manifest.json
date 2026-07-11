@@ -1,0 +1,116 @@
+{
+  "agent": "sparky",
+  "groundTruth": {
+    "emitArtifactRefs": false,
+    "trims": [
+      {
+        "artifact": "dist/web/DesignTokens.web.css",
+        "cue": {
+          "mcp": "application",
+          "negative": "do NOT read the built token CSS snapshot dist/web/DesignTokens.web.css — it is a stale generated artifact, not the source of truth",
+          "replaces": "dist/web/DesignTokens.web.css",
+          "shape": "per-platform-value",
+          "tool": "get_token_details"
+        },
+        "fires": "unconditional"
+      },
+      {
+        "artifact": "dist/ComponentTokens.web.css",
+        "cue": {
+          "mcp": "application",
+          "negative": "do NOT read the built component-token CSS snapshot dist/ComponentTokens.web.css — it is a stale generated artifact, not the source of truth",
+          "replaces": "dist/ComponentTokens.web.css",
+          "shape": "per-platform-value",
+          "tool": "get_token_details"
+        },
+        "fires": "unconditional"
+      },
+      {
+        "artifact": "dist/browser/demo-styles.css",
+        "cue": {
+          "mcp": "application",
+          "negative": "do NOT read dist/browser/demo-styles.css — it is demo-page chrome and defines no tokens",
+          "replaces": "dist/browser/demo-styles.css",
+          "tool": "search_tokens"
+        },
+        "fires": "unconditional"
+      }
+    ],
+    "verdict": "none-trim-stale-snapshots"
+  },
+  "members": [
+    {
+      "class": "capability-routing",
+      "delivery": "file",
+      "id": "agent-directory",
+      "lane": "shared"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "ai-collaboration-principles",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "civitas-system-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "governance-as-law",
+      "delivery": "file",
+      "id": "contract-system-reference",
+      "lane": "per-agent"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "core-goals",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "designerpunk-systems-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "personal-note",
+      "lane": "shared"
+    },
+    {
+      "class": "governance-as-law",
+      "delivery": "file",
+      "id": "product-token-governance",
+      "lane": "per-agent"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "spec-feedback-protocol",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "start-up-tasks",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "task-completion-protocol",
+      "lane": "shared"
+    },
+    {
+      "class": "governance-as-law",
+      "delivery": "file",
+      "id": "web-authoring-standards",
+      "lane": "per-agent"
+    }
+  ],
+  "target": "cc"
+}

@@ -15,3 +15,7 @@ agents:
   # U4 — Thurgood (Task 11). Generator-SSOT from this entry forward; his runtime artifacts
   # (.claude/agents/thurgood.md, .kiro/agents/thurgood.{json,-prompt.md}) are diff-guarded.
   - thurgood
+  # U5 — Sparky (Task 14). FIRST-GENERATION (never CC-ported). Generator-SSOT from this
+  # entry forward; his runtime artifacts (.claude/agents/sparky.md — NEW,
+  # .kiro/agents/sparky.{json,-prompt.md}) are diff-guarded surfaces.
+  - sparky

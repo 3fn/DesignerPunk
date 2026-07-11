@@ -57,6 +57,23 @@
     ]
   },
   {
+    "agent": "sparky",
+    "removals": [
+      "dist/ComponentTokens.web.css",
+      "dist/browser/demo-styles.css",
+      "dist/web/DesignTokens.web.css",
+      "platform-implementation-guidelines",
+      "platform-resource-map",
+      "process-development-workflow",
+      "process-file-organization",
+      "stemma-system-principles",
+      "technology-stack",
+      "test-behavioral-contract-validation",
+      "test-development-standards",
+      "token-quick-reference"
+    ]
+  },
+  {
     "agent": "thurgood",
     "removals": [
       "build-system-setup",

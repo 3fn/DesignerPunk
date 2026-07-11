@@ -14,6 +14,8 @@
   - .claude/agents/ada.md.attribution.json
   - .claude/agents/lina.md
   - .claude/agents/lina.md.attribution.json
+  - .claude/agents/sparky.md
+  - .claude/agents/sparky.md.attribution.json
   - .claude/agents/thurgood.md
   - .claude/agents/thurgood.md.attribution.json
   - .claude/skills/**
@@ -25,6 +27,10 @@
   - .kiro/agents/lina-prompt.md.attribution.json
   - .kiro/agents/lina.json
   - .kiro/agents/lina.json.attribution.json
+  - .kiro/agents/sparky-prompt.md
+  - .kiro/agents/sparky-prompt.md.attribution.json
+  - .kiro/agents/sparky.json
+  - .kiro/agents/sparky.json.attribution.json
   - .kiro/agents/thurgood-prompt.md
   - .kiro/agents/thurgood-prompt.md.attribution.json
   - .kiro/agents/thurgood.json
