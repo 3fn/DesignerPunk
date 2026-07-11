@@ -1,15 +1,43 @@
 {
-  "name": "data",
-  "description": "Android platform engineer — Jetpack Compose implementation, DesignerPunk token and component consumption, Android accessibility, and native screen development",
-  "prompt": "file://./data-prompt.md",
-  "includeMcpJson": true,
-  "tools": ["*"],
   "allowedTools": [
     "read",
     "knowledge",
     "@designerpunk-docs",
     "@designerpunk-application",
     "@designerpunk-product"
+  ],
+  "description": "Android platform engineer — implements product screens in Jetpack Compose/Kotlin, consuming DesignerPunk Android tokens and components. Use for Android screen implementation, Compose patterns, Android accessibility (TalkBack), edge-to-edge/insets, adaptive layouts, Navigation 3, Compose theming, and Android build setup. Implements specs (from Leonardo); does NOT make cross-platform architecture decisions, create tokens/components, or own test governance (escalates those).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+d",
+  "name": "data",
+  "prompt": "file://./data-prompt.md",
+  "resources": [
+    "file://.kiro/steering/Agent-Directory.md",
+    "file://.kiro/steering/AI-Collaboration-Principles.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
+    "file://.kiro/steering/core-goals.md",
+    "file://.kiro/steering/DesignerPunk-Systems-Overview.md",
+    "file://.kiro/steering/personal-note.md",
+    "file://governance/platform-implementation-guidelines.md",
+    "file://governance/Product-Token-Governance.md",
+    "file://.kiro/steering/Spec-Feedback-Protocol.md",
+    "file://.kiro/steering/start-up-tasks.md",
+    "file://.kiro/steering/Task-Completion-Protocol.md",
+    "skill://.kiro/skills/android/adaptive/SKILL.md",
+    "skill://.kiro/skills/android/edge-to-edge/SKILL.md",
+    "skill://.kiro/skills/android/navigation-3/SKILL.md",
+    "skill://.kiro/skills/android/theming/styles/SKILL.md"
+  ],
+  "tools": [
+    "*"
   ],
   "toolsSettings": {
     "write": {
@@ -19,40 +47,5 @@
       ]
     }
   },
-  "resources": [
-    "file://.kiro/steering/core-goals.md",
-    "file://.kiro/steering/AI-Collaboration-Principles.md",
-    "file://.kiro/steering/personal-note.md",
-    "file://.kiro/steering/Agent-Directory.md",
-    "file://governance/Platform-Resource-Map.md",
-    "file://governance/Product-Token-Governance.md",
-    "file://dist/android/DesignTokens.android.kt",
-    "file://dist/ComponentTokens.android.kt",
-    "skill://.kiro/steering/start-up-tasks.md",
-    "skill://governance/Process-Development-Workflow.md",
-    "skill://governance/Process-File-Organization.md",
-    "skill://governance/Token-Quick-Reference.md",
-    "skill://governance/platform-implementation-guidelines.md",
-    "skill://governance/Contract-System-Reference.md",
-    "skill://governance/stemma-system-principles.md",
-    "skill://governance/Test-Development-Standards.md",
-    "skill://governance/Test-Behavioral-Contract-Validation.md",
-    "skill://.kiro/steering/Spec-Feedback-Protocol.md",
-    "skill://governance/technology-stack.md",
-    "skill://governance/Product-Token-Governance.md",
-    "skill://.kiro/skills/android/edge-to-edge/SKILL.md",
-    "skill://.kiro/skills/android/adaptive/SKILL.md",
-    "skill://.kiro/skills/android/navigation-3/SKILL.md",
-    "skill://.kiro/skills/android/theming/styles/SKILL.md"
-  ],
-  "hooks": {
-    "agentSpawn": [
-      {
-        "command": "git status --porcelain",
-        "timeout_ms": 5000
-      }
-    ]
-  },
-  "keyboardShortcut": "ctrl+shift+d",
   "welcomeMessage": "Hey! I'm Data, your Android platform engineer. I implement product screens in Jetpack Compose using DesignerPunk tokens and components. What are we building?"
 }

@@ -665,7 +665,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Measure the Req 23 AC3 signal (demotion count ≈ 60% as member figure; check 8 green; sweep 3 green); adjudicate any missed shape before merge.
     - _Requirements: 12.1, 18.1, 19.3, 21.3, 21.5, 22.3, 23.3, 23.5_
 
-- [ ] 13. Cutover: Data (Android platform engineer) — **U7, cutover position 6**
+- [x] 13. Cutover: Data (Android platform engineer) — **U7, cutover position 6**
 
   **Type**: Parent
   **Unit**: U7
@@ -688,14 +688,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-data` branch)
   - Open U7's PR: `./.kiro/hooks/complete-task.sh "Task 13 Complete: Cutover Data (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U7 — Cutover: Data`. **Merge gate: zero unexplained regressions in `cutover/data-diff-vs-baseline.md` — his per-artifact trims classify as channel-move ONLY where each `dist/android/*.kt` trim's hard-negative-plus-positive cue passes C7 resolution (rule of the channel-move bucket); any uncued/unresolving trim is a `regression`, adjudicated in the artifact's `## Regression adjudications` section — AND C7 green/adjudicated AND an independent validation signature recorded.**
 
-  - [ ] 13.1 Author Data's canonical source (carry JOB-1) + capture baseline
+  - [x] 13.1 Author Data's canonical source (carry JOB-1) + capture baseline
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Data (Data confirms JOB-1 carry + trim cues on the PR)
     - Carry Data's JOB-1 (outline round record) into `canonical/agents/data.md` traceably (`Source:` comments — Req 21 AC2); author `groundTruthManifest.trims` with `shape: per-theme-set` cues + `fires: unconditional`; migrate routes prose→`routes.agents`; capture baseline (ids + artifact-path members).
     - _Requirements: 10.1, 10.2, 12.1, 12.2, 15.2, 21.1, 21.2_
 
-  - [ ] 13.2 Generate both targets, run checks, commit sweep report, Stacy validation
+  - [x] 13.2 Generate both targets, run checks, commit sweep report, Stacy validation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy

@@ -25,6 +25,22 @@
     ]
   },
   {
+    "agent": "data",
+    "removals": [
+      "contract-system-reference",
+      "dist/ComponentTokens.android.kt",
+      "dist/android/DesignTokens.android.kt",
+      "platform-resource-map",
+      "process-development-workflow",
+      "process-file-organization",
+      "stemma-system-principles",
+      "technology-stack",
+      "test-behavioral-contract-validation",
+      "test-development-standards",
+      "token-quick-reference"
+    ]
+  },
+  {
     "agent": "leonardo",
     "removals": [
       "component-quick-reference",

@@ -23,3 +23,9 @@ agents:
   # (impeccable). Generator-SSOT from this entry forward; his runtime artifacts
   # (.claude/agents/leonardo.md, .kiro/agents/leonardo.{json,-prompt.md}) are diff-guarded.
   - leonardo
+  # U7 — Data (Task 13). Android platform engineer; DIFF-VS-BASELINE (was CC-ported);
+  # none-trim-stale-snapshots verdict (2 stale dist/*.kt); 4 Android skills; token-law
+  # adjudicated to product-token-governance (Ada 2026-07-11). Generator-SSOT from this entry
+  # forward; his runtime artifacts (.claude/agents/data.md, .kiro/agents/data.{json,-prompt.md})
+  # are diff-guarded surfaces.
+  - data

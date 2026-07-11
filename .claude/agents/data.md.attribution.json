@@ -1,0 +1,103 @@
+{
+  "artifact": ".claude/agents/data.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        30
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        31,
+        302
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#body"
+    },
+    {
+      "lines": [
+        303,
+        304
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        305,
+        426
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:platform-implementation-guidelines"
+    },
+    {
+      "lines": [
+        427,
+        479
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:product-token-governance"
+    },
+    {
+      "lines": [
+        480,
+        485
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        486,
+        489
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        490,
+        513
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        514,
+        525
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        526,
+        530
+      ],
+      "op": "render",
+      "source": "knowledgeBases"
+    },
+    {
+      "lines": [
+        531,
+        534
+      ],
+      "op": "render",
+      "source": "writeScope"
+    },
+    {
+      "lines": [
+        535,
+        540
+      ],
+      "op": "render",
+      "source": "kiro.hooks.agentSpawn"
+    }
+  ]
+}

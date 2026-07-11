@@ -1,0 +1,25 @@
+{
+  "agent": "data",
+  "capturedFrom": ".kiro/agents/data.json@pre-cutover (U7, 2026-07-11; deduped — Product-Token-Governance was double-loaded in the hand config (file:// line 28 + skill:// line 42), fixed by construction. The four android skill:// entries are skills, not ambient doc members — excluded per the demotion-diff namespace, same as prior cutovers). Includes artifact-path members (the two stale dist/*.kt snapshots) per sweep 8's D-A1 namespace.",
+  "members": [
+    "agent-directory",
+    "ai-collaboration-principles",
+    "contract-system-reference",
+    "core-goals",
+    "dist/ComponentTokens.android.kt",
+    "dist/android/DesignTokens.android.kt",
+    "personal-note",
+    "platform-implementation-guidelines",
+    "platform-resource-map",
+    "process-development-workflow",
+    "process-file-organization",
+    "product-token-governance",
+    "spec-feedback-protocol",
+    "start-up-tasks",
+    "stemma-system-principles",
+    "technology-stack",
+    "test-behavioral-contract-validation",
+    "test-development-standards",
+    "token-quick-reference"
+  ]
+}
