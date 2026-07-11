@@ -235,7 +235,25 @@ export class KiroAdapter implements TargetAdapter {
       return this.skillRef(row);
     });
 
-    const resources: string[] = [...resourceEntries, ...skillResources];
+    // Rich knowledgeBase objects (Req 15 AC2 — the hand-wired ada.json shape, preserved by
+    // regeneration; Task 5 open item landed at Ada's cutover): a declaration carrying
+    // `source` emits the full Kiro-native object into resources, after the doc + skill
+    // entries (matching the live hand-config ordering).
+    const kbResources: JsonValue[] = (fm.knowledgeBases ?? [])
+      .filter((kb) => typeof kb.source === 'string')
+      .map((kb) => {
+        const obj: Record<string, JsonValue> = {
+          type: 'knowledgeBase',
+          source: kb.source as string,
+          name: kb.name,
+        };
+        if (kb.description !== undefined) obj.description = kb.description;
+        if (kb.indexType !== undefined) obj.indexType = kb.indexType;
+        if (kb.autoUpdate !== undefined) obj.autoUpdate = kb.autoUpdate;
+        return obj;
+      });
+
+    const resources: JsonValue[] = [...resourceEntries, ...skillResources, ...kbResources];
 
     // -- config object (canonical, key-sorted by the serializer) --------------
     const config: Record<string, JsonValue> = {

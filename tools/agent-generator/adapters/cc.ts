@@ -38,12 +38,13 @@ import {
   renderDocRoute,
 } from '../render';
 import { AttributionAccumulator, type AttributionManifest } from '../attribution';
-import type {
-  TargetAdapter,
-  AdapterContext,
-  EmittedFile,
-  FieldDispositionTable,
-  SharedCatalogMember,
+import {
+  MCP_TO_SERVER,
+  type TargetAdapter,
+  type AdapterContext,
+  type EmittedFile,
+  type FieldDispositionTable,
+  type SharedCatalogMember,
 } from './index';
 
 // ============================================================================
@@ -79,6 +80,34 @@ function toolRefImpl(subset: ToolSubset, tool: string): string {
       `(declared: ${declared.join(', ') || '<none>'}).`
   );
 }
+
+/**
+ * Namespaced ref for a CUE — the cue's own `mcp` field picks the server, NEVER a
+ * subset-order search: an ambiguous tool name (`rebuild_index` is declared by two servers)
+ * would otherwise namespace to whichever server sorts first and MISROUTE the cue (found
+ * live by Ada's U2 content confirmation — her application-MCP rebuild cue rendered with the
+ * docs server). Throws loud when the cue's server does not grant the tool in this agent's
+ * subset — the same invariant C7 class (c) leg 1 checks, enforced at emission too.
+ */
+function cueToolRef(subset: ToolSubset, cue: ToolCueRoute): string {
+  const server = MCP_TO_SERVER[cue.mcp];
+  if (!subset[server]?.includes(cue.tool)) {
+    throw new Error(
+      `CcAdapter.cueToolRef: cue tool "${cue.tool}" is not granted by its own server "${server}" ` +
+        `(cue.mcp: ${cue.mcp}) in this agent's toolSubset — fix the subset or the cue's mcp field.`
+    );
+  }
+  return `mcp__${server}__${cue.tool}`;
+}
+
+/**
+ * The CC core-tool grants every generated agent carries. In CC, a subagent's `tools:` list
+ * is the COMPLETE allowlist — emitting only the namespaced MCP tools would silently strip
+ * file/shell access (a regression the Ada diff-vs-baseline would flag: all six hand ports
+ * grant exactly this set). `Skill` is appended iff the agent declares skills (matches the
+ * live ports: data/leonardo carry it, the skill-less seats do not) — derived, not authored.
+ */
+export const CC_CORE_TOOLS: readonly string[] = ['Read', 'Grep', 'Glob', 'Bash', 'Write', 'Edit'];
 
 /** Every namespaced tool name in a subset, flattened, sorted (P1 determinism). */
 function allNamespacedTools(subset: ToolSubset): string[] {
@@ -179,12 +208,16 @@ export class CcAdapter implements TargetAdapter {
     const bodyParts: string[] = [];
 
     // -- Frontmatter --------------------------------------------------------
+    // Core tools first (the complete-allowlist rule — see CC_CORE_TOOLS), `Skill` iff the
+    // agent declares skills, then the namespaced MCP subset.
     const namespacedTools = allNamespacedTools(subset);
+    const coreTools = [...CC_CORE_TOOLS, ...((fm.skills ?? []).length > 0 ? ['Skill'] : [])];
     const frontmatterLines = [
       '---',
       `name: ${fm.agent}`,
       `description: ${fm.description}`,
       'tools:',
+      ...coreTools.map((t) => `  - ${t}`),
       ...namespacedTools.map((t) => `  - ${t}`),
       '---',
       '',
@@ -248,7 +281,7 @@ export class CcAdapter implements TargetAdapter {
         lines.push(`- ${renderDocRoute(route)}`);
       }
       for (const cue of cueRoutes) {
-        const namespaced = toolRefImpl(subset, cue.tool);
+        const namespaced = cueToolRef(subset, cue); // by the cue's OWN mcp — never subset order
         lines.push(`- ${renderToolCue({ ...cue, tool: namespaced })}`);
       }
       lines.push('');

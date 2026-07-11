@@ -168,16 +168,12 @@ export interface TruthCheckInputs {
 // ============================================================================
 
 /**
- * `ToolCueRoute.mcp` is a short name (`docs`/`application`/`product`); `ToolSubset` keys and
- * registry server names are the full `designerpunk-*` names. This is the single mapping seam
- * — kept local here (no shared map exists elsewhere; DESIGN CALL flagged in the completion
- * report) and mirroring `registry.ts`'s `serverTable` names exactly.
+ * The mcp short-name → server-name seam MOVED to adapters/index.ts at Ada's cutover (the CC
+ * adapter needs it to namespace cues by their own `mcp` field — the U2 misroute fix);
+ * re-exported here so existing consumers (sweep 6, tests) keep their import path.
  */
-export const MCP_TO_SERVER: Readonly<Record<McpName, keyof ToolSubset>> = Object.freeze({
-  docs: 'designerpunk-docs',
-  application: 'designerpunk-application',
-  product: 'designerpunk-product',
-});
+export { MCP_TO_SERVER } from './adapters/index';
+import { MCP_TO_SERVER } from './adapters/index';
 
 /** All server names a `ToolSubset` can carry, in registry order. */
 const TOOL_SUBSET_SERVERS: ReadonlyArray<keyof ToolSubset> = [
@@ -608,20 +604,11 @@ function checkLiveTool(
 }
 
 /**
- * A KnowledgeBaseDeclaration MAY carry an `expected-empty` annotation adjudicating a zero-match
- * glob (D-A3). The schema (schema.ts) does not YET model this field — the prompt directs
- * reading it via a SAFE CAST here and NOT editing schema.ts; formalizing the field is a
- * one-line follow-up for the schema owner (flagged in the completion report).
- */
-type KnowledgeBaseDeclarationWithAnnotation = KnowledgeBaseDeclaration & {
-  'expected-empty'?: string;
-};
-
-/**
  * (D-A3) knowledgeBases glob currency — every declaration's every glob MUST resolve to ≥1
  * match OR the declaration carries an `expected-empty: <reason>` annotation. A zero-match glob
  * without the annotation → FAIL (a stale glob renders a `/knowledge` note pointing at nothing).
- * Adjudicator = thurgood (infrastructure), same as class (e).
+ * Adjudicator = thurgood (infrastructure), same as class (e). (The `expected-empty` field is
+ * now formally on the schema — the Task 6 safe-cast follow-up landed at Ada's cutover.)
  */
 function checkKnowledgeBases(
   agent: string,
@@ -631,8 +618,7 @@ function checkKnowledgeBases(
   findings: Finding[]
 ): void {
   if (!knowledgeBases) return;
-  knowledgeBases.forEach((declRaw, di) => {
-    const decl = declRaw as KnowledgeBaseDeclarationWithAnnotation;
+  knowledgeBases.forEach((decl, di) => {
     const expectedEmpty = decl['expected-empty'];
     const isAnnotated = typeof expectedEmpty === 'string' && expectedEmpty.trim().length > 0;
     decl.globs.forEach((glob, gi) => {
@@ -875,8 +861,10 @@ async function main(): Promise<void> {
       corpus,
       registry,
       cutoverLedger: readCutoverLedger(REPO_ROOT),
-      // Empty grant surfaces until cutovers exist (the emitted configs are produced per cutover).
-      grantSurfaces: [],
+      // Grant surfaces from the EMITTED configs of every ledger agent (class (c) leg 2 —
+      // the lina.json bug class ARMS at the first cutover): Kiro grants from allowedTools'
+      // `@server` entries; CC grants from the frontmatter tools' `mcp__<server>__` names.
+      grantSurfaces: readEmittedGrantSurfaces(REPO_ROOT, readCutoverLedger(REPO_ROOT)),
       scripts: readScripts(REPO_ROOT),
       repoRoot: REPO_ROOT,
       fs: nodeFsFacade,
@@ -887,6 +875,48 @@ async function main(): Promise<void> {
   } finally {
     await corpus.close();
   }
+}
+
+/**
+ * Build class (c) leg-2's grant surfaces from the EMITTED configs of the ledger agents:
+ * Kiro — `.kiro/agents/<a>.json` `allowedTools` entries of the form `@<server>`;
+ * CC — `.claude/agents/<a>.md` frontmatter `tools:` entries of the form `mcp__<server>__*`.
+ * A missing emitted file contributes an EMPTY grant list for that (agent, target) — which
+ * makes every subset-named server a leg-2 FAIL (an agent in the ledger with no emitted
+ * config is itself the defect; silence would hide it).
+ */
+export function readEmittedGrantSurfaces(repoRoot: string, ledger: string[]): EmittedGrantSurface[] {
+  const surfaces: EmittedGrantSurface[] = [];
+  for (const agent of ledger) {
+    // Kiro leg.
+    let kiroGrants: string[] = [];
+    try {
+      const config = JSON.parse(
+        fs.readFileSync(path.join(repoRoot, '.kiro', 'agents', `${agent}.json`), 'utf8')
+      ) as { allowedTools?: string[] };
+      kiroGrants = (config.allowedTools ?? [])
+        .filter((t) => t.startsWith('@'))
+        .map((t) => t.slice(1));
+    } catch {
+      kiroGrants = [];
+    }
+    surfaces.push({ agent, target: 'kiro', grantedServers: kiroGrants });
+
+    // CC leg — scan the FRONTMATTER tools block only (the grant surface); body prose may
+    // mention tool names without granting them.
+    let ccGrants: string[] = [];
+    try {
+      const md = fs.readFileSync(path.join(repoRoot, '.claude', 'agents', `${agent}.md`), 'utf8');
+      const fmMatch = md.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      const servers = new Set<string>();
+      for (const m of (fmMatch?.[1] ?? '').matchAll(/mcp__([a-z0-9-]+)__/g)) servers.add(m[1]);
+      ccGrants = [...servers].sort();
+    } catch {
+      ccGrants = [];
+    }
+    surfaces.push({ agent, target: 'cc', grantedServers: ccGrants });
+  }
+  return surfaces;
 }
 
 // Run ONLY when this module is the process entry point (mirrors registry.ts / mcp-server).

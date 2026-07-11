@@ -98,7 +98,7 @@ export function isScaffolding(rel: string): boolean {
 
 /** The lock's output leg: hash of the guarded roots' current on-disk contents. */
 export function computeOutputsHash(repoRoot: string): string {
-  const files = guardedRoots()
+  const files = guardedRoots(repoRoot)
     .flatMap((root) => listFilesUnder(repoRoot, root))
     .filter((rel) => !isScaffolding(rel));
   return hashFileSet(repoRoot, files);
@@ -196,7 +196,7 @@ export async function runGuard(repoRoot: string, opts?: { refreshLock?: boolean 
   try {
     const outputs = await generateAll(repoRoot);
     writeOutputs(temp, outputs);
-    const delta = compareTrees(temp, repoRoot, guardedRoots());
+    const delta = compareTrees(temp, repoRoot, guardedRoots(repoRoot));
     const clean = delta.changed.length === 0 && delta.missing.length === 0 && delta.extra.length === 0;
 
     if (!clean) {

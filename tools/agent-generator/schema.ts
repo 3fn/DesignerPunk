@@ -181,7 +181,23 @@ export type SkillRef = string;
 
 export interface KnowledgeBaseDeclaration {
   name: string;
+  /** Repo globs the KB covers — D-A3 asserts each resolves to ≥1 match (or expected-empty). */
   globs: string[];
+  /**
+   * `expected-empty: <reason>` adjudicates a zero-match glob (D-A3) — formalized from the
+   * Task 6 safe-cast open item; canonical-vs-truth reads it typed now.
+   */
+  'expected-empty'?: string;
+  /**
+   * Kiro-native rich fields (Req 15 AC2 — the hand-wired `ada.json` knowledgeBase objects
+   * are INPUT, preserved by regeneration, never clobbered; Task 5 open item landed at Ada's
+   * cutover). When `source` is present the Kiro adapter emits the full rich object into
+   * `resources`; CC has no KB surface and renders the Grep/Glob fallback from `globs`.
+   */
+  source?: string;
+  description?: string;
+  indexType?: string;
+  autoUpdate?: boolean;
 }
 
 export type StandingFactKind = 'platform-reality' | 'process-reality';

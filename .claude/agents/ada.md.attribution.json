@@ -1,34 +1,34 @@
 {
-  "artifact": ".claude/agents/_fixture.md",
+  "artifact": ".claude/agents/ada.md",
   "spans": [
     {
       "lines": [
         1,
-        16
+        25
       ],
       "op": "render",
       "source": "C1:frontmatter"
     },
     {
       "lines": [
-        17,
-        27
+        26,
+        180
       ],
       "op": "passthrough",
-      "source": "canonical/agents/_fixture.md#body"
+      "source": "canonical/agents/ada.md#body"
     },
     {
       "lines": [
-        28,
-        29
+        181,
+        182
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        30,
-        120
+        183,
+        369
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,40 +36,48 @@
     },
     {
       "lines": [
-        121,
-        124
+        370,
+        373
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        125,
-        131
+        374,
+        409
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        132,
-        142
+        410,
+        420
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        143,
-        146
+        421,
+        426
+      ],
+      "op": "render",
+      "source": "knowledgeBases"
+    },
+    {
+      "lines": [
+        427,
+        430
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        147,
-        152
+        431,
+        436
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

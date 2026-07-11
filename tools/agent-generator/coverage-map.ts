@@ -81,8 +81,8 @@ export type CoverageManifest = Record<CheckContext, string[]>;
  * Not a co-located constant: `guardedRoots()` already IS the shared symbol, imported here
  * and by diff-guard.ts itself.
  */
-export function diffGuardSurfaceGlobs(): string[] {
-  return guardedRoots().map((root) => (path.extname(root) ? root : `${root}/**`));
+export function diffGuardSurfaceGlobs(repoRoot?: string): string[] {
+  return guardedRoots(repoRoot).map((root) => (path.extname(root) ? root : `${root}/**`));
 }
 
 /**
@@ -90,9 +90,9 @@ export function diffGuardSurfaceGlobs(): string[] {
  * equivalent for `122-diff-guard`). No glob here is hand-declared independently of the check
  * it describes — see the module header.
  */
-export function buildCoverageManifest(): CoverageManifest {
+export function buildCoverageManifest(repoRoot?: string): CoverageManifest {
   return {
-    '122-diff-guard': diffGuardSurfaceGlobs(),
+    '122-diff-guard': diffGuardSurfaceGlobs(repoRoot),
     '122-canonical-vs-truth': canonicalVsTruthSurfaceGlobs(),
     '122-sweep-1-refs': sweep1SurfaceGlobs(),
     '122-sweep-2-skills': sweep2SurfaceGlobs(),
@@ -115,7 +115,7 @@ export function buildCoverageManifest(): CoverageManifest {
  * exclusion diff-guard applies to the guarded surface).
  */
 export function enumerateSurfaces(repoRoot: string): string[] {
-  const fromGuardedRoots = guardedRoots().flatMap((root) => listFilesUnder(repoRoot, root));
+  const fromGuardedRoots = guardedRoots(repoRoot).flatMap((root) => listFilesUnder(repoRoot, root));
   const fromCanonical = listFilesUnder(repoRoot, 'canonical');
   const all = new Set([...fromGuardedRoots, ...fromCanonical].filter((f) => !isScaffolding(f)));
   return [...all].sort();
@@ -258,7 +258,7 @@ export function auditCoverageMap(
 if (require.main === module) {
   const repoRoot = path.resolve(__dirname, '..', '..');
 
-  const manifest = buildCoverageManifest();
+  const manifest = buildCoverageManifest(repoRoot);
   const surfaces = enumerateSurfaces(repoRoot);
   const rows = buildCoverageMap(surfaces, manifest);
 

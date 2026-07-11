@@ -2,6 +2,13 @@
 name: _fixture
 description: Standing pipeline fixture (Spec 122 C10.3) — exercises one member of every content class and transform disposition; emitted only under canonical/_fixture-output; no runtime ever loads it.
 tools:
+  - Read
+  - Grep
+  - Glob
+  - Bash
+  - Write
+  - Edit
+  - Skill
   - mcp__designerpunk-application__get_component_catalog
   - mcp__designerpunk-docs__find_docs
   - mcp__designerpunk-docs__get_section

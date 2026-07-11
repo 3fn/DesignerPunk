@@ -182,10 +182,16 @@ describe('CcAdapter.emitAgent — frontmatter', () => {
     expect(files[0].path).toBe('.claude/agents/fixture-consumer.md');
   });
 
-  it('carries the sorted namespaced tools list', () => {
+  it('carries the CC core tools then the sorted namespaced tools (complete-allowlist rule, Task 9)', () => {
     const files = adapter.emitAgent(resolvedAgent(), ctx());
     const content = files[0].content;
-    const expected = ['mcp__designerpunk-application__get_component_full', 'mcp__designerpunk-docs__find_docs', 'mcp__designerpunk-docs__get_section'].sort();
+    // Core tools FIRST (in CC the tools list is the complete allowlist — MCP-only would
+    // silently strip file/shell access); no `Skill` (this fixture declares no skills);
+    // then the namespaced subset, sorted.
+    const expected = [
+      'Read', 'Grep', 'Glob', 'Bash', 'Write', 'Edit',
+      ...['mcp__designerpunk-application__get_component_full', 'mcp__designerpunk-docs__find_docs', 'mcp__designerpunk-docs__get_section'].sort(),
+    ];
     const toolsBlock = content.match(/tools:\n((?:\s+- .+\n)+)/);
     expect(toolsBlock).not.toBeNull();
     const listed = toolsBlock![1].trim().split('\n').map((l) => l.replace(/^\s*-\s*/, ''));
@@ -196,7 +202,35 @@ describe('CcAdapter.emitAgent — frontmatter', () => {
     const agent = resolvedAgent({
       routes: { cues: [{ when: 'x', tool: 'not_in_subset', mcp: 'application' }] },
     });
-    expect(() => adapter.emitAgent(agent, ctx())).toThrow(/not declared by any server/);
+    expect(() => adapter.emitAgent(agent, ctx())).toThrow(/not granted by its own server/);
+  });
+
+  it("namespaces a cue by the cue's OWN mcp field — never subset search order (Ada U2 misroute regression)", () => {
+    // The live bug: `rebuild_index` declared by BOTH servers; the application-MCP cue was
+    // rendered with the docs server (first subset match). The cue's mcp field must win.
+    const agent = resolvedAgent({
+      toolSubset: {
+        'designerpunk-docs': ['find_docs', 'rebuild_index'], // find_docs: the shared-catalog discovery cue's grant
+        'designerpunk-application': ['rebuild_index'],
+      },
+      routes: {
+        cues: [
+          { when: 'token-index changed', tool: 'rebuild_index', mcp: 'application' },
+          { when: 'governance docs changed', tool: 'rebuild_index', mcp: 'docs' },
+        ],
+      },
+    });
+    const content = adapter.emitAgent(agent, ctx())[0].content;
+    expect(content).toContain('WHEN token-index changed THEN use mcp__designerpunk-application__rebuild_index (application MCP)');
+    expect(content).toContain('WHEN governance docs changed THEN use mcp__designerpunk-docs__rebuild_index (docs MCP)');
+  });
+
+  it("throws when a cue's own server does not grant the tool, even if another server does", () => {
+    const agent = resolvedAgent({
+      toolSubset: { 'designerpunk-docs': ['find_docs', 'rebuild_index'] },
+      routes: { cues: [{ when: 'x', tool: 'rebuild_index', mcp: 'application' }] },
+    });
+    expect(() => adapter.emitAgent(agent, ctx())).toThrow(/not granted by its own server "designerpunk-application"/);
   });
 });
 

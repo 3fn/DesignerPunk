@@ -1,0 +1,45 @@
+{
+  "artifact": ".kiro/agents/ada-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        155
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#body"
+    },
+    {
+      "lines": [
+        156,
+        159
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        160,
+        195
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        196,
+        206
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        207,
+        210
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}

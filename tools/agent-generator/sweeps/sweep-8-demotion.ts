@@ -77,6 +77,26 @@ export interface AmbientBaseline {
   members: string[];
 }
 
+/**
+ * Normalize one Kiro `resources[]` entry to its D-A1 namespace member: a `.md` doc →
+ * its doc id (lowercase basename, the docs-MCP derivation); anything else (knowledgeBase
+ * `source` dirs, `dist/**` artifacts) → its scheme-stripped path (an ARTIFACT-PATH member).
+ * ONE helper for all three consumers — the baseline capture, this sweep's fresh side, and
+ * generate.ts's demotion-delta emission — so the set-difference can never be an artifact of
+ * mismatched normalizations.
+ */
+export function normalizeKiroResourceToMember(entry: string | { source?: string }): string | undefined {
+  const uri = typeof entry === 'string' ? entry : entry.source;
+  if (typeof uri !== 'string') return undefined;
+  let p = uri.replace(/^[a-z]+:\/\//, '');
+  while (p.startsWith('./')) p = p.slice(2);
+  if (p.endsWith('.md')) {
+    const base = p.split('/').pop() as string;
+    return base.replace(/\.md$/, '').toLowerCase();
+  }
+  return p;
+}
+
 /** One agent's demotion-diff computation surface. */
 export interface AgentDemotionInputs {
   agent: string;
@@ -199,7 +219,18 @@ function main(): void {
     const agent = baseline.agent;
     const doc = docsByAgent.get(agent);
     const agentManifests = manifests.filter((m) => m.agent === agent);
-    const freshMemberIds = [...new Set(agentManifests.flatMap((m: AmbientManifest) => m.members.map((x) => x.id)))];
+    // Fresh side = manifest doc ids ∪ the REGENERATED Kiro config's own normalized
+    // resources: preserved hand-wiring (knowledgeBase sources, Req 15 AC2) appears on both
+    // sides and cancels; genuinely trimmed artifacts register as removals (D-A1).
+    const emittedConfig = readFileIfExists(path.join(repoRoot, '.kiro', 'agents', `${agent}.json`));
+    const configMembers: string[] = emittedConfig
+      ? ((JSON.parse(emittedConfig) as { resources?: Array<string | { source?: string }> }).resources ?? [])
+          .map(normalizeKiroResourceToMember)
+          .filter((m): m is string => m !== undefined)
+      : [];
+    const freshMemberIds = [
+      ...new Set([...agentManifests.flatMap((m: AmbientManifest) => m.members.map((x) => x.id)), ...configMembers]),
+    ];
     const emittedText = readFileIfExists(path.join(repoRoot, CC_AGENTS_ROOT, `${agent}.md`)) ?? '';
     return {
       agent,

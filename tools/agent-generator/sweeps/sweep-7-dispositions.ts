@@ -124,7 +124,8 @@ export function readAllAgentConfigs(repoRoot: string): AgentConfig[] {
   const dir = path.join(repoRoot, KIRO_AGENTS_ROOT);
   let files: string[];
   try {
-    files = fs.readdirSync(dir).filter((f) => f.endsWith('.json'));
+    // Attribution sidecars (<artifact>.attribution.json) are generated metadata, not agent configs.
+    files = fs.readdirSync(dir).filter((f) => f.endsWith('.json') && !f.endsWith('.attribution.json'));
   } catch {
     return [];
   }

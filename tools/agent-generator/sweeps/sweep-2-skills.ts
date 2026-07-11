@@ -281,10 +281,11 @@ export function runSweep2(inputs: Sweep2Inputs): SweepReport {
 // CLI wiring
 // ============================================================================
 
-/** Extract `skill://` refs from an emitted Kiro config JSON text. */
+/** Extract `skill://` refs from an emitted Kiro config JSON text (object entries — rich
+ * knowledgeBases — are not skill refs and are skipped). */
 export function extractKiroSkillRefs(configText: string): string[] {
-  const parsed = JSON.parse(configText) as { resources?: string[] };
-  return (parsed.resources ?? []).filter((r) => r.startsWith('skill://'));
+  const parsed = JSON.parse(configText) as { resources?: Array<string | object> };
+  return (parsed.resources ?? []).filter((r): r is string => typeof r === 'string' && r.startsWith('skill://'));
 }
 
 /**

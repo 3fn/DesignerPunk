@@ -1,0 +1,27 @@
+[
+  {
+    "agent": "ada",
+    "removals": [
+      "process-development-workflow",
+      "process-file-organization",
+      "rosetta-system-architecture",
+      "rosetta-system-principles",
+      "token-family-accessibility",
+      "token-family-blend",
+      "token-family-border",
+      "token-family-color",
+      "token-family-glow",
+      "token-family-layering",
+      "token-family-motion",
+      "token-family-opacity",
+      "token-family-radius",
+      "token-family-responsive",
+      "token-family-shadow",
+      "token-family-spacing",
+      "token-family-typography",
+      "token-quick-reference",
+      "token-resolution-patterns",
+      "token-semantic-structure"
+    ]
+  }
+]
