@@ -881,6 +881,8 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - The 119-B handback is written: 122 delivered the generator that 119-B's routing + measurement work consumes; OB-5/OB-6/OB-7 dispositions recorded (OB-5 cue generated, OB-6 ports generated, OB-7 retired).
   - The 123 handback is written: canonical source + adapters exist; consumer-side CC always-layer delivery (Req 16 AC4) and consumer distribution are 123's to build; the CC/Kiro adapter seam is documented for the third-target (Cursor) proof-of-additivity (Req 24 AC4).
   - The 119-B deferred-obligations ledger and any umbrella tracking (OB-7 closure; the CLAUDE.md interim-stopgap note in `CLAUDE.md`) are reconciled — exactly one always-layer mechanism per runtime, per OB-7.
+  - **OB-8 discharged** (routing `not-yet-ported` staleness): the one-time backfill flips every stale `not-yet-ported` whose target is now in the ledger → `resolves` (zero stale in-ledger targets remain), AND the C7(b) check is sharpened so a `not-yet-ported` with an in-ledger target FAILs (prove-it-bites recorded). Done here (not earlier) so the remaining cutovers stay self-contained.
+  - **OB-9 discharged** (owner-value audit): every generated agent's `governanceAsLaw` `owner:` matches its doc's substance owner (schema.ts:51), or carries an adjudicated exception; a lightweight recurrence guard is considered. (Sparky's three were corrected earlier at the Data-cutover follow-up; this is the systematic all-agent sweep.)
 
   **Primary Artifacts:**
   - Handback notes into `.kiro/specs/119-steering-progressive-disclosure-redesign/` and `.kiro/specs/123-*/` (inbound notes)
@@ -908,6 +910,15 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     **Agent**: Thurgood
     - Confirm OB-5/OB-6/OB-7 closed or dispositioned in `119-B-deferred-obligations.md`; confirm `CLAUDE.md`'s interim-stopgap banner is retired/superseded per OB-7 (no coexistence past 122); route any discovered out-of-scope work to its owner via inbound note (Req 25 AC3), NOT absorbed.
     - _Requirements: 25.3_
+
+  - [ ] 18.3 Discharge OB-8 (routing backfill + C7(b) strict-check) and OB-9 (owner-value audit)
+    **Type**: Implementation
+    **Validation**: Tier 2 - Standard
+    **Agent**: Thurgood (+ domain owners for any owner-value adjudication)
+    - **OB-8**: backfill every stale `not-yet-ported` route whose target is now in the cutover ledger → `resolves` (regenerate affected agents; diff-guard green); sharpen C7 class (b) so a `not-yet-ported` with an in-ledger target FAILs; record prove-it-bites (induce a stale not-yet-ported → FAIL). Now safe because U9 is the last roster cutover — no further predecessor churn.
+    - **OB-9**: audit every generated agent's `governanceAsLaw` `owner:` against the doc's substance owner (schema.ts:51); correct any mismatch (route ambiguous cases to the doc owner); consider a lightweight recurrence guard (owner ∈ a doc→owner map). Sparky's three were corrected at the Data-cutover follow-up; verify the rest.
+    - Close OB-8 and OB-9 in `119-B-deferred-obligations.md`.
+    - _Requirements: 18.2, 18.3_
 
 ---
 

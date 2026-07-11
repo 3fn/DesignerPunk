@@ -22,21 +22,21 @@ ambient:
   #    the taxonomy (same discriminator as Lina).
   governanceAsLaw:
     - id: product-token-governance
-      owner: sparky
+      owner: ada                         # corrected 2026-07-11 (was sparky): token substance = Ada per schema.ts:51 (OB-9)
       assert:
         - claim: system-first-value-selection
           section: "System-First Value Selection"
           mustContain:
             - "If a system token (semantic or primitive) exists within perceptual tolerance of your intended value, use `ref:` instead."
     - id: web-authoring-standards
-      owner: sparky
+      owner: lina                        # corrected 2026-07-11 (was sparky): component-CSS substance = Lina (Lina's ruling; OB-9)
       assert:
         - claim: css-hard-rules
           section: "Hard Rules"
           mustContain:
             - "These are non-negotiable. Every CSS file — component or screen — must follow these rules."
     - id: contract-system-reference
-      owner: sparky
+      owner: lina                        # corrected 2026-07-11 (was sparky): contract-system substance = Lina per schema.ts:51 (OB-9)
       assert:
         - claim: canonical-naming-convention
           section: "Naming Convention"
