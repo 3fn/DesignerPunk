@@ -210,7 +210,12 @@ describe('runRelocationIntegrityGate — full gate (the 119-A exit check, Req 8 
   it('excludes template placeholders from pass/fail (Req 8 AC1 — not real refs)', async () => {
     const result = await runRelocationIntegrityGate();
     const templates = result.references.filter((r) => r.role === 'template');
-    expect(templates.length).toBe(3);
+    // Anti-vacuity, not inventory: ≥1 proves the classifier still routes placeholders down
+    // the template path so the exclusion below is exercised. The exact count shrinks as
+    // Spec 122 cutovers regenerate prompts (Ada's U2 regeneration dropped the old
+    // `Token-Family-{Name}.md` table placeholder: 3 → 2) — pinning it would break at
+    // every cutover for no protective value.
+    expect(templates.length).toBeGreaterThanOrEqual(1);
     // a template ref must never appear in unresolved
     for (const t of templates) {
       expect(result.unresolved.some((u) => u.includes(t.ref))).toBe(false);

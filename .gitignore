@@ -86,6 +86,10 @@ temp-*.md
 performance-*.json
 *-baseline.txt
 *-baseline.json
+# …but Spec 122's ambient baselines are COMMITTED cutover artifacts (D-A1: the demotion
+# diff's origin), not performance outputs — found when CI regenerated an empty
+# demotion-delta because ada's baseline never left the local machine (U2, PR #55).
+!canonical/baselines/*.ambient-baseline.json
 .npmrc
 
 # Presentations

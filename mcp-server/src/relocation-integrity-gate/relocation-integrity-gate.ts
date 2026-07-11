@@ -269,14 +269,44 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
   // non-identity .kiro/steering/ doc remains referenced in any agent JSON.
   {
     const dir = path.join(projectRoot, '.kiro/agents');
-    const jsons = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort();
+    const jsons = fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith('.json') && !f.endsWith('.attribution.json'))
+      .sort();
+
+    // Spec 122 cutover-ledger awareness (added at Ada's cutover, U2/PR #55): a GENERATED
+    // config carries only its designed ambient members — Ada's trim took the fleet total
+    // from 122 to 100 governance/ entries and broke the old flat `govEntries >= 120`
+    // floor, and every later cutover would break any fixed total again. The floor's real
+    // job is anti-vacuity over the HAND-maintained configs (proof the scan actually saw
+    // the remediated entries), so it is now PER-CONFIG (≥5 governance/ entries each; the
+    // thinnest hand config today carries 9) over NON-ledger configs only. Generated
+    // configs are exempt from the floor — their ref integrity is the generator gate's job
+    // (122-sweep-1-refs + 122-canonical-vs-truth) — but they stay IN the stray-relocating
+    // scan below: no config, hand or generated, may point a relocating doc at
+    // .kiro/steering/. When the ledger covers every seat, the floor leg is vacuously true
+    // and this gate's remediation duty is fully handed to the generation-era checks.
+    let ledgerAgents = new Set<string>();
+    try {
+      const ledgerText = fs.readFileSync(path.join(projectRoot, 'canonical/cutover-ledger.yaml'), 'utf-8');
+      ledgerAgents = new Set([...ledgerText.matchAll(/^\s*-\s*([a-z0-9-]+)\s*$/gm)].map((m) => m[1]));
+    } catch {
+      ledgerAgents = new Set(); // pre-122 tree: floor applies to all configs, as before
+    }
+
     let govEntries = 0;
+    const thinHandConfigs: string[] = [];
     const strayRelocating = new Set<string>();
     let strayIdentityLeak = false; // an .kiro/steering/ entry that is NOT an identity doc
     for (const j of jsons) {
       const content = fs.readFileSync(path.join(dir, j), 'utf-8');
+      const agentName = j.replace(/\.json$/, '');
       const govRe = /(?:file|skill):\/\/[^"]*governance\/[^"]*\.md/g;
-      govEntries += (content.match(govRe) || []).length;
+      const configGovEntries = (content.match(govRe) || []).length;
+      govEntries += configGovEntries;
+      if (!ledgerAgents.has(agentName) && configGovEntries < 5) {
+        thinHandConfigs.push(`${j} (${configGovEntries})`);
+      }
       const steerRe = /(?:file|skill):\/\/[^"]*\.kiro\/steering\/([^"/]+\.md)/g;
       let mm: RegExpExecArray | null;
       while ((mm = steerRe.exec(content)) !== null) {
@@ -287,13 +317,13 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
         }
       }
     }
-    const ok = govEntries >= 120 && !strayIdentityLeak;
+    const ok = thinHandConfigs.length === 0 && !strayIdentityLeak;
     checks.push({
       surface: 'agent-definition resources[] (file:// + skill://)',
       remediated: ok,
       detail: ok
-        ? `governance/ entries=${govEntries} (≥120); zero relocating docs left at .kiro/steering/`
-        : `governance/ entries=${govEntries}; UNREMEDIATED relocating docs still at .kiro/steering/: ${[...strayRelocating].join(', ')}`,
+        ? `governance/ entries=${govEntries} (per-hand-config floor ≥5 held; ${ledgerAgents.size} generator-governed config(s) exempt); zero relocating docs left at .kiro/steering/`
+        : `governance/ entries=${govEntries}; hand configs under the ≥5 floor: ${thinHandConfigs.join(', ') || 'none'}; UNREMEDIATED relocating docs still at .kiro/steering/: ${[...strayRelocating].join(', ')}`,
     });
   }
 
