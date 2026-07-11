@@ -69,8 +69,87 @@ Source: `feedback/requirements.md` § "[SPARKY R1]"; command strings verified ag
 
 ## Validation signatures (independent-validation default, amendment 4 — mandatory first-generation trigger)
 
-**Owning seat — Sparky (content confirmation, 14.1):** PENDING
+**Owning seat — Sparky (content confirmation, 14.1):**
+> [SPARKY(seat) — U5 content confirmation] CONFIRMED — 2026-07-11
+> (First-generation NOTE: no pre-existing `sparky` subagent could self-review — this cutover
+> creates his first CC port — so this is a fresh-context seat stand-in operating under his
+> canonical source, NOT a self-review. Findings: all 3 law embeds verbatim + right reflexive
+> sections for daily web work (Hard Rules governs every CSS file, System-First every token
+> decision, Naming Convention prevents silent taxonomy fragmentation); 3 embeds appropriate
+> for a consumer, not heavy. Ground-truth trims correct — independently measured
+> demo-styles.css = **0 token definitions** (confirming demo-chrome), DesignTokens.web.css =
+> 687 / ComponentTokens.web.css = 33 real stale snapshots. All 8 command strings match
+> package.json; build:browser gzip-ceiling source-routing ruled the correct anti-drift call.
+> All 3 gaps honest (build:watch verified tsc-only; no web-only Jest lane exists). All-3-MCP
+> subset serves the consumer seat. Body complete; nothing material lost (MCP Usage→Practice
+> Notes; /knowledge KB table → Grep/Glob fallback; hotkeys correctly absent). Every merge-gate
+> "present in generated CC" claim independently grepped and TRUE. Zero disputes.)
 
-**Independent validation — Stacy (mandatory first-generation trigger, Req 21 AC5):** PENDING
+**Independent validation — Stacy (mandatory first-generation trigger, Req 21 AC5):**
+> [STACY — U5 Sparky cutover validation] CONFIRMED — independent re-derivation + coverage-of-coverage; 2026-07-11
+> (State: `task/122-cutover-sparky` @ `e7c47830`; working tree only cutover/completion docs, no
+> artifact drift. Her checks: diff-guard no-op-green; canonical-vs-truth clean; sweep-4 PASS
+> non-vacuous (both sparky manifests in scope, 12 members each); sweep-8 PASS; coverage-map
+> PASS (256/255/1); lane **326/326**; **lock-independent generateAll→compareTrees — all 8
+> sparky outputs byte-IDENTICAL**. **sweep-8 K-D1 fault-injection (the load-bearing proof for
+> the new trims leg): mangled trim[0]'s negative → sweep-8 FAILED exit 1 naming
+> `sparky @ groundTruthManifest.trims[0] (dist/web/DesignTokens.web.css)` → restored → PASS.
+> The unconditional-trim leg bites.** Signals re-derived: baseline 21 (sole dup
+> product-token-governance), union 12, per-agent 3 == pinned lock-set, cc==kiro, 12 removals
+> = 3 trims + 9 docs each replaces-covered, dist CSS trimmed from Kiro config by construction.
+> Trim rationale independently measured: demo-styles.css = **0** token defs → search_tokens;
+> DesignTokens = **687**, ComponentTokens = **33** → get_token_details (discovery-vs-detail
+> discriminator correct). Content-completeness: ZERO unexplained omissions — all 8 commands +
+> 3 gaps-as-gaps + 3 law embeds present (grepped); 125KB/24-demo-pages volatile literals
+> correctly dropped. Two-absence-correctness confirmed (no diff artifact = correct for
+> never-ported; no faithfulness verbs = correct for a negative-cue verdict). First-generation
+> coverage: seat stand-in + her load-bearing independent gate = SUFFICIENT (her gate did not
+> lean on the stand-in — she re-derived and fault-injected independently). Zero disputes.
+> Full entry: appendix below.)
 
-**Main-loop engineering verification:** PENDING
+**Main-loop engineering verification:** the trims render leg (`renderGroundTruthTrims` + both
+adapters + tests) re-verified after authoring; all fixes green; final battery green (ten
+checks + C7 clean + coverage; full suite 8987/8987; lane 326/326; root + scripts + generator
+tsc clean); Stacy's state-validated commit matches the branch head at PR time.
+
+---
+
+## Appendix — Stacy's recorded entry (verbatim, key sections)
+
+> **[STACY — U5 Sparky cutover validation] CONFIRMED — independent re-derivation +
+> coverage-of-coverage; 2026-07-11**
+>
+> **State**: branch `task/122-cutover-sparky` @ `e7c47830`; working tree only the cutover-doc
+> + completion/summary edits — NO artifact/emitted-file changes (fault-injection restore + a
+> stray `undefined/regen` dir from her own lock-independent regen both cleaned).
+> **Checks (mine)**: diff-guard `no-op-green` (0) · canonical-vs-truth `clean, 0 findings` (0) ·
+> sweep-4 `PASS` **non-vacuous** (both sparky.{cc,kiro} manifests in scope, 12 members each) ·
+> sweep-8 `PASS` (no delta drift) · audit:coverage-map `PASS` (256/255/1 adjudicated-blank =
+> generated.lock) · test:agent-generator **326 passed, 27 suites** · **lock-independent
+> generateAll→compareTrees: all 8 sparky outputs byte-IDENTICAL to committed**.
+> **sweep-8 K-D1 fault-injection**: mangled trim[0]'s negative in the emitted CC file → sweep-8
+> **FAILED exit 1** naming `[FAIL] sparky @ groundTruthManifest.trims[0] (dist/web/DesignTokens.web.css)`
+> "unconditional trim's negative cue is ABSENT" → restored → PASS, git byte-clean. The K-D1
+> leg bites.
+> **Signals**: baseline `main:sparky.json` 22 raw → **21 unique** (sole dup product-token-governance
+> file://+skill://) · |union| **12**, |per-agent| **3** = {contract-system-reference,
+> product-token-governance, web-authoring-standards} == pinned 119-A § "5. Sparky" · cc==kiro
+> TRUE · verdict none-trim-stale-snapshots, emitArtifactRefs false, no faithfulness verbs, 3
+> trims fires:unconditional · demotion-delta = (21∖12) = **12 removals** (3 trims + 9 docs),
+> every removal replaces-covered, 3 always-set additions explain the delta · regenerated
+> sparky.json = 12 resources, **zero dist/CSS, zero dups** · trim rationale measured:
+> demo-styles.css **0** defs, DesignTokens **687**, ComponentTokens **33**.
+> **Content-completeness (the merge gate)**: ZERO unexplained omissions — all 8 commands
+> (6 in-repo script names resolve in package.json), all 3 gaps present-as-gaps (build:watch
+> verified tsc-only), all 3 law embeds full-verbatim. 125KB → source-routed (0 occurrences);
+> "24 demo pages" dropped (0 occurrences). Two principled absences correct (no diff artifact;
+> no faithfulness verbs — none-trim emits negatives, not faithfulness).
+> **Coverage-of-coverage**: all 8 sparky surfaces guarded rows; none blank.
+> **First-generation**: stand-in + her load-bearing independent gate = SUFFICIENT; her gate
+> re-derived every signal + fault-injected the novel leg rather than leaning on the stand-in.
+> **Routed (non-blocking)**: (1) LOW generator foot-gun — `writeOutputs(root,…)` silently
+> created `undefined/regen` on a falsy-resolving root; consider asserting a non-empty root.
+> (2) informational — transcribe this stamp into the signature block (done). (3) the
+> first-generation template (omissions gate + lock-independent regen + fault-inject-the-novel-leg)
+> is reusable for Kenya/Data's never-ported consumer seats (same stale-snapshot trim shape;
+> K-D1 now proven).

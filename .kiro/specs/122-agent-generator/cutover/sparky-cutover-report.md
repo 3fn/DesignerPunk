@@ -46,13 +46,25 @@ See `cutover/sparky-content-completeness.md` § Acceptance signals — union 12,
 
 ## Validation signatures (independent-validation default, amendment 4 — mandatory first-generation Stacy trigger, Req 21 AC5)
 
-**Owning seat — Sparky (content confirmation, 14.1):** PENDING
+**Owning seat — Sparky (content confirmation, 14.1):** **CONFIRMED 2026-07-11** (fresh-context first-generation seat stand-in — no pre-existing sparky subagent to self-review; full entry verbatim in `cutover/sparky-content-completeness.md`). Zero disputes; independently verified the trim token counts (demo-styles.css = 0), command strings vs package.json, and every merge-gate claim.
 
-**Independent validation — Stacy (mandatory first-generation trigger):** PENDING
+**Independent validation — Stacy (mandatory first-generation trigger):** **CONFIRMED 2026-07-11** — full entry verbatim in `cutover/sparky-content-completeness.md` (appendix). Fault-injected the sweep-8 K-D1 trim leg (mangled trim[0] negative → FAIL naming the exact trim → restored); lock-independent regen byte-identical across all 8 outputs; all signals re-derived; trim token counts independently measured (0/687/33); zero unexplained omissions; first-generation coverage ruled sufficient. Zero disputes.
 
-**Main-loop engineering verification:** PENDING
+**Main-loop engineering verification:** trims render leg re-verified; final battery green (ten checks + C7 clean + coverage; full suite 8987/8987; lane 326/326; tsc clean ×3).
+
+## Content-freshness check (Peter-requested, 2026-07-11)
+
+The carried Web Theming + Product Tokens body sections (pass-through from his pre-122 prompt,
+provenance specs 094/108/109) were verified against live authority — NOT just carried
+faithfully but confirmed CURRENT: product-token output path (`dist/product/ProductTokens.web.css`,
+`generateProductTokens.ts`), CSS naming (`--product-{category}-{token-name}`,
+Product-Token-Governance), authoring path (`product/tokens/{category}.yaml`,
+DesignerPunk-Integration-Guide L621 + config `productTokens`), and the `data-theme` /
+`:root`-base / dark-only-`color-scheme` theming model (Integration-Guide L353–360). No drift;
+no content flag needed. The cutover carries content that is both faithful AND current.
 
 ## Routed items (non-blocking, carried forward)
 
 1. **U6+ cutovers inherit**: the trims render leg is now live for any future `none-trim-stale-snapshots` verdict; verify FULL verbatim heading lines; the volatile-fact lint fires on spec-number-in-heading (keep spec provenance out of headings).
+2. **Low-priority doc-currency (Sparky/Leonardo, when it lands)**: his Web Theming section's "no `light-dark()`" line is accurate for the current M0a state; revisit when both-mode / `light-dark()` support ships (Integration-Guide notes mode:'both' "not yet supported in M0a"). Not drift — a time-bound status line to refresh later.
 2. **Kenya (U8) heads-up**: also first-generation (never-ported) with 4+4 input-of-record and zero skills — sweep-2 must pass legitimately on a no-skills agent (already handled).
