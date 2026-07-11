@@ -1,0 +1,24 @@
+{
+  "agent": "thurgood",
+  "capturedFrom": ".kiro/agents/thurgood.json@pre-cutover (U4, 2026-07-11)",
+  "members": [
+    "agent-directory",
+    "ai-collaboration-principles",
+    "build-system-setup",
+    "civitas-system-overview",
+    "completion-documentation-guide",
+    "core-goals",
+    "personal-note",
+    "process-cross-reference-standards",
+    "process-development-workflow",
+    "process-file-organization",
+    "process-hook-operations",
+    "process-spec-planning",
+    "process-task-type-definitions",
+    "spec-feedback-protocol",
+    "start-up-tasks",
+    "test-behavioral-contract-validation",
+    "test-development-standards",
+    "test-failure-audit-methodology"
+  ]
+}

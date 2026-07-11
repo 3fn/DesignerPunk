@@ -55,5 +55,19 @@
       "token-quick-reference",
       "web-authoring-standards"
     ]
+  },
+  {
+    "agent": "thurgood",
+    "removals": [
+      "build-system-setup",
+      "completion-documentation-guide",
+      "process-cross-reference-standards",
+      "process-file-organization",
+      "process-hook-operations",
+      "process-spec-planning",
+      "process-task-type-definitions",
+      "test-behavioral-contract-validation",
+      "test-failure-audit-methodology"
+    ]
   }
 ]

@@ -1,0 +1,13 @@
+{
+  "artifact": ".kiro/agents/thurgood.json",
+  "spans": [
+    {
+      "lines": [
+        1,
+        47
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    }
+  ]
+}

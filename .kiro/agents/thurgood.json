@@ -1,13 +1,38 @@
 {
-  "name": "thurgood",
-  "description": "Test governance, audit, spec standards & Civitas steward — test suite health, coverage analysis, audit methodology, spec creation standards, accessibility test coverage auditing, design outline formalization, and Civitas governance infrastructure stewardship",
-  "prompt": "file://./thurgood-prompt.md",
-  "includeMcpJson": true,
-  "tools": ["*"],
   "allowedTools": [
     "read",
+    "knowledge",
     "@designerpunk-docs",
-    "@figma-console-mcp"
+    "@designerpunk-application"
+  ],
+  "description": "Test governance, audit, spec standards & Civitas steward. Use for test-suite health audits, coverage-gap analysis, test-failure investigation, formalizing design outlines into specs (requirements/design/tasks), spec quality review (EARS, task types, validation tiers), accessibility/contract/token test-coverage auditing, and governance-infrastructure health (steering-doc metadata, cross-references, MCP health, agent-prompt currency). Audits and sets standards; does NOT write domain-specific tests or implementation (defers token work to Ada, component work to Lina).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+t",
+  "name": "thurgood",
+  "prompt": "file://./thurgood-prompt.md",
+  "resources": [
+    "file://.kiro/steering/Agent-Directory.md",
+    "file://.kiro/steering/AI-Collaboration-Principles.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
+    "file://.kiro/steering/core-goals.md",
+    "file://.kiro/steering/DesignerPunk-Systems-Overview.md",
+    "file://.kiro/steering/personal-note.md",
+    "file://governance/Process-Development-Workflow.md",
+    "file://.kiro/steering/Spec-Feedback-Protocol.md",
+    "file://.kiro/steering/start-up-tasks.md",
+    "file://.kiro/steering/Task-Completion-Protocol.md",
+    "file://governance/Test-Development-Standards.md"
+  ],
+  "tools": [
+    "*"
   ],
   "toolsSettings": {
     "write": {
@@ -18,34 +43,5 @@
       ]
     }
   },
-  "resources": [
-    "file://.kiro/steering/core-goals.md",
-    "file://.kiro/steering/AI-Collaboration-Principles.md",
-    "file://.kiro/steering/personal-note.md",
-    "file://.kiro/steering/Agent-Directory.md",
-    "file://governance/Process-Development-Workflow.md",
-    "file://governance/Process-Spec-Planning.md",
-    "file://governance/Process-Task-Type-Definitions.md",
-    "file://.kiro/steering/Spec-Feedback-Protocol.md",
-    "file://.kiro/steering/Civitas-System-Overview.md",
-    "skill://governance/BUILD-SYSTEM-SETUP.md",
-    "file://governance/completion-documentation-guide.md",
-    "skill://governance/Process-Cross-Reference-Standards.md",
-    "skill://governance/Process-File-Organization.md",
-    "skill://governance/Process-Hook-Operations.md",
-    "skill://.kiro/steering/start-up-tasks.md",
-    "skill://governance/Test-Development-Standards.md",
-    "skill://governance/Test-Failure-Audit-Methodology.md",
-    "skill://governance/Test-Behavioral-Contract-Validation.md"
-  ],
-  "hooks": {
-    "agentSpawn": [
-      {
-        "command": "git status --porcelain",
-        "timeout_ms": 5000
-      }
-    ]
-  },
-  "keyboardShortcut": "ctrl+shift+t",
   "welcomeMessage": "Hey! I'm Thurgood, your test governance, spec standards specialist, and Civitas steward. I can help with test suite health audits, spec quality reviews, accessibility test coverage, formalizing design outlines into specs, and governance infrastructure health. What needs attention?"
 }
