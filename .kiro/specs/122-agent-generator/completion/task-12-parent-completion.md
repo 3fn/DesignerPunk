@@ -33,7 +33,7 @@ Union 10, per-agent lock == {cross-platform-vs-platform-specific-decision-framew
 ## Validation signatures (amendment 4)
 
 - **Leonardo (seat)**: initial **DISPUTED** → **CONFIRMED 2026-07-11** after fix. His dispute was load-bearing: the first-draft canonical body dropped the Screen Specification mode's Layout Specification block (REQUIRED-layout mandate + 5 rules) with no cue, orphaning `layout-specification-vocabulary`. A real ambient-grade regression the automated sweeps could NOT catch (dropped prose ≠ a tracked demotion). Fixed-before-merge (content restored both targets + doc routed, C7-resolving); re-confirmed. His other 6 items all pass; all 12 flagged trims genuine channel-moves. Full arc in the cutover report.
-- **Stacy (independent)**: recorded in the cutover report.
+- **Stacy (independent)**: initial **DISPUTED** → **CONFIRMED 2026-07-11** after fix. Her independent full baseline re-diff caught a SECOND body-compression regression the seat missed — `### Platform Currency Awareness` dropped with no cue. Fixed (restored + 2 more surfaced by exhaustive reconciliation, all carried back); re-confirmed with a full 52-subsection content-phrase scan showing zero remaining drops. She also drove the process fix (the mechanical reconciliation table). One non-blocking observation (Collaboration Model paraphrase). Full arc in the cutover report.
 - **Main loop (engineering)**: all checks re-run green after the body additions; final battery green.
 
 ## Validation (Tier 3)

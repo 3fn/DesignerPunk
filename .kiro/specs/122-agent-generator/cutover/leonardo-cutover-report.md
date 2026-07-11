@@ -65,11 +65,28 @@
 > need); handoff routing correct (system escalation THROUGH Thurgood); skills/impeccable
 > intact; tool set a strict superset; empty manifest correct. All 7 items pass.)
 
-**Independent validation — Stacy (re-derivation + coverage-of-coverage):** PENDING
+**Independent validation — Stacy (re-derivation + coverage-of-coverage):**
+> [STACY — U6 Leonardo cutover validation] CONFIRMED — independent re-derivation + coverage-of-coverage; 2026-07-11
+> (Initial verdict **DISPUTED** — found a SECOND body-compression regression the seat missed:
+> `### Platform Currency Awareness` dropped with no cue, via her full baseline-subsection
+> re-diff. **Re-CONFIRMED at HEAD `c124b9a0`** after fix: Platform Currency restored
+> verbatim-in-substance (gen L310–315, all 4 elements); her exhaustive content-phrase scan
+> across all 52 baseline subsections finds ZERO fully-dropped; the three restorations (Platform
+> Currency, Ask If Unsure, Design-Creation Lessons-Learned Capture) all verified present; the
+> reconciliation table + regression rows 21–23 independently spot-verified accurate. First-round
+> signals still hold (fault-injected): double-load dedupe 21→20, 60% trim 12/20 exact, 12
+> one-for-one C7-resolving cues proven non-vacuous, cc==kiro union 10, empty verdict, first
+> non-empty skills round-trip proven by fault injection, mixed-disposition routes, full
+> coverage-of-coverage. Battery re-run green independently. One non-blocking observation below.
+> Full entry: appendix.)
 
-**Main-loop engineering verification:** all checks re-run green after the body additions; final battery green.
+**Main-loop engineering verification:** both body-compression regressions fixed-before-merge;
+the exhaustive baseline-subsection reconciliation (Stacy's process amendment) confirms zero
+remaining drops; final battery green (ten checks + C7 clean + coverage; full suite 8987/8987;
+lane 326/326; tsc clean ×3).
 
 ## Routed items (non-blocking, carried forward)
 
-1. **U7+ cutovers inherit**: the skills round-trip is now proven live (Data/Kenya carry platform skills); the empty-manifest render (nothing) is proven; verify FULL verbatim heading lines; keep spec-number provenance out of headings.
-2. **Kenya/Data/Stacy still not-yet-ported** — Leonardo's `routes.agents` will flip those to `resolves` automatically as each cutover lands (LE-D1 — a body pointer that becomes true by regeneration).
+1. **U7+ cutovers inherit (PROCESS — Stacy's U6 amendment, now standard)**: every cutover's diff-vs-baseline MUST carry a **Baseline subsection reconciliation** table (every baseline `##`/`###`/`####` line-item reconciled). The U6 lesson: the loud ~60% trim was clean, but TWO quiet body-compression regressions escaped both the sweeps and the seat — the mechanical table makes this class surface systematically. Skills round-trip + empty-manifest render both proven; verify FULL verbatim heading lines; keep spec-number provenance out of headings.
+2. **Low-priority polish (Stacy observation, non-blocking)**: the Collaboration Model paraphrases a couple of multi-bullet baseline subsections (With Peter 5→1, With Stacy 4→1) into theme-preserving summaries — content present, substantially covered by always-loaded law, classified "present" in the reconciliation table. Defensible paraphrase, not a vanish-class drop; a possible later fidelity pass, not a merge blocker.
+3. **Kenya/Data/Stacy still not-yet-ported** — Leonardo's `routes.agents` will flip those to `resolves` automatically as each cutover lands (LE-D1 — a body pointer that becomes true by regeneration).

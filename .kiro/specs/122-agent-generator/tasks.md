@@ -627,7 +627,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Generate both targets; run checks; commit `cutover/thurgood-cutover-report.md`; **commit `cutover/thurgood-diff-vs-baseline.md`** (classified diff vs the current CC agent; channel-move only if the replacement cue passes C7 resolution else `regression`; regressions adjudicated in this artifact's `## Regression adjudications` section; zero unexplained regressions; paired with C7); Stacy validation recorded; record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 18.1, 19.3, 21.3, 21.5, 22.3_
 
-- [ ] 12. Cutover: Leonardo (product architect) — the consumer-signal cutover — **U6, cutover position 5**
+- [x] 12. Cutover: Leonardo (product architect) — the consumer-signal cutover — **U6, cutover position 5**
 
   **Type**: Parent
   **Unit**: U6
@@ -650,14 +650,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-leonardo` branch)
   - Open U6's PR: `./.kiro/hooks/complete-task.sh "Task 12 Complete: Cutover Leonardo (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U6 — Cutover: Leonardo`. **Merge gate: zero unexplained regressions in `cutover/leonardo-diff-vs-baseline.md` — his ~60% trim classifies as channel-move ONLY where each trimmed doc's replacement cue passes C7 resolution (the rule of the channel-move bucket, Group 2 preamble); any trimmed doc without a C7-resolving replacement cue is a `regression`, adjudicated in the artifact's `## Regression adjudications` section — AND C7 green/adjudicated AND an independent validation signature recorded. This is the spec's highest-exposure channel-move surface.**
 
-  - [ ] 12.1 Author Leonardo's canonical source + capture baseline
+  - [x] 12.1 Author Leonardo's canonical source + capture baseline
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Leonardo (Leonardo confirms the handoff routing table + ~60% demotion cues on the PR)
     - Carry config/prompt into `canonical/agents/leonardo.md`; MIGRATE the inter-agent handoff routing table from body prose into `routes.agents` (LE-D1 — this is the live instance the not-yet-ported check must bite on); each ~60% demotion emits an MCP replacement cue (Req 12 AC1); capture baseline.
     - _Requirements: 10.1, 10.4, 10.5, 12.1, 15.2, 21.1_
 
-  - [ ] 12.2 Generate both targets, run checks, commit sweep report, Stacy validation, measure signal
+  - [x] 12.2 Generate both targets, run checks, commit sweep report, Stacy validation, measure signal
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy
