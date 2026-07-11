@@ -14,7 +14,7 @@ cites a C7-verified carrier.
 |---|---|---|---|
 | 1 | `tools:` single-line list (6 core + 14 MCP) | **channel-move** | Identical grant SET, rendered as a structured list from `toolSubset` + the CC core-tools rule. Zero tools added/removed (verified by set comparison). |
 | 2 | "⚙️ Claude Code Port Note — READ FIRST" block (7 lines) | **improvement** | The port note existed to document hand-adaptations. Each adaptation is now structurally delivered: namespaced tools → rendered Routing cues; no-skills knowledge fallback → the rendered `## Knowledge fallback` section (from `knowledgeBases` declarations); no-hotkeys → runtime-neutral canonical body; write-scope → the field-driven `## Write scope` note. The note's OWN stale line ("Steering doc paths remain under `.kiro/steering/` — no relocation yet") predates 119-A and was WRONG for the current corpus. |
-| 3 | Identity roster "(recommend Peter bring them in — no agent-swap hotkeys here)" | **channel-move** | Carried reworded (runtime-neutral); hand-off TRIGGERS now structured in `routes.agents` (lina, thurgood — `not-yet-ported`, C7 class (b) exempt-by-disposition ✓) and rendered in `## Routing`. |
+| 3 | Identity roster "(recommend Peter bring them in — no agent-swap hotkeys here)" | **channel-move** | Carried reworded (runtime-neutral); hand-off TRIGGERS now structured in `routes.agents` (lina, thurgood — `not-yet-ported`, C7 class (b) exempt-by-disposition ✓) and rendered in `## Routing`. **Stacy's validation caught this row's render claim as initially FALSE** (neither adapter rendered `routes.agents` — a dangling body pointer on both targets); fixed-before-merge: `renderAgentRoute` added, both adapters render agent routes in Routing (verified: `.claude/agents/ada.md:382-383`, `.kiro/agents/ada-prompt.md:168-169`). |
 | 4 | "Out of Scope — that's Lina's/Thurgood's domain" phrasing | **channel-move** | Same content, tightened phrasing; the routing behavior lives in `routes.agents` (see #3). |
 | 5 | "You do NOT have write access to `.kiro/steering/` files (behavioral rule — see Port Note…)" | **channel-move** | Carried as the runtime-neutral ballot-model line + the rendered `## Write scope` note (field-driven from `writeScope`, per-target enforcement semantics — Req 11 AC3). |
 | 6 | `## Token Governance Levels` (hand-compressed autonomy levels, 18 lines) | **channel-move** | Superseded by the AMBIENT LAW EMBED: `token-governance` § "Token Usage Governance" + § "Token Creation Governance" now inline in `## Ambient (per-agent)` — the FULL law text, not a compression. Carrier: `governanceAsLaw` entry, C7 class (a) VERIFIED (both claims' predicates hold live). |
@@ -37,14 +37,22 @@ no structured carrier — two `routes.docs` entries were added to canonical sour
 
 | Diff line | Disposition | Reason / fix ref | Owner |
 |---|---|---|---|
-| *(none — zero regression-bucket lines remain)* | — | The one candidate (completion-doc/spec-planning routing, above) was **fixed-before-merge** by adding the two routes rather than adjudicating an absence. | ada / thurgood |
+| Generated cue (line 387): application-MCP `rebuild_index` rendered with the DOCS server name (`mcp__designerpunk-docs__rebuild_index (application MCP)`) — **found by Ada's seat confirmation (DISPUTED)**: would have misrouted her write-side rebuild protocol, leaving the token-index stale after `npx designerpunk generate` | **fixed-before-merge** | CC adapter bug: cue tools were namespaced by subset search order, not the cue's own `mcp` field — any ambiguous tool name misroutes. Fixed in `adapters/cc.ts` (`cueToolRef` + fail-loud grant assertion), regression test added (`cc-adapter.test.ts`), `MCP_TO_SERVER` hoisted to the shared adapters module (one seam), regenerated + re-verified (line 387 now `mcp__designerpunk-application__rebuild_index`). Ada re-confirmation recorded in the cutover report. | ada (found) / thurgood (fix) |
+| Completion-doc + spec-planning routing (the port's MCP-table rows initially had no structured carrier) | **fixed-before-merge** | Two `routes.docs` entries added to canonical source (both sweep-1 live-resolved) rather than adjudicating an absence. | ada / thurgood |
 
-**Merge gate: ZERO unexplained regressions — SATISFIED (zero regressions, all buckets carried by C7-verified channels).**
+**Merge gate: ZERO unexplained regressions — SATISFIED (both found regressions fixed-before-merge; all remaining buckets carried by C7-verified channels).**
+
+> **Meta-note for the cutover pattern**: BOTH regression-class defects at this first cutover
+> were caught by the designed gates themselves (the seat's content confirmation; the
+> classification pass) and fixed before merge — the U2 debut did exactly what the
+> low-blast-radius-first sequencing (C11 L5) was for.
 
 ## Kiro-side note (outside the CC diff gate, recorded for completeness)
 
-The regenerated `.kiro/agents/ada.json` differs from the hand config by design: 27 ambient
-doc resources → 10 (always-set ∪ token-governance; the 20 trims each carry a sweep-8-verified
-`replaces:` cue), the three rich knowledgeBase objects preserved byte-faithfully
-(Req 15 AC2), grants/writeScope/hooks/shortcut/welcomeMessage carried. The regenerated
+The regenerated `.kiro/agents/ada.json` differs from the hand config by design: the
+30-entry baseline decomposes as 27 doc resources + 3 knowledgeBase resources; the 27 doc
+resources → 10 (always-set ∪ token-governance; the 20 trims each carry a sweep-8-verified
+`replaces:` cue) while the three rich knowledgeBase objects are preserved byte-faithfully
+(Req 15 AC2 — so 30 = 27 + 3, and only the doc side shrinks), with
+grants/writeScope/hooks/shortcut/welcomeMessage carried. The regenerated
 `ada-prompt.md` mirrors the CC body's structured sections in Kiro-native form.

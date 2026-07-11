@@ -36,6 +36,7 @@ import {
   renderRunContextAnnotation,
   renderToolCue,
   renderDocRoute,
+  renderAgentRoute,
 } from '../render';
 import { AttributionAccumulator, type AttributionManifest } from '../attribution';
 import {
@@ -275,10 +276,16 @@ export class CcAdapter implements TargetAdapter {
     // -- (d) Routing ------------------------------------------------------------
     const docRoutes = (fm.routes?.docs ?? []) as DocRoute[];
     const cueRoutes = (fm.routes?.cues ?? []) as ToolCueRoute[];
-    if (docRoutes.length > 0 || cueRoutes.length > 0) {
+    const agentRoutes = fm.routes?.agents ?? [];
+    if (docRoutes.length > 0 || cueRoutes.length > 0 || agentRoutes.length > 0) {
       const lines: string[] = ['## Routing', ''];
       for (const route of docRoutes) {
         lines.push(`- ${renderDocRoute(route)}`);
+      }
+      // Inter-agent routes rendered per LE-D1 (Stacy's U2 row-3 finding: the structured
+      // routes must also be DELIVERED, or body pointers at "your routing section" dangle).
+      for (const route of agentRoutes) {
+        lines.push(`- ${renderAgentRoute(route)}`);
       }
       for (const cue of cueRoutes) {
         const namespaced = cueToolRef(subset, cue); // by the cue's OWN mcp — never subset order
