@@ -102,6 +102,34 @@
 
 ---
 
+## OB-8 — Routing `not-yet-ported` staleness: C7(b) strict-check + one-time backfill
+
+**Status**: OPEN · **Owner**: Spec 122 (closeout, Task 18 / U11) · **Surfaced**: 122 Task 13 (Data cutover, 2026-07-11)
+
+**What.** Inter-agent routes in generated prompts carry a `disposition` — `resolves` (target is a generated CC agent → hand off directly) or `not-yet-ported` (target not generated yet → route via Peter). The disposition is **authored** in each agent's canonical source and rendered verbatim (`renderAgentRoute`); it is NOT derived from the cutover ledger. So once a target IS cut over, every predecessor still authored `not-yet-ported` for it goes **stale** — the prompt tells the agent "seat not generated yet, route via Peter" for an agent that now exists. Live proof: Sparky's route to Leonardo still says `not-yet-ported` post-U6; after U7, Leonardo's route to `data` is stale. C7 class (b) **exempts** `not-yet-ported` unconditionally, so no check catches it. (The Task 12 completion doc's claim that these "flip automatically by regeneration" is inaccurate — they do not.)
+
+**Severity.** Low-but-real: a generated prompt strands an agent on a false "can't reach them in CC" instruction — the stale-address drift class 122 exists to kill, pointed inward. Not dangerous (adds a Peter-hop), but generated prompts are asserting a falsehood.
+
+**Fix (decided — Peter, 2026-07-11, option A).** (1) A one-time **backfill** flipping every stale `not-yet-ported` whose target is now in the ledger → `resolves`. (2) A **C7(b) sharpening**: a `not-yet-ported` disposition whose target IS in the cutover ledger becomes a FAIL (stale), not an exempt pass. Both land at 122 **closeout (U11), NOT earlier** — arming the strict check before the last cutover would force every remaining cutover (Kenya, Stacy) to edit predecessors' files to flip labels, re-introducing the cross-agent churn the self-contained-PR design avoids. After U9 (Stacy, the last roster agent) every in-roster inter-agent route should be `resolves`; the backfill clears the state and the strict check keeps it clean going forward.
+
+**Done when.** 122 U11 lands the backfill (zero stale `not-yet-ported` for in-ledger targets) + the C7(b) strict-check sharpening, with a prove-it-bites (a stale `not-yet-ported` FAILs).
+
+---
+
+## OB-9 — `owner:` value audit across all generated agents (substance-owner correctness)
+
+**Status**: OPEN · **Owner**: Spec 122 (closeout, Task 18 / U11) · **Surfaced**: 122 Task 13 (Data cutover, 2026-07-11)
+
+**What.** Each `governanceAsLaw` lock in canonical agent source carries `owner:` = the doc's **substance domain owner** (`tools/agent-generator/schema.ts:51` — the adjudicator who rules on predicate mismatches). System-agent cutovers (Ada/Lina/Thurgood) were coincidentally correct (they lock their own docs → `owner: self`). But **consumer** agents lock docs owned by others, and the `owner: self` pattern was copied incorrectly. Sparky (the first consumer) set `owner: sparky` for `contract-system-reference` (Lina's), `product-token-governance` (Ada's), and `web-authoring-standards` (Lina's, per her 2026-07-11 ruling) — all three wrong. Ada flagged the class at Data's cutover; Data (U7) authors his owners correctly (`lina`/`ada`). **Sparky's three are corrected in the same PR that records this obligation**; the OPEN part is the **systematic audit of ALL agents' `owner:` values** at closeout to catch any other latent mismatch (Kenya/Stacy will be authored correctly, but verify).
+
+**Severity.** Low: `owner:` only matters WHEN a check flags a mismatch and a human ruling is needed — a wrong value misroutes that ruling to the wrong expert. Nothing breaks until then.
+
+**Fix (decided — Peter, 2026-07-11).** (1) Sparky's three owners corrected now (this PR): `contract-system-reference` → lina, `product-token-governance` → ada, `web-authoring-standards` → lina. (2) At 122 **closeout (U11)**: a systematic audit of every generated agent's `owner:` values against schema.ts:51, correcting any remaining mismatch; consider a lightweight check (owner ∈ known doc→owner map) so the class cannot silently recur.
+
+**Done when.** 122 U11 records the owner-audit result (every `owner:` matches its doc's substance owner, or an adjudicated exception per doc).
+
+---
+
 ## Informational notes for 119-B (NOT obligations — context the deferred work needs)
 
 ### IN-1 — `find_docs` ranking improved mid-119-A (baseline for the measurement case study)
