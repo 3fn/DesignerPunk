@@ -1,0 +1,13 @@
+{
+  "artifact": ".kiro/agents/data.json",
+  "spans": [
+    {
+      "lines": [
+        1,
+        51
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    }
+  ]
+}

@@ -36,3 +36,23 @@ adjudications:
     ruling: intentional-trim
     owner: thurgood
     record: ".kiro/specs/122-agent-generator/completion/task-8-2-completion.md § 'Blank-row adjudication' (input/lock artifact — content integrity via the C6 input-closure lock + PR review, not a content check; Stacy's fail-safe analysis recorded there)"
+
+  # --- U7 (Data cutover, Task 13) — token-law adjudication (Ada, token substance owner, 2026-07-11) ---
+  # The 119-A spine (per-agent-ambient-design.md § "7. Data") classified `token-quick-reference` as
+  # Data's token-first governance-law. Ada ruled that classification does NOT survive materialization:
+  # Token-Quick-Reference.md is a routing table whose own Purpose disclaims being a reference — it
+  # carries no C7 class-(a) mandate and fails the AXA §3.3 silent-failure discriminator. The mandate
+  # Data's token-first EFFECT needs lives in `product-token-governance` (System-First Value Selection),
+  # already force-loaded in data.json and the same lock his sibling consumers Sparky/Kenya use. So:
+  # token-quick-reference is DEMOTED to an on-demand route; product-token-governance is LOCKED as law.
+  # Both are `assessment-gap`: the spine named the right effect but pointed at the wrong doc.
+  - sweep: 122-sweep-4-ambient
+    key: data/designed-minus-generated/token-quick-reference
+    ruling: assessment-gap
+    owner: data
+    record: ".kiro/specs/122-agent-generator/cutover/data-cutover-report.md § 'Token-law adjudication (Ada, 2026-07-11)' — token-quick-reference is a routing table with no materializable C7 class-(a) mandate; Ada demoted it from Data's governance-as-law to an on-demand doc route (Token Documentation Map). Assessment-gap: the spine named the silent-wrong-tier effect but pointed at the wrong doc."
+  - sweep: 122-sweep-4-ambient
+    key: data/generated-minus-designed/product-token-governance
+    ruling: assessment-gap
+    owner: data
+    record: ".kiro/specs/122-agent-generator/cutover/data-cutover-report.md § 'Token-law adjudication (Ada, 2026-07-11)' — product-token-governance carries Data's real token-first mandate (System-First Value Selection; force-loaded in data.json; the lock siblings Sparky/Kenya use). Ada ruled it IN as Data's governance-as-law token lock, replacing the mis-classified token-quick-reference. Assessment-gap: the spine omitted the doc carrying the mandate it described."

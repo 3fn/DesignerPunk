@@ -1,0 +1,53 @@
+{
+  "artifact": ".kiro/agents/data-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        272
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#body"
+    },
+    {
+      "lines": [
+        273,
+        278
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        279,
+        282
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        283,
+        306
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        307,
+        318
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        319,
+        322
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}
