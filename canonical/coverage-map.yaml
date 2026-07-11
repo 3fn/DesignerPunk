@@ -28,6 +28,16 @@
     - 122-diff-guard
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
+- surface: .claude/agents/kenya.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: .claude/agents/kenya.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
 - surface: .claude/agents/leonardo.md
   checks:
     - 122-diff-guard
@@ -492,6 +502,24 @@
     - 122-sweep-3-dupes
     - 122-sweep-7-dispositions
 - surface: .kiro/agents/data.json.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/kenya-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: .kiro/agents/kenya-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/kenya.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/kenya.json.attribution.json
   checks:
     - 122-diff-guard
     - 122-sweep-3-dupes
@@ -1012,6 +1040,14 @@
     - 122-sweep-5-corrected-state
     - 122-sweep-6-declarations
     - 122-sweep-8-demotion
+- surface: canonical/agents/kenya.md
+  checks:
+    - 122-canonical-vs-truth
+    - 122-sweep-1-refs
+    - 122-sweep-2-skills
+    - 122-sweep-5-corrected-state
+    - 122-sweep-6-declarations
+    - 122-sweep-8-demotion
 - surface: canonical/agents/leonardo.md
   checks:
     - 122-canonical-vs-truth
@@ -1048,6 +1084,9 @@
   checks:
     - 122-sweep-8-demotion
 - surface: canonical/baselines/data.ambient-baseline.json
+  checks:
+    - 122-sweep-8-demotion
+- surface: canonical/baselines/kenya.ambient-baseline.json
   checks:
     - 122-sweep-8-demotion
 - surface: canonical/baselines/leonardo.ambient-baseline.json
@@ -1094,6 +1133,16 @@
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
 - surface: canonical/manifests/demotion-delta.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/kenya.cc.ambient-manifest.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/kenya.kiro.ambient-manifest.json
   checks:
     - 122-diff-guard
     - 122-sweep-4-ambient
