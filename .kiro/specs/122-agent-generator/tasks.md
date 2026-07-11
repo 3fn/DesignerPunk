@@ -591,7 +591,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Measure the Req 23 AC2 signal (lock-set == pinned set; zero family/standards ids; member + union recorded); adjudicate any missed shape before merge.
     - _Requirements: 18.1, 19.3, 21.3, 21.5, 22.3, 23.2, 23.5_
 
-- [ ] 11. Cutover: Thurgood (Civitas steward)
+- [x] 11. Cutover: Thurgood (Civitas steward)
 
   **Type**: Parent
   **Unit**: U4
@@ -613,14 +613,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-thurgood` branch)
   - Open U4's PR: `./.kiro/hooks/complete-task.sh "Task 11 Complete: Cutover Thurgood (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U4 — Cutover: Thurgood`. **Merge gate: zero unexplained regressions in `cutover/thurgood-diff-vs-baseline.md` (channel-move lines honor the rule-of-the-bucket; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
-  - [ ] 11.1 Author Thurgood's canonical source + capture baseline
+  - [x] 11.1 Author Thurgood's canonical source + capture baseline
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
     - Carry config/prompt into `canonical/agents/thurgood.md`; add the OB-5 cue (`WHEN creating/modifying a steering doc THEN consult Steering-Addressing-Conventions`, Req 14); migrate routes prose→`routes.agents`; capture baseline.
     - _Requirements: 10.1, 10.2, 13.1, 14.1, 15.2, 21.1_
 
-  - [ ] 11.2 Generate both targets, run checks, commit sweep report, Stacy validation
+  - [x] 11.2 Generate both targets, run checks, commit sweep report, Stacy validation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy
