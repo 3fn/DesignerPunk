@@ -541,27 +541,28 @@ export interface GateOptions {
   indexer?: DocumentIndexer;
 }
 
+/** The reference axis's scan output — see {@link scanPromptReferences}. */
+export interface PromptReferenceScan {
+  references: ReferenceCheck[];
+  unresolved: string[];
+  referencedIdentityIds: Set<string>;
+}
+
 /**
- * Run the relocation-integrity gate (the 119-A exit check).
- *
- * Builds a real `DocumentIndexer` over `governance/` (the frozen legacy manifest is
- * seeded automatically at the tail of `indexDirectory`), then exercises the live
- * `resolveRef` per prompt reference. Identity refs bypass MCP (static presence);
- * must-fix couplings + family-guidance + scope are asserted statically.
+ * The reference axis (Req 8 AC1–AC5), extracted from the orchestrator as its own
+ * exported seam: scan every prompt under `projectRoot`, classify each steering ref
+ * (template / identity / served), and resolve served refs through the live indexer.
+ * Template placeholders are excluded from pass/fail here — they are recorded but
+ * NEVER pushed to `unresolved` — which is the behavior the fixture-based unit test
+ * exercises directly (the live corpus carries zero placeholders since the Spec 122
+ * U3 regeneration, so full-gate runs can no longer test this leg non-vacuously).
+ * Only served refs touch the indexer; a template-only or identity-only scan never
+ * calls `resolveRef`.
  */
-export async function runRelocationIntegrityGate(opts: GateOptions = {}): Promise<GateResult> {
-  const projectRoot = opts.projectRoot ?? DEFAULT_PROJECT_ROOT;
-  const governanceDir = opts.governanceDir ?? DEFAULT_GOVERNANCE_DIR;
-
-  let indexer = opts.indexer;
-  if (!indexer) {
-    indexer = new DocumentIndexer();
-    // indexDirectory seeds the frozen legacy manifest at its tail (re-seed
-    // obligation) — so the legacy-fallback resolution mechanism is live here.
-    await indexer.indexDirectory(governanceDir);
-  }
-
-  // --- Reference axis (Req 8 AC1–AC5) ---
+export function scanPromptReferences(
+  projectRoot: string,
+  indexer: Pick<DocumentIndexer, 'resolveRef'>
+): PromptReferenceScan {
   const references: ReferenceCheck[] = [];
   const unresolved: string[] = [];
   const referencedIdentityIds = new Set<string>();
@@ -612,6 +613,32 @@ export async function runRelocationIntegrityGate(opts: GateOptions = {}): Promis
       }
     }
   }
+
+  return { references, unresolved, referencedIdentityIds };
+}
+
+/**
+ * Run the relocation-integrity gate (the 119-A exit check).
+ *
+ * Builds a real `DocumentIndexer` over `governance/` (the frozen legacy manifest is
+ * seeded automatically at the tail of `indexDirectory`), then exercises the live
+ * `resolveRef` per prompt reference. Identity refs bypass MCP (static presence);
+ * must-fix couplings + family-guidance + scope are asserted statically.
+ */
+export async function runRelocationIntegrityGate(opts: GateOptions = {}): Promise<GateResult> {
+  const projectRoot = opts.projectRoot ?? DEFAULT_PROJECT_ROOT;
+  const governanceDir = opts.governanceDir ?? DEFAULT_GOVERNANCE_DIR;
+
+  let indexer = opts.indexer;
+  if (!indexer) {
+    indexer = new DocumentIndexer();
+    // indexDirectory seeds the frozen legacy manifest at its tail (re-seed
+    // obligation) — so the legacy-fallback resolution mechanism is live here.
+    await indexer.indexDirectory(governanceDir);
+  }
+
+  // --- Reference axis (Req 8 AC1–AC5) ---
+  const { references, unresolved, referencedIdentityIds } = scanPromptReferences(projectRoot, indexer);
 
   // --- Identity axis (Req 8 AC5) ---
   const identity = assertIdentityPresence(projectRoot, referencedIdentityIds);

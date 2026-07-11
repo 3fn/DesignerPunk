@@ -19,6 +19,7 @@ import {
   assertMustFixCouplings,
   assertScope,
   runRelocationIntegrityGate,
+  scanPromptReferences,
   LOCKED_IDENTITY_IDS,
   DEFAULT_PROJECT_ROOT,
 } from '../relocation-integrity-gate';
@@ -207,16 +208,45 @@ describe('runRelocationIntegrityGate — full gate (the 119-A exit check, Req 8 
     expect(result.resolutionMechanism).toMatch(/legacy-fallback/);
   });
 
-  it('excludes template placeholders from pass/fail (Req 8 AC1 — not real refs)', async () => {
+  it('excludes template placeholders from pass/fail — fixture prompt (Req 8 AC1 — not real refs)', () => {
+    // Anti-vacuity moved OFF live data (2026-07-11, Spec 122 U3): the live floor
+    // (≥1 template in the real prompts) died by progress — Ada's U2 regeneration dropped
+    // `Token-Family-{Name}.md` (3 → 2) and Lina's U3 regeneration removed the corpus's
+    // LAST template placeholders (`Component-Family-{Name}.md` / `{FamilyName}`, 2 → 0),
+    // exactly as this test's old comment predicted. The exclusion behavior is now
+    // exercised non-vacuously via the extracted reference-axis seam on a fixture prompt;
+    // the live leg below keeps the invariant without an inventory floor.
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'rig-tpl-'));
+    try {
+      fs.mkdirSync(path.join(root, '.kiro/agents'), { recursive: true });
+      fs.writeFileSync(
+        path.join(root, '.kiro/agents', 'fixture-prompt.md'),
+        '# Fixture\n\nSee `get_document_summary({ path: ".kiro/steering/Component-Family-{Name}.md" })`.\n',
+      );
+      // A template-only scan must never touch the resolver — throwing stub proves it.
+      const neverCalled = {
+        resolveRef: (): never => {
+          throw new Error('resolveRef must not be called for a template placeholder');
+        },
+      };
+      const scan = scanPromptReferences(root, neverCalled);
+      const templates = scan.references.filter((r) => r.role === 'template');
+      expect(templates.length).toBe(1);
+      expect(templates[0].ref).toBe('.kiro/steering/Component-Family-{Name}.md');
+      expect(templates[0].resolved).toBe(false);
+      // a template ref must never appear in unresolved — the exclusion under test
+      expect(scan.unresolved).toEqual([]);
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('live prompts: any template placeholder stays excluded from unresolved (Req 8 AC1)', async () => {
     const result = await runRelocationIntegrityGate();
     const templates = result.references.filter((r) => r.role === 'template');
-    // Anti-vacuity, not inventory: ≥1 proves the classifier still routes placeholders down
-    // the template path so the exclusion below is exercised. The exact count shrinks as
-    // Spec 122 cutovers regenerate prompts (Ada's U2 regeneration dropped the old
-    // `Token-Family-{Name}.md` table placeholder: 3 → 2) — pinning it would break at
-    // every cutover for no protective value.
-    expect(templates.length).toBeGreaterThanOrEqual(1);
-    // a template ref must never appear in unresolved
+    // NO count floor: the live corpus legitimately holds zero placeholders since U3
+    // (see the fixture leg above for the non-vacuous exclusion assertion; the classifier
+    // routing itself is directly covered by the classifyReference tests).
     for (const t of templates) {
       expect(result.unresolved.some((u) => u.includes(t.ref))).toBe(false);
     }

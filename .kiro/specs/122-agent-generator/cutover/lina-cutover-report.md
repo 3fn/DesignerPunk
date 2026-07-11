@@ -53,6 +53,16 @@
    Test-Behavioral-Contract-Validation, and Component-MCP-Document-Template had no
    structured carrier — three `routes.docs` entries + one `get_document_full` cue added
    before the diff artifact was finalized. Details: `lina-diff-vs-baseline.md`.
+3. **CI catch (first PR run): the 119-A relocation-gate test's live anti-vacuity floor
+   died by progress** — `lane-mcp-server-suite` failed because the test asserted ≥1
+   template placeholder in the live prompts, and this regeneration removed the corpus's
+   LAST two (`Component-Family-{Name}` / `{FamilyName}` in Lina's old surfaces; the
+   test's own comment predicted this class at U2, 3 → 2 — U3 took it 2 → 0). Fixed on
+   the branch: the reference axis extracted as an exported seam
+   (`scanPromptReferences`), the exclusion behavior now tested NON-VACUOUSLY against a
+   fixture prompt (with a throwing resolver stub proving templates never touch the
+   indexer), and the live leg keeps the no-template-in-unresolved invariant without an
+   inventory floor. mcp-server suite 601/601; full suite + lane + diff-guard re-verified.
 
 ## Acceptance signals (Req 23 AC2 / design C10.2, Lina row — A-D5/LE-D4 discipline)
 
