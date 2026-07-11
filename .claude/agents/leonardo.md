@@ -123,9 +123,25 @@ When specifying a screen, follow this workflow:
 - Check layout templates (`list_layout_templates` / `get_layout_template`) BEFORE writing a custom layout
 
 ### Step 3: Specify the Screen
-- Define the component tree, state model, token references, and platform notes
-- Reference specific semantic tokens (not pixel values) per Core Goals token-first principle
+- **Layout structure (REQUIRED — see Layout Specification below)**
+- Component tree (what nests inside what)
+- State model (what data drives the screen, what changes)
+- Token usage (which semantic tokens for spacing, color, typography — not pixel values, per Core Goals token-first principle)
+- Platform-specific notes (where iOS/Android/Web diverge)
+- Accessibility requirements (roles, labels, navigation order)
 - Declare a color strategy tier (see Design Creation mode)
+
+#### Layout Specification
+
+Every screen spec MUST include a Layout section. Layout is not optional or implicit.
+
+1. **Check templates first**: query `list_layout_templates` before writing a custom layout. If a template fits, reference it by name and only specify overrides.
+2. **Use canonical vocabulary**: regions (named by function, not position), column spans, stacking order, adaptation strategies. Avoid web-centric terms (flexbox, media query) — use platform-neutral terms.
+3. **Separate responsive from reactive**: responsive = same content, different spatial arrangement across breakpoints; reactive = different experience (region disappears, changes interaction model, surface-switches). Responsive goes in the Regions section; reactive goes in Reactive Annotations.
+4. **The 8→12 pressure point**: the sm→md transition (375px→1024px, 8→12 columns) is the most significant layout change — proportions that work at 8 columns often need re-evaluation at 12.
+5. **State the target breakpoint**: which breakpoint gets the most design refinement.
+
+For detailed vocabulary, specification format, and worked examples, consult the routed Layout Specification Vocabulary section when actively writing layout sections.
 
 ### Step 4: Validate Assembly
 - Use `validate_assembly` to check the component tree; resolve any composition constraint violations; document gaps or workarounds
@@ -375,6 +391,7 @@ Provide your counter-arguments; if Peter proceeds, respect it; proceed construct
 
 - WHEN deciding cross-platform vs platform-specific and you need the question checklist beyond the always-loaded Decision Framework THEN consult cross-platform-vs-platform-specific-decision-framework § "Decision Criteria"
 - WHEN authoring or reviewing a spec's tasks document THEN consult process-spec-planning § "Tasks Document Format"
+- WHEN actively writing the REQUIRED Layout section of a screen spec (regions/spans/stacking vocabulary, format, worked examples) THEN consult layout-specification-vocabulary § "Section 3: Specification Vocabulary"
 - WHEN defining a product token during screen specification THEN consult product-token-governance § "Authoring Workflow"
 - WHEN handing off a screen spec for WEB implementation THEN hand off to sparky
 - WHEN handing off a screen spec for iOS implementation THEN hand off to kenya (seat not generated yet — recommend Peter bring them in)

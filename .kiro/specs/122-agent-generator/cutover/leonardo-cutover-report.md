@@ -49,7 +49,21 @@
 
 ## Validation signatures (independent-validation default, amendment 4)
 
-**Owning seat — Leonardo (content confirmation, 12.1):** PENDING
+**Owning seat — Leonardo (content confirmation, 12.1):**
+> [LEONARDO — U6 content confirmation] CONFIRMED — 2026-07-11
+> (Initial verdict **DISPUTED** — a REAL, load-bearing catch: the Screen Specification mode's
+> Layout Specification block + Step 3 REQUIRED-layout entry were dropped in the first-draft
+> canonical body with no replacement cue, and the `layout-specification-vocabulary` doc was
+> left orphaned. Layout is the REQUIRED spine of every screen spec — ambient-grade for the
+> hub — so a real regression, not a channel-move, and one the automated sweeps could NOT
+> catch (dropped prose with no cue is not a tracked demotion). **Re-CONFIRMED after fix**:
+> Step 3 REQUIRED-layout entry restored (gen line 126); the Layout Specification subsection
+> with all 5 rules present (lines 134–142); the `layout-vocabulary` route resolves live to
+> `layout-specification-vocabulary § "Section 3: Specification Vocabulary"` — the real
+> canonical vocabulary, doc no longer orphaned. His other findings: law embed verbatim +
+> right silent-failure section; all 12 flagged trims genuine channel-moves (none an ambient
+> need); handoff routing correct (system escalation THROUGH Thurgood); skills/impeccable
+> intact; tool set a strict superset; empty manifest correct. All 7 items pass.)
 
 **Independent validation — Stacy (re-derivation + coverage-of-coverage):** PENDING
 
