@@ -51,6 +51,7 @@ import {
   renderToolCue,
   renderDocRoute,
   renderAgentRoute,
+  renderGroundTruthFaithfulness,
 } from '../render';
 import { AttributionAccumulator } from '../attribution';
 import { canonicalStringify, type JsonValue } from '../canonical-json';
@@ -317,6 +318,23 @@ export class KiroAdapter implements TargetAdapter {
     // array built in emitConfig — the reference mechanism EXISTS on this target, so per the
     // design's Rosetta-framing the reference form is used and nothing is inlined into the
     // prompt body (design C11: "an adapter KNOWS its harness's native delivery model").
+
+    // -- (a2) Ground truth (manifest verdict honored as DATA — Req 10 AC3) ------
+    // The ground-truth directive has NO native Kiro config surface (unlike ambient
+    // membership → resources), so the faithfulness cue renders into the prompt body on
+    // this target too — native (non-namespaced) verb names via toolRef (fail-loud when
+    // a verb is not granted by the agent's subset).
+    const kiroManifest = agent.ambientManifests.kiro;
+    if (kiroManifest.groundTruth) {
+      const faithfulness = renderGroundTruthFaithfulness(kiroManifest.groundTruth, (t) =>
+        toolRefImpl(subset, t)
+      );
+      if (faithfulness !== undefined) {
+        const block = `## Ground truth\n\n${faithfulness}\n\n`;
+        acc.add('render', countLines(block), 'ambient.groundTruthManifest');
+        bodyParts.push(block);
+      }
+    }
 
     // -- (b) Workflow rules ---------------------------------------------------
     const flatTools = allFlatTools(subset);

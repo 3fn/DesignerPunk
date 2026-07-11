@@ -1,0 +1,53 @@
+{
+  "artifact": ".kiro/agents/lina-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        268
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#body"
+    },
+    {
+      "lines": [
+        269,
+        272
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        273,
+        276
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        277,
+        328
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        329,
+        338
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        339,
+        342
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}

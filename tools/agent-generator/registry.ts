@@ -34,6 +34,7 @@ import * as path from 'path';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { canonicalStringify, type JsonValue } from './canonical-json';
+import { guardChild, noteChildPid, releaseChild } from './child-process-guard';
 
 // ============================================================================
 // The fixed server table — mirrors `.mcp.json`'s three servers, repo-relative
@@ -136,16 +137,21 @@ export async function introspectServer(
     env[key] = value;
   }
 
-  const transport = new StdioClientTransport({
-    command: process.execPath,
-    args: [absoluteEntry],
-    env,
-    stderr: 'inherit',
-  });
+  // guardChild: reap this server if the parent dies without the finally running
+  // (harness timeout / crash / Ctrl-C) — the U3 orphan-leak fix.
+  const transport = guardChild(
+    new StdioClientTransport({
+      command: process.execPath,
+      args: [absoluteEntry],
+      env,
+      stderr: 'inherit',
+    })
+  );
   const client = new Client({ name: 'agent-generator-registry', version: '0.0.0' }, { capabilities: {} });
 
   try {
     await client.connect(transport);
+    noteChildPid(transport); // snapshot the pid — survives the SDK close-window nulling
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(
@@ -171,6 +177,7 @@ export async function introspectServer(
     );
   } finally {
     await client.close();
+    releaseChild(transport); // gracefully closed — no reaping needed
   }
 }
 

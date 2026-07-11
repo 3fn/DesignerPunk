@@ -37,6 +37,7 @@ import {
   renderToolCue,
   renderDocRoute,
   renderAgentRoute,
+  renderGroundTruthFaithfulness,
 } from '../render';
 import { AttributionAccumulator, type AttributionManifest } from '../attribution';
 import {
@@ -262,6 +263,21 @@ export class CcAdapter implements TargetAdapter {
       const block = `### ${member.id}\n\n${ensureTrailingNewline(embed)}\n`;
       acc.add('resolve', countLines(block), `id:${member.id}`, 'embed');
       bodyParts.push(block);
+    }
+
+    // -- (b2) Ground truth (manifest verdict honored as DATA — Req 10 AC3) ------
+    // catalog-is-manifest carries faithfulnessVerbs → the assembly-grain faithfulness cue
+    // renders here, verbs namespaced via toolRef (fail-loud when a verb is not granted by
+    // the agent's subset — the same invariant cueToolRef enforces for routed cues).
+    if (manifest.groundTruth) {
+      const faithfulness = renderGroundTruthFaithfulness(manifest.groundTruth, (t) =>
+        toolRefImpl(subset, t)
+      );
+      if (faithfulness !== undefined) {
+        const block = `## Ground truth\n\n${faithfulness}\n\n`;
+        acc.add('render', countLines(block), 'ambient.groundTruthManifest');
+        bodyParts.push(block);
+      }
     }
 
     // -- (c) Workflow rules ---------------------------------------------------

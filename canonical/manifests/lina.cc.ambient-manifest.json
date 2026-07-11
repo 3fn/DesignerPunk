@@ -1,0 +1,74 @@
+{
+  "agent": "lina",
+  "groundTruth": {
+    "emitArtifactRefs": true,
+    "faithfulnessVerbs": [
+      "get_component_full",
+      "get_component_health"
+    ],
+    "verdict": "catalog-is-manifest"
+  },
+  "members": [
+    {
+      "class": "capability-routing",
+      "delivery": "file",
+      "id": "agent-directory",
+      "lane": "shared"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "ai-collaboration-principles",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "civitas-system-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "governance-as-law",
+      "delivery": "file",
+      "id": "contract-system-reference",
+      "lane": "per-agent"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "core-goals",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "designerpunk-systems-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "personal-note",
+      "lane": "shared"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "spec-feedback-protocol",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "start-up-tasks",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "task-completion-protocol",
+      "lane": "shared"
+    }
+  ],
+  "target": "cc"
+}

@@ -439,3 +439,45 @@ describe('KiroAdapter.emitAlwaysLayer', () => {
     expect(files).toEqual([]);
   });
 });
+
+// ============================================================================
+// Ground truth (Req 10 AC3 — manifest verdicts honored as data; U3 Lina cutover)
+// ============================================================================
+
+describe('KiroAdapter.emitAgent — ground truth faithfulness cue (prompt body, native names)', () => {
+  const adapter = new KiroAdapter(DISPOSITIONS);
+
+  it('renders the catalog-is-manifest faithfulness cue with NATIVE (non-namespaced) verbs in the prompt', () => {
+    const agent = resolvedAgent({
+      toolSubset: {
+        'designerpunk-docs': ['find_docs', 'get_section'],
+        'designerpunk-application': ['get_component_full', 'get_component_health'],
+      },
+    });
+    agent.ambientManifests.kiro = {
+      ...agent.ambientManifests.kiro,
+      groundTruth: {
+        verdict: 'catalog-is-manifest',
+        emitArtifactRefs: true,
+        faithfulnessVerbs: ['get_component_full', 'get_component_health'],
+      },
+    };
+    const files = adapter.emitAgent(agent, ctx());
+    const prompt = files.find((f) => f.path.endsWith('-prompt.md'))!;
+    expect(prompt.content).toContain('## Ground truth');
+    expect(prompt.content).toContain('`get_component_full`');
+    expect(prompt.content).toContain('`get_component_health`');
+    expect(prompt.content).not.toContain('mcp__designerpunk-application__get_component_full');
+  });
+
+  it('omits the section entirely for a directive without faithfulness verbs (none-standing)', () => {
+    const agent = resolvedAgent();
+    agent.ambientManifests.kiro = {
+      ...agent.ambientManifests.kiro,
+      groundTruth: { verdict: 'none-standing', emitArtifactRefs: true },
+    };
+    const files = adapter.emitAgent(agent, ctx());
+    const prompt = files.find((f) => f.path.endsWith('-prompt.md'))!;
+    expect(prompt.content).not.toContain('## Ground truth');
+  });
+});

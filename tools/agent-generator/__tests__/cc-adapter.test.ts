@@ -421,3 +421,51 @@ describe('emitAgent — empty per-agent ambient (incorporation adjudication)', (
     expect(checkAttributionTotality(file.attribution, lineCount(file.content)).valid).toBe(true);
   });
 });
+
+// ============================================================================
+// Ground truth (Req 10 AC3 — manifest verdicts honored as data; U3 Lina cutover)
+// ============================================================================
+
+describe('CcAdapter.emitAgent — ground truth faithfulness cue', () => {
+  const adapter = new CcAdapter(DISPOSITIONS);
+
+  function withGroundTruth(groundTruth: NonNullable<ResolvedAgent['ambientManifests']['cc']['groundTruth']>, subsetOverride?: AgentFrontmatter['toolSubset']): ResolvedAgent {
+    const agent = resolvedAgent(subsetOverride ? { toolSubset: subsetOverride } : {});
+    agent.ambientManifests.cc = { ...agent.ambientManifests.cc, groundTruth };
+    return agent;
+  }
+
+  it('renders the catalog-is-manifest faithfulness cue with namespaced verbs', () => {
+    const agent = withGroundTruth(
+      {
+        verdict: 'catalog-is-manifest',
+        emitArtifactRefs: true,
+        faithfulnessVerbs: ['get_component_full', 'get_component_health'],
+      },
+      {
+        'designerpunk-docs': ['find_docs', 'get_section'],
+        'designerpunk-application': ['get_component_full', 'get_component_health'],
+      }
+    );
+    const [file] = adapter.emitAgent(agent, ctx());
+    expect(file.content).toContain('## Ground truth');
+    expect(file.content).toContain('`mcp__designerpunk-application__get_component_full`');
+    expect(file.content).toContain('`mcp__designerpunk-application__get_component_health`');
+    expect(file.content).toContain('assembly-grain, not catalog enumeration');
+  });
+
+  it('omits the section entirely for a directive without faithfulness verbs (none-standing)', () => {
+    const agent = withGroundTruth({ verdict: 'none-standing', emitArtifactRefs: true });
+    const [file] = adapter.emitAgent(agent, ctx());
+    expect(file.content).not.toContain('## Ground truth');
+  });
+
+  it('throws loud when a faithfulness verb is not granted by the subset', () => {
+    const agent = withGroundTruth({
+      verdict: 'catalog-is-manifest',
+      emitArtifactRefs: true,
+      faithfulnessVerbs: ['get_component_health'], // fixture subset grants only get_component_full
+    });
+    expect(() => adapter.emitAgent(agent, ctx())).toThrow(/not declared by any server/);
+  });
+});

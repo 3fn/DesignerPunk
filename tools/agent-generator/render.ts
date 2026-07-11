@@ -18,6 +18,7 @@
  */
 
 import type { WorkflowRule } from './workflow-rules-guard';
+import type { GroundTruthDirective } from './compose';
 import type { AgentRoute, DocRoute, RunContext, ToolCueRoute } from './schema';
 
 // ============================================================================
@@ -117,6 +118,31 @@ export function renderToolCue(cue: ToolCueRoute): string {
  */
 export function renderDocRoute(route: DocRoute): string {
   return `WHEN ${route.when} THEN consult ${route.doc} § "${route.section}"`;
+}
+
+/**
+ * Render the ground-truth faithfulness cue from a manifest directive (Req 10 AC3 —
+ * verdicts honored as DATA). Branches on the directive's `faithfulnessVerbs` FIELD (the
+ * field that encodes the catalog-is-manifest behavior), never on a re-read of the verdict
+ * string; verbs are namespaced per target by the caller-supplied `toolName` (CC
+ * `mcp__<server>__<tool>`, Kiro native). Returns undefined when the directive carries no
+ * faithfulness verbs (none-standing / collapses-into-catalog / empty render nothing here;
+ * the `trims` leg of none-trim-stale-snapshots is a separate render, still unimplemented —
+ * no ledger agent carries a trim verdict yet).
+ */
+export function renderGroundTruthFaithfulness(
+  directive: GroundTruthDirective,
+  toolName: (tool: string) => string
+): string | undefined {
+  if (!directive.faithfulnessVerbs || directive.faithfulnessVerbs.length === 0) {
+    return undefined;
+  }
+  const verbs = directive.faithfulnessVerbs.map((v) => `\`${toolName(v)}\``).join(' and ');
+  return (
+    'Your ground-truth manifest IS the live catalog — served fresh by MCP, never a ' +
+    'standing snapshot. Faithfulness checks are assembly-grain, not catalog enumeration: ' +
+    `verify with ${verbs}.`
+  );
 }
 
 /**

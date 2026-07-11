@@ -30,6 +30,7 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import * as path from 'path';
+import { guardChild, noteChildPid, releaseChild } from './child-process-guard';
 
 // ============================================================================
 // CorpusClient — the injectable MCP surface
@@ -192,14 +193,19 @@ export class StdioCorpusClient implements CorpusClient {
     }
     env.WORKSPACE_ROOT = this.options.workspaceRoot;
 
-    this.transport = new StdioClientTransport({
-      command: process.execPath,
-      args: [this.options.entry],
-      env,
-      stderr: 'inherit',
-    });
+    // guardChild: reap this server if the parent dies without close() running
+    // (harness timeout / crash / Ctrl-C) — the U3 orphan-leak fix.
+    this.transport = guardChild(
+      new StdioClientTransport({
+        command: process.execPath,
+        args: [this.options.entry],
+        env,
+        stderr: 'inherit',
+      })
+    );
     this.client = new Client({ name: 'agent-generator-resolver', version: '0.0.0' }, { capabilities: {} });
     await this.client.connect(this.transport);
+    noteChildPid(this.transport); // snapshot the pid — survives the SDK close-window nulling
   }
 
   private async call(name: string, args: Record<string, unknown>): Promise<CorpusToolResult> {
@@ -229,6 +235,9 @@ export class StdioCorpusClient implements CorpusClient {
     if (this.client) {
       await this.client.close();
       this.client = undefined;
+    }
+    if (this.transport) {
+      releaseChild(this.transport); // gracefully closed — no reaping needed
     }
     this.transport = undefined;
     this.connecting = undefined;

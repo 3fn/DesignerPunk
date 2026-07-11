@@ -18,6 +18,16 @@
     - 122-diff-guard
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
+- surface: .claude/agents/lina.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: .claude/agents/lina.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
 - surface: .claude/skills/_fixture-skill/SKILL.md
   checks:
     - 122-diff-guard
@@ -424,6 +434,24 @@
     - 122-sweep-3-dupes
     - 122-sweep-7-dispositions
 - surface: .kiro/agents/ada.json.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/lina-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: .kiro/agents/lina-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/lina.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/lina.json.attribution.json
   checks:
     - 122-diff-guard
     - 122-sweep-3-dupes
@@ -864,7 +892,18 @@
     - 122-sweep-5-corrected-state
     - 122-sweep-6-declarations
     - 122-sweep-8-demotion
+- surface: canonical/agents/lina.md
+  checks:
+    - 122-canonical-vs-truth
+    - 122-sweep-1-refs
+    - 122-sweep-2-skills
+    - 122-sweep-5-corrected-state
+    - 122-sweep-6-declarations
+    - 122-sweep-8-demotion
 - surface: canonical/baselines/ada.ambient-baseline.json
+  checks:
+    - 122-sweep-8-demotion
+- surface: canonical/baselines/lina.ambient-baseline.json
   checks:
     - 122-sweep-8-demotion
 - surface: canonical/coverage-manifest.yaml
@@ -889,6 +928,16 @@
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
 - surface: canonical/manifests/demotion-delta.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/lina.cc.ambient-manifest.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/lina.kiro.ambient-manifest.json
   checks:
     - 122-diff-guard
     - 122-sweep-4-ambient

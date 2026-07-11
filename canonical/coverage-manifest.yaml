@@ -12,11 +12,17 @@
 122-diff-guard:
   - .claude/agents/ada.md
   - .claude/agents/ada.md.attribution.json
+  - .claude/agents/lina.md
+  - .claude/agents/lina.md.attribution.json
   - .claude/skills/**
   - .kiro/agents/ada-prompt.md
   - .kiro/agents/ada-prompt.md.attribution.json
   - .kiro/agents/ada.json
   - .kiro/agents/ada.json.attribution.json
+  - .kiro/agents/lina-prompt.md
+  - .kiro/agents/lina-prompt.md.attribution.json
+  - .kiro/agents/lina.json
+  - .kiro/agents/lina.json.attribution.json
   - .kiro/skills/**
   - canonical/_fixture-output/**
   - canonical/coverage-manifest.yaml
