@@ -1,0 +1,87 @@
+{
+  "artifact": ".claude/agents/thurgood.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        26
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        27,
+        332
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/thurgood.md#body"
+    },
+    {
+      "lines": [
+        333,
+        334
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        335,
+        404
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:process-development-workflow"
+    },
+    {
+      "lines": [
+        405,
+        758
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:test-development-standards"
+    },
+    {
+      "lines": [
+        759,
+        762
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        763,
+        792
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        793,
+        807
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        808,
+        811
+      ],
+      "op": "render",
+      "source": "writeScope"
+    },
+    {
+      "lines": [
+        812,
+        817
+      ],
+      "op": "render",
+      "source": "kiro.hooks.agentSpawn"
+    }
+  ]
+}

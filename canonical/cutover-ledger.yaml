@@ -12,3 +12,6 @@ agents:
   # U3 — Lina (Task 10). Generator-SSOT from this entry forward; her runtime artifacts
   # (.claude/agents/lina.md, .kiro/agents/lina.{json,-prompt.md}) are diff-guarded surfaces.
   - lina
+  # U4 — Thurgood (Task 11). Generator-SSOT from this entry forward; his runtime artifacts
+  # (.claude/agents/thurgood.md, .kiro/agents/thurgood.{json,-prompt.md}) are diff-guarded.
+  - thurgood

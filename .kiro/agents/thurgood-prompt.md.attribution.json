@@ -1,0 +1,45 @@
+{
+  "artifact": ".kiro/agents/thurgood-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        306
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/thurgood.md#body"
+    },
+    {
+      "lines": [
+        307,
+        310
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        311,
+        340
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        341,
+        355
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        356,
+        359
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}
