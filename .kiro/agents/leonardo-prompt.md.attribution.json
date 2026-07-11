@@ -4,39 +4,39 @@
     {
       "lines": [
         1,
-        277
+        292
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#body"
     },
     {
       "lines": [
-        278,
-        281
+        293,
+        296
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        282,
-        321
+        297,
+        336
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        322,
-        332
+        337,
+        347
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        333,
-        336
+        348,
+        351
       ],
       "op": "render",
       "source": "writeScope"

@@ -32,7 +32,7 @@ Union 10, per-agent lock == {cross-platform-vs-platform-specific-decision-framew
 
 ## Validation signatures (amendment 4)
 
-- **Leonardo (seat)**: recorded in `cutover/leonardo-cutover-report.md` — the key judgment being whether all 12 trims are genuinely fine as on-demand (not a real ambient need).
+- **Leonardo (seat)**: initial **DISPUTED** → **CONFIRMED 2026-07-11** after fix. His dispute was load-bearing: the first-draft canonical body dropped the Screen Specification mode's Layout Specification block (REQUIRED-layout mandate + 5 rules) with no cue, orphaning `layout-specification-vocabulary`. A real ambient-grade regression the automated sweeps could NOT catch (dropped prose ≠ a tracked demotion). Fixed-before-merge (content restored both targets + doc routed, C7-resolving); re-confirmed. His other 6 items all pass; all 12 flagged trims genuine channel-moves. Full arc in the cutover report.
 - **Stacy (independent)**: recorded in the cutover report.
 - **Main loop (engineering)**: all checks re-run green after the body additions; final battery green.
 

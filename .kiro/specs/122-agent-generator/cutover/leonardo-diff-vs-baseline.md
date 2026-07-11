@@ -26,15 +26,61 @@ regression here.
 | 21 | Screen Specification mode's `#### Layout Specification` block + Step 3 "Layout structure (REQUIRED)" entry (in BOTH inputs-of-record — Kiro prompt L97–114 and hand CC port) | **regression → FIXED-BEFORE-MERGE** | **Found by Leonardo's seat confirmation (DISPUTED).** My first-draft canonical body compressed Step 3 and DROPPED the Layout Specification content — the REQUIRED-layout mandate, the 5 layout rules (templates-first, canonical vocabulary, responsive-vs-reactive, the 8→12 pressure point, target-breakpoint), and the only pointer to `layout-specification-vocabulary` (which exists in the corpus but had NO route/cue). Ambient-grade for the hub (layout is the REQUIRED spine of every screen spec, his core job), so a real regression, not a channel-move. **Fixed**: the Layout Specification content restored into the Screen Specification body (both targets), + a `routes.docs` entry `layout-vocabulary → layout-specification-vocabulary § "Section 3: Specification Vocabulary"` (sweep-1 live-resolved, C7 clean) so the vocabulary doc is now reachable. See Regression adjudications. |
 | 22 | — (generated-side additions: `## Ambient (per-agent)` law embed, `## Routing` — docs+agents+cues, `## Commands`, `## Workflow rules`, `## Write scope`, `## Pre-flight`; the `skills: [impeccable]` round-trip; NO `## Ground truth`) | **improvement** | Net-new structured delivery: inline law; the handoff routing table as `routes.agents` (sparky+thurgood `resolves`, kenya/data/stacy `not-yet-ported` — the LE-D1 live instance); 15 capability cues + 13 doc routes/demotion cues; the DesignerPunk-CLI consumer-repo commands; the Impeccable skill (first non-empty `skills:` — CC `Skill` tool + emitted `.claude/skills/impeccable/**` + Kiro `skill://` resource, sweep-2 round-trip verified). NO `## Ground truth` — his `empty` verdict renders nothing (consumer owns no source; recorded intentional, Req 10 AC2). |
 
+## Baseline subsection reconciliation (Stacy amendment — U6)
+
+Per Stacy's U6 process recommendation: every baseline `###`/`####` subsection is line-item
+reconciled here (present / renamed / channel-moved / carried / dropped-with-reason), so body
+compressions surface MECHANICALLY rather than depending on the seat noticing. This is the
+disciplined response to two body-compression regressions escaping the sweeps this cutover.
+
+| Baseline subsection | Disposition in generated output |
+|---|---|
+| In Scope / Out of Scope / Direct vs Delegate | present (Domain Boundaries) |
+| Product Configuration Context (Spec 094) | carried, heading de-spec-numbered ("Product Configuration Context") |
+| Product Tokens (Specs 108/109) | carried, heading de-spec-numbered ("Product Tokens") |
+| Screen Spec Steps 1–5 incl. **Layout Specification** | present; Layout Specification RESTORED (see regression row) |
+| Lessons Learned mode (What Qualifies / Capture / Request Format) | present |
+| Cross-Platform Review (Checklist / What "Consistent" Means) | present |
+| Design Creation: Skill Loading / Gate System / Color Strategy / Conflict Resolution / Anti-Slop | present |
+| Design Creation: **Lessons-Learned Capture** | RESTORED (was dropped; carried back) |
+| Design Creation: Available Commands | present |
+| Collaboration Model (Platform Agents / Scope Adaptation / Stacy / System Agents / Peter) | present |
+| Application MCP / Product MCP / Docs MCP (Primary/Reference) | channel-move → `routes.cues` (15 capability cues) |
+| Progressive Disclosure | channel-move → `## MCP Practice Notes` |
+| Write-Side Rebuild Protocol | channel-move → `## MCP Practice Notes` |
+| Onboarding Awareness | carried (was CC-port-only) |
+| Testing Practices (Own / Don't Own) | carried (was CC-port-only) |
+| **Platform Currency Awareness** | RESTORED (was dropped; carried back — see regression row) |
+| **Ask If Unsure** | RESTORED (was dropped; carried back — content also covered by always-loaded AI-Collaboration-Principles) |
+| Knowledge Lookups | channel-move (zero-KB → no fallback section; capability = MCP cues) |
+| Collaboration Standards (Counter-Args / Candid / Bias / Disagree) | present |
+
+**Result: every baseline subsection is present, renamed, channel-moved (with a C7-resolving
+carrier), or carried. Zero unexplained drops after the two rounds of fixes.**
+
 ## Regression adjudications
 
 | Diff line | Disposition | Reason / fix ref | Owner |
 |---|---|---|---|
-| Screen Specification mode's Layout Specification block + Step 3 REQUIRED-layout entry — DROPPED in the first-draft canonical body with no replacement cue (row 21) | **fixed-before-merge** | Found by Leonardo's seat confirmation (initial verdict DISPUTED — a REAL catch on the hub's core operational mode). Layout is the REQUIRED spine of every screen spec; the content + its only doc pointer (`layout-specification-vocabulary`) were both lost. Fixed: content restored into the Screen Specification body on both targets; `routes.docs` `layout-vocabulary` route added (§ "Section 3: Specification Vocabulary", sweep-1 live-resolved). Regenerated + re-verified (C7 clean, all checks green); Leonardo re-confirmation recorded in the cutover report. | leonardo (found) / thurgood-main-loop (fix) |
+| Screen Specification mode's Layout Specification block + Step 3 REQUIRED-layout entry — DROPPED with no replacement cue (row 21) | **fixed-before-merge** | Found by **Leonardo's seat confirmation (DISPUTED)** — a REAL catch on the hub's core operational mode. Layout is the REQUIRED spine of every screen spec; content + its only doc pointer (`layout-specification-vocabulary`) both lost. Fixed: content restored (both targets) + `routes.docs` `layout-vocabulary` route (§ "Section 3: Specification Vocabulary", sweep-1 live-resolved). Leonardo re-confirmed. | leonardo (found) / thurgood-main-loop (fix) |
+| `### Platform Currency Awareness` (training-data-cutoff guidance: trust platform agents, verify currency for cross-platform decisions, flag to Peter, don't override on outdated knowledge) — DROPPED with no cue (row 22) | **fixed-before-merge** | Found by **Stacy's independent validation (DISPUTED)** via a full baseline-subsection re-diff — a SECOND body-compression regression that BOTH the seat and the first-draft author missed. Real Leonardo-specific content, existing nowhere else. Fixed: restored verbatim-in-substance as `## Platform Currency Awareness`. | stacy (found) / thurgood-main-loop (fix) |
+| `### Ask If Unsure` + Design-Creation `### Lessons-Learned Capture` — DROPPED (row 23) | **fixed-before-merge** | Ask-If-Unsure flagged by Stacy as an undisclosed drop (its substance IS covered by always-loaded AI-Collaboration-Principles — a defensible dedupe — but must not be silent); the Design-Creation lessons-capture line surfaced by the exhaustive reconciliation. Both carried back rather than adjudicated away. | stacy / thurgood-main-loop |
 
-**Merge gate: ZERO unexplained regressions — SATISFIED (after the fix).** The one regression-class defect (Layout Specification drop) was found by the seat gate and FIXED-BEFORE-MERGE (content restored + doc routed, C7-resolving). All 12 ambient-doc demotions are channel-moves whose replacement cues pass C7 (the rule of the bucket, on the spec's largest channel-move surface); the CC-port-only sections were carried; the tool set is a strict superset (no drops). C7 clean; the empty-manifest and skills-round-trip both honored.
+**Merge gate: ZERO unexplained regressions — SATISFIED (after two rounds of fixes).** Two
+body-compression regression-class defects were found (Layout by the seat; Platform Currency by
+the independent gate) and both FIXED-BEFORE-MERGE; the full baseline-subsection reconciliation
+above proves no third drop remains. All 12 ambient-doc demotions are channel-moves whose
+replacement cues pass C7 (the rule of the bucket, on the spec's largest channel-move surface);
+the tool set is a strict superset (no drops). C7 clean; empty-manifest and skills-round-trip honored.
 
-> **Meta-note**: this cutover is why the seat gate exists. The ~60% trim (the loud, high-attention risk) was clean — every one of the 12 flagged demotions had a working cue. The real regression was an UNFLAGGED compression in the body's Screen Specification mode that the automated checks could not catch (dropped content with no cue reference isn't a demotion the sweeps track), and only the domain seat reading his own operating prompt would notice. Ada's U2 DISPUTE caught an adapter bug; Leonardo's U6 DISPUTE caught an authoring omission — both load-bearing.
+> **Meta-note (the U6 lesson)**: the ~60% trim — the LOUD, high-attention risk — was clean;
+> every one of the 12 flagged demotions had a working cue. BOTH real regressions were QUIET
+> body compressions in operational-mode prose that the automated checks structurally cannot
+> catch (dropped prose with no cue reference is not a tracked demotion). The seat gate caught
+> one, the independent gate caught the other — and the process fix (mechanical per-subsection
+> reconciliation, above) makes this class surface systematically going forward. Ada's U2
+> DISPUTE caught an adapter bug; Leonardo's U6 DISPUTE caught one authoring omission; Stacy's
+> U6 DISPUTE caught a second the seat missed. Every gate in the three-gate design bit.
 
 ## Kiro-side note (outside the CC diff gate, recorded for completeness)
 
