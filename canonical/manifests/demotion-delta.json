@@ -25,6 +25,23 @@
     ]
   },
   {
+    "agent": "leonardo",
+    "removals": [
+      "component-quick-reference",
+      "component-readiness-status",
+      "contract-system-reference",
+      "platform-implementation-guidelines",
+      "process-development-workflow",
+      "process-file-organization",
+      "process-spec-planning",
+      "product-token-governance",
+      "stemma-system-principles",
+      "technology-stack",
+      "test-development-standards",
+      "token-quick-reference"
+    ]
+  },
+  {
     "agent": "lina",
     "removals": [
       "component-development-standards",

@@ -1,15 +1,39 @@
 {
-  "name": "leonardo",
-  "description": "Product architect — screen specification, component selection, design context translation, cross-platform consistency, and Application MCP consumption",
-  "prompt": "file://./leonardo-prompt.md",
-  "includeMcpJson": true,
-  "tools": ["*"],
   "allowedTools": [
     "read",
     "knowledge",
     "@designerpunk-docs",
     "@designerpunk-application",
     "@designerpunk-product"
+  ],
+  "description": "Cross-platform product architect. Use for screen/flow specification, component & pattern selection (via Application MCP), layout specification, token-selection guidance for product screens, cross-platform consistency review, and design-creation/visual direction (the Impeccable skill). Directs — does NOT implement platform code (hands off to Kenya/Data/Sparky), create tokens/components (escalates to Ada/Lina via Thurgood), or make product decisions (Peter's call).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+o",
+  "name": "leonardo",
+  "prompt": "file://./leonardo-prompt.md",
+  "resources": [
+    "file://.kiro/steering/Agent-Directory.md",
+    "file://.kiro/steering/AI-Collaboration-Principles.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
+    "file://.kiro/steering/core-goals.md",
+    "file://governance/cross-platform-vs-platform-specific-decision-framework.md",
+    "file://.kiro/steering/DesignerPunk-Systems-Overview.md",
+    "file://.kiro/steering/personal-note.md",
+    "file://.kiro/steering/Spec-Feedback-Protocol.md",
+    "file://.kiro/steering/start-up-tasks.md",
+    "file://.kiro/steering/Task-Completion-Protocol.md",
+    "skill://.kiro/skills/impeccable/SKILL.md"
+  ],
+  "tools": [
+    "*"
   ],
   "toolsSettings": {
     "write": {
@@ -19,37 +43,5 @@
       ]
     }
   },
-  "resources": [
-    "file://.kiro/steering/core-goals.md",
-    "file://.kiro/steering/AI-Collaboration-Principles.md",
-    "file://.kiro/steering/personal-note.md",
-    "file://.kiro/steering/Agent-Directory.md",
-    "file://governance/Product-Token-Governance.md",
-    "skill://.kiro/steering/start-up-tasks.md",
-    "skill://governance/Process-Development-Workflow.md",
-    "skill://governance/Token-Quick-Reference.md",
-    "skill://governance/Component-Quick-Reference.md",
-    "skill://governance/Component-Readiness-Status.md",
-    "skill://governance/stemma-system-principles.md",
-    "skill://governance/platform-implementation-guidelines.md",
-    "skill://governance/cross-platform-vs-platform-specific-decision-framework.md",
-    "skill://governance/Contract-System-Reference.md",
-    "skill://governance/Process-File-Organization.md",
-    "skill://governance/Process-Spec-Planning.md",
-    "skill://.kiro/steering/Spec-Feedback-Protocol.md",
-    "skill://governance/technology-stack.md",
-    "skill://governance/Test-Development-Standards.md",
-    "skill://.kiro/steering/DesignerPunk-Systems-Overview.md",
-    "skill://governance/Product-Token-Governance.md"
-  ],
-  "hooks": {
-    "agentSpawn": [
-      {
-        "command": "git status --porcelain",
-        "timeout_ms": 5000
-      }
-    ]
-  },
-  "keyboardShortcut": "ctrl+shift+o",
   "welcomeMessage": "Hey! I'm Leonardo, your product architect. I handle cross-platform technical direction, component selection, and screen specification for products built with DesignerPunk. What are we building?"
 }

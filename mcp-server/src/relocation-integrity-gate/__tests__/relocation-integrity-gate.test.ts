@@ -22,7 +22,9 @@ import {
   scanPromptReferences,
   LOCKED_IDENTITY_IDS,
   DEFAULT_PROJECT_ROOT,
+  DEFAULT_GOVERNANCE_DIR,
 } from '../relocation-integrity-gate';
+import { DocumentIndexer } from '../../indexer/DocumentIndexer';
 
 describe('classifyReference — identity vs served vs template (Req 8 AC5)', () => {
   it('classifies a placeholder path-shape as template', () => {
@@ -199,10 +201,40 @@ describe('runRelocationIntegrityGate — full gate (the 119-A exit check, Req 8 
     expect(result.unresolved).toEqual([]);
   });
 
-  it('resolves every served prompt ref via the legacy-fallback (Req 8 AC1–AC3)', async () => {
+  it('resolves a served prompt ref via legacy-fallback — fixture prompt (Req 8 AC1–AC3)', async () => {
+    // Anti-vacuity moved OFF live data (2026-07-11, Spec 122 U6): the served floor
+    // (≥1 served `.kiro/steering/*.md` ref in the REAL agent prompts) died by progress —
+    // the 122 cutovers regenerate agent prompts into runtime-neutral MCP-cue form, removing
+    // `.kiro/steering/*.md` file references. With Leonardo (U6) cut over, ZERO live prompts
+    // carry served refs (same class as the template floor's death at U3). The served-
+    // resolution behavior is now exercised NON-VACUOUSLY against a fixture prompt carrying a
+    // real relocated-doc ref, resolved through a real indexer (frozen legacy manifest seeded);
+    // the live leg below keeps the every-served-ref-resolves invariant without an inventory floor.
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'rig-served-'));
+    const indexer = new DocumentIndexer();
+    await indexer.indexDirectory(DEFAULT_GOVERNANCE_DIR); // seeds the frozen legacy manifest at its tail
+    try {
+      fs.mkdirSync(path.join(root, '.kiro/agents'), { recursive: true });
+      fs.writeFileSync(
+        path.join(root, '.kiro/agents', 'fixture-prompt.md'),
+        '# Fixture\n\nSee `get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Usage Governance" })`.\n',
+      );
+      const scan = scanPromptReferences(root, indexer);
+      const served = scan.references.filter((r) => r.role === 'served');
+      expect(served.length).toBeGreaterThanOrEqual(1);
+      expect(served.every((r) => r.resolved)).toBe(true);
+      expect(served.every((r) => r.strategy === 'legacy-fallback')).toBe(true);
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('live prompts: every served ref (if any) resolves via legacy-fallback (Req 8 AC1–AC3)', async () => {
     const result = await runRelocationIntegrityGate();
     const served = result.references.filter((r) => r.role === 'served');
-    expect(served.length).toBeGreaterThan(0);
+    // NO count floor: the live corpus legitimately holds zero served refs since U6 (the
+    // fixture leg above covers non-vacuous resolution). If any served refs exist, each must
+    // resolve via legacy-fallback; the resolutionMechanism description holds regardless.
     expect(served.every((r) => r.resolved)).toBe(true);
     expect(served.every((r) => r.strategy === 'legacy-fallback')).toBe(true);
     expect(result.resolutionMechanism).toMatch(/legacy-fallback/);

@@ -12,6 +12,8 @@
 122-diff-guard:
   - .claude/agents/ada.md
   - .claude/agents/ada.md.attribution.json
+  - .claude/agents/leonardo.md
+  - .claude/agents/leonardo.md.attribution.json
   - .claude/agents/lina.md
   - .claude/agents/lina.md.attribution.json
   - .claude/agents/sparky.md
@@ -23,6 +25,10 @@
   - .kiro/agents/ada-prompt.md.attribution.json
   - .kiro/agents/ada.json
   - .kiro/agents/ada.json.attribution.json
+  - .kiro/agents/leonardo-prompt.md
+  - .kiro/agents/leonardo-prompt.md.attribution.json
+  - .kiro/agents/leonardo.json
+  - .kiro/agents/leonardo.json.attribution.json
   - .kiro/agents/lina-prompt.md
   - .kiro/agents/lina-prompt.md.attribution.json
   - .kiro/agents/lina.json

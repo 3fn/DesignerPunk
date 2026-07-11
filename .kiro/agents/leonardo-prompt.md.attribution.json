@@ -1,0 +1,45 @@
+{
+  "artifact": ".kiro/agents/leonardo-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        292
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#body"
+    },
+    {
+      "lines": [
+        293,
+        296
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        297,
+        336
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        337,
+        347
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        348,
+        351
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}
