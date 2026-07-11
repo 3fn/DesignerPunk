@@ -1,0 +1,13 @@
+{
+  "artifact": ".kiro/agents/kenya.json",
+  "spans": [
+    {
+      "lines": [
+        1,
+        46
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    }
+  ]
+}

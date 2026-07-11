@@ -1,0 +1,94 @@
+{
+  "agent": "kenya",
+  "groundTruth": {
+    "emitArtifactRefs": false,
+    "trims": [
+      {
+        "artifact": "dist/ios/DesignTokens.ios.swift",
+        "cue": {
+          "mcp": "application",
+          "negative": "do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift — it is ORPHANED and stale (pre-Spec-094: flat Color.oklch literals, no theme surface); do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) — they are stale generated artifacts, not the source of truth",
+          "note": "theme-varying tokens are a per-theme SET — get_token_details returns the set, not a single flattened value",
+          "replaces": "dist/ios/DesignTokens.ios.swift",
+          "shape": "per-theme-set",
+          "tool": "get_token_details"
+        },
+        "fires": "unconditional"
+      },
+      {
+        "artifact": "dist/ComponentTokens.ios.swift",
+        "cue": {
+          "mcp": "application",
+          "negative": "do NOT read the built iOS component-token snapshot dist/ComponentTokens.ios.swift — it is a stale generated artifact, not the source of truth",
+          "replaces": "dist/ComponentTokens.ios.swift",
+          "tool": "get_component_full"
+        },
+        "fires": "unconditional"
+      }
+    ],
+    "verdict": "none-trim-stale-snapshots"
+  },
+  "members": [
+    {
+      "class": "capability-routing",
+      "delivery": "file",
+      "id": "agent-directory",
+      "lane": "shared"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "ai-collaboration-principles",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "civitas-system-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "core-goals",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "designerpunk-systems-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "personal-note",
+      "lane": "shared"
+    },
+    {
+      "class": "governance-as-law",
+      "delivery": "file",
+      "id": "product-token-governance",
+      "lane": "per-agent"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "spec-feedback-protocol",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "start-up-tasks",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "task-completion-protocol",
+      "lane": "shared"
+    }
+  ],
+  "target": "cc"
+}

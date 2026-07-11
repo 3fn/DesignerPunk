@@ -742,7 +742,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Record dev-server absence as intentional-and-unguarded in his acceptance signals (SP-D2); record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 15.1, 15.3, 18.1, 19.3, 21.1, 21.3, 21.5, 22.3_
 
-- [ ] 15. Cutover: Kenya (iOS platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog
+- [x] 15. Cutover: Kenya (iOS platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog
 
   **Type**: Parent
   **Unit**: U8
@@ -765,7 +765,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-kenya` branch)
   - Open U8's PR: `./.kiro/hooks/complete-task.sh "Task 15 Complete: Cutover Kenya — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U8 — Cutover: Kenya (first-generation, never-ported)`. **Merge gate: `cutover/kenya-content-completeness.md` shows zero unexplained omissions vs canonical + his 4+4 input-of-record + standingFacts (NO diff-against-baseline — no current CC port exists; the channel-move-bucket rule does not apply) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
-  - [ ] 15.1 Carry Kenya's input-of-record content into canonical source (content-before-catalog)
+  - [x] 15.1 Carry Kenya's input-of-record content into canonical source (content-before-catalog)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Kenya (Kenya confirms the 4+4 carry + standingFacts on the PR)
@@ -773,7 +773,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Capture baseline degrading explicitly to the Kiro-side set (D-A4).
     - _Requirements: 12.1, 12.2, 15.3, 21.1, 21.2_
 
-  - [ ] 15.2 Generate both targets, run checks, commit sweep report, Stacy validation
+  - [x] 15.2 Generate both targets, run checks, commit sweep report, Stacy validation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy

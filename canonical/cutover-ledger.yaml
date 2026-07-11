@@ -29,3 +29,9 @@ agents:
   # forward; his runtime artifacts (.claude/agents/data.md, .kiro/agents/data.{json,-prompt.md})
   # are diff-guarded surfaces.
   - data
+  # U8 — Kenya (Task 15). iOS platform engineer; FIRST-GENERATION (never CC-ported → NEW
+  # .claude/agents/kenya.md; baseline degrades to the Kiro-side set, D-A4); content-completeness
+  # gate (not diff-vs-baseline); sole law lock = product-token-governance (K4); ZERO skills;
+  # none-trim-stale-snapshots (2 stale dist/*.ios.swift, one orphaned); standingFacts (no in-repo
+  # iOS build). Generator-SSOT from this entry forward; his runtime artifacts are diff-guarded.
+  - kenya

@@ -1,0 +1,25 @@
+{
+  "agent": "kenya",
+  "capturedFrom": ".kiro/agents/kenya.json@pre-cutover (U8, 2026-07-11; FIRST-GENERATION / never CC-ported — the baseline degrades EXPLICITLY to the Kiro-side set per D-A4, so the first-CC-generation demotion delta is computed against it rather than an empty/CC-only set that would show zero removals. Deduped — Product-Token-Governance was double-loaded in the hand config (file:// line 30 + skill:// line 42), fixed by construction). Includes artifact-path members (the two stale dist/*.ios.swift snapshots — dist/ios/DesignTokens.ios.swift is orphaned) per sweep 8's D-A1 namespace.",
+  "members": [
+    "agent-directory",
+    "ai-collaboration-principles",
+    "contract-system-reference",
+    "core-goals",
+    "dist/ComponentTokens.ios.swift",
+    "dist/ios/DesignTokens.ios.swift",
+    "personal-note",
+    "platform-implementation-guidelines",
+    "platform-resource-map",
+    "process-development-workflow",
+    "process-file-organization",
+    "product-token-governance",
+    "spec-feedback-protocol",
+    "start-up-tasks",
+    "stemma-system-principles",
+    "technology-stack",
+    "test-behavioral-contract-validation",
+    "test-development-standards",
+    "token-quick-reference"
+  ]
+}

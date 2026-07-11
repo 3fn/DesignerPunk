@@ -1,0 +1,94 @@
+{
+  "artifact": ".claude/agents/kenya.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        29
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        30,
+        284
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#body"
+    },
+    {
+      "lines": [
+        285,
+        286
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        287,
+        339
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:product-token-governance"
+    },
+    {
+      "lines": [
+        340,
+        345
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        346,
+        349
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        350,
+        375
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        376,
+        388
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        389,
+        393
+      ],
+      "op": "render",
+      "source": "knowledgeBases"
+    },
+    {
+      "lines": [
+        394,
+        397
+      ],
+      "op": "render",
+      "source": "writeScope"
+    },
+    {
+      "lines": [
+        398,
+        403
+      ],
+      "op": "render",
+      "source": "kiro.hooks.agentSpawn"
+    }
+  ]
+}

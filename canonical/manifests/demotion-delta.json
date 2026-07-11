@@ -41,6 +41,23 @@
     ]
   },
   {
+    "agent": "kenya",
+    "removals": [
+      "contract-system-reference",
+      "dist/ComponentTokens.ios.swift",
+      "dist/ios/DesignTokens.ios.swift",
+      "platform-implementation-guidelines",
+      "platform-resource-map",
+      "process-development-workflow",
+      "process-file-organization",
+      "stemma-system-principles",
+      "technology-stack",
+      "test-behavioral-contract-validation",
+      "test-development-standards",
+      "token-quick-reference"
+    ]
+  },
+  {
     "agent": "leonardo",
     "removals": [
       "component-quick-reference",

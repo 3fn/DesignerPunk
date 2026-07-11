@@ -14,6 +14,8 @@
   - .claude/agents/ada.md.attribution.json
   - .claude/agents/data.md
   - .claude/agents/data.md.attribution.json
+  - .claude/agents/kenya.md
+  - .claude/agents/kenya.md.attribution.json
   - .claude/agents/leonardo.md
   - .claude/agents/leonardo.md.attribution.json
   - .claude/agents/lina.md
@@ -31,6 +33,10 @@
   - .kiro/agents/data-prompt.md.attribution.json
   - .kiro/agents/data.json
   - .kiro/agents/data.json.attribution.json
+  - .kiro/agents/kenya-prompt.md
+  - .kiro/agents/kenya-prompt.md.attribution.json
+  - .kiro/agents/kenya.json
+  - .kiro/agents/kenya.json.attribution.json
   - .kiro/agents/leonardo-prompt.md
   - .kiro/agents/leonardo-prompt.md.attribution.json
   - .kiro/agents/leonardo.json

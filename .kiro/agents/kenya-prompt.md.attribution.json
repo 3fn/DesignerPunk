@@ -1,0 +1,53 @@
+{
+  "artifact": ".kiro/agents/kenya-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        255
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#body"
+    },
+    {
+      "lines": [
+        256,
+        261
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        262,
+        265
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        266,
+        291
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        292,
+        304
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        305,
+        308
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}
