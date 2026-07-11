@@ -1,0 +1,26 @@
+{
+  "agent": "leonardo",
+  "capturedFrom": ".kiro/agents/leonardo.json@pre-cutover (U6, 2026-07-11; deduped — Product-Token-Governance was double-loaded, fixed by construction)",
+  "members": [
+    "agent-directory",
+    "ai-collaboration-principles",
+    "component-quick-reference",
+    "component-readiness-status",
+    "contract-system-reference",
+    "core-goals",
+    "cross-platform-vs-platform-specific-decision-framework",
+    "designerpunk-systems-overview",
+    "personal-note",
+    "platform-implementation-guidelines",
+    "process-development-workflow",
+    "process-file-organization",
+    "process-spec-planning",
+    "product-token-governance",
+    "spec-feedback-protocol",
+    "start-up-tasks",
+    "stemma-system-principles",
+    "technology-stack",
+    "test-development-standards",
+    "token-quick-reference"
+  ]
+}

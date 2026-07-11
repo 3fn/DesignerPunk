@@ -1,0 +1,78 @@
+{
+  "artifact": ".claude/agents/leonardo.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        44
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        45,
+        305
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#body"
+    },
+    {
+      "lines": [
+        306,
+        307
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        308,
+        369
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "id:cross-platform-vs-platform-specific-decision-framework"
+    },
+    {
+      "lines": [
+        370,
+        373
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        374,
+        412
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        413,
+        423
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        424,
+        427
+      ],
+      "op": "render",
+      "source": "writeScope"
+    },
+    {
+      "lines": [
+        428,
+        433
+      ],
+      "op": "render",
+      "source": "kiro.hooks.agentSpawn"
+    }
+  ]
+}

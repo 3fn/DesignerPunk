@@ -19,3 +19,7 @@ agents:
   # entry forward; his runtime artifacts (.claude/agents/sparky.md — NEW,
   # .kiro/agents/sparky.{json,-prompt.md}) are diff-guarded surfaces.
   - sparky
+  # U6 — Leonardo (Task 12). The consumer/hub; ~60% on-demand trim; first non-empty skills
+  # (impeccable). Generator-SSOT from this entry forward; his runtime artifacts
+  # (.claude/agents/leonardo.md, .kiro/agents/leonardo.{json,-prompt.md}) are diff-guarded.
+  - leonardo
