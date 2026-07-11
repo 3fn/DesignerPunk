@@ -58,7 +58,8 @@ The regenerated `.kiro/agents/lina.json` differs from the hand config by design 
 defect-fix: the 35-entry baseline decomposes as 34 doc resources + 1 knowledgeBase resource;
 the 34 doc resources → 10 (always-set ∪ contract-system-reference; the 27 trims each carry a
 sweep-8-verified `replaces:` cue) while the rich `StemmaComponentSource` knowledgeBase object
-is preserved byte-faithfully (Req 15 AC2 — so 35 = 34 + 1, and only the doc side shrinks).
+is preserved field-faithfully — every field and value identical, key order JSON-normalized
+(Req 15 AC2; wording per Lina's seat review — so 35 = 34 + 1, and only the doc side shrinks).
 `allowedTools` gains `@designerpunk-application` — the L1 defect fixed by construction (the
 hand config granted no application server despite the prompt's App-MCP instructions).
 grants/writeScope/hooks/shortcut/welcomeMessage carried. The regenerated `lina-prompt.md`

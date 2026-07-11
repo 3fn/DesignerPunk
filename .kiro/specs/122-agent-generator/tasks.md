@@ -549,7 +549,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Measure the Req 23 AC1 signal per C10.2 (observed baseline 30; member + union both recorded; both targets agree); adjudicate any missed shape (design-change vs defect) before merge.
     - _Requirements: 15.1, 18.1, 19.3, 21.3, 21.5, 22.3, 23.1, 23.5_
 
-- [ ] 10. Cutover: Lina (Stemma component specialist)
+- [x] 10. Cutover: Lina (Stemma component specialist)
 
   **Type**: Parent
   **Unit**: U3
@@ -574,7 +574,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-lina` branch)
   - Open U3's PR: `./.kiro/hooks/complete-task.sh "Task 10 Complete: Cutover Lina (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U3 — Cutover: Lina`. **Merge gate: zero unexplained regressions in `cutover/lina-diff-vs-baseline.md` (channel-move lines honor the rule-of-the-bucket; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated (the L1 server-grant leg — a defect in BOTH current and generated the diff CANNOT see, so C7 is load-bearing here) AND an independent validation signature recorded.**
 
-  - [ ] 10.1 Author Lina's canonical source + capture baseline
+  - [x] 10.1 Author Lina's canonical source + capture baseline
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Lina (Lina confirms carried content + the pinned lock-set on the PR)
@@ -582,7 +582,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Commit baseline (ids + artifact-path members).
     - _Requirements: 10.1, 10.3, 15.2, 18.2, 21.1_
 
-  - [ ] 10.2 Generate both targets, run checks, commit sweep report, Stacy validation, measure signal
+  - [x] 10.2 Generate both targets, run checks, commit sweep report, Stacy validation, measure signal
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy

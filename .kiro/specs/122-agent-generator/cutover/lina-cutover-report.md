@@ -68,17 +68,91 @@
 
 ## Validation signatures (independent-validation default, amendment 4)
 
-**Owning seat — Lina (content confirmation, 10.1):** PENDING
+**Owning seat — Lina (content confirmation, 10.1):**
+> [LINA — U3 content confirmation] CONFIRMED — 2026-07-11
+> (Her per-item findings: law embed verbatim vs live corpus, both predicates hold, right
+> two sections for her seat with catalog/format correctly routed; Ground truth rendered
+> both targets with correct per-target naming; all 10 doc routes live-resolved by her; the
+> 27 demotion cues matched one-for-one against the 27 trimmed resources; tool grants
+> mechanically set-identical both directions (and the L1 missing-grant defect confirmed
+> real against the pre-cutover json); body audited section-by-section — stale pre-119-A
+> paths, fake tool names, and a never-actually-wired KB table row all corrected by
+> construction; Kiro wiring field-for-field faithful. Diff-artifact render claims audited:
+> none half-false. Zero disputed items; 4 non-blocking routed items below.)
 
-**Independent validation — Stacy (re-derivation + coverage-of-coverage):** PENDING
+**Independent validation — Stacy (re-derivation + coverage-of-coverage):**
+> [STACY — U3 Lina cutover validation] CONFIRMED — independent re-derivation + coverage-of-coverage; 2026-07-11
+> (Her full entry: appendix below. Beyond the brief: a LOCK-INDEPENDENT full
+> regenerate-and-compare — generateAll → compareTrees over all guarded roots, no lock
+> consulted — CLEAN 0/0/0; sweep-4 non-vacuity verified IN CODE; all signals re-derived by
+> her own set arithmetic and matching; classification audit — every render claim holds,
+> zero regression-class lines found. One Low cosmetic finding — the law embed's dangling
+> "above"/volatile "136" — converging with Lina's routed item (i); routed, non-blocking.)
 
-**Thurgood (engineering verification, main loop):** PENDING
+**Thurgood (engineering verification, main loop):** all fixes re-verified after every
+change; final battery green (ten checks + C7 clean + coverage audit; full suite 8987/8987;
+lane 322/322; root + scripts + generator tsc clean); delegated validations independently
+spot-checked (Lina's byte→field wording fix applied; Stacy's state-validated commit matches
+the branch head at PR time).
+
+---
+
+## Appendix — Stacy's recorded entry (verbatim, key sections)
+
+> **[STACY — U3 Lina cutover validation] CONFIRMED — independent re-derivation +
+> coverage-of-coverage; 2026-07-11**
+>
+> **State validated**: branch `task/122-cutover-lina` @ commit `d4a82d11`, plus
+> working-tree wording edits confined to the two cutover docs — no artifact or
+> generated-file drift (confirmed by my own full regeneration).
+> **Check runs (mine)**: diff-guard `no-op-green` (0) PLUS a lock-independent full
+> regenerate-and-compare — **CLEAN, 0 changed / 0 missing / 0 extra** with lina's 3
+> runtime files + 3 sidecars in the compared roots · canonical-vs-truth `clean, 0
+> findings` (0) · sweep-4 `PASS — 0 info` (**non-vacuous, verified in code**: 4 manifests
+> in scope incl. lina cc+kiro; the vacuous-PASS path emits info, not taken) · sweep-8
+> `PASS` (2 agents in delta) · audit:coverage-map `PASS — 236/235/1` · lane **322/322**.
+> **Signals re-derived**: baseline **35** (= 8 file:// + 26 skill:// + 1 KB from the
+> `main` config, one-to-one id mapping) · |cc| == |kiro| == **10**, id-sets equal ·
+> per-agent lane exactly `{contract-system-reference}` both targets · **zero**
+> family/standards ids · baseline ∖ union = 28, minus the field-faithfully-carried KB =
+> **27 removals** matching demotion-delta.json; cue coverage removals∖cues = ∅ and
+> cues∖removals = ∅, no duplicates · union ∖ baseline = 3 expected always-set gains
+> (civitas-system-overview, designerpunk-systems-overview, task-completion-protocol) ·
+> pinned lock-set holds; groundTruth block matches the pinned design exactly.
+> **Classification audit**: 14 rows vs `git show main:.claude/agents/lina.md` — every
+> render claim spot-checked and holding (tool sets IDENTICAL by sorted diff; law embed
+> with no-directional-prefixes + full Classification Rules; Ground truth namespaced on CC
+> and native on Kiro; 10 § routes; per-server rebuild cues; ada `resolves` / thurgood
+> `not-yet-ported`; commands, write scope, pre-flight all carried). Regression
+> adjudications table empty AND no regression-class line found that it should contain.
+> Kiro-side L1 fix confirmed in the emitted config. **One Low finding** (cosmetic,
+> routed): the embedded law text's "The Concept Catalog above lists all 136 concepts" —
+> verbatim-faithful but deictically dangling in the embed; the adjacent routing line
+> resolves it.
+> **Coverage-of-coverage**: all 11 lina-relevant surfaces are guarded rows in
+> coverage-map.yaml with named 122 checks (direct row extraction + the audit's own PASS).
+> **Routed**: embed-lint candidate for dangling positional references in section-grain
+> embeds (alongside the volatile-fact lint); the 119-A "117 vs 136" ballot now flows
+> through regeneration automatically once resolved — no separate action; lina-prompt.md's
+> single named check (122-diff-guard) is consistent with byte-fidelity-by-construction
+> (U2 pattern).
 
 ## Routed items (non-blocking, carried forward)
 
 1. **Generator team**: the `trims` render leg (`none-trim-stale-snapshots` → per-trim
    demotion cues) is still unimplemented — no ledger agent exercises it yet; implement at
    the first cutover that carries a trim verdict.
+1a. **Lina's seat-review routed items (4)**: (i) the embedded Naming Convention section
+   retains "The Concept Catalog above lists all 136 concepts" — deictically wrong in the
+   embed context (the catalog is routed, not above) and a volatile count on an
+   always-loaded surface; candidate source-doc rewording ballot or embed-side deictic
+   handling. (ii) The old rebuild-protocol row enumerating "experience patterns, layout
+   templates, family guidance → application rebuild_index" lost its enumeration in the
+   carry; the general rule keeps behavior correct but the enumeration had value —
+   candidate cue/note addition. (iii) Fallback's "flag the issue for Peter" softened to
+   "acknowledge the limitation" — negligible; note only. (iv) "byte-faithfully" →
+   "field-faithfully (JSON key-order-normalized)" — FIXED in the diff artifact
+   pre-merge.
 2. **U4+ cutovers inherit**: verify each routed doc's DECLARED frontmatter id before
    authoring (the component-family-templates lesson); the groundTruth render is now live
    for any future catalog-is-manifest / faithfulness-verb verdict.
