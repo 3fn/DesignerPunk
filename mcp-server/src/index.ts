@@ -346,7 +346,15 @@ class MCPDocumentationServer {
   }
 
   /**
-   * Set up graceful shutdown handlers
+   * Set up graceful shutdown handlers.
+   *
+   * stdin EOF ('end'/'close') is a first-class shutdown trigger: a stdio MCP server
+   * whose parent client died (or gracefully closed the pipe) has no one to serve, but
+   * the file watcher keeps the event loop alive forever — found live at Spec 122 U3
+   * (~230 orphaned servers accumulated across harness runs, wedging later boots).
+   * Self-exiting on EOF also makes graceful client closes immediate: the MCP SDK's
+   * StdioClientTransport.close() ends stdin and waits up to 2s for exactly this exit
+   * before escalating to SIGTERM.
    */
   private setupShutdownHandlers(): void {
     const shutdown = async () => {
@@ -356,6 +364,8 @@ class MCPDocumentationServer {
 
     process.on('SIGINT', shutdown);
     process.on('SIGTERM', shutdown);
+    process.stdin.on('end', shutdown);
+    process.stdin.on('close', shutdown);
   }
 }
 
