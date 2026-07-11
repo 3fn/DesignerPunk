@@ -3,6 +3,9 @@
 # An agent is added to this ledger ONLY when its cutover PR lands (C10). Membership
 # drives check coverage: the sweeps, diff-guard, and canonical-vs-truth checks apply
 # to ledger members. An agent NOT in the ledger is still hand-authored and exempt.
-#
-# Empty until the first cutover (Task 9, U2 — Ada). The substrate (U1) adds no agents.
-agents: []
+
+agents:
+  # U2 — Ada, the FIRST CC cutover (Task 9; RATIFIED order, Peter 2026-07-07). From this
+  # entry forward the generator is SSOT for ada; her runtime artifacts
+  # (.claude/agents/ada.md, .kiro/agents/ada.{json,-prompt.md}) are diff-guarded surfaces.
+  - ada

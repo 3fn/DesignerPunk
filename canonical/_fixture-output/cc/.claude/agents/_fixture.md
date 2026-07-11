@@ -2,6 +2,13 @@
 name: _fixture
 description: Standing pipeline fixture (Spec 122 C10.3) — exercises one member of every content class and transform disposition; emitted only under canonical/_fixture-output; no runtime ever loads it.
 tools:
+  - Read
+  - Grep
+  - Glob
+  - Bash
+  - Write
+  - Edit
+  - Skill
   - mcp__designerpunk-application__get_component_catalog
   - mcp__designerpunk-docs__find_docs
   - mcp__designerpunk-docs__get_section
@@ -118,6 +125,7 @@ Awaiting your approval to proceed."
 ## Routing
 
 - WHEN authoring a completion doc and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
+- WHEN a component-implementation question arises THEN hand off to lina (seat not generated yet — recommend Peter bring them in)
 - WHEN you need one section of a governance doc THEN use mcp__designerpunk-docs__get_section (docs MCP)
 - WHEN you need the component inventory THEN use mcp__designerpunk-application__get_component_catalog (application MCP)
 - WHEN you need product-level context THEN use mcp__designerpunk-product__get_product_overview (product MCP)

@@ -1,0 +1,70 @@
+{
+  "agent": "ada",
+  "groundTruth": {
+    "emitArtifactRefs": true,
+    "verdict": "none-standing"
+  },
+  "members": [
+    {
+      "class": "capability-routing",
+      "delivery": "file",
+      "id": "agent-directory",
+      "lane": "shared"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "ai-collaboration-principles",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "civitas-system-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "core-goals",
+      "lane": "shared"
+    },
+    {
+      "class": "orientation-reference",
+      "delivery": "file",
+      "id": "designerpunk-systems-overview",
+      "lane": "shared"
+    },
+    {
+      "class": "formative",
+      "delivery": "file",
+      "id": "personal-note",
+      "lane": "shared"
+    },
+    {
+      "class": "reflexive-principle",
+      "delivery": "file",
+      "id": "spec-feedback-protocol",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "start-up-tasks",
+      "lane": "shared"
+    },
+    {
+      "class": "operational",
+      "delivery": "file",
+      "id": "task-completion-protocol",
+      "lane": "shared"
+    },
+    {
+      "class": "governance-as-law",
+      "delivery": "file",
+      "id": "token-governance",
+      "lane": "per-agent"
+    }
+  ],
+  "target": "cc"
+}

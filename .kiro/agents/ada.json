@@ -1,14 +1,61 @@
 {
-  "name": "ada",
-  "description": "Rosetta token specialist — token development, maintenance, documentation, compliance, mathematical foundations, export pipeline architecture (DTCG/Figma), and design token standards alignment",
-  "prompt": "file://./ada-prompt.md",
-  "includeMcpJson": true,
-  "tools": ["*"],
   "allowedTools": [
     "read",
     "knowledge",
     "@designerpunk-docs",
     "@designerpunk-application"
+  ],
+  "description": "Rosetta token specialist — token creation/modification/deprecation, mathematical foundations (modular scale, baseline grid), token governance & compliance, Token-Family docs, cross-platform token output (CSS/Swift/Kotlin), the export pipeline (DTCG/Figma), theme registry, and designerpunk.config.ts authoring. Owns ALL tokens (ecosystem + product). Does NOT do component development (Lina), test governance/spec formalization (Thurgood). Token creation always requires Peter's review.",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+a",
+  "name": "ada",
+  "prompt": "file://./ada-prompt.md",
+  "resources": [
+    "file://.kiro/steering/Agent-Directory.md",
+    "file://.kiro/steering/AI-Collaboration-Principles.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
+    "file://.kiro/steering/core-goals.md",
+    "file://.kiro/steering/DesignerPunk-Systems-Overview.md",
+    "file://.kiro/steering/personal-note.md",
+    "file://.kiro/steering/Spec-Feedback-Protocol.md",
+    "file://.kiro/steering/start-up-tasks.md",
+    "file://.kiro/steering/Task-Completion-Protocol.md",
+    "file://governance/Token-Governance.md",
+    {
+      "autoUpdate": true,
+      "description": "Rosetta token system source code — primitive token definitions, mathematical formulas, scale calculations, and platform generators",
+      "indexType": "best",
+      "name": "RosettaTokenSource",
+      "source": "file://./src/tokens",
+      "type": "knowledgeBase"
+    },
+    {
+      "autoUpdate": false,
+      "description": "Token validation system — mathematical relationship validators, semantic token validators, WCAG validators, and compliance checkers",
+      "indexType": "best",
+      "name": "TokenValidators",
+      "source": "file://./src/validators",
+      "type": "knowledgeBase"
+    },
+    {
+      "autoUpdate": false,
+      "description": "Token generation system — platform file generators (web/iOS/Android), DTCG format generator with modes extension, Figma variable transformer, blend utility generators, responsive grid generators",
+      "indexType": "best",
+      "name": "TokenGenerators",
+      "source": "file://./src/generators",
+      "type": "knowledgeBase"
+    }
+  ],
+  "tools": [
+    "*"
   ],
   "toolsSettings": {
     "write": {
@@ -21,67 +68,5 @@
       ]
     }
   },
-  "resources": [
-    "file://.kiro/steering/core-goals.md",
-    "file://.kiro/steering/AI-Collaboration-Principles.md",
-    "file://.kiro/steering/personal-note.md",
-    "file://.kiro/steering/Agent-Directory.md",
-    "file://governance/Rosetta-System-Architecture.md",
-    "file://governance/Token-Governance.md",
-    "file://governance/Token-Quick-Reference.md",
-    "skill://.kiro/steering/Spec-Feedback-Protocol.md",
-    "skill://.kiro/steering/start-up-tasks.md",
-    "skill://governance/rosetta-system-principles.md",
-    "skill://governance/Token-Resolution-Patterns.md",
-    "skill://governance/Token-Semantic-Structure.md",
-    "skill://governance/Token-Family-Accessibility.md",
-    "skill://governance/Token-Family-Blend.md",
-    "skill://governance/Token-Family-Border.md",
-    "skill://governance/Token-Family-Color.md",
-    "skill://governance/Token-Family-Glow.md",
-    "skill://governance/Token-Family-Layering.md",
-    "skill://governance/Token-Family-Motion.md",
-    "skill://governance/Token-Family-Opacity.md",
-    "skill://governance/Token-Family-Radius.md",
-    "skill://governance/Token-Family-Responsive.md",
-    "skill://governance/Token-Family-Shadow.md",
-    "skill://governance/Token-Family-Spacing.md",
-    "skill://governance/Token-Family-Typography.md",
-    "skill://governance/Process-Development-Workflow.md",
-    "skill://governance/Process-File-Organization.md",
-    {
-      "type": "knowledgeBase",
-      "source": "file://./src/tokens",
-      "name": "RosettaTokenSource",
-      "description": "Rosetta token system source code — primitive token definitions, mathematical formulas, scale calculations, and platform generators",
-      "indexType": "best",
-      "autoUpdate": true
-    },
-    {
-      "type": "knowledgeBase",
-      "source": "file://./src/validators",
-      "name": "TokenValidators",
-      "description": "Token validation system — mathematical relationship validators, semantic token validators, WCAG validators, and compliance checkers",
-      "indexType": "best",
-      "autoUpdate": false
-    },
-    {
-      "type": "knowledgeBase",
-      "source": "file://./src/generators",
-      "name": "TokenGenerators",
-      "description": "Token generation system — platform file generators (web/iOS/Android), DTCG format generator with modes extension, Figma variable transformer, blend utility generators, responsive grid generators",
-      "indexType": "best",
-      "autoUpdate": false
-    }
-  ],
-  "hooks": {
-    "agentSpawn": [
-      {
-        "command": "git status --porcelain",
-        "timeout_ms": 5000
-      }
-    ]
-  },
-  "keyboardShortcut": "ctrl+shift+a",
   "welcomeMessage": "Hey! I'm Ada, your Rosetta token specialist. I can help with token development, mathematical foundations, token compliance, and export pipeline work (DTCG, Figma, platform generators). What are we working on?"
 }

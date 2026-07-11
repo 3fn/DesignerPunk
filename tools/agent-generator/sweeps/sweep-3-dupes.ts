@@ -146,7 +146,7 @@ function main(): void {
     try {
       agents = fs
         .readdirSync(path.join(repoRoot, KIRO_AGENTS_ROOT))
-        .filter((f) => f.endsWith('.json'))
+        .filter((f) => f.endsWith('.json') && !f.endsWith('.attribution.json'))
         .map((f) => f.replace(/\.json$/, ''))
         .sort();
     } catch {

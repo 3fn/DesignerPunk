@@ -1,42 +1,42 @@
 {
-  "artifact": ".kiro/agents/_fixture-prompt.md",
+  "artifact": ".kiro/agents/ada-prompt.md",
   "spans": [
     {
       "lines": [
         1,
-        11
+        155
       ],
       "op": "passthrough",
-      "source": "canonical/agents/_fixture.md#body"
+      "source": "canonical/agents/ada.md#body"
     },
     {
       "lines": [
-        12,
-        15
+        156,
+        159
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        16,
-        23
+        160,
+        197
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        24,
-        34
+        198,
+        208
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        35,
-        38
+        209,
+        212
       ],
       "op": "render",
       "source": "writeScope"

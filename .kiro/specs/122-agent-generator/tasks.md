@@ -504,7 +504,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 >
 > **Content-before-catalog** (Req 21 AC1/AC2): the three seats lacking authored command content — **Sparky, Kenya, Stacy** — carry their input-of-record content into canonical source BEFORE their catalog generates. Named gaps ARE valid authored content. Each such cutover's first subtask is the content-authoring subtask. (Note: Stacy WAS ported to CC, so she gets the diff artifact; Sparky and Kenya were never ported, so they get the content-completeness check.)
 
-- [ ] 9. Cutover: Ada (Rosetta token specialist) — **U2, the FIRST CC cutover** (RATIFIED Peter 2026-07-07; mechanically forced — the diff-against-baseline gate needs a real committed baseline, which excludes the never-ported seats); already-ported system agent, debut-safe
+- [x] 9. Cutover: Ada (Rosetta token specialist) — **U2, the FIRST CC cutover** (RATIFIED Peter 2026-07-07; mechanically forced — the diff-against-baseline gate needs a real committed baseline, which excludes the never-ported seats); already-ported system agent, debut-safe
 
   **Type**: Parent
   **Unit**: U2
@@ -530,7 +530,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-ada` branch)
   - Open U2's PR: `./.kiro/hooks/complete-task.sh "Task 9 Complete: Cutover Ada — first CC cutover (122)"` — report the PR URL and STOP; complete at merge (Peter merges — governance-law carve-out on agent prompts/configs). PR body carries `Unit: U2 — Cutover: Ada (first CC cutover)`. **Merge gate: zero unexplained regressions in `cutover/ada-diff-vs-baseline.md` (any channel-move line honors the rule-of-the-bucket: its replacement cue passes C7 resolution, else it is a `regression`; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
-  - [ ] 9.1 Author Ada's canonical source + capture baseline
+  - [x] 9.1 Author Ada's canonical source + capture baseline
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Ada (Ada confirms her carried content — token-governance law refs, module-resolution route, subset — on the PR)
@@ -538,7 +538,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Commit `canonical/baselines/ada.ambient-baseline.json` = pre-generation ambient set (Kiro `*.json` resources normalized to ids + artifact-path members).
     - _Requirements: 10.1, 10.2, 15.2, 21.1_
 
-  - [ ] 9.2 Generate both targets, run checks, commit sweep report, Stacy validation, measure signal
+  - [x] 9.2 Generate both targets, run checks, commit sweep report, Stacy validation, measure signal
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy (Stacy: independent re-derivation + coverage-of-coverage, recorded in the report)

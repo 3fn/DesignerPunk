@@ -8,6 +8,16 @@
 #
 # Regenerate: npx tsx tools/agent-generator/coverage-map.ts (also runs as part of
 # `npx tsx tools/agent-generator/generate.ts`). Guarded by the C6 diff-guard.
+- surface: .claude/agents/ada.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: .claude/agents/ada.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
 - surface: .claude/skills/_fixture-skill/SKILL.md
   checks:
     - 122-diff-guard
@@ -400,6 +410,24 @@
   checks:
     - 122-diff-guard
     - 122-sweep-2-skills
+- surface: .kiro/agents/ada-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: .kiro/agents/ada-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/ada.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/ada.json.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
 - surface: .kiro/skills/_fixture-skill/SKILL.md
   checks:
     - 122-diff-guard
@@ -828,6 +856,17 @@
     - 122-sweep-5-corrected-state
     - 122-sweep-6-declarations
     - 122-sweep-8-demotion
+- surface: canonical/agents/ada.md
+  checks:
+    - 122-canonical-vs-truth
+    - 122-sweep-1-refs
+    - 122-sweep-2-skills
+    - 122-sweep-5-corrected-state
+    - 122-sweep-6-declarations
+    - 122-sweep-8-demotion
+- surface: canonical/baselines/ada.ambient-baseline.json
+  checks:
+    - 122-sweep-8-demotion
 - surface: canonical/coverage-manifest.yaml
   checks:
     - 122-diff-guard
@@ -839,6 +878,21 @@
     - 122-sweep-6-declarations
 - surface: canonical/generated.lock
   checks: []
+- surface: canonical/manifests/ada.cc.ambient-manifest.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/ada.kiro.ambient-manifest.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/demotion-delta.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
 - surface: canonical/registry/tool-registry.json
   checks:
     - 122-diff-guard

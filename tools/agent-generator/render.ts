@@ -18,7 +18,7 @@
  */
 
 import type { WorkflowRule } from './workflow-rules-guard';
-import type { DocRoute, RunContext, ToolCueRoute } from './schema';
+import type { AgentRoute, DocRoute, RunContext, ToolCueRoute } from './schema';
 
 // ============================================================================
 // (b) Pass-through
@@ -117,4 +117,19 @@ export function renderToolCue(cue: ToolCueRoute): string {
  */
 export function renderDocRoute(route: DocRoute): string {
   return `WHEN ${route.when} THEN consult ${route.doc} § "${route.section}"`;
+}
+
+/**
+ * Render an inter-agent route (LE-D1: routes migrated from body prose into structured
+ * `routes.agents` — and RENDERED back into each target's Routing section, so a body line
+ * like "hand-off triggers live in your routing section" is TRUE on both targets; Stacy's
+ * U2 row-3 finding). A `not-yet-ported` disposition renders honestly: the target seat is
+ * not generated yet, so the hand-off goes through Peter rather than a direct swap.
+ */
+export function renderAgentRoute(route: AgentRoute): string {
+  const suffix =
+    route.disposition === 'not-yet-ported'
+      ? ' (seat not generated yet — recommend Peter bring them in)'
+      : '';
+  return `WHEN ${route.when} THEN hand off to ${route.target}${suffix}`;
 }

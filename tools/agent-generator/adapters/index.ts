@@ -88,6 +88,24 @@ export function parseFieldDispositions(yamlText: string): FieldDispositionTable 
 }
 
 // ============================================================================
+// mcp short-name → server-name mapping (the single mapping seam)
+// ============================================================================
+
+/**
+ * `ToolCueRoute.mcp` is a short name (`docs`/`application`/`product`); `ToolSubset` keys and
+ * registry server names are the full `designerpunk-*` names. MOVED here from
+ * canonical-vs-truth.ts (which re-exports it) at Ada's cutover: the CC adapter must
+ * namespace a CUE by the cue's own `mcp` field — a subset-order search misroutes ambiguous
+ * tool names (`rebuild_index` exists on two servers; Ada's U2 content confirmation caught
+ * the live misroute). One map, all consumers.
+ */
+export const MCP_TO_SERVER = Object.freeze({
+  docs: 'designerpunk-docs',
+  application: 'designerpunk-application',
+  product: 'designerpunk-product',
+} as const);
+
+// ============================================================================
 // Shared catalog (C2.5) — cross-agent members every generated catalog receives
 // ============================================================================
 

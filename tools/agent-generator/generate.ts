@@ -107,26 +107,85 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
     serializeCoverageManifest,
     serializeCoverageMap,
   } = require('./coverage-map') as typeof import('./coverage-map');
-  const coverageManifest = buildCoverageManifest();
+  const coverageManifest = buildCoverageManifest(repoRoot);
   const coverageSurfaces = enumerateSurfaces(repoRoot);
   const coverageRows = buildCoverageMap(coverageSurfaces, coverageManifest);
   outputs.push({ path: 'canonical/coverage-manifest.yaml', content: serializeCoverageManifest(coverageManifest) });
   outputs.push({ path: 'canonical/coverage-map.yaml', content: serializeCoverageMap(coverageRows) });
 
-  // 4. Per-agent artifacts for every ledger agent (none until the first cutover, U2).
+  // 4. The RUNTIME per-agent lane (Task 9 — wired at Ada's cutover, U2): for every
+  // cutover-ledger agent, emit the REAL runtime artifacts (.claude/agents/<a>.md,
+  // .kiro/agents/<a>.json + <a>-prompt.md) plus per-target ambient manifests
+  // (canonical/manifests/<a>.<target>.ambient-manifest.json) through the same
+  // validate→resolve→emit path the fixture proved. From the ledger entry forward the
+  // generator is SSOT for the agent and these paths are diff-guarded surfaces
+  // (guardedRoots(repoRoot) derives them from this same ledger — C6's "derived from the
+  // cutover ledger + substrate artifacts").
   const ledger = parseCutoverLedger(
     fs.readFileSync(path.join(repoRoot, 'canonical', 'cutover-ledger.yaml'), 'utf8')
   );
   if (ledger.length > 0) {
-    // The fixture lane above IS the wiring pattern (corpus session, embeds, id→path maps);
-    // the per-agent runtime emission (real .claude/agents/** + .kiro/agents/** paths, not
-    // fixture-remapped) lands with the first cutover (Task 9). Fail loud rather than emit
-    // partial agents.
-    throw new Error(
-      `generateAll: cutover ledger names ${ledger.length} agent(s) but the runtime per-agent ` +
-        `lane is not wired yet — wire it (the fixture lane is the pattern) before cutting ` +
-        `an agent over.`
-    );
+    const corpus = createStdioDocsClient();
+    try {
+      for (const agentName of ledger) {
+        const srcAbs = path.join(repoRoot, 'canonical', 'agents', `${agentName}.md`);
+        if (!fs.existsSync(srcAbs)) {
+          throw new Error(
+            `generateAll: ledger agent "${agentName}" has no canonical source at ` +
+              `canonical/agents/${agentName}.md — a ledger entry without source is a broken cutover.`
+          );
+        }
+        const doc = parseCanonicalAgentSource(fs.readFileSync(srcAbs, 'utf8'), srcAbs);
+        const { resolved, emitCtx } = await resolveForEmission(repoRoot, ctx, doc, corpus);
+        for (const adapter of adapters) {
+          for (const file of adapter.emitAgent(resolved, emitCtx)) {
+            outputs.push(emittedToOutput(file));
+          }
+          outputs.push({
+            path: `canonical/manifests/${agentName}.${adapter.target}.ambient-manifest.json`,
+            content: serializeAmbientManifest(resolved.ambientManifests[adapter.target]),
+          });
+        }
+      }
+    } finally {
+      await corpus.close();
+    }
+
+    // demotion-delta.json is a GENERATED artifact (it lives under the guarded
+    // canonical/manifests root, so the generator must emit it or the guard would flag the
+    // sweep-8 CLI's copy as a stale extra). Same pure functions + the SAME fresh-side
+    // definition sweep 8 uses: manifest ids ∪ the regenerated Kiro config's normalized
+    // resources (preserved knowledgeBase hand-wiring cancels; trimmed artifacts register).
+    const { readBaselines, serializeDemotionDeltas, normalizeKiroResourceToMember } =
+      require('./sweeps/sweep-8-demotion') as typeof import('./sweeps/sweep-8-demotion');
+    const freshIdsByAgent = new Map<string, Set<string>>();
+    const add = (agent: string, members: string[]): void => {
+      const set = freshIdsByAgent.get(agent) ?? new Set<string>();
+      members.forEach((id) => set.add(id));
+      freshIdsByAgent.set(agent, set);
+    };
+    for (const out of outputs) {
+      const manifestMatch = out.path.match(/^canonical\/manifests\/(.+)\.(cc|kiro)\.ambient-manifest\.json$/);
+      if (manifestMatch) {
+        add(manifestMatch[1], (JSON.parse(out.content) as { members: Array<{ id: string }> }).members.map((x) => x.id));
+        continue;
+      }
+      const configMatch = out.path.match(/^\.kiro\/agents\/(.+)\.json$/);
+      if (configMatch && ledger.includes(configMatch[1])) {
+        const resources = (JSON.parse(out.content) as { resources?: Array<string | { source?: string }> }).resources ?? [];
+        add(
+          configMatch[1],
+          resources.map(normalizeKiroResourceToMember).filter((m): m is string => m !== undefined)
+        );
+      }
+    }
+    const deltas = readBaselines(repoRoot)
+      .filter((b) => ledger.includes(b.agent))
+      .map((b) => ({
+        agent: b.agent,
+        removals: b.members.filter((mem) => !(freshIdsByAgent.get(b.agent)?.has(mem) ?? false)).sort(),
+      }));
+    outputs.push({ path: 'canonical/manifests/demotion-delta.json', content: serializeDemotionDeltas(deltas) });
   }
 
   // Deterministic output ordering (P1).
@@ -236,41 +295,12 @@ export async function generateFixture(
   if (!fs.existsSync(sourceAbs)) return [];
 
   const doc = parseCanonicalAgentSource(fs.readFileSync(sourceAbs, 'utf8'), sourceAbs);
-  const validation = validateAgentDoc(doc, ctx.alwaysSet.map((m) => m.id));
-  if (!validation.valid) {
-    const schema = validation.schemaErrors.map((e) => `  - [rule ${e.rule}] ${e.message}`);
-    const dup = validation.duplicationErrors.map(
-      (e) => `  - [workflow-rules duplication] line ${e.line}: "${e.matchedPhrase}"`
-    );
-    throw new Error(`generateFixture: ${FIXTURE_SOURCE} failed validation:\n${[...schema, ...dup].join('\n')}`);
-  }
-
   const corpus = createStdioDocsClient();
   try {
-    const resolved = await resolveAgent(doc, {
-      corpus: new CorpusResolver(corpus),
-      alwaysSet: ctx.alwaysSet,
-      workflowRules: ctx.workflowRules,
-    });
-    if (resolved.unresolved.length > 0) {
-      throw new Error(
-        `generateFixture: ${resolved.unresolved.length} unresolved ref(s) in the fixture — ` +
-          `the fixture is a standing test and must resolve fully:\n` +
-          resolved.unresolved.map((u) => `  - ${u.path}: ${u.detail}`).join('\n')
-      );
-    }
-
-    const docIdToPath = buildDocIdToPath(repoRoot);
-    const fixtureCtx: AdapterContext = {
-      ...ctx,
-      embeds: await buildEmbeds(doc, corpus),
-      docIdToPath,
-      steeringIdToPath: docIdToPath,
-    };
-
+    const { resolved, emitCtx } = await resolveForEmission(repoRoot, ctx, doc, corpus);
     const outputs: GeneratedOutput[] = [];
     for (const adapter of adapters) {
-      for (const file of adapter.emitAgent(resolved, fixtureCtx)) {
+      for (const file of adapter.emitAgent(resolved, emitCtx)) {
         outputs.push({
           path: `${FIXTURE_OUTPUT_ROOT}/${adapter.target}/${file.path}`,
           content: file.content,
@@ -286,6 +316,52 @@ export async function generateFixture(
   } finally {
     await corpus.close();
   }
+}
+
+/**
+ * The shared validate→resolve→embeds context assembly BOTH agent lanes use (the fixture,
+ * remapped; the runtime ledger agents, real paths). Fail-loud throughout: validation
+ * errors, unresolved refs, and unresolvable embeds all throw naming the agent — a cutover
+ * emission must resolve FULLY (the sweeps adjudicate content questions; emission never
+ * ships a partial agent).
+ */
+export async function resolveForEmission(
+  repoRoot: string,
+  ctx: AdapterContext,
+  doc: CanonicalAgentDoc,
+  corpus: CorpusClient
+): Promise<{ resolved: Awaited<ReturnType<typeof resolveAgent>>; emitCtx: AdapterContext }> {
+  const agent = doc.frontmatter.agent;
+  const validation = validateAgentDoc(doc, ctx.alwaysSet.map((m) => m.id));
+  if (!validation.valid) {
+    const schema = validation.schemaErrors.map((e) => `  - [rule ${e.rule}] ${e.message}`);
+    const dup = validation.duplicationErrors.map(
+      (e) => `  - [workflow-rules duplication] line ${e.line}: "${e.matchedPhrase}"`
+    );
+    throw new Error(`resolveForEmission: canonical source for "${agent}" failed validation:\n${[...schema, ...dup].join('\n')}`);
+  }
+
+  const resolved = await resolveAgent(doc, {
+    corpus: new CorpusResolver(corpus),
+    alwaysSet: ctx.alwaysSet,
+    workflowRules: ctx.workflowRules,
+  });
+  if (resolved.unresolved.length > 0) {
+    throw new Error(
+      `resolveForEmission: ${resolved.unresolved.length} unresolved ref(s) in "${agent}" — ` +
+        `emission requires full resolution:\n` +
+        resolved.unresolved.map((u) => `  - ${u.path}: ${u.detail}`).join('\n')
+    );
+  }
+
+  const docIdToPath = buildDocIdToPath(repoRoot);
+  const emitCtx: AdapterContext = {
+    ...ctx,
+    embeds: await buildEmbeds(doc, corpus),
+    docIdToPath,
+    steeringIdToPath: docIdToPath,
+  };
+  return { resolved, emitCtx };
 }
 
 function emittedToOutput(file: EmittedFile): GeneratedOutput {
@@ -318,9 +394,17 @@ export function writeOutputs(root: string, outputs: readonly GeneratedOutput[], 
   return written.sort();
 }
 
-/** The guarded surface ROOTS the diff-guard compares bidirectionally (dir-level). */
-export function guardedRoots(): string[] {
-  return [
+/**
+ * The guarded surface ROOTS the diff-guard compares bidirectionally. STATIC substrate roots
+ * plus — when `repoRoot` is supplied — the per-agent runtime artifacts DERIVED from the
+ * cutover ledger (C6's "derived from the cutover ledger + substrate artifacts"; Stacy's
+ * Task 8.2 routed item 3): from an agent's ledger entry forward, its emitted
+ * `.claude/agents/<a>.md` and `.kiro/agents/<a>.{json,-prompt.md}` are guarded files —
+ * file-grain roots, NOT whole-dir roots, so the not-yet-cut-over hand agents beside them
+ * are never flagged as extras. Argless callers (log lines) get the static set.
+ */
+export function guardedRoots(repoRoot?: string): string[] {
+  const staticRoots = [
     'canonical/registry',
     '.claude/skills',
     '.kiro/skills',
@@ -332,6 +416,21 @@ export function guardedRoots(): string[] {
     'canonical/coverage-map.yaml',
     'canonical/coverage-manifest.yaml',
   ];
+  if (repoRoot === undefined) return staticRoots;
+  let ledger: string[] = [];
+  try {
+    ledger = parseCutoverLedger(
+      fs.readFileSync(path.join(repoRoot, 'canonical', 'cutover-ledger.yaml'), 'utf8')
+    );
+  } catch {
+    ledger = [];
+  }
+  const agentFiles = ledger.flatMap((a) =>
+    [`.claude/agents/${a}.md`, `.kiro/agents/${a}.json`, `.kiro/agents/${a}-prompt.md`].flatMap(
+      (f) => [f, `${f}.attribution.json`] // prose artifacts carry sidecars — guarded together
+    )
+  );
+  return [...staticRoots, ...agentFiles];
 }
 
 /** Serialize any JSON-ish guard report deterministically. */

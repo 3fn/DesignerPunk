@@ -77,6 +77,16 @@ export interface Sweep6Inputs {
    * demand") — exempt from the un-routed diff. Empty until a cutover declares one.
    */
   deferredDiscoverable?: string[];
+  /**
+   * Whether the cutover ledger covers the FULL designed population (all 8 agents). The
+   * un-routed diff is a FLEET property: mid-cutovers, a tool routed to a not-yet-cut-over
+   * seat is "pending", not un-routed — flagging 29 ADJUDICATEs at U2 would be noise that
+   * trains adjudication fatigue. While the fleet is partial, un-routed tools are reported
+   * as a visible INFO count; the leg HARD-ARMS automatically when the last designed agent
+   * enters the ledger (default true so tests and the complete-fleet future keep the strict
+   * behavior). Interpretation call recorded in the Ada cutover report.
+   */
+  fleetComplete?: boolean;
   adjudications?: RecordedAdjudication[];
 }
 
@@ -137,19 +147,34 @@ export function runSweep6(inputs: Sweep6Inputs): SweepReport {
         for (const tool of subset[server] ?? []) routed.add(tool);
       }
     }
+    const fleetComplete = inputs.fleetComplete ?? true;
+    const unrouted: string[] = [];
     for (const server of inputs.registry.servers) {
       for (const tool of server.tools) {
         if (!routed.has(tool.name)) {
-          findings.push({
-            verdict: 'ADJUDICATE',
-            path: `${server.name}/${tool.name}`,
-            observed: `declared tool "${tool.name}" is in NO agent's toolSubset and not in the deferred-discoverable set`,
-            expected: 'every declared tool is routed, deferred, or adjudicated (Req 7 AC4/AC5)',
-            owner: `declaring-owner:${server.name}`,
-            adjudicationKey: `un-routed/${server.name}/${tool.name}`,
-          });
+          if (fleetComplete) {
+            findings.push({
+              verdict: 'ADJUDICATE',
+              path: `${server.name}/${tool.name}`,
+              observed: `declared tool "${tool.name}" is in NO agent's toolSubset and not in the deferred-discoverable set`,
+              expected: 'every declared tool is routed, deferred, or adjudicated (Req 7 AC4/AC5)',
+              owner: `declaring-owner:${server.name}`,
+              adjudicationKey: `un-routed/${server.name}/${tool.name}`,
+            });
+          } else {
+            unrouted.push(`${server.name}/${tool.name}`);
+          }
         }
       }
+    }
+    if (!fleetComplete && unrouted.length > 0) {
+      findings.push({
+        verdict: 'INFO',
+        path: 'declarations-diff',
+        observed: `${unrouted.length} declared tool(s) not yet routed by the PARTIAL fleet (pending later cutovers — the leg hard-arms when the ledger covers the full designed population): ${unrouted.join(', ')}`,
+        expected: 'visible count while the fleet is partial; strict ADJUDICATE at fleet completion (Req 7 AC4)',
+        owner: 'thurgood',
+      });
     }
   }
 
@@ -185,11 +210,20 @@ async function main(): Promise<void> {
     cutoverLedger = [];
   }
 
+  // Fleet completeness = the ledger covers every agent the Task-9 design doc designs.
+  const { parseDesignedBlocks, AMBIENT_DESIGN_DOC } =
+    require('./sweep-4-ambient') as typeof import('./sweep-4-ambient');
+  const designed = Object.keys(
+    parseDesignedBlocks(readFileIfExists(path.join(repoRoot, AMBIENT_DESIGN_DOC)) ?? '')
+  );
+  const fleetComplete = designed.length > 0 && designed.every((a) => cutoverLedger.includes(a));
+
   const report = runSweep6({
     docs,
     sharedCatalog,
     registry,
     cutoverLedger,
+    fleetComplete,
     adjudications: readAdjudications(repoRoot),
   });
   exitWithReport(report);
