@@ -1,15 +1,40 @@
 {
-  "name": "sparky",
-  "description": "Web platform engineer — Web Components implementation, DesignerPunk token and component consumption, Web accessibility, and native screen development",
-  "prompt": "file://./sparky-prompt.md",
-  "includeMcpJson": true,
-  "tools": ["*"],
   "allowedTools": [
     "read",
     "knowledge",
     "@designerpunk-docs",
     "@designerpunk-application",
     "@designerpunk-product"
+  ],
+  "description": "Web platform engineer — Web Components implementation, DesignerPunk token and component consumption, Web accessibility, and native screen development. Implements Leonardo's product-screen specs in Web Components (Shadow DOM) + TypeScript; does NOT make cross-platform architecture decisions, create tokens/components, or own test governance (escalates those through Leonardo).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+w",
+  "name": "sparky",
+  "prompt": "file://./sparky-prompt.md",
+  "resources": [
+    "file://.kiro/steering/Agent-Directory.md",
+    "file://.kiro/steering/AI-Collaboration-Principles.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
+    "file://governance/Contract-System-Reference.md",
+    "file://.kiro/steering/core-goals.md",
+    "file://.kiro/steering/DesignerPunk-Systems-Overview.md",
+    "file://.kiro/steering/personal-note.md",
+    "file://governance/Product-Token-Governance.md",
+    "file://.kiro/steering/Spec-Feedback-Protocol.md",
+    "file://.kiro/steering/start-up-tasks.md",
+    "file://.kiro/steering/Task-Completion-Protocol.md",
+    "file://governance/Web-Authoring-Standards.md"
+  ],
+  "tools": [
+    "*"
   ],
   "toolsSettings": {
     "write": {
@@ -19,38 +44,5 @@
       ]
     }
   },
-  "resources": [
-    "file://.kiro/steering/core-goals.md",
-    "file://.kiro/steering/AI-Collaboration-Principles.md",
-    "file://.kiro/steering/personal-note.md",
-    "file://.kiro/steering/Agent-Directory.md",
-    "file://governance/Platform-Resource-Map.md",
-    "file://dist/web/DesignTokens.web.css",
-    "file://dist/ComponentTokens.web.css",
-    "file://dist/browser/demo-styles.css",
-    "file://governance/Product-Token-Governance.md",
-    "skill://.kiro/steering/start-up-tasks.md",
-    "skill://governance/Process-Development-Workflow.md",
-    "skill://governance/Process-File-Organization.md",
-    "skill://governance/Token-Quick-Reference.md",
-    "skill://governance/Web-Authoring-Standards.md",
-    "skill://governance/platform-implementation-guidelines.md",
-    "skill://governance/Contract-System-Reference.md",
-    "skill://governance/stemma-system-principles.md",
-    "skill://governance/Test-Development-Standards.md",
-    "skill://governance/Test-Behavioral-Contract-Validation.md",
-    "skill://.kiro/steering/Spec-Feedback-Protocol.md",
-    "skill://governance/technology-stack.md",
-    "skill://governance/Product-Token-Governance.md"
-  ],
-  "hooks": {
-    "agentSpawn": [
-      {
-        "command": "git status --porcelain",
-        "timeout_ms": 5000
-      }
-    ]
-  },
-  "keyboardShortcut": "ctrl+shift+w",
   "welcomeMessage": "Hey! I'm Sparky, your Web platform engineer. I implement product screens in Web Components using DesignerPunk tokens and components. What are we building?"
 }

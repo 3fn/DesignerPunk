@@ -702,7 +702,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Generate both targets; run checks (sweep 8 exercises artifact-path removals; the `start-up-tasks` re-run shows no-delta post-union); commit `cutover/data-cutover-report.md`; **commit `cutover/data-diff-vs-baseline.md`** (classified diff vs the current CC agent; artifact-path trims classify as channel-move ONLY where each trim's cue passes C7 resolution (rule of the bucket) else `regression`; regressions adjudicated in this artifact's `## Regression adjudications` section; zero unexplained regressions; paired with C7); Stacy validation recorded; record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 12.1, 12.2, 18.1, 19.3, 21.3, 21.5, 22.3_
 
-- [ ] 14. Cutover: Sparky (web platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog — **U5, cutover position 4** (moved early per Peter's 2026-07-07 order to surface first-generation risk with runway)
+- [x] 14. Cutover: Sparky (web platform engineer) — FIRST-GENERATION (never-ported); content-before-catalog — **U5, cutover position 4** (moved early per Peter's 2026-07-07 order to surface first-generation risk with runway)
 
   **Type**: Parent
   **Unit**: U5
@@ -725,7 +725,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-sparky` branch)
   - Open U5's PR: `./.kiro/hooks/complete-task.sh "Task 14 Complete: Cutover Sparky — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U5 — Cutover: Sparky (first-generation, never-ported)`. **Merge gate: `cutover/sparky-content-completeness.md` shows zero unexplained omissions vs canonical + his 8+3 input-of-record (NO diff-against-baseline — no current CC port exists; the channel-move-bucket rule does not apply) AND C7 green/adjudicated AND an independent validation signature recorded.**
 
-  - [ ] 14.1 Carry Sparky's input-of-record content into canonical source (content-before-catalog)
+  - [x] 14.1 Carry Sparky's input-of-record content into canonical source (content-before-catalog)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Sparky (Sparky confirms the 8+3 carry on the PR)
@@ -733,7 +733,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Capture baseline from `sparky.json` resources (ids + artifact-path members).
     - _Requirements: 15.3, 21.1, 21.2_
 
-  - [ ] 14.2 Generate both targets, run checks, commit sweep report, Stacy validation
+  - [x] 14.2 Generate both targets, run checks, commit sweep report, Stacy validation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy

@@ -1,0 +1,27 @@
+{
+  "agent": "sparky",
+  "capturedFrom": ".kiro/agents/sparky.json@pre-cutover (U5, 2026-07-11; deduped — Product-Token-Governance was double-loaded in the hand config, fixed by construction)",
+  "members": [
+    "agent-directory",
+    "ai-collaboration-principles",
+    "contract-system-reference",
+    "core-goals",
+    "dist/ComponentTokens.web.css",
+    "dist/browser/demo-styles.css",
+    "dist/web/DesignTokens.web.css",
+    "personal-note",
+    "platform-implementation-guidelines",
+    "platform-resource-map",
+    "process-development-workflow",
+    "process-file-organization",
+    "product-token-governance",
+    "spec-feedback-protocol",
+    "start-up-tasks",
+    "stemma-system-principles",
+    "technology-stack",
+    "test-behavioral-contract-validation",
+    "test-development-standards",
+    "token-quick-reference",
+    "web-authoring-standards"
+  ]
+}

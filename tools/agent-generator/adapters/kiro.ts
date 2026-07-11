@@ -52,6 +52,7 @@ import {
   renderDocRoute,
   renderAgentRoute,
   renderGroundTruthFaithfulness,
+  renderGroundTruthTrims,
 } from '../render';
 import { AttributionAccumulator } from '../attribution';
 import { canonicalStringify, type JsonValue } from '../canonical-json';
@@ -319,18 +320,19 @@ export class KiroAdapter implements TargetAdapter {
     // design's Rosetta-framing the reference form is used and nothing is inlined into the
     // prompt body (design C11: "an adapter KNOWS its harness's native delivery model").
 
-    // -- (a2) Ground truth (manifest verdict honored as DATA — Req 10 AC3) ------
+    // -- (a2) Ground truth (manifest verdict honored as DATA — Req 10 AC2/AC3) ------
     // The ground-truth directive has NO native Kiro config surface (unlike ambient
-    // membership → resources), so the faithfulness cue renders into the prompt body on
-    // this target too — native (non-namespaced) verb names via toolRef (fail-loud when
-    // a verb is not granted by the agent's subset).
+    // membership → resources), so it renders into the prompt body on this target too.
+    // Two mutually-exclusive legs (faithfulnessVerbs XOR trims); native (non-namespaced)
+    // tool names via toolRef (fail-loud when a tool is not granted by the subset).
     const kiroManifest = agent.ambientManifests.kiro;
     if (kiroManifest.groundTruth) {
-      const faithfulness = renderGroundTruthFaithfulness(kiroManifest.groundTruth, (t) =>
-        toolRefImpl(subset, t)
-      );
-      if (faithfulness !== undefined) {
-        const block = `## Ground truth\n\n${faithfulness}\n\n`;
+      const toolName = (t: string): string => toolRefImpl(subset, t);
+      const groundTruthBody =
+        renderGroundTruthFaithfulness(kiroManifest.groundTruth, toolName) ??
+        renderGroundTruthTrims(kiroManifest.groundTruth, toolName);
+      if (groundTruthBody !== undefined) {
+        const block = `## Ground truth\n\n${groundTruthBody}\n\n`;
         acc.add('render', countLines(block), 'ambient.groundTruthManifest');
         bodyParts.push(block);
       }

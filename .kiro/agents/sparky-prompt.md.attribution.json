@@ -1,0 +1,53 @@
+{
+  "artifact": ".kiro/agents/sparky-prompt.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        252
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#body"
+    },
+    {
+      "lines": [
+        253,
+        259
+      ],
+      "op": "render",
+      "source": "ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        260,
+        263
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        264,
+        288
+      ],
+      "op": "render",
+      "source": "routes"
+    },
+    {
+      "lines": [
+        289,
+        306
+      ],
+      "op": "render",
+      "source": "commands+shared-catalog"
+    },
+    {
+      "lines": [
+        307,
+        310
+      ],
+      "op": "render",
+      "source": "writeScope"
+    }
+  ]
+}

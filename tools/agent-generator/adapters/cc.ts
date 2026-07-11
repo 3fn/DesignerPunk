@@ -38,6 +38,7 @@ import {
   renderDocRoute,
   renderAgentRoute,
   renderGroundTruthFaithfulness,
+  renderGroundTruthTrims,
 } from '../render';
 import { AttributionAccumulator, type AttributionManifest } from '../attribution';
 import {
@@ -265,16 +266,19 @@ export class CcAdapter implements TargetAdapter {
       bodyParts.push(block);
     }
 
-    // -- (b2) Ground truth (manifest verdict honored as DATA — Req 10 AC3) ------
-    // catalog-is-manifest carries faithfulnessVerbs → the assembly-grain faithfulness cue
-    // renders here, verbs namespaced via toolRef (fail-loud when a verb is not granted by
-    // the agent's subset — the same invariant cueToolRef enforces for routed cues).
+    // -- (b2) Ground truth (manifest verdict honored as DATA — Req 10 AC2/AC3) ------
+    // Two mutually-exclusive legs (a directive carries faithfulnessVerbs XOR trims):
+    //   catalog-is-manifest → the assembly-grain faithfulness cue;
+    //   none-trim-stale-snapshots → the trim negatives (verbatim, for sweep-8 K-D1).
+    // Both namespace tools via toolRef (fail-loud when a tool is not granted by the
+    // agent's subset — the same invariant cueToolRef enforces for routed cues).
     if (manifest.groundTruth) {
-      const faithfulness = renderGroundTruthFaithfulness(manifest.groundTruth, (t) =>
-        toolRefImpl(subset, t)
-      );
-      if (faithfulness !== undefined) {
-        const block = `## Ground truth\n\n${faithfulness}\n\n`;
+      const toolName = (t: string): string => toolRefImpl(subset, t);
+      const groundTruthBody =
+        renderGroundTruthFaithfulness(manifest.groundTruth, toolName) ??
+        renderGroundTruthTrims(manifest.groundTruth, toolName);
+      if (groundTruthBody !== undefined) {
+        const block = `## Ground truth\n\n${groundTruthBody}\n\n`;
         acc.add('render', countLines(block), 'ambient.groundTruthManifest');
         bodyParts.push(block);
       }

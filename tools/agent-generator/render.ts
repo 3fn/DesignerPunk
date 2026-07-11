@@ -127,8 +127,7 @@ export function renderDocRoute(route: DocRoute): string {
  * string; verbs are namespaced per target by the caller-supplied `toolName` (CC
  * `mcp__<server>__<tool>`, Kiro native). Returns undefined when the directive carries no
  * faithfulness verbs (none-standing / collapses-into-catalog / empty render nothing here;
- * the `trims` leg of none-trim-stale-snapshots is a separate render, still unimplemented —
- * no ledger agent carries a trim verdict yet).
+ * the `trims` leg of none-trim-stale-snapshots renders via {@link renderGroundTruthTrims}).
  */
 export function renderGroundTruthFaithfulness(
   directive: GroundTruthDirective,
@@ -142,6 +141,35 @@ export function renderGroundTruthFaithfulness(
     'Your ground-truth manifest IS the live catalog — served fresh by MCP, never a ' +
     'standing snapshot. Faithfulness checks are assembly-grain, not catalog enumeration: ' +
     `verify with ${verbs}.`
+  );
+}
+
+/**
+ * Render the ground-truth TRIM negatives from a manifest directive (Req 10 AC2/AC3 —
+ * the `none-trim-stale-snapshots` verdict). Branches on the directive's `trims` FIELD
+ * (never a re-read of the verdict string). Each trim's `cue.negative` is emitted VERBATIM
+ * — sweep 8's K-D1 leg asserts that exact string appears in the emitted CC text, so this
+ * render is the mechanism that satisfies the unconditional-negative coverage check. The
+ * positive replacement tool is namespaced per target by the caller-supplied `toolName`
+ * (CC `mcp__<server>__<tool>`, Kiro native), which fail-louds if the tool is not granted
+ * by the agent's subset (same invariant cueToolRef enforces for routed cues). Returns
+ * undefined when the directive carries no trims (every other verdict).
+ */
+export function renderGroundTruthTrims(
+  directive: GroundTruthDirective,
+  toolName: (tool: string) => string
+): string | undefined {
+  if (!directive.trims || directive.trims.length === 0) {
+    return undefined;
+  }
+  const lines = directive.trims.map((trim) => {
+    // trim.cue.negative is emitted verbatim (sweep-8 K-D1 substring check).
+    return `- ${trim.cue.negative} — use \`${toolName(trim.cue.tool)}\` (${trim.cue.mcp} MCP)`;
+  });
+  return (
+    'Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read ' +
+    'these stale/generated artifacts; query the live tool instead:\n' +
+    lines.join('\n')
   );
 }
 

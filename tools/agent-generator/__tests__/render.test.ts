@@ -14,6 +14,7 @@ import {
   renderToolCue,
   renderDocRoute,
   renderGroundTruthFaithfulness,
+  renderGroundTruthTrims,
 } from '../render';
 import type { GroundTruthDirective } from '../compose';
 import type { WorkflowRule } from '../workflow-rules-guard';
@@ -141,5 +142,42 @@ describe('renderGroundTruthFaithfulness (Req 10 AC3) — verdicts honored as dat
   it('returns undefined when the directive carries no faithfulness verbs (none-standing et al.)', () => {
     const directive: GroundTruthDirective = { verdict: 'none-standing', emitArtifactRefs: true };
     expect(renderGroundTruthFaithfulness(directive, (t) => t)).toBeUndefined();
+  });
+});
+
+describe('renderGroundTruthTrims (Req 10 AC2 — none-trim-stale-snapshots)', () => {
+  const directive: GroundTruthDirective = {
+    verdict: 'none-trim-stale-snapshots',
+    emitArtifactRefs: false,
+    trims: [
+      {
+        artifact: 'dist/web/DesignTokens.web.css',
+        fires: 'unconditional',
+        cue: {
+          negative: 'do NOT read dist/web/DesignTokens.web.css (a stale build snapshot)',
+          tool: 'get_token_details',
+          mcp: 'application',
+          replaces: 'dist/web/DesignTokens.web.css',
+        },
+      },
+    ],
+  };
+
+  it('emits each trim cue.negative VERBATIM (sweep-8 K-D1 substring contract)', () => {
+    const out = renderGroundTruthTrims(directive, (t) => `mcp__designerpunk-application__${t}`);
+    // The exact negative string sweep-8 asserts must be present.
+    expect(out).toContain('do NOT read dist/web/DesignTokens.web.css (a stale build snapshot)');
+    expect(out).toContain('`mcp__designerpunk-application__get_token_details`');
+    expect(out).toContain('never a build snapshot');
+  });
+
+  it('returns undefined when the directive carries no trims (faithfulness/none-standing verdicts)', () => {
+    const faith: GroundTruthDirective = {
+      verdict: 'catalog-is-manifest',
+      emitArtifactRefs: true,
+      faithfulnessVerbs: ['get_component_full'],
+    };
+    expect(renderGroundTruthTrims(faith, (t) => t)).toBeUndefined();
+    expect(renderGroundTruthTrims({ verdict: 'none-standing', emitArtifactRefs: true }, (t) => t)).toBeUndefined();
   });
 });
