@@ -378,6 +378,17 @@ function emittedToOutput(file: EmittedFile): GeneratedOutput {
  * always get sidecars.
  */
 export function writeOutputs(root: string, outputs: readonly GeneratedOutput[], opts?: { skillSidecars?: boolean }): string[] {
+  // Fail loud on a falsy/empty root: `path.join('', p)` and `path.join(undefined as any, p)`
+  // both resolve to a RELATIVE path (or an `undefined/`-prefixed one), silently scattering
+  // emitted files instead of erroring. A lock-independent regen with a mis-resolved root left
+  // a stray `undefined/regen` dir at the U5 cutover validation — this assertion turns that
+  // foot-gun into a clear failure.
+  if (typeof root !== 'string' || root.trim().length === 0) {
+    throw new Error(
+      `writeOutputs: "root" must be a non-empty string (got ${JSON.stringify(root)}) — ` +
+        `refusing to materialize outputs under an empty/undefined root.`
+    );
+  }
   const written: string[] = [];
   for (const out of outputs) {
     const target = path.join(root, out.path);
