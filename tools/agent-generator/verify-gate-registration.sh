@@ -2,16 +2,21 @@
 # verify-gate-registration.sh — Spec 122 Task 7.3 (C9 / Req 20 AC3).
 #
 # Queries the branch-protection API and COUNT-ASSERTS the required-status-check context
-# set: the ten 122 contexts PLUS the seven pre-existing contexts (Consumer Guard, package
-# drift, the five 125-A lanes) — per inbound-from-125-A-arming.md (the handback ACTION).
+# set: the NINE standing 122 contexts PLUS the seven pre-existing contexts (Consumer Guard,
+# package drift, the five 125-A lanes) — per inbound-from-125-A-arming.md (the handback ACTION).
 # The Item-13 sweep precedent applied to ourselves: a required check that silently fell off
 # the protection list is exactly the drift class Spec 122 exists to kill.
 #
 # Run at each cutover + the monthly governance health check (Thurgood).
 #
-# When sweep 5's context is removed after the last cutover (its pre-cutover window ends),
-# update EXPECTED_CONTEXTS and EXPECTED_COUNT here IN THE SAME recorded protection-list
-# change — that keeps the count assertion honest (C9).
+# SWEEP-5 RETIRED (Spec 122 Task 18 / U11 closeout, 2026-07-11): 122-sweep-5-corrected-state was
+# a PRE-CUTOVER-WINDOW-ONLY gate (Req 19 AC1 exception; re-entry protection lives in the standing
+# class checks). All cutovers are done, so its context is removed from branch protection (Peter's
+# Settings action) and re-counted here IN THE SAME recorded protection-list change (C9) — 17 → 16,
+# ten → nine 122 contexts. NOTE: this script must MATCH the live protection list; if it is run
+# before the Settings removal lands, it will (correctly) FAIL on the extra sweep-5 context — sync
+# the two. The sweep-5 workflow JOB may keep running as a NON-required check (harmless) until
+# separately removed.
 #
 # Auth: GITHUB_TOKEN from the environment, falling back to the repo-root .env. The
 # repo-root PAT can READ/PATCH protection (it cannot dispatch workflows — 403; that
@@ -47,19 +52,19 @@ EXPECTED_CONTEXTS=(
   "lane-functional-root"
   "lane-mcp-server-suite"
   "lane-application-mcp-server-suite"
-  # The ten 122 registrants (C9):
+  # The nine STANDING 122 registrants (C9) — 122-sweep-5-corrected-state RETIRED at U11 closeout
+  # (pre-cutover-window-only gate; see the header note). It is no longer a required context.
   "122-diff-guard"
   "122-canonical-vs-truth"
   "122-sweep-1-refs"
   "122-sweep-2-skills"
   "122-sweep-3-dupes"
   "122-sweep-4-ambient"
-  "122-sweep-5-corrected-state"   # PRE-CUTOVER WINDOW ONLY — remove + re-count after the last cutover
   "122-sweep-6-declarations"
   "122-sweep-7-dispositions"
   "122-sweep-8-demotion"
 )
-EXPECTED_COUNT=17
+EXPECTED_COUNT=16
 
 # ── Query ────────────────────────────────────────────────────────────────────
 ACTUAL_JSON="$(curl -sfL \
