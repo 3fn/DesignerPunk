@@ -33,3 +33,4 @@
 ## Ballots on record
 
 - [2026-07-05-documentation-task-type.md](2026-07-05-documentation-task-type.md) — RATIFIED (Peter, 2026-07-05). Defined the Documentation task type; origin of the ratification protocol above.
+- [2026-07-11-claude-md-retirement.md](2026-07-11-claude-md-retirement.md) — DRAFT (Spec 122 Task 17 / U10). Retire the interim `CLAUDE.md` stopgap by superseding it with the generator's output (OB-7 closure); awaiting Peter's ratification before the swap PR merges.

@@ -825,7 +825,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 ## Group 3 — OB-7 retirement
 
-- [ ] 17. OB-7: generate the CC always-layer (both lanes) + retire the interim CLAUDE.md
+- [x] 17. OB-7: generate the CC always-layer (both lanes) + retire the interim CLAUDE.md
 
   **Type**: Parent
   **Unit**: U10
@@ -850,7 +850,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-ob7-claude-md` branch)
   - Open U10's PR: `./.kiro/hooks/complete-task.sh "Task 17 Complete: OB-7 CC always-layer + CLAUDE.md retirement (122)"` — report the PR URL and STOP; complete at merge (Peter merges — governance-law carve-out: an always-loaded delivery surface). PR body carries `Unit: U10 — OB-7 retirement`.
 
-  - [ ] 17.1 Emit the generated CLAUDE.md always-lane + record the probe-subagent evidence
+  - [x] 17.1 Emit the generated CLAUDE.md always-lane + record the probe-subagent evidence
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -858,7 +858,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Record the probe-subagent test per generated CC agent: certainty-calibration rule reaches the subagent; canary planted in the imported target file discriminates resolution from snapshot (LE-D2 realized by fact — lane 1 imports resolve). Evidence committed.
     - _Requirements: 1.5, 9.3, 16.1, 16.2_
 
-  - [ ] 17.2 Retire the interim CLAUDE.md via the record-first ratification ballot
+  - [x] 17.2 Retire the interim CLAUDE.md via the record-first ratification ballot
     **Type**: Documentation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood

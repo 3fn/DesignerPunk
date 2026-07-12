@@ -60,6 +60,8 @@
   - .kiro/agents/thurgood.json
   - .kiro/agents/thurgood.json.attribution.json
   - .kiro/skills/**
+  - CLAUDE.md
+  - CLAUDE.md.attribution.json
   - canonical/_fixture-output/**
   - canonical/coverage-manifest.yaml
   - canonical/coverage-map.yaml

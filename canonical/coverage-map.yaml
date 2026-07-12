@@ -1016,6 +1016,12 @@
   checks:
     - 122-diff-guard
     - 122-sweep-2-skills
+- surface: CLAUDE.md
+  checks:
+    - 122-diff-guard
+- surface: CLAUDE.md.attribution.json
+  checks:
+    - 122-diff-guard
 - surface: canonical/_fixture-output/cc/.claude/agents/_fixture.md
   checks:
     - 122-diff-guard

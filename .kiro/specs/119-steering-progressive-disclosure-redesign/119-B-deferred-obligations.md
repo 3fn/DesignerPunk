@@ -88,7 +88,13 @@
 
 ## OB-7 — Claude Code always-layer delivery (the 9 identity docs) + retire the interim CLAUDE.md stopgap
 
-**Status**: OPEN · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A post-push review (2026-06-29)
+**Status**: **CLOSED** — Spec 122 Task 17 (U10). Both C11 lanes emit from the generator (lane 2 per-agent inline,
+per-cutover U2–U9; lane 1 the shared `CLAUDE.md` `@`-imports, wired in Task 17.1) and the interim hand-maintained
+`CLAUDE.md` is superseded by the generated, diff-guarded output. Retirement record: ballot
+`.kiro/docs/ballots/2026-07-11-claude-md-retirement.md` (record-first, Peter-ratified) + the ratified U10 swap PR
+(`task/122-ob7-claude-md`); OB-7 closes at that PR's merge. Exactly one always-layer mechanism per runtime.
+Consumer-side CC delivery stays out of scope (123 — Req 16 AC4). · **Owner**: Spec 122 (generator) · **Surfaced**:
+119-A post-push review (2026-06-29)
 
 **What.** The 9 identity/always docs in `.kiro/steering/` (personal-note, core-goals, ai-collaboration-principles [incl. the 119-A certainty-calibration rule], spec-feedback-protocol, designerpunk-systems-overview, civitas-system-overview, start-up-tasks, task-completion-protocol, agent-directory) are delivered in Kiro by `inclusion: always`. **Claude Code has no equivalent**: verified 2026-06-29 there is no `CLAUDE.md`, the `.claude/agents/*.md` carry no path references to them, and they are deliberately NOT in the MCP index (governance-only) — so they are not `find_docs`-able and `get_document_summary('core-goals')` → FileNotFound. Only each agent's *role* content is inlined in its `.claude/agents/*.md`; the cross-cutting always-layer is not. **Concrete proof:** the 119-A calibration rule is absent from every `.claude/agents/*.md`. So in CC these important docs can be silently ignored.
 
