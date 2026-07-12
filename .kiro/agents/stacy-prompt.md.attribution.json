@@ -1,42 +1,42 @@
 {
-  "artifact": ".kiro/agents/leonardo-prompt.md",
+  "artifact": ".kiro/agents/stacy-prompt.md",
   "spans": [
     {
       "lines": [
         1,
-        292
+        249
       ],
       "op": "passthrough",
-      "source": "canonical/agents/leonardo.md#body"
+      "source": "canonical/agents/stacy.md#body"
     },
     {
       "lines": [
-        293,
-        296
+        250,
+        253
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        297,
-        341
+        254,
+        285
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        342,
-        352
+        286,
+        298
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        353,
-        356
+        299,
+        302
       ],
       "op": "render",
       "source": "writeScope"

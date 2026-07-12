@@ -22,6 +22,8 @@
   - .claude/agents/lina.md.attribution.json
   - .claude/agents/sparky.md
   - .claude/agents/sparky.md.attribution.json
+  - .claude/agents/stacy.md
+  - .claude/agents/stacy.md.attribution.json
   - .claude/agents/thurgood.md
   - .claude/agents/thurgood.md.attribution.json
   - .claude/skills/**
@@ -49,6 +51,10 @@
   - .kiro/agents/sparky-prompt.md.attribution.json
   - .kiro/agents/sparky.json
   - .kiro/agents/sparky.json.attribution.json
+  - .kiro/agents/stacy-prompt.md
+  - .kiro/agents/stacy-prompt.md.attribution.json
+  - .kiro/agents/stacy.json
+  - .kiro/agents/stacy.json.attribution.json
   - .kiro/agents/thurgood-prompt.md
   - .kiro/agents/thurgood-prompt.md.attribution.json
   - .kiro/agents/thurgood.json

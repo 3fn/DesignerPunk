@@ -1,0 +1,21 @@
+{
+  "agent": "stacy",
+  "capturedFrom": ".kiro/agents/stacy.json@pre-cutover (U9, 2026-07-11; the FINAL cutover). Stacy WAS CC-ported (the hand port was authored as a dry-run — port-recon-stacy.md), so the diff-vs-baseline is computed against her committed config's ambient set. NO Product-Token-Governance double-load (unlike Data/Kenya/Leonardo/Sparky — her config loads it once). NO artifact-path members (differential-auditor, collapses-into-catalog — she has no dist snapshot). The 4 always-identity docs are file://, the governance corpus + start-up-tasks are skill:// (D1/D2 — classification reads prefix + path-root + membership).",
+  "members": [
+    "agent-directory",
+    "ai-collaboration-principles",
+    "completion-documentation-guide",
+    "contract-system-reference",
+    "core-goals",
+    "personal-note",
+    "process-development-workflow",
+    "process-file-organization",
+    "process-spec-planning",
+    "process-task-type-definitions",
+    "product-token-governance",
+    "spec-feedback-protocol",
+    "start-up-tasks",
+    "test-behavioral-contract-validation",
+    "test-development-standards"
+  ]
+}
