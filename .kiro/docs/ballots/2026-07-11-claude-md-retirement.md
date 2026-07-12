@@ -2,9 +2,10 @@
 
 **Date**: 2026-07-11
 **Author**: Thurgood (Civitas steward) / Spec 122 Task 17
-**Status**: **DRAFT** — pending Peter's ratification. Per the README record-first protocol, this record must read
-`RATIFIED (Peter, <date>)` and be committed **before** the swap PR (U10) merges. It changes an always-loaded
-governance delivery surface, so it stays Peter-merged (the governance-law carve-out).
+**Status**: **RATIFIED (Peter, 2026-07-11)** — approved. Ratified record-first per the README protocol: this record is
+committed **before** the U10 swap PR (#66) merges. It changes an always-loaded governance delivery surface, so it stays
+Peter-merged (the governance-law carve-out); merging #66 applies the retirement — the ratified swap PR is the OB-7
+closure record (Req 16 AC3).
 **Purpose**: Retire the interim hand-maintained `CLAUDE.md` by superseding it with the Spec 122 generator's output, so
 there is exactly one always-layer mechanism per runtime (Req 16 AC2). Closes OB-7.
 
@@ -74,5 +75,5 @@ cutovers and the Task 17.1 probe; this ballot review confirms the retirement mec
 
 ---
 
-**Status: `DRAFT`** — awaiting Peter's ratification. On ratification, update to `RATIFIED (Peter, <date>)`, commit this
-record, then merge the U10 swap PR.
+**Status: `RATIFIED (Peter, 2026-07-11)`** — ratified record-first (this record committed before merge). Merge the U10
+swap PR (#66) to apply the retirement; the ratified swap PR is the OB-7 closure record.
