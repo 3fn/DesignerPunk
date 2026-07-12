@@ -52,3 +52,31 @@ Because CLAUDE.md is snapshotted at session start, the definitive probe of the *
 session after the swap PR merges (the same fresh-session method the interim's 2026-06-29 OB-7 verification used). This
 evidence + the byte-identical-imports equivalence establish the mechanism now; the fresh-session re-probe is the
 post-merge confirmation, not a blocker for the swap.
+
+---
+
+## Post-merge fresh-session confirmation (2026-07-11) — CONFIRMED PASS
+
+The fresh-session re-probe anticipated above was executed **2026-07-11**, after the OB-7 swap merged
+(Task 17 `45b0af2b`, closeout `cda5c5fa`). A general-purpose probe subagent, answering ONLY from context
+(no file reads, no tools), confirmed the **generated** CLAUDE.md now delivers the always-layer to subagents:
+
+1. **All 9 identity docs — PRESENT**, full bodies inlined: personal-note, core-goals, AI-Collaboration-Principles,
+   Spec-Feedback-Protocol, start-up-tasks, Task-Completion-Protocol, Agent-Directory, DesignerPunk-Systems-Overview,
+   Civitas-System-Overview.
+2. **Certainty-calibration labels — PRESENT**, quoted verbatim: **`strong` / `partial` / `none`**
+   (from AI-Collaboration-Principles § "Certainty Calibration").
+3. **Old interim stopgap — GONE.** The probe explicitly did **not** see `INTERIM STOPGAP` or the old
+   `DesignerPunk — Project Context` header (the defined FAIL marker). The FAIL condition is not met.
+
+**Generated-wrapper banner — benign non-appearance (expected).** The probe could not *quote* the
+`GENERATED FILE — do not hand-edit` banner, because that banner lives inside an HTML comment (`<!-- … -->`,
+CLAUDE.md lines 1–6) which the harness strips when it expands the `@`-import CLAUDE.md into agent context.
+The banner is a human/diff-guard marker, never a delivery payload — only the 9 `@`-import lines are the
+payload, and those resolved to full doc bodies in the probe's context. On-disk verification confirms the banner
+is present (the file is the generated wrapper, not the retired interim stopgap). So the banner's absence from
+*delivered context* is correct-by-design, not a propagation failure.
+
+**Verdict: PASS.** Generated CLAUDE.md is in place, its 9 `@`-imports reach spawned subagents with full content,
+the certainty-calibration rule reaches them, and the interim stopgap is retired. The OB-7 verification loop is
+closed.
