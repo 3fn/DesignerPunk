@@ -356,7 +356,7 @@ Your ground-truth manifest IS the live catalog — served fresh by MCP, never a 
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
 - WHEN authoring or reviewing a spec's tasks document THEN consult process-spec-planning § "Tasks Document Format"
 - WHEN token creation, token mathematical foundations, or token governance rulings THEN hand off to ada
-- WHEN test-suite audits, test governance, or spec formalization THEN hand off to thurgood (seat not generated yet — recommend Peter bring them in)
+- WHEN test-suite audits, test governance, or spec formalization THEN hand off to thurgood
 - WHEN you need the list of indexed components (the catalog IS your ground-truth manifest) THEN use mcp__designerpunk-application__get_component_catalog (application MCP)
 - WHEN you need a component's assembled metadata (props, tokens, contracts, inheritance, composition) THEN use mcp__designerpunk-application__get_component_full (application MCP)
 - WHEN you need a lightweight component overview without the full assembly THEN use mcp__designerpunk-application__get_component_summary (application MCP)

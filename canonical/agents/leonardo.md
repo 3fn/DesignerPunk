@@ -4,8 +4,9 @@
 # Content carried from the input-of-record (Req 15 AC2): `.kiro/agents/leonardo.json` +
 # `.kiro/agents/leonardo-prompt.md`, reconciled against the hand CC port
 # `.claude/agents/leonardo.md` (the diff-vs-baseline artifact classifies every difference).
-# His inter-agent HANDOFF ROUTING TABLE migrated from body prose into `routes.agents` (LE-D1
-# — the live not-yet-ported instance). Source: per-agent-ambient-design.md § "4. Leonardo —
+# His inter-agent HANDOFF ROUTING TABLE migrated from body prose into `routes.agents` (LE-D1;
+# all routes `resolves` post-U11 — the OB-8 backfill flipped the stale not-yet-ported cases once
+# the full roster was ported). Source: per-agent-ambient-design.md § "4. Leonardo —
 # product architect" (the worked consumer/hub design block). His ~60% on-demand trim is the
 # spec's largest channel-move surface — every demotion carries a C7-resolving `replaces:` cue.
 agent: leonardo
@@ -20,7 +21,7 @@ ambient:
   # canonical silent failure — AXA §3.3 worked law).
   governanceAsLaw:
     - id: cross-platform-vs-platform-specific-decision-framework
-      owner: leonardo
+      owner: lina                        # SUBSTANCE owner per schema.ts:51 (OB-9; Lina's ruling, Peter-confirmed 2026-07-11): the doc's content is component cross-platform IMPLEMENTATION (Lina's domain, alongside platform-implementation-guidelines). Leonardo LOCKS it (his signature silent-failure law); `owner` names the content-domain adjudicator, not the lock holder. Was `leonardo`.
       assert:
         - claim: cross-platform-vs-idiom-decision
           section: "Decision Framework"
@@ -53,23 +54,23 @@ routes:
       doc: product-token-governance
       section: "Authoring Workflow"
       when: "defining a product token during screen specification"
-  # Inter-agent HANDOFF ROUTING TABLE (LE-D1 — migrated from body prose; THE live
-  # not-yet-ported instance). His hub function: platform impl → Sparky/Kenya/Data; product
-  # QA → Stacy; ALL system requests route THROUGH Thurgood (who triages to Ada/Lina).
-  # sparky (U5) + thurgood (U4) are generator-SSOT → resolves; kenya/data/stacy not yet.
+  # Inter-agent HANDOFF ROUTING TABLE (LE-D1 — migrated from body prose). His hub function:
+  # platform impl → Sparky/Kenya/Data; product QA → Stacy; ALL system requests route THROUGH
+  # Thurgood (who triages to Ada/Lina). ALL targets are generator-SSOT (full roster ported) →
+  # every route `resolves` (the OB-8 backfill flipped kenya/data/stacy at U11 closeout).
   agents:
     - target: sparky
       when: "handing off a screen spec for WEB implementation"
       disposition: resolves
     - target: kenya
       when: "handing off a screen spec for iOS implementation"
-      disposition: not-yet-ported
+      disposition: resolves
     - target: data
       when: "handing off a screen spec for Android implementation"
-      disposition: not-yet-ported
+      disposition: resolves
     - target: stacy
       when: "product quality / process governance, or feeding the Lessons Synthesis Review"
-      disposition: not-yet-ported
+      disposition: resolves
     - target: thurgood
       when: "any system-level gap (token, component, test, spec, governance) — he triages to Ada/Lina or handles directly"
       disposition: resolves

@@ -125,7 +125,7 @@ Awaiting your approval to proceed."
 ## Routing
 
 - WHEN authoring a completion doc and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
-- WHEN a component-implementation question arises THEN hand off to lina (seat not generated yet — recommend Peter bring them in)
+- WHEN a component-implementation question arises THEN hand off to _fixture-peer (seat not generated yet — recommend Peter bring them in)
 - WHEN you need one section of a governance doc THEN use mcp__designerpunk-docs__get_section (docs MCP)
 - WHEN you need the component inventory THEN use mcp__designerpunk-application__get_component_catalog (application MCP)
 - WHEN you need product-level context THEN use mcp__designerpunk-product__get_product_overview (product MCP)

@@ -376,6 +376,25 @@ describe('(b) agent-routes', () => {
     expect(findingsFor(report, 'agent-routes')).toHaveLength(0);
   });
 
+  it('FAIL: a "not-yet-ported" target that IS in the ledger is a STALE escape hatch (OB-8, Task 18 prove-it-bites)', async () => {
+    const report = await runTruthCheck(
+      baseInputs({
+        cutoverLedger: ['lina'],
+        docs: [
+          doc({
+            agent: 'ada',
+            routes: { agents: [{ target: 'lina', when: 'component q', disposition: 'not-yet-ported' }] },
+          }),
+        ],
+      })
+    );
+    const fs = findingsFor(report, 'agent-routes');
+    expect(fs).toHaveLength(1);
+    expect(fs[0].adjudicator).toBe('ada');
+    expect(fs[0].verdict).toBe('FAIL');
+    expect(fs[0].truthObserved).toMatch(/STALE/);
+  });
+
   it('FAIL: a "resolves" target NOT in the ledger → adjudicator = routing agent seat', async () => {
     const report = await runTruthCheck(
       baseInputs({

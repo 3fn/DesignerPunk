@@ -871,7 +871,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
 
 ## Closeout
 
-- [ ] 18. Closeout: handbacks to 119-B and 123, umbrella/deferred-obligation updates
+- [x] 18. Closeout: handbacks to 119-B and 123, umbrella/deferred-obligation updates
 
   **Type**: Parent
   **Unit**: U11
@@ -896,7 +896,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-closeout` branch)
   - Open U11's PR: `./.kiro/hooks/complete-task.sh "Task 18 Complete: Closeout — handbacks + ledger reconciliation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U11 — Closeout`.
 
-  - [ ] 18.1 Write the 119-B and 123 handbacks
+  - [x] 18.1 Write the 119-B and 123 handbacks
     **Type**: Documentation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood
@@ -904,14 +904,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Tier 2 rationale (conjunctive): the handbacks carry SHALL/SHALL-NOT hand-off semantics AND downstream specs (119-B, 123) depend on them — both properties hold (precedent: Spec 118 Task 6).
     - _Requirements: 16.4, 24.4_
 
-  - [ ] 18.2 Reconcile the deferred-obligations ledger and the CLAUDE.md interim note
+  - [x] 18.2 Reconcile the deferred-obligations ledger and the CLAUDE.md interim note
     **Type**: Documentation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood
     - Confirm OB-5/OB-6/OB-7 closed or dispositioned in `119-B-deferred-obligations.md`; confirm `CLAUDE.md`'s interim-stopgap banner is retired/superseded per OB-7 (no coexistence past 122); route any discovered out-of-scope work to its owner via inbound note (Req 25 AC3), NOT absorbed.
     - _Requirements: 25.3_
 
-  - [ ] 18.3 Discharge OB-8 (routing backfill + C7(b) strict-check) and OB-9 (owner-value audit)
+  - [x] 18.3 Discharge OB-8 (routing backfill + C7(b) strict-check) and OB-9 (owner-value audit)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (+ domain owners for any owner-value adjudication)
