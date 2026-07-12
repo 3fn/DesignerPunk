@@ -8,6 +8,33 @@
 
 ---
 
+## Spec 122 Closeout Handback (2026-07-11)
+
+Spec 122 (the agent generator) is complete — all 8 agents are generator-SSOT, both runtimes generated + diff-guarded.
+Its dispositions of this ledger's obligations:
+
+| OB | Owner | Disposition |
+|----|-------|-------------|
+| OB-1 | Docs-MCP infra (Thurgood) | **OPEN** — NOT 122's (the OB-1 scanner repoint was routed out per Req 25 AC2, ratified). Stays 119-B/Docs-MCP work. |
+| OB-2 | Docs-MCP infra | **OPEN** — NOT 122's (corpus `path:`→`id` sweep). Stays 119-B/Docs-MCP. |
+| OB-3 | Thurgood/Ada/Lina | **OPEN** — NOT 122's (alias pruning). Stays 119-B. |
+| OB-4 | Thurgood | **OPEN** — NOT 122's (discovery-gate threshold). Stays 119-B. |
+| OB-5 | Spec 122 | **CLOSED** — Req 14 steering-addressing cue generated (Thurgood U4). |
+| OB-6 | Spec 122 | **CLOSED** — all `.claude/agents/*.md` regenerated from canonical source (U2–U9). |
+| OB-7 | Spec 122 | **CLOSED** — CC always-layer (both C11 lanes) generated; interim `CLAUDE.md` retired via record-first ballot (Task 17, #66). |
+| OB-8 | Spec 122 | **CLOSED** — routing `not-yet-ported` backfill + C7(b) strict-check (Task 18). |
+| OB-9 | Spec 122 | **CLOSED** — `owner:` value audit across all agents (Task 18). |
+
+**What 122 delivered that 119-B consumes**: the generator that turns 119-A Task 9's per-agent five-class ambient
+design into generated agent prompts + the always-layer. 119-B's routing + measurement work (the discovery-signal
+refinement, the `find_docs` measurement case study) runs against these generated outputs. The four OPEN obligations
+(OB-1–4) are Docs-MCP-infrastructure work independent of the generator and remain 119-B's.
+
+**Cross-reference**: the reciprocal 123 handback (the 122↔123 boundary + the adapter seam) lives in
+`.kiro/specs/123-consumer-distribution/inbound-from-122.md`.
+
+---
+
 ## OB-1 — Cross-ref parser `id`-awareness (so `list_cross_references` enumerates bare-`id` cross-refs)
 
 **Status**: OPEN · **Owner**: Thurgood / Docs-MCP infra · **Surfaced**: 119-A Task 8.5 (2026-06-29)
@@ -66,7 +93,7 @@
 
 ## OB-5 — Agent-prompt routing to the steering-addressing conventions doc
 
-**Status**: OPEN · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A Task 12 (2026-06-29)
+**Status**: **CLOSED** — Spec 122 Task 18 (U11 closeout). 122 generated the Req 14 steering-addressing triggered cue into the steering-doc-authoring agents' prompts from canonical source (delivered at Thurgood's cutover, U4). · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A Task 12 (2026-06-29)
 
 **What.** 119-A creates the standalone `governance/Steering-Addressing-Conventions.md` (the `id`/filename/`aliases`/grammar conventions) — discoverable via `find_docs` aliases, with enforcement already live (uniqueness guard + Thurgood metadata hook). What's missing is **active routing**: a triggered cue in the relevant agent prompts — `WHEN creating/modifying a steering doc THEN consult Steering-Addressing-Conventions` — so authors reach it proactively, not only by searching.
 
@@ -76,7 +103,7 @@
 
 ## OB-6 — Regenerate the Claude Code agent-prompt port (`.claude/agents/*.md`) for the relocation
 
-**Status**: OPEN · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A post-Task-11 review (2026-06-29)
+**Status**: **CLOSED** — Spec 122 Task 18 (U11 closeout). 122 regenerated every `.claude/agents/*.md` (all 8 agents) from canonical source with `id`-addressed / `governance/`-rooted references and accurate post-relocation notes, across the U2–U9 cutovers — the hand ports are superseded, and the stale "no relocation yet" prose is gone by construction. · **Owner**: Spec 122 (generator) · **Surfaced**: 119-A post-Task-11 review (2026-06-29)
 
 **What.** The five `.claude/agents/*.md` files (ada, lina, thurgood, leonardo, data) are the **Claude Code port** of the canonical `.kiro/agents/*-prompt.md` (created in Spec 121; "the Kiro file is the source of truth — reconcile there"). They are **stale post-119-A**: their port-notes still say "no relocation yet" and their MCP-query examples use `.kiro/steering/…` paths for docs now in `governance/` (e.g. `get_section({ path: ".kiro/steering/Token-Governance.md" })`).
 
@@ -110,7 +137,7 @@ Consumer-side CC delivery stays out of scope (123 — Req 16 AC4). · **Owner**:
 
 ## OB-8 — Routing `not-yet-ported` staleness: C7(b) strict-check + one-time backfill
 
-**Status**: OPEN · **Owner**: Spec 122 (closeout, Task 18 / U11) · **Surfaced**: 122 Task 13 (Data cutover, 2026-07-11)
+**Status**: **CLOSED** — Spec 122 Task 18 (U11 closeout). (1) One-time backfill: the 7 stale `not-yet-ported` routes (ada→lina/thurgood, leonardo→kenya/data/stacy, lina→thurgood, sparky→leonardo) flipped to `resolves` now that the full roster is ported. (2) C7(b) sharpened (`canonical-vs-truth.ts` checkAgentRoutes): a `not-yet-ported` whose target IS in the ledger now FAILs; prove-it-bites recorded as a unit test (`canonical-vs-truth.test.ts`). The fixture's escape-hatch route was retargeted to a non-ledger placeholder so the valid case stays exercised. · **Owner**: Spec 122 (closeout, Task 18 / U11) · **Surfaced**: 122 Task 13 (Data cutover, 2026-07-11)
 
 **What.** Inter-agent routes in generated prompts carry a `disposition` — `resolves` (target is a generated CC agent → hand off directly) or `not-yet-ported` (target not generated yet → route via Peter). The disposition is **authored** in each agent's canonical source and rendered verbatim (`renderAgentRoute`); it is NOT derived from the cutover ledger. So once a target IS cut over, every predecessor still authored `not-yet-ported` for it goes **stale** — the prompt tells the agent "seat not generated yet, route via Peter" for an agent that now exists. Live proof: Sparky's route to Leonardo still says `not-yet-ported` post-U6; after U7, Leonardo's route to `data` is stale. C7 class (b) **exempts** `not-yet-ported` unconditionally, so no check catches it. (The Task 12 completion doc's claim that these "flip automatically by regeneration" is inaccurate — they do not.)
 
@@ -124,7 +151,7 @@ Consumer-side CC delivery stays out of scope (123 — Req 16 AC4). · **Owner**:
 
 ## OB-9 — `owner:` value audit across all generated agents (substance-owner correctness)
 
-**Status**: OPEN · **Owner**: Spec 122 (closeout, Task 18 / U11) · **Surfaced**: 122 Task 13 (Data cutover, 2026-07-11)
+**Status**: **CLOSED** — Spec 122 Task 18 (U11 closeout). Audited every agent's governance-as-law `owner:` against the doc's substance owner (schema.ts:51). All correct except Leonardo's `cross-platform-vs-platform-specific-decision-framework` (`owner: leonardo` → `lina`, per Lina's ruling + Peter's confirm 2026-07-11 — the doc's content is component cross-platform implementation, Lina's domain; the lock stays Leonardo's). Sparky's three were corrected earlier (#63). A per-lock rationale comment is recorded in canonical source for the boundary doc so the audit doesn't re-open it as an Agent-Directory-vs-canonical mismatch. · **Owner**: Spec 122 (closeout, Task 18 / U11) · **Surfaced**: 122 Task 13 (Data cutover, 2026-07-11)
 
 **What.** Each `governanceAsLaw` lock in canonical agent source carries `owner:` = the doc's **substance domain owner** (`tools/agent-generator/schema.ts:51` — the adjudicator who rules on predicate mismatches). System-agent cutovers (Ada/Lina/Thurgood) were coincidentally correct (they lock their own docs → `owner: self`). But **consumer** agents lock docs owned by others, and the `owner: self` pattern was copied incorrectly. Sparky (the first consumer) set `owner: sparky` for `contract-system-reference` (Lina's), `product-token-governance` (Ada's), and `web-authoring-standards` (Lina's, per her 2026-07-11 ruling) — all three wrong. Ada flagged the class at Data's cutover; Data (U7) authors his owners correctly (`lina`/`ada`). **Sparky's three are corrected in the same PR that records this obligation**; the OPEN part is the **systematic audit of ALL agents' `owner:` values** at closeout to catch any other latent mismatch (Kenya/Stacy will be authored correctly, but verify).
 

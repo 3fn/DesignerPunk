@@ -165,8 +165,8 @@ Your test commands (with their triggering cues) are in the Commands section. Thi
 - WHEN registering or validating themes, or computing theme-varying tokens THEN consult token-governance § "Theme Registry (Spec 094)"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
 - WHEN authoring or reviewing a spec's tasks document THEN consult process-spec-planning § "Tasks Document Format"
-- WHEN component development, behavioral contracts, or component-side token integration THEN hand off to lina (seat not generated yet — recommend Peter bring them in)
-- WHEN test-suite audits, test governance, or spec formalization THEN hand off to thurgood (seat not generated yet — recommend Peter bring them in)
+- WHEN component development, behavioral contracts, or component-side token integration THEN hand off to lina
+- WHEN test-suite audits, test governance, or spec formalization THEN hand off to thurgood
 - WHEN you need token VALUES (resolved values, per-platform names, formulas) THEN use get_token_details (application MCP)
 - WHEN you need to find tokens by family, tier, or name THEN use search_tokens (application MCP)
 - WHEN you need every token in a family THEN use get_token_family (application MCP)

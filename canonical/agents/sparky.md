@@ -103,7 +103,7 @@ routes:
   agents:
     - target: leonardo
       when: "you need a screen spec, a cross-platform decision, or to escalate a token/component gap (he routes it to Thurgood → Ada/Lina)"
-      disposition: not-yet-ported
+      disposition: resolves
   # Tool cues. The first block is his web-consumer capability cue set (live-tool checked);
   # the `replaces:` block covers every ambient doc DEMOTED from the hand config (sweep 8:
   # every removal carries a replacement cue — Req 12 AC1). The 3 dist-CSS trims are covered

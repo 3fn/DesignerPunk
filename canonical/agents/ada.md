@@ -62,10 +62,10 @@ routes:
   agents:
     - target: lina
       when: "component development, behavioral contracts, or component-side token integration"
-      disposition: not-yet-ported
+      disposition: resolves
     - target: thurgood
       when: "test-suite audits, test governance, or spec formalization"
-      disposition: not-yet-ported
+      disposition: resolves
   # Tool cues. The first block is the design block's catalog cue set (live-tool checked);
   # the `replaces:` block below it covers every ambient doc DEMOTED from the hand config
   # (sweep 8: every removal carries a replacement cue — Req 12 AC1).

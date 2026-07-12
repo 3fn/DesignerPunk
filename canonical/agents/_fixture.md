@@ -30,9 +30,12 @@ routes:
       doc: completion-documentation-guide
       section: "Two-Document Workflow"
       when: "authoring a completion doc and unsure which tier applies"
-  # one agent route with the not-yet-ported disposition (C7 class (b)'s escape hatch, LE1):
+  # one agent route with the not-yet-ported disposition (C7 class (b)'s escape hatch, LE1). The
+  # target is a DELIBERATELY non-ledger placeholder so the escape hatch stays VALID under the OB-8
+  # strict-check (Task 18): a not-yet-ported whose target IS in the ledger now FAILs as stale; one
+  # whose target is genuinely un-ported (like this) remains the correct exempt escape hatch.
   agents:
-    - target: lina
+    - target: _fixture-peer
       when: "a component-implementation question arises"
       disposition: not-yet-ported
   # one cue per MCP (registry-declared tools — sweep 6's phantom-route leg walks these):

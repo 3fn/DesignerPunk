@@ -321,10 +321,16 @@ function describePredicate(claim: GovernanceAssertClaim): string {
 }
 
 /**
- * (b) agent-routes — every `routes.agents` target with disposition `resolves` MUST be in the
- * cutover ledger; an unlisted target with `resolves` → FAIL. A target with disposition
- * `not-yet-ported` is exempt (that IS the escape hatch — LE1). Adjudicator = the routing
- * agent's seat (the agent doing the routing).
+ * (b) agent-routes — TWO FAIL directions:
+ *   - disposition `resolves`: the target MUST be in the cutover ledger; an unlisted `resolves`
+ *     target → FAIL (a route to a seat that doesn't exist on this runtime).
+ *   - disposition `not-yet-ported`: the target MUST NOT be in the cutover ledger. A
+ *     `not-yet-ported` whose target IS in the ledger → FAIL — **OB-8 sharpening (Task 18)**: a
+ *     STALE escape hatch. The generated prompt strands the agent on "seat not generated yet,
+ *     route via Peter" for a seat that now exists (the inward-pointing stale-address drift 122
+ *     exists to kill). A `not-yet-ported` whose target is genuinely un-ported stays exempt — the
+ *     valid escape hatch (LE1).
+ * Adjudicator = the routing agent's seat (the agent doing the routing).
  */
 function checkAgentRoutes(
   agent: string,
@@ -335,7 +341,22 @@ function checkAgentRoutes(
   if (!routes) return;
   const ledger = new Set(cutoverLedger);
   routes.forEach((route, i) => {
-    if (route.disposition === 'not-yet-ported') return; // exempt by declared disposition.
+    if (route.disposition === 'not-yet-ported') {
+      // OB-8 sharpening (Task 18): the escape hatch is valid ONLY while the target is genuinely
+      // not a generated agent. Once the target IS in the ledger, the disposition is STALE.
+      if (ledger.has(route.target)) {
+        findings.push({
+          class: 'agent-routes',
+          agent,
+          path: `routes.agents[${i}]`,
+          truthObserved: `target "${route.target}" IS in the cutover ledger, but the route is still disposition "not-yet-ported" — a STALE escape hatch`,
+          canonicalClaim: `routes.agents[${i}] targets "${route.target}" with disposition "not-yet-ported"; flip to "resolves" (the target is a generated agent)`,
+          adjudicator: agent,
+          verdict: 'FAIL',
+        });
+      }
+      return; // un-ledgered target → the valid escape hatch, exempt.
+    }
     if (!ledger.has(route.target)) {
       findings.push({
         class: 'agent-routes',

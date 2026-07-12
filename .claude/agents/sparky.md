@@ -525,7 +525,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - WHEN naming a new product token (--product-{category}-{token-name}) THEN consult product-token-governance § "Naming Conventions"
 - WHEN you need to find which token doc covers a topic THEN consult token-quick-reference § "Token Documentation Map"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
-- WHEN you need a screen spec, a cross-platform decision, or to escalate a token/component gap (he routes it to Thurgood → Ada/Lina) THEN hand off to leonardo (seat not generated yet — recommend Peter bring them in)
+- WHEN you need a screen spec, a cross-platform decision, or to escalate a token/component gap (he routes it to Thurgood → Ada/Lina) THEN hand off to leonardo
 - WHEN you need a component's assembled API, props, tokens, or contracts to implement it THEN use mcp__designerpunk-application__get_component_full (application MCP)
 - WHEN the spec references a component you can't place — find it by context or concept THEN use mcp__designerpunk-application__find_components (application MCP)
 - WHEN you need a token's resolved value, formula, or per-platform name THEN use mcp__designerpunk-application__get_token_details (application MCP)

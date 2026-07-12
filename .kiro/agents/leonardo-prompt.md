@@ -301,9 +301,9 @@ If there are questions, be proactive and ask — don't assume.
 - WHEN actively writing the REQUIRED Layout section of a screen spec (regions/spans/stacking vocabulary, format, worked examples) THEN consult layout-specification-vocabulary § "Section 3: Specification Vocabulary"
 - WHEN defining a product token during screen specification THEN consult product-token-governance § "Authoring Workflow"
 - WHEN handing off a screen spec for WEB implementation THEN hand off to sparky
-- WHEN handing off a screen spec for iOS implementation THEN hand off to kenya (seat not generated yet — recommend Peter bring them in)
-- WHEN handing off a screen spec for Android implementation THEN hand off to data (seat not generated yet — recommend Peter bring them in)
-- WHEN product quality / process governance, or feeding the Lessons Synthesis Review THEN hand off to stacy (seat not generated yet — recommend Peter bring them in)
+- WHEN handing off a screen spec for iOS implementation THEN hand off to kenya
+- WHEN handing off a screen spec for Android implementation THEN hand off to data
+- WHEN product quality / process governance, or feeding the Lessons Synthesis Review THEN hand off to stacy
 - WHEN any system-level gap (token, component, test, spec, governance) — he triages to Ada/Lina or handles directly THEN hand off to thurgood
 - WHEN selecting components by context, category, or concept THEN use find_components (application MCP)
 - WHEN retrieving an assembly / experience pattern THEN use get_experience_pattern (application MCP)
