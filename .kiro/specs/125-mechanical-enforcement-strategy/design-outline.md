@@ -105,6 +105,8 @@ Teeth stop at DesignerPunk's own repo boundary. You cannot force a downstream pr
 
 ## 5. The spine — the per-rule classification map (block / warn / educate)
 
+> **RECONCILIATION NOTE (2026-07-12, Peter — methodology realigned in 125-B):** *"CI validates functional and operational requirements, never ideology; education and verification are complementary layers (strategy → tactics → validation loop)."* **The governing text for 125-B's methodology is `../125-B-classification-map/design-outline.md` §2**; this section's wording is superseded where they diverge (notably: the honesty guard's mechanizability criterion → the boundary-call guard; duplication-as-failure-mode → contradiction/imposter; the pruning obligation → "prune imposters, not teachers"). This section is preserved as the historical record — do not rewrite it.
+
 This is the artifact 125 owns and its central deliverable. For **every** enforceable governance/design rule, pick one:
 
 1. **Barrier** → CI/lint owns it. The learning layer then keeps at most the *why*, not "remember to do this."
