@@ -4,6 +4,10 @@
 **Source**: `docs/roadmap/2026-07-04-wordpress-thesis-strategy.md` (Peter + Claude strategy session, post-Astryx-launch + full-project-audit + "loops" discussion)
 **Status**: Considerations for formalization — **NOT decisions.** The outline's phasing and right-sizing caveat stand; nothing here expands Phase 0/1's core.
 
+> **DISPOSITION (2026-07-11): MOSTLY SPENT.** §1 sequencing + §2 execution-loop reframing are spent
+> (Phase 0/1 shipped in 125-A). Still-live: §3 the autonomy dial → carried as `125-B-backlog.md` item 7
+> (ELECTIVE, with its activation trigger intact).
+
 ---
 
 ## 1. Sequencing: Phase 0/1 pulled forward, before Spec 122 (proposed, strategy-level)

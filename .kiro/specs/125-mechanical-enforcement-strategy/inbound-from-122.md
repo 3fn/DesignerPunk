@@ -4,6 +4,11 @@
 **Source**: Spec 122 design-outline feedback rounds (R1/R2 + Stacy native) + the 122↔125 sequencing discussion (Peter + Claude)
 **Status**: One decided sequencing fact; the rest is coordination requirements and empirics for Phase 0/1 formalization.
 
+> **DISPOSITION (2026-07-11): MOSTLY CONSUMED.** §1 sequencing ("125 before 122") happened; §3
+> protocol-rewrite-by-hand done in 125-A; §5 self-merge ergonomics adopted; §6 is informational evidence.
+> Still-live pieces are carried in `125-B-backlog.md`: §2 tool-boot smoke → backlog item 3; §4 prune-with-arm
+> → backlog item 1. Read the backlog, not this note, for open 125-B work.
+
 ---
 
 ## 1. Sequencing DECIDED (Peter, 2026-07-05): 125 Phase 0 lands BEFORE 122 starts

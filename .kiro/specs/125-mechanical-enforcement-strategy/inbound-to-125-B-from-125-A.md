@@ -4,6 +4,11 @@
 **Source**: 125-A Task 9 closeout — the physical home named in 125-A tasks.md (ratified v2)
 **Status**: Handoff records, NOT ratified classification rows. 125-B formalizes after Spec 122 calcifies (umbrella outline, DECIDED).
 
+> **DISPOSITION (2026-07-11): LIVE — FOLDED into `125-B-backlog.md`.** Item map: §1 findings 1/3 →
+> backlog item 4 (SHOULD); §2 tool-boot smoke → item 3 (SHOULD); §3 warn→fail → item 5; §4 governance
+> layers → items 1 & 6; §5 PAT asymmetry → **RESOLVED, dropped**; §5 jest split → item 8 (WATCH). This
+> note remains the detailed source; the backlog is the canonical read.
+
 ---
 
 ## 1. Open bake-in findings carried BY LEDGER NUMBER (125-A `bake-in-ledger.md`)
