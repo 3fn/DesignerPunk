@@ -780,7 +780,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
     - Generate both targets (first CC port — first-generation cutover); run checks (zero-skills = sweep-2 PASS; orphaned-artifact negative fires); commit `cutover/kenya-cutover-report.md`; **commit `cutover/kenya-content-completeness.md`** (content-completeness check, NOT a diff — no current CC baseline): verify generated CC output covers canonical + 4 verified commands + 4 named gaps + standingFacts with zero unexplained omissions; Stacy validation recorded (mandatory); record the independent validation signature (amendment 4); adjudicate any missed shape before merge.
     - _Requirements: 8.1, 15.1, 18.1, 19.3, 21.1, 21.3, 21.5, 22.3_
 
-- [ ] 16. Cutover: Stacy (product governance & QA) — FIRST-GENERATION (never-ported); content-before-catalog
+- [x] 16. Cutover: Stacy (product governance & QA) — FIRST-GENERATION (never-ported); content-before-catalog
 
   **Type**: Parent
   **Unit**: U9
@@ -804,14 +804,14 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - Mark complete: Use `taskStatus` tool to update task status (on the `task/122-cutover-stacy` branch)
   - Open U9's PR: `./.kiro/hooks/complete-task.sh "Task 16 Complete: Cutover Stacy — first generation (122)"` — report the PR URL and STOP; complete at merge (Peter merges). PR body carries `Unit: U9 — Cutover: Stacy`. **Merge gate: zero unexplained regressions in `cutover/stacy-diff-vs-baseline.md` (she was ported — real baseline; channel-move lines honor the rule-of-the-bucket; regressions adjudicated in the artifact's `## Regression adjudications` section) AND C7 green/adjudicated AND — because this is the QA seat's OWN cutover (self-review conflict) — an INDEPENDENT validation signature (Thurgood + a second reviewer per Peter's routing) is the DEFAULT done-condition, not a fallback (Stacy amendment 4).**
 
-  - [ ] 16.1 Author Stacy's canonical source (carry provisioned audit catalog) + capture baseline
+  - [x] 16.1 Author Stacy's canonical source (carry provisioned audit catalog) + capture baseline
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy (Stacy confirms her carried audit catalog on the PR)
     - Author `canonical/agents/stacy.md`; carry her audit-command catalog (provisioned at Task 8/C12: `audit:coverage-map`, `audit:mode-parity`, `audit:theme-drift`, `test:coverage`, `governance-check.sh`, `verify-gate-registration.sh`) with run-context; migrate routes prose→`routes.agents`; capture baseline degrading to Kiro-side (D-A4).
     - _Requirements: 15.3, 21.1, 21.2, 22.1_
 
-  - [ ] 16.2 Generate both targets, run checks, commit sweep report, independent validation
+  - [x] 16.2 Generate both targets, run checks, commit sweep report, independent validation
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood + Stacy + independent second reviewer (per Peter's routing — Stacy's own cutover cannot be self-validated; amendment 4)

@@ -68,6 +68,16 @@
     - 122-diff-guard
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
+- surface: .claude/agents/stacy.md
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: .claude/agents/stacy.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
 - surface: .claude/agents/thurgood.md
   checks:
     - 122-diff-guard
@@ -578,6 +588,24 @@
     - 122-diff-guard
     - 122-sweep-3-dupes
     - 122-sweep-7-dispositions
+- surface: .kiro/agents/stacy-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: .kiro/agents/stacy-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/stacy.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
+- surface: .kiro/agents/stacy.json.attribution.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-3-dupes
+    - 122-sweep-7-dispositions
 - surface: .kiro/agents/thurgood-prompt.md
   checks:
     - 122-diff-guard
@@ -1072,6 +1100,14 @@
     - 122-sweep-5-corrected-state
     - 122-sweep-6-declarations
     - 122-sweep-8-demotion
+- surface: canonical/agents/stacy.md
+  checks:
+    - 122-canonical-vs-truth
+    - 122-sweep-1-refs
+    - 122-sweep-2-skills
+    - 122-sweep-5-corrected-state
+    - 122-sweep-6-declarations
+    - 122-sweep-8-demotion
 - surface: canonical/agents/thurgood.md
   checks:
     - 122-canonical-vs-truth
@@ -1096,6 +1132,9 @@
   checks:
     - 122-sweep-8-demotion
 - surface: canonical/baselines/sparky.ambient-baseline.json
+  checks:
+    - 122-sweep-8-demotion
+- surface: canonical/baselines/stacy.ambient-baseline.json
   checks:
     - 122-sweep-8-demotion
 - surface: canonical/baselines/thurgood.ambient-baseline.json
@@ -1173,6 +1212,16 @@
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
 - surface: canonical/manifests/sparky.kiro.ambient-manifest.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/stacy.cc.ambient-manifest.json
+  checks:
+    - 122-diff-guard
+    - 122-sweep-4-ambient
+    - 122-sweep-8-demotion
+- surface: canonical/manifests/stacy.kiro.ambient-manifest.json
   checks:
     - 122-diff-guard
     - 122-sweep-4-ambient

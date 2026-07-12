@@ -124,6 +124,19 @@
     ]
   },
   {
+    "agent": "stacy",
+    "removals": [
+      "completion-documentation-guide",
+      "contract-system-reference",
+      "process-development-workflow",
+      "process-file-organization",
+      "process-spec-planning",
+      "process-task-type-definitions",
+      "product-token-governance",
+      "test-behavioral-contract-validation"
+    ]
+  },
+  {
     "agent": "thurgood",
     "removals": [
       "build-system-setup",

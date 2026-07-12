@@ -1,75 +1,83 @@
 {
-  "artifact": ".claude/agents/leonardo.md",
+  "artifact": ".claude/agents/stacy.md",
   "spans": [
     {
       "lines": [
         1,
-        49
+        34
       ],
       "op": "render",
       "source": "C1:frontmatter"
     },
     {
       "lines": [
-        50,
-        341
+        35,
+        283
       ],
       "op": "passthrough",
-      "source": "canonical/agents/leonardo.md#body"
+      "source": "canonical/agents/stacy.md#body"
     },
     {
       "lines": [
-        342,
-        343
+        284,
+        285
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        344,
-        405
+        286,
+        639
       ],
       "mode": "embed",
       "op": "resolve",
-      "source": "id:cross-platform-vs-platform-specific-decision-framework"
+      "source": "id:test-development-standards"
     },
     {
       "lines": [
-        406,
-        409
+        640,
+        643
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        410,
-        454
+        644,
+        675
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        455,
-        465
+        676,
+        688
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        466,
-        469
+        689,
+        693
+      ],
+      "op": "render",
+      "source": "knowledgeBases"
+    },
+    {
+      "lines": [
+        694,
+        697
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        470,
-        475
+        698,
+        703
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

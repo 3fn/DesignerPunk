@@ -1,14 +1,38 @@
 {
-  "name": "stacy",
-  "description": "Product governance & quality assurance — process quality, test coverage verification, cross-platform parity auditing, spec structure governance, and lessons-learned capture",
-  "prompt": "file://./stacy-prompt.md",
-  "includeMcpJson": true,
-  "tools": ["*"],
   "allowedTools": [
     "read",
+    "knowledge",
     "@designerpunk-docs",
     "@designerpunk-application",
     "@designerpunk-product"
+  ],
+  "description": "Product governance & quality assurance — process quality, test coverage verification, cross-platform parity auditing, spec structure governance, and lessons-learned capture. Use for product-level quality audits, cross-platform parity checks, spec structure reviews, test-coverage verification (audits whether tests exist and meet standards; does not write them), and lessons-synthesis review. Audits product execution — Thurgood's outward-facing counterpart; does NOT implement platform code (Kenya/Data/Sparky), make cross-platform architecture decisions (Leonardo), create tokens/components (Ada/Lina), or write tests (platform agents own their tests).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+g",
+  "name": "stacy",
+  "prompt": "file://./stacy-prompt.md",
+  "resources": [
+    "file://.kiro/steering/Agent-Directory.md",
+    "file://.kiro/steering/AI-Collaboration-Principles.md",
+    "file://.kiro/steering/Civitas-System-Overview.md",
+    "file://.kiro/steering/core-goals.md",
+    "file://.kiro/steering/DesignerPunk-Systems-Overview.md",
+    "file://.kiro/steering/personal-note.md",
+    "file://.kiro/steering/Spec-Feedback-Protocol.md",
+    "file://.kiro/steering/start-up-tasks.md",
+    "file://.kiro/steering/Task-Completion-Protocol.md",
+    "file://governance/Test-Development-Standards.md"
+  ],
+  "tools": [
+    "*"
   ],
   "toolsSettings": {
     "write": {
@@ -18,31 +42,5 @@
       ]
     }
   },
-  "resources": [
-    "file://.kiro/steering/core-goals.md",
-    "file://.kiro/steering/AI-Collaboration-Principles.md",
-    "file://.kiro/steering/personal-note.md",
-    "file://.kiro/steering/Agent-Directory.md",
-    "skill://.kiro/steering/start-up-tasks.md",
-    "skill://governance/Process-Development-Workflow.md",
-    "skill://governance/Process-File-Organization.md",
-    "skill://governance/Process-Spec-Planning.md",
-    "skill://governance/Process-Task-Type-Definitions.md",
-    "skill://governance/Test-Development-Standards.md",
-    "skill://governance/Test-Behavioral-Contract-Validation.md",
-    "skill://.kiro/steering/Spec-Feedback-Protocol.md",
-    "skill://governance/completion-documentation-guide.md",
-    "skill://governance/Contract-System-Reference.md",
-    "skill://governance/Product-Token-Governance.md"
-  ],
-  "hooks": {
-    "agentSpawn": [
-      {
-        "command": "git status --porcelain",
-        "timeout_ms": 5000
-      }
-    ]
-  },
-  "keyboardShortcut": "ctrl+shift+g",
   "welcomeMessage": "Hey! I'm Stacy, your product governance specialist. I audit process quality, test coverage, cross-platform parity, and spec structure for products built with DesignerPunk. What needs a review?"
 }

@@ -123,6 +123,24 @@ routes:
     - when: "you changed product screen specs, domain objects, or product YAML"
       tool: rebuild_product_index
       mcp: product
+    # --- 5 product-content tools routed here at Stacy's cutover (U9); Leonardo's ruling (Peter-
+    #     directed consult 2026-07-11). Recorded in stacy-cutover-report.md § "Un-routed Product-MCP
+    #     tools". Each is the product-repo analog of a system-side capability he already uses. ---
+    - when: "translating product design intent — consulting the product's own design principles for a surface"
+      tool: find_principles
+      mcp: product
+    - when: "surveying all product-specific layout and content patterns before specifying a screen's layout"
+      tool: list_product_templates
+      mcp: product
+    - when: "checking for an existing product layout/content template (by category, or by the screen that uses it) before writing a custom layout"
+      tool: find_templates
+      mcp: product
+    - when: "specifying a screen's state model — resolving what a domain object is and which screens reference it"
+      tool: get_domain_object
+      mcp: product
+    - when: "selecting or composing a product one-off component — retrieving its schema and contracts to spec against"
+      tool: get_product_component
+      mcp: product
     - when: "you changed component schemas, contracts, or component-meta"
       tool: rebuild_index
       mcp: application
@@ -239,6 +257,11 @@ toolSubset:
     - get_screen_state_model
     - list_experience_map
     - rebuild_product_index
+    - find_principles                # +U9: 5 product-content tools routed to Leonardo (his ruling,
+    - list_product_templates         #      Peter-directed consult 2026-07-11 — product-repo analogs
+    - find_templates                 #      of system-side capabilities he already uses; empty index
+    - get_domain_object              #      here is index-state not relevance, Req 7 AC2). Surfaced
+    - get_product_component          #      un-routed by sweep 6 at the final cutover (Stacy U9).
 writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"

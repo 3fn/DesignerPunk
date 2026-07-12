@@ -33,13 +33,18 @@ tools:
   - mcp__designerpunk-docs__get_index_health
   - mcp__designerpunk-docs__get_section
   - mcp__designerpunk-docs__rebuild_index
+  - mcp__designerpunk-product__find_principles
   - mcp__designerpunk-product__find_screens
+  - mcp__designerpunk-product__find_templates
   - mcp__designerpunk-product__get_brand_context
+  - mcp__designerpunk-product__get_domain_object
+  - mcp__designerpunk-product__get_product_component
   - mcp__designerpunk-product__get_product_overview
   - mcp__designerpunk-product__get_product_tokens
   - mcp__designerpunk-product__get_screen_spec
   - mcp__designerpunk-product__get_screen_state_model
   - mcp__designerpunk-product__list_experience_map
+  - mcp__designerpunk-product__list_product_templates
   - mcp__designerpunk-product__rebuild_product_index
 ---
 
@@ -428,6 +433,11 @@ If there are questions, be proactive and ask — don't assume.
 - WHEN counting matching screens to determine novelty / gate depth THEN use mcp__designerpunk-product__find_screens (product MCP)
 - WHEN you need an existing screen's specification THEN use mcp__designerpunk-product__get_screen_spec (product MCP)
 - WHEN you changed product screen specs, domain objects, or product YAML THEN use mcp__designerpunk-product__rebuild_product_index (product MCP)
+- WHEN translating product design intent — consulting the product's own design principles for a surface THEN use mcp__designerpunk-product__find_principles (product MCP)
+- WHEN surveying all product-specific layout and content patterns before specifying a screen's layout THEN use mcp__designerpunk-product__list_product_templates (product MCP)
+- WHEN checking for an existing product layout/content template (by category, or by the screen that uses it) before writing a custom layout THEN use mcp__designerpunk-product__find_templates (product MCP)
+- WHEN specifying a screen's state model — resolving what a domain object is and which screens reference it THEN use mcp__designerpunk-product__get_domain_object (product MCP)
+- WHEN selecting or composing a product one-off component — retrieving its schema and contracts to spec against THEN use mcp__designerpunk-product__get_product_component (product MCP)
 - WHEN you changed component schemas, contracts, or component-meta THEN use mcp__designerpunk-application__rebuild_index (application MCP)
 - WHEN you need the component routing table or family-doc map THEN use mcp__designerpunk-docs__get_section (docs MCP)
 - WHEN you need a component's readiness / status before selecting it THEN use mcp__designerpunk-docs__get_section (docs MCP)
