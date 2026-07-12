@@ -90,6 +90,22 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
     }
   }
 
+  // 2b. The shared CC always-layer (C11 lane 1; OB-7 / Task 17): generate CLAUDE.md from the
+  // locked always-set as live `@`-import references (id→path at emit time, so the paths are
+  // case-correct and relocation-transparent). The CC adapter emits CLAUDE.md; the Kiro adapter
+  // emits nothing here (Kiro delivers its always-layer via each agent's `resources` + the docs'
+  // own `inclusion: always`, produced in emitAgent — there is no separate Kiro always-layer file).
+  // This SUPERSEDES the interim hand-maintained CLAUDE.md stopgap (Req 16 AC2): one always-layer
+  // mechanism per runtime (the generator). `steeringIdToPath` resolves the always-set ids to
+  // their on-disk .kiro/steering/ paths (buildDocIdToPath covers both resolve-by-id roots; the
+  // CC always-layer only looks up always-set ids, all of which are steering docs).
+  const alwaysLayerCtx: AdapterContext = { ...ctx, steeringIdToPath: buildDocIdToPath(repoRoot) };
+  for (const adapter of adapters) {
+    for (const file of adapter.emitAlwaysLayer(ctx.alwaysSet, alwaysLayerCtx)) {
+      outputs.push(emittedToOutput(file));
+    }
+  }
+
   // 3. The `_fixture` pseudo-agent lane (C10.3 — Task 8.1): a STANDING pipeline test.
   // Emits through the SAME resolve→emit path a real cutover uses (corpus session, embeds,
   // id→path maps), with outputs REMAPPED under `canonical/_fixture-output/<target>/` so no
@@ -426,6 +442,11 @@ export function guardedRoots(repoRoot?: string): string[] {
     // files ride the same bidirectional compare (a stale map FAILS the diff-guard).
     'canonical/coverage-map.yaml',
     'canonical/coverage-manifest.yaml',
+    // C11 lane 1 (OB-7, Task 17): the generated CLAUDE.md (shared always-set `@`-imports) is a
+    // guarded output like any other — a hand-edit is a loud diff-guard failure. Its attribution
+    // sidecar rides with it (prose artifact, multi-span manifest).
+    'CLAUDE.md',
+    'CLAUDE.md.attribution.json',
   ];
   if (repoRoot === undefined) return staticRoots;
   let ledger: string[] = [];

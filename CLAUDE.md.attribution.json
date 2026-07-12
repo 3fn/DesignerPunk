@@ -1,0 +1,85 @@
+{
+  "artifact": "CLAUDE.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        7
+      ],
+      "op": "render",
+      "source": "C11:lane1-banner"
+    },
+    {
+      "lines": [
+        8,
+        8
+      ],
+      "op": "resolve",
+      "source": "id:personal-note"
+    },
+    {
+      "lines": [
+        9,
+        9
+      ],
+      "op": "resolve",
+      "source": "id:core-goals"
+    },
+    {
+      "lines": [
+        10,
+        10
+      ],
+      "op": "resolve",
+      "source": "id:ai-collaboration-principles"
+    },
+    {
+      "lines": [
+        11,
+        11
+      ],
+      "op": "resolve",
+      "source": "id:spec-feedback-protocol"
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "op": "resolve",
+      "source": "id:start-up-tasks"
+    },
+    {
+      "lines": [
+        13,
+        13
+      ],
+      "op": "resolve",
+      "source": "id:task-completion-protocol"
+    },
+    {
+      "lines": [
+        14,
+        14
+      ],
+      "op": "resolve",
+      "source": "id:agent-directory"
+    },
+    {
+      "lines": [
+        15,
+        15
+      ],
+      "op": "resolve",
+      "source": "id:designerpunk-systems-overview"
+    },
+    {
+      "lines": [
+        16,
+        16
+      ],
+      "op": "resolve",
+      "source": "id:civitas-system-overview"
+    }
+  ]
+}
