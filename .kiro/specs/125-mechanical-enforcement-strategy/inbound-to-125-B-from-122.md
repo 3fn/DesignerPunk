@@ -6,6 +6,9 @@
 directory because 125-B has no spec directory yet (Peter, 2026-07-10); it moves with (or is
 consumed by) 125-B's formalization alongside `inbound-to-125-B-from-125-A.md`.
 
+> **DISPOSITION (2026-07-11): LIVE — FOLDED into `125-B-backlog.md`** (item 2, MUST — the crossRef
+> re-point obligation, tied to U1). This note remains the detailed source; the backlog is the canonical read.
+
 ---
 
 ## 1. The item: `record-first-ratification` crossRef is INTERIM-TARGETED

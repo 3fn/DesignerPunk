@@ -4,6 +4,10 @@
 **Source**: Peter's ruling on the first ballots-directory measure (see `.kiro/docs/ballots/README.md` § "The Ratification Protocol"), triggered by an applying agent refusing a relayed ratification claim it could not verify
 **Status**: DECIDED (Peter, all three layers, 2026-07-05) — 125 owns layer 2 and the classification-map entry.
 
+> **DISPOSITION (2026-07-11): LIVE — FOLDED into `125-B-backlog.md`.** The authority map row → backlog
+> item 1 (MUST); layer-2 CODEOWNERS/PR-approval → backlog item 6 (LATER / U3). This note remains the
+> detailed source; the backlog is the canonical read for open 125-B work.
+
 ---
 
 ## 1. The incident is a live specimen of 125's thesis

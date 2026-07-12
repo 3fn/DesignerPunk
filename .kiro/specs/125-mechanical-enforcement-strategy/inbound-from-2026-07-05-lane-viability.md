@@ -4,6 +4,10 @@
 **Source**: main-loop session (Peter + Claude), post-de-flake measurements + 13.0.0 release CI
 **Status**: Measured facts for formalization — they shrink Phase 1's design space. NOT decisions.
 
+> **DISPOSITION (2026-07-11): CONSUMED by 125-A.** These measurements were acted on — 125-A gates the
+> full functional suite + full typecheck as required checks. Historical evidence trail; **not** open
+> 125-B work. See `125-B-backlog.md` § "CONSUMED / HISTORICAL".
+
 ---
 
 ## 1. The full functional suite is now CI-gateable wholesale — §9's scoped-lane question largely dissolves

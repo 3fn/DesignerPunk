@@ -4,6 +4,13 @@
 **Spec**: 125 — Mechanical Enforcement Strategy
 **Author**: (to be assigned — Thurgood-led; see §7 Ownership)
 **Status**: **STUB + directional update (2026-07-05); PHASE 0 + PHASE 1a COMPLETE (2026-07-10)** — Spec 125-A delivered both: the PR gate went live 2026-07-05, survived a 5-day/30-PR bake-in (closed 2026-07-10, PR #41), and the mechanical arming landed 2026-07-10 — five lanes (full typecheck · build:validate · root functional suite · both sub-package suites) promoted to REQUIRED checks with did-it-really-run guards, proven per-lane at the platform level (gate-bites PRs #46–#50, each `BLOCKED`). The "authored-but-unarmed" load-bearing finding below is CLOSED for those five surfaces. **125-B (the classification map + later phases) formalizes after Spec 122 calcifies** — seed note: `inbound-to-125-B-from-125-A.md` (this directory). The remaining phases still await the Spec Feedback Protocol; this remains an outline, not requirements/design/tasks.
+>
+> **UPDATE (2026-07-11): Spec 122 COMPLETE — 125-B's gate is met; inbounds CONSOLIDATED.** The seven
+> inbound notes have been deduplicated into a single provenance-tagged input, **`125-B-backlog.md`** (this
+> directory) — read that, not the scattered notes, for what 125-B owes. Spent notes are stamped
+> `DISPOSITION: CONSUMED`; live ones `DISPOSITION: FOLDED`. **125-B is confirmed a single, internally-phased
+> spec** (Peter, 2026-07-11) — see § "8. Decisions on record". Formalization (spec dir + map methodology)
+> remains Thurgood's, unstarted.
 
 > **Inbound inputs folded into this update (read alongside — they are the evidence, this outline is the synthesis):**
 > 1. `inbound-from-2026-07-05-lane-viability.md` — the full functional suite is now CI-gateable wholesale (~53s warm); sub-package suites must be named; "armed = verified non-empty AND correct scope."
@@ -159,7 +166,22 @@ This is the artifact 125 owns and its central deliverable. For **every** enforce
 - **Phase 0 ships NOW as a standalone right-sized increment, ahead of formalizing Phases 1–3 AND ahead of Spec 122's formalization** — DECIDED, Peter, 2026-07-05 (resolves two §9 open questions; consistent with the wordpress-thesis inbound's Adjustment 1 and its three compounding reasons).
 - **125 splits on the Spec 119 A/B model** — DECIDED, Peter, 2026-07-05. **125-A** (`../125-A-pr-gate-mechanical-arming/`) = Phase 0 + Phase 1a (the mechanical sliver of Phase 1: wholesale suite, full tsc, `build:validate`, sub-package lanes, selection-floor guards) — executable now, clean completion semantics. **125-B** = the classification map, warn→fail promotions, Phase 2 diff-gates incl. the CODEOWNERS ratification layer, and the pruning pass — formalized AFTER 122 calcifies, with 122's canonical source as the rule inventory (the map gets better and pruning gets cheaper post-generator). Sequence: **125-A → 122 → (125-B ∥ 119-B) → 123.** This document remains the umbrella/strategy home for both.
 - **Record-first ratification protocol adopted, all three layers** — DECIDED, Peter, 2026-07-05. 125 owns layer 2 (PR-approval-as-ratification, Phase 2) and the classification-map authority entry (§5); layer 1 (committed-record check) is in force now via `.kiro/docs/ballots/README.md`; layer 3 (prompt rule) is 122's.
-- **The scoped-lane question is DISSOLVED by measurement** — the full functional suite is ~53s warm post-de-flake; Phase 1 gates it wholesale rather than carving lanes (see §4 Phase 1 update + the lane-viability inbound). Pending only a cold-cache CI re-measure.
+- **The scoped-lane question is DISSOLVED by measurement** — the full functional suite is ~53s warm post-de-flake; Phase 1 gates it wholesale rather than carving lanes (see §4 Phase 1 update + the lane-viability inbound).
+
+*2026-07-11 update:*
+- **Spec 122 COMPLETE — 125-B's "after 122 calcifies" gate is met.** 125-B may now formalize (Thurgood-led).
+- **125-B stays a SINGLE, internally-phased spec — NOT split into 125-C/125-D** — DECIDED, Peter, 2026-07-11.
+  Scope discipline comes from **declared merge units** inside one spec (the 122 pattern: substrate → units →
+  closeout), not from more spec directories. Rationale: the A/B split already captured the one division that
+  earned its keep (ship-now-mechanical vs. defer-until-122-judgment); further directory-splitting worsens a
+  real sprawl problem (~178 spec dirs) for no gain the unit machinery doesn't already provide. **Counter-cost
+  on record:** a single 125-B spanning the map (ready now) and the Phase-2 governance layer (later) stays
+  "open" until its slowest unit merges — acceptable *provided* the work is sliced into declared units so each
+  delivers independently. The failure mode to guard is a monolithic 125-B, not too-few specs. Proposed unit
+  shape → `125-B-backlog.md` § "Proposed unit shape".
+- **The seven inbound notes are CONSOLIDATED into `125-B-backlog.md`** — one deduplicated, triaged,
+  provenance-tagged input. Spent notes stamped `CONSUMED`; live ones `FOLDED`. Removes the archaeology step
+  from formalization. Pending only a cold-cache CI re-measure.
 
 ## 9. Open questions (for the Phase 0 increment + later formalization)
 
