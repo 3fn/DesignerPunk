@@ -179,7 +179,25 @@ My read: **do not keep console-fail at warn longer than the others on churn grou
 ## Requirements Feedback
 
 ### Context for Reviewers
-*To be populated by the spec author when requirements.md is written — after the design-outline round settles (Spec Feedback Protocol sequential formalization gate).*
+
+*Populated by the spec author (Thurgood), 2026-07-13, with requirements.md drafted. Roster: unchanged — Ada, Lina, Stacy (reasoning: the same domain surfaces are implicated at requirements grain — Ada: Req 12.5/13.4 token-side items + Exp 3 scoping; Lina: Req 12's re-arm mechanics, which she implements, + Req 11's allowlist; Stacy: the verification stack Reqs 6–9, where her battery-relevance criterion and churn-metric now live as ACs. Leonardo remains untagged — mechanism-only scope unchanged).*
+
+**Settled — do NOT re-litigate:**
+- **The design outline is MERGED and SETTLED** (PR #71, main, 2026-07-13). The methodology (§2), the pilot-first unit shape, all Q dispositions, and the eight post-round decisions are closed. Requirements formalize; they do not re-open. → design-outline.md, § "10".
+- **STACY R2: clean bill** — all four R1 gaps CLOSED at outline altitude; both fidelity findings hold; Lina's carried allowlist question answered in empirical form (arm it; track churn as a metric). Her ONE new hazard (battery-relevance) is now Req 7.3. → feedback.md [STACY R2].
+- **Q3 resolved in principle / Q4 resolved / Q6 parked+chartered** — requirements execute Q3 (Reqs 11–12); Q6 is explicitly excluded (requirements.md § Introduction).
+
+**Under review (what this round IS about) — requirements.md in full, with reviewer attention drawn to:**
+- **The [REQUIREMENTS-PHASE DECISION]**: DORMANT as a first-class check-state value in the register schema (Req 1.3) — the outline deferred this; the author decided it here.
+- **The [PROPOSED — Peter ratifies] values** (flagged, not settled): **N = 20 PRs** for the observation window, cadence-grounded (Req 8.2); the staleness "materially changes" definition (Req 8.4); the battery-relevance verification method — the control-arm transcript must exhibit the rubric's target actions (Req 7.3); the trial-run caps (Req 9.2).
+- **Domain-owner checks**: [@LINA] Req 12's re-arm ACs (re-point + a11y-concept allowlist scope + match-count floor) — is the mechanism right for the lane you own? [@ADA] Req 13.4's carry of your Exp 3 scoping (source surface `src/tokens/**`; workflow-hygiene caveat) — faithful? [@STACY] Reqs 6–9 — do the ACs operationalize your R1/R2 process asks without gaps?
+- The testable budget caps (Req 9) and whether "escalate, don't build" is stated tightly enough to bite.
+
+**Dependencies:**
+- 125-A substrate (required checks, the gate-bite arming pattern — Req 5.4 reuses it); 122 complete (manifest for Req 5; generator for Reqs 6–7 context substitution; canonical source for Req 3.3).
+- Verified state as of 2026-07-13: `crossRefStatus: interim` still present (Req 4.1's precondition live); `tool-registry.json` present; the WCAG-format test verified already blocking (Req 12.5 records it, builds nothing).
+
+**Sequential gate**: design.md and tasks.md are NOT drafted — this round reviews requirements only.
 
 ---
 
