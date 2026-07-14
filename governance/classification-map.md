@@ -199,3 +199,130 @@ education:
 history:
   - { date: 2026-07-14, change: "entry created (U1-s pilot substrate, Task 1.6); check wired: .github/workflows/tool-boot-smoke.yml + tests/tool-boot-smoke.test.ts; local run 49/49 passing incl. Product MCP passing index-empty (Req 5.2); side-effect confirmation + gate-bite proof plan recorded in .kiro/specs/125-B-classification-map/completion/task-1-6-completion.md", by: thurgood }
 ```
+
+### no-autonomous-token-creation
+
+```yaml
+rule: "Creating ANY token (primitive, semantic, or component) requires human review — no autonomous token creation"
+boundary_call:
+  class: operational
+  rationale: "Protects the primitive→semantic→component hierarchy and namespace coherence — workflow integrity (the sanctioned path by which vocabulary enters the system), not the math and not ideology; the contested reading ('functional — protects the math') is recorded and rejected: a functional rule is machine-checkable against a token's value, and 'was this sanctioned' is not a value property"
+verification:
+  disposition: warn
+  owner: ada
+  check_state: proposed
+  checks: []
+education:
+  disposition: "KEEP — education owns mathematical fit, semantic/tier correctness, and the approval itself (token-governance autonomy levels + Component Development Guide's token-selection framework; generated prompts teach right-token / right-tier / mathematical fit). The clean split (Part 1 of the evidence): a check may detect that a token appeared; it never verifies that its creation was sanctioned or that it is mathematically/semantically correct — those stay education's job."
+history:
+  - { date: 2026-07-14, change: "entry created from Experiment 3 (token-approval boundary call + feasibility spike), U2 — boundary call and FP/FN adjudication are Ada's (token-owner judgment); Thurgood audited the evidence and landed this entry. Evidence: .kiro/specs/125-B-classification-map/completion/u2/exp3-spike-evidence.md", by: thurgood }
+```
+
+### console-fail-root-lanes
+
+```yaml
+rule: "Root functional-lane test suites SHALL fail on unallowlisted console.error/console.warn output — expected noise is recorded in a checked-in per-suite allowlist (suite × message-pattern), not tolerated ambiently (Req 11)"
+boundary_call:
+  class: functional
+  rationale: "An armed barrier against actual runtime output a test run produces — machine-checkable against the allowlist by construction; nothing to prune (no prose predecessor for this specific gate)"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: armed
+  checks: ["root functional lane — src/__tests__/console-fail-setup.ts wired via jest.config.js setupFilesAfterEnv; every root-lane test file; gate-bite proven live during Task 4.4 (clean tests pass, an injected unallowlisted console.error/console.warn fails the test)"]
+education:
+  disposition: "nothing to prune — no prose predecessor. The allowlist itself (src/__tests__/console-allowlist.json) is the citable record: each entry carries its own { suite, pattern, reason } — the adjudication lives with the data, not in steering prose."
+history:
+  - { date: 2026-07-14, change: "entry created (U2, Task 4.4): hook wired; allowlist seeded with 12 entries (10 from PR #39's adjudicated jsdom-stylesheet-limitation and deliberate-error-path-logging classes, discharging the pending jsdom-stylesheet-limitation doc-addition chip [125-B-backlog.md item 5]; 2 net-new — figma-extract.test.ts / figma-push.test.ts CLI-output classes discovered during this task's own full-suite gate-bite run); full root suite green (377 suites / 8987 tests). Mechanism built and row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-4-completion.md", by: thurgood }
+```
+
+### console-fail-subpackage-deferred
+
+```yaml
+rule: "Console-fail (console-fail-root-lanes) is NOT extended to the mcp-server / application-mcp-server sub-package suites for U2 — their own jest 29 configs sit outside the root jest.config.js's `roots`, so the root setupFilesAfterEnv hook never loads for them. A future extension MUST use a version-agnostic capture (plain method-swap / jest.spyOn without jest-30-only APIs) since those suites run under jest 29 (Design C8)"
+boundary_call:
+  class: operational
+  rationale: "A scope decision about WHERE the functional console-fail rule runs, not the rule itself — the underlying property stays functional (see console-fail-root-lanes); this row records the deliberate root-lanes-only boundary plus the constraint a future implementer inherits, so the deferral is recorded rather than silently skipped"
+verification:
+  disposition: none
+  owner: thurgood
+  check_state: none
+  checks: []
+education:
+  disposition: "KEEP this row as the citable deferral record — no prose predecessor to prune. If ever replicated to the sub-packages, the version-agnostic constraint travels with this entry rather than being rediscovered."
+history:
+  - { date: 2026-07-14, change: "entry created (U2, Task 4.4) recording the root-lanes-only scope decision fixed in Design C8 — deferred, not silently skipped. Row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-4-completion.md", by: thurgood }
+```
+
+### wcag-format-validity
+
+```yaml
+rule: "WCAG references on behavioral contracts SHALL follow the standard format — a numbered WCAG criterion plus text, single or comma-separated multiple ('N/A' exempt) — malformed references fail the check (behavioral-contract-validation.test.ts, 'WCAG references should follow standard format')"
+boundary_call:
+  class: functional
+  rationale: "A machine-checkable string-shape property of a contract's wcag field — not a style/workflow preference"
+verification:
+  disposition: barrier
+  owner: lina
+  check_state: armed
+  checks: ["behavioral-contract-validation.test.ts:355 'WCAG references should follow standard format' (root functional lane) — already blocking since 125-A; no implementation work performed in U2"]
+education:
+  disposition: "nothing to prune — no prose predecessor. Record-only entry (Req 12.7): the check's already-armed state needed a citable register row; this is it."
+history:
+  - { date: 2026-07-14, change: "entry created (U2, Task 4.4, Req 12.7) — record-only: verified already armed/blocking since 125-A, no work performed. Row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-4-completion.md", by: thurgood }
+```
+
+### inverse-drift-incremental-build
+
+```yaml
+rule: "The armed lane-functional-root required check rebuilds from a clean state on every run, which MASKS incremental-build breakage and stale-artifact test dependencies — a distinct risk from what the check verifies. Candidate mechanism: an incremental-path integrity check (not yet designed)"
+boundary_call:
+  class: operational
+  rationale: "A workflow/tooling-integrity risk about HOW the check runs (clean vs. incremental rebuild), not a functional property of any single artifact — recorded as a known-deferred hazard, not yet a rule with a check"
+verification:
+  disposition: none
+  owner: thurgood
+  check_state: proposed
+  checks: []
+education:
+  disposition: "KEEP as the citable WATCH record — no prose predecessor to prune. Candidate mechanism noted for whoever picks this up."
+history:
+  - { date: 2026-07-14, change: "entry created (U2, Task 4.4) recording the known-deferred incremental-build / inverse-drift hazard at WATCH (check_state: proposed) — evidence: 125-B-backlog.md item 5; .kiro/specs/125-mechanical-enforcement-strategy/inbound-to-125-B-from-125-A.md §3 (STACY R1 item 4). Row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-4-completion.md", by: thurgood }
+```
+
+### wcag-required-refs
+
+```yaml
+rule: "Behavioral contracts on the WCAG-required allowlist (exact `interaction_focusable`, `interaction_focus_ring`, `state_disabled`, `state_error`; `accessibility_*`; `content_*_label`) SHALL carry a WCAG reference (or the 'N/A' legitimate-null sentinel) — re-armed at the canonical allowlist after a period as DORMANT (armed but aimed at six retired legacy contract names) (Req 12.1–12.5)"
+boundary_call:
+  class: functional
+  rationale: "A machine-checkable presence check against a contract's own wcag field, scoped to a defined allowlist — not a style/workflow preference"
+verification:
+  disposition: barrier
+  owner: lina
+  check_state: armed
+  checks: ["behavioral-contract-validation.test.ts 'accessibility-related contracts should have WCAG references' (root functional lane) — re-armed at the canonical allowlist matcher (Req 12.1-12.3). Match-count floor: aggregate selection > 0 (69 selected at Task 4.2's audit) PLUS per-literal presence for interaction_focusable (7 live), interaction_focus_ring (10 live), state_error (4 live). state_disabled is EXCLUDED from the per-literal floor pending the Button-CTA disabled-state adjudication (Peter, 2026-07-14 amendment) — the matcher itself is unchanged: state_disabled contracts (currently 1 live, Button-CTA) are still selected and still must carry a valid wcag ref, proven live via a gate-bite mutation (Task 4.3)"]
+education:
+  disposition: "nothing to prune — no prose predecessor taught the six-name trigger as a rule (it was implementation detail of a stale test, not documented education). The adjudication table (.kiro/specs/125-B-classification-map/completion/u2/stemma-pre-arm-adjudication.md) is the citable record of the 7 nulls resolved (4 genuine-defect fixes + 3 'N/A' legitimate-null exemptions) and the DD3 floor-input correction (design.md's recorded 11/11/21/4 were grep over-counts conflating live contracts: with excludes: blocks; true live counts are 7/10/1/4)."
+history:
+  - { date: 2026-07-14, change: "entry created (U2, Task 4.2 audit -> Task 4.3 arm): check re-armed, replacing the legacy 6-name trigger (behavioral-contract-validation.test.ts, formerly :325-350) with the normative allowlist matcher (C7) copied verbatim from .kiro/specs/125-B-classification-map/completion/u2/wcag-required-matcher.ts. State transition: DORMANT (armed-but-aimed-at-6-retired-legacy-names, discovered 125-B design-outline §3.3) -> armed (re-pointed at canonical allowlist; audit-clean per 4 WCAG-ref fixes + 3 legitimate-null 'N/A' exemptions applied to contracts.yaml BEFORE arming). Aggregate floor: 69 selected at audit. Bite-tested live (4 mutate/red/restore/green cycles). Row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-3-completion.md", by: thurgood }
+  - { date: 2026-07-14, change: "Per-literal floor set to THREE literals (interaction_focusable, interaction_focus_ring, state_error) per Peter's in-session amendment to DD3's originally-recorded four (design.md still records four; this entry is the citable deviation record). state_disabled EXCLUDED from the per-literal floor pending the Button-CTA disabled-state adjudication — the matcher's WCAG_REQUIRED_EXACT set is UNCHANGED: state_disabled contracts (1 live, Button-CTA) are still selected and still must carry a valid wcag ref; the amendment narrows the floor assertion only, not the selection. This defuses the razor's-edge coupling risk Lina raised as a PETER-ESCALATION in Task 4.2's adjudication table (.kiro/specs/125-B-classification-map/completion/u2/stemma-pre-arm-adjudication.md §7). Drafted by Lina; landed by Thurgood — evidence: .kiro/specs/125-B-classification-map/completion/task-4-3-completion.md", by: thurgood }
+```
+
+### validation-criteria-completeness
+
+```yaml
+rule: "All non-inherited behavioral contracts SHALL carry validation criteria — promoted from counting-without-failing (asserting only contractsWithValidation > 0) to a hard zero-tolerance assertion (withoutValidation === 0) after an audit found the corpus already clean (Req 12.6)"
+boundary_call:
+  class: functional
+  rationale: "A machine-checkable presence check against a contract's own validation field; the domain-owner position (Lina) is that zero-validation is a defect by definition, not a style preference (DD4)"
+verification:
+  disposition: barrier
+  owner: lina
+  check_state: armed
+  checks: ["behavioral-contract-validation.test.ts 'all contracts should have validation criteria' (root functional lane), formerly :435 -- promoted from toBeGreaterThan(0) to expect(contractsWithoutValidation).toBe(0); inherited-contract skip preserved. Bite-tested live: emptying a non-inherited contract's validation array reds the check; restored to green."]
+education:
+  disposition: "nothing to prune -- no prose predecessor. DD4's no-exemption-mechanism rationale (a zero-validation contract is defective by definition; escalate, don't self-exempt) is the citable design rationale, not restated in steering prose."
+history:
+  - { date: 2026-07-14, change: "entry created (U2, Task 4.2 inventory -> Task 4.3 promotion): pre-promotion inventory (Task 4.2) found 234 non-inherited contracts, 0 without validation -- zero fixes, zero DD4 escalations needed (no trigger existed). Assertion promoted audit-first per Req 12.6 / Peter's 2026-07-13 approval. Flagged by Lina as beyond the explicit (a)/(b) drafting scope (one-rule-per-entry: this promotion governs a distinct assertion from wcag-required-refs) and accepted for landing on that basis. Row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-3-completion.md", by: thurgood }
+```

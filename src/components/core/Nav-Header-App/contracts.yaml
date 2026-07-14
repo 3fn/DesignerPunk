@@ -12,7 +12,7 @@ contracts:
       may contain logos, search inputs, or other non-heading content.
       Heading semantics are the responsibility of Nav-Header-Page (h1)
       and future variants (Nav-Header-Modal: h2).
-    wcag: null
+    wcag: "N/A"  # legitimate-null: renders-no-heading negative guarantee, no positive WCAG SC (125-B 4.2)
     platforms: [web, ios, android]
     validation:
       - No h1/h2/h3 element rendered

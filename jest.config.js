@@ -70,9 +70,18 @@ module.exports = {
   
   // Timeout for infrastructure tests (F2)
   testTimeout: 10000, // 10 seconds
-  
+
   // Test utilities organization (documented for reference):
   // - Shared fixtures: src/__tests__/fixtures/
   // - Component-specific: src/components/*/__tests__/test-utils.ts
   // - Setup files: src/components/*/__tests__/setup.ts
+
+  // Console-fail hook (125-B, Requirement 11 / Design C8): fails a test on
+  // unallowlisted console.error/console.warn output. NET-NEW as of this
+  // wiring — root lanes ONLY (this file's `roots` above); sub-package suites
+  // (mcp-server, application-mcp-server — own jest 29 configs) are NOT
+  // covered — see governance/classification-map.md
+  // § "console-fail-subpackage-deferred". Allowlist:
+  // src/__tests__/console-allowlist.json.
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/console-fail-setup.ts'],
 };

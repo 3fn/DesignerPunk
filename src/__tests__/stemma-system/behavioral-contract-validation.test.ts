@@ -323,33 +323,83 @@ describe('Behavioral Contract Validation Suite', () => {
   });
 
   describe('WCAG Reference Validation', () => {
+    /**
+     * NORMATIVE WCAG-REQUIRED MATCHER — Spec 125-B U2, Task 4.2 (audit) → 4.3 (arm).
+     *
+     * Copied VERBATIM from the Task 4.2 audit matcher:
+     *   .kiro/specs/125-B-classification-map/completion/u2/wcag-required-matcher.ts
+     *
+     * CONTINUITY CONTRACT (Req 12.3 / LINA tasks-R1): Task 4.2's pre-arm WCAG audit
+     * enumerated the corpus THROUGH this exact function (and the same COMPONENTS
+     * loader below), so "audit-clean ⇒ arm-green by construction" holds ONLY while
+     * this predicate stays unmodified. ANY change to it RE-OPENS the 4.2 audit —
+     * do not "improve" it here.
+     *
+     * Replaces the legacy DORMANT six-name trigger (armed-but-aimed-at-6-retired
+     * legacy contract names — Spec 063 renamed them to canonical
+     * `{category}_{concept}` form; this check never matched the renamed names).
+     */
+    const WCAG_REQUIRED_EXACT: ReadonlySet<string> = new Set([
+      'interaction_focusable',
+      'interaction_focus_ring',
+      'state_disabled',
+      'state_error',
+    ]);
+
+    function isWcagRequiredContract(contractName: string): boolean {
+      if (WCAG_REQUIRED_EXACT.has(contractName)) return true;
+      if (contractName.startsWith('accessibility_')) return true;
+      if (contractName.startsWith('content_') && contractName.endsWith('_label')) return true;
+      return false;
+    }
+
     it('accessibility-related contracts should have WCAG references', () => {
-      const accessibilityContracts = [
-        'focusable',
-        'focus_ring',
-        'disabled_state',
-        'error_state_display',
-        'reduced_motion_support',
-        'accessibility_hidden',
-      ];
-      
+      // Match-count floor (Req 12.4 / DD3): the DORMANT lesson made structural —
+      // an empty (or stale) selection fails the check itself.
+      let totalSelected = 0;
+      const perLiteralCounts: Record<string, number> = {
+        interaction_focusable: 0,
+        interaction_focus_ring: 0,
+        state_error: 0,
+      };
+
       for (const component of COMPONENTS) {
         const contracts = loadComponentContracts(component);
-        
+
         if (!contracts) continue;
-        
+
         for (const [contractName, contract] of Object.entries(contracts)) {
-          if (accessibilityContracts.includes(contractName)) {
+          if (isWcagRequiredContract(contractName)) {
+            totalSelected++;
+            if (contractName in perLiteralCounts) {
+              perLiteralCounts[contractName]++;
+            }
+
             const hasWcag = contract.wcag && contract.wcag.length > 0;
-            
+
             if (!hasWcag) {
               console.log(`${component}.${contractName}: Missing WCAG reference`);
             }
-            
+
             expect(hasWcag).toBe(true);
           }
         }
       }
+
+      // Aggregate floor (DD3): non-empty selection (audited at 69 on the current
+      // corpus — Task 4.2 adjudication table).
+      expect(totalSelected).toBeGreaterThan(0);
+
+      // Per-literal presence floor (DD3), THREE literals per Peter's 2026-07-14
+      // amendment — NOT the four DD3 originally recorded. `state_disabled` is
+      // EXCLUDED from this floor pending the Button-CTA disabled-state
+      // adjudication (the matcher itself is unchanged: state_disabled contracts
+      // are still selected above and still must carry a valid wcag ref; only the
+      // per-literal PRESENCE floor omits it). See:
+      // .kiro/specs/125-B-classification-map/completion/u2/stemma-pre-arm-adjudication.md § 7
+      expect(perLiteralCounts.interaction_focusable).toBeGreaterThan(0);
+      expect(perLiteralCounts.interaction_focus_ring).toBeGreaterThan(0);
+      expect(perLiteralCounts.state_error).toBeGreaterThan(0);
     });
 
     it('WCAG references should follow standard format', () => {
@@ -430,9 +480,12 @@ describe('Behavioral Contract Validation Suite', () => {
       console.log(`\nValidation Criteria Summary:`);
       console.log(`  With validation: ${contractsWithValidation}`);
       console.log(`  Without validation: ${contractsWithoutValidation}`);
-      
-      // Most contracts should have validation criteria
-      expect(contractsWithValidation).toBeGreaterThan(0);
+
+      // Promoted (Req 12.6 / DD4, audit-first — Task 4.2's inventory found the
+      // corpus already clean: 234 non-inherited contracts, 0 without validation;
+      // zero fixes, zero escalations needed). Inherited-contract skip preserved
+      // above. DD4: no exemption mechanism — fix-all, escalate-if-candidate.
+      expect(contractsWithoutValidation).toBe(0);
     });
 
     it('validation criteria should include testable assertions', () => {

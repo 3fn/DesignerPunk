@@ -193,7 +193,7 @@
     - Closeout notes the return edge's FIRST EXERCISE was the pilot window (Req 17.1)
     - _Requirements: 14.1–14.3; Design: DD2_
 
-- [ ] 4. U2: Net-New Checks + Re-arms
+- [x] 4. U2: Net-New Checks + Re-arms
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -212,7 +212,7 @@
   **Post-Completion:**
   - `./.kiro/hooks/complete-task.sh "Task 4 Complete: U2 Checks (125-B)"` — merge unit U2; PR opens; report URL, STOP. Gate-bite proofs post-merge (throwaway PRs).
 
-  - [ ] 4.1 Experiment 3 — boundary call + feasibility spike
+  - [x] 4.1 Experiment 3 — boundary call + feasibility spike
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Ada (Opus) executes — the boundary call + FP/FN adjudication are token-owner judgment; Thurgood (Sonnet) audits the evidence artifact **and lands the register entry from Ada's adjudication** (register writes stay with the steward, consistent with 1.2/1.3/1.4 — ADA tasks-R1, accepted)
@@ -220,7 +220,7 @@
     - **Evidence artifact path pinned: `.kiro/specs/125-B-classification-map/completion/u2/exp3-spike-evidence.md`** — a U2 artifact, NOT `completion/pilot/`
     - _Requirements: 16.1–16.5; Design: C9_
 
-  - [ ] 4.2 Stemma pre-arm audits (WCAG + validation-criteria) — adjudication + fix preparation
+  - [x] 4.2 Stemma pre-arm audits (WCAG + validation-criteria) — adjudication + fix preparation
     **Type**: Architecture
     **Validation**: Tier 2 - Standard
     **Agent**: Lina (Opus) — legitimate-null vs. defect AND fix-vs-escalate adjudication is owner judgment (tier diverges upward from Implementation-adjacent work; reason recorded here)
@@ -230,7 +230,7 @@
     - **The adjudication table + any escalation candidates are surfaced in the U2 PR BODY** (not buried in the diff) — Peter's merge is this table's independent check (LINA tasks-R1 process note)
     - _Requirements: 12.1–12.3, 12.6; Design: C7, DD4_
 
-  - [ ] 4.3 WCAG re-arm + validation promotion (implementation)
+  - [x] 4.3 WCAG re-arm + validation promotion (implementation)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina (Sonnet) — purely mechanical: both flips + floors + fixtures + register entries, consuming 4.2's outputs
@@ -238,7 +238,7 @@
     - **Matcher continuity (LINA tasks-R1): consumes 4.2's matcher function UNMODIFIED — any matcher change re-opens the audit.** Bite fixtures cover the matcher-selection edges (the `content_` non-label exclusion; the four exact names), not only the DD3 floor
     - _Requirements: 12.1–12.7; Design: C7, DD3_
 
-  - [ ] 4.4 Console-fail hook + allowlist + promotion
+  - [x] 4.4 Console-fail hook + allowlist + promotion
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina (Sonnet) — escalate genuinely novel log patterns rather than adjudicating silently
