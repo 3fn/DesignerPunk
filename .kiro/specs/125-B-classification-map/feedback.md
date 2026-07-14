@@ -422,5 +422,37 @@ My read: **do not keep console-fail at warn longer than the others on churn grou
 - **Nothing declined.** Every R1 item landed; three were your-call items resolved with recorded reasoning (register home = governance/; DD7 upgrade over recording; DD2 protocol-instead-of-stacy.md with the no-third-edit chain argument).
 - **K=3 and the segment semantics (DD8) are design-level pre-commitments, not ratified values** — they are prime targets for the next round / Peter's design settle, flagged as such rather than presented as settled.
 
+#### [LINA R2]
+
+*Targeted implementer verification, scoped to C7/C8/DD3/DD4 as reworked in [THURGOOD R2]. Build-from-text standard. Not a full re-review; no settled item re-litigated.*
+
+1. **`content_*_label` matcher stated normatively — CLOSED.** C7 now reads `startsWith('content_') AND endsWith('_label')`, with the bare-`content_` over-selection named explicitly NON-compliant. The "will bite if taken literally" fix landed exactly. → design.md § C7
+2. **Audit-through-the-armed-matcher — CLOSED.** "The audit SHALL enumerate through the SAME matcher function and the same `COMPONENTS` loader the armed check uses … audit-clean ⇒ arm-green by construction"; Error Handling composes correctly (red suite ⇒ re-open the audit table, never weaken the check). Guaranteed by construction, not discipline. → design.md § C7, § Error Handling
+3. **DD3 coupling note — CLOSED.** The per-literal→last-consumer coupling recorded verbatim (floor reds = "the backstop working as designed," fixed by a conscious floor update in the same PR, "not a puzzled revert"), alongside the wildcard-rename residual; my born-safe corpus counts (11/11/21/4) recorded as pre-arm verification. → design.md § DD3
+4. **C8 — CLOSED on all five sub-points.** Net-new wiring named as net-new WITH its own gate-bite proof; root-lanes-only scope explicit; sub-package console-fail a deferred register row, not silently skipped; version-agnostic constraint recorded now; one-entry-per-line + parsed-object churn counting. Every buildability gap resolved as an explicit call. → design.md § C8
+5. **Unrequested build-surface change — NONE found.** R2 items map one-to-one onto my R1 asks. One cosmetic note, not a blocker: JSONL grain + parsed-object counting is mildly belt-and-suspenders; harmless, I'll implement both.
+
+**Bottom line: C7 and C8 are my buildable mechanism spec.** Every R1 item CLOSED; DD3/DD4 endorsements hold. Clean bill. -- [LINA R2]
+
+#### [STACY R2]
+
+*Targeted R2 verification of my R1 findings only. Not a re-review. All seven items checked against design.md as reworked.*
+
+- **CRITICAL (MCP-leak fallback / Req 7.1) — CLOSED.** Peter's option (a) faithfully realized: MCP-unsubstituted run = VOID trial, executable only as an explicitly-labeled supplementary observation that does NOT feed the trial verdict — verbatim my (a). Relayed-authorization citation scrubbed; escalation route explicit (recorded amendment request with cost evidence, only if execution proves the leg costly — the requirement is not pre-softened); bias rationale on record. **History notes honest, not blame-shifting**: the incorporation note splits the two failures cleanly — coordinator owns the relay; Thurgood owns not verifying before citing. → design.md C3, DD5
+- **HIGH 1 (MCP-leg positive detection) — CLOSED.** All three legs detected: legs 1–2 grep on-disk; leg 3 queries the docs MCP in the pruned worktree and asserts the pruned text absent from what the server RETURNS, with the reason stated. Detect-not-assume true on all three; all results recorded in evidence. → design.md C3
+- **HIGH 2 / DD8 — CLOSED.** Category error fixed and called out; re-baseline SEGMENTS, N never resets (my named failure cited as the reason); segment semantics coherent and conservative (under-populated → indeterminate, never a false pass); K=3 reasoning sound; **properly flagged as a design-level pre-commitment for Peter's settle, not passed off as ratified.** → design.md Error Handling, DD8
+- **MEDIUM (closeout gate) — CLOSED.** Gates on content with three mechanically-auditable conditions; "a present-but-TBD section fails the gate." → design.md C5
+- **LOW (void-attempt ceiling) — CLOSED.** ">2 voided attempts on the same arm → STOP and escalate as a substitution-harness finding." → design.md Error Handling
+- **DD7 — CLOSED.** Upgraded to my option (b): per-tool empty-args invocation asserting a JSON-RPC response returns, payload uninspected — Req 5.2 structurally safe; a declared-but-index-empty tool and an "invalid params" error both pass. → design.md C6, DD7
+- **DD6 / DD2 — CLOSED.** "Agent-authored" = head branch matching `task/*`/`fix/*`/`chore/*` (mechanical, matches the workflow law's conventions); first-push SHA pinned at observation time — the counted set is hand-reproducible. DD2 joins the two process-defining surfaces (thurgood.md ↔ Product-Handoff-Protocol.md); pointer-to-a-pointer resolved. → design.md C4/DD6, DD2
+
+**NEW watch-items from the rework — two, neither a blocker (task-grain, not design-integrity):** (1) DD8's cross-segment roll-up is unstated (how one criterion verdict aggregates across segments) — tactical, backstopped by the indeterminate-not-pass discipline, so it cannot produce a false certification; flag for the measurement-protocol task. (2) C6's empty-args invocation newly touches every declared tool's handler each CI boot — benign for these read/serve servers, but the C6 task should confirm no declared tool mutates persistent state under empty args.
+
+**Bottom line: clean bill.** All seven R1 items CLOSED with faithful, auditable realizations — compliance verifiable from the text alone on every one. The design now realizes Reqs 6–9 and 17 with auditable integrity. -- [STACY R2]
+
+---
+
+## Tasks Feedback
+
 ### Context for Reviewers
 *To be populated when tasks.md is written.*
