@@ -8,7 +8,7 @@ description: Development workflow and task completion practices — task complet
 # Development Workflow and Task Completion Practices
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-07-08
+**Last Reviewed**: 2026-07-14
 **Purpose**: Task completion workflow and git practices for all development work
 **Organization**: process-standard
 **Scope**: cross-project
@@ -72,13 +72,7 @@ description: Development workflow and task completion practices — task complet
 
 ### Recommended Process (IDE-based with Automation)
 1. **[MANUAL]** **Complete Task Work**: Implement all requirements and create specified artifacts
-2. **[MANUAL]** **Validate Implementation**: 
-   - For regular tasks: Run `npm test` (functional lanes only, timing-assertion-free; ~1 min warm)
-   - For parent tasks (default): Run `npm test` (comprehensive functional validation, ~1 min warm)
-   - For parent tasks modifying release tool: Run `npm run test:all` (~1 min — includes performance suites; the cost delta over `npm test` is seconds)
-   - For performance tasks: Run `npm run test:performance` AND `npm run test:performance:isolated` (seconds each; perf coverage is split across the two lanes — or run `npm run test:all`). Performance assertions are wall-clock-sensitive: run on an otherwise-idle machine
-   
-   > Lane semantics reworked 2026-07-03 (commit `29bba7de`; see Spec 125 design-outline addendum): default lanes are timing-assertion-free; performance coverage is split across `test:performance` + `test:performance:isolated`.
+2. **[MANUAL]** **Local validation**: the unit PR's required checks run the full functional suite at the gate; validating locally first catches failures before they block the merge. Test-command and lane selection (incl. the performance lanes and the 2026-07-03 lane-semantics note): Start Up Tasks §4–§5.
 3. **[MANUAL]** **Create Detailed Completion Document**: For parent tasks, create comprehensive completion doc at `.kiro/specs/[spec-name]/completion/task-N-parent-completion.md` (Tier 3)
 4. **[MANUAL]** **Create Summary Document**: For parent tasks, create concise summary doc at `docs/specs/[spec-name]/task-N-summary.md`
 5. **[MANUAL]** **Mark Task Complete**: Use `taskStatus` tool to update task status to "completed" when finished

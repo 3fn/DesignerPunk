@@ -130,7 +130,7 @@
     - Worktree arms; total substitution verified (3 legs incl. MCP served-output); paired runs ≤2/arm; ≤20 transcripts; void ceiling (>2 voids/arm → escalate); ethics protocol (ordinary tasks, transparency, transcripts unedited); scored diff table
     - _Requirements: 7.1–7.7, 9.2–9.3; Design: C3, DD5_
 
-- [ ] 2. U1-p: The Prune PR
+- [x] 2. U1-p: The Prune PR
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
