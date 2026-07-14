@@ -238,7 +238,7 @@
     - **Matcher continuity (LINA tasks-R1): consumes 4.2's matcher function UNMODIFIED — any matcher change re-opens the audit.** Bite fixtures cover the matcher-selection edges (the `content_` non-label exclusion; the four exact names), not only the DD3 floor
     - _Requirements: 12.1–12.7; Design: C7, DD3_
 
-  - [ ] 4.4 Console-fail hook + allowlist + promotion
+  - [x] 4.4 Console-fail hook + allowlist + promotion
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina (Sonnet) — escalate genuinely novel log patterns rather than adjudicating silently
