@@ -199,3 +199,21 @@ education:
 history:
   - { date: 2026-07-14, change: "entry created (U1-s pilot substrate, Task 1.6); check wired: .github/workflows/tool-boot-smoke.yml + tests/tool-boot-smoke.test.ts; local run 49/49 passing incl. Product MCP passing index-empty (Req 5.2); side-effect confirmation + gate-bite proof plan recorded in .kiro/specs/125-B-classification-map/completion/task-1-6-completion.md", by: thurgood }
 ```
+
+### no-autonomous-token-creation
+
+```yaml
+rule: "Creating ANY token (primitive, semantic, or component) requires human review — no autonomous token creation"
+boundary_call:
+  class: operational
+  rationale: "Protects the primitive→semantic→component hierarchy and namespace coherence — workflow integrity (the sanctioned path by which vocabulary enters the system), not the math and not ideology; the contested reading ('functional — protects the math') is recorded and rejected: a functional rule is machine-checkable against a token's value, and 'was this sanctioned' is not a value property"
+verification:
+  disposition: warn
+  owner: ada
+  check_state: proposed
+  checks: []
+education:
+  disposition: "KEEP — education owns mathematical fit, semantic/tier correctness, and the approval itself (token-governance autonomy levels + Component Development Guide's token-selection framework; generated prompts teach right-token / right-tier / mathematical fit). The clean split (Part 1 of the evidence): a check may detect that a token appeared; it never verifies that its creation was sanctioned or that it is mathematically/semantically correct — those stay education's job."
+history:
+  - { date: 2026-07-14, change: "entry created from Experiment 3 (token-approval boundary call + feasibility spike), U2 — boundary call and FP/FN adjudication are Ada's (token-owner judgment); Thurgood audited the evidence and landed this entry. Evidence: .kiro/specs/125-B-classification-map/completion/u2/exp3-spike-evidence.md", by: thurgood }
+```
