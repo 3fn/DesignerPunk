@@ -7,7 +7,7 @@
         {
           "description": "Check if a parent component can contain a child component, with optional prop context.",
           "inputSchemaHash": "sha256:98792936c453bd4651dc6b436786a3460693f96a37134cc5bc77c4fa418390ac",
-          "name": "check_composition"
+          "name": "check_composition_PHANTOM_BITE"
         },
         {
           "description": "Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. \"primary action button\", \"login\", \"text input field\").",
@@ -65,7 +65,7 @@
           "name": "get_layout_template"
         },
         {
-          "description": "Get prop selection and family member guidance for a component or family. Returns whenToUse, whenNotToUse, selectionRules (scenario→recommendation with optional props), accessibilityNotes, and family-scoped patterns. Query by component name (returns its family guidance) or family name.",
+          "description": "Get prop selection and family member guidance for a component or family. Returns whenToUse, whenNotToUse, selectionRules (scenario\u2192recommendation with optional props), accessibilityNotes, and family-scoped patterns. Query by component name (returns its family guidance) or family name.",
           "inputSchemaHash": "sha256:c821035bf408819e4340ca7a5afa29553761d7ed556adf3d4a982715b6e6fc9c",
           "name": "get_prop_guidance"
         },
@@ -136,7 +136,7 @@
           "name": "get_index_health"
         },
         {
-          "description": "Get specific document section by heading. Returns section content with parent context, a stable sectionId, and siblingHeadings (adjacent sections under the same parent — a cue that more may exist). For a heading that occurs more than once, pass \"parent\" or \"sectionId\" to disambiguate; otherwise the response lists the candidate occurrences. RULE: when retrieving a multi-section logical unit, call get_document_summary first (summary-first) so sibling sections are discoverable rather than silently omitted.",
+          "description": "Get specific document section by heading. Returns section content with parent context, a stable sectionId, and siblingHeadings (adjacent sections under the same parent \u2014 a cue that more may exist). For a heading that occurs more than once, pass \"parent\" or \"sectionId\" to disambiguate; otherwise the response lists the candidate occurrences. RULE: when retrieving a multi-section logical unit, call get_document_summary first (summary-first) so sibling sections are discoverable rather than silently omitted.",
           "inputSchemaHash": "sha256:f756993a9ee9d71183d2be148daf21879a4b46f573431134a6f7e30c5e057a16",
           "name": "get_section"
         },
@@ -187,7 +187,7 @@
           "name": "get_domain_object"
         },
         {
-          "description": "Get a product-specific (one-off) component by name — schema, contracts, and composition details.",
+          "description": "Get a product-specific (one-off) component by name \u2014 schema, contracts, and composition details.",
           "inputSchemaHash": "sha256:26942b63a9ea8b8da1fe65d26992b2b0b7bde3fb2444c91e7bcd0845a86b173b",
           "name": "get_product_component"
         },
