@@ -288,6 +288,22 @@ My read: **do not keep console-fail at warn longer than the others on churn grou
 - **Nothing declined.** Two items were resolved by author's-choice where the round offered alternatives, both noted above with reasoning: the allowlist entry grain **fixed now** rather than deferred-with-dependency (item 7); Req 14.2's doc names **deferred to design with constraints** rather than named now (item 14 — verify-first over completeness).
 - **The 26-vs-~33 concept-count delta** (coordinator's verification note): not adjudicated in requirements text — Req 12.3 says "26+ in-use concepts," which is true on either count; the audit-before-arm AC is the mechanism that makes the exact number an execution finding rather than a requirements fact.
 
+#### [LINA R2]
+
+*Targeted R2 verification, Reqs 11 & 12 (my implementation lane). Standard applied: could I build both deliverables from AC text alone? Ground-truthed against `behavioral-contract-validation.test.ts` (:327–334, :413, :435, :438–451). Not a full re-review.*
+
+1. **Req 12.1/12.2 selection-set conflict — CLOSED.** The 6→6 remap trap is gone: 12.1 now reads "replaced WITH the AC 2 allowlist," AC 2 named authoritative, and `content_*_label`'s net-new status is recorded in the AC itself. An implementer can no longer ship the narrow check by reading 12.1 literally. Buildable — noting the wildcards require prefix-matching logic replacing the current exact `.includes(contractName)` at :342, but that's implementation; the AC gives the selection semantics unambiguously. → requirements.md Req 12.1, 12.2
+
+2. **Req 12.3 audit-before-arm — CLOSED.** All three elements specified: *what* I audit (on-allowlist contracts' current `wcag` state), the *adjudication* (legitimate-null → exempt/re-scope vs. genuine-defect → fix), and the *sequencing* (audit THEN arm). Mirrors 11.1's discipline as I asked. Executable as written. → requirements.md Req 12.3
+
+3. **Req 12.6 validation-criteria promotion (NEW) — buildable, with one minor flag.** It's my proposed parallel intact: promote `:435` from `>0` to `withoutValidation === 0` (the `contractsWithoutValidation` counter already exists at :404/:423, so the flip is direct), inherited-contract skip preserved (:413 confirmed), audit-first. The companion testable-assertions test (:438) becomes moot once `withoutValidation === 0` holds — no hidden extra work. **Minor flag (non-blocking):** 12.6 says "fixed or *consciously exempted*," but unlike 12.3 — where the exemption mechanism is explicit (`wcag: null` legal off-list) — 12.6 specifies no test-level mechanism for an exempted-but-still-zero-validation contract; a flat `withoutValidation === 0` would fail on one. My owner's read (stated R1) is that no legitimate zero-validation contract should exist, so "exempt" is a near-empty escape hatch and the realistic path is "fix all." Content to treat the exemption mechanism as a U2 execution finding the audit-first pattern is designed to surface — **recommend the design phase note it** so it doesn't surprise the implementer if the audit turns up a candidate. Does not block. → requirements.md Req 12.6
+
+4. **Req 11.1 entry grain — CLOSED.** "(suite × message-pattern) pair, whole-suite/file exemptions NOT valid" is my exact steer and matches what I'd construct from PR #39 (per-suite judgment over specific message blocks — suite identifies the file, message-pattern identifies the legitimate log). The AC correctly ties the grain to making Req 8.3/11.3's churn metric computable. → requirements.md Req 11.1
+
+5. **Unrequested changes to my contract — none adverse.** The fold of 12.6 into Req 12 (title broadened) is the author's structural choice; same lane, same implementer, same audit-first pattern, no change to my build surface. The match-count floor's aggregate-vs-per-concept framing (12.4) carries my accepted single-concept re-dormancy risk faithfully. → requirements.md Req 12
+
+**Bottom line: Reqs 11 and 12 are ready to serve as my implementation contract.** All four R1 items CLOSED; the Peter-approved 12.6 promotion is my parallel intact; I could build both deliverables from the AC text without returning for clarification. The single 12.6 exemption-mechanism nuance is a design-note-worthy execution detail, not a blocker, and by my own owner's read likely never fires. **Clean bill for my lane.** -- [LINA R2]
+
 ---
 
 ## Design Feedback
