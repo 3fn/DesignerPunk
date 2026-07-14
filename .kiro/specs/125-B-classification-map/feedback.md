@@ -455,4 +455,21 @@ My read: **do not keep console-fail at warn longer than the others on churn grou
 ## Tasks Feedback
 
 ### Context for Reviewers
-*To be populated when tasks.md is written.*
+
+*Populated by the spec author (Thurgood), 2026-07-13, with tasks.md drafted. Roster: unchanged — Ada, Lina, Stacy. Per the protocol's tasks-checkpoint definition, this round reviews **assignment correctness, sequencing, and scope**: [@LINA] your assignments' buildability (4.2 audit at Opus / 4.3 implementation at Sonnet / 4.4 console — and the 1.8 note that YOU are the cloned trial agent for 126, run in both arms); [@ADA] 4.1's shape (you execute at Opus, marker-form rules decided in-task with you, Thurgood audits); [@STACY] process + sequencing — especially the three-PR U1 structure and the watch-item placements (roll-up definition in 1.1; empty-args side-effect confirmation in 1.6).*
+
+**Settled — do NOT re-litigate:**
+- **design.md is MERGED and SETTLED** (PR #73, main cd552664) — and that merge **RATIFIES DD7** (per-tool empty-args smoke) **and DD8** (segment-never-reset; K=3). All prior settles stand (see the Requirements/Design Context blocks above).
+- **Spec 126 soft-interweave (Peter, 2026-07-13)**: 126 is battery task #1 — ratify-then-hold; **escape hatch intact and stated in Task 1.8** (stall/misalignment/urgency → 126 ships independently; battery falls back to the next queued task or replay). A preference with an escape hatch, never a blocker. Relevance still CHECKED, not assumed.
+- **U1 closeout = report + decision point (Peter, 2026-07-13, composition)**: the Req 17 record, then ONE batched Peter session — program verdict (proceed / proceed-modified / stop-and-park, the last a legitimate outcome) + dial election + at-scale parameters. **U1b's gate cites the RECORDED VERDICT** — record-first at program level. Task 3.2 carries it.
+- Q6 stays parked — the tasks doc's Exclusions restate it; no release-detection work is scoped.
+
+**PRIME REVIEW TARGET — the declared merge units** (Task-Completion-Protocol: declared here, reviewed now, never judged at merge time):
+- **U1 as ONE coherent unit across THREE sequential PRs (U1-s / U1-p / U1-c) — a structural-necessity adaptation of the one-unit-one-PR default**: the window must observe ordinary work merged between the prune and the closeout, so a single-PR U1 is physically impossible. Is the three-PR decomposition + its gates right? This is the author's task-grain resolution of a genuine protocol tension — scrutinize it.
+- U2 as one PR, branching after U1-s (needs the register), parallel to the window.
+- U1b/U3 as GATED PLACEHOLDERS with no breakdown — U1b's tasks literally cannot be written pre-calibration; authored post-verdict as a tasks.md amendment with its own lightweight round. Confirm the placeholder treatment is right.
+- Bandwidth: 4 substantive PRs now — at the declared ceiling.
+
+**Also under review:** per-task Type/Agent/model-tier calibration (Opus where judgment lives: 1.1 protocol, 1.3/1.4 classification, 3.2 closeout, 4.1 boundary call, 4.2 audit; Sonnet where design is settled — divergence reasons noted in-task); the watch-item placements; the post-merge gate-bite pattern (bites as throwaway PRs, since a bite can't ride the arming PR).
+
+**Sequential gate**: this is the LAST formalization artifact — after this round settles, execution begins with Task 1 (U1-s).
