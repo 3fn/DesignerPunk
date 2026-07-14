@@ -17,15 +17,19 @@
 
 ## Declared Merge Units (Task-Completion-Protocol § Coherent Units — reviewed in this tasks round, never judged at merge time)
 
-| Unit | PR(s) | Contents | Gate |
-|------|-------|----------|------|
-| **U1 — Pilot** | **THREE sequential PRs by structural necessity** (flagged for review): **U1-s** (substrate — Tasks 1.*), **U1-p** (the prune PR — Task 2), **U1-c** (window + closeout — Tasks 3.*) | Register + protocol + Exp 2 + pilot row + smoke + crossRef + probe/trial (U1-s); the governance-law prune (U1-p); window + closeout + return-edge refs (U1-c) | U1-s: none. U1-p: U1-s merged + evidence attached. U1-c: window closed. |
-| **U2 — Checks** | One PR (Tasks 4.*) | Exp 3 spike; WCAG re-arm + validation promotion; console-fail; U2 register entries | Branches from main after U1-s merges (needs the register). Independent of the prune chain. |
-| **U1b — Map at scale** | Declared, NOT broken down | Full-corpus waves | **Gated on the RECORDED CLOSEOUT VERDICT** (Task 3.2), not merely the record. Tasks authored post-closeout as a tasks.md amendment with its own lightweight review — they cannot be written before the pilot's calibration exists. |
-| **U3 — Governance layer** | Declared, NOT broken down | CODEOWNERS + PR-approval-as-ratification + Exp-3-informed diff-gates | Gated on U2 (Exp 3 evidence) + Peter's scheduling; platform settings are Peter's action. Charter grain per design C9. |
-| **Elective — Autonomy dial** | No PR unless elected | Policy amendment only | Decision point inside Task 3.2's batched Peter session (Req 15). |
+*Relabeled per STACY tasks-R1 (accepted in R2): the pilot is **THREE UNITS grouped under the "U1 Pilot" PHASE** — a phase is a narrative label; the merge grain is the unit. Gates and tasks unchanged from the draft. Acceptance is crisp: Task 1 is accepted at U1-s's merge, Task 2 at U1-p's, Task 3 at U1-c's.*
 
-**Why U1 is one coherent unit across three PRs (structural necessity, not preference):** the observation window (Req 8) measures ordinary work merged AFTER the prune and BEFORE the closeout — so the prune must merge mid-unit and the closeout must follow ~N=20 PRs later. A single-PR U1 is physically impossible. The unit's coherence lives in its evidence chain (protocol → probe/trial → prune → window → closeout), reviewed as three PRs that cite each other. **Bandwidth check**: 4 substantive PRs now (U1-s, U1-p, U1-c, U2) — at the declared ceiling; U1b/U3 PRs come later under their own gates.
+| Unit | Phase | PR | Contents | Gate |
+|------|-------|-----|----------|------|
+| **U1-s — Pilot substrate** | U1 Pilot | One PR (Tasks 1.*) | Register + protocol + Exp 2 + pilot row + smoke + crossRef + probe/trial evidence | None. |
+| **U1-p — The prune** | U1 Pilot | One PR (Task 2) | The governance-law prune, evidence attached | U1-s merged + probe/trial evidence attached. Peter-merged (standing carve-out). |
+| **U1-c — Window + closeout** | U1 Pilot | One PR (Tasks 3.*) | Window dataset + closeout record + return-edge refs | Window closed (N=20 per protocol). |
+| **U2 — Checks** | — | One PR (Tasks 4.*) | Exp 3 spike; WCAG re-arm + validation promotion; console-fail; U2 register entries | Branches from main after U1-s merges (needs the register). Independent of the prune chain. |
+| **U1b — Map at scale** | — | Declared, NOT broken down | Full-corpus waves | **Gated on the RECORDED CLOSEOUT VERDICT ballot** (Task 3.2), not merely the report. Tasks authored post-verdict as a tasks.md amendment with its own lightweight review — they cannot be written before the pilot's calibration exists. |
+| **U3 — Governance layer** | — | Declared, NOT broken down | CODEOWNERS + PR-approval-as-ratification + Exp-3-informed diff-gates | Gated on U2 (Exp 3 evidence) + Peter's scheduling; platform settings are Peter's action. Charter grain per design C9. |
+| **Elective — Autonomy dial** | — | No PR unless elected | Policy amendment only | Decision point inside Task 3.2's batched Peter session (Req 15). |
+
+**Why the pilot spans three units (structural necessity, not preference):** the observation window (Req 8) measures ordinary work merged AFTER the prune and BEFORE the closeout — so the prune must merge mid-phase and the closeout must follow ~N=20 PRs later. A single-PR pilot is physically impossible. The phase's coherence lives in its evidence chain (protocol → probe/trial → prune → window → closeout) — three units whose Gate column couples them exactly as the law couples sequential dependent units. **Bandwidth check**: 4 substantive units now (U1-s, U1-p, U1-c, U2) — at the declared ceiling; U1b/U3 come later under their own gates.
 
 **Sequencing**: Task 1 (U1-s) → Task 2 (U1-p, Peter-merged) → [window runs over ordinary work] → Task 3 (U1-c) → U1b gate. Task 4 (U2) branches from main after U1-s merges and proceeds in parallel with the window.
 
@@ -65,6 +69,7 @@
     **Agent**: Thurgood (Opus) — pre-commitments are judgment; they steer every later verdict
     - Rubric (workflow actions scored present/absent for the npm-test rule), pre-committed difference criteria
     - Window definition: N=20 (ratified, pilot-only); observed-PR filter (`task/*`,`fix/*`,`chore/*` head branches) + first-push SHA pinning (DD6); staleness triggers; **DD8 segment semantics + K=3 bound + the CROSS-SEGMENT ROLL-UP definition** (how one criterion verdict aggregates across segments — Stacy design-R2 watch item, lands HERE)
+    - **Instrument-PR exclusion (STACY tasks-R1, HIGH):** the observed set EXCLUDES 125-B's own instrument PRs — U2's arming PR and ALL gate-bite throwaway PRs (engineered failures would directly corrupt first-push failure rate; the window must measure ordinary work, not the spec measuring itself). **U2 arming console-fail mid-window IS a Req 8.4 "materially changes" event → opens a DD8 segment boundary** (a new first-push failure source unrelated to the prune). **Known limitation, recorded in the protocol notes:** U2's agents are prune-aware (non-independent observers) — at solo scale every observer is somewhat prune-aware; the exclusion handles the mechanical contamination, this note handles the honesty.
     - Manual query recipes (gh/check-run, re-accretion grep, allowlist-churn count) — repeatable by hand, Req 8.6
     - _Requirements: 8.1–8.7; Design: C4, DD6, DD8_
 
@@ -104,7 +109,7 @@
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — settled design (DD7 ratified)
     - Consume `tool-registry.json`; handshake + `tools/list` presence + **per-tool empty-args invocation asserting a JSON-RPC response (result OR structured error, payload uninspected — DD7)**; NEVER assert returns-data (Req 5.2 normative); zero-tools selection floor
-    - **Side-effect confirmation (Stacy design-R2 watch item): verify no declared tool mutates persistent state under empty-args invocation BEFORE wiring the check** — read the registry entries/tool handlers; record the confirmation in the task completion doc
+    - **Side-effect confirmation (Stacy design-R2 watch item): verify no declared tool mutates persistent state under empty-args invocation BEFORE wiring the check** — read the registry entries/tool handlers; record the confirmation in the task completion doc. *This is the task's one judgment nub (Stacy tasks-R1 soft note): Sonnet stays — bounded scope, clear pass criterion — with **escalate-on-hit** (any tool that DOES mutate under empty-args stops the task and goes to Peter/Thurgood rather than being worked around). Conscious call, recorded.*
     - Wire as required check; gate-bite proof post-merge (throwaway PR, 125-A pattern); register entry ("barrier, nothing to prune")
     - _Requirements: 5.1–5.5; Design: C6, DD7_
 
@@ -121,6 +126,7 @@
     **Agent**: Thurgood (Sonnet) orchestrating; **the cloned trial agent is the battery task's NATURAL agent** (Lina for 126 — avatar lane), run in both arms
     - **Battery task #1 = Spec 126 (avatar-decorative-warn) — Peter's soft-interweave (2026-07-13): ratify-then-hold.** Peter ratifies 126's option; execution HELD to serve as the trial's first battery task; both arms attempt it; the better output ships through 126's own flow (shipping quality adjudicated THERE — the trial's rubric scores process behavior only). **ESCAPE HATCH (stated, per Peter): if 126's ratification stalls, timing misaligns, or 126 becomes urgent, it ships independently and the battery uses the next suitably-sized queued task or the replay fallback — a preference with an escape hatch, never a blocker.**
     - **Relevance CHECKED, not assumed**: 126 is code-plus-tests and should route through the npm-test rule's territory on its face — the control-arm transcript must still exhibit the rubric's target actions (Req 7.3 ratified method) before the task counts
+    - **Quality-gate escape trigger (LINA tasks-R1): 126's quality gate is UNMODIFIED and the trial's ≤2-runs cap can NEVER lower it** — if fitting the cap would force a sub-bar 126 deliverable, the escape hatch fires (126 ships independently; the battery falls back). The run-cap serves the trial; 126's quality wins the tie.
     - Worktree arms; total substitution verified (3 legs incl. MCP served-output); paired runs ≤2/arm; ≤20 transcripts; void ceiling (>2 voids/arm → escalate); ethics protocol (ordinary tasks, transparency, transcripts unedited); scored diff table
     - _Requirements: 7.1–7.7, 9.2–9.3; Design: C3, DD5_
 
@@ -152,7 +158,7 @@
   **Success Criteria:**
   - Window closed at N=20 observed PRs with all metrics computed per the protocol (segments honest, roll-up per 1.1's definition)
   - The closeout record is CONTENT-complete (C5: every criterion carries a verdict; every 10.6 problem carries its answer-or-datum; no TBD)
-  - Peter's batched decision session held and the program verdict RECORDED
+  - Peter's batched decision session held and the program verdict RECORDED as a ballot under `.kiro/docs/ballots/` (the artifact U1b's gate cites)
   - Return-edge cross-references landed (DD2 targets)
 
   **Primary Artifacts:** window dataset; `completion/pilot/u1-closeout.md`; DD2 doc edits
@@ -161,7 +167,7 @@
   - Detailed: `completion/task-3-parent-completion.md`; Summary: `docs/specs/125-B-classification-map/task-3-summary.md`
 
   **Post-Completion:**
-  - `./.kiro/hooks/complete-task.sh "Task 3 Complete: Pilot Window + Closeout (125-B)"` — merge unit U1-c; PR opens; report URL, STOP. **U1b's entry gate cites the RECORDED VERDICT in the merged closeout.**
+  - `./.kiro/hooks/complete-task.sh "Task 3 Complete: Pilot Window + Closeout (125-B)"` — merge unit U1-c; PR opens; report URL, STOP. **U1b's entry gate cites the RECORDED VERDICT BALLOT (committed with this unit).**
 
   - [ ] 3.1 Observation window execution
     **Type**: Implementation
@@ -175,7 +181,8 @@
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — synthesis + honest-ambiguity reporting is judgment
     - The Req 17 five-part record, CONTENT-complete per C5 (ambiguous reported as ambiguous)
-    - **Then ONE batched Peter decision session (Peter, 2026-07-13 — composition, not replacement): (a) the PROGRAM VERDICT — proceed to U1b as designed / proceed modified / stop-and-park** (stop-and-park = register kept as documentation, pruning opportunistic — a legitimate outcome, not a failure)**; (b) the autonomy-dial election (Req 15); (c) at-scale window parameters ratification (Req 10.6).** Three decisions, one sitting, full context. **The recorded verdict is what U1b's entry gate cites — record-first at program level.**
+    - **Then ONE batched Peter decision session (Peter, 2026-07-13 — composition, not replacement): (a) the PROGRAM VERDICT — proceed to U1b as designed / proceed modified / stop-and-park** (stop-and-park = register kept as documentation, pruning opportunistic — a legitimate outcome, not a failure)**; (b) the autonomy-dial election (Req 15); (c) at-scale window parameters ratification (Req 10.6).** Three decisions, one sitting, full context.
+    - **Verdict record form + location (pinned in tasks-R2, resolving STACY R1's MEDIUM): a BALLOT under `.kiro/docs/ballots/`** — a distinct, Peter-attributed, dated decision record covering all three decisions, separate from Thurgood's `u1-closeout.md` report (which links it). *Reasoning: the verdict gates a unit, elects a policy that would amend Task-Completion-Protocol scope, and ratifies at-scale parameters — ballot-grade weight on all three counts; the ballots directory is where the record-first protocol already puts Peter-attributed authority, and the register's own authority row defines layer-1 verification as committed ballot status — the program verdict should be verifiable by the very mechanism this spec maps.* **U1b's entry gate cites the VERDICT BALLOT, not the report** — record-first at program level.
     - _Requirements: 17.1–17.3, 15.1–15.2, 10.6; Design: C5_
 
   - [ ] 3.3 Return-edge cross-references
@@ -208,22 +215,27 @@
   - [ ] 4.1 Experiment 3 — boundary call + feasibility spike
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
-    **Agent**: Ada (Opus) executes — the boundary call + FP/FN adjudication are token-owner judgment; Thurgood (Sonnet) audits the evidence artifact
-    - Part 1 boundary call (register entry); Part 2 spike against `src/tokens/**` only; FP/FN counted against an Ada-adjudicated labeled ground set (C9 frame); precise marker-form rules decided IN this task with Ada; hygiene caveat as recorded finding; throwaway prototype (9.3 stop applies)
+    **Agent**: Ada (Opus) executes — the boundary call + FP/FN adjudication are token-owner judgment; Thurgood (Sonnet) audits the evidence artifact **and lands the register entry from Ada's adjudication** (register writes stay with the steward, consistent with 1.2/1.3/1.4 — ADA tasks-R1, accepted)
+    - Part 1 boundary call (Ada adjudicates; Thurgood writes the register entry from it); Part 2 spike against `src/tokens/**` only; **FP/FN counted against an Ada-adjudicated labeled ground set of HISTORICAL TOKEN-ADDITION PRs** (C9 frame, restated in-task for zero-lookup executability); precise marker-form rules decided IN this task with Ada; hygiene caveat as recorded finding; throwaway prototype (9.3 stop applies)
+    - **Evidence artifact path pinned: `.kiro/specs/125-B-classification-map/completion/u2/exp3-spike-evidence.md`** — a U2 artifact, NOT `completion/pilot/`
     - _Requirements: 16.1–16.5; Design: C9_
 
-  - [ ] 4.2 WCAG re-arm audit (pre-arm)
+  - [ ] 4.2 Stemma pre-arm audits (WCAG + validation-criteria) — adjudication + fix preparation
     **Type**: Architecture
     **Validation**: Tier 2 - Standard
-    **Agent**: Lina (Opus) — legitimate-null vs. defect adjudication across 26+ concepts is owner judgment (tier diverges upward from Implementation-adjacent work; reason recorded here)
-    - Build the normative matcher (exact four + `accessibility_` prefix + `content_`/`_label` prefix-AND-suffix — C7); audit THROUGH the same matcher + loader; adjudication table in the spec dir; fixes/exemption-escalations prepared (DD4: no exemption path — escalate candidates to Peter)
-    - _Requirements: 12.1–12.3; Design: C7, DD4_
+    **Agent**: Lina (Opus) — legitimate-null vs. defect AND fix-vs-escalate adjudication is owner judgment (tier diverges upward from Implementation-adjacent work; reason recorded here)
+    - Build the normative matcher (exact four + `accessibility_` prefix + `content_`/`_label` prefix-AND-suffix — C7); WCAG audit THROUGH the same matcher + loader; adjudication table in the spec dir
+    - **PLUS (LINA tasks-R1 lead finding, her lean (a) accepted): the Req 12.6 zero-validation inventory + fix-vs-escalate adjudication** — previously unassigned, now owned HERE; DD4 discipline: never self-exempt, escalate candidates to Peter with the owner-read attached
+    - **Fix PREPARATION lands here; fix APPLICATION lands on 4.3's branch** — the adjudicated WCAG-ref and validation fixes ride the U2 PR with the re-arm, prepared in this task, applied in 4.3, so audit-clean ⇒ arm-green stays honest (4.3 arms only after the adjudicated fixes are in the same branch)
+    - **The adjudication table + any escalation candidates are surfaced in the U2 PR BODY** (not buried in the diff) — Peter's merge is this table's independent check (LINA tasks-R1 process note)
+    - _Requirements: 12.1–12.3, 12.6; Design: C7, DD4_
 
   - [ ] 4.3 WCAG re-arm + validation promotion (implementation)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
-    **Agent**: Lina (Sonnet) — settled mechanism, audit already adjudicated
-    - Replace the legacy trigger WITH the allowlist matcher; floors per DD3 (aggregate + per-literal, coupling note in the register row); flip `:435` to `withoutValidation === 0` post-inventory, inherited-skip preserved; local bite fixtures per Testing Strategy; register entries incl. DORMANT→armed history
+    **Agent**: Lina (Sonnet) — purely mechanical: both flips + floors + fixtures + register entries, consuming 4.2's outputs
+    - Apply 4.2's prepared fixes; replace the legacy trigger WITH the allowlist matcher; floors per DD3 (aggregate + per-literal, coupling note in the register row); flip `:435` to `withoutValidation === 0` per 4.2's inventory, inherited-skip preserved; register entries incl. DORMANT→armed history
+    - **Matcher continuity (LINA tasks-R1): consumes 4.2's matcher function UNMODIFIED — any matcher change re-opens the audit.** Bite fixtures cover the matcher-selection edges (the `content_` non-label exclusion; the four exact names), not only the DD3 floor
     - _Requirements: 12.1–12.7; Design: C7, DD3_
 
   - [ ] 4.4 Console-fail hook + allowlist + promotion
@@ -236,8 +248,8 @@
 - [ ] 5. U1b: Map at Scale — GATED PLACEHOLDER (no breakdown by design)
 
   **Type**: Parent (placeholder)
-  **Gate**: the RECORDED CLOSEOUT VERDICT (Task 3.2) — proceed / proceed-modified only; stop-and-park ends here legitimately
-  - Tasks CANNOT be authored before the pilot's calibration exists (at-scale N-per-wave, overlap/serialization policy, amended imposter-test criteria are all closeout outputs). Authored post-verdict as a tasks.md amendment with its own lightweight review round.
+  **Gate**: the RECORDED CLOSEOUT VERDICT BALLOT (Task 3.2) — proceed / proceed-modified only; stop-and-park ends here legitimately
+  - Tasks CANNOT be authored before the pilot's calibration exists (at-scale N-per-wave, overlap/serialization policy, amended imposter-test criteria are all closeout outputs). Authored post-verdict as a tasks.md amendment with its own lightweight review round — **roster: the same three (Ada, Lina, Stacy), reviewing the amended task grouping against the verdict ballot's parameters** (Stacy tasks-R1 completeness item; changeable only by a recorded roster decision).
   - _Requirements: 10.1–10.6_
 
 - [ ] 6. U3: Governance Layer — GATED PLACEHOLDER (charter grain per design C9)
