@@ -2,11 +2,11 @@
 
 **Date**: 2026-07-14
 **Author**: Thurgood (Civitas steward) / Spec 125-B Task 2 (U1-p, "The Prune PR")
-**Status**: **DRAFT — awaiting Peter's ratification.** Per the ballots README record-first protocol, this ballot's
-`Status` is updated to `RATIFIED (Peter, <date>)` and **committed** before the U1-p PR merges. The PR itself is a
-governance-law change (steering + governance docs) and stays Peter-merged under the standing carve-out
-(Task-Completion-Protocol § "The Merge Rule"). Do not apply/merge this measure until the committed record says
-`RATIFIED`.
+**Status**: **RATIFIED (Peter, 2026-07-14)** — ratified in-session upon presentation of the full evidence chain
+(register row → probe → trial verdict + pre-committed consequence → re-verification), recorded and committed to the
+U1-p PR branch BEFORE merge per the ballots README record-first protocol. The PR remains a governance-law change
+(steering + governance docs), Peter-merged under the standing carve-out (Task-Completion-Protocol § "The Merge
+Rule"); the merge applies the measure this record ratifies.
 **Purpose**: Apply the ratified candidate prune diff (Task 1.4) that removes the "run `npm test` before marking a
 task complete" rule's imperative *what*-restatements from steering/governance prose — now that the 125-A required
 checks mechanically own that *what* — while leaving every teaching clause (lane selection, Jest-not-Vitest command
