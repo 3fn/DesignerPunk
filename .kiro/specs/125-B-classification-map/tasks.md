@@ -37,7 +37,7 @@
 
 ## Task List
 
-- [ ] 1. U1-s: Pilot Substrate
+- [x] 1. U1-s: Pilot Substrate
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -63,7 +63,7 @@
   - `./.kiro/hooks/complete-task.sh "Task 1 Complete: Pilot Substrate (125-B)"` — this parent IS merge unit U1-s → PR opens; report URL and STOP. Accepted at merge.
   - Post-merge: trigger docs-MCP `rebuild_index` (governance/ is MCP-served; the register must be queryable). Smoke gate-bite proof (1.6) runs as a throwaway post-merge PR — the 125-A pattern.
 
-  - [ ] 1.1 Author the measurement protocol
+  - [x] 1.1 Author the measurement protocol
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — pre-commitments are judgment; they steer every later verdict
@@ -73,14 +73,14 @@
     - Manual query recipes (gh/check-run, re-accretion grep, allowlist-churn count) — repeatable by hand, Req 8.6
     - _Requirements: 8.1–8.7; Design: C4, DD6, DD8_
 
-  - [ ] 1.2 Create the register scaffold
+  - [x] 1.2 Create the register scaffold
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — settled schema, settled location
     - `governance/classification-map.md`: steering metadata header; addressing/citation docs (Req 1.6); entry-id constraints (unique + non-substring — C1); the § Data Models schema incl. `scoped` sentinel, per-scope checks/check_state, DORMANT enum
     - _Requirements: 1.1–1.7; Design: C1, DD1_
 
-  - [ ] 1.3 Experiment 2 — authority-row resolution
+  - [x] 1.3 Experiment 2 — authority-row resolution
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — multi-surface ownership + contradiction adjudication is judgment
@@ -88,7 +88,7 @@
     - Register entry + `exp2-authority-row-record.md` (citable, Req 3.4)
     - _Requirements: 3.1–3.4; Design: C1, C2_
 
-  - [ ] 1.4 Pilot-row classification + per-surface assessments + candidate prune diff
+  - [x] 1.4 Pilot-row classification + per-surface assessments + candidate prune diff
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — teacher/imposter calls are the methodology's live judgment
@@ -96,7 +96,7 @@
     - Produce the candidate prune diff (all three surfaces, rule-grain) — consumed by 1.7/1.8, ratified in Task 2
     - _Requirements: 2.1–2.3; Design: C2_
 
-  - [ ] 1.5 crossRef re-point + reciprocal half
+  - [x] 1.5 crossRef re-point + reciprocal half
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet)
@@ -104,7 +104,7 @@
     - Re-point `shared-catalog.yaml` → `governance/classification-map.md § "record-first-ratification"`; remove interim markers; reciprocal half in the register entry; sweep-1 green in-PR (Req 4.4)
     - _Requirements: 4.1–4.4; Design: C1_
 
-  - [ ] 1.6 Tool-boot smoke
+  - [x] 1.6 Tool-boot smoke
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — settled design (DD7 ratified)
@@ -113,14 +113,14 @@
     - Wire as required check; gate-bite proof post-merge (throwaway PR, 125-A pattern); register entry ("barrier, nothing to prune")
     - _Requirements: 5.1–5.5; Design: C6, DD7_
 
-  - [ ] 1.7 Pre-merge A/B probe
+  - [x] 1.7 Pre-merge A/B probe
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — rubric-scored per the settled protocol
     - Scenario sourced per Req 7.2; all-surface substitution verified (grep legs + MCP served-output leg); rubric-scored verdict; `probe-evidence.md` (OB-7 pattern); "no gross loss detected" reporting discipline
     - _Requirements: 6.1–6.6; Design: C2, C3_
 
-  - [ ] 1.8 Cloned-agent behavioral trial
+  - [x] 1.8 Cloned-agent behavioral trial
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) orchestrating; **the cloned trial agent is the battery task's NATURAL agent** (Lina for 126 — avatar lane), run in both arms

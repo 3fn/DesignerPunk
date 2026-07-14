@@ -1,0 +1,87 @@
+# Spec 125-B Task 1.6 — Tool-Boot Smoke (Req 5; Design C6, DD7)
+#
+# A standalone required check, `125B-tool-boot-smoke`, asserting every tool DECLARED in
+# canonical/registry/tool-registry.json (122's registry generator output) is both listed
+# (`tools/list`) and RESPONDS to a cheap, empty-args call on each of the three MCP
+# servers. NORMATIVE (Req 5.2): the smoke never asserts any tool returns DATA — a
+# declared-but-index-empty tool (the Product MCP; this repo has no `product/` dir) SHALL
+# pass. Selection floor (Req 5.3): a missing/empty manifest, or a manifest declaring a
+# server with zero tools, FAILS rather than silently passing.
+#
+# BUILD-BEFORE-SMOKE (mirrors .github/workflows/agent-generator.yml's `122-setup` job —
+# the proven recipe for booting these same three servers): docs + application boot from
+# their SUB-PACKAGE tsc dists (mcp-server/dist, application-mcp-server/dist — NOT the
+# esbuild bundles); product boots from the root esbuild bundle (dist/mcp/product-mcp.js).
+# The sub-package tsc dists require the root-compiled dist/cli/shared/mcpDataRoots.js at
+# RUNTIME (see src/cli/shared/mcpDataRoots.ts header) — `npm run build:mcp` produces that
+# via its `build:mcp-shared` prerequisite, so it runs alongside the sub-package builds
+# below regardless of ordering (a runtime require, not a static import).
+#
+# MAKING THIS CHECK REQUIRED is a branch-protection settings action (Peter's, per the
+# 125-A pattern) — this workflow only defines the check; Settings -> Branches -> main ->
+# Require status checks -> add "125B Tool-Boot Smoke / 125B-tool-boot-smoke" is separate.
+#
+# Arming proof (Req 5.4, the 125-A gate-bite pattern): a deliberate failing-case PR
+# (mangle a registered tool name so tools/list omits it, observe BLOCKED, revert) runs
+# POST-MERGE as a throwaway PR — see Task 1.6's completion doc. NOT done in this PR.
+#
+# @see .kiro/specs/125-B-classification-map/requirements.md § Requirement 5
+# @see .kiro/specs/125-B-classification-map/design.md § C6, DD7
+# @see tests/tool-boot-smoke.test.ts — the smoke itself
+# @see canonical/registry/tool-registry.json — the manifest under test
+# @see .github/workflows/agent-generator.yml — the boot recipe this mirrors
+# @see .github/workflows/consumer-guard.yml (Spec 118 Task 5.1a) — the sibling boot-
+#      sentinel guard (proves bundles RESOLVE at boot; this check proves every DECLARED
+#      tool RESPONDS post-boot — complementary, not duplicative)
+
+name: 125B Tool-Boot Smoke
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  tool-boot-smoke:
+    name: 125B-tool-boot-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            mcp-server/package-lock.json
+            application-mcp-server/package-lock.json
+
+      - name: Install root dependencies
+        run: npm ci
+
+      # The sub-package dists are tsc builds (NOT bundles) — they resolve their runtime
+      # deps from each sub-package's own node_modules.
+      - name: Install MCP sub-package dependencies
+        run: |
+          (cd mcp-server && npm ci)
+          (cd application-mcp-server && npm ci)
+
+      - name: Build docs-mcp (mcp-server/dist/index.js)
+        run: (cd mcp-server && npm run build)
+
+      - name: Build application-mcp (application-mcp-server/dist/index.js)
+        run: (cd application-mcp-server && npm run build)
+
+      - name: Build product-mcp bundle + shared data-root module (dist/mcp/, dist/cli/shared/)
+        run: npm run build:mcp
+
+      - name: Run the tool-boot smoke
+        run: npx jest --roots='<rootDir>/tests' --testMatch='**/tool-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000
