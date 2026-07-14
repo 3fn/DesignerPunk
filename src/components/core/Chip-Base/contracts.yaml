@@ -139,7 +139,7 @@ contracts:
     behavior: |
       Can receive focus via Tab key. Focus ring visible on keyboard focus
       only via :focus-visible (web). Uses accessibility tokens.
-    wcag: "2.1.1 Keyboard"
+    wcag: null
     platforms: [web, ios, android]
     validation:
       - Tab key moves focus to chip
