@@ -113,7 +113,7 @@
     - Wire as required check; gate-bite proof post-merge (throwaway PR, 125-A pattern); register entry ("barrier, nothing to prune")
     - _Requirements: 5.1–5.5; Design: C6, DD7_
 
-  - [ ] 1.7 Pre-merge A/B probe
+  - [x] 1.7 Pre-merge A/B probe
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — rubric-scored per the settled protocol
