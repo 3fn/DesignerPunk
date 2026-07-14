@@ -193,7 +193,7 @@
     - Closeout notes the return edge's FIRST EXERCISE was the pilot window (Req 17.1)
     - _Requirements: 14.1–14.3; Design: DD2_
 
-- [ ] 4. U2: Net-New Checks + Re-arms
+- [x] 4. U2: Net-New Checks + Re-arms
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
