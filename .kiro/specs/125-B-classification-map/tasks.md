@@ -63,7 +63,7 @@
   - `./.kiro/hooks/complete-task.sh "Task 1 Complete: Pilot Substrate (125-B)"` — this parent IS merge unit U1-s → PR opens; report URL and STOP. Accepted at merge.
   - Post-merge: trigger docs-MCP `rebuild_index` (governance/ is MCP-served; the register must be queryable). Smoke gate-bite proof (1.6) runs as a throwaway post-merge PR — the 125-A pattern.
 
-  - [ ] 1.1 Author the measurement protocol
+  - [x] 1.1 Author the measurement protocol
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — pre-commitments are judgment; they steer every later verdict
@@ -73,7 +73,7 @@
     - Manual query recipes (gh/check-run, re-accretion grep, allowlist-churn count) — repeatable by hand, Req 8.6
     - _Requirements: 8.1–8.7; Design: C4, DD6, DD8_
 
-  - [ ] 1.2 Create the register scaffold
+  - [x] 1.2 Create the register scaffold
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — settled schema, settled location
