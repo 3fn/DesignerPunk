@@ -104,7 +104,7 @@
     - Re-point `shared-catalog.yaml` → `governance/classification-map.md § "record-first-ratification"`; remove interim markers; reciprocal half in the register entry; sweep-1 green in-PR (Req 4.4)
     - _Requirements: 4.1–4.4; Design: C1_
 
-  - [ ] 1.6 Tool-boot smoke
+  - [x] 1.6 Tool-boot smoke
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — settled design (DD7 ratified)
