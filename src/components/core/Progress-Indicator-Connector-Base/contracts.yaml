@@ -59,7 +59,7 @@ contracts:
       Connector-Base is marked as decorative (aria-hidden on web,
       accessibilityHidden on iOS, clearAndSetSemantics on Android).
       Semantic variants provide ARIA roles and labels.
-    wcag: null
+    wcag: "1.1.1 Non-text Content"
     platforms: [web, ios, android]
     validation:
       - Connector has aria-hidden="true" (web)

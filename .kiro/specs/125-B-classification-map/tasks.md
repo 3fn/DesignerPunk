@@ -230,7 +230,7 @@
     - **The adjudication table + any escalation candidates are surfaced in the U2 PR BODY** (not buried in the diff) — Peter's merge is this table's independent check (LINA tasks-R1 process note)
     - _Requirements: 12.1–12.3, 12.6; Design: C7, DD4_
 
-  - [ ] 4.3 WCAG re-arm + validation promotion (implementation)
+  - [x] 4.3 WCAG re-arm + validation promotion (implementation)
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Lina (Sonnet) — purely mechanical: both flips + floors + fixtures + register entries, consuming 4.2's outputs

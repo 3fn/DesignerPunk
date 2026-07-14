@@ -77,7 +77,7 @@ contracts:
       - No hover or press visual feedback
       - pointer-events: none (web)
       - No gesture handlers (native)
-    wcag: null
+    wcag: "N/A"  # legitimate-null: non-interactive negative guarantee, no positive WCAG SC (125-B 4.2)
     platforms: [web, ios, android]
     validation:
       - Badge cannot receive keyboard focus
