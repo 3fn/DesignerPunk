@@ -80,7 +80,7 @@
     - `governance/classification-map.md`: steering metadata header; addressing/citation docs (Req 1.6); entry-id constraints (unique + non-substring — C1); the § Data Models schema incl. `scoped` sentinel, per-scope checks/check_state, DORMANT enum
     - _Requirements: 1.1–1.7; Design: C1, DD1_
 
-  - [ ] 1.3 Experiment 2 — authority-row resolution
+  - [x] 1.3 Experiment 2 — authority-row resolution
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — multi-surface ownership + contradiction adjudication is judgment
@@ -88,7 +88,7 @@
     - Register entry + `exp2-authority-row-record.md` (citable, Req 3.4)
     - _Requirements: 3.1–3.4; Design: C1, C2_
 
-  - [ ] 1.4 Pilot-row classification + per-surface assessments + candidate prune diff
+  - [x] 1.4 Pilot-row classification + per-surface assessments + candidate prune diff
     **Type**: Architecture
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — teacher/imposter calls are the methodology's live judgment

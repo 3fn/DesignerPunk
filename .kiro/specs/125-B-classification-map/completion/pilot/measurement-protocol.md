@@ -158,13 +158,25 @@ The §1–§3 pre-commitments are LOCKED once the prune PR (U1-p) merges. Any am
 
 ---
 
-## Appendix A1 — The pruned rule's surfaces **[REQUIRED BEFORE WINDOW OPENS — filled from Task 1.4's per-surface assessment]**
+## Appendix A1 — The pruned rule's surfaces **[FILLED — Task 1.4, 2026-07-14; parameters only, no criteria changed (§7)]**
 
-> To be filled by Task 1.4 with the exact repo paths of ALL surfaces carrying the npm-test rule (expected: `.kiro/steering/start-up-tasks.md`, `.kiro/steering/Task-Completion-Protocol.md`, and the ambient workflow doc's canonical source as enumerated by the assessment — the assessment's list is authoritative; rule-grain requires every surface named).
+The §5.3 scan covers these paths (the authoritative list per `pilot-row-assessment.md` §1):
 
-## Appendix A2 — The pruned imperative patterns **[REQUIRED BEFORE WINDOW OPENS — filled from Task 1.4's candidate prune diff]**
+1. `.kiro/steering/Task-Completion-Protocol.md` — prune hunks S2-1 (:44–:45), S2-2 (:146)
+2. `governance/Process-Development-Workflow.md` — prune hunk S3-1 (:75–:82)
+3. `.kiro/steering/start-up-tasks.md` — **zero prune hunks** (education-only surface for this rule; scanned anyway — re-accretion of a pruned imperative INTO it would be a W2 hit)
+4. `.claude/agents/thurgood.md` — generated, regen-slaved to #2 (scanned; a pruned imperative reappearing here WITHOUT a source change indicates a generator/manual-edit anomaly — reported as an anomaly, not W2-counted)
 
-> To be filled with the grep-able text patterns of each pruned clause (the imperative what-restatements removed by the prune), one per line, exactly as needed by §5.3's W2 scan. Teaching clauses retained by the prune are NOT patterns here — W2 detects re-accretion of imposters, not echoes of education.
+## Appendix A2 — The pruned imperative patterns **[FILLED — Task 1.4, 2026-07-14; parameters only, no criteria changed (§7)]**
+
+W2 greps ADDED lines (`+` hunks) in §5.3's diff scan for these literal patterns (the pruned imposters — NOT the retained teaching, which legitimately echoes validation vocabulary):
+
+1. `Run full validation (\`npm test\`)`
+2. `validation MUST pass before marking complete`
+3. `AFTER** validation passes`
+4. `**Validate Implementation**` *(as a checklist-step imperative frame — the pruned S3 step-2 form)*
+
+A hit on any pattern in an added line on an A1 surface = W2 UNMET for the current segment (record the commit). The rewritten context/why forms landing at the same locations are the retained education — not hits.
 
 ---
 

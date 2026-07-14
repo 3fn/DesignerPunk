@@ -134,3 +134,49 @@ history:
 <!-- Entries are added by 125-B Tasks 1.3/1.4 (pilot rows) and subsequent waves.
      Each entry: `### <entry-id>` heading (kebab-case, unique, non-substring — see
      Addressing and Citation above) + one fenced YAML block per the Entry Schema. -->
+
+### record-first-ratification
+
+```yaml
+rule: "Governance-law changes require Peter's ratification — authority is verified against a committed record, never a relayed claim"
+boundary_call:
+  class: operational
+  rationale: "Verifiable-record-vs-trusted-claim is an operational property of the workflow (origin: the 2026-07-05 relayed-authority incident — friction without protection); the boundary is surface-dependent, so per-scope realities are stated in scope[]"
+verification:
+  disposition: scoped
+  owner: thurgood
+  scope:
+    - surface: "gated surfaces — governance-law paths behind the PR gate (governance/**, .kiro/steering/**, .kiro/docs/ballots/**, agent prompts/configs)"
+      disposition: barrier
+      check_state: proposed
+      checks: []
+      rationale: "PR-approval-as-ratification (branch protection + CODEOWNERS -> Peter) — delivered by 125-B U3; until it arms, the standing carve-out (Task-Completion-Protocol § The Merge Rule, :126) keeps these paths Peter-merged as the closest ratification proxy"
+    - surface: "ungated artifacts — governance changes outside the PR gate's reach"
+      disposition: record-check
+      check_state: armed
+      checks: ["record-first ballot-status verification (PROCEDURAL, per .kiro/docs/ballots/README.md § 'The Ratification Protocol (record-first)' — an agent-performed mechanical check, not a CI lane)"]
+      rationale: "Layer 1, IN FORCE since 2026-07-05: apply only on a committed RATIFIED record; if the record is missing, report — never rubber-stamp a relayed claim and never refuse-and-stop on relay alone"
+education:
+  disposition: "KEEP all education surfaces — no imposters found (Exp 2, 2026-07-14): the ballots README teaches the protocol and the why; Task-Completion-Protocol teaches the gate-verifies-mechanics-not-authority boundary (:93, :125-126, :153); the canonical catalog statement (stated ONCE, canonical/shared/shared-catalog.yaml) propagates the agent-facing what+why into all 16 generated prompts via 122 auto-regen. RE-ASSESS the propagated statement's what-half when U3 arms the barrier for gated surfaces (the record-check remains operative for ungated artifacts regardless)."
+crossRef: "canonical/shared/shared-catalog.yaml#record-first-ratification"
+history:
+  - { date: 2026-07-14, change: "entry created from Experiment 2 (authority-row resolution), U1 pilot — evidence: .kiro/specs/125-B-classification-map/completion/pilot/exp2-authority-row-record.md", by: thurgood }
+```
+
+### npm-test-before-complete
+
+```yaml
+rule: "Run the full validation suite before marking a task complete (the npm-test rule — the U1 pilot's prune-with-arm row)"
+boundary_call:
+  class: operational
+  rationale: "Validation-before-completion is a workflow-ordering requirement; the artifact half (the suite itself passing) is functional and owned by the armed lanes — this row classifies the workflow imperative, not the suite"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: armed
+  checks: ["the 125-A required-check set: root functional lane + both sub-package suite lanes + full typecheck + build:validate — suite-green gates every unit merge (armed 2026-07-10, proven per-lane)"]
+education:
+  disposition: "PILOT ROW — candidate prune PRODUCED (Task 1.4, 2026-07-14), NOT applied: imperative what-restatements at Task-Completion-Protocol :44/:45/:146 and Process-Development-Workflow step 2 rewritten to context/why in the candidate diff; KEEP the subtask targeted-tests instruction (no gate exists at subtask grain), ALL lane-selection teaching (single home: start-up-tasks §5), and the SEPARATELY-CLASSIFIED Jest-not-Vitest education (a distinct rule, provably untouched by the diff). Prune ratification = Task 2 (U1-p, ballot-gated, Peter-merged), gated on probe + trial evidence; the trial and window adjudicate whether the pruned imperatives were nags (map frame) or teaching (layered frame)."
+history:
+  - { date: 2026-07-14, change: "entry created from Experiment 1 classification (Task 1.4); per-surface assessments + candidate prune diff: .kiro/specs/125-B-classification-map/completion/pilot/pilot-row-assessment.md; prune candidate produced, not applied", by: thurgood }
+```
