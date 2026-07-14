@@ -28,7 +28,7 @@
     {
       "lines": [
         335,
-        404
+        398
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,8 +36,8 @@
     },
     {
       "lines": [
-        405,
-        758
+        399,
+        752
       ],
       "mode": "embed",
       "op": "resolve",
@@ -45,40 +45,40 @@
     },
     {
       "lines": [
-        759,
-        762
+        753,
+        756
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        763,
-        792
+        757,
+        786
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        793,
-        807
+        787,
+        801
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        808,
-        811
+        802,
+        805
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        812,
-        817
+        806,
+        811
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

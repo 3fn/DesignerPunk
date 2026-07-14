@@ -8,7 +8,7 @@ description: Operational law for ending a task — when to write completion docs
 # Task Completion Protocol
 
 **Date**: 2026-06-29
-**Last Reviewed**: 2026-07-08
+**Last Reviewed**: 2026-07-14
 **Purpose**: The end-of-task operational sequence (completion docs, tiers, parent vs. subtask, stop-and-wait, PR flow) — operational law, always loaded
 **Organization**: process-standard
 **Scope**: cross-project
@@ -41,8 +41,8 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
 5. [ ] **STOP** and wait for user authorization
 
 ### For PARENT TASKS (Implementation or Architecture type)
-1. [ ] Run full validation (`npm test`) — see Start Up Tasks for test-command selection
-2. [ ] Mark parent task complete (use the `taskStatus` tool) **AFTER** validation passes — the status change commits with the work and takes effect at merge
+1. [ ] Local validation: the unit PR's required checks run the full suite at the gate — validating locally first catches failures before they block the merge (test-command selection: Start Up Tasks)
+2. [ ] Mark parent task complete (use the `taskStatus` tool) — the status change commits with the work and takes effect at merge; a failing suite blocks that merge at the gate
 3. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md` (on the task branch)
 4. [ ] Create summary doc: `docs/specs/[spec]/task-N-summary.md` (on the task branch)
 5. [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."`.
@@ -143,7 +143,7 @@ When the gate must be bypassed (broken gate, urgent fix the checks themselves bl
 
 ## Key Rules
 
-- **Implementation / Architecture tasks**: validation MUST pass before marking complete.
+- **Implementation / Architecture tasks**: the unit's required checks enforce a green suite at merge — local validation before completion catches failures early.
 - **All parent tasks**: create BOTH the completion doc AND the summary doc, on the task branch.
 - **All tasks**: STOP after completion — never auto-proceed to the next task. Authorization to START the next task is governed by Start Up Tasks; the merge that completes this task is not that authorization.
 - **Parent vs. subtask** is the load-bearing distinction: subtasks get targeted tests + a completion doc + an **optional, judgment-based** branch commit-and-push (at a checkpoint, on backup-worthy accumulation, or at a session/handoff boundary — not mechanically per subtask); parents get full validation + completion doc + summary doc, committed on the branch.
