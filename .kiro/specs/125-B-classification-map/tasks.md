@@ -96,7 +96,7 @@
     - Produce the candidate prune diff (all three surfaces, rule-grain) — consumed by 1.7/1.8, ratified in Task 2
     - _Requirements: 2.1–2.3; Design: C2_
 
-  - [ ] 1.5 crossRef re-point + reciprocal half
+  - [x] 1.5 crossRef re-point + reciprocal half
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet)
