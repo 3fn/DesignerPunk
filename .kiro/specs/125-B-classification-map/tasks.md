@@ -120,7 +120,7 @@
     - Scenario sourced per Req 7.2; all-surface substitution verified (grep legs + MCP served-output leg); rubric-scored verdict; `probe-evidence.md` (OB-7 pattern); "no gross loss detected" reporting discipline
     - _Requirements: 6.1–6.6; Design: C2, C3_
 
-  - [ ] 1.8 Cloned-agent behavioral trial
+  - [x] 1.8 Cloned-agent behavioral trial
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) orchestrating; **the cloned trial agent is the battery task's NATURAL agent** (Lina for 126 — avatar lane), run in both arms

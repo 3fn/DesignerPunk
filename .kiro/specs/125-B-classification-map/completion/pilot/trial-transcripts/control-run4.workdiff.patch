@@ -1,0 +1,237 @@
+diff --git a/src/components/core/Avatar-Base/Avatar-Base.schema.yaml b/src/components/core/Avatar-Base/Avatar-Base.schema.yaml
+index 82e6fc1a..aa335a5a 100644
+--- a/src/components/core/Avatar-Base/Avatar-Base.schema.yaml
++++ b/src/components/core/Avatar-Base/Avatar-Base.schema.yaml
+@@ -60,7 +60,10 @@ properties:
+   alt:
+     type: string
+     required: false
+-    description: Alt text for accessibility. Required if src provided.
++    description: >-
++      Alt text for accessibility. Required when src is provided on a human-type avatar
++      (agent type ignores src). Not required when decorative=true, which marks the avatar
++      non-informative and hides it from screen readers.
+   interactive:
+     type: boolean
+     required: false
+diff --git a/src/components/core/Avatar-Base/__tests__/Avatar.accessibility.test.ts b/src/components/core/Avatar-Base/__tests__/Avatar.accessibility.test.ts
+index 7af240f1..face1a92 100644
+--- a/src/components/core/Avatar-Base/__tests__/Avatar.accessibility.test.ts
++++ b/src/components/core/Avatar-Base/__tests__/Avatar.accessibility.test.ts
+@@ -212,16 +212,13 @@ describe('Avatar Component Accessibility', () => {
+     });
+ 
+     it('should apply empty alt when alt is empty string', async () => {
+-      // This fixture DELIBERATELY uses alt='' (the decorative-image pattern this test
+-      // asserts). The component's Req 5.4 check is `src && !alt`, which treats '' as
+-      // missing and warns — a known tension between Req 5.4 and the decorative pattern
+-      // (Req 9.2), flagged for Lina to adjudicate at the component level. Locally
+-      // silence the expected warn; do NOT change the fixture (it IS the test).
+-      const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
++      // Uses setAttribute, not the property: the alt setter removes the attribute on a
++      // falsy value, so `avatar.alt = ''` would collapse to absent. setAttribute is the
++      // only path that yields a genuine empty alt — the HTML-idiomatic decorative signal.
+       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
+       avatar.type = 'human';
+       avatar.src = 'https://example.com/profile.jpg';
+-      avatar.alt = '';
++      avatar.setAttribute('alt', '');
+       document.body.appendChild(avatar);
+ 
+       await new Promise(resolve => setTimeout(resolve, 0));
+@@ -229,7 +226,6 @@ describe('Avatar Component Accessibility', () => {
+       const img = avatar.shadowRoot?.querySelector('.avatar__image');
+       expect(img).toBeTruthy();
+       expect(img?.getAttribute('alt')).toBe('');
+-      warnSpy.mockRestore();
+     });
+ 
+     it('should update alt when alt attribute changes', async () => {
+@@ -292,18 +288,123 @@ describe('Avatar Component Accessibility', () => {
+ 
+     it('should NOT warn when no src is provided', async () => {
+       const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+-      
++
+       const avatar = document.createElement('avatar-base') as AvatarBaseElement;
+       avatar.type = 'human';
+       // No src, no alt
+       document.body.appendChild(avatar);
+-      
++
+       await new Promise(resolve => setTimeout(resolve, 0));
+-      
++
+       expect(consoleSpy).not.toHaveBeenCalled();
+-      
++
+       consoleSpy.mockRestore();
+     });
++
++    /**
++     * The settled edge semantics of the Req 5.4 warning: it fires only for a human-type
++     * avatar that renders an image with no alt text and no decorative intent.
++     *
++     * @see Requirements: 5.4 - alt required when src provided (human type)
++     * @see Requirements: 5 AC 5 - agent type ignores src
++     * @see Requirements: 9.2 - decorative=true applies aria-hidden="true"
++     * @see Spec 126 (O2 ratified)
++     */
++    describe('Warning edge semantics (human + absent alt + not decorative)', () => {
++      let consoleSpy: jest.SpyInstance;
++
++      beforeEach(() => {
++        consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
++      });
++
++      afterEach(() => {
++        consoleSpy.mockRestore();
++      });
++
++      it('should warn when a human avatar has src and no alt attribute', async () => {
++        const avatar = document.createElement('avatar-base') as AvatarBaseElement;
++        avatar.type = 'human';
++        avatar.src = 'https://example.com/profile.jpg';
++        document.body.appendChild(avatar);
++
++        await new Promise(resolve => setTimeout(resolve, 0));
++
++        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('"alt" is required'));
++      });
++
++      it('should NOT warn when a human avatar has a genuine empty alt attribute', async () => {
++        // setAttribute is the only path to a real alt="" — the idiomatic decorative signal
++        const avatar = document.createElement('avatar-base') as AvatarBaseElement;
++        avatar.type = 'human';
++        avatar.src = 'https://example.com/profile.jpg';
++        avatar.setAttribute('alt', '');
++        document.body.appendChild(avatar);
++
++        await new Promise(resolve => setTimeout(resolve, 0));
++
++        expect(consoleSpy).not.toHaveBeenCalled();
++      });
++
++      it('should warn when alt is set to empty string via the property (collapses to absent)', async () => {
++        // The alt setter removes the attribute on a falsy value, so the property form
++        // lands in the absent bucket and correctly warns — pinned explicitly.
++        const avatar = document.createElement('avatar-base') as AvatarBaseElement;
++        avatar.type = 'human';
++        avatar.src = 'https://example.com/profile.jpg';
++        avatar.alt = '';
++        document.body.appendChild(avatar);
++
++        await new Promise(resolve => setTimeout(resolve, 0));
++
++        expect(avatar.getAttribute('alt')).toBeNull();
++        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('"alt" is required'));
++
++        // The rendered image still falls back to alt="" (render-level behavior)
++        const img = avatar.shadowRoot?.querySelector('.avatar__image');
++        expect(img?.getAttribute('alt')).toBe('');
++      });
++
++      it('should NOT warn when a human avatar with src is decorative', async () => {
++        const avatar = document.createElement('avatar-base') as AvatarBaseElement;
++        avatar.type = 'human';
++        avatar.src = 'https://example.com/profile.jpg';
++        avatar.decorative = true;
++        document.body.appendChild(avatar);
++
++        await new Promise(resolve => setTimeout(resolve, 0));
++
++        expect(consoleSpy).not.toHaveBeenCalled();
++
++        // Co-asserted: the warn is suppressed *because* the avatar is genuinely hidden
++        // from screen readers (Req 9.2) — the semantic linkage, not a coincidence.
++        const container = avatar.shadowRoot?.querySelector('.avatar');
++        expect(container?.getAttribute('aria-hidden')).toBe('true');
++      });
++
++      it('should NOT warn when an agent avatar has src and no alt', async () => {
++        // Req 5 AC 5: agent type ignores src entirely — no image renders, nothing to describe
++        const avatar = document.createElement('avatar-base') as AvatarBaseElement;
++        avatar.type = 'agent';
++        avatar.src = 'https://example.com/profile.jpg';
++        document.body.appendChild(avatar);
++
++        await new Promise(resolve => setTimeout(resolve, 0));
++
++        expect(consoleSpy).not.toHaveBeenCalled();
++      });
++
++      it('should NOT warn when an agent avatar has src and alt (silence is type-driven)', async () => {
++        const avatar = document.createElement('avatar-base') as AvatarBaseElement;
++        avatar.type = 'agent';
++        avatar.src = 'https://example.com/profile.jpg';
++        avatar.alt = 'Agent avatar';
++        document.body.appendChild(avatar);
++
++        await new Promise(resolve => setTimeout(resolve, 0));
++
++        expect(consoleSpy).not.toHaveBeenCalled();
++      });
++    });
+   });
+ 
+   // ============================================================================
+diff --git a/src/components/core/Avatar-Base/contracts.yaml b/src/components/core/Avatar-Base/contracts.yaml
+index 2ac76376..e672d523 100644
+--- a/src/components/core/Avatar-Base/contracts.yaml
++++ b/src/components/core/Avatar-Base/contracts.yaml
+@@ -162,7 +162,15 @@ contracts:
+       When not decorative, Avatar provides accessible name:
+       - If alt prop provided: uses alt text
+       - If no alt prop (iOS/Android): "User avatar" for human, "AI agent avatar" for agent
+-      - Web requires alt prop when src is provided
++      - Web requires alt prop when src is provided, and emits a development warning when
++        it is missing. The warning fires only for a HUMAN-type avatar with src, absent alt,
++        and decorative=false:
++        - Agent type ignores src entirely (Req 5 AC 5), so it never warns.
++        - decorative=true is the official non-informative signal (aria-hidden), so it
++          never warns — alt text would never be announced.
++        - A genuine empty alt (alt="" via setAttribute) is the HTML-idiomatic decorative
++          signal and does not warn. Setting the alt PROPERTY to '' removes the attribute,
++          so it is treated as absent and does warn.
+     wcag: "1.1.1 Non-text Content"
+     platforms: [web, ios, android]
+     validation:
+diff --git a/src/components/core/Avatar-Base/platforms/web/Avatar.web.ts b/src/components/core/Avatar-Base/platforms/web/Avatar.web.ts
+index 192ab31e..cbf3c4be 100644
+--- a/src/components/core/Avatar-Base/platforms/web/Avatar.web.ts
++++ b/src/components/core/Avatar-Base/platforms/web/Avatar.web.ts
+@@ -700,12 +700,29 @@ export class AvatarBaseElement extends HTMLElement {
+     // @see Requirements: 9.2 - Apply aria-hidden="true" when decorative prop is true
+     const ariaHiddenAttr = decorative ? ' aria-hidden="true"' : '';
+     
+-    // Warn in development if src is provided without alt
+-    // @see Requirements: 5.4 - Require alt prop when src is provided
+-    if (src && !alt && typeof console !== 'undefined') {
++    // Warn in development if a human-type avatar renders an image with no alt text
++    // and no decorative intent.
++    //
++    // Scope is human type only: Req 5 AC 5 says agent type SHALL ignore `src` entirely,
++    // so no image renders and there is nothing to describe.
++    //
++    // `alt === null` (not `!alt`) is the "absent" test: the alt setter removes the
++    // attribute on a falsy value, so `avatar.alt = ''` collapses to null and warns.
++    // A genuine empty alt — reachable only via setAttribute('alt', '') — is the
++    // HTML-idiomatic decorative signal and stays silent.
++    //
++    // `decorative` is the component's official non-informative signal (Req 9.2 applies
++    // aria-hidden="true"), so a decorative avatar has no alt text to announce.
++    //
++    // @see Requirements: 5.4 - Require alt prop when src is provided (human type)
++    // @see Requirements: 5 AC 5 - Agent type ignores src
++    // @see Requirements: 9.2 - decorative=true applies aria-hidden="true"
++    // @see Spec 126 (O2 ratified) - settled edge semantics for this warning
++    if (type === 'human' && src && alt === null && !decorative && typeof console !== 'undefined') {
+       console.warn(
+-        'AvatarBaseElement: "alt" prop is required when "src" is provided for accessibility. ' +
+-        'Please add an alt attribute describing the image.'
++        'AvatarBaseElement: "alt" is required when "src" is provided. ' +
++        'Add an alt description of the image; or, if this avatar is purely decorative ' +
++        '(non-informative), set the "decorative" prop to hide it from screen readers.'
+       );
+     }
+     
