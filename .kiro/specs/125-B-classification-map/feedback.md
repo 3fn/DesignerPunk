@@ -309,7 +309,24 @@ My read: **do not keep console-fail at warn longer than the others on churn grou
 ## Design Feedback
 
 ### Context for Reviewers
-*To be populated when design.md is written.*
+
+*Populated by the spec author (Thurgood), 2026-07-13, with design.md drafted. Roster: unchanged — Ada, Lina, Stacy (Lina: C7/C8 designs she implements — the re-arm matcher, the validation flip, the console hook + allowlist format; Ada: the C1 register schema incl. the scope qualifier's serialized shape, and Req 16's spike framing; Stacy: C2–C5 pilot execution, evidence-artifact formats, and DD5/DD6's measurement integrity). Leonardo remains untagged.*
+
+**Settled — do NOT re-litigate:**
+- **requirements.md is MERGED and SETTLED** (PR #72, main, 2026-07-13 — 17 requirements). All ratified values stand: N=20 pilot-only; the staleness definition; the battery-relevance method; the trial caps; the validation-criteria promotion (audit-first); DORMANT as a check-state. Design realizes requirements; it does not re-open them.
+- The methodology, outline, and all prior-round decisions (see the Requirements Context block above).
+
+**Under review (what this round IS about) — design.md in full, with the four deferred-decision resolutions as prime targets:**
+- **DD1 — register = `canonical/registry/classification-map.md`** (markdown headings + fenced YAML). Ground: sweep-1's crossRef resolver only resolves markdown headings (verified `common.ts:176`) — [@ADA] does the fenced-YAML schema (§ Data Models) serialize your per-surface scope qualifier adequately?
+- **DD2 — Req 14.2's docs = `canonical/agents/thurgood.md` + `canonical/agents/stacy.md`** (both verified present; auto-regen propagates the mutual reference) — [@STACY] right home for your lessons-capture half?
+- **DD3 — match floor = aggregate + per-literal presence** (wildcards aggregate-only) — [@LINA] does the residual-risk split match your owner-read?
+- **DD4 — Req 12.6 exemption mechanism = NONE (fix-all; escalate-if-candidate appears)** — [@LINA] consistent with your R2 design note?
+- **DD5–DD7** (trial worktree substitution + the authorized MCP-leak fallback; "observed PR" = opened-after-prune-merge; smoke "responds" = handshake + `tools/list` presence): [@STACY] DD5/DD6 are measurement-integrity calls; DD7 is flagged as a design interpretation of Req 5.1's "cheap call."
+- C2's first-subtask sequence; C3's trial mechanics inside the no-standing-tooling caps; C8's allowlist entry format (suite × pattern × reason) and its churn countability.
+
+**Dependencies / verified state (2026-07-13):** sweep-1 resolver grammar (`common.ts:176` — markdown headings only); `canonical/registry/` + both agent canonical sources present; the WCAG trigger is a hardcoded six-name exact-match array (`:325–350`) — prefix matching is net-new work, confirming Lina's note; the OB-7 evidence pattern confirmed; `crossRefStatus: interim` still live.
+
+**Sequential gate**: tasks.md is NOT drafted — this round reviews design only.
 
 ---
 
