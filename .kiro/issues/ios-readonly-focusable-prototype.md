@@ -2,7 +2,11 @@
 
 **Date**: 2026-07-15
 **Owner**: Kenya (assigned in the iOS readOnly adjudication, condition 2 — accepted in [KENYA R2])
-**Status**: OPEN — requires real hardware; cannot run from this repo
+**Status**: OPEN — DEFERRED (Peter, 2026-07-15: no hardware access currently;
+revisit in a later roadmap phase). Until then the `interaction_focusable`
+iOS readOnly carve-out stands as the declared, mitigable exception the
+contract words it as — nothing degrades by waiting, and the auto-tighten
+clause fires whenever this runs.
 **Source**: `.kiro/issues/input-text-base-ios-readonly-adjudication.md`, RULED B-prime (Peter, 2026-07-15)
 
 ---
