@@ -16,7 +16,7 @@
  * - blendHoverLighter: Hover feedback on dark backgrounds (8% lighter)
  * - blendPressedDarker: Pressed state feedback with darkening (12% darker)
  * - blendFocusSaturate: Focus state with increased saturation (8% more saturated)
- * - blendDisabledDesaturate: Disabled state with decreased saturation (12% less saturated)
+ * - blendDisabledDesaturate: DEPRECATED 2026-07-15 — DesignerPunk has no disabled states
  * - blendContainerHoverDarker: Subtle container hover feedback (4% darker)
  * - color.icon.opticalBalance: Icon optical weight compensation (8% lighter)
  * 
@@ -49,6 +49,15 @@ export interface SemanticBlendToken {
 
   /** Detailed description of semantic meaning and appropriate usage */
   description: string;
+
+  /** Token is deprecated — do not use in new work; flows to DTCG $extensions.designerpunk.deprecated */
+  deprecated?: boolean;
+
+  /** ISO date the deprecation took effect */
+  deprecatedSince?: string;
+
+  /** Why the token was deprecated and what to do instead */
+  deprecatedReason?: string;
 }
 
 /**
@@ -111,6 +120,14 @@ export const blendTokens: Record<string, SemanticBlendToken> = {
     description: 'Blend for focus states with saturation increase (8% more saturated) - creates energized, attention-drawing appearance for focused interactive elements'
   },
 
+  /**
+   * @deprecated 2026-07-15 — DesignerPunk does not support disabled states
+   * (Button-CTA disabled-state adjudication, ruled REMOVE; the no-disabled-states
+   * philosophy holds corpus-wide). If an action is unavailable, do not render the
+   * component. Retained for backward compatibility; scheduled for removal in the
+   * next major version of @3fn/core. For non-disabled desaturation needs, use the
+   * generic desaturate utilities with primitive blend tokens.
+   */
   'blend.disabledDesaturate': {
     name: 'blend.disabledDesaturate',
     primitiveReferences: {
@@ -118,8 +135,11 @@ export const blendTokens: Record<string, SemanticBlendToken> = {
     },
     direction: BlendDirection.DESATURATE,
     category: 'interaction',
-    context: 'Disabled state appearance - muted, inactive color',
-    description: 'Blend for disabled states with desaturation (12% less saturated) - creates muted, inactive appearance indicating non-interactive state'
+    context: 'DEPRECATED - disabled states are not supported in DesignerPunk',
+    description: 'DEPRECATED (2026-07-15): DesignerPunk does not support disabled states — if an action is unavailable, do not render the component. Formerly: blend for disabled states with desaturation (12% less saturated). Scheduled for removal in the next major version.',
+    deprecated: true,
+    deprecatedSince: '2026-07-15',
+    deprecatedReason: 'No-disabled-states philosophy holds corpus-wide (Button-CTA adjudication, 2026-07-15). Unavailable actions should not be rendered; state_loading covers in-flight async actions.'
   },
 
   'blend.containerHoverDarker': {
@@ -200,8 +220,9 @@ export function validateBlendTokenCount(): boolean {
  *    → Creates vibrant, attention-drawing appearance for focused elements
  * 
  * 5. Disabled states?
- *    → Use blend.disabledDesaturate (12% less saturated)
- *    → Creates muted appearance indicating non-interactive state
+ *    → DO NOT style disabled states. DesignerPunk does not support disabled states —
+ *      if an action is unavailable, do not render the component (adjudicated 2026-07-15).
+ *    → blend.disabledDesaturate is DEPRECATED and scheduled for removal at the next major.
  * 
  * 6. Large container/surface hover?
  *    → Use blend.containerHoverDarker (4% darker)

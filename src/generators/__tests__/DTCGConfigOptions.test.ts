@@ -200,9 +200,8 @@ describe('DTCGFormatGenerator Configuration Options', () => {
   // -------------------------------------------------------------------------
   describe('includeDeprecated: false', () => {
     it('should exclude tokens marked as deprecated', () => {
-      // Since no tokens currently have deprecated: true in their data,
-      // we verify the infrastructure works by generating with both configs
-      // and confirming the output is identical (no deprecated tokens to strip)
+      // blend.disabledDesaturate is deprecated (2026-07-15, no-disabled-states ruling)
+      // and is currently the only deprecated token in the corpus
       const withDeprecated = new DTCGFormatGenerator({ includeDeprecated: true });
       const withoutDeprecated = new DTCGFormatGenerator({ includeDeprecated: false });
 
@@ -213,10 +212,20 @@ describe('DTCGFormatGenerator Configuration Options', () => {
       expect(outputWith.$schema).toBeDefined();
       expect(outputWithout.$schema).toBeDefined();
 
-      // Since no tokens are currently deprecated, counts should match
+      // includeDeprecated: true keeps the token and carries deprecation metadata
+      const blendWith = outputWith.semanticBlend as Record<string, any>;
+      expect(blendWith['blend.disabledDesaturate']).toBeDefined();
+      expect(blendWith['blend.disabledDesaturate'].$extensions?.designerpunk?.deprecated).toBe(true);
+      expect(blendWith['blend.disabledDesaturate'].$extensions?.designerpunk?.deprecatedSince).toBe('2026-07-15');
+
+      // includeDeprecated: false strips it
+      const blendWithout = outputWithout.semanticBlend as Record<string, any>;
+      expect(blendWithout['blend.disabledDesaturate']).toBeUndefined();
+
+      // Exactly the deprecated token is stripped — nothing else
       const countWith = countAllTokens(outputWith);
       const countWithout = countAllTokens(outputWithout);
-      expect(countWith).toBe(countWithout);
+      expect(countWith).toBe(countWithout + 1);
     });
   });
 });

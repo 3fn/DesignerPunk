@@ -294,9 +294,10 @@ export const TOKEN_CATEGORIES = {
     'border.default', 'border.strong',
     'radius.100', 'radius.150', 'radius.200',
   ],
+  // blend.disabledDesaturate removed 2026-07-15: deprecated (no-disabled-states
+  // philosophy) — the validator must not suggest it for new component work
   blend: [
-    'blend.hoverDarker', 'blend.pressedDarker',
-    'blend.disabledDesaturate', 'blend.iconLighter',
+    'blend.hoverDarker', 'blend.pressedDarker', 'blend.iconLighter',
   ],
 };
 

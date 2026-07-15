@@ -3,13 +3,13 @@ id: token-family-blend
 inclusion: manual
 name: Token-Family-Blend
 aliases: blend token work
-description: Blend token family — color modification utilities (darken, lighten, saturate, desaturate) producing opaque colors. Load when working with hover/pressed/disabled/focus color states or theme-aware color blending.
+description: Blend token family — color modification utilities (darken, lighten, saturate, desaturate) producing opaque colors. Load when working with hover/pressed/focus color states or theme-aware color blending.
 ---
 
 # Blend Tokens Guide
 
 **Date**: 2025-12-29
-**Last Reviewed**: 2026-05-06
+**Last Reviewed**: 2026-07-15
 **Purpose**: Complete reference for blend tokens with utility functions and theme-aware patterns
 **Organization**: token-documentation
 **Scope**: cross-project
@@ -27,7 +27,9 @@ The DesignerPunk blend token system provides a mathematically consistent foundat
 - **Opaque Color Results**: Blend operations produce new opaque colors, not transparent overlays
 - **Cross-Platform Consistency**: Same blend calculations produce identical results (±1 RGB) across Web, iOS, and Android
 - **Theme-Aware**: Blend utilities work correctly with both light and dark themes
-- **Semantic Meaning**: Semantic blend tokens express design intent (hover, pressed, disabled, focus)
+- **Semantic Meaning**: Semantic blend tokens express design intent (hover, pressed, focus)
+
+> **Deprecation note (2026-07-15)**: `blend.disabledDesaturate` and the `disabledColor()`/`disabledBlend()` convenience wrappers are **DEPRECATED**. DesignerPunk does not support disabled states (Button-CTA disabled-state adjudication, ruled REMOVE — the philosophy holds corpus-wide): if an action is unavailable, do not render the component. The deprecated surfaces remain for backward compatibility and are scheduled for removal in the next major version of `@3fn/core`. The generic `desaturate()` utilities are NOT deprecated.
 
 ---
 
@@ -54,7 +56,7 @@ Blend tokens can be applied in four directions:
 | `darker` | Overlay black at specified opacity | Hover/pressed states on light backgrounds |
 | `lighter` | Overlay white at specified opacity | Hover/pressed states on dark backgrounds, icon optical balance |
 | `saturate` | Increase color saturation in HSL space | Focus states, emphasis |
-| `desaturate` | Decrease color saturation in HSL space | Disabled states |
+| `desaturate` | Decrease color saturation in HSL space | Muted, de-emphasized colors |
 
 ---
 
@@ -68,7 +70,7 @@ Semantic blend tokens provide contextual meaning for common color modification u
 | `blend.hoverLighter` | blend200 | lighter | 8% | Hover feedback on dark backgrounds |
 | `blend.pressedDarker` | blend300 | darker | 12% | Pressed state feedback |
 | `blend.focusSaturate` | blend200 | saturate | 8% | Focus state with increased saturation |
-| `blend.disabledDesaturate` | blend300 | desaturate | 12% | Disabled state with decreased saturation |
+| `blend.disabledDesaturate` | blend300 | desaturate | 12% | **DEPRECATED 2026-07-15** — no disabled states in DesignerPunk; removal at next major |
 | `blend.containerHoverDarker` | blend100 | darker | 4% | Subtle container/surface hover |
 | `color.icon.opticalBalance` | blend200 | lighter | 8% | Icon optical weight compensation |
 
@@ -107,7 +109,7 @@ import {
 | `hoverColor(baseColor)` | darkerBlend | 8% (blend200) |
 | `pressedColor(baseColor)` | darkerBlend | 12% (blend300) |
 | `focusColor(baseColor)` | saturate | 8% (blend200) |
-| `disabledColor(baseColor)` | desaturate | 12% (blend300) |
+| `disabledColor(baseColor)` | desaturate | **DEPRECATED 2026-07-15** — removal at next major |
 | `iconColor(baseColor)` | lighterBlend | 8% (blend200) |
 
 **Usage Example**:
@@ -125,7 +127,6 @@ class ButtonCTA extends HTMLElement {
     // Calculate state colors
     this._hoverColor = blendUtils.hoverColor(primaryColor);
     this._pressedColor = blendUtils.pressedColor(primaryColor);
-    this._disabledColor = blendUtils.disabledColor(primaryColor);
   }
 }
 ```
@@ -168,7 +169,7 @@ extension Color {
     /// Focus state color (8% more saturated)
     func focusBlend() -> Color
     
-    /// Disabled state color (12% less saturated)
+    /// DEPRECATED 2026-07-15 — no disabled states in DesignerPunk; removal at next major
     func disabledBlend() -> Color
     
     /// Icon optical balance (8% lighter)
@@ -189,7 +190,6 @@ struct ButtonCTA: View {
         .background(isPressed ? primaryColor.pressedBlend() : 
                     isHovered ? primaryColor.hoverBlend() : 
                     primaryColor)
-        .foregroundColor(isDisabled ? primaryColor.disabledBlend() : primaryColor)
     }
 }
 ```
@@ -216,7 +216,7 @@ fun Color.desaturate(amount: Float): Color
 fun Color.hoverBlend(): Color    // 8% darker
 fun Color.pressedBlend(): Color  // 12% darker
 fun Color.focusBlend(): Color    // 8% more saturated
-fun Color.disabledBlend(): Color // 12% less saturated
+fun Color.disabledBlend(): Color // DEPRECATED 2026-07-15 — removal at next major
 fun Color.iconBlend(): Color     // 8% lighter
 ```
 
@@ -266,7 +266,6 @@ class ButtonCTA extends HTMLElement {
     const blendUtils = getBlendUtilities();
     this._hoverColor = blendUtils.hoverColor(primaryColor);
     this._pressedColor = blendUtils.pressedColor(primaryColor);
-    this._disabledColor = blendUtils.disabledColor(primaryColor);
     this._iconColor = blendUtils.iconColor(onPrimaryColor);
   }
   
@@ -348,7 +347,6 @@ const iconStyle = { filter: 'brightness(1.08)' };
 const blendUtils = getBlendUtilities();
 const hoverColor = blendUtils.hoverColor(primaryColor);      // darkerBlend 8%
 const pressedColor = blendUtils.pressedColor(primaryColor);  // darkerBlend 12%
-const disabledColor = blendUtils.disabledColor(primaryColor); // desaturate 12%
 const iconColor = blendUtils.iconColor(onPrimaryColor);      // lighterBlend 8%
 ```
 
@@ -357,7 +355,6 @@ const iconColor = blendUtils.iconColor(onPrimaryColor);      // lighterBlend 8%
 ```typescript
 const blendUtils = getBlendUtilities();
 const focusColor = blendUtils.focusColor(primaryColor);      // saturate 8%
-const disabledColor = blendUtils.disabledColor(primaryColor); // desaturate 12%
 ```
 
 ### Container Component
@@ -414,7 +411,6 @@ Use semantic blend tokens for standard interaction states:
 | Hover (dark bg) | `blend.hoverLighter` | `lighterBlend(color, 0.08)` |
 | Pressed | `blend.pressedDarker` | `pressedColor()` |
 | Focus | `blend.focusSaturate` | `focusColor()` |
-| Disabled | `blend.disabledDesaturate` | `disabledColor()` |
 | Container hover | `blend.containerHoverDarker` | `darkerBlend(color, 0.04)` |
 | Icon optical | `color.icon.opticalBalance` | `iconColor()` |
 
@@ -432,6 +428,13 @@ const emphasisColor = blendUtils.darkerBlend(color, 0.16); // blend400 = 16%
 ```
 
 ### Anti-Patterns to Avoid
+
+**❌ Don't style disabled states**:
+```typescript
+// WRONG: DesignerPunk does not support disabled states (adjudicated 2026-07-15).
+// If an action is unavailable, do not render the component.
+const disabledColor = blendUtils.disabledColor(primaryColor);
+```
 
 **❌ Don't use opacity for state colors**:
 ```typescript
@@ -481,7 +484,7 @@ blend500 = base × 5 = 0.04 × 5 = 0.20 (20%)
 | blend.hoverLighter | blend200 | 8% |
 | blend.pressedDarker | blend300 | 12% |
 | blend.focusSaturate | blend200 | 8% |
-| blend.disabledDesaturate | blend300 | 12% |
+| blend.disabledDesaturate (deprecated) | blend300 | 12% |
 | blend.containerHoverDarker | blend100 | 4% |
 | color.icon.opticalBalance | blend200 | 8% |
 
