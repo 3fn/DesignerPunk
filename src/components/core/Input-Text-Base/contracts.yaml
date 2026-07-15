@@ -9,12 +9,29 @@ contracts:
     behavior: |
       Component can receive focus via Tab key navigation.
       Focus state is visually indicated and triggers label animation.
+
+      Platform note — iOS readOnly carve-out (declared, adjudicated): when
+      readOnly is true, iOS renders the value as selectable static text
+      (see state_readonly) and does NOT participate in keyboard/Full
+      Keyboard Access focus order; onFocus/onBlur are declared not-fired on
+      that path. Web and Android readOnly fields affirmatively REMAIN in
+      focus order and fire focus events (removing an Android readOnly field
+      from focus order would require enabled=false — banned disabled
+      semantics — so normalizing web/Android down to iOS is not an
+      available move). The carve-out is a mitigable declared exception, not
+      a settled permanent difference: an on-device .focusable(interactions:)
+      prototype is tracked, and if it verifies (FKA reachability + keyboard
+      copy), iOS re-enters focus order and this note tightens to full
+      three-platform participation.
+      Ruling: .kiro/issues/input-text-base-ios-readonly-adjudication.md
+      (RULED B-prime, Peter 2026-07-15).
     wcag: "2.1.1 Keyboard"
     platforms: [web, ios, android]
     validation:
       - Tab key moves focus to input
       - Focus state is visually distinct
       - Focus triggers label float animation
+      - readOnly fields remain in keyboard focus order on web and Android
     test_approach: |
       - Press Tab, verify input receives focus
       - Verify label animates on focus
@@ -72,6 +89,78 @@ contracts:
       - Error message displayed and associated via aria-describedby
     test_approach: |
       - Set error state, verify border/label/icon/message
+    required: true
+
+  # state_readonly is a NEW Concept Catalog concept — concept ballot pending
+  # ratification (drafted separately by the coordinator). Authored under the
+  # B-prime ruling: .kiro/issues/input-text-base-ios-readonly-adjudication.md
+  # (RULED by Peter, 2026-07-15).
+  state_readonly:
+    category: state
+    description: Displays a non-editable value that stays perceivable, selectable, and copyable — never disabled semantics
+    behavior: |
+      When readOnly is true, the component displays its value without
+      allowing edits. Invariants on all platforms:
+      - Content is selectable and copyable (whole-string copy is the
+        accepted iOS behavior — long-press select/copy on static text).
+      - Content is not editable; no software keyboard/IME is raised.
+      - Assistive technology announces the label, the value, and a
+        read-only indication — NEVER a disabled/dimmed trait or state.
+      - No disabled semantics of any kind (no SwiftUI .disabled(), no
+        Compose enabled=false, no aria-disabled/disabled attribute).
+
+      Announcement per platform:
+      - Web: native readonly attribute semantics (implicit aria-readonly).
+      - Android: explicit stateDescription("read only") in semantics.
+      - iOS: composed accessibility — label + value + read-only hint.
+
+      Focus order per platform:
+      - Web and Android: readOnly fields affirmatively PARTICIPATE in
+        keyboard focus order and fire onFocus/onBlur.
+      - iOS: readOnly content is rendered as selectable static text inside
+        the shared field chrome (B-prime); it is NOT in keyboard/FKA focus
+        order and onFocus/onBlur are DECLARED not-fired — a mitigable
+        declared exception. A .focusable(interactions:) on-device prototype
+        is tracked; if it verifies, this contract auto-tightens and iOS
+        re-enters focus order.
+
+      Tap-acknowledgment delta (platform note): tapping an Android readOnly
+      field focuses it (focus ring engages; empty-field label floats);
+      tapping the iOS readOnly text gives no acknowledgment until
+      long-press (select/copy). Declared, cosmetic.
+
+      Empty-value behavior: the label rests in placeholder position on all
+      platforms (no platform force-floats it), and the field chrome
+      reserves its full height unconditionally.
+
+      Secure-type carve-out (declared): when Input-Text-Base is used
+      directly with a secure/password type, readOnly is IGNORED — the field
+      remains an editable secure field. The read-only display path renders
+      the value as selectable plaintext and must be unreachable for
+      secrets; read-only passwords are excluded at the variant level
+      (Input-Text-Password excludes state_readonly and never forwards
+      readOnly).
+    wcag: "4.1.2 Name, Role, Value"
+    platforms: [web, ios, android]
+    validation:
+      - Value is not editable when readOnly is true
+      - Content is selectable and copyable on all platforms
+      - No software keyboard/IME is raised
+      - Web renders the native readonly attribute
+      - Android passes readOnly to the text field with enabled=true and sets
+        stateDescription("read only")
+      - iOS renders selectable Text (textSelection enabled) inside the
+        shared field chrome and composes a read-only accessibility hint
+      - No platform applies disabled semantics (.disabled(), enabled=false,
+        aria-disabled, dimmed trait)
+      - readOnly fields remain in keyboard focus order on web and Android
+    test_approach: |
+      - Static (Jest): web readonly attribute wiring; Android
+        readOnly = readOnly pass-through; iOS textSelection path present and
+        no .disabled( anywhere in Form Inputs iOS sources
+      - Device: attempt edit (rejected), copy value, verify announcement
+        (VoiceOver: label + value + read-only hint, never "dimmed";
+        TalkBack: "read only")
     required: true
 
   state_success:

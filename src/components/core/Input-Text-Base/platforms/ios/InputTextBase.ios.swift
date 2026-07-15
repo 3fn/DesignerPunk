@@ -14,20 +14,32 @@
  * - Offset animation (translateY)
  * - Trailing icon support (error, success, info)
  * - Trailing content slot for semantic variants (e.g., password toggle)
+ * - Read-only rendering (B-prime): selectable Text inside the shared field
+ *   chrome — never disabled semantics
  * - Respects accessibilityReduceMotion
  * - WCAG 2.1 AA compliant
  * - Uses theme-aware blend utilities for state colors (focus)
  *
  * Behavioral Contracts:
- * - focusable: Can receive keyboard focus
- * - float_label_animation: Label animates on focus
- * - validates_on_blur: Validation triggers on blur
- * - error_state_display: Shows error message and styling
- * - success_state_display: Shows success styling
- * - trailing_icon_display: Shows contextual trailing icons
- * - focus_ring: WCAG 2.4.7 focus visible indicator
- * - reduced_motion_support: Respects prefers-reduced-motion
- * 
+ * - interaction_focusable: Can receive keyboard focus (iOS readOnly carve-out
+ *   declared in contracts.yaml — readOnly content is not in FKA focus order)
+ * - content_float_label: Label animates on focus
+ * - validation_on_blur: Validation triggers on blur
+ * - state_error: Shows error message and styling
+ * - state_success: Shows success styling
+ * - state_readonly: Read-only display — selectable/copyable, non-editable,
+ *   announced read-only, never a disabled/dimmed trait (concept ballot
+ *   pending ratification; see contracts.yaml)
+ * - content_trailing_icon: Shows contextual trailing icons
+ * - interaction_focus_ring: WCAG 2.4.7 focus visible indicator
+ * - accessibility_reduced_motion: Respects prefers-reduced-motion
+ *
+ * Read-only (B-prime ruling — Peter, 2026-07-15,
+ * .kiro/issues/input-text-base-ios-readonly-adjudication.md):
+ * readOnly renders as `Text(value).textSelection(.enabled)` inside the same
+ * field chrome as the editable field. The SwiftUI disabled modifier is never
+ * applied. onFocus/onBlur are DECLARED not-fired on the iOS readOnly path.
+ *
  * Requirements: 1.1, 1.2, 1.3, 1.5, 4.1, 4.2, 4.3, 8.1, 8.2, 8.4, 11.1, 11.2, 11.3, 13.1
  */
 
@@ -81,7 +93,9 @@ struct InputTextBase: View {
     /// Placeholder text (only shown when label is floated and input is empty)
     let placeholder: String?
     
-    /// Read-only state
+    /// Read-only state (state_readonly contract): renders the value as
+    /// selectable Text inside the field chrome — never disabled semantics.
+    /// Ignored for secure fields (see isReadOnlyDisplay).
     let readOnly: Bool
     
     /// Required field indicator
@@ -113,6 +127,22 @@ struct InputTextBase: View {
     /// Whether input has content
     private var isFilled: Bool {
         !value.isEmpty
+    }
+
+    /// Whether to render the read-only display path (B-prime).
+    ///
+    /// SECURITY-CRITICAL GATE: the read-only path renders the value as
+    /// selectable plaintext `Text`. It MUST be unreachable for secure fields
+    /// (`type == .password`), or a readOnly password would render its secret
+    /// in plaintext. readOnly is contracted OUT of Input-Text-Password
+    /// entirely (adjudication condition 4:
+    /// .kiro/issues/input-text-base-ios-readonly-adjudication.md — RULED
+    /// B-prime, Peter 2026-07-15); the Password variant additionally strips
+    /// readOnly before it reaches this component. On a secure field, readOnly
+    /// is ignored (the field stays an editable SecureField) rather than ever
+    /// routing to the plaintext Text branch.
+    private var isReadOnlyDisplay: Bool {
+        readOnly && type != .password
     }
     
     /// Whether input has error
@@ -211,7 +241,36 @@ struct InputTextBase: View {
                         }
                     
                     // Input field
-                    if type == .password {
+                    if isReadOnlyDisplay {
+                        // Read-only rendering (B-prime): selectable Text inside
+                        // the shared field chrome. Never the SwiftUI disabled
+                        // modifier — it produces disabled semantics (unfocusable,
+                        // uncopyable, VoiceOver "dimmed"), which DesignerPunk bans.
+                        // Long-press → select/copy (whole-string copy is the
+                        // contracted iOS behavior). No keyboard is raised.
+                        //
+                        // Declared behavior (state_readonly contract):
+                        // - NOT in keyboard/FKA focus order (mitigable declared
+                        //   exception — .focusable(interactions:) prototype
+                        //   tracked; contract tightens if it verifies on-device)
+                        // - onFocus/onBlur DECLARED not-fired on this path
+                        //   (there is no focus system here — nothing simulates
+                        //   or pretends otherwise)
+                        // - Empty value: label rests in placeholder position
+                        //   (cross-platform parity); the chrome reserves full
+                        //   height unconditionally.
+                        Text(value)
+                            .textSelection(.enabled)
+                            .modifier(InputTextBaseFieldChrome(
+                                borderColor: borderColor,
+                                isFocused: false,
+                                hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible || trailingContent != nil
+                            ))
+                    } else if type == .password {
+                        // Secure path: readOnly is IGNORED here (see
+                        // isReadOnlyDisplay) — a secure field never routes to
+                        // the plaintext read-only Text branch, and disabled
+                        // semantics are never applied.
                         SecureField(isLabelFloated && placeholder != nil ? placeholder! : "", text: $value)
                             .textFieldStyle(InputTextBaseFieldStyle(
                                 borderColor: borderColor,
@@ -221,7 +280,6 @@ struct InputTextBase: View {
                                 hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible || trailingContent != nil
                             ))
                             .focused($isFocused)
-                            .disabled(readOnly)
                             .textContentType(autocomplete)
                             .onChange(of: value) { newValue in
                                 if let maxLength = maxLength, newValue.count > maxLength {
@@ -246,7 +304,6 @@ struct InputTextBase: View {
                                 hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible || trailingContent != nil
                             ))
                             .focused($isFocused)
-                            .disabled(readOnly)
                             .textContentType(autocomplete)
                             .keyboardType(keyboardTypeForInputType(type))
                             .onChange(of: value) { newValue in
@@ -321,7 +378,25 @@ struct InputTextBase: View {
         .accessibilityElement(children: .contain)
         .accessibilityLabel(label)
         .accessibilityValue(value)
-        .accessibilityHint(helperText ?? "")
+        .accessibilityHint(accessibilityHintText)
+    }
+
+    /// Composed accessibility hint.
+    ///
+    /// On the read-only path this composes the read-only indication with any
+    /// helper text, so VoiceOver announces label + value + "Read only"
+    /// (state_readonly contract) — never a disabled/dimmed trait. iOS has no
+    /// read-only accessibility trait; the hint is the correct announcement
+    /// route (adjudication, Kenya R1).
+    private var accessibilityHintText: String {
+        var parts: [String] = []
+        if isReadOnlyDisplay {
+            parts.append("Read only")
+        }
+        if let helperText = helperText, !helperText.isEmpty {
+            parts.append(helperText)
+        }
+        return parts.joined(separator: ". ")
     }
     
     // MARK: - Helper Methods
@@ -355,29 +430,48 @@ enum InputType {
     case url
 }
 
-// MARK: - Custom Text Field Style
+// MARK: - Shared Field Chrome
 
 /**
- * Custom text field style for consistent appearance
+ * Shared field chrome (B-prime chrome extraction, adjudication 2026-07-15).
+ *
+ * The visual treatment of the field box — typography, text color, insets,
+ * canvas background, border overlay, and focus-ring overlay — extracted from
+ * InputTextBaseFieldStyle so it applies to BOTH rendering paths: the editable
+ * TextField/SecureField (via InputTextBaseFieldStyle, which delegates here)
+ * and the read-only Text (applied directly). One chrome, two contents — the
+ * two paths cannot drift visually.
  */
-struct InputTextBaseFieldStyle: TextFieldStyle {
+struct InputTextBaseFieldChrome: ViewModifier {
     let borderColor: Color
     let isFocused: Bool
-    let hasError: Bool
-    let isSuccess: Bool
     let hasTrailingIcon: Bool
-    
+
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.dpTheme) private var theme
-    
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
+
+    /// Minimum content height, reserved UNCONDITIONALLY on both paths:
+    /// input line height (fontSize × unitless lineHeight multiplier, the
+    /// Badge/Nav token-derived pattern) + vertical insets. This deliberately
+    /// does NOT reason about empty `Text` intrinsic size (undocumented, has
+    /// varied across SwiftUI releases): an empty readOnly value keeps the
+    /// same field height as a filled editable field. Note: the field uses a
+    /// fixed token font size (no Dynamic Type) today — if the family adopts
+    /// Dynamic Type, this minHeight must scale with it.
+    private var minFieldHeight: CGFloat {
+        (DesignTokens.typographyInput.fontSize * DesignTokens.typographyInput.lineHeight)
+            + (DesignTokens.spaceInset100 * 2)
+    }
+
+    func body(content: Content) -> some View {
+        content
             .font(Font.system(size: DesignTokens.typographyInput.fontSize)
                 .weight(DesignTokens.typographyInput.fontWeight))
             .foregroundColor(theme.colorTextDefault)
             .padding(.leading, DesignTokens.spaceInset100)
             .padding(.vertical, DesignTokens.spaceInset100)
             .padding(.trailing, hasTrailingIcon ? 0 : DesignTokens.spaceInset100)
+            .frame(maxWidth: .infinity, minHeight: minFieldHeight, alignment: .leading)
             .background(theme.colorStructureCanvas)
             .overlay(
                 RoundedRectangle(cornerRadius: DesignTokens.radius150)
@@ -393,6 +487,30 @@ struct InputTextBaseFieldStyle: TextFieldStyle {
                         value: isFocused
                     )
             )
+    }
+}
+
+// MARK: - Custom Text Field Style
+
+/**
+ * Custom text field style for consistent appearance.
+ * Delegates all visual treatment to InputTextBaseFieldChrome (shared with
+ * the read-only rendering path).
+ */
+struct InputTextBaseFieldStyle: TextFieldStyle {
+    let borderColor: Color
+    let isFocused: Bool
+    let hasError: Bool
+    let isSuccess: Bool
+    let hasTrailingIcon: Bool
+
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .modifier(InputTextBaseFieldChrome(
+                borderColor: borderColor,
+                isFocused: isFocused,
+                hasTrailingIcon: hasTrailingIcon
+            ))
     }
 }
 
@@ -474,6 +592,47 @@ struct InputTextBase_Previews: PreviewProvider {
                 autocomplete: .emailAddress,
                 placeholder: nil,
                 readOnly: false,
+                required: false,
+                maxLength: nil
+            )
+
+            // Read-only (B-prime): selectable Text in the shared chrome
+            InputTextBase(
+                id: "preview-read-only",
+                label: "Reference number",
+                value: .constant("REF-2026-07-15"),
+                onChange: nil,
+                onFocus: nil,
+                onBlur: nil,
+                helperText: "Long-press to copy",
+                errorMessage: nil,
+                isSuccess: false,
+                showInfoIcon: false,
+                type: .text,
+                autocomplete: nil,
+                placeholder: nil,
+                readOnly: true,
+                required: false,
+                maxLength: nil
+            )
+
+            // Read-only, empty: label rests in placeholder position,
+            // chrome reserves full field height
+            InputTextBase(
+                id: "preview-read-only-empty",
+                label: "Reference number",
+                value: .constant(""),
+                onChange: nil,
+                onFocus: nil,
+                onBlur: nil,
+                helperText: nil,
+                errorMessage: nil,
+                isSuccess: false,
+                showInfoIcon: false,
+                type: .text,
+                autocomplete: nil,
+                placeholder: nil,
+                readOnly: true,
                 required: false,
                 maxLength: nil
             )

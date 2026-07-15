@@ -117,7 +117,16 @@ private fun validatePasswordRequirements(
  * @param isSuccess Success state indicator
  * @param showInfoIcon Info icon support
  * @param placeholder Placeholder text (only shown when label is floated and input is empty)
- * @param readOnly Read-only state
+ * @param readOnly Read-only state — NOT SUPPORTED on Input-Text-Password.
+ *   readOnly is contracted OUT of the Password variant (see Input-Text-Password
+ *   contracts.yaml excludes.state_readonly; adjudication condition 4:
+ *   .kiro/issues/input-text-base-ios-readonly-adjudication.md — RULED B-prime,
+ *   Peter 2026-07-15). Zero named consumers; contracting it out deletes the
+ *   security fork rather than fencing it. Note this is contract conformance,
+ *   not a security fix: on Android the masked PasswordVisualTransformation
+ *   already suppresses copy/cut ([DATA R2] §3 verification). This param is
+ *   accepted for API stability but IGNORED: it is never forwarded to
+ *   InputTextBase.
  * @param required Required field indicator
  * @param maxLength Maximum length for input value
  * @param imeAction IME action for keyboard
@@ -253,7 +262,12 @@ fun InputTextPassword(
         type = InputType.PASSWORD,
         visualTransformation = visualTransformation,
         placeholder = placeholder,
-        readOnly = readOnly,
+        // readOnly is contracted out of Input-Text-Password (excludes.state_readonly;
+        // adjudication condition 4: .kiro/issues/input-text-base-ios-readonly-adjudication.md
+        // — RULED B-prime, Peter 2026-07-15). Always stripped. Contract conformance,
+        // not a security fix — Android's masked PasswordVisualTransformation already
+        // suppresses copy/cut, so Android was never the hazard here ([DATA R2] §3).
+        readOnly = false,
         required = required,
         maxLength = maxLength,
         imeAction = imeAction,

@@ -129,13 +129,18 @@ const CONTRACT_PATTERNS: Record<string, Record<string, RegExp[]>> = {
 
 // Disabled-state exclusion guard (no-disabled-states philosophy, Spec 066 / Button-CTA pattern).
 // These patterns must NOT appear in any Form Inputs platform implementation.
-// readOnly is the documented alternative; iOS implements readOnly via SwiftUI
-// .disabled(readOnly), which none of these patterns match.
+// The iOS `.disabled(` pattern was added per the iOS readOnly adjudication
+// (.kiro/issues/input-text-base-ios-readonly-adjudication.md — RULED B-prime,
+// Peter 2026-07-15, condition 5): iOS previously implemented readOnly via
+// SwiftUI .disabled(readOnly), which the original patterns missed — that is
+// how a "dimmed" readOnly field survived two disabled-cleanup passes. There
+// are zero legitimate `.disabled(` uses in Form Inputs platform sources.
 const DISABLED_EXCLUSION_GUARD_PATTERNS: RegExp[] = [
   /isDisabled/,
   /disabledBlend/,
   /aria-disabled/,
   /cursor:\s*not-allowed/,
+  /\.disabled\(/, // SwiftUI disabled modifier — disabled semantics regardless of intent
 ];
 
 /**
@@ -371,13 +376,18 @@ describe('Form Inputs Family Behavioral Contracts', () => {
 
       it('no platform implementation should contain disabled-state handling', () => {
         // Exclusion guard (Spec 066 / Button-CTA pattern): the contracts.yaml
-        // exclusion must hold in code. readOnly is the documented alternative;
-        // iOS implements readOnly via SwiftUI .disabled(readOnly), which is allowed.
+        // exclusion must hold in code. readOnly is the documented alternative
+        // and must never be implemented via disabled semantics — iOS renders
+        // readOnly as selectable Text in the field chrome (B-prime ruling,
+        // 2026-07-15), never via .disabled(readOnly).
         for (const formComponent of FORM_INPUT_COMPONENTS) {
           for (const platform of ['web', 'ios', 'android']) {
             const content = loadPlatformImpl(formComponent, platform);
             if (!content) continue;
 
+            // Raw-source matching (strict): banned patterns may not appear
+            // anywhere in a platform implementation, comments included —
+            // reference the mechanism descriptively in docs, never literally.
             const violations = DISABLED_EXCLUSION_GUARD_PATTERNS
               .filter(pattern => pattern.test(content))
               .map(pattern => pattern.source);
@@ -389,6 +399,184 @@ describe('Form Inputs Family Behavioral Contracts', () => {
             expect(violations).toEqual([]);
           }
         }
+      });
+    });
+
+    describe('state_readonly contract (iOS readOnly adjudication, RULED B-prime 2026-07-15)', () => {
+      // @see .kiro/issues/input-text-base-ios-readonly-adjudication.md
+      // These are the first executable readOnly assertions anywhere in the
+      // component (pre-ruling coverage was zero on all platforms).
+
+      it('Input-Text-Base contracts.yaml declares state_readonly', () => {
+        const contracts = loadContracts('Input-Text-Base');
+        expect(contracts).not.toBeNull();
+        expect(contracts!.state_readonly).toBeDefined();
+        expect(contracts!.state_readonly.category).toBe('state');
+        expect(contracts!.state_readonly.required).toBe(true);
+        expect(contracts!.state_readonly.platforms).toEqual(['web', 'ios', 'android']);
+        // The contract must pin "never disabled semantics" — the invariant
+        // the original implementation violated.
+        expect(contracts!.state_readonly.behavior).toMatch(/disabled/i);
+      });
+
+      it('Input-Text-Base interaction_focusable declares the iOS readOnly carve-out', () => {
+        const contractsPath = path.join(COMPONENTS_DIR, 'Input-Text-Base', 'contracts.yaml');
+        const content = fs.readFileSync(contractsPath, 'utf-8');
+        const parsed = yaml.load(content) as Record<string, any>;
+        const focusable = parsed.contracts.interaction_focusable;
+
+        // Declared, never silent: iOS carve-out + affirmative web/Android
+        // focus-order participation (adjudication condition 1).
+        expect(focusable.behavior).toMatch(/iOS readOnly carve-out/i);
+        expect(focusable.behavior).toMatch(/mitigable declared exception/i);
+        expect(focusable.behavior).toMatch(/REMAIN in\s+focus order/);
+      });
+
+      it('Input-Text-Password contracts.yaml excludes state_readonly (security fork deleted)', () => {
+        const contractsPath = path.join(COMPONENTS_DIR, 'Input-Text-Password', 'contracts.yaml');
+        const content = fs.readFileSync(contractsPath, 'utf-8');
+        const parsed = yaml.load(content) as Record<string, any>;
+
+        expect(parsed.excludes).toBeDefined();
+        expect(parsed.excludes.state_readonly).toBeDefined();
+        expect(parsed.excludes.state_readonly.reason).toMatch(/security/i);
+        expect(parsed.excludes.state_readonly.reference).toMatch(
+          /input-text-base-ios-readonly-adjudication/
+        );
+      });
+
+      it('no Input-Text iOS implementation contains .disabled( anywhere', () => {
+        for (const formComponent of FORM_INPUT_COMPONENTS) {
+          const content = loadPlatformImpl(formComponent, 'ios');
+          if (!content) continue;
+
+          // Raw-source assertion, comments included: this is how
+          // .disabled(readOnly) survived two disabled-cleanup passes.
+          expect(content).not.toMatch(/\.disabled\(/);
+        }
+      });
+
+      it('iOS readOnly path renders selectable Text inside the shared field chrome', () => {
+        const content = loadPlatformImpl('Input-Text-Base', 'ios');
+        expect(content).not.toBeNull();
+
+        // B-prime: Text(value).textSelection(.enabled) wrapped by the
+        // extracted chrome modifier, shared with the editable path.
+        expect(content).toMatch(/\.textSelection\(\.enabled\)/);
+        expect(content).toMatch(/InputTextBaseFieldChrome/);
+        // The chrome must reserve min-height from the typographyInput
+        // line-height token unconditionally on both paths (Kenya hardening).
+        expect(content).toMatch(/typographyInput\.lineHeight/);
+        expect(content).toMatch(/minHeight/);
+      });
+
+      it('iOS readOnly Text path is unreachable for secure fields (SECURITY gate)', () => {
+        const content = loadPlatformImpl('Input-Text-Base', 'ios');
+        expect(content).not.toBeNull();
+
+        // The gate: the read-only display path must exclude .password so a
+        // secure value can never render as selectable plaintext Text.
+        expect(content).toMatch(/readOnly\s*&&\s*type\s*!=\s*\.password/);
+        // And the rendering branch must key off the gated property, not the
+        // raw readOnly prop.
+        expect(content).toMatch(/if\s+isReadOnlyDisplay/);
+      });
+
+      it('iOS Input-Text-Password never forwards readOnly to the base', () => {
+        const content = loadPlatformImpl('Input-Text-Password', 'ios');
+        expect(content).not.toBeNull();
+
+        // Both branches (masked SecureField and revealed .text) must strip
+        // readOnly — the revealed branch would otherwise route a secret to
+        // the base's plaintext Text path.
+        const forwarded = content!.match(/readOnly:\s*readOnly/g);
+        expect(forwarded).toBeNull();
+
+        const stripped = content!.match(/readOnly:\s*false/g);
+        expect(stripped).not.toBeNull();
+        expect(stripped!.length).toBeGreaterThanOrEqual(2);
+      });
+
+      it('iOS composes a read-only accessibility indication (never a dimmed trait)', () => {
+        const content = loadPlatformImpl('Input-Text-Base', 'ios');
+        expect(content).not.toBeNull();
+
+        // Composed label + value + read-only hint (Kenya R1: iOS has no
+        // read-only trait; the hint is the announcement route).
+        expect(content).toMatch(/Read only/);
+        expect(content).toMatch(/accessibilityHint/);
+      });
+
+      it('web implements readOnly via the native readonly attribute', () => {
+        const content = loadPlatformImpl('Input-Text-Base', 'web');
+        expect(content).not.toBeNull();
+
+        // Native readonly attribute = native semantics (implicit
+        // aria-readonly), focus-order participation, selectable content.
+        expect(content).toMatch(/readOnly\s*\?\s*'readonly'/);
+      });
+
+      it('Android passes readOnly through to the text field without disabled semantics', () => {
+        const content = loadPlatformImpl('Input-Text-Base', 'android');
+        expect(content).not.toBeNull();
+
+        // Compose readOnly keeps the field focusable/selectable/copyable.
+        expect(content).toMatch(/readOnly\s*=\s*readOnly/);
+        // Never enabled=false — the only Compose mechanism that would remove
+        // a readOnly field from focus order is banned disabled semantics.
+        expect(content).not.toMatch(/enabled\s*=\s*false/);
+      });
+
+      it('Android sets TalkBack stateDescription("read only") conditionally on readOnly', () => {
+        const content = loadPlatformImpl('Input-Text-Base', 'android');
+        expect(content).not.toBeNull();
+
+        // Announcement parity (adjudication condition 3): explicit
+        // stateDescription in the semantics block, gated on readOnly —
+        // never announced on editable fields, never a disabled/dimmed state.
+        expect(content).toMatch(
+          /if\s*\(readOnly\)\s*\{[^}]*stateDescription\s*=\s*"read only"/
+        );
+        // And the semantics property must actually be wired up (import), not
+        // just mentioned in a comment.
+        expect(content).toMatch(/import\s+androidx\.compose\.ui\.semantics\.stateDescription/);
+      });
+
+      it('Android Input-Text-Password never forwards readOnly to the base', () => {
+        const content = loadPlatformImpl('Input-Text-Password', 'android');
+        expect(content).not.toBeNull();
+
+        // readOnly is contracted out of the Password variant (adjudication
+        // condition 4). On Android this is contract conformance, not a
+        // security fix — the masked PasswordVisualTransformation already
+        // suppresses copy/cut ([DATA R2] §3) — but the exclusion must hold
+        // uniformly: the prop is accepted for API stability and stripped.
+        const forwarded = content!.match(/readOnly\s*=\s*readOnly/g);
+        expect(forwarded).toBeNull();
+
+        const stripped = content!.match(/readOnly\s*=\s*false/g);
+        expect(stripped).not.toBeNull();
+        expect(stripped!.length).toBeGreaterThanOrEqual(1);
+      });
+
+      it('web Input-Text-Password never forwards read-only to the base', () => {
+        const content = loadPlatformImpl('Input-Text-Password', 'web');
+        expect(content).not.toBeNull();
+
+        // readOnly is contracted out of the Password variant (adjudication
+        // condition 4). On web this is contract conformance, not a security
+        // fix — a readonly password input stays masked and browsers block
+        // copy from type=password — but the exclusion holds uniformly on all
+        // three platforms.
+        // The render template must not interpolate read-only onto the inner
+        // input-text-base, and no code path may read the attribute.
+        expect(content).not.toMatch(/\$\{readOnly/);
+        expect(content).not.toMatch(/hasAttribute\(\s*['"]read-only['"]\s*\)/);
+
+        // The attribute stays accepted (observedAttributes) for API
+        // stability, documented as ignored with the adjudication reference.
+        expect(content).toMatch(/'read-only',/);
+        expect(content).toMatch(/input-text-base-ios-readonly-adjudication/);
       });
     });
   });

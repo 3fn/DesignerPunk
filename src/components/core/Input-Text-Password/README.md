@@ -178,7 +178,7 @@ InputTextPassword(
 | `isSuccess` | boolean | No | false | Success state indicator |
 | `showInfoIcon` | boolean | No | false | Show info icon |
 | `placeholder` | string | No | - | Placeholder text |
-| `readOnly` | boolean | No | false | Read-only state |
+| `readOnly` | boolean | No | false | Accepted but **ignored** — readOnly is contracted out of Input-Text-Password (never forwarded to the base; see contracts.yaml `excludes.state_readonly` and the adjudication `.kiro/issues/input-text-base-ios-readonly-adjudication.md`, RULED B-prime 2026-07-15) |
 | `required` | boolean | No | false | Required field indicator |
 | `maxLength` | number | No | - | Maximum input length |
 | `testID` | string | No | - | Test ID for automation |

@@ -74,6 +74,9 @@ export class InputTextPassword extends HTMLElement {
       'error-message',
       'is-success',
       'show-info-icon',
+      // read-only is accepted for API stability but IGNORED — readOnly is
+      // contracted out of Input-Text-Password (see render(), and
+      // contracts.yaml excludes.state_readonly).
       'read-only',
       'required',
       'max-length',
@@ -154,7 +157,14 @@ export class InputTextPassword extends HTMLElement {
     const propsErrorMessage = this.getAttribute('error-message') || '';
     const isSuccess = this.getAttribute('is-success') === 'true';
     const showInfoIcon = this.getAttribute('show-info-icon') === 'true';
-    const readOnly = this.hasAttribute('read-only');
+    // read-only is NOT read or forwarded: readOnly is contracted out of
+    // Input-Text-Password (adjudication condition 4:
+    // .kiro/issues/input-text-base-ios-readonly-adjudication.md — RULED
+    // B-prime, Peter 2026-07-15). On web this is contract conformance, not a
+    // security fix — a readonly password input stays masked and browsers
+    // block copy from type=password — but the exclusion holds uniformly on
+    // all three platforms. The attribute is accepted (observedAttributes)
+    // for API stability and ignored.
     const required = this.hasAttribute('required');
     const maxLength = this.getAttribute('max-length');
     const showToggle = this.getAttribute('show-toggle') !== 'false'; // Default true
@@ -197,7 +207,6 @@ export class InputTextPassword extends HTMLElement {
           ${errorMessage ? `error-message="${errorMessage}"` : ''}
           ${isSuccess ? 'is-success="true"' : ''}
           ${showInfoIcon ? 'show-info-icon="true"' : ''}
-          ${readOnly ? 'read-only' : ''}
           ${required ? 'required' : ''}
           ${maxLength ? `max-length="${maxLength}"` : ''}
         ></input-text-base>

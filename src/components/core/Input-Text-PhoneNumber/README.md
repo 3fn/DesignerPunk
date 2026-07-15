@@ -101,7 +101,7 @@ InputTextPhoneNumber(
 | `isSuccess` | boolean | No | false | Success state indicator |
 | `showInfoIcon` | boolean | No | false | Show info icon |
 | `placeholder` | string | No | - | Placeholder text |
-| `readOnly` | boolean | No | false | Read-only state |
+| `readOnly` | boolean | No | false | Read-only display state (`state_readonly` contract): value is non-editable but selectable and copyable; no keyboard raised; iOS renders selectable text in the field chrome |
 | `required` | boolean | No | false | Required field indicator |
 | `maxLength` | number | No | - | Maximum input length |
 | `testID` | string | No | - | Test ID for automation |

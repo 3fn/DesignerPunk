@@ -101,7 +101,11 @@ properties:
     type: boolean
     required: false
     default: false
-    description: Read-only state (alternative to disabled)
+    description: >-
+      Read-only display state (state_readonly contract) — the value is
+      non-editable but stays perceivable, selectable, and copyable; no
+      keyboard/IME is raised and disabled semantics are never applied. iOS
+      renders it as selectable static text inside the field chrome.
   
   required:
     type: boolean

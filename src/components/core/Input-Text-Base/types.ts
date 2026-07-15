@@ -54,7 +54,19 @@ export interface InputTextBaseProps {
   /** Placeholder text (only shown when label is floated and input is empty) */
   placeholder?: string;
   
-  /** Read-only state (alternative to disabled) */
+  /**
+   * Read-only state (state_readonly contract): the value is displayed
+   * non-editably while remaining perceivable, selectable, and copyable —
+   * never rendered with disabled semantics on any platform.
+   *
+   * Platform note: web and Android readOnly fields participate in keyboard
+   * focus order; iOS renders readOnly as selectable static text in the
+   * field chrome and is not in focus order (declared carve-out — see
+   * contracts.yaml interaction_focusable).
+   *
+   * NOT supported by Input-Text-Password: readOnly is contracted out of the
+   * Password variant (see its contracts.yaml excludes) and is ignored there.
+   */
   readOnly?: boolean;
   
   /** Required field indicator */

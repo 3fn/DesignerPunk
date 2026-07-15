@@ -57,6 +57,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -231,6 +232,14 @@ fun InputTextBase(
                 }
                 if (errorMessage != null) {
                     error(errorMessage)
+                }
+                if (readOnly) {
+                    // Explicit TalkBack read-only announcement — label, value,
+                    // and "read only", never a disabled/dimmed state
+                    // (state_readonly contract, announcement-parity condition 3:
+                    // .kiro/issues/input-text-base-ios-readonly-adjudication.md,
+                    // RULED B-prime, Peter 2026-07-15).
+                    stateDescription = "read only"
                 }
             }
     ) {
