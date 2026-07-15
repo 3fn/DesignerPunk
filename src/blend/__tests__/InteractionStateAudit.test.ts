@@ -13,7 +13,10 @@
  *   hover:    ΔL ∈ [0.02, 0.05], preserve chroma
  *   pressed:  ΔL ∈ [0.05, 0.10], preserve chroma
  *   focused:  ΔC ≥ 0.02 (chroma boost)
- *   disabled: ΔC ≥ 0.03 (chroma reduction)
+ *   disabled: ΔC ≥ 0.03 (chroma reduction) — calculator capability only;
+ *             no component declares a disabled state (state_disabled removed
+ *             from Button-CTA 2026-07-15, completing the no-disabled-states
+ *             philosophy across the corpus)
  *
  * Components audited:
  *   Button-CTA, Button-Icon, Button-VerticalList-Item, Chip-Base,
@@ -125,14 +128,12 @@ describe('Spec 112 Task 5.1: Interaction State Visual Audit', () => {
   });
 
   describe('Disabled state (ΔC ≥ 0.03 reduction)', () => {
-    // Only Button-CTA has a disabled state in DesignerPunk
-    const cases: [string, Oklch][] = [
-      ['Button-CTA (primary)', primaryButton],
-    ];
-
-    it.each(cases)('%s — ΔC reduction meets minimum', (name, base) => {
-      const result = calc.interactionBlend(base, 'disabled', lightSurface);
-      const dc = deltaC(base, result);
+    // No component declares a disabled state (no-disabled-states philosophy).
+    // This validates the calculator capability only, kept until the
+    // blend.disabledDesaturate token's deprecation is adjudicated (Ada).
+    it('calculator disabled blend — ΔC reduction meets minimum', () => {
+      const result = calc.interactionBlend(primaryButton, 'disabled', lightSurface);
+      const dc = deltaC(primaryButton, result);
       // dc should be negative (chroma reduced), absolute value ≥ 0.03
       expect(dc).toBeLessThan(0);
       expect(Math.abs(dc)).toBeGreaterThanOrEqual(INTERACTION_THRESHOLDS.disabled.deltaC.min);

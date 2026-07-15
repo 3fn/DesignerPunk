@@ -99,12 +99,8 @@
   </div>
   
   <div class="example-section">
-    <h2>Example 4: Disabled Button</h2>
-    <p>Button in disabled state that cannot be interacted with.</p>
-    <div class="button-container">
-      <button-cta id="disabled-btn" label="Submit" disabled></button-cta>
-    </div>
-    <div class="output" id="disabled-output">This button is disabled and won't respond to clicks.</div>
+    <h2>Example 4: Unavailable Actions</h2>
+    <p>DesignerPunk does not support disabled states. If an action is unavailable, the button should not be rendered. For in-flight async operations, use the loading state instead.</p>
   </div>
   
   <script type="module">
@@ -131,14 +127,6 @@
     handlerBtn.addEventListener('press', () => {
       handlerOutput.textContent = `Form submitted at ${new Date().toLocaleTimeString()}`;
       // In a real app, you would validate and submit form data here
-    });
-    
-    // Example 4: Disabled button
-    const disabledBtn = document.getElementById('disabled-btn');
-    const disabledOutput = document.getElementById('disabled-output');
-    disabledBtn.addEventListener('press', () => {
-      // This will never be called because button is disabled
-      disabledOutput.textContent = 'This should never appear!';
     });
   </script>
 </body>

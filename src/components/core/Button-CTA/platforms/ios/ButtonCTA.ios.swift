@@ -11,7 +11,7 @@
  * while maintaining API consistency with web and Android platforms.
  * 
  * Uses theme-aware blend utilities (Color extensions with SwiftUI environment) for
- * state colors (hover, pressed, disabled, icon) instead of opacity or scale workarounds.
+ * state colors (hover, pressed, icon) instead of opacity or scale workarounds.
  * This ensures cross-platform consistency with Web and Android implementations.
  * 
  * Part of the DesignerPunk CTA Button Component system.
@@ -23,7 +23,7 @@
 import SwiftUI
 
 // Import theme-aware blend utilities (Color extensions from ThemeAwareBlendUtilities.ios.swift)
-// These provide semantic blend methods: hoverBlend(), pressedBlend(), disabledBlend(), iconBlend()
+// These provide semantic blend methods: hoverBlend(), pressedBlend(), iconBlend()
 // @see Requirements: 11.1, 11.2, 11.3 - Theme-aware utilities
 
 /**
@@ -65,8 +65,8 @@ enum ButtonCTAStyle {
  * three size variants, three visual styles, optional leading icons, and
  * theme-aware blend utilities for state colors.
  * 
- * Uses theme-aware Color extensions (hoverBlend(), pressedBlend(), disabledBlend(),
- * iconBlend()) with SwiftUI environment for automatic theme color updates.
+ * Uses theme-aware Color extensions (hoverBlend(), pressedBlend(), iconBlend())
+ * with SwiftUI environment for automatic theme color updates.
  * 
  * Usage:
  * ```swift
@@ -97,7 +97,7 @@ enum ButtonCTAStyle {
  * Requirements:
  * - 1.1-1.7: Size variants (small: 40px, medium: 48px, large: 56px)
  * - 2.1-2.4: Visual styles (primary, secondary, tertiary)
- * - 7.1-7.4: Blend utility state colors (hover, pressed, disabled, icon)
+ * - 7.1-7.4: Blend utility state colors (hover, pressed, icon)
  * - 8.1-8.6: Icon support with leading position
  * - 11.1-11.3: Theme-aware blend utilities with SwiftUI environment
  * - 13.1-13.4: Touch target accessibility (44px minimum)
@@ -125,10 +125,7 @@ struct ButtonCTA: View {
     
     /// Optional test ID for automated testing
     let testID: String?
-    
-    /// Optional disabled state (default: false)
-    let disabled: Bool
-    
+
     // MARK: - State
     
     /// Tracks pressed state for scale transform animation
@@ -149,7 +146,6 @@ struct ButtonCTA: View {
      *   - noWrap: Prevent text wrapping (default: false)
      *   - onPress: Click/tap handler (required)
      *   - testID: Optional test identifier
-     *   - disabled: Optional disabled state (default: false)
      */
     init(
         label: String,
@@ -158,8 +154,7 @@ struct ButtonCTA: View {
         icon: String? = nil,
         noWrap: Bool = false,
         onPress: @escaping () -> Void,
-        testID: String? = nil,
-        disabled: Bool = false
+        testID: String? = nil
     ) {
         self.label = label
         self.size = size
@@ -168,7 +163,6 @@ struct ButtonCTA: View {
         self.noWrap = noWrap
         self.onPress = onPress
         self.testID = testID
-        self.disabled = disabled
     }
     
     // MARK: - Body
@@ -213,15 +207,12 @@ struct ButtonCTA: View {
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { _ in
-                    if !disabled {
-                        isPressed = true
-                    }
+                    isPressed = true
                 }
                 .onEnded { _ in
                     isPressed = false
                 }
         )
-        .disabled(disabled)
         // Requirement 13.1-13.4, 16.4: Accessibility identifier for testing
         .accessibilityIdentifier(testID ?? "")
         // Requirement 17.4: Respect safe area insets for full-width buttons
@@ -230,14 +221,11 @@ struct ButtonCTA: View {
     
     // MARK: - Blend Color Computed Properties
     
-    /// Current background color based on state (normal, hover, pressed, disabled)
+    /// Current background color based on state (normal, pressed)
     /// Uses theme-aware blend utilities (Color extensions) for cross-platform consistency
-    /// @see Requirements: 7.1, 7.2, 7.3, 11.1, 11.2, 11.3
+    /// @see Requirements: 7.1, 7.2, 11.1, 11.2, 11.3
     private var currentBackgroundColor: Color {
-        if disabled {
-            // @see Requirements: 7.3 - Disabled uses desaturate(color.primary, blend.disabledDesaturate)
-            return disabledBackgroundColor
-        } else if isPressed {
+        if isPressed {
             // @see Requirements: 7.2 - Pressed uses darkerBlend(color.primary, blend.pressedDarker)
             return pressedBackgroundColor
         } else {
@@ -255,20 +243,6 @@ struct ButtonCTA: View {
             return theme.colorActionPrimary.pressedBlend()
         case .secondary:
             return theme.colorStructureCanvas.pressedBlend()
-        case .tertiary:
-            return Color.clear
-        }
-    }
-    
-    /// Disabled state background color using theme-aware blend utility
-    /// Uses disabledBlend() which applies desaturate with blend.disabledDesaturate (12%)
-    /// @see Requirements: 7.3, 11.1, 11.2, 11.3
-    private var disabledBackgroundColor: Color {
-        switch style {
-        case .primary:
-            return theme.colorActionPrimary.disabledBlend()
-        case .secondary:
-            return theme.colorStructureCanvas
         case .tertiary:
             return Color.clear
         }
@@ -532,20 +506,7 @@ struct ButtonCTA_Previews: PreviewProvider {
                     onPress: { print("Confirm pressed") }
                 )
             }
-            
-            Divider()
-            
-            // Disabled state
-            Text("Disabled State")
-                .font(.headline)
-            
-            VStack(spacing: 12) {
-                ButtonCTA(
-                    label: "Disabled Button",
-                    disabled: true,
-                    onPress: { print("Should not print") }
-                )
-            }
+
         }
         .padding()
     }

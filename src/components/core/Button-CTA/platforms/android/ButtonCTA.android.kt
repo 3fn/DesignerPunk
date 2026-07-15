@@ -11,7 +11,7 @@
  * while maintaining API consistency with web and iOS platforms.
  * 
  * Uses theme-aware blend utilities (Color extensions with Compose MaterialTheme) for
- * state colors (hover, pressed, disabled, icon) instead of opacity or Material ripple
+ * state colors (hover, pressed, icon) instead of opacity or Material ripple
  * workarounds. This ensures cross-platform consistency with Web and iOS implementations.
  * 
  * Part of the DesignerPunk CTA Button Component system.
@@ -42,11 +42,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
 // Import theme-aware blend utilities (Color extension functions from ThemeAwareBlendUtilities.android.kt)
-// These provide semantic blend methods: hoverBlend(), pressedBlend(), disabledBlend(), iconBlend()
+// These provide semantic blend methods: hoverBlend(), pressedBlend(), iconBlend()
 // @see Requirements: 11.1, 11.2, 11.3 - Theme-aware utilities
 import com.designerpunk.tokens.hoverBlend
 import com.designerpunk.tokens.pressedBlend
-import com.designerpunk.tokens.disabledBlend
 import com.designerpunk.tokens.iconBlend
 
 /**
@@ -88,8 +87,8 @@ enum class ButtonCTAStyle {
  * three size variants, three visual styles, optional leading icons, and
  * theme-aware blend utilities for state colors.
  * 
- * Uses theme-aware Color extensions (hoverBlend(), pressedBlend(), disabledBlend(),
- * iconBlend()) with Compose MaterialTheme for automatic theme color updates.
+ * Uses theme-aware Color extensions (hoverBlend(), pressedBlend(), iconBlend())
+ * with Compose MaterialTheme for automatic theme color updates.
  * 
  * Usage:
  * ```kotlin
@@ -120,7 +119,7 @@ enum class ButtonCTAStyle {
  * Requirements:
  * - 1.1-1.7: Size variants (small: 40dp, medium: 48dp, large: 56dp)
  * - 2.1-2.4: Visual styles (primary, secondary, tertiary)
- * - 7.1-7.4: Blend utility state colors (hover, pressed, disabled, icon)
+ * - 7.1-7.4: Blend utility state colors (hover, pressed, icon)
  * - 8.1-8.6: Icon support with leading position
  * - 11.1-11.3: Theme-aware blend utilities with Compose MaterialTheme
  * - 13.1-13.4: Touch target accessibility (44dp minimum)
@@ -132,7 +131,6 @@ enum class ButtonCTAStyle {
  * @param noWrap Prevent text wrapping (default: false)
  * @param onPress Click/tap handler (required)
  * @param testID Optional test identifier
- * @param disabled Optional disabled state (default: false)
  */
 @Composable
 fun ButtonCTA(
@@ -142,8 +140,7 @@ fun ButtonCTA(
     icon: String? = null,
     noWrap: Boolean = false,
     onPress: () -> Unit,
-    testID: String? = null,
-    disabled: Boolean = false
+    testID: String? = null
 ) {
     val theme = LocalDPTheme.current
     // Remember interaction source for tracking pressed state
@@ -154,7 +151,7 @@ fun ButtonCTA(
     val sizeConfig = getButtonCTASizeConfig(size)
     
     // Get style-based configuration with blend utilities
-    val styleConfig = getButtonCTAStyleConfig(style, isPressed, disabled)
+    val styleConfig = getButtonCTAStyleConfig(style, isPressed)
     
     // Use Surface with clickable modifier (no ripple indication for cross-platform consistency)
     Surface(
@@ -169,7 +166,6 @@ fun ButtonCTA(
             // Apply clickable without ripple indication (blend colors handle state feedback)
             .clickable(
                 onClick = onPress,
-                enabled = !disabled,
                 interactionSource = interactionSource,
                 indication = null // No ripple - using blend colors for state feedback
             ),
@@ -316,7 +312,7 @@ private fun getButtonCTASizeConfig(size: ButtonCTASize): ButtonCTASizeConfig {
  * Style configuration data class
  * 
  * Encapsulates all style-related properties for a button visual style.
- * Uses blend utilities for state colors (pressed, disabled, icon optical balance).
+ * Uses blend utilities for state colors (pressed, icon optical balance).
  * 
  * @property backgroundColor Background color (includes state-based blend)
  * @property textColor Text color
@@ -338,36 +334,32 @@ private data class ButtonCTAStyleConfig(
  * Returns configuration object with all style-related properties based on
  * semantic color tokens and theme-aware blend utilities for state colors.
  * 
- * Uses theme-aware Color extensions (hoverBlend(), pressedBlend(), disabledBlend(),
- * iconBlend()) instead of direct blend calculations for cross-platform consistency
+ * Uses theme-aware Color extensions (hoverBlend(), pressedBlend(), iconBlend())
+ * instead of direct blend calculations for cross-platform consistency
  * with Web and iOS implementations.
  * 
  * Requirements:
  * - 2.1-2.4: Visual styles (primary, secondary, tertiary)
- * - 7.1-7.4: Blend utility state colors (hover, pressed, disabled, icon)
+ * - 7.1-7.4: Blend utility state colors (hover, pressed, icon)
  * - 9.1-9.3: Icon color with optical balance using blend utility
  * - 11.1-11.3: Theme-aware blend utilities with Compose MaterialTheme
  * 
  * @param style Button visual style
  * @param isPressed Whether button is currently pressed
- * @param disabled Whether button is disabled
  * @return Style configuration object with blend-calculated colors
  */
-private fun getButtonCTAStyleConfig(style: ButtonCTAStyle, isPressed: Boolean, disabled: Boolean): ButtonCTAStyleConfig {
+private fun getButtonCTAStyleConfig(style: ButtonCTAStyle, isPressed: Boolean): ButtonCTAStyleConfig {
     // Import semantic color tokens from generated constants
     
     // Calculate state-based background colors using theme-aware blend utilities
     // @see Requirements: 7.1, 7.2, 7.3, 11.1, 11.2, 11.3
     val primaryBgColor = when {
-        // @see Requirements: 7.3 - Disabled uses desaturate(color.action.primary, blend.disabledDesaturate)
-        disabled -> colorActionPrimary.disabledBlend()
         // @see Requirements: 7.2 - Pressed uses darkerBlend(color.action.primary, blend.pressedDarker)
         isPressed -> colorActionPrimary.pressedBlend()
         else -> colorActionPrimary
     }
     
     val secondaryBgColor = when {
-        disabled -> colorBackground
         // @see Requirements: 7.2 - Pressed uses darkerBlend for secondary background
         isPressed -> colorBackground.pressedBlend()
         else -> colorBackground

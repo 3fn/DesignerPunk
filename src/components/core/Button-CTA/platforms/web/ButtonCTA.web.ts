@@ -12,7 +12,7 @@
  * composition pattern as iOS and Android platforms. This ensures cross-platform
  * consistency and single source of truth for icon rendering.
  * 
- * Uses theme-aware blend utilities for state colors (hover, pressed, disabled, icon)
+ * Uses theme-aware blend utilities for state colors (hover, pressed, icon)
  * instead of opacity or filter workarounds. This ensures cross-platform consistency
  * with iOS and Android implementations.
  * 
@@ -86,13 +86,12 @@ function getIconSizeForButton(buttonSize: ButtonSize): IconBaseSize {
  * - Semantic `<button>` element with proper accessibility
  * - Token-based styling via CSS custom properties
  * - Supports text wrapping by default (accessibility-first)
- * - Uses blend utilities for state colors (hover, pressed, disabled, icon)
+ * - Uses blend utilities for state colors (hover, pressed, icon)
  * - WCAG 2.1 AA compliant:
  *   - Keyboard navigation (Tab, Enter, Space)
  *   - Focus indicators with 3:1 contrast ratio
  *   - Color contrast 4.5:1 for all styles
  *   - Screen reader support with ARIA attributes
- *   - Proper disabled state handling
  * 
  * @example
  * ```html
@@ -106,7 +105,6 @@ function getIconSizeForButton(buttonSize: ButtonSize): IconBaseSize {
  *   variant="primary"
  *   icon="arrow-right"
  *   no-wrap="false"
- *   disabled="false"
  *   test-id="submit-button"
  * ></button-cta>
  * ```
@@ -143,7 +141,6 @@ export class ButtonCTA extends HTMLElement {
   // Cached blend colors for state styling
   private _hoverColor: string = '';
   private _pressedColor: string = '';
-  private _disabledColor: string = '';
   private _iconColor: string = '';
   private _iconOpticalBalanceColor: string = '';
   
@@ -153,7 +150,7 @@ export class ButtonCTA extends HTMLElement {
    * When these attributes change, attributeChangedCallback is invoked.
    */
   static get observedAttributes(): string[] {
-    return ['label', 'size', 'variant', 'icon', 'no-wrap', 'disabled', 'test-id'];
+    return ['label', 'size', 'variant', 'icon', 'no-wrap', 'test-id'];
   }
   
   constructor() {
@@ -219,15 +216,14 @@ export class ButtonCTA extends HTMLElement {
    * Calculate blend colors from CSS custom properties.
    * 
    * Reads base colors from CSS custom properties and applies theme-aware blend
-   * utilities to generate state colors (hover, pressed, disabled, icon).
-   * 
+   * utilities to generate state colors (hover, pressed, icon).
+   *
    * Uses getBlendUtilities() factory functions instead of direct blend calculations
    * for cross-platform consistency with iOS and Android implementations.
-   * 
+   *
    * State color mappings:
    * - Hover: darkerBlend(color.action.primary, blend.hoverDarker) - 8% darker
    * - Pressed: darkerBlend(color.action.primary, blend.pressedDarker) - 12% darker
-   * - Disabled: desaturate(color.action.primary, blend.disabledDesaturate) - 12% less saturated
    * - Icon: lighterBlend(color.contrast.onAction, blend.iconLighter) - 8% lighter
    * 
    * @see Requirements: 7.1, 7.2, 7.3, 7.4 - Button-CTA state colors
@@ -258,10 +254,7 @@ export class ButtonCTA extends HTMLElement {
     
     // @see Requirements: 7.2 - Pressed uses darkerBlend(color.action.primary, blend.pressedDarker)
     this._pressedColor = this._blendUtils.pressedColor(primaryColor);
-    
-    // @see Requirements: 7.3 - Disabled uses desaturate(color.action.primary, blend.disabledDesaturate)
-    this._disabledColor = this._blendUtils.disabledColor(primaryColor);
-    
+
     // @see Requirements: 7.4 - Icon uses lighterBlend(color.contrast.onAction, blend.iconLighter)
     // Icon for primary buttons: provides optical balance for icons on primary background
     this._iconColor = this._blendUtils.iconColor(onActionColor);
@@ -372,24 +365,6 @@ export class ButtonCTA extends HTMLElement {
   }
   
   /**
-   * Get the disabled state.
-   */
-  get disabled(): boolean {
-    return this.hasAttribute('disabled');
-  }
-  
-  /**
-   * Set the disabled state.
-   */
-  set disabled(value: boolean) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
-  }
-  
-  /**
    * Get the test ID.
    */
   get testID(): string | null {
@@ -451,17 +426,15 @@ export class ButtonCTA extends HTMLElement {
     const variant = this.buttonVariant;
     const icon = this.icon;
     const noWrap = this.noWrap;
-    const disabled = this.disabled;
     const testID = this.testID;
-    
+
     // Generate class names
     const buttonClasses = [
       'button-cta',
       `button-cta--${size}`,
-      `button-cta--${variant}`,
-      disabled ? 'button-cta--disabled' : ''
-    ].filter(Boolean).join(' ');
-    
+      `button-cta--${variant}`
+    ].join(' ');
+
     // Get icon size for button size variant
     // Icon sizes are type-safe mapped from button size:
     // - Small/Medium: 24px (iconBaseSize100)
@@ -480,7 +453,6 @@ export class ButtonCTA extends HTMLElement {
     const blendColorStyles = `
       --_cta-hover-bg: ${this._hoverColor};
       --_cta-pressed-bg: ${this._pressedColor};
-      --_cta-disabled-bg: ${this._disabledColor};
       --_cta-icon-color: ${this._iconColor};
       --_cta-icon-optical: ${this._iconOpticalBalanceColor};
     `;
@@ -491,11 +463,10 @@ export class ButtonCTA extends HTMLElement {
     // @see Requirements: 8.2, 8.3 (components render correctly with interactivity)
     this._shadowRoot.innerHTML = `
       <style>${buttonStyles}</style>
-      <button 
+      <button
         class="${buttonClasses}"
         type="button"
         role="button"
-        ${disabled ? 'disabled aria-disabled="true"' : 'aria-disabled="false"'}
         ${testIDAttr}
         aria-label="${label}"
         style="${blendColorStyles}"
@@ -536,34 +507,23 @@ export class ButtonCTA extends HTMLElement {
     const variant = this.buttonVariant;
     const icon = this.icon;
     const noWrap = this.noWrap;
-    const disabled = this.disabled;
     const testID = this.testID;
-    
+
     // Get icon size for button size variant
     const iconSize: IconBaseSize = getIconSizeForButton(size);
-    
+
     // ─────────────────────────────────────────────────────────────────
     // Update button element
     // ─────────────────────────────────────────────────────────────────
-    
+
     // Update CSS class (preserves element identity for transitions)
     const buttonClasses = [
       'button-cta',
       `button-cta--${size}`,
-      `button-cta--${variant}`,
-      disabled ? 'button-cta--disabled' : ''
-    ].filter(Boolean).join(' ');
+      `button-cta--${variant}`
+    ].join(' ');
     this._button.className = buttonClasses;
-    
-    // Update disabled state
-    if (disabled) {
-      this._button.setAttribute('disabled', '');
-      this._button.setAttribute('aria-disabled', 'true');
-    } else {
-      this._button.removeAttribute('disabled');
-      this._button.setAttribute('aria-disabled', 'false');
-    }
-    
+
     // Update aria-label
     this._button.setAttribute('aria-label', label);
     
@@ -577,7 +537,6 @@ export class ButtonCTA extends HTMLElement {
     // Update blend color CSS custom properties
     this._button.style.setProperty('--_cta-hover-bg', this._hoverColor);
     this._button.style.setProperty('--_cta-pressed-bg', this._pressedColor);
-    this._button.style.setProperty('--_cta-disabled-bg', this._disabledColor);
     this._button.style.setProperty('--_cta-icon-color', this._iconColor);
     this._button.style.setProperty('--_cta-icon-optical', this._iconOpticalBalanceColor);
     
@@ -638,13 +597,6 @@ export class ButtonCTA extends HTMLElement {
    * Dispatches a custom 'press' event that bubbles up to parent elements.
    */
   private _handleClick = (event: Event): void => {
-    // Don't dispatch if disabled
-    if (this.disabled) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-    
     // Dispatch custom 'press' event
     this.dispatchEvent(new CustomEvent('press', {
       bubbles: true,
@@ -663,11 +615,6 @@ export class ButtonCTA extends HTMLElement {
    * @param event - The keyboard event
    */
   private _handleKeyDown = (event: KeyboardEvent): void => {
-    // Don't handle if disabled
-    if (this.disabled) {
-      return;
-    }
-    
     // Handle Enter and Space keys (WCAG 2.1 AA keyboard navigation)
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault(); // Prevent default space scrolling

@@ -41,9 +41,10 @@ This component guarantees 7 behavioral contracts across all platforms:
 | `pressable` | Responds to press/click events | web, ios, android | 2.1.1 |
 | `hover_state` | Visual feedback on hover | web | 1.4.13 |
 | `pressed_state` | Visual feedback when pressed | web, ios, android | 2.4.7 |
-| `disabled_state` | Prevents interaction when disabled | web, ios, android | 4.1.2 |
 | `loading_state` | Shows loading indicator | web, ios, android | 4.1.3 |
 | `focus_ring` | WCAG 2.4.7 focus visible indicator | web, ios, android | 2.4.7 |
+
+**Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered (adjudicated 2026-07-15).
 
 ---
 
@@ -62,7 +63,6 @@ This component guarantees 7 behavioral contracts across all platforms:
   variant="primary"
   icon="arrow-right"
   no-wrap="false"
-  disabled="false"
   test-id="submit-button"
 ></button-cta>
 ```
@@ -122,7 +122,6 @@ ButtonCTA(
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | No | `'primary'` | Button visual variant |
 | `icon` | `IconName` | No | - | Optional leading icon |
 | `noWrap` | `boolean` | No | `false` | Prevent text wrapping |
-| `disabled` | `boolean` | No | `false` | Disable button interaction |
 | `onPress` | `() => void` | ✅ Yes | - | Press/click handler |
 | `testID` | `string` | No | - | Test identifier |
 
@@ -177,7 +176,6 @@ ButtonCTA(
 ### Blend
 - `blend.hoverDarker` - Hover state (8% darker)
 - `blend.pressedDarker` - Pressed state (12% darker)
-- `blend.disabledDesaturate` - Disabled state (12% less saturated)
 - `blend.iconLighter` - Icon optical balance (8% lighter)
 
 ### Accessibility
@@ -205,7 +203,7 @@ ButtonCTA(
 | 2.1.1 Keyboard | ✅ | Fully keyboard accessible (Tab, Enter, Space) |
 | 2.4.7 Focus Visible | ✅ | Clear focus indicator with :focus-visible |
 | 2.5.5 Target Size | ✅ | Touch targets meet 44px minimum |
-| 4.1.2 Name, Role, Value | ✅ | Proper ARIA attributes and disabled state |
+| 4.1.2 Name, Role, Value | ✅ | Proper ARIA attributes |
 
 ### Keyboard Navigation
 
@@ -219,7 +217,6 @@ ButtonCTA(
 
 - Semantic `<button>` element provides implicit role
 - `aria-label` set from label prop
-- `aria-disabled="true"` when disabled
 - State changes announced to assistive technology
 
 ---

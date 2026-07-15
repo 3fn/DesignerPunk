@@ -202,50 +202,10 @@
          ============================================================ -->
     <div class="demo-section">
       <h2>4. State Variants</h2>
-      <p>Buttons support disabled state with desaturated styling. Disabled buttons are non-interactive and not keyboard focusable.</p>
-
-      <h3>Disabled State</h3>
-      <div class="demo-row">
-        <div class="demo-item">
-          <button-cta label="Primary Disabled" variant="primary" disabled></button-cta>
-          <span class="demo-item-label">Primary (12% desaturated)</span>
-        </div>
-        <div class="demo-item">
-          <button-cta label="Secondary Disabled" variant="secondary" disabled></button-cta>
-          <span class="demo-item-label">Secondary disabled</span>
-        </div>
-        <div class="demo-item">
-          <button-cta label="Tertiary Disabled" variant="tertiary" disabled></button-cta>
-          <span class="demo-item-label">Tertiary disabled</span>
-        </div>
-      </div>
-
-      <h3>Disabled with Icons</h3>
-      <div class="demo-row">
-        <div class="demo-item">
-          <button-cta label="Submit" variant="primary" icon="check" disabled></button-cta>
-          <span class="demo-item-label">Disabled + icon</span>
-        </div>
-        <div class="demo-item">
-          <button-cta label="Cancel" variant="secondary" icon="x" disabled></button-cta>
-          <span class="demo-item-label">Disabled + icon</span>
-        </div>
-      </div>
-
-      <h3>Enabled vs Disabled Comparison</h3>
-      <div class="demo-row">
-        <div class="demo-item">
-          <button-cta label="Enabled" variant="primary" icon="arrow-right"></button-cta>
-          <span class="demo-item-label">Enabled</span>
-        </div>
-        <div class="demo-item">
-          <button-cta label="Disabled" variant="primary" icon="arrow-right" disabled></button-cta>
-          <span class="demo-item-label">Disabled</span>
-        </div>
-      </div>
+      <p>Button-CTA has no disabled state. DesignerPunk does not support disabled states for usability and accessibility reasons — if an action is unavailable, the component should not be rendered.</p>
 
       <div class="demo-note">
-        <strong>Accessibility:</strong> Disabled buttons use <code>desaturate()</code> blend utility (12% less saturated) instead of opacity, maintaining color contrast for accessibility. The <code>cursor: not-allowed</code> and <code>aria-disabled="true"</code> attributes communicate the non-interactive state.
+        <strong>No disabled state:</strong> Disabled buttons remove affordance without explanation. Use alternative patterns instead: hide the button when the action is unavailable, keep it interactive and validate on press, or use the loading state for in-flight async operations.
       </div>
     </div>
 
@@ -286,7 +246,7 @@
       </div>
 
       <div class="demo-note">
-        <strong>State color calculation:</strong> Uses <code>darkerBlend()</code> for hover (8%) and pressed (12%), and <code>desaturate()</code> for disabled (12%). These are calculated at runtime using theme-aware blend utilities for cross-platform consistency with iOS and Android.
+        <strong>State color calculation:</strong> Uses <code>darkerBlend()</code> for hover (8%) and pressed (12%). These are calculated at runtime using theme-aware blend utilities for cross-platform consistency with iOS and Android.
       </div>
     </div>
 
@@ -324,9 +284,6 @@
           <div class="demo-item">
             <button-cta id="event-btn-secondary" label="Secondary Action" variant="secondary" icon="settings"></button-cta>
           </div>
-          <div class="demo-item">
-            <button-cta id="event-btn-disabled" label="Disabled (no events)" variant="primary" disabled></button-cta>
-          </div>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-block-start: var(--space-100);">
@@ -339,7 +296,7 @@
       </div>
 
       <div class="demo-note">
-        <strong>Event details:</strong> The <code>press</code> event includes <code>event.detail.originalEvent</code> containing the underlying click or keyboard event. Disabled buttons do not fire events.
+        <strong>Event details:</strong> The <code>press</code> event includes <code>event.detail.originalEvent</code> containing the underlying click or keyboard event.
       </div>
     </div>
 
@@ -363,10 +320,6 @@
             <span class="demo-item-label">Tab → Enter/Space</span>
           </div>
           <div class="demo-item">
-            <button-cta label="Skipped" variant="primary" size="medium" disabled></button-cta>
-            <span class="demo-item-label">Disabled (skipped)</span>
-          </div>
-          <div class="demo-item">
             <button-cta label="Third" variant="tertiary" size="medium"></button-cta>
             <span class="demo-item-label">Tab → Enter/Space</span>
           </div>
@@ -377,7 +330,6 @@
       <ul class="demo-token-list">
         <li><code>role="button"</code> — semantic button role</li>
         <li><code>aria-label</code> — set to the label text</li>
-        <li><code>aria-disabled</code> — reflects disabled state</li>
         <li><code>aria-hidden="true"</code> — on icon container (decorative)</li>
       </ul>
 
@@ -459,9 +411,6 @@
 &lt;!-- With icon --&gt;
 &lt;button-cta label="Continue" variant="primary" icon="arrow-right"&gt;&lt;/button-cta&gt;
 
-&lt;!-- Disabled state --&gt;
-&lt;button-cta label="Unavailable" variant="primary" disabled&gt;&lt;/button-cta&gt;
-
 &lt;!-- No-wrap for constrained spaces --&gt;
 &lt;button-cta label="Long Label Text" variant="primary" no-wrap="true"&gt;&lt;/button-cta&gt;
 
@@ -488,8 +437,6 @@ btn.addEventListener('press', () =&gt; console.log('Pressed!'));
 document.body.appendChild(btn);
 
 // Dynamic state changes
-btn.disabled = true;   // Disable
-btn.disabled = false;  // Re-enable
 btn.label = 'Updated'; // Change label
 btn.icon = 'check';    // Change icon</pre>
     </div>
@@ -544,10 +491,6 @@ btn.icon = 'check';    // Change icon</pre>
       logEvent('Secondary Action', 'press');
     });
 
-    // Disabled button should not fire events, but listen anyway to verify
-    document.getElementById('event-btn-disabled').addEventListener('press', function() {
-      logEvent('Disabled Button', 'press (unexpected!)');
-    });
   </script>
 </body>
 </html>

@@ -9,17 +9,14 @@ contracts:
     behavior: |
       Component can receive focus via Tab key navigation.
       Focus state is visually indicated with a focus ring.
-      Focus is managed appropriately when disabled state changes.
     wcag: "2.1.1 Keyboard"
     platforms: [web, ios, android]
     validation:
       - Tab key moves focus to button
       - Focus state is visually distinct with focus ring
       - Focus ring meets 3:1 contrast ratio
-      - Disabled buttons are not focusable
     test_approach: |
       - Render button, press Tab, verify focus
-      - Set disabled=true, verify not focusable
     required: true
 
   interaction_pressable:
@@ -27,7 +24,7 @@ contracts:
     description: Responds to press/click events
     behavior: |
       Component responds to click, tap, Enter key, and Space key.
-      Press triggers the onPress callback when not disabled.
+      Press triggers the onPress callback.
       Platform-appropriate feedback is provided during press.
     wcag: "2.1.1 Keyboard"
     platforms: [web, ios, android]
@@ -35,11 +32,9 @@ contracts:
       - Click/tap triggers onPress callback
       - Enter key triggers onPress callback
       - Space key triggers onPress callback
-      - onPress not called when disabled
     test_approach: |
       - Click button, verify onPress called
       - Focus and press Enter, verify onPress called
-      - Set disabled, click, verify onPress not called
     required: true
 
   interaction_hover:
@@ -56,10 +51,8 @@ contracts:
       - Background color darkens on mouse enter (ΔL 0.02–0.05)
       - Background color reverts on mouse leave
       - Chroma unchanged between rest and hover states
-      - Hover state not shown when disabled
     test_approach: |
       - Simulate hover, verify background change
-      - Set disabled, simulate hover, verify no change
     required: true
 
   interaction_pressed:
@@ -76,29 +69,8 @@ contracts:
       - Visual feedback shown during press (ΔL 0.05–0.10)
       - Pressed state is perceptibly stronger than hover
       - Platform-appropriate animation/effect applied
-      - Pressed state not shown when disabled
     test_approach: |
       - Simulate press, verify visual feedback
-    required: true
-
-  state_disabled:
-    category: state
-    description: Prevents interaction when disabled
-    behavior: |
-      When disabled, component cannot receive focus, cannot be clicked/tapped,
-      appears visually muted via chroma reduction (OKLCH ΔC ≥0.03 desaturation),
-      shows cursor: not-allowed (web), and communicates disabled state to
-      assistive technology.
-    wcag: "4.1.2 Name, Role, Value"
-    platforms: [web, ios, android]
-    validation:
-      - Button cannot receive focus when disabled
-      - onPress not called when disabled
-      - Visual styling indicates disabled state (chroma reduced ≥0.03)
-      - aria-disabled="true" set (web)
-    test_approach: |
-      - Set disabled=true, verify not focusable
-      - Verify aria-disabled attribute (web)
     required: true
 
   state_loading:
@@ -138,3 +110,8 @@ contracts:
       - Tab to button, verify focus ring visible
       - Test in each variant
     required: true
+
+excludes:
+  state_disabled:
+    reason: "DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered."
+    category: state

@@ -637,7 +637,7 @@ All four core components use blend utilities:
 
 | Component | Blend Usage |
 |-----------|-------------|
-| ButtonCTA | hover (darkerBlend), pressed (darkerBlend), disabled (desaturate), icon (lighterBlend) |
+| ButtonCTA | hover (darkerBlend), pressed (darkerBlend), icon (lighterBlend) |
 | TextInputField | focus (saturate), disabled (desaturate) |
 | Container | hover (darkerBlend) |
 | Icon | optical balance (lighterBlend) |

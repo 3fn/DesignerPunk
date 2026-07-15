@@ -96,7 +96,6 @@ export async function createButtonCTA(props: {
   buttonVariant?: 'primary' | 'secondary' | 'tertiary';
   icon?: string;
   noWrap?: boolean;
-  disabled?: boolean;
   testID?: string;
 }): Promise<ButtonCTA> {
   registerButtonCTA();
@@ -109,7 +108,6 @@ export async function createButtonCTA(props: {
   if (props.buttonVariant) button.buttonVariant = props.buttonVariant;
   if (props.icon) button.icon = props.icon;
   if (props.noWrap !== undefined) button.noWrap = props.noWrap;
-  if (props.disabled !== undefined) button.disabled = props.disabled;
   if (props.testID) button.testID = props.testID;
   
   // Append to document to trigger rendering

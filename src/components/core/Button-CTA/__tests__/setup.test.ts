@@ -123,7 +123,6 @@ describe('Button-CTA Test Infrastructure Setup', () => {
         buttonVariant: 'secondary',
         icon: 'arrow-right',
         noWrap: true,
-        disabled: false,
         testID: 'test-button'
       });
       
@@ -132,7 +131,6 @@ describe('Button-CTA Test Infrastructure Setup', () => {
       expect(button.buttonVariant).toBe('secondary');
       expect(button.icon).toBe('arrow-right');
       expect(button.noWrap).toBe(true);
-      expect(button.disabled).toBe(false);
       expect(button.testID).toBe('test-button');
     });
     

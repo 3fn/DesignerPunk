@@ -22,7 +22,6 @@ import { ButtonCTA } from '../platforms/web/ButtonCTA.web';
  * - size: 'medium' (48px height)
  * - variant: 'primary' (filled background with primary color)
  * - noWrap: false (text wraps if needed)
- * - disabled: false (interactive)
  * 
  * @example
  * ```html
@@ -79,7 +78,6 @@ export function customLabelButton(): void {
  * 
  * The 'press' event:
  * - Bubbles up through the DOM
- * - Is not called when button is disabled
  * - Works with click, tap, Enter key, and Space key
  * - Provides originalEvent in event.detail for advanced use cases
  * 
@@ -111,55 +109,37 @@ export function buttonWithHandler(): void {
 }
 
 /**
- * Example 4: Disabled Button
+ * Example 4: Unavailable Actions (no disabled state)
  * 
- * Demonstrates how to disable a button to prevent user interaction.
- * Disabled buttons are commonly used during form submission, when prerequisites
- * aren't met, or when an action is temporarily unavailable.
+ * DesignerPunk does not support disabled states for usability and
+ * accessibility reasons. If an action is unavailable, the component
+ * should not be rendered.
  * 
- * Disabled button behavior:
- * - Not keyboard focusable (skipped in Tab order)
- * - Does not respond to clicks or keyboard activation
- * - Visual styling indicates non-interactive state
- * - Screen readers announce disabled state
- * - onPress handler is not called
- * 
- * Common use cases:
- * - Form submission in progress
- * - Required fields not filled
- * - User lacks permissions
- * - Action temporarily unavailable
- * 
- * @example
- * ```html
- * <button-cta label="Submit" disabled></button-cta>
- * ```
+ * For in-flight async operations (e.g. form submission), use the loading
+ * state instead of disabling the button. For actions the user cannot take
+ * yet, keep the button interactive and validate on press, or do not render
+ * the button at all.
  * 
  * @example
  * ```typescript
- * // Conditional disable based on form state
- * const button = document.createElement('button-cta') as ButtonCTA;
- * button.label = 'Submit';
- * button.disabled = isSubmitting || !isFormValid;
+ * // Conditionally render instead of disabling
+ * if (userCanSubmit) {
+ *   const button = document.createElement('button-cta') as ButtonCTA;
+ *   button.label = 'Submit';
+ *   button.addEventListener('press', handleSubmit);
+ *   document.body.appendChild(button);
+ * }
  * ```
  */
-export function disabledButton(): void {
+export function conditionallyRenderedButton(): void {
   const button = document.createElement('button-cta') as ButtonCTA;
   button.label = 'Submit';
-  button.disabled = true; // Button is non-interactive
   
-  // This handler will NOT be called when button is disabled
   button.addEventListener('press', () => {
-    console.log('This will not be logged when button is disabled');
+    console.log('Submitted');
   });
   
   document.body.appendChild(button);
-  
-  // Example: Enable button after 3 seconds (simulating async operation)
-  setTimeout(() => {
-    button.disabled = false;
-    console.log('Button is now enabled');
-  }, 3000);
 }
 
 /**
@@ -201,13 +181,6 @@ export function renderAllBasicExamples(): void {
     alert('Form submitted successfully!');
   });
   container.appendChild(handlerBtn);
-  
-  // Example 4: Disabled
-  const disabledBtn = document.createElement('button-cta') as ButtonCTA;
-  disabledBtn.label = 'Disabled Button';
-  disabledBtn.disabled = true;
-  disabledBtn.addEventListener('press', () => console.log('This will not log'));
-  container.appendChild(disabledBtn);
   
   // Add container to document
   document.body.appendChild(container);
