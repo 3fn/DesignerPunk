@@ -61,7 +61,7 @@ description: Guide for building components with appropriate token usage, True Na
 4. ✅ **Icon Integration Anti-Patterns** (what NOT to do)
 5. ✅ **Icon Integration Checklist** (verification steps)
 
-**WHEN implementing interaction states (hover, pressed, focus, disabled) THEN read:**
+**WHEN implementing interaction states (hover, pressed, focus) THEN read:**
 1. ✅ **Blend Utility Integration** (how to use blend utilities for state colors)
 2. ✅ **Semantic Blend Token Reference** (which token/function for each state)
 3. ✅ **Blend Utility Anti-Patterns** (what NOT to do - no opacity, no filters)
@@ -433,7 +433,8 @@ export interface ButtonCTAProps {
   variant?: 'primary' | 'secondary' | 'danger';  // ✅ Use variant
   size?: 'small' | 'medium' | 'large';
   icon?: string;
-  disabled?: boolean;
+  // No `disabled` prop — DesignerPunk components do not support disabled
+  // states (see "No Disabled States" under Behavioral Contracts Workflow).
 }
 ```
 
@@ -494,8 +495,21 @@ Author `contracts.yaml` after `types.ts` and before platform implementation. Con
 ### Naming Convention
 
 All contract names follow `{category}_{concept}` in `snake_case`:
-- `interaction_focusable`, `state_disabled`, `accessibility_reduced_motion`
+- `interaction_focusable`, `state_error`, `accessibility_reduced_motion`
 - 10 categories: accessibility, animation, composition, content, interaction, layout, performance, state, validation, visual
+
+### No Disabled States
+
+**DesignerPunk components MUST NOT declare a disabled-state contract.** Per the 2026-07-15 adjudication (`.kiro/issues/button-cta-disabled-state-adjudication.md`), the no-disabled-states philosophy holds corpus-wide with zero exceptions. Every component's `contracts.yaml` MUST instead carry the standardized exclusion block:
+
+```yaml
+excludes:
+  state_disabled:
+    reason: "DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered."
+    category: state
+```
+
+If an action is temporarily unavailable, use one of these alternatives instead: `state_loading` (in-flight async operation), validate-on-press/validate-on-blur (surface the error rather than disabling the trigger), or don't render the component (no valid path forward). See Component-Templates.md § "No Disabled States — Standardized Exclusion" for the full rationale and reference implementation.
 
 ### Concept Catalog Consultation
 
@@ -1036,7 +1050,7 @@ theme.colorActionPrimary
 
 ### Overview
 
-Blend utilities enable components to create new opaque colors for interaction states (hover, pressed, focus, disabled) rather than using opacity-based workarounds. All components should use blend utilities for state color modifications.
+Blend utilities enable components to create new opaque colors for interaction states (hover, pressed, focus) rather than using opacity-based workarounds. All components should use blend utilities for state color modifications.
 
 ### Why Blend Utilities Over CSS Filters
 
@@ -1064,7 +1078,7 @@ Blend utilities enable components to create new opaque colors for interaction st
 
 - Importing `getBlendUtilities()` from the theme-aware blend utilities module
 - Initializing blend utilities in the constructor
-- Calculating state colors (hover, pressed, disabled, icon) in `connectedCallback()`
+- Calculating state colors (hover, pressed, icon) in `connectedCallback()`
 - Applying calculated colors via CSS custom properties
 - Retry pattern for handling CSS custom property timing
 
@@ -1076,7 +1090,6 @@ Blend utilities enable components to create new opaque colors for interaction st
 - Hover state colors (darken or lighten based on background)
 - Pressed state colors (stronger darkening than hover)
 - Focus state colors (increased saturation for emphasis)
-- Disabled state colors (desaturation for muted appearance)
 - Icon optical balance (lightening for visual weight compensation)
 
 ### Web Platform Usage
@@ -1462,7 +1475,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 | Button-CTA | `_cta` | `--_cta-hover-bg`, `--_cta-pressed-bg` |
 | Button-VerticalList-Item | `_vlbi` | `--_vlbi-background`, `--_vlbi-border-color` |
 | ButtonIcon | `_bi` | `--_bi-hover-bg`, `--_bi-icon-color` |
-| Input-Text-Base | `_itb` | `--_itb-focus-color`, `--_itb-disabled-color` |
+| Input-Text-Base | `_itb` | `--_itb-focus-color` |
 
 ### When to Use Each Type
 
