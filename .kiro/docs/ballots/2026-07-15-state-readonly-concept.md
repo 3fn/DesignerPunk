@@ -2,7 +2,7 @@
 
 **Date**: 2026-07-15
 **Author**: Lina (contract authored on `fix/input-text-readonly-b-prime`); ballot drafted by the coordinating session
-**Status**: DRAFT — awaiting ratification
+**Status**: RATIFIED (Peter, 2026-07-15)
 **Origin**: iOS readOnly adjudication, RULED B-prime by Peter 2026-07-15 (`.kiro/issues/input-text-base-ios-readonly-adjudication.md`), ruling condition 1: "new readOnly contract via Concept Catalog ballot"
 
 ---
@@ -56,4 +56,4 @@ The concept was reviewed through the adjudication itself rather than a separate 
 
 ## Ratification
 
-*(pending — on ratification, update Status to `RATIFIED (Peter, <date>)` and commit that record before applying the edits, per the record-first protocol)*
+RATIFIED by Peter, 2026-07-15, in-session following the B-prime implementation review (PR #91). Per the record-first protocol, this status was committed before the edits in this measure were applied; the application commit follows.
