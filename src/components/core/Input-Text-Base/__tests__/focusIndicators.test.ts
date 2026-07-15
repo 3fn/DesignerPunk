@@ -219,7 +219,9 @@ describe('Input-Text-Base Focus Indicators', () => {
       
       // iOS: Verify focus ring is not conditional on error/success state
       // (it should always show when focused, regardless of validation state)
-      // Find the focus ring section in the InputTextBaseFieldStyle
+      // Find the focus ring section in InputTextBaseFieldChrome (the shared
+      // field chrome, extracted from InputTextBaseFieldStyle per the B-prime
+      // readOnly ruling, 2026-07-15)
       const iosFocusRingSection = iosContent.substring(
         iosContent.indexOf('.opacity(isFocused ? 1 : 0)'),
         iosContent.indexOf('.opacity(isFocused ? 1 : 0)') + 200

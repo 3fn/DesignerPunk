@@ -61,3 +61,8 @@ excludes:
   state_disabled:
     reason: "DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered."
     category: state
+
+  state_readonly:
+    reason: "readOnly is contracted out of Input-Text-Password: zero named consumers, and excluding it deletes a security fork — the base's iOS read-only path (B-prime) renders the value as selectable plaintext Text, which must never be reachable for a secret. The profile idiom for a locked password is a display row ('Password ••••••••') plus a Change action, not a read-only password field. Implementations strip/ignore the inherited readOnly prop. If a product case ever materializes, the invariant-based fallback rule recorded in the adjudication ([DATA R2] §3: masked value never copyable; plaintext never in the accessibility tree while masked; announced semantically as hidden; no keyboard; toggle functional; revealed plaintext selectable/copyable) is the recorded alternative."
+    category: state
+    reference: ".kiro/issues/input-text-base-ios-readonly-adjudication.md (RULED B-prime, Peter 2026-07-15, condition 4)"

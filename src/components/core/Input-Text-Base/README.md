@@ -146,7 +146,7 @@ InputTextBase(
 | `type` | `'text' \| 'email' \| 'password' \| 'tel' \| 'url'` | No | `'text'` | Input type |
 | `autocomplete` | `string` | No | - | Autocomplete attribute for browser autofill |
 | `placeholder` | `string` | No | - | Placeholder text (only shown when label is floated and input is empty) |
-| `readOnly` | `boolean` | No | `false` | Read-only state (alternative to disabled) |
+| `readOnly` | `boolean` | No | `false` | Read-only display state (`state_readonly` contract): value is non-editable but selectable and copyable; no keyboard raised; iOS renders selectable text in the field chrome. Ignored for secure types; not supported by Input-Text-Password |
 | `required` | `boolean` | No | `false` | Required field indicator |
 | `maxLength` | `number` | No | - | Maximum length for input value |
 | `testID` | `string` | No | - | Test ID for automated testing |

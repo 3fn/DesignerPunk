@@ -27,6 +27,20 @@ const BASELINE_CONCEPT_COUNT = 116;
 const EXPECTED_CATEGORY_COUNT = 10;
 
 /**
+ * Contracts authored ahead of Concept Catalog ratification (ballot pending).
+ *
+ * Each entry MUST reference the ruling that authorized authoring the contract
+ * before the concept ballot ratified. This allowlist is SELF-CLEANING: once
+ * the concept lands in the catalog (ballot RATIFIED), the validation below
+ * fails with a removal instruction — a stale entry cannot linger.
+ */
+const PENDING_BALLOT_CONCEPTS: Record<string, string> = {
+  state_readonly:
+    'Concept ballot pending ratification — authored per the iOS readOnly adjudication ' +
+    '(.kiro/issues/input-text-base-ios-readonly-adjudication.md, RULED B-prime, Peter 2026-07-15)',
+};
+
+/**
  * Parse the Concept Catalog from Contract-System-Reference.md.
  *
  * Format:
@@ -143,6 +157,21 @@ describe('Contract Catalog Name Validation', () => {
           throw new Error(
             `Component ${componentName}: contract '${contractKey}' has unrecognized category '${category}'`
           );
+        }
+
+        // Pending-ballot carve-out (self-cleaning): a contract authored ahead
+        // of catalog ratification passes only while the concept is absent
+        // from the catalog. The moment the ballot ratifies and the concept
+        // lands in the catalog, the stale allowlist entry fails the test.
+        if (contractKey in PENDING_BALLOT_CONCEPTS) {
+          if (catalogCategory.has(concept)) {
+            throw new Error(
+              `Contract '${contractKey}' is now in the Concept Catalog — its ballot has ` +
+              `ratified. Remove it from PENDING_BALLOT_CONCEPTS. ` +
+              `(Entry: ${PENDING_BALLOT_CONCEPTS[contractKey]})`
+            );
+          }
+          return; // valid category + documented pending ballot
         }
 
         if (!catalogCategory.has(concept)) {

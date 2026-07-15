@@ -132,7 +132,16 @@ struct InputTextPassword: View {
     /// Placeholder text (only shown when label is floated and input is empty)
     let placeholder: String?
     
-    /// Read-only state
+    /// Read-only state — NOT SUPPORTED on Input-Text-Password.
+    ///
+    /// readOnly is contracted OUT of the Password variant (see
+    /// contracts.yaml excludes.state_readonly; adjudication condition 4:
+    /// .kiro/issues/input-text-base-ios-readonly-adjudication.md — RULED
+    /// B-prime, Peter 2026-07-15). Zero named consumers, and the Base's
+    /// read-only path renders selectable plaintext Text — a readOnly
+    /// Password must never reach it, masked or revealed. This prop is
+    /// accepted for API stability but IGNORED: it is never forwarded to
+    /// InputTextBase.
     let readOnly: Bool
     
     /// Required field indicator
@@ -268,7 +277,12 @@ struct InputTextPassword: View {
                     type: .text,
                     autocomplete: contentType,
                     placeholder: placeholder,
-                    readOnly: readOnly,
+                    // SECURITY: readOnly is contracted out of Input-Text-Password
+                    // (adjudication, RULED B-prime, Peter 2026-07-15). The revealed
+                    // branch uses type .text — forwarding readOnly here would route
+                    // the secret to the Base's selectable plaintext Text path.
+                    // Always stripped.
+                    readOnly: false,
                     required: required,
                     maxLength: maxLength,
                     trailingContent: showToggle ? AnyView(toggleButton) : nil
@@ -298,7 +312,11 @@ struct InputTextPassword: View {
                     type: .password,
                     autocomplete: contentType,
                     placeholder: placeholder,
-                    readOnly: readOnly,
+                    // SECURITY: readOnly is contracted out of Input-Text-Password
+                    // (adjudication, RULED B-prime, Peter 2026-07-15). Stripped on
+                    // the masked branch too — the Base additionally gates its
+                    // read-only Text path away from secure fields (defense in depth).
+                    readOnly: false,
                     required: required,
                     maxLength: maxLength,
                     trailingContent: showToggle ? AnyView(toggleButton) : nil
