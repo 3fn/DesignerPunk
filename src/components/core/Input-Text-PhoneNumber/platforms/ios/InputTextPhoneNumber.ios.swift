@@ -291,7 +291,7 @@ struct InputTextPhoneNumber: View {
             errorMessage: effectiveErrorMessage,
             isSuccess: isSuccess,
             showInfoIcon: showInfoIcon,
-            type: .phone,
+            type: .tel,
             autocomplete: .telephoneNumber,
             placeholder: placeholder,
             readOnly: readOnly,

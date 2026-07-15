@@ -11,7 +11,7 @@
 name: Input-Text-Base
 type: primitive
 family: FormInput
-version: "1.0.0"
+version: "1.1.0"
 readiness:
   web:
     reviewed: true
@@ -24,6 +24,16 @@ composition:
   internal:
     - component: Icon-Base
       role: Trailing contextual icon (error, success, info)
+      required: false
+  slots:
+    - name: trailingContent
+      description: >-
+        Trailing content slot rendered after the status icons. Semantic
+        variants use it to inject interactive trailing controls (e.g.,
+        Input-Text-Password's visibility toggle). Native platforms only
+        (iOS: AnyView?, Android: @Composable lambda) — the web base has no
+        equivalent slot; web variants render trailing controls in their
+        own Shadow DOM.
       required: false
 
 # Component description
@@ -188,9 +198,23 @@ platform_notes:
   ios:
     implementation: SwiftUI View
     file: platforms/ios/InputTextBase.ios.swift
+    notes: |
+      Platform composition parameters (not part of the cross-platform props):
+      - trailingContent: AnyView? = nil — trailing content slot (see composition.slots)
+      Masking: type .password renders SecureField; other types render TextField.
+      Variants toggle visibility by switching type between .password and .text.
   android:
     implementation: Jetpack Compose Composable
     file: platforms/android/InputTextBase.android.kt
+    notes: |
+      Platform composition parameters (not part of the cross-platform props):
+      - modifier, imeAction, keyboardActions — standard Compose passthroughs
+      - visualTransformation: VisualTransformation? = null — masking override;
+        null derives from type (PasswordVisualTransformation for PASSWORD)
+      - trailingContent: (@Composable () -> Unit)? = null — trailing content
+        slot (see composition.slots)
+      Variants toggle password visibility via visualTransformation while
+      keeping type = PASSWORD (preserves the password keyboard type).
 
 # Semantic components that inherit from this primitive
 semantic_variants:

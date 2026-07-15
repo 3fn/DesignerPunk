@@ -250,7 +250,7 @@ fun InputTextPhoneNumber(
         errorMessage = effectiveErrorMessage,
         isSuccess = isSuccess,
         showInfoIcon = showInfoIcon,
-        type = InputType.PHONE,
+        type = InputType.TEL,
         placeholder = placeholder,
         readOnly = readOnly,
         required = required,

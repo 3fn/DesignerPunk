@@ -151,6 +151,21 @@ InputTextBase(
 | `testID` | `string` | No | - | Test ID for automated testing |
 | `className` | `string` | No | - | Additional CSS class names (web only) |
 
+### Platform Composition Parameters (native only)
+
+These parameters exist on the native implementations for platform composition —
+they are not part of the cross-platform props contract above:
+
+| Parameter | Platform | Type | Default | Description |
+|-----------|----------|------|---------|-------------|
+| `trailingContent` | iOS | `AnyView?` | `nil` | Trailing content slot rendered after the status icons (e.g., Input-Text-Password's visibility toggle) |
+| `trailingContent` | Android | `(@Composable () -> Unit)?` | `null` | Same slot, Compose form |
+| `visualTransformation` | Android | `VisualTransformation?` | `null` | Masking override; `null` derives from `type` (`PasswordVisualTransformation` for `PASSWORD`). Lets variants toggle password visibility while keeping the password keyboard type |
+| `modifier`, `imeAction`, `keyboardActions` | Android | — | — | Standard Compose passthroughs |
+
+The web base has no trailing slot equivalent — web semantic variants render
+trailing controls inside their own Shadow DOM.
+
 ---
 
 ## Token Consumption
@@ -220,6 +235,13 @@ Legacy type aliases are provided for backward compatibility during migration.
 ---
 
 ## Changelog
+
+### v1.1.0 (July 2026)
+
+- Native bases gain a `trailingContent` composition slot (iOS `AnyView?`, Android `@Composable` lambda) so semantic variants can inject trailing controls — required by Input-Text-Password's visibility toggle
+- Android base gains a `visualTransformation` override (null = derived from `type`) so variants can toggle masking without changing the input type
+- Fixed Input-Text-PhoneNumber native callers referencing nonexistent enum members (`.phone`/`PHONE` → `.tel`/`TEL`)
+- Added static base-call alignment test (`src/__tests__/stemma-system/input-text-native-base-call-alignment.test.ts`) guarding native call sites against parameter/enum drift
 
 ### v1.0.0 (January 2026)
 
