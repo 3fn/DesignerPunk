@@ -78,7 +78,6 @@ private fun isValidEmail(email: String): Boolean {
  * @param maxLength Maximum length for input value
  * @param imeAction IME action for keyboard
  * @param keyboardActions Keyboard actions
- * @param isDisabled Disabled state
  * @param invalidEmailMessage Custom invalid email message
  * @param customValidator Custom email validator function
  */
@@ -102,7 +101,6 @@ fun InputTextEmail(
     maxLength: Int? = null,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    isDisabled: Boolean = false,
     invalidEmailMessage: String = DEFAULT_INVALID_EMAIL_MESSAGE,
     customValidator: ((String) -> Boolean)? = null
 ) {
@@ -158,8 +156,7 @@ fun InputTextEmail(
         required = required,
         maxLength = maxLength,
         imeAction = imeAction,
-        keyboardActions = keyboardActions,
-        isDisabled = isDisabled
+        keyboardActions = keyboardActions
     )
 }
 

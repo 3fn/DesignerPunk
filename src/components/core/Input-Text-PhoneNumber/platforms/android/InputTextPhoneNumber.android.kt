@@ -151,7 +151,6 @@ private fun isValidPhoneNumber(phoneNumber: String, countryCode: String = DEFAUL
  * @param maxLength Maximum length for input value
  * @param imeAction IME action for keyboard
  * @param keyboardActions Keyboard actions
- * @param isDisabled Disabled state
  * @param countryCode Country code for formatting and validation
  * @param autoFormat Whether to auto-format as user types
  * @param invalidPhoneMessage Custom invalid phone message
@@ -177,7 +176,6 @@ fun InputTextPhoneNumber(
     maxLength: Int? = null,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    isDisabled: Boolean = false,
     countryCode: String = DEFAULT_COUNTRY_CODE,
     autoFormat: Boolean = true,
     invalidPhoneMessage: String = DEFAULT_INVALID_PHONE_MESSAGE,
@@ -258,8 +256,7 @@ fun InputTextPhoneNumber(
         required = required,
         maxLength = maxLength,
         imeAction = imeAction,
-        keyboardActions = keyboardActions,
-        isDisabled = isDisabled
+        keyboardActions = keyboardActions
     )
 }
 

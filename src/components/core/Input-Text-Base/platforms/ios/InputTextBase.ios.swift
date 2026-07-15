@@ -15,15 +15,14 @@
  * - Trailing icon support (error, success, info)
  * - Respects accessibilityReduceMotion
  * - WCAG 2.1 AA compliant
- * - Uses theme-aware blend utilities for state colors (focus, disabled)
- * 
+ * - Uses theme-aware blend utilities for state colors (focus)
+ *
  * Behavioral Contracts:
  * - focusable: Can receive keyboard focus
  * - float_label_animation: Label animates on focus
  * - validates_on_blur: Validation triggers on blur
  * - error_state_display: Shows error message and styling
  * - success_state_display: Shows success styling
- * - disabled_state: Prevents interaction when disabled
  * - trailing_icon_display: Shows contextual trailing icons
  * - focus_ring: WCAG 2.4.7 focus visible indicator
  * - reduced_motion_support: Respects prefers-reduced-motion
@@ -89,10 +88,7 @@ struct InputTextBase: View {
     
     /// Maximum length for input value
     let maxLength: Int?
-    
-    /// Disabled state
-    let isDisabled: Bool
-    
+
     // MARK: - State
     
     /// Whether input currently has focus
@@ -140,8 +136,6 @@ struct InputTextBase: View {
             return theme.colorFeedbackErrorText
         } else if isSuccess {
             return theme.colorFeedbackSuccessText
-        } else if isDisabled {
-            return theme.colorActionPrimary.disabledBlend()
         } else if isFocused {
             return theme.colorActionPrimary.focusBlend()
         } else {
@@ -164,8 +158,6 @@ struct InputTextBase: View {
             return theme.colorFeedbackErrorText
         } else if isSuccess {
             return theme.colorFeedbackSuccessText
-        } else if isDisabled {
-            return theme.colorActionPrimary.disabledBlend()
         } else if isFocused {
             return theme.colorActionPrimary.focusBlend()
         } else {
@@ -220,11 +212,10 @@ struct InputTextBase: View {
                                 isFocused: isFocused,
                                 hasError: hasError,
                                 isSuccess: isSuccess,
-                                isDisabled: isDisabled,
                                 hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible
                             ))
                             .focused($isFocused)
-                            .disabled(readOnly || isDisabled)
+                            .disabled(readOnly)
                             .textContentType(autocomplete)
                             .onChange(of: value) { newValue in
                                 if let maxLength = maxLength, newValue.count > maxLength {
@@ -246,11 +237,10 @@ struct InputTextBase: View {
                                 isFocused: isFocused,
                                 hasError: hasError,
                                 isSuccess: isSuccess,
-                                isDisabled: isDisabled,
                                 hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible
                             ))
                             .focused($isFocused)
-                            .disabled(readOnly || isDisabled)
+                            .disabled(readOnly)
                             .textContentType(autocomplete)
                             .keyboardType(keyboardTypeForInputType(type))
                             .onChange(of: value) { newValue in
@@ -363,7 +353,6 @@ struct InputTextBaseFieldStyle: TextFieldStyle {
     let isFocused: Bool
     let hasError: Bool
     let isSuccess: Bool
-    let isDisabled: Bool
     let hasTrailingIcon: Bool
     
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -373,7 +362,7 @@ struct InputTextBaseFieldStyle: TextFieldStyle {
         configuration
             .font(Font.system(size: DesignTokens.typographyInput.fontSize)
                 .weight(DesignTokens.typographyInput.fontWeight))
-            .foregroundColor(isDisabled ? theme.colorTextMuted : theme.colorTextDefault)
+            .foregroundColor(theme.colorTextDefault)
             .padding(.leading, DesignTokens.spaceInset100)
             .padding(.vertical, DesignTokens.spaceInset100)
             .padding(.trailing, hasTrailingIcon ? 0 : DesignTokens.spaceInset100)
@@ -386,7 +375,7 @@ struct InputTextBaseFieldStyle: TextFieldStyle {
                 RoundedRectangle(cornerRadius: DesignTokens.radius150)
                     .stroke(theme.colorActionPrimary, lineWidth: DesignTokens.accessibilityFocusWidth)
                     .padding(-DesignTokens.accessibilityFocusOffset)
-                    .opacity(isFocused && !isDisabled ? 1 : 0)
+                    .opacity(isFocused ? 1 : 0)
                     .animation(
                         reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.MotionFocusTransition.duration),
                         value: isFocused
@@ -417,8 +406,7 @@ struct InputTextBase_Previews: PreviewProvider {
                 placeholder: nil,
                 readOnly: false,
                 required: false,
-                maxLength: nil,
-                isDisabled: false
+                maxLength: nil
             )
             
             InputTextBase(
@@ -437,8 +425,7 @@ struct InputTextBase_Previews: PreviewProvider {
                 placeholder: nil,
                 readOnly: false,
                 required: false,
-                maxLength: nil,
-                isDisabled: false
+                maxLength: nil
             )
             
             InputTextBase(
@@ -457,8 +444,7 @@ struct InputTextBase_Previews: PreviewProvider {
                 placeholder: nil,
                 readOnly: false,
                 required: true,
-                maxLength: nil,
-                isDisabled: false
+                maxLength: nil
             )
             
             InputTextBase(
@@ -477,28 +463,7 @@ struct InputTextBase_Previews: PreviewProvider {
                 placeholder: nil,
                 readOnly: false,
                 required: false,
-                maxLength: nil,
-                isDisabled: false
-            )
-            
-            InputTextBase(
-                id: "preview-disabled",
-                label: "Email",
-                value: .constant("user@example.com"),
-                onChange: nil,
-                onFocus: nil,
-                onBlur: nil,
-                helperText: "This field is disabled",
-                errorMessage: nil,
-                isSuccess: false,
-                showInfoIcon: false,
-                type: .email,
-                autocomplete: .emailAddress,
-                placeholder: nil,
-                readOnly: false,
-                required: false,
-                maxLength: nil,
-                isDisabled: true
+                maxLength: nil
             )
         }
         .padding()

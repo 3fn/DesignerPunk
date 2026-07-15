@@ -140,10 +140,7 @@ struct InputTextPassword: View {
     
     /// Maximum length for input value
     let maxLength: Int?
-    
-    /// Disabled state
-    let isDisabled: Bool
-    
+
     /// Whether to show the toggle button
     let showToggle: Bool
     
@@ -212,7 +209,6 @@ struct InputTextPassword: View {
         readOnly: Bool = false,
         required: Bool = false,
         maxLength: Int? = nil,
-        isDisabled: Bool = false,
         showToggle: Bool = true,
         isNewPassword: Bool = false,
         invalidPasswordMessage: String = defaultInvalidPasswordMessage,
@@ -235,7 +231,6 @@ struct InputTextPassword: View {
         self.readOnly = readOnly
         self.required = required
         self.maxLength = maxLength
-        self.isDisabled = isDisabled
         self.showToggle = showToggle
         self.isNewPassword = isNewPassword
         self.invalidPasswordMessage = invalidPasswordMessage
@@ -276,7 +271,6 @@ struct InputTextPassword: View {
                     readOnly: readOnly,
                     required: required,
                     maxLength: maxLength,
-                    isDisabled: isDisabled,
                     trailingContent: showToggle ? AnyView(toggleButton) : nil
                 )
             } else {
@@ -307,7 +301,6 @@ struct InputTextPassword: View {
                     readOnly: readOnly,
                     required: required,
                     maxLength: maxLength,
-                    isDisabled: isDisabled,
                     trailingContent: showToggle ? AnyView(toggleButton) : nil
                 )
             }
@@ -327,7 +320,6 @@ struct InputTextPassword: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
-        .disabled(isDisabled)
         .accessibilityLabel(isPasswordVisible ? "Hide password" : "Show password")
         .accessibilityAddTraits(.isButton)
     }
@@ -406,14 +398,6 @@ struct InputTextPassword_Previews: PreviewProvider {
                 value: .constant("StrongP@ss123"),
                 helperText: "Enter your password",
                 isSuccess: true
-            )
-            
-            InputTextPassword(
-                id: "preview-disabled",
-                label: "Password",
-                value: .constant("secretpassword"),
-                helperText: "This field is disabled",
-                isDisabled: true
             )
             
             InputTextPassword(
