@@ -13,6 +13,7 @@
  * - Color animation (text.subtle → primary with blend.focusSaturate)
  * - Offset animation (translateY)
  * - Trailing icon support (error, success, info)
+ * - Trailing content slot for semantic variants (e.g., password toggle)
  * - Respects reduce motion settings
  * - WCAG 2.1 AA compliant
  * - Uses theme-aware blend utilities for state colors (focus, disabled)
@@ -99,6 +100,9 @@ enum class InputType {
  * @param isSuccess Success state indicator
  * @param showInfoIcon Info icon support
  * @param type Input type
+ * @param visualTransformation Override for the input's visual transformation.
+ *        When null, derived from type (PasswordVisualTransformation for PASSWORD).
+ *        Semantic variants use this to control masking (e.g., password visibility toggle).
  * @param placeholder Placeholder text (only shown when label is floated and input is empty)
  * @param readOnly Read-only state
  * @param required Required field indicator
@@ -106,6 +110,8 @@ enum class InputType {
  * @param imeAction IME action for keyboard
  * @param keyboardActions Keyboard actions
  * @param isDisabled Disabled state
+ * @param trailingContent Trailing content slot rendered after the status icons
+ *        (e.g., password visibility toggle)
  */
 @Composable
 fun InputTextBase(
@@ -121,13 +127,15 @@ fun InputTextBase(
     isSuccess: Boolean = false,
     showInfoIcon: Boolean = false,
     type: InputType = InputType.TEXT,
+    visualTransformation: VisualTransformation? = null,
     placeholder: String? = null,
     readOnly: Boolean = false,
     required: Boolean = false,
     maxLength: Int? = null,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    isDisabled: Boolean = false
+    isDisabled: Boolean = false,
+    trailingContent: (@Composable () -> Unit)? = null
 ) {
     // State
     var isFocused by remember { mutableStateOf(false) }
@@ -304,7 +312,7 @@ fun InputTextBase(
                 keyboardActions = keyboardActions,
                 singleLine = true,
                 readOnly = readOnly || isDisabled,
-                visualTransformation = if (type == InputType.PASSWORD) {
+                visualTransformation = visualTransformation ?: if (type == InputType.PASSWORD) {
                     PasswordVisualTransformation()
                 } else {
                     VisualTransformation.None
@@ -373,6 +381,9 @@ fun InputTextBase(
                     )
                 }
             }
+
+            // Trailing content slot (e.g., password visibility toggle)
+            trailingContent?.invoke()
         }
         
         // Helper text (persistent)

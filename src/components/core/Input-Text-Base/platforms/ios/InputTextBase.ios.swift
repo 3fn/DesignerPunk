@@ -13,6 +13,7 @@
  * - Color animation (text.subtle → primary with blend.focusSaturate)
  * - Offset animation (translateY)
  * - Trailing icon support (error, success, info)
+ * - Trailing content slot for semantic variants (e.g., password toggle)
  * - Respects accessibilityReduceMotion
  * - WCAG 2.1 AA compliant
  * - Uses theme-aware blend utilities for state colors (focus, disabled)
@@ -92,7 +93,12 @@ struct InputTextBase: View {
     
     /// Disabled state
     let isDisabled: Bool
-    
+
+    /// Trailing content slot rendered after the status icons
+    /// (e.g., password visibility toggle). Declared as `var` with a
+    /// default so the memberwise initializer keeps it optional and last.
+    var trailingContent: AnyView? = nil
+
     // MARK: - State
     
     /// Whether input currently has focus
@@ -221,7 +227,7 @@ struct InputTextBase: View {
                                 hasError: hasError,
                                 isSuccess: isSuccess,
                                 isDisabled: isDisabled,
-                                hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible
+                                hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible || trailingContent != nil
                             ))
                             .focused($isFocused)
                             .disabled(readOnly || isDisabled)
@@ -247,7 +253,7 @@ struct InputTextBase: View {
                                 hasError: hasError,
                                 isSuccess: isSuccess,
                                 isDisabled: isDisabled,
-                                hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible
+                                hasTrailingIcon: showErrorIcon || showSuccessIcon || showInfoIconVisible || trailingContent != nil
                             ))
                             .focused($isFocused)
                             .disabled(readOnly || isDisabled)
@@ -294,6 +300,12 @@ struct InputTextBase: View {
                             reduceMotion ? .none : Animation.timingCurve(0.4, 0.0, 0.2, 1.0, duration: DesignTokens.MotionFloatLabel.duration),
                             value: showInfoIconVisible
                         )
+                }
+
+                // Trailing content slot (e.g., password visibility toggle)
+                if let trailingContent = trailingContent {
+                    trailingContent
+                        .padding(.trailing, DesignTokens.spaceInset100)
                 }
             }
             .frame(minHeight: DesignTokens.tapAreaRecommended)
