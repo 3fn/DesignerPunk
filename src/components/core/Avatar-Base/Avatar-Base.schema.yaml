@@ -60,7 +60,7 @@ properties:
   alt:
     type: string
     required: false
-    description: Alt text for accessibility. Required if src provided.
+    description: Alt text for accessibility. Required if src provided on human type, unless decorative is true (agent type ignores src entirely, per Req 5 AC 5).
   interactive:
     type: boolean
     required: false

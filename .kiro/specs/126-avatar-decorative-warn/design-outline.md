@@ -1,7 +1,7 @@
 # Design Outline: 126 — Avatar Req 5.4 warn vs `decorative` prop
 
 **Date**: 2026-07-09 (v2 — round 1 incorporated)
-**Status**: ROUND 1 INCORPORATED (Lina AWA + Thurgood AWA, both converging on O2) — **awaiting Peter's recorded option choice in feedback.md, which per Thurgood R1 IS the ratification event for the settled edge semantics.**
+**Status**: O2 RATIFIED (Peter, 2026-07-09, recorded in feedback.md's `[PETER — DECISION, 2026-07-09]` entry — the ratification event for the settled edge semantics per Thurgood R1's process ruling) — IMPLEMENTED (Lina, Task 1, 2026-07-15).
 **Author**: Main-loop session (Fable 5), from Lina's PR #39 domain review (2026-07-09)
 **Origin**: Lina-confirmed defect, adjudicated during the PR #39 test-noise review and explicitly routed to a spec round rather than an inline fix
 **Scope class**: small component-behavior correction (one check + tests + doc comment), web platform
