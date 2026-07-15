@@ -313,7 +313,7 @@ All contract names follow `{category}_{concept}` in `snake_case`. No `supports_`
 | Checkmark animation | `animation_checkmark` |
 | Circular shape | `visual_circular_shape` |
 
-The Concept Catalog above lists all 136 concepts. For the historical migration mapping (113 source names → 104 canonical names, pre-Task 2.1), see `.kiro/specs/063-uniform-contract-system/findings/canonical-name-mapping.md`.
+The Concept Catalog above lists all 137 concepts. For the historical migration mapping (113 source names → 104 canonical names, pre-Task 2.1), see `.kiro/specs/063-uniform-contract-system/findings/canonical-name-mapping.md`.
 
 ---
 

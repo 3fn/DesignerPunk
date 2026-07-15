@@ -2,7 +2,7 @@
 id: contract-system-reference
 inclusion: manual
 name: Contract-System-Reference
-description: Uniform behavioral contract system reference — 10-category taxonomy with definitions, concept catalog with all 136 concepts, {category}_{concept} naming convention, canonical contracts.yaml format, exclusion format, inheritance and composition patterns, classification rules. Load when creating or modifying component contracts, auditing contract coverage, or building contract-consuming systems.
+description: Uniform behavioral contract system reference — 10-category taxonomy with definitions, concept catalog with all 137 concepts, {category}_{concept} naming convention, canonical contracts.yaml format, exclusion format, inheritance and composition patterns, classification rules. Load when creating or modifying component contracts, auditing contract coverage, or building contract-consuming systems.
 ---
 
 # Contract System Reference
@@ -46,9 +46,9 @@ This document is the authoritative reference for contract conventions. For the d
 
 ## Concept Catalog
 
-136 concepts across 10 categories. Originally 116, derived from the 29 deployed contracts.yaml files in the Spec 078 audit; grown since through governed additions (`gradient_glow` ballot measure, Spec 088 Nav-Header concepts, Spec 090 Progress-Bar-Base concepts).
+137 concepts across 10 categories. Originally 116, derived from the 29 deployed contracts.yaml files in the Spec 078 audit; grown since through governed additions (`gradient_glow` ballot measure, Spec 088 Nav-Header concepts, Spec 090 Progress-Bar-Base concepts, `readonly` ballot measure 2026-07-15).
 
-*Adjudicated 2026-07-03 (Lina): 136 counted empirically from the per-category lists below (26+6+7+17+19+6+1+15+10+29), which are the enforced source of truth via `src/__tests__/stemma-system/contract-catalog-name-validation.test.ts`; the stale "117" figures dated from the last full-sweep update (gradient_glow, 2026-03-18), while only this section's rolling "Updated:" line had tracked subsequent additions to 136.*
+*Adjudicated 2026-07-03 (Lina): 137 counted empirically from the per-category lists below (26+6+7+17+19+6+1+16+10+29), which are the enforced source of truth via `src/__tests__/stemma-system/contract-catalog-name-validation.test.ts`; the stale "117" figures dated from the last full-sweep update (gradient_glow, 2026-03-18), while only this section's rolling "Updated:" line had tracked subsequent additions to 136. state grew to 16 via the 2026-07-15 readonly ballot.*
 
 ### accessibility (26)
 
@@ -78,9 +78,9 @@ This document is the authoritative reference for contract conventions. For the d
 
 `virtualization`
 
-### state (15)
+### state (16)
 
-`binary_derivation` · `checked` · `connector_derivation` · `controlled` · `disabled` · `error` · `indeterminate` · `loading` · `mode_driven` · `priority_derivation` · `selected` · `selected_styling` · `styling` · `success` · `visual_driven`
+`binary_derivation` · `checked` · `connector_derivation` · `controlled` · `disabled` · `error` · `indeterminate` · `loading` · `mode_driven` · `priority_derivation` · `readonly` · `selected` · `selected_styling` · `styling` · `success` · `visual_driven`
 
 ### validation (10)
 
@@ -110,7 +110,7 @@ All contract names follow `{category}_{concept}` in `snake_case`. No `supports_`
 | Checkmark animation | `animation_checkmark` |
 | Circular shape | `visual_circular_shape` |
 
-The Concept Catalog above lists all 136 concepts. For the historical migration mapping (113 source names → 104 canonical names, pre-Task 2.1), see `.kiro/specs/063-uniform-contract-system/findings/canonical-name-mapping.md`.
+The Concept Catalog above lists all 137 concepts. For the historical migration mapping (113 source names → 104 canonical names, pre-Task 2.1), see `.kiro/specs/063-uniform-contract-system/findings/canonical-name-mapping.md`.
 
 ---
 

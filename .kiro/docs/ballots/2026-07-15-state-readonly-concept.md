@@ -2,7 +2,7 @@
 
 **Date**: 2026-07-15
 **Author**: Lina (contract authored on `fix/input-text-readonly-b-prime`); ballot drafted by the coordinating session
-**Status**: DRAFT — awaiting ratification
+**Status**: RATIFIED (Peter, 2026-07-15)
 **Origin**: iOS readOnly adjudication, RULED B-prime by Peter 2026-07-15 (`.kiro/issues/input-text-base-ios-readonly-adjudication.md`), ruling condition 1: "new readOnly contract via Concept Catalog ballot"
 
 ---
@@ -47,6 +47,7 @@ The concept was reviewed through the adjudication itself rather than a separate 
 2. Remove the `state_readonly` entry from `PENDING_BALLOT_CONCEPTS` in `src/__tests__/stemma-system/contract-catalog-name-validation.test.ts` — the allowlist is self-cleaning and will fail with an explicit instruction until removed.
 3. Straggler sweep: `grep -rn "136 concepts" governance/ docs/ .kiro/steering/` (every count in this directory's first ballot was wrong at least once — sweep, don't trust the enumerated list).
 4. Verification: `npx jest src/__tests__/stemma-system/contract-catalog-name-validation.test.ts src/__tests__/stemma-system/form-inputs-contracts.test.ts`; docs MCP index rebuild after merge.
+5. **Regenerate agent outputs** (`npx tsx tools/agent-generator/generate.ts`, then a green `diff-guard.ts` run to refresh the lock): `Contract-System-Reference.md` is a resolve-by-id input to the Spec-122 agent generator, and generated agent prompts (lina.md, sparky.md) embed the resolved catalog section. *Added during application — the 122-diff-guard failed PR #93 on exactly this omission; future ballots editing generator-embedded sections must carry this step.*
 
 ## Scope decisions
 
@@ -56,4 +57,4 @@ The concept was reviewed through the adjudication itself rather than a separate 
 
 ## Ratification
 
-*(pending — on ratification, update Status to `RATIFIED (Peter, <date>)` and commit that record before applying the edits, per the record-first protocol)*
+RATIFIED by Peter, 2026-07-15, in-session following the B-prime implementation review (PR #91). Per the record-first protocol, this status was committed before the edits in this measure were applied; the application commit follows.

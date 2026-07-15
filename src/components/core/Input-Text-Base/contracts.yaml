@@ -91,10 +91,11 @@ contracts:
       - Set error state, verify border/label/icon/message
     required: true
 
-  # state_readonly is a NEW Concept Catalog concept — concept ballot pending
-  # ratification (drafted separately by the coordinator). Authored under the
-  # B-prime ruling: .kiro/issues/input-text-base-ios-readonly-adjudication.md
-  # (RULED by Peter, 2026-07-15).
+  # state_readonly concept ratified into the Concept Catalog via ballot
+  # (.kiro/docs/ballots/2026-07-15-state-readonly-concept.md, RATIFIED Peter
+  # 2026-07-15). Authored under the B-prime ruling:
+  # .kiro/issues/input-text-base-ios-readonly-adjudication.md (RULED by Peter,
+  # 2026-07-15).
   state_readonly:
     category: state
     description: Displays a non-editable value that stays perceivable, selectable, and copyable — never disabled semantics
