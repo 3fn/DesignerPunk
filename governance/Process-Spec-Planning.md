@@ -35,7 +35,7 @@ description: Standards for creating spec documents — requirements format (EARS
 
 1. ✅ **Component-Templates** - Query "Behavioral Contract Templates" section for:
    - Interaction contracts (Focusable, Pressable, Hoverable)
-   - State contracts (Disabled, Error, Success, Loading)
+   - State contracts (Error, Success, Loading)
    - Accessibility contracts (Focus Ring, Reduced Motion, Screen Reader Hidden)
    - Visual contracts (Pressed State, Float Label Animation)
 
@@ -439,7 +439,7 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
 
 **Contract Traceability:**
 - Every platform implementation subtask in a component spec must include `_Contracts:` lines listing the contracts that subtask satisfies
-- Format: `_Contracts: interaction_focusable, interaction_pressable, state_disabled_`
+- Format: `_Contracts: interaction_focusable, interaction_pressable, state_loading_`
 - This maps implementation work to behavioral guarantees, enabling review and audit
 
 ### Task Format Examples
