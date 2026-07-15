@@ -7,7 +7,7 @@
  * Unit tests for Button-CTA component rendering
  * 
  * Tests component rendering with various props, size variants, variant styles,
- * icon integration, text wrapping, and disabled state.
+ * icon integration, and text wrapping.
  * 
  * Stemma System Naming: [Family]-[Type] = Button-CTA
  * Component Type: Standalone (no behavioral variants)
@@ -66,7 +66,6 @@ describe('Button-CTA Component Rendering', () => {
     buttonVariant?: 'primary' | 'secondary' | 'tertiary';
     icon?: string;
     noWrap?: boolean;
-    disabled?: boolean;
     testID?: string;
   }): ButtonCTA {
     // Create element - constructor runs and attaches shadow DOM
@@ -78,7 +77,6 @@ describe('Button-CTA Component Rendering', () => {
     if (props.buttonVariant) button.buttonVariant = props.buttonVariant;
     if (props.icon) button.icon = props.icon;
     if (props.noWrap !== undefined) button.noWrap = props.noWrap;
-    if (props.disabled !== undefined) button.disabled = props.disabled;
     if (props.testID) button.testID = props.testID;
     
     // Append to container
@@ -287,40 +285,48 @@ describe('Button-CTA Component Rendering', () => {
     });
   });
   
-  describe('Disabled State', () => {
-    it('should render disabled button with correct attributes', () => {
-      // Requirement: Disabled prop prevents interaction
-      const button = createButton({ label: 'Disabled Button', disabled: true });
-      
-      const shadowButton = button.shadowRoot?.querySelector('button');
-      expect(shadowButton?.hasAttribute('disabled')).toBe(true);
-      expect(shadowButton?.getAttribute('aria-disabled')).toBe('true');
-      expect(shadowButton?.className).toContain('button-cta--disabled');
+  describe('No Disabled State (philosophy exclusion)', () => {
+    // DesignerPunk does not support disabled states: if an action is
+    // unavailable, the component should not be rendered. state_disabled was
+    // removed from Button-CTA per the 2026-07-15 adjudication; these tests
+    // guard against the disabled state resurfacing.
+
+    it('should declare state_disabled under excludes (not contracts) in contracts.yaml', () => {
+      const fs = require('fs');
+      const path = require('path');
+      const contractsContent = fs.readFileSync(
+        path.join(__dirname, '../contracts.yaml'),
+        'utf-8'
+      );
+
+      const contractsSection = contractsContent.split(/^excludes:/m)[0];
+      const excludesSection = contractsContent.split(/^excludes:/m)[1] ?? '';
+      expect(contractsSection).not.toContain('state_disabled');
+      expect(excludesSection).toContain('state_disabled');
     });
-    
-    it('should not have disabled attributes when disabled is false', () => {
-      // Requirement: Enabled button is interactive
-      const button = createButton({ label: 'Enabled Button', disabled: false });
-      
-      const shadowButton = button.shadowRoot?.querySelector('button');
-      expect(shadowButton?.hasAttribute('disabled')).toBe(false);
-      expect(shadowButton?.getAttribute('aria-disabled')).toBe('false');
-      expect(shadowButton?.className).not.toContain('button-cta--disabled');
+
+    it('should not expose a disabled property or observe a disabled attribute', () => {
+      expect(ButtonCTA.observedAttributes).not.toContain('disabled');
+
+      const button = createButton({ label: 'Button' });
+      expect('disabled' in button).toBe(false);
     });
-    
-    it('should prevent press event when disabled', () => {
-      // Requirement: Disabled button doesn't trigger onPress
-      const button = createButton({ label: 'Disabled Button', disabled: true });
-      
+
+    it('should ignore a disabled attribute set by consumers', () => {
+      const button = createButton({ label: 'Button' });
+      button.setAttribute('disabled', '');
+
       let pressCount = 0;
       button.addEventListener('press', () => {
         pressCount++;
       });
-      
+
       const shadowButton = button.shadowRoot?.querySelector('button');
+      expect(shadowButton?.hasAttribute('disabled')).toBe(false);
+      expect(shadowButton?.className).not.toContain('button-cta--disabled');
+
       shadowButton?.click();
-      
-      expect(pressCount).toBe(0);
+      expect(pressCount).toBe(1);
     });
   });
   
@@ -407,21 +413,6 @@ describe('Button-CTA Component Rendering', () => {
       shadowButton?.click();
       
       expect(pressCount).toBe(1);
-    });
-    
-    it('should NOT call onPress when button disabled', () => {
-      // Requirement 15.1: Disabled button doesn't trigger onPress
-      const button = createButton({ label: 'Disabled Button', disabled: true });
-      
-      let pressCount = 0;
-      button.addEventListener('press', () => {
-        pressCount++;
-      });
-      
-      const shadowButton = button.shadowRoot?.querySelector('button');
-      shadowButton?.click();
-      
-      expect(pressCount).toBe(0);
     });
     
     it('should receive focus via Tab key', () => {
@@ -647,19 +638,6 @@ describe('Button-CTA Component Rendering', () => {
       expect(shadowButton?.getAttribute('role')).toBe('button');
       expect(shadowButton?.getAttribute('aria-label')).toBe('Accessible Button');
       expect(shadowButton?.getAttribute('type')).toBe('button');
-      expect(shadowButton?.getAttribute('aria-disabled')).toBe('false');
-    });
-    
-    it('should have proper ARIA attributes when disabled', () => {
-      // Requirement 12.6: Disabled button has correct ARIA attributes
-      const button = createButton({ label: 'Disabled Button', disabled: true });
-      
-      const shadowButton = button.shadowRoot?.querySelector('button');
-      
-      // Verify disabled ARIA attributes
-      expect(shadowButton?.getAttribute('role')).toBe('button');
-      expect(shadowButton?.getAttribute('aria-disabled')).toBe('true');
-      expect(shadowButton?.hasAttribute('disabled')).toBe(true);
     });
     
     it('should support keyboard navigation with Enter key', () => {
@@ -716,37 +694,5 @@ describe('Button-CTA Component Rendering', () => {
       expect(pressCount).toBe(1);
     });
     
-    it('should not activate on keyboard when disabled', () => {
-      // Requirement 15.4: Disabled button doesn't respond to keyboard
-      const button = createButton({ label: 'Disabled Keyboard', disabled: true });
-      
-      let pressCount = 0;
-      button.addEventListener('press', () => {
-        pressCount++;
-      });
-      
-      const shadowButton = button.shadowRoot?.querySelector('button');
-      shadowButton?.focus();
-      
-      // Try Enter key
-      const enterEvent = new KeyboardEvent('keydown', {
-        key: 'Enter',
-        code: 'Enter',
-        bubbles: true,
-        cancelable: true
-      });
-      shadowButton?.dispatchEvent(enterEvent);
-      
-      // Try Space key
-      const spaceEvent = new KeyboardEvent('keydown', {
-        key: ' ',
-        code: 'Space',
-        bubbles: true,
-        cancelable: true
-      });
-      shadowButton?.dispatchEvent(spaceEvent);
-      
-      expect(pressCount).toBe(0);
-    });
   });
 });

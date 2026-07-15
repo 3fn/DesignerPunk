@@ -32,7 +32,7 @@ The Buttons family provides interactive components for triggering user actions w
 
 - **Visual Hierarchy**: Three visual variants (primary, secondary, tertiary) establish clear action hierarchy
 - **Size Variants**: Three sizes (small, medium, large) for different contexts and emphasis levels
-- **Interaction States**: Comprehensive hover, pressed, disabled, and loading states
+- **Interaction States**: Comprehensive hover, pressed, and loading states (no disabled state — DesignerPunk philosophy)
 - **Accessibility First**: WCAG 2.1 AA compliant with keyboard navigation and screen reader support
 - **Cross-Platform Consistent**: Platform-appropriate feedback (ripple on Android, scale on iOS)
 
@@ -98,7 +98,7 @@ Button-CTA uses the `[Family]-[Type]` pattern without a variant suffix because i
 
 ### Base Contracts
 
-All Button-CTA instances implement these 7 foundational contracts:
+All Button-CTA instances implement these 6 foundational contracts:
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
@@ -106,7 +106,6 @@ All Button-CTA instances implement these 7 foundational contracts:
 | `pressable` | Responds to press/click events | 2.1.1 | web, ios, android |
 | `hover_state` | Visual feedback on hover (desktop) | 1.4.13 | web |
 | `pressed_state` | Visual feedback when pressed | 2.4.7 | web, ios, android |
-| `disabled_state` | Prevents interaction when disabled | 4.1.2 | web, ios, android |
 | `loading_state` | Shows loading indicator during async | 4.1.3 | web, ios, android |
 | `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
 
@@ -116,7 +115,7 @@ All Button-CTA instances implement these 7 foundational contracts:
 
 **Description**: Component can receive keyboard focus via Tab key navigation.
 
-**Behavior**: Focus state is visually indicated with a focus ring. Focus is managed appropriately when disabled state changes. Disabled buttons are not keyboard focusable.
+**Behavior**: Focus state is visually indicated with a focus ring.
 
 **WCAG Compliance**: 2.1.1 Keyboard, 2.4.7 Focus Visible
 
@@ -124,7 +123,7 @@ All Button-CTA instances implement these 7 foundational contracts:
 
 **Description**: Component responds to click, tap, Enter key, and Space key.
 
-**Behavior**: Press triggers the onPress callback when not disabled. Platform-appropriate feedback is provided during press (ripple on Android, scale on iOS).
+**Behavior**: Press triggers the onPress callback. Platform-appropriate feedback is provided during press (ripple on Android, scale on iOS).
 
 **WCAG Compliance**: 2.1.1 Keyboard
 
@@ -143,14 +142,6 @@ All Button-CTA instances implement these 7 foundational contracts:
 **Behavior**: Component shows visual feedback during active press/click. Uses `blend.pressedDarker` token (12% darker). Platform-specific feedback: Web uses background color change, iOS uses scale animation with haptic feedback, Android uses ripple effect with haptic feedback.
 
 **WCAG Compliance**: 2.4.7 Focus Visible
-
-#### disabled_state
-
-**Description**: Prevents interaction when disabled.
-
-**Behavior**: When disabled, component cannot receive focus, cannot be clicked/tapped, uses desaturated colors (`blend.disabledDesaturate` - 12% less saturated), shows `cursor: not-allowed` (web), and communicates disabled state to assistive technology.
-
-**WCAG Compliance**: 4.1.2 Name, Role, Value
 
 #### focus_ring
 
@@ -179,7 +170,6 @@ All Button-CTA instances implement these 7 foundational contracts:
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | No | `'primary'` | Visual variant for hierarchy |
 | `icon` | `IconName` | No | - | Optional leading icon |
 | `noWrap` | `boolean` | No | `false` | Truncate text instead of wrapping |
-| `disabled` | `boolean` | No | `false` | Disabled state |
 | `onPress` | `() => void` | Yes | - | Press callback |
 | `testID` | `string` | No | - | Test identifier |
 
@@ -503,7 +493,6 @@ Button components rely on three semantic concepts:
 | Icon | `icon.size100`, `icon.size125` | Icon sizing |
 | Blend | `blend.hoverDarker` | Hover state (8% darker) |
 | Blend | `blend.pressedDarker` | Pressed state (12% darker) |
-| Blend | `blend.disabledDesaturate` | Disabled state (12% less saturated) |
 
 **Why Semantic Concept Tokens**:
 - **Action concept**: `color.action.primary` clearly indicates emphasized interactive elements
@@ -650,7 +639,6 @@ iOS uses scale transforms + color blends for all press feedback. The ripple dist
 
 All platforms implement the same behavioral contracts:
 - Press feedback timing matches across platforms
-- Disabled state appearance is mathematically equivalent
 - Focus ring appearance is consistent
 - Touch targets meet platform guidelines
 

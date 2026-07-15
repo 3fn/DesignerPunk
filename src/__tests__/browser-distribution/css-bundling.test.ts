@@ -183,11 +183,13 @@ describe('CSS Bundling for Browser Distribution', () => {
       expect(bundleContent).toMatch(/:hover/);
     });
 
-    it('should contain disabled state styles', () => {
+    it('should not contain disabled state styles (no-disabled-states philosophy)', () => {
       const bundleContent = fs.readFileSync(ESM_BUNDLE_PATH, 'utf-8');
-      
-      // Components should have disabled styles
-      expect(bundleContent).toMatch(/:disabled|--disabled/);
+
+      // DesignerPunk does not support disabled states: if an action is
+      // unavailable, the component should not be rendered. No component CSS
+      // should ship disabled selectors or modifier classes.
+      expect(bundleContent).not.toMatch(/:disabled|--disabled/);
     });
   });
 

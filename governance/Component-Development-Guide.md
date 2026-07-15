@@ -1492,7 +1492,6 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
   /* Component-scoped properties - internal, calculated */
   --_cta-hover-bg: /* calculated by blend utilities */;
   --_cta-pressed-bg: /* calculated by blend utilities */;
-  --_cta-disabled-bg: /* calculated by blend utilities */;
 }
 
 .button-cta {

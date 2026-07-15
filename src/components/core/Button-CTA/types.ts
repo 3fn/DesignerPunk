@@ -82,7 +82,6 @@ export type ButtonStyle = 'primary' | 'secondary' | 'tertiary';
  *   variant="primary"
  *   icon="arrow-right"
  *   noWrap={false}
- *   disabled={false}
  *   testID="submit-button"
  *   onPress={handleSubmit}
  * />
@@ -197,15 +196,13 @@ export interface ButtonProps {
   
   /**
    * Click/tap handler (required)
-   * 
+   *
    * Callback function invoked when the button is clicked or tapped.
-   * Not called when button is disabled.
-   * 
+   *
    * @remarks
    * - Function signature: `() => void`
-   * - Not invoked when `disabled` is true
    * - Triggered by click, tap, Enter key, or Space key
-   * 
+   *
    * @example
    * ```typescript
    * onPress={() => console.log('Clicked')}
@@ -232,26 +229,11 @@ export interface ButtonProps {
    * ```
    */
   testID?: string;
-  
-  /**
-   * Optional disabled state (default: false)
-   * 
-   * When true, the button is non-interactive and visually indicates
-   * disabled state. The onPress handler is not called when disabled.
-   * 
-   * @defaultValue false
-   * 
-   * @remarks
-   * - Disabled buttons are not keyboard focusable
-   * - Screen readers announce disabled state
-   * - Visual styling indicates non-interactive state
-   * 
-   * @example
-   * ```typescript
-   * disabled={false}  // Interactive (default)
-   * disabled={true}   // Non-interactive
-   * disabled={isSubmitting}  // Conditional disable
-   * ```
-   */
-  disabled?: boolean;
 }
+
+// NO DISABLED STATES
+// DesignerPunk does not support disabled states for usability and
+// accessibility reasons. If an action is unavailable, the component
+// should not be rendered. For in-flight async actions, use the loading
+// state (state_loading) instead.
+// Ruled by Peter 2026-07-15 (Button-CTA disabled-state adjudication).

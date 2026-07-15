@@ -90,20 +90,12 @@ properties:
       When true, text is truncated with ellipsis instead of wrapping.
       Default (false) allows text wrapping for accessibility and i18n support.
   
-  disabled:
-    type: boolean
-    required: false
-    default: false
-    description: |
-      When true, button is non-interactive with disabled visual styling.
-      Disabled buttons are not keyboard focusable and onPress is not called.
-  
   onPress:
     type: "() => void"
     required: true
     description: |
       Callback function invoked when button is clicked, tapped, or activated
-      via keyboard (Enter/Space). Not called when disabled.
+      via keyboard (Enter/Space).
   
   testID:
     type: string
@@ -153,7 +145,6 @@ tokens:
   blend:
     - blend.hoverDarker
     - blend.pressedDarker
-    - blend.disabledDesaturate
     - blend.iconLighter
   component:
     - buttonCTA.minWidth.small
@@ -247,11 +238,10 @@ accessibility:
     - "1.4.11 Non-text Contrast - Focus ring meets 3:1 contrast"
     - "2.1.1 Keyboard - Fully keyboard accessible (Tab, Enter, Space)"
     - "2.4.7 Focus Visible - Clear focus indicator with :focus-visible"
-    - "4.1.2 Name, Role, Value - Proper ARIA attributes and disabled state"
+    - "4.1.2 Name, Role, Value - Proper ARIA attributes"
     - "2.5.5 Target Size - Touch targets meet 44px minimum"
   aria_attributes:
     - role: button (implicit from semantic element)
-    - aria-disabled: true when disabled
     - aria-label: label prop value
   keyboard_navigation:
     - Tab: Move focus to/from button

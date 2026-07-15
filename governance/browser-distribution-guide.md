@@ -345,9 +345,6 @@ Call-to-action button with variants, sizes, and icon support.
 <button-cta label="Primary" variant="primary"></button-cta>
 <button-cta label="Secondary" variant="secondary"></button-cta>
 <button-cta label="Tertiary" variant="tertiary"></button-cta>
-
-<!-- Disabled state -->
-<button-cta label="Disabled" variant="primary" disabled></button-cta>
 ```
 
 **Events:**

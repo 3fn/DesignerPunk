@@ -275,7 +275,7 @@
  * The --_cta-hover-bg custom property is set by the component
  * using darkerBlend(color.primary, blend.hoverDarker) = 8% darker.
  */
-.button-cta--primary:hover:not(:disabled) {
+.button-cta--primary:hover {
   background-color: var(--_cta-hover-bg);
 }
 
@@ -288,7 +288,7 @@
  * The --_cta-pressed-bg custom property is set by the component
  * using darkerBlend(color.primary, blend.pressedDarker) = 12% darker.
  */
-.button-cta--primary:active:not(:disabled) {
+.button-cta--primary:active {
   background-color: var(--_cta-pressed-bg);
 }
 
@@ -316,30 +316,6 @@
  */
 .button-cta:focus:not(:focus-visible) {
   outline: none;
-}
-
-/**
- * Disabled state.
- * 
- * Uses blend utility calculated color (desaturate with blend.disabledDesaturate)
- * instead of opacity workaround for cross-platform consistency.
- * 
- * The --button-disabled-color custom property is set by the component
- * using desaturate(color.primary, blend.disabledDesaturate) = 12% less saturated.
- * 
- * - Cursor changes to not-allowed
- * - Prevents interaction
- * - Maintains color contrast for accessibility
- */
-.button-cta:disabled,
-.button-cta--disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.button-cta--primary:disabled,
-.button-cta--primary.button-cta--disabled {
-  background-color: var(--_cta-disabled-bg);
 }
 
 /* ==========================================================================

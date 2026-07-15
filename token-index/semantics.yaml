@@ -1418,8 +1418,7 @@ tokens:
       web: '--blend-disabled-desaturate'
       ios: blendDisabledDesaturate
       android: blend_disabled_desaturate
-    consumers:
-      - Button-CTA
+    consumers: []
   blend.containerHoverDarker:
     category: interaction
     primitiveReferences:
