@@ -35,9 +35,8 @@ const EXPECTED_CATEGORY_COUNT = 10;
  * fails with a removal instruction — a stale entry cannot linger.
  */
 const PENDING_BALLOT_CONCEPTS: Record<string, string> = {
-  state_readonly:
-    'Concept ballot pending ratification — authored per the iOS readOnly adjudication ' +
-    '(.kiro/issues/input-text-base-ios-readonly-adjudication.md, RULED B-prime, Peter 2026-07-15)',
+  // (empty — state_readonly ratified and landed in the catalog, 2026-07-15;
+  // add entries here only for contracts whose concept ballot is still pending)
 };
 
 /**
