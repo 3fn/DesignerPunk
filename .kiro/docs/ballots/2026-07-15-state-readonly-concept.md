@@ -47,6 +47,7 @@ The concept was reviewed through the adjudication itself rather than a separate 
 2. Remove the `state_readonly` entry from `PENDING_BALLOT_CONCEPTS` in `src/__tests__/stemma-system/contract-catalog-name-validation.test.ts` — the allowlist is self-cleaning and will fail with an explicit instruction until removed.
 3. Straggler sweep: `grep -rn "136 concepts" governance/ docs/ .kiro/steering/` (every count in this directory's first ballot was wrong at least once — sweep, don't trust the enumerated list).
 4. Verification: `npx jest src/__tests__/stemma-system/contract-catalog-name-validation.test.ts src/__tests__/stemma-system/form-inputs-contracts.test.ts`; docs MCP index rebuild after merge.
+5. **Regenerate agent outputs** (`npx tsx tools/agent-generator/generate.ts`, then a green `diff-guard.ts` run to refresh the lock): `Contract-System-Reference.md` is a resolve-by-id input to the Spec-122 agent generator, and generated agent prompts (lina.md, sparky.md) embed the resolved catalog section. *Added during application — the 122-diff-guard failed PR #93 on exactly this omission; future ballots editing generator-embedded sections must carry this step.*
 
 ## Scope decisions
 
