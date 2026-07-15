@@ -6,10 +6,10 @@
  * the design system while maintaining semantic meaning.
  * 
  * Opacity values:
- * - subtle: 0.9 (90%) - Minimal transparency for subtle effects
- * - medium: 0.7 (70%) - Moderate transparency for overlays
- * - heavy: 0.5 (50%) - Strong transparency for backgrounds
- * - ghost: 0.3 (30%) - Maximum transparency for ghost effects
+ * - subtle: opacity088 (88%) - Minimal transparency for subtle effects
+ * - medium: opacity072 (72%) - Moderate transparency for overlays
+ * - heavy: opacity048 (48%) - Strong transparency for backgrounds
+ * - ghost: opacity032 (32%) - Maximum transparency for ghost effects
  * 
  * All opacity tokens reference primitive opacity values that can be applied
  * to any color or surface for consistent transparency effects.

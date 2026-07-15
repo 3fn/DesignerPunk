@@ -40,7 +40,7 @@ This document is organized for efficient MCP section queries. Use `get_section` 
 | Shadow | 23 | 8 | ✅ Complete |
 | Glow | 9 | 3 | ✅ Complete |
 | Blend | 5 | 7 | ✅ Complete |
-| Opacity | 14 | 8 | ✅ Complete |
+| Opacity | 14 | 4 | ✅ Complete |
 | Border Width | 3 | 5 | ✅ Complete |
 | Layering | - | 12 | ✅ Complete |
 | Motion | 12 | 1+ | ✅ Complete |
@@ -381,12 +381,12 @@ if (validationResult.valid) {
 #### Semantic Opacity Tokens
 - **File**: `src/tokens/semantic/OpacityTokens.ts`
 - **Description**: Purpose-driven opacity values
-- **Tokens**: opacity.disabled, opacity.overlay, opacity.hover, opacity.pressed, opacity.ghost
+- **Tokens**: opacity.subtle, opacity.medium, opacity.heavy, opacity.ghost
 
 #### Semantic Blend Tokens
 - **File**: `src/tokens/semantic/BlendTokens.ts`
 - **Description**: Contextual blend amounts for interaction states
-- **Tokens**: blend.hoverDarker, blend.hoverLighter, blend.pressedDarker, blend.focusSaturate, blend.disabledDesaturate (DEPRECATED 2026-07-15 — no disabled states; removal at next major), blend.containerHoverDarker, color.icon.opticalBalance
+- **Tokens**: blend.hoverDarker, blend.hoverLighter, blend.pressedDarker, blend.pressedLighter, blend.focusSaturate, blend.disabledDesaturate (DEPRECATED 2026-07-15 — no disabled states; removal at next major), blend.containerHoverDarker, color.icon.opticalBalance
 - **Related Guides**:
   - [Blend Tokens Guide](./tokens/blend-tokens.md)
   - [Blend Infrastructure Design](../.kiro/specs/031-blend-infrastructure-implementation/design.md)
@@ -598,7 +598,7 @@ Four blend operations are available on all platforms:
 | `darkerBlend(color, amount)` | Darken a color | Hover states, pressed states |
 | `lighterBlend(color, amount)` | Lighten a color | Icon optical balance |
 | `saturate(color, amount)` | Increase saturation | Focus states |
-| `desaturate(color, amount)` | Decrease saturation | Disabled states |
+| `desaturate(color, amount)` | Decrease saturation | Deprecated disabled-state usage (blend.disabledDesaturate, 2026-07-15) — no current consumer; calculator retained for backward compatibility |
 
 ### Generated Files
 
@@ -633,14 +633,14 @@ val hoverColor = MaterialTheme.colorScheme.primary.darkerBlend(BlendTokens.hover
 
 ### Component Integration
 
-All four core components use blend utilities:
+Blend utilities are used across the component library. Representative examples:
 
 | Component | Blend Usage |
 |-----------|-------------|
-| ButtonCTA | hover (darkerBlend), pressed (darkerBlend), icon (lighterBlend) |
-| TextInputField | focus (saturate), disabled (desaturate) |
-| Container | hover (darkerBlend) |
-| Icon | optical balance (lighterBlend) |
+| Button-CTA | hover (darkerBlend), pressed (darkerBlend), icon (lighterBlend) |
+| Input-Text-Base | focus (saturate) |
+| Container-Base | hover (darkerBlend) |
+| Icon-Base | optical balance (lighterBlend) |
 
 ### Validation
 

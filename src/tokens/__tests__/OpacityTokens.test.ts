@@ -280,7 +280,9 @@ describe('Opacity Tokens', () => {
       
       expect(opacity000?.description).toContain('Fully transparent');
       expect(opacity008?.description).toContain('Subtle transparency');
-      expect(opacity048?.description).toContain('Disabled state');
+      // opacity048 description corrected 2026-07-15: disabled-state phrasing removed
+      // (no-disabled-states philosophy, Button-CTA adjudication)
+      expect(opacity048?.description).toContain('Very strong transparency');
       expect(opacity100?.description).toContain('Fully opaque');
     });
 
