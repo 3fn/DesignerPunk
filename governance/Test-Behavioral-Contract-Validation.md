@@ -14,7 +14,7 @@ description: Framework for validating behavioral contracts across web, iOS, and 
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, cross-platform-validation, testing
-**Last Reviewed**: 2026-07-08
+**Last Reviewed**: 2026-07-15
 
 ---
 
@@ -210,13 +210,11 @@ pressable_validation_checklist:
     - [ ] Click/tap triggers action
     - [ ] Enter key triggers action (web)
     - [ ] Space key triggers action (web)
-    - [ ] Action NOT triggered when disabled
     
   state_validation:
     - [ ] Default state is correct
     - [ ] Hover state appears (desktop only)
     - [ ] Pressed/active state appears
-    - [ ] Disabled state prevents interaction
     
   outcome_validation:
     - [ ] onPress callback is invoked
@@ -226,7 +224,6 @@ pressable_validation_checklist:
     
   accessibility_validation:
     - [ ] role="button" or semantic button (web)
-    - [ ] aria-disabled when disabled (web)
     - [ ] Screen reader announces button
     
   cross_platform_validation:
@@ -305,37 +302,48 @@ error_state_validation_checklist:
     - [ ] Android: TalkBack announces error
 ```
 
-### Disabled State Contract Validation
+### Disabled State Exclusion Guard Validation
 
-**Contract Definition**: Prevents interaction when disabled
+**Provenance**: As of the 2026-07-15 adjudication (`.kiro/issues/button-cta-disabled-state-adjudication.md`), the no-disabled-states philosophy holds corpus-wide with **zero exceptions** — Button-CTA was the last component carrying `state_disabled`, and it has been removed. No component in the corpus may declare a disabled state as a behavioral contract, and `blend.disabledDesaturate` (along with the other disabled-state blend wrappers) is deprecated. Validation for this contract type has inverted: rather than validating that a disabled state behaves correctly, validation now confirms a disabled state does **not exist** and cannot be reintroduced.
+
+**Contract Definition**: Component has no disabled state. Interaction affordances are always active; unavailable actions are handled by not rendering the component (or by another contract — see Philosophy Alternatives below), never by disabling it in place.
+
+**Rationale**: DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered.
 
 ```yaml
-disabled_state_validation_checklist:
-  trigger_validation:
-    - [ ] Disabled state activates when disabled=true
-    - [ ] Disabled state deactivates when disabled=false
-    
-  state_validation:
-    - [ ] Component cannot receive focus
-    - [ ] Component cannot be clicked/tapped
-    - [ ] Visual styling indicates disabled state
-    - [ ] Cursor shows not-allowed (web)
-    
-  outcome_validation:
-    - [ ] onPress/onChange NOT called when disabled
-    - [ ] Desaturated colors applied (blend.disabledDesaturate)
-    - [ ] Component is visually distinct from enabled
-    
-  accessibility_validation:
-    - [ ] aria-disabled="true" set (web)
-    - [ ] Disabled state communicated to AT
-    - [ ] Component removed from tab order (web)
-    
+disabled_state_exclusion_guard_checklist:
+  schema_validation:
+    - [ ] state_disabled is declared under contracts.yaml `excludes:` (NOT under `contracts:`)
+    - [ ] Excludes entry carries the standardized reason: "DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered."
+
+  api_surface_validation:
+    - [ ] Component exposes no disabled prop/property
+    - [ ] Component does not list `disabled` in observedAttributes (web) or an equivalent observed-attribute mechanism per platform
+
+  ignored_input_validation:
+    - [ ] A consumer-set disabled attribute is ignored — not forwarded to internal/shadow elements
+    - [ ] No disabled-styling class is applied when a disabled attribute is set
+    - [ ] No aria-disabled (or platform-equivalent) attribute is applied when a disabled attribute is set
+    - [ ] Press/activation still fires normally even when a consumer sets a disabled attribute
+
+  rendered_output_validation:
+    - [ ] No disabled attribute is ever rendered on any platform
+    - [ ] No aria-disabled attribute is ever rendered on any platform
+    - [ ] No platform-equivalent disabled semantic (e.g., Android `enabled = false`, iOS `.disabled()`) is ever applied
+
   cross_platform_validation:
-    - [ ] Web: aria-disabled and tabindex=-1
-    - [ ] iOS: .disabled() modifier applied
-    - [ ] Android: enabled = false in semantics
+    - [ ] Web: no disabled/aria-disabled attribute, no tabindex=-1 for disabled reasons
+    - [ ] iOS: no `.disabled()` modifier applied
+    - [ ] Android: no `enabled = false` in semantics
 ```
+
+**Philosophy Alternatives** — when a spec's design outline reaches for "disabled," redirect to the pattern that actually fits:
+
+- **In-flight async action** → `state_loading` (component shows a loading/busy state; the action remains conceptually available, just pending)
+- **Form input momentarily invalid** → validate-on-press / validate-on-submit (surface the error, do not disable the control)
+- **Action genuinely unavailable** → do not render the component/action at all
+
+**Mirror reference**: `src/components/core/Button-CTA/__tests__/ButtonCTA.test.ts`, `describe('No Disabled State (philosophy exclusion)')` — the canonical exclusion-guard test block this checklist is derived from.
 
 ### Hover State Contract Validation
 
@@ -347,7 +355,6 @@ hover_state_validation_checklist:
     - [ ] Hover state triggers on mouse enter
     - [ ] Hover state clears on mouse leave
     - [ ] Hover state NOT shown on touch devices
-    - [ ] Hover state NOT shown when disabled
     
   state_validation:
     - [ ] Background color changes on hover
