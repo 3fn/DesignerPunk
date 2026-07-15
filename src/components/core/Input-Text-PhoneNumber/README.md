@@ -149,16 +149,17 @@ InputTextPhoneNumber(
 3. **validates_on_blur**: Validation triggers on blur
 4. **error_state_display**: Shows error message and styling
 5. **success_state_display**: Shows success styling
-6. **disabled_state**: Prevents interaction when disabled
-7. **trailing_icon_display**: Shows contextual trailing icons
-8. **focus_ring**: WCAG 2.4.7 focus visible indicator
-9. **reduced_motion_support**: Respects prefers-reduced-motion
+6. **trailing_icon_display**: Shows contextual trailing icons
+7. **focus_ring**: WCAG 2.4.7 focus visible indicator
+8. **reduced_motion_support**: Respects prefers-reduced-motion
+
+**Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered (adjudicated 2026-07-15).
 
 ### Phone-Specific Contracts
 
-10. **validates_phone_format**: Validates phone against country-specific patterns
-11. **provides_phone_formatting**: Formats phone numbers as user types
-12. **supports_international_formats**: Handles multiple country formats
+9. **validates_phone_format**: Validates phone against country-specific patterns
+10. **provides_phone_formatting**: Formats phone numbers as user types
+11. **supports_international_formats**: Handles multiple country formats
 
 ## Validation
 

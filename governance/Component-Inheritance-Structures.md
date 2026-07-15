@@ -76,16 +76,17 @@ Input-Text-Base (Primitive) │ ├── Input-Text-Email (Semantic) │ └─
 
 ### Behavioral Contracts
 
-**Base Contracts (9 total)**:
+**Base Contracts (8 total)**:
 - `focusable` - Keyboard focus support (WCAG 2.1.1)
 - `float_label_animation` - Label animates on focus (WCAG 2.3.3)
 - `validates_on_blur` - Validation triggers on blur (WCAG 3.3.1)
 - `error_state_display` - Error message and styling (WCAG 3.3.1, 1.4.1)
 - `success_state_display` - Success styling (WCAG 1.4.1)
-- `disabled_state` - Prevents interaction when disabled (WCAG 4.1.2)
 - `trailing_icon_display` - Contextual trailing icons
 - `focus_ring` - WCAG 2.4.7 focus visible indicator
 - `reduced_motion_support` - Respects prefers-reduced-motion
+
+**Excluded**: `disabled_state` — DesignerPunk does not support disabled states for usability and accessibility reasons (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
 
 **Extended Contracts by Variant**:
 - **Email**: `validates_email_format`, `provides_email_autocomplete`
@@ -142,14 +143,15 @@ Button-CTA uses the `[Family]-[Type]` pattern (not `[Family]-[Type]-Base`) becau
 
 ### Behavioral Contracts
 
-**Contracts (7 total)**:
+**Contracts (6 total)**:
 - `clickable` - Responds to click/tap interactions (WCAG 2.1.1)
 - `focusable` - Keyboard focus support (WCAG 2.1.1)
-- `disabled_state` - Prevents interaction when disabled (WCAG 4.1.2)
 - `loading_state` - Shows loading indicator during async operations
 - `icon_support` - Supports leading/trailing icons
 - `focus_ring` - WCAG 2.4.7 focus visible indicator
 - `reduced_motion_support` - Respects prefers-reduced-motion
+
+**Excluded**: `disabled_state` — DesignerPunk does not support disabled states for usability and accessibility reasons (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
 
 ### Token Dependencies
 
@@ -618,7 +620,7 @@ Planned (not shipped): Nav-Breadcrumb, Nav-List.
 - `supports_icons` - Optional icons for items
 
 **Extended Contracts by Variant**:
-- **Tabs**: `switches_content`, `supports_disabled_tabs`, `supports_scrollable`
+- **Tabs**: `switches_content`, `supports_scrollable` (no disabled-tab affordance — DesignerPunk does not support disabled states; omit unavailable tabs instead)
 - **Breadcrumb**: `shows_hierarchy`, `supports_truncation`, `links_to_ancestors`
 - **List**: `supports_nesting`, `supports_collapsible`, `supports_badges`
 - **Bar**: `supports_responsive`, `supports_dropdown`, `supports_search`

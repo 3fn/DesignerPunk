@@ -168,32 +168,21 @@
     </div>
 
     <!-- ============================================================
-         SECTION 4: Disabled State
+         SECTION 4: State Variants
          ============================================================ -->
     <div class="demo-section">
-      <h2>4. Disabled State</h2>
-      <p>Disabled inputs prevent interaction and use desaturated styling. They are not keyboard focusable.</p>
+      <h2>4. State Variants</h2>
+      <p>Input-Text has no disabled state. DesignerPunk does not support disabled states for usability and accessibility reasons — if a field is unavailable, it should not be rendered.</p>
 
-      <div class="input-demo-row">
-        <div class="input-demo-item">
-          <input-text-base id="disabled-empty" label="Disabled empty" disabled value=""></input-text-base>
-          <span class="input-demo-item-label">Disabled (empty)</span>
-        </div>
-        <div class="input-demo-item">
-          <input-text-base id="disabled-filled" label="Disabled filled" disabled value="Cannot edit this"></input-text-base>
-          <span class="input-demo-item-label">Disabled (with value)</span>
-        </div>
+      <div class="demo-note">
+        <strong>No disabled state:</strong> Disabled inputs remove affordance without explanation. Use alternative patterns instead: don't render the field when it's unavailable, or use <code>read-only</code> when the value should stay visible in the layout but not be editable.
       </div>
 
       <div class="input-demo-row">
         <div class="input-demo-item">
           <input-text-base id="readonly" label="Read-only field" read-only value="Read-only content"></input-text-base>
-          <span class="input-demo-item-label">Read-only (focusable but not editable)</span>
+          <span class="input-demo-item-label">Read-only (value visible, editing prevented)</span>
         </div>
-      </div>
-
-      <div class="demo-note">
-        <strong>Disabled vs Read-only:</strong> Disabled inputs are not focusable and use desaturated styling. Read-only inputs are focusable and visually similar to default state but prevent editing.
       </div>
     </div>
 
@@ -217,10 +206,6 @@
           </div>
         </div>
         <div class="input-demo-row">
-          <div class="input-demo-item">
-            <input-text-base id="interactive-disabled" label="Skipped (disabled)" disabled value=""></input-text-base>
-            <span class="input-demo-item-label">Disabled (skipped by Tab)</span>
-          </div>
           <div class="input-demo-item">
             <input-text-base id="interactive-3" label="City" value=""></input-text-base>
             <span class="input-demo-item-label">Tab continues here</span>
@@ -301,8 +286,8 @@
       <h3>States</h3>
       <div class="input-demo-row">
         <div class="input-demo-item">
-          <input-text-password id="pw-disabled" label="Password" disabled value="disabled123"></input-text-password>
-          <span class="input-demo-item-label">Disabled</span>
+          <input-text-password id="pw-success" label="Password" value="StrongPass123!" is-success="true"></input-text-password>
+          <span class="input-demo-item-label">Success state</span>
         </div>
         <div class="input-demo-item">
           <input-text-password id="pw-error" label="Password" error-message="Password does not meet requirements" value="weak"></input-text-password>
@@ -344,13 +329,6 @@
         </div>
       </div>
 
-      <div class="input-demo-row">
-        <div class="input-demo-item">
-          <input-text-phone-number id="phone-disabled" label="Phone number" disabled value="5559876543"></input-text-phone-number>
-          <span class="input-demo-item-label">Disabled</span>
-        </div>
-      </div>
-
       <div class="demo-note">
         <strong>Formatting:</strong> Phone numbers are auto-formatted as the user types (US format by default). The <code>change</code> event includes both <code>formattedValue</code> and <code>rawDigits</code>. Use <code>auto-format="false"</code> to disable formatting. Validation triggers on blur.
       </div>
@@ -365,16 +343,13 @@
 
       <h3>Keyboard Navigation</h3>
       <div class="demo-interactive">
-        <p>Use <kbd>Tab</kbd> to move between inputs. Disabled inputs are skipped. Focus ring is visible on keyboard navigation:</p>
+        <p>Use <kbd>Tab</kbd> to move between inputs. Focus ring is visible on keyboard navigation:</p>
         <div class="input-demo-row">
           <div class="input-demo-item">
             <input-text-base id="a11y-1" label="First field" value=""></input-text-base>
           </div>
           <div class="input-demo-item">
-            <input-text-base id="a11y-disabled" label="Disabled (skipped)" disabled value=""></input-text-base>
-          </div>
-          <div class="input-demo-item">
-            <input-text-base id="a11y-2" label="Third field" value=""></input-text-base>
+            <input-text-base id="a11y-2" label="Second field" value=""></input-text-base>
           </div>
         </div>
       </div>
@@ -385,7 +360,6 @@
         <li><code>aria-invalid="true"</code> — set when error-message is present</li>
         <li><code>role="alert"</code> — on error message element for screen reader announcement</li>
         <li><code>required</code> — native HTML required attribute for form validation</li>
-        <li><code>disabled</code> — native HTML disabled attribute, removes from tab order</li>
       </ul>
 
       <h3>Reduced Motion</h3>

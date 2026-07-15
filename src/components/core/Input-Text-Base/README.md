@@ -36,10 +36,11 @@ This component guarantees the following behaviors across all platforms:
 | `validates_on_blur` | Validation triggers on blur | 3.3.1 |
 | `error_state_display` | Shows error message and styling | 3.3.1, 1.4.1 |
 | `success_state_display` | Shows success styling | 1.4.1 |
-| `disabled_state` | Prevents interaction when disabled | 4.1.2 |
 | `trailing_icon_display` | Shows contextual trailing icons | 1.4.1 |
 | `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 |
 | `reduced_motion_support` | Respects prefers-reduced-motion | 2.3.3 |
+
+**Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered (adjudicated 2026-07-15).
 
 ---
 
