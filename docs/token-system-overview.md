@@ -386,7 +386,7 @@ if (validationResult.valid) {
 #### Semantic Blend Tokens
 - **File**: `src/tokens/semantic/BlendTokens.ts`
 - **Description**: Contextual blend amounts for interaction states
-- **Tokens**: blend.hoverDarker, blend.hoverLighter, blend.pressedDarker, blend.focusSaturate, blend.disabledDesaturate, blend.containerHoverDarker, color.icon.opticalBalance
+- **Tokens**: blend.hoverDarker, blend.hoverLighter, blend.pressedDarker, blend.focusSaturate, blend.disabledDesaturate (DEPRECATED 2026-07-15 — no disabled states; removal at next major), blend.containerHoverDarker, color.icon.opticalBalance
 - **Related Guides**:
   - [Blend Tokens Guide](./tokens/blend-tokens.md)
   - [Blend Infrastructure Design](../.kiro/specs/031-blend-infrastructure-implementation/design.md)

@@ -908,7 +908,6 @@ Components in the Form Inputs family consume these design tokens:
 | Accessibility | `accessibility.focus.color` | Focus ring color |
 | Icon | `icon.size100` | Icon size |
 | Blend | `blend.focusSaturate` | Focus state saturation |
-| Blend | `blend.disabledDesaturate` | Disabled state desaturation |
 
 #### Checkbox Tokens
 

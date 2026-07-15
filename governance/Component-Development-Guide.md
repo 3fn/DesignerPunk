@@ -1096,7 +1096,6 @@ class MyComponent extends HTMLElement {
     // Calculate state colors
     this._hoverColor = blendUtils.hoverColor(primaryColor);      // 8% darker
     this._pressedColor = blendUtils.pressedColor(primaryColor);  // 12% darker
-    this._disabledColor = blendUtils.disabledColor(primaryColor); // 12% desaturated
     this._focusColor = blendUtils.focusColor(primaryColor);      // 8% more saturated
   }
 }
@@ -1145,7 +1144,6 @@ fun MyComponent(primaryColor: Color) {
 | Hover (dark bg) | `blend.hoverLighter` | `lighterBlend(color, 0.08)` | 8% lighter |
 | Pressed | `blend.pressedDarker` | `pressedColor()` | 12% darker |
 | Focus | `blend.focusSaturate` | `focusColor()` | 8% more saturated |
-| Disabled | `blend.disabledDesaturate` | `disabledColor()` | 12% desaturated |
 | Container hover | `blend.containerHoverDarker` | `darkerBlend(color, 0.04)` | 4% darker |
 | Icon optical | `color.icon.opticalBalance` | `iconColor()` | 8% lighter |
 

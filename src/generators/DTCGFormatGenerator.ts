@@ -724,6 +724,12 @@ export class DTCGFormatGenerator {
       } else if (token.direction === 'lighter') {
         extensions.blendType = 'lighterBlend';
       }
+      // Deprecation metadata (e.g. blend.disabledDesaturate) — lets includeDeprecated: false strip it
+      if (token.deprecated) {
+        extensions.deprecated = true;
+        if (token.deprecatedSince) extensions.deprecatedSince = token.deprecatedSince;
+        if (token.deprecatedReason) extensions.deprecatedReason = token.deprecatedReason;
+      }
 
       group[key] = this.toDTCGToken(aliasValue, 'number', token.description, extensions);
     }
