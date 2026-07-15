@@ -122,7 +122,6 @@ private fun validatePasswordRequirements(
  * @param maxLength Maximum length for input value
  * @param imeAction IME action for keyboard
  * @param keyboardActions Keyboard actions
- * @param isDisabled Disabled state
  * @param showToggle Whether to show the toggle button
  * @param isNewPassword Whether this is for a new password
  * @param invalidPasswordMessage Custom invalid password message
@@ -150,7 +149,6 @@ fun InputTextPassword(
     maxLength: Int? = null,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    isDisabled: Boolean = false,
     showToggle: Boolean = true,
     isNewPassword: Boolean = false,
     invalidPasswordMessage: String = DEFAULT_INVALID_PASSWORD_MESSAGE,
@@ -212,8 +210,7 @@ fun InputTextPassword(
                 onClick = {
                     isPasswordVisible = !isPasswordVisible
                     onToggleVisibility?.invoke(isPasswordVisible)
-                },
-                enabled = !isDisabled
+                }
             ) {
                 Icon(
                     imageVector = if (isPasswordVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
@@ -261,7 +258,6 @@ fun InputTextPassword(
         maxLength = maxLength,
         imeAction = imeAction,
         keyboardActions = keyboardActions,
-        isDisabled = isDisabled,
         trailingContent = toggleButton
     )
 }

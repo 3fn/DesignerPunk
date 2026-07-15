@@ -93,22 +93,8 @@ const CONTRACT_PATTERNS: Record<string, Record<string, RegExp[]>> = {
       /errorMessage/g,
     ],
   },
-  disabled_state: {
-    web: [
-      /disabled/gi,
-      /aria-disabled/g,
-      /cursor:\s*not-allowed/g,
-    ],
-    ios: [
-      /disabled/gi,
-      /isDisabled/g,
-    ],
-    android: [
-      /enabled/gi,
-      /isEnabled/g,
-      /disabled/gi,
-    ],
-  },
+  // NOTE: disabled_state is a standardized EXCLUSION (no-disabled-states philosophy).
+  // Implementation-level guard patterns live in DISABLED_EXCLUSION_GUARD_PATTERNS below.
   focus_ring: {
     web: [
       /:focus-visible/g,
@@ -140,6 +126,17 @@ const CONTRACT_PATTERNS: Record<string, Record<string, RegExp[]>> = {
     ],
   },
 };
+
+// Disabled-state exclusion guard (no-disabled-states philosophy, Spec 066 / Button-CTA pattern).
+// These patterns must NOT appear in any Form Inputs platform implementation.
+// readOnly is the documented alternative; iOS implements readOnly via SwiftUI
+// .disabled(readOnly), which none of these patterns match.
+const DISABLED_EXCLUSION_GUARD_PATTERNS: RegExp[] = [
+  /isDisabled/,
+  /disabledBlend/,
+  /aria-disabled/,
+  /cursor:\s*not-allowed/,
+];
 
 /**
  * Load component schema
@@ -370,6 +367,28 @@ describe('Form Inputs Family Behavioral Contracts', () => {
         const content = fs.readFileSync(contractsPath, 'utf-8');
         expect(content).toContain('state_disabled');
         expect(content).toContain('excludes');
+      });
+
+      it('no platform implementation should contain disabled-state handling', () => {
+        // Exclusion guard (Spec 066 / Button-CTA pattern): the contracts.yaml
+        // exclusion must hold in code. readOnly is the documented alternative;
+        // iOS implements readOnly via SwiftUI .disabled(readOnly), which is allowed.
+        for (const formComponent of FORM_INPUT_COMPONENTS) {
+          for (const platform of ['web', 'ios', 'android']) {
+            const content = loadPlatformImpl(formComponent, platform);
+            if (!content) continue;
+
+            const violations = DISABLED_EXCLUSION_GUARD_PATTERNS
+              .filter(pattern => pattern.test(content))
+              .map(pattern => pattern.source);
+
+            if (violations.length > 0) {
+              console.log(`${formComponent} (${platform}) disabled-state handling found: ${violations.join(', ')}`);
+            }
+
+            expect(violations).toEqual([]);
+          }
+        }
       });
     });
   });

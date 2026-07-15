@@ -15,15 +15,14 @@
  * - Trailing icon support (error, success, info)
  * - Respects reduce motion settings
  * - WCAG 2.1 AA compliant
- * - Uses theme-aware blend utilities for state colors (focus, disabled)
- * 
+ * - Uses theme-aware blend utilities for state colors (focus)
+ *
  * Behavioral Contracts:
  * - focusable: Can receive keyboard focus
  * - float_label_animation: Label animates on focus
  * - validates_on_blur: Validation triggers on blur
  * - error_state_display: Shows error message and styling
  * - success_state_display: Shows success styling
- * - disabled_state: Prevents interaction when disabled
  * - trailing_icon_display: Shows contextual trailing icons
  * - focus_ring: WCAG 2.4.7 focus visible indicator
  * - reduced_motion_support: Respects prefers-reduced-motion
@@ -68,7 +67,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.provider.Settings
 import com.designerpunk.tokens.focusBlend
-import com.designerpunk.tokens.disabledBlend
 
 /**
  * Input type enumeration
@@ -105,7 +103,6 @@ enum class InputType {
  * @param maxLength Maximum length for input value
  * @param imeAction IME action for keyboard
  * @param keyboardActions Keyboard actions
- * @param isDisabled Disabled state
  */
 @Composable
 fun InputTextBase(
@@ -126,8 +123,7 @@ fun InputTextBase(
     required: Boolean = false,
     maxLength: Int? = null,
     imeAction: ImeAction = ImeAction.Done,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    isDisabled: Boolean = false
+    keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
     // State
     var isFocused by remember { mutableStateOf(false) }
@@ -192,7 +188,6 @@ fun InputTextBase(
         targetValue = when {
             hasError -> colorFeedbackErrorText
             isSuccess -> colorFeedbackSuccessText
-            isDisabled -> colorActionPrimary.disabledBlend()
             isFocused -> colorActionPrimary.focusBlend()
             else -> colorTextMuted
         },
@@ -204,7 +199,6 @@ fun InputTextBase(
         targetValue = when {
             hasError -> colorFeedbackErrorText
             isSuccess -> colorFeedbackSuccessText
-            isDisabled -> colorActionPrimary.disabledBlend()
             isFocused -> colorActionPrimary.focusBlend()
             else -> colorBorder
         },
@@ -278,7 +272,7 @@ fun InputTextBase(
                         shape = RoundedCornerShape(radius150)
                     )
                     .then(
-                        if (isFocused && !isDisabled) {
+                        if (isFocused) {
                             Modifier.border(
                                 width = accessibilityFocusWidth,
                                 color = accessibilityFocusColor,
@@ -295,7 +289,7 @@ fun InputTextBase(
                     lineHeight = typographyInputLineHeight.sp,
                     fontWeight = FontWeight(typographyInputFontWeight),
                     letterSpacing = typographyInputLetterSpacing.sp,
-                    color = if (isDisabled) colorTextMuted else colorTextDefault
+                    color = colorTextDefault
                 ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = getKeyboardType(type),
@@ -303,7 +297,7 @@ fun InputTextBase(
                 ),
                 keyboardActions = keyboardActions,
                 singleLine = true,
-                readOnly = readOnly || isDisabled,
+                readOnly = readOnly,
                 visualTransformation = if (type == InputType.PASSWORD) {
                     PasswordVisualTransformation()
                 } else {
