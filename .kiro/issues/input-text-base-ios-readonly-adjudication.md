@@ -1,9 +1,11 @@
-# Input-Text-Base: iOS readOnly-as-Disabled Adjudication
+# Input-Text-Base: iOS readOnly-as-Disabled Adjudication — RULED: B-PRIME
 
 **Date**: 2026-07-15
+**Ruled by**: Peter, 2026-07-15
 **Owner recommendation**: Lina (fix iOS — parity or documented native adaptation; `.disabled()` valid under neither)
+**Joint recommendation after synthesis round**: B-prime with conditions — unanimous (Lina, Kenya, Data)
 **Source**: Post-merge review of the no-disabled-states cleanup (PRs #83–#85)
-**Status**: OPEN — awaiting ruling
+**Status**: RULED — implementation pending (see Ruling)
 
 ---
 
@@ -330,4 +332,41 @@ Verified against `InputTextPassword.android.kt` and Compose foundation behavior:
 
 ## Ruling
 
-*(pending)*
+**B-prime, with the consolidated conditions** — ruled by Peter, 2026-07-15,
+accepting the unanimous joint recommendation from the synthesis round.
+
+iOS renders `readOnly` as selectable `Text` inside the existing field chrome
+(border, background, padding, floated label when filled), with composed
+accessibility (label + value + read-only indication, never a disabled/dimmed
+trait). `.disabled(readOnly)` is removed. The seven conditions in the
+Synthesis Outcome section are part of the ruling:
+
+1. Declared, never silent — explicit iOS platform note on
+   `interaction_focusable`; new readOnly contract via Concept Catalog ballot;
+   web/Android focus-order participation affirmatively pinned; carve-out
+   framed as a mitigable declared exception; tap-acknowledgment delta noted.
+2. Kenya's on-device `.focusable(interactions:)` prototype, prioritized
+   before the contract ballot; the contract auto-tightens if it verifies.
+3. Announcement parity on all three platforms (web native; Android
+   `stateDescription("read only")` — new work, Data; iOS composed hint).
+4. Password: readOnly contracted OUT of the Input-Text-Password variant
+   (the Kenya/Data-preferred resolution — zero named consumers; deletes the
+   security fork). The invariant-based fallback rule in [DATA R2] §3 is the
+   recorded alternative if a product case ever materializes.
+5. `DISABLED_EXCLUSION_GUARD_PATTERNS` gains an iOS `.disabled(` pattern.
+6. Three-platform readOnly tests land with the contract.
+7. Implementation notes per the Synthesis Outcome (shared chrome extraction;
+   unconditional token-derived min-height; empty-field label parity; visual
+   affordance routed to Leonardo).
+
+**Recorded dissent accepted into the ruling (Data)**: if the `.focusable`
+prototype fails verification, the record stands that iOS FKA/external-keyboard
+users are knowingly served worse than Android keyboard users for this state —
+a declared, mitigable platform difference, monitored, not erased.
+
+**Implementation routing**: Lina owns the component work (iOS rendering
+change, contract authoring, guard pattern, tests), with Kenya's prototype as
+the scheduling gate for contract wording and Data implementing the Android
+`stateDescription`. Follow-up 4 (correcting the retention note in
+`input-text-base-disabled-implementation-cleanup.md:51`) proceeds with the
+implementation.
