@@ -161,7 +161,8 @@ base_contracts:
   - validatable
   - float_label_animation
   - error_state_display
-  - disabled_state
+  # No disabled_state — DesignerPunk does not support disabled states
+  # (adjudicated 2026-07-15). If unavailable, don't render the component.
 
 # Input-Text-Email extends with:
 extended_contracts:
@@ -554,11 +555,9 @@ Input-Text-Base:
       type: string
       required: false
       description: Placeholder text when empty
-    disabled:
-      type: boolean
-      required: false
-      default: false
-      description: Whether input is disabled
+    # No `disabled` prop — DesignerPunk does not support disabled states
+    # (adjudicated 2026-07-15). If the field is unavailable, don't render it;
+    # use `readOnly` when the value should stay visible but not be editable.
     error:
       type: string
       required: false
@@ -577,10 +576,9 @@ Input-Text-Base:
       description: Displays error message and visual error indication
       platforms: [web, ios, android]
       required: true
-    - name: supports_disabled_state
-      description: Prevents interaction when disabled
-      platforms: [web, ios, android]
-      required: true
+    # No supports_disabled_state contract — DesignerPunk does not support
+    # disabled states for usability and accessibility reasons (adjudicated
+    # 2026-07-15). If unavailable, don't render the component.
   
   tokens:
     - typography.input.*
@@ -712,7 +710,10 @@ LoginForm:
   behavioral_contracts:
     - form_validation_on_submit
     - field_validation_on_blur
-    - submit_button_disabled_until_valid
+    # Submit button stays interactive at all times — validation runs on press
+    # and surfaces field errors. DesignerPunk does not support disabled states
+    # (adjudicated 2026-07-15), so never gate the button on form validity.
+    - submit_validates_on_press
 ```
 
 #### Feed Post Pattern

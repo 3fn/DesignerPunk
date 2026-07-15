@@ -86,7 +86,7 @@ Include these sections when applicable to the component:
 
 - **Size variants** — If the component has a size prop (small, medium, large), show all sizes
 - **Visual variants** — If the component has variant/color/style props, show all variants
-- **State variants** — Disabled, error, success, loading, etc.
+- **State variants** — Error, success, loading, etc. (DesignerPunk has no disabled state — see the excluded `state_disabled` contract in the component's `contracts.yaml`)
 - **Interactive states** — Hover, focus, active, pressed (for interactive components)
 - **Accessibility features** — Keyboard navigation, ARIA attributes, screen reader behavior
 - **Event handling** — If the component emits events, show interactive examples with visible event output

@@ -216,16 +216,17 @@ InputTextPassword(
 3. **validates_on_blur**: Validation triggers on blur
 4. **error_state_display**: Shows error message and styling
 5. **success_state_display**: Shows success styling
-6. **disabled_state**: Prevents interaction when disabled
-7. **trailing_icon_display**: Shows contextual trailing icons
-8. **focus_ring**: WCAG 2.4.7 focus visible indicator
-9. **reduced_motion_support**: Respects prefers-reduced-motion
+6. **trailing_icon_display**: Shows contextual trailing icons
+7. **focus_ring**: WCAG 2.4.7 focus visible indicator
+8. **reduced_motion_support**: Respects prefers-reduced-motion
+
+**Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered (adjudicated 2026-07-15).
 
 ### Password-Specific Contracts
 
-10. **provides_secure_input**: Masks password input by default
-11. **supports_password_toggle**: Show/hide password functionality
-12. **provides_password_autocomplete**: Enables browser/platform password autofill
+9. **provides_secure_input**: Masks password input by default
+10. **supports_password_toggle**: Show/hide password functionality
+11. **provides_password_autocomplete**: Enables browser/platform password autofill
 
 ## Validation
 

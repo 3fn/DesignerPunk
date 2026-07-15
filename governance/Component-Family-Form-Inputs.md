@@ -102,7 +102,7 @@ Input-Radio-Base (Primitive)
 
 ### Text Input Base Contracts (Inherited by Text Input Components)
 
-All text input components in the Form Inputs family inherit these 9 foundational contracts from Input-Text-Base:
+All text input components in the Form Inputs family inherit these 8 foundational contracts from Input-Text-Base:
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
@@ -111,10 +111,11 @@ All text input components in the Form Inputs family inherit these 9 foundational
 | `validates_on_blur` | Validation triggers on blur | 3.3.1 | web, ios, android |
 | `error_state_display` | Shows error message and styling | 3.3.1, 1.4.1 | web, ios, android |
 | `success_state_display` | Shows success styling | 1.4.1 | web, ios, android |
-| `disabled_state` | Prevents interaction when disabled | 4.1.2 | web, ios, android |
 | `trailing_icon_display` | Shows contextual trailing icons | 1.4.1 | web, ios, android |
 | `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
 | `reduced_motion_support` | Respects prefers-reduced-motion | 2.3.3 | web, ios, android |
+
+**Excluded**: `disabled_state` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an input is unavailable, it should not be rendered (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
 
 ### Contract Details
 
