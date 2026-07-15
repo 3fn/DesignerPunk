@@ -113,7 +113,7 @@ export const opacityTokens: Record<string, PrimitiveToken> = {
     category: TokenCategory.OPACITY,
     baseValue: OPACITY_BASE_VALUE * 6,
     familyBaseValue: OPACITY_BASE_VALUE,
-    description: 'Disabled state - faded, very strong overlay',
+    description: 'Very strong transparency - background scrims and modal overlays (referenced by opacity.heavy)',
     mathematicalRelationship: 'base × 6 = 0.08 × 6 = 0.48',
     baselineGridAlignment: false,
     isStrategicFlexibility: false,

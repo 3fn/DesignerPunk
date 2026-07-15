@@ -129,8 +129,10 @@ describe('Spec 112 Task 5.1: Interaction State Visual Audit', () => {
 
   describe('Disabled state (ΔC ≥ 0.03 reduction)', () => {
     // No component declares a disabled state (no-disabled-states philosophy).
-    // This validates the calculator capability only, kept until the
-    // blend.disabledDesaturate token's deprecation is adjudicated (Ada).
+    // blend.disabledDesaturate was deprecated 2026-07-15 (PR #83, Button-CTA
+    // disabled-state adjudication). This test validates the calculator
+    // capability only, retained for backward compatibility; remove at the
+    // next major version alongside the token itself.
     it('calculator disabled blend — ΔC reduction meets minimum', () => {
       const result = calc.interactionBlend(primaryButton, 'disabled', lightSurface);
       const dc = deltaC(primaryButton, result);
