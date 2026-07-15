@@ -192,6 +192,142 @@ On the options: this verification strengthens **Option A**. The strongest counte
 
 ---
 
+## Synthesis Round
+
+### [LINA R2] — Owner/implementer response to Kenya + Data consults
+
+#### 1. B-prime feasibility against the actual internals
+
+**Verdict: feasible, SwiftUI-pure, with one refactor, one layout guarantee, one open design question, and one genuine security fork. Honest size: moderate — bigger than a patch, far smaller than the UIKit bridge.**
+
+**The chrome swap is clean, but not free.** Kenya's B-prime assumes the chrome can wrap a `Text` — it currently can't as written. `InputTextBaseFieldStyle` is a `TextFieldStyle` (`InputTextBase.ios.swift:363–397`); its `_body(configuration:)` applies only to `TextField`/`SecureField`. The fix is a straightforward extraction: pull the chrome (font, `colorTextDefault`, insets, `colorStructureCanvas` background, border overlay, focus-ring overlay) into a shared `ViewModifier`/container parameterized on the same five inputs, apply it to either the field or the readOnly `Text`. Low-risk refactor, and it's the same extraction A-mechanism-2 would need anyway — this cost is common to both options, not a B-prime penalty.
+
+**Layout/height parity: one real trap.** With identical font + insets, filled `Text` and `TextField` render at matching heights, and the focus-ring overlay is layout-neutral (negative-padding overlay, `:386–395`), so its death under B-prime has zero layout effect. The trap is **empty value**: `Text("")` collapses to zero intrinsic size where `TextField` reserves its line height, so an empty readOnly field would shrink the border box. The row-level `.frame(minHeight: tapAreaRecommended)` (`:301`) protects the row, not the bordered field. Mitigation is trivial (reserve `typographyInput` line height inside the chrome) but must be explicit, or the first empty readOnly field ships visibly broken.
+
+**Empty readOnly + float label: keep the shared rule, don't invent an iOS-only one.** The label floats on `isFocused || isFilled` (`:124`); under B-prime `isFocused` is permanently false, so an empty readOnly field shows the label resting in placeholder position over an inert box. That is *exactly* what web and Android render for empty readOnly today — so parity says accept it, not force-float on iOS alone. Contract-note the degenerate case; route "should readOnly get a distinct affordance / forced float?" to Leonardo as a cross-platform design decision — it merges with Data's visual-affordance follow-up.
+
+**Input-Text-Password + readOnly — the fork nobody addressed, and it has teeth.** Naive B-prime renders `Text(value).textSelection(.enabled)` — **plaintext secret, selectable and copyable**. That is a security regression over even the broken status quo (which at least keeps `SecureField` masking). The other naive branch — masked dots as copyable Text — copies bullet characters: harmless nonsense. Recommendation:
+
+- readOnly Password renders **masked dots as `Text`, with `textSelection` NOT enabled** — matching web, where browsers block copy from `type=password` inputs; Compose likewise suppresses copy under a password visual transformation (medium confidence — flagged for Data to verify on-device).
+- `accessibilityValue` must be the masked string, never plaintext.
+- The visibility toggle stays functional; revealed state shows plaintext `Text`. Whether *revealed* plaintext gets `textSelection` should be pinned in the contract cross-platform (lean: yes — a deliberately revealed value is a value the user may copy).
+- Candidly: "is readOnly Password a legitimate state at all?" belongs on the table — no product case has ever been named; contracting it out of the Password variant is a defensible simplification Peter could choose instead.
+
+**Complexity estimate, honestly:** chrome extraction + conditional content view + accessibility composition + empty-height guarantee + Password branch + previews ≈ 1–2 focused days of iOS work. Email and PhoneNumber inherit for free; only Password needs its own branch. Shared costs regardless of option: concept-catalog ballot + readOnly contract, three-platform tests (Android coverage is currently zero), demo copy.
+
+#### 2. A-mechanism-2 cost check — Kenya's tax estimate is partly high, partly exactly right
+
+**Push-back**: "font/color/padding/background/border/focus-ring must all be re-implemented in UIKit" is overstated. The bridge is isolable to a single `UIViewRepresentable` replacing only the *inner field*; the chrome wraps it in SwiftUI via the same extraction B-prime needs. One representable in the Base, inherited by all three children — not a per-component tax. And "two rendering paths" is not unique to A: **B-prime is also two rendering paths** (field vs Text). The fair comparison is which second path drifts worse.
+
+**Where Kenya is exactly right, and it's load-bearing**: the **focus bridge**. `@FocusState` does not bind to UIKit first-responder status, so the readOnly path needs delegate→state plumbing while the editable path keeps `@FocusState` — two focus systems driving the same focus ring, animation timing, and `onFocus`/`onBlur` ordering, in the *foundational* form field of the family. Permanent, and precisely the category of subtle cross-path drift Stemma's contracts exist to prevent. B-prime's second path has no focus system at all — a dead path can't drift on focus behavior.
+
+**Implementer's correction**: A-mechanism-2 is **medium cost, not catastrophic** — but its residual risk concentrates exactly where bugs are hardest to see in review (focus timing, caret/tint, autofill overlays), whereas B-prime's residual risk concentrates where bugs are trivially visible (layout height). The corrected estimate doesn't flip the comparison.
+
+#### 3. Revised recommendation
+
+**B-prime, with conditions — a genuine move from the original A-lean.**
+
+- **Kenya's kill of A-mechanism-1: fully accepted.** The original doc under-called it as "risky"; it's out. That narrows A to the bridge — the original A-lean was priced against the cheap mechanism.
+- **Data's corrections: fully accepted, including against my own text.** The announcement table was imprecise, and his keyboard/IME finding demolishes my own "Against A" counter-argument — it was only ever true of mechanism 1.
+- **Dissent from Data — plainly**: every fact he verified stands; "this strengthens A" as ruling implication does not follow. A's cost lives entirely on iOS and isn't visible from the Android seat: a permanent dual-focus-system bridge in the family's base field, purchased to give FKA/external-keyboard users reachability of read-only content. VoiceOver users are served correctly by B-prime; touch users get long-press copy; under B-prime iOS's felt behavior converges with Android readOnly (no caret, no keyboard, long-press copy) — the remaining delta is focus-order participation and the focus ring. That delta is not worth the bridge's permanent drift surface. If Peter weighs FKA parity as contract-grade, A-mechanism-2 is the defensible ruling and I'll build it — knowing the tax is focus-bridge drift, forever, on Input-Text-Base.
+- **Dissent from Kenya — narrowly**: her mechanism-2 chrome-cost claim is inflated (see §2); Peter shouldn't rule against A on the inflated number. And her B-prime sketch is incomplete on Password and empty-field height — "zero UIKit, same chrome" undersells the two places B-prime can actually ship broken.
+
+**Conditions attached to B-prime (all non-negotiable from the owner seat):**
+
+1. **Declared, never silent**: `interaction_focusable` gets an explicit iOS readOnly platform note; the new readOnly contract (new Concept Catalog entry — ballot) pins selectable/copyable on all platforms, correct announcement on all platforms, never a disabled/dimmed trait, and the `onFocus`/`onBlur` not-fired-on-iOS-readOnly decision made cross-platform.
+2. **Kenya prototypes `.focusable(interactions:)` on-device** for FKA reachability of the readOnly Text — promoted into the contract only if it verifies; tracked enhancement otherwise.
+3. **Data's Android `stateDescription("read only")`** and the web announcement get pinned in the contract — announcement parity on all three.
+4. **Password rule as specified above** — or Peter rules readOnly out of the Password variant entirely.
+5. **Follow-up 1 proceeds regardless of ruling**: `DISABLED_EXCLUSION_GUARD_PATTERNS` gains an iOS `.disabled(` pattern.
+6. **Tests land with the contract on all three platforms** — current executable readOnly coverage is zero everywhere.
+
+**C remains out** — no dissent anywhere.
+
+### [KENYA R2] — iOS consult response to synthesis round
+
+#### 1. A-mechanism-2 cost correction — accepted, with one residue; recommendation unchanged
+
+**Correction accepted.** "Font/color/padding/background/border/focus-ring must all be re-implemented in UIKit" was overstated. With the chrome extracted into a shared ViewModifier/container — an extraction B-prime needs anyway — the representable replaces only the inner field, and the box chrome stays SwiftUI. Lina is also right that "two rendering paths" cuts both ways; her drift asymmetry is the correct frame — A's second path drifts *invisibly* (focus timing, caret/tint, autofill overlays, `onFocus`/`onBlur` ordering), B-prime's drifts *visibly* (layout height). Signed as written.
+
+**One residue before the correction fully lands**: even with the chrome extracted, the inner `UITextField` still needs a UIKit-side mapping of the *text* styling — `UIFont` from the `typographyInput` token, `textColor`/`tintColor` theme resolution, and first-baseline/intrinsic-height parity between `UITextField` and SwiftUI `TextField` (they don't automatically match). So A is chrome extraction **plus** a text-styling bridge **plus** the focus bridge. Small next to the focus bridge, but it belongs in the ledger.
+
+**Does medium-not-catastrophic change the recommendation? No.** The recommendation was never load-bearing on the chrome number: it rests on the focus bridge (which Lina confirms as load-bearing) and the consumer verdict — for the actual product cases, B-prime's felt behavior is what I want to ship on iOS.
+
+#### 2. Password fork — as the consumer: contract readOnly OUT of the Password variant
+
+**Contract it out.** No iOS screen would be specced with a read-only password *field*: stored secrets are never displayed back; confirmation screens don't echo passwords; the profile idiom is a display row ("Password ••••••••") plus a "Change" action — a `LabeledContent`-style row and a button, not `Input-Text-Password(readOnly: true)`. Keeping the state means permanently maintaining a security-sensitive branch with zero named consumers. If a product case materializes, extend the contract then, case in hand.
+
+**If Peter keeps it — Lina's mechanism is right on iOS, with two corrections:**
+- **`accessibilityValue` should NOT be the literal masked string.** VoiceOver renders literal bullet glyphs poorly (version-dependent "bullet bullet bullet…" or silence). Use a semantic value — `accessibilityValue("hidden")` / localized "secure" — mirroring `SecureField`. Pin the *intent* (announced as hidden, never plaintext, never literal glyph soup), not the literal string.
+- **Revealed-plaintext copy has an iOS-specific leak to pin knowingly**: copy via the `Text` edit menu goes to the general `UIPasteboard`, syncing via Universal Clipboard/Handoff; the component cannot set `localOnly`/expiration on a system-menu copy. Web has an analogous exposure — contract-able, but with that sentence in the rationale.
+
+#### 3. Empty-field height trap — mitigation confirmed, hardened
+
+Confirmed; the fix should not reason about empty `Text` intrinsic size at all (undocumented, has varied across SwiftUI releases): the chrome reserves min-height from the `typographyInput` line-height token plus vertical insets, unconditionally, on both paths — holds for empty and filled, immune to OS-version intrinsic-size changes. Consistency note: the field uses fixed `Font.system(size:)` (no Dynamic Type) today, so a token-derived fixed minHeight is consistent — if the family ever adopts Dynamic Type, this minHeight must scale with it.
+
+#### 4. Final position
+
+**Hold: B-prime, with Lina's six conditions — plus the Password amendment (condition 4 resolved as "contract readOnly out of Password"; her masked-Text rule with the two corrections above as fallback if Peter keeps the state).**
+
+**Condition 2 accepted**: on-device `.focusable(interactions:)` prototype — real hardware, Full Keyboard Access enabled, verifying (a) FKA-order reachability, (b) keyboard-invocable copy, (c) interaction with `accessibilityElement(children: .contain)` grouping, (d) external keyboard without FKA. Promoted into the contract only on verification.
+
+**Preserved dissents**: From Data — facts stand, the "strengthens A" implication doesn't follow; co-signing Lina's dissent with an addition from the iOS seat: Compose readOnly's felt behavior (no caret, no keyboard, long-press copy) is closer to B-prime's than to web's caret-and-cursor readonly, so Android is a weaker precedent for A than his framing suggested. From Lina, narrowly — "chrome stays SwiftUI via the same extraction" slightly undersells A's remaining UIKit text-styling/baseline bridge, and her Password `accessibilityValue`-as-masked-string detail is wrong on iOS as literally worded. Her dissent from my R1 — accepted without reservation: the B-prime sketch undersold Password and empty-height; her 1–2 focused days is the honest number.
+
+**C remains out.**
+
+---
+
+### [DATA R2] — Android response to Lina's synthesis
+
+#### 1. Declared iOS focus-order carve-out — acceptable, not a red line
+
+**Load-bearing (red lines, from the Android/consumer seat):**
+- **Never disabled semantics on any platform's readOnly path.** Mechanical Android corollary for the record: the *only* way to remove a readOnly field from Android focus order is `enabled = false` — precisely the banned disabled semantics. So "achieve uniform focus order by normalizing web/Android *down* to iOS" is not an available future move; it would re-violate the philosophy on Android. The carve-out must be iOS-scoped and one-directional, with the contract *affirmatively* pinning web/Android focus-order participation — not merely staying silent. Android hardware-keyboard users (tablets, Chromebooks, DPAD) are a first-class constituency served by Android's native behavior today.
+- **Explicit announced read-only state on all three platforms** — the `stateDescription` requirement (Lina's condition 3). Non-negotiable regardless of ruling.
+- **Selectable/copyable, non-editable content; no keyboard raise.**
+
+**Evidence-reporting, not a red line**: uniform focus-order participation. R1 pinned "focusable on all three" *conditional on Peter picking A*. A **declared** carve-out — explicit platform note, contracted announcement parity, iOS-scoped — is acceptable. The objection to the status quo was always that the divergence is silent and disabled-flavored, not that divergence per se is intolerable. Wording condition: frame the carve-out as a **mitigable declared exception, not a settled permanent difference** — if the `.focusable(interactions:)` prototype verifies, iOS re-enters focus order and the carve-out shrinks to zero. Prioritize that prototype before the contract ballot if scheduling allows.
+
+#### 2. Lina's dissent — position updated, epistemics stated honestly
+
+"This strengthens A" was a *refutation of the stated counter-argument against A* — which, as written, was mechanism-1-only. It was never a pricing of mechanism 2. Kenya's kill of mechanism 1 narrows A to the UIKit bridge, whose dual-focus-system cost is an iOS-internals claim not independently verifiable from the Android seat — the two agents who own that seat agree it's real, permanent, and concentrated where drift is hardest to review. Deferred — and R1 was exhibiting exactly the bias Lina names: the behavioral-correctness case looked free because A's cost is invisible from Android.
+
+Her felt-behavior convergence claim **checks out from the Android side**: Android readOnly already has no caret, no keyboard, long-press copy — B-prime iOS converges with that for touch users. One correction to her delta list ("focus-order + focus ring"): a third delta exists — **tap acknowledgment**. Tapping an Android readOnly field focuses it (ring engages, empty-field label floats); tapping B-prime iOS does nothing until long-press. Cosmetic, but it belongs in the contract's platform notes.
+
+So: facts held, implication conceded. **No longer recommending A.** If Peter independently weighs FKA parity as contract-grade, A-mechanism-2 remains the defensible ruling — but that's his weighing, not a preserved recommendation.
+
+#### 3. Password verification (assigned) — confirmed, with one wording correction
+
+Verified against `InputTextPassword.android.kt` and Compose foundation behavior:
+- **Our implementation**: masked state applies `PasswordVisualTransformation()` (lines 224–228) → Base (line 254); `KeyboardType.Password` via `type = InputType.PASSWORD`; `readOnly` passes through (line 256). The visibility toggle in `trailingContent` is **not gated on readOnly** — functional under readOnly today, matching her rule.
+- **"Compose suppresses copy under a password visual transformation" — CONFIRMED, medium-high confidence.** `TextFieldSelectionManager` suppresses Copy/Cut in the selection toolbar under `PasswordVisualTransformation` — parity with framework `TextView.canCopy()`. Because gating is transformation-keyed, **revealed** plaintext IS copyable on Android today — so her lean (revealed = copyable) is the zero-work native default; pinning the opposite would require custom suppression. Endorsed.
+- **Wording correction**: "masked dots as `Text`, with selection NOT enabled" describes the iOS *mechanism*; on Android the literal "no selection" clause is wrong — Compose permits the selection UI to engage on a masked field while withholding Copy. Harmless, but the contract should pin **invariants**, not mechanisms: *masked value never copyable; plaintext never exposed to the accessibility tree while masked; no keyboard; toggle functional; revealed plaintext selectable/copyable.* Under that wording, Android needs **zero readOnly-Password rework**.
+- **Masked announcement — CONFIRMED with a device-verification flag** (exact TalkBack utterance: medium confidence; same on-device pass as R1's items).
+- **"Is readOnly Password legitimate at all?" — from the consumer seat: no.** Never specced or needed; contracting it out deletes the security fork rather than fencing it. If kept, the invariants apply and Android is already compliant.
+
+#### 4. Final position
+
+**B-prime, conditional — joining Lina and Kenya**, co-signing the six conditions with refinements: (1) the `interaction_focusable` platform note affirmatively pins web/Android in focus order (the carve-out is iOS-only and cannot be resolved by normalizing Android down); (2) the `.focusable` prototype prioritized, contract worded to auto-tighten if it verifies; (3) `stateDescription("read only")` — will implement against the contract; (4) reworded invariant-based per §3, preference: **contract readOnly out of Password entirely**; (5)–(6) stand, noting Android executable readOnly coverage is currently zero — condition 6 is where the Android platform pays its share.
+
+**Preserved dissent, stated plainly**: B-prime *accepts* a real accessibility cost — FKA/external-keyboard users on iOS lose reachability of read-only content that web and Android users keep. Lina's weighing treats that as priced; I treat it as *mitigable and declared but not eliminated*. If the `.focusable` prototype fails verification, the ruling should record that iOS keyboard users are knowingly served worse than Android keyboard users for this state — an honest ledger entry, not a reason to reverse. C remains out.
+
+---
+
+### Synthesis Outcome
+
+**Joint recommendation: B-prime — unanimous (Lina, Kenya, Data), each from an initially different position.** Lina moved from an A-lean (her original mechanism-1 pricing was invalidated); Kenya held B-prime through the cost-correction exchange; Data conceded the "strengthens A" implication after the mechanism-2 costs were priced by the platform owners. C ruled out unanimously at every round.
+
+**Consolidated conditions (the joint package):**
+1. Declared, never silent: explicit iOS readOnly platform note on `interaction_focusable`; new readOnly contract via Concept Catalog ballot; web/Android focus-order participation affirmatively pinned (Data: normalizing Android down is mechanically impossible without banned disabled semantics); the carve-out framed as a mitigable declared exception; tap-acknowledgment delta noted in platform notes.
+2. Kenya prototypes `.focusable(interactions:)` on-device (FKA reachability, keyboard copy, a11y-grouping interaction, non-FKA external keyboard) — prioritized before the contract ballot; contract auto-tightens if it verifies.
+3. Announcement parity on all three platforms: web native, Android `stateDescription("read only")` (new work, Data implements), iOS composed label + value + read-only hint.
+4. Password: **preferred (Kenya + Data): contract readOnly out of the Input-Text-Password variant entirely** — zero named consumers, deletes the security fork. Fallback if kept: invariant-based rule (masked value never copyable; plaintext never in the a11y tree while masked; announced semantically as hidden, never literal glyphs; no keyboard; toggle functional; revealed plaintext selectable/copyable, with the iOS Universal-Clipboard exposure pinned knowingly).
+5. `DISABLED_EXCLUSION_GUARD_PATTERNS` gains an iOS `.disabled(` pattern — proceeds regardless of ruling.
+6. Three-platform readOnly tests land with the contract (current executable coverage: zero on all platforms).
+7. Implementation notes: chrome extraction to a shared container (common to A and B-prime); min-height reserved from the `typographyInput` line-height token unconditionally on both paths; empty-readOnly float-label behavior kept parity-consistent (label rests); visual-affordance question routed to Leonardo cross-platform.
+
+**Preserved dissent for the ruling record (Data)**: B-prime accepts a real, mitigable-but-not-eliminated accessibility cost for iOS FKA/external-keyboard users. If the `.focusable` prototype fails verification, the ruling should record that iOS keyboard users are knowingly served worse than Android keyboard users for this state.
+
 ## Ruling
 
 *(pending)*
