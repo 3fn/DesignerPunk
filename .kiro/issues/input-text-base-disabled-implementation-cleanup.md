@@ -29,3 +29,25 @@ Removed disabled implementation from web platform files across Input-Text-Base a
 
 Files changed: 8 platform files, 1 schema, 3 contracts, 2 test files.
 Tests: 290/290 suites, 7435/7435 passed.
+
+---
+
+## Follow-up: iOS/Android Cleanup
+
+**Date**: 2026-07-15
+**Resolved by**: Lina
+**Priority**: Low — **RESOLVED**
+
+The 2026-03-01 resolution removed disabled handling from WEB platform files only. The iOS and Android implementations of Input-Text-Base and all 3 children retained live disabled-state handling (`isDisabled` prop, `disabledBlend()` calls, disabled previews), contradicting the `state_disabled` exclusion in contracts.yaml and types.ts (which offers `readOnly` as the alternative and has never had a `disabled` prop).
+
+### Scope
+
+- `InputTextBase.ios.swift` — removed `isDisabled` property, `disabledBlend()` label/border branches, `.disabled(readOnly || isDisabled)` → `.disabled(readOnly)`, field-style `isDisabled` (text color + focus-ring gating), disabled preview, header contract/feature mentions
+- `InputTextBase.android.kt` — removed `disabledBlend` import, `isDisabled` param, `disabledBlend()` label/border branches, focus-ring `!isDisabled` gating, disabled text color, `readOnly = readOnly || isDisabled` → `readOnly`, header mentions
+- Children (Email/Password/PhoneNumber, iOS + Android) — removed inherited `isDisabled` params, pass-throughs, disabled previews; Password also dropped toggle-button disabling (`.disabled(isDisabled)` / `enabled = !isDisabled`)
+- `focusIndicators.test.ts` — assertions updated to the disabled-free focus-ring conditions
+- `form-inputs-contracts.test.ts` — dead `disabled_state` CONTRACT_PATTERNS entry replaced with `DISABLED_EXCLUSION_GUARD_PATTERNS`; new exclusion-guard test asserts no Form Inputs platform implementation contains `isDisabled`, `disabledBlend`, `aria-disabled`, or `cursor: not-allowed` (Spec 066 / Button-CTA pattern)
+
+Note: iOS's `.disabled(readOnly)` is retained — it is SwiftUI's mechanism for the documented `readOnly` prop, not a disabled state.
+
+This completes the component-code prerequisite for Ada's staged deprecation of `blend.disabledDesaturate` and the `disabledBlend()` utility extensions (Button-CTA adjudication follow-up #1, `.kiro/issues/button-cta-disabled-state-adjudication.md`). `token-index/semantics.yaml` shows `consumers: []` for `blend.disabledDesaturate` because the index is schema-derived; these platform-code call sites were invisible to it — now they are gone on all platforms.

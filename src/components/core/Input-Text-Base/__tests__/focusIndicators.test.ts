@@ -165,8 +165,8 @@ describe('Input-Text-Base Focus Indicators', () => {
       expect(iosComponentContent).toContain('accessibilityFocusWidth');
       expect(iosComponentContent).toContain('accessibilityFocusOffset');
       
-      // Verify focus ring is visible when focused (and not disabled)
-      expect(iosComponentContent).toContain('.opacity(isFocused && !isDisabled ? 1 : 0)');
+      // Verify focus ring is visible when focused
+      expect(iosComponentContent).toContain('.opacity(isFocused ? 1 : 0)');
     });
     
     it('should have focus ring animation that respects reduce motion', () => {
@@ -194,8 +194,8 @@ describe('Input-Text-Base Focus Indicators', () => {
       expect(androidComponentContent).toContain('accessibilityFocusColor');
       expect(androidComponentContent).toContain('accessibilityFocusOffset');
       
-      // Verify focus ring is conditional on focus state (and not disabled)
-      expect(androidComponentContent).toContain('if (isFocused && !isDisabled)');
+      // Verify focus ring is conditional on focus state
+      expect(androidComponentContent).toContain('if (isFocused)');
     });
   });
   
@@ -219,16 +219,15 @@ describe('Input-Text-Base Focus Indicators', () => {
       
       // iOS: Verify focus ring is not conditional on error/success state
       // (it should always show when focused, regardless of validation state)
-      // Note: Focus ring is hidden when disabled (isDisabled check is expected)
       // Find the focus ring section in the InputTextBaseFieldStyle
       const iosFocusRingSection = iosContent.substring(
-        iosContent.indexOf('.opacity(isFocused && !isDisabled ? 1 : 0)'),
-        iosContent.indexOf('.opacity(isFocused && !isDisabled ? 1 : 0)') + 200
+        iosContent.indexOf('.opacity(isFocused ? 1 : 0)'),
+        iosContent.indexOf('.opacity(isFocused ? 1 : 0)') + 200
       );
-      expect(iosFocusRingSection).toContain('.opacity(isFocused && !isDisabled ? 1 : 0)');
-      
-      // Android: Verify focus ring is conditional on focus state (and not disabled)
-      expect(androidContent).toContain('if (isFocused && !isDisabled)');
+      expect(iosFocusRingSection).toContain('.opacity(isFocused ? 1 : 0)');
+
+      // Android: Verify focus ring is conditional on focus state
+      expect(androidContent).toContain('if (isFocused)');
     });
   });
   
@@ -249,10 +248,10 @@ describe('Input-Text-Base Focus Indicators', () => {
       expect(cssContent).toContain(':focus-visible');
       
       // iOS: Uses overlay with opacity based on focus state
-      expect(iosContent).toContain('.opacity(isFocused && !isDisabled ? 1 : 0)');
-      
+      expect(iosContent).toContain('.opacity(isFocused ? 1 : 0)');
+
       // Android: Uses conditional border based on focus state
-      expect(androidContent).toContain('if (isFocused && !isDisabled)');
+      expect(androidContent).toContain('if (isFocused)');
     });
 
     it('should document WCAG 2.4.7 compliance in behavioral contracts', () => {

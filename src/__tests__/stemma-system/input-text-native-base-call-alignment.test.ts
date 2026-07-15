@@ -210,7 +210,7 @@ describe('Input-Text native base-call alignment', () => {
   describe('base declaration parsing (sanity)', () => {
     it('parses the iOS base memberwise properties', () => {
       expect(iosBaseProps).toEqual(
-        expect.arrayContaining(['id', 'label', 'value', 'type', 'isDisabled', 'trailingContent'])
+        expect.arrayContaining(['id', 'label', 'value', 'type', 'readOnly', 'trailingContent'])
       );
       expect(iosBaseProps.length).toBeGreaterThanOrEqual(15);
     });

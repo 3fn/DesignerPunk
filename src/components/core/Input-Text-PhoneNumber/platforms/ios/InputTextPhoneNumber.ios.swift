@@ -175,10 +175,7 @@ struct InputTextPhoneNumber: View {
     
     /// Maximum length for input value
     let maxLength: Int?
-    
-    /// Disabled state
-    let isDisabled: Bool
-    
+
     /// Country code for formatting and validation
     let countryCode: String
     
@@ -243,7 +240,6 @@ struct InputTextPhoneNumber: View {
         readOnly: Bool = false,
         required: Bool = false,
         maxLength: Int? = nil,
-        isDisabled: Bool = false,
         countryCode: String = defaultCountryCode,
         autoFormat: Bool = true,
         invalidPhoneMessage: String = defaultInvalidPhoneMessage,
@@ -264,7 +260,6 @@ struct InputTextPhoneNumber: View {
         self.readOnly = readOnly
         self.required = required
         self.maxLength = maxLength
-        self.isDisabled = isDisabled
         self.countryCode = countryCode
         self.autoFormat = autoFormat
         self.invalidPhoneMessage = invalidPhoneMessage
@@ -301,8 +296,7 @@ struct InputTextPhoneNumber: View {
             placeholder: placeholder,
             readOnly: readOnly,
             required: required,
-            maxLength: maxLength,
-            isDisabled: isDisabled
+            maxLength: maxLength
         )
         .onAppear {
             // Initialize formatted value from initial value
@@ -394,14 +388,6 @@ struct InputTextPhoneNumber_Previews: PreviewProvider {
                 value: .constant(""),
                 helperText: "Enter your UK phone number",
                 countryCode: "GB"
-            )
-            
-            InputTextPhoneNumber(
-                id: "preview-disabled",
-                label: "Phone Number",
-                value: .constant("5551234567"),
-                helperText: "This field is disabled",
-                isDisabled: true
             )
             
             InputTextPhoneNumber(

@@ -12,7 +12,7 @@ aliases: how do i scaffold a new component, scaffold a new component template, n
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, architecture, spec-planning
-**Last Reviewed**: 2026-07-08
+**Last Reviewed**: 2026-07-15
 
 ---
 
@@ -412,14 +412,6 @@ properties:
       - secondary: [description]
       - tertiary: [description]
   
-  # State properties
-  disabled:
-    type: boolean
-    required: false
-    default: false
-    description: |
-      When true, component is non-interactive with disabled visual styling.
-  
   # Callback properties
   [callbackProp]:
     type: "() => void"
@@ -709,14 +701,12 @@ focusable:
   behavior: |
     Component can receive focus via Tab key navigation.
     Focus state is visually indicated with a focus ring.
-    Focus is managed appropriately when disabled state changes.
   wcag: "2.1.1 Keyboard, 2.4.7 Focus Visible"
   platforms: [web, ios, android]
   validation: |
     - Tab key moves focus to component
     - Focus state is visually distinct with focus ring
     - Focus ring meets 3:1 contrast ratio
-    - Disabled components are not focusable
 ```
 
 #### Pressable Contract
@@ -726,7 +716,7 @@ pressable:
   description: Responds to press/click events
   behavior: |
     Component responds to click, tap, Enter key, and Space key.
-    Press triggers the callback when not disabled.
+    Press triggers the callback.
     Platform-appropriate feedback is provided during press.
   wcag: "2.1.1 Keyboard"
   platforms: [web, ios, android]
@@ -734,7 +724,6 @@ pressable:
     - Click/tap triggers callback
     - Enter key triggers callback
     - Space key triggers callback
-    - Callback not called when disabled
 ```
 
 #### Hoverable Contract
@@ -745,14 +734,12 @@ hoverable:
   behavior: |
     On pointer devices, component shows visual feedback when mouse
     hovers over the component. Uses blend.hoverDarker token.
-    Hover state not shown when disabled.
   wcag: "1.4.13 Content on Hover or Focus"
   platforms: [web, ios, android]
   validation: |
     - Visual feedback shown on mouse enter
     - Visual feedback removed on mouse leave
     - Hover uses blend.hoverDarker token
-    - Hover state not shown when disabled
     - iOS: Only on macOS/iPadOS with pointer
     - Android: Only on desktop/ChromeOS with pointer
 ```
@@ -761,27 +748,37 @@ hoverable:
 
 ### Contract Category 2: State Contracts
 
-#### Disabled State Contract
+#### No Disabled States — Standardized Exclusion
+
+**DesignerPunk components MUST NOT declare a disabled-state contract.** Per the
+2026-07-15 adjudication (`.kiro/issues/button-cta-disabled-state-adjudication.md`),
+the no-disabled-states philosophy now holds corpus-wide with zero exceptions —
+Button-CTA was the last remaining component with a live `disabled_state`
+contract, and it has been removed in favor of the standardized exclusion below.
+
+If an action is temporarily unavailable, use one of these alternatives instead:
+
+- **`state_loading`** — the action is in-flight (async operation running).
+- **Validate-on-press / validate-on-blur** — the action is available but the
+  current input is invalid; surface the error rather than disabling the trigger.
+- **Do not render the component** — if an action is genuinely unavailable
+  (no valid path forward), omit the component entirely rather than rendering
+  it in a disabled state.
+
+Every component's `contracts.yaml` MUST carry the standardized exclusion block
+(mirrored corpus-wide, e.g. `src/components/core/Button-CTA/contracts.yaml`):
 
 ```yaml
-disabled_state:
-  description: Prevents interaction when disabled
-  behavior: |
-    When disabled, component:
-    - Cannot receive focus
-    - Cannot be interacted with
-    - Uses desaturated colors (blend.disabledDesaturate)
-    - Shows cursor: not-allowed (web)
-    - Communicates disabled state to assistive technology
-  wcag: "4.1.2 Name, Role, Value"
-  platforms: [web, ios, android]
-  validation: |
-    - Component cannot receive focus when disabled
-    - Interactions do not trigger callbacks when disabled
-    - Visual styling indicates disabled state
-    - aria-disabled="true" set (web)
-    - Disabled state announced to screen readers
+excludes:
+  state_disabled:
+    reason: "DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered."
+    category: state
 ```
+
+Do not scaffold a `disabled` prop, a `disabled_state` contract, or any
+disabled-specific validation steps in new components. For the full rationale,
+see the exclusion reason above and the 2026-07-15 adjudication ruling
+(`.kiro/issues/button-cta-disabled-state-adjudication.md`).
 
 #### Error State Contract
 
@@ -830,7 +827,7 @@ loading_state:
   behavior: |
     When in loading state, component:
     - Shows loading spinner or indicator
-    - Prevents interaction (similar to disabled)
+    - Prevents interaction while the async operation is in-flight
     - Maintains dimensions to prevent layout shift
     - Communicates loading state to assistive technology
   wcag: "4.1.3 Status Messages"
@@ -947,7 +944,6 @@ pressed_state:
     - Visual feedback shown during press
     - Feedback uses blend.pressedDarker token
     - Platform-appropriate animation/effect applied
-    - Pressed state not shown when disabled
 ```
 
 #### Gradient Glow Contract
@@ -1084,7 +1080,7 @@ renders_svg:
 | Keyboard navigation | focusable, focus_ring |
 | Click/tap interaction | pressable, pressed_state |
 | Mouse hover feedback | hoverable |
-| Disabled state | disabled_state |
+| Action temporarily unavailable | state_loading (in-flight), validates_on_blur (invalid input), or do not render (no valid path) — never a disabled-state contract; see "No Disabled States — Standardized Exclusion" |
 | Error handling | error_state, validates_on_blur |
 | Success feedback | success_state |
 | Loading indication | loading_state |

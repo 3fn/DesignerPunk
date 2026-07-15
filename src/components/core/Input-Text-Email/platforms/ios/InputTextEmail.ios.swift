@@ -104,10 +104,7 @@ struct InputTextEmail: View {
     
     /// Maximum length for input value
     let maxLength: Int?
-    
-    /// Disabled state
-    let isDisabled: Bool
-    
+
     /// Custom invalid email message
     let invalidEmailMessage: String
     
@@ -155,7 +152,6 @@ struct InputTextEmail: View {
         readOnly: Bool = false,
         required: Bool = false,
         maxLength: Int? = nil,
-        isDisabled: Bool = false,
         invalidEmailMessage: String = defaultInvalidEmailMessage,
         customValidator: ((String) -> Bool)? = nil
     ) {
@@ -174,7 +170,6 @@ struct InputTextEmail: View {
         self.readOnly = readOnly
         self.required = required
         self.maxLength = maxLength
-        self.isDisabled = isDisabled
         self.invalidEmailMessage = invalidEmailMessage
         self.customValidator = customValidator
     }
@@ -207,8 +202,7 @@ struct InputTextEmail: View {
             placeholder: placeholder,
             readOnly: readOnly,
             required: required,
-            maxLength: maxLength,
-            isDisabled: isDisabled
+            maxLength: maxLength
         )
     }
     
@@ -266,14 +260,6 @@ struct InputTextEmail_Previews: PreviewProvider {
                 value: .constant("user@example.com"),
                 helperText: "Enter your email address",
                 isSuccess: true
-            )
-            
-            InputTextEmail(
-                id: "preview-disabled",
-                label: "Email",
-                value: .constant("user@example.com"),
-                helperText: "This field is disabled",
-                isDisabled: true
             )
             
             InputTextEmail(
