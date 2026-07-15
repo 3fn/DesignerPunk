@@ -700,12 +700,31 @@ export class AvatarBaseElement extends HTMLElement {
     // @see Requirements: 9.2 - Apply aria-hidden="true" when decorative prop is true
     const ariaHiddenAttr = decorative ? ' aria-hidden="true"' : '';
     
-    // Warn in development if src is provided without alt
-    // @see Requirements: 5.4 - Require alt prop when src is provided
-    if (src && !alt && typeof console !== 'undefined') {
+    // Warn in development if a human-type avatar is missing alt text for its image.
+    // @see Requirements: 5.4 - Human type + src SHALL require alt for accessibility
+    // @see Requirements: 5 AC 5 - Agent type SHALL ignore src entirely (src not
+    //   rendered as an image), so agent-type avatars never warn regardless of alt.
+    //
+    // Settled edge semantics (Spec 126, O2, ratified 2026-07-09):
+    // - Scope is human-type only — Req 5.4 is human-type-scoped, and Req 5 AC 5
+    //   affirmatively establishes that agent-type SHALL ignore src, so a src+no-alt
+    //   agent avatar is not a violation of anything.
+    // - `alt == null` (loose equality — also excludes `undefined`), not `!alt`, is the
+    //   test. The `alt` attribute getter returns `getAttribute('alt')`. Raw
+    //   `setAttribute('alt', '')` yields `alt === ''`, which is the HTML-idiomatic
+    //   explicit-empty-alt signal and must NOT warn. The `alt` *property setter*
+    //   (see below) treats a falsy value as "remove the attribute," so
+    //   `avatar.alt = ''` collapses to `alt === null` — indistinguishable from
+    //   omitting alt entirely, and DOES warn under this condition.
+    // - `!decorative` is the operative fix for the confirmed false positive: a
+    //   `decorative` avatar is the component's official signal that the image is
+    //   non-informative (Req 9.2 applies `aria-hidden="true"`), so it must never warn
+    //   regardless of alt.
+    if (type === 'human' && src && alt == null && !decorative && typeof console !== 'undefined') {
       console.warn(
-        'AvatarBaseElement: "alt" prop is required when "src" is provided for accessibility. ' +
-        'Please add an alt attribute describing the image.'
+        'AvatarBaseElement: "alt" is required when "src" is provided. ' +
+        'Add an alt description of the image; or, if this avatar is purely decorative ' +
+        '(non-informative), set the "decorative" prop to hide it from screen readers.'
       );
     }
     

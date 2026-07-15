@@ -162,7 +162,17 @@ contracts:
       When not decorative, Avatar provides accessible name:
       - If alt prop provided: uses alt text
       - If no alt prop (iOS/Android): "User avatar" for human, "AI agent avatar" for agent
-      - Web requires alt prop when src is provided
+      - Web requires alt prop when src is provided, scoped to human type only
+        (agent type ignores src entirely — Req 5 AC 5) and only when decorative
+        is false (decorative is the component's own non-informative signal,
+        Req 9.2, and takes precedence over the alt requirement)
+      - Web edge semantics (settled Spec 126, O2, ratified 2026-07-09): the dev
+        warn fires iff `type === 'human' && src && alt == null && !decorative`.
+        A raw explicit empty alt (`setAttribute('alt', '')`) does not warn —
+        it is treated as the deliberate empty-alt signal. The `alt` property
+        setter collapses a falsy value (including '') to removeAttribute, so
+        setting `avatar.alt = ''` via the property lands in the "absent" bucket
+        and DOES warn — this is a setter-collapse detail, not a design gap.
     wcag: "1.1.1 Non-text Content"
     platforms: [web, ios, android]
     validation:
