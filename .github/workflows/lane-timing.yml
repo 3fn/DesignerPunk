@@ -193,11 +193,13 @@ jobs:
       # Selection floor + correct-scope evidence (Task 7 / Req 7): the floor proves the
       # selection is non-empty; the printed resolved LIST proves it is the RIGHT selection
       # (STACY R1 — a mis-pointed config can pass a bare count). Pattern mirrors package.json's
-      # `test` script exactly. Floor 300, derived from 377 resolved test files on 2026-07-10 —
+      # `test` script exactly (jest.functional.config.js — the perf exclusions moved there
+      # from a CLI flag so `npm test -- <file>` single-file runs work; selection unchanged).
+      # Floor 300, derived from 377 resolved test files on 2026-07-10 —
       # re-derive on legitimate large suite removals.
       - name: Selection floor — resolved test files ≥ 300
         run: |
-          npx jest --listTests --testPathIgnorePatterns='performance/__tests__|__tests__/performance|PerformanceValidation' > resolved-tests.txt
+          npx jest --listTests --config jest.functional.config.js > resolved-tests.txt
           COUNT=$(wc -l < resolved-tests.txt | tr -d ' ')
           echo "jest resolved $COUNT test files (floor: 300; derived from 377 on 2026-07-10)"
           echo "--- sample of resolved selection ---"; head -15 resolved-tests.txt
