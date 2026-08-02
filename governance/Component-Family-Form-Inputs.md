@@ -3,7 +3,7 @@ id: component-family-form-inputs
 inclusion: manual
 name: Component-Family-Form-Inputs
 description: Form Inputs component family — text input (float label pattern), checkbox, and radio components with built-in validation, accessibility, and cross-platform consistency. Load when working with form components, input validation, or selection controls.
-aliases: RTL, internationalization, i18n, bidi, right-to-left, text direction
+aliases: textfield, text field, textbox, form field, input field, form controls
 ---
 
 # Form Inputs Components
@@ -14,7 +14,7 @@ aliases: RTL, internationalization, i18n, bidi, right-to-left, text direction
 **Scope**: cross-project
 **Layer**: 3
 **Relevant Tasks**: component-development, ui-composition, component-implementation
-**Last Reviewed**: 2026-02-07
+**Last Reviewed**: 2026-08-02
 
 ---
 
