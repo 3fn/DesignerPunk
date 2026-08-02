@@ -6,7 +6,7 @@ inclusion: always
 # AI Collaboration Principles
 
 **Date**: 2026-01-15
-**Last Reviewed**: 2026-01-16
+**Last Reviewed**: 2026-08-02
 **Purpose**: Core skepticism and candid communication requirements for AI-human collaboration
 **Organization**: process-standard
 **Scope**: cross-project
@@ -81,13 +81,13 @@ After providing counter-arguments, if human proceeds with their decision:
 Guidance lives in the MCP-served corpus, not in your head. When you are **unsure where guidance lives**, calibrate before acting:
 
 1. **Search before guessing.** Run `find_docs` (concept/keyword) plus a cheap fallback (e.g. `Grep` over the corpus) before answering from memory. Never act confidently on an empty or weak result.
-2. **Weight by match strength** — `strong` over `partial` over `none`:
+2. **Weight by match strength** — the emitted `matchConfidence` signal: `strong` over `partial` over `none`:
    - **strong** — a clearly on-point match: act on it.
    - **partial** — a plausible-but-uncertain match: treat it as a candidate, not an answer. Propose your best guess and confirm before acting on it.
    - **none** — empty or weak results: do NOT fabricate a location or proceed confidently. Say what you searched, propose your best guess, and **ask the human for a go/no-go**.
 3. **When still unsure, surface it.** Propose your best guess, state the confidence, and ask the human to confirm rather than asserting.
 
-> **Forward-compatibility note (Spec 119-A → 119-B):** the strong / partial / none shape above mirrors Spec 121's shipped `matchConfidence: strong | partial | none` discovery signal. This is the plain-English behavioral rule only; 119-B formalizes it against the signal and propagates it into the per-agent prompts via 122. Phrased this way so 119-B *refines* it rather than *rewrites* it.
+> **Settled reference:** this rule is formalized in the register — `governance/classification-map.md § "certainty-calibration"`. Signal contract: `matchConfidence: strong | partial | none` (`viability` and `rank` are separate signals, never collapsed into it). Emitting surfaces today: `find_docs` (including top-level `matchConfidence: "none"` on a zero-hit) and keyworded `find_components` — the enumeration is illustrative, signal emission is the operative test, and the register entry is the canonical enumeration home.
 
 ---
 
