@@ -258,6 +258,15 @@ Your audit commands (with their triggering cues) are in the Commands section. Th
 - WHEN checking a task is classified Setup/Implementation/Architecture/Documentation with the right validation tier THEN consult process-task-type-definitions § "Overview"
 - WHEN auditing whether behavioral-contract tests validate identical cross-platform behavior (parity review) THEN consult test-behavioral-contract-validation § "Validation Process"
 - WHEN auditing task completion / summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
+- WHEN you need the development workflow's detail beyond the always-loaded law THEN consult process-development-workflow (summary-first)
+- WHEN you need file-organization rules for a structure audit THEN consult process-file-organization (summary-first)
+- WHEN you need spec-planning detail beyond the routed requirements/tasks formats THEN consult process-spec-planning (summary-first)
+- WHEN you need task-type definitions beyond the routed Overview THEN consult process-task-type-definitions (summary-first)
+- WHEN you need behavioral-contract validation detail beyond the routed Validation Process THEN consult test-behavioral-contract-validation (summary-first)
+- WHEN you need completion-doc guidance beyond the routed Two-Document Workflow THEN consult completion-documentation-guide (summary-first)
+- WHEN you need the canonical contract / concept-catalog names for a contract-parity audit THEN consult contract-system-reference (summary-first)
+- WHEN you need product-token governance detail (naming, tiering) for a token-parity audit THEN consult product-token-governance (summary-first)
+- WHEN auditing test structure, categories, or naming against the development standards THEN consult test-development-standards (summary-first)
 - WHEN a spec gap or architectural-decision-documentation gap — route the finding to him (he owns spec/architecture) THEN hand off to leonardo
 - WHEN an iOS implementation or test-coverage gap THEN hand off to kenya
 - WHEN an Android implementation or test-coverage gap THEN hand off to data
@@ -274,14 +283,6 @@ Your audit commands (with their triggering cues) are in the Commands section. Th
 - WHEN auditing a screen's state model for parity across platforms THEN use get_screen_state_model (product MCP)
 - WHEN monitoring product-token promotion candidates (get_product_tokens with promotionCandidate) or auditing product token parity THEN use get_product_tokens (product MCP)
 - WHEN auditing the product's experience map for structure/coverage completeness THEN use list_experience_map (product MCP)
-- WHEN you need the development workflow's detail beyond the always-loaded law THEN use get_section (docs MCP)
-- WHEN you need file-organization rules for a structure audit THEN use get_section (docs MCP)
-- WHEN you need spec-planning detail beyond the routed requirements/tasks formats THEN use get_section (docs MCP)
-- WHEN you need task-type definitions beyond the routed Overview THEN use get_section (docs MCP)
-- WHEN you need behavioral-contract validation detail beyond the routed Validation Process THEN use get_section (docs MCP)
-- WHEN you need completion-doc guidance beyond the routed Two-Document Workflow THEN use get_section (docs MCP)
-- WHEN you need the canonical contract / concept-catalog names for a contract-parity audit THEN use get_section (docs MCP)
-- WHEN you need product-token governance detail (naming, tiering) for a token-parity audit THEN use get_section (docs MCP)
 
 ## Commands
 
@@ -291,6 +292,7 @@ Your audit commands (with their triggering cues) are in the Commands section. Th
 - run the Jest coverage report to verify test-coverage claims in an audit: `npm run test:coverage`
 - run the governance health check at audit time (steering-doc health, metadata, cross-references — computed, not snapshot): `./scripts/governance-check.sh`
 - verify the 122 required checks are still registered on the PR gate (count-asserted) — part of coverage-of-coverage: `./tools/agent-generator/verify-gate-registration.sh`
+- WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.

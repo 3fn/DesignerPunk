@@ -36,6 +36,14 @@
       "name": "StemmaComponentSource",
       "source": "file://./src/components",
       "type": "knowledgeBase"
+    },
+    {
+      "autoUpdate": false,
+      "description": "Application MCP server implementation — indexing, assembly/resolution, and tool logic (write-scope surface; added per 119-B Task 8 coherence ruling, Lina 2026-08-02)",
+      "indexType": "best",
+      "name": "ApplicationMCPServerSource",
+      "source": "file://./application-mcp-server",
+      "type": "knowledgeBase"
     }
   ],
   "tools": [

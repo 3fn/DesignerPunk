@@ -79,6 +79,118 @@ routes:
       doc: process-spec-planning
       section: "Tasks Document Format"
       when: "authoring or reviewing a spec's tasks document"
+    - id: family-avatar
+      doc: component-family-avatar
+      when: "you need the Avatar component family's guidance"
+      replaces: component-family-avatar
+    - id: family-badge
+      doc: component-family-badge
+      when: "you need the Badge component family's guidance"
+      replaces: component-family-badge
+    - id: family-button
+      doc: component-family-button
+      when: "you need the Button component family's guidance"
+      replaces: component-family-button
+    - id: family-chip
+      doc: component-family-chip
+      when: "you need the Chip component family's guidance"
+      replaces: component-family-chip
+    - id: family-container
+      doc: component-family-container
+      when: "you need the Container component family's guidance"
+      replaces: component-family-container
+    - id: family-data-display
+      doc: component-family-data-display
+      when: "you need the Data-Display component family's guidance"
+      replaces: component-family-data-display
+    - id: family-divider
+      doc: component-family-divider
+      when: "you need the Divider component family's guidance"
+      replaces: component-family-divider
+    - id: family-form-inputs
+      doc: component-family-form-inputs
+      when: "you need the Form-Inputs component family's guidance"
+      replaces: component-family-form-inputs
+    - id: family-icon
+      doc: component-family-icon
+      when: "you need the Icon component family's guidance"
+      replaces: component-family-icon
+    - id: family-loading
+      doc: component-family-loading
+      when: "you need the Loading component family's guidance"
+      replaces: component-family-loading
+    - id: family-modal
+      doc: component-family-modal
+      when: "you need the Modal component family's guidance"
+      replaces: component-family-modal
+    - id: family-navigation
+      doc: component-family-navigation
+      when: "you need the Navigation component family's guidance"
+      replaces: component-family-navigation
+    - id: family-progress
+      doc: progress-indicator-components
+      when: "you need the Progress component family's guidance"
+      replaces: component-family-progress
+    - id: stemma-principles
+      doc: stemma-system-principles
+      when: "you need the component philosophy or family inheritance principles"
+      replaces: stemma-system-principles
+    - id: component-dev-standards
+      doc: component-development-standards
+      when: "you need component development standards (structure, lifecycle, quality bars)"
+      replaces: component-development-standards
+    - id: component-doc-map
+      doc: component-quick-reference
+      when: "you need the component routing table or family-doc map"
+      replaces: component-quick-reference
+    - id: component-readiness
+      doc: component-readiness-status
+      when: "you need a component's readiness or status tracking"
+      replaces: component-readiness-status
+    - id: inheritance-structures
+      doc: component-inheritance-structures
+      when: "you need inheritance structure patterns (base/variant families)"
+      replaces: component-inheritance-structures
+    - id: web-css-rules
+      doc: web-authoring-standards
+      when: "you need web CSS rules (logical properties, Shadow DOM, custom elements)"
+      replaces: web-authoring-standards
+    - id: cross-platform-guidance
+      doc: platform-implementation-guidelines
+      when: "you need cross-platform implementation guidance for a component"
+      replaces: platform-implementation-guidelines
+    - id: cross-platform-decision
+      doc: cross-platform-vs-platform-specific-decision-framework
+      when: "deciding whether a behavior is cross-platform or platform-specific"
+      replaces: cross-platform-vs-platform-specific-decision-framework
+    - id: token-governance-beyond
+      doc: token-governance
+      when: "you need token governance beyond the routed Token Usage Governance section"
+      replaces: token-governance
+    - id: token-lookup-patterns
+      doc: token-quick-reference
+      when: "you need token lookup patterns or common token usage patterns"
+      replaces: token-quick-reference
+    - id: schema-format-beyond
+      doc: component-schema-format
+      when: "you need schema format detail beyond the routed Schema Structure section"
+      replaces: component-schema-format
+    - id: component-meta-authoring
+      doc: component-meta-authoring-guide
+      when: "you need component-meta.yaml authoring guidance (purpose, contexts, alternatives)"
+      replaces: component-meta-authoring-guide
+    - id: dev-workflow-detail
+      doc: process-development-workflow
+      when: "you need the development workflow's detail beyond the always-loaded law"
+      replaces: process-development-workflow
+    - id: file-organization
+      doc: process-file-organization
+      when: "you need file-organization rules"
+      replaces: process-file-organization
+    - id: component-token-brand-contract
+      doc: rosetta-system-architecture
+      section: "Module-Resolution Contract (Spec 118)"
+      when: "authoring or modifying a component .tokens.ts file and the return-value/brand contract is in question"
   # Inter-agent routes (LE-D1 — migrated from body prose; ada is generator-SSOT since U2):
   agents:
     - target: ada
@@ -122,114 +234,6 @@ routes:
       tool: get_document_full
       mcp: docs
     # --- demotion coverage: one cue per doc trimmed from the hand config's ambient set ---
-    - when: "you need the component philosophy or family inheritance principles"
-      tool: get_section
-      mcp: docs
-      replaces: stemma-system-principles
-    - when: "you need component development standards (structure, lifecycle, quality bars)"
-      tool: get_section
-      mcp: docs
-      replaces: component-development-standards
-    - when: "you need the component routing table or family-doc map"
-      tool: get_section
-      mcp: docs
-      replaces: component-quick-reference
-    - when: "you need a component's readiness or status tracking"
-      tool: get_section
-      mcp: docs
-      replaces: component-readiness-status
-    - when: "you need inheritance structure patterns (base/variant families)"
-      tool: get_section
-      mcp: docs
-      replaces: component-inheritance-structures
-    - when: "you need web CSS rules (logical properties, Shadow DOM, custom elements)"
-      tool: get_section
-      mcp: docs
-      replaces: web-authoring-standards
-    - when: "you need cross-platform implementation guidance for a component"
-      tool: get_section
-      mcp: docs
-      replaces: platform-implementation-guidelines
-    - when: "deciding whether a behavior is cross-platform or platform-specific"
-      tool: get_section
-      mcp: docs
-      replaces: cross-platform-vs-platform-specific-decision-framework
-    - when: "you need token governance beyond the routed Token Usage Governance section"
-      tool: get_section
-      mcp: docs
-      replaces: token-governance
-    - when: "you need token lookup patterns or common token usage patterns"
-      tool: get_section
-      mcp: docs
-      replaces: token-quick-reference
-    - when: "you need the Avatar component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-avatar
-    - when: "you need the Badge component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-badge
-    - when: "you need the Button component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-button
-    - when: "you need the Chip component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-chip
-    - when: "you need the Container component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-container
-    - when: "you need the Data-Display component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-data-display
-    - when: "you need the Divider component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-divider
-    - when: "you need the Form-Inputs component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-form-inputs
-    - when: "you need the Icon component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-icon
-    - when: "you need the Loading component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-loading
-    - when: "you need the Modal component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-modal
-    - when: "you need the Navigation component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-navigation
-    - when: "you need the Progress component family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: component-family-progress
-    - when: "you need schema format detail beyond the routed Schema Structure section"
-      tool: get_section
-      mcp: docs
-      replaces: component-schema-format
-    - when: "you need component-meta.yaml authoring guidance (purpose, contexts, alternatives)"
-      tool: get_section
-      mcp: docs
-      replaces: component-meta-authoring-guide
-    - when: "you need the development workflow's detail beyond the always-loaded law"
-      tool: get_section
-      mcp: docs
-      replaces: process-development-workflow
-    - when: "you need file-organization rules"
-      tool: get_section
-      mcp: docs
-      replaces: process-file-organization
 commands:
   - name: functional-suite
     cmd: "npm test"
@@ -255,6 +259,13 @@ knowledgeBases:
       - "src/components/**"
     source: "file://./src/components"
     description: "Stemma component system source code — component implementations, platform-specific code (web/iOS/Android), types, and behavioral contract tests"
+    indexType: best
+    autoUpdate: false
+  - name: ApplicationMCPServerSource
+    globs:
+      - "application-mcp-server/**"
+    source: "file://./application-mcp-server"
+    description: "Application MCP server implementation — indexing, assembly/resolution, and tool logic (write-scope surface; added per 119-B Task 8 coherence ruling, Lina 2026-08-02)"
     indexType: best
     autoUpdate: false
 toolSubset:

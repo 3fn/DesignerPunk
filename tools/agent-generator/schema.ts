@@ -109,10 +109,22 @@ export interface AmbientBlock {
 export interface DocRoute {
   id: string;
   doc: string;
-  /** Interim address form (Req 3 AC2): verbatim heading string. */
-  section: string;
+  /**
+   * Interim address form (Req 3 AC2): verbatim heading string. OPTIONAL since
+   * Spec 119-B (R6 AC3 amendment, Peter 2026-08-02): a section-less route is
+   * the (b)-grade doc-id-only form — rendered `THEN consult <doc> (summary-first)`,
+   * sweep-1-verified at doc grain. Adds zero unguarded headings by construction.
+   */
+  section?: string;
   /** Triggering condition prose — subject to the volatile-fact lint (rule 2). */
   when: string;
+  /**
+   * Demotion-coverage marker (Spec 119-B, same amendment): when a promoted
+   * route supersedes a `replaces:`-carrying tool cue, the marker travels here
+   * so sweep-8's every-removal-has-a-replacement contract keeps holding —
+   * a precise route is a stronger "where the content lives now" than a cue.
+   */
+  replaces?: string;
 }
 
 export type AgentRouteDisposition = 'resolves' | 'not-yet-ported';

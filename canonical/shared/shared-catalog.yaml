@@ -49,3 +49,16 @@ members:
     # .kiro/specs/125-mechanical-enforcement-strategy/inbound-to-125-B-from-122.md): the
     # ratification-protocol section of the ballots README, while the map did not yet exist.
     crossRef: "governance/classification-map.md § \"record-first-ratification\""
+  - id: certainty-calibration-cue
+    kind: governance-rule
+    owner: thurgood
+    # Spec 119-B Component 4c: the ONE generated discovery-adjacent pointer cue —
+    # single canonical snippet, zero restated tier semantics per agent (Ada's
+    # pointer-not-restated-semantics rule, adopted as design law). The emitting-tools
+    # enumeration is illustrative; signal emission is the operative test — the
+    # canonical enumeration home is the register entry cited in crossRef (its
+    # enumeration_home field carries the update trigger). Renders into the shared
+    # member block pending the recorded Commands-placement class-fit fix
+    # (findings/catalog-routing-audit.md G1, accepted misfit).
+    statement: "WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting"
+    crossRef: "governance/classification-map.md § \"certainty-calibration\""

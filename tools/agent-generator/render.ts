@@ -117,6 +117,11 @@ export function renderToolCue(cue: ToolCueRoute): string {
  * emitted — the route addresses by `id` (+ interim heading), resolved per target at emit time.
  */
 export function renderDocRoute(route: DocRoute): string {
+  // Section-less = the (b)-grade doc-id-only form (119-B R6 AC3 amendment):
+  // routes to the doc with the summary-first hard rule doing section discovery.
+  if (route.section === undefined) {
+    return `WHEN ${route.when} THEN consult ${route.doc} (summary-first)`;
+  }
   return `WHEN ${route.when} THEN consult ${route.doc} § "${route.section}"`;
 }
 

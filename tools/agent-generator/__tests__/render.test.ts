@@ -123,6 +123,18 @@ describe('cue / route sentences — assembled from fields (P4)', () => {
     );
     expect(out).not.toContain('governance/');
   });
+
+  it('renders a section-less doc route in the (b)-grade summary-first form (119-B R6 AC3 amendment)', () => {
+    const out = renderDocRoute({
+      id: 'x',
+      doc: 'token-family-color',
+      when: "you need the Color token family's guidance",
+    });
+    expect(out).toBe(
+      "WHEN you need the Color token family's guidance THEN consult token-family-color (summary-first)"
+    );
+    expect(out).not.toContain('§');
+  });
 });
 
 describe('renderGroundTruthFaithfulness (Req 10 AC3) — verdicts honored as data', () => {

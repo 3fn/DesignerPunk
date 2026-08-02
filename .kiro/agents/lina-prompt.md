@@ -286,6 +286,34 @@ Your ground-truth manifest IS the live catalog — served fresh by MCP, never a 
 - WHEN validating that platform implementations satisfy a behavioral contract THEN consult test-behavioral-contract-validation § "Validation Criteria for Behavioral Contracts"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
 - WHEN authoring or reviewing a spec's tasks document THEN consult process-spec-planning § "Tasks Document Format"
+- WHEN you need the Avatar component family's guidance THEN consult component-family-avatar (summary-first)
+- WHEN you need the Badge component family's guidance THEN consult component-family-badge (summary-first)
+- WHEN you need the Button component family's guidance THEN consult component-family-button (summary-first)
+- WHEN you need the Chip component family's guidance THEN consult component-family-chip (summary-first)
+- WHEN you need the Container component family's guidance THEN consult component-family-container (summary-first)
+- WHEN you need the Data-Display component family's guidance THEN consult component-family-data-display (summary-first)
+- WHEN you need the Divider component family's guidance THEN consult component-family-divider (summary-first)
+- WHEN you need the Form-Inputs component family's guidance THEN consult component-family-form-inputs (summary-first)
+- WHEN you need the Icon component family's guidance THEN consult component-family-icon (summary-first)
+- WHEN you need the Loading component family's guidance THEN consult component-family-loading (summary-first)
+- WHEN you need the Modal component family's guidance THEN consult component-family-modal (summary-first)
+- WHEN you need the Navigation component family's guidance THEN consult component-family-navigation (summary-first)
+- WHEN you need the Progress component family's guidance THEN consult progress-indicator-components (summary-first)
+- WHEN you need the component philosophy or family inheritance principles THEN consult stemma-system-principles (summary-first)
+- WHEN you need component development standards (structure, lifecycle, quality bars) THEN consult component-development-standards (summary-first)
+- WHEN you need the component routing table or family-doc map THEN consult component-quick-reference (summary-first)
+- WHEN you need a component's readiness or status tracking THEN consult component-readiness-status (summary-first)
+- WHEN you need inheritance structure patterns (base/variant families) THEN consult component-inheritance-structures (summary-first)
+- WHEN you need web CSS rules (logical properties, Shadow DOM, custom elements) THEN consult web-authoring-standards (summary-first)
+- WHEN you need cross-platform implementation guidance for a component THEN consult platform-implementation-guidelines (summary-first)
+- WHEN deciding whether a behavior is cross-platform or platform-specific THEN consult cross-platform-vs-platform-specific-decision-framework (summary-first)
+- WHEN you need token governance beyond the routed Token Usage Governance section THEN consult token-governance (summary-first)
+- WHEN you need token lookup patterns or common token usage patterns THEN consult token-quick-reference (summary-first)
+- WHEN you need schema format detail beyond the routed Schema Structure section THEN consult component-schema-format (summary-first)
+- WHEN you need component-meta.yaml authoring guidance (purpose, contexts, alternatives) THEN consult component-meta-authoring-guide (summary-first)
+- WHEN you need the development workflow's detail beyond the always-loaded law THEN consult process-development-workflow (summary-first)
+- WHEN you need file-organization rules THEN consult process-file-organization (summary-first)
+- WHEN authoring or modifying a component .tokens.ts file and the return-value/brand contract is in question THEN consult rosetta-system-architecture § "Module-Resolution Contract (Spec 118)"
 - WHEN token creation, token mathematical foundations, or token governance rulings THEN hand off to ada
 - WHEN test-suite audits, test governance, or spec formalization THEN hand off to thurgood
 - WHEN you need the list of indexed components (the catalog IS your ground-truth manifest) THEN use get_component_catalog (application MCP)
@@ -298,39 +326,13 @@ Your ground-truth manifest IS the live catalog — served fresh by MCP, never a 
 - WHEN you changed component schemas, contracts, or component-meta.yaml THEN use rebuild_index (application MCP)
 - WHEN you changed governance/component docs and need the corpus index fresh THEN use rebuild_index (docs MCP)
 - WHEN drafting a new Component-Family doc (start from component-mcp-document-template) THEN use get_document_full (docs MCP)
-- WHEN you need the component philosophy or family inheritance principles THEN use get_section (docs MCP)
-- WHEN you need component development standards (structure, lifecycle, quality bars) THEN use get_section (docs MCP)
-- WHEN you need the component routing table or family-doc map THEN use get_section (docs MCP)
-- WHEN you need a component's readiness or status tracking THEN use get_section (docs MCP)
-- WHEN you need inheritance structure patterns (base/variant families) THEN use get_section (docs MCP)
-- WHEN you need web CSS rules (logical properties, Shadow DOM, custom elements) THEN use get_section (docs MCP)
-- WHEN you need cross-platform implementation guidance for a component THEN use get_section (docs MCP)
-- WHEN deciding whether a behavior is cross-platform or platform-specific THEN use get_section (docs MCP)
-- WHEN you need token governance beyond the routed Token Usage Governance section THEN use get_section (docs MCP)
-- WHEN you need token lookup patterns or common token usage patterns THEN use get_section (docs MCP)
-- WHEN you need the Avatar component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Badge component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Button component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Chip component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Container component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Data-Display component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Divider component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Form-Inputs component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Icon component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Loading component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Modal component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Navigation component family's guidance THEN use get_section (docs MCP)
-- WHEN you need the Progress component family's guidance THEN use get_section (docs MCP)
-- WHEN you need schema format detail beyond the routed Schema Structure section THEN use get_section (docs MCP)
-- WHEN you need component-meta.yaml authoring guidance (purpose, contexts, alternatives) THEN use get_section (docs MCP)
-- WHEN you need the development workflow's detail beyond the always-loaded law THEN use get_section (docs MCP)
-- WHEN you need file-organization rules THEN use get_section (docs MCP)
 
 ## Commands
 
 - run the functional lanes to validate component work (Jest — never vitest or a --run flag): `npm test`
 - run the component-specific suites: `npm test -- src/components/`
 - run ALL tests including the performance lanes (wall-clock-sensitive — idle machine): `npm run test:all`
+- WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.

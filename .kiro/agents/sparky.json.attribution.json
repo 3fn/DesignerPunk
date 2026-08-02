@@ -4,7 +4,7 @@
     {
       "lines": [
         1,
-        48
+        56
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

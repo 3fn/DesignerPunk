@@ -69,6 +69,41 @@ routes:
       when: "auditing task completion / summary docs and unsure which tier applies"
   # Inter-agent routes (LE-D1 — migrated from body prose). The FIRST cutover whose agent routes ALL
   # resolve AND cover the full roster: every routing target is generator-SSOT (U2–U8 all merged).
+    - id: dev-workflow-detail
+      doc: process-development-workflow
+      when: "you need the development workflow's detail beyond the always-loaded law"
+      replaces: process-development-workflow
+    - id: file-organization
+      doc: process-file-organization
+      when: "you need file-organization rules for a structure audit"
+      replaces: process-file-organization
+    - id: spec-planning-beyond
+      doc: process-spec-planning
+      when: "you need spec-planning detail beyond the routed requirements/tasks formats"
+      replaces: process-spec-planning
+    - id: task-types-beyond
+      doc: process-task-type-definitions
+      when: "you need task-type definitions beyond the routed Overview"
+      replaces: process-task-type-definitions
+    - id: bcv-beyond
+      doc: test-behavioral-contract-validation
+      when: "you need behavioral-contract validation detail beyond the routed Validation Process"
+      replaces: test-behavioral-contract-validation
+    - id: completion-docs-beyond
+      doc: completion-documentation-guide
+      when: "you need completion-doc guidance beyond the routed Two-Document Workflow"
+      replaces: completion-documentation-guide
+    - id: contract-concept-names
+      doc: contract-system-reference
+      when: "you need the canonical contract / concept-catalog names for a contract-parity audit"
+      replaces: contract-system-reference
+    - id: product-token-gov-detail
+      doc: product-token-governance
+      when: "you need product-token governance detail (naming, tiering) for a token-parity audit"
+      replaces: product-token-governance
+    - id: test-dev-standards-add
+      doc: test-development-standards
+      when: "auditing test structure, categories, or naming against the development standards"
   agents:
     - target: leonardo
       when: "a spec gap or architectural-decision-documentation gap — route the finding to him (he owns spec/architecture)"
@@ -123,38 +158,6 @@ routes:
       tool: list_experience_map
       mcp: product
     # --- demotion coverage: one cue per doc trimmed from the hand config's ambient set ---
-    - when: "you need the development workflow's detail beyond the always-loaded law"
-      tool: get_section
-      mcp: docs
-      replaces: process-development-workflow
-    - when: "you need file-organization rules for a structure audit"
-      tool: get_section
-      mcp: docs
-      replaces: process-file-organization
-    - when: "you need spec-planning detail beyond the routed requirements/tasks formats"
-      tool: get_section
-      mcp: docs
-      replaces: process-spec-planning
-    - when: "you need task-type definitions beyond the routed Overview"
-      tool: get_section
-      mcp: docs
-      replaces: process-task-type-definitions
-    - when: "you need behavioral-contract validation detail beyond the routed Validation Process"
-      tool: get_section
-      mcp: docs
-      replaces: test-behavioral-contract-validation
-    - when: "you need completion-doc guidance beyond the routed Two-Document Workflow"
-      tool: get_section
-      mcp: docs
-      replaces: completion-documentation-guide
-    - when: "you need the canonical contract / concept-catalog names for a contract-parity audit"
-      tool: get_section
-      mcp: docs
-      replaces: contract-system-reference
-    - when: "you need product-token governance detail (naming, tiering) for a token-parity audit"
-      tool: get_section
-      mcp: docs
-      replaces: product-token-governance
 commands:
   # Her AUDIT instruments (design block C12: bash/npm instruments are invisible unless named; the
   # catalog IS the ground-truth provisioning for this differential-auditor seat). npm commands

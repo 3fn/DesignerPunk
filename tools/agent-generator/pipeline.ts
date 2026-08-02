@@ -138,8 +138,10 @@ export interface ResolvedAgent {
  * section refs and the `ambient.governanceAsLaw` per-claim section refs. Tool cues (registry,
  * Task 4) and agent routes (cutover ledger, Task 6) resolve elsewhere and are not walked here.
  */
-function collectCorpusRefs(doc: CanonicalAgentDoc): Array<{ kind: RefKind; id: string; section: string; path: string }> {
-  const refs: Array<{ kind: RefKind; id: string; section: string; path: string }> = [];
+function collectCorpusRefs(doc: CanonicalAgentDoc): Array<{ kind: RefKind; id: string; section?: string; path: string }> {
+  // `section` optional since the 119-B R6 AC3 amendment: section-less doc routes
+  // are the (b)-grade doc-id-only form, resolved at doc grain.
+  const refs: Array<{ kind: RefKind; id: string; section?: string; path: string }> = [];
   const fm = doc.frontmatter;
 
   fm.routes?.docs?.forEach((route, i) => {
@@ -170,7 +172,10 @@ export async function resolveAgent(doc: CanonicalAgentDoc, ctx: ResolveContext):
   const resolutions: RefResolution[] = [];
 
   for (const ref of refs) {
-    const result: DocResolution | SectionResolution = await ctx.corpus.resolveSection(ref.id, ref.section);
+    const result: DocResolution | SectionResolution =
+      ref.section === undefined
+        ? await ctx.corpus.resolveDoc(ref.id)
+        : await ctx.corpus.resolveSection(ref.id, ref.section);
     resolutions.push({
       kind: ref.kind,
       id: ref.id,

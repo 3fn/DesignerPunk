@@ -5,8 +5,8 @@
  * negative.
  */
 
-import { runSweep8, serializeDemotionDeltas } from '../sweeps/sweep-8-demotion';
-import type { GroundTruthManifestTrim } from '../schema';
+import { runSweep8, serializeDemotionDeltas, collectReplacesKeys } from '../sweeps/sweep-8-demotion';
+import type { CanonicalAgentDoc, GroundTruthManifestTrim } from '../schema';
 
 const KT_TRIM: GroundTruthManifestTrim = {
   artifact: 'dist/android/DesignTokens.android.kt',
@@ -18,6 +18,23 @@ const KT_TRIM: GroundTruthManifestTrim = {
     replaces: 'dist/android/DesignTokens.android.kt',
   },
 };
+
+describe('collectReplacesKeys — promoted doc routes carry their demotion marker (119-B R6 AC3 amendment)', () => {
+  it('collects replaces from routes.docs alongside routes.cues and trims', () => {
+    const doc = {
+      frontmatter: {
+        routes: {
+          cues: [{ when: 'w', tool: 'get_section', mcp: 'docs', replaces: 'cue-doc' }],
+          docs: [
+            { id: 'r1', doc: 'token-family-color', when: 'w2', replaces: 'token-family-color' },
+            { id: 'r2', doc: 'other-doc', section: 'H', when: 'w3' },
+          ],
+        },
+      },
+    } as unknown as CanonicalAgentDoc;
+    expect(collectReplacesKeys(doc).sort()).toEqual(['cue-doc', 'token-family-color']);
+  });
+});
 
 describe('sweep 8 — demotion-diff', () => {
   it('PROVE-IT-BITES: a removal with no replaces cue FAILS naming the removed member', () => {

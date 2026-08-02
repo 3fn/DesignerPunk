@@ -53,23 +53,23 @@
     {
       "lines": [
         133,
-        143
+        144
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        144,
-        147
+        145,
+        148
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        148,
-        153
+        149,
+        154
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

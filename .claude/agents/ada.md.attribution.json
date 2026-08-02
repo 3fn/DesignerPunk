@@ -53,31 +53,31 @@
     {
       "lines": [
         412,
-        422
+        423
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        423,
-        428
+        424,
+        429
       ],
       "op": "render",
       "source": "knowledgeBases"
     },
     {
       "lines": [
-        429,
-        432
+        430,
+        433
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        433,
-        438
+        434,
+        439
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"
