@@ -3,7 +3,7 @@
 **Created**: 2026-08-02 (first observation pass — LATE; see Deviations)
 **Maintained by**: hand transcription per measurement-protocol.md §5–§6 (no standing tooling)
 **Path authority**: designated by measurement-protocol.md §6 (`completion/pilot/window-dataset.md`)
-**Status**: WINDOW OPEN — nothing here is a closeout verdict; per-pass tallies only. 125-B Task 3.1 is NOT complete.
+**Status**: **WINDOW CLOSED** — N=20 reached at pass 2 (2026-08-02T16:36Z; 20th observed PR = #100). Per-pass tallies + close-state recorded here; the formal closeout verdicts are Task 3.2's deliverable, still pending. **119-B coordination: R10 sunset takes effect** (119-B Task 9's window law ACs are vacuously satisfied from this close forward).
 
 ---
 
@@ -26,6 +26,7 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 - **D1 — Late first observation pass** (day ~18 vs the 2–3-day cadence): handled via the reconstruction method above. Cadence is operational hygiene, not a criterion (§5.1 note); no criterion is amended.
 - **D2 — Baseline B computed LATE** (2026-08-02, after window open; §3.1 says "computed ONCE, before the window opens"). No pre-window computation exists in any 125-B completion doc (searched 2026-08-02). The computation is a deterministic historical query (pinned SHAs + concluded check-runs cannot change retroactively), so lateness cannot have altered its value — but per §7's spirit Peter MAY rule W1 INDETERMINATE on this ground; flagged, not self-adjudicated. **RULED — ACCEPTED (Peter, 2026-08-02, in-session; recorded record-first before merge): the value is a deterministic historical query lateness cannot alter; W1 remains evaluable.**
 - **D3 — PR #86 first-push outcome INDETERMINATE** (see table note).
+- **D4 — Pass-2 batch also observed post-merge (2026-08-02T16:36Z)**: cadence was NOT violated (pass 2 ran the same day as pass 1), but all 8 new qualifying PRs (#96–#103) merged within minutes-to-hours of opening — faster than any feasible observation cadence — so "head SHA at first observation" would again capture post-review pushes. **D1's reconstruction method reapplied** (first-push SHA = last commit with `committedDate ≤ createdAt + 120s`; check-runs queried against that SHA). Reconstruction was identity with the final head for 6 of 8; it materially differed for **#97** (one post-open push; first-push `7f673746` had 19 concluded checks, all green — the later push was not a check-fix) and **#103** (two post-open pushes; see the post-close data note). Pass-1's "normal DD6 pinning at next pass" footer assumed PRs would be observed while open; that assumption failed for the same structural reason as D1, and the same intent-preserving method is the recorded answer. No criterion is amended.
 
 ---
 
@@ -60,6 +61,24 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 | 13 | #92 | chore/readonly-prototype-deferral | 2026-07-15T21:04:49Z | `e0f53bcfb9` | PASS | 2 |
 | 14 | #93 | chore/apply-state-readonly-ballot | 2026-07-15T21:39:50Z | `efca4f7c55` | **FAILURE** — required check `122-diff-guard` concluded failure on first push (fixed in 2 subsequent pushes; per DD6 the later green never replaces the pin) | 2 |
 | 15 | #94 | chore/119-B-formalization | 2026-08-02T03:50:48Z | `ff53bebacc` | PASS | 2 |
+| 16 | #96 | task/119-B-u1-paper-decisions | 2026-08-02T04:45:16Z | `98af8b9862` | PASS (19 required checks green) | 2 |
+| 17 | #97 | fix/npm-test-single-file-selection | 2026-08-02T13:06:31Z | `7f673746ec` | PASS (reconstructed first-push; one post-open push existed but first push was fully green — 19 concluded checks, 0 failures) | 2 |
+| 18 | #98 | chore/delete-test-quick | 2026-08-02T13:15:51Z | `222523a2d5` | PASS | 2 |
+| 19 | #99 | task/119-B-u2-measurement | 2026-08-02T13:55:08Z | `4d5162ac10` | PASS | 2 |
+| 20 | #100 | fix/form-inputs-aliases | 2026-08-02T14:54:03Z | `bb5542f4e0` | PASS | 2 — **20th observed PR: WINDOW CLOSES at this observation (2026-08-02T16:36Z)** |
+
+### Post-close data note (qualifying PRs beyond N=20 — recorded, NOT counted; J3 below)
+
+Three PRs qualify under the DD6 filter but fall beyond the N=20 close (slots were filled in `createdAt` order, which here coincides with PR-number order — no ordering ambiguity in practice):
+
+| PR | branch | createdAt | reconstructed first-push SHA | first-push result (datum only) |
+|----|--------|-----------|------------------------------|--------------------------------|
+| #101 | task/119-B-u3-corpus | 2026-08-02T15:14:14Z | `0e1c28e237` | PASS |
+| #102 | task/119-B-u4-aicp-refinement | 2026-08-02T15:30:23Z | `cec5a0f7bf` | PASS |
+| #103 | task/119-B-ob1-crossref-parser | 2026-08-02T15:52:23Z | `504c915d17` | **FAILURE** — required check `122-diff-guard` concluded failure on first push (fixed in 2 subsequent pushes; final head merged green) |
+
+- **Honesty note**: a first-push failure (#103) occurred immediately past the close boundary. It is reported here as a datum precisely because silently dropping it would make the boundary look like it was drawn to exclude a failure. It was not: the boundary is `createdAt` order against the pre-committed N=20, and the robustness check below shows W1's verdict does not depend on where the boundary falls.
+- **Robustness (both ways)**: counting ALL 23 qualifying PRs (no close at 20): segment-2 n=23, f=2 (#93, #103), e = B×(n/20) = 1×1.15 → 1; f=2 ≤ e+1=2 → **W1 still MET**. Only the stacked worst case (all 23 counted AND #86's indeterminate converted to a failure: f=3 = e+2) reaches INDETERMINATE — and indeterminate-conversion was already rejected as a method in pass 1.
 
 ## Exclusion table (§4)
 
@@ -70,23 +89,30 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 | #76 (`chore/125-B-smoke-gate-bite`) | §4.2 (baseline-side) — Task 1.6 smoke gate-bite (CLOSED, never merged; pre-window, listed for baseline completeness) |
 | #80 (`chore/119-B-inbound-from-125-B`) | **J1 — JUDGMENT CALL, PETER RULES.** Thurgood's recommendation: **INCLUDE as observed.** It is cross-spec handoff documentation authored as ordinary work; §4.3 targets self-referential instrumentation (PRs that measure or arm the measurement), which this is not. Counter-argument: it is 125-B-adjacent content by a prune-aware author — but §4's honesty note already concedes universal prune-awareness at solo scale; adjacency is not instrumentation. Tally reported both ways below. **RULED — INCLUDE (Peter, 2026-08-02, in-session; record-first).** |
 | (this PR) `chore/125-B-window-dataset` | **J2 — JUDGMENT CALL, PETER RULES (self-referential case, recorded either way per §4.3).** Thurgood's recommendation: **EXCLUDE** — its sole purpose is 125-B instrumentation (transcribing the window dataset); it is the §4.3 class par excellence. If Peter rules INCLUDE, its own first-push outcome gets pinned at next pass. **RULED — EXCLUDE (Peter, 2026-08-02, in-session; record-first).** |
+| (pass-2 PR) `chore/125-B-window-pass-2` | §4.3 per the **J2 precedent** (ruled class: sole purpose is transcribing the window dataset) — excluded on the same ground, recorded for the audit trail. Moot for counting either way: the window closed at #100, before this PR opened. |
+
+### Judgment call J3 (pass 2) — batch-observation overshoot at close
+
+**J3 — JUDGMENT CALL, PETER RULES.** Eight qualifying PRs (#96–#103) were observed in one pass with only five N=20 slots remaining. The protocol defines the close (N=20; close timestamp = observation time of the 20th observed PR) but not how a single overshooting batch fills the final slots. **Thurgood's recommendation: fill slots 16–20 in `createdAt` order (→ #96–#100; #101–#103 beyond-close, recorded as data).** Rationale: `createdAt` is the qualification event DD6 itself keys on ("opened AFTER the prune merge"), it is deterministic and hand-checkable, and here it coincides with PR-number order. Counter-argument: one could read "observed" as observation-time-denominated, making all 23 part of the pass and the close boundary artificial — but that reading makes N=20 unenforceable whenever observation batches, and the pre-commitment says N=20, PILOT-ONLY, never calendar/observation-schedule-dependent. **Tally reported both ways in the post-close note; W1 verdict identical under either reading.** If Peter rules the all-23 reading, the observed table gains 3 rows, f becomes 2, and W1 remains MET — no verdict changes; only the recorded n/f change.
 
 ## Segment log
 
 | segment | opened-by (event) | boundary timestamp | n (observed) | f (first-push failures) | W1 (as-of-pass) | W2 (as-of-pass) |
 |---------|-------------------|--------------------|--------------|-------------------------|------------------|------------------|
 | 1 | Window open (U1-p merge `4992e592`) | 2026-07-14T20:25:29Z | 0 | 0 | INDETERMINATE (n<5, not evaluable) | **MET** (zero A1-surface commits) |
-| 2 | **§4 material-change event: U2 console-fail arming merged** — PR #78, merge `6df1375a` (a new first-push failure source; DD8 segment, N never resets) | 2026-07-14T22:44:48Z | 14 (15 if J1=include) | 1 (#93) | **MET** — e = B×(n/20) = 1×(14 or 15/20) → 1; f=1 ≤ e+1=2. Robust: MET even if #86's indeterminate were counted as a failure (f=2 ≤ 2) and under either J1 ruling and either baseline composition (B∈{1,2}) | **MET** (zero A1-surface commits; verified independently 2026-08-02) |
+| 2 | **§4 material-change event: U2 console-fail arming merged** — PR #78, merge `6df1375a` (a new first-push failure source; DD8 segment, N never resets) | 2026-07-14T22:44:48Z | 20 (final at close; J1=INCLUDE ruled) | 1 (#93) | **MET (at close)** — e = B×(n/20) = 1×(20/20) = 1; f=1 ≤ e+1=2. Robust: MET even if #86's indeterminate were counted as a failure (f=2 ≤ 2), under either baseline composition (B∈{1,2}), and under either J3 reading (see post-close note: n=23/f=2 → still MET) | **MET (at close)** (zero A1-surface commits through close; §5.3 scan rerun this pass over the full prune→`origin/main` range — empty; verified independently, not inherited) |
 
-- **Segment-boundary note**: the §5.3 staleness scan found ZERO commits touching any Appendix-A1 surface since the prune merge (`git log 4992e592..origin/main -- <4 A1 paths>` → empty — verified this pass, not inherited from briefings). The single boundary event is the §4 U2-arming trigger, which the protocol names explicitly. **Boundary events used: 1 of K=3.**
+- **Segment-boundary note**: the §5.3 staleness scan found ZERO commits touching any Appendix-A1 surface since the prune merge (`git log 4992e592..origin/main -- <4 A1 paths>` → empty — verified at pass 1 AND rerun independently at pass 2 through the close, still empty). The single boundary event is the §4 U2-arming trigger, which the protocol names explicitly. **Boundary events used: 1 of K=3 (final at close).**
+- **Pass-2 regen cross-check (verified, not inherited)**: 119-B's one generator run during the window is claimed provably-null in `.kiro/specs/119-B-capability-routing-measurement/completion/task-7-4-completion.md` ("Window consequence: NONE — no `thurgood.md` output change"). Independently confirmed: the A1 scan shows zero commits to `.claude/agents/thurgood.md` in the entire prune→close range, so no 122-regen staleness event exists regardless of the claim.
 - **Roll-up reading (recorded)**: per §3.2, segment 1's not-evaluable W1 does not block a MET roll-up ("MET in every evaluable segment AND ≥1 evaluable"); the clause-3 "any indeterminate segment" catch is read as the evaluable-but-f=e+2 case. If Peter reads §3.2 differently, the roll-up is INDETERMINATE, not MET — flagged, not silently resolved.
 
 ## Wall-clock record (§5.2 — datum, never a criterion)
 
 - Window open: 2026-07-14T20:25:29Z
 - Segment 1 → 2 boundary: 2026-07-14T22:44:48Z (span: 2h 19m)
-- Segment 2: open as of this pass (2026-08-02; span to date ≈ 18.2 days)
-- Window close: pending (closes at the 20th observed PR's observation)
+- Segment 2 span: 2026-07-14T22:44:48Z → 2026-08-02T16:36:21Z (≈ 18.7 days)
+- **Window close: 2026-08-02T16:36:21Z** (= pass-2 observation time of the 20th observed PR, #100)
+- **Total window span: ≈ 18.8 days** (2026-07-14T20:25:29Z → 2026-08-02T16:36:21Z) — the Req 10.6(a) serialization-estimation datum; a datum, never a criterion
 
 ## Churn log (§5.4 — ACTIVE: U2 armed mid-window at the segment-2 boundary)
 
@@ -94,13 +120,16 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 |----|-------------------------------|------|
 | #81 | 1 | An in-place REPLACEMENT of an existing Avatar entry (1 removed, 1 added — pattern updated to the Spec 126 message string; entry self-describes as retained safety net, not a live suppression). Net-new suppressions: 0. |
 
-## Current tally (as of pass 1, 2026-08-02)
+- **Pass-2 rerun (through close)**: `git log 6df1375a..origin/main -- src/__tests__/console-allowlist.json` → still only #81's commit. **Final W3 datum: 1 entry-replacement, 0 net-new suppressions over the whole armed span.**
 
-- **Observed: 15 of N=20** (J1 ruled INCLUDE — Peter, 2026-08-02) — 5 slots remain; 119-B execution PRs are the expected fill.
-- **Segments: 2; boundary events 1 of K=3.**
-- **W1 (as-of-pass roll-up): MET** (segment 2; segment 1 not evaluable) — D2 late-baseline flag RULED ACCEPTED (Peter, 2026-08-02); the roll-up-reading note stands.
-- **W2 (as-of-pass roll-up): MET** (both segments; zero A1 touches, zero A2-pattern reintroductions).
-- **W3 (report-only): 1 allowlist entry-replacement, 0 net-new** since arming.
+## Final tally at close (pass 2, 2026-08-02T16:36Z)
+
+- **Observed: 20 of N=20 → WINDOW CLOSED.** (J1 ruled INCLUDE carried forward; J2 ruled EXCLUDE carried forward — #95 stays off the observed set; J3 pending Peter's ruling at this PR's merge, verdict-invariant either way.)
+- **Segments: 2 (final); boundary events 1 of K=3.**
+- **W1 (§3.2 roll-up at close): MET** — segment 2 MET (n=20, f=1, e=1); segment 1 not evaluable (n=0). Pass-1's roll-up-reading note stands: if Peter reads §3.2's clause 3 as making any not-evaluable segment force INDETERMINATE, the roll-up is INDETERMINATE, not MET — flagged, not self-adjudicated.
+- **W2 (§3.2 roll-up at close): MET** — zero A1-surface commits and zero A2-pattern reintroductions across the entire window (both segments; scans rerun at close).
+- **W3 (report-only): 1 allowlist entry-replacement, 0 net-new suppressions** over the armed span.
 - **INDETERMINATE entries: 1** (#86 — first-push SHA has no concluded checks; superseded pre-conclusion).
+- **Deviations on record: D1–D4** (D2 RULED ACCEPTED; D1/D3/D4 stand as recorded method/limitation notes).
 
-*Next pass: resume 2–3-day cadence while the window is open; pin any new qualifying PRs at observation (normal DD6 pinning — the reconstruction method above applies only to this late pass's backlog).*
+*Window execution (Task 3.1's observation work) ends here. The formal closeout verdicts against §3 + §3.2 — including Peter's rulings on J3 and the §3.2 roll-up reading — are **Task 3.2's deliverable**, computed from this dataset. Nothing in this file self-certifies a closeout verdict.*
