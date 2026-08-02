@@ -24,7 +24,7 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 ## Deviations (recorded, not silent — §7 adjacency flagged for Peter)
 
 - **D1 — Late first observation pass** (day ~18 vs the 2–3-day cadence): handled via the reconstruction method above. Cadence is operational hygiene, not a criterion (§5.1 note); no criterion is amended.
-- **D2 — Baseline B computed LATE** (2026-08-02, after window open; §3.1 says "computed ONCE, before the window opens"). No pre-window computation exists in any 125-B completion doc (searched 2026-08-02). The computation is a deterministic historical query (pinned SHAs + concluded check-runs cannot change retroactively), so lateness cannot have altered its value — but per §7's spirit Peter MAY rule W1 INDETERMINATE on this ground; flagged, not self-adjudicated.
+- **D2 — Baseline B computed LATE** (2026-08-02, after window open; §3.1 says "computed ONCE, before the window opens"). No pre-window computation exists in any 125-B completion doc (searched 2026-08-02). The computation is a deterministic historical query (pinned SHAs + concluded check-runs cannot change retroactively), so lateness cannot have altered its value — but per §7's spirit Peter MAY rule W1 INDETERMINATE on this ground; flagged, not self-adjudicated. **RULED — ACCEPTED (Peter, 2026-08-02, in-session; recorded record-first before merge): the value is a deterministic historical query lateness cannot alter; W1 remains evaluable.**
 - **D3 — PR #86 first-push outcome INDETERMINATE** (see table note).
 
 ---
@@ -45,7 +45,7 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 
 | # | PR | branch | createdAt | pinned SHA (first-push) | first-push result | segment |
 |---|----|--------|-----------|--------------------------|-------------------|---------|
-| 1 | #80 | chore/119-B-inbound-from-125-B | 2026-07-15T14:06:44Z | `47440622aa` | PASS (0 required-check failures) | 2 — **INCLUSION PENDING PETER (judgment call J1)** |
+| 1 | #80 | chore/119-B-inbound-from-125-B | 2026-07-15T14:06:44Z | `47440622aa` | PASS (0 required-check failures) | 2 — **INCLUDED (J1 RULED — Peter, 2026-08-02)** |
 | 2 | #81 | task/126-avatar-decorative-warn | 2026-07-15T14:19:41Z | `6b5bcaf76c` | PASS | 2 |
 | 3 | #82 | fix/button-cta-remove-disabled-state | 2026-07-15T15:22:20Z | `89309e3e94` | PASS | 2 |
 | 4 | #83 | chore/deprecate-blend-disabled-desaturate | 2026-07-15T15:55:15Z | `38ef254097` | PASS | 2 |
@@ -68,8 +68,8 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 | #78 (`task/125-B-u2`) | §4.1 explicit — U2's console-fail arming PR |
 | #79 (`chore/125-B-u2-gate-bite`) | §4.2 explicit — gate-bite throwaway (engineered failure; CLOSED, never merged) |
 | #76 (`chore/125-B-smoke-gate-bite`) | §4.2 (baseline-side) — Task 1.6 smoke gate-bite (CLOSED, never merged; pre-window, listed for baseline completeness) |
-| #80 (`chore/119-B-inbound-from-125-B`) | **J1 — JUDGMENT CALL, PETER RULES.** Thurgood's recommendation: **INCLUDE as observed.** It is cross-spec handoff documentation authored as ordinary work; §4.3 targets self-referential instrumentation (PRs that measure or arm the measurement), which this is not. Counter-argument: it is 125-B-adjacent content by a prune-aware author — but §4's honesty note already concedes universal prune-awareness at solo scale; adjacency is not instrumentation. Tally reported both ways below. |
-| (this PR) `chore/125-B-window-dataset` | **J2 — JUDGMENT CALL, PETER RULES (self-referential case, recorded either way per §4.3).** Thurgood's recommendation: **EXCLUDE** — its sole purpose is 125-B instrumentation (transcribing the window dataset); it is the §4.3 class par excellence. If Peter rules INCLUDE, its own first-push outcome gets pinned at next pass. |
+| #80 (`chore/119-B-inbound-from-125-B`) | **J1 — JUDGMENT CALL, PETER RULES.** Thurgood's recommendation: **INCLUDE as observed.** It is cross-spec handoff documentation authored as ordinary work; §4.3 targets self-referential instrumentation (PRs that measure or arm the measurement), which this is not. Counter-argument: it is 125-B-adjacent content by a prune-aware author — but §4's honesty note already concedes universal prune-awareness at solo scale; adjacency is not instrumentation. Tally reported both ways below. **RULED — INCLUDE (Peter, 2026-08-02, in-session; record-first).** |
+| (this PR) `chore/125-B-window-dataset` | **J2 — JUDGMENT CALL, PETER RULES (self-referential case, recorded either way per §4.3).** Thurgood's recommendation: **EXCLUDE** — its sole purpose is 125-B instrumentation (transcribing the window dataset); it is the §4.3 class par excellence. If Peter rules INCLUDE, its own first-push outcome gets pinned at next pass. **RULED — EXCLUDE (Peter, 2026-08-02, in-session; record-first).** |
 
 ## Segment log
 
@@ -96,9 +96,9 @@ This first pass ran 2026-08-02, ~18 days after window open (protocol cadence: ev
 
 ## Current tally (as of pass 1, 2026-08-02)
 
-- **Observed: 14 of N=20** (15 if Peter rules J1=include) — 5–6 slots remain; 119-B execution PRs are the expected fill.
+- **Observed: 15 of N=20** (J1 ruled INCLUDE — Peter, 2026-08-02) — 5 slots remain; 119-B execution PRs are the expected fill.
 - **Segments: 2; boundary events 1 of K=3.**
-- **W1 (as-of-pass roll-up): MET** (segment 2; segment 1 not evaluable) — subject to the D2 late-baseline flag and the roll-up-reading note.
+- **W1 (as-of-pass roll-up): MET** (segment 2; segment 1 not evaluable) — D2 late-baseline flag RULED ACCEPTED (Peter, 2026-08-02); the roll-up-reading note stands.
 - **W2 (as-of-pass roll-up): MET** (both segments; zero A1 touches, zero A2-pattern reintroductions).
 - **W3 (report-only): 1 allowlist entry-replacement, 0 net-new** since arming.
 - **INDETERMINATE entries: 1** (#86 — first-push SHA has no concluded checks; superseded pre-conclusion).
