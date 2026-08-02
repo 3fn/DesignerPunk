@@ -24,6 +24,17 @@ export interface HealthCheckOptions {
   directoryPath: string;
   /** Last index time (ISO string) */
   lastIndexTime?: string;
+  /**
+   * Validated cross-reference totals from the indexer (Spec 119-B OB-1).
+   * When provided, `totalCrossReferences` reports the VALIDATED index-time
+   * count (a stable index property — Decision 1) instead of a re-extraction,
+   * and `droppedBareIdCount > 0` emits ONE aggregate warning pointing at
+   * scan-cross-references.sh for the individual listing.
+   */
+  crossRefTotals?: {
+    validatedCount: number;
+    droppedBareIdCount: number;
+  };
 }
 
 /**
@@ -38,7 +49,7 @@ export interface HealthCheckOptions {
  * @returns IndexHealth with status, errors, warnings, and metrics
  */
 export function determineIndexHealth(options: HealthCheckOptions): IndexHealth {
-  const { indexedDocuments, directoryPath, lastIndexTime } = options;
+  const { indexedDocuments, directoryPath, lastIndexTime, crossRefTotals } = options;
   
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -68,9 +79,23 @@ export function determineIndexHealth(options: HealthCheckOptions): IndexHealth {
     warnings.push(`Malformed metadata: ${malformedDocs.join(', ')}`);
   }
   
+  // Dropped bare-id candidates: ONE aggregate warning on the daily-consumer
+  // channel (Spec 119-B OB-1, design Component 6) — per-item detail lives in
+  // the scanner, not here.
+  if (crossRefTotals && crossRefTotals.droppedBareIdCount > 0) {
+    warnings.push(
+      `${crossRefTotals.droppedBareIdCount} unresolved bare-id link targets — run scan-cross-references.sh for the list`
+    );
+  }
+
   // Calculate metrics
   const metrics = calculateIndexMetrics(indexedDocuments);
-  
+  // Spec 119-B OB-1: prefer the indexer's validated count (stable index
+  // property) over re-extraction when supplied.
+  if (crossRefTotals) {
+    metrics.totalCrossReferences = crossRefTotals.validatedCount;
+  }
+
   // Determine status
   let status: IndexHealthStatus;
   if (errors.length > 0) {

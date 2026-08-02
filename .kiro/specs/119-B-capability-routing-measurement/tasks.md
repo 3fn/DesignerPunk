@@ -91,12 +91,12 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
 
 ### Unit OB-1 — Cross-ref parser `id`-awareness + scanner repoint (PARALLEL — start early)
 
-- [ ] 7. Implement OB-1 per design § Component 6
+- [x] 7. Implement OB-1 per design § Component 6
   - **Type**: Implementation (parent) · **Agent**: Thurgood (Sonnet) — Decision 1 settled the architecture; this implements it. Escalate to Opus ONLY if implementation invalidates a Decision-1 premise (that is a design change, not a bigger hammer) · **Validation**: Tier 3 (parent; load-bearing property-tested surface)
-  - [ ] 7.1 Re-probe V6 + re-count the invisible-ref population (D1; VERIFIED-UNGUARDED re-probe rule R11 AC4) — record prior → current in the completion doc; this is the unit's before-evidence
-  - [ ] 7.2 Parser: bare-`id` candidate extraction (grammar `/^[a-z0-9][a-z0-9-]*$/`, no `/ . : #`), `kind` tag internal-only; tests: grammar positives, false-positive guards, `.md` extraction byte-identical regression, property tests unchanged and green
-  - [ ] 7.3 Indexer: validation sweep on the existing post-index hook (DocumentIndexer.ts:124 precedent); `reindexFile` inline validation + the **accepted-edge test** (new-doc-B ref dropped until full rebuild); migrated-doc enumeration test (token-governance-pattern fixture)
-  - [ ] 7.4 Surfacing + tooling: dropped-candidate channels (scanner individual listing + ONE aggregate index-health warning when count > 0); `scan-cross-references.sh` repointed to `governance/*.md` + `.kiro/steering/*.md`; **D5 normalization** — `list_cross_references` resolves through the same resolver chain as the other document tools, contract documented
+  - [x] 7.1 Re-probe V6 + re-count the invisible-ref population (D1; VERIFIED-UNGUARDED re-probe rule R11 AC4) — record prior → current in the completion doc; this is the unit's before-evidence
+  - [x] 7.2 Parser: bare-`id` candidate extraction (grammar `/^[a-z0-9][a-z0-9-]*$/`, no `/ . : #`), `kind` tag internal-only; tests: grammar positives, false-positive guards, `.md` extraction byte-identical regression, property tests unchanged and green
+  - [x] 7.3 Indexer: validation sweep on the existing post-index hook (DocumentIndexer.ts:124 precedent); `reindexFile` inline validation + the **accepted-edge test** (new-doc-B ref dropped until full rebuild); migrated-doc enumeration test (token-governance-pattern fixture)
+  - [x] 7.4 Surfacing + tooling: dropped-candidate channels (scanner individual listing + ONE aggregate index-health warning when count > 0); `scan-cross-references.sh` repointed to `governance/*.md` + `.kiro/steering/*.md`; **D5 normalization** — `list_cross_references` resolves through the same resolver chain as the other document tools, contract documented
   - Parent completion: after-evidence re-count (the crossReferences step-up, attributed for the Civitas health check per design § Component 6); full `npm test` green locally; completion doc + summary doc
   - _Requirements: R9 AC1–AC4 · Design: Component 6, Decision 1_
   - Completion docs: `completion/task-7-N-completion.md` (subtasks), `completion/task-7-completion.md` + `docs/specs/119-B-capability-routing-measurement/task-7-summary.md` (parent)
