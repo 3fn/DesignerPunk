@@ -20,7 +20,8 @@
 
 The first PR push failed `122-diff-guard` with `input-closure-changed: canonical/registry/tool-registry.json` — the guard boots the live server and compares tool definitions against the canonical registry, and the D5 description update made them diverge. Unanticipated by the "zero window interaction" framing, resolved with proof rather than assumption:
 
-1. Registry synced to the new description (1-line diff).
-2. `generate.ts` run: **274 files written, zero content changes** (`git status` clean on all guarded roots) — the description is registry-input but renders into NO generated output (only the tool NAME appears in thurgood/stacy routing). A provably-NULL regen.
-3. **Window consequence: NONE** — no `thurgood.md` output change → no segment (§ 7.1.iii); confirmed mechanically against the merged window dataset (1 of K=3 boundary events used, unchanged). Not a qualifying regen (zero output delta) → no regen-log line; this note is the auditable record instead.
-4. `npm run test:agent-generator`: 27 suites / 331 tests green locally.
+1. First attempt — a hand-synced registry edit — STILL failed the guard: `tool-registry.json` is itself GENERATOR OUTPUT (C5: boot each server from its compiled entry, `tools/list`, canonicalStringify), so hand-placed bytes can never satisfy it. The never-hand-place rule applies to the registry too; lesson recorded.
+2. Correct fix: rebuilt `mcp-server` dist (so the compiled server declares the new description) and ran the REGISTRY GENERATOR (`tools/agent-generator/registry.ts`) — the committed registry is now generator-emitted bytes. `canonical/generated.lock` refreshed by the guard's green full run, committed with it.
+3. Agent prompts: `generate.ts` run produced **zero content changes** across all guarded roots — the description renders into NO generated prompt (only the tool NAME appears in thurgood/stacy routing).
+4. **Window consequence: NONE** — no `thurgood.md` output change → no segment (§ 7.1.iii); confirmed mechanically against the merged window dataset (1 of K=3 boundary events used, unchanged). Not a qualifying regen (zero prompt-output delta) → no regen-log line; this note is the auditable record instead.
+5. Local validation: `diff-guard: full-run-green (input-closure-changed)`; `npm run test:agent-generator` 27 suites / 331 tests green.
