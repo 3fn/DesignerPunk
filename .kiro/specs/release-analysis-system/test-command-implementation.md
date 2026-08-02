@@ -4,6 +4,8 @@
 **Purpose**: Document implementation of separated test commands for improved developer experience
 **Context**: Implemented hybrid approach to separate performance tests from regular test runs
 
+> **Historical record — command set and durations superseded.** The 2026-07-03 lane rework (commit `29bba7de`) made the default lanes timing-assertion-free and fast (~1 min warm), voiding the durations below. `npm run test:quick` was **removed 2026-08-02**: unused by CI/hooks/steering, its "ultra-fast" rationale no longer held, and its trailing `--testPathIgnorePatterns` (an array-typed jest option) made `npm run test:quick -- <file>` ADD the file as an ignore pattern instead of selecting it. Current command guidance lives in Start Up Tasks.
+
 ---
 
 ## Implementation Summary
