@@ -15,3 +15,12 @@
 ## Public-API note
 
 `list_cross_references` response shape is UNCHANGED (target/context/section/lineNumber; no `kind` tag). New behavior is additive: bare-id refs now appear with target = the doc id.
+
+## Registry input-closure (discovered at the PR gate, resolved same-branch)
+
+The first PR push failed `122-diff-guard` with `input-closure-changed: canonical/registry/tool-registry.json` — the guard boots the live server and compares tool definitions against the canonical registry, and the D5 description update made them diverge. Unanticipated by the "zero window interaction" framing, resolved with proof rather than assumption:
+
+1. Registry synced to the new description (1-line diff).
+2. `generate.ts` run: **274 files written, zero content changes** (`git status` clean on all guarded roots) — the description is registry-input but renders into NO generated output (only the tool NAME appears in thurgood/stacy routing). A provably-NULL regen.
+3. **Window consequence: NONE** — no `thurgood.md` output change → no segment (§ 7.1.iii); confirmed mechanically against the merged window dataset (1 of K=3 boundary events used, unchanged). Not a qualifying regen (zero output delta) → no regen-log line; this note is the auditable record instead.
+4. `npm run test:agent-generator`: 27 suites / 331 tests green locally.
