@@ -38,9 +38,12 @@ module.exports = {
   ],
   
   // Exclude patterns (F1, F3)
-  // NOTE: performance-test exclusion lives in the npm `test` script's CLI flag,
-  // NOT here. Config-level ignores also apply when `test:performance` selects by
-  // pattern, which silently reduced that lane (and `test:all`) to zero perf tests.
+  // NOTE: performance-test exclusion lives in jest.functional.config.js (used by
+  // npm test / test:watch / test:coverage), NOT here. Config-level ignores also
+  // apply when `test:performance` selects by pattern, which silently reduced that
+  // lane (and `test:all`) to zero perf tests. It can't be a CLI flag either:
+  // --testPathIgnorePatterns is array-typed, so a trailing flag swallows appended
+  // positionals and breaks `npm test -- <test-file-path>` single-file runs.
   testPathIgnorePatterns: [
     '/node_modules/',           // Standard exclusion
     '/dist/',                   // Prevent duplicate execution (F1)
