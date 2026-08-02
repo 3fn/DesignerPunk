@@ -3,7 +3,7 @@
 **Date**: 2026-08-02 (all measurements this date — D1; corpus state: post-#105 main)
 **Spec**: 119-B — Capability Catalog, Routing & Measurement
 **Requirements**: R6 AC1, AC5–AC6; R7 AC3, AC5–AC6 · **Design**: Components 1, 2; Decision 2
-**Status**: 8.1 + 8.2 complete (dispositions DRAFTED); 8.3 owner confirmations IN PROGRESS — the `owner confirm` cells below are populated as verdicts land
+**Status**: 8.1 + 8.2 complete; **8.3 round 1 COMPLETE (all three owners returned verdicts 2026-08-02; § "8.3 Owner-Confirmation Record" below is the authoritative cell-by-cell record)**; round 2 ran on the four sibling token-lookup rows (Ada's false-cognate evidence) — outcomes in the same record. PENDING markers in the tables resolve through that record.
 
 ---
 
@@ -33,9 +33,9 @@
 | 13 × "<Family> token family's guidance" (Accessibility, Blend, Border, Color, Glow, Layering, Motion, Opacity, Radius, Responsive, Shadow, Spacing, Typography) | **(b)** | token-family-* (13 ids) | determinate doc; section varies; family docs are summary-first multi-section units | ada — pre-signal (b)-expected; **PENDING 8.3** | Task 9 (9.4) |
 | Rosetta architecture beyond routed sections | (b) | rosetta-system-architecture | pair-pattern beside 2 precise rosetta rows — (b) permitted, (a) barred | ada PENDING | Task 9 |
 | naming conventions / token philosophy | (b) | rosetta-system-principles | determinate; section varies | ada PENDING | Task 9 |
-| token resolution patterns (context, fallbacks) | (b) | token-resolution-patterns | determinate | ada PENDING | Task 9 |
-| semantic token structure guidance | (b) | token-semantic-structure | determinate | ada PENDING | Task 9 |
-| token lookup patterns / mode-aware / common patterns | **(c)** | — | doc-INDETERMINATE (token-quick-reference vs token-resolution-patterns) — criterion 1 bars promotion; matches leonardo's same-shape (c) | ada PENDING | n/a |
+| token resolution patterns (context, fallbacks) | (b) **AMENDED target** | **token-quick-reference** (was token-resolution-patterns — FALSE COGNATE: that doc is TS type-safety strategy, no runtime resolution content; the row's "(context resolution, fallbacks)" matches token-quick-reference § "Context Resolution" under "Mode-Aware Token Lookup (Spec 080)" verbatim) | determinate after owner inspection; stays (b) — owner declines rename-attestation on "Context Resolution" | **ada AMEND 2026-08-02 consult (R1), evidence-inspected** | Task 9 |
+| semantic token structure guidance | (b) | token-semantic-structure | determinate | ada CONFIRM 2026-08-02 consult (R1) | Task 9 |
+| token lookup patterns / mode-aware / common patterns | **(b) — AMENDED from (c)** | **token-quick-reference** | NOT doc-indeterminate: owner inspection shows § "Mode-Aware Token Lookup (Spec 080)" + § "Common Patterns" match the row near-verbatim, and the rival candidate is the same false cognate as above — criterion 1 passes | **ada AMEND (c)→(b) 2026-08-02 consult (R1)** | Task 9 |
 | dev-workflow + file-org | shared → G2 | | | thurgood self | |
 
 - Non-promotions: 6 precise § routes (already (a)); 2 agent hand-offs; 7 application-MCP tool cues (named tools, invocable — correct class); index-rebuild cues (correct).
@@ -125,6 +125,16 @@
 
 ---
 
-## Task 9 edit-load summary (drafted; final after 8.3)
+## 8.3 Owner-Confirmation Record (AUTHORITATIVE — resolves every PENDING cell above)
 
-~57 (b) promotions (13+13 family sets + singles + 4 shared-source edits) · 2 (a) rows (leonardo Concept Catalog promotion; data Android-patterns addition) · 7 route additions · 2 class-fit reclassifications (shared source, ambient-class feasibility check first) · + Component 3's two 118 rows · + the 4c cue · + Ada's row re-verify · + the PDW 32-snippet fold-item. Non-promotions and (c) rows are recorded above with rationale (R7 AC3).
+**Method for all rows: spawned owner-agent consult sessions, 2026-08-02; confirm-or-diverge from the recorded dR1 pre-signals; read-only; verdicts returned as structured records.** Round 2 (the designed second round) ran same-day on the token-lookup sibling rows.
+
+- **Ada (round 1)**: A thirteen — CONFIRM (spot-inspected two family docs). B1 rosetta-beyond — CONFIRM. B2 naming/philosophy — CONFIRM (verified "Naming Convention Governance" section). **B3 resolution-patterns — AMEND: retarget → token-quick-reference** (false-cognate evidence, doc content inspected; declines rename-attestation on "Context Resolution" → stays (b)). B4 semantic-structure — CONFIRM. **C token-lookup — AMEND (c)→(b) token-quick-reference** (determinacy restored by the same evidence). D lina→token-governance (b) — CONFIRM as target-doc owner. Her cross-cutting flag on the four sibling rows triggered round 2.
+- **Lina (round 1)**: A (24 discrete items; the token-governance pair correctly re-routed to Ada's batch — her count note on record) — CONFIRM, zero divergence. **B app-mcp-server coherence — RULING: ADD-FALLBACK** (`ApplicationMCPServerSource: application-mcp-server/**` — implementation-code class, symmetric with StemmaComponentSource; a routing row would not close the gap: the candidate docs cover tool usage, not server internals). C1 data Android (a) — CONFIRM (target-doc owner; no attestation needed, platform-named heading). C2 sparky contract-names (b) — CONFIRM. C3 platform-agent (b) set into her docs — CONFIRM. C4 thurgood bcv (b) — CONFIRM. **D sparky fallback — RULING: ADD-WEB-FALLBACK** (`src/components/core/*/platforms/web/**`; restores kenya/data symmetry; no duplicative routing exists, unlike the intentional-no-fallback cases).
+- **Leonardo (round 1)**: A Concept Catalog (a) — CONFIRM (his own worked case, measured unchanged). B stress-test set (7 b + 2 c) — CONFIRM. C1 PHP route-added (b) + WHEN wording — CONFIRM (explicitly confirms the audit's correction of his dR1 target-missing expectation). C2 integration-guide (b) + wording — CONFIRM. C3 cross-platform-review no-route-needed — CONFIRM. C4 corpus-wide class-fit finding — CONFIRM (Thurgood owns the shared-source fix). D no-fallback intentional — CONFIRM (no code write scope; MCP-served ground truth).
+- **Round 2 (token-lookup siblings, on Ada's target-owner evidence + consent)**: Lina — CONFIRM (c)→(b) for HER row and SPARKY's (surface-canonical owner per OB-9). Leonardo — CONFIRM for HIS row; as product-agent director, no objection for DATA's and KENYA's same-shape rows. **Net: all six token-lookup-shaped rows across ada/lina/leonardo/data/kenya/sparky land (b) token-quick-reference.** The (c) column now holds only: technology-stack (leonardo/data/kenya/sparky — exploratory, criterion 2) and the two cross-platform-file-paths rows (data/kenya/sparky — genuinely doc-indeterminate).
+- **Thurgood (self-owned)**: promotions + additions + the src/__tests__ no-fallback ruling recorded as self-confirmations, 2026-08-02, this audit (never blank cells).
+
+## Task 9 edit-load summary (FINAL after 8.3)
+
+**~62 (b) promotions** (two 13-row family sets; owner singles incl. the six amended token-lookup rows and Ada's retargeted resolution-patterns row; 2 shared-source promotions rendering across 7–8 agents) · **2 (a) rows** (leonardo Concept Catalog promotion; data Android-patterns route-addition) · **7 route additions** (leonardo ×2 [PHP, integration-guide], data Android (a), sparky contract-names, stacy test-dev-standards, thurgood process-dev-workflow; + thurgood's 118 row counted under Component 3) · **2 class-fit reclassifications** (shared source; ambient-class feasibility check first, fallback recorded-misfit) · **2 fallback additions** (lina app-mcp-server; sparky web) · + Component 3's two 118 rows with Lina's annotations · + the 4c cue · + Ada's row formal re-verify · + the PDW 32-snippet fold-item. Remaining (c) rows + all non-promotions recorded above with rationale (R7 AC3). Every promoted/added route gets its 9.4 spot-verify before the regen (R7 AC4).
