@@ -78,7 +78,7 @@ Documentation tiers define the depth and comprehensiveness of completion documen
 **For complete tier definitions and templates**, query Spec Planning Standards via MCP:
 
 ```
-get_section({ path: ".kiro/steering/Process-Spec-Planning.md", heading: "Three-Tier Completion Documentation System" })
+get_section({ path: "process-spec-planning", heading: "Three-Tier Completion Documentation System" })
 ```
 
 ---
@@ -368,7 +368,7 @@ If AI agent created the summary document, you MUST run:
 
 **MCP Queries**:
 ```
-get_section({ path: ".kiro/steering/Process-Spec-Planning.md", heading: "Three-Tier Completion Documentation System" })
-get_section({ path: ".kiro/steering/Process-Development-Workflow.md", heading: "Task Completion Workflow" })
-get_section({ path: ".kiro/steering/Release Management System.md", heading: "Release Pipeline Architecture" })
+get_section({ path: "process-spec-planning", heading: "Three-Tier Completion Documentation System" })
+get_section({ path: "process-development-workflow", heading: "Task Completion Workflow" })
+get_section({ path: "release-management-system", heading: "Release Pipeline Architecture" })
 ```

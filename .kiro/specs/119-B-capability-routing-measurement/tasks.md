@@ -61,7 +61,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
 
 ### Unit U3 — Corpus changes, measured
 
-- [ ] 4. OB-3 alias prune (design § Component 8a flow)
+- [x] 4. OB-3 alias prune (design § Component 8a flow)
   - **Type**: Implementation · **Agent**: Thurgood (Sonnet), with **Ada and Lina as consulted domain owners** (not optional — the flow blocks on their confirmation) · **Validation**: Tier 2
   - 8a flow in order: (1) D1 re-inventory (prior → current in completion doc, R4 AC1); (2) candidate assembly with oracle-coverage status per candidate (R4 AC6 — computed against the fixture, never by editing it); (3) **owner consult BEFORE merge**: per-owner candidate lists **carrying oracle-coverage status per candidate** (the owners apply the stricter consent bar against that column — Ada+Lina tR1) → confirm/object (objection → retain, the default) → date + method recorded; non-oracle-covered removals need explicit owner CONSENT, recorded as accepted residual risk; (4) dry-run gate with candidates removed — any WEAK/MISS → retain + record; no partial prunes merge (a gate-retention of a confirmed candidate needs no re-consult — retention is the safe direction, Lina tR1)
   - Produce `findings/alias-prune.md` per the Data Models schema
@@ -70,7 +70,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
   - _Requirements: R4 (all ACs) · Design: Component 8a, Decision 6_
   - Completion doc: `completion/task-4-completion.md`
 
-- [ ] 5. OB-2 snippet sweep (design § Component 8b flow)
+- [x] 5. OB-2 snippet sweep (design § Component 8b flow)
   - **Type**: Implementation · **Agent**: Thurgood (Sonnet) · **Validation**: Tier 2
   - 8b flow in order: (1) D1 re-count (prior → current in completion doc, R5 AC1); (2) **carve-out check FIRST** (R5 AC3): inventory `governance/Process-Development-Workflow.md`; any legacy snippets there are EXCLUDED from this PR and recorded in this completion doc as the origin of the U-final fold-item; (3) migrate legacy `path:` snippets → `id` form; (4) spot-resolution checks via the docs MCP (R5 AC2) + rebuild index
   - Completion doc carries the R5 AC5 owner-grouped touched-docs listing (Ada / Lina / Thurgood) — the explicitly designated evidence home (Decision 6); no findings artifact

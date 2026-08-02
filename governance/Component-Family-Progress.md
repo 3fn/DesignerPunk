@@ -1,7 +1,6 @@
 ---
 id: progress-indicator-components
 inclusion: manual
-aliases: progress family work
 ---
 
 # Progress Indicator Components

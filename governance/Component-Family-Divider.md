@@ -2,7 +2,6 @@
 id: component-family-divider
 inclusion: manual
 name: Component-Family-Divider
-aliases: divider family work
 description: Divider component family (placeholder) — planned components for visual separation between content sections with horizontal and vertical orientations. Load when planning divider components or reviewing family architecture.
 ---
 

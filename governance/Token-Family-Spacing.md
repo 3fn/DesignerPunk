@@ -2,7 +2,6 @@
 id: token-family-spacing
 inclusion: manual
 name: Token-Family-Spacing
-aliases: spacing token work
 description: Spacing token family — layout and component spacing on 8-unit baseline grid with strategic flexibility exceptions. Load when working with padding, margins, gaps, or any spatial layout decisions.
 ---
 

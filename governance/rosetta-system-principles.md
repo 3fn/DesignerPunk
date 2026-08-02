@@ -524,8 +524,8 @@ Rosetta Token System
 Rosetta System documentation is accessible via MCP:
 
 ```
-get_document_summary({ path: ".kiro/steering/rosetta-system-principles.md" })
-get_section({ path: ".kiro/steering/rosetta-system-principles.md", heading: "Mathematical Relationships" })
+get_document_summary({ path: "rosetta-system-principles" })
+get_section({ path: "rosetta-system-principles", heading: "Mathematical Relationships" })
 ```
 
 ---

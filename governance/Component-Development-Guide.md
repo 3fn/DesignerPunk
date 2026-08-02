@@ -515,7 +515,7 @@ If an action is temporarily unavailable, use one of these alternatives instead: 
 
 Before naming a contract, query the Concept Catalog via MCP:
 ```
-get_section({ path: ".kiro/steering/Contract-System-Reference.md", heading: "Concept Catalog" })
+get_section({ path: "contract-system-reference", heading: "Concept Catalog" })
 ```
 - Use existing catalog concepts whenever possible
 - If a behavior needs a new concept, propose a catalog addition (ballot measure) before using it
@@ -531,7 +531,7 @@ get_section({ path: ".kiro/steering/Contract-System-Reference.md", heading: "Con
 
 For the full contract system (taxonomy, canonical format, classification rules, inheritance patterns):
 ```
-get_document_full({ path: ".kiro/steering/Contract-System-Reference.md" })
+get_document_full({ path: "contract-system-reference" })
 ```
 
 ---

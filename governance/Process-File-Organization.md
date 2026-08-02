@@ -34,8 +34,8 @@ description: File organization standards — metadata-driven organization, direc
 
 **Query via MCP for detailed guidance:**
 ```
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Two-Document Workflow" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Cross-References" })
+get_section({ path: "completion-documentation-guide", heading: "Two-Document Workflow" })
+get_section({ path: "completion-documentation-guide", heading: "Cross-References" })
 ```
 
 ### WHEN Creating Spec Documents (Requirements, Design, Tasks)
@@ -58,8 +58,8 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 
 **Query via MCP for detailed guidance:**
 ```
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Naming Conventions" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Document Templates" })
+get_section({ path: "completion-documentation-guide", heading: "Naming Conventions" })
+get_section({ path: "completion-documentation-guide", heading: "Document Templates" })
 ```
 
 ### WHEN Adding Cross-References
@@ -69,9 +69,9 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 
 **Query via MCP for detailed guidance:**
 ```
-get_section({ path: ".kiro/steering/Process-Cross-Reference-Standards.md", heading: "How to Format Cross-References" })
-get_section({ path: ".kiro/steering/Process-Cross-Reference-Standards.md", heading: "Common Cross-Reference Patterns" })
-get_section({ path: ".kiro/steering/Process-Cross-Reference-Standards.md", heading: "Anti-Patterns to Avoid" })
+get_section({ path: "process-cross-reference-standards", heading: "How to Format Cross-References" })
+get_section({ path: "process-cross-reference-standards", heading: "Common Cross-Reference Patterns" })
+get_section({ path: "process-cross-reference-standards", heading: "Anti-Patterns to Avoid" })
 ```
 
 ### WHEN Organizing Existing Files AND Creating New Implementation Files
@@ -172,13 +172,13 @@ aliases: RTL, bidirectional, internationalization, i18n
 **For detailed guidance** on completion documentation naming conventions, templates, and the two-document workflow, query Completion Documentation Guide via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Completion Documentation Guide.md" })
+get_document_full({ path: "completion-documentation-guide" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Naming Conventions" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Directory Structure" })
+get_section({ path: "completion-documentation-guide", heading: "Naming Conventions" })
+get_section({ path: "completion-documentation-guide", heading: "Directory Structure" })
 ```
 
 #### Summary Documents
@@ -199,14 +199,14 @@ get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading:
 **For detailed guidance** on summary document templates, cross-references, and the two-document workflow, query Completion Documentation Guide via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Completion Documentation Guide.md" })
+get_document_full({ path: "completion-documentation-guide" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Two-Document Workflow" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Cross-References" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Document Templates" })
+get_section({ path: "completion-documentation-guide", heading: "Two-Document Workflow" })
+get_section({ path: "completion-documentation-guide", heading: "Cross-References" })
+get_section({ path: "completion-documentation-guide", heading: "Document Templates" })
 ```
 
 #### Spec-Specific Guides
@@ -293,13 +293,13 @@ strategic-framework/
 **For detailed guidance** on completion documentation directory structure, naming patterns, and the two-document workflow, query Completion Documentation Guide via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Completion Documentation Guide.md" })
+get_document_full({ path: "completion-documentation-guide" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Directory Structure" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Naming Conventions" })
+get_section({ path: "completion-documentation-guide", heading: "Directory Structure" })
+get_section({ path: "completion-documentation-guide", heading: "Naming Conventions" })
 ```
 
 ### Audit Findings
@@ -561,14 +561,14 @@ Cross-references are markdown links that connect related documentation, enabling
 **For detailed guidance** on cross-reference formatting, patterns, anti-patterns, and maintenance, query Process-Cross-Reference-Standards via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Process-Cross-Reference-Standards.md" })
+get_document_full({ path: "process-cross-reference-standards" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Process-Cross-Reference-Standards.md", heading: "How to Format Cross-References" })
-get_section({ path: ".kiro/steering/Process-Cross-Reference-Standards.md", heading: "Common Cross-Reference Patterns" })
-get_section({ path: ".kiro/steering/Process-Cross-Reference-Standards.md", heading: "Anti-Patterns to Avoid" })
+get_section({ path: "process-cross-reference-standards", heading: "How to Format Cross-References" })
+get_section({ path: "process-cross-reference-standards", heading: "Common Cross-Reference Patterns" })
+get_section({ path: "process-cross-reference-standards", heading: "Anti-Patterns to Avoid" })
 ```
 
 ---

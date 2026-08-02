@@ -520,7 +520,7 @@ metadata:
 **Query component readiness**:
 ```
 get_section({ 
-  path: ".kiro/steering/Component-Family-Form-Inputs.md", 
+  path: "component-family-form-inputs", 
   heading: "Component Readiness" 
 })
 ```

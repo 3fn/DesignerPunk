@@ -625,15 +625,15 @@ This gate exists to prevent ungoverned growth of the modifier pattern. The opaci
 
 ```
 # Get this document
-get_document_full({ path: ".kiro/steering/Token-Governance.md" })
+get_document_full({ path: "token-governance" })
 
 # Get specific sections
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Selection Matrix" })
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Usage Governance" })
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Creation Governance" })
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Prior Acknowledgment" })
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Decision Examples" })
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Creation Guides" })
+get_section({ path: "token-governance", heading: "Token Selection Matrix" })
+get_section({ path: "token-governance", heading: "Token Usage Governance" })
+get_section({ path: "token-governance", heading: "Token Creation Governance" })
+get_section({ path: "token-governance", heading: "Prior Acknowledgment" })
+get_section({ path: "token-governance", heading: "Decision Examples" })
+get_section({ path: "token-governance", heading: "Token Creation Guides" })
 ```
 
 ---

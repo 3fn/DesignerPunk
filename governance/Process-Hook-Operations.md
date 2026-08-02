@@ -1167,13 +1167,13 @@ File organization triggers automatically when task status changes to "completed"
 **For detailed guidance** on file organization workflow, metadata values, directory structure, scope rationale, and manual organization options, query File Organization Standards via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Process-File-Organization.md" })
+get_document_full({ path: "process-file-organization" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Process-File-Organization.md", heading: "Organization Implementation (Conditional Loading)" })
-get_section({ path: ".kiro/steering/Process-File-Organization.md", heading: "File Organization Scope (Conditional Loading)" })
+get_section({ path: "process-file-organization", heading: "Organization Implementation (Conditional Loading)" })
+get_section({ path: "process-file-organization", heading: "File Organization Scope (Conditional Loading)" })
 ```
 
 ### Release Detection
@@ -1194,13 +1194,13 @@ Release detection triggers automatically when parent task summary documents are 
 **For detailed guidance** on release detection pipeline, troubleshooting, hook debugging, and manual triggers, query Release Management System via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Release Management System.md" })
+get_document_full({ path: "release-management-system" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Release Management System.md", heading: "Release Pipeline Architecture" })
-get_section({ path: ".kiro/steering/Release Management System.md", heading: "AI Agent Decision Points" })
+get_section({ path: "release-management-system", heading: "Release Pipeline Architecture" })
+get_section({ path: "release-management-system", heading: "AI Agent Decision Points" })
 ```
 
 ---

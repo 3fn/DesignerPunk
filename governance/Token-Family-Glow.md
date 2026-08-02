@@ -2,7 +2,6 @@
 id: token-family-glow
 inclusion: manual
 name: Token-Family-Glow
-aliases: glow token work
 description: Glow token family — radial emphasis and energy effects with zero-offset blur, opacity, and color primitives. Load when working with glow effects, emphasis indicators, or interactive energy states.
 ---
 
