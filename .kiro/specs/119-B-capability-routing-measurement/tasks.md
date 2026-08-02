@@ -38,7 +38,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
   - _Requirements: R1 (all ACs) · Design: Component 4a_
   - Completion doc: `completion/task-1-completion.md`
 
-- [ ] 2. Record the OB-4 discovery-gate threshold decision
+- [x] 2. Record the OB-4 discovery-gate threshold decision
   - **Type**: Architecture · **Agent**: Thurgood (Opus) — a genuine decide-class call (gate semantics, cross-cutting to the dry-run harness and all future discovery gates) · **Validation**: Tier 2 — **deliberate deviation from the Architecture→Tier 3 letter** (Stacy tR1, named-not-silent): a paper decision whose only executable surface is one harness assertion; success-criteria verification is carried by the decision record in the completion doc, not by code-centric Tier 3 checks
   - Decide: keep rank ≤ 2, or move to reachability-at-strong — with rationale framed by Decision 4's reachability emphasis and the 10.4 evidence (four concepts strong-but-rank-3–4); record the decision + counter-argument in the completion doc
   - **R2 AC3 step (design § Component 5)**: IF the decision changes the gate THEN update the dry-run harness's gate assertion in THIS task, before any dependent task runs; run the harness to confirm the assertion change is green
