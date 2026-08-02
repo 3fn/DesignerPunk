@@ -12,7 +12,7 @@
 
 Settled decisions — do not re-litigate; follow the references if you need the rationale:
 
-- **Scope authority**: the four pillar deliverables → `119-steering-progressive-disclosure-redesign/design-outline.md` § "Pillar mapping"; verified substrate → `119-B-scope-pass.md` (RATIFIED 2026-07-16, incl. Part 7).
+- **Scope authority**: the four pillar deliverables → `119-agent-experience-architecture/design-outline.md` § "Pillar mapping"; verified substrate → `119-B-scope-pass.md` (RATIFIED 2026-07-16, incl. Part 7).
 - **119-B/122 boundary (settled)**: 122 owns mechanism + baseline content; 119-B is content-layer work THROUGH the generator; no new generator machinery → scope-pass § "7.2 — G1 Delta Audit" (boundary answer).
 - **OB-1 placement (settled, A1 as ratified-amended)**: stays IN 119-B as its own declared merge unit, started early, parallel; bundle (parser + scanner repoint + D5) moves whole; stall → recorded descope → scope-pass § "Part 7 — Ratification Record".
 - **Window coordination (settled, A2 ratified with amendments)**: state-driven ACs, sunset at U1-c close, spec-local regen log; trigger surfaces are Appendix A1's four (NOT CLAUDE.md — D6 drift; NOT AI-Collaboration-Principles) → scope-pass § "7.1".

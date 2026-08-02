@@ -43,7 +43,7 @@ How an agent is provisioned: **ambient** (always-loaded) vs **on-demand**. Five 
 ### Reconciliation with prior decisions (carried forward, NOT discarded)
 - The 119-A / 119-B split **holds** — now expressed as AXA pillars. R1–R10 **hold**. Inbound 117 / 118 / 121 **hold**. Sequencing `119-A → 122 → 123 → 119-B` **holds**.
 - The revised `requirements.md` (119-A) + its three agent reviews + the three per-agent AX assessments **compound into** this reframe; nothing resets.
-- **Structural follow-up (flagged, NOT done):** the spec folder `119-steering-progressive-disclosure-redesign` should be renamed to reflect AXA (e.g. `119-agent-experience-architecture`); deferred to avoid path churn mid-draft.
+- **Structural follow-up (EXECUTED 2026-08-02):** the spec folder was renamed from its pre-reframe name to `119-agent-experience-architecture` at 119-B closeout — see `.kiro/issues/2026-07-19-spec-119-folder-rename.md`.
 
 ### Open questions
 See the AXA doc §8 (ground-truth divergence is currently *latent* → manifest is insurance-not-remediation; the *formative* class is asserted, not demonstrated; the AX/experience analogy overstates force-loaded files; "generate-don't-curate" assumes 122 exists; sprawl risk). Spec-specific: does the AXA reframe over-expand 119 (the severable seam is the guard); and the 119-B/122 boundary under the capability-catalog reframing.
@@ -64,4 +64,4 @@ It was **moved, not deleted** (also fully retained in git history). The move end
 - The **through-line, coupling inventory, and pillar mapping** are the AXA Reframe section above.
 - The **case-study / measurement** material and the **119-B routing** material remain *deferred* (119-B); the archive preserves their design notes until 119-B is worked.
 
-> **Structural follow-up (still flagged, NOT done):** rename the spec folder `119-steering-progressive-disclosure-redesign` → `119-agent-experience-architecture` to reflect AXA. Deferred to avoid path churn mid-draft (it would move this outline, the archive, and the inbound files, and touch every cross-reference into the folder). Track as a single atomic rename when 119 next has a quiet moment.
+> **Structural follow-up (EXECUTED 2026-08-02):** the spec folder was renamed from its pre-reframe name to `119-agent-experience-architecture` to reflect AXA. Originally deferred to avoid path churn mid-draft; executed as a single atomic rename + repo-wide cross-reference sweep at 119-B closeout, before Spec 123 opened — see `.kiro/issues/2026-07-19-spec-119-folder-rename.md`.

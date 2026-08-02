@@ -6,7 +6,7 @@
 **Status**: Requirements Phase
 **Dependencies**: 119-A (complete), 121 (complete), 122 (complete), 118 (complete); runs PARALLEL to 125-B (see Requirement 10)
 **Author**: Thurgood
-**Formalizes against**: `.kiro/specs/119-steering-progressive-disclosure-redesign/119-B-scope-pass.md` (RATIFIED 2026-07-16, incl. Part 7 ratification record + 7.2 delta audit + 7.3 execution ordering). Scope authority: `design-outline.md` § "Pillar mapping".
+**Formalizes against**: `.kiro/specs/119-agent-experience-architecture/119-B-scope-pass.md` (RATIFIED 2026-07-16, incl. Part 7 ratification record + 7.2 delta audit + 7.3 execution ordering). Scope authority: `design-outline.md` § "Pillar mapping".
 
 ---
 

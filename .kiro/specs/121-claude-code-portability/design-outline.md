@@ -5,7 +5,7 @@
 **Author**: Peter + Claude Code (drafted for Thurgood formalization)
 **Status**: Design Outline — ready for formalization
 **Feedback panel (reduced, scope-appropriate)**: Thurgood (MCP/governance steward) + Leonardo (heaviest MCP consumer). Rationale: this effort is about MCP-delivery infrastructure and agent-config generation, not token (Ada) or component (Lina) domains. Data may be consulted for the consumer-with-skills angle if a gap surfaces.
-**Evidence base**: `.kiro/specs/119-steering-progressive-disclosure-redesign/portability-dry-run-findings.md` (4 seams + 2 probes, all passed; Findings 1–12)
+**Evidence base**: `.kiro/specs/119-agent-experience-architecture/portability-dry-run-findings.md` (4 seams + 2 probes, all passed; Findings 1–12)
 
 ---
 
@@ -213,7 +213,7 @@ Per the project's **documentation-as-requirement** standard (Process-Spec-Planni
 
 ## Related Work
 
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/` — consumes this spec; Decision 4 is a recommended amendment to it.
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/portability-dry-run-findings.md` — the full evidence base (Findings 1–12).
+- `.kiro/specs/119-agent-experience-architecture/` — consumes this spec; Decision 4 is a recommended amendment to it.
+- `.kiro/specs/119-agent-experience-architecture/portability-dry-run-findings.md` — the full evidence base (Findings 1–12).
 - `.kiro/issues/2026-06-13-module-resolution-strategy.md` — precedent for "dedicated spec, don't bolt on" discipline (Decision 1).
 - Task chip (2026-06-22): "Decide RTL parity governance" — out-of-scope finding surfaced during the dry-run.

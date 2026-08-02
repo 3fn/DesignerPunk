@@ -1,6 +1,6 @@
 # Spec Feedback: Steering Progressive Disclosure Redesign
 
-**Spec**: 119-steering-progressive-disclosure-redesign
+**Spec**: 119-agent-experience-architecture (folder renamed from the pre-reframe name, 2026-08-02 — see `.kiro/issues/2026-07-19-spec-119-folder-rename.md`)
 **Created**: 2026-06-19
 
 ---

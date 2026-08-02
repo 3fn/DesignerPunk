@@ -349,7 +349,7 @@ One canonical agent definition → per-tool configs, generated, never curated. 1
 - `.kiro/specs/119-A-steering-relocation-serving-contract/per-agent-ambient-design.md` — the spine (incl. the RATIFIED gap-#7 composition rule).
 - `.kiro/specs/122-agent-generator/inbound-from-{118,119,121,wordpress-thesis,2026-07-05-gate-clearance,ratification-protocol}.md` — formalization inputs.
 - `.kiro/specs/122-agent-generator/port-recon-stacy.md` — transform deltas D1–D6.
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/119-B-deferred-obligations.md` § OB-5/OB-6/OB-7.
+- `.kiro/specs/119-agent-experience-architecture/119-B-deferred-obligations.md` § OB-5/OB-6/OB-7.
 - `inbound-from-125-A-phase-0.md` — the no-path-filter constraint, PR-sized task granularity, `complete-task.sh` as shared catalog member, Cursor MIGRATE implication. (Backed by the committed record: `.kiro/specs/125-A-pr-gate-mechanical-arming/requirements.md` Req 2.3/6.3 + completion docs.)
 - `.kiro/specs/125-mechanical-enforcement-strategy/inbound-from-122.md` — the reciprocal handoff (check registrants; tool-boot smoke split).
 

@@ -840,7 +840,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   **Primary Artifacts:**
   - Generated `CLAUDE.md` (lane 1) + per-agent inline bodies (lane 2, already emitted per-cutover — this task closes the shared lane + retirement)
   - `.kiro/docs/ballots/` retirement ballot record (record-first)
-  - Updated `.kiro/specs/119-steering-progressive-disclosure-redesign/119-B-deferred-obligations.md` § OB-7 (closed)
+  - Updated `.kiro/specs/119-agent-experience-architecture/119-B-deferred-obligations.md` § OB-7 (closed)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/122-agent-generator/completion/task-17-parent-completion.md`
@@ -885,7 +885,7 @@ This plan decomposes design.md (C1–C13, DD1–DD13) into buildable, PR-sized w
   - **OB-9 discharged** (owner-value audit): every generated agent's `governanceAsLaw` `owner:` matches its doc's substance owner (schema.ts:51), or carries an adjudicated exception; a lightweight recurrence guard is considered. (Sparky's three were corrected earlier at the Data-cutover follow-up; this is the systematic all-agent sweep.)
 
   **Primary Artifacts:**
-  - Handback notes into `.kiro/specs/119-steering-progressive-disclosure-redesign/` and `.kiro/specs/123-*/` (inbound notes)
+  - Handback notes into `.kiro/specs/119-agent-experience-architecture/` and `.kiro/specs/123-*/` (inbound notes)
   - Updated deferred-obligations ledger; updated `CLAUDE.md` interim-stopgap note (retired per OB-7)
 
   **Completion Documentation:**

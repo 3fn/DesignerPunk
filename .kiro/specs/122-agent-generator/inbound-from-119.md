@@ -34,6 +34,6 @@ These are not new 122 scope — they're instances of "agent prompts become gener
 
 ## Cross-references
 
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/design-outline.md` (§ "Pre-Formalization Decisions & Inbound Reconciliation" — the A/B split, the Documentation Directory reconciliation, the 119-A logical-addressing scope item)
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/inbound-from-118.md` (the Module-Resolution Contract routing row)
+- `.kiro/specs/119-agent-experience-architecture/design-outline.md` (§ "Pre-Formalization Decisions & Inbound Reconciliation" — the A/B split, the Documentation Directory reconciliation, the 119-A logical-addressing scope item)
+- `.kiro/specs/119-agent-experience-architecture/inbound-from-118.md` (the Module-Resolution Contract routing row)
 - `.kiro/specs/122-agent-generator/inbound-from-121.md` (summary-first `WORKFLOW_RULES` propagation — same canonical-source-injection pattern)
