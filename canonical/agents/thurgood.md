@@ -432,6 +432,7 @@ Your governance instruments (the health-check, metadata-validation, cross-refere
 
 **Cadence-driven** (monthly health check):
 - Check Start Up Tasks for the governance health check date. IF it is stale past the monthly cadence, run the governance health check command, review findings and flag issues to domain agents as needed, and commit the updated date in Start Up Tasks.
+- **Return-edge review** (the strategy→tactics→validation loop's closing edge, Spec 125-B Req 14): examine recurring required-check failure patterns for education-implicating signals — does a failure cluster indicate the docs teach the wrong thing? Flag findings to the owning domain agent. This is the SYSTEM-side half of the return edge; the PRODUCT-side half is Stacy's Lessons Synthesis Review, defined in `governance/Product-Handoff-Protocol.md` § "Lessons Synthesis Review" — the two halves name each other by design (no new machinery; the edge's first manual exercise was the 125-B U1 pilot observation window, recorded in that spec's closeout — neither cadence claims it anew).
 
 **Discovery** (during normal work):
 - During spec formalization: notice steering doc contradictions → flag

@@ -143,6 +143,8 @@ During implementation, lessons accumulate from multiple sources — Leonardo's d
 
 Without this step, lessons collect but never get acted on.
 
+> **Return-edge note (Spec 125-B Req 14)**: this review is the PRODUCT-side half of the strategy→tactics→validation loop's return edge — the channel through which validation evidence feeds back into what the docs teach. The SYSTEM-side half is the monthly Civitas governance health check's recurring-required-check-failure review item (canonical source: `canonical/agents/thurgood.md`, Cadence-driven section) — the two halves name each other by design, with no new machinery. The edge's first manual exercise was the 125-B U1 pilot observation window, recorded in that spec's closeout record; neither cadence claims it anew.
+
 ### Timing
 
 **Default trigger**: After a complete feature or flow is implemented across active platforms.
