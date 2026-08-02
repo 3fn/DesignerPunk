@@ -38,4 +38,4 @@ The gate is live and unbypassed; the full mechanical check set blocks merges; th
 - `.kiro/docs/ballots/README.md` — record-first ratification (the Phase 0 law change is its first planned use)
 - `../125-mechanical-enforcement-strategy/inbound-from-2026-07-05-lane-viability.md` — the measurements behind Phase 1a
 - `../125-mechanical-enforcement-strategy/inbound-from-122.md` — extensible-check-set requirement; the eleven protocol surfaces (atomic move); prune-with-arm reflexive application; self-merge recommendation; the tool-boot-smoke handoff
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/` — the A/B split precedent
+- `.kiro/specs/119-agent-experience-architecture/` — the A/B split precedent

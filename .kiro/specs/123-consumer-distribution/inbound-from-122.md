@@ -47,4 +47,4 @@ unchanged. This is the Rosetta extensibility contract (C4): characterize the new
 ---
 
 *Cross-reference this note from 123's decision record. The reciprocal 119-B handback (122's OB-5/6/7/8/9 dispositions)
-lives in `.kiro/specs/119-steering-progressive-disclosure-redesign/119-B-deferred-obligations.md`.*
+lives in `.kiro/specs/119-agent-experience-architecture/119-B-deferred-obligations.md`.*

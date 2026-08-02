@@ -131,7 +131,7 @@ This spec turns that evidence into buildable, testable work. It covers four deli
 
 > **The model is owned in the artifact; the rubrics are domain-authored and tunable.** The per-domain Layer-1 rubrics are authored by their owners (**Lina** = components; **Thurgood** = docs; **Ada** = token exemption). The rubric is tunable by **legible knobs** — field signal-class assignments, coverage thresholds (≥2-token / ≥50%), and a **versioned stop-word list** — not opaque weights. Format-level confirmation stays flagged to the owning domains in the design pass; this requirement pins the model, the three distinct fields, and the governing sequence.
 
-> **Cross-reference (119 Decision 4a):** The agent-side protocol that consumes a Layer-1 `partial` — *propose best-fit + confidence + rationale → human go/no-go*, with the proposal required to carry its own uncertainty — is captured in `.kiro/specs/119-steering-progressive-disclosure-redesign/design-outline.md` under **Decision 4a: Certainty Calibration Protocol** (to formalize when 119 is worked). 121 surfaces the three-layer signal; 119 defines what the agent does with a `partial`.
+> **Cross-reference (119 Decision 4a):** The agent-side protocol that consumes a Layer-1 `partial` — *propose best-fit + confidence + rationale → human go/no-go*, with the proposal required to carry its own uncertainty — is captured in `.kiro/specs/119-agent-experience-architecture/design-outline.md` under **Decision 4a: Certainty Calibration Protocol** (to formalize when 119 is worked). 121 surfaces the three-layer signal; 119 defines what the agent does with a `partial`.
 
 #### Acceptance Criteria
 

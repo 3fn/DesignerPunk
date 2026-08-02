@@ -340,10 +340,10 @@ These feed the §3b clean-room cutover audit — the checks that must clear (or 
 - `.kiro/specs/122-agent-generator/inbound-from-121.md` — `WORKFLOW_RULES` propagation; `find_docs`-not-`get_documentation_map`.
 - `.kiro/specs/122-agent-generator/port-recon-stacy.md` — the manual Stacy CC-port dry-run; transform deltas D1–D6 feeding §2.1/§2.2/§2.3 and §8 sweep 7.
 - `.kiro/specs/119-A-steering-relocation-serving-contract/per-agent-ambient-design.md` — the five-class ambient design (122's spine).
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/119-B-deferred-obligations.md` § OB-5/OB-6/OB-7/OB-1 — the 122-owned obligations.
+- `.kiro/specs/119-agent-experience-architecture/119-B-deferred-obligations.md` § OB-5/OB-6/OB-7/OB-1 — the 122-owned obligations.
 - `.kiro/specs/121-claude-code-portability/` (design-outline + requirements) — source of the lifted scope + summary-first contract.
 - `.kiro/specs/118-module-resolution-coherence/` — the cleared direction gate.
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/design-outline.md` — the AXA reframe + pillar mapping that places 122 as "Generation & Enforcement."
+- `.kiro/specs/119-agent-experience-architecture/design-outline.md` — the AXA reframe + pillar mapping that places 122 as "Generation & Enforcement."
 - `.kiro/specs/123-consumer-distribution/design-outline.md` — downstream packaging of generator output.
 
 ---

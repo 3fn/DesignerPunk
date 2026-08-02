@@ -20,7 +20,7 @@ The full law is now codified in steering — **`Rosetta-System-Architecture.md` 
 
 ## The 118 → 119 → 122 consumption chain (the load-bearing coupling for 122)
 
-118's Task 11 codified the contract but deliberately did NOT wire its *consumption*. Spec 119 hand-wires a **module-resolution-contract routing row** into the relevant agents' prompt routing tables (primarily **Ada**; also Thurgood for the process-guard, Lina for the brand contract) — see `.kiro/specs/119-steering-progressive-disclosure-redesign/inbound-from-118.md` (Hand-off 1) and 119's Phase 7.
+118's Task 11 codified the contract but deliberately did NOT wire its *consumption*. Spec 119 hand-wires a **module-resolution-contract routing row** into the relevant agents' prompt routing tables (primarily **Ada**; also Thurgood for the process-guard, Lina for the brand contract) — see `.kiro/specs/119-agent-experience-architecture/inbound-from-118.md` (Hand-off 1) and 119's Phase 7.
 
 **122's relevance:** 122 regenerates agent prompts from a single canonical source. So those routing rows (and all of 119's per-agent routing tables) must live in **122's canonical agent source**, so regeneration *preserves* them rather than clobbering 119's hand-edits. When 122 formalizes:
 - Treat 119's hand-wired routing tables as **input to the canonical source**, not as outputs to be overwritten.
@@ -30,5 +30,5 @@ The full law is now codified in steering — **`Rosetta-System-Architecture.md` 
 ## Cross-references
 - `.kiro/specs/118-module-resolution-coherence/findings/runtime-ts-resolution-target-model.md` (the ratified contract, by class)
 - `.kiro/specs/118-module-resolution-coherence/completion/task-11-completion.md` (what was codified into steering)
-- `.kiro/specs/119-steering-progressive-disclosure-redesign/inbound-from-118.md` (the routing hand-off 122 ultimately owns via the canonical source)
+- `.kiro/specs/119-agent-experience-architecture/inbound-from-118.md` (the routing hand-off 122 ultimately owns via the canonical source)
 - `.kiro/steering/Rosetta-System-Architecture.md` § "Module-Resolution Contract (Spec 118)" (the served law)

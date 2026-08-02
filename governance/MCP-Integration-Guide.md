@@ -151,7 +151,7 @@ Both `find_docs` and keyworded `find_components` emit a three-layer confidence s
 
 **Token exemption:** token tools perform structured predicate retrieval with no relevance ranking — the three-layer model does not apply. Trigger: if a token tool is introduced with open-ended intent input and ranked output, it inherits this model. Bright line: predicate filter → no tier; relevance ranking → tier required.
 
-**119 Decision 4a cross-reference:** the agent-side certainty-calibration protocol that consumes a `partial` (propose best-fit + confidence + rationale → human go/no-go, with the proposal required to carry its own uncertainty) is captured in `.kiro/specs/119-steering-progressive-disclosure-redesign/design-outline.md` under Decision 4a. 121 emits the signal; 119 defines what the agent does with a `partial`.
+**119 Decision 4a cross-reference:** the agent-side certainty-calibration protocol that consumes a `partial` (propose best-fit + confidence + rationale → human go/no-go, with the proposal required to carry its own uncertainty) is captured in `.kiro/specs/119-agent-experience-architecture/design-outline.md` under Decision 4a. 121 emits the signal; 119 defines what the agent does with a `partial`.
 
 ---
 
