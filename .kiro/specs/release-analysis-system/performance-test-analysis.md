@@ -4,6 +4,8 @@
 **Purpose**: Analyze slow performance/stress tests and provide recommendations
 **Context**: Test suite taking 1683 seconds (~28 minutes) with performance tests timing out
 
+> **Historical record.** The package.json snippets below reflect November 2025. The lane semantics were reworked 2026-07-03 (commit `29bba7de`), and `test:quick` was **removed 2026-08-02** (unused; single-file-selection footgun in its trailing array-typed `--testPathIgnorePatterns`). See Start Up Tasks for current commands.
+
 ---
 
 ## Current State
