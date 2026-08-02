@@ -49,7 +49,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
 
 ### Unit U2 — Measurement case study
 
-- [ ] 3. Run the before/after measurement case study
+- [x] 3. Run the before/after measurement case study
   - **Type**: Implementation · **Agent**: Thurgood (Sonnet) — method fully designed (Component 5) · **Validation**: Tier 2
   - Run `scripts/discovery-dry-run.ts` against the frozen oracle (`scripts/__fixtures__/discovery-oracle.ts`) — READ-ONLY; the oracle is never edited, never re-wired (R3 AC3)
   - Produce `findings/measurement-case-study.md` per the Component 5 schema: method + provenance **+ the coverage-boundary statement** (whose surfaces the oracle exercises); before/after tables per axis; the IN-1 attribution ladder (floor 54.2% → aliases → tie-breaker 94% → current — the 94% includes the tie-breaker, R3 AC2); OB-4 input section (rank distribution; IF it contradicts Task 2's decision → recorded amendment + harness-assertion update per R2 AC3)
