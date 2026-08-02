@@ -887,8 +887,8 @@ get_section({ path: "stemma-system-principles", heading: "Component Schema Forma
 
 ## Related Documentation
 
-- [Civitas System Overview](civitas-system-overview) - Governance foundation for operational consistency
-- [DesignerPunk Systems Overview](designerpunk-systems-overview) - Visual architecture of all three systems
+- [Civitas System Overview](../.kiro/steering/Civitas-System-Overview.md) - Governance foundation for operational consistency
+- [DesignerPunk Systems Overview](../.kiro/steering/DesignerPunk-Systems-Overview.md) - Visual architecture of all three systems
 - [Primitive vs Semantic Usage Philosophy](primitive-vs-semantic-usage-philosophy) - Comprehensive decision guidance for component selection
 - [Component Schema Format Specification](component-schema-format) - Formal schema structure and validation rules
 - [Component Readiness Status System](component-readiness-status) - Comprehensive readiness status definitions and transition guidelines
