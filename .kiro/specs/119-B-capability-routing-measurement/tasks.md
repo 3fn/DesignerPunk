@@ -128,7 +128,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
 
 ### Unit U-close — Closeout
 
-- [ ] 10. Closeout verification and record
+- [x] 10. Closeout verification and record
   - **Type**: Documentation · **Agent**: Thurgood (Sonnet) · **Validation**: Tier 1
   - **THE R9 AC5 GATE (checkable, not aspirational): verify the OB-1 unit is MERGED or DESCOPED-BY-RECORD (ballot/committed record). Anything else BLOCKS closeout.**
   - Audit the regen log against K=3 (occurred column); fill any pending `segment occurred?` cells; verify the R10 sunset state (window closed → ACs vacuously satisfied, recorded)
