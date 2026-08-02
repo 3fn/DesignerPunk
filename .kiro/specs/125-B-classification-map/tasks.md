@@ -150,7 +150,7 @@
   **Agent**: Thurgood (Sonnet) — the edits are pre-adjudicated by 1.4; this task applies them
   - _Requirements: 2.3–2.5; Design: C2_
 
-- [ ] 3. U1-c: Window + Closeout
+- [x] 3. U1-c: Window + Closeout
 
   **Type**: Parent
   **Validation**: Tier 3 - Comprehensive (includes success criteria)
@@ -185,7 +185,7 @@
     - **Verdict record form + location (pinned in tasks-R2, resolving STACY R1's MEDIUM): a BALLOT under `.kiro/docs/ballots/`** — a distinct, Peter-attributed, dated decision record covering all three decisions, separate from Thurgood's `u1-closeout.md` report (which links it). *Reasoning: the verdict gates a unit, elects a policy that would amend Task-Completion-Protocol scope, and ratifies at-scale parameters — ballot-grade weight on all three counts; the ballots directory is where the record-first protocol already puts Peter-attributed authority, and the register's own authority row defines layer-1 verification as committed ballot status — the program verdict should be verifiable by the very mechanism this spec maps.* **U1b's entry gate cites the VERDICT BALLOT, not the report** — record-first at program level.
     - _Requirements: 17.1–17.3, 15.1–15.2, 10.6; Design: C5_
 
-  - [ ] 3.3 Return-edge cross-references
+  - [x] 3.3 Return-edge cross-references
     **Type**: Implementation
     **Validation**: Tier 1 - Minimal
     **Agent**: Thurgood (Sonnet)
