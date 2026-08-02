@@ -19,7 +19,7 @@ description: Essential pre-task checklist — date verification, governance heal
 
 2. **Civitas Governance Health Check**
    
-   IF it's been >30 days since last governance health check **[2026-06-29]**, THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the monthly health check before proceeding."
+   IF it's been >30 days since last governance health check **[2026-08-02]**, THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the monthly health check before proceeding."
    
    *Only Thurgood runs the health check. All agents check the date and flag if overdue.*
 
