@@ -31,7 +31,15 @@
     "file://.kiro/steering/Spec-Feedback-Protocol.md",
     "file://.kiro/steering/start-up-tasks.md",
     "file://.kiro/steering/Task-Completion-Protocol.md",
-    "file://governance/Web-Authoring-Standards.md"
+    "file://governance/Web-Authoring-Standards.md",
+    {
+      "autoUpdate": false,
+      "description": "Web platform implementations of DesignerPunk components (added per 119-B Task 8 coherence ruling, Lina as sparky.md canonical owner, 2026-08-02)",
+      "indexType": "best",
+      "name": "web-components",
+      "source": "file://./src/components/core",
+      "type": "knowledgeBase"
+    }
   ],
   "tools": [
     "*"

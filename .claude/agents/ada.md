@@ -379,6 +379,26 @@ export default defineConfig({
 - WHEN registering or validating themes, or computing theme-varying tokens THEN consult token-governance § "Theme Registry (Spec 094)"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
 - WHEN authoring or reviewing a spec's tasks document THEN consult process-spec-planning § "Tasks Document Format"
+- WHEN you need Rosetta architecture beyond the routed sections THEN consult rosetta-system-architecture (summary-first)
+- WHEN you need token lookup patterns, mode-aware lookups, or common token patterns THEN consult token-quick-reference (summary-first)
+- WHEN you need naming conventions or the token philosophy THEN consult rosetta-system-principles (summary-first)
+- WHEN you need token resolution patterns (context resolution, fallbacks) THEN consult token-quick-reference (summary-first)
+- WHEN you need semantic token structure guidance THEN consult token-semantic-structure (summary-first)
+- WHEN you need the Accessibility token family's guidance THEN consult token-family-accessibility (summary-first)
+- WHEN you need the Blend token family's guidance THEN consult token-family-blend (summary-first)
+- WHEN you need the Border token family's guidance THEN consult token-family-border (summary-first)
+- WHEN you need the Color token family's guidance THEN consult token-family-color (summary-first)
+- WHEN you need the Glow token family's guidance THEN consult token-family-glow (summary-first)
+- WHEN you need the Layering token family's guidance THEN consult token-family-layering (summary-first)
+- WHEN you need the Motion token family's guidance THEN consult token-family-motion (summary-first)
+- WHEN you need the Opacity token family's guidance THEN consult token-family-opacity (summary-first)
+- WHEN you need the Radius token family's guidance THEN consult token-family-radius (summary-first)
+- WHEN you need the Responsive token family's guidance THEN consult token-family-responsive (summary-first)
+- WHEN you need the Shadow token family's guidance THEN consult token-family-shadow (summary-first)
+- WHEN you need the Spacing token family's guidance THEN consult token-family-spacing (summary-first)
+- WHEN you need the Typography token family's guidance THEN consult token-family-typography (summary-first)
+- WHEN you need the development workflow's detail beyond the always-loaded law THEN consult process-development-workflow (summary-first)
+- WHEN you need file-organization rules THEN consult process-file-organization (summary-first)
 - WHEN component development, behavioral contracts, or component-side token integration THEN hand off to lina
 - WHEN test-suite audits, test governance, or spec formalization THEN hand off to thurgood
 - WHEN you need token VALUES (resolved values, per-platform names, formulas) THEN use mcp__designerpunk-application__get_token_details (application MCP)
@@ -388,26 +408,6 @@ export default defineConfig({
 - WHEN you need a component's token usage (tokens / resolvedTokens fields) THEN use mcp__designerpunk-application__get_component_full (application MCP)
 - WHEN you changed token source or token-index data (after npx designerpunk generate) THEN use mcp__designerpunk-application__rebuild_index (application MCP)
 - WHEN you changed governance/token-family docs and need the corpus index fresh THEN use mcp__designerpunk-docs__rebuild_index (docs MCP)
-- WHEN you need Rosetta architecture beyond the routed sections THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need token lookup patterns, mode-aware lookups, or common token patterns THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need naming conventions or the token philosophy THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need token resolution patterns (context resolution, fallbacks) THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need semantic token structure guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Accessibility token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Blend token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Border token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Color token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Glow token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Layering token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Motion token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Opacity token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Radius token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Responsive token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Shadow token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Spacing token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the Typography token family's guidance THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the development workflow's detail beyond the always-loaded law THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need file-organization rules THEN use mcp__designerpunk-docs__get_section (docs MCP)
 
 ## Commands
 
@@ -415,6 +415,7 @@ export default defineConfig({
 - run the token-specific suites: `npm test -- src/tokens/__tests__/`
 - run the validator suites: `npm test -- src/validators/__tests__/`
 - run ALL tests including the performance lanes (wall-clock-sensitive — idle machine): `npm run test:all`
+- WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (mcp__designerpunk-docs__find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.

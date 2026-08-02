@@ -193,11 +193,17 @@ export function readBaselines(repoRoot: string): AmbientBaseline[] {
   return files.sort().map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')) as AmbientBaseline);
 }
 
-/** Collect the `replaces:` keys a canonical doc's cues + trims carry. */
+/** Collect the `replaces:` keys a canonical doc's cues + doc routes + trims carry. */
 export function collectReplacesKeys(doc: CanonicalAgentDoc): string[] {
   const keys: string[] = [];
   for (const cue of doc.frontmatter.routes?.cues ?? []) {
     if (cue.replaces) keys.push(cue.replaces);
+  }
+  // 119-B R6 AC3 amendment: a cue PROMOTED to a doc route carries its demotion
+  // marker with it — a precise route is a stronger "where the content lives
+  // now" than the cue it supersedes (Req 12 AC1 contract preserved).
+  for (const route of doc.frontmatter.routes?.docs ?? []) {
+    if (route.replaces) keys.push(route.replaces);
   }
   for (const trim of doc.frontmatter.ambient?.groundTruthManifest?.trims ?? []) {
     if (trim.cue.replaces) keys.push(trim.cue.replaces);

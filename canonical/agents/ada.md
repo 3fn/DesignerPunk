@@ -58,6 +58,86 @@ routes:
       doc: process-spec-planning
       section: "Tasks Document Format"
       when: "authoring or reviewing a spec's tasks document"
+    - id: rosetta-arch-beyond
+      doc: rosetta-system-architecture
+      when: "you need Rosetta architecture beyond the routed sections"
+      replaces: rosetta-system-architecture
+    - id: token-lookup-patterns
+      doc: token-quick-reference
+      when: "you need token lookup patterns, mode-aware lookups, or common token patterns"
+      replaces: token-quick-reference
+    - id: naming-and-philosophy
+      doc: rosetta-system-principles
+      when: "you need naming conventions or the token philosophy"
+      replaces: rosetta-system-principles
+    - id: token-context-resolution
+      doc: token-quick-reference
+      when: "you need token resolution patterns (context resolution, fallbacks)"
+      replaces: token-resolution-patterns
+    - id: semantic-structure
+      doc: token-semantic-structure
+      when: "you need semantic token structure guidance"
+      replaces: token-semantic-structure
+    - id: family-accessibility
+      doc: token-family-accessibility
+      when: "you need the Accessibility token family's guidance"
+      replaces: token-family-accessibility
+    - id: family-blend
+      doc: token-family-blend
+      when: "you need the Blend token family's guidance"
+      replaces: token-family-blend
+    - id: family-border
+      doc: token-family-border
+      when: "you need the Border token family's guidance"
+      replaces: token-family-border
+    - id: family-color
+      doc: token-family-color
+      when: "you need the Color token family's guidance"
+      replaces: token-family-color
+    - id: family-glow
+      doc: token-family-glow
+      when: "you need the Glow token family's guidance"
+      replaces: token-family-glow
+    - id: family-layering
+      doc: token-family-layering
+      when: "you need the Layering token family's guidance"
+      replaces: token-family-layering
+    - id: family-motion
+      doc: token-family-motion
+      when: "you need the Motion token family's guidance"
+      replaces: token-family-motion
+    - id: family-opacity
+      doc: token-family-opacity
+      when: "you need the Opacity token family's guidance"
+      replaces: token-family-opacity
+    - id: family-radius
+      doc: token-family-radius
+      when: "you need the Radius token family's guidance"
+      replaces: token-family-radius
+    - id: family-responsive
+      doc: token-family-responsive
+      when: "you need the Responsive token family's guidance"
+      replaces: token-family-responsive
+    - id: family-shadow
+      doc: token-family-shadow
+      when: "you need the Shadow token family's guidance"
+      replaces: token-family-shadow
+    - id: family-spacing
+      doc: token-family-spacing
+      when: "you need the Spacing token family's guidance"
+      replaces: token-family-spacing
+    - id: family-typography
+      doc: token-family-typography
+      when: "you need the Typography token family's guidance"
+      replaces: token-family-typography
+    - id: dev-workflow-detail
+      doc: process-development-workflow
+      when: "you need the development workflow's detail beyond the always-loaded law"
+      replaces: process-development-workflow
+    - id: file-organization
+      doc: process-file-organization
+      when: "you need file-organization rules"
+      replaces: process-file-organization
   # Inter-agent routes (LE-D1 — migrated from body prose; neither target is generated yet):
   agents:
     - target: lina
@@ -92,86 +172,6 @@ routes:
       tool: rebuild_index
       mcp: docs
     # --- demotion coverage: one cue per doc trimmed from the hand config's ambient set ---
-    - when: "you need Rosetta architecture beyond the routed sections"
-      tool: get_section
-      mcp: docs
-      replaces: rosetta-system-architecture
-    - when: "you need token lookup patterns, mode-aware lookups, or common token patterns"
-      tool: get_section
-      mcp: docs
-      replaces: token-quick-reference
-    - when: "you need naming conventions or the token philosophy"
-      tool: get_section
-      mcp: docs
-      replaces: rosetta-system-principles
-    - when: "you need token resolution patterns (context resolution, fallbacks)"
-      tool: get_section
-      mcp: docs
-      replaces: token-resolution-patterns
-    - when: "you need semantic token structure guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-semantic-structure
-    - when: "you need the Accessibility token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-accessibility
-    - when: "you need the Blend token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-blend
-    - when: "you need the Border token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-border
-    - when: "you need the Color token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-color
-    - when: "you need the Glow token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-glow
-    - when: "you need the Layering token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-layering
-    - when: "you need the Motion token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-motion
-    - when: "you need the Opacity token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-opacity
-    - when: "you need the Radius token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-radius
-    - when: "you need the Responsive token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-responsive
-    - when: "you need the Shadow token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-shadow
-    - when: "you need the Spacing token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-spacing
-    - when: "you need the Typography token family's guidance"
-      tool: get_section
-      mcp: docs
-      replaces: token-family-typography
-    - when: "you need the development workflow's detail beyond the always-loaded law"
-      tool: get_section
-      mcp: docs
-      replaces: process-development-workflow
-    - when: "you need file-organization rules"
-      tool: get_section
-      mcp: docs
-      replaces: process-file-organization
 commands:
   - name: functional-suite
     cmd: "npm test"

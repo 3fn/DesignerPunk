@@ -318,6 +318,17 @@ Your test commands (with their triggering cues) are in the Commands section. Thi
 - WHEN running a test-suite health audit or investigating test failures THEN consult test-failure-audit-methodology § "Audit Workflow Steps"
 - WHEN auditing whether behavioral contract tests validate identical cross-platform behavior THEN consult test-behavioral-contract-validation § "Validation Process"
 - WHEN writing or reviewing task completion / summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
+- WHEN you need spec-planning standards beyond the routed format sections THEN consult process-spec-planning (summary-first)
+- WHEN you need task-type definitions beyond the routed classification overview THEN consult process-task-type-definitions (summary-first)
+- WHEN you need build-system setup guidance (jest config, tsc surfaces, build layout) THEN consult build-system-setup (summary-first)
+- WHEN you need completion-documentation detail beyond the routed Two-Document Workflow THEN consult completion-documentation-guide (summary-first)
+- WHEN you need cross-reference formatting or validation standards THEN consult process-cross-reference-standards (summary-first)
+- WHEN you need file-organization rules THEN consult process-file-organization (summary-first)
+- WHEN you need hook-system operations detail (hook inventory, dependency chains) THEN consult process-hook-operations (summary-first)
+- WHEN you need audit methodology beyond the routed Audit Workflow Steps THEN consult test-failure-audit-methodology (summary-first)
+- WHEN you need behavioral-contract validation detail beyond the routed Validation Process THEN consult test-behavioral-contract-validation (summary-first)
+- WHEN a test-governance or health-check question touches the module-resolution surface (CI-enforced guards, the Civitas close-state guard) THEN consult test-development-standards § "CI-Enforced Guards (Spec 118)"
+- WHEN you need the development workflow's detail beyond the always-loaded law THEN consult process-development-workflow (summary-first)
 - WHEN token creation, token mathematical foundations, or writing token-specific tests (formula validation) THEN hand off to ada
 - WHEN component scaffolding/implementation or writing behavioral contract tests (stemma tests) THEN hand off to lina
 - WHEN creating or modifying a steering/governance doc — consult steering-addressing-conventions (per-doc id, docid#sectionid grammar, kebab-case filenames, aliases seeding) THEN use get_document_full (docs MCP)
@@ -329,15 +340,6 @@ Your test commands (with their triggering cues) are in the Commands section. Thi
 - WHEN auditing a component's contracts, tokens, or test surface (assembled metadata) THEN use get_component_full (application MCP)
 - WHEN checking application-MCP health (index status, component counts, warnings) THEN use get_component_health (application MCP)
 - WHEN auditing whether a component tree assembles correctly THEN use validate_assembly (application MCP)
-- WHEN you need spec-planning standards beyond the routed format sections THEN use get_section (docs MCP)
-- WHEN you need task-type definitions beyond the routed classification overview THEN use get_section (docs MCP)
-- WHEN you need build-system setup guidance (jest config, tsc surfaces, build layout) THEN use get_section (docs MCP)
-- WHEN you need completion-documentation detail beyond the routed Two-Document Workflow THEN use get_section (docs MCP)
-- WHEN you need cross-reference formatting or validation standards THEN use get_section (docs MCP)
-- WHEN you need file-organization rules THEN use get_section (docs MCP)
-- WHEN you need hook-system operations detail (hook inventory, dependency chains) THEN use get_section (docs MCP)
-- WHEN you need audit methodology beyond the routed Audit Workflow Steps THEN use get_section (docs MCP)
-- WHEN you need behavioral-contract validation detail beyond the routed Validation Process THEN use get_section (docs MCP)
 
 ## Commands
 
@@ -349,6 +351,7 @@ Your test commands (with their triggering cues) are in the Commands section. Thi
 - run ALL tests including the performance lanes (wall-clock-sensitive — idle machine): `npm run test:all`
 - run the performance-lane suites (perf coverage is split — pair with the isolated lane): `npm run test:performance`
 - run the serialized PerformanceValidation suite (NOT included in the performance lane): `npm run test:performance:isolated`
+- WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.

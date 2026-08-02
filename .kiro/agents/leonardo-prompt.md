@@ -300,6 +300,19 @@ If there are questions, be proactive and ask — don't assume.
 - WHEN authoring or reviewing a spec's tasks document THEN consult process-spec-planning § "Tasks Document Format"
 - WHEN actively writing the REQUIRED Layout section of a screen spec (regions/spans/stacking vocabulary, format, worked examples) THEN consult layout-specification-vocabulary § "Section 3: Specification Vocabulary"
 - WHEN defining a product token during screen specification THEN consult product-token-governance § "Authoring Workflow"
+- WHEN you need the component routing table or family-doc map THEN consult component-quick-reference (summary-first)
+- WHEN you need a component's readiness / status before selecting it THEN consult component-readiness-status (summary-first)
+- WHEN you need canonical contract / concept names when specifying behavior THEN consult contract-system-reference § "Concept Catalog"
+- WHEN you need cross-platform implementation guidance for a component THEN consult platform-implementation-guidelines (summary-first)
+- WHEN you need spec-planning standards beyond the routed Tasks Document Format THEN consult process-spec-planning (summary-first)
+- WHEN you need product-token governance beyond the routed Authoring Workflow THEN consult product-token-governance (summary-first)
+- WHEN you need the component philosophy or family inheritance principles THEN consult stemma-system-principles (summary-first)
+- WHEN you need test development standards when reviewing coverage expectations THEN consult test-development-standards (summary-first)
+- WHEN you need token lookup patterns or the token documentation map THEN consult token-quick-reference (summary-first)
+- WHEN you need the development workflow's detail beyond the always-loaded law THEN consult process-development-workflow (summary-first)
+- WHEN you need file-organization rules THEN consult process-file-organization (summary-first)
+- WHEN handing off screen specs and coordinating platform-agent communication THEN consult product-handoff-protocol (summary-first)
+- WHEN walking a product repo through DesignerPunk integration/onboarding THEN consult designerpunk-integration-guide (summary-first)
 - WHEN handing off a screen spec for WEB implementation THEN hand off to sparky
 - WHEN handing off a screen spec for iOS implementation THEN hand off to kenya
 - WHEN handing off a screen spec for Android implementation THEN hand off to data
@@ -326,18 +339,7 @@ If there are questions, be proactive and ask — don't assume.
 - WHEN specifying a screen's state model — resolving what a domain object is and which screens reference it THEN use get_domain_object (product MCP)
 - WHEN selecting or composing a product one-off component — retrieving its schema and contracts to spec against THEN use get_product_component (product MCP)
 - WHEN you changed component schemas, contracts, or component-meta THEN use rebuild_index (application MCP)
-- WHEN you need the component routing table or family-doc map THEN use get_section (docs MCP)
-- WHEN you need a component's readiness / status before selecting it THEN use get_section (docs MCP)
-- WHEN you need canonical contract / concept names when specifying behavior THEN use get_section (docs MCP)
-- WHEN you need cross-platform implementation guidance for a component THEN use get_section (docs MCP)
-- WHEN you need the development workflow's detail beyond the always-loaded law THEN use get_section (docs MCP)
-- WHEN you need file-organization rules THEN use get_section (docs MCP)
-- WHEN you need spec-planning standards beyond the routed Tasks Document Format THEN use get_section (docs MCP)
-- WHEN you need product-token governance beyond the routed Authoring Workflow THEN use get_section (docs MCP)
-- WHEN you need the component philosophy or family inheritance principles THEN use get_section (docs MCP)
 - WHEN you need the technology-stack reference (frameworks, build tooling, versions) THEN use get_section (docs MCP)
-- WHEN you need test development standards when reviewing coverage expectations THEN use get_section (docs MCP)
-- WHEN you need token lookup patterns or the token documentation map THEN use get_section (docs MCP)
 
 ## Commands
 
@@ -345,6 +347,7 @@ If there are questions, be proactive and ask — don't assume.
 - npx designerpunk validate --product-tokens — check product-token ref integrity in a product repo — validating product-token references before hand-off (run from the consumer product repo, not this repo)
 - npx designerpunk init — scaffold DesignerPunk into a new product repo — setting up DesignerPunk in a new product (run from the consumer product repo, not this repo)
 - npx designerpunk sync — sync a product repo's generated artifacts to the current package — syncing a product repo after a package update (run from the consumer product repo, not this repo)
+- WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.

@@ -28,15 +28,15 @@
     {
       "lines": [
         198,
-        208
+        209
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        209,
-        212
+        210,
+        213
       ],
       "op": "render",
       "source": "writeScope"

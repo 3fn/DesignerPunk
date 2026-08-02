@@ -45,31 +45,31 @@
     {
       "lines": [
         410,
-        454
+        456
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        455,
-        465
+        457,
+        468
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        466,
-        469
+        469,
+        472
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        470,
-        475
+        473,
+        478
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

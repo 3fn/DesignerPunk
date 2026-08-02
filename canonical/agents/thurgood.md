@@ -86,6 +86,49 @@ routes:
       when: "writing or reviewing task completion / summary docs and unsure which tier applies"
   # Inter-agent routes (LE-D1 — migrated from body prose; ada AND lina are generator-SSOT
   # since U2/U3 — the first cutover whose agent routes ALL resolve):
+    - id: spec-planning-beyond
+      doc: process-spec-planning
+      when: "you need spec-planning standards beyond the routed format sections"
+      replaces: process-spec-planning
+    - id: task-types-beyond
+      doc: process-task-type-definitions
+      when: "you need task-type definitions beyond the routed classification overview"
+      replaces: process-task-type-definitions
+    - id: build-system-setup
+      doc: build-system-setup
+      when: "you need build-system setup guidance (jest config, tsc surfaces, build layout)"
+      replaces: build-system-setup
+    - id: completion-docs-beyond
+      doc: completion-documentation-guide
+      when: "you need completion-documentation detail beyond the routed Two-Document Workflow"
+      replaces: completion-documentation-guide
+    - id: cross-ref-standards
+      doc: process-cross-reference-standards
+      when: "you need cross-reference formatting or validation standards"
+      replaces: process-cross-reference-standards
+    - id: file-organization
+      doc: process-file-organization
+      when: "you need file-organization rules"
+      replaces: process-file-organization
+    - id: hook-ops-detail
+      doc: process-hook-operations
+      when: "you need hook-system operations detail (hook inventory, dependency chains)"
+      replaces: process-hook-operations
+    - id: audit-methodology-beyond
+      doc: test-failure-audit-methodology
+      when: "you need audit methodology beyond the routed Audit Workflow Steps"
+      replaces: test-failure-audit-methodology
+    - id: bcv-beyond
+      doc: test-behavioral-contract-validation
+      when: "you need behavioral-contract validation detail beyond the routed Validation Process"
+      replaces: test-behavioral-contract-validation
+    - id: ci-enforced-guards
+      doc: test-development-standards
+      section: "CI-Enforced Guards (Spec 118)"
+      when: "a test-governance or health-check question touches the module-resolution surface (CI-enforced guards, the Civitas close-state guard)"
+    - id: dev-workflow-detail-add
+      doc: process-development-workflow
+      when: "you need the development workflow's detail beyond the always-loaded law"
   agents:
     - target: ada
       when: "token creation, token mathematical foundations, or writing token-specific tests (formula validation)"
@@ -127,42 +170,6 @@ routes:
       tool: validate_assembly
       mcp: application
     # --- demotion coverage: one cue per doc trimmed from the hand config's ambient set ---
-    - when: "you need spec-planning standards beyond the routed format sections"
-      tool: get_section
-      mcp: docs
-      replaces: process-spec-planning
-    - when: "you need task-type definitions beyond the routed classification overview"
-      tool: get_section
-      mcp: docs
-      replaces: process-task-type-definitions
-    - when: "you need build-system setup guidance (jest config, tsc surfaces, build layout)"
-      tool: get_section
-      mcp: docs
-      replaces: build-system-setup
-    - when: "you need completion-documentation detail beyond the routed Two-Document Workflow"
-      tool: get_section
-      mcp: docs
-      replaces: completion-documentation-guide
-    - when: "you need cross-reference formatting or validation standards"
-      tool: get_section
-      mcp: docs
-      replaces: process-cross-reference-standards
-    - when: "you need file-organization rules"
-      tool: get_section
-      mcp: docs
-      replaces: process-file-organization
-    - when: "you need hook-system operations detail (hook inventory, dependency chains)"
-      tool: get_section
-      mcp: docs
-      replaces: process-hook-operations
-    - when: "you need audit methodology beyond the routed Audit Workflow Steps"
-      tool: get_section
-      mcp: docs
-      replaces: test-failure-audit-methodology
-    - when: "you need behavioral-contract validation detail beyond the routed Validation Process"
-      tool: get_section
-      mcp: docs
-      replaces: test-behavioral-contract-validation
 commands:
   # The governance/audit instruments (design block: "names the governance/audit scripts +
   # WHEN to run them" — bash instruments are invisible unless named; the catalog IS the

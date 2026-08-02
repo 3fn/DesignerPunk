@@ -110,7 +110,12 @@ export async function runSweep1(inputs: Sweep1Inputs): Promise<SweepReport> {
     const docRoutes = doc.frontmatter.routes?.docs ?? [];
     for (let ri = 0; ri < docRoutes.length; ri += 1) {
       const route = docRoutes[ri];
-      const resolution = await resolver.resolveSection(route.doc, route.section);
+      // Section-less routes are the (b)-grade doc-id-only form (119-B R6 AC3
+      // amendment): verified at doc grain via the same resolver.
+      const resolution =
+        route.section === undefined
+          ? await resolver.resolveDoc(route.doc)
+          : await resolver.resolveSection(route.doc, route.section);
       const failure = describeUnresolved(resolution);
       if (failure) {
         findings.push({
@@ -118,7 +123,10 @@ export async function runSweep1(inputs: Sweep1Inputs): Promise<SweepReport> {
           agent,
           path: `routes.docs[${ri}]`,
           observed: failure,
-          expected: `route doc "${route.doc}" resolves AND verbatim heading "${route.section}" exists`,
+          expected:
+            route.section === undefined
+              ? `route doc "${route.doc}" resolves (doc-grain, section-less (b) route)`
+              : `route doc "${route.doc}" resolves AND verbatim heading "${route.section}" exists`,
           owner: agent,
         });
       }

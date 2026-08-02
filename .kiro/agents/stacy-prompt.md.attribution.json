@@ -20,23 +20,23 @@
     {
       "lines": [
         254,
-        285
+        286
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        286,
-        298
+        287,
+        300
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        299,
-        302
+        301,
+        304
       ],
       "op": "render",
       "source": "writeScope"

@@ -31,10 +31,10 @@ description: Development workflow and task completion practices — task complet
 5. ❌ **SKIP**: Agent Hook Dependency Chains (priming only - query MCP for details), Troubleshooting sections, Hook Integration details
 
 **MCP Queries for Detailed Guidance** (query when needed):
-- **Completion Documentation**: `get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Two-Document Workflow" })`
-- **Release Detection**: `get_section({ path: ".kiro/steering/Release Management System.md", heading: "Release Pipeline Architecture" })`
-- **File Organization**: `get_section({ path: ".kiro/steering/Process-File-Organization.md", heading: "Organization Implementation (Conditional Loading)" })`
-- **Hook Operations**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Agent Hook Dependency Chains" })`
+- **Completion Documentation**: `get_section({ path: "completion-documentation-guide", heading: "Two-Document Workflow" })`
+- **Release Detection**: `get_section({ path: "release-management-system", heading: "Release Pipeline Architecture" })`
+- **File Organization**: `get_section({ path: "process-file-organization", heading: "Organization Implementation (Conditional Loading)" })`
+- **Hook Operations**: `get_section({ path: "process-hook-operations", heading: "Agent Hook Dependency Chains" })`
 
 ### WHEN Debugging Hook Issues THEN Read:
 1. ✅ **Task Completion Workflow** (context)
@@ -43,11 +43,11 @@ description: Development workflow and task completion practices — task complet
 4. ❌ **SKIP**: Spec Planning, Kiro Agent Hook Integration
 
 **MCP Queries for Detailed Guidance** (query when needed):
-- **Hook Dependency Chains**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Agent Hook Dependency Chains" })`
-- **Hook Troubleshooting**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Troubleshooting" })`
-- **Common Issues**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Common Issues and Solutions" })`
-- **Release Detection Issues**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Release Detection Not Triggering" })`
-- **Hook Best Practices**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Best Practices" })`
+- **Hook Dependency Chains**: `get_section({ path: "process-hook-operations", heading: "Agent Hook Dependency Chains" })`
+- **Hook Troubleshooting**: `get_section({ path: "process-hook-operations", heading: "Troubleshooting" })`
+- **Common Issues**: `get_section({ path: "process-hook-operations", heading: "Common Issues and Solutions" })`
+- **Release Detection Issues**: `get_section({ path: "process-hook-operations", heading: "Release Detection Not Triggering" })`
+- **Hook Best Practices**: `get_section({ path: "process-hook-operations", heading: "Best Practices" })`
 
 ### WHEN Setting Up or Modifying Hooks THEN Read:
 1. ✅ **Agent Hook Dependency Chains** (priming - then query MCP for detailed guidance)
@@ -56,15 +56,15 @@ description: Development workflow and task completion practices — task complet
 4. ❌ **SKIP**: Task Completion Workflow, Quality Standards
 
 **MCP Queries for Detailed Guidance** (query when needed):
-- **Hook Dependency Chains**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Agent Hook Dependency Chains" })`
-- **Hook Troubleshooting**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Troubleshooting" })`
-- **Kiro Agent Hook Integration**: `get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Kiro Agent Hook Integration" })`
+- **Hook Dependency Chains**: `get_section({ path: "process-hook-operations", heading: "Agent Hook Dependency Chains" })`
+- **Hook Troubleshooting**: `get_section({ path: "process-hook-operations", heading: "Troubleshooting" })`
+- **Kiro Agent Hook Integration**: `get_section({ path: "process-hook-operations", heading: "Kiro Agent Hook Integration" })`
 
 ### WHEN Creating Completion Documentation THEN Read:
 1. ✅ **Task Completion Workflow** (quick reference section)
 2. ✅ Query **Completion Documentation Guide** via MCP for detailed guidance:
-   - `get_document_full({ path: ".kiro/steering/Completion Documentation Guide.md" })`
-   - Or specific sections: `get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Documentation Tiers" })`
+   - `get_document_full({ path: "completion-documentation-guide" })`
+   - Or specific sections: `get_section({ path: "completion-documentation-guide", heading: "Documentation Tiers" })`
 
 ---
 
@@ -94,14 +94,14 @@ description: Development workflow and task completion practices — task complet
 **For detailed guidance** on documentation tiers, naming conventions, templates, and the two-document workflow, query Completion Documentation Guide via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Completion Documentation Guide.md" })
+get_document_full({ path: "completion-documentation-guide" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Two-Document Workflow" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Documentation Tiers" })
-get_section({ path: ".kiro/steering/Completion Documentation Guide.md", heading: "Naming Conventions" })
+get_section({ path: "completion-documentation-guide", heading: "Two-Document Workflow" })
+get_section({ path: "completion-documentation-guide", heading: "Documentation Tiers" })
+get_section({ path: "completion-documentation-guide", heading: "Naming Conventions" })
 ```
 
 ### Alternative Process (Script-based without Automation)
@@ -185,14 +185,14 @@ Agent hooks use `runAfter` configuration to create dependency chains where hooks
 **For detailed guidance** on dependency chain behavior, troubleshooting, and best practices, query Process-Hook-Operations via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Process-Hook-Operations.md" })
+get_document_full({ path: "process-hook-operations" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Agent Hook Dependency Chains" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Dependency Chain Behavior" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Best Practices" })
+get_section({ path: "process-hook-operations", heading: "Agent Hook Dependency Chains" })
+get_section({ path: "process-hook-operations", heading: "Dependency Chain Behavior" })
+get_section({ path: "process-hook-operations", heading: "Best Practices" })
 ```
 
 ---
@@ -227,15 +227,15 @@ When experiencing errors or failures during task completion, hooks not triggerin
 **For detailed troubleshooting guidance**, query Process-Hook-Operations via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Process-Hook-Operations.md" })
+get_document_full({ path: "process-hook-operations" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Troubleshooting" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Common Issues and Solutions" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Release Detection Not Triggering" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Quick Reference: Diagnostic Commands" })
+get_section({ path: "process-hook-operations", heading: "Troubleshooting" })
+get_section({ path: "process-hook-operations", heading: "Common Issues and Solutions" })
+get_section({ path: "process-hook-operations", heading: "Release Detection Not Triggering" })
+get_section({ path: "process-hook-operations", heading: "Quick Reference: Diagnostic Commands" })
 ```
 
 **Quick Reference - Common Issues**:
@@ -288,13 +288,13 @@ Agent hooks provide automatic file organization and release detection when tasks
 **For detailed guidance** on hook execution order, automatic file organization, release detection, and troubleshooting, query Process-Hook-Operations via MCP:
 
 ```
-get_document_full({ path: ".kiro/steering/Process-Hook-Operations.md" })
+get_document_full({ path: "process-hook-operations" })
 ```
 
 Or query specific sections:
 ```
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Kiro Agent Hook Integration" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Agent Hook Execution Order" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Automatic File Organization" })
-get_section({ path: ".kiro/steering/Process-Hook-Operations.md", heading: "Release Detection" })
+get_section({ path: "process-hook-operations", heading: "Kiro Agent Hook Integration" })
+get_section({ path: "process-hook-operations", heading: "Agent Hook Execution Order" })
+get_section({ path: "process-hook-operations", heading: "Automatic File Organization" })
+get_section({ path: "process-hook-operations", heading: "Release Detection" })
 ```

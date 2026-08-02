@@ -353,6 +353,14 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - WHEN you need the iOS implementation patterns (SwiftUI render target, token consumption, accessibility) — demoted to on-demand per the consumer decomposition THEN consult platform-implementation-guidelines § "iOS Implementation Patterns"
 - WHEN naming a product token you author during implementation (--product-{category}-{token-name}) THEN consult product-token-governance § "Naming Conventions"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
+- WHEN you need the canonical contract / concept-catalog names for a behavioral contract THEN consult contract-system-reference (summary-first)
+- WHEN you need the component philosophy or family inheritance principles THEN consult stemma-system-principles (summary-first)
+- WHEN you need test development standards (structure, categories, naming) for a screen test THEN consult test-development-standards (summary-first)
+- WHEN you need behavioral-contract validation guidance for an iOS implementation THEN consult test-behavioral-contract-validation (summary-first)
+- WHEN you need token lookup patterns beyond the routed Token Documentation Map THEN consult token-quick-reference (summary-first)
+- WHEN you need iOS implementation patterns beyond the routed iOS Implementation Patterns section THEN consult platform-implementation-guidelines (summary-first)
+- WHEN you need the development workflow's detail beyond the always-loaded law THEN consult process-development-workflow (summary-first)
+- WHEN you need file-organization rules THEN consult process-file-organization (summary-first)
 - WHEN you need a screen spec, a cross-platform decision, or to escalate a token/component gap (he routes it to Thurgood → Ada/Lina) THEN hand off to leonardo
 - WHEN you need a component's assembled API, props, tokens, or contracts to implement it THEN use mcp__designerpunk-application__get_component_full (application MCP)
 - WHEN the spec references a component you can't place — find it by context or concept THEN use mcp__designerpunk-application__find_components (application MCP)
@@ -363,15 +371,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - WHEN you need Leonardo's screen specification for the screen you're implementing THEN use mcp__designerpunk-product__get_screen_spec (product MCP)
 - WHEN you changed product screen implementations or product YAML THEN use mcp__designerpunk-product__rebuild_product_index (product MCP)
 - WHEN you need cross-platform file paths for component source, tokens, or shared artifacts THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the canonical contract / concept-catalog names for a behavioral contract THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the development workflow's detail beyond the always-loaded law THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need file-organization rules THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need the component philosophy or family inheritance principles THEN use mcp__designerpunk-docs__get_section (docs MCP)
 - WHEN you need the technology-stack reference (build tooling, frameworks, versions) THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need token lookup patterns beyond the routed Token Documentation Map THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need iOS implementation patterns beyond the routed iOS Implementation Patterns section THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need test development standards (structure, categories, naming) for a screen test THEN use mcp__designerpunk-docs__get_section (docs MCP)
-- WHEN you need behavioral-contract validation guidance for an iOS implementation THEN use mcp__designerpunk-docs__get_section (docs MCP)
 
 ## Commands
 
@@ -381,6 +381,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - audit component token usage / compliance across the token pipeline: `npm run audit:tokens`
 - no in-repo iOS build or test is possible — this repo has no .xcodeproj / Package.swift / Xcode workspace (see standingFacts). Real iOS build & UI test run from the product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl` — all consumer-repo. — you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / simctl) (run from the consumer product repo, not this repo)
 - product-screen build/test/run commands are per-product and cannot be extracted in this repo — they live in the consumer iOS app (theming Swift materializes there via `npx designerpunk generate`). — you need product-screen build/test/run commands (authored per product)
+- WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (mcp__designerpunk-docs__find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.

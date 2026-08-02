@@ -1,0 +1,7 @@
+# Task 9.4 Completion: Per-Route Spot-Verify + Empty-Result Re-probe
+
+**Date**: 2026-08-02 · **Unit**: U-final · **Type**: Implementation subtask
+
+- **Every promoted/added route spot-verified pre-regen-PR (R7 AC4)**, through the live resolver at the tool boundary: (a)-grade rows via doc + verbatim-heading resolution (the `get_section` leg — leonardo Concept Catalog, data Android patterns, thurgood CI-Enforced Guards (Spec 118), lina Module-Resolution Contract (Spec 118), plus all pre-existing § routes), (b)-grade rows via doc-grain resolution (the `get_document_summary` leg — all ~97 converted + 6 section-less additions). Mechanism: sweep-1's post-edit PASS covers 100% of `routes.docs` entries at their declared grain; the generator's emission gate independently enforced full resolution (and demonstrably bit once). Zero unresolved routes.
+- **ACCEPTANCE LINE (Ada dR1) — empty-result trigger re-probed and recorded in the findings**: `find_docs` on a true zero-hit concept returns `data: []` WITH top-level `matchConfidence: "none"` (tool-boundary probe 2026-08-02; control query shows per-entry `strong`, no top-level field). Result recorded in `findings/catalog-routing-audit.md` § "Task 9 verification record".
+- Probe-quality note for the record: the first zero-hit probe string accidentally contained the real corpus token "concept" and matched documents — a reminder that negative probes need clean gibberish; the recorded result uses one.

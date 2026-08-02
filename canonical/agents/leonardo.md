@@ -58,6 +58,57 @@ routes:
   # platform impl → Sparky/Kenya/Data; product QA → Stacy; ALL system requests route THROUGH
   # Thurgood (who triages to Ada/Lina). ALL targets are generator-SSOT (full roster ported) →
   # every route `resolves` (the OB-8 backfill flipped kenya/data/stacy at U11 closeout).
+    - id: component-doc-map
+      doc: component-quick-reference
+      when: "you need the component routing table or family-doc map"
+      replaces: component-quick-reference
+    - id: component-readiness
+      doc: component-readiness-status
+      when: "you need a component's readiness / status before selecting it"
+      replaces: component-readiness-status
+    - id: concept-catalog
+      doc: contract-system-reference
+      section: "Concept Catalog"
+      when: "you need canonical contract / concept names when specifying behavior"
+      replaces: contract-system-reference
+    - id: cross-platform-guidance
+      doc: platform-implementation-guidelines
+      when: "you need cross-platform implementation guidance for a component"
+      replaces: platform-implementation-guidelines
+    - id: spec-planning-beyond
+      doc: process-spec-planning
+      when: "you need spec-planning standards beyond the routed Tasks Document Format"
+      replaces: process-spec-planning
+    - id: product-token-gov-beyond
+      doc: product-token-governance
+      when: "you need product-token governance beyond the routed Authoring Workflow"
+      replaces: product-token-governance
+    - id: stemma-principles
+      doc: stemma-system-principles
+      when: "you need the component philosophy or family inheritance principles"
+      replaces: stemma-system-principles
+    - id: test-dev-standards
+      doc: test-development-standards
+      when: "you need test development standards when reviewing coverage expectations"
+      replaces: test-development-standards
+    - id: token-lookup-patterns
+      doc: token-quick-reference
+      when: "you need token lookup patterns or the token documentation map"
+      replaces: token-quick-reference
+    - id: dev-workflow-detail
+      doc: process-development-workflow
+      when: "you need the development workflow's detail beyond the always-loaded law"
+      replaces: process-development-workflow
+    - id: file-organization
+      doc: process-file-organization
+      when: "you need file-organization rules"
+      replaces: process-file-organization
+    - id: product-handoff-protocol-route
+      doc: product-handoff-protocol
+      when: "handing off screen specs and coordinating platform-agent communication"
+    - id: integration-onboarding-guide
+      doc: designerpunk-integration-guide
+      when: "walking a product repo through DesignerPunk integration/onboarding"
   agents:
     - target: sparky
       when: "handing off a screen spec for WEB implementation"
@@ -148,54 +199,10 @@ routes:
     # --- demotion coverage: one cue per doc trimmed from the hand config's ambient set
     # (the ~60% on-demand trim — Quick-Reference/Readiness, consciously-invoked Process-*,
     # platform-implementation-guidelines, Test-Development-Standards [not his], etc.) ---
-    - when: "you need the component routing table or family-doc map"
-      tool: get_section
-      mcp: docs
-      replaces: component-quick-reference
-    - when: "you need a component's readiness / status before selecting it"
-      tool: get_section
-      mcp: docs
-      replaces: component-readiness-status
-    - when: "you need canonical contract / concept names when specifying behavior"
-      tool: get_section
-      mcp: docs
-      replaces: contract-system-reference
-    - when: "you need cross-platform implementation guidance for a component"
-      tool: get_section
-      mcp: docs
-      replaces: platform-implementation-guidelines
-    - when: "you need the development workflow's detail beyond the always-loaded law"
-      tool: get_section
-      mcp: docs
-      replaces: process-development-workflow
-    - when: "you need file-organization rules"
-      tool: get_section
-      mcp: docs
-      replaces: process-file-organization
-    - when: "you need spec-planning standards beyond the routed Tasks Document Format"
-      tool: get_section
-      mcp: docs
-      replaces: process-spec-planning
-    - when: "you need product-token governance beyond the routed Authoring Workflow"
-      tool: get_section
-      mcp: docs
-      replaces: product-token-governance
-    - when: "you need the component philosophy or family inheritance principles"
-      tool: get_section
-      mcp: docs
-      replaces: stemma-system-principles
     - when: "you need the technology-stack reference (frameworks, build tooling, versions)"
       tool: get_section
       mcp: docs
       replaces: technology-stack
-    - when: "you need test development standards when reviewing coverage expectations"
-      tool: get_section
-      mcp: docs
-      replaces: test-development-standards
-    - when: "you need token lookup patterns or the token documentation map"
-      tool: get_section
-      mcp: docs
-      replaces: token-quick-reference
 commands:
   # The DesignerPunk CLI (bin: designerpunk) — consumer-repo verbs he directs product work
   # with (Req 12 AC3: consumer-repo entries carry a run-context annotation + cue, exempt from

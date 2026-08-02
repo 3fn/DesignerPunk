@@ -94,6 +94,38 @@ routes:
   # Inter-agent routes (LE-D1). Leonardo is his PRIMARY hub — all screen specs arrive from him and
   # all token/component escalations route THROUGH him (to Thurgood, who triages to Ada/Lina).
   # Leonardo IS ported (U6), so this resolves.
+    - id: contract-concept-names
+      doc: contract-system-reference
+      when: "you need the canonical contract / concept-catalog names for a behavioral contract"
+      replaces: contract-system-reference
+    - id: stemma-principles
+      doc: stemma-system-principles
+      when: "you need the component philosophy or family inheritance principles"
+      replaces: stemma-system-principles
+    - id: test-dev-standards
+      doc: test-development-standards
+      when: "you need test development standards (structure, categories, naming) for a screen test"
+      replaces: test-development-standards
+    - id: bcv-guidance
+      doc: test-behavioral-contract-validation
+      when: "you need behavioral-contract validation guidance for an Android implementation"
+      replaces: test-behavioral-contract-validation
+    - id: token-lookup-beyond
+      doc: token-quick-reference
+      when: "you need token lookup patterns beyond the routed Token Documentation Map"
+      replaces: token-quick-reference
+    - id: dev-workflow-detail
+      doc: process-development-workflow
+      when: "you need the development workflow's detail beyond the always-loaded law"
+      replaces: process-development-workflow
+    - id: file-organization
+      doc: process-file-organization
+      when: "you need file-organization rules"
+      replaces: process-file-organization
+    - id: android-implementation-patterns
+      doc: platform-implementation-guidelines
+      section: "Android Implementation Patterns"
+      when: "you need the Android implementation patterns (Compose render target, token consumption, accessibility)"
   agents:
     - target: leonardo
       when: "you need a screen spec, a cross-platform decision, or to escalate a token/component gap (he routes it to Thurgood → Ada/Lina)"
@@ -132,38 +164,10 @@ routes:
       tool: get_section
       mcp: docs
       replaces: platform-resource-map
-    - when: "you need the canonical contract / concept-catalog names for a behavioral contract"
-      tool: get_section
-      mcp: docs
-      replaces: contract-system-reference
-    - when: "you need the development workflow's detail beyond the always-loaded law"
-      tool: get_section
-      mcp: docs
-      replaces: process-development-workflow
-    - when: "you need file-organization rules"
-      tool: get_section
-      mcp: docs
-      replaces: process-file-organization
-    - when: "you need the component philosophy or family inheritance principles"
-      tool: get_section
-      mcp: docs
-      replaces: stemma-system-principles
     - when: "you need the technology-stack reference (build tooling, frameworks, versions)"
       tool: get_section
       mcp: docs
       replaces: technology-stack
-    - when: "you need token lookup patterns beyond the routed Token Documentation Map"
-      tool: get_section
-      mcp: docs
-      replaces: token-quick-reference
-    - when: "you need test development standards (structure, categories, naming) for a screen test"
-      tool: get_section
-      mcp: docs
-      replaces: test-development-standards
-    - when: "you need behavioral-contract validation guidance for an Android implementation"
-      tool: get_section
-      mcp: docs
-      replaces: test-behavioral-contract-validation
 commands:
   # In-repo commands — verified against package.json (Req 18 AC2(d)):
   - name: platform-tokens

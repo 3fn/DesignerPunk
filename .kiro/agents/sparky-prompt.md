@@ -268,6 +268,14 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - WHEN naming a new product token (--product-{category}-{token-name}) THEN consult product-token-governance § "Naming Conventions"
 - WHEN you need to find which token doc covers a topic THEN consult token-quick-reference § "Token Documentation Map"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
+- WHEN you need cross-platform implementation guidance for a component THEN consult platform-implementation-guidelines (summary-first)
+- WHEN you need the component philosophy or family inheritance principles THEN consult stemma-system-principles (summary-first)
+- WHEN you need test development standards (structure, categories, naming) for a screen test THEN consult test-development-standards (summary-first)
+- WHEN you need behavioral-contract validation guidance for a web implementation THEN consult test-behavioral-contract-validation (summary-first)
+- WHEN you need token lookup patterns beyond the routed Token Documentation Map THEN consult token-quick-reference (summary-first)
+- WHEN you need the development workflow's detail beyond the always-loaded law THEN consult process-development-workflow (summary-first)
+- WHEN you need file-organization rules THEN consult process-file-organization (summary-first)
+- WHEN you need the canonical contract / concept-catalog names for a behavioral contract THEN consult contract-system-reference (summary-first)
 - WHEN you need a screen spec, a cross-platform decision, or to escalate a token/component gap (he routes it to Thurgood → Ada/Lina) THEN hand off to leonardo
 - WHEN you need a component's assembled API, props, tokens, or contracts to implement it THEN use get_component_full (application MCP)
 - WHEN the spec references a component you can't place — find it by context or concept THEN use find_components (application MCP)
@@ -277,14 +285,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - WHEN you need Leonardo's screen specification for the screen you're implementing THEN use get_screen_spec (product MCP)
 - WHEN you changed product screen implementations or product YAML THEN use rebuild_product_index (product MCP)
 - WHEN you need cross-platform file paths for component source, tokens, or shared artifacts THEN use get_section (docs MCP)
-- WHEN you need cross-platform implementation guidance for a component THEN use get_section (docs MCP)
-- WHEN you need the development workflow's detail beyond the always-loaded law THEN use get_section (docs MCP)
-- WHEN you need file-organization rules THEN use get_section (docs MCP)
-- WHEN you need the component philosophy or family inheritance principles THEN use get_section (docs MCP)
 - WHEN you need the technology-stack reference (build tooling, frameworks, versions) THEN use get_section (docs MCP)
-- WHEN you need token lookup patterns beyond the routed Token Documentation Map THEN use get_section (docs MCP)
-- WHEN you need test development standards (structure, categories, naming) for a screen test THEN use get_section (docs MCP)
-- WHEN you need behavioral-contract validation guidance for a web implementation THEN use get_section (docs MCP)
 
 ## Commands
 
@@ -299,6 +300,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - no web dev server or hot-reload exists in this repo — `build:watch` is tsc-only (type-check, no bundling or serving); never use a dev-server workflow. For local preview, build then `serve` the static output. — you reach for a dev server / hot reload
 - no dedicated web-only Jest lane exists — scope web tests by path selection (`npm test -- <path>`); that path form IS the honest lane, not a missing one. — you reach for a web-only test lane
 - product-screen build/test/serve commands are per-product and cannot be extracted in this repo — they live in the consumer product app. — you need product-screen build/test/serve commands (authored per product)
+- WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.
