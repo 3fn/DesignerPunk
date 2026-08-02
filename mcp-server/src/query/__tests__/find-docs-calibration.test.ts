@@ -28,9 +28,7 @@
  * | concept query          | must include                           | expected tier |
  * |------------------------|----------------------------------------|---------------|
  * | "RTL"                  | Web-Authoring-Standards.md             | strong        |
- * |                        | Component-Family-Form-Inputs.md        | strong        |
  * | "internationalization" | Web-Authoring-Standards.md             | strong        |
- * |                        | Component-Family-Form-Inputs.md        | strong        |
  * | "spec planning"        | Process-Spec-Planning.md               | strong        |
  * | "EARS"                 | Process-Spec-Planning.md               | strong        |
  * | incidental-token case  | only incidental match                  | partial       |
@@ -60,7 +58,6 @@ const STEERING_DIR = path.resolve(__dirname, '../../../../governance');
  * absolute-path prefixes do not make the fixture brittle to CWD differences).
  */
 const RTL_DOC_A = 'Web-Authoring-Standards.md';
-const RTL_DOC_B = 'Component-Family-Form-Inputs.md';
 const SPEC_PLANNING_DOC = 'Process-Spec-Planning.md';
 
 // ---------------------------------------------------------------------------
@@ -132,7 +129,16 @@ describe('find_docs calibration fixtures — real corpus, tool boundary (Task 4.
   // Fixture 1 — RTL / right-to-left
   // -------------------------------------------------------------------------
 
-  describe('fixture: "RTL" → Web-Authoring-Standards.md + Component-Family-Form-Inputs.md (strong via aliases)', () => {
+  describe('fixture: "RTL" → Web-Authoring-Standards.md (strong via aliases)', () => {
+    /**
+     * NOTE (119-B Task 4 alias prune, 2026-08-02): Component-Family-Form-Inputs.md
+     * previously carried the same RTL alias set as a second calibration fixture
+     * (Spec 121 Task 5). Its only RTL content was two passing bullets, so the
+     * aliases were replaced with form-inputs-scoped vocabulary (Lina's domain
+     * ruling). The RTL/internationalization recall floor is satisfied by
+     * Web-Authoring-Standards.md alone, which has real RTL/logical-properties
+     * content and keeps its aliases.
+     */
     let result: FindDocsHandlerResult;
 
     beforeAll(() => {
@@ -155,23 +161,8 @@ describe('find_docs calibration fixtures — real corpus, tool boundary (Task 4.
       expect(entry!.matchConfidence).toBe('strong');
     });
 
-    it('includes Component-Family-Form-Inputs.md', () => {
-      const entry = findEntry(result, RTL_DOC_B);
-      expect(entry).toBeDefined();
-    });
-
-    it('classifies Component-Family-Form-Inputs.md as strong (aliases high-signal hit)', () => {
-      const entry = findEntry(result, RTL_DOC_B);
-      expect(entry!.matchConfidence).toBe('strong');
-    });
-
     it('emits three distinct Layer fields on Web-Authoring-Standards.md (criterion b)', () => {
       const entry = findEntry(result, RTL_DOC_A);
-      assertThreeDistinctLayers(entry!);
-    });
-
-    it('emits three distinct Layer fields on Component-Family-Form-Inputs.md (criterion b)', () => {
-      const entry = findEntry(result, RTL_DOC_B);
       assertThreeDistinctLayers(entry!);
     });
 
@@ -186,7 +177,7 @@ describe('find_docs calibration fixtures — real corpus, tool boundary (Task 4.
   // Fixture 2 — internationalization
   // -------------------------------------------------------------------------
 
-  describe('fixture: "internationalization" → same two docs (strong)', () => {
+  describe('fixture: "internationalization" → Web-Authoring-Standards.md (strong)', () => {
     let result: FindDocsHandlerResult;
 
     beforeAll(() => {
@@ -195,12 +186,6 @@ describe('find_docs calibration fixtures — real corpus, tool boundary (Task 4.
 
     it('includes Web-Authoring-Standards.md at strong', () => {
       const entry = findEntry(result, RTL_DOC_A);
-      expect(entry).toBeDefined();
-      expect(entry!.matchConfidence).toBe('strong');
-    });
-
-    it('includes Component-Family-Form-Inputs.md at strong', () => {
-      const entry = findEntry(result, RTL_DOC_B);
       expect(entry).toBeDefined();
       expect(entry!.matchConfidence).toBe('strong');
     });
