@@ -169,14 +169,14 @@
   **Post-Completion:**
   - `./.kiro/hooks/complete-task.sh "Task 3 Complete: Pilot Window + Closeout (125-B)"` — merge unit U1-c; PR opens; report URL, STOP. **U1b's entry gate cites the RECORDED VERDICT BALLOT (committed with this unit).**
 
-  - [ ] 3.1 Observation window execution
+  - [x] 3.1 Observation window execution
     **Type**: Implementation
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Sonnet) — manual queries per the pre-committed protocol
     - N=20 observed PRs (filter + SHA pinning per protocol); first-push failure rate; re-accretion scans; staleness events tallied (segment on trigger; >K=3 → escalate); wall-clock span recorded as datum; allowlist churn if U2 armed by then
     - _Requirements: 8.2–8.7; Design: C4, DD6, DD8_
 
-  - [ ] 3.2 Closeout record + Peter's batched decision session
+  - [x] 3.2 Closeout record + Peter's batched decision session
     **Type**: Documentation
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — synthesis + honest-ambiguity reporting is judgment
