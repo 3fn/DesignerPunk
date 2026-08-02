@@ -80,7 +80,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
 
 ### Unit U4 — AICP prose refinement (micro-unit; post-U2)
 
-- [ ] 6. Refine the AI-Collaboration-Principles calibration prose
+- [x] 6. Refine the AI-Collaboration-Principles calibration prose
   - **Type**: Documentation · **Agent**: Thurgood (Sonnet) — the three surgical changes are fully designed (4b) · **Validation**: Tier 1
   - Apply design § 4b exactly: (1) discharge the forward-compat note with the settled reference (register-entry citation + signal contract) — **record blade verdicts** for the removal per `pilot-row-assessment.md` format (R8 AC2); (2) name the signal with the illustrative hedge, citing the register entry as canonical enumeration home — **the changes-1/2 overlap counts as ONE removal** in the blade record; (3) preserve the frozen anchors verbatim-in-substance (3-step structure, trigger phrase, tier semantics, go/no-go contract — R8 AC1/AC5)
   - NOT a window trigger surface (R10 AC4); measurement-gated only — this unit branches after U2 merges (R8 AC4)
