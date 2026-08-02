@@ -8,11 +8,27 @@
  */
 
 export interface CrossReference {
-  target: string;                  // Referenced document path
+  target: string;                  // Referenced document path (or doc id, for bare-id refs)
   context: string;                 // Context description from link text
   section: string;                 // Source section containing reference
   lineNumber: number;              // Line number in source file
+  /**
+   * INTERNAL-ONLY candidate tag (Spec 119-B OB-1). Present ONLY on bare-id
+   * candidates awaiting idIndex validation; `.md` path refs never carry it
+   * (their extracted shape is unchanged). The tag never escapes the indexer:
+   * validation strips it before refs reach any public surface.
+   */
+  kind?: 'id-candidate';
 }
+
+/**
+ * Bare-id candidate grammar (Spec 119-B OB-1 / design Component 6): a link
+ * target is an id candidate IF it matches this AND contains none of `/ . : #`
+ * (the character class already excludes them; the explicit guard in the
+ * extractor documents the contract). Validation against idIndex happens in the
+ * indexer's post-index pass — the parser stays a dumb extractor.
+ */
+export const BARE_ID_GRAMMAR = /^[a-z0-9][a-z0-9-]*$/;
 
 /**
  * Extract cross-references from markdown content
@@ -56,6 +72,18 @@ export function extractCrossReferences(content: string, _filePath: string): Cros
           context,
           section: currentSection,
           lineNumber: i + 1
+        });
+      } else if (BARE_ID_GRAMMAR.test(target) && !/[/.:#]/.test(target)) {
+        // Bare-id candidate (Spec 119-B OB-1): tagged, NOT validated here —
+        // anchors (#…), URLs (contain :/), and paths (contain / or .) never
+        // reach this branch. The indexer's post-index pass validates against
+        // idIndex and drops misses.
+        references.push({
+          target,
+          context,
+          section: currentSection,
+          lineNumber: i + 1,
+          kind: 'id-candidate'
         });
       }
     }

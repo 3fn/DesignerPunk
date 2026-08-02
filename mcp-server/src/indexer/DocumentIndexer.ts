@@ -4,7 +4,7 @@ import { extractMetadata } from './metadata-parser';
 import { extractFrontmatterInfo } from './frontmatter-parser';
 import { extractHeadingStructure } from './heading-parser';
 import { resolveSection, SectionLookup } from './section-parser';
-import { extractCrossReferences } from './cross-ref-parser';
+import { extractCrossReferences, CrossReference as ParsedCrossReference } from './cross-ref-parser';
 import { estimateTokenCount } from '../utils/token-estimator';
 import { determineIndexHealth } from './index-health';
 import { seedLegacyPathsFromFrozenManifest } from '../legacy-path';
@@ -65,6 +65,25 @@ export class DocumentIndexer {
   private idIndex: Map<string, string> = new Map();          // id → indexedKey
   private legacyPathIndex: Map<string, string> = new Map();  // normalizedLegacyPath → indexedKey
 
+  /**
+   * Validated cross-references per indexed key (Spec 119-B OB-1, Decision 1:
+   * extract-then-validate at INDEX time, one validation point). indexFile
+   * stores the raw parser output (bare-id candidates still tagged); the
+   * post-index validation pass (or reindexFile's inline pass) replaces it with
+   * the validated, TAG-STRIPPED set — the candidate tag never escapes the
+   * indexer. All read surfaces (list_cross_references, getDocumentSummary,
+   * index-health metrics) consume THIS map, never re-extract, so the
+   * crossReferences count is a stable index property.
+   */
+  private crossRefsByKey: Map<string, ParsedCrossReference[]> = new Map();
+  /**
+   * Bare-id candidates dropped by validation (target not in idIndex) — the
+   * typo-suspicious class. Surfaced on two channels (design Component 6):
+   * scan-cross-references.sh lists individually; index-health emits ONE
+   * aggregate warning when count > 0.
+   */
+  private droppedIdCandidates: Array<{ sourceKey: string; target: string; section: string; lineNumber: number }> = [];
+
   private lastIndexTime: string | undefined;
   private directoryPath: string | undefined;
   private logsDirectory: string;
@@ -104,6 +123,8 @@ export class DocumentIndexer {
     this.documentContent.clear();
     this.idIndex.clear();
     this.legacyPathIndex.clear();
+    this.crossRefsByKey.clear();
+    this.droppedIdCandidates = [];
     // RE-SEED OBLIGATION (Task 3.2): legacyPathIndex is seeded out-of-band from a
     // build-time manifest via loadLegacyPathManifest — it is NOT derived from
     // on-disk scanning (the original `.kiro/steering/…` paths no longer exist
@@ -131,6 +152,13 @@ export class DocumentIndexer {
     // no legacy fallback (correct degraded behavior).
     this.seedLegacyPaths();
 
+    // CROSS-REF VALIDATION PASS (Spec 119-B OB-1): joins the same post-index
+    // hook as the legacy re-seed — idIndex is complete here, so every bare-id
+    // candidate can be validated in ONE place (Decision 1: index-time, never
+    // query-time). Hits become real cross-references (target already the doc
+    // id); misses are dropped and recorded for the two surfacing channels.
+    this.validateAllCrossReferences();
+
     // Update last index time
     this.lastIndexTime = new Date().toISOString();
 
@@ -157,12 +185,20 @@ export class DocumentIndexer {
       this.pruneAddressingEntriesForKey(filePath);
       this.documentMap.delete(filePath);
       this.documentContent.delete(filePath);
+      this.crossRefsByKey.delete(filePath);
+      this.droppedIdCandidates = this.droppedIdCandidates.filter(d => d.sourceKey !== filePath);
       this.lastIndexTime = new Date().toISOString();
       return;
     }
 
     // Re-index the file (the re-add branch repopulates idIndex via indexFile).
     await this.indexFile(filePath);
+    // Inline cross-ref validation against the STANDING idIndex (Spec 119-B
+    // OB-1) — same validation function as the full-rebuild pass. ACCEPTED EDGE
+    // (pinned by test): a ref to a NEW doc B not yet in the standing idIndex is
+    // dropped until the next full rebuild — covered operationally by the
+    // write-side rebuild protocol.
+    this.validateCrossReferencesForKey(filePath);
     this.lastIndexTime = new Date().toISOString();
   }
 
@@ -206,14 +242,16 @@ export class DocumentIndexer {
    * @param filePath - Path to document
    */
   getDocumentSummary(filePath: string): DocumentSummary {
-    const content = this.getDocumentContent(filePath);
+    const { indexedKey } = this.resolveRef(filePath);
+    const content = this.documentContent.get(indexedKey)!;
     const metadata = extractMetadata(content);
 
     // Extract heading structure
     const outline = extractHeadingStructure(content);
 
-    // Extract cross-references
-    const crossReferences = extractCrossReferences(content, filePath);
+    // Cross-references: the VALIDATED index-time set (Spec 119-B OB-1) — same
+    // single source list_cross_references serves; dropped candidates excluded.
+    const crossReferences = this.crossRefsByKey.get(indexedKey) ?? [];
 
     // Convert CrossReference[] to CrossReferenceInfo[]
     const crossReferenceInfo = crossReferences.map(ref => ({
@@ -350,12 +388,71 @@ export class DocumentIndexer {
   /**
    * List cross-references in a document
    * Returns links without following them
-   * 
-   * @param filePath - Path to document
+   *
+   * Spec 119-B OB-1: the incoming ref routes through the SAME resolver chain
+   * as every other document-addressed tool (id → indexed key → legacy path,
+   * D5), and the result is the VALIDATED index-time set — `.md` path refs
+   * unchanged, bare-id refs enumerated with target = the doc id; dropped
+   * candidates never appear. Public shape unchanged (no kind tag).
+   *
+   * @param filePath - Document ref: id, indexed relative path, or legacy path
    */
   listCrossReferences(filePath: string): CrossReference[] {
-    const content = this.getDocumentContent(filePath);
-    return extractCrossReferences(content, filePath);
+    const { indexedKey } = this.resolveRef(filePath);
+    return this.crossRefsByKey.get(indexedKey) ?? [];
+  }
+
+  /**
+   * Bare-id candidates dropped by validation (Spec 119-B OB-1) — the
+   * typo-suspicious class surfaced via index-health's aggregate warning and
+   * scan-cross-references.sh's individual listing.
+   */
+  getDroppedIdCandidates(): ReadonlyArray<{ sourceKey: string; target: string; section: string; lineNumber: number }> {
+    return this.droppedIdCandidates;
+  }
+
+  /**
+   * Validate ALL stored cross-reference sets against the completed idIndex
+   * (the post-index hook — Spec 119-B OB-1, Decision 1's single validation
+   * point). Resets the dropped-candidate record.
+   */
+  private validateAllCrossReferences(): void {
+    this.droppedIdCandidates = [];
+    for (const key of this.crossRefsByKey.keys()) {
+      this.validateCrossReferencesForKey(key);
+    }
+  }
+
+  /**
+   * Validate one document's stored cross-references against the CURRENT
+   * idIndex. `.md` path refs pass through untouched; bare-id candidates are
+   * kept iff their target is a known doc id (tag stripped — it never escapes
+   * the indexer) and dropped-with-record otherwise.
+   */
+  private validateCrossReferencesForKey(key: string): void {
+    const raw = this.crossRefsByKey.get(key);
+    if (!raw) return;
+
+    // Replace any prior dropped entries for this key (reindex path).
+    this.droppedIdCandidates = this.droppedIdCandidates.filter(d => d.sourceKey !== key);
+
+    const validated: ParsedCrossReference[] = [];
+    for (const ref of raw) {
+      if (ref.kind !== 'id-candidate') {
+        validated.push(ref);
+      } else if (this.idIndex.has(ref.target)) {
+        const { kind: _kind, ...publicRef } = ref;
+        validated.push(publicRef);
+      } else {
+        this.droppedIdCandidates.push({
+          sourceKey: key,
+          target: ref.target,
+          section: ref.section,
+          lineNumber: ref.lineNumber,
+        });
+      }
+    }
+    this.crossRefsByKey.set(key, validated);
   }
 
   /**
@@ -482,6 +579,13 @@ export class DocumentIndexer {
     };
 
     this.documentMap.set(filePath, documentMetadata);
+
+    // Store the RAW parser output (bare-id candidates still tagged) for the
+    // post-index validation pass (Spec 119-B OB-1). Mid-indexing this map may
+    // hold unvalidated candidates — accepted and explicit (design Component 6):
+    // no consumer reads cross-refs during indexing; indexing is atomic from the
+    // API's view.
+    this.crossRefsByKey.set(filePath, extractCrossReferences(content, filePath));
 
     // Build the id index (id → indexed key). First drop any PRIOR id forward-entry
     // that still points at this same key — covers an in-place id rewrite (reindexFile
@@ -690,10 +794,16 @@ export class DocumentIndexer {
     }
 
     // Use determineIndexHealth for comprehensive health check
+    let validatedCount = 0;
+    for (const refs of this.crossRefsByKey.values()) validatedCount += refs.length;
     const health = determineIndexHealth({
       indexedDocuments: this.documentContent,
       directoryPath: this.directoryPath,
-      lastIndexTime: this.lastIndexTime
+      lastIndexTime: this.lastIndexTime,
+      crossRefTotals: {
+        validatedCount,
+        droppedBareIdCount: this.droppedIdCandidates.length
+      }
     });
 
     this.logIndexStateChange('validation_completed', { 

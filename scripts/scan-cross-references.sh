@@ -1,59 +1,82 @@
 #!/bin/bash
-# DEPRECATED (Spec 099, 2026-05-03): Superseded by Docs MCP list_cross_references() tool.
-# The MCP tool provides the same data with better structure (JSON with target, context, section, line number).
-# Use: list_cross_references({ path: ".kiro/steering/<doc>.md" }) via MCP query.
-# This script is preserved as a historical artifact. Do not use for new work.
+# Cross-reference scanner — repointed by Spec 119-B OB-1 (R9 AC4, Peter's
+# ratified bundle routing of 2026-07-05: parser id-awareness + this repoint
+# travel together).
 #
-# Original purpose: Scan and validate cross-references in steering documents
+# History: originally Spec 020 (steering-doc validation, .kiro/steering only);
+# marked deprecated by Spec 099 in favor of the Docs MCP list_cross_references
+# tool. 119-B revives it with a NEW role: the OPT-IN DETAIL CHANNEL for
+# bare-id link-target diagnostics (design Component 6). The MCP tool serves
+# validated refs; index-health emits the aggregate unresolved-count warning;
+# THIS script lists every bare-id target individually — including UNRESOLVED
+# ones — so "run scan-cross-references.sh for the list" resolves here.
+#
+# Scans BOTH corpus roots: governance/*.md (MCP-served) + .kiro/steering/*.md
+# (the 9 identity docs). Resolution check: a bare-id target is RESOLVED iff
+# some governance/*.md carries `id: <target>` frontmatter (identity docs are
+# not MCP-indexed, so links targeting them report UNRESOLVED — correct: such
+# a link cannot resolve through the docs MCP).
+#
+# Output: stdout. Exit 0 always (diagnostic, not a gate).
 
-OUTPUT_FILE=".kiro/specs/020-steering-documentation-refinement/cross-reference-report.md"
+set -euo pipefail
+cd "$(dirname "$0")/.."
 
-echo "# Cross-Reference Validation Report" > "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
-echo "**Date**: $(date +%Y-%m-%d)" >> "$OUTPUT_FILE"
-echo "**Purpose**: Validation of cross-references across steering documents" >> "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
+echo "# Cross-reference scan — $(date +%Y-%m-%d)"
+echo
 
-echo "## Cross-References by Document" >> "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
+# Build the known-id set from governance frontmatter
+KNOWN_IDS=$(grep -h "^id: " governance/*.md 2>/dev/null | sed 's/^id: *//' | sort -u)
 
-# Function to extract cross-references from a file
-scan_references() {
-    local file="$1"
-    local filename=$(basename "$file")
+doc_count=0
+md_total=0
+bareid_total=0
+unresolved_total=0
 
-    echo "### $filename" >> "$OUTPUT_FILE"
-    echo "" >> "$OUTPUT_FILE"
+for file in governance/*.md .kiro/steering/*.md; do
+  [ -f "$file" ] || continue
+  doc_count=$((doc_count + 1))
 
-    # Extract markdown links
-    grep -o '\[.*\](.*\.md[^)]*)' "$file" > /tmp/links.txt || true
+  # Extract markdown link targets
+  targets=$(grep -oE '\]\([^)]+\)' "$file" | sed 's/^](\(.*\))$/\1/' || true)
+  [ -n "$targets" ] || continue
 
-    if [ -s /tmp/links.txt ]; then
-        echo "**Cross-references found:**" >> "$OUTPUT_FILE"
-        while read -r link; do
-            echo "- $link" >> "$OUTPUT_FILE"
-        done < /tmp/links.txt
-        echo "" >> "$OUTPUT_FILE"
-    else
-        echo "**No cross-references found**" >> "$OUTPUT_FILE"
-        echo "" >> "$OUTPUT_FILE"
+  md_refs=""
+  bare_refs=""
+  while IFS= read -r t; do
+    [ -n "$t" ] || continue
+    case "$t" in
+      *.md*) md_refs="${md_refs}  - ${t}\n"; md_total=$((md_total + 1)) ;;
+      *[/.:#]*) : ;; # URLs, anchors, dotted/slashed paths — not doc refs
+      *)
+        if printf '%s' "$t" | grep -qE '^[a-z0-9][a-z0-9-]*$'; then
+          bareid_total=$((bareid_total + 1))
+          if printf '%s\n' "$KNOWN_IDS" | grep -qx "$t"; then
+            bare_refs="${bare_refs}  - ${t}\n"
+          else
+            bare_refs="${bare_refs}  - ${t}  [UNRESOLVED]\n"
+            unresolved_total=$((unresolved_total + 1))
+          fi
+        fi
+        ;;
+    esac
+  done <<< "$targets"
+
+  if [ -n "$md_refs" ] || [ -n "$bare_refs" ]; then
+    echo "## $file"
+    if [ -n "$bare_refs" ]; then
+      echo "bare-id link targets:"
+      printf "%b" "$bare_refs"
     fi
-
-    echo "---" >> "$OUTPUT_FILE"
-    echo "" >> "$OUTPUT_FILE"
-}
-
-# Scan all steering documents
-for file in .kiro/steering/*.md; do
-    scan_references "$file"
+    if [ -n "$md_refs" ]; then
+      echo "path (.md) link targets:"
+      printf "%b" "$md_refs"
+    fi
+    echo
+  fi
 done
 
-# Add summary
-echo "## Summary" >> "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
-
-total_refs=$(grep -oh '\[.*\](.*\.md[^)]*)' .kiro/steering/*.md | wc -l)
-echo "**Total cross-references**: $total_refs" >> "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
-
-echo "Cross-reference report created at: $OUTPUT_FILE"
+echo "---"
+echo "Docs scanned: $doc_count (governance + .kiro/steering)"
+echo "Path (.md) refs: $md_total | bare-id refs: $bareid_total | UNRESOLVED bare-id: $unresolved_total"
+exit 0
