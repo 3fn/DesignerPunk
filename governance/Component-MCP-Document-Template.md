@@ -710,11 +710,12 @@ get_index_health()
 rebuild_index()
 
 // 3. Verify document is indexed
-get_document_summary({ path: ".kiro/steering/Component-Family-[FamilyName].md" })
+get_document_summary({ path: "component-family-[family-name]" })
+// (use the doc's frontmatter `id:` verbatim — some family ids diverge from the filename pattern, e.g. progress-indicator-components)
 
 // 4. Test section queries
-get_section({ path: ".kiro/steering/Component-Family-[FamilyName].md", heading: "Family Overview" })
-get_section({ path: ".kiro/steering/Component-Family-[FamilyName].md", heading: "Behavioral Contracts" })
+get_section({ path: "component-family-[family-name]", heading: "Family Overview" })
+get_section({ path: "component-family-[family-name]", heading: "Behavioral Contracts" })
 ```
 
 ---

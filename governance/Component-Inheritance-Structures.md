@@ -106,7 +106,7 @@ Input-Text-Base (Primitive) │ ├── Input-Text-Email (Semantic) │ └─
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Form-Inputs.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Form-Inputs.md" })`
+- **Query**: `get_document_full({ path: "component-family-form-inputs" })`
 
 ---
 
@@ -166,7 +166,7 @@ Button-CTA uses the `[Family]-[Type]` pattern (not `[Family]-[Type]-Base`) becau
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Button.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Button.md" })`
+- **Query**: `get_document_full({ path: "component-family-button" })`
 
 ---
 
@@ -220,7 +220,7 @@ Container-Base uses the `[Family]-Base` pattern because:
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Container.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Container.md" })`
+- **Query**: `get_document_full({ path: "component-family-container" })`
 
 ---
 
@@ -269,7 +269,7 @@ Icon-Base uses the `[Family]-Base` pattern because:
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Icon.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Icon.md" })`
+- **Query**: `get_document_full({ path: "component-family-icon" })`
 
 ---
 
@@ -323,7 +323,7 @@ Modal-Base (Primitive) [Placeholder] │ ├── Modal-Dialog (Semantic) [Plac
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Modal.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Modal.md" })`
+- **Query**: `get_document_full({ path: "component-family-modal" })`
 
 ---
 
@@ -375,7 +375,7 @@ Avatar-Base (Primitive) [Shipped] │ ├── Avatar-User (Semantic) [Planned]
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Avatar.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Avatar.md" })`
+- **Query**: `get_document_full({ path: "component-family-avatar" })`
 
 ---
 
@@ -432,7 +432,7 @@ Planned (not shipped): a Badge-Status semantic variant, removable Badge-Tag.
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Badge.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Badge.md" })`
+- **Query**: `get_document_full({ path: "component-family-badge" })`
 
 ---
 
@@ -484,7 +484,7 @@ Display-Base (Primitive) [Placeholder] │ ├── Display-Text (Semantic) [Pl
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Data-Display.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Data-Display.md" })`
+- **Query**: `get_document_full({ path: "component-family-data-display" })`
 
 ---
 
@@ -530,7 +530,7 @@ Divider-Base (Primitive) [Placeholder] │ ├── Divider-Horizontal (Semanti
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Divider.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Divider.md" })`
+- **Query**: `get_document_full({ path: "component-family-divider" })`
 
 ---
 
@@ -578,7 +578,7 @@ Loading-Base (Primitive) [Placeholder] │ ├── Loading-Spinner (Semantic) 
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Loading.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Loading.md" })`
+- **Query**: `get_document_full({ path: "component-family-loading" })`
 
 ---
 
@@ -639,7 +639,7 @@ Planned (not shipped): Nav-Breadcrumb, Nav-List.
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Navigation.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Navigation.md" })`
+- **Query**: `get_document_full({ path: "component-family-navigation" })`
 
 ---
 
@@ -669,7 +669,7 @@ Chip-Base is focusable and selectable; Chip-Filter adds toggle semantics; Chip-I
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Chip.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Chip.md" })`
+- **Query**: `get_document_full({ path: "component-family-chip" })`
 
 ---
 
@@ -713,7 +713,7 @@ Node/bar/pagination/stepper components carry step-state and progress-value contr
 ### MCP Documentation
 
 - **Full Documentation**: `.kiro/steering/Component-Family-Progress.md`
-- **Query**: `get_document_full({ path: ".kiro/steering/Component-Family-Progress.md" })`
+- **Query**: `get_document_full({ path: "progress-indicator-components" })`
 
 ---
 

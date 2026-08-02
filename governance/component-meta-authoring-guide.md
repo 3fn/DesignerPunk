@@ -229,7 +229,7 @@ Component-meta.yaml does NOT currently include a `data_shapes:` field for descri
 
 Or query via MCP:
 ```
-get_section({ path: ".kiro/steering/Component-Meta-Data-Shapes-Governance.md", heading: "Trigger Criteria" })
+get_section({ path: "component-meta-data-shapes-governance", heading: "Trigger Criteria" })
 ```
 
 **Any agent creating or reviewing a component-meta.yaml should evaluate the trigger criteria in that doc.** If any criterion is met, follow the escalation process defined there.

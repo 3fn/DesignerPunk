@@ -829,8 +829,8 @@ Rosetta Token System
 Stemma System documentation is accessible via MCP:
 
 ```
-get_document_summary({ path: ".kiro/steering/stemma-system-principles.md" })
-get_section({ path: ".kiro/steering/stemma-system-principles.md", heading: "Component Schema Format" })
+get_document_summary({ path: "stemma-system-principles" })
+get_section({ path: "stemma-system-principles", heading: "Component Schema Format" })
 ```
 
 ---

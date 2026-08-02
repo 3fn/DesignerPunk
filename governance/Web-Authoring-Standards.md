@@ -391,13 +391,13 @@ gap: 24px; /* "I'll tokenize this later" — no you won't, session memory is los
 
 For the full document:
 ```
-get_document_full({ path: ".kiro/steering/Web-Authoring-Standards.md" })
+get_document_full({ path: "web-authoring-standards" })
 ```
 
 For specific sections:
 ```
-get_section({ path: ".kiro/steering/Web-Authoring-Standards.md", heading: "Hard Rules" })
-get_section({ path: ".kiro/steering/Web-Authoring-Standards.md", heading: "Token Priority" })
-get_section({ path: ".kiro/steering/Web-Authoring-Standards.md", heading: "Product Token Authoring (Sparky)" })
-get_section({ path: ".kiro/steering/Web-Authoring-Standards.md", heading: "Naming Schema" })
+get_section({ path: "web-authoring-standards", heading: "Hard Rules" })
+get_section({ path: "web-authoring-standards", heading: "Token Priority" })
+get_section({ path: "web-authoring-standards", heading: "Product Token Authoring (Sparky)" })
+get_section({ path: "web-authoring-standards", heading: "Naming Schema" })
 ```

@@ -69,7 +69,7 @@ Type primitives are specialized components within a family that provide opiniona
 
 For detailed Container-Card-Base documentation including props mapping, interactive behavior, and usage examples:
 ```
-get_section({ path: ".kiro/steering/Component-Family-Container.md", heading: "Container-Card-Base" })
+get_section({ path: "component-family-container", heading: "Container-Card-Base" })
 ```
 
 ## Naming Convention
@@ -156,22 +156,22 @@ Returns metadata and outline (~200 tokens) to understand document structure befo
 
 ```
 // Understand Form Inputs family structure
-get_document_summary({ path: ".kiro/steering/Component-Family-Form-Inputs.md" })
+get_document_summary({ path: "component-family-form-inputs" })
 
 // Understand Button family structure
-get_document_summary({ path: ".kiro/steering/Component-Family-Button.md" })
+get_document_summary({ path: "component-family-button" })
 
 // Understand Container family structure
-get_document_summary({ path: ".kiro/steering/Component-Family-Container.md" })
+get_document_summary({ path: "component-family-container" })
 
 // Understand Icon family structure
-get_document_summary({ path: ".kiro/steering/Component-Family-Icon.md" })
+get_document_summary({ path: "component-family-icon" })
 
 // Understand Chip family structure
-get_document_summary({ path: ".kiro/steering/Component-Family-Chip.md" })
+get_document_summary({ path: "component-family-chip" })
 
 // Get Container-Card-Base type primitive details
-get_section({ path: ".kiro/steering/Component-Family-Container.md", heading: "Container-Card-Base" })
+get_section({ path: "component-family-container", heading: "Container-Card-Base" })
 ```
 
 **Returns**: Document metadata (purpose, layer, relevant tasks) plus section outline with headings.
@@ -182,37 +182,37 @@ Returns targeted content (~500-2,000 tokens) for specific information needs:
 
 ```
 // Get component behavioral contracts
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Behavioral Contracts" })
+get_section({ path: "component-family-form-inputs", heading: "Behavioral Contracts" })
 
 // Get contract system conventions (taxonomy, naming, format)
-get_section({ path: ".kiro/steering/Contract-System-Reference.md", heading: "Taxonomy" })
-get_section({ path: ".kiro/steering/Contract-System-Reference.md", heading: "Naming Convention" })
-get_section({ path: ".kiro/steering/Contract-System-Reference.md", heading: "Canonical Format" })
+get_section({ path: "contract-system-reference", heading: "Taxonomy" })
+get_section({ path: "contract-system-reference", heading: "Naming Convention" })
+get_section({ path: "contract-system-reference", heading: "Canonical Format" })
 
 // Get inheritance structure
-get_section({ path: ".kiro/steering/Component-Family-Button.md", heading: "Inheritance Structure" })
+get_section({ path: "component-family-button", heading: "Inheritance Structure" })
 
 // Get token dependencies
-get_section({ path: ".kiro/steering/Component-Family-Container.md", heading: "Token Dependencies" })
+get_section({ path: "component-family-container", heading: "Token Dependencies" })
 
 // Get usage guidelines
-get_section({ path: ".kiro/steering/Component-Family-Icon.md", heading: "Usage Guidelines" })
+get_section({ path: "component-family-icon", heading: "Usage Guidelines" })
 
 // Get Chip family behavioral contracts
-get_section({ path: ".kiro/steering/Component-Family-Chip.md", heading: "Behavioral Contracts" })
+get_section({ path: "component-family-chip", heading: "Behavioral Contracts" })
 
 // Get cross-platform notes
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Cross-Platform Notes" })
+get_section({ path: "component-family-form-inputs", heading: "Cross-Platform Notes" })
 
 // Get radio component details
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Input-Radio-Base" })
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Input-Radio-Set" })
+get_section({ path: "component-family-form-inputs", heading: "Input-Radio-Base" })
+get_section({ path: "component-family-form-inputs", heading: "Input-Radio-Set" })
 
 // Get component schema definitions
-get_section({ path: ".kiro/steering/Component-Family-Button.md", heading: "Component Schemas" })
+get_section({ path: "component-family-button", heading: "Component Schemas" })
 
 // Get placeholder family planned characteristics
-get_section({ path: ".kiro/steering/Component-Family-Modal.md", heading: "Planned Characteristics" })
+get_section({ path: "component-family-modal", heading: "Planned Characteristics" })
 ```
 
 **Returns**: Section content with parent heading context for document location.
@@ -223,10 +223,10 @@ Returns complete content (~2,000-10,000 tokens) when comprehensive reference is 
 
 ```
 // Full Form Inputs family reference
-get_document_full({ path: ".kiro/steering/Component-Family-Form-Inputs.md" })
+get_document_full({ path: "component-family-form-inputs" })
 
 // Full Button family reference
-get_document_full({ path: ".kiro/steering/Component-Family-Button.md" })
+get_document_full({ path: "component-family-button" })
 ```
 
 **Use sparingly**: Only when you need complete component family documentation.
@@ -241,10 +241,10 @@ find_docs({ concept: "form inputs" })   // discover by concept/keyword
 find_docs({ list: true })               // full catalog, paginated
 
 // List cross-references in a document
-list_cross_references({ path: ".kiro/steering/Component-Family-Form-Inputs.md" })
+list_cross_references({ path: "component-family-form-inputs" })
 
 // Validate document metadata schema
-validate_metadata({ path: ".kiro/steering/Component-Family-Button.md" })
+validate_metadata({ path: "component-family-button" })
 
 // Check documentation index health
 get_index_health()
@@ -270,30 +270,30 @@ rebuild_index()
 **Example: Building a Login Form:**
 ```
 // Step 1: Get Form Inputs overview
-get_document_summary({ path: ".kiro/steering/Component-Family-Form-Inputs.md" })
+get_document_summary({ path: "component-family-form-inputs" })
 
 // Step 2: Get specific component contracts
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Input-Text-Email" })
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Input-Text-Password" })
+get_section({ path: "component-family-form-inputs", heading: "Input-Text-Email" })
+get_section({ path: "component-family-form-inputs", heading: "Input-Text-Password" })
 
 // Step 3: Get button for submit action
-get_section({ path: ".kiro/steering/Component-Family-Button.md", heading: "Button-CTA" })
+get_section({ path: "component-family-button", heading: "Button-CTA" })
 
 // Step 4: Get container for layout
-get_section({ path: ".kiro/steering/Component-Family-Container.md", heading: "Container-Base" })
+get_section({ path: "component-family-container", heading: "Container-Base" })
 ```
 
 **Example: Building a Survey with Radio Groups:**
 ```
 // Step 1: Get radio component details
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Input-Radio-Base" })
-get_section({ path: ".kiro/steering/Component-Family-Form-Inputs.md", heading: "Input-Radio-Set" })
+get_section({ path: "component-family-form-inputs", heading: "Input-Radio-Base" })
+get_section({ path: "component-family-form-inputs", heading: "Input-Radio-Set" })
 
 // Step 2: Get container for section layout
-get_section({ path: ".kiro/steering/Component-Family-Container.md", heading: "Container-Base" })
+get_section({ path: "component-family-container", heading: "Container-Base" })
 
 // Step 3: Get button for submit
-get_section({ path: ".kiro/steering/Component-Family-Button.md", heading: "Button-CTA" })
+get_section({ path: "component-family-button", heading: "Button-CTA" })
 ```
 
 ## Related Documentation

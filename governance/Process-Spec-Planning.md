@@ -46,7 +46,7 @@ description: Standards for creating spec documents — requirements format (EARS
 
 **MCP Queries**:
 ```
-get_section({ path: "component-templates", heading: "Behavioral Contract Templates" })
+get_section({ path: "component-family-templates", heading: "Behavioral Contract Templates" })
 get_section({ path: "component-quick-reference", heading: "Naming Convention" })
 ```
 

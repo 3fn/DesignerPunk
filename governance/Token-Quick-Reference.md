@@ -122,8 +122,8 @@ See Rosetta-System-Architecture § Stage 5: Generation for why these two definit
 ### MCP Queries for Mode Architecture
 
 ```
-get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Stage 4: Mode Resolution (Spec 080)" })
-get_section({ path: ".kiro/steering/Token-Quick-Reference.md", heading: "Mode-Aware Token Lookup (Spec 080)" })
+get_section({ path: "rosetta-system-architecture", heading: "Stage 4: Mode Resolution (Spec 080)" })
+get_section({ path: "token-quick-reference", heading: "Mode-Aware Token Lookup (Spec 080)" })
 ```
 
 ---
@@ -286,9 +286,9 @@ Use these MCP queries to access token documentation progressively:
 Returns metadata and outline (~200 tokens) to understand document structure:
 
 ```
-get_document_summary({ path: ".kiro/steering/Token-Family-Color.md" })
-get_document_summary({ path: ".kiro/steering/Token-Family-Spacing.md" })
-get_document_summary({ path: ".kiro/steering/Token-Family-Typography.md" })
+get_document_summary({ path: "token-family-color" })
+get_document_summary({ path: "token-family-spacing" })
+get_document_summary({ path: "token-family-typography" })
 ```
 
 ### Get Specific Section
@@ -296,48 +296,48 @@ Returns targeted content (~2,000 tokens) for specific information:
 
 ```
 // Get color concept tokens by category
-get_section({ path: ".kiro/steering/Token-Family-Color.md", heading: "Feedback Concept" })
-get_section({ path: ".kiro/steering/Token-Family-Color.md", heading: "Identity Concept" })
-get_section({ path: ".kiro/steering/Token-Family-Color.md", heading: "Action Concept" })
-get_section({ path: ".kiro/steering/Token-Family-Color.md", heading: "Contrast Concept" })
-get_section({ path: ".kiro/steering/Token-Family-Color.md", heading: "Structure Concept" })
+get_section({ path: "token-family-color", heading: "Feedback Concept" })
+get_section({ path: "token-family-color", heading: "Identity Concept" })
+get_section({ path: "token-family-color", heading: "Action Concept" })
+get_section({ path: "token-family-color", heading: "Contrast Concept" })
+get_section({ path: "token-family-color", heading: "Structure Concept" })
 
 // Get component-specific color tokens
-get_section({ path: ".kiro/steering/Token-Family-Color.md", heading: "Component Tokens" })
+get_section({ path: "token-family-color", heading: "Component Tokens" })
 
 // Get primitive color families
-get_section({ path: ".kiro/steering/Token-Family-Color.md", heading: "Primitive Color Families" })
+get_section({ path: "token-family-color", heading: "Primitive Color Families" })
 
 // Get spacing scale values
-get_section({ path: ".kiro/steering/Token-Family-Spacing.md", heading: "Spacing Scale" })
+get_section({ path: "token-family-spacing", heading: "Spacing Scale" })
 
 // Get typography composition patterns
-get_section({ path: ".kiro/steering/Token-Family-Typography.md", heading: "Typography Composition" })
+get_section({ path: "token-family-typography", heading: "Typography Composition" })
 
 // Get shadow elevation levels
-get_section({ path: ".kiro/steering/Token-Family-Shadow.md", heading: "Shadow Scale" })
+get_section({ path: "token-family-shadow", heading: "Shadow Scale" })
 
 // Get radius values
-get_section({ path: ".kiro/steering/Token-Family-Radius.md", heading: "Primitive Radius Tokens" })
+get_section({ path: "token-family-radius", heading: "Primitive Radius Tokens" })
 
 // Get border width values
-get_section({ path: ".kiro/steering/Token-Family-Border.md", heading: "Primitive Border Width Tokens" })
+get_section({ path: "token-family-border", heading: "Primitive Border Width Tokens" })
 
 // Get opacity values
-get_section({ path: ".kiro/steering/Token-Family-Opacity.md", heading: "Primitive Opacity Tokens" })
+get_section({ path: "token-family-opacity", heading: "Primitive Opacity Tokens" })
 
 // Get breakpoint values
-get_section({ path: ".kiro/steering/Token-Family-Responsive.md", heading: "Breakpoint Tokens" })
+get_section({ path: "token-family-responsive", heading: "Breakpoint Tokens" })
 
 // Get tap area requirements
-get_section({ path: ".kiro/steering/Token-Family-Accessibility.md", heading: "Tap Area Tokens" })
+get_section({ path: "token-family-accessibility", heading: "Tap Area Tokens" })
 ```
 
 ### Get Full Document
 Returns complete content (2,000-15,000 tokens) when comprehensive reference needed:
 
 ```
-get_document_full({ path: ".kiro/steering/Token-Family-Color.md" })
+get_document_full({ path: "token-family-color" })
 ```
 
 ### Recommended Workflow

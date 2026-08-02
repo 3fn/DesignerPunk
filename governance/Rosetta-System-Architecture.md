@@ -631,16 +631,16 @@ The exemption is **not silent**: each exempt subsystem has a **paired boot/smoke
 
 ```
 # Get this document
-get_document_full({ path: ".kiro/steering/Rosetta-System-Architecture.md" })
+get_document_full({ path: "rosetta-system-architecture" })
 
 # Get specific sections
-get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Token Pipeline Architecture" })
-get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "OKLCH Color Pipeline" })
-get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Component Token Integration" })
-get_section({ path: ".kiro/steering/Rosetta-System-Architecture.md", heading: "Subsystem Entry Points Summary" })
+get_section({ path: "rosetta-system-architecture", heading: "Token Pipeline Architecture" })
+get_section({ path: "rosetta-system-architecture", heading: "OKLCH Color Pipeline" })
+get_section({ path: "rosetta-system-architecture", heading: "Component Token Integration" })
+get_section({ path: "rosetta-system-architecture", heading: "Subsystem Entry Points Summary" })
 
 # For token creation governance and guides
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Creation Guides" })
+get_section({ path: "token-governance", heading: "Token Creation Guides" })
 ```
 
 ---

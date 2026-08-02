@@ -70,7 +70,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
   - _Requirements: R4 (all ACs) · Design: Component 8a, Decision 6_
   - Completion doc: `completion/task-4-completion.md`
 
-- [ ] 5. OB-2 snippet sweep (design § Component 8b flow)
+- [x] 5. OB-2 snippet sweep (design § Component 8b flow)
   - **Type**: Implementation · **Agent**: Thurgood (Sonnet) · **Validation**: Tier 2
   - 8b flow in order: (1) D1 re-count (prior → current in completion doc, R5 AC1); (2) **carve-out check FIRST** (R5 AC3): inventory `governance/Process-Development-Workflow.md`; any legacy snippets there are EXCLUDED from this PR and recorded in this completion doc as the origin of the U-final fold-item; (3) migrate legacy `path:` snippets → `id` form; (4) spot-resolution checks via the docs MCP (R5 AC2) + rebuild index
   - Completion doc carries the R5 AC5 owner-grouped touched-docs listing (Ada / Lina / Thurgood) — the explicitly designated evidence home (Decision 6); no findings artifact
