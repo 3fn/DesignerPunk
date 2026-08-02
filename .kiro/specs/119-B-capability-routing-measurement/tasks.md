@@ -29,7 +29,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
 
 ### Unit U1 — Window-free paper decisions
 
-- [ ] 1. Author the `certainty-calibration` register row
+- [x] 1. Author the `certainty-calibration` register row
   - **Type**: Documentation · **Agent**: Thurgood (Sonnet) — implementing the settled 4a sketch; the boundary call was made at design · **Validation**: Tier 1
   - Draft the row in `governance/classification-map.md` per design § 4a: education-owned, `verification: none`, `education: KEEP`, trigger scope + signal scope recorded in-row, **canonical enumeration home designation + update-trigger note**, drafted-by/landed-by attribution (R1 AC3), entry-id grammar citation form
   - Template: the `record-first-ratification` entry; NO parallel structure

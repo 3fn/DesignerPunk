@@ -9,7 +9,7 @@ aliases: classification map register, rule classification, boundary call, verifi
 # Classification Map
 
 **Date**: 2026-07-14
-**Last Reviewed**: 2026-07-14
+**Last Reviewed**: 2026-08-02
 **Purpose**: The living register of per-rule classification decisions — boundary call, verification disposition + owner, and education disposition — so enforcement ownership is decided once and cited thereafter instead of re-litigated per agent, per prompt, per session
 **Organization**: process-standard
 **Scope**: cross-project
@@ -325,4 +325,32 @@ education:
   disposition: "nothing to prune -- no prose predecessor. DD4's no-exemption-mechanism rationale (a zero-validation contract is defective by definition; escalate, don't self-exempt) is the citable design rationale, not restated in steering prose."
 history:
   - { date: 2026-07-14, change: "entry created (U2, Task 4.2 inventory -> Task 4.3 promotion): pre-promotion inventory (Task 4.2) found 234 non-inherited contracts, 0 without validation -- zero fixes, zero DD4 escalations needed (no trigger existed). Assertion promoted audit-first per Req 12.6 / Peter's 2026-07-13 approval. Flagged by Lina as beyond the explicit (a)/(b) drafting scope (one-rule-per-entry: this promotion governs a distinct assertion from wcag-required-refs) and accepted for landing on that basis. Row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-3-completion.md", by: thurgood }
+```
+
+### certainty-calibration
+
+```yaml
+rule: "Discovery-time certainty calibration — weight discovery results by match strength (strong / partial / none): search before guessing; strong -> act on it; partial -> a candidate, not an answer — propose best-fit + confidence + rationale and confirm before acting; none -> never fabricate a location or proceed confidently — state what was searched, propose the best guess, ask the human for go/no-go; when still unsure, surface it"
+boundary_call:
+  class: ideological
+  rationale: "The rule governs judgment quality at discovery time — CI validates function, never ideology: there is no mechanical predicate for 'calibrated well', so no check can own compliance; the education layer owns the rule"
+verification:
+  disposition: none
+  owner: thurgood
+  check_state: none
+  checks: []
+  rationale: "No CI hook. A narrow future hook — e.g. a prompt-lint asserting the generated pointer cue's PRESENCE in agent outputs — is noted as possible, NOT adopted: it would verify delivery of the education, never compliance with the rule"
+education:
+  disposition: "KEEP — durable and specific-but-stable by the churn-rate test (the strong/partial/none contract tracks the shipped Spec-121 matchConfidence signal, not implementation detail). Canonical prose lives in AI-Collaboration-Principles § 'Certainty Calibration: Finding Guidance Before You Guess' (refined-not-rewritten by 119-B, design § 4b). Delivery surfaces: Kiro always-load + CLAUDE.md @-import (the always layer), plus ONE generated discovery-adjacent pointer cue landing with 119-B U-final (design § 4c) — single canonical snippet, zero restated semantics per surface"
+trigger_scope: "Discovery-time uncertainty about WHERE GUIDANCE LIVES — not a general epistemic protocol for all judgments (scope expansion is the likeliest accidental-rewrite mode; R8 AC5)"
+signal_scope: "Surfaces that emit matchConfidence — signal emission is the operative test, not server identity. Signal-less surfaces (deterministic lookups, search_tokens partial matching, find_screens / find_templates) are OUT of scope: prose either states their degraded behavior or stays silent; the search_tokens partial-match gap is routed to Ada as .kiro/issues/2026-07-19-application-mcp-search-tokens-partial-match-signal.md"
+enumeration_home:
+  canonical: "THIS field is the single canonical home of the emitting-tools enumeration (the three-surface fork guard). Currently emitting matchConfidence: find_docs (incl. top-level matchConfidence 'none' on zero-hit); keyworded find_components. Citing surfaces — the AICP settled reference (4b) and the generated pointer cue (4c) — carry the 'enumeration illustrative; signal emission is the operative test' hedge and cite this entry; they never independently assert the list"
+  update_trigger: "A new tool emitting matchConfidence updates THIS field; citing surfaces inherit through the hedge, or are touched in the same edit"
+attribution:
+  drafted_by: thurgood
+  landed_by: thurgood
+  second_eye: "Peter's ratification (R1 AC3; scope-pass A3-as-ratified) — the row is presented for ratification with the 119-B U1 PR and reaches main only through Peter's ratifying merge; a light Ada/Lina consumer review may be added at Peter's option"
+history:
+  - { date: 2026-08-02, change: "entry created (119-B Task 1, unit U1 — window-free per R1 AC1; lands pre-measurement under the ratified R11 AC2 exception, with the keyword-shadowing check scheduled in the U2 case-study findings). Cite as governance/classification-map.md § 'certainty-calibration' (entry-id grammar, never count/position — R1 AC4). Drafted and landed by Thurgood per the steward-writes-register convention; pending Peter's ratification at the U1 merge. Evidence: .kiro/specs/119-B-capability-routing-measurement/completion/task-1-completion.md", by: thurgood }
 ```
