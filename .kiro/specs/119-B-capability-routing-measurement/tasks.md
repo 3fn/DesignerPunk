@@ -61,7 +61,7 @@ Window law (R10), binding WHILE the 125-B window is open: regens batch (target �
 
 ### Unit U3 — Corpus changes, measured
 
-- [ ] 4. OB-3 alias prune (design § Component 8a flow)
+- [x] 4. OB-3 alias prune (design § Component 8a flow)
   - **Type**: Implementation · **Agent**: Thurgood (Sonnet), with **Ada and Lina as consulted domain owners** (not optional — the flow blocks on their confirmation) · **Validation**: Tier 2
   - 8a flow in order: (1) D1 re-inventory (prior → current in completion doc, R4 AC1); (2) candidate assembly with oracle-coverage status per candidate (R4 AC6 — computed against the fixture, never by editing it); (3) **owner consult BEFORE merge**: per-owner candidate lists **carrying oracle-coverage status per candidate** (the owners apply the stricter consent bar against that column — Ada+Lina tR1) → confirm/object (objection → retain, the default) → date + method recorded; non-oracle-covered removals need explicit owner CONSENT, recorded as accepted residual risk; (4) dry-run gate with candidates removed — any WEAK/MISS → retain + record; no partial prunes merge (a gate-retention of a confirmed candidate needs no re-consult — retention is the safe direction, Lina tR1)
   - Produce `findings/alias-prune.md` per the Data Models schema

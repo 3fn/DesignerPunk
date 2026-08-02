@@ -2,7 +2,6 @@
 id: component-family-loading
 inclusion: manual
 name: Component-Family-Loading
-aliases: loading family work
 description: Loading component family (placeholder) — planned components for progress indication including indeterminate spinners, determinate progress bars, and skeleton placeholders. Load when planning loading components or reviewing family architecture.
 ---
 
