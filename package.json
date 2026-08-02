@@ -113,7 +113,6 @@
     "test:resolution-matrix": "node src/config/__resolution-matrix__/run-matrix.js",
     "test:performance": "jest --testPathPatterns='performance/__tests__|__tests__/performance'",
     "test:performance:isolated": "jest --config jest.performance.config.js --runInBand",
-    "test:quick": "jest --testPathIgnorePatterns='(performance|integration)'",
     "test:watch": "jest --watch --testPathIgnorePatterns='performance/__tests__|__tests__/performance'",
     "test:coverage": "jest --coverage --testPathIgnorePatterns='performance/__tests__|__tests__/performance'",
     "release:analyze": "npx tsx src/tools/release/cli/release-tool.ts analyze",
