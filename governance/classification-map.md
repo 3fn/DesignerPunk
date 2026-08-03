@@ -402,6 +402,7 @@ education:
   disposition: "WAVE-1 CANDIDATE — six C1 hunks across TWO surfaces (wave-1-assessment.md §2): FOUR deletions (W1-1; W1-2/3 half-clauses; W1-4 half-clause) + one rewrite-to-descriptive (W1-5) on Task-Completion-Protocol, + one half-clause deletion (W1-9, consult catch) on Process-Development-Workflow § Troubleshooting. Clause-grain cuts justified per Req 10.2: the compound sentences' 'Never merge your own PR' halves are NOT gate-owned until U3 and are retained verbatim on every surface. Retained education: 'Direct pushes to main are rejected by branch protection, admins included' and all branch/PR-flow how-to prose (per-surface hit counts in the assessment). DISCLOSED: .kiro/hooks/complete-task.sh:372 echoes the compound imperative at completion time — tooling, outside the education corpus, retained (weak trial confound recorded). Candidate diff staged (git-apply-verified), NOT applied — application follows trial + Peter's wave ballot."
 history:
   - { date: 2026-08-02, change: "entry created (U1b wave 1, Task 5.2 step (a)); clause scoring + candidate diff: .kiro/specs/125-B-classification-map/completion/u1b/wave-1-assessment.md + wave-1-candidate-diff.patch; Stacy process-owner consult recorded in the assessment; pending Peter's record-first row ratification", by: thurgood }
+  - { date: 2026-08-02, change: "row RATIFIED (Peter, 2026-08-02, in-session record-first; post-consult revision reviewed) — classification approved; prune application still gated on 5.W(b) verification + the wave ballot", by: thurgood }
 ```
 
 ### squash-merge-only
@@ -420,6 +421,7 @@ education:
   disposition: "WAVE-1 CANDIDATE — one rewrite only (W1-6: TCP:80's imperative-shaped lead becomes descriptive; the education after the dash is retained verbatim). All other squash prose (TCP:100/:117, PDW:130/:250) scored KEEP as retained-class education. Low prune yield expected and recorded up front."
 history:
   - { date: 2026-08-02, change: "entry created (U1b wave 1, Task 5.2 step (a)); scoring + candidate hunk in wave-1-assessment.md / wave-1-candidate-diff.patch; pending Peter's record-first row ratification", by: thurgood }
+  - { date: 2026-08-02, change: "row RATIFIED + TRIAL-EXEMPTION RULED (Peter, 2026-08-02, in-session record-first): C2 is unexercisable by agent trials by construction (merges are Peter-performed platform acts) — its single content-preserving rewrite (W1-6) rides on probe evidence + the window backstop, per-case exemption; the never-prune-untested rule stands for every trial-coverable rule (wave-1-assessment.md §4)", by: thurgood }
 ```
 
 ### typecheck-build-green-at-merge
@@ -438,4 +440,5 @@ education:
   disposition: "ROWS-ONLY (wave-1 finding, recorded 2026-08-02): the sweep found ZERO imposter clauses — TCP:44/:146/:149 are the pilot's own retained/rewritten education (untouched); BUILD-SYSTEM-SETUP:188/:210 are KEEP (local dev-loop guidance, no gate at that grain — the retained subtask-targeted-tests precedent); PTD/PSP hits are task-template examples. Late-found adjacent hit Test-Development-Standards:1472 is DEFERRED to Wave 2 with its surface (explicit call, recorded on npm-test-before-complete's history). No prune action exists for this rule; the row documents the clean state so future waves do not re-litigate it."
 history:
   - { date: 2026-08-02, change: "entry created (U1b wave 1, Task 5.2 step (a)) as a rows-only finding; enumeration record in wave-1-assessment.md §5; pending Peter's record-first row ratification", by: thurgood }
+  - { date: 2026-08-02, change: "row RATIFIED (Peter, 2026-08-02, in-session record-first; post-consult revision reviewed) — classification approved; prune application still gated on 5.W(b) verification + the wave ballot", by: thurgood }
 ```
