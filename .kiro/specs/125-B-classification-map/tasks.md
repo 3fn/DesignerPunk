@@ -267,7 +267,7 @@
   - **Ambiguity (standing instruction)**: ambiguous results are reported as ambiguous at every tier; INDETERMINATE never converts to pass; MIXED/INDETERMINATE trial verdicts go to Peter, never default-proceed.
   - **Documentation grade [STACY R1]**: every U1b unit (5.1, each wave, 5.Z) carries PARENT-grade completion docs (detailed completion doc + summary doc) despite subtask numbering — each is a merge unit shipping governance-law change.
 
-  - [ ] 5.1 Campaign roster + campaign measurement protocol + shared-window arming
+  - [x] 5.1 Campaign roster + campaign measurement protocol + shared-window arming
     **Type**: Architecture
     **Validation**: Tier 2 - Standard
     **Agent**: Thurgood (Opus) — corpus triage is judgment; owner consults recorded per candidate
@@ -290,7 +290,18 @@
     - (e) **Wave record**: per-criterion verdicts (met/unmet/indeterminate; ambiguity discipline); W2 UNMET → the wave ballot's recorded revert path + a methodology finding to the register's notes; the record cites the campaign dataset state at wave close. **Chafe line, mandatory [STACY R1]: "stop-and-wait friction incidents under armed gates observed this wave: <incidents, or explicit none-observed>" — the collection that makes 5.Z's dial decision meaningful.**
     - _Requirements: 10.2–10.5, 6.x, 7.x, 9 caps_
 
-  - [ ] 5.Z Campaign closeout (final unit; its real number is assigned by 5.1's same mechanical instantiation edit [STACY R1 nit])
+  *(Waves 5.2–5.5 instantiated by 5.1's mechanical edit, 2026-08-02 — each executes the 5.W template VERBATIM; the task entries below declare ONLY the enumerated fill slots (wave number, rule names + sweep surface lists, sizing rationale, agent/model stamps). Roster + sweep record: `completion/u1b/campaign-plan.md`. Any textual departure from 5.W during execution is a deviation and re-opens review.)*
+
+  - [ ] 5.2 Wave 1 — workflow-gate territory (executes 5.W verbatim)
+    **Fill slots**: rules **C1** never-commit/push-to-`main`/PR-flow (gate: branch protection; sweep surfaces: Task-Completion-Protocol, Process-Development-Workflow, core-goals; HIGH), **C2** squash-merge-only (gate: repo merge config; TCP, PDW; MEDIUM), **C3** typecheck/build-green-before-merge (gates: lane-typecheck, lane-build-validate; Process-Task-Type-Definitions, Process-Spec-Planning, BUILD-SYSTEM-SETUP, canonical/thurgood; LOW). **Sizing**: 3 rules, one shared territory — a single PR-flow-traversing battery task can cover all three (relevance per rule iff R1-PRESENT per territory); pilot's home ground. **Agents**: Thurgood (Opus classify / Sonnet mechanics); Stacy consult.
+  - [ ] 5.3 Wave 2 — component/test-governance territory (executes 5.W verbatim)
+    **Fill slots**: rules **C4** WCAG-refs-required (armed check; Contract-System-Reference, Component-Development-Guide, family docs; MEDIUM), **C5** validation-criteria-completeness (armed; Contract-System-Reference, Component-Inheritance-Structures; MEDIUM), **C6** console-discipline (armed console-fail; Test-Development-Standards; LOW). **Sizing**: 3 rules, Lina's check territory; one component battery task shares territory. **Agents**: Thurgood steward; **Lina consult per row**.
+  - [ ] 5.4 Wave 3 — artifact-integrity territory (executes 5.W verbatim)
+    **Fill slots**: rules **C7** never-hand-edit-122-generated (gates: 122-diff-guard + sweeps; canonical agent headers, thin steering prose; MEDIUM), **C8** never-hand-edit-generated-token-outputs (gate TBD at classification — **Ada adjudicates**; Token-Governance, Token-Quick-Reference, rosetta docs; MEDIUM), **C9** `no-hardcoded-color` (NAMED classify-only commitment — row lands, no lint task; Component-Development-Guide, platform guides; rows-only expected). **Sizing**: 3 rules incl. one committed rows-only item; generated-surface anomaly rule (5.W(d)) is load-bearing here. **Agents**: Thurgood steward; **Ada consult central**, Lina on C9 scope.
+  - [ ] 5.5 Wave 4 — register maintenance (executes 5.W verbatim; ROWS-ONLY EXPECTED)
+    **Fill slots**: **C10** philosophy-conformance candidate row (U2's logged candidate) + **C11** `proposed`-row state work: record-first-ratification barrier scope (U3 territory), no-autonomous-token-creation (U3 diff-gate territory), inverse-drift WATCH confirmation. **Sizing**: 4 row items, no prune anticipated — if that holds, the wave merges as a rows-only PR (instrument-excluded per protocol §6 class 3) and opens no window. **Agents**: Thurgood steward; per-row owner consults.
+
+  - [ ] 5.6 Campaign closeout (numbered by 5.1's instantiation edit; was template 5.Z)
     **Type**: Documentation
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — synthesis + honest-ambiguity reporting

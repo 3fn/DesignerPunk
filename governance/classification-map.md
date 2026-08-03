@@ -32,6 +32,18 @@ This is the **classification-map register**: one entry per governance/design rul
 
 ---
 
+## Methodology Notes (measurement law — U1 pilot verdicts carried into the U1b campaign)
+
+*Recorded 2026-08-02 by Thurgood (steward) per 125-B Task 5.1; source rulings: the ratified verdict ballot (`.kiro/docs/ballots/2026-08-02-u1-pilot-closeout-verdict.md`), the U1 closeout record §2, and the settled U1b amendment (PR #112). These are the durable, MCP-served statements of the campaign's measurement law; the operational detail lives in `.kiro/specs/125-B-classification-map/completion/u1b/campaign-measurement-protocol.md`.*
+
+1. **First-push pinning by RECONSTRUCTION (default)**: a PR's first-push SHA = the last commit with `committedDate ≤ createdAt + 120s`; check conclusions are queried against that SHA; no concluded required checks → INDETERMINATE, never converted. Observation passes are event-anchored (window open / session-start-while-open / close) — never calendar-cadenced.
+2. **Batch overshoot counts whole** (the J3 ruling): an observation batch that crosses a close condition counts every qualifying PR in the batch.
+3. **Roll-up reading** (ballot Decision 0): a criterion is MET iff MET in every EVALUABLE segment with ≥1 evaluable; empty or under-populated segments never force INDETERMINATE.
+4. **Applicability scoring**: actions that never become applicable score N/A, not ABSENT.
+5. **Campaign window parameters** (ballot Decision (c), P1–P3): N=10 observed PRs per wave window; re-accretion (W2) and churn (W3) per-wave; first-push failure rate (W1) on ONE shared campaign window with a single pre-campaign baseline; waves may overlap; **campaign-endogenous events (wave prunes, wave ballots, register/roster PRs) do not segment the shared window — exogenous events only (new check armings, outside regenerations touching pruned surfaces, required-check-set changes), bounded at K=3** (Peter's ruling, 2026-08-02). A pruned pattern reappearing on a GENERATED surface without a source change is an anomaly finding, never a re-accretion hit.
+
+---
+
 ## Addressing and Citation
 
 **How to cite an entry** (from any spec, steering doc, crossRef, or agent):
