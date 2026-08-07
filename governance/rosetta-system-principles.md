@@ -583,8 +583,8 @@ get_section({ path: "rosetta-system-principles", heading: "Mathematical Relation
 ## Related Documentation
 
 - [Stemma System Principles](stemma-system-principles) - Relational foundation for component development
-- [Civitas System Overview](civitas-system-overview) - Governance foundation for operational consistency
-- [DesignerPunk Systems Overview](designerpunk-systems-overview) - Visual architecture of all three systems
+- [Civitas System Overview](../.kiro/steering/Civitas-System-Overview.md) - Governance foundation for operational consistency
+- [DesignerPunk Systems Overview](../.kiro/steering/DesignerPunk-Systems-Overview.md) - Visual architecture of all three systems
 - [Token System Overview](../../docs/token-system-overview.md) - Master document mapping token files
 - [Token Quick Reference](token-quick-reference) - Token documentation routing
 - [Token Architecture 2.0 Mathematics](../../preserved-knowledge/token-architecture-2-0-mathematics.md) - Detailed mathematical formulas

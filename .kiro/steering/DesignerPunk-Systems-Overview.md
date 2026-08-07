@@ -27,7 +27,7 @@ DesignerPunk is built on three complementary foundation systems:
 
 This document provides visual diagrams showing how these systems work individually and how they integrate to create the complete design system.
 
-For detailed Civitas documentation, see [Civitas System Overview](civitas-system-overview).
+For detailed Civitas documentation, see [Civitas System Overview](./Civitas-System-Overview.md).
 
 ---
 
@@ -291,7 +291,7 @@ flowchart TB
 ## Related Documentation
 
 **Civitas System:**
-- [Civitas System Overview](civitas-system-overview) — Governance layer definition, three-layer boundary, processes
+- [Civitas System Overview](./Civitas-System-Overview.md) — Governance layer definition, three-layer boundary, processes
 
 **Rosetta System:**
 - [Rosetta System Principles](rosetta-system-principles) — Mathematical foundation and token philosophy

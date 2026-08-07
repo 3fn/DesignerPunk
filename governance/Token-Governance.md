@@ -645,7 +645,7 @@ get_section({ path: "token-governance", heading: "Token Creation Guides" })
 - [Rosetta System Principles](rosetta-system-principles) — Mathematical foundations
 - [Token Quick Reference](token-quick-reference) — Token documentation routing
 - [Token Category Pattern Guide](../specs/token-system/token-category-pattern-guide.md) — Detailed primitive/semantic creation patterns
-- [Core Goals](core-goals) — Project principles including token-first approach
+- [Core Goals](../.kiro/steering/core-goals.md) — Project principles including token-first approach
 - [Design Authority](../specs/051-semantic-token-naming-restructure/design-outline.md) — Semantic token naming restructure design
 
 ### DTCG Integration
