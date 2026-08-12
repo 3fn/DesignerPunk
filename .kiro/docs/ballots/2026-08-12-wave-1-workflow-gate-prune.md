@@ -2,7 +2,7 @@
 
 **Date**: 2026-08-12
 **Author**: Thurgood (Civitas steward) / Spec 125-B Task 5.2 (U1b Wave 1, 5.W step (c))
-**Status**: **DRAFT — awaiting Peter's ratification.** Per the ballots README record-first protocol, ratification (Status update + commit) precedes the wave PR's merge; the merge is the application.
+**Status**: **RATIFIED (Peter, 2026-08-12)** — ratified in-session upon presentation of the full evidence chain (ratified rows → probe → trial verdict + pre-committed consequence → application-time re-verification), with the counter-argument (single valid pair; no R4' evidence; symmetric explicit trial-awareness) presented alongside. Recorded and committed to the wave-1 PR branch (PR #124) BEFORE merge per the ballots README record-first protocol. The PR is a governance-law change, Peter-merged under the standing carve-out; **the merge applies the measure this record ratifies.**
 **Purpose**: Apply Wave 1's ratified candidate prune diff — seven hunks removing or rewriting the imperative restatements of three workflow-gate rules whose *what* the platform has mechanically owned since 125-A — while retaining every consequence-education clause verbatim. Executes tasks.md 5.W(c) under the campaign law settled at PR #112 and the at-scale parameters ratified in the U1 closeout verdict ballot (2026-08-02).
 
 ---
