@@ -5,6 +5,8 @@
 **Author**: Thurgood (placeholder scaffolding)
 **Status**: **PLACEHOLDER STUB — not a design outline.** Formalization is **gated on Spec 118's module-resolution direction decision** (bundle-vs-tsx / CJS-vs-ESM). This document captures scope, dependencies, and cross-references only so the references from Spec 121 resolve and the dependency graph is navigable. **No architecture or design decisions are recorded here** — they would pre-empt 118.
 
+> **GATE-STATUS UPDATE (2026-08-12): ALL formalization gates are OPEN.** Spec 118 is COMPLETE (module-resolution contract shipped in v13.0.0, 2026-07-05); the 125-B U1-c verdict is RATIFIED (PROCEED, #105); Spec 119-B is COMPLETE (#107) with its handoff at `.kiro/specs/119-B-capability-routing-measurement/inbound-to-123-from-119-B.md`. **New inbound this date**: `inbound-from-onboarding-ci-vision.md` — Peter's onboarding-CLI + consumer-CI-integration vision (design-outline grain; extends this stub's `init` scope with a spec-driven CI-integration step). The kickoff folds ALL NINE inbounds through the full pipeline on Peter's go; this stub remains a stub until then.
+
 ---
 
 ## Why This Is a Stub
