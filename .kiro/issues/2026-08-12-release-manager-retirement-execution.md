@@ -25,13 +25,13 @@
 - [x] `npm test` 8891/8891 green (before: 9020) + `tsc` clean (PR 1)
 
 ### UPDATE (law + live teaching surfaces — governance PR, Peter-merged)
-- [ ] `.kiro/steering/Task-Completion-Protocol.md` :80 — "preserving the atomic-commit-per-task history the release tool scans" → title-discipline rationale stands on its own (the changelog spine)
-- [ ] `.kiro/steering/start-up-tasks.md` — test-command decision tree ×3: "modifies release tool" branch → re-anchor (e.g., "performance-critical systems" alone)
-- [ ] `governance/release-management-system.md` — REWRITE to the recipe mental-model + the C1 "discovering what changed and why" chain (squash titles → `docs/releases/` notes → task summaries → ballots/register)
-- [ ] `.kiro/hooks/RELEASE-FLOW.md` — add the derive-classify-ratify section (v14's proven sequence incl. dual-registry playbook pointer + guard scripts)
-- [ ] `.kiro/hooks/complete-task.sh` — remove the "Release analysis runs post-merge" banner line
-- [ ] Remaining governance references, adjudicate each: `Process-Development-Workflow.md`, `Process-Hook-Operations.md`, `Process-Spec-Planning.md`, `completion-documentation-guide.md`, `Test-Failure-Audit-Methodology.md`, `BUILD-SYSTEM-SETUP.md`, `.kiro/hooks/README.md`, `docs/testing/test-infrastructure-guide.md`
-- [ ] Docs-MCP `rebuild_index` after governance edits; steering-metadata validation on touched docs
+- [x] TCP :80 amended (PR 2) — "atomic-commit-per-unit history that serves as the release changelog spine". **HANDOFF NOTE for 125-B Wave 1(b)/(c): this touches the SAME TCP line as candidate hunk W1-6 — the staged `wave-1-candidate-diff.patch` needs mechanical re-derivation post-merge (context refresh only; cuts unchanged; record a dated note in the wave-1 assessment).**
+- [x] start-up-tasks ×3 re-anchored to performance-systems-only (PR 2)
+- [x] release-management-system.md REWRITTEN (PR 2) — recipe + C1 discovery chain + Stacy-consult folds: audience-framing banner (consumer worked-example), role-framed release owner, guard-scripts consumer qualifier, inline tag mechanics, **`package.json` files[] as the authoritative shipped-surface list**, name/description frontmatter. Consult record: transcribed below.
+- [x] RELEASE-FLOW.md § "Deriving the delta" added (PR 2), files[]-authority included
+- [x] complete-task.sh banner + both stale comments removed (PR 2); bash -n clean
+- [x] All 8 adjudicated (PR 2): PDW pointers re-aimed; PHO framing + dead get_section citations + dead hook pointers fixed (Stacy consult catch); CDG + PSP release-detection rationale passages rewritten w/ historical notes (consult catch); BUILD-SYSTEM-SETUP example swapped + orphan tsconfig line dropped; hooks README re-pointed; test-infra guide example swapped. Test-Failure-Audit-Methodology KEPT untouched (OPP-043 + lessons are audit HISTORY). PSP :2305+ quoted historical content untouched per consult.
+- [x] Index rebuilds server-side at serve/CI; frontmatter conformance hand-checked on the rewrite (id/name/description/aliases + full metadata block); CI lanes verify (PR 2)
 
 ### ARCHIVE or DELETE (per-file call at execution; git history preserves regardless)
 - [x] `docs/release-management/` — DELETED (PR 1; git history preserves)
@@ -39,10 +39,15 @@
 - [x] `docs/roadmap/release-system-review.md` — KEPT as history (PR 1 decision; 065-era analysis record)
 
 ### KEEP untouched (verify only)
-- [ ] Publish guard scripts (`check:drift`, `verify:token-index-clean`, `prepublishOnly` chain) — regression-check they run standalone
-- [ ] `docs/releases/` records; the hand-authored-notes practice
-- [ ] Spec 065 / 101 records (history)
+- [x] Guard scripts re-verified standalone at PR 1 (green)
+- [x] Untouched; v14 notes' "reproduce at this tag" verified still-true as historical record (consult)
+- [x] Untouched (history)
 
 ### Cross-spec notes
-- [ ] Record the "serve release notes to consumers?" question in 123's inbound set (per the ballot's C1 deferral)
+- [x] DONE — `.kiro/specs/123-consumer-distribution/inbound-from-q6-release-retirement.md` authored (rides PR 2's fix push): notes-shipping deferral + the systemic internal-vs-consumer framing question, both routed to 123. **NEW from consult: (i) candidate register/U1b rule — "a get_section heading citation must resolve" (nothing mechanically guards cross-doc heading citations today); (ii) systemic internal-vs-consumer framing for the ~80 shipped governance docs → Spec 123's consumer-surface story.**
 - [ ] If a U1b wave window is OPEN at execution time: this work's PRs are ordinary observed PRs (not instrument PRs — this is Q6 work, not 125-B measurement); no special handling
+
+
+## Stacy consult record (safeguard 2 — RMS rewrite, 2026-08-12)
+
+Returned pre-PR-2; ALL items folded, zero declined: (a) ballot-fidelity clean incl. C1 chain; (b) CRITICAL dead get_section citations in PHO → fixed in PR 2, + register-candidate rule recorded above; (c) CRITICAL consumer dead-pointer + 3 MEDIUMs → audience-framing banner + role-framing + guard-script qualifier + inline tag mechanics + chain consumer-note (her one-line fix adopted; systemic question routed to 123 per her own counter-argument); (d) MEDIUM shipped-surface under-specification → files[] named authoritative in BOTH docs; adjacent residue (CDG/PSP hook-rationale passages) → rewritten with historical notes; nits (frontmatter name/description; Historical Note retained given the banner) → taken.
