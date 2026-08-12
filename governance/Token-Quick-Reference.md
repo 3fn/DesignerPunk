@@ -375,3 +375,6 @@ What are you building?
 - [Figma Workflow Guide](figma-workflow-guide) - Bidirectional Figma integration: token push and design extraction
 - [Transformer Development Guide](transformer-development-guide) - Building custom token transformers
 - [MCP Integration Guide](mcp-integration-guide) - Programmatic token loading and querying
+
+<!-- GATE-BITE PROOF (throwaway — never merge): deliberate dead citation -->
+get_section({ path: "token-governance", heading: "Deliberately Nonexistent Heading (gate-bite)" })
