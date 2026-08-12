@@ -520,17 +520,16 @@ metadata:
 **Query component readiness**:
 ```
 get_section({ 
-  path: "component-family-form-inputs", 
-  heading: "Component Readiness" 
+  path: "component-readiness-status", 
+  heading: "Individual Component Status" 
 })
 ```
 
 **Response includes**:
-- Component name
-- Current readiness status
-- Status indicator emoji
-- Usage recommendations
-- Migration guidance (if deprecated)
+- Component name and family
+- Roll-up status indicator (production-ready / web-ready-mobile-scaffold / scaffold)
+- Per-platform readiness breakdown (web / iOS / Android)
+- Implementation path
 
 ---
 

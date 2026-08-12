@@ -128,6 +128,7 @@
     "figma:generate-component": "npx tsx scripts/figma-component-generator.ts",
     "check:drift": "node scripts/check-package-name-drift.js",
     "check:id-uniqueness": "tsx scripts/check-id-uniqueness.ts",
+    "check:section-citations": "tsx scripts/check-section-citations.ts",
     "prepack": "npm run build",
     "verify:token-index-clean": "git diff --quiet token-index/ || (echo '✖ token-index/ is stale relative to the committed state. Regenerate and commit it on the RELEASE BRANCH (it traverses the PR gate with the version bump) before publishing. See .kiro/hooks/RELEASE-FLOW.md.' && exit 1)",
     "prepublishOnly": "npm run build && npm run check:drift && npm run verify:token-index-clean",

@@ -228,15 +228,6 @@ The feedback document uses this structure:
 
 ---
 
-## MCP Query
+## Document Access
 
-For the full protocol:
-```
-get_document_full({ path: "spec-feedback-protocol" })
-```
-
-For specific sections:
-```
-get_section({ path: "spec-feedback-protocol", heading: "Stamp Format" })
-get_section({ path: "spec-feedback-protocol", heading: "Mandatory @ Mention Scanning" })
-```
+This is an identity doc (Spec 119) — never MCP-served, always loaded in full into every agent's context. No query is needed to access it. If you need to point to a specific part of it, use an in-document § reference (e.g., this doc's § "Stamp Format" or § "Mandatory @ Mention Scanning"), not an MCP call.

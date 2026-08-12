@@ -397,7 +397,7 @@ get_document_full({ path: "web-authoring-standards" })
 For specific sections:
 ```
 get_section({ path: "web-authoring-standards", heading: "Hard Rules" })
-get_section({ path: "web-authoring-standards", heading: "Token Priority" })
+get_section({ path: "web-authoring-standards", heading: "3. Token Priority" })
 get_section({ path: "web-authoring-standards", heading: "Product Token Authoring (Sparky)" })
 get_section({ path: "web-authoring-standards", heading: "Naming Schema" })
 ```
