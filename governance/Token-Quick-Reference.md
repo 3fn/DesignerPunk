@@ -297,25 +297,20 @@ Returns targeted content (~2,000 tokens) for specific information:
 ```
 // Get color concept tokens by category
 get_section({ path: "token-family-color", heading: "Feedback Concept" })
-get_section({ path: "token-family-color", heading: "Identity Concept" })
-get_section({ path: "token-family-color", heading: "Action Concept" })
-get_section({ path: "token-family-color", heading: "Contrast Concept" })
-get_section({ path: "token-family-color", heading: "Structure Concept" })
-
-// Get component-specific color tokens
-get_section({ path: "token-family-color", heading: "Component Tokens" })
+get_section({ path: "token-family-color", heading: "Identity, Action, Contrast, Structure, Progress" })
 
 // Get primitive color families
-get_section({ path: "token-family-color", heading: "Primitive Color Families" })
+get_section({ path: "token-family-color", heading: "Neutral Partition" })
+get_section({ path: "token-family-color", heading: "Chromatic Families" })
 
 // Get spacing scale values
-get_section({ path: "token-family-spacing", heading: "Spacing Scale" })
+get_section({ path: "token-family-spacing", heading: "Primitive Spacing Tokens" })
 
 // Get typography composition patterns
-get_section({ path: "token-family-typography", heading: "Typography Composition" })
+get_section({ path: "token-family-typography", heading: "Typography Token Categories" })
 
 // Get shadow elevation levels
-get_section({ path: "token-family-shadow", heading: "Shadow Scale" })
+get_section({ path: "token-family-shadow", heading: "Shadow Semantic Tokens" })
 
 // Get radius values
 get_section({ path: "token-family-radius", heading: "Primitive Radius Tokens" })

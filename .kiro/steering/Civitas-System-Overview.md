@@ -120,15 +120,6 @@ The three systems form a complete design system ecosystem: Rosetta defines the v
 
 ---
 
-## MCP Query
+## Document Access
 
-For the full document:
-```
-get_document_full({ path: "civitas-system-overview" })
-```
-
-For specific sections:
-```
-get_section({ path: "civitas-system-overview", heading: "The Three-Layer Boundary" })
-get_section({ path: "civitas-system-overview", heading: "Relationship to Rosetta and Stemma" })
-```
+This is an identity doc (Spec 119) — never MCP-served, always loaded in full into every agent's context. No query is needed to access it. If you need to point to a specific part of it, use an in-document § reference (e.g., this doc's § "The Three-Layer Boundary" or § "Relationship to Rosetta and Stemma"), not an MCP call.

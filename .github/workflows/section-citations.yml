@@ -1,0 +1,51 @@
+# Section Citation Guard — dead get_section/get_document_full citation check.
+#
+# Sanctioned by register row `governance/classification-map.md § "section-citation-resolution"`
+# (check_state: proposed → armed at Peter's flip). Execution issue:
+# `.kiro/issues/2026-08-12-section-citation-defects-and-checker.md`.
+#
+# One job, one script (escalate-don't-build boundary): scans the citing corpus
+# (governance/, .kiro/steering/, canonical/) for MCP citation blocks and verifies
+# each resolves — doc via the runtime resolver chain (id → indexed key → frozen
+# legacy-path manifest), heading via exact-match, with identity-doc awareness
+# (citations targeting never-served .kiro/steering/ docs are defects by
+# construction) and a template-placeholder allowlist.
+#
+# Making this a required check: Settings → Branches → main → Require status
+# checks → add "Section Citation Guard / section-citations". This workflow only
+# defines the check; ARMING IS PETER'S FLIP (125-A pattern). Timing law: arm
+# BEFORE U1b wave 1's prune merges — after the campaign window opens, a new
+# check arming is an exogenous boundary event (K=3 budget).
+
+name: Section Citation Guard
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  section-citations:
+    name: Section Citation Guard
+    runs-on: ubuntu-latest
+    # The script is a pure-fs scan (no builds, no MCP boot); npm ci dominates.
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Section citation guard
+        run: npm run check:section-citations
