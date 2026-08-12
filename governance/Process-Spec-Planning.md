@@ -403,8 +403,8 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
 **Completion Documentation**:
 - Two documents per primary task:
   - Detailed: `.kiro/specs/[spec-name]/completion/task-[N]-parent-completion.md` (comprehensive internal documentation)
-  - Summary: `docs/specs/[spec-name]/task-[N]-summary.md` (concise public-facing summary, used by release tool)
-- Detailed docs preserve comprehensive knowledge; summary docs trigger hooks and serve as release notes
+  - Summary: `docs/specs/[spec-name]/task-[N]-summary.md` (concise public-facing summary — source material for hand-authored release notes)
+- Detailed docs preserve comprehensive knowledge; summary docs serve as release-note source material
 
 **Sub-tasks**:
 - Focus on implementation steps
@@ -2227,25 +2227,20 @@ Developers can now:
 
 ### Parent Task Summary Documents
 
-**Purpose**: Create concise, commit-style summaries of parent task completion that serve as release note content for the release tool.
+**Purpose**: Create concise, commit-style summaries of parent task completion that serve as source material for hand-authored release notes.
 
 **Location**: `docs/specs/[spec-name]/task-N-summary.md`
 
 **When to Create**: After completing a parent task and writing detailed completion documentation in `.kiro/specs/[spec-name]/completion/task-N-parent-completion.md`
 
-**Hook Limitation**: Kiro IDE's `fileCreated` and `fileSaved` hooks only trigger for manual file operations through the IDE UI, not for programmatically created files by AI agents. This requires a hybrid approach:
-- **Automatic hooks**: Work for manually created/edited files through IDE UI
-- **Manual trigger**: Required for AI-assisted workflows after summary document creation
-
-**Rationale**: 
-- **Hook Triggering**: The `.kiro/` directory is filtered from Kiro IDE's file watching system, preventing hooks from triggering on files created there. Summary documents in `docs/specs/` directory enable automatic release detection for manual file operations.
-- **Dual Purpose**: Summary documents serve both as hook triggers and as concise, public-facing release note content.
+**Rationale**:
+- **Dual Purpose**: Summary documents are the concise, public-facing record of each parent task — the source material the release recipe reads when authoring release notes.
 - **Clear Separation**: Detailed completion docs (internal knowledge preservation) remain in `.kiro/`, while summaries (public-facing) live in `docs/`.
-- **Hybrid Approach**: Automatic hooks for manual edits, manual trigger for AI workflows ensures release detection works in all scenarios.
+- *(Historical: `docs/`-placement also served a Kiro release-detection hook and its manual trigger, deleted 2026-08-12 — Q6 ballot. The public/internal split stands on its own.)*
 
 **Forward-Looking Note**: This summary document workflow applies to new specs going forward. Existing completion documents don't need changes.
 
-**Release Analysis**: The release tool (`src/tools/release/`) scans summary documents via git log to generate release notes. Release analysis runs post-merge on `main` (non-blocking); run `npm run release:analyze` for on-demand detail.
+**Release notes**: hand-authored per the release recipe (Release Management System) — the author derives the delta from squash titles since the last tag and reads summary docs for each change's substance. (The automated release tool was retired 2026-08-12, Q6 ballot.)
 
 **Format Template**:
 
@@ -2294,7 +2289,7 @@ Developers can now:
 - 🟡 **Ecosystem** — new tools, agents, MCPs, build system changes, or third-party integrations. Surfaced prominently.
 - 🔵 **Internal** — governance updates, process changes, infrastructure work. Included as context.
 
-When present, the release tool uses this for accurate classification. When absent, it falls back to section-based extraction. Include when your task delivers artifacts that should appear in release notes.
+When present, the release-notes author uses this for accurate classification. Include when your task delivers artifacts that should appear in release notes.
 
 **Example - Task 1 Summary**:
 
@@ -2503,7 +2498,6 @@ When creating cross-references, calculate relative paths based on the source doc
 - Manual task status updates → `complete-task.sh` on the task branch → No agent hooks triggered
 - **Benefit**: Simpler, direct control
 - **Use when**: Quick fixes, non-spec work, or when agent hooks aren't needed
-- **Note**: Run `npm run release:analyze` for on-demand release analysis
 
 ---
 

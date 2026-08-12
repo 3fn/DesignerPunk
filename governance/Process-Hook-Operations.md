@@ -2,7 +2,7 @@
 id: process-hook-operations
 inclusion: manual
 name: Process-Hook-Operations
-description: Agent hook operational guidance — dependency chains, execution order, automatic file organization, troubleshooting, and best practices. Load when debugging hook issues, setting up or modifying hooks, or troubleshooting automation failures. NOTE - Release detection sections are outdated; the release system was rebuilt in Spec 065 as an on-demand CLI tool at src/tools/release/. See Release Management System.md for current architecture.
+description: Agent hook operational guidance — dependency chains, execution order, automatic file organization, troubleshooting, and best practices. Load when debugging hook issues, setting up or modifying hooks, or troubleshooting automation failures. NOTE - Release detection sections are historical; the Spec-065 release CLI was RETIRED 2026-08-12 (Q6 ballot) in favor of the manual release recipe. See Release Management System for current process.
 ---
 
 # Hook Operations Guide
@@ -25,7 +25,7 @@ This document provides detailed operational guidance for working with Kiro agent
 >
 > **2. "Task completion" now means merge (125-A PR-gate).** Since the ratified 125-A workflow, a task is accepted when its unit's **PR is merged** — not when a local status flips. The completion tool is `./.kiro/hooks/complete-task.sh` (opens the PR), which **superseded** the old commit-on-completion tooling. Work reaches `main` only through a merged, branch-protected PR. So the troubleshooting guidance below that frames "direct git commits" as *bypassing hooks* (versus using the `taskStatus` tool) is **Kiro-IDE-specific and predates the branch→PR→merge flow** — under the current workflow, committing and pushing a branch is a *correct, expected* step, not an error to avoid.
 >
-> **3. Release detection here is historical.** As the frontmatter notes, the release system was rebuilt in Spec 065 into an on-demand CLI (`src/tools/release/`); the release-detection-on-task-completion hook content below is retained for Kiro-hook operational history. See [Release Management System](release-management-system) for the current architecture.
+> **3. Release detection here is historical.** The Spec-065 release CLI was itself RETIRED on 2026-08-12 (Q6 ballot: `.kiro/docs/ballots/2026-08-12-q6-release-manager-retirement.md`), and the `release-manager.sh` hook described below was DELETED the same day; this content is retained solely as Kiro-hook operational history. See [Release Management System](release-management-system) for the current release recipe.
 >
 > This doc is preserved for Kiro-runtime hook operations and history. A cross-runtime rework belongs with the 122 agent-generator work (OB-7), not here.
 
@@ -1187,11 +1187,10 @@ Release detection triggers automatically when parent task summary documents are 
 - `.kiro/` directory is filtered from Kiro IDE file watching (hooks don't trigger there)
 
 **Quick Reference**:
-- **Summary docs**: `docs/specs/[spec-name]/task-N-summary.md` (triggers hooks)
+- **Summary docs**: `docs/specs/[spec-name]/task-N-summary.md` (release-note source material)
 - **Detailed docs**: `.kiro/specs/[spec-name]/completion/task-N-parent-completion.md` (internal)
-- **Manual trigger**: `./.kiro/hooks/release-manager.sh auto`
 
-**For detailed guidance** on release detection pipeline, troubleshooting, hook debugging, and manual triggers, query Release Management System via MCP:
+**For the current release process** (the manual recipe; the detection hook was deleted 2026-08-12, Q6 ballot), query Release Management System via MCP:
 
 ```
 get_document_full({ path: "release-management-system" })
@@ -1199,8 +1198,8 @@ get_document_full({ path: "release-management-system" })
 
 Or query specific sections:
 ```
-get_section({ path: "release-management-system", heading: "Release Pipeline Architecture" })
-get_section({ path: "release-management-system", heading: "AI Agent Decision Points" })
+get_section({ path: "release-management-system", heading: "The Release Recipe" })
+get_section({ path: "release-management-system", heading: "Discovering What Changed and Why" })
 ```
 
 ---

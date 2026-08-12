@@ -410,8 +410,8 @@ it('should have automatic hook', () => {
 });
 
 // ✅ Correct - tests actual implementation
-it('should have release manager script', () => {
-  expect(fs.existsSync('.kiro/hooks/release-manager.sh')).toBe(true);
+it('should have completion tooling script', () => {
+  expect(fs.existsSync('.kiro/hooks/complete-task.sh')).toBe(true);
 });
 ```
 

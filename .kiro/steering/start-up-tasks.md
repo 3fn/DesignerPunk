@@ -83,7 +83,7 @@ description: Essential pre-task checklist — date verification, governance heal
    
    **WHEN validating parent task completion THEN:**
    - **Default**: Use `npm test` (comprehensive functional validation)
-   - **If task modifies release tool or is performance-critical**: Use `npm run test:all` (adds the performance suites; the cost difference is now seconds, so when in doubt, run `test:all`)
+   - **If task is performance-critical**: Use `npm run test:all` (adds the performance suites; the cost difference is now seconds, so when in doubt, run `test:all`)
    
    **WHEN task involves performance changes THEN:**
    - Run BOTH `npm run test:performance` AND `npm run test:performance:isolated` (perf coverage is split across the two lanes), or simply `npm run test:all`
@@ -92,7 +92,7 @@ description: Essential pre-task checklist — date verification, governance heal
    **Decision tree:**
    ```
    Is this a parent task completion?
-   ├─ YES → Does task modify release tool or performance systems?
+   ├─ YES → Does task modify performance systems?
    │   ├─ YES → npm run test:all (includes performance regression tests)
    │   └─ NO → npm test (comprehensive functional validation)
    └─ NO → Does task involve performance changes?
@@ -105,7 +105,7 @@ description: Essential pre-task checklist — date verification, governance heal
    - `npm run test:all` additionally runs the performance suites (seconds of extra cost, but wall-clock-sensitive — avoid under heavy machine load)
    - Most parent tasks only need functional validation
    
-   **Default assumption**: Use `npm test` for parent tasks unless working on release tool or performance systems.
+   **Default assumption**: Use `npm test` for parent tasks unless working on performance systems.
 
 6. **Model-tier calibration — when this task will delegate to subagents**
    

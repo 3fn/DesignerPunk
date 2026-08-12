@@ -24,9 +24,9 @@ This guide consolidates all guidance for creating completion documentation, incl
 - What content to include (documentation tiers)
 - Where to place files (directory structure)
 - How to name files (naming conventions)
-- Why summary docs matter (release detection)
+- Why summary docs matter (release-note source material)
 
-**Key Principle**: Parent task completion requires TWO documents - a detailed completion doc for internal knowledge preservation and a summary doc for release detection and public-facing release notes.
+**Key Principle**: Parent task completion requires TWO documents - a detailed completion doc for internal knowledge preservation and a summary doc as public-facing release-note source material.
 
 ---
 
@@ -39,12 +39,12 @@ Parent task completion produces two complementary documents:
 | Document Type | Location | Purpose | Audience |
 |---------------|----------|---------|----------|
 | **Detailed Completion Doc** | `.kiro/specs/[spec-name]/completion/` | Comprehensive internal documentation | Internal team, knowledge preservation |
-| **Summary Doc** | `docs/specs/[spec-name]/` | Concise, commit-style summary | Public-facing, release notes, hook trigger |
+| **Summary Doc** | `docs/specs/[spec-name]/` | Concise, commit-style summary | Public-facing, release-note source |
 
 **Rationale**:
-- **Hook Triggering**: The `.kiro/` directory is filtered from Kiro IDE's file watching system. Summary documents in `docs/specs/` enable automatic release detection.
-- **Dual Purpose**: Summary documents serve both as hook triggers and as concise, public-facing release note content.
+- **Dual Purpose**: Summary documents are the concise, public-facing record of each parent task — the source material the release recipe reads when authoring release notes.
 - **Clear Separation**: Detailed completion docs (internal knowledge preservation) remain in `.kiro/`, while summaries (public-facing) live in `docs/`.
+- *(Historical: the `docs/`-placement also served a Kiro release-detection hook, deleted 2026-08-12 — Q6 ballot. The placement stays: the public/internal split earns it on its own.)*
 
 ### When to Create Each Document
 
@@ -130,10 +130,10 @@ docs/specs/cross-platform-build-system/
 ### Two-Directory Structure
 
 ```
-docs/specs/[spec-name]/                   # Public-facing documentation (TRIGGERS HOOKS)
-├── task-1-summary.md                     # ✅ Parent task summary (triggers release detection)
-├── task-2-summary.md                     # ✅ Parent task summary (triggers release detection)
-└── task-N-summary.md                     # ✅ Parent task summary (triggers release detection)
+docs/specs/[spec-name]/                   # Public-facing documentation
+├── task-1-summary.md                     # ✅ Parent task summary (release-note source)
+├── task-2-summary.md                     # ✅ Parent task summary (release-note source)
+└── task-N-summary.md                     # ✅ Parent task summary (release-note source)
 
 .kiro/specs/[spec-name]/                  # Internal documentation (NO HOOK TRIGGERS)
 ├── requirements.md                        # ❌ Spec requirements (no hook trigger)
@@ -150,7 +150,7 @@ docs/specs/[spec-name]/                   # Public-facing documentation (TRIGGER
 
 | Location | Purpose | Hook Trigger | Audience |
 |----------|---------|--------------|----------|
-| `docs/specs/[spec-name]/` | Concise summaries | ✅ Yes | Public-facing, release notes |
+| `docs/specs/[spec-name]/` | Concise summaries | — (hook retired) | Public-facing, release-note source |
 | `.kiro/specs/[spec-name]/completion/` | Comprehensive docs | ❌ No | Internal, knowledge preservation |
 
 ---
@@ -282,18 +282,10 @@ Detailed completion documents can optionally link to the summary document:
 ### How Summary Documents Feed Release Notes
 
 1. **Summary document created** in `docs/specs/[spec-name]/`
-2. **Release tool** (`npm run release:analyze`) scans summary docs via git log since last tag
-3. **ChangeExtractor** parses markdown sections into structured data
-4. **ChangeClassifier** maps changes to priority tiers (🔴/🟡/🔵)
-5. **NotesRenderer** generates public + internal markdown release notes
+2. **At release time**, the release author derives the shipped delta from squash-commit titles since the last tag (`git log <last-tag>..main --oneline`) and reads summary docs for each change's substance and classification (🔴/🟡/🔵)
+3. **Release notes are hand-authored** at `docs/releases/release-X.Y.Z.md` from that material — summaries are the notes' source, and the durable per-task record
 
-### Automatic Analysis
-
-Release analysis runs post-merge on `main` (non-blocking). For on-demand analysis:
-
-```bash
-npm run release:analyze
-```
+*(The automated release tool that formerly scanned summaries was retired 2026-08-12 — Q6 ballot `.kiro/docs/ballots/2026-08-12-q6-release-manager-retirement.md`. See Release Management System § "The Release Recipe".)*
 
 ---
 
@@ -326,14 +318,6 @@ task-10-summary.md
 
 Summary documents are ONLY for parent tasks. Subtasks only need detailed completion docs.
 
-### ❌ Forgetting Manual Trigger for AI Workflows
-
-If AI agent created the summary document, you MUST run:
-```bash
-./.kiro/hooks/release-manager.sh auto
-```
-
----
 
 ## Workflow Checklist
 
@@ -350,7 +334,6 @@ If AI agent created the summary document, you MUST run:
 - [ ] Run validation (`npm test` or `npm run test:all`)
 - [ ] Create detailed completion doc: `.kiro/specs/[spec-name]/completion/task-N-completion.md`
 - [ ] Create summary doc: `docs/specs/[spec-name]/task-N-summary.md`
-- [ ] Trigger release detection: `./.kiro/hooks/release-manager.sh auto`
 - [ ] Mark parent task complete using `taskStatus` tool
 - [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."` — completion and summary docs travel on the branch.
    - **If this parent IS its own merge unit** (a standalone task, or a small single-unit spec): the tooling opens the PR.
@@ -370,5 +353,5 @@ If AI agent created the summary document, you MUST run:
 ```
 get_section({ path: "process-spec-planning", heading: "Three-Tier Completion Documentation System" })
 get_section({ path: "process-development-workflow", heading: "Task Completion Workflow" })
-get_section({ path: "release-management-system", heading: "Release Pipeline Architecture" })
+get_section({ path: "release-management-system", heading: "The Release Recipe" })
 ```

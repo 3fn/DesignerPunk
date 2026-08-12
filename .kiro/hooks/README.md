@@ -55,7 +55,7 @@ Commits on the task branch with a plain message and pushes the branch. **No PR o
 
 ### Release analysis
 
-Release analysis no longer runs at completion. It runs **post-merge on `main`** (non-blocking, informational) via `.github/workflows/release-analysis.yml` (ballot Item 1e). Run `npm run release:analyze` for on-demand local detail.
+The automated release-analysis tooling was RETIRED 2026-08-12 (Q6 ballot: `.kiro/docs/ballots/2026-08-12-q6-release-manager-retirement.md`). Releases follow the manual recipe in `RELEASE-FLOW.md` + the Release Management System governance doc.
 
 ---
 
@@ -75,7 +75,7 @@ The following scripts implemented the retired direct-commit flow and are now **h
 
 ## Release Flow
 
-See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the `prepublishOnly` token-index gate, and the post-merge analysis workflow).
+See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the `prepublishOnly` token-index gate, and the derive-classify-ratify notes recipe).
 
 ---
 

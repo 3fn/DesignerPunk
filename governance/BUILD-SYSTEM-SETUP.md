@@ -125,7 +125,7 @@ The `build:verify` script (`verify-build.js`) checks that:
 
 ### You DON'T need to build when:
 - Running tests with `npm test` (ts-jest handles compilation)
-- Using CLI tools that run via tsx (e.g., the release tool: `npx tsx src/tools/release/cli/release-tool.ts analyze`)
+- Using CLI tools that run via tsx (e.g., the agent generator: `npx tsx tools/agent-generator/generate.ts`)
 - Making changes and running tests immediately
 
 ## Development Workflow
@@ -215,7 +215,6 @@ The build system now enforces full TypeScript type safety:
 ### Option 1: Separate Build Configs
 Create separate `tsconfig.json` files for different parts of the codebase:
 - `tsconfig.tokens.json` - Just token generation code
-- `tsconfig.release.json` - Release analysis code
 
 ### Module-resolution direction (settled — Spec 118)
 *(Supersedes the former "Go Full ts-node" option, which is moot: ts-node is retired from the governed surface.)* The settled direction is **compiled-`dist/` for package own code** (Class A — CLI, generators, exports run as compiled JS) and **scoped `tsx`** as the sole runtime-TS mechanism for consumer `.ts` (Class B). See the Rosetta-System-Architecture "Module-Resolution Contract (Spec 118)" for the full contract; full ESM modernization is a separate, externally-triggered future migration tracked in `docs/roadmap/m0a-deferred-items.md`.

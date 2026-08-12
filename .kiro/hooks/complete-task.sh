@@ -24,9 +24,8 @@
 #   - it re-asserts current branch != main immediately before commit and push,
 #   - the push refspec is pinned to the verified task branch.
 #
-# Release analysis does NOT run here (ballot 1e): it runs post-merge on main via
-# .github/workflows/release-analysis.yml. Use `npm run release:analyze` for
-# on-demand local detail.
+# Release analysis does not run here. The automated release tooling was RETIRED
+# 2026-08-12 (Q6 ballot); releases follow the manual recipe in RELEASE-FLOW.md.
 
 set -euo pipefail
 
@@ -86,8 +85,6 @@ BEHAVIOR NOTES:
     credentials fail loud with what's missing — there is no direct-push fallback.
   - If an open PR already exists for the branch (change-request resume, ballot
     1d.7), parent mode pushes and re-reports the existing PR URL.
-  - Release analysis no longer runs at completion — it runs post-merge on main
-    (.github/workflows/release-analysis.yml).
 EOF
 }
 
@@ -370,4 +367,3 @@ echo "STOP: report the PR URL and wait."
 echo "  - Required checks run on the PR; fix on this branch if they fail."
 echo "  - The task is complete when Peter merges (merge on green = the authorization act)."
 echo "  - Never merge your own PR; never push to $PROTECTED_BRANCH."
-echo "  - Release analysis runs post-merge on $PROTECTED_BRANCH (release-analysis workflow)."
