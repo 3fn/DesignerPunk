@@ -1,5 +1,5 @@
 diff --git a/.kiro/steering/Task-Completion-Protocol.md b/.kiro/steering/Task-Completion-Protocol.md
-index 1892c1d2..726c7129 100644
+index ce4d0e7a..f75a09a4 100644
 --- a/.kiro/steering/Task-Completion-Protocol.md
 +++ b/.kiro/steering/Task-Completion-Protocol.md
 @@ -37,7 +37,7 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
@@ -33,8 +33,8 @@ index 1892c1d2..726c7129 100644
  3. **Dependent tasks branch from `main` after the prior task's PR merges.** Starting a dependent task before the prior merge is not sanctioned by default — this composes with stop-and-wait (Peter's go for the next task typically follows his merge of the prior one), so the wait costs nothing in practice. Exception, only on Peter's explicit direction: branch from the prior task branch and declare `Stacked-on: #<PR>` in the PR body; stacked PRs merge in base-first order.
  4. At **unit** completion (a standalone task, a small single-unit spec, or the final/gating parent of a declared multi-parent unit), the tooling commits, pushes the branch, **opens a PR**, and reports the PR URL. A parent completing *inside* a multi-parent unit commits its completion+summary docs on the branch and does NOT open a PR — its acceptance is the unit's merge.
  5. Required checks run on the PR. A failing check blocks merge at the platform.
--6. **Peter merges on green** (see The Merge Rule below). **Squash-merge is the ONLY merge method** — the repository is configured to allow squash-merge only (method drift closed by configuration, not convention). The PR collapses to one commit on `main`, preserving the atomic-commit-per-task history the release tool scans; the PR title becomes the commit subject.
-+6. **Peter merges on green** (see The Merge Rule below). The repository is configured **squash-merge-only** (method drift closed by configuration, not convention). The PR collapses to one commit on `main`, preserving the atomic-commit-per-task history the release tool scans; the PR title becomes the commit subject.
+-6. **Peter merges on green** (see The Merge Rule below). **Squash-merge is the ONLY merge method** — the repository is configured to allow squash-merge only (method drift closed by configuration, not convention). The PR collapses to one commit on `main`, preserving the atomic-commit-per-unit history that serves as the release changelog spine; the PR title becomes the commit subject.
++6. **Peter merges on green** (see The Merge Rule below). The repository is configured **squash-merge-only** (method drift closed by configuration, not convention). The PR collapses to one commit on `main`, preserving the atomic-commit-per-unit history that serves as the release changelog spine; the PR title becomes the commit subject.
  7. Direct pushes to `main` are rejected by branch protection, **admins included**.
  
  **A task is complete at MERGE, not at PR-open.** The PR is the submission; the merge is the acceptance.
@@ -57,7 +57,7 @@ index 1892c1d2..726c7129 100644
  - **A checks-only merge is NOT ratification**: governance-law changes still ratify via the record-first ballot protocol (`.kiro/docs/ballots/README.md`).
  - **Delegated-tier capture (exception-based)**: if the agent/model that actually did the work **diverged** from the task's planned `**Agent**: <agent> (<Model>)` — a different tier, or additional agents pulled in — record the delta and a one-line reason in the completion doc. A plan that held needs no note. This is a cheap data-point, **not** a justification to defend (overriding a stale or rote stamp is the *correct* move) — it feeds model-tier recalibration and process audits. Agent-evolution (routing/scope estimate was off) and model-evolution (cognitive-demand estimate was off) are distinct signals — note which. See `process-orchestration-model-selection`.
 diff --git a/governance/Process-Development-Workflow.md b/governance/Process-Development-Workflow.md
-index a643786e..dba55ccb 100644
+index 68723bc6..4d8f3338 100644
 --- a/governance/Process-Development-Workflow.md
 +++ b/governance/Process-Development-Workflow.md
 @@ -246,7 +246,7 @@ get_section({ path: "process-hook-operations", heading: "Quick Reference: Diagno

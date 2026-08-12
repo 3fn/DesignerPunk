@@ -40,6 +40,8 @@
 ## 3. Candidate prune diff (the (a) artifact)
 
 `wave-1-candidate-diff.patch` — **7 hunks, 2 files** (TCP 6 line-pairs, PDW 1), canonical `a/`–`b/` paths, **`git apply --check` verified green against the working tree** (consult CRITICAL fixed: the earlier artifact carried a scratch b-path that git read as a rename-and-delete of the law doc; regenerated via in-place-edit → scoped `git diff` → restore).
+
+> **RE-DERIVED 2026-08-12 (step (b) first action, per the pre-committed note):** Q6 PR #118 edited the same TCP line as hunk W1-6 between (a) and (b) — the stale patch failed `git apply --check` on exactly that hunk. Patch mechanically re-derived against the current corpus (branch rebased onto main first; register tail-row appends resolved over #119/#123). Delta vs the ratified artifact: two blob-hash index lines + W1-6's post-dash retained-education context refreshed to #118's wording ("atomic-commit-per-unit history that serves as the release changelog spine") identically on both diff sides — **context refresh only; all 7 ratified cuts byte-identical**. `git apply --check` green on the re-derived patch before any trial run.
 **Generated/served-surface consequences**: TCP is delivered by CLAUDE.md `@`-reference (no generator embed → generator leg NULL, stated explicitly); **PDW is docs-MCP-served → the trial's docs-MCP substitution leg is LIVE** (the substituted corpus must serve the pruned PDW; verified by query per DD5/C3, not assumed). PDW is generator input (thurgood routes/asserts) → expect `generated.lock` refresh at (c); zero prompt-output delta expected (no embed of the cut tail; an output delta would be an anomaly finding).
 
 ## 4. Pre-committed rubric (probe AND trial — fixed BEFORE any run; consult re-forms folded)
