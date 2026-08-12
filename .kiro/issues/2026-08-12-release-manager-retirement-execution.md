@@ -44,7 +44,7 @@
 - [x] Untouched (history)
 
 ### Cross-spec notes
-- [x] Referenced in the RMS audience-framing banner (points at the Spec 123 deferral); formal 123-inbound line rides the next 123-touching PR. **NEW from consult: (i) candidate register/U1b rule — "a get_section heading citation must resolve" (nothing mechanically guards cross-doc heading citations today); (ii) systemic internal-vs-consumer framing for the ~80 shipped governance docs → Spec 123's consumer-surface story.**
+- [x] DONE — `.kiro/specs/123-consumer-distribution/inbound-from-q6-release-retirement.md` authored (rides PR 2's fix push): notes-shipping deferral + the systemic internal-vs-consumer framing question, both routed to 123. **NEW from consult: (i) candidate register/U1b rule — "a get_section heading citation must resolve" (nothing mechanically guards cross-doc heading citations today); (ii) systemic internal-vs-consumer framing for the ~80 shipped governance docs → Spec 123's consumer-surface story.**
 - [ ] If a U1b wave window is OPEN at execution time: this work's PRs are ordinary observed PRs (not instrument PRs — this is Q6 work, not 125-B measurement); no special handling
 
 

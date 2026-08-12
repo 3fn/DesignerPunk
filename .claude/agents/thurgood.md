@@ -376,7 +376,7 @@ get_section({ path: "completion-documentation-guide", heading: "Naming Conventio
 2. **Manually update tasks.md**: Change task status from `[ ]` to `[x]`
 3. **Open the Task PR**: Run `./.kiro/hooks/complete-task.sh "Task Name"` to commit on the task branch, push, and open the PR
 4. **Merge = completion**: Peter merges on green; the merged PR is the verification
-5. **[OPTIONAL]** **Release Analysis**: Run `npm run release:analyze` for detailed local analysis (the standing analysis runs post-merge on `main`)
+5. **[OPTIONAL]** **Release-delta check**: `git log $(git describe --tags --abbrev=0)..main --oneline` shows everything shipped since the last release (squash titles are the changelog spine — see Release Management System)
 
 **When to use this approach:**
 - Quick fixes or minor changes
