@@ -1,0 +1,71 @@
+diff --git a/.kiro/steering/Task-Completion-Protocol.md b/.kiro/steering/Task-Completion-Protocol.md
+index ce4d0e7a..f75a09a4 100644
+--- a/.kiro/steering/Task-Completion-Protocol.md
++++ b/.kiro/steering/Task-Completion-Protocol.md
+@@ -37,7 +37,7 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
+ 1. [ ] Run targeted tests relevant to the change (not the full suite)
+ 2. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-M-completion.md`
+ 3. [ ] Mark subtask complete (use the `taskStatus` tool)
+-4. [ ] **Commit is optional and judgment-based — not mechanical per subtask.** When you commit, **commit AND push the unit branch** (`task/<spec>-<unit-slug>` or `task/<spec>-<N>-<slug>`, created at the first subtask — `git switch -c` or the completion tooling's equivalent); the two stay coupled because the push is the off-machine backup guarantee (a local-only commit is not backed up). Commit-and-push at a **checkpoint** (delicate or potentially-breaking work — a restore point worth having), when **backup-worthy work has accumulated** (a unit branch is longer-lived than a single task, so more unpushed work sits at risk between merges — push before the pile grows), or at a **session/handoff boundary**. Do NOT commit mechanically after every trivial subtask — the unit squash-merges anyway, so subtask granularity is cosmetic to `main`'s history. No PR opens and no required checks fire until unit completion. Subtasks do NOT open PRs. Never commit to `main`.
++4. [ ] **Commit is optional and judgment-based — not mechanical per subtask.** When you commit, **commit AND push the unit branch** (`task/<spec>-<unit-slug>` or `task/<spec>-<N>-<slug>`, created at the first subtask — `git switch -c` or the completion tooling's equivalent); the two stay coupled because the push is the off-machine backup guarantee (a local-only commit is not backed up). Commit-and-push at a **checkpoint** (delicate or potentially-breaking work — a restore point worth having), when **backup-worthy work has accumulated** (a unit branch is longer-lived than a single task, so more unpushed work sits at risk between merges — push before the pile grows), or at a **session/handoff boundary**. Do NOT commit mechanically after every trivial subtask — the unit squash-merges anyway, so subtask granularity is cosmetic to `main`'s history. No PR opens and no required checks fire until unit completion. Subtasks do NOT open PRs.
+ 5. [ ] **STOP** and wait for user authorization
+ 
+ ### For PARENT TASKS (Implementation or Architecture type)
+@@ -48,7 +48,7 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
+ 5. [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."`.
+    - **If this parent IS its own merge unit** (a standalone task, or a small single-unit spec): the tooling opens the PR and reports the URL.
+    - **If this parent is one of several in a declared multi-parent unit** (see the spec's tasks.md unit grouping): the tooling commits the completion+summary docs on the branch — **no PR yet**. The PR opens when the UNIT completes (its final/gating parent).
+-6. [ ] **STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR; never push to `main`.
++6. [ ] **STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR.
+ 
+ ### For PARENT TASKS (Setup or Documentation type)
+ 1. [ ] Verify artifacts created/updated as specified
+@@ -58,7 +58,7 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
+ 5. [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."`.
+    - **If this parent IS its own merge unit**: the tooling opens the PR and reports the URL.
+    - **If this parent is one of several in a declared multi-parent unit** (spec's tasks.md unit grouping): the tooling commits the completion+summary docs on the branch — **no PR yet**; the PR opens at UNIT completion.
+-6. [ ] **STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR; never push to `main`.
++6. [ ] **STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR.
+ 
+ ---
+ 
+@@ -77,7 +77,7 @@ Branch → PR → required checks → merge.
+ 3. **Dependent tasks branch from `main` after the prior task's PR merges.** Starting a dependent task before the prior merge is not sanctioned by default — this composes with stop-and-wait (Peter's go for the next task typically follows his merge of the prior one), so the wait costs nothing in practice. Exception, only on Peter's explicit direction: branch from the prior task branch and declare `Stacked-on: #<PR>` in the PR body; stacked PRs merge in base-first order.
+ 4. At **unit** completion (a standalone task, a small single-unit spec, or the final/gating parent of a declared multi-parent unit), the tooling commits, pushes the branch, **opens a PR**, and reports the PR URL. A parent completing *inside* a multi-parent unit commits its completion+summary docs on the branch and does NOT open a PR — its acceptance is the unit's merge.
+ 5. Required checks run on the PR. A failing check blocks merge at the platform.
+-6. **Peter merges on green** (see The Merge Rule below). **Squash-merge is the ONLY merge method** — the repository is configured to allow squash-merge only (method drift closed by configuration, not convention). The PR collapses to one commit on `main`, preserving the atomic-commit-per-unit history that serves as the release changelog spine; the PR title becomes the commit subject.
++6. **Peter merges on green** (see The Merge Rule below). The repository is configured **squash-merge-only** (method drift closed by configuration, not convention). The PR collapses to one commit on `main`, preserving the atomic-commit-per-unit history that serves as the release changelog spine; the PR title becomes the commit subject.
+ 7. Direct pushes to `main` are rejected by branch protection, **admins included**.
+ 
+ **A task is complete at MERGE, not at PR-open.** The PR is the submission; the merge is the acceptance.
+@@ -121,7 +121,7 @@ Branch → PR → required checks → merge.
+ 
+ ### The Merge Rule
+ 
+-- **Agents open PRs; Peter merges on green** during bake-in (Spec 125-A Task 5's gate). Agents NEVER merge their own PRs and NEVER push to `main`.
++- **Agents open PRs; Peter merges on green** during bake-in (Spec 125-A Task 5's gate). Agents NEVER merge their own PRs.
+ - Any later **delegation of merge-on-green must be a recorded rule** (ballot or committed record with date and scope) — never a verbal grant. The relayed-authority lesson: authority is a record.
+ - **Standing carve-out, surviving any delegation**: PRs touching governance law (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent prompts/configs) stay Peter-merged — the closest ratification proxy until 125-B's CODEOWNERS layer.
+ 
+@@ -148,7 +148,7 @@ When the gate must be bypassed (broken gate, urgent fix the checks themselves bl
+ - **All tasks**: STOP after completion — never auto-proceed to the next task. Authorization to START the next task is governed by Start Up Tasks; the merge that completes this task is not that authorization.
+ - **Parent vs. subtask** is the load-bearing distinction: subtasks get targeted tests + a completion doc + an **optional, judgment-based** branch commit-and-push (at a checkpoint, on backup-worthy accumulation, or at a session/handoff boundary — not mechanically per subtask); parents get full validation + completion doc + summary doc, committed on the branch.
+ - **The merge unit is the coherent unit** — the smallest chunk that is coherent-on-its-own AND reviewable as a single diff, DECLARED in the spec's tasks.md (a small spec = one unit = one PR; a large spec declares internal units). The unit's completion opens the PR; a parent inside a multi-parent unit is done-on-branch, accepted at the unit's merge.
+-- **A task is accepted at the MERGE of its unit.** Agents open PRs at unit completion; Peter merges on green. Never merge your own PR; never push to `main` (branch protection rejects it, admins included).
++- **A task is accepted at the MERGE of its unit.** Agents open PRs at unit completion; Peter merges on green. Never merge your own PR. Pushes to `main` are rejected by branch protection (admins included).
+ - **On merge, the unit's branch is cleaned up** — remote auto-deleted by repo setting; local deleted on return to `main`; stale/unmerged branches swept in the monthly Civitas health check.
+ - **A checks-only merge is NOT ratification**: governance-law changes still ratify via the record-first ballot protocol (`.kiro/docs/ballots/README.md`).
+ - **Delegated-tier capture (exception-based)**: if the agent/model that actually did the work **diverged** from the task's planned `**Agent**: <agent> (<Model>)` — a different tier, or additional agents pulled in — record the delta and a one-line reason in the completion doc. A plan that held needs no note. This is a cheap data-point, **not** a justification to defend (overriding a stale or rote stamp is the *correct* move) — it feeds model-tier recalibration and process audits. Agent-evolution (routing/scope estimate was off) and model-evolution (cognitive-demand estimate was off) are distinct signals — note which. See `process-orchestration-model-selection`.
+diff --git a/governance/Process-Development-Workflow.md b/governance/Process-Development-Workflow.md
+index 68723bc6..4d8f3338 100644
+--- a/governance/Process-Development-Workflow.md
++++ b/governance/Process-Development-Workflow.md
+@@ -246,7 +246,7 @@ get_section({ path: "process-hook-operations", heading: "Quick Reference: Diagno
+ 
+ **Quick Reference - Error Recovery**:
+ - If commit fails: Fix issues and re-run the tooling
+-- If push fails: Push the TASK BRANCH manually (`git push -u origin <branch>`) — never `main`
++- If push fails: Push the TASK BRANCH manually (`git push -u origin <branch>`)
+ - If the PR title is wrong: Edit the PR title on GitHub (squash-merge takes the title as the commit subject)
+ 
+ 

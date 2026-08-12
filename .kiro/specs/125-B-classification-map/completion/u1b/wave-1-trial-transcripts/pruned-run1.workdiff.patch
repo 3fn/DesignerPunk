@@ -1,0 +1,95 @@
+From 19c3c613a15a4359c7d99fc6d32f0ca44f873819 Mon Sep 17 00:00:00 2001
+From: Peter Michaels Allen <peter@designerpunk.ai>
+Date: Wed, 12 Aug 2026 14:55:31 -0400
+Subject: [PATCH] Delete unused test:quick script (single-file-selection
+ footgun) (chore)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Spec: n/a (chore — spawned follow-up from the npm test single-file-selection fix)
+Task: Delete test:quick per Peter's decision
+Agent: Claude (main session)
+Unit: this chore (single commit)
+
+## What
+
+- Removes the root `test:quick` script from package.json.
+- Adds dated removal notes to the two historical docs that documented it
+  (`.kiro/specs/release-analysis-system/test-command-implementation.md`,
+  `performance-test-analysis.md`) — records preserved, not rewritten.
+
+## Why deletion (Peter's call, offered delete vs. lane-config fix)
+
+- Same footgun as the `npm test` one fixed in #97: trailing array-typed
+  `--testPathIgnorePatterns` means `npm run test:quick -- <file>` ADDS the file
+  as an ignore pattern instead of selecting it.
+- Unused: no CI workflow, hook, or steering doc references it — only two
+  historical spec docs.
+- Rationale void: since the 2026-07-03 lane rework (`29bba7de`), `test:quick`
+  was just `npm test` minus the integration suites on a ~1-minute lane;
+  skipping integration coverage invites false-green validation.
+
+## Validation
+
+- `npm test`: 367/367 suites, 8891 tests passed.
+- The `test` script string is byte-unchanged, so lane selection cannot shift.
+- package.json parses; no remaining operational `test:quick` references
+  (remaining hits are historical records, now annotated).
+
+## Flagged, NOT fixed here (out of scope)
+
+The revert `f4e40cef` mis-resolved and left DUPLICATE `test:performance` and
+`test:performance:isolated` keys in package.json (visible in this diff's
+context lines). Values are identical so behavior is unaffected (last-wins),
+but the duplication is unintended. Left untouched to keep this chore's diff
+faithful to the original; needs a separate call.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+---
+ .../specs/release-analysis-system/performance-test-analysis.md  | 2 ++
+ .../release-analysis-system/test-command-implementation.md      | 2 ++
+ package.json                                                    | 1 -
+ 3 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/.kiro/specs/release-analysis-system/performance-test-analysis.md b/.kiro/specs/release-analysis-system/performance-test-analysis.md
+index 028e7075..c5451c19 100644
+--- a/.kiro/specs/release-analysis-system/performance-test-analysis.md
++++ b/.kiro/specs/release-analysis-system/performance-test-analysis.md
+@@ -4,6 +4,8 @@
+ **Purpose**: Analyze slow performance/stress tests and provide recommendations
+ **Context**: Test suite taking 1683 seconds (~28 minutes) with performance tests timing out
+ 
++> **Historical record.** The package.json snippets below reflect November 2025. The lane semantics were reworked 2026-07-03 (commit `29bba7de`), and `test:quick` was **removed 2026-08-12** (unused; single-file-selection footgun in its trailing array-typed `--testPathIgnorePatterns`). See Start Up Tasks for current commands.
++
+ ---
+ 
+ ## Current State
+diff --git a/.kiro/specs/release-analysis-system/test-command-implementation.md b/.kiro/specs/release-analysis-system/test-command-implementation.md
+index 1dca4237..db9d434e 100644
+--- a/.kiro/specs/release-analysis-system/test-command-implementation.md
++++ b/.kiro/specs/release-analysis-system/test-command-implementation.md
+@@ -4,6 +4,8 @@
+ **Purpose**: Document implementation of separated test commands for improved developer experience
+ **Context**: Implemented hybrid approach to separate performance tests from regular test runs
+ 
++> **Historical record — command set and durations superseded.** The 2026-07-03 lane rework (commit `29bba7de`) made the default lanes timing-assertion-free and fast (~1 min warm), voiding the durations below. `npm run test:quick` was **removed 2026-08-12**: unused by CI/hooks/steering, its "ultra-fast" rationale no longer held, and its trailing `--testPathIgnorePatterns` (an array-typed jest option) made `npm run test:quick -- <file>` ADD the file as an ignore pattern instead of selecting it. Current command guidance lives in Start Up Tasks.
++
+ ---
+ 
+ ## Implementation Summary
+diff --git a/package.json b/package.json
+index 6cc3f836..5c4923b5 100644
+--- a/package.json
++++ b/package.json
+@@ -115,7 +115,6 @@
+     "test:performance:isolated": "jest --config jest.performance.config.js --runInBand",
+     "test:performance": "jest --testPathPatterns='performance/__tests__|__tests__/performance'",
+     "test:performance:isolated": "jest --config jest.performance.config.js --runInBand",
+-    "test:quick": "jest --testPathIgnorePatterns='(performance|integration)'",
+     "test:watch": "jest --watch --config jest.functional.config.js",
+     "test:coverage": "jest --coverage --config jest.functional.config.js",
+     "audit:tokens": "node scripts/audit-component-tokens.js",
+-- 
+2.50.1 (Apple Git-155)
+

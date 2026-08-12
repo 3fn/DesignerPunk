@@ -385,3 +385,62 @@ history:
   - { date: 2026-08-12, change: "entry created (steward, window-free — the certainty-calibration precedent) from the Q6-execution consult incident (Stacy caught two dead citations only because safeguard-2 happened to run) + the same-day corpus scan proving 14 pre-existing silent instances; evidence + adjudication table in the linked issue; check_state proposed — Peter ratifies the row at this PR's merge, the ARMING remains his separate flip", by: thurgood }
   - { date: 2026-08-12, change: "row ratified at PR #122's merge (per the creation entry's own terms). PR #122 built the checker and fixed all 18 defects found by the resolver-chain-aware re-scan (183 citations checked; the issue table's ~15 plus one new exact-match catch, row 16 / Web-Authoring-Standards) — post-fix corpus 173 citations, 0 defects. Gate-bite proven red on throwaway PR #121 (one deliberate dead citation; run https://github.com/3fn/DesignerPunk/actions/runs/31608088052/job/94152123200), closed unmerged. Peter flipped \"Section Citation Guard\" required on main branch protection the same day, BEFORE U1b wave 1's prune merges — measurement-free per campaign law (no window open yet; not a boundary-event charge). check_state: proposed -> armed", by: thurgood }
 ```
+
+### commit-to-main-via-pr-only
+
+```yaml
+rule: "Work never lands on main directly — commits ride task branches and land via PR merge (the C1 wave-1 row)"
+boundary_call:
+  class: operational
+  rationale: "A workflow-topology requirement (where work is allowed to land), mechanically owned by branch protection since 125-A — the gate rejects the PUSH (a local commit on main is non-durable and detected at push); the imperative restatements add no durable behavior the platform does not force"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: armed
+  checks: ["branch protection on main, admins included (platform gate, 125-A; admin-rejection proven in 125-A records; re-verified live 2026-08-02)"]
+education:
+  disposition: "PRUNED (wave 1, applied via ballot 2026-08-12-wave-1-workflow-gate-prune at the wave PR's merge) — six C1 hunks across TWO surfaces (wave-1-assessment.md §2): FOUR deletions (W1-1; W1-2/3 half-clauses; W1-4 half-clause) + one rewrite-to-descriptive (W1-5) on Task-Completion-Protocol, + one half-clause deletion (W1-9, consult catch) on Process-Development-Workflow § Troubleshooting. Clause-grain cuts justified per Req 10.2: the compound sentences' 'Never merge your own PR' halves are NOT gate-owned until U3 and are retained verbatim on every surface. Retained education: 'Direct pushes to main are rejected by branch protection, admins included' and all branch/PR-flow how-to prose (per-surface hit counts in the assessment). DISCLOSED: .kiro/hooks/complete-task.sh:372 echoes the compound imperative at completion time — tooling, outside the education corpus, retained (weak trial confound recorded)."
+history:
+  - { date: 2026-08-02, change: "entry created (U1b wave 1, Task 5.2 step (a)); clause scoring + candidate diff: .kiro/specs/125-B-classification-map/completion/u1b/wave-1-assessment.md + wave-1-candidate-diff.patch; Stacy process-owner consult recorded in the assessment; pending Peter's record-first row ratification", by: thurgood }
+  - { date: 2026-08-12, change: "rows ratified (Peter, record-first — commit 3c729da2); candidate diff RE-DERIVED post-#118 (context-only delta, assessment §3 note); step (b) verdicts: probe NO GROSS LOSS DETECTED + trial NO-DIFFERENCE-DETECTED (1 valid pair, zero voids, relevance gate passed on R1'-C1; evidence: wave-1-probe-evidence.md + wave-1-trial-diff-table.md); prune applied via ballot 2026-08-12-wave-1-workflow-gate-prune (record-first) at the wave-1 PR's merge — the wave-1 window (N=10) opens at that merge", by: thurgood }
+  - { date: 2026-08-02, change: "row RATIFIED (Peter, 2026-08-02, in-session record-first; post-consult revision reviewed) — classification approved; prune application still gated on 5.W(b) verification + the wave ballot", by: thurgood }
+```
+
+### squash-merge-only
+
+```yaml
+rule: "Squash-merge is the only merge method (the C2 wave-1 row)"
+boundary_call:
+  class: operational
+  rationale: "A repo-configuration fact (merge-method policy) — closed by configuration since 125-A; prose about it is almost entirely consequence-education (atomic history, PR title becomes the commit subject)"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: armed
+  checks: ["repository merge-method configuration: squash-only (platform config, 125-A)"]
+education:
+  disposition: "REWRITTEN (wave 1, applied via ballot 2026-08-12-wave-1-workflow-gate-prune at the wave PR's merge) — one rewrite only (W1-6: TCP:80's imperative-shaped lead becomes descriptive; the education after the dash is retained verbatim). All other squash prose (TCP:100/:117, PDW:130/:250) scored KEEP as retained-class education. Low prune yield expected and recorded up front."
+history:
+  - { date: 2026-08-02, change: "entry created (U1b wave 1, Task 5.2 step (a)); scoring + candidate hunk in wave-1-assessment.md / wave-1-candidate-diff.patch; pending Peter's record-first row ratification", by: thurgood }
+  - { date: 2026-08-12, change: "row ratified + TRIAL-EXEMPTION RULED (Peter, record-first, commit 3c729da2): C2 unscoreable by construction in a control arm (agents never merge); the single content-preserving rewrite rides on probe evidence + the window backstop — per-case exemption, never-prune-untested stands for trial-coverable rules. Probe evidence: symmetric silence on merge method + textual verification that the rewrite retains the full education (wave-1-probe-evidence.md). W1-6 context re-derived post-#118 (assessment §3). Rewrite applied via ballot 2026-08-12-wave-1-workflow-gate-prune at the wave-1 PR's merge", by: thurgood }
+  - { date: 2026-08-02, change: "row RATIFIED + TRIAL-EXEMPTION RULED (Peter, 2026-08-02, in-session record-first): C2 is unexercisable by agent trials by construction (merges are Peter-performed platform acts) — its single content-preserving rewrite (W1-6) rides on probe evidence + the window backstop, per-case exemption; the never-prune-untested rule stands for every trial-coverable rule (wave-1-assessment.md §4)", by: thurgood }
+```
+
+### typecheck-build-green-at-merge
+
+```yaml
+rule: "Full typecheck and build-validate must be green to merge (the C3 wave-1 row)"
+boundary_call:
+  class: functional
+  rationale: "The artifact requirement (tsc + build:validate green) is functional and owned by the armed lanes; no workflow imperative restating it survives in prose, so only the artifact half remains to classify — the DIVERGENCE from the twin row npm-test-before-complete (operational) is deliberate: that row classifies a surviving workflow imperative, this one classifies the artifact requirement alone"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: armed
+  checks: ["lane-typecheck (required check, armed 2026-07-10, frozen 18-context set)", "lane-build-validate (required check, armed 2026-07-10, frozen 18-context set)"]
+education:
+  disposition: "ROWS-ONLY (wave-1 finding, recorded 2026-08-02): the sweep found ZERO imposter clauses — TCP:44/:146/:149 are the pilot's own retained/rewritten education (untouched); BUILD-SYSTEM-SETUP:188/:210 are KEEP (local dev-loop guidance, no gate at that grain — the retained subtask-targeted-tests precedent); PTD/PSP hits are task-template examples. Late-found adjacent hit Test-Development-Standards:1472 is DEFERRED to Wave 2 with its surface (explicit call, recorded on npm-test-before-complete's history). No prune action exists for this rule; the row documents the clean state so future waves do not re-litigate it."
+history:
+  - { date: 2026-08-02, change: "entry created (U1b wave 1, Task 5.2 step (a)) as a rows-only finding; enumeration record in wave-1-assessment.md §5; pending Peter's record-first row ratification", by: thurgood }
+  - { date: 2026-08-02, change: "row RATIFIED (Peter, 2026-08-02, in-session record-first; post-consult revision reviewed) — classification approved; prune application still gated on 5.W(b) verification + the wave ballot", by: thurgood }
+```

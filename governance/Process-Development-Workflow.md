@@ -8,7 +8,7 @@ description: Development workflow and task completion practices — task complet
 # Development Workflow and Task Completion Practices
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-07-14
+**Last Reviewed**: 2026-08-12
 **Purpose**: Task completion workflow and git practices for all development work
 **Organization**: process-standard
 **Scope**: cross-project
@@ -246,7 +246,7 @@ get_section({ path: "process-hook-operations", heading: "Quick Reference: Diagno
 
 **Quick Reference - Error Recovery**:
 - If commit fails: Fix issues and re-run the tooling
-- If push fails: Push the TASK BRANCH manually (`git push -u origin <branch>`) — never `main`
+- If push fails: Push the TASK BRANCH manually (`git push -u origin <branch>`)
 - If the PR title is wrong: Edit the PR title on GitHub (squash-merge takes the title as the commit subject)
 
 
