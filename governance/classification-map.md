@@ -366,3 +366,21 @@ attribution:
 history:
   - { date: 2026-08-02, change: "entry created (119-B Task 1, unit U1 — window-free per R1 AC1; lands pre-measurement under the ratified R11 AC2 exception, with the keyword-shadowing check scheduled in the U2 case-study findings). Cite as governance/classification-map.md § 'certainty-calibration' (entry-id grammar, never count/position — R1 AC4). Drafted and landed by Thurgood per the steward-writes-register convention; pending Peter's ratification at the U1 merge. Evidence: .kiro/specs/119-B-capability-routing-measurement/completion/task-1-completion.md", by: thurgood }
 ```
+
+### section-citation-resolution
+
+```yaml
+rule: "A get_section heading citation in served or steering docs must resolve — the doc id must be MCP-served and the heading must exist on it"
+boundary_call:
+  class: functional
+  rationale: "Whether a citation resolves is a mechanical property of the artifact pair (id served + heading present) — no judgment; a dead citation silently withholds teaching from every agent that follows it"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: proposed
+  checks: ["PROPOSED: a resolver-chain-aware scanner (doc id/path/aliases per D5; heading existence; identity-doc awareness — an MCP citation TO a never-served identity doc is a defect by construction). Unarmed until built + gate-bite-proven; ARMING IS PETER'S FLIP (125-A pattern). Timing note: arm BEFORE U1b wave 1's prune merges — a new check arming after the campaign window opens is an exogenous boundary event"]
+education:
+  disposition: "No prose prune — this row records a NET-NEW verification need. Known defect class recorded 2026-08-12: first-ever scan found ~14 dead citations of 135 (Token-Quick-Reference ~10 [Ada], Component-Readiness-Status 1 [Lina], identity-doc self-MCP-query examples in Spec-Feedback-Protocol + Civitas-System-Overview [Thurgood — identity docs are deliberately never MCP-served, so those example blocks teach a failing action]). Fixes + checker build: .kiro/issues/2026-08-12-section-citation-defects-and-checker.md"
+history:
+  - { date: 2026-08-12, change: "entry created (steward, window-free — the certainty-calibration precedent) from the Q6-execution consult incident (Stacy caught two dead citations only because safeguard-2 happened to run) + the same-day corpus scan proving 14 pre-existing silent instances; evidence + adjudication table in the linked issue; check_state proposed — Peter ratifies the row at this PR's merge, the ARMING remains his separate flip", by: thurgood }
+```

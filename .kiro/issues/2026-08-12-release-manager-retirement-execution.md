@@ -44,7 +44,7 @@
 - [x] Untouched (history)
 
 ### Cross-spec notes
-- [x] DONE — `.kiro/specs/123-consumer-distribution/inbound-from-q6-release-retirement.md` authored (rides PR 2's fix push): notes-shipping deferral + the systemic internal-vs-consumer framing question, both routed to 123. **NEW from consult: (i) candidate register/U1b rule — "a get_section heading citation must resolve" (nothing mechanically guards cross-doc heading citations today); (ii) systemic internal-vs-consumer framing for the ~80 shipped governance docs → Spec 123's consumer-surface story.**
+- [x] DONE — `.kiro/specs/123-consumer-distribution/inbound-from-q6-release-retirement.md` authored (rides PR 2's fix push): notes-shipping deferral + the systemic internal-vs-consumer framing question, both routed to 123. **NEW from consult: (i) EXECUTED 2026-08-12 — register row `section-citation-resolution` (proposed) + defect/checker issue `2026-08-12-section-citation-defects-and-checker.md` (first scan: ~14 pre-existing dead citations); (ii) systemic internal-vs-consumer framing for the ~80 shipped governance docs → Spec 123's consumer-surface story.**
 - [ ] If a U1b wave window is OPEN at execution time: this work's PRs are ordinary observed PRs (not instrument PRs — this is Q6 work, not 125-B measurement); no special handling
 
 
