@@ -13,7 +13,7 @@
  * @see .kiro/specs/048-progress-family/design.md (Size Variant, Current Size Formula)
  */
 
-import { ProgressTokens } from '../component/progress';
+import { progressTokenValues } from '../component/progress';
 import { SPACING_BASE_VALUE } from '../SpacingTokens';
 
 describe('Progress Token Formula Validation', () => {
@@ -52,8 +52,8 @@ describe('Progress Token Formula Validation', () => {
         const calculated = SPACING_BASE_VALUE * multiplier;
         expect(calculated).toBe(expected);
 
-        const tokenKey = `node.size.${size}.current` as keyof typeof ProgressTokens;
-        expect(ProgressTokens[tokenKey]).toBe(expected);
+        const tokenKey = `node.size.${size}.current` as keyof typeof progressTokenValues;
+        expect(progressTokenValues[tokenKey]).toBe(expected);
       }
     );
   });
@@ -66,12 +66,12 @@ describe('Progress Token Formula Validation', () => {
     ] as const)(
       'should maintain +4px offset for %s (base %dpx → current %dpx)',
       (size, base, current) => {
-        const baseKey = `node.size.${size}` as keyof typeof ProgressTokens;
-        const currentKey = `node.size.${size}.current` as keyof typeof ProgressTokens;
+        const baseKey = `node.size.${size}` as keyof typeof progressTokenValues;
+        const currentKey = `node.size.${size}.current` as keyof typeof progressTokenValues;
 
-        expect(ProgressTokens[baseKey]).toBe(base);
-        expect(ProgressTokens[currentKey]).toBe(current);
-        expect(ProgressTokens[currentKey] - ProgressTokens[baseKey]).toBe(4);
+        expect(progressTokenValues[baseKey]).toBe(base);
+        expect(progressTokenValues[currentKey]).toBe(current);
+        expect(progressTokenValues[currentKey] - progressTokenValues[baseKey]).toBe(4);
       }
     );
   });
@@ -84,9 +84,9 @@ describe('Progress Token Formula Validation', () => {
     ] as const)(
       'should align %s (%dpx) to 4px baseline grid',
       (tokenName, expected) => {
-        const tokenKey = tokenName as keyof typeof ProgressTokens;
-        expect(ProgressTokens[tokenKey]).toBe(expected);
-        expect(ProgressTokens[tokenKey] % 4).toBe(0);
+        const tokenKey = tokenName as keyof typeof progressTokenValues;
+        expect(progressTokenValues[tokenKey]).toBe(expected);
+        expect(progressTokenValues[tokenKey] % 4).toBe(0);
       }
     );
   });

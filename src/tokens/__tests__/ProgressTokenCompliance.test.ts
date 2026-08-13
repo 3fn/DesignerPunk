@@ -22,18 +22,20 @@ import {
   PROGRESS_COLOR_TOKEN_COUNT,
 } from '../semantic/ColorTokens';
 import {
-  ProgressTokens,
+  getProgressRegisteredTokens,
   PROGRESS_COMPONENT_TOKEN_COUNT,
   progressComponentTokenNames,
 } from '../component/progress';
-import { getTokenContract } from '../../build/tokens';
 import type { RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
 
 // Spec 124: defineComponentTokens no longer self-registers into ComponentTokenRegistry;
 // the rich tokens ride back on the branded return and are recovered via getTokenContract.
 // (Was: reads of ComponentTokenRegistry.getByComponent('Progress') populated by the import
 // side effect — now empty/false-red.)
-const progressRegisteredTokens: RegisteredComponentToken[] = getTokenContract(ProgressTokens) ?? [];
+//
+// Progress registers through THREE family calls (sizing / spacing / borderWidth); the
+// helper concatenates their branded contracts in declaration order.
+const progressRegisteredTokens: RegisteredComponentToken[] = getProgressRegisteredTokens();
 
 describe('Progress Token Compliance', () => {
   // ==========================================================================

@@ -33,7 +33,16 @@
  * Icon Size Derivations (in Avatar.web.ts):
  * - xs: calc(icon.size050 × 0.75) = 12px
  * - xxl: calc(icon.size050 × 4) = 64px
- * 
+ *
+ * TOKEN FAMILY: all dimensional Avatar tokens (container `size.*` AND icon
+ * `icon.size.*` gap fillers) are registered by the single sizing-family call
+ * `AvatarSizingTokens` below. The `icon.size.*` pair previously lived in a
+ * separate `AvatarTokens` call stamped `family: 'spacing'` — a mislabel, since
+ * both are dimensional sizing values. `AvatarTokens` is removed; consumers use
+ * `AvatarSizingTokens` or the `getAvatarIconSize()` / `getAvatarSize()` accessors.
+ * Generated platform output is unaffected: both calls declare `component: 'Avatar'`,
+ * so all tokens still land in one `AvatarTokens` Swift enum / Kotlin object.
+ *
  * COLOR TOKENS (Spec 058):
  * Avatar color tokens are defined in this file following the Rosetta System architecture
  * which mandates component tokens live at src/components/[ComponentName]/tokens.ts.
@@ -56,13 +65,24 @@ import { defineComponentTokens } from '../../../build/tokens';
 import { SIZING_BASE_VALUE, sizingTokens } from '../../../tokens/SizingTokens';
 
 /**
- * Avatar sizing tokens — container dimensions for each size variant.
+ * Avatar sizing tokens — container dimensions and icon dimensions for each size variant.
  *
  * Previously in a separate file (avatar-sizing.tokens.ts). Inlined to prevent
  * architectural anomaly (no other component splits tokens across files) and
  * simplify the package surface for sync.
  *
+ * ONE CALL PER FAMILY. Every token registered by a single defineComponentTokens()
+ * call is stamped with that call's `family`, and the family drives platform output
+ * (Swift type, Kotlin `.dp` suffix, primitive class name). The `icon.size.*` gap
+ * fillers below are dimensional sizing values, so they live in this sizing-family
+ * call — they were previously mis-stamped `family: 'spacing'` in a separate
+ * `AvatarTokens` call, the same latent mislabel class fixed for Button-Icon.
+ * Do NOT spread/merge this result with another call's result — the rich metadata
+ * rides on a non-enumerable brand (see src/build/tokens/defineComponentTokens.ts,
+ * TOKEN_CONTRACT_BRAND) that a spread would silently drop.
+ *
  * @see .kiro/specs/092-sizing-token-family/design.md
+ * @see src/components/core/Button-Icon/buttonIcon.tokens.ts for the two-call pattern
  */
 export const AvatarSizingTokens = defineComponentTokens({
   component: 'Avatar',
@@ -92,38 +112,15 @@ export const AvatarSizingTokens = defineComponentTokens({
       reference: sizingTokens.size1600,
       reasoning: 'Extra extra large avatar (128px). Full profile view, onboarding.',
     },
-  },
-});
 
-/**
- * Avatar component tokens defined using the hybrid authoring API.
- * 
- * Each token either references a primitive spacing token or uses a family-conformant
- * derivation, and includes reasoning explaining why the token exists.
- * 
- * NOTE: Web platform uses CSS calc() with icon tokens for sizing (see Avatar.styles.css).
- * These component tokens are primarily used for iOS/Android platforms and documentation.
- * 
- * Size token values:
- * - size.xs: 24px (3 × base, references size300)
- * - size.sm: 32px (4 × base, references size400)
- * - size.md: 40px (5 × base, references size500)
- * - size.lg: 48px (6 × base, references size600)
- * - size.xl: 80px (10 × base, derivation)
- * - size.xxl: 128px (16 × base, derivation)
- * 
- * Icon size token values (gap fillers - web uses calc() instead):
- * - icon.size.xs: 12px (1.5 × base, derivation) - web uses calc(icon.size050 × 0.75)
- * - icon.size.xxl: 64px (8 × base, derivation) - web uses calc(icon.size050 × 4)
- * 
- * @see Requirements 2.1-2.6, 3.1, 3.6 in .kiro/specs/042-avatar-component/requirements.md
- */
-export const AvatarTokens = defineComponentTokens({
-  component: 'Avatar',
-  family: 'spacing',
-  tokens: {
-    // Icon size tokens (gap fillers for sizes without existing icon tokens)
-    // These fill gaps where no standard icon token exists at the required 50% ratio
+    // Icon size tokens (gap fillers for sizes without an existing icon token).
+    // Kept on the VALUE path deliberately: sizing primitives exist at both values
+    // (size150 = 12, size800 = 64), but the reference path currently emits a
+    // fabricated `SizingTokens.<name>` class on iOS/Android that no generated or
+    // hand-written platform file defines. Switching these to `reference:` would
+    // trade compiling output (`12.dp`) for non-compiling output and break
+    // Avatar.android.kt's `val iconSizeXs: Dp = GeneratedAvatarTokens.iconSizeXs`.
+    // Revisit once TokenFileGenerator.getFamilyClassName emits a real platform type.
     'icon.size.xs': {
       value: SIZING_BASE_VALUE * 1.5,
       reasoning: 'Icon size for xs avatar (12px = 1.5× base) maintains 50% ratio (12/24). No existing icon token at this size, so component token fills the gap.',
@@ -273,7 +270,7 @@ export function getAvatarSize(variant: AvatarSizeVariant): number {
  * @see Requirements 3.1, 3.6 in .kiro/specs/042-avatar-component/requirements.md
  */
 export function getAvatarIconSize(variant: AvatarIconSizeVariant): number {
-  return AvatarTokens[`icon.size.${variant}`];
+  return AvatarSizingTokens[`icon.size.${variant}`];
 }
 
 /**

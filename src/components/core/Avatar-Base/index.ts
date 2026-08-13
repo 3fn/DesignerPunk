@@ -11,7 +11,7 @@ export { AVATAR_DEFAULTS } from './types';
 
 // Token exports
 export {
-  AvatarTokens,
+  AvatarSizingTokens,
   getAvatarSize,
   getAvatarIconSize,
   getAvatarSizeTokenReference,
