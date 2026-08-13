@@ -1,26 +1,35 @@
 /**
  * Button-Icon Component Token Definitions
- * 
+ *
  * Stemma System naming: [Family]-[Type] = Button-Icon
  * Type: Primitive (foundational component)
- * 
+ *
  * Platform-agnostic token definitions for the Button-Icon component.
  * Uses the defineComponentTokens() API to register tokens with the global
  * ComponentTokenRegistry for pipeline integration.
- * 
+ *
+ * Two separate defineComponentTokens() calls are used — one per token family
+ * (spacing, sizing) — following the Avatar-Base pattern (avatar.tokens.ts). Every
+ * token registered by a single call is stamped with that call's `family`, so inset
+ * (spacing) and size (sizing) tokens must NOT share a call even though they live in
+ * the same file. The two branded results are exported separately and must NOT be
+ * spread/merged into one object — the rich metadata rides on a non-enumerable brand
+ * (see src/build/tokens/defineComponentTokens.ts, TOKEN_CONTRACT_BRAND) that a spread
+ * would silently drop.
+ *
  * The build system generates platform-specific values from these definitions:
  * - Web: CSS custom properties (var(--buttonicon-inset-large))
  * - iOS: Swift constants (ButtonIconTokens.insetLarge)
  * - Android: Kotlin constants (ButtonIconTokens.insetLarge)
- * 
+ *
  * Token Relationships:
- * - buttonIcon.inset.large (12px) references space150
- * - buttonIcon.inset.medium (10px) references space125 (strategic flexibility token)
- * - buttonIcon.inset.small (8px) references space100
- * - buttonIcon.size.large (48px) references size600
- * - buttonIcon.size.medium (40px) references size500
- * - buttonIcon.size.small (32px) references size400
- * 
+ * - buttonIcon.inset.large (12px) references space150 — family: spacing
+ * - buttonIcon.inset.medium (10px) references space125 (strategic flexibility token) — family: spacing
+ * - buttonIcon.inset.small (8px) references space100 — family: spacing
+ * - buttonIcon.size.large (48px) references size600 — family: sizing
+ * - buttonIcon.size.medium (40px) references size500 — family: sizing
+ * - buttonIcon.size.small (32px) references size400 — family: sizing
+ *
  * @see .kiro/specs/035-button-icon-component/design.md for token consumption strategy
  * @see .kiro/specs/034-component-architecture-system for Stemma System details
  * @see .kiro/specs/037-component-token-generation-pipeline for pipeline integration
@@ -32,28 +41,21 @@ import { spacingTokens } from '../../../tokens/SpacingTokens';
 import { sizingTokens } from '../../../tokens/SizingTokens';
 
 /**
- * Button-Icon component tokens defined using the hybrid authoring API.
- * 
+ * Button-Icon inset (padding) tokens — reference spacing primitives.
+ *
  * Each token references a primitive token and includes reasoning
  * explaining why the token exists and its purpose in the component.
- * 
- * Inset (padding) token values — reference spacing primitives:
+ *
  * - inset.large: 12px (1.5 × base, references space150)
  * - inset.medium: 10px (1.25 × base, references space125 strategic flexibility token)
  * - inset.small: 8px (1 × base, references space100)
- * 
- * Size (width/height) token values:
- * - size.large: 48px (6 × base, references size600)
- * - size.medium: 40px (5 × base, references size500)
- * - size.small: 32px (4 × base, references size400)
- * 
+ *
  * @see Requirements 6.1, 6.2, 6.3 in .kiro/specs/040-component-alignment/requirements.md
  */
-export const ButtonIconTokens = defineComponentTokens({
+export const ButtonIconInsetTokens = defineComponentTokens({
   component: 'ButtonIcon',
   family: 'spacing',
   tokens: {
-    // Inset (padding) tokens
     'inset.large': {
       reference: spacingTokens.space150,
       reasoning: 'Large button variant requires 12px padding (1.5× base) for comfortable touch target and visual balance with larger icon sizes',
@@ -66,8 +68,22 @@ export const ButtonIconTokens = defineComponentTokens({
       reference: spacingTokens.space100,
       reasoning: 'Small button variant uses 8px padding (1× base) for minimal footprint in dense UI layouts while meeting minimum touch target requirements',
     },
-    // Size (width/height) tokens — reference sizing primitives, not spacing
-    // @see Requirements 6.1, 6.2, 6.3
+  },
+});
+
+/**
+ * Button-Icon size (width/height) tokens — reference sizing primitives, not spacing.
+ *
+ * - size.large: 48px (6 × base, references size600)
+ * - size.medium: 40px (5 × base, references size500)
+ * - size.small: 32px (4 × base, references size400)
+ *
+ * @see Requirements 6.1, 6.2, 6.3 in .kiro/specs/040-component-alignment/requirements.md
+ */
+export const ButtonIconSizeTokens = defineComponentTokens({
+  component: 'ButtonIcon',
+  family: 'sizing',
+  tokens: {
     'size.large': {
       reference: sizingTokens.size600,
       reasoning: 'Large button size (48px = 6× base) provides generous touch target exceeding tapAreaRecommended, calculated as icon (24px) + padding (12px × 2)',
@@ -107,7 +123,7 @@ export type ButtonIconSizeVariant = 'large' | 'medium' | 'small';
  * ```
  */
 export function getButtonIconInset(variant: ButtonIconInsetVariant): number {
-  return ButtonIconTokens[`inset.${variant}`];
+  return ButtonIconInsetTokens[`inset.${variant}`];
 }
 
 /**
@@ -126,7 +142,7 @@ export function getButtonIconInset(variant: ButtonIconInsetVariant): number {
  * @see Requirements 6.1, 6.2, 6.3 in .kiro/specs/040-component-alignment/requirements.md
  */
 export function getButtonIconSize(variant: ButtonIconSizeVariant): number {
-  return ButtonIconTokens[`size.${variant}`];
+  return ButtonIconSizeTokens[`size.${variant}`];
 }
 
 /**
