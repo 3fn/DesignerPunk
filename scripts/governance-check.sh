@@ -94,6 +94,27 @@ if [ -n "$AGENT_CHANGES" ] || [ "$FULL_CHECK" = true ]; then
   echo ""
 fi
 
+# === Trigger 5: Gate registration (branch protection count-assert) — --full only ===
+# Wired 2026-08-21 (drift reconciliation — .kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md):
+# the instrument's "run at the monthly health check" cadence previously lived only in its own
+# header comment, so the orchestrator never ran it and its 2026-07/08 drift went undetected.
+# Report-and-continue (FINDINGS=1), matching every other instrument here — a red gate-registration
+# is a finding for the steward to route, not a reason to abort the remaining checks.
+# KNOWN STATE until Peter's pending sweep-5 Settings removal lands (see the issue doc): this step
+# reports exactly one failure — the extra 122-sweep-5-corrected-state context. That single failure
+# IS the pending-action signal; it clears when the removal lands.
+if [ "$FULL_CHECK" = true ]; then
+  echo "## 5. Gate Registration (branch protection)"
+  echo ""
+  GATE_SCRIPT="$SCRIPTS_DIR/../tools/agent-generator/verify-gate-registration.sh"
+  if [ -x "$GATE_SCRIPT" ]; then
+    "$GATE_SCRIPT" 2>&1 || FINDINGS=1
+  else
+    echo "⚠️  verify-gate-registration.sh not found or not executable"
+  fi
+  echo ""
+fi
+
 # === Summary ===
 echo "---"
 if [ "$FINDINGS" -eq 0 ]; then
