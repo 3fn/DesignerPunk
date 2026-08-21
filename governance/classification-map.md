@@ -210,6 +210,7 @@ education:
   disposition: "nothing to prune — no prose predecessor"
 history:
   - { date: 2026-07-14, change: "entry created (U1-s pilot substrate, Task 1.6); check wired: .github/workflows/tool-boot-smoke.yml + tests/tool-boot-smoke.test.ts; local run 49/49 passing incl. Product MCP passing index-empty (Req 5.2); side-effect confirmation + gate-bite proof plan recorded in .kiro/specs/125-B-classification-map/completion/task-1-6-completion.md", by: thurgood }
+  - { date: 2026-08-21, change: "context 125B-tool-boot-smoke added to verify-gate-registration.sh EXPECTED_CONTEXTS (drift reconciliation — the 2026-07-14 arming never updated the count-assert in the same recorded change; record: .kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md, applied via this entry's PR)", by: thurgood }
 ```
 
 ### no-autonomous-token-creation
@@ -384,6 +385,7 @@ education:
 history:
   - { date: 2026-08-12, change: "entry created (steward, window-free — the certainty-calibration precedent) from the Q6-execution consult incident (Stacy caught two dead citations only because safeguard-2 happened to run) + the same-day corpus scan proving 14 pre-existing silent instances; evidence + adjudication table in the linked issue; check_state proposed — Peter ratifies the row at this PR's merge, the ARMING remains his separate flip", by: thurgood }
   - { date: 2026-08-12, change: "row ratified at PR #122's merge (per the creation entry's own terms). PR #122 built the checker and fixed all 18 defects found by the resolver-chain-aware re-scan (183 citations checked; the issue table's ~15 plus one new exact-match catch, row 16 / Web-Authoring-Standards) — post-fix corpus 173 citations, 0 defects. Gate-bite proven red on throwaway PR #121 (one deliberate dead citation; run https://github.com/3fn/DesignerPunk/actions/runs/31608088052/job/94152123200), closed unmerged. Peter flipped \"Section Citation Guard\" required on main branch protection the same day, BEFORE U1b wave 1's prune merges — measurement-free per campaign law (no window open yet; not a boundary-event charge). check_state: proposed -> armed", by: thurgood }
+  - { date: 2026-08-21, change: "context \"Section Citation Guard\" added to verify-gate-registration.sh EXPECTED_CONTEXTS (drift reconciliation — the 2026-08-12 arming never updated the count-assert in the same recorded change; record: .kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md, applied via this entry's PR)", by: thurgood }
 ```
 
 ### commit-to-main-via-pr-only
