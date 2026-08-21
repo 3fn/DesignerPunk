@@ -3,20 +3,33 @@
 #
 # Queries the branch-protection API and COUNT-ASSERTS the required-status-check context
 # set: the NINE standing 122 contexts PLUS the seven pre-existing contexts (Consumer Guard,
-# package drift, the five 125-A lanes) — per inbound-from-125-A-arming.md (the handback ACTION).
+# package drift, the five 125-A lanes) — per inbound-from-125-A-arming.md (the handback ACTION) —
+# PLUS the two later-armed contexts (125B-tool-boot-smoke, Section Citation Guard; see below).
 # The Item-13 sweep precedent applied to ourselves: a required check that silently fell off
 # the protection list is exactly the drift class Spec 122 exists to kill.
 #
 # Run at each cutover + the monthly governance health check (Thurgood).
 #
+# DRIFT RECONCILIATION (2026-08-21, Civitas steward audit): this script was stale/failing from
+# 2026-07-14 until this change because two later-armed required checks were never added to the
+# expected set in the same recorded change as their arming:
+#   - "125B-tool-boot-smoke" — armed 2026-07-14 (125-B U1-s pilot substrate, Task 1.6;
+#     register row: governance/classification-map.md § "tool-boot-smoke")
+#   - "Section Citation Guard" — armed 2026-08-12 (Peter's Settings flip; register row:
+#     governance/classification-map.md § "section-citation-resolution")
+# Both are now counted (16 → 18). Root causes and the reconciliation record:
+# .kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md. Rule restated: arming OR
+# retiring a required check updates EXPECTED_CONTEXTS in the SAME recorded change (C9).
+#
 # SWEEP-5 RETIRED (Spec 122 Task 18 / U11 closeout, 2026-07-11): 122-sweep-5-corrected-state was
 # a PRE-CUTOVER-WINDOW-ONLY gate (Req 19 AC1 exception; re-entry protection lives in the standing
-# class checks). All cutovers are done, so its context is removed from branch protection (Peter's
-# Settings action) and re-counted here IN THE SAME recorded protection-list change (C9) — 17 → 16,
-# ten → nine 122 contexts. NOTE: this script must MATCH the live protection list; if it is run
-# before the Settings removal lands, it will (correctly) FAIL on the extra sweep-5 context — sync
-# the two. The sweep-5 workflow JOB may keep running as a NON-required check (harmless) until
-# separately removed.
+# class checks). The script side landed 2026-07-11 (PR #68), but the PAIRED Peter Settings action
+# (removing the context from branch protection) is STILL PENDING as of 2026-08-21 — ruled
+# option (a) by Peter 2026-08-21 (charges 1 of K=3 on the open 125-B campaign window; see the
+# issue doc). Until that removal lands, this script (correctly) FAILS on exactly one thing: the
+# extra sweep-5 context — that single failure IS the pending-action signal. After the removal,
+# it PASSES at 18. The sweep-5 workflow JOB may keep running as a NON-required check (harmless)
+# until separately removed.
 #
 # Auth: GITHUB_TOKEN from the environment, falling back to the repo-root .env. The
 # repo-root PAT can READ/PATCH protection (it cannot dispatch workflows — 403; that
@@ -63,8 +76,11 @@ EXPECTED_CONTEXTS=(
   "122-sweep-6-declarations"
   "122-sweep-7-dispositions"
   "122-sweep-8-demotion"
+  # Later-armed required checks (2026-08-21 drift reconciliation — see header):
+  "125B-tool-boot-smoke"     # armed 2026-07-14 (125-B Task 1.6)
+  "Section Citation Guard"   # armed 2026-08-12 (Peter's flip; register § section-citation-resolution)
 )
-EXPECTED_COUNT=16
+EXPECTED_COUNT=18
 
 # ── Query ────────────────────────────────────────────────────────────────────
 ACTUAL_JSON="$(curl -sfL \
