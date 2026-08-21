@@ -3,7 +3,7 @@
 **Date**: 2026-08-21
 **Authority**: Peter's ruling 2026-08-21 (in-session, coordinator-relayed and executed same session): option (a) of the Civitas steward advisory — the sweep-5 Settings removal proceeds mid-window and **charges 1 of K=3** on the open 125-B U1b campaign window (campaign-measurement-protocol.md §2: a required-check-set change is an exogenous boundary event)
 **Owner**: Thurgood (Civitas steward); script/governance edits Peter-merged (governance carve-out); the Settings action is Peter-only
-**Status**: IN EXECUTION — script reconciliation in PR; **Peter Settings action PENDING** (this issue is the pending-handback ledger that the 2026-07-11 sweep-5 retirement lacked)
+**Status**: RESOLVED 2026-08-21 (same burst) — PRs #128/#129 merged, Peter's Settings removal landed, verify-run PASS at 18. Sole remaining item: the campaign-dataset boundary-event entry (Thurgood, next observation pass).
 
 ---
 
@@ -31,17 +31,17 @@ Context strings verified against the live protection API 2026-08-21 (the script'
 - [x] Post-edit verify-run: script fails on EXACTLY one thing — the extra sweep-5 context (the precise pending-action signal; output in the PR body)
 
 ### PENDING — Peter Settings action (Step 2 of the advisory)
-- [ ] **Peter**: Settings → Branches → `main` protection → required status checks → **remove `122-sweep-5-corrected-state`**. This is the C9-recorded protection-list change deferred since 2026-07-11.
+- [x] **Peter**: Settings → Branches → `main` protection → required status checks → **remove `122-sweep-5-corrected-state`**. This is the C9-recorded protection-list change deferred since 2026-07-11. **DONE 2026-08-21** (same burst as the PR #128/#129 merges) — confirmed live by the Step-3 verify-run below (18 contexts, sweep-5 absent).
 
 ### Step 3 — verify-run after the removal (same burst)
-- [ ] **Thurgood** (or Peter): run `./tools/agent-generator/verify-gate-registration.sh` → expect `PASS: all 18 required contexts present`. Record the PASS here (date + output line) to close this ledger's sweep-5 item.
+- [x] Run `./tools/agent-generator/verify-gate-registration.sh` → expect `PASS: all 18 required contexts present`. **DONE 2026-08-21**, run from `main` at the post-merge head, immediately after Peter's removal (coordinator session): `PASS: all 18 required contexts present, count-asserted (N=18 recorded in this script)` — 18 contexts listed, `122-sweep-5-corrected-state` absent. This closes the sweep-5 item deferred since 2026-07-11.
 
 ### 125-B campaign-window accounting
 - [ ] **Thurgood**: at the NEXT observation pass after the removal lands, record the boundary event in `.kiro/specs/125-B-classification-map/completion/u1b/campaign-window-dataset.md` — exogenous required-check-set change, charges **1 of K=3**, segments the shared campaign window (Peter's option-(a) ruling, 2026-08-21). NOT recorded pre-emptively; the dataset entry is made at the observation pass, per campaign law's event-anchored cadence.
 - Note: the §4 FROZEN scoring set (18, incl. sweep-5) is unaffected — frozen means frozen; post-removal, sweep-5 simply stops appearing on new pinned SHAs ("present on the pinned SHA" handles absence). The charge is the segmentation, not a scoring change.
 
 ### Follow-up (separate PR, independent files)
-- [ ] Wire `verify-gate-registration.sh` into `scripts/governance-check.sh --full` (`chore/wire-gate-registration-into-health-check`) so the monthly cadence is mechanical, not a comment.
+- [x] Wire `verify-gate-registration.sh` into `scripts/governance-check.sh --full` (`chore/wire-gate-registration-into-health-check`) so the monthly cadence is mechanical, not a comment. **DONE 2026-08-21** — PR #129 merged.
 
 ## Rule restated (for future armings/retirements)
 
