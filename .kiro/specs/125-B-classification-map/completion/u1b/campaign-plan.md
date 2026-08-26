@@ -34,7 +34,7 @@
 | Wave (task) | Rules | Territory + sizing rationale |
 |-------------|-------|------------------------------|
 | **Wave 1 (5.2)** | C1, C2, C3 | Workflow-gate territory — the pilot's home ground, method well-oiled. ONE PR-flow-traversing battery task exercises all three territories (relevance shareable per rule iff R1-PRESENT per territory — cap-safe at ≤5). Highest-confidence candidate (C1) leads. |
-| **Wave 2 (5.3)** | C4, C5, C6 | Component/test-governance territory (Lina's armed checks). One component-work battery task shares territory; caps safe. |
+| **Wave 2 (5.3)** | C4, C5, C6 **+ wcag-format-validity education layer (rostered by amendment)** | Component/test-governance territory (Lina's armed checks). One component-work battery task shares territory; caps safe. **AMENDED (Peter, 2026-08-25, record-first, at wave-2 row ratification)**: wcag-format-validity — armed since 125-A, rostered in no wave (gap found at consult U6) — added to wave 2; its only found imposter is the dual-rule clause CDS:513, cut as hunk W2-2. Same ruling created the `contract-platforms-specified` register row (a second unregistered armed check, found at consult R2-2). Open 5.6 closeout item: audit whether the remaining non-C1–C11 armed rows are rostered anywhere. |
 | **Wave 3 (5.4)** | C7, C8, C9 | Artifact-integrity territory (generated-output discipline; Ada consult central). C9 rides as its committed rows-only classification. |
 | **Wave 4 (5.5)** | C10, C11 (4 row items) | Register maintenance — **rows-only expected** (no prune anticipated; merges as a rows-only PR, instrument-excluded, if that holds). Can run any time; no window needed unless a prune emerges. |
 

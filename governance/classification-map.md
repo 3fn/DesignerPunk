@@ -286,6 +286,7 @@ education:
   disposition: "nothing to prune — no prose predecessor. Record-only entry (Req 12.7): the check's already-armed state needed a citable register row; this is it."
 history:
   - { date: 2026-07-14, change: "entry created (U2, Task 4.4, Req 12.7) — record-only: verified already armed/blocking since 125-A, no work performed. Row drafted by Lina; landed by Thurgood per the Task 4.1 register-writes-stay-with-the-steward convention — evidence: .kiro/specs/125-B-classification-map/completion/task-4-4-completion.md", by: thurgood }
+  - { date: 2026-08-25, change: "ROSTERED into U1b wave 2 by Peter's amendment ruling (2026-08-25, record-first — this row was armed but rostered in NO campaign wave; gap found at consult U6). Education layer classified with wave 2: its only found imposter is the shared dual-rule clause CDS:513 ('Contracts reference valid WCAG criteria' — restates this rule AND wcag-required-refs in one line), cut as hunk W2-2 of the ratified wave-2 candidate diff; trial coverage via the informational R1'-fv line. Evidence: .kiro/specs/125-B-classification-map/completion/u1b/wave-2-assessment.md", by: thurgood }
 ```
 
 ### inverse-drift-incremental-build
@@ -325,6 +326,7 @@ history:
   - { date: 2026-07-14, change: "Per-literal floor set to THREE literals (interaction_focusable, interaction_focus_ring, state_error) per Peter's in-session amendment to DD3's originally-recorded four (design.md still records four; this entry is the citable deviation record). state_disabled EXCLUDED from the per-literal floor pending the Button-CTA disabled-state adjudication — the matcher's WCAG_REQUIRED_EXACT set is UNCHANGED: state_disabled contracts (1 live, Button-CTA) are still selected and still must carry a valid wcag ref; the amendment narrows the floor assertion only, not the selection. This defuses the razor's-edge coupling risk Lina raised as a PETER-ESCALATION in Task 4.2's adjudication table (.kiro/specs/125-B-classification-map/completion/u2/stemma-pre-arm-adjudication.md §7). Drafted by Lina; landed by Thurgood — evidence: .kiro/specs/125-B-classification-map/completion/task-4-3-completion.md", by: thurgood }
   - { date: 2026-08-25, change: "Wave 2 (5.3) classification: candidate diff produced (3 deletions + 2 rewrites, three surfaces — CDS/PIG/CSR), education-drift hazard recorded (Component-Templates seven retired names, CIS, family-doc unprefixed tables, CDS stale block), consumed unchanged by (b)'s probe+trial and applied only as ratified at (c). An R1 roster-bounded sweep reported rows-only and was FALSIFIED by the owner consult (Lina, BLOCKING x4) — the corpus-wide re-sweep found the candidates on surfaces the roster never named; both rounds + steward verification: wave-2-consult-lina.md. Evidence: .kiro/specs/125-B-classification-map/completion/u1b/wave-2-assessment.md", by: thurgood }
   - { date: 2026-08-25, change: "STALE-PENDING DISCHARGE (register currency, steward catch at wave 2): the 2026-07-14 floor amendment's state_disabled exclusion cites the Button-CTA disabled-state adjudication as 'pending' — it RESOLVED 2026-07-15, RULED REMOVE, implemented (.kiro/issues/button-cta-disabled-state-adjudication.md; CIS:90 records DesignerPunk does not support disabled states by design). The exclusion's rationale is therefore SETTLED, not pending: state_disabled stays outside the per-literal floor because no live instances exist by design; the matcher's WCAG_REQUIRED_EXACT still lists it (harmless — selects nothing; any future state_disabled contract is still selected and checked)", by: thurgood }
+  - { date: 2026-08-25, change: "Wave 2 rows + candidate diff RATIFIED (Peter, 2026-08-25, record-first, in-session at step (a) completion): the 5-hunk diff approved as the (b) probe+trial input (prune application still gated on (b) evidence + the wave ballot at (c)); roster/register amendment APPROVED (wcag-format-validity education layer rostered into wave 2 + contract-platforms-specified row created); sequencing RULED — Lina's Component-Templates repair lands BEFORE/WITH the wave-2 prune merge (option (a) of assessment §5.4)", by: thurgood }
 ```
 
 ### validation-criteria-completeness
@@ -451,4 +453,22 @@ education:
 history:
   - { date: 2026-08-02, change: "entry created (U1b wave 1, Task 5.2 step (a)) as a rows-only finding; enumeration record in wave-1-assessment.md §5; pending Peter's record-first row ratification", by: thurgood }
   - { date: 2026-08-02, change: "row RATIFIED (Peter, 2026-08-02, in-session record-first; post-consult revision reviewed) — classification approved; prune application still gated on 5.W(b) verification + the wave ballot", by: thurgood }
+```
+
+### contract-platforms-specified
+
+```yaml
+rule: "All behavioral contracts SHALL specify platforms — armed assertion behavioral-contract-validation.test.ts:275 'all contracts should specify platforms' (root functional lane)"
+boundary_call:
+  class: functional
+  rationale: "A machine-checkable presence check against a contract's own platforms field — the validation-criteria-completeness class"
+verification:
+  disposition: barrier
+  owner: lina
+  check_state: armed
+  checks: ["behavioral-contract-validation.test.ts:275 'all contracts should specify platforms' (root functional lane) — armed since 125-A; no implementation work performed in wave 2"]
+education:
+  disposition: "record-only entry (the wcag-format-validity Req 12.7 class): the check was armed but UNREGISTERED until wave 2's scoring of CDS:823 surfaced it (owner consult R2-2 — a gap-mode finding produced by adjudicating a KEEP line). Education layer: CDS:823's fenced schema field list (KEEP, wave 2) is the only known prose naming the obligation — accurate, retained. No imposters known; the territory sweeps with any future wave that touches its surfaces."
+history:
+  - { date: 2026-08-25, change: "entry created (U1b wave 2, Task 5.3 step (a)) per Peter's roster/register amendment ruling (2026-08-25, record-first, in-session — approved together with rostering wcag-format-validity's education layer into wave 2). Found by Lina at consult R2-2; drafted and landed by Thurgood per the register-writes-stay-with-the-steward convention. Related open question (5.6 closeout checklist item): whether the remaining non-C1-C11 armed rows are rostered anywhere. Evidence: .kiro/specs/125-B-classification-map/completion/u1b/wave-2-assessment.md; wave-2-consult-lina.md R2-2", by: thurgood }
 ```
