@@ -180,7 +180,7 @@ excludes:
 | `category` | Taxonomy category (redundant with name prefix — enables validation) |
 | `description` | Short description of the behavioral guarantee |
 | `behavior` | Detailed behavior description |
-| `wcag` | WCAG criterion this contract supports (null if not applicable) |
+| `wcag` | WCAG criterion this contract supports — required for allowlisted contracts (use the 'N/A' sentinel when genuinely not applicable); null only for non-allowlisted contracts |
 | `platforms` | Platforms where this contract applies |
 | `validation` | Testable criteria for verifying the contract |
 | `test_approach` | How to test this contract |
