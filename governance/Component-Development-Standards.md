@@ -113,7 +113,7 @@ List the foundational behaviors that ALL semantic variants will inherit.
 **Behavior Identification Checklist**:
 - [ ] What interaction patterns are common to all variants?
 - [ ] What accessibility requirements apply to all variants?
-- [ ] What visual states are shared (focus, error, disabled)?
+- [ ] What visual states are shared (focus, error, loading)?
 - [ ] What token dependencies are universal?
 
 **Template**:
@@ -319,11 +319,10 @@ properties:
     type: string
     required: false
     description: Error message to display
-  disabled:
-    type: boolean
-    required: false
-    default: false
-    description: Whether input is disabled
+  # No disabled prop: disabled states are not supported corpus-wide, zero
+  # exceptions (adjudicated 2026-07-15 — .kiro/issues/button-cta-disabled-state-adjudication.md).
+  # Components declare the standardized `excludes: state_disabled` block in
+  # contracts.yaml instead; use state_loading or validate-on-press/blur.
 
 contracts:
   - name: focusable
