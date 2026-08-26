@@ -24,7 +24,6 @@ export type {
 // Platform-specific build validators
 export { iOSBuildValidator } from './iOSBuildValidator';
 export type { iOSValidationResult } from './iOSBuildValidator';
-export { AndroidBuildValidator } from './AndroidBuildValidator';
 export { WebBuildValidator } from './WebBuildValidator';
 
 // Cross-platform mathematical consistency validator
