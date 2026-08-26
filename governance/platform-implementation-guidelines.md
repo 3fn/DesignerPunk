@@ -465,7 +465,6 @@ pre_implementation:
   contract_review:
     - [ ] Each contract has clear trigger conditions
     - [ ] Each contract has measurable outcomes
-    - [ ] WCAG references included for accessibility contracts
     - [ ] Contracts are platform-agnostic (WHAT not HOW)
     
   human_ai_checkpoint:

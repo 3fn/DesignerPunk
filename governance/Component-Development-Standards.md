@@ -510,7 +510,6 @@ Add the new family to the Component Family Inheritance Structures document.
 Verify all schemas are valid and complete:
 - [ ] All required fields present
 - [ ] Property types are valid
-- [ ] Contracts reference valid WCAG criteria
 - [ ] Token patterns exist in token system
 - [ ] Platforms list is complete
 
@@ -683,7 +682,6 @@ Complete these checks before starting implementation:
 - [ ] **Schema Location Correct**: `src/components/core/[Component-Name]/[Component-Name].schema.yaml`
 - [ ] **Required Fields Present**: name, type, family, behaviors, properties, contracts, tokens, platforms, readiness
 - [ ] **Property Types Valid**: All properties have valid type definitions
-- [ ] **Contracts Reference WCAG**: Accessibility contracts include WCAG criterion references
 - [ ] **Token Patterns Exist**: All referenced tokens exist in the token system
 - [ ] **Platforms List Complete**: All supported platforms listed (web, ios, android)
 
@@ -825,7 +823,7 @@ schema_validation:
   
   contract_validation:
     - Each contract must have: description, platforms, validation
-    - WCAG-referenced contracts must have: wcag field
+    - Allowlisted contracts (exact names + accessibility_*/content_*_label prefixes) must carry a wcag value ('N/A' when genuinely not applicable)
   
   token_validation:
     - All token patterns must exist in token system

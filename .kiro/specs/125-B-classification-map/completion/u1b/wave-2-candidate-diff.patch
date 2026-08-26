@@ -1,0 +1,54 @@
+diff --git a/governance/Component-Development-Standards.md b/governance/Component-Development-Standards.md
+index 7198f7aa..44d8fb00 100644
+--- a/governance/Component-Development-Standards.md
++++ b/governance/Component-Development-Standards.md
+@@ -510,7 +510,6 @@ Add the new family to the Component Family Inheritance Structures document.
+ Verify all schemas are valid and complete:
+ - [ ] All required fields present
+ - [ ] Property types are valid
+-- [ ] Contracts reference valid WCAG criteria
+ - [ ] Token patterns exist in token system
+ - [ ] Platforms list is complete
+ 
+@@ -683,7 +682,6 @@ Complete these checks before starting implementation:
+ - [ ] **Schema Location Correct**: `src/components/core/[Component-Name]/[Component-Name].schema.yaml`
+ - [ ] **Required Fields Present**: name, type, family, behaviors, properties, contracts, tokens, platforms, readiness
+ - [ ] **Property Types Valid**: All properties have valid type definitions
+-- [ ] **Contracts Reference WCAG**: Accessibility contracts include WCAG criterion references
+ - [ ] **Token Patterns Exist**: All referenced tokens exist in the token system
+ - [ ] **Platforms List Complete**: All supported platforms listed (web, ios, android)
+ 
+@@ -821,7 +819,7 @@ schema_validation:
+   
+   contract_validation:
+     - Each contract must have: description, platforms, validation
+-    - WCAG-referenced contracts must have: wcag field
++    - Allowlisted contracts (exact names + accessibility_*/content_*_label prefixes) must carry a wcag value ('N/A' when genuinely not applicable)
+   
+   token_validation:
+     - All token patterns must exist in token system
+diff --git a/governance/Contract-System-Reference.md b/governance/Contract-System-Reference.md
+index e3a5f71b..761fd9b9 100644
+--- a/governance/Contract-System-Reference.md
++++ b/governance/Contract-System-Reference.md
+@@ -180,7 +180,7 @@ excludes:
+ | `category` | Taxonomy category (redundant with name prefix — enables validation) |
+ | `description` | Short description of the behavioral guarantee |
+ | `behavior` | Detailed behavior description |
+-| `wcag` | WCAG criterion this contract supports (null if not applicable) |
++| `wcag` | WCAG criterion this contract supports — required for allowlisted contracts (use the 'N/A' sentinel when genuinely not applicable); null only for non-allowlisted contracts |
+ | `platforms` | Platforms where this contract applies |
+ | `validation` | Testable criteria for verifying the contract |
+ | `test_approach` | How to test this contract |
+diff --git a/governance/platform-implementation-guidelines.md b/governance/platform-implementation-guidelines.md
+index fb07c5bc..15953d2e 100644
+--- a/governance/platform-implementation-guidelines.md
++++ b/governance/platform-implementation-guidelines.md
+@@ -465,7 +465,6 @@ pre_implementation:
+   contract_review:
+     - [ ] Each contract has clear trigger conditions
+     - [ ] Each contract has measurable outcomes
+-    - [ ] WCAG references included for accessibility contracts
+     - [ ] Contracts are platform-agnostic (WHAT not HOW)
+     
+   human_ai_checkpoint:
