@@ -103,3 +103,5 @@ wrkingClass-c003/
 
 # .claude/skills/ is GENERATED, COMMITTED, diff-guarded output of the agent generator —
 # the prior ignore's "pending a generator" condition is fulfilled (Spec 122 Task 6; Req 17 AC1/AC2).
+# Private collaboration vault — lives in-place as a nested repo pushing to 3fn/collab-private (Peter ruling 2026-08-25); must NEVER be tracked by this public repo
+.kiro/collab/
