@@ -313,10 +313,11 @@ Semantic color tokens are resolved into light and dark mode sets before generati
 │                       MODE RESOLUTION SUBSYSTEM                              │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
-│   Level 1: Primitive Mode Values                                             │
-│   ├── Primitives carry distinct light/dark values in ColorTokenValue         │
-│   ├── Same primitive name in both modes — primitive handles differentiation │
-│   ├── Handles the common case (~85% of semantic color tokens)               │
+│   Level 1: Primitive Value Resolution (no mode variance)                     │
+│   ├── Primitives are single OKLCH triples — NO mode dimension (Spec 112)    │
+│   ├── No dark override → token falls back to the base (light) reference,    │
+│   │   resolving to the SAME value in both modes                             │
+│   ├── The common case — see npm run audit:mode-parity for the live split    │
 │   └── Resolved by: SemanticValueResolver                                    │
 │                                                                              │
 │   Level 2: Semantic Overrides                                                │
@@ -334,7 +335,8 @@ Semantic color tokens are resolved into light and dark mode sets before generati
 │                                                                              │
 │   Fallback Behavior                                                          │
 │   ├── Absent dark override → token uses base (light) primitive reference    │
-│   ├── Absent dark primitive value → primitive's light value used            │
+│   │   — the ONLY fallback that fires; primitives have no mode values to     │
+│   │   fall back from (legacy ColorTokens.ts is deprecated, Spec 115)        │
 │   ├── Fallback is graceful degradation, not build failure                   │
 │   └── Mode parity audit reports fallback usage: npm run audit:mode-parity   │
 │                                                                              │

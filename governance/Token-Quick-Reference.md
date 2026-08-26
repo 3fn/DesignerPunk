@@ -52,32 +52,50 @@ This document serves as a routing table for token documentation—it helps AI ag
 
 Semantic color tokens support light/dark mode through a two-level resolution system. Use this guide to determine how a token behaves across modes.
 
+**Prerequisite fact (Spec 112).** Color primitives have **no mode dimension**. A primitive is a single OKLCH triple (`{ l, c, h }`) composed from channel references in `src/tokens/color/` — the same value in light and dark. Mode differentiation therefore happens **only** at the semantic tier, via a theme override. Zero primitives in the system carry differing light/dark values.
+
 ### Does My Token Need a Dark Override?
 
 | Question | Answer | Resolution Level |
 |----------|--------|-----------------|
-| Is the token mode-invariant (print, glow, scrim, contrast.onLight/onDark)? | Yes → same value in both modes | Mode-invariant — no action needed |
-| Does the token use the same primitive name in both modes, just with different light/dark values? | Yes → primitive handles it | Level 1 — populate primitive's dark value in `ColorTokens.ts` |
-| Does the token need a *different primitive name* in dark mode (role remapping)? | Yes → semantic override needed | Level 2 — add entry to the appropriate theme's SemanticOverrides |
+| Is the token mode-invariant *by design* (print, glow, scrim, contrast.onLight/onDark)? | Yes → same value in both modes, declared as intentional | Mode-invariant — listed in `MODE_INVARIANT_TOKENS` (`src/validators/ModeParity.ts`); no theme-file entry needed |
+| Is the same value correct in both modes? | Yes → no override | **Level 1** — leave the token **commented out** in the dark theme file; it falls back to the base (light) reference |
+| Does the token need a *different primitive* in dark mode (role remapping)? | Yes → override needed | **Level 2** — add an active entry to the appropriate theme's SemanticOverrides |
 
-### Level 1 Example (Primitive Handles Mode)
+> **Level 1 does not mean "the primitive handles it."** No primitive varies by mode. Level 1 means *the token deliberately resolves to the same value in both modes*, and the commented-out theme-file line is the record of that decision. A token that must actually change in dark mode needs a Level 2 override — there is no other mechanism.
 
-`color.structure.canvas` references `white100`. The primitive `white100` carries its own light/dark values:
+### Level 1 Example (Falls Back to Base — Same Value in Both Modes)
+
+`color.feedback.error.text` references `pink400`. It has no active dark override; the entry sits commented out in the dark theme file (`src/tokens/themes/dark/SemanticOverrides.ts:27`):
+```typescript
+// color.feedback.error.text: { value: 'pink400' }
 ```
-white100.light.base = 'oklch(1.0 0 0)'      // white in light mode
-white100.dark.base  = 'oklch(0.21 0 0)'     // near-black in dark mode
+`pink400` resolves to one OKLCH value used in both modes — `l` 0.55 (`channels/lightness/chromatic.ts`), `c` 0.203 (`channels/chroma/chromatic.ts`), `h` 10 (`channels/hues.ts`). The emitted CSS carries a single value with no `light-dark()` wrapper (`dist/DesignTokens.web.css:527`):
+```css
+--color-feedback-error-text: oklch(0.55 0.203 10);
 ```
-No semantic override needed — the primitive handles differentiation.
 
 ### Level 2 Example (Semantic Override)
 
-`color.action.navigation` references `cyan500` in light mode, but dark mode needs `cyan100` (a different primitive). The dark theme overrides the reference:
+`color.structure.canvas` references `white100` in light mode, but dark mode needs `gray400` (a different primitive). The dark theme overrides the reference (`src/tokens/themes/dark/SemanticOverrides.ts:163`):
 ```typescript
 // Dark theme SemanticOverrides
 export const darkSemanticOverrides: SemanticOverrideMap = {
-  'color.action.navigation': { primitiveReferences: { value: 'cyan100' } },
+  'color.structure.canvas': { primitiveReferences: { value: 'gray400' } },
 };
 ```
+Because the modes now resolve to different values, the generator emits a mode-aware value (`dist/DesignTokens.web.css:559`):
+```css
+--color-structure-canvas: light-dark(oklch(1 0 260), oklch(0.42 0.018 260));
+```
+
+### Which File Actually Changes a Color?
+
+| Goal | Edit | Note |
+|------|------|------|
+| Make a semantic token differ by mode | The theme's `SemanticOverrides.ts` (Level 2) | The only mechanism that produces mode variance |
+| Change a primitive's color value | `src/tokens/color/channels/**` (lightness / chroma / hue) | Changes the primitive in **both** modes and every theme; composed into named primitives in `src/tokens/color/primitives/**` |
+| — | ~~`src/tokens/ColorTokens.ts`~~ | **Deprecated (Spec 115).** `SemanticValueResolver.resolveColorPrimitive()` consults `composedColorMap` first, so for all 50 OKLCH primitives the legacy `light`/`dark`/`wcag` slots are never read on the CSS/Swift/Kotlin path. Only the four shadow primitives (`shadowBlack100`, `shadowBlue100`, `shadowOrange100`, `shadowGray100`) still fall through to it. It *is* still the sole source for DTCG/Figma primitive export — see `.kiro/issues/2026-08-25-dual-color-source-divergence.md`. |
 
 ### Context Resolution
 
