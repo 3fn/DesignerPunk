@@ -17,6 +17,13 @@
 
 | # | PR | branch | createdAt | pinned first-push SHA | first-push result | campaign segment |
 |---|----|--------|-----------|------------------------|-------------------|------------------|
+| 1 | #126 | fix/buttonicon-token-family | 2026-08-13T14:54:35Z | `5fcdd432aa8c` | GREEN (19/19 concluded success) | 1 |
+| 2 | #127 | fix/avatar-icon-token-family | 2026-08-13T18:44:15Z | `0339a4550a84` | GREEN (19/19 concluded success) | 1 |
+| 3 | #128 | fix/gate-registration-drift-reconciliation | 2026-08-21T13:37:47Z | `e5f998f6f88e` | GREEN (19/19 concluded success) | 1 |
+| 4 | #129 | chore/wire-gate-registration-into-health-check | 2026-08-21T13:39:00Z | `11f98156ee48` | GREEN (19/19 concluded success) | 1 |
+| 5 | #130 | chore/close-gate-registration-ledger | 2026-08-21T13:52:05Z | `b3713374b000` | GREEN (19/19 concluded success) | 2 |
+
+*(Pass 1, 2026-08-25: all five pinned by A1 reconstruction — each PR is single-commit with `committedDate ≤ createdAt`; check-runs queried per SHA. #127 OPEN at this pass — qualification is at open (DD6/J-C2 precedent), first-push outcome concluded. Note: `122-sweep-5-corrected-state` still RAN (success) on `b3713374b000` post-removal — the workflow persists; only the required flag was removed. Scoring unaffected either way.)*
 
 ## Exclusion table (protocol §6 classes + open clause; reasons per PR)
 
@@ -28,22 +35,26 @@
 | #122 | citation-defect fixes + checker/CI-job ship — **judgment exclusion (open clause)**: nearest class 1 (arming PR — authors prune-aware; ships a brand-new failure source whose required flip followed same-day). Dual-purpose PR (18 real defect fixes rode with it); excluded conservatively from the baseline; contested → Peter (J1/J3 pattern) |
 | #123 | register check_state flip — class 3 (register-only). Baseline exclusion |
 | #124 | the wave-1 prune itself (campaign-endogenous instrument; also the baseline/window boundary) |
+| #125 | wave-1 window-open pass (datasets + B recheck) — class 3 (dataset-transcription instrument; J2 precedent). Recorded at pass 1 |
 
 ## Segment log (EXOGENOUS events only)
 
 | segment | opened-by (exogenous event) | boundary timestamp | n | f | W1 (as-of-pass) |
 |---------|------------------------------|--------------------|---|---|------------------|
-| 1 | Campaign open (wave-1 prune merge) | 2026-08-12T21:03:24Z | 0 | 0 | not evaluable (n<5) |
+| 1 | Campaign open (wave-1 prune merge) | 2026-08-12T21:03:24Z | 4 | 0 | not evaluable (n<5); f=0 ≤ e+1 (e=0.4) informationally |
+| 2 | **Required-check-set change: `122-sweep-5-corrected-state` removed from required contexts (Peter Settings action; option-(a) ruling 2026-08-21 — charges 1 of K=3)** | 2026-08-21 ~13:50Z (bracketed: after #129's merge 13:48:30Z, before #130's creation 13:52:05Z; exact Settings-action time not captured) | 1 | 0 | not evaluable (n<5) |
+
+**Boundary-event count: 1 of K=3.** Segment 1 is CLOSED at n=4 — below the ≥5 evaluability floor, permanently not-evaluable (A3: never forces INDETERMINATE). The §4 frozen scoring set is UNCHANGED by the removal (frozen means frozen — sweep-5 simply stops being a required context on the live gate; "present on the pinned SHA" handles any future absence). Ledger: `.kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md` — its campaign-accounting item is closed by this entry (pass 1, 2026-08-25).
 
 ## Wall-clock record (datum, never a criterion)
 
-- Campaign open: 2026-08-12T21:03:24Z · Segment boundaries: none yet · Campaign close: *(at final wave-window close)*
+- Campaign open: 2026-08-12T21:03:24Z · Segment boundaries: 2026-08-21 ~13:50Z (sweep-5 required-flag removal) · Campaign close: *(at final wave-window close)*
 
 ## Per-wave dataset index
 
 | Wave | Dataset | Prune merge | Window state |
 |------|---------|-------------|--------------|
-| 1 (5.2) | `wave-1-dataset.md` | `cbf9929c` 2026-08-12T21:03:24Z | **OPEN** (0/10) |
+| 1 (5.2) | `wave-1-dataset.md` | `cbf9929c` 2026-08-12T21:03:24Z | **OPEN** (5/10 at pass 1, 2026-08-25) |
 | 2 (5.3) | `wave-2-dataset.md` | — | not open |
 | 3 (5.4) | `wave-3-dataset.md` | — | not open |
 | 4 (5.5) | *(rows-only expected — dataset only if a prune emerges)* | — | — |

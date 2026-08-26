@@ -3,7 +3,7 @@
 **Date**: 2026-08-21
 **Authority**: Peter's ruling 2026-08-21 (in-session, coordinator-relayed and executed same session): option (a) of the Civitas steward advisory — the sweep-5 Settings removal proceeds mid-window and **charges 1 of K=3** on the open 125-B U1b campaign window (campaign-measurement-protocol.md §2: a required-check-set change is an exogenous boundary event)
 **Owner**: Thurgood (Civitas steward); script/governance edits Peter-merged (governance carve-out); the Settings action is Peter-only
-**Status**: RESOLVED 2026-08-21 (same burst) — PRs #128/#129 merged, Peter's Settings removal landed, verify-run PASS at 18. Sole remaining item: the campaign-dataset boundary-event entry (Thurgood, next observation pass).
+**Status**: CLOSED 2026-08-25 — PRs #128/#129 merged, Peter's Settings removal landed, verify-run PASS at 18 (2026-08-21); campaign-dataset boundary-event entry recorded at observation pass 1 (2026-08-25). No items remain.
 
 ---
 
@@ -37,7 +37,7 @@ Context strings verified against the live protection API 2026-08-21 (the script'
 - [x] Run `./tools/agent-generator/verify-gate-registration.sh` → expect `PASS: all 18 required contexts present`. **DONE 2026-08-21**, run from `main` at the post-merge head, immediately after Peter's removal (coordinator session): `PASS: all 18 required contexts present, count-asserted (N=18 recorded in this script)` — 18 contexts listed, `122-sweep-5-corrected-state` absent. This closes the sweep-5 item deferred since 2026-07-11.
 
 ### 125-B campaign-window accounting
-- [ ] **Thurgood**: at the NEXT observation pass after the removal lands, record the boundary event in `.kiro/specs/125-B-classification-map/completion/u1b/campaign-window-dataset.md` — exogenous required-check-set change, charges **1 of K=3**, segments the shared campaign window (Peter's option-(a) ruling, 2026-08-21). NOT recorded pre-emptively; the dataset entry is made at the observation pass, per campaign law's event-anchored cadence.
+- [x] **Thurgood**: at the NEXT observation pass after the removal lands, record the boundary event in `.kiro/specs/125-B-classification-map/completion/u1b/campaign-window-dataset.md` — exogenous required-check-set change, charges **1 of K=3**, segments the shared campaign window (Peter's option-(a) ruling, 2026-08-21). NOT recorded pre-emptively; the dataset entry is made at the observation pass, per campaign law's event-anchored cadence. **DONE 2026-08-25 (observation pass 1)** — segment 2 opened at boundary ~2026-08-21T13:50Z (bracketed by #129's merge and #130's creation); boundary count 1 of K=3; frozen scoring set unchanged. This ledger is now fully closed.
 - Note: the §4 FROZEN scoring set (18, incl. sweep-5) is unaffected — frozen means frozen; post-removal, sweep-5 simply stops appearing on new pinned SHAs ("present on the pinned SHA" handles absence). The charge is the segmentation, not a scoring change.
 
 ### Follow-up (separate PR, independent files)
