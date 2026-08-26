@@ -21,10 +21,6 @@ export type {
   ActionableSuggestion,
 } from './ValidationReporter';
 
-// Platform-specific build validators
-export { iOSBuildValidator } from './iOSBuildValidator';
-export type { iOSValidationResult } from './iOSBuildValidator';
-export { WebBuildValidator } from './WebBuildValidator';
 
 // Cross-platform mathematical consistency validator
 export { MathematicalConsistencyValidator } from './MathematicalConsistencyValidator';
