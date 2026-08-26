@@ -65,6 +65,16 @@ export interface PrimitiveTokenReference {
   name: string;
   /** Unitless base value from the primitive token */
   baseValue: number;
+  /**
+   * Primitive token family (the `category` field of a `PrimitiveToken`, e.g. 'spacing',
+   * 'sizing', 'radius'). OPTIONAL for backward compatibility: minimal `{ name, baseValue }`
+   * reference literals remain valid.
+   *
+   * When present, it is cross-checked against the call's declared `family` by the
+   * family-mismatch guard in {@link defineComponentTokens}. Real primitives from
+   * src/tokens/** always carry it, so the guard is active for all production authoring.
+   */
+  category?: string;
 }
 
 /**
@@ -216,8 +226,40 @@ export function defineComponentTokens<T extends Record<string, TokenDefinition>>
     if (isTokenWithReference(definition)) {
       // Token with primitive reference
       const primitiveToken = definition.reference;
+
+      // FAMILY-MISMATCH GUARD.
+      // The call's `family` is stamped onto every token it registers, and the generator
+      // derives platform output from it — notably the primitive class name used for
+      // reference-path tokens (getFamilyClassName) and the Android `.dp` suffix. A call
+      // that declares one family but references another family's primitive therefore emits
+      // a member that does not exist on the target platform. That is exactly the Button-Icon
+      // defect: a `family: 'spacing'` call referencing `sizingTokens.size600` generated
+      // `SpacingTokens.size600`, a non-existent member (PR #126).
+      //
+      // Only enforced when the reference carries a `category` — minimal `{ name, baseValue }`
+      // literals (used widely in tests) are intentionally exempt rather than rejected.
+      //
+      // Escape hatch: a token that legitimately needs another family's VALUE should use the
+      // value path (`value:`), which asserts no cross-family token-chain claim.
+      if (
+        typeof primitiveToken.category === 'string' &&
+        primitiveToken.category !== family
+      ) {
+        throw new Error(
+          `Token family mismatch in defineComponentTokens() for component '${component}': ` +
+          `token '${key}' is declared in a '${family}' family call but references primitive ` +
+          `'${primitiveToken.name}' from the '${primitiveToken.category}' family. ` +
+          `Every token in a call is stamped with that call's family, which drives platform ` +
+          `output (e.g. the generated '${family.charAt(0).toUpperCase() + family.slice(1)}Tokens' ` +
+          `class reference), so this would emit a non-existent platform member. ` +
+          `Fix: move '${key}' into a separate defineComponentTokens() call with ` +
+          `family: '${primitiveToken.category}', or use the value path if no token-chain ` +
+          `relationship is intended.`
+        );
+      }
+
       const value = primitiveToken.baseValue;
-      
+
       values[key] = value;
       registeredTokens.push({
         name: tokenName,

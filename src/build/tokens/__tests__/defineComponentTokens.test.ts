@@ -392,6 +392,119 @@ describe('defineComponentTokens', () => {
     });
   });
 
+  describe('Family-mismatch guard (reference path)', () => {
+    // A reference literal that carries `category`, as every real primitive in
+    // src/tokens/** does. The guard keys off this field.
+    const createMockPrimitiveWithCategory = (
+      name: string,
+      baseValue: number,
+      category: string
+    ): PrimitiveTokenReference => ({ name, baseValue, category });
+
+    test('throws when a reference primitive belongs to a different family than declared', () => {
+      const size600 = createMockPrimitiveWithCategory('size600', 48, 'sizing');
+
+      expect(() =>
+        defineComponentTokens({
+          component: 'ButtonIcon',
+          family: 'spacing',
+          tokens: {
+            'size.large': { reference: size600, reasoning: 'Large button size' },
+          },
+        })
+      ).toThrow(/Token family mismatch/);
+    });
+
+    test('error names the component, token, declared family, primitive and its real family', () => {
+      const size600 = createMockPrimitiveWithCategory('size600', 48, 'sizing');
+
+      let message = '';
+      try {
+        defineComponentTokens({
+          component: 'ButtonIcon',
+          family: 'spacing',
+          tokens: {
+            'size.large': { reference: size600, reasoning: 'Large button size' },
+          },
+        });
+      } catch (error) {
+        message = (error as Error).message;
+      }
+
+      expect(message).toContain("component 'ButtonIcon'");
+      expect(message).toContain("token 'size.large'");
+      expect(message).toContain("'spacing' family call");
+      expect(message).toContain("'size600'");
+      expect(message).toContain("'sizing' family");
+    });
+
+    test('regression: the real Button-Icon defect (PR #126) now fails at authoring time', () => {
+      // Before PR #126, buttonIcon.tokens.ts declared family 'spacing' while referencing
+      // sizing primitives. That produced `SpacingTokens.size600` — a member no generated
+      // platform file defines — and was caught only by reading generated Swift/Kotlin.
+      expect(() =>
+        defineComponentTokens({
+          component: 'ButtonIcon',
+          family: 'spacing',
+          tokens: {
+            'inset.large': {
+              reference: createMockPrimitiveWithCategory('space150', 12, 'spacing'),
+              reasoning: 'Correctly family-matched spacing token',
+            },
+            'size.large': {
+              reference: createMockPrimitiveWithCategory('size600', 48, 'sizing'),
+              reasoning: 'Mis-stamped sizing token — the defect',
+            },
+          },
+        })
+      ).toThrow(/references primitive 'size600' from the 'sizing' family/);
+    });
+
+    test('accepts a reference whose category matches the declared family', () => {
+      const size600 = createMockPrimitiveWithCategory('size600', 48, 'sizing');
+
+      const result = defineComponentTokens({
+        component: 'ButtonIcon',
+        family: 'sizing',
+        tokens: {
+          'size.large': { reference: size600, reasoning: 'Large button size' },
+        },
+      });
+
+      expect(result['size.large']).toBe(48);
+      expect((getTokenContract(result) ?? [])[0].family).toBe('sizing');
+    });
+
+    test('does not fire for reference literals without a category (back-compat)', () => {
+      const bareRef = createMockPrimitiveToken('space100', 8);
+
+      expect(() =>
+        defineComponentTokens({
+          component: 'ButtonIcon',
+          family: 'sizing',
+          tokens: {
+            'inset.small': { reference: bareRef, reasoning: 'Bare reference literal' },
+          },
+        })
+      ).not.toThrow();
+    });
+
+    test('does not fire for value-path tokens (the Avatar icon-size case is NOT covered)', () => {
+      // Documents a real limitation: the Avatar `icon.size.*` gap fillers were mis-stamped
+      // `family: 'spacing'` on the VALUE path. No reference exists to cross-check, so this
+      // guard cannot catch that class of mislabel.
+      expect(() =>
+        defineComponentTokens({
+          component: 'Avatar',
+          family: 'spacing',
+          tokens: {
+            'icon.size.xs': { value: 12, reasoning: 'Dimensional value in a spacing call' },
+          },
+        })
+      ).not.toThrow();
+    });
+  });
+
   describe('Idempotent re-branding (Spec 124, caveat c)', () => {
     test('re-applying the brand to the same return does not throw', () => {
       const result = defineComponentTokens({

@@ -18,13 +18,15 @@
 
 import { TokenFileGenerator } from '../../generators/TokenFileGenerator';
 import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
-import { getTokenContract } from '../../build/tokens';
 
 // Spec 124: defineComponentTokens no longer self-registers; the rich tokens ride back on
-// the branded return. We reproduce the production harvest here (recover via getTokenContract
+// the branded return. We reproduce the production harvest here (recover the rich tokens
 // + register into the canonical registry) so the real TokenFileGenerator pipeline — which
 // reads ComponentTokenRegistry.getAll() — has the Progress tokens to translate.
-import { ProgressTokens } from '../../tokens/component/progress';
+//
+// Progress registers through THREE family calls (sizing / spacing / borderWidth), so the
+// harvest is the concatenation helper rather than getTokenContract() of a single export.
+import { getProgressRegisteredTokens } from '../../tokens/component/progress';
 
 describe('Progress Token Cross-Platform Translation', () => {
   let generator: TokenFileGenerator;
@@ -34,7 +36,7 @@ describe('Progress Token Cross-Platform Translation', () => {
 
   beforeAll(() => {
     ComponentTokenRegistry.clear();
-    for (const token of getTokenContract(ProgressTokens) ?? []) {
+    for (const token of getProgressRegisteredTokens()) {
       ComponentTokenRegistry.register(token);
     }
 
@@ -91,27 +93,27 @@ describe('Progress Token Cross-Platform Translation', () => {
   describe('iOS Swift output includes progress current size tokens', () => {
     it('should reference size200 for sm current size', () => {
       expect(iosContent).toContain('nodeSizeSmCurrent');
-      expect(iosContent).toMatch(/nodeSizeSmCurrent.*SpacingTokens.size200/);
+      expect(iosContent).toMatch(/nodeSizeSmCurrent.*SizingTokens.size200/);
     });
 
     it('should reference size250 for md current size', () => {
       expect(iosContent).toContain('nodeSizeMdCurrent');
-      expect(iosContent).toMatch(/nodeSizeMdCurrent.*SpacingTokens.size250/);
+      expect(iosContent).toMatch(/nodeSizeMdCurrent.*SizingTokens.size250/);
     });
 
     it('should reference size300 for lg current size', () => {
       expect(iosContent).toContain('nodeSizeLgCurrent');
-      expect(iosContent).toMatch(/nodeSizeLgCurrent.*SpacingTokens.size300/);
+      expect(iosContent).toMatch(/nodeSizeLgCurrent.*SizingTokens.size300/);
     });
 
-    it('should use CGFloat type for spacing tokens', () => {
+    it('should use CGFloat type for dimensional tokens', () => {
       expect(iosContent).toMatch(/nodeSizeSmCurrent:\s*CGFloat/);
     });
 
     it('should reference SizingTokens for base size tokens', () => {
-      expect(iosContent).toContain('SpacingTokens.size150');
-      expect(iosContent).toContain('SpacingTokens.size200');
-      expect(iosContent).toContain('SpacingTokens.size250');
+      expect(iosContent).toContain('SizingTokens.size150');
+      expect(iosContent).toContain('SizingTokens.size200');
+      expect(iosContent).toContain('SizingTokens.size250');
     });
   });
 
@@ -122,23 +124,23 @@ describe('Progress Token Cross-Platform Translation', () => {
   describe('Android Kotlin output includes progress current size tokens', () => {
     it('should reference size200 for sm current size', () => {
       expect(androidContent).toContain('nodeSizeSmCurrent');
-      expect(androidContent).toMatch(/nodeSizeSmCurrent\s*=\s*SpacingTokens.size200/);
+      expect(androidContent).toMatch(/nodeSizeSmCurrent\s*=\s*SizingTokens.size200/);
     });
 
     it('should reference size250 for md current size', () => {
       expect(androidContent).toContain('nodeSizeMdCurrent');
-      expect(androidContent).toMatch(/nodeSizeMdCurrent\s*=\s*SpacingTokens.size250/);
+      expect(androidContent).toMatch(/nodeSizeMdCurrent\s*=\s*SizingTokens.size250/);
     });
 
     it('should reference size300 for lg current size', () => {
       expect(androidContent).toContain('nodeSizeLgCurrent');
-      expect(androidContent).toMatch(/nodeSizeLgCurrent\s*=\s*SpacingTokens.size300/);
+      expect(androidContent).toMatch(/nodeSizeLgCurrent\s*=\s*SizingTokens.size300/);
     });
 
     it('should reference SizingTokens for base size tokens', () => {
-      expect(androidContent).toContain('SpacingTokens.size150');
-      expect(androidContent).toContain('SpacingTokens.size200');
-      expect(androidContent).toContain('SpacingTokens.size250');
+      expect(androidContent).toContain('SizingTokens.size150');
+      expect(androidContent).toContain('SizingTokens.size200');
+      expect(androidContent).toContain('SizingTokens.size250');
     });
   });
 
@@ -149,9 +151,9 @@ describe('Progress Token Cross-Platform Translation', () => {
   describe('Cross-platform value consistency', () => {
     it('should reference same sizing primitives for current sizes across all platforms', () => {
       const currentSizes = [
-        { cssRef: 'size-200', swiftRef: 'SpacingTokens.size200', kotlinRef: 'SpacingTokens.size200', cssName: 'sm-current', camelName: 'nodeSizeSmCurrent' },
-        { cssRef: 'size-250', swiftRef: 'SpacingTokens.size250', kotlinRef: 'SpacingTokens.size250', cssName: 'md-current', camelName: 'nodeSizeMdCurrent' },
-        { cssRef: 'size-300', swiftRef: 'SpacingTokens.size300', kotlinRef: 'SpacingTokens.size300', cssName: 'lg-current', camelName: 'nodeSizeLgCurrent' },
+        { cssRef: 'size-200', swiftRef: 'SizingTokens.size200', kotlinRef: 'SizingTokens.size200', cssName: 'sm-current', camelName: 'nodeSizeSmCurrent' },
+        { cssRef: 'size-250', swiftRef: 'SizingTokens.size250', kotlinRef: 'SizingTokens.size250', cssName: 'md-current', camelName: 'nodeSizeMdCurrent' },
+        { cssRef: 'size-300', swiftRef: 'SizingTokens.size300', kotlinRef: 'SizingTokens.size300', cssName: 'lg-current', camelName: 'nodeSizeLgCurrent' },
       ];
 
       for (const { cssRef, swiftRef, kotlinRef, cssName, camelName } of currentSizes) {

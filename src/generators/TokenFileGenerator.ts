@@ -565,6 +565,7 @@ export class TokenFileGenerator {
   private getiOSComponentTokenType(token: RegisteredComponentToken): string {
     switch (token.family) {
       case 'spacing':
+      case 'sizing':
       case 'radius':
       case 'fontSize':
       case 'tapArea':
@@ -619,8 +620,12 @@ export class TokenFileGenerator {
       const familyClass = this.getFamilyClassName(token.family);
       return `${familyClass}.${token.primitiveReference}`;
     }
-    // Dimensional families need .dp suffix to match primitive token output (Task 1.4)
-    const dimensionalFamilies = ['spacing', 'radius', 'tapArea', 'fontSize', 'borderWidth'];
+    // Dimensional families need .dp suffix to match primitive token output (Task 1.4).
+    // 'sizing' is dimensional (component width/height) and belongs here: without it, a
+    // value-path sizing token emits a bare Int, which fails to compile against consumers
+    // that type the member as Dp (e.g. Avatar.android.kt's
+    // `val iconSizeXs: Dp = GeneratedAvatarTokens.iconSizeXs`).
+    const dimensionalFamilies = ['spacing', 'sizing', 'radius', 'tapArea', 'fontSize', 'borderWidth'];
     if (dimensionalFamilies.includes(token.family)) {
       return `${token.value}.dp`;
     }

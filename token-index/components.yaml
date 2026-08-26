@@ -1,4 +1,12 @@
 tokens:
+  progress.connector.thickness:
+    component: Progress
+    primitiveReferences:
+      value: borderWidth100
+    platforms:
+      web: '--progress-connector-thickness'
+      ios: ProgressTokens.connectorThickness
+      android: ProgressTokens.connectorThickness
   progress.node.size.sm:
     component: Progress
     primitiveReferences:
@@ -71,14 +79,6 @@ tokens:
       web: '--progress-node-gap-lg'
       ios: ProgressTokens.nodeGapLg
       android: ProgressTokens.nodeGapLg
-  progress.connector.thickness:
-    component: Progress
-    primitiveReferences:
-      value: borderWidth100
-    platforms:
-      web: '--progress-connector-thickness'
-      ios: ProgressTokens.connectorThickness
-      android: ProgressTokens.connectorThickness
   avatar.size.xs:
     component: Avatar
     primitiveReferences:
