@@ -13,7 +13,7 @@ description: Token documentation routing table — maps token types to their MCP
 **Scope**: cross-project
 **Layer**: 2
 **Relevant Tasks**: component-development, token-selection, styling
-**Last Reviewed**: 2026-06-24
+**Last Reviewed**: 2026-08-25
 
 ---
 
