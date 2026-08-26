@@ -151,3 +151,17 @@ silently.
 
 1. Is `dist/DesignTokens.figma.json` / `dist/DesignTokens.dtcg.json` actually consumed today? (Determines priority.)
 2. Option A, B, or C — and whether it warrants a spec or runs issue-driven.
+
+---
+
+## Decision Question #1 ANSWERED (2026-08-25, Peter-prompted check)
+
+**The export HAS a live consumer, and the divergence reaches it.** Peter's recollection confirmed: the DTCG/Figma export exists to connect tokens to canvas-based design tooling via **`figma-console-mcp`** (^1.10.1, a package.json dependency).
+
+**The consumption chain, verified**: `npm run figma:push` (`src/cli/figma-push.ts`, Spec 054a) loads `dist/DesignTokens.dtcg.json` → transforms → `dist/DesignTokens.figma.json` → syncs Figma variables via figma-console-mcp. Spec 054b (design extract) reads back through the same MCP. The push tooling has been exercised in anger (054a known-issues ledger + March 2026 issue trail: duplicate collections, variable-binding gaps).
+
+**Confirmed live impact example**: the pushed artifact carries `color/gray/300 = #26323A` in ALL THREE modes (light/dark/wcag) — the legacy RGBA value — while shipped platforms render gray300 at `oklch(0.52 0.02 260)`. A designer working from the synced Figma variables sees a significantly darker gray than any platform ships. The 19/50 divergent primitives above all reach Figma this way (semantic variables alias primitives — e.g. `color/icon/navigation/inactive` aliases `color/gray/300` in every mode — so the primitive-value staleness propagates to every aliased semantic).
+
+**Priority consequence**: HIGH stands, and the frame sharpens — this is not a dormant export with hypothetical consumers; it is the design/code contract surface, and it currently lies to the design side. **Sequencing note**: any fix session should also check the 054a/054b issue trail (duplicate collections, extractor variable-binding gaps) — repairing values into a push pipeline with known sync defects risks conflating the two failure classes.
+
+**Remaining decision (Peter, at the fix session)**: options A/B/C above, now weighted by a real consumer — the DTCG primitive `$value` path should almost certainly read the same OKLCH source as the platforms (option A's shape), with the legacy file's remaining sole-source roles (shadows, DTCG structure) migrated or explicitly recorded.
