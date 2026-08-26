@@ -83,13 +83,13 @@ Chip (Family)
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| renders_pill_container | Renders pill-shaped container with label text | — | web, ios, android |
-| renders_icon | Optionally displays leading icon via Icon-Base at icon.size075 | — | web, ios, android |
-| press_interaction | Responds to press/click/tap events, calls onPress callback | 2.1.1 | web, ios, android |
+| visual_pill_container | Renders pill-shaped container with label text | — | web, ios, android |
+| visual_renders_icon | Optionally displays leading icon via Icon-Base at icon.size075 | — | web, ios, android |
+| interaction_pressable | Responds to press/click/tap events, calls onPress callback | 2.1.1 | web, ios, android |
 | state_styling | Visual feedback for default, hover, pressed states | 1.4.13 | web, ios, android |
-| keyboard_focusable | Can receive keyboard focus via Tab key | 2.1.1, 2.4.7 | web, ios, android |
-| keyboard_activation | Activates on Space/Enter key press | 2.1.1 | web |
-| expanded_tap_area | 48px tap area exceeds WCAG 44px minimum | 2.5.5 | web, ios, android |
+| interaction_focusable | Can receive keyboard focus via Tab key | 2.1.1, 2.4.7 | web, ios, android |
+| interaction_keyboard_activation | Activates on Space/Enter key press | 2.1.1 | web |
+| interaction_expanded_tap_area | 48px tap area exceeds WCAG 44px minimum | 2.5.5 | web, ios, android |
 | accessibility_role | Announces as button to assistive technology | 4.1.2 | web, ios, android |
 
 ### Extended Contracts (Chip-Filter)
@@ -98,10 +98,10 @@ Inherits all contracts from Chip-Base, plus:
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| toggle_selection | Toggles selected state on press, calls onSelectionChange | 4.1.2 | web, ios, android |
-| selected_styling | Visual feedback for selected state using select feedback colors | 1.4.1 | web, ios, android |
-| checkmark_icon | Displays checkmark icon when selected (replaces leading icon) | — | web, ios, android |
-| aria_pressed | Announces selection state via aria-pressed attribute | 4.1.2 | web |
+| interaction_toggle_selection | Toggles selected state on press, calls onSelectionChange | 4.1.2 | web, ios, android |
+| state_selected_styling | Visual feedback for selected state using select feedback colors | 1.4.1 | web, ios, android |
+| visual_checkmark_icon | Displays checkmark icon when selected (replaces leading icon) | — | web, ios, android |
+| accessibility_aria_pressed | Announces selection state via aria-pressed attribute | 4.1.2 | web |
 
 ### Extended Contracts (Chip-Input)
 
@@ -109,10 +109,10 @@ Inherits most contracts from Chip-Base, plus:
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| dismiss_on_press | Dismisses chip on press anywhere, calls onDismiss | 2.1.1 | web, ios, android |
-| trailing_x_icon | Always displays X icon as trailing element | — | web, ios, android |
-| dual_icons | Supports both leading icon AND trailing X icon | — | web, ios, android |
-| x_icon_accessible_label | X icon has accessible label "Remove [label]" | 4.1.2 | web, ios, android |
+| interaction_dismiss | Dismisses chip on press anywhere, calls onDismiss | 2.1.1 | web, ios, android |
+| content_trailing_dismiss_icon | Always displays X icon as trailing element | — | web, ios, android |
+| content_dual_icons | Supports both leading icon AND trailing X icon | — | web, ios, android |
+| accessibility_dismiss_label | X icon has accessible label "Remove [label]" | 4.1.2 | web, ios, android |
 
 ---
 

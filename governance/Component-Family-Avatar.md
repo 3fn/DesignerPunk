@@ -80,13 +80,13 @@ Avatar-Base (Primitive) [IMPLEMENTED]
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `shape_differentiation` | Circle for human, hexagon for agent | 1.4.1 | web, ios, android |
-| `displays_image` | Shows user image when available (human only) | 1.1.1 | web, ios, android |
-| `displays_fallback` | Shows icon when image unavailable or agent type | 1.1.1 | web, ios, android |
+| `visual_entity_shape` | Circle for human, hexagon for agent | 1.4.1 | web, ios, android |
+| `content_displays_image` | Shows user image when available (human only) | 1.1.1 | web, ios, android |
+| `content_displays_fallback` | Shows icon when image unavailable or agent type | 1.1.1 | web, ios, android |
 | `error_handling` | Falls back to icon on image load failure | N/A | web, ios, android |
-| `size_variants` | Supports six size variants (xs-xxl) | N/A | web, ios, android |
-| `interactive_feedback` | Shows hover visual feedback when interactive | N/A | web, ios, android |
-| `decorative_mode` | Hides from screen readers when decorative | 1.1.1 | web, ios, android |
+| `visual_size_variants` | Supports six size variants (xs-xxl) | N/A | web, ios, android |
+| `interaction_hover` | Shows hover visual feedback when interactive | N/A | web, ios, android |
+| `accessibility_decorative_mode` | Hides from screen readers when decorative | 1.1.1 | web, ios, android |
 | `wrapper_delegation` | No onClick/onPress - wrapper handles interaction | 2.1.1 | web, ios, android |
 
 ---

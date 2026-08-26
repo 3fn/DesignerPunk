@@ -84,15 +84,15 @@ All components in the Icons family inherit these 5 foundational contracts from I
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `renders_svg` | Renders inline SVG with correct viewBox and stroke | N/A | web, ios, android |
-| `color_inheritance` | Inherits color from parent via currentColor | 1.4.1 | web, ios, android |
-| `size_variants` | Supports 11 size variants from typography scale | N/A | web, ios, android |
-| `optical_balance` | Optional 8% lighter blend for icon-text pairing | 1.4.3 | web, ios, android |
+| `visual_renders_svg` | Renders inline SVG with correct viewBox and stroke | N/A | web, ios, android |
+| `visual_color_inheritance` | Inherits color from parent via currentColor | 1.4.1 | web, ios, android |
+| `visual_size_variants` | Supports 11 size variants from typography scale | N/A | web, ios, android |
+| `visual_optical_balance` | Optional 8% lighter blend for icon-text pairing | 1.4.3 | web, ios, android |
 | `accessibility_hidden` | Decorative icons hidden from assistive technology | 1.1.1 | web, ios, android |
 
 ### Contract Details
 
-#### renders_svg
+#### visual_renders_svg
 
 **Description**: Renders inline SVG with correct viewBox and stroke attributes.
 
@@ -100,7 +100,7 @@ All components in the Icons family inherit these 5 foundational contracts from I
 
 **WCAG Compliance**: N/A
 
-#### color_inheritance
+#### visual_color_inheritance
 
 **Description**: Inherits color from parent via currentColor.
 
@@ -108,7 +108,7 @@ All components in the Icons family inherit these 5 foundational contracts from I
 
 **WCAG Compliance**: 1.4.1 Use of Color
 
-#### size_variants
+#### visual_size_variants
 
 **Description**: Supports 11 size variants calculated from typography scale.
 
@@ -125,7 +125,7 @@ All components in the Icons family inherit these 5 foundational contracts from I
 
 **WCAG Compliance**: N/A
 
-#### optical_balance
+#### visual_optical_balance
 
 **Description**: Optional 8% lighter blend for icon-text pairing.
 

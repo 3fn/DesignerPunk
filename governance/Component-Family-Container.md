@@ -97,17 +97,17 @@ All components in the Containers family inherit these 7 foundational contracts f
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `contains_children` | Can contain child components | 1.3.1 | web, ios, android |
-| `applies_padding` | Applies consistent internal padding | 1.4.12 | web, ios, android |
-| `applies_background` | Applies background color styling | 1.4.3 | web, ios, android |
-| `applies_shadow` | Applies shadow/elevation styling | 1.4.11 | web, ios, android |
-| `applies_border` | Applies border styling | 1.4.11 | web, ios, android |
-| `applies_radius` | Applies border radius styling | N/A | web, ios, android |
-| `hover_state` | Visual feedback on hover (pointer devices) | 1.4.13 | web, ios, android |
+| `layout_contains_children` | Can contain child components | 1.3.1 | web, ios, android |
+| `layout_padding` | Applies consistent internal padding | 1.4.12 | web, ios, android |
+| `visual_background` | Applies background color styling | 1.4.3 | web, ios, android |
+| `visual_shadow` | Applies shadow/elevation styling | 1.4.11 | web, ios, android |
+| `visual_border` | Applies border styling | 1.4.11 | web, ios, android |
+| `visual_radius` | Applies border radius styling | N/A | web, ios, android |
+| `interaction_hover` | Visual feedback on hover (pointer devices) | 1.4.13 | web, ios, android |
 
 ### Contract Details
 
-#### contains_children
+#### layout_contains_children
 
 **Description**: Container-Base can contain any child components or content.
 
@@ -115,7 +115,7 @@ All components in the Containers family inherit these 7 foundational contracts f
 
 **WCAG Compliance**: 1.3.1 Info and Relationships
 
-#### applies_padding
+#### layout_padding
 
 **Description**: Applies consistent internal padding using space.inset tokens.
 
@@ -123,7 +123,7 @@ All components in the Containers family inherit these 7 foundational contracts f
 
 **WCAG Compliance**: 1.4.12 Text Spacing
 
-#### applies_background
+#### visual_background
 
 **Description**: Applies background color styling.
 
@@ -131,7 +131,7 @@ All components in the Containers family inherit these 7 foundational contracts f
 
 **WCAG Compliance**: 1.4.3 Contrast (Minimum)
 
-#### applies_shadow
+#### visual_shadow
 
 **Description**: Applies shadow/elevation styling.
 
@@ -139,7 +139,7 @@ All components in the Containers family inherit these 7 foundational contracts f
 
 **WCAG Compliance**: 1.4.11 Non-text Contrast
 
-#### hover_state
+#### interaction_hover
 
 **Description**: Visual feedback on hover (pointer devices only).
 

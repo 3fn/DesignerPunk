@@ -101,16 +101,16 @@ All Button-CTA instances implement these 6 foundational contracts:
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `focusable` | Can receive keyboard focus | 2.1.1, 2.4.7 | web, ios, android |
-| `pressable` | Responds to press/click events | 2.1.1 | web, ios, android |
-| `hover_state` | Visual feedback on hover (desktop) | 1.4.13 | web |
-| `pressed_state` | Visual feedback when pressed | 2.4.7 | web, ios, android |
-| `loading_state` | Shows loading indicator during async | 4.1.3 | web, ios, android |
-| `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
+| `interaction_focusable` | Can receive keyboard focus | 2.1.1, 2.4.7 | web, ios, android |
+| `interaction_pressable` | Responds to press/click events | 2.1.1 | web, ios, android |
+| `interaction_hover` | Visual feedback on hover (desktop) | 1.4.13 | web |
+| `interaction_pressed` | Visual feedback when pressed | 2.4.7 | web, ios, android |
+| `state_loading` | Shows loading indicator during async | 4.1.3 | web, ios, android |
+| `interaction_focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
 
 ### Contract Details
 
-#### focusable
+#### interaction_focusable
 
 **Description**: Component can receive keyboard focus via Tab key navigation.
 
@@ -118,7 +118,7 @@ All Button-CTA instances implement these 6 foundational contracts:
 
 **WCAG Compliance**: 2.1.1 Keyboard, 2.4.7 Focus Visible
 
-#### pressable
+#### interaction_pressable
 
 **Description**: Component responds to click, tap, Enter key, and Space key.
 
@@ -126,7 +126,7 @@ All Button-CTA instances implement these 6 foundational contracts:
 
 **WCAG Compliance**: 2.1.1 Keyboard
 
-#### hover_state
+#### interaction_hover
 
 **Description**: Visual feedback on hover (desktop only).
 
@@ -134,7 +134,7 @@ All Button-CTA instances implement these 6 foundational contracts:
 
 **WCAG Compliance**: 1.4.13 Content on Hover or Focus
 
-#### pressed_state
+#### interaction_pressed
 
 **Description**: Visual feedback when pressed.
 
@@ -142,7 +142,7 @@ All Button-CTA instances implement these 6 foundational contracts:
 
 **WCAG Compliance**: 2.4.7 Focus Visible
 
-#### focus_ring
+#### interaction_focus_ring
 
 **Description**: WCAG 2.4.7 focus visible indicator.
 
@@ -292,14 +292,14 @@ Container component that orchestrates selection behavior across child Button-Ver
 
 | Contract | Description | WCAG |
 |----------|-------------|------|
-| `mode_driven` | Behavior determined by mode prop | - |
-| `controlled_state` | Selection state managed by parent via props | - |
-| `state_coordination` | Derives and propagates visual states to children | - |
+| `state_mode_driven` | Behavior determined by mode prop | - |
+| `state_controlled` | Selection state managed by parent via props | - |
+| `composition_state_coordination` | Derives and propagates visual states to children | - |
 | `animation_coordination` | Coordinates transition timing across children | 2.3.3 |
-| `keyboard_navigation` | Arrow keys, Home, End, Enter, Space support | 2.1.1 |
-| `roving_tabindex` | Single tab stop with arrow key navigation | 2.4.3 |
-| `error_propagation` | Error state propagates to all children | 3.3.1 |
-| `aria_roles` | Appropriate ARIA roles based on mode | 4.1.2 |
+| `interaction_keyboard_navigation` | Arrow keys, Home, End, Enter, Space support | 2.1.1 |
+| `interaction_roving_tabindex` | Single tab stop with arrow key navigation | 2.4.3 |
+| `composition_error_propagation` | Error state propagates to all children | 3.3.1 |
+| `accessibility_aria_roles` | Appropriate ARIA roles based on mode | 4.1.2 |
 
 #### Usage Example
 
@@ -383,14 +383,14 @@ Presentational button component for vertical list selection patterns. Renders vi
 
 | Contract | Description | WCAG |
 |----------|-------------|------|
-| `focusable` | Can receive keyboard focus | 2.1.1, 2.4.7 |
-| `pressable` | Responds to press/click events | 2.1.1 |
-| `hover_state` | Visual feedback on hover | 1.4.13 |
-| `pressed_state` | Visual feedback when pressed | 2.4.7 |
-| `visual_state_driven` | Renders appearance based on visualState prop | - |
-| `checkmark_animation` | Animated selection indicator | 2.3.3 |
-| `error_state_display` | Shows error styling when error=true | 3.3.1 |
-| `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 |
+| `interaction_focusable` | Can receive keyboard focus | 2.1.1, 2.4.7 |
+| `interaction_pressable` | Responds to press/click events | 2.1.1 |
+| `interaction_hover` | Visual feedback on hover | 1.4.13 |
+| `interaction_pressed` | Visual feedback when pressed | 2.4.7 |
+| `state_visual_driven` | Renders appearance based on visualState prop | - |
+| `animation_checkmark` | Animated selection indicator | 2.3.3 |
+| `state_error` | Shows error styling when error=true | 3.3.1 |
+| `interaction_focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 |
 
 #### Usage Example
 
