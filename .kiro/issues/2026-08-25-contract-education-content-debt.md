@@ -26,8 +26,13 @@ The development standards' worked example taught a `disabled: boolean` prop cont
 ### 3. Schema-embed staleness — three Component-Templates schema templates + CDS example
 CT:~122/~277/~430 and CDS's `#### Behavioral Contracts` example (~:272) still embed `contracts:` inside schema.yaml — the pre-Spec-063 shape. An author following them ships no `contracts.yaml`; `contract-existence-validation` reds the lane (the gate contains it) but the failure arrives pointing at a file the template never mentioned — gate-as-teacher. Fix: restructure the templates/examples to the two-file shape (schema = structure, contracts.yaml = behavior). Genuine content change; Lina drafts, normal review.
 
-### 4. `custom_validation` — no Concept Catalog concept (CT:996 + selection table :1089)
-A template teaching an uncatalogued concept. **Peter decision point: ballot `validation_custom` into the catalog, or delete the template.** Steward lean (recorded at the 2026-08-25 discussion, counter-argument acknowledged): DELETE — a custom-validation catch-all invites the uncatalogued sprawl the catalog exists to prevent; Lina argues her own position when she takes the item.
+### 4. `custom_validation` — RULED (Peter, 2026-08-25, record-first): DELETE, full disposition
+Owner argument heard (Lina, verbatim in the session record; steward-verified): the concept is a CATEGORY ERROR — it names who supplies the predicate (a prop), not a behavior the component guarantees; redundant with the catalogued, deployed `validation_on_blur`; its one unique criterion (validation results announced to assistive technology) is already catalogued as `accessibility_error_announcement` (live on Input-Radio-Set). Ballotting it would create ambiguity at contract-selection time.
+**Ruled disposition (Lina executes as this batch item — fully specified, no further decisions needed):**
+1. Delete the `custom_validation` template block (CT ~:996).
+2. Fold "validation result and message announced to assistive technology" into the `validation_on_blur` template's criteria (CT ~:975–:990) — the accessibility guidance lands where authors look.
+3. Rewrite the selection-table row (~:1089) to: `| Form validation | validation_on_blur, validation_form_integration |` (the second is catalogued and live on Input-Checkbox-Base + Input-Radio-Base).
+*(If a future component genuinely needs a caller-supplied-predicate contract, the ballot route exists; the least-bad name recorded for that hypothetical is `validation_custom_predicate`, never `validation_custom`.)*
 
 ### 5. Eight phantom rows — documented contracts with no live counterpart
 Avatar `error_handling` + `wrapper_delegation`; Container(CIS) `responsive_layout`; Icon(CIS) `accessible_label` + `decorative_mode`; Button(CIS) `icon_support` + `reduced_motion_support`; Form-Inputs `required_indicator`. Need owner re-derivation against each component's contracts.yaml (some may be planned, some ghosts) — delete or re-derive per row, recorded. No gate consumes these; low urgency, Lina's pace.
