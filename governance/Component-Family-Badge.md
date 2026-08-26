@@ -77,24 +77,24 @@ Badge (Family)
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| displays_label | Renders text label visibly | 1.3.1 | web, ios, android |
-| non_interactive | Does not respond to user interaction | — | web, ios, android |
-| supports_icon | Optionally displays leading icon via Icon-Base | 1.3.1 | web, ios, android |
-| supports_truncation | Truncates with ellipsis when truncate=true; full text accessible | 1.3.1 | web, ios, android |
-| color_contrast | Meets WCAG AA contrast requirements (4.5:1) | 1.4.3 | web, ios, android |
-| text_scaling | Scales proportionally with user font size preferences | 1.4.4 | web, ios, android |
+| content_displays_label | Renders text label visibly | 1.3.1 | web, ios, android |
+| accessibility_non_interactive | Does not respond to user interaction | — | web, ios, android |
+| content_supports_icon | Optionally displays leading icon via Icon-Base | 1.3.1 | web, ios, android |
+| content_truncation | Truncates with ellipsis when truncate=true; full text accessible | 1.3.1 | web, ios, android |
+| accessibility_color_contrast | Meets WCAG AA contrast requirements (4.5:1) | 1.4.3 | web, ios, android |
+| accessibility_text_scaling | Scales proportionally with user font size preferences | 1.4.4 | web, ios, android |
 
 ### Base Contracts (Badge-Count-Base)
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| displays_count | Shows numeric value | 1.3.1 | web, ios, android |
-| truncates_at_max | Shows "[max]+" when count exceeds max | 1.3.1 | web, ios, android |
-| circular_single_digit | Renders circular for single-digit counts | — | web, ios, android |
-| pill_multi_digit | Renders pill shape for multi-digit counts | — | web, ios, android |
-| non_interactive | Does not respond to user interaction | — | web, ios, android |
-| color_contrast | Meets WCAG AA contrast requirements (4.5:1) | 1.4.3 | web, ios, android |
-| text_scaling | Scales proportionally with user font size preferences | 1.4.4 | web, ios, android |
+| content_displays_count | Shows numeric value | 1.3.1 | web, ios, android |
+| content_truncates_at_max | Shows "[max]+" when count exceeds max | 1.3.1 | web, ios, android |
+| visual_circular_shape | Renders circular for single-digit counts | — | web, ios, android |
+| visual_pill_shape | Renders pill shape for multi-digit counts | — | web, ios, android |
+| accessibility_non_interactive | Does not respond to user interaction | — | web, ios, android |
+| accessibility_color_contrast | Meets WCAG AA contrast requirements (4.5:1) | 1.4.3 | web, ios, android |
+| accessibility_text_scaling | Scales proportionally with user font size preferences | 1.4.4 | web, ios, android |
 
 ### Extended Contracts (Badge-Count-Notification)
 
@@ -102,13 +102,13 @@ Inherits all contracts from Badge-Count-Base, plus:
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| notification_semantics | Conveys notification/alert meaning through color | 1.3.1 | web, ios, android |
-| announces_count_changes | Announces count changes to screen readers when enabled | 4.1.3 | web, ios, android |
-| pluralized_announcements | Uses correct pluralization in announcements | 4.1.3 | web, ios, android |
+| visual_notification_color | Conveys notification/alert meaning through color | 1.3.1 | web, ios, android |
+| accessibility_announces_changes | Announces count changes to screen readers when enabled | 4.1.3 | web, ios, android |
+| accessibility_pluralized_announcements | Uses correct pluralization in announcements | 4.1.3 | web, ios, android |
 
 ### Contract Details
 
-#### displays_label
+#### content_displays_label
 
 **Description**: Renders the provided text label visibly within the badge container.
 
@@ -121,7 +121,7 @@ Inherits all contracts from Badge-Count-Base, plus:
 
 **WCAG Compliance**: 1.3.1 Info and Relationships
 
-#### non_interactive
+#### accessibility_non_interactive
 
 **Description**: Badge components do not respond to user interaction.
 
@@ -132,7 +132,7 @@ Inherits all contracts from Badge-Count-Base, plus:
 - iOS: No onTapGesture, not focusable
 - Android: No clickable modifier, not focusable
 
-#### announces_count_changes
+#### accessibility_announces_changes
 
 **Description**: When count changes and announceChanges is enabled, screen readers are notified.
 

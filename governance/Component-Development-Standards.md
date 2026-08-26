@@ -36,7 +36,7 @@ This document provides comprehensive guidelines for creating new component famil
 |-----------|----------|---------|
 | **Shared Purpose** | Do components share a common purpose that doesn't fit existing families? | "Progress indication" doesn't fit Form Inputs or Buttons |
 | **Multiple Variants** | Can you identify at least 3 potential semantic variants? | Loading: Spinner, Progress, Skeleton |
-| **Clear Base Behaviors** | Can you define foundational behaviors that ALL variants share? | All loading indicators: `indicates_loading`, `accessible_label` |
+| **Clear Base Behaviors** | Can you define foundational behaviors that ALL variants share? | All loading indicators: `state_loading`, `accessibility_aria_label` |
 | **Cross-Platform Need** | Is this needed across web, iOS, and Android? | Yes - all platforms need loading indicators |
 
 **Do NOT create a new family when**:
@@ -326,22 +326,22 @@ properties:
     description: Whether input is disabled
 
 contracts:
-  - name: focusable
+  - name: interaction_focusable
     description: Can receive keyboard focus via Tab key navigation
     platforms: [web, ios, android]
     required: true
     wcag: "2.1.1"
-  - name: float_label_animation
+  - name: content_float_label
     description: Label animates from placeholder to floating position on focus
     platforms: [web, ios, android]
     required: true
     wcag: "2.3.3"
-  - name: validates_on_blur
+  - name: validation_on_blur
     description: Validation triggers when field loses focus
     platforms: [web, ios, android]
     required: true
     wcag: "3.3.1"
-  - name: error_state_display
+  - name: state_error
     description: Displays error message and visual error indication
     platforms: [web, ios, android]
     required: true
@@ -803,16 +803,20 @@ This section defines the formal review process for ensuring new component famili
 **Automated Validation Checks**:
 ```yaml
 schema_validation:
+  # Per spec 063, contracts live in contracts.yaml — NOT in the schema. These
+  # five fields are what schema validation actually requires (see
+  # src/__tests__/stemma-system/behavioral-contract-validation.test.ts).
   required_fields:
     - name
     - type
     - family
     - behaviors
-    - properties
-    - contracts
-    - tokens
     - platforms
-    - readiness
+
+  # Authored by convention, but NOT presence-checked by schema validation:
+  #   properties, tokens, readiness (and `inherits` on semantic variants)
+  # Contract-level checks below read the component's contracts.yaml, not the
+  # schema; contracts.yaml must exist and declare at least one contract.
   
   type_validation:
     - type must be: primitive | semantic | standalone

@@ -106,20 +106,20 @@ All text input components in the Form Inputs family inherit these 8 foundational
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `focusable` | Can receive keyboard focus | 2.1.1 | web, ios, android |
-| `float_label_animation` | Label animates on focus | 2.3.3 | web, ios, android |
-| `validates_on_blur` | Validation triggers on blur | 3.3.1 | web, ios, android |
-| `error_state_display` | Shows error message and styling | 3.3.1, 1.4.1 | web, ios, android |
-| `success_state_display` | Shows success styling | 1.4.1 | web, ios, android |
-| `trailing_icon_display` | Shows contextual trailing icons | 1.4.1 | web, ios, android |
-| `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
-| `reduced_motion_support` | Respects prefers-reduced-motion | 2.3.3 | web, ios, android |
+| `interaction_focusable` | Can receive keyboard focus | 2.1.1 | web, ios, android |
+| `content_float_label` | Label animates on focus | 2.3.3 | web, ios, android |
+| `validation_on_blur` | Validation triggers on blur | 3.3.1 | web, ios, android |
+| `state_error` | Shows error message and styling | 3.3.1, 1.4.1 | web, ios, android |
+| `state_success` | Shows success styling | 1.4.1 | web, ios, android |
+| `content_trailing_icon` | Shows contextual trailing icons | 1.4.1 | web, ios, android |
+| `interaction_focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
+| `accessibility_reduced_motion` | Respects prefers-reduced-motion | 2.3.3 | web, ios, android |
 
-**Excluded**: `disabled_state` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an input is unavailable, it should not be rendered (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
+**Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an input is unavailable, it should not be rendered (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
 
 ### Contract Details
 
-#### focusable
+#### interaction_focusable
 
 **Description**: Component can receive keyboard focus via Tab key navigation.
 
@@ -127,7 +127,7 @@ All text input components in the Form Inputs family inherit these 8 foundational
 
 **WCAG Compliance**: 2.1.1 Keyboard
 
-#### float_label_animation
+#### content_float_label
 
 **Description**: Label smoothly transitions from placeholder position inside input to floated position above input when focused or filled.
 
@@ -135,7 +135,7 @@ All text input components in the Form Inputs family inherit these 8 foundational
 
 **WCAG Compliance**: 2.3.3 Animation from Interactions
 
-#### error_state_display
+#### state_error
 
 **Description**: When in error state, component displays red border, red label text, error icon, and error message.
 
@@ -143,7 +143,7 @@ All text input components in the Form Inputs family inherit these 8 foundational
 
 **WCAG Compliance**: 3.3.1 Error Identification, 1.4.1 Use of Color
 
-#### focus_ring
+#### interaction_focus_ring
 
 **Description**: When focused via keyboard, component displays a visible focus indicator.
 
@@ -157,24 +157,24 @@ All text input components in the Form Inputs family inherit these 8 foundational
 
 | Contract | Description | WCAG |
 |----------|-------------|------|
-| `validates_email_format` | Validates email against RFC 5322 pattern | 3.3.1 |
-| `provides_email_autocomplete` | Enables browser/platform email autofill | 1.3.5 |
+| `validation_email_format` | Validates email against RFC 5322 pattern | 3.3.1 |
+| `interaction_email_autocomplete` | Enables browser/platform email autofill | 1.3.5 |
 
 #### Input-Text-Password Extended Contracts
 
 | Contract | Description | WCAG |
 |----------|-------------|------|
-| `provides_secure_input` | Masks password input by default | 3.3.2 |
-| `supports_password_toggle` | Provides show/hide password functionality | 2.1.1, 4.1.2 |
-| `provides_password_autocomplete` | Enables browser/platform password autofill | 1.3.5 |
+| `interaction_secure_input` | Masks password input by default | 3.3.2 |
+| `interaction_password_toggle` | Provides show/hide password functionality | 2.1.1, 4.1.2 |
+| `interaction_password_autocomplete` | Enables browser/platform password autofill | 1.3.5 |
 
 #### Input-Text-PhoneNumber Extended Contracts
 
 | Contract | Description | WCAG |
 |----------|-------------|------|
-| `validates_phone_format` | Validates phone number against country-specific patterns | 3.3.1 |
-| `provides_phone_formatting` | Formats phone numbers as user types | 3.3.2 |
-| `supports_international_formats` | Handles multiple country phone number formats | 3.3.2 |
+| `validation_phone_format` | Validates phone number against country-specific patterns | 3.3.1 |
+| `content_phone_formatting` | Formats phone numbers as user types | 3.3.2 |
+| `content_international_formats` | Handles multiple country phone number formats | 3.3.2 |
 
 ### Checkbox Base Contracts (Inherited by Checkbox Components)
 
@@ -182,19 +182,19 @@ All checkbox components in the Form Inputs family inherit these 9 foundational c
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `focusable` | Can receive keyboard focus | 2.1.1 | web, ios, android |
-| `pressable` | Responds to click/tap on entire label area | 2.1.1 | web, ios, android |
-| `hover_state` | Visual feedback on hover (web) | 1.4.13 | web |
-| `pressed_state` | Visual feedback when pressed | 2.4.7 | web, ios, android |
-| `checked_state` | Shows checkmark icon when checked | 1.4.1 | web, ios, android |
-| `indeterminate_state` | Shows minus icon for partial selection | 1.4.1 | web, ios, android |
-| `error_state_display` | Shows error border and message | 3.3.1 | web, ios, android |
-| `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
-| `form_integration` | Native form submission and reset | 4.1.2 | web, ios, android |
+| `interaction_focusable` | Can receive keyboard focus | 2.1.1 | web, ios, android |
+| `interaction_pressable` | Responds to click/tap on entire label area | 2.1.1 | web, ios, android |
+| `interaction_hover` | Visual feedback on hover (web) | 1.4.13 | web |
+| `interaction_pressed` | Visual feedback when pressed | 2.4.7 | web, ios, android |
+| `state_checked` | Shows checkmark icon when checked | 1.4.1 | web, ios, android |
+| `state_indeterminate` | Shows minus icon for partial selection | 1.4.1 | web, ios, android |
+| `state_error` | Shows error border and message | 3.3.1 | web, ios, android |
+| `interaction_focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
+| `validation_form_integration` | Native form submission and reset | 4.1.2 | web, ios, android |
 
 ### Checkbox Contract Details
 
-#### checked_state
+#### state_checked
 
 **Description**: When checked, component displays filled background with checkmark icon via Icon-Base.
 
@@ -202,7 +202,7 @@ All checkbox components in the Form Inputs family inherit these 9 foundational c
 
 **WCAG Compliance**: 1.4.1 Use of Color (icon provides non-color indication)
 
-#### indeterminate_state
+#### state_indeterminate
 
 **Description**: When indeterminate, component displays filled background with horizontal minus icon via Icon-Base.
 
@@ -210,7 +210,7 @@ All checkbox components in the Form Inputs family inherit these 9 foundational c
 
 **WCAG Compliance**: 1.4.1 Use of Color (icon provides non-color indication)
 
-#### form_integration
+#### validation_form_integration
 
 **Description**: Checkbox integrates with native form submission and reset.
 
@@ -222,8 +222,8 @@ All checkbox components in the Form Inputs family inherit these 9 foundational c
 
 | Contract | Description | WCAG |
 |----------|-------------|------|
-| `explicit_consent` | Prevents pre-checking with console warning | N/A |
-| `audit_trail` | Provides ISO 8601 timestamp and metadata | N/A |
+| `validation_explicit_consent` | Prevents pre-checking with console warning | N/A |
+| `validation_audit_trail` | Provides ISO 8601 timestamp and metadata | N/A |
 | `required_indicator` | Shows "Required" indicator by default | 3.3.2 |
 
 ### Radio Base Contracts (Inherited by Radio Components)
@@ -232,18 +232,18 @@ All radio components in the Form Inputs family inherit these 8 foundational cont
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `focusable` | Can receive keyboard focus | 2.1.1 | web, ios, android |
-| `pressable` | Responds to click/tap on entire label area | 2.1.1 | web, ios, android |
-| `hover_state` | Visual feedback on hover (web) | 1.4.13 | web |
-| `pressed_state` | Visual feedback when pressed | 2.4.7 | web, ios, android |
-| `selected_state` | Shows filled dot when selected | 1.4.1 | web, ios, android |
-| `error_state` | Shows error border and message | 3.3.1 | web, ios, android |
-| `focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
-| `form_integration` | Native form submission | 4.1.2 | web, ios, android |
+| `interaction_focusable` | Can receive keyboard focus | 2.1.1 | web, ios, android |
+| `interaction_pressable` | Responds to click/tap on entire label area | 2.1.1 | web, ios, android |
+| `interaction_hover` | Visual feedback on hover (web) | 1.4.13 | web |
+| `interaction_pressed` | Visual feedback when pressed | 2.4.7 | web, ios, android |
+| `state_selected` | Shows filled dot when selected | 1.4.1 | web, ios, android |
+| `state_error` | Shows error border and message | 3.3.1 | web, ios, android |
+| `interaction_focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
+| `validation_form_integration` | Native form submission | 4.1.2 | web, ios, android |
 
 ### Radio Contract Details
 
-#### selected_state
+#### state_selected
 
 **Description**: When selected, component displays a filled circular dot centered within the outer circle.
 
@@ -263,21 +263,21 @@ All radio components in the Form Inputs family inherit these 8 foundational cont
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
-| `mutual_exclusivity` | Only one radio selected at a time | N/A | web, ios, android |
-| `keyboard_navigation` | Arrow keys navigate within group | 2.1.1 | web, ios, android |
-| `group_validation` | Required validation at group level | 3.3.1 | web, ios, android |
-| `error_announcement` | Error message announced to screen readers | 4.1.3 | web, ios, android |
-| `radiogroup_role` | Proper ARIA role for group | 4.1.2 | web, ios, android |
+| `composition_mutual_exclusivity` | Only one radio selected at a time | N/A | web, ios, android |
+| `interaction_keyboard_navigation` | Arrow keys navigate within group | 2.1.1 | web, ios, android |
+| `validation_group_required` | Required validation at group level | 3.3.1 | web, ios, android |
+| `accessibility_error_announcement` | Error message announced to screen readers | 4.1.3 | web, ios, android |
+| `accessibility_radiogroup_role` | Proper ARIA role for group | 4.1.2 | web, ios, android |
 
 ### Radio Set Contract Details
 
-#### mutual_exclusivity
+#### composition_mutual_exclusivity
 
 **Description**: Only one radio within the group can be selected at any time.
 
 **Behavior**: When a user selects a radio, the previously selected radio becomes unselected. Clicking an already-selected radio does NOT deselect it (radio convention). The Set coordinates this via event listening (web), environment values (iOS), or CompositionLocal (Android).
 
-#### keyboard_navigation
+#### interaction_keyboard_navigation
 
 **Description**: Arrow keys navigate between radios within the group following WAI-ARIA radio group pattern.
 
@@ -372,8 +372,8 @@ InputTextBase(
 
 | Contract | Description | Platforms |
 |----------|-------------|-----------|
-| `validates_email_format` | Validates email against RFC 5322 pattern on blur | web, ios, android |
-| `provides_email_autocomplete` | Enables browser/platform email autofill | web, ios, android |
+| `validation_email_format` | Validates email against RFC 5322 pattern on blur | web, ios, android |
+| `interaction_email_autocomplete` | Enables browser/platform email autofill | web, ios, android |
 
 #### Usage Example
 
@@ -426,9 +426,9 @@ InputTextEmail(
 
 | Contract | Description | Platforms |
 |----------|-------------|-----------|
-| `provides_secure_input` | Masks password input by default | web, ios, android |
-| `supports_password_toggle` | Provides show/hide password functionality | web, ios, android |
-| `provides_password_autocomplete` | Enables browser/platform password autofill | web, ios, android |
+| `interaction_secure_input` | Masks password input by default | web, ios, android |
+| `interaction_password_toggle` | Provides show/hide password functionality | web, ios, android |
+| `interaction_password_autocomplete` | Enables browser/platform password autofill | web, ios, android |
 
 #### Usage Example
 
@@ -480,9 +480,9 @@ InputTextPassword(
 
 | Contract | Description | Platforms |
 |----------|-------------|-----------|
-| `validates_phone_format` | Validates phone number against country-specific patterns | web, ios, android |
-| `provides_phone_formatting` | Formats phone numbers as user types | web, ios, android |
-| `supports_international_formats` | Handles multiple country phone number formats | web, ios, android |
+| `validation_phone_format` | Validates phone number against country-specific patterns | web, ios, android |
+| `content_phone_formatting` | Formats phone numbers as user types | web, ios, android |
+| `content_international_formats` | Handles multiple country phone number formats | web, ios, android |
 
 #### Supported Countries
 
@@ -666,8 +666,8 @@ interface ConsentChangeData {
 
 | Contract | Description | Platforms |
 |----------|-------------|-----------|
-| `explicit_consent` | Prevents pre-checking with console warning | web, ios, android |
-| `audit_trail` | Provides ISO 8601 timestamp and metadata | web, ios, android |
+| `validation_explicit_consent` | Prevents pre-checking with console warning | web, ios, android |
+| `validation_audit_trail` | Provides ISO 8601 timestamp and metadata | web, ios, android |
 | `required_indicator` | Shows "Required" indicator by default | web, ios, android |
 
 #### Usage Example

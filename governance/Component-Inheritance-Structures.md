@@ -76,22 +76,23 @@ Input-Text-Base (Primitive) │ ├── Input-Text-Email (Semantic) │ └─
 
 ### Behavioral Contracts
 
-**Base Contracts (8 total)**:
-- `focusable` - Keyboard focus support (WCAG 2.1.1)
-- `float_label_animation` - Label animates on focus (WCAG 2.3.3)
-- `validates_on_blur` - Validation triggers on blur (WCAG 3.3.1)
-- `error_state_display` - Error message and styling (WCAG 3.3.1, 1.4.1)
-- `success_state_display` - Success styling (WCAG 1.4.1)
-- `trailing_icon_display` - Contextual trailing icons
-- `focus_ring` - WCAG 2.4.7 focus visible indicator
-- `reduced_motion_support` - Respects prefers-reduced-motion
+**Base Contracts (9 total)**:
+- `interaction_focusable` - Keyboard focus support (WCAG 2.1.1)
+- `content_float_label` - Label animates on focus (WCAG 2.3.3)
+- `validation_on_blur` - Validation triggers on blur (WCAG 3.3.1)
+- `state_error` - Error message and styling (WCAG 3.3.1)
+- `state_readonly` - Non-editable value that stays perceivable, selectable, and copyable — never disabled semantics (WCAG 4.1.2)
+- `state_success` - Success styling (WCAG 1.4.1)
+- `content_trailing_icon` - Contextual trailing icons (WCAG 1.4.1)
+- `interaction_focus_ring` - WCAG 2.4.7 focus visible indicator
+- `accessibility_reduced_motion` - Respects prefers-reduced-motion (WCAG 2.3.3)
 
-**Excluded**: `disabled_state` — DesignerPunk does not support disabled states for usability and accessibility reasons (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
+**Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
 
 **Extended Contracts by Variant**:
-- **Email**: `validates_email_format`, `provides_email_autocomplete`
-- **Password**: `provides_secure_input`, `supports_password_toggle`, `provides_password_autocomplete`
-- **PhoneNumber**: `validates_phone_format`, `provides_phone_formatting`, `supports_international_formats`
+- **Email**: `validation_email_format`, `interaction_email_autocomplete`
+- **Password**: `interaction_secure_input`, `interaction_password_toggle`, `interaction_password_autocomplete` (also excludes `state_readonly`)
+- **PhoneNumber**: `validation_phone_format`, `content_phone_formatting`, `content_international_formats`
 
 ### Token Dependencies
 
@@ -144,14 +145,14 @@ Button-CTA uses the `[Family]-[Type]` pattern (not `[Family]-[Type]-Base`) becau
 ### Behavioral Contracts
 
 **Contracts (6 total)**:
-- `clickable` - Responds to click/tap interactions (WCAG 2.1.1)
-- `focusable` - Keyboard focus support (WCAG 2.1.1)
-- `loading_state` - Shows loading indicator during async operations
+- `interaction_pressable` - Responds to click/tap interactions (WCAG 2.1.1)
+- `interaction_focusable` - Keyboard focus support (WCAG 2.1.1)
+- `state_loading` - Shows loading indicator during async operations
 - `icon_support` - Supports leading/trailing icons
-- `focus_ring` - WCAG 2.4.7 focus visible indicator
+- `interaction_focus_ring` - WCAG 2.4.7 focus visible indicator
 - `reduced_motion_support` - Respects prefers-reduced-motion
 
-**Excluded**: `disabled_state` — DesignerPunk does not support disabled states for usability and accessibility reasons (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
+**Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
 
 ### Token Dependencies
 
@@ -200,12 +201,12 @@ Container-Base uses the `[Family]-Base` pattern because:
 ### Behavioral Contracts
 
 **Contracts (7 total)**:
-- `contains_children` - Can contain child components
-- `applies_padding` - Applies consistent internal padding
-- `applies_background` - Supports background color/image
-- `applies_border` - Supports border styling
-- `applies_shadow` - Supports elevation shadow
-- `applies_radius` - Supports border radius
+- `layout_contains_children` - Can contain child components
+- `layout_padding` - Applies consistent internal padding
+- `visual_background` - Supports background color/image
+- `visual_border` - Supports border styling
+- `visual_shadow` - Supports elevation shadow
+- `visual_radius` - Supports border radius
 - `responsive_layout` - Adapts to container width
 
 ### Token Dependencies
@@ -253,9 +254,9 @@ Icon-Base uses the `[Family]-Base` pattern because:
 ### Behavioral Contracts
 
 **Contracts (5 total)**:
-- `renders_svg` - Renders SVG icon content
-- `scales_with_size` - Scales proportionally with size prop
-- `inherits_color` - Inherits color from parent or uses explicit color
+- `visual_renders_svg` - Renders SVG icon content
+- `visual_size_variants` - Scales proportionally with size prop
+- `visual_color_inheritance` - Inherits color from parent or uses explicit color
 - `accessible_label` - Provides accessible label for screen readers
 - `decorative_mode` - Can be marked as decorative (aria-hidden)
 

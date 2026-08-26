@@ -696,7 +696,7 @@ Use when semantic variants represent different states or statuses.
 #### Focusable Contract
 
 ```yaml
-focusable:
+interaction_focusable:
   description: Can receive keyboard focus
   behavior: |
     Component can receive focus via Tab key navigation.
@@ -712,7 +712,7 @@ focusable:
 #### Pressable Contract
 
 ```yaml
-pressable:
+interaction_pressable:
   description: Responds to press/click events
   behavior: |
     Component responds to click, tap, Enter key, and Space key.
@@ -729,7 +729,7 @@ pressable:
 #### Hoverable Contract
 
 ```yaml
-hoverable:
+interaction_hover:
   description: Visual feedback on hover (pointer devices only)
   behavior: |
     On pointer devices, component shows visual feedback when mouse
@@ -783,7 +783,7 @@ see the exclusion reason above and the 2026-07-15 adjudication ruling
 #### Error State Contract
 
 ```yaml
-error_state:
+state_error:
   description: Shows error message and styling
   behavior: |
     When in error state, component displays:
@@ -804,7 +804,7 @@ error_state:
 #### Success State Contract
 
 ```yaml
-success_state:
+state_success:
   description: Shows success styling
   behavior: |
     When in success state, component displays:
@@ -822,7 +822,7 @@ success_state:
 #### Loading State Contract
 
 ```yaml
-loading_state:
+state_loading:
   description: Shows loading indicator during async operations
   behavior: |
     When in loading state, component:
@@ -846,7 +846,7 @@ loading_state:
 #### Focus Ring Contract
 
 ```yaml
-focus_ring:
+interaction_focus_ring:
   description: WCAG 2.4.7 focus visible indicator
   behavior: |
     When focused via keyboard, component displays:
@@ -867,7 +867,7 @@ focus_ring:
 #### Reduced Motion Support Contract
 
 ```yaml
-reduced_motion_support:
+accessibility_reduced_motion:
   description: Respects prefers-reduced-motion
   behavior: |
     When user has reduced motion preference:
@@ -910,7 +910,7 @@ accessibility_hidden:
 #### Float Label Animation Contract
 
 ```yaml
-float_label_animation:
+content_float_label:
   description: Label animates on focus
   behavior: |
     Label smoothly transitions from placeholder position inside component
@@ -929,7 +929,7 @@ float_label_animation:
 #### Pressed State Visual Contract
 
 ```yaml
-pressed_state:
+interaction_pressed:
   description: Visual feedback when pressed
   behavior: |
     Component shows visual feedback during active press/click.
@@ -949,7 +949,7 @@ pressed_state:
 #### Gradient Glow Contract
 
 ```yaml
-gradient_glow:
+visual_gradient_glow:
   description: Radial gradient background providing state-dependent visual emphasis
   behavior: |
     Component renders an elliptical radial gradient background on
@@ -975,7 +975,7 @@ gradient_glow:
 #### Validates On Blur Contract
 
 ```yaml
-validates_on_blur:
+validation_on_blur:
   description: Validation triggers on blur
   behavior: |
     Validation state is evaluated when component loses focus.
@@ -1014,7 +1014,7 @@ custom_validation:
 #### Contains Children Contract
 
 ```yaml
-contains_children:
+layout_contains_children:
   description: Can contain child components
   behavior: |
     Component can contain any child components or content.
@@ -1034,7 +1034,7 @@ contains_children:
 #### Renders SVG Contract
 
 ```yaml
-renders_svg:
+visual_renders_svg:
   description: Renders inline SVG with correct attributes
   behavior: |
     Component renders an inline SVG element with:
@@ -1042,7 +1042,7 @@ renders_svg:
     - Appropriate fill/stroke attributes
     - Proper sizing based on size prop
     SVG content is loaded based on name from internal map.
-  wcag: N/A
+  wcag: null
   platforms: [web, ios, android]
   validation: |
     - SVG element renders with correct viewBox
@@ -1077,18 +1077,18 @@ renders_svg:
 
 | Behavior Needed | Contract(s) to Include |
 |-----------------|------------------------|
-| Keyboard navigation | focusable, focus_ring |
-| Click/tap interaction | pressable, pressed_state |
-| Mouse hover feedback | hoverable |
-| Action temporarily unavailable | state_loading (in-flight), validates_on_blur (invalid input), or do not render (no valid path) — never a disabled-state contract; see "No Disabled States — Standardized Exclusion" |
-| Error handling | error_state, validates_on_blur |
-| Success feedback | success_state |
-| Loading indication | loading_state |
-| Animation support | reduced_motion_support |
+| Keyboard navigation | interaction_focusable, interaction_focus_ring |
+| Click/tap interaction | interaction_pressable, interaction_pressed |
+| Mouse hover feedback | interaction_hover |
+| Action temporarily unavailable | state_loading (in-flight), validation_on_blur (invalid input), or do not render (no valid path) — never a disabled-state contract; see "No Disabled States — Standardized Exclusion" |
+| Error handling | state_error, validation_on_blur |
+| Success feedback | state_success |
+| Loading indication | state_loading |
+| Animation support | accessibility_reduced_motion |
 | Decorative elements | accessibility_hidden |
-| Form validation | validates_on_blur, custom_validation |
-| Container behavior | contains_children |
-| Icon rendering | renders_svg, accessibility_hidden |
+| Form validation | validation_on_blur, custom_validation |
+| Container behavior | layout_contains_children |
+| Icon rendering | visual_renders_svg, accessibility_hidden |
 
 ### Application MCP Checklist
 

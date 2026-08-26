@@ -50,7 +50,7 @@ behavioral_contract_compliance:
 
 **Example - Float Label Animation Contract**:
 ```
-Contract: provides_float_label_animation
+Contract: content_float_label
 
 All platforms MUST:
 ✅ Animate label from placeholder to floating position on focus

@@ -143,7 +143,7 @@ Nav-Header-Base (Primitive) [PLANNED]
 | `accessibility_touch_target` | accessibility | 2.5.5 | web, ios, android |
 | `validation_selection_constraints` | validation | — | web, ios, android |
 
-**Exclusions**: `state_disabled`, `interaction_hoverable` — No disabled or hover states on tab bar.
+**Exclusions**: `state_disabled`, `interaction_hover` — No disabled or hover states on tab bar.
 
 ---
 
