@@ -42,6 +42,10 @@ Avatar `error_handling` + `wrapper_delegation`; Container(CIS) `responsive_layou
 - CIS's self-disclaimed planned sections and the four placeholder family docs (Divider/Loading/Modal/Data-Display) — aspirational, self-disclaiming, MCP named authoritative; editing them would launder them into looking settled.
 - Concept Catalog bare names in Contract-System-Reference and historical-record uses (register history, adjudication prose) — correct by design.
 
+## Review standard for the paired review-age reviews (added 2026-08-25, Peter-ratified)
+
+The 7 component-doc reviews routed to Lina at the 2026-08-25 health check (§3 + Addendum) naturally pair with this batch and are **verification-grade**: factual claims checked against source (names vs contracts.yaml, field lists vs live validators, citations vs code) — not plausibility read-throughs. `Last Reviewed` updates only after claims verify. Full standard: `.kiro/docs/civitas-health-checks/2026-08-25.md` § Addendum.
+
 ## Done criteria
 
 Each item lands via its own PR (or small coherent groups), normal review; item 2's validator extension proves its bite (mutation red/green) before the sweep is called closed; docs-MCP reindex after any served-surface change. This issue closes when items 2–5 are each resolved-or-explicitly-parked with a dated note here.
