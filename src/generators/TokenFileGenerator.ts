@@ -1466,39 +1466,39 @@ export class TokenFileGenerator {
   private generateMotionSection(platform: 'web' | 'ios' | 'android'): string[] {
     const lines: string[] = [];
 
-    // Import platform builders for motion token generation
-    const { WebBuilder } = require('../build/platforms/WebBuilder');
-    const { iOSBuilder } = require('../build/platforms/iOSBuilder');
-    const { AndroidBuilder } = require('../build/platforms/AndroidBuilder');
+    // Import platform motion-token formatters
+    const { WebMotionTokenFormatter } = require('../build/platforms/WebMotionTokenFormatter');
+    const { iOSMotionTokenFormatter } = require('../build/platforms/iOSMotionTokenFormatter');
+    const { AndroidMotionTokenFormatter } = require('../build/platforms/AndroidMotionTokenFormatter');
 
-    // Select appropriate builder based on platform
-    let builder: any;
+    // Select appropriate formatter based on platform
+    let formatter: any;
 
     switch (platform) {
       case 'web':
-        builder = new WebBuilder();
+        formatter = new WebMotionTokenFormatter();
         break;
       case 'ios':
-        builder = new iOSBuilder();
+        formatter = new iOSMotionTokenFormatter();
         break;
       case 'android':
-        builder = new AndroidBuilder();
+        formatter = new AndroidMotionTokenFormatter();
         break;
       default:
         return lines;
     }
 
     // Generate primitive motion tokens
-    const durationLines = builder.generateDurationTokens(durationTokens);
-    const easingLines = builder.generateEasingTokens(easingTokens);
-    const scaleLines = builder.generateScaleTokens(scaleTokens);
+    const durationLines = formatter.generateDurationTokens(durationTokens);
+    const easingLines = formatter.generateEasingTokens(easingTokens);
+    const scaleLines = formatter.generateScaleTokens(scaleTokens);
 
     lines.push(durationLines);
     lines.push(easingLines);
     lines.push(scaleLines);
 
     // Generate semantic motion tokens
-    const semanticMotionLines = builder.generateSemanticMotionTokens(motionTokens);
+    const semanticMotionLines = formatter.generateSemanticMotionTokens(motionTokens);
     lines.push(semanticMotionLines);
 
     return lines;

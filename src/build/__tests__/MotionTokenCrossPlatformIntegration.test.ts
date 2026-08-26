@@ -15,9 +15,9 @@
  * - Generated tokens can be imported and used
  */
 
-import { WebBuilder } from '../platforms/WebBuilder';
-import { iOSBuilder } from '../platforms/iOSBuilder';
-import { AndroidBuilder } from '../platforms/AndroidBuilder';
+import { WebMotionTokenFormatter } from '../platforms/WebMotionTokenFormatter';
+import { iOSMotionTokenFormatter } from '../platforms/iOSMotionTokenFormatter';
+import { AndroidMotionTokenFormatter } from '../platforms/AndroidMotionTokenFormatter';
 import { durationTokens } from '../../tokens/DurationTokens';
 import { easingTokens } from '../../tokens/EasingTokens';
 import { scaleTokens } from '../../tokens/ScaleTokens';
@@ -27,15 +27,15 @@ import * as path from 'path';
 import * as os from 'os';
 
 describe('Motion Token Cross-Platform Integration', () => {
-  let webBuilder: WebBuilder;
-  let iosBuilder: iOSBuilder;
-  let androidBuilder: AndroidBuilder;
+  let webBuilder: WebMotionTokenFormatter;
+  let iosBuilder: iOSMotionTokenFormatter;
+  let androidBuilder: AndroidMotionTokenFormatter;
   let tempDir: string;
 
   beforeEach(async () => {
-    webBuilder = new WebBuilder();
-    iosBuilder = new iOSBuilder();
-    androidBuilder = new AndroidBuilder();
+    webBuilder = new WebMotionTokenFormatter();
+    iosBuilder = new iOSMotionTokenFormatter();
+    androidBuilder = new AndroidMotionTokenFormatter();
 
     // Create temporary directory for output files
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'motion-token-integration-'));
