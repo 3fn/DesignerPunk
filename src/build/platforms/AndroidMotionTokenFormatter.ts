@@ -1,5 +1,5 @@
 /**
- * Android Motion Token Generator
+ * Android Motion Token Formatter
  *
  * Generates the Kotlin motion-token section (Duration/Easing/Scale objects and
  * semantic motion composites) consumed by TokenFileGenerator.generateMotionSection().
@@ -18,7 +18,7 @@
  * contract). That path was never wired into any shipping pipeline and was
  * retired 2026-08-26 (see .kiro/issues/2026-08-26-androidbuilder-camelcase-dead-path.md).
  */
-export class AndroidBuilder {
+export class AndroidMotionTokenFormatter {
   /**
    * Generate duration token Kotlin constants
    *

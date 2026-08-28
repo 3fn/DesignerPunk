@@ -1,5 +1,5 @@
 /**
- * iOS Motion Token Generator
+ * iOS Motion Token Formatter
  *
  * Generates the Swift motion-token section (duration/easing/scale constants and
  * semantic motion structs) consumed by TokenFileGenerator.generateMotionSection().
@@ -13,7 +13,7 @@
  * 2026-08-26 alongside AndroidBuilder's (see
  * .kiro/issues/2026-08-26-androidbuilder-camelcase-dead-path.md).
  */
-export class iOSBuilder {
+export class iOSMotionTokenFormatter {
   /**
    * Generate duration token Swift constants
    * 

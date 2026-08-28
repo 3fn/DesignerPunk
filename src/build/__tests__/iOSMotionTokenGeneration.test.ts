@@ -5,23 +5,23 @@
 /**
  * iOS Motion Token Generation Tests
  * 
- * Tests iOS-specific motion token generation methods in iOSBuilder.
+ * Tests iOS-specific motion token generation methods in iOSMotionTokenFormatter.
  * Validates Swift constant generation for duration, easing, scale, and semantic motion tokens.
  * 
  * Requirements: 1.6, 2.6, 3.1, 5.1, 6.2, 6.5, 6.6
  */
 
-import { iOSBuilder } from '../platforms/iOSBuilder';
+import { iOSMotionTokenFormatter } from '../platforms/iOSMotionTokenFormatter';
 import { durationTokens } from '../../tokens/DurationTokens';
 import { easingTokens } from '../../tokens/EasingTokens';
 import { scaleTokens } from '../../tokens/ScaleTokens';
 import { motionTokens } from '../../tokens/semantic/MotionTokens';
 
-describe('iOSBuilder Motion Token Generation', () => {
-  let builder: iOSBuilder;
+describe('iOSMotionTokenFormatter Motion Token Generation', () => {
+  let builder: iOSMotionTokenFormatter;
 
   beforeEach(() => {
-    builder = new iOSBuilder();
+    builder = new iOSMotionTokenFormatter();
   });
 
   describe('generateDurationTokens', () => {

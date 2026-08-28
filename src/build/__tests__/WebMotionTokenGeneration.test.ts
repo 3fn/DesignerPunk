@@ -9,17 +9,17 @@
  * Validates Requirements 1.5, 2.5, 3.1, 5.1, 5.2, 6.1, 6.4
  */
 
-import { WebBuilder } from '../platforms/WebBuilder';
+import { WebMotionTokenFormatter } from '../platforms/WebMotionTokenFormatter';
 import { durationTokens } from '../../tokens/DurationTokens';
 import { easingTokens } from '../../tokens/EasingTokens';
 import { scaleTokens } from '../../tokens/ScaleTokens';
 import { motionTokens } from '../../tokens/semantic/MotionTokens';
 
-describe('WebBuilder - Motion Token Generation', () => {
-  let webBuilder: WebBuilder;
+describe('WebMotionTokenFormatter - Motion Token Generation', () => {
+  let webBuilder: WebMotionTokenFormatter;
 
   beforeEach(() => {
-    webBuilder = new WebBuilder();
+    webBuilder = new WebMotionTokenFormatter();
   });
 
   describe('Requirement 1.5: Duration Token Generation for Web', () => {

@@ -1,5 +1,5 @@
 /**
- * Web Motion Token Generator
+ * Web Motion Token Formatter
  *
  * Generates the CSS custom-property motion-token section (duration/easing/scale
  * and semantic motion composites) consumed by
@@ -14,7 +14,7 @@
  * 2026-08-26 alongside AndroidBuilder's (see
  * .kiro/issues/2026-08-26-androidbuilder-camelcase-dead-path.md).
  */
-export class WebBuilder {
+export class WebMotionTokenFormatter {
   /**
    * Generate duration token CSS custom properties
    * 

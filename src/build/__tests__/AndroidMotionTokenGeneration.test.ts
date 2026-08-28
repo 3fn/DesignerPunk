@@ -12,17 +12,17 @@
  * Requirements: 1.7, 2.7, 3.1, 5.1, 5.2, 6.3, 6.7
  */
 
-import { AndroidBuilder } from '../platforms/AndroidBuilder';
+import { AndroidMotionTokenFormatter } from '../platforms/AndroidMotionTokenFormatter';
 import { durationTokens } from '../../tokens/DurationTokens';
 import { easingTokens } from '../../tokens/EasingTokens';
 import { scaleTokens } from '../../tokens/ScaleTokens';
 import { motionTokens } from '../../tokens/semantic/MotionTokens';
 
-describe('AndroidBuilder - Motion Token Generation', () => {
-  let builder: AndroidBuilder;
+describe('AndroidMotionTokenFormatter - Motion Token Generation', () => {
+  let builder: AndroidMotionTokenFormatter;
 
   beforeEach(() => {
-    builder = new AndroidBuilder();
+    builder = new AndroidMotionTokenFormatter();
   });
 
   describe('generateDurationTokens', () => {
