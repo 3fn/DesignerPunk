@@ -24,6 +24,26 @@
 | 5 | #130 | chore/close-gate-registration-ledger | 2026-08-21T13:52:05Z | `b3713374b000` | GREEN (19/19 concluded success) | 2 |
 | 6 | #132 | fix/contract-name-education-drift | 2026-08-26T01:51:34Z | `e7d7940417ff` | GREEN (19/19 concluded success) | 2 |
 | 7 | #134 | fix/cds-disabled-prop-example | 2026-08-26T01:58:19Z | `306f21066f32` | GREEN (19/19 concluded success) | 2 |
+| 8 | #136 | fix/token-quick-reference-mode-resolution | 2026-08-26T02:28:40Z | `09fa9dd863fd` | GREEN (19/19 concluded success) | 2 |
+| 9 | #137 | chore/dtcg-consumer-answer | 2026-08-26T02:44:51Z | `70689573a695` | GREEN (19/19 concluded success) | 2 |
+| 10 | #138 | chore/custom-validation-ruling | 2026-08-26T03:02:22Z | `12f107273aec` | GREEN (19/19 concluded success) | 2 |
+| 11 | #139 | chore/health-check-2026-08-25 | 2026-08-26T03:17:08Z | `7754c51541ba` | GREEN (19/19 concluded success) | 2 |
+| 12 | #140 | chore/gitignore-collab-vault | 2026-08-26T03:43:04Z | `5285db33d1e5` | GREEN (19/19 concluded success) | 2 |
+| 13 | #141 | chore/verification-grade-reviews | 2026-08-26T13:26:19Z | `3baacfec26ca` | GREEN (19/19 concluded success) | 2 |
+| 14 | #142 | chore/release-14.1.0 | 2026-08-26T13:35:40Z | `68362b18d136` | GREEN (19/19 concluded success) | 2 |
+| 15 | #143 | chore/androidbuilder-dead-path | 2026-08-26T14:11:39Z | `5562393d0fab` | GREEN (19/19 concluded success) | 2 |
+| 16 | #144 | chore/readme-version-badge | 2026-08-26T14:12:11Z | `9b3a9536c1a8` | GREEN (19/19 concluded success) | 2 |
+| 17 | #145 | chore/androidbuildvalidator-orphan | 2026-08-26T14:28:08Z | `e6ebb2dbeac0` | GREEN (19/19 concluded success) | 2 |
+| 18 | #146 | chore/ios-web-dead-build-paths | 2026-08-26T14:41:16Z | `7fcd06134d43` | GREEN (19/19 concluded success) | 2 |
+| 19 | #147 | chore/shadowgenerator-sweep | 2026-08-26T14:48:10Z | `3dac2ef9d93a` | GREEN (19/19 concluded success) | 2 |
+| 20 | #148 | chore/motion-formatter-rename | 2026-08-26T15:04:38Z | `15ea30eacbdd` | **INDETERMINATE** (A1: zero concluded checks on pinned SHA — 2026-08-26 GitHub Actions outage wedged first-push suites; second push `fda98bbf` was an empty retrigger, 20/20 success; never converted) | 2 |
+
+*(Pass 3, 2026-08-27: #136–#148 A1-pinned by reconstruction — #137–#147 single-commit `committedDate ≤ createdAt`; #136 two pre-open commits, pinned to the last; #148 pinned to its only pre-open commit, second commit is a post-open retrigger. All greens verified 20 concluded check runs = frozen 19 (incl. sweep-5, still running unrequired) + `122-setup` (never counted), zero non-success.)*
+
+**Recorded judgments at pass 3 (open for Peter's ratification at this pass PR's merge; W1 tallies robust either way — all three PRs first-push GREEN):**
+- **J-C3 — #139 (monthly Civitas health check) INCLUDED**: purpose is governance cadence, not 125-B instrumentation — the class-3 test is "purpose is 125-B instrumentation," and precedent #110 (the prior health check) was counted in the campaign baseline set. Its `start-up-tasks.md` edit is the health-check date bump, not a campaign surface.
+- **J-C4 — #140 (.gitignore collab-vault guard) INCLUDED**: ordinary repo hygiene (single-file .gitignore change); nothing instrument-classed about it.
+- **J-C5 — #141 (verification-grade review standard) INCLUDED**: a governance process standard riding the health-check record — Civitas work product, not campaign measurement machinery.
 
 *(Pass 2, 2026-08-26: #132 and #134 A1-pinned (single-commit PRs); #132 is the wave-2-sequenced companion repair but ordinary domain work, not instrumentation — counts. Note `122-sweep-5-corrected-state` still runs (success) on both pinned SHAs post-removal — workflow persists, required flag gone; scoring unaffected.)*
 
@@ -42,13 +62,14 @@
 | #125 | wave-1 window-open pass (datasets + B recheck) — class 3 (dataset-transcription instrument; J2 precedent). Recorded at pass 1 |
 | #131 | observation pass 1 (datasets + boundary event + ledger closure) — class 3 (dataset-transcription instrument). Recorded at pass 2 |
 | #133 | the wave-2 prune unit PR (rows + evidence + prune + ballot) — campaign-endogenous instrument (the measured intervention; the wave-1 #124 class). Also the wave-2 window-open boundary |
+| #135 | observation pass 2 (datasets — wave-1 rows + wave-2 window-open) — class 3 (dataset-transcription instrument; #125/#131 precedent). Recorded at pass 3 |
 
 ## Segment log (EXOGENOUS events only)
 
 | segment | opened-by (exogenous event) | boundary timestamp | n | f | W1 (as-of-pass) |
 |---------|------------------------------|--------------------|---|---|------------------|
 | 1 | Campaign open (wave-1 prune merge) | 2026-08-12T21:03:24Z | 4 | 0 | not evaluable (n<5); f=0 ≤ e+1 (e=0.4) informationally |
-| 2 | **Required-check-set change: `122-sweep-5-corrected-state` removed from required contexts (Peter Settings action; option-(a) ruling 2026-08-21 — charges 1 of K=3)** | 2026-08-21 ~13:50Z (bracketed: after #129's merge 13:48:30Z, before #130's creation 13:52:05Z; exact Settings-action time not captured) | 3 | 0 | not evaluable (n<5); f=0 ≤ e+1 (e=0.3) informationally — pass 2: n 1→3 (#132, #134 added; wave-2 prune/ballot merges are campaign-endogenous, NO segment) |
+| 2 | **Required-check-set change: `122-sweep-5-corrected-state` removed from required contexts (Peter Settings action; option-(a) ruling 2026-08-21 — charges 1 of K=3)** | 2026-08-21 ~13:50Z (bracketed: after #129's merge 13:48:30Z, before #130's creation 13:52:05Z; exact Settings-action time not captured) | 16 | 0 | **EVALUABLE (n≥5) as of pass 3**: n=16, f=0, e = 2×(16/20) = 1.6 → f ≤ e+1 → **W1 MET as-of-pass (informational; roll-up per A3 at campaign close)**. Pass 3: n 3→16 (#136–#148 added; #148 INDETERMINATE counts in n, never in f — pilot #86 discipline). Live required set re-verified at pass 3: 18 contexts, unchanged — NO new boundary event |
 
 **Boundary-event count: 1 of K=3.** Segment 1 is CLOSED at n=4 — below the ≥5 evaluability floor, permanently not-evaluable (A3: never forces INDETERMINATE). The §4 frozen scoring set is UNCHANGED by the removal (frozen means frozen — sweep-5 simply stops being a required context on the live gate; "present on the pinned SHA" handles any future absence). Ledger: `.kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md` — its campaign-accounting item is closed by this entry (pass 1, 2026-08-25).
 
@@ -60,7 +81,7 @@
 
 | Wave | Dataset | Prune merge | Window state |
 |------|---------|-------------|--------------|
-| 1 (5.2) | `wave-1-dataset.md` | `cbf9929c` 2026-08-12T21:03:24Z | **OPEN** (7/10 at pass 2, 2026-08-26) |
-| 2 (5.3) | `wave-2-dataset.md` | `1301c2de` 2026-08-26T01:57:03Z (PR #133) | **OPEN** (1/10 at pass 2 — windows overlap per P3) |
+| 1 (5.2) | `wave-1-dataset.md` | `cbf9929c` 2026-08-12T21:03:24Z | **CLOSED at pass 3 (2026-08-27), N=20** (A2 overshoot) — W2 MET, W3 zero; 5.W(e) record in the dataset |
+| 2 (5.3) | `wave-2-dataset.md` | `1301c2de` 2026-08-26T01:57:03Z (PR #133) | **CLOSED at pass 3 (2026-08-27), N=14** (A2 overshoot) — W2 MET (interpretive caveats recorded), W3 zero; 5.W(e) record in the dataset |
 | 3 (5.4) | `wave-3-dataset.md` | — | not open |
 | 4 (5.5) | *(rows-only expected — dataset only if a prune emerges)* | — | — |
