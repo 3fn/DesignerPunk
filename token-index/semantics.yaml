@@ -2,12 +2,12 @@ tokens:
   color.feedback.success.text:
     category: color
     primitiveReferences:
-      value: green400
-    themeVarying: false
+      value: green500
+    themeVarying: true
     platforms:
       web: '--color-feedback-success-text'
-      ios: colorFeedbackSuccessText
-      android: color_feedback_success_text
+      ios: theme.colorFeedbackSuccessText
+      android: theme.color_feedback_success_text
     consumers: []
   color.feedback.success.background:
     category: color

@@ -28,11 +28,14 @@ import { getColorToken as getPrimitiveColorToken } from '../../tokens/ColorToken
 
 describe('Color Inheritance Validation', () => {
   describe('Semantic Token Updates', () => {
-    it('should verify color.feedback.success.text references green400 (not cyan400)', () => {
+    // green400 → green500 on 2026-09-12 (Spec 112 audit finding F4): green400 measured
+    // 2.84:1 against the light canvas, below the 4.5:1 WCAG AA floor for normal text.
+    // The point of this test — success is GREEN, not the pre-052 cyan — is unchanged.
+    it('should verify color.feedback.success.text references green500 (not cyan400)', () => {
       const successToken = colorTokens['color.feedback.success.text'];
       
       expect(successToken).toBeDefined();
-      expect(successToken.primitiveReferences.value).toBe('green400');
+      expect(successToken.primitiveReferences.value).toBe('green500');
       
       // Verify it's NOT the old cyan color
       expect(successToken.primitiveReferences.value).not.toBe('cyan400');
@@ -101,12 +104,12 @@ describe('Color Inheritance Validation', () => {
     describe('ButtonCTA Success Variant', () => {
       it('should inherit green color through semantic token chain', () => {
         // ButtonCTA would use color.feedback.success.text for success variant
-        // Verify the token chain: ButtonCTA → color.feedback.success.text → green400
+        // Verify the token chain: ButtonCTA → color.feedback.success.text → green500
         
         const successToken = colorTokens['color.feedback.success.text'];
         const primitiveRef = successToken.primitiveReferences.value;
         
-        expect(primitiveRef).toBe('green400');
+        expect(primitiveRef).toBe('green500');
         
         // Verify the primitive token exists and has green color
         const primitiveToken = getPrimitiveColorToken(primitiveRef as any);
@@ -214,12 +217,12 @@ describe('Color Inheritance Validation', () => {
     it('should verify components inherit colors without code changes', () => {
       // This test verifies the architectural principle:
       // Components reference semantic tokens (e.g., color.feedback.success.text)
-      // Semantic tokens reference primitive tokens (e.g., green400)
+      // Semantic tokens reference primitive tokens (e.g., green500)
       // When primitive tokens change, components automatically inherit new colors
       
       // Verify the chain is intact for success colors
       const successToken = colorTokens['color.feedback.success.text'];
-      expect(successToken.primitiveReferences.value).toBe('green400');
+      expect(successToken.primitiveReferences.value).toBe('green500');
       
       // Verify the chain is intact for error colors
       const errorToken = colorTokens['color.feedback.error.text'];

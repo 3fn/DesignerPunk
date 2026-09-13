@@ -92,16 +92,16 @@ describe('Invariants — P3 no-rgba scoped to OKLCH-migrated primitives', () => 
 });
 
 describe('Invariants — P5 theme-varying base-scoped + anti-conflation', () => {
-  it('passes on the committed semantics.yaml (exactly the 5 base keys)', () => {
+  it('passes on the committed semantics.yaml (exactly the expected base keys)', () => {
     expect(assertThemeVaryingBaseScoped(readSemantics())).toEqual([]);
   });
 
-  it('confirms the themeVarying:true set equals the expected base-scoped 5', () => {
+  it('confirms the themeVarying:true set equals the expected base-scoped set', () => {
     expect(themeVaryingTrueKeys(readSemantics()).sort()).toEqual([...EXPECTED_BASE_THEME_VARYING].sort());
   });
 
   it('catches the §4.1 regression: registry-wide WCAG-only over-marks leaking in', () => {
-    // Simulate the index being re-wired to the registry-wide Set (10): the 5 base keys
+    // Simulate the index being re-wired to the registry-wide Set: the base keys
     // PLUS the WCAG-only over-marks become themeVarying: true.
     const lines = ['tokens:'];
     for (const key of EXPECTED_BASE_THEME_VARYING) {

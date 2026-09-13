@@ -37,9 +37,12 @@ describe('Semantic Color Tokens - Palette Update', () => {
       expect(colorTokens['color.feedback.success.text']).toBeDefined();
     });
 
-    it('should reference green400 primitive for success text', () => {
+    // Remapped green400 → green500 on 2026-09-12 (Spec 112 audit finding F4):
+    // green400 measured 2.84:1 on the light canvas, below the 4.5:1 AA floor.
+    // See src/tokens/__tests__/SemanticColorContrast.test.ts for the contrast guard.
+    it('should reference green500 primitive for success text (WCAG AA)', () => {
       const token = colorTokens['color.feedback.success.text'];
-      expect(token.primitiveReferences.value).toBe('green400');
+      expect(token.primitiveReferences.value).toBe('green500');
     });
 
     it('should have color.feedback.success.background token', () => {
@@ -60,7 +63,7 @@ describe('Semantic Color Tokens - Palette Update', () => {
       expect(token.primitiveReferences.value).toBe('green400');
     });
 
-    it('should verify green400 primitive exists', () => {
+    it('should verify the referenced success-text green primitive exists', () => {
       const token = colorTokens['color.feedback.success.text'];
       const primitiveName = token.primitiveReferences.value;
       expect(primitiveColorTokens).toHaveProperty(primitiveName);
@@ -735,7 +738,8 @@ describe('Semantic Color Tokens - Palette Update', () => {
 
   describe('Palette Update Requirements Coverage', () => {
     it('should satisfy Requirement 2.1: Success tokens reference green', () => {
-      expect(colorTokens['color.feedback.success.text'].primitiveReferences.value).toBe('green400');
+      // green500 since the 2026-09-12 WCAG AA remediation (was green400 — 2.84:1 on canvas)
+      expect(colorTokens['color.feedback.success.text'].primitiveReferences.value).toBe('green500');
       expect(colorTokens['color.feedback.success.background'].primitiveReferences.value).toBe('green100');
     });
 

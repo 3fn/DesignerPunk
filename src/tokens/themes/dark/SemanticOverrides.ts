@@ -17,7 +17,7 @@ import type { SemanticOverrideMap } from '../types';
 // ======================================================================
 // FEEDBACK — SUCCESS
 // ======================================================================
-// color.feedback.success.text: { value: 'green400' }
+// color.feedback.success.text: { value: 'green500' }  [OVERRIDDEN below → green300]
 // color.feedback.success.background: { value: 'green100' }
 // color.feedback.success.border: { value: 'green400' }
 
@@ -159,6 +159,13 @@ import type { SemanticOverrideMap } from '../types';
 // Each key must match a semantic token name in the registry.
 
 export const darkSemanticOverrides: SemanticOverrideMap = {
+  // WCAG AA remediation (2026-09-12, Spec 112 audit finding F4)
+  // Light base is green500 (4.72:1 on white100). Against the dark canvas
+  // (color.structure.canvas → gray400) green500 measures only 1.79:1, so dark mode
+  // needs a LIGHTER step: green300 = 4.63:1 on gray400. Guarded by
+  // src/tokens/__tests__/SemanticColorContrast.test.ts.
+  'color.feedback.success.text': { primitiveReferences: { value: 'green300' } },
+
   // Nav-TabBar-Base overrides (Spec 050 Ada R2, 2026-03-17)
   'color.structure.canvas': { primitiveReferences: { value: 'gray400' } },
   'color.action.navigation': { primitiveReferences: { value: 'cyan100' } },
