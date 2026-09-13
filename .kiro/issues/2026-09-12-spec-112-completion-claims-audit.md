@@ -3,8 +3,8 @@
 **Date**: 2026-09-12
 **Chartered by**: Peter (ruling at the dual-color-source divergence fix session — "queue both follow-ups")
 **Domain**: Thurgood (audit methodology; verification-grade standard per the 2026-08-25 health-check Addendum, PR #141)
-**Severity**: Medium (process integrity — one confirmed escape; unknown whether it is unique)
-**Status**: Queued — bounded audit session
+**Severity**: Medium → **High** (process integrity — 3.3 is NOT unique; five unshipped-work findings, four still open as of 2026-09-12)
+**Status**: **Audit complete (2026-09-12)** — findings below. 11 CLEAN / 12 DISCREPANCY (5 unshipped-work, 7 claim-drift) / 2 doc-coverage / 0 INDETERMINATE at task level. Source-side fixes routed to Ada as recommendations; no source modified by this audit.
 **Origin**: `.kiro/issues/2026-08-25-dual-color-source-divergence.md` (root-cause finding, 2026-08-27 session)
 
 ---
@@ -29,3 +29,96 @@ Verification-grade (claims-vs-source) pass over **Spec 112's completion docs** (
 ## Output
 
 Findings ledger entry per discrepancy (if any), routed to Ada for source-side fixes; a process note to the verification-grade standard if a second escape is found (pattern vs. one-off).
+
+---
+
+# Audit Findings (2026-09-12)
+
+## Method
+
+All 25 ticked items in `tasks.md` were triangulated: **promised outputs** (task text + parent "Primary Artifacts"/"Success Criteria") vs. **claimed outputs** (completion-doc change tables, validation lines) vs. **shipped source** (git history + live tree). Spec 112 landed as a **single pre-PR-gate commit — `71120a5d` (2026-06-10, "v12.0.0: Spec 112 + Spec 115")** carrying all 24 completion docs and all 114 changed files, so per-task commit attribution does not exist; verification is therefore commit-content-based (`git show --name-status 71120a5d`), widened to the 2026-06-09→2026-06-12 window for work that legitimately spanned commits, plus live-tree checks with drift attributed to later specs. Every claimed test count was **re-run** (`npx jest` on the 12 Spec 112 suites): 280/280 pass and the twelve per-suite counts match the docs exactly, including the four loop-generated suites (29/63/15/51).
+
+Subclasses used: **unshipped-work** (the 3.3 class — a promised output absent from both the change table and the history), **claim-drift** (work shipped, the claim overstates it — wrong criterion, dropped criterion, relaxed threshold), and **doc-coverage** (a required completion/summary doc never written). The third subclass was added because two findings are pure absence-of-claims, which neither charter subclass describes; flagging the addition rather than rounding them into claim-drift.
+
+## Verdict Table
+
+| Task | Promised outputs (summary) | Verdict | Evidence |
+|------|---------------------------|---------|----------|
+| 1 (parent) | OklchConverter/Validator + tests; 4 success criteria | CLEAN | Both files + both suites `A` in `71120a5d`; 60/60 re-run pass |
+| 1.1 | OklchConverter.ts + comprehensive tests | CLEAN | `A src/color/OklchConverter.ts`; 33 tests claimed, 33 re-run |
+| 1.2 | OklchValidator.ts + per-constraint tests | CLEAN | `A src/color/OklchValidator.ts`; 27 claimed, 27 re-run |
+| 2 (parent) | Parent completion doc + summary doc + 6 criteria | **DISCREPANCY (doc-coverage)** | No `task-2-completion.md` and no `docs/specs/.../task-2-summary.md` exist — at `71120a5d` or today |
+| 2.1a | channels/hues + L/C chromatic + barrel + tests | CLEAN | All 5 files `A`; 29 claimed, 29 re-run; conversion adjustments disclosed |
+| 2.1b | Teal/green/orange refinements, gamut + WCAG verification | CLEAN | `tealChroma` at commit = 0.035/0.100/0.080/0.060/0.045 — exactly the doc's "After" column |
+| 2.2 | neutral L/C files + partition tests | CLEAN | Both files `A`; 18 claimed, 18 re-run; buffer gaps asserted in-suite |
+| 2.3 | Composed primitives **+ semantic ColorTokens.ts + theme overrides + pipeline interface types** | **DISCREPANCY (unshipped-work)** | Doc self-declares "Partial"; box ticked anyway. `71120a5d` touches semantic `ColorTokens.ts` by 2 lines (glow repoint only); `src/tokens/themes/` untouched (last change 2026-03-18) |
+| 3 (parent) | 6 generator files "(modified)"; 6 success criteria | **DISCREPANCY (claim-drift)** | "Token-index: OKLCH channel metadata ✅" is false at ship: **zero** `oklch` in any `token-index/*.yaml` at `71120a5d`; first appearance `35d311f5` (2026-06-24, Spec 117) |
+| 3.1 | WebFormatGenerator (modified) + tests | CLEAN | `M src/providers/WebFormatGenerator.ts`; 9 claimed, 9 re-run (task text's `src/generators/` path is wrong — file lives in `src/providers/`) |
+| 3.2 | iOS+Android generators **+ init scaffolding for ChromaKit/colormath (R4 AC4)** | **DISCREPANCY (unshipped-work)** | Both generators `M`; `src/cli/init.ts` untouched by 112 and still has **zero** ChromaKit/colormath references today |
+| 3.3 | DTCG + Figma generators + generateTokenIndex, all "(modified)" | **DISCREPANCY-REMEDIATED (index case)** | Utilities-only shipped; `DTCGFormatGenerator.ts` untouched 2026-04-07→2026-07-15; remediated 2026-09-12 by `d17c9448` (#150). **Scope is wider than charted** — see F1 |
+| 4 (parent) | BlendCalculator + 3 ThemeAwareBlendUtilities "(reworked)"; 5 criteria | **DISCREPANCY (claim-drift)** | All four named artifacts untouched by 112; criterion 5 ("platform blend utilities all use OKLCH") silently **dropped** from the doc's 4-row criteria table |
+| 4.1 | OKLCH blend interpolation + interactionBlend + tests | CLEAN | `A src/blend/OklchBlendCalculator.ts`; 14 claimed, 14 re-run; doc accurately describes a new module (seam finding sits on parent 4 / F3) |
+| 4.2 | web `.ts` + iOS `.swift` + Android `.kt` blend utilities + color-mix migration | **DISCREPANCY (unshipped-work)** | color-mix claims exact (1 Avatar, 5 NavTabBar, 0 srgb remaining at commit); the three `ThemeAwareBlendUtilities.*` files were never touched and contain **zero** OKLCH today |
+| 5 (parent) | contracts.yaml updates + audit report; 5 criteria | **DISCREPANCY (claim-drift)** | "Platform implementations produce visually correct results ✅" rests on `OklchBlendCalculator`, which no platform path uses; also "13 components" vs 11 audited vs 10 table rows |
+| 5.1 | Audit 13 components' blend states + glow chroma | **DISCREPANCY (claim-drift)** | 63 claimed/63 re-run and the glow repoint is real (`green500`→`green300`, the only semantic edit in `71120a5d`); but the suite exercises the orphaned calculator, not the components' live RGB/HSL blend path |
+| 5.2 | 11 contracts.yaml → OKLCH intent language | CLEAN | Exactly 11 `M …/contracts.yaml` in `71120a5d`; 0 blend-percentage references remaining in all 11 at commit |
+| 6 (parent) | OklchWcagValidator.ts + color-regression test; 5 criteria | **DISCREPANCY (claim-drift)** | Criteria table drops 2 of 5 (green success.text ≥4.5:1; Spec 106 consumer contract test), reworks "pass"→"evaluated", relaxes ΔE₀₀ <1→<3; neither named artifact path exists (work shipped at other paths) |
+| 6.1 | Semantic-pair AA validation **+ HC/WCAG override ≥7:1 validation (R8 AC4)** | **DISCREPANCY (unshipped-work)** | 15 claimed/15 re-run, but the WCAG-theme overrides the shipped test names ("Use green500 in WCAG theme" etc.) do not exist at commit or today; `color.feedback.success.text` → `green400` = 2.84:1 |
+| 6.2 | ΔE₀₀ **< 1** regression + Spec 106 contract test run | **DISCREPANCY (claim-drift)** | 51 claimed/51 re-run, but the assertion is `toBeLessThan(3)` while the file's own docblock still reads "ΔE₀₀ < 1 … (Spec 112 R11 AC4)"; no evidence of the Spec 106 run |
+| 7 (parent) | 4 docs + release notes; summary doc; 5 criteria | **DISCREPANCY (claim-drift + coverage)** | All doc artifacts verified `M`/`A`; `docs/specs/.../task-7-summary.md` never created; "366/369 suites, 8965/8969 tests" conflicts with the same commit's message ("369 suites, 8936 tests, 0 failures") |
+| 7.1 | Token-Family-Color.md rewrite | CLEAN | `M`; 642 → 315 lines at commit — exactly as claimed |
+| 7.2 | Product-Token-Governance + Integration Guide + Rosetta Architecture | CLEAN | All three `M` with the claimed content (ΔE₀₀ ≤ 1.0 row; ChromaKit/colormath table; 53+/43- pipeline rewrite) |
+| 7.3 | Release notes (Setup, Tier 1) | **doc-coverage gap** (work CLEAN) | `A docs/releases/RELEASE-NOTES-12.0.0.md` covers every promised bullet; no `task-7-3-completion.md` exists — see F6 |
+| *(extra)* `pipeline-integration-completion.md` | TokenFileGenerator OKLCH interception | CLEAN | `M src/generators/TokenFileGenerator.ts`; both claimed helpers present at commit and today |
+
+**Point-in-time claims not mechanically re-verifiable** (noted, not counted as verdicts): "2377/2377 component tests", "331 Avatar+NavTabBar tests", "497/497 generator tests", "`npx designerpunk generate` … 217 tokens". All are plausible and none is contradicted by the record.
+
+---
+
+## Detailed Findings
+
+### F1 — Task 3.3 (index case) is **wider** than charted: two seams unshipped, not one
+`71120a5d` created `src/generators/oklch/OklchExportUtils.ts` and `OklchTokenIndexMetadata.ts` and wired **neither**. The DTCG seam is the known case (remediated by `d17c9448`/#150). The **token-index seam is a second, separately-escaped instance of the same signature**: `getOklchMetadata` sat orphaned until `35d311f5` (2026-06-24, Spec 117) imported it into `generateTokenFiles.ts` — 14 days after `task-3-completion.md` asserted "Token-index: OKLCH channel metadata on composed tokens ✅". At ship, `token-index/{primitives,semantics,components}.yaml` contained zero `oklch`. The third promised file, `src/generators/FigmaFormatGenerator.ts`, **has never existed** — Figma rides DTCG via `src/generators/transformers/FigmaTransformer.ts`, so #150 closes it downstream; the task text named a phantom path.
+
+### F2 — Task 2.3: a ticked "Partial" that caused two escaped defects
+`task-2-3-completion.md` is honest ("Status: Partial — semantic/theme updates deferred"), but the box is ticked `[x]` and v12.0.0 shipped. The record names it as root cause **twice**: `.kiro/issues/2026-06-10-oklch-pipeline-integration-incomplete.md` ("Root Cause: Task 2.3 was marked 'Partial' …", High, blocked the release, fixed same day) and `.kiro/issues/2026-06-11-semantic-colors-still-rgba.md` (same root cause, found **after** release in @3fn/core 12.0.3, fixed by `9a5c875a` touching `SemanticValueResolver.ts` + all three generators). The theme-override half of the promise was obviated by design — overrides are pure primitive name-swaps (`src/tokens/themes/wcag/SemanticOverrides.ts`), so no OKLCH values were needed — which the completion doc should have said instead of "deferred". **Recommendation (Ada)**: none open; both defects are resolved. Process finding only.
+
+### F3 — Task 4: the blend rework was built and never connected (still open, 3 months)
+Parent 4's Primary Artifacts promised `BlendCalculator.ts` and all three `ThemeAwareBlendUtilities.*` "(reworked)". None was touched: `BlendCalculator.ts` last changed **2025-10-28**; the three platform utilities last changed for unrelated reasons and contain **zero** OKLCH today. `OklchBlendCalculator.ts` is imported only by its own two test files — orphaned. This was independently rediscovered by Spec 117's audit: `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` ("It is orphaned — no non-test production code imports it… the in-use path computes in hex → RGB → HSL"), status Open/SOON, owner Ada. `task-4-2-completion.md` disclosed the deferral to "the full pipeline integration pass" — a pass that only covered `TokenFileGenerator` color emission and never reached blend. **Recommendation (Ada)**: no new work item needed — the 2026-06-24 issue already owns it; this audit supplies the completion-claim provenance for that issue.
+
+### F4 — Task 6.1: the WCAG remediation the shipped test points at does not exist
+`src/color/__tests__/WcagContrast.test.ts` ships six pairs under `NEEDS_OVERRIDE` with a comment asserting "The WCAG theme (Spec 112 R8 AC4) provides overrides with darker primitives" and per-pair fixes. `src/tokens/themes/wcag/SemanticOverrides.ts` contains no green/orange/pink/gray override — at `71120a5d` or today. `color.feedback.success.text` still resolves to `green400` (2.84:1 on white100, below AA). tasks.md task 6 criterion "Green success.text contrast improved from ~1.3:1 to ≥4.5:1" was **dropped** from `task-6-completion.md`'s criteria table, and `71120a5d`'s own commit message claims "WCAG: all semantic pairs pass AA, teal/green contrast fixed" — false in the release record. **Recommendation (Ada, accessibility-severity)**: decide and apply the WCAG-theme overrides for the six documented pairs, or record an accepted-deviation with rationale; the in-test comment must stop asserting overrides that do not exist.
+
+### F5 — Task 6.2: requirement threshold relaxed 3× without a record
+R11 AC4 requires ΔE₀₀ **< 1** for non-intentionally-changed colors. The shipped assertion is `expect(dE).toBeLessThan(3)` while the file's docblock still cites "< 1 … (Spec 112 R11 AC4)"; the in-line comment concedes "ideal < 1, but lightness rounding introduces drift". `feedback.md` contains no discussion of the relaxation and no ratification. **Recommendation (Ada)**: either tighten to <1, or amend R11 AC4 with the rounding rationale and fix the docblock so code and claim agree.
+
+### F6 — Completion-documentation coverage gaps (4)
+Per `completion-documentation-guide` § "When to Create Each Document": every subtask requires a detailed doc (Setup = Tier 1), every parent requires **both** a detailed doc and a summary doc. Missing from Spec 112: `completion/task-2-completion.md`, `docs/specs/112-oklch-color-migration/task-2-summary.md`, `docs/specs/112-oklch-color-migration/task-7-summary.md`, `completion/task-7-3-completion.md`. **The 7.3 coverage answer**: 7.3's *work* shipped and is verifiable (`RELEASE-NOTES-12.0.0.md` covers new output format, ChromaKit/colormath deps, palette refinements, blend changes, intentional visual changes, and the install→sync→generate path), and `task-7-completion.md` lists it as an artifact — but that is parent-level mention, not the required Tier 1 subtask doc. It is a real doc-coverage gap, not coverage-by-another-artifact.
+
+### F7 — A structural pattern in the parent docs: unmet criteria are dropped, not marked failed
+Parents 4 and 6 each present a criteria table with **fewer rows than tasks.md defines**, and in both cases the omitted rows are precisely the unmet ones (4: "platform blend utilities all use OKLCH"; 6: "green success.text ≥4.5:1" and "Spec 106 consumer contract test passes"). Parent 6 additionally reworded "All semantic pairs **pass** WCAG AA" to "**evaluated** against" and restated ΔE₀₀ <1 as <3, both marked ✅. No row in any Spec 112 parent doc is marked ⚠️ or ❌. The verification tables were authored from what was done rather than checked against what was promised — which is the mechanism that let 3.3, 3.2, 4.2 and 6.1 pass as complete.
+
+---
+
+## Closing Assessment: 3.3 is a **pattern**, not a one-off
+
+Five unshipped-work findings (2.3, 3.2, 3.3-DTCG, 3.3-token-index, 4.2/parent 4, 6.1 — six if the two 3.3 seams are counted separately), of which **four remain open today**: init scaffolding (R4 AC4), the blend-utility rework, the WCAG-theme overrides, and the ΔE₀₀ threshold. Four of them share the 3.3 signature exactly — **a tested utility module is created, the existing seam it was meant to modify is never touched, and the parent's success-criteria table asserts the seam works.** Two of those escapes reached consumers (semantic tokens shipping RGBA in v12.0.3; Figma receiving legacy hex for ~3 months); two were caught by later audits (Spec 117's orphan sweep; this one).
+
+This triggers the charter's process note. The proximate mechanism is F7 — self-attested parent verification tables with no promised-vs-shipped check. Three observations worth carrying into the verification-grade standard, offered for Peter's decision rather than adopted here:
+
+1. **The cheapest guard is mechanical and already proven**: the signature is "file named `(modified)` in the task text does not appear in the task's diff." A required check could compute that from `tasks.md` annotations at PR time. Spec 112 predates PR gating entirely — it landed as one 114-file direct commit — so today's gate already removes the *review* half of the failure; it does not yet remove the *claim* half.
+2. **Counter-argument I owe you**: every one of these gaps was eventually caught (two by audits, two by consumer symptoms, one by this audit), and four of the five sat in a subsystem — blend, WCAG overrides — that was already under a separate open issue. A stricter parent-verification rule buys earlier detection, not detection that would otherwise never happen, and it taxes every future parent task to prevent a failure mode whose base rate is one spec's worth of evidence. If Peter reads that as insufficient justification for new required-check machinery, the honest fallback is small: require parent criteria tables to reproduce **all** tasks.md criteria rows verbatim, marking unmet ones ⚠️ with a link to the follow-up issue. That is a template change, not a gate.
+3. **Scope note for the standard**: parent docs, not subtask docs, are where this failed. Subtask docs in Spec 112 were largely *honest* — 2.3 said "Partial", 4.2 disclosed the deferral, 3.2 quietly narrowed its requirements line. The claims hardened into ✅ one level up.
+
+### Routed to Ada (recommendations — nothing implemented by this audit)
+- **F4 (highest)**: WCAG-theme overrides for the six `NEEDS_OVERRIDE` pairs, or a recorded accepted-deviation; `color.feedback.success.text` at 2.84:1 is a live AA failure.
+- **F5**: reconcile R11 AC4 (<1) with the shipped `toBeLessThan(3)` and the contradicting docblock.
+- **3.2 / R4 AC4**: `npx designerpunk init` still scaffolds neither ChromaKit nor colormath; Integration Guide documents them manually, so consumers are not stranded, but the AC is unmet.
+- **F3**: no new item — folds into the open `2026-06-24-blend-system-architecture-and-oklch-alignment.md` (Ada-owned); this audit supplies its provenance.
+
+### Routed to Thurgood/Peter
+- **F6**: four missing completion/summary docs. Recommend recording as a known historical gap rather than back-filling 2026-06 docs from memory — back-filled completion docs would be exactly the unverifiable self-attestation this audit is about.
+- **F7**: the parent-criteria-table template question above.
+
+### Scope discipline note
+Two temptations to exceed the audit's scope, both declined: (a) F4 is a live WCAG AA failure and the fix is a two-line override edit — I did not make it; audits report, Ada fixes. (b) F5's docblock contradiction is a one-word correction in a test file that sits inside my write scope (`src/__tests__/**` — though this file is `src/color/__tests__/`, outside it) — also left alone, because changing the claim without deciding the threshold would paper over the finding. Nothing in the source tree was modified; the only file this session touched is this charter.
