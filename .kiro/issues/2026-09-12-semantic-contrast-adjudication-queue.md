@@ -56,6 +56,7 @@ All ratios via the repo's `contrastRatio()` (OklchConverter), pinned in the exem
 ## Also carried here
 
 - Lina advisory (F4 consult, 2026-09-12): dark-mode *inheritance* assertions may have no coverage in the component test layer (light-only in `colorInheritanceValidation.test.ts`) — flag for Thurgood's coverage view; the new contrast guard covers dark *resolution* but not component-layer inheritance.
+- Known re-break point for the spec (interim fix, 2026-09-13): `src/generators/__tests__/ModeAwareGeneration.test.ts` needs a genuinely non-theme-varying token as its example; the interim fix moved it OFF `color.text.default` and onto `color.feedback.error.text` — which is itself on this queue. When the spec adds dark feedback overrides, that test premise breaks again; expect it, swap the example (or rewrite the test to derive a non-varying token instead of naming one).
 
 ---
 
