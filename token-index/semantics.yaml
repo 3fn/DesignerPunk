@@ -325,11 +325,11 @@ tokens:
     category: color
     primitiveReferences:
       value: gray300
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-text-default'
-      ios: colorTextDefault
-      android: color_text_default
+      ios: theme.colorTextDefault
+      android: theme.color_text_default
     consumers:
       - Button-VerticalList-Item
       - Chip-Base
@@ -345,11 +345,11 @@ tokens:
     category: color
     primitiveReferences:
       value: gray200
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-text-muted'
-      ios: colorTextMuted
-      android: color_text_muted
+      ios: theme.colorTextMuted
+      android: theme.color_text_muted
     consumers:
       - Button-VerticalList-Item
       - Input-Checkbox-Base
@@ -363,11 +363,11 @@ tokens:
     category: color
     primitiveReferences:
       value: gray100
-    themeVarying: false
+    themeVarying: true
     platforms:
       web: '--color-text-subtle'
-      ios: colorTextSubtle
-      android: color_text_subtle
+      ios: theme.colorTextSubtle
+      android: theme.color_text_subtle
     consumers: []
   color.contrast.onLight:
     category: color

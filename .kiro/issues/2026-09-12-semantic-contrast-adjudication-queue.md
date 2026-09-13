@@ -4,7 +4,7 @@
 **Discovered by**: Ada, while shipping the `color.feedback.success.text` WCAG fix (Spec 112 audit F4 remediation) — the new `SemanticColorContrast.test.ts` guard measured every text-role pair for the first time
 **Domain**: Ada (token remaps) — **color choices need Peter's adjudication** (visible design changes)
 **Severity**: High — includes a dark-mode body-text failure more severe than the defect the fix session was sent for
-**Status**: Open — queued for a dedicated session (possibly spec-sized; see root cause)
+**Status**: **DEFERRED until 125-B campaign close (Peter's ruling, 2026-09-13)** — spec-track; see § "The sustained fix" and § "Deferral ruling" below. Interim dark-text fix carved out and shipped (see § "Interim fix").
 
 ---
 
@@ -56,3 +56,28 @@ All ratios via the repo's `contrastRatio()` (OklchConverter), pinned in the exem
 ## Also carried here
 
 - Lina advisory (F4 consult, 2026-09-12): dark-mode *inheritance* assertions may have no coverage in the component test layer (light-only in `colorInheritanceValidation.test.ts`) — flag for Thurgood's coverage view; the new contrast guard covers dark *resolution* but not component-layer inheritance.
+- Known re-break point for the spec (interim fix, 2026-09-13): `src/generators/__tests__/ModeAwareGeneration.test.ts` needs a genuinely non-theme-varying token as its example; the interim fix moved it OFF `color.text.default` and onto `color.feedback.error.text` — which is itself on this queue. When the spec adds dark feedback overrides, that test premise breaks again; expect it, swap the example (or rewrite the test to derive a non-varying token instead of naming one).
+
+---
+
+## The sustained fix (design sketch, settled in discussion with Peter 2026-09-13 — the future spec's seed)
+
+A "Semantic Contrast & Theme Coverage" spec (Thurgood formalizes, Ada central, Lina consult on component compositions). The class being killed: **contrast guarantees that exist only as assumptions.** Five deliverables:
+
+1. **Declared pairing contracts** — every text-role token declares (machine-readable, MCP-served) what it is guaranteed against: canvas, family background, or both. Evidence base: shipped components compose BOTH models (BVLI/Chip-Filter: select text on select background; Progress nodes: text on family background; validation messages: text on canvas). Families needing both surfaces get distinct tokens via the existing `contrast.on*` pattern — one token does not serve two surfaces it cannot satisfy.
+2. **Complete dark theme** — a designed pass over all 62 semantic color tokens: every token gets an explicit dark override OR an explicit same-in-both-modes declaration that passes its contract. The silent fallback-to-light (56/62 today) stops being a valid state — it is the root cause of 10 of the 16 queue failures.
+3. **Ramp completeness where the math demands it** — three proven gaps where NO existing step satisfies AA: light gray (nothing between gray200 3.64 and gray300 5.51 — muted's gap), orange (4.23 → 7.53 jump — warning's gap), green (no step clears green100 — the family-background problem). Each resolves by a new primitive (Peter review, token governance) or a ratified usage constraint (e.g. large-text-only).
+4. **Guard graduates to contract enforcement** — `SemanticColorContrast.test.ts` asserts each token's DECLARED contract in every theme/mode; the exemption list burns down to empty at spec close and stays the spec's progress chart.
+5. **wcag theme gets an honest definition** — today 8 role-remap overrides wearing Spec 112 R8 AC4's unsubstantiated ≥7:1 AAA label. Decide: AAA contrast theme (build the machinery) or color-vision-safety theme (re-scope the claim); either way, contract + guard.
+
+**Definition of done**: no semantic color token resolves anywhere, in any theme/mode, without a declared contract and a passing assertion behind it.
+
+**Precondition**: fix `.kiro/issues/2026-09-12-mcp-token-details-dark-value-stale.md` first — dark-theme work needs the MCP to report true dark values.
+
+## Deferral ruling (Peter, 2026-09-13)
+
+Deferred until **125-B campaign close** (waves 3–4 + 5.Z), on three grounds settled in discussion: (1) Peter's decision bandwidth is the shared bottleneck — the spec is decision-dense and would contend with campaign ballots/prunes for the same reviewer; (2) Wave 3 (5.4 C7–C9) measures exactly the doc surfaces this spec would churn (Token-Governance, Token-Quick-Reference, rosetta docs, color guidance) — quiet surfaces make better instruments; (3) deferral is cheap NOW because the guard pins all queue failures with exact ratios and breaks on regression or unadjudicated fix — a known, pinned, guarded queue is a scheduling decision, not silent drift. Recorded counter-argument: the remaining failures (notably dark feedback text 1.16–2.0:1) stay live for the deferral's duration. At campaign close, sequencing against Spec 123 is Peter's call.
+
+## Interim fix (carved out, Peter-ratified 2026-09-13)
+
+**Dark text hierarchy only**: Level 2 dark overrides `color.text.default → white100` (8.46:1), `color.text.muted → white300` (6.28:1), `color.text.subtle → white500` (4.53:1) — all vs. dark canvas gray400, ratios from the repo's `contrastRatio`. Kills the queue's most severe item (dark body text 1.536:1) with existing primitives and zero design invention; the picks form a clean preserved hierarchy the spec is expected to keep. The three dark text-hierarchy rows above are thereby REMEDIATED; all other queue rows stand.

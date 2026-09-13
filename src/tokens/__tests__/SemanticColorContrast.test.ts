@@ -39,7 +39,8 @@
  *
  * P2 IS NOT ASSERTED IN DARK MODE — and that is a finding, not an omission.
  *   None of the `.background` tokens in these families has a Level 2 dark override
- *   (src/tokens/themes/dark/SemanticOverrides.ts populates 6 of 62 tokens). A dark-mode
+ *   (src/tokens/themes/dark/SemanticOverrides.ts populates 9 of 62 tokens as of the
+ *   2026-09-13 interim dark-text-hierarchy fix). A dark-mode
  *   family pairing therefore composes a dark-mode text primitive against a LIGHT-mode
  *   background primitive — e.g. success.text green300 on success.background green100 =
  *   1.69:1. Asserting that would be measuring an un-designed composition and would
@@ -170,8 +171,10 @@ const EXEMPT: Record<string, { ratio: number; note: string }> = {
   },
 
   // ── P1, dark: text on the dark canvas (gray400) ───────────────────────────────
-  // Root cause is shared: the dark theme overrides 6 of 62 semantic color tokens, so
-  // every entry here is a LIGHT-mode primitive being rendered on a dark canvas.
+  // Root cause is shared: the dark theme overrides only 9 of 62 semantic color tokens
+  // (as of the 2026-09-13 interim dark-text-hierarchy fix — the three color.text.*
+  // pairs below are now remediated and asserted PASSING, not exempted here); every
+  // remaining entry is a LIGHT-mode primitive being rendered on a dark canvas.
   'dark|color.feedback.error.text|color.structure.canvas': {
     ratio: 1.561,
     note: 'pink400 on gray400 — no dark override exists. PENDING Peter adjudication, found by 2026-09-12 audit remediation.',
@@ -184,18 +187,12 @@ const EXEMPT: Record<string, { ratio: number; note: string }> = {
     ratio: 1.155,
     note: 'teal400 on gray400 — no dark override exists; teal400 is a DARK teal, effectively invisible on the dark canvas. PENDING Peter adjudication, found by 2026-09-12 audit remediation.',
   },
-  'dark|color.text.default|color.structure.canvas': {
-    ratio: 1.536,
-    note: 'gray300 on gray400 — body text on the dark canvas, no dark override. The most severe entry in this list. PENDING Peter adjudication, found by 2026-09-12 audit remediation.',
-  },
-  'dark|color.text.muted|color.structure.canvas': {
-    ratio: 2.324,
-    note: 'gray200 on gray400 — no dark override exists. PENDING Peter adjudication, found by 2026-09-12 audit remediation.',
-  },
-  'dark|color.text.subtle|color.structure.canvas': {
-    ratio: 3.411,
-    note: 'gray100 on gray400 — no dark override exists. PENDING Peter adjudication, found by 2026-09-12 audit remediation.',
-  },
+  // dark|color.text.default|color.structure.canvas, dark|color.text.muted|...,
+  // dark|color.text.subtle|... — REMEDIATED 2026-09-13 (interim dark-text-hierarchy
+  // fix, Peter-ratified; .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md).
+  // New Level 2 dark overrides (white100/white300/white500) clear AA against the dark
+  // canvas; these three pairs now assert PASSING through the normal (unexempted) path
+  // below rather than being pinned here.
 
   // ── P2, light: text on its family background ──────────────────────────────────
   'light|color.feedback.success.text|color.feedback.success.background': {
