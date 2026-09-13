@@ -15,6 +15,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { parseSemanticOverrides } from './SemanticOverrideReader';
 
 export type ModeLevel = 'level-1' | 'level-2' | 'mode-invariant';
 
@@ -45,21 +46,12 @@ function isColorToken(name: string): boolean {
 
 /**
  * Extract override keys from SemanticOverrides.ts by parsing the exported map.
- * Reads the file as text and matches string-literal keys — no TS compilation needed.
+ * Delegates to SemanticOverrideReader, which owns the (unchanged) key regex and additionally
+ * captures the referenced primitive names that TokenIndexer needs. Classification behaviour
+ * here is identical to the pre-delegation implementation — only the keys are used.
  */
 function extractOverrideKeys(overridesPath: string): Set<string> {
-  const keys = new Set<string>();
-  if (!fs.existsSync(overridesPath)) return keys;
-
-  const content = fs.readFileSync(overridesPath, 'utf-8');
-
-  // Match keys in the exported map: 'token.name': { primitiveReferences: ... }
-  const keyPattern = /^\s*'([^']+)':\s*\{\s*primitiveReferences:/gm;
-  let match: RegExpExecArray | null;
-  while ((match = keyPattern.exec(content)) !== null) {
-    keys.add(match[1]);
-  }
-  return keys;
+  return new Set(parseSemanticOverrides(overridesPath).overrides.keys());
 }
 
 export class ModeClassifier {

@@ -82,6 +82,8 @@ export class ComponentIndexer {
   private layoutTemplateIndexer = new LayoutTemplateIndexer();
   private tokenIndexer = new TokenIndexer();
   private modeClassifier = new ModeClassifier();
+  /** Project root resolved by the last full index — reused by reindexTokens (issue 2026-09-12). */
+  private lastProjectRoot: string | undefined;
   private lastIndexTime = '';
   private lastIndexTimeMs = 0;
   private indexWarnings: string[] = [];
@@ -126,6 +128,7 @@ export class ComponentIndexer {
 
     // Load mode classifier (reads SemanticOverrides.ts for Level 2 keys)
     const projectRoot = path.resolve(componentsDir, '..', '..', '..');
+    this.lastProjectRoot = projectRoot;
     this.modeClassifier.load(projectRoot);
 
     // Second pass: assemble full metadata
@@ -153,9 +156,11 @@ export class ComponentIndexer {
     const patternNames = new Set(this.patternIndexer.getCatalog().map(p => p.name));
     this.guidanceIndexer.validateCrossReferences(componentNames, patternNames, projectRoot);
 
-    // Index token data (if token index directory exists)
+    // Index token data (if token index directory exists). projectRoot is passed explicitly so
+    // the token indexer reads the SAME theme override files the mode classifier does
+    // (issue 2026-09-12 — get_token_details reporting light values as dark).
     if (tokenIndexDir) {
-      await this.tokenIndexer.indexTokens(tokenIndexDir);
+      await this.tokenIndexer.indexTokens(tokenIndexDir, projectRoot);
     }
 
     this.lastIndexTime = new Date().toISOString();
@@ -234,9 +239,13 @@ export class ComponentIndexer {
     this.lastIndexTimeMs = this.computeMaxMtime();
   }
 
-  /** Re-index token data from the given directory. */
+  /**
+   * Re-index token data from the given directory (file-watcher path).
+   * Reuses the project root resolved by the last full index so theme overrides keep resolving
+   * from the same place a full reindex would use (issue 2026-09-12).
+   */
   async reindexTokens(tokenIndexDir: string): Promise<void> {
-    await this.tokenIndexer.indexTokens(tokenIndexDir);
+    await this.tokenIndexer.indexTokens(tokenIndexDir, this.lastProjectRoot);
     this.lastIndexTime = new Date().toISOString();
     this.lastIndexTimeMs = this.computeMaxMtime();
   }

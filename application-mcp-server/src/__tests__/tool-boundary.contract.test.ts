@@ -69,9 +69,23 @@ function assertResult<T = Record<string, unknown>>(raw: unknown): T {
  *     name, tier, family, value (primitives only), formula, platforms
  *   From ResolvedValueTriple (Spec 121 Req 2, additive):
  *     resolvedValue, resolvedUnitType, resolutionDepth
+ *   themeResolutions (issue 2026-09-12, additive — DELIBERATE RE-BASELINE):
+ *     theme-scoped resolutions; `dark` is the Level 2 dark-override resolution or null.
  *
  * RE-BASELINE: when a new field is legitimately added, append it here AND add a comment
  * explaining what it is and which requirement/task introduced it.
+ *
+ * RE-BASELINE LOG
+ * ---------------
+ * 2026-09-13 — ADDED `themeResolutions` to all three token key sets. Why: get_token_details
+ *   resolved only a token's BASE primitiveReferences, so every Level 2 dark-override token
+ *   (color.structure.canvas, color.text.*, …) was reported with its LIGHT value. The fix is
+ *   strictly additive: the triple's meaning is unchanged (it remains the base/light
+ *   resolution) and the dark answer lives in a new, clearly-named field that is ALWAYS
+ *   present with an explicit null contract (`dark: null` = no dark override). Not a breaking
+ *   change; the key-set guard fires because it is doing its job.
+ *   @see .kiro/issues/2026-09-12-mcp-token-details-dark-value-stale.md
+ *   @see TokenIndexer.ts § ThemeResolutions (contract + null semantics)
  */
 const TOKEN_PRIMITIVE_EXACT_KEYS = new Set([
   // TokenIndexEntry — identity + value
@@ -86,6 +100,8 @@ const TOKEN_PRIMITIVE_EXACT_KEYS = new Set([
   'resolvedValue',
   'resolvedUnitType',
   'resolutionDepth',
+  // Theme-scoped resolutions (issue 2026-09-12 — additive; see RE-BASELINE LOG above)
+  'themeResolutions',
 ]);
 
 /**
@@ -106,6 +122,8 @@ const TOKEN_SEMANTIC_EXACT_KEYS = new Set([
   'resolvedValue',
   'resolvedUnitType',
   'resolutionDepth',
+  // Theme-scoped resolutions (issue 2026-09-12 — additive; see RE-BASELINE LOG above)
+  'themeResolutions',
   // NOTE: `value` is intentionally absent — P2 / Req 2.4
 ]);
 
@@ -122,6 +140,8 @@ const TOKEN_COMPONENT_EXACT_KEYS = new Set([
   'resolvedValue',
   'resolvedUnitType',
   'resolutionDepth',
+  // Theme-scoped resolutions (issue 2026-09-12 — additive; see RE-BASELINE LOG above)
+  'themeResolutions',
 ]);
 
 /**
@@ -583,6 +603,41 @@ describe('get_token_details — tool-boundary contract', () => {
       const result = assertResult(await liveServer.callTool('get_token_details', { name: 'space100' }));
       expect('value' in result).toBe(true);
       expect(result.value).toBeDefined();
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // themeResolutions (issue 2026-09-12) — contract at the TOOL boundary
+  // The value-level regressions live in indexer/__tests__/ThemeResolution.test.ts; these
+  // assertions exist to prove the field survives handleTool's response assembly.
+  // -------------------------------------------------------------------------
+  describe('themeResolutions — additive field contract', () => {
+    it('pinned corpus (no theme file present): always present, dark is null', async () => {
+      for (const name of ['prim.space.100', 'sem.color.info', 'comp.btn.inset']) {
+        const result = assertResult(await pinnedServer.callTool('get_token_details', { name }));
+        expect(result).toHaveProperty('themeResolutions');
+        expect((result.themeResolutions as any).dark).toBeNull();
+      }
+    });
+
+    it('live corpus: a Level 2 token (color.structure.canvas) carries its DARK resolution', async () => {
+      const result = assertResult(await liveServer.callTool('get_token_details', { name: 'color.structure.canvas' }));
+      const dark = (result.themeResolutions as any).dark;
+      expect(dark).not.toBeNull();
+      // gray400 — the dark override shipped since Spec 050, previously reported as white100.
+      expect(dark.primitiveReferences).toEqual({ value: 'gray400' });
+      expect(dark.modeValue).toBe('oklch(0.42 0.018 260)');
+    });
+
+    it('live corpus: a non-overridden token reports dark: null (never omitted)', async () => {
+      const result = assertResult(await liveServer.callTool('get_token_details', { name: 'color.structure.surface' }));
+      expect(result).toHaveProperty('themeResolutions');
+      expect((result.themeResolutions as any).dark).toBeNull();
+    });
+
+    it('not-found responses carry no themeResolutions (error object shape unchanged)', async () => {
+      const result = assertResult(await pinnedServer.callTool('get_token_details', { name: 'nonexistent.token.xyz' }));
+      expect('themeResolutions' in result).toBe(false);
     });
   });
 });
