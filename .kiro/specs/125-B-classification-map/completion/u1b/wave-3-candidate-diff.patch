@@ -1,0 +1,39 @@
+# Wave 3 (Task 5.4) — CANDIDATE PRUNE DIFF: DECLARED NO-OP
+#
+# Zero hunks across zero files. This is the artifact 5.W(a) requires, in its
+# rows-only form: the wave's corpus-wide sweep found no imposter clause for any
+# of its three rules (C7, C8, C9), so there is nothing to cut.
+#
+#   C7 never-hand-edit-122-generated        -> ROWS-ONLY (no source-corpus statement of the
+#                                              rule exists at all; its only imperative home is
+#                                              the generator's own emitted banner, which is
+#                                              tooling, not education)
+#   C8 never-hand-edit-generated-token-outputs -> ROWS-ONLY (gate field OPEN, Ada adjudication
+#                                              pending; with no armed gate owning the rule's
+#                                              what, the imposter test cannot bite)
+#   C9 no-hardcoded-color                   -> ROWS-ONLY (committed classify-only row; and the
+#                                              armed barrier found is ~5x narrower than every
+#                                              prose surface that teaches the rule)
+#
+# Scoring, KEEP sets, reproducible sweep commands, and the explicit
+# "what would falsify this" clause per rule:
+#   .kiro/specs/125-B-classification-map/completion/u1b/wave-3-assessment.md
+#
+# VERIFICATION — both results reported, per the assessment's §5:
+#
+#   git apply --check wave-3-candidate-diff.patch
+#     -> error: No valid patches in input (allow with "--allow-empty")
+#        This is the CORRECT signal for a rows-only wave, not a defect.
+#
+#   git apply --check --allow-empty wave-3-candidate-diff.patch
+#     -> exit 0 (green)
+#
+# CONSUMPTION CONTRACT (5.W): (b) consumes this artifact UNCHANGED. Under the
+# rows-only finding (b) does not run — no prune to probe, nothing to trial — and
+# the wave merges as a rows-only, instrument-excluded PR (class 3) with no window.
+#
+# FALSIFICATION PATH: the Ada consult (C8 gate, central) and the Lina consult
+# (C9 scope) run AFTER this draft. Wave 2's pre-consult draft reached an identical
+# ROWS-ONLY verdict and was FALSIFIED by the owner consult. If a consult produces a
+# cut, this file is REPLACED by a real diff and Wave-A2 is populated from it BEFORE
+# any window opens — never after.
