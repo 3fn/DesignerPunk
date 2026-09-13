@@ -129,14 +129,17 @@ describe('Mode-Aware Generation (Spec 080)', () => {
 
   describe('DTCG export', () => {
     it('should not emit mode contexts when light/dark values are identical', () => {
-      // All current primitives have identical light/dark — no modes.light/dark should appear
+      // color.text.default gained a genuine dark override on 2026-09-13 (interim
+      // dark-text-hierarchy fix — see src/tokens/themes/dark/SemanticOverrides.ts), so
+      // it's no longer a valid "identical light/dark" example. color.feedback.error.text
+      // has no dark override — light/dark resolve identically.
       const { DTCGFormatGenerator } = require('../DTCGFormatGenerator');
       const gen = new DTCGFormatGenerator();
       const output = gen.generate();
       const sc = output.semanticColor as Record<string, any>;
-      const textDefault = sc['color.text.default'];
-      expect(textDefault).toBeDefined();
-      const modes = textDefault.$extensions?.designerpunk?.modes;
+      const errorText = sc['color.feedback.error.text'];
+      expect(errorText).toBeDefined();
+      const modes = errorText.$extensions?.designerpunk?.modes;
       // Should not have light/dark keys (values are identical)
       if (modes) {
         expect(modes.light).toBeUndefined();

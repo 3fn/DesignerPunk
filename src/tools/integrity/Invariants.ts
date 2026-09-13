@@ -52,6 +52,11 @@ export const SHADOW_COLOR_PRIMITIVES = [
  * (green500 → green300) as part of the WCAG AA remediation of the Spec 112
  * completion-claims audit finding F4. See
  * .kiro/issues/2026-09-12-spec-112-completion-claims-audit.md § F4.
+ *
+ * 6 → 9 on 2026-09-13: `color.text.default`, `color.text.muted`, and
+ * `color.text.subtle` each gained a dark override (white100/white300/white500) as
+ * part of the interim dark-text-hierarchy fix, Peter-ratified. See
+ * .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md.
  */
 export const EXPECTED_BASE_THEME_VARYING = [
   'color.action.navigation',
@@ -60,6 +65,9 @@ export const EXPECTED_BASE_THEME_VARYING = [
   'color.icon.navigation.inactive',
   'color.structure.border.subtle',
   'color.structure.canvas',
+  'color.text.default',
+  'color.text.muted',
+  'color.text.subtle',
 ] as const;
 
 /**

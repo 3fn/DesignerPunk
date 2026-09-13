@@ -384,28 +384,62 @@ export const colorTokens: Record<string, Omit<SemanticToken, 'primitiveTokens'>>
   },
 
   // Text Hierarchy (4 tokens)
+  /**
+   * WCAG remediation (2026-09-13, interim dark-text-hierarchy fix, Peter-ratified;
+   * .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md):
+   * The light-mode primitive (gray300) is unchanged and remains AA-passing against
+   * the light canvas. Against the dark canvas (color.structure.canvas → gray400) it
+   * measured 1.536:1 — well below the 4.5:1 AA floor for normal text. The dark theme
+   * carries a Level 2 override to white100 (8.46:1 on gray400) — see
+   * src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed.
+   */
   'color.text.default': {
     name: 'color.text.default',
     primitiveReferences: { value: 'gray300' },
     category: SemanticCategory.COLOR,
     context: 'Primary text color for body content',
-    description: 'Primary gray for main text content'
+    description: 'Primary gray for main text content. Dark theme overrides to white100 (8.46:1 against the dark canvas) for WCAG AA.'
   },
 
+  /**
+   * WCAG remediation (2026-09-13, interim dark-text-hierarchy fix, Peter-ratified;
+   * .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md):
+   * The light-mode primitive (gray200) is unchanged. Against the dark canvas it
+   * measured 2.324:1 — below the 4.5:1 AA floor. The dark theme carries a Level 2
+   * override to white300 (6.28:1 on gray400) — see
+   * src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed.
+   */
   'color.text.muted': {
     name: 'color.text.muted',
     primitiveReferences: { value: 'gray200' },
     category: SemanticCategory.COLOR,
     context: 'Muted text color for secondary content',
-    description: 'Muted gray for secondary and less prominent text'
+    description: 'Muted gray for secondary and less prominent text. Dark theme overrides to white300 (6.28:1 against the dark canvas) for WCAG AA.'
   },
 
+  /**
+   * WCAG remediation (2026-09-13, interim dark-text-hierarchy fix, Peter-ratified;
+   * .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md):
+   * The light-mode primitive (gray100) is unchanged. Against the dark canvas it
+   * measured 3.411:1 — below the 4.5:1 AA floor. The dark theme carries a Level 2
+   * override to white500 (4.53:1 on gray400) — see
+   * src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed.
+   */
   'color.text.subtle': {
     name: 'color.text.subtle',
     primitiveReferences: { value: 'gray100' },
     category: SemanticCategory.COLOR,
     context: 'Subtle text color for tertiary content',
-    description: 'Subtle gray for tertiary and very subtle text elements'
+    description: 'Subtle gray for tertiary and very subtle text elements. Dark theme overrides to white500 (4.53:1 against the dark canvas) for WCAG AA.'
   },
 
   // ============================================================================

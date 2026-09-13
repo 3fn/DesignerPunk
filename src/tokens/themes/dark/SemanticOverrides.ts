@@ -86,9 +86,9 @@ import type { SemanticOverrideMap } from '../types';
 // ======================================================================
 // TEXT HIERARCHY
 // ======================================================================
-// color.text.default: { value: 'gray300' }
-// color.text.muted: { value: 'gray200' }
-// color.text.subtle: { value: 'gray100' }
+// color.text.default: { value: 'gray300' }  [OVERRIDDEN below → white100]
+// color.text.muted: { value: 'gray200' }  [OVERRIDDEN below → white300]
+// color.text.subtle: { value: 'gray100' }  [OVERRIDDEN below → white500]
 
 // ======================================================================
 // CONTRAST
@@ -165,6 +165,18 @@ export const darkSemanticOverrides: SemanticOverrideMap = {
   // needs a LIGHTER step: green300 = 4.63:1 on gray400. Guarded by
   // src/tokens/__tests__/SemanticColorContrast.test.ts.
   'color.feedback.success.text': { primitiveReferences: { value: 'green300' } },
+
+  // WCAG AA remediation (2026-09-13, interim dark-text-hierarchy fix; Peter-ratified;
+  // .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md)
+  // Light base primitives (gray300/gray200/gray100) render on the dark canvas
+  // (color.structure.canvas → gray400) at 1.536:1 / 2.324:1 / 3.411:1 — all below the
+  // 4.5:1 AA floor for normal text. Remapped to white-ramp steps measured against
+  // gray400: white100 = 8.46:1, white300 = 6.28:1, white500 = 4.53:1. Interim fix —
+  // the other adjudication-queue exemption pairs remain deferred to a future spec.
+  // Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+  'color.text.default': { primitiveReferences: { value: 'white100' } },
+  'color.text.muted': { primitiveReferences: { value: 'white300' } },
+  'color.text.subtle': { primitiveReferences: { value: 'white500' } },
 
   // Nav-TabBar-Base overrides (Spec 050 Ada R2, 2026-03-17)
   'color.structure.canvas': { primitiveReferences: { value: 'gray400' } },
