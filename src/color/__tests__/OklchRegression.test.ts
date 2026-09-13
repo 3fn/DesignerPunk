@@ -1,6 +1,15 @@
 /**
  * @category evergreen
- * @purpose Verify OKLCH migration regression — ΔE₀₀ < 1 for non-intentionally-changed colors (Spec 112 R11 AC4)
+ * @purpose Composed-color stability guard. Asserts the composed OKLCH pipeline
+ *   (channels → composed primitives) has not drifted from the frozen pre-migration
+ *   sRGB reference: ΔE₀₀ < 1 for colors NOT intentionally changed by the OKLCH
+ *   migration (Spec 112 R11 AC4). Intentional changes — family-hue systematization,
+ *   chroma boosts, lightness redistribution, neutral partition redesign — are
+ *   enumerated in INTENTIONALLY_CHANGED with a causal, one-line rationale each; the
+ *   exemption criterion is causal, never magnitudinal (a color is exempt because a
+ *   ratified design act caused its delta, never because its delta is large).
+ *   See `.kiro/issues/2026-09-12-spec-112-completion-claims-audit.md` § "F5 Ruling
+ *   & Remediation" (2026-09-13, Peter-ratified) for the full record.
  */
 
 import { deltaE00, fromSrgbHex, toSrgbHex, type Oklch } from '../../color/OklchConverter';
@@ -31,18 +40,28 @@ const PRE_MIGRATION_RGB: Record<string, string> = {
   black100: '#3a3a45', black200: '#22222a', black300: '#0a0a0f', black400: '#06060a', black500: '#000000',
 };
 
-/** Colors intentionally changed by the migration (lightness redistribution, chroma boost, neutral redesign). */
+/**
+ * Colors intentionally changed by the migration (lightness redistribution, chroma boost,
+ * neutral redesign, family-hue systematization). Exemption is causal, not magnitudinal —
+ * see F5 Ruling, `.kiro/issues/2026-09-12-spec-112-completion-claims-audit.md`.
+ */
 const INTENTIONALLY_CHANGED = new Set([
   // Pink 100-200: hue normalization (original H≈353-356, normalized to family hue H=10)
   'pink100', 'pink200',
   // Teal: chroma boost
   'teal100', 'teal200', 'teal300', 'teal400', 'teal500',
-  // Green: lightness redistributed from compressed 0.88/0.88 to even steps
+  // Green100: family-hue systematization (H 169.75 → family hue 154 per R1 AC3; non-hue
+  // residual 0.535, decimal rounding)
+  'green100',
+  // Green 200-500: lightness redistributed from compressed 0.88/0.88 to even steps
   'green200', 'green300', 'green400', 'green500',
   // Yellow: lightness redistributed from compressed 0.95/0.93 to even steps
   'yellow200', 'yellow300', 'yellow400', 'yellow500',
   // Cyan: lightness redistributed
   'cyan200', 'cyan300', 'cyan400', 'cyan500',
+  // Purple 200-400: family-hue systematization (H 313.93/307.98/308.27 → family hue 310
+  // per R1 AC3; L/C match to rounding, non-hue ΔE₀₀ ≤ 0.134)
+  'purple200', 'purple300', 'purple400',
   // Neutrals: entire partition redesigned (new L/C/H values)
   'white100', 'white200', 'white300', 'white400', 'white500',
   'gray100', 'gray200', 'gray300', 'gray400', 'gray500',
@@ -50,11 +69,11 @@ const INTENTIONALLY_CHANGED = new Set([
 ]);
 
 describe('OKLCH Migration Regression (Spec 112 R11 AC4)', () => {
-  describe('non-intentionally-changed colors: ΔE₀₀ < 3', () => {
+  describe('non-intentionally-changed colors: ΔE₀₀ < 1', () => {
     const nonChanged = Object.keys(PRE_MIGRATION_RGB).filter(k => !INTENTIONALLY_CHANGED.has(k));
 
     for (const name of nonChanged) {
-      it(`${name}: ΔE₀₀ < 3 vs original RGB`, () => {
+      it(`${name}: ΔE₀₀ < 1 vs original RGB`, () => {
         const composed = composedColorMap.get(name);
         expect(composed).toBeDefined();
 
@@ -62,32 +81,57 @@ describe('OKLCH Migration Regression (Spec 112 R11 AC4)', () => {
         const newOklch = composed!.resolved;
         const dE = deltaE00(originalOklch, newOklch);
 
-        // ΔE₀₀ < 3 for non-intentionally-changed (ideal < 1, but lightness rounding introduces drift)
-        expect(dE).toBeLessThan(3);
+        // Ratified threshold (Spec 112 R11 AC4; F5 ruling 2026-09-13): the remaining 12
+        // non-intentionally-changed colors max at ΔE₀₀ ≈ 0.741 (yellow100) — a real
+        // quantization budget (R5 AC5), not a relaxed one.
+        expect(dE).toBeLessThan(1);
       });
     }
   });
 
-  describe('intentionally changed colors: document ΔE₀₀', () => {
+  describe('intentionally changed colors: causal exemptions (F5 ruling, 2026-09-13)', () => {
     const changed = Object.keys(PRE_MIGRATION_RGB).filter(k => INTENTIONALLY_CHANGED.has(k));
 
-    for (const name of changed) {
-      it(`${name}: documents intentional change`, () => {
-        const composed = composedColorMap.get(name);
-        expect(composed).toBeDefined();
+    it('every intentionally-changed name is a real color in both reference maps', () => {
+      // Exemption-set hygiene: closes the reverse direction of the "all 50 composed
+      // colors have a pre-migration reference" check below — every name claimed as
+      // intentionally-changed must actually exist in both maps, not just be a string.
+      const missingFromPreMigration = Array.from(INTENTIONALLY_CHANGED).filter(
+        name => !(name in PRE_MIGRATION_RGB)
+      );
+      const missingFromComposed = Array.from(INTENTIONALLY_CHANGED).filter(
+        name => !composedColorMap.has(name)
+      );
+      expect(missingFromPreMigration).toEqual([]);
+      expect(missingFromComposed).toEqual([]);
+    });
 
-        const originalOklch = fromSrgbHex(PRE_MIGRATION_RGB[name]);
-        const newOklch = composed!.resolved;
-        const dE = deltaE00(originalOklch, newOklch);
+    it('white100: ΔE₀₀ ≈ 0 vs #ffffff — sRGB↔OKLab round-trip float residual only, not tinting (neutralHue is product-configurable per R2 AC6)', () => {
+      const composed = composedColorMap.get('white100');
+      expect(composed).toBeDefined();
+      const originalOklch = fromSrgbHex(PRE_MIGRATION_RGB.white100);
+      const dE = deltaE00(originalOklch, composed!.resolved);
+      // Measured residual ≈ 1.29e-5 (l=1/c=0 does not round-trip to exactly 1/0 through the
+      // sRGB↔OKLab conversion matrices in floating point). Too large for a ≤1e-9 epsilon —
+      // verified before choosing — so bounded loosely but still far tighter than the < 1
+      // migration threshold: any real hue tint would land orders of magnitude above this.
+      expect(dE).toBeLessThan(0.0001);
+    });
 
-        // Intentional changes are expected to be larger — just verify they're valid colors
-        expect(newOklch.l).toBeGreaterThanOrEqual(0);
-        expect(newOklch.l).toBeLessThanOrEqual(1);
-        // Log for documentation (captured in test output)
-        // eslint-disable-next-line no-console
-        if (dE > 5) {
-          // Large changes are expected for neutral redesign and lightness redistribution
-        }
+    it('black500: ΔE₀₀ exactly 0 vs #000000 — l=0/c=0 has no floating-point residual (neutralHue is product-configurable per R2 AC6)', () => {
+      const composed = composedColorMap.get('black500');
+      expect(composed).toBeDefined();
+      const originalOklch = fromSrgbHex(PRE_MIGRATION_RGB.black500);
+      const dE = deltaE00(originalOklch, composed!.resolved);
+      // Verified: black500's dE computes to exact 0 (unlike white100), so strict
+      // equality holds rather than needing an epsilon.
+      expect(dE).toBe(0);
+    });
+
+    const remaining = changed.filter(name => name !== 'white100' && name !== 'black500');
+    for (const name of remaining) {
+      it(`${name}: exists in composed color map (magnitude not asserted — rider 3 declined per F5 ruling)`, () => {
+        expect(composedColorMap.get(name)).toBeDefined();
       });
     }
   });
