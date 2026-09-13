@@ -154,3 +154,32 @@ This triggers the charter's process note. The proximate mechanism is F7 — self
 
 ### Scope discipline note
 Two temptations to exceed the audit's scope, both declined: (a) F4 is a live WCAG AA failure and the fix is a two-line override edit — I did not make it; audits report, Ada fixes. (b) F5's docblock contradiction is a one-word correction in a test file that sits inside my write scope (`src/__tests__/**` — though this file is `src/color/__tests__/`, outside it) — also left alone, because changing the claim without deciding the threshold would paper over the finding. Nothing in the source tree was modified; the only file this session touched is this charter.
+
+---
+
+## F5 Ruling & Remediation (2026-09-13 — Peter-ratified, record-first)
+
+**Ruling (Peter, 2026-09-13, after Ada + Thurgood consults, both endorsing)**: **Option A** — reclassify `purple200/300/400` + `green100` into the test's `INTENTIONALLY_CHANGED` set and restore the ratified **ΔE₀₀ < 1** for the remaining 12 colors; fix the header/assertion contradiction; delete the dead documentation-theater block. Riders elected: **(1)** exemption-set hygiene + anchor-exactness assertions, **(2)** docblock reframe to "composed-color stability guard." Rider (3) (recorded-delta bands on the intentional set) **declined** — Ada's grounds: recurring maintenance tax on legitimate palette refinement, tight bands become a de-facto palette freeze, and magnitude-keyed guards erode the causal criterion this ruling rests on; revisitable at the deferred Semantic Contrast & Theme Coverage spec. Recording form per Thurgood: issue-driven ruling entry, PR-merge-as-ratification (#138 precedent) — not ballot-grade (domain content, not governance law).
+
+**The exemption criterion, stated for the record**: AC4's carve-out ("not intentionally changed by palette refinements") is **causal, not magnitudinal** — a color is exempt because a ratified design act caused its delta, never because its delta is large. This is the meaning already in force: ~30 of the 34 pre-existing exemptions trace to R1/R2 acts, not R7's literally-titled refinements; and white100/black500 are deliberately-redesigned colors with ΔE = 0.000. A color failing the gate is never exemptable *by* failing it.
+
+### Verification-grade evidence (Ada and Thurgood computed independently; main session reproduced; all three agree)
+
+Mechanism: **family-hue systematization** — R1 AC1/AC3/AC6 (ratified) collapse each family to ONE hue token, derived "as median of 5-step hues" (task-2-1a-completion.md § Conversion Process; `src/tokens/color/channels/hues.ts` header); `src/tokens/color/primitives/chromatic.ts:48` composes the family hue unconditionally, so preserving a per-step hue is architecturally impossible. The resulting chroma-scaled hue-lock drift runs through EVERY family; it crosses ΔE 1.0 only for these four chroma × hue-delta combinations. Identical class to the already-shipped pink100/200 exemption ("hue normalization … normalized to family hue H=10").
+
+| color | ΔE₀₀ | L old→new | C old→new | H old→new | ΔE with hue held at original (non-hue residual) |
+|---|---|---|---|---|---|
+| purple200 | 1.930 | 0.7582→0.76 | 0.1792→0.179 | 313.93→310 | 0.134 |
+| green100 | 1.737 | 0.9791→0.97 | 0.0291→0.029 | 169.75→154 | 0.535 |
+| purple300 | 1.405 | 0.6010→0.60 | 0.2863→0.286 | 307.98→310 | 0.091 |
+| purple400 | 1.076 | 0.5104→0.51 | 0.2410→0.241 | 308.27→310 | 0.042 |
+
+Post-reclassification, the 12 remaining threshold-bound colors max at **0.7406** (yellow100) in OKLCH space — and **0.579** (purple500) under AC4's literal round-trip formulation (Ada verified both; quantization partially cancels rather than compounds). `< 1` holds with real margin on either reading. **No primitive or composed color value changes** — this is a test-file + record change only.
+
+**Candid caveats recorded with the ruling**: purple400 clears 1.0 by 0.076 — exempted by cause (non-hue residual 0.042), and only by cause; purple's family hue 310 sits 1.26° off the computed median 308.74 (largest such deviation of any family; a judgment call inside the recorded derive-and-round envelope, same standard as pink's accepted 10.24→10.0).
+
+**Provenance of the original defect**: the relaxation to < 3 was written into `task-6-2-completion.md` ("All pass ΔE₀₀ < 3") against the ratified < 1 and never escalated — an F7-pattern instance (that doc also says "15 colors" where the test binds 16; minor record defect, noted, not rewritten). Historical completion docs stay as-is per F6's no-backfill principle; this entry is the correction of record.
+
+**Cross-surface alignment (Ada's finding)**: seven surfaces claimed conflicting thresholds; with this ruling the live surfaces (test assertion + docblock) return to < 1, making the ratified requirement (requirements.md:172), shipped governance law (`Product-Token-Governance.md:92`, ΔE₀₀ ≤ 1.0), and the published v12.0.0 release-notes claim all TRUE as written. Option B ("ratify < 3") was rejected precisely because it would have required amending governance law and a shipped consumer-facing release note; Option C (retire) rejected as it removes the only guard tying composed pipeline output to an external reference.
+
+**Execution**: Ada, on this branch, riding this PR (record lands atomically with the fix). F5 CLOSES at this PR's merge.
