@@ -89,12 +89,23 @@ export const colorTokens: Record<string, Omit<SemanticToken, 'primitiveTokens'>>
    */
 
   // Feedback - Success (3 tokens)
+  /**
+   * WCAG remediation (2026-09-12, Spec 112 audit finding F4):
+   * This token previously referenced green400 (OKLCH 0.66 0.18 154), which measures
+   * 2.84:1 against color.structure.canvas (white100) — below the 4.5:1 AA floor for
+   * normal text. Remapped to green500 (OKLCH 0.54 0.14 154) = 4.72:1 on white100.
+   * The dark theme carries a Level 2 override to green300 (4.63:1 on the dark canvas,
+   * gray400) — see src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed; green400 remains the ramp step it was.
+   */
   'color.feedback.success.text': {
     name: 'color.feedback.success.text',
-    primitiveReferences: { value: 'green400' },
+    primitiveReferences: { value: 'green500' },
     category: SemanticCategory.COLOR,
     context: 'Text color for success feedback messages and indicators',
-    description: 'Green text color for success states - form validation, confirmation messages, positive feedback'
+    description: 'Green text color for success states - form validation, confirmation messages, positive feedback. References green500 for WCAG AA contrast (4.72:1) against the light canvas; dark theme overrides to green300 (4.63:1 against the dark canvas).'
   },
 
   'color.feedback.success.background': {

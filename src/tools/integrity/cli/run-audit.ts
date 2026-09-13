@@ -77,7 +77,7 @@ rgbaScan('token-index/semantics.yaml');
 oklchVsRgba('dist/DesignTokens.web.css');
 
 // CHECK 3 (Task 5.1) — the absolute correctness-property assertions the re-diff cannot catch:
-//   P3 (no rgba except the shadow allowlist) and P5 (theme-varying = base-scoped 5, not registry-wide 10).
+//   P3 (no rgba except the shadow allowlist) and P5 (theme-varying = the base-scoped set, not the registry-wide one).
 // Run against the COMMITTED token-index (repo cwd) — these must hold regardless of drift.
 console.log('\n--- CHECK 3: token-index invariants (P3 no-legacy-color, P5 theme-varying-base-scoped) ---\n');
 const primitivesYaml = readMaybe(path.resolve(repo, 'token-index/primitives.yaml'));

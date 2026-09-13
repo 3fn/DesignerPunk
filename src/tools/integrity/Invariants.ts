@@ -11,7 +11,7 @@
  *     This is exactly how Finding 1 hid (216 rgba in both committed and fresh).
  *
  *   - P5 (theme-varying rule): the index's `themeVarying` set must be the
- *     dist base-mode set (5 keys), NOT the registry-wide set (10 keys). A future
+ *     dist base-mode set (EXPECTED_BASE_THEME_VARYING), NOT the registry-wide set. A future
  *     "simplification" that pipes the registry-wide Set through to the index would
  *     reproduce identically committed-vs-fresh while silently re-breaking R5.
  *     (§4.1 residual risk, Task 3 completion.)
@@ -39,21 +39,32 @@ export const SHADOW_COLOR_PRIMITIVES = [
 
 /**
  * The base-scoped theme-varying set the INDEX must mark `themeVarying: true`
- * (the 5 dist base-mode dark-override keys). This is the readout the index uses;
- * it is deliberately NOT the registry-wide 10 (which over-includes WCAG-only
+ * (the dist base-mode dark-override keys). This is the readout the index uses;
+ * it is deliberately NOT the registry-wide set (which over-includes WCAG-only
  * contrast keys). See Task 3 completion §"Why two theme-varying sets coexist".
+ *
+ * This list grows when a token gains a genuine base-mode DARK override in
+ * src/tokens/themes/dark/SemanticOverrides.ts — that is the invariant holding, not
+ * breaking. It must NEVER grow by absorbing a WCAG_ONLY_OVERMARKS key; that is the
+ * §4.1 regression the anti-conflation sentinel below names.
+ *
+ * 5 → 6 on 2026-09-12: `color.feedback.success.text` gained a dark override
+ * (green500 → green300) as part of the WCAG AA remediation of the Spec 112
+ * completion-claims audit finding F4. See
+ * .kiro/issues/2026-09-12-spec-112-completion-claims-audit.md § F4.
  */
 export const EXPECTED_BASE_THEME_VARYING = [
   'color.action.navigation',
   'color.background.primary.subtle',
+  'color.feedback.success.text',
   'color.icon.navigation.inactive',
   'color.structure.border.subtle',
   'color.structure.canvas',
 ] as const;
 
 /**
- * Sentinel WCAG-only over-marks: keys that the registry-wide set (10) marks but
- * the base-scoped set (5) must NOT. If any of these is `themeVarying: true`, the
+ * Sentinel WCAG-only over-marks: keys that the registry-wide set marks but
+ * the base-scoped set must NOT. If any of these is `themeVarying: true`, the
  * index has been silently re-wired to the registry-wide Set — the §4.1 regression.
  * (This is the anti-conflation guard's negative assertion.)
  */
@@ -150,12 +161,12 @@ export function rgbaColorPrimitives(primitivesYaml: string): string[] {
  * P5 — theme-varying is the base-scoped set, NOT the registry-wide set.
  *
  * Two assertions (both must hold):
- *   (a) the index's `themeVarying: true` set equals EXACTLY the expected 5 base keys
+ *   (a) the index's `themeVarying: true` set equals EXACTLY the expected base keys
  *       (a missing or extra key is a divergence from the dist base-mode set); and
  *   (b) NONE of the known WCAG-only over-marks is `themeVarying: true` — the
  *       anti-conflation guard. (b) is redundant with (a) when (a) holds, but it
  *       is the explicit, named regression sentinel: if a future change pipes the
- *       registry-wide 10 through to the index, (b) names exactly which over-marks
+ *       registry-wide set through to the index, (b) names exactly which over-marks
  *       reappeared, making the §4.1 re-break legible rather than a generic "extra key".
  */
 export function assertThemeVaryingBaseScoped(semanticsYaml: string): InvariantViolation[] {
@@ -169,7 +180,7 @@ export function assertThemeVaryingBaseScoped(semanticsYaml: string): InvariantVi
   );
   const expected = new Set<string>(EXPECTED_BASE_THEME_VARYING);
 
-  // (a) exact-set equality with the base-scoped 5.
+  // (a) exact-set equality with the base-scoped set (EXPECTED_BASE_THEME_VARYING).
   for (const key of expected) {
     if (!actualTrue.has(key)) {
       violations.push({

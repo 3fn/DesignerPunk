@@ -89,6 +89,38 @@ Parent 4's Primary Artifacts promised `BlendCalculator.ts` and all three `ThemeA
 ### F4 — Task 6.1: the WCAG remediation the shipped test points at does not exist
 `src/color/__tests__/WcagContrast.test.ts` ships six pairs under `NEEDS_OVERRIDE` with a comment asserting "The WCAG theme (Spec 112 R8 AC4) provides overrides with darker primitives" and per-pair fixes. `src/tokens/themes/wcag/SemanticOverrides.ts` contains no green/orange/pink/gray override — at `71120a5d` or today. `color.feedback.success.text` still resolves to `green400` (2.84:1 on white100, below AA). tasks.md task 6 criterion "Green success.text contrast improved from ~1.3:1 to ≥4.5:1" was **dropped** from `task-6-completion.md`'s criteria table, and `71120a5d`'s own commit message claims "WCAG: all semantic pairs pass AA, teal/green contrast fixed" — false in the release record. **Recommendation (Ada, accessibility-severity)**: decide and apply the WCAG-theme overrides for the six documented pairs, or record an accepted-deviation with rationale; the in-test comment must stop asserting overrides that do not exist.
 
+#### F4 — Remediation note (Ada, 2026-09-12)
+
+Peter authorized a scoped fix: `color.feedback.success.text` only, plus the guard task 6.1 claimed but never shipped. Sibling failures were measured and queued, not fixed.
+
+**What changed**
+
+| Context | Before | After | Ratio before | Ratio after |
+|---|---|---|---|---|
+| light, on `color.structure.canvas` (white100) | `green400` | **`green500`** | **2.842:1 (AA FAIL)** | **4.717:1 (AA PASS)** |
+| dark, on `color.structure.canvas` (gray400) | `green400` (no override) | **`green300`** (new Level 2 dark override) | **2.977:1 (AA FAIL)** | **4.625:1 (AA PASS)** |
+| light-wcag / dark-wcag | inherits base | inherits base (no wcag override added) | — | 4.717 / 4.625 (AA PASS; **not** the ≥7:1 AAA floor R8 AC4 asserts) |
+
+All ratios computed with the repo's own `contrastRatio()` (`src/color/OklchConverter.ts`). **No primitive OKLCH values were changed** — `green400` is untouched and keeps its other consumers; this is a semantic remap only.
+
+**Canonical pairing adjudicated**: `.text`-role tokens are asserted against `color.structure.canvas` — the architecture's declared default page background, and the pairing Spec 112's own criteria were measured against ("green success.text improved from ~1.3:1", "teal info.text from ~1.5:1" are both ratios against white). Because canvas is mode-varying (white100 → gray400), light mode needs a DARKER green and dark mode a LIGHTER one — hence opposite steps in the two modes.
+
+**Consumer-visible side effect (iOS/Android)**: adding a dark override makes the token theme-varying, so per Spec 094 it is excluded from the static `DesignTokens.swift`/`.kt` structs and moves to the theme-aware surface. `token-index/semantics.yaml` now reads `ios: theme.colorFeedbackSuccessText` / `android: theme.color_feedback_success_text` (was static). Web is unaffected: `--color-feedback-success-text: light-dark(oklch(0.54 0.14 154), oklch(0.78 0.208 154))`. `src/tools/integrity/Invariants.ts`'s `EXPECTED_BASE_THEME_VARYING` grew 5 → 6 accordingly (the anti-conflation sentinel is untouched — this is a genuine base dark override, not a WCAG-only over-mark).
+
+**The missing guard now exists**: `src/tokens/__tests__/SemanticColorContrast.test.ts` (evergreen, 32 tests) resolves SEMANTIC tokens through the same context composition the generators use and asserts AA on text/background pairs — which is what task 6.1 promised. The shipped `src/color/__tests__/WcagContrast.test.ts` remains primitive-level; its `NEEDS_OVERRIDE` comment still asserts WCAG-theme overrides that do not exist (this audit's F4 note), and was left alone as out of scope.
+
+**Queued, not fixed — the exemption list** (each pinned to its measured ratio in the new test and marked "PENDING Peter adjudication, found by 2026-09-12 audit remediation"; the pin fails the test if the pair regresses *or* if it is fixed, forcing re-adjudication either way):
+
+*Light mode, text on canvas:* `warning.text` orange400 **4.231**; `text.muted` gray200 **3.640**; `text.subtle` gray100 **2.480**.
+
+*Dark mode, text on canvas (gray400) — one shared root cause: the dark theme overrides 6 of 62 semantic color tokens, so these are light-mode primitives rendered on a dark canvas:* `error.text` pink400 **1.561**; `warning.text` orange400 **1.999**; `info.text` teal400 **1.155**; `text.default` gray300 **1.536**; `text.muted` gray200 **2.324**; `text.subtle` gray100 **3.411**.
+
+*Light mode, text on its family background:* `success.text` green500/green100 **4.369**; `error.text` pink400/pink100 **4.187**; `warning.text` orange400/orange100 **3.518**; `select.text.rest` cyan400/cyan100 **2.820**; `select.text.default` gray200/gray100 **1.468**; `progress.current.text` cyan400/cyan300 **1.573**; `progress.pending.text` gray300/white300 **4.086**; `progress.completed.text` green400/green100 **2.632**; `progress.error.text` pink400/pink100 **4.187**.
+
+**Two findings Peter should see explicitly:**
+1. **The green ramp cannot satisfy both pairings.** `green500` is the darkest step; on `success.background` (green100) it reaches only 4.369 — 0.13 short. Closing the family pairing needs a design change (a darker green step or a deeper success background), which is outside this authorization. `color.progress.completed.text` is the same defect class as the one just fixed (green400 on green100 = 2.632) in a token the authorization did not cover.
+2. **The dark theme has no designed backgrounds.** No feedback/progress `.background` token has a dark override, so a dark-mode family pairing composes a dark text against a light background (success: green300 on green100 = 1.694). The new guard therefore asserts the family pairing in light mode only and says so in its header. The honest reading: dark-mode banners/badges/stepper nodes have no valid contrast story yet, and this fix improved the dark canvas pairing (2.977 → 4.625) while that undesigned family pairing moved 2.632 → 1.694.
+
 ### F5 — Task 6.2: requirement threshold relaxed 3× without a record
 R11 AC4 requires ΔE₀₀ **< 1** for non-intentionally-changed colors. The shipped assertion is `expect(dE).toBeLessThan(3)` while the file's docblock still cites "< 1 … (Spec 112 R11 AC4)"; the in-line comment concedes "ideal < 1, but lightness rounding introduces drift". `feedback.md` contains no discussion of the relaxation and no ratification. **Recommendation (Ada)**: either tighten to <1, or amend R11 AC4 with the rounding rationale and fix the docblock so code and claim agree.
 
