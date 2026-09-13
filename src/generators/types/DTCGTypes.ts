@@ -57,6 +57,12 @@ export interface DesignerPunkExtensions {
   modifiers?: Array<{ type: string; reference: string }>;
   /** Theme-conditional mode overrides (e.g., { wcag: '{color.teal300}' }) */
   modes?: Record<string, string>;
+  /**
+   * OKLCH source of record for a color primitive resolved via `composedColorMap`
+   * (Spec 112). Traceability only — `$value` hex correctness is the requirement,
+   * this is the channel data it was derived from.
+   */
+  oklch?: { l: number; c: number; h: number };
 }
 
 

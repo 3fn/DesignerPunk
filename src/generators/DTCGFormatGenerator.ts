@@ -26,6 +26,8 @@ import type { PrimitiveToken, ColorTokenValue } from '../types/PrimitiveToken';
 // Primitive token imports
 import { spacingTokens, SPACING_BASE_VALUE } from '../tokens/SpacingTokens';
 import { colorTokens } from '../tokens/ColorTokens';
+import { composedColorMap } from '../tokens/color';
+import { oklchToExportHex } from './oklch/OklchExportUtils';
 import { fontSizeTokens, FONT_SIZE_BASE_VALUE } from '../tokens/FontSizeTokens';
 import { fontWeightTokens, FONT_WEIGHT_BASE_VALUE } from '../tokens/FontWeightTokens';
 import { fontFamilyTokens } from '../tokens/FontFamilyTokens';
@@ -325,6 +327,15 @@ export class DTCGFormatGenerator {
     for (const [key, token] of Object.entries(colorTokens)) {
       const colorValue = this.resolveColorValue(token, key);
       const extensions = this.buildPrimitiveExtensions(token, 'color');
+
+      // Spec 112 traceability: record the OKLCH source of record for primitives
+      // that resolved through composedColorMap, so consumers can see the value
+      // this hex was derived from (nice-to-have; hex $value is the requirement).
+      const composed = composedColorMap.get(token.name || key);
+      if (composed) {
+        extensions.oklch = { ...composed.resolved };
+      }
+
       group[key] = this.toDTCGToken(colorValue, 'color', token.description, extensions);
     }
     return group;
@@ -569,7 +580,10 @@ export class DTCGFormatGenerator {
         family: 'color',
       };
 
-      // Spec 080: emit mode contexts for Level 2 overrides or Level 1 primitive differences
+      // Spec 080: emit mode contexts for Level 2 overrides.
+      // (Level 1 — "does the primitive itself carry distinct light/dark values" —
+      // was removed here: zero legacy primitives ever satisfied that predicate,
+      // per `.kiro/issues/2026-08-25-dual-color-source-divergence.md`. It never fired.)
       const override = darkSemanticOverrides[key];
       if (override) {
         // Level 2: semantic override swaps primitive name in dark mode
@@ -583,17 +597,6 @@ export class DTCGFormatGenerator {
           if (!extensions.modes) extensions.modes = {};
           extensions.modes.light = lightVal;
           extensions.modes.dark = darkVal;
-        }
-      } else {
-        // Level 1: check if primitive itself has distinct light/dark values
-        const primitiveToken = (colorTokens as Record<string, PrimitiveToken>)[primaryRef];
-        if (primitiveToken) {
-          const colorVal = primitiveToken.platforms.web.value as ColorTokenValue;
-          if (colorVal?.light?.base && colorVal?.dark?.base && colorVal.light.base !== colorVal.dark.base) {
-            if (!extensions.modes) extensions.modes = {};
-            extensions.modes.light = colorVal.light.base;
-            extensions.modes.dark = colorVal.dark.base;
-          }
         }
       }
       // If token has separate color + opacity composition, note it
@@ -1229,15 +1232,34 @@ export class DTCGFormatGenerator {
   }
 
   /**
-   * Resolve a color token's RGBA value from its mode/theme structure.
-   * Uses light.base as the default resolved value for DTCG output.
+   * Resolve a color token's value for DTCG output.
+   *
+   * OKLCH-sourced primitives (Spec 112, `composedColorMap`) are checked FIRST —
+   * mirroring `SemanticValueResolver.resolveColorPrimitive()` — and converted to
+   * sRGB hex via `oklchToExportHex` (CSS Color Level 4 gamut mapping). This keeps
+   * DTCG/Figma export in agreement with the OKLCH source of record that drives
+   * CSS/Swift/Kotlin, closing the dual-color-source divergence (see
+   * `.kiro/issues/2026-08-25-dual-color-source-divergence.md`, Option A).
+   *
+   * Only primitives absent from `composedColorMap` (the four legacy-only shadow
+   * primitives: shadowBlack100, shadowBlue100, shadowOrange100, shadowGray100)
+   * fall through to the legacy RGBA `light.base` path.
    *
    * @param token - The primitive color token to resolve
-   * @param tokenName - Optional token name for error messages
-   * @returns Resolved color string (e.g., "rgba(255, 0, 0, 1)")
+   * @param tokenName - Optional token name for error messages / composedColorMap lookup fallback
+   * @returns Resolved color string (e.g., "#818b9c" or "rgba(255, 0, 0, 1)")
    * @throws Error if the resolved color value is not a valid color format
    */
   private resolveColorValue(token: PrimitiveToken, tokenName?: string): string {
+    const lookupName = token.name || tokenName;
+    if (lookupName) {
+      const composed = composedColorMap.get(lookupName);
+      if (composed) {
+        const { l, c, h } = composed.resolved;
+        return oklchToExportHex(l, c, h).hex;
+      }
+    }
+
     const webValue = token.platforms.web.value;
     let resolved: string;
     if (typeof webValue === 'string') {

@@ -3,7 +3,7 @@
 **Date**: August 25, 2026
 **Discovered By**: Ada, while settling the "Open question for Ada" in `.kiro/issues/2026-08-19-token-quick-reference-mode-resolution-stale.md`
 **Spec**: None yet — spun out of the Token-Quick-Reference doc fix (`fix/token-quick-reference-mode-resolution`)
-**Status**: Proposed — diagnosed with evidence, no pipeline code changed
+**Status**: Resolved — Option A implemented (Peter's ruling, 2026-09-12)
 **Priority**: High for design/code parity; **not** a build breakage — all platforms build and are internally self-consistent
 **Impact**: Figma / Tokens Studio / Style Dictionary consumers of `dist/DesignTokens.dtcg.json` and `dist/DesignTokens.figma.json`
 **Assigned To**: Ada (token pipeline) — needs Peter's routing decision on scope
@@ -165,3 +165,63 @@ silently.
 **Priority consequence**: HIGH stands, and the frame sharpens — this is not a dormant export with hypothetical consumers; it is the design/code contract surface, and it currently lies to the design side. **Sequencing note**: any fix session should also check the 054a/054b issue trail (duplicate collections, extractor variable-binding gaps) — repairing values into a push pipeline with known sync defects risks conflating the two failure classes.
 
 **Remaining decision (Peter, at the fix session)**: options A/B/C above, now weighted by a real consumer — the DTCG primitive `$value` path should almost certainly read the same OKLCH source as the platforms (option A's shape), with the legacy file's remaining sole-source roles (shadows, DTCG structure) migrated or explicitly recorded.
+
+---
+
+## Resolution: Option A — Peter, 2026-09-12
+
+**Ruling**: Implement Option A (point DTCG at the OKLCH source). Emit sRGB hex, never `oklch()` strings, since the Figma push path (`FigmaTransformer`/`TokenTranslator`) parses only `rgba()`/hex and would break on an `oklch()` string. Full Spec 115 Phase B (`ColorTokens.ts` deletion) is chartered separately — see `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md` — and out of scope here.
+
+### What changed
+
+- **`src/generators/DTCGFormatGenerator.ts`**
+  - `resolveColorValue()` (formerly ~1240–1248) now checks `composedColorMap` FIRST — mirroring `SemanticValueResolver.resolveColorPrimitive()` (`src/resolvers/SemanticValueResolver.ts:24-41`) — and routes matches through `oklchToExportHex` (`src/generators/oklch/OklchExportUtils.ts`) to emit sRGB hex. The legacy RGBA `light.base` path is now reached ONLY by primitives absent from `composedColorMap`: `shadowBlack100`, `shadowBlue100`, `shadowOrange100`, `shadowGray100`.
+  - `generateColorTokens()` additionally attaches an `oklch` traceability extension (`$extensions.designerpunk.oklch = { l, c, h }`) for primitives resolved via `composedColorMap`.
+  - `generateSemanticColorTokens()`: deleted the dead Level-1 mode-metadata branch (formerly `:588-596`, the `colorVal.light.base !== colorVal.dark.base` predicate). Zero legacy primitives ever satisfied it — confirmed dead in the original diagnosis above. The Level-2 semantic-override modes-extension path (`:573-587` at diagnosis time) is unchanged; it already routed through the correct resolver.
+  - Because `resolveColorValue()` is the single shared resolution point, this same fix also reaches `resolvePrimitiveColorAlias()` (semantic color aliases, accessibility tokens, progress-color tokens) and the shadow-color path — the latter is unaffected in practice since all shadow `refs.color` values (`shadowBlack100`/`shadowBlue100`) are legacy-only and were already verified absent from `composedColorMap` before this change shipped.
+- **`src/generators/types/DTCGTypes.ts`**: added `DesignerPunkExtensions.oklch?: { l: number; c: number; h: number }` for the new traceability field.
+- **`src/generators/__tests__/DTCGColorOklchParity.test.ts`** (new): the parity regression test — see below.
+
+### The parity test
+
+`src/generators/__tests__/DTCGColorOklchParity.test.ts` — 112 assertions across four `describe` blocks:
+
+1. **`describe.each` over every `composedColorMap` entry** (50 primitives × 2 assertions = 100 tests): asserts the DTCG-emitted `$value` hex equals `oklchToExportHex(l, c, h).hex` for the SAME `l, c, h` that `SemanticValueResolver.resolveColorPrimitive()` emits as `oklch(l c h)` on the CSS/Swift/Kotlin path — i.e., DTCG `$value` must agree with the OKLCH source of record, CSS L4 gamut mapping included. Also asserts `$value` is a hex string and never a raw `oklch()` string (the Figma-parser constraint).
+2. **Legacy-shadow-path guard** (4 primitives × 2 assertions = 8 tests): confirms `shadowBlack100`/`shadowBlue100`/`shadowOrange100`/`shadowGray100` are absent from `composedColorMap` (so they take the legacy branch by construction, not by accident) and that their DTCG `$value` still equals the legacy `ColorTokens.ts` `light.base` RGBA value.
+3. **Self-consistency check** (1 test, non-vacuous — asserts `checked.length > 0`): with `resolveAliases: true`, every semantic color token that resolves to a hex value must match SOME primitive's emitted hex in the primitive `color` group — guarding against the exact "$value contradicts $extensions.modes" defect class this issue documents.
+4. Two sanity/coverage-count checks (`composedColorMap.size > 0`, `>= 50`) so a future primitive addition/removal is visible in test output.
+
+This converts the defect class from silent (no test existed before this fix — see § "Whichever is chosen ..." above) to loud: any future change that reintroduces a second color source, or that regresses `resolveColorValue()` back to the legacy path for an OKLCH-sourced primitive, fails this suite.
+
+### Before / after evidence
+
+`dist/DesignTokens.dtcg.json`, `color.gray300`:
+
+| | Before | After |
+|---|---|---|
+| `$value` | `"rgba(38, 50, 58, 1)"` (≈ near-black) | `"#626975"` (mid-gray — the sRGB hex of `oklch(0.52 0.02 260)`) |
+| `$extensions.designerpunk.oklch` | *(absent)* | `{ "l": 0.52, "c": 0.02, "h": 260 }` |
+
+`dist/DesignTokens.dtcg.json`, `semanticColor.color.icon.navigation.inactive` — the self-contradicting token from the original diagnosis:
+
+- Before: `$value` aliased `{color.gray300}` → resolved to `rgba(38, 50, 58, 1)` (`oklch(0.31 ...)`), while `$extensions.designerpunk.modes.light` said `"oklch(0.52 0.02 260)"`. Two different light-mode colors in one token.
+- After: `$value` still aliases `{color.gray300}`, which now resolves to `#626975` — the hex of `oklch(0.52 0.02 260)` — agreeing with `modes.light`. No more contradiction.
+
+`dist/DesignTokens.figma.json` — `color/gray/300` variable, all three modes:
+
+| | Before | After |
+|---|---|---|
+| light / dark / wcag | `#26323A` (near-black, all three modes) | `#626975` (mid-gray, all three modes) |
+
+### Validation
+
+- `npm test`: 358 suites / 8864 tests passed (includes the new `DTCGColorOklchParity.test.ts`, 112 assertions).
+- `npx tsc --noEmit`: clean.
+- Regeneration ran via `npm run generate:platform-tokens` (drives `src/generators/generateTokenFiles.ts`). `dist/` is untracked; inspected, not committed.
+- No live Figma push was run (`npm run figma:push` untouched, per the open duplicate-collections defect, 2026-03-14 issue) — verification was in-repo only, against the regenerated `dist/DesignTokens.dtcg.json` and `dist/DesignTokens.figma.json`.
+
+### What this does NOT close
+
+- **`src/tokens/ColorTokens.ts` still exists** and is still the live source for the four legacy-only shadow primitives and the Level-2 semantic-override resolution path. Its full deletion (migrating the four shadow primitives to OKLCH) is Spec 115 Phase B — chartered separately, see `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`. This fix does not touch `ColorTokens.ts`.
+- The parity test added here is the seam guard until Phase B lands: it will keep failing loudly if `resolveColorValue()` ever regresses, and it documents exactly which primitives (the four shadow-only ones) still depend on the legacy file.
+- The dead primitive-tier `base`/`wcag` split noted in the original diagnosis (§ "Also inert...") is unaffected by this fix — it was already dead before, and stays dead; it is a `ColorTokens.ts` cleanup concern, in Phase B's scope, not this fix's.
