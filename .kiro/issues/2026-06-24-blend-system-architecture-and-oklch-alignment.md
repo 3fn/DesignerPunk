@@ -48,9 +48,23 @@ A dedicated investigation (likely a small spec), Ada-led, deciding in order:
 2. **Given that answer, how is Layer 2 delivered** — generated-from-source (anti-drift) or hand-authored-with-a-real-cross-platform-consistency-guard?
 3. **Then** the generator code disposition (delete vs rebuild) falls out.
 
+## Audit provenance addendum (2026-09-13 — folded from the Spec 112 completion-claims audit, Peter-directed)
+
+The 2026-09-12 verification-grade audit of Spec 112's completion claims (`.kiro/issues/2026-09-12-spec-112-completion-claims-audit.md`, findings F3 and the task-5.1 entry) supplies the **provenance** for this issue's primary finding, and one new fact. The audit ruled no new work item is needed — this issue owns the work; the record below is what the future Ada-led spec should know about how the gap arose.
+
+**1. The gap is a ticked-but-unshipped Spec 112 claim, not an oversight discovered late.** Spec 112 task 4.2 and parent 4 promised `BlendCalculator.ts` and all three `ThemeAwareBlendUtilities.*` "(reworked)" for OKLCH. None was touched: `BlendCalculator.ts` last changed **2025-10-28** (pre-Spec-112 entirely); the three platform utilities contain zero OKLCH today. `OklchBlendCalculator.ts` was built and tested, then never connected — the same built-not-wired signature as the audit's index case (the DTCG generator, remediated by #150). `task-4-2-completion.md` disclosed a deferral to "the full pipeline integration pass," but that pass only covered `TokenFileGenerator` color emission and never reached blend; parent 4's criteria table then omitted the unmet rows rather than marking them failed (the audit's F7 pattern). Both tasks are ticked.
+
+**2. New fact for decision #2's "drift surface unguarded" story (audit finding on task 5.1)**: the Spec 112 visual-audit suite (63 tests, real and passing) **audits the orphaned `OklchBlendCalculator`, not the live RGB/HSL path components actually use**. So the interaction-state coverage that exists validates an engine production never calls — the drift surface is not merely unguarded by the cross-platform consistency test (§2 above); the guard that appears to exist points at the wrong engine. The future spec's decision #1 should treat that suite as a ready-made contract for the OKLCH path if it is wired, and as dead weight if the RGB/HSL path is instead ratified.
+
+**3. Interaction-state thresholds are designed and ratified-in-code, awaiting delivery**: the orphaned calculator carries defined thresholds (Hover ΔL 0.02–0.05 preserve-chroma; Pressed ΔL 0.05–0.10; Focused ΔC ≥ 0.02; Disabled ΔC ≥ 0.03) with test coverage — decision #1 is not a green-field design question; it is a wire-or-formally-retire question with the design work already banked.
+
+*(Status unchanged: Open — SOON, Ada-led spec, Lina/Leonardo consulted. The audit provenance raises no new urgency — interaction states still render correctly — but the completion-claim history should be cited in the spec's design outline so the rework is scoped against what was actually promised in Spec 112 R6/R11.)*
+
 ## Cross-References
 
 - Spec 117 N1 (doc half handled by P3; code disposition moved here): `.kiro/issues/2026-06-13-blendutilities-not-generated.md`
 - Pattern siblings (orphaned OKLCH path / silent legacy path): Spec 117 (`getOklchMetadata`, rgba-in-index), Spec 118 (config loader)
+- **Spec 112 completion-claims audit (provenance for the primary finding; F3 + task-5.1 entry)**: `.kiro/issues/2026-09-12-spec-112-completion-claims-audit.md`
 - Shadow OKLCH gap (related incomplete-OKLCH-migration finding): `.kiro/issues/2026-06-24-oklch-shadow-color-family-not-migrated.md`
+- Related deferred work with a shadow-primitive dependency (Spec 115 Phase B charter): `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`
 - Public blend API consumed by components: `@3fn/core/blend` → `src/blend/index.ts` (the runtime utilities — note this export points at raw `.ts`, tracked to Spec 118 Increment 3b)
