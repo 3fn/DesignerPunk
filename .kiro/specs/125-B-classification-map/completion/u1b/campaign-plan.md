@@ -24,10 +24,12 @@
 | C6 | no unexpected console output in tests | armed console-fail (root lanes) | LOW (TDS hits are code examples) | Test-Development-Standards | Lina |
 | C7 | never hand-edit 122 generated outputs (edit canonical, regenerate) | 122-diff-guard + 8 sweeps + canonical-vs-truth | MEDIUM (rule mostly lives in generated CLAUDE.md + canonical comments; source-prose presence thin) | steering/process docs (thin), canonical agent headers | Thurgood |
 | C8 | never hand-edit generated token/platform outputs | (gate ownership TBD at classification — Ada adjudicates) | MEDIUM | Token-Governance, Token-Quick-Reference, rosetta docs, DesignerPunk-Integration-Guide | **Ada** |
-| C9 | `no-hardcoded-color` (NAMED INCLUSION — committed classify-only row; no lint task in 125-B) | none armed (a proposed-check row) | rows-only expected | Component-Development-Guide, platform guides (per its eventual row's scope[]) | Ada + Lina |
+| C9 | `no-hardcoded-color` (NAMED INCLUSION — committed classify-only row; no lint task in 125-B) | none armed (a proposed-check row) [^c9-erratum] | rows-only expected | Component-Development-Guide, platform guides (per its eventual row's scope[]) | Ada + Lina |
 | C10 | philosophy-conformance check (U2's logged candidate; red-on-presence) | none armed (candidate row) | rows-only expected | (row-definition work, not prose pruning) | Thurgood |
 | C11 | register rows still `proposed`, state confirmation/advance: record-first-ratification (barrier scope → U3 territory), no-autonomous-token-creation (→ U3 diff-gate territory), inverse-drift (WATCH) | various / U3 | rows-only expected | register + their evidence artifacts | per row |
 | — | **Control-group non-candidates (recorded so the sweep's breadth is auditable)**: "Peter merges on green / never merge your own PR" (NOT gate-owned until U3 — operational teaching, keep); Jest-not-Vitest command forms (pilot precedent: education, keep) | | | | |
+
+[^c9-erratum]: **Erratum (2026-09-14)**: this roster line's "none armed" is superseded — the ratified `no-hardcoded-color` register row (`governance/classification-map.md` § "no-hardcoded-color"; PR #160) found an armed-but-dormant barrier already existed (the 7-component `*.stemma.test.ts` check), not "none armed."
 
 ## 3. Wave cuts (2–4 rules each; sizing rationale per Req 10.4)
 
