@@ -119,7 +119,7 @@
     "audit:tokens:detailed": "node scripts/audit-component-tokens.js -- --detailed",
     "audit:coverage-map": "npx tsx tools/agent-generator/coverage-map.ts",
     "audit:mode-parity": "npx tsx src/validators/ModeParity.ts",
-    "audit:theme-drift": "npx tsx src/tools/ThemeFileGenerator.ts > /tmp/theme-skeleton-check.ts && diff -u src/tokens/themes/dark/SemanticOverrides.ts /tmp/theme-skeleton-check.ts || echo '⚠️  Theme file drift detected — regenerate with: npm run generate:theme-skeleton'",
+    "audit:theme-drift": "npx tsx src/tools/ThemeFileGenerator.ts > /tmp/theme-skeleton-check.ts && diff -u src/tokens/themes/dark/SemanticOverrides.ts /tmp/theme-skeleton-check.ts || (echo '✖ Theme skeleton differs from the live theme file (or the generator failed). READ THE DIFF FIRST: this comparison is comment-sensitive, so hand-written rationale comments in the theme file always show as differences. Regenerating (npm run generate:theme-skeleton) preserves override VALUES but DELETES those comments — only do it for real token additions/removals, and restore the rationale afterward.' && exit 1)",
     "generate:theme-skeleton": "npx tsx src/tools/ThemeFileGenerator.ts",
     "serve": "python3 -m http.server 8001",
     "server": "python3 -m http.server 8001",

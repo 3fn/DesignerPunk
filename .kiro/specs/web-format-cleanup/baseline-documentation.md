@@ -6,6 +6,16 @@
 
 ---
 
+## EXCLUDED from any generated-token-output guard
+
+**Added 2026-09-14 (Ada, disposition F-3).** `baseline-DesignTokens.web.css` in this directory is a **deliberately frozen** snapshot of generator output. Its entire value is that it does **not** regenerate — it is the before-picture this spec's cleanup was measured against.
+
+It is therefore a committed generated token output that any future regenerate-and-diff guard would **RED on**, and "fixing" it by regenerating would destroy the baseline. **Any such guard MUST carry this path as an explicit exclusion.** Recorded in the ratified register row `governance/classification-map.md § "never-hand-edit-generated-token-outputs"` (scope entry: *deliberately-frozen spec fixtures*, `disposition: none`, `check_state: none`); repeated here so it is visible at the file itself.
+
+Related: `.kiro/issues/2026-09-13-docs-tokens-css-stale-published.md` (F-3).
+
+---
+
 ## Generation Details
 
 - **Command**: `npx ts-node src/generators/generateTokenFiles.ts output`

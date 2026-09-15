@@ -194,7 +194,40 @@ function copyTokenCSS() {
   // The token generator outputs JSON objects for color tokens instead of hex values
   // This fix extracts the actual color values from the JSON objects
   fixTokenColorValues(destPath);
-  
+
+  // Publish the same bytes to the GitHub Pages showcase (docs/tokens.css).
+  // This is NOT an optional convenience: docs/tokens.css is served live by GitHub
+  // Pages (legacy branch deploy from main:/docs — verified via the Pages API), and
+  // every showcase layout links it (docs/_layouts/{default,deep-dive}.html:8).
+  // It was previously refreshed by a documented MANUAL copy step, which drifted for
+  // ~6 months and published a color value that had been fixed as a WCAG AA failure.
+  // Making it a build output means any `npm run build` refreshes it and any staleness
+  // shows up as a working-tree diff instead of silently reaching the public site.
+  // @see .kiro/issues/2026-09-13-docs-tokens-css-stale-published.md (F-1)
+  publishTokenCSSToDocs(destPath);
+
+  return true;
+}
+
+/**
+ * Copy the built token CSS to the GitHub Pages showcase directory.
+ *
+ * Non-fatal by design: a missing docs/ directory (e.g. a trimmed checkout) must not
+ * fail the browser build, but it IS reported so the condition is never silent.
+ *
+ * @param {string} sourcePath - Path to the built dist/browser/tokens.css
+ * @returns {boolean} True if the docs copy was written
+ */
+function publishTokenCSSToDocs(sourcePath) {
+  const docsDir = 'docs';
+  if (!fs.existsSync(docsDir)) {
+    console.warn('   ⚠️  docs/ not found — skipped publishing tokens.css to the Pages showcase');
+    return false;
+  }
+
+  const docsTokensPath = path.join(docsDir, 'tokens.css');
+  fs.copyFileSync(sourcePath, docsTokensPath);
+  console.log(`      Published token CSS to: ${docsTokensPath} (GitHub Pages showcase)`);
   return true;
 }
 

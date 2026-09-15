@@ -543,7 +543,9 @@ export const semanticTokenName = {
 
 **Theme sync (Spec 094)**: When creating a new semantic color token, ensure it has appropriate values in all registered themes. Base themes (`dark`, `wcag`, `dark-wcag`) are defined in the DesignerPunk repo. Product themes are registered via `designerpunk.config.ts` and are the product team's responsibility.
 
-New semantic tokens should have a base primitive reference. The theme drift audit (`npm run audit:theme-drift`) catches missing entries in CI.
+New semantic tokens should have a base primitive reference. The theme drift audit (`npm run audit:theme-drift`) can surface missing or orphaned theme entries — but **you must run it by hand**. It is in no CI workflow and no PR check, so nothing catches a missed theme entry for you.
+
+> **Corrected 2026-09-14 (Ada, wave-3 finding O-10).** This line previously claimed the audit "catches missing entries in CI." It does not run in CI — it appears in no `.github/workflows/**` file. Until that line was corrected the audit also could not fail even when run manually: its `package.json` definition ended in `|| echo`, which swallowed the diff's exit code. The exit code now propagates. Two caveats before you trust the result: the comparison is **comment-sensitive**, so hand-written rationale comments in a theme file always register as differences, and the remedy it suggests (`npm run generate:theme-skeleton`) preserves override values but **deletes those comments**. Read the diff; do not regenerate reflexively. Whether this audit should become a real gate is an open enforcement question, not settled here.
 
 ```typescript
 // In a theme's SemanticOverrides:
