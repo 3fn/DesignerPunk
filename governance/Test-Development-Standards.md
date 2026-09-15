@@ -1983,10 +1983,10 @@ console.log(reporter.generateReport());
 ### Quick Reference: Validation Commands
 
 ```bash
-# Linting validation
-npm run lint:stemma                    # Run all Stemma validators
-npm run lint:stemma:naming             # Component naming only
-npm run lint:stemma:tokens             # Token usage only
+# Stemma validation (no standalone lint:stemma* scripts exist — naming and
+# token-usage validators (StemmaComponentNamingValidator, StemmaTokenUsageValidator)
+# are exercised via *.stemma.test.ts files, run through the normal test command below)
+npm test -- --testPathPattern=stemma   # Stemma contract tests only
 
 # Unit tests
 npm test -- path/to/component.test.ts  # Single test file
