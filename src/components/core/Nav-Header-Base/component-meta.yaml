@@ -1,6 +1,5 @@
 purpose: "Structural primitive for top-of-screen navigation bars providing safe area, background, layout regions, and landmark semantics. Internal only — use Nav-Header-Page or Nav-Header-App."
 
-# Derived from family-level guidance (Component-Family-Navigation.md)
 usage:
   when_to_use:
     - "Building a semantic header variant that needs safe area, background, layout regions, and landmark semantics"

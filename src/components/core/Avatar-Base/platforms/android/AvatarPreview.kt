@@ -36,10 +36,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
+// Import DesignTokens for semantic color token references (matches Avatar.android.kt's
+// consumption pattern for non-theme-varying tokens — see Rosetta System Architecture §
+// "Module-Resolution Contract").
+import com.designerpunk.tokens.DesignTokens
 
 // MARK: - Main Preview
 
@@ -316,7 +320,10 @@ private fun ImageExamplesSection() {
                     Text(
                         text = "src ignored",
                         style = MaterialTheme.typography.labelSmall,
-                        color = Color(0xFFFF9800) /* orange400 - warning color */
+                        // color.feedback.warning.text (→ orange400; no dark-mode override,
+                        // see src/tokens/themes/dark/SemanticOverrides.ts) — was a hardcoded
+                        // hex literal duplicating this token's value (2026-09-13 audit finding).
+                        color = DesignTokens.color_feedback_warning_text
                     )
                 }
                 
