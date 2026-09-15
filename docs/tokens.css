@@ -1,6 +1,6 @@
 /**
  * DesignerPunk Design System - Web Tokens
- * Generated: 2026-03-19T16:03:08.659Z
+ * Generated: 2026-09-15T02:35:51.556Z
  * Version: 1.0.0
  * Platform: Web (CSS Custom Properties)
  *
@@ -31,6 +31,26 @@
   /* base × 5 = 0.04 × 5 = 0.20 */
   --blend-500: 0.2;
 
+  /* BLUR TOKENS */
+  /* 0 */
+  --blur-000: 0px;
+  /* base × 0.25 = 16 × 0.25 = 4 */
+  --blur-025: 4px;
+  /* base × 0.5 = 16 × 0.5 = 8 */
+  --blur-050: 8px;
+  /* base × 0.75 = 16 × 0.75 = 12 */
+  --blur-075: 12px;
+  /* base × 1 = 16 × 1 = 16 */
+  --blur-100: 16px;
+  /* base × 1.25 = 16 × 1.25 = 20 */
+  --blur-125: 20px;
+  /* base × 1.5 = 16 × 1.5 = 24 */
+  --blur-150: 24px;
+  /* base × 2 = 16 × 2 = 32 */
+  --blur-200: 32px;
+  /* base × 2.5 = 16 × 2.5 = 40 */
+  --blur-250: 40px;
+
   /* BORDERWIDTH TOKENS */
   /* base × 0 = 1 × 0 = 0 */
   --border-width-000: 0px;
@@ -52,114 +72,167 @@
   --breakpoint-lg: 1440px;
 
   /* COLOR TOKENS */
-  /* Systematic gray scale progression - lightest */
-  --gray-100: rgba(178, 188, 196, 1);
-  /* Systematic gray scale progression - medium-light */
-  --gray-200: rgba(94, 112, 124, 1);
-  /* Systematic gray scale progression - medium */
-  --gray-300: rgba(38, 50, 58, 1);
-  /* Systematic gray scale progression - dark */
-  --gray-400: rgba(24, 34, 40, 1);
-  /* Systematic gray scale progression - darkest */
-  --gray-500: rgba(16, 22, 26, 1);
-  /* Systematic black scale progression - lightest */
-  --black-100: rgba(58, 58, 69, 1);
-  /* Systematic black scale progression - medium */
-  --black-200: rgba(34, 34, 42, 1);
-  /* Systematic black scale progression - dark */
-  --black-300: rgba(10, 10, 15, 1);
-  /* Systematic black scale progression - very dark */
-  --black-400: rgba(6, 6, 10, 1);
-  /* Systematic black scale progression - pure black */
-  --black-500: rgba(0, 0, 0, 1);
-  /* Systematic white scale progression - pure white */
-  --white-100: rgba(255, 255, 255, 1);
-  /* Systematic white scale progression - near white */
-  --white-200: rgba(245, 245, 250, 1);
-  /* Systematic white scale progression - light gray-white */
-  --white-300: rgba(232, 232, 240, 1);
-  /* Systematic white scale progression - medium gray-white */
-  --white-400: rgba(197, 197, 213, 1);
-  /* Systematic white scale progression - dark gray-white */
-  --white-500: rgba(153, 153, 171, 1);
-  /* Systematic yellow scale progression - lightest */
-  --yellow-100: rgba(254, 251, 204, 1);
-  /* Systematic yellow scale progression - medium-light */
-  --yellow-200: rgba(252, 246, 128, 1);
-  /* Systematic yellow scale progression - bright */
-  --yellow-300: rgba(249, 240, 2, 1);
-  /* Systematic yellow scale progression - dark */
-  --yellow-400: rgba(199, 192, 2, 1);
-  /* Systematic yellow scale progression - darkest */
-  --yellow-500: rgba(143, 139, 1, 1);
-  /* Systematic orange scale progression - lightest */
-  --orange-100: rgba(255, 229, 220, 1);
-  /* Systematic orange scale progression - medium-light */
-  --orange-200: rgba(255, 184, 160, 1);
-  /* Systematic orange scale progression - bright */
-  --orange-300: rgba(255, 107, 53, 1);
-  /* Systematic orange scale progression - dark */
-  --orange-400: rgba(204, 85, 41, 1);
-  /* Systematic orange scale progression - darkest */
-  --orange-500: rgba(143, 60, 29, 1);
-  /* Systematic purple scale progression - lightest */
-  --purple-100: rgba(243, 224, 255, 1);
-  /* Systematic purple scale progression - medium-light */
-  --purple-200: rgba(217, 138, 255, 1);
-  /* Systematic purple scale progression - primary brand */
-  --purple-300: rgba(176, 38, 255, 1);
-  /* Systematic purple scale progression - dark */
-  --purple-400: rgba(141, 30, 204, 1);
-  /* Systematic purple scale progression - darkest */
-  --purple-500: rgba(99, 21, 143, 1);
-  /* Systematic pink scale progression - lightest */
-  --pink-100: rgba(255, 218, 232, 1);
-  /* Systematic pink scale progression - medium-light */
-  --pink-200: rgba(255, 130, 180, 1);
-  /* Systematic pink scale progression - base */
-  --pink-300: rgba(255, 42, 109, 1);
-  /* Systematic pink scale progression - dark */
-  --pink-400: rgba(204, 34, 87, 1);
-  /* Systematic pink scale progression - darkest */
-  --pink-500: rgba(128, 21, 55, 1);
-  /* Systematic green scale progression - lightest */
-  --green-100: rgba(230, 255, 245, 1);
-  /* Systematic green scale progression - medium-light */
-  --green-200: rgba(128, 255, 187, 1);
-  /* Systematic green scale progression - bright */
-  --green-300: rgba(51, 255, 153, 1);
-  /* Systematic green scale progression - strong */
-  --green-400: rgba(0, 255, 136, 1);
-  /* Systematic green scale progression - darkest/glow */
-  --green-500: rgba(0, 204, 110, 1);
-  /* Systematic cyan scale progression - lightest */
-  --cyan-100: rgba(204, 251, 255, 1);
-  /* Systematic cyan scale progression - medium-light */
-  --cyan-200: rgba(128, 246, 255, 1);
-  /* Systematic cyan scale progression - tech primary */
-  --cyan-300: rgba(0, 240, 255, 1);
-  /* Systematic cyan scale progression - dark */
-  --cyan-400: rgba(0, 192, 204, 1);
-  /* Systematic cyan scale progression - darkest */
-  --cyan-500: rgba(0, 136, 143, 1);
-  /* Systematic teal scale progression - lightest */
-  --teal-100: rgba(217, 232, 234, 1);
-  /* Systematic teal scale progression - medium-light */
-  --teal-200: rgba(77, 155, 165, 1);
-  /* Systematic teal scale progression - secondary UI */
-  --teal-300: rgba(26, 83, 92, 1);
-  /* Systematic teal scale progression - dark */
-  --teal-400: rgba(21, 66, 74, 1);
-  /* Systematic teal scale progression - darkest */
-  --teal-500: rgba(15, 46, 51, 1);
-  /* Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic */
-  --shadow-black-100: rgba(0, 0, 0, 1);
-  /* Systematic shadow color family - blue-tinted gray for sunrise/sunset lighting - mode-agnostic */
-  --shadow-blue-100: rgba(20, 25, 40, 1);
-  /* Systematic shadow color family - warm-tinted gray for cool lighting environments - mode-agnostic */
-  --shadow-orange-100: rgba(25, 20, 15, 1);
-  /* Systematic shadow color family - blue-gray for ambient/overcast conditions - mode-agnostic */
-  --shadow-gray-100: rgba(15, 20, 30, 1);
+  --pink-hue: 10;
+  --pink-l100: 0.92;
+  --pink-l200: 0.76;
+  --pink-l300: 0.65;
+  --pink-l400: 0.55;
+  --pink-l500: 0.4;
+  --pink-c100: 0.045;
+  --pink-c200: 0.16;
+  --pink-c300: 0.242;
+  --pink-c400: 0.203;
+  --pink-c500: 0.141;
+  --orange-hue: 39.5;
+  --orange-l100: 0.94;
+  --orange-l200: 0.84;
+  --orange-l300: 0.7;
+  --orange-l400: 0.6;
+  --orange-l500: 0.46;
+  --orange-c100: 0.031;
+  --orange-c200: 0.089;
+  --orange-c300: 0.193;
+  --orange-c400: 0.162;
+  --orange-c500: 0.121;
+  --yellow-hue: 107;
+  --yellow-l100: 0.98;
+  --yellow-l200: 0.9;
+  --yellow-l300: 0.8;
+  --yellow-l400: 0.68;
+  --yellow-l500: 0.56;
+  --yellow-c100: 0.061;
+  --yellow-c200: 0.14;
+  --yellow-c300: 0.2;
+  --yellow-c400: 0.169;
+  --yellow-c500: 0.133;
+  --green-hue: 154;
+  --green-l100: 0.97;
+  --green-l200: 0.88;
+  --green-l300: 0.78;
+  --green-l400: 0.66;
+  --green-l500: 0.54;
+  --green-c100: 0.029;
+  --green-c200: 0.149;
+  --green-c300: 0.208;
+  --green-c400: 0.18;
+  --green-c500: 0.14;
+  --cyan-hue: 202.5;
+  --cyan-l100: 0.96;
+  --cyan-l200: 0.87;
+  --cyan-l300: 0.76;
+  --cyan-l400: 0.64;
+  --cyan-l500: 0.52;
+  --cyan-c100: 0.048;
+  --cyan-c200: 0.108;
+  --cyan-c300: 0.148;
+  --cyan-c400: 0.125;
+  --cyan-c500: 0.097;
+  --teal-hue: 209;
+  --teal-l100: 0.92;
+  --teal-l200: 0.72;
+  --teal-l300: 0.52;
+  --teal-l400: 0.38;
+  --teal-l500: 0.28;
+  --teal-c100: 0.035;
+  --teal-c200: 0.1;
+  --teal-c300: 0.08;
+  --teal-c400: 0.06;
+  --teal-c500: 0.045;
+  --purple-hue: 310;
+  --purple-l100: 0.93;
+  --purple-l200: 0.76;
+  --purple-l300: 0.6;
+  --purple-l400: 0.51;
+  --purple-l500: 0.4;
+  --purple-c100: 0.046;
+  --purple-c200: 0.179;
+  --purple-c300: 0.286;
+  --purple-c400: 0.241;
+  --purple-c500: 0.183;
+  --neutral-hue: 260;
+  --white-hue: 260;
+  --white-l100: 1;
+  --white-l200: 0.95;
+  --white-l300: 0.9;
+  --white-l400: 0.85;
+  --white-l500: 0.8;
+  --white-c100: 0;
+  --white-c200: 0.006;
+  --white-c300: 0.01;
+  --white-c400: 0.013;
+  --white-c500: 0.015;
+  --gray-hue: 260;
+  --gray-l100: 0.72;
+  --gray-l200: 0.62;
+  --gray-l300: 0.52;
+  --gray-l400: 0.42;
+  --gray-l500: 0.32;
+  --gray-c100: 0.018;
+  --gray-c200: 0.02;
+  --gray-c300: 0.02;
+  --gray-c400: 0.018;
+  --gray-c500: 0.015;
+  --black-hue: 260;
+  --black-l100: 0.28;
+  --black-l200: 0.21;
+  --black-l300: 0.14;
+  --black-l400: 0.07;
+  --black-l500: 0;
+  --black-c100: 0.013;
+  --black-c200: 0.01;
+  --black-c300: 0.008;
+  --black-c400: 0.004;
+  --black-c500: 0;
+  --pink-100: oklch(0.92 0.045 10);
+  --pink-200: oklch(0.76 0.16 10);
+  --pink-300: oklch(0.65 0.242 10);
+  --pink-400: oklch(0.55 0.203 10);
+  --pink-500: oklch(0.4 0.141 10);
+  --orange-100: oklch(0.94 0.031 39.5);
+  --orange-200: oklch(0.84 0.089 39.5);
+  --orange-300: oklch(0.7 0.193 39.5);
+  --orange-400: oklch(0.6 0.162 39.5);
+  --orange-500: oklch(0.46 0.121 39.5);
+  --yellow-100: oklch(0.98 0.061 107);
+  --yellow-200: oklch(0.9 0.14 107);
+  --yellow-300: oklch(0.8 0.2 107);
+  --yellow-400: oklch(0.68 0.169 107);
+  --yellow-500: oklch(0.56 0.133 107);
+  --green-100: oklch(0.97 0.029 154);
+  --green-200: oklch(0.88 0.149 154);
+  --green-300: oklch(0.78 0.208 154);
+  --green-400: oklch(0.66 0.18 154);
+  --green-500: oklch(0.54 0.14 154);
+  --cyan-100: oklch(0.96 0.048 202.5);
+  --cyan-200: oklch(0.87 0.108 202.5);
+  --cyan-300: oklch(0.76 0.148 202.5);
+  --cyan-400: oklch(0.64 0.125 202.5);
+  --cyan-500: oklch(0.52 0.097 202.5);
+  --teal-100: oklch(0.92 0.035 209);
+  --teal-200: oklch(0.72 0.1 209);
+  --teal-300: oklch(0.52 0.08 209);
+  --teal-400: oklch(0.38 0.06 209);
+  --teal-500: oklch(0.28 0.045 209);
+  --purple-100: oklch(0.93 0.046 310);
+  --purple-200: oklch(0.76 0.179 310);
+  --purple-300: oklch(0.6 0.286 310);
+  --purple-400: oklch(0.51 0.241 310);
+  --purple-500: oklch(0.4 0.183 310);
+  --white-100: oklch(1 0 260);
+  --white-200: oklch(0.95 0.006 260);
+  --white-300: oklch(0.9 0.01 260);
+  --white-400: oklch(0.85 0.013 260);
+  --white-500: oklch(0.8 0.015 260);
+  --gray-100: oklch(0.72 0.018 260);
+  --gray-200: oklch(0.62 0.02 260);
+  --gray-300: oklch(0.52 0.02 260);
+  --gray-400: oklch(0.42 0.018 260);
+  --gray-500: oklch(0.32 0.015 260);
+  --black-100: oklch(0.28 0.013 260);
+  --black-200: oklch(0.21 0.01 260);
+  --black-300: oklch(0.14 0.008 260);
+  --black-400: oklch(0.07 0.004 260);
+  --black-500: oklch(0 0 260);
 
   /* DENSITY TOKENS */
   /* base × 0.75 = 1.0 × 0.75 = 0.75 */
@@ -175,11 +248,11 @@
   /* N/A - Categorical value */
   --font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   /* N/A - Categorical value */
-  --font-family-mono: SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-family-mono: "Commit Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace;
   /* N/A - Categorical value */
   --font-family-display: Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   /* N/A - Categorical value */
-  --font-family-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-body: Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* FONTSIZE TOKENS */
   /* base ÷ (1.125²) = 16 ÷ 1.266 ≈ 13 */
@@ -226,16 +299,6 @@
   --font-weight-900: 900;
 
   /* GLOW TOKENS */
-  /* base × 1 = 8 × 1 = 8 */
-  --glow-blur-100: 8px;
-  /* base × 2 = 8 × 2 = 16 */
-  --glow-blur-200: 16px;
-  /* base × 3 = 8 × 3 = 24 */
-  --glow-blur-300: 24px;
-  /* base × 4 = 8 × 4 = 32 */
-  --glow-blur-400: 32px;
-  /* base × 5 = 8 × 5 = 40 */
-  --glow-blur-500: 40px;
   /* base × 1 = 0.8 × 1 = 0.8 */
   --glow-opacity-100: 0.8;
   /* base × 0.75 = 0.8 × 0.75 = 0.6 */
@@ -368,18 +431,6 @@
   --shadow-offset-y-400: 16px;
   /* base × 0 = 4 × 0 = 0 */
   --shadow-offset-y-000: 0px;
-  /* base × 0 = 4 × 0 = 0 */
-  --shadow-blur-none: 0px;
-  /* base × 1 = 4 × 1 = 4 */
-  --shadow-blur-hard: 4px;
-  /* base × 3 = 4 × 3 = 12 */
-  --shadow-blur-moderate: 12px;
-  /* base × 5 = 4 × 5 = 20 */
-  --shadow-blur-soft: 20px;
-  /* base × 4 = 4 × 4 = 16 */
-  --shadow-blur-depth-200: 16px;
-  /* base × 6 = 4 × 6 = 24 */
-  --shadow-blur-depth-300: 24px;
   /* base × 0 = 0.3 × 0 = 0 */
   --shadow-opacity-none: 0;
   /* base × 1.33 = 0.3 × 1.33 ≈ 0.4 */
@@ -392,6 +443,36 @@
   --shadow-opacity-depth-200: 0.35;
   /* base × 1.33 = 0.3 × 1.33 ≈ 0.4 */
   --shadow-opacity-depth-300: 0.4;
+
+  /* SIZING TOKENS */
+  /* base × 0.5 = 8 × 0.5 = 4 */
+  --size-050: 4px;
+  /* base × 1 = 8 × 1 = 8 */
+  --size-100: 8px;
+  /* base × 1.5 = 8 × 1.5 = 12 */
+  --size-150: 12px;
+  /* base × 2 = 8 × 2 = 16 */
+  --size-200: 16px;
+  /* base × 2.5 = 8 × 2.5 = 20 */
+  --size-250: 20px;
+  /* base × 3 = 8 × 3 = 24 */
+  --size-300: 24px;
+  /* base × 4 = 8 × 4 = 32 */
+  --size-400: 32px;
+  /* base × 5 = 8 × 5 = 40 */
+  --size-500: 40px;
+  /* base × 6 = 8 × 6 = 48 */
+  --size-600: 48px;
+  /* base × 7 = 8 × 7 = 56 */
+  --size-700: 56px;
+  /* base × 8 = 8 × 8 = 64 */
+  --size-800: 64px;
+  /* base × 9 = 8 × 9 = 72 */
+  --size-900: 72px;
+  /* base × 10 = 8 × 10 = 80 */
+  --size-1000: 80px;
+  /* base × 16 = 8 × 16 = 128 */
+  --size-1600: 128px;
 
   /* SPACING TOKENS */
   /* base × 0 = 8 × 0 = 0 */
@@ -440,68 +521,68 @@
   Use these for UI development
    * ============================================ */
 
-  --color-feedback-success-text: rgba(0, 255, 136, 1);
-  --color-feedback-success-background: rgba(230, 255, 245, 1);
-  --color-feedback-success-border: rgba(0, 255, 136, 1);
-  --color-feedback-error-text: rgba(204, 34, 87, 1);
-  --color-feedback-error-background: rgba(255, 218, 232, 1);
-  --color-feedback-error-border: rgba(204, 34, 87, 1);
-  --color-feedback-warning-text: rgba(204, 85, 41, 1);
-  --color-feedback-warning-background: rgba(255, 229, 220, 1);
-  --color-feedback-warning-border: rgba(204, 85, 41, 1);
-  --color-feedback-info-text: rgba(21, 66, 74, 1);
-  --color-feedback-info-background: rgba(217, 232, 234, 1);
-  --color-feedback-info-border: rgba(21, 66, 74, 1);
-  --color-feedback-select-text-rest: rgba(0, 192, 204, 1);
-  --color-feedback-select-text-default: rgba(94, 112, 124, 1);
-  --color-feedback-select-background-rest: rgba(204, 251, 255, 1);
-  --color-feedback-select-background-default: rgba(178, 188, 196, 1);
-  --color-feedback-select-border-rest: rgba(0, 192, 204, 1);
-  --color-feedback-select-border-default: rgba(94, 112, 124, 1);
-  --color-feedback-notification-background: rgba(204, 34, 87, 1);
-  --color-feedback-notification-text: rgba(255, 255, 255, 1);
-  --color-identity-human: rgba(255, 107, 53, 1);
-  --color-identity-agent: rgba(77, 155, 165, 1);
-  --color-action-primary: rgba(0, 240, 255, 1);
-  --color-action-secondary: rgba(24, 34, 40, 1);
-  --color-action-navigation: light-dark(rgba(0, 136, 143, 1), rgba(204, 251, 255, 1));
-  --color-attention: rgba(199, 192, 2, 1);
-  --color-highlight: rgba(249, 240, 2, 1);
-  --color-tech: rgba(141, 30, 204, 1);
-  --color-data: rgba(176, 38, 255, 1);
-  --color-text-default: rgba(38, 50, 58, 1);
-  --color-text-muted: rgba(94, 112, 124, 1);
-  --color-text-subtle: rgba(178, 188, 196, 1);
-  --color-contrast-on-light: rgba(0, 0, 0, 1);
-  --color-contrast-on-dark: rgba(255, 255, 255, 1);
-  --color-contrast-on-action: rgba(0, 0, 0, 1);
-  --color-structure-canvas: light-dark(rgba(255, 255, 255, 1), rgba(24, 34, 40, 1));
-  --color-structure-surface: rgba(245, 245, 250, 1);
-  --color-structure-surface-primary: rgba(245, 245, 250, 1);
-  --color-structure-surface-secondary: rgba(232, 232, 240, 1);
-  --color-structure-surface-tertiary: rgba(197, 197, 213, 1);
-  --color-structure-border: rgba(178, 188, 196, 1);
-  --color-structure-border-subtle: light-dark(rgba(178, 188, 196, 0.48), rgba(16, 22, 26, 0.48));
-  --color-background-primary-subtle: light-dark(rgba(204, 251, 255, 1), rgba(0, 136, 143, 1));
-  --color-icon-default: rgba(94, 112, 124, 1);
-  --color-icon-navigation-inactive: light-dark(rgba(38, 50, 58, 1), rgba(178, 188, 196, 1));
-  --color-print-default: rgba(58, 58, 69, 1);
-  --glow-neon-purple: rgba(99, 21, 143, 1);
-  --glow-neon-cyan: rgba(0, 136, 143, 1);
-  --glow-neon-yellow: rgba(143, 139, 1, 1);
-  --glow-neon-green: rgba(0, 204, 110, 1);
-  --glow-neon-pink: rgba(128, 21, 55, 1);
-  --color-progress-current-background: rgba(0, 240, 255, 1);
-  --color-progress-current-text: rgba(0, 192, 204, 1);
-  --color-progress-pending-background: rgba(232, 232, 240, 1);
-  --color-progress-pending-text: rgba(38, 50, 58, 1);
-  --color-progress-pending-connector: rgba(245, 245, 250, 1);
-  --color-progress-completed-background: rgba(230, 255, 245, 1);
-  --color-progress-completed-text: rgba(0, 255, 136, 1);
-  --color-progress-completed-connector: rgba(230, 255, 245, 1);
-  --color-progress-error-background: rgba(255, 218, 232, 1);
-  --color-progress-error-text: rgba(204, 34, 87, 1);
-  --color-scrim-standard: rgba(0, 0, 0, 0.8);
+  --color-feedback-success-text: light-dark(oklch(0.54 0.14 154), oklch(0.78 0.208 154));
+  --color-feedback-success-background: oklch(0.97 0.029 154);
+  --color-feedback-success-border: oklch(0.66 0.18 154);
+  --color-feedback-error-text: oklch(0.55 0.203 10);
+  --color-feedback-error-background: oklch(0.92 0.045 10);
+  --color-feedback-error-border: oklch(0.55 0.203 10);
+  --color-feedback-warning-text: oklch(0.6 0.162 39.5);
+  --color-feedback-warning-background: oklch(0.94 0.031 39.5);
+  --color-feedback-warning-border: oklch(0.6 0.162 39.5);
+  --color-feedback-info-text: oklch(0.38 0.06 209);
+  --color-feedback-info-background: oklch(0.92 0.035 209);
+  --color-feedback-info-border: oklch(0.38 0.06 209);
+  --color-feedback-select-text-rest: oklch(0.64 0.125 202.5);
+  --color-feedback-select-text-default: oklch(0.62 0.02 260);
+  --color-feedback-select-background-rest: oklch(0.96 0.048 202.5);
+  --color-feedback-select-background-default: oklch(0.72 0.018 260);
+  --color-feedback-select-border-rest: oklch(0.64 0.125 202.5);
+  --color-feedback-select-border-default: oklch(0.62 0.02 260);
+  --color-feedback-notification-background: oklch(0.55 0.203 10);
+  --color-feedback-notification-text: oklch(1 0 260);
+  --color-identity-human: oklch(0.7 0.193 39.5);
+  --color-identity-agent: oklch(0.72 0.1 209);
+  --color-action-primary: oklch(0.76 0.148 202.5);
+  --color-action-secondary: oklch(0.42 0.018 260);
+  --color-action-navigation: light-dark(oklch(0.52 0.097 202.5), oklch(0.96 0.048 202.5));
+  --color-attention: oklch(0.68 0.169 107);
+  --color-highlight: oklch(0.8 0.2 107);
+  --color-tech: oklch(0.51 0.241 310);
+  --color-data: oklch(0.6 0.286 310);
+  --color-text-default: light-dark(oklch(0.52 0.02 260), oklch(1 0 260));
+  --color-text-muted: light-dark(oklch(0.62 0.02 260), oklch(0.9 0.01 260));
+  --color-text-subtle: light-dark(oklch(0.72 0.018 260), oklch(0.8 0.015 260));
+  --color-contrast-on-light: oklch(0 0 260);
+  --color-contrast-on-dark: oklch(1 0 260);
+  --color-contrast-on-action: oklch(0 0 260);
+  --color-structure-canvas: light-dark(oklch(1 0 260), oklch(0.42 0.018 260));
+  --color-structure-surface: oklch(0.95 0.006 260);
+  --color-structure-surface-primary: oklch(0.95 0.006 260);
+  --color-structure-surface-secondary: oklch(0.9 0.01 260);
+  --color-structure-surface-tertiary: oklch(0.85 0.013 260);
+  --color-structure-border: oklch(0.72 0.018 260);
+  --color-structure-border-subtle: light-dark(oklch(0.72 0.018 260 / 0.48), oklch(0.32 0.015 260 / 0.48));
+  --color-background-primary-subtle: light-dark(oklch(0.96 0.048 202.5), oklch(0.52 0.097 202.5));
+  --color-icon-default: oklch(0.62 0.02 260);
+  --color-icon-navigation-inactive: light-dark(oklch(0.52 0.02 260), oklch(0.72 0.018 260));
+  --color-print-default: oklch(0.28 0.013 260);
+  --glow-neon-purple: oklch(0.4 0.183 310);
+  --glow-neon-cyan: oklch(0.52 0.097 202.5);
+  --glow-neon-yellow: oklch(0.56 0.133 107);
+  --glow-neon-green: oklch(0.78 0.208 154);
+  --glow-neon-pink: oklch(0.4 0.141 10);
+  --color-progress-current-background: oklch(0.76 0.148 202.5);
+  --color-progress-current-text: oklch(0.64 0.125 202.5);
+  --color-progress-pending-background: oklch(0.9 0.01 260);
+  --color-progress-pending-text: oklch(0.52 0.02 260);
+  --color-progress-pending-connector: oklch(0.95 0.006 260);
+  --color-progress-completed-background: oklch(0.97 0.029 154);
+  --color-progress-completed-text: oklch(0.66 0.18 154);
+  --color-progress-completed-connector: oklch(0.97 0.029 154);
+  --color-progress-error-background: oklch(0.92 0.045 10);
+  --color-progress-error-text: oklch(0.55 0.203 10);
+  --color-scrim-standard: oklch(0 0 260 / 0.8);
   --typography-body-sm-font-size: var(--font-size-075);
   --typography-body-sm-line-height: var(--line-height-075);
   --typography-body-sm-font-family: var(--font-family-body);
@@ -624,91 +705,91 @@
   --typography-code-lg-letter-spacing: var(--letter-spacing-100);
   --shadow-none-offset-x: var(--shadow-offset-x-000);
   --shadow-none-offset-y: var(--shadow-offset-y-000);
-  --shadow-none-blur: var(--shadow-blur-none);
+  --shadow-none-blur: var(--blur-000);
   --shadow-none-opacity: var(--shadow-opacity-none);
   --shadow-none-color: var(--shadow-black-100);
   --shadow-none: var(--shadow-none-offset-x) var(--shadow-none-offset-y) var(--shadow-none-blur) rgba(0, 0, 0, var(--shadow-none-opacity));
   --shadow-container-offset-x: var(--shadow-offset-x-000);
   --shadow-container-offset-y: var(--shadow-offset-y-100);
-  --shadow-container-blur: var(--shadow-blur-moderate);
+  --shadow-container-blur: var(--blur-075);
   --shadow-container-opacity: var(--shadow-opacity-moderate);
   --shadow-container-color: var(--shadow-black-100);
   --shadow-container: var(--shadow-container-offset-x) var(--shadow-container-offset-y) var(--shadow-container-blur) rgba(0, 0, 0, var(--shadow-container-opacity));
   --shadow-navigation-offset-x: var(--shadow-offset-x-000);
   --shadow-navigation-offset-y: var(--shadow-offset-y-100);
-  --shadow-navigation-blur: var(--shadow-blur-soft);
+  --shadow-navigation-blur: var(--blur-125);
   --shadow-navigation-opacity: var(--shadow-opacity-soft);
   --shadow-navigation-color: var(--shadow-black-100);
   --shadow-navigation: var(--shadow-navigation-offset-x) var(--shadow-navigation-offset-y) var(--shadow-navigation-blur) rgba(0, 0, 0, var(--shadow-navigation-opacity));
   --shadow-dropdown-offset-x: var(--shadow-offset-x-000);
   --shadow-dropdown-offset-y: var(--shadow-offset-y-100);
-  --shadow-dropdown-blur: var(--shadow-blur-moderate);
+  --shadow-dropdown-blur: var(--blur-075);
   --shadow-dropdown-opacity: var(--shadow-opacity-moderate);
   --shadow-dropdown-color: var(--shadow-black-100);
   --shadow-dropdown: var(--shadow-dropdown-offset-x) var(--shadow-dropdown-offset-y) var(--shadow-dropdown-blur) rgba(0, 0, 0, var(--shadow-dropdown-opacity));
   --shadow-modal-offset-x: var(--shadow-offset-x-000);
   --shadow-modal-offset-y: var(--shadow-offset-y-200);
-  --shadow-modal-blur: var(--shadow-blur-depth-200);
+  --shadow-modal-blur: var(--blur-100);
   --shadow-modal-opacity: var(--shadow-opacity-depth-200);
   --shadow-modal-color: var(--shadow-black-100);
   --shadow-modal: var(--shadow-modal-offset-x) var(--shadow-modal-offset-y) var(--shadow-modal-blur) rgba(0, 0, 0, var(--shadow-modal-opacity));
   --shadow-toast-offset-x: var(--shadow-offset-x-000);
   --shadow-toast-offset-y: var(--shadow-offset-y-300);
-  --shadow-toast-blur: var(--shadow-blur-depth-300);
+  --shadow-toast-blur: var(--blur-150);
   --shadow-toast-opacity: var(--shadow-opacity-depth-300);
   --shadow-toast-color: var(--shadow-black-100);
   --shadow-toast: var(--shadow-toast-offset-x) var(--shadow-toast-offset-y) var(--shadow-toast-blur) rgba(0, 0, 0, var(--shadow-toast-opacity));
   --shadow-tooltip-offset-x: var(--shadow-offset-x-000);
   --shadow-tooltip-offset-y: var(--shadow-offset-y-300);
-  --shadow-tooltip-blur: var(--shadow-blur-depth-300);
+  --shadow-tooltip-blur: var(--blur-150);
   --shadow-tooltip-opacity: var(--shadow-opacity-depth-300);
   --shadow-tooltip-color: var(--shadow-black-100);
   --shadow-tooltip: var(--shadow-tooltip-offset-x) var(--shadow-tooltip-offset-y) var(--shadow-tooltip-blur) rgba(0, 0, 0, var(--shadow-tooltip-opacity));
   --shadow-fab-offset-x: var(--shadow-offset-x-300);
   --shadow-fab-offset-y: var(--shadow-offset-y-400);
-  --shadow-fab-blur: var(--shadow-blur-hard);
+  --shadow-fab-blur: var(--blur-025);
   --shadow-fab-opacity: var(--shadow-opacity-hard);
   --shadow-fab-color: var(--shadow-blue-100);
   --shadow-fab: var(--shadow-fab-offset-x) var(--shadow-fab-offset-y) var(--shadow-fab-blur) rgba(0, 0, 0, var(--shadow-fab-opacity));
   --shadow-hover-offset-x: var(--shadow-offset-x-000);
   --shadow-hover-offset-y: var(--shadow-offset-y-100);
-  --shadow-hover-blur: var(--shadow-blur-soft);
+  --shadow-hover-blur: var(--blur-125);
   --shadow-hover-opacity: var(--shadow-opacity-soft);
   --shadow-hover-color: var(--shadow-black-100);
   --shadow-hover: var(--shadow-hover-offset-x) var(--shadow-hover-offset-y) var(--shadow-hover-blur) rgba(0, 0, 0, var(--shadow-hover-opacity));
   --shadow-navigation-indicator-offset-x: var(--shadow-offset-x-000);
   --shadow-navigation-indicator-offset-y: var(--shadow-offset-y-000);
-  --shadow-navigation-indicator-blur: var(--shadow-blur-hard);
+  --shadow-navigation-indicator-blur: var(--blur-025);
   --shadow-navigation-indicator-opacity: var(--shadow-opacity-soft);
   --shadow-navigation-indicator-color: var(--shadow-black-100);
   --shadow-navigation-indicator: var(--shadow-navigation-indicator-offset-x) var(--shadow-navigation-indicator-offset-y) var(--shadow-navigation-indicator-blur) rgba(0, 0, 0, var(--shadow-navigation-indicator-opacity));
   --shadow-sunrise-offset-x: var(--shadow-offset-x-n-300);
   --shadow-sunrise-offset-y: var(--shadow-offset-y-200);
-  --shadow-sunrise-blur: var(--shadow-blur-moderate);
+  --shadow-sunrise-blur: var(--blur-075);
   --shadow-sunrise-opacity: var(--shadow-opacity-moderate);
   --shadow-sunrise-color: var(--shadow-blue-100);
   --shadow-sunrise: var(--shadow-sunrise-offset-x) var(--shadow-sunrise-offset-y) var(--shadow-sunrise-blur) rgba(0, 0, 0, var(--shadow-sunrise-opacity));
   --shadow-morning-offset-x: var(--shadow-offset-x-n-150);
   --shadow-morning-offset-y: var(--shadow-offset-y-200);
-  --shadow-morning-blur: var(--shadow-blur-moderate);
+  --shadow-morning-blur: var(--blur-075);
   --shadow-morning-opacity: var(--shadow-opacity-moderate);
   --shadow-morning-color: var(--shadow-black-100);
   --shadow-morning: var(--shadow-morning-offset-x) var(--shadow-morning-offset-y) var(--shadow-morning-blur) rgba(0, 0, 0, var(--shadow-morning-opacity));
   --shadow-noon-offset-x: var(--shadow-offset-x-000);
   --shadow-noon-offset-y: var(--shadow-offset-y-200);
-  --shadow-noon-blur: var(--shadow-blur-moderate);
+  --shadow-noon-blur: var(--blur-075);
   --shadow-noon-opacity: var(--shadow-opacity-moderate);
   --shadow-noon-color: var(--shadow-black-100);
   --shadow-noon: var(--shadow-noon-offset-x) var(--shadow-noon-offset-y) var(--shadow-noon-blur) rgba(0, 0, 0, var(--shadow-noon-opacity));
   --shadow-dusk-offset-x: var(--shadow-offset-x-150);
   --shadow-dusk-offset-y: var(--shadow-offset-y-200);
-  --shadow-dusk-blur: var(--shadow-blur-moderate);
+  --shadow-dusk-blur: var(--blur-075);
   --shadow-dusk-opacity: var(--shadow-opacity-moderate);
   --shadow-dusk-color: var(--shadow-black-100);
   --shadow-dusk: var(--shadow-dusk-offset-x) var(--shadow-dusk-offset-y) var(--shadow-dusk-blur) rgba(0, 0, 0, var(--shadow-dusk-opacity));
   --shadow-sunset-offset-x: var(--shadow-offset-x-300);
   --shadow-sunset-offset-y: var(--shadow-offset-y-200);
-  --shadow-sunset-blur: var(--shadow-blur-moderate);
+  --shadow-sunset-blur: var(--blur-075);
   --shadow-sunset-opacity: var(--shadow-opacity-moderate);
   --shadow-sunset-color: var(--shadow-blue-100);
   --shadow-sunset: var(--shadow-sunset-offset-x) var(--shadow-sunset-offset-y) var(--shadow-sunset-blur) rgba(0, 0, 0, var(--shadow-sunset-opacity));
@@ -751,19 +832,7 @@
   /* WCAG 2.4.7 Focus Visible */
   --accessibility-focus-width: var(--border-width-200);
   /* WCAG 2.4.7 Focus Visible */
-  --accessibility-focus-color: rgba(0, 240, 255, 1);
-  --motion-float-label-duration: var(--duration-250);
-  --motion-float-label-easing: var(--easing-standard);
-  --motion-focus-transition-duration: var(--duration-150);
-  --motion-focus-transition-easing: var(--easing-standard);
-  --motion-button-press-duration: var(--duration-150);
-  --motion-button-press-easing: var(--easing-accelerate);
-  --motion-modal-slide-duration: var(--duration-350);
-  --motion-modal-slide-easing: var(--easing-decelerate);
-  --motion-selection-transition-duration: var(--duration-250);
-  --motion-selection-transition-easing: var(--easing-standard);
-  --motion-settle-transition-duration: var(--duration-350);
-  --motion-settle-transition-easing: var(--easing-decelerate);
+  --accessibility-focus-color: oklch(0.76 0.148 202.5);
   --border-none: var(--border-width-000);
   --border-default: var(--border-width-100);
   --border-emphasis: var(--border-width-200);
@@ -861,13 +930,13 @@
 
 /* WCAG Theme: Semantic token overrides from theme files (Spec 080 Phase 2) */
 :root[data-theme="wcag"] {
-  --color-feedback-info-text: rgba(99, 21, 143, 1);
-  --color-feedback-info-background: rgba(243, 224, 255, 1);
-  --color-feedback-info-border: rgba(99, 21, 143, 1);
-  --color-action-primary: light-dark(rgba(26, 83, 92, 1), rgba(0, 240, 255, 1));
-  --color-action-navigation: light-dark(rgba(15, 46, 51, 1), rgba(217, 232, 234, 1));
-  --color-contrast-on-action: rgba(255, 255, 255, 1);
-  --color-background-primary-subtle: light-dark(rgba(217, 232, 234, 1), rgba(15, 46, 51, 1));
+  --color-feedback-info-text: oklch(0.4 0.183 310);
+  --color-feedback-info-background: oklch(0.93 0.046 310);
+  --color-feedback-info-border: oklch(0.4 0.183 310);
+  --color-action-primary: oklch(0.52 0.08 209);
+  --color-action-navigation: light-dark(oklch(0.28 0.045 209), oklch(0.92 0.035 209));
+  --color-contrast-on-action: oklch(1 0 260);
+  --color-background-primary-subtle: light-dark(oklch(0.92 0.035 209), oklch(0.28 0.045 209));
 
 
   /* ============================================
@@ -877,18 +946,18 @@
 
 
   /* Avatar Component Tokens */
-  /* Extra small avatar (24px = 3× base) for inline mentions and compact UI contexts where minimal visual footprint is needed */
-  --avatar-size-xs: var(--space-300);
-  /* Small avatar (32px = 4× base) for list items and secondary UI contexts with moderate visual presence */
-  --avatar-size-sm: var(--space-400);
-  /* Medium avatar (40px = 5× base) as the default size, providing balanced visual weight for most UI contexts */
-  --avatar-size-md: var(--space-500);
-  /* Large avatar (48px = 6× base) for profile headers and primary UI contexts requiring prominent visual presence */
-  --avatar-size-lg: var(--space-600);
-  /* Extra large avatar (80px = 10× base) for profile pages and hero sections where avatar is a focal point */
-  --avatar-size-xl: 80;
-  /* Extra extra large avatar (128px = 16× base) for hero profiles and full-page profile views requiring maximum visual impact */
-  --avatar-size-xxl: 128;
+  /* Extra small avatar (24px). Compact contexts — inline mentions, dense lists. */
+  --avatar-size-xs: var(--size-300);
+  /* Small avatar (32px). Comment threads, contact lists. */
+  --avatar-size-sm: var(--size-400);
+  /* Medium avatar (40px). Default size — profile cards, list items. */
+  --avatar-size-md: var(--size-500);
+  /* Large avatar (48px). Profile headers, prominent identity display. */
+  --avatar-size-lg: var(--size-600);
+  /* Extra large avatar (80px). Profile pages, hero sections. */
+  --avatar-size-xl: var(--size-1000);
+  /* Extra extra large avatar (128px). Full profile view, onboarding. */
+  --avatar-size-xxl: var(--size-1600);
   /* Icon size for xs avatar (12px = 1.5× base) maintains 50% ratio (12/24). No existing icon token at this size, so component token fills the gap. */
   --avatar-icon-size-xs: 12;
   /* Icon size for xxl avatar (64px = 8× base) maintains 50% ratio (64/128). No existing icon token at this size, so component token fills the gap. */
@@ -906,33 +975,49 @@
   /* Small button variant uses 8px padding (1× base) for minimal footprint in dense UI layouts while meeting minimum touch target requirements */
   --buttonicon-inset-small: var(--space-100);
   /* Large button size (48px = 6× base) provides generous touch target exceeding tapAreaRecommended, calculated as icon (24px) + padding (12px × 2) */
-  --buttonicon-size-large: var(--space-600);
+  --buttonicon-size-large: var(--size-600);
   /* Medium button size (40px = 5× base) provides standard touch target, calculated as icon (18px) + padding (10px × 2) rounded to grid */
-  --buttonicon-size-medium: var(--space-500);
+  --buttonicon-size-medium: var(--size-500);
   /* Small button size (32px = 4× base) provides compact visual footprint, calculated as icon (13px) + padding (8px × 2) rounded to grid */
-  --buttonicon-size-small: var(--space-400);
+  --buttonicon-size-small: var(--size-400);
+
+  /* InputCheckbox Component Tokens */
+  /* Small checkbox box (24px). icon.size050 (16px) + inset.050 (4px) × 2. */
+  --inputcheckbox-box-sm: var(--size-300);
+  /* Medium checkbox box (32px). icon.size075 (20px) + inset.075 (6px) × 2. */
+  --inputcheckbox-box-md: var(--size-400);
+  /* Large checkbox box (40px). icon.size100 (24px) + inset.100 (8px) × 2. */
+  --inputcheckbox-box-lg: var(--size-500);
+
+  /* InputRadio Component Tokens */
+  /* Small radio box (24px). Same dimensions as checkbox sm. */
+  --inputradio-box-sm: var(--size-300);
+  /* Medium radio box (32px). Same dimensions as checkbox md. */
+  --inputradio-box-md: var(--size-400);
+  /* Large radio box (40px). Same dimensions as checkbox lg. */
+  --inputradio-box-lg: var(--size-500);
 
   /* Progress Component Tokens */
+  /* Connector line thickness (1px). References borderDefault primitive for consistent border treatment across the design system. */
+  --progress-connector-thickness: var(--border-width-100);
   /* Small node base size (12px). Inactive dots in compact mobile contexts. */
-  --progress-node-size-sm: var(--space-150);
+  --progress-node-size-sm: var(--size-150);
   /* Medium node base size (16px). Default inactive dot size. */
-  --progress-node-size-md: var(--space-200);
+  --progress-node-size-md: var(--size-200);
   /* Large node base size (20px). Inactive dots in desktop contexts. */
-  --progress-node-size-lg: var(--space-250);
+  --progress-node-size-lg: var(--size-250);
   /* Current node emphasis for sm (16px). +4px over base 12px for non-color visual differentiation. */
-  --progress-node-size-sm-current: var(--space-200);
+  --progress-node-size-sm-current: var(--size-200);
   /* Current node emphasis for md (20px). +4px over base 16px for non-color visual differentiation. */
-  --progress-node-size-md-current: var(--space-250);
+  --progress-node-size-md-current: var(--size-250);
   /* Current node emphasis for lg (24px). +4px over base 20px for non-color visual differentiation. */
-  --progress-node-size-lg-current: var(--space-300);
+  --progress-node-size-lg-current: var(--size-300);
   /* Small gap between nodes (6px = 0.75× base). Tight spacing for compact pagination dots in mobile contexts. */
   --progress-node-gap-sm: var(--space-075);
   /* Medium gap between nodes (8px = 1× base). Default spacing for stepper nodes, providing clear separation without excessive whitespace. */
   --progress-node-gap-md: var(--space-100);
   /* Large gap between nodes (12px = 1.5× base). Generous spacing for detailed steppers with labels in desktop contexts. */
   --progress-node-gap-lg: var(--space-150);
-  /* Connector line thickness (1px). References borderDefault primitive for consistent border treatment across the design system. */
-  --progress-connector-thickness: var(--border-width-100);
 
   /* VerticalListItem Component Tokens */
   /* Block padding at rest state (1px border). 11px padding + 1px border = 12px per side, achieving 48px total with 24px content. Uses TokenWithValue pattern as no primitive token exists for 11px. */

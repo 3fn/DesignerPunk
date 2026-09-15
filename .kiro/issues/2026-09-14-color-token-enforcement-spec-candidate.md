@@ -19,6 +19,7 @@
 3. **Arming path**: proposed → gate-bite proof → Peter flip, per the section-citations precedent; arming is a campaign boundary event if any measurement window is open — sequence against campaign close like Spec 127's Q2.
 4. **Relationship to the dormant row**: the row's falsification clause already defines when `dormant` reverts to `armed` — the spec's deliverables should trip it legitimately.
 5. **The phantom-gate build-vs-never decisions deferred from the cleanup session**: `lint:stemma*` (O-9) and CI-wiring the theme-drift audit (O-10) — adopt into this spec's scope or formally decline each, so the corrected docs stay true.
+6. **Theme-drift audit comparison semantics** (routed from the O-10 fix, Ada 2026-09-14): the audit diffs the whole theme file including comments, so the Peter-ratified WCAG rationale comments (#152/#153) make it fail permanently on a healthy repo — and its own remedy (`generate:theme-skeleton`) deletes those comments. Defining what counts as drift (comment-insensitive comparison? value-grain diff? comment-preserving regeneration?) is a design decision; the cleanup fix made the failure honest and the message route-to-diff, no more. A check that can never pass is nearly as uninformative as one that can never fail — this spec decides its real shape.
 
 ## Why chartered-not-started
 

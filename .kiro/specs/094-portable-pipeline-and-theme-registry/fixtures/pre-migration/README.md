@@ -54,6 +54,14 @@ The diff will show a mix of:
 
 Read diffs with that context — these fixtures are frozen at a specific historical moment, not a rolling baseline.
 
+## EXCLUDED from any generated-token-output guard
+
+**Added 2026-09-14 (Ada, disposition F-3).** These files are committed *generated token outputs* by construction, so any future guard over "committed generated token outputs" — a regenerate-and-diff check on the Spec 122 diff-guard pattern, for example — would **RED on every one of them**, and a well-meaning author would then "fix" them by regenerating, destroying the only thing they are for.
+
+**Any such guard MUST carry this path as an explicit exclusion.** The exclusion is recorded in the ratified register row `governance/classification-map.md § "never-hand-edit-generated-token-outputs"` (scope entry: *deliberately-frozen spec fixtures*, `disposition: none`, `check_state: none`), and is repeated here so it is visible at the files themselves rather than only in the register.
+
+Related: `.kiro/issues/2026-09-13-docs-tokens-css-stale-published.md` (F-3).
+
 ## Do Not
 
 - **Do not re-enable `pre-migration-regression.test.ts`** — it will fail against any current output because legitimate post-migration changes have accumulated. The retirement was the correct call.

@@ -226,11 +226,18 @@
 
 ## Token Refresh Procedure
 
+**AMENDED 2026-09-14 (Ada)** — the manual copy step below was removed. `scripts/build-browser-bundles.js` now publishes `docs/tokens.css` as a build output alongside `dist/browser/tokens.css`.
+
 When DesignerPunk tokens are regenerated:
 
-1. Run `npm run build:browser` (regenerates `dist/browser/tokens.css`)
-2. Copy `dist/browser/tokens.css` to `docs/tokens.css`
-3. Verify showcase site renders correctly with updated tokens
-4. Commit the updated `docs/tokens.css`
+1. Run `npm run generate:platform-tokens` then `npm run build:browser` (or simply `npm run build`, which runs both) — this regenerates `dist/browser/tokens.css` **and** rewrites `docs/tokens.css` from it
+2. Verify showcase site renders correctly with updated tokens
+3. Commit the updated `docs/tokens.css` — it will appear in `git status` whenever it drifted
 
-This is a manual process by design — the showcase is a snapshot, not a live mirror.
+### Why the original "manual by design" framing was withdrawn
+
+The original text read: *"This is a manual process by design — the showcase is a snapshot, not a live mirror."* That framing is what failed. The manual step was never performed after 2026-03-24, and the published showcase served a color value for ~6 months after the project fixed it as a WCAG AA failure (PR #152). A snapshot nobody refreshes is not a snapshot; it is a public claim that quietly stops being true.
+
+The showcase is still not a live mirror — GitHub Pages serves this repo with a legacy branch deploy (`main:/docs`, `build_type: legacy`) and cannot run npm. What changed is that staleness is no longer silent: the next build makes it a visible working-tree diff. There is still **no PR gate** enforcing freshness; a regenerate-and-diff check is the named-but-unbuilt mechanism recorded on the `never-hand-edit-generated-token-outputs` register row.
+
+See `.kiro/issues/2026-09-13-docs-tokens-css-stale-published.md` (F-1).
