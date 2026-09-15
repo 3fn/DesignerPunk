@@ -36,12 +36,12 @@ interface MetadataBlock {
   contexts: string[];
 }
 
-interface UsageData {
+export interface UsageData {
   when_to_use: string[];
   when_not_to_use: string[];
 }
 
-interface Alternative {
+export interface Alternative {
   component: string;
   reason: string;
 }
@@ -196,6 +196,68 @@ function loadGuidanceUsage(familyName: string): UsageData | null {
   return null;
 }
 
+// --- Preservation Predicate ---
+//
+// Content-aware, not length-keyed (fix: 2026-09-14, see
+// .kiro/issues/2026-09-13-component-meta-extractor-clobbers-handedits.md).
+//
+// BEFORE: preservation compared `existing.usage.when_to_use.length > derived.when_to_use.length`
+// (and the equivalent for `alternatives`) — a sanctioned hand-edit that REWROTE entries without
+// adding one, or that touched `when_not_to_use` alone, was silently clobbered by the next
+// `npm run extract:meta` because the count never grew.
+//
+// AFTER: preservation compares full field CONTENT against what would be freshly derived. Any
+// divergence — added, removed, reordered, or rewritten-in-place entries, in either field —
+// is treated as a hand-edit and the whole existing `usage`/`alternatives` value is kept.
+//
+// This is deliberately coarse (any divergence wins, not just "richer" divergence) and does not
+// distinguish "human hand-edited this" from "the family doc's derivation legitimately changed
+// since the last run" — that field-grain distinction is future register/guard work per the
+// issue. `purpose` and `contexts` are unconditionally derived from the family doc and never
+// pass through this predicate, so legitimate regeneration of those two fields is unaffected.
+
+function arraysEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false;
+  return a.every((v, i) => v === b[i]);
+}
+
+export function usageContentEqual(a: UsageData, b: UsageData): boolean {
+  return arraysEqual(a.when_to_use, b.when_to_use) && arraysEqual(a.when_not_to_use, b.when_not_to_use);
+}
+
+export function alternativesContentEqual(a: Alternative[], b: Alternative[]): boolean {
+  if (a.length !== b.length) return false;
+  return a.every((x, i) => x.component === b[i].component && x.reason === b[i].reason);
+}
+
+/**
+ * Resolve the final `usage` value: preserve the existing (hand-authored) value whenever it
+ * diverges in content from the freshly-derived value; otherwise use the derived value.
+ */
+export function resolveUsage(
+  existing: UsageData | null,
+  derived: UsageData,
+): { usage: UsageData; preserved: boolean } {
+  if (existing && !usageContentEqual(existing, derived)) {
+    return { usage: existing, preserved: true };
+  }
+  return { usage: derived, preserved: false };
+}
+
+/**
+ * Resolve the final `alternatives` value: preserve the existing (hand-authored) value whenever
+ * it diverges in content from the freshly-derived value; otherwise use the derived value.
+ */
+export function resolveAlternatives(
+  existing: Alternative[] | null,
+  derived: Alternative[],
+): { alternatives: Alternative[]; preserved: boolean } {
+  if (existing && !alternativesContentEqual(existing, derived)) {
+    return { alternatives: existing, preserved: true };
+  }
+  return { alternatives: derived, preserved: false };
+}
+
 // --- Preservation ---
 
 function loadExistingMeta(componentDir: string): GeneratedMeta | null {
@@ -328,7 +390,7 @@ function main(): void {
     const existing = loadExistingMeta(path.join(COMPONENTS_DIR, comp));
 
     // Purpose + contexts: always from family doc metadata block (single source)
-    // Usage + alternatives: preserve hand-authored when richer than derived
+    // Usage + alternatives: preserve hand-authored content when it diverges from derived
 
     // Derive usage
     const { usage: derivedUsage, derived } = deriveUsage(
@@ -339,9 +401,11 @@ function main(): void {
     let finalUsage = derivedUsage;
     let finalDerived = derived;
 
-    // Preserve hand-authored usage when it's richer
-    if (existing && existing.usage.when_to_use.length > finalUsage.when_to_use.length) {
-      finalUsage = existing.usage;
+    // Preserve hand-authored usage when its content diverges from derived (content-aware,
+    // not length-keyed — see the "Preservation Predicate" comment above resolveUsage()).
+    const usageResolution = resolveUsage(existing ? existing.usage : null, finalUsage);
+    finalUsage = usageResolution.usage;
+    if (usageResolution.preserved) {
       finalDerived = 'preserved';
     }
 
@@ -366,12 +430,12 @@ function main(): void {
     }
 
     // Derive alternatives
-    let alternatives = deriveAlternatives(comp, parsed.selectionTable, allComponents);
+    const derivedAlternatives = deriveAlternatives(comp, parsed.selectionTable, allComponents);
 
-    // Preserve hand-authored alternatives when richer
-    if (existing && existing.alternatives.length > alternatives.length) {
-      alternatives = existing.alternatives;
-    }
+    // Preserve hand-authored alternatives when their content diverges from derived
+    // (content-aware, not length-keyed).
+    const alternativesResolution = resolveAlternatives(existing ? existing.alternatives : null, derivedAlternatives);
+    const alternatives = alternativesResolution.alternatives;
 
     // Validate alternative references
     for (const alt of alternatives) {
@@ -395,7 +459,7 @@ function main(): void {
     if (finalDerived === 'family-level') {
       console.log(`  ℹ ${comp}: usage derived from family-level guidance`);
     } else if (finalDerived === 'preserved') {
-      console.log(`  ℹ ${comp}: usage preserved from hand-authored meta (richer)`);
+      console.log(`  ℹ ${comp}: usage preserved from hand-authored meta (diverges from derived)`);
     }
   }
 
@@ -412,4 +476,9 @@ function main(): void {
   }
 }
 
-main();
+// CLI — run against the real repo (require.main only, never on import). Guards the pure
+// preservation-predicate functions above so tests can import this module without triggering
+// a full extraction run against COMPONENTS_DIR/STEERING_DIR.
+if (require.main === module) {
+  main();
+}

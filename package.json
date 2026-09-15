@@ -109,6 +109,7 @@
     "test": "jest --config jest.functional.config.js",
     "test:all": "jest",
     "test:agent-generator": "jest --config tools/agent-generator/jest.config.js",
+    "test:scripts": "jest --config scripts/jest.config.js",
     "test:consumer": "jest --roots='<rootDir>/tests' --testMatch='**/consumer-integration.test.ts' --runInBand --testTimeout=120000 --forceExit",
     "test:resolution-matrix": "node src/config/__resolution-matrix__/run-matrix.js",
     "test:performance": "jest --testPathPatterns='performance/__tests__|__tests__/performance'",
