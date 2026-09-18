@@ -67,6 +67,8 @@
   - **Steward's sequencing lean (one line, not a plan)**: the two HIGH owner repairs + parity ballot first (small, live-defect-led), 127 requirements continuing in parallel, then Spec 123 as the next major arc — with the contrast queue and enforcement-spec candidate slotted at Peter's next deep burst; everything else rides the charter-walk cadence.
 - **D6 — Settings confirmations (two one-liners)**: (a) required-check set still exactly the 18 contexts? (closes the campaign dataset's last owed verification); (b) is "Require review from Code Owners" enabled on main? (assumed NO everywhere — one sentence falsifies or confirms).
 
+> **Sitting follow-through (dated postscript, 2026-09-18, after the D6 answers — the ballot's rulings are unchanged):** Peter ENABLED "Require a pull request before merging" (sub-options off) per the steward's recommendation — U3 toggle 1 of 2 now met; recorded on the `record-first-ratification` row. The sitting's capture-before-work audit then closed two documentation gaps: the phantom "claims-vs-source" queue chartered as `.kiro/issues/2026-09-18-ada-token-doc-accuracy-pass.md`, and the U3 authoring-identity constraint (self-approval impossibility) + full precondition ledger captured as `inbound-to-u3-from-5-6.md`.
+
 ## 8. Campaign totals (the record in five lines)
 
 - **Register**: 3 entries at pilot close → **23 at campaign close** (21 + the 2 audit-gap rows in this PR); 11 rostered candidates classified; 2 methodology notes added; zero entries renamed or deleted (history-only evolution held).
