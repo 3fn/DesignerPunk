@@ -171,7 +171,7 @@ contracts:
       and verify focus order matches specification.
     required: true
 
-excluded:
+excludes:
   state_disabled:
     reason: "DesignerPunk does not support disabled states. If an action is unavailable, do not render it."
     category: state

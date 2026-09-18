@@ -21,7 +21,7 @@ contracts:
       Render Nav-Header-App, verify no heading elements in DOM/tree.
     required: true
 
-excluded:
+excludes:
   state_disabled:
     reason: "DesignerPunk does not support disabled states."
     category: state
