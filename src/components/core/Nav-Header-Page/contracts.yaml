@@ -189,7 +189,7 @@ contracts:
       Render trailing action with various badge values, verify presence.
     required: true
 
-excluded:
+excludes:
   state_disabled:
     reason: "DesignerPunk does not support disabled states. Unavailable actions are not rendered."
     category: state

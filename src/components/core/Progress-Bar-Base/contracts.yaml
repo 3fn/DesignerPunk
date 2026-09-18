@@ -126,7 +126,7 @@ contracts:
       Pass out-of-range values, verify error thrown with correct message.
     required: true
 
-excluded:
+excludes:
   state_disabled:
     reason: "DesignerPunk does not support disabled states. If progress is not applicable, do not render the bar."
     category: state

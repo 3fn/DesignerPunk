@@ -18,6 +18,15 @@ The corpus spells the contracts.yaml exclusion section three ways: `excludes:` (
 
 **Repair**: normalize the 5 files to `excludes:` (pure key rename; block bodies already canonical-shaped) → `rebuild_index` → **evidence requirement Lina set for herself**: before/after `get_component_full` diff for all five components, not just a green suite.
 
+**STATUS (2026-09-18): DONE, pending merge.** Repair executed in worktree branch
+`fix/exclusion-key-normalization` — pure key rename applied to all five files, targeted
+suites green (8/8 suites, 191/191 tests, contract-count baseline unchanged at 234). Live-MCP
+BEFORE evidence captured (all five confirmed `"excluded": {}` on the live server). Live-MCP
+AFTER evidence (post-`rebuild_index`) is deferred to post-merge since the server reads
+`main`, not this branch — the merging session runs it. Full evidence:
+`.kiro/issues/evidence-2026-09-18-exclusion-key-normalization.md`. PR: (see PR link reported
+in the completing session's output).
+
 **Tracked WITH this item, shipped SEPARATELY** (the patch-without-guard lesson): the MCP parser silently accepting an unrecognized top-level key is itself the failure mode — a strict-key warning in `parsers.ts` (warn vs fail is its own design question) would have surfaced this years earlier.
 
 ### 2. Ignore-vs-throw parity adjudication — **a Peter BALLOT, and the gate for items 3–4** (W4-1(f))

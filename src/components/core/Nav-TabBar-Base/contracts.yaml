@@ -400,7 +400,7 @@ contracts:
 # EXCLUSIONS
 # ============================================================
 
-exclusions:
+excludes:
   state_disabled:
     reason: |
       No disabled state. Unavailable destinations should not be rendered.
