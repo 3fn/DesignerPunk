@@ -37,3 +37,9 @@
 ## Adjacent, tracked here so it is not lost (NOT this charter's scope)
 
 - TQR path-staleness: its family table points at `.kiro/steering/Token-Family-*.md` for ~14 docs that live in `governance/` — routed to Thurgood's infra-health queue (the monthly health check) or the claims-vs-source pass, whichever fires first.
+
+---
+
+## Status: DONE pending merge (2026-09-18)
+
+All 7 repair-scope items executed on `fix/opacity-disabled-reconciliation`; PR opened, awaiting Peter's merge. Post-rewrite re-sweep found zero teaching-the-practice hits remaining (6 hits, all within the new `❌ Don't style disabled states` inversion block itself). `npm run check:section-citations` PASSED. `src/tokens/OpacityTokens.ts` verified untouched. Discovery-path re-query (`find_docs` post-`rebuild_index`) is POST-MERGE, to be run by the merging session per the charter's verification obligation. See PR for full detail.
