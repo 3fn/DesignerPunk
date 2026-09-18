@@ -301,7 +301,7 @@
   - [x] 5.5 Wave 4 — register maintenance (executes 5.W verbatim; ROWS-ONLY EXPECTED)
     **Fill slots**: **C10** philosophy-conformance candidate row (U2's logged candidate) + **C11** `proposed`-row state work: record-first-ratification barrier scope (U3 territory), no-autonomous-token-creation (U3 diff-gate territory), inverse-drift WATCH confirmation. **Sizing**: 4 row items, no prune anticipated — if that holds, the wave merges as a rows-only PR (instrument-excluded per protocol §6 class 3) and opens no window. **Agents**: Thurgood steward; per-row owner consults.
 
-  - [ ] 5.6 Campaign closeout (numbered by 5.1's instantiation edit; was template 5.Z)
+  - [x] 5.6 Campaign closeout (numbered by 5.1's instantiation edit; was template 5.Z)
     **Type**: Documentation
     **Validation**: Tier 3 - Comprehensive
     **Agent**: Thurgood (Opus) — synthesis + honest-ambiguity reporting

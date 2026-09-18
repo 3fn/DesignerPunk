@@ -1,6 +1,6 @@
 # U1b Campaign — Shared W1 Window Dataset
 
-**Status**: **OPEN** (2026-08-12T21:03:24Z — wave-1 prune merge, PR #124, squash `cbf9929c`). Nothing here is a verdict.
+**Status**: **CLOSED** (2026-09-18T03:46:27Z — the wave-4 unit merge, PR #167 squash `13b0d474`, per register methodology note 7 ratified at that merge: for windowless final waves the campaign window closes at the final wave's UNIT MERGE). Opened 2026-08-12T21:03:24Z (wave-1 prune merge, PR #124, squash `cbf9929c`). Verdicts live in `campaign-closeout.md`, not here.
 **Maintained by**: hand transcription per `campaign-measurement-protocol.md` §8 (manual recipes only; escalate-don't-build).
 **Close condition**: closes at the close of the FINAL wave's window (event-denominated; never while any wave window is open).
 
@@ -37,6 +37,24 @@
 | 18 | #146 | chore/ios-web-dead-build-paths | 2026-08-26T14:41:16Z | `7fcd06134d43` | GREEN (19/19 concluded success) | 2 |
 | 19 | #147 | chore/shadowgenerator-sweep | 2026-08-26T14:48:10Z | `3dac2ef9d93a` | GREEN (19/19 concluded success) | 2 |
 | 20 | #148 | chore/motion-formatter-rename | 2026-08-26T15:04:38Z | `15ea30eacbdd` | **INDETERMINATE** (A1: zero concluded checks on pinned SHA — 2026-08-26 GitHub Actions outage wedged first-push suites; second push `fda98bbf` was an empty retrigger, 20/20 success; never converted) | 2 |
+| 21 | #150 | fix/dtcg-oklch-divergence | 2026-09-13T01:31:00Z | `a33f1e956559` | GREEN (20 concluded, zero non-success) | 2 |
+| 22 | #151 | chore/spec-112-claims-audit | 2026-09-13T01:47:07Z | `f25bf00f8030` | GREEN (20 concluded, zero non-success) | 2 |
+| 23 | #152 | fix/success-text-wcag-aa | 2026-09-13T02:16:04Z | `3a5e321fdc3b` | GREEN (20 concluded, zero non-success) | 2 |
+| 24 | #153 | fix/dark-text-hierarchy-aa | 2026-09-13T12:36:34Z | `a141335e4263` | GREEN (20 concluded, zero non-success) | 2 |
+| 25 | #154 | fix/mcp-token-details-dark-value | 2026-09-13T12:57:15Z | `fe2671879532` | GREEN (20 concluded, zero non-success) | 2 |
+| 26 | #155 | fix/oklch-regression-threshold | 2026-09-13T13:33:07Z | `a67d83b78e93` | GREEN (20 concluded, zero non-success) | 2 |
+| 27 | #156 | chore/fold-blend-audit-provenance | 2026-09-13T13:38:53Z | `1a24555fb244` | GREEN (20 concluded, zero non-success) | 2 |
+| 28 | #157 | task/127-design-outline | 2026-09-13T14:26:21Z | `d6b1e7abb7c6` | GREEN (20 concluded, zero non-success) | 2 |
+| 29 | #158 | task/127-q5-working-agreement | 2026-09-13T14:57:08Z | `52356bff9806` | GREEN (20 concluded, zero non-success) | 2 |
+| 30 | #159 | task/127-r1-feedback | 2026-09-13T15:51:33Z | `865a238cec17` | GREEN (20 concluded, zero non-success) | 2 |
+| 31 | #161 | chore/wave-3-cleanup-brief | 2026-09-15T02:29:06Z | `5c8eb574ee05` | GREEN (20 concluded, zero non-success) | 2 |
+| 32 | #162 | chore/phantom-gates-hygiene | 2026-09-15T02:37:07Z | `6c18b15beea6` | GREEN (20 concluded, zero non-success) | 2 |
+| 33 | #163 | fix/docs-tokens-css-stale | 2026-09-15T02:46:46Z | `d4eaa6edadb5` | GREEN (20 concluded, zero non-success) | 2 |
+| 34 | #164 | fix/component-meta-clobber | 2026-09-15T02:59:42Z | `f33329594459` | GREEN (20 concluded, zero non-success) | 2 |
+| 35 | #165 | task/127-q5-lifecycle-amendment | 2026-09-15T11:31:11Z | `b81d9a4beaf9` | GREEN (20 concluded, zero non-success) | 2 |
+| 36 | #166 | task/127-outline-settle | 2026-09-18T02:43:47Z | `4e49ffe1d8d7` | GREEN (20 concluded, zero non-success) | 2 |
+
+*(Close pass, 2026-09-18, at 5.6 — the wave-4 measurement debt PAID: #150–#166 A1-pinned by reconstruction. All single-commit with `committedDate ≤ createdAt` except #153 (two commits: pinned to `a141335e` at createdAt−3s; its second commit `ca6815c3` at createdAt+129s is 9s past the +120s cutoff and is NOT first-push — its pinned first-push was GREEN anyway, so the late push was not a red-fix). Check-run composition verified on sampled SHAs (#150, #167): 20 concluded = the frozen 19 (incl. sweep-5, still running unrequired) + `122-setup` (never counted) — identical to the pass-3 accounting. Zero non-success on all 16 pinned SHAs.)*
 
 *(Pass 3, 2026-08-27: #136–#148 A1-pinned by reconstruction — #137–#147 single-commit `committedDate ≤ createdAt`; #136 two pre-open commits, pinned to the last; #148 pinned to its only pre-open commit, second commit is a post-open retrigger. All greens verified 20 concluded check runs = frozen 19 (incl. sweep-5, still running unrequired) + `122-setup` (never counted), zero non-success.)*
 
@@ -44,6 +62,11 @@
 - **J-C3 — #139 (monthly Civitas health check) INCLUDED**: purpose is governance cadence, not 125-B instrumentation — the class-3 test is "purpose is 125-B instrumentation," and precedent #110 (the prior health check) was counted in the campaign baseline set. Its `start-up-tasks.md` edit is the health-check date bump, not a campaign surface.
 - **J-C4 — #140 (.gitignore collab-vault guard) INCLUDED**: ordinary repo hygiene (single-file .gitignore change); nothing instrument-classed about it.
 - **J-C5 — #141 (verification-grade review standard) INCLUDED**: a governance process standard riding the health-check record — Civitas work product, not campaign measurement machinery.
+
+**Recorded judgments at the close pass (open for Peter's ratification at the 5.6 PR's merge; W1 tallies robust either way — all three first-push GREEN):**
+- **J-C6 — #161 (wave-3 cleanup session brief + enforcement-spec charter) INCLUDED**: purpose is repo coordination records (a session brief + a spec charter in `.kiro/issues/`), not campaign measurement machinery — the J-C5 Civitas-work-product class.
+- **J-C7 — #162 (phantom-gate correction + roster erratum + coverage untrack) INCLUDED**: purpose is governance-doc correction and repo hygiene (O-9/O-6/O-11 cleanup); the one-footnote campaign-plan erratum rode along — the J-C1 test is the PR's PURPOSE, and a rider does not convert a hygiene PR into instrumentation.
+- **J-C8 — #166 (Spec 127 outline settle) INCLUDED**: purpose is Spec 127 work product (the J-C1 #105 spec-work precedent); its O-8 register edit (the `armed_at` schema qualifier) rode as a rider under the same purpose test as J-C7.
 
 *(Pass 2, 2026-08-26: #132 and #134 A1-pinned (single-commit PRs); #132 is the wave-2-sequenced companion repair but ordinary domain work, not instrumentation — counts. Note `122-sweep-5-corrected-state` still runs (success) on both pinned SHAs post-removal — workflow persists, required flag gone; scoring unaffected.)*
 
@@ -63,19 +86,22 @@
 | #131 | observation pass 1 (datasets + boundary event + ledger closure) — class 3 (dataset-transcription instrument). Recorded at pass 2 |
 | #133 | the wave-2 prune unit PR (rows + evidence + prune + ballot) — campaign-endogenous instrument (the measured intervention; the wave-1 #124 class). Also the wave-2 window-open boundary |
 | #135 | observation pass 2 (datasets — wave-1 rows + wave-2 window-open) — class 3 (dataset-transcription instrument; #125/#131 precedent). Recorded at pass 3 |
+| #149 | observation pass 3 (both wave closes + campaign transcription) — class 3 (dataset-transcription instrument; recorded as such at pass 3, entered here at close) |
+| #160 | the wave-3 unit PR (rows-only) — class 3 (register-only purpose, J2 precedent; disclosed contestability in its own PR body stands) |
+| #167 | the wave-4 unit PR (rows-only + bookkeeping riders) — class 3 (campaign instrumentation; the exclusion's fresh-disclosure basis in its PR body; ALSO the campaign-close boundary under methodology note 7) |
 
 ## Segment log (EXOGENOUS events only)
 
 | segment | opened-by (exogenous event) | boundary timestamp | n | f | W1 (as-of-pass) |
 |---------|------------------------------|--------------------|---|---|------------------|
 | 1 | Campaign open (wave-1 prune merge) | 2026-08-12T21:03:24Z | 4 | 0 | not evaluable (n<5); f=0 ≤ e+1 (e=0.4) informationally |
-| 2 | **Required-check-set change: `122-sweep-5-corrected-state` removed from required contexts (Peter Settings action; option-(a) ruling 2026-08-21 — charges 1 of K=3)** | 2026-08-21 ~13:50Z (bracketed: after #129's merge 13:48:30Z, before #130's creation 13:52:05Z; exact Settings-action time not captured) | 16 | 0 | **EVALUABLE (n≥5) as of pass 3**: n=16, f=0, e = 2×(16/20) = 1.6 → f ≤ e+1 → **W1 MET as-of-pass (informational; roll-up per A3 at campaign close)**. Pass 3: n 3→16 (#136–#148 added; #148 INDETERMINATE counts in n, never in f — pilot #86 discipline). Live required set re-verified at pass 3: 18 contexts, unchanged — NO new boundary event |
+| 2 | **Required-check-set change: `122-sweep-5-corrected-state` removed from required contexts (Peter Settings action; option-(a) ruling 2026-08-21 — charges 1 of K=3)** | 2026-08-21 ~13:50Z (bracketed: after #129's merge 13:48:30Z, before #130's creation 13:52:05Z; exact Settings-action time not captured) | **32** | **0** | **FINAL (close pass, 2026-09-18)**: n=32, f=0, e = 2×(32/20) = 3.2 → f ≤ e+1 → **W1 MET (segment-final)**. Close pass: n 16→32 (#150–#159, #161–#166 added; #148 INDETERMINATE remains in n, never in f). Boundary events at close: git-observable half verified ZERO changes to gate surfaces #149→close (Stacy, 2026-09-17); **Settings-visible half VERIFIED at the 5.6 sitting (Peter, 2026-09-18, screenshots): exactly 18 required contexts, verbatim EXPECTED_CONTEXTS match — zero further boundary events; boundary count ends 1 of K=3** (closeout ballot D6a) |
 
 **Boundary-event count: 1 of K=3.** Segment 1 is CLOSED at n=4 — below the ≥5 evaluability floor, permanently not-evaluable (A3: never forces INDETERMINATE). The §4 frozen scoring set is UNCHANGED by the removal (frozen means frozen — sweep-5 simply stops being a required context on the live gate; "present on the pinned SHA" handles any future absence). Ledger: `.kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md` — its campaign-accounting item is closed by this entry (pass 1, 2026-08-25).
 
 ## Wall-clock record (datum, never a criterion)
 
-- Campaign open: 2026-08-12T21:03:24Z · Segment boundaries: 2026-08-21 ~13:50Z (sweep-5 required-flag removal) · Campaign close: *(at final wave-window close)*
+- Campaign open: 2026-08-12T21:03:24Z · Segment boundaries: 2026-08-21 ~13:50Z (sweep-5 required-flag removal) · **Campaign close: 2026-09-18T03:46:27Z (#167 merge, methodology note 7)** · Span ≈ 36.3 days
 
 ## Per-wave dataset index
 
@@ -83,8 +109,8 @@
 |------|---------|-------------|--------------|
 | 1 (5.2) | `wave-1-dataset.md` | `cbf9929c` 2026-08-12T21:03:24Z | **CLOSED at pass 3 (2026-08-27), N=20** (A2 overshoot) — W2 MET, W3 zero; 5.W(e) record in the dataset |
 | 2 (5.3) | `wave-2-dataset.md` | `1301c2de` 2026-08-26T01:57:03Z (PR #133) | **CLOSED at pass 3 (2026-08-27), N=14** (A2 overshoot) — W2 MET (interpretive caveats recorded), W3 zero; 5.W(e) record in the dataset |
-| 3 (5.4) | `wave-3-dataset.md` | — | not open |
-| 4 (5.5) | *(rows-only expected — dataset only if a prune emerges)* | — | — |
+| 3 (5.4) | *(none — rows-only, no prune, no window)* | — (unit merge `d0f709f9` #160, 2026-09-14 = its (e) point per note 6) | never opened — W2/W3 N/A-by-construction; (e) record in `task-5-4-completion.md` |
+| 4 (5.5) | *(none — rows-only held)* | — (unit merge `13b0d474` #167, 2026-09-18 = its (e) point AND the campaign close per note 7) | never opened — W2/W3 N/A-by-construction; (e) record in `task-5-5-completion.md` |
 
 ---
 
@@ -99,3 +125,5 @@
 3. **The B2 contingency, stated so the debt is not overpaid**: under close-reading **(i)** (campaign window closed 2026-08-27 at the last real window's close) the #150+ range is OUT-of-window and transcription is moot; under close-reading **(ii, recommended — register methodology note 7)** the range is in-window and the transcription binds 5.6's W1 roll-up. **Peter's ruling on note 7 decides which**; this note survives either way as the record that the gap was seen, bounded, and handed off rather than discovered.
 
 **Robustness context** (why the debt is safe to carry, not why it may be ignored): W1 has been f=0 across 20 observations at every pass; at segment-2 n=16, e=1.6 — even 2–3 failures in the untranscribed range leave W1 MET (Stacy's own counter-argument to her transcribe-now recommendation).
+
+> **DEBT PAID — 2026-09-18, at 5.6 (the close pass above).** Peter's #167 merge ratified methodology note 7's recommended reading (ii), making the range in-window; the full #150–#166 transcription landed at the close pass (rows 21–36), the B1 option resolved itself (the closeout performed the pass), and the Settings-visible required-set confirmation is the one item still owed — asked at the 5.6 sitting.
