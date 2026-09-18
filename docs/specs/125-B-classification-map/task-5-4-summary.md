@@ -1,0 +1,9 @@
+# Task 5.4 Summary — U1b Wave 3: artifact-integrity territory
+
+**Completed**: 2026-09-14 (unit merge, PR #160 — a windowless wave's (e) point per register methodology note 6) · **Record authored**: 2026-09-17, retrospectively · **Ballot**: none (rows-only — the wave-ballot trigger's subject is the prune, and there was none)
+
+Wave 3 classified the three artifact-integrity rules — C7 never-hand-edit-122-generated, C8 never-hand-edit-generated-token-outputs, C9 no-hardcoded-color — and found **rows-only on all three: zero imposters corpus-wide across 12 sweep passes**, including the check-worded pass 10 added mid-wave after Lina's consult showed the rule-worded passes were structurally blind to the imposter class. The verdict held; **two of three fact bases did not**: Ada's consult rebuilt C8's artifact enumeration (two missed classes; `docs/tokens.css` identified as a live published surface serving a stale WCAG-failing value) and Lina's corrected C9's scope in the overstated direction (the armed barrier detects essentially nothing real today — moved `armed → dormant`, a declared extension of the register's dormant definition).
+
+**Window outcome: none opened** — no prune, no A1/A2 freeze, no (b). W2/W3 verdicts are **N/A-by-construction** (nothing was pruned; there is no pattern set to score — not a measured zero). **Chafe: not collected at wave time** (process defect); retrospective reconstruction shows no recorded incident; 5.6 must weight it as absence-of-collection.
+
+**Bookkeeping defect, cured at wave 4**: the unit PR carried no parent-grade completion/summary docs and the 5.4 tick never landed, because a windowless wave's completion point was undefined until methodology note 6 (rows-only wave completes at unit merge). The retrospective record cures the content gap, not the traversal gap — recorded as a 5.6 method finding.

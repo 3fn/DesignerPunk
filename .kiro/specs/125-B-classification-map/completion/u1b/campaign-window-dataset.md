@@ -85,3 +85,17 @@
 | 2 (5.3) | `wave-2-dataset.md` | `1301c2de` 2026-08-26T01:57:03Z (PR #133) | **CLOSED at pass 3 (2026-08-27), N=14** (A2 overshoot) — W2 MET (interpretive caveats recorded), W3 zero; 5.W(e) record in the dataset |
 | 3 (5.4) | `wave-3-dataset.md` | — | not open |
 | 4 (5.5) | *(rows-only expected — dataset only if a prune emerges)* | — | — |
+
+---
+
+## Measurement-debt hand-off (recorded 2026-09-17, wave 4 — Stacy consult B1; the recording is the compliance act)
+
+**The shared W1 window's transcription is STALE by ~3 weeks.** The observed-PR table above ends at **#148** (observation pass 3, 2026-08-27, PR #149). Merged since and **UNTRANSCRIBED: #150 → the wave-4 unit merge** (17+ PRs as of this note — the majority `fix/*`/`chore/*`/`task/*` qualifying branches; several plainly ordinary domain work under the J-C3/J-C4/J-C5 reasoning recorded above). No observation pass ran at the wave-3 (2026-09-14) or wave-4 (2026-09-17) session starts — the wave-window suspension ("no wave window open") was correct for the WAVE instruments and incorrectly inherited by THIS instrument, which has its own close condition. Wave 4's assessment §12/§13 records the correction.
+
+**What is owed, bounded, to whoever transcribes** (5.6 unless Peter elects the pass at wave 4 — his B1 option choice rides the wave-4 PR):
+
+1. **Transcription**: A1 first-push reconstruction pinning for the #150+ qualifying range, against the frozen scoring set above.
+2. **Required-set re-verification (the Settings-visible half)**: pass 3 verified 18 contexts unchanged; nobody has re-verified since. The **git-observable half is ALREADY DONE** (Stacy, 2026-09-17): ZERO changes to `.github/`, `.claude/`, `CLAUDE.md`, `.kiro/steering/`, `canonical/` since #149 — no git-visible boundary event occurred in the gap.
+3. **The B2 contingency, stated so the debt is not overpaid**: under close-reading **(i)** (campaign window closed 2026-08-27 at the last real window's close) the #150+ range is OUT-of-window and transcription is moot; under close-reading **(ii, recommended — register methodology note 7)** the range is in-window and the transcription binds 5.6's W1 roll-up. **Peter's ruling on note 7 decides which**; this note survives either way as the record that the gap was seen, bounded, and handed off rather than discovered.
+
+**Robustness context** (why the debt is safe to carry, not why it may be ignored): W1 has been f=0 across 20 observations at every pass; at segment-2 n=16, e=1.6 — even 2–3 failures in the untranscribed range leave W1 MET (Stacy's own counter-argument to her transcribe-now recommendation).

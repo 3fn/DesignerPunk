@@ -1,0 +1,34 @@
+# Wave 4 (Task 5.5) — Candidate Prune Diff: DECLARED NO-OP
+#
+# Date: 2026-09-17
+# Step: 5.W(a) artifact — consumed unchanged by (b), applied as ratified in (c).
+#
+# This patch contains ZERO hunks across ZERO files, deliberately.
+#
+# Wave 4 is register maintenance (roster: campaign-plan.md § 3, "rows-only
+# expected"): one new register row (no-disabled-states, from U2's logged
+# philosophy-conformance candidate) + three state-confirmation history entries
+# (record-first-ratification, no-autonomous-token-creation,
+# inverse-drift-incremental-build) + one register-integrity fact refresh
+# (wcag-required-refs). Register edits are the wave's WORK PRODUCT, not a
+# prune; they ride the wave PR directly and ratify at Peter's merge
+# (the #113 / wave-3 precedent). Education pruning found nothing to cut:
+# zero imposters across sweeps S2-S6 (wave-4-assessment.md § 7), including
+# the check-worded passes per the wave-3 pass-10 discipline.
+#
+# Contradiction-class candidates found in C10 territory (Token-Family-Opacity
+# disabled-state sections; platform-implementation-guidelines.md:169) are
+# ROUTED to their owners for adjudication and — if ruled rewrite — repaired
+# via owner fix PRs (the wave-2 #132 sequencing precedent), never as wave
+# hunks. They are deliberately NOT in this diff.
+#
+# Verification (both results reported, per the wave-3 discipline):
+#   git apply --check <this file>                  -> "No valid patches in input"
+#                                                     (the CORRECT signal for a
+#                                                      rows-only wave, not a defect)
+#   git apply --check --allow-empty <this file>    -> exit 0
+#
+# If any consult falsifies a rows-only finding (wave-4-assessment.md § 7,
+# "What would falsify"), the cut lands HERE as a real hunk by a dated
+# amendment, the § 9 pre-committed rubric governs its (b), and Wave-A1/A2
+# freeze at the prune merge per protocol § 7 — never authored after evidence.
