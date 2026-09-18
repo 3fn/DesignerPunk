@@ -2,7 +2,7 @@
 id: token-family-opacity
 inclusion: manual
 name: Token-Family-Opacity
-description: Opacity token family — transparency tokens with 8% base increment system and 14-token percentage-based scale (opacity000–opacity100). Load when working with transparency effects, disabled states, overlays, or visual hierarchy through opacity.
+description: Opacity token family — transparency tokens with 8% base increment system and 14-token percentage-based scale (opacity000–opacity100). Load when working with transparency effects, overlays, or visual hierarchy through opacity.
 ---
 
 # Opacity Tokens Guide
@@ -44,7 +44,7 @@ All opacity tokens derive from a base unit of **0.08 (8%)**:
 | `opacity024` | 0.24 | 24% | 3 × base | Medium-light overlay |
 | `opacity032` | 0.32 | 32% | 4 × base | Ghost effects, medium overlay |
 | `opacity040` | 0.40 | 40% | 5 × base | Strong overlay |
-| `opacity048` | 0.48 | 48% | 6 × base | Disabled state, very strong overlay |
+| `opacity048` | 0.48 | 48% | 6 × base | Content de-emphasis, very strong overlay |
 | `opacity056` | 0.56 | 56% | 7 × base | Nearly opaque, subtle transparency |
 | `opacity064` | 0.64 | 64% | 8 × base | Very opaque, minimal transparency |
 | `opacity072` | 0.72 | 72% | 9 × base | Extremely opaque |
@@ -132,7 +132,6 @@ Semantic opacity tokens provide contextual meaning for specific transparency pat
 
 **Use Cases**:
 - Modal dialog backdrop/scrim
-- Disabled state overlays
 - Strong background dimming effects
 - Content de-emphasis overlays
 
@@ -250,7 +249,7 @@ Opacity tokens use unitless values (0.0 - 1.0) that are identical across all pla
   background-color: oklch(1 0 0 / var(--opacity-ghost));
 }
 
-.disabled-overlay {
+.scrim-overlay {
   opacity: var(--opacity-048);
 }
 ```
@@ -368,19 +367,25 @@ Use opacity tokens for modal backdrops, overlays, and scrim effects:
 
 ### Disabled States
 
-Use opacity tokens to indicate disabled or inactive states:
+**❌ Don't style disabled states**:
 
 ```typescript
-// Disabled button - apply opacity to entire element
-<Button disabled opacity="opacity048">  // 48% opacity
+// WRONG: DesignerPunk does not support disabled states (Button-CTA disabled-state
+// adjudication, ruled REMOVE corpus-wide with ZERO exceptions — Peter, 2026-07-15,
+// .kiro/issues/button-cta-disabled-state-adjudication.md). Applying opacity to
+// simulate a disabled state is the exact pattern the ruling prohibits.
+<Button disabled opacity="opacity048">
   Submit
 </Button>
-
-// Disabled content area
-<ContentArea disabled opacity="opacity048">
-  <Content />
-</ContentArea>
 ```
+
+If an action is unavailable, use one of the three ruled alternatives instead:
+
+- `state_loading` — for an in-flight async action
+- Validate-on-press / validate-on-blur — for invalid input
+- Do not render the component — for an action that is not available at all
+
+See `Token-Family-Blend.md` § "Anti-Patterns to Avoid" for the same inversion applied to blend tokens.
 
 ### Hover and Interaction Effects
 
@@ -448,25 +453,6 @@ When combining opacity with colors:
 </Container>
 ```
 
-### Disabled State Accessibility
-
-When using opacity for disabled states:
-
-**Visual Indication**: Opacity alone may not be sufficient to indicate disabled state. Combine with other visual cues (color changes, icons, cursor changes).
-
-**Screen Reader Support**: Ensure disabled state is communicated to assistive technologies through proper ARIA attributes, not just visual opacity changes.
-
-```typescript
-// ✅ CORRECT: Opacity + ARIA for disabled state
-<Button 
-  disabled 
-  aria-disabled="true"
-  opacity="opacity048"
->
-  Submit
-</Button>
-```
-
 ### Motion and Animation
 
 When animating opacity:
@@ -507,7 +493,7 @@ export const tooltipTokens = {
 ### When to Use Semantic Tokens
 
 Use semantic opacity tokens for:
-- Standard transparency patterns (overlays, disabled states, ghost effects)
+- Standard transparency patterns (overlays, ghost effects, content de-emphasis)
 - Consistent visual language across the design system
 - Clear communication of design intent
 
@@ -543,9 +529,9 @@ When applying opacity:
    → Use `opacity.ghost`
    → 32% opacity for highly transparent elements
 
-5. **Disabled state?**
+5. **Strong content de-emphasis, primitive-level?**
    → Use `opacity048` (primitive)
-   → 48% opacity is standard for disabled elements
+   → 48% opacity for strong overlay/de-emphasis effects outside the modal-scrim semantic
 
 6. **Hover feedback?**
    → Use `opacity008` or `opacity016` (primitives)

@@ -41,7 +41,7 @@ This document serves as a routing table for token documentation—it helps AI ag
 | Motion | Animation timing and easing (duration, easing curves, transitions) | `.kiro/steering/Token-Family-Motion.md` |
 | Radius | Corner rounding values (none, sm, md, lg, xl, full) | `.kiro/steering/Token-Family-Radius.md` |
 | Border | Border width values (none, thin, medium, thick) for form elements, cards, dividers | `.kiro/steering/Token-Family-Border.md` |
-| Opacity | Transparency values for overlays, disabled states, hover effects | `.kiro/steering/Token-Family-Opacity.md` |
+| Opacity | Transparency values for overlays, hover effects | `.kiro/steering/Token-Family-Opacity.md` |
 | Accessibility | Focus indicators, tap area sizing (WCAG compliance), icon tokens | `.kiro/steering/Token-Family-Accessibility.md` |
 | Responsive | Breakpoints (xs-xxl) and density scaling (compact, normal, comfortable) | `.kiro/steering/Token-Family-Responsive.md` |
 | Semantic Structure | Token architecture patterns and primitive→semantic hierarchy | `.kiro/steering/Token-Semantic-Structure.md` |
@@ -286,7 +286,7 @@ These are frequently used token combinations for common UI scenarios:
 - **Color**: `Token-Family-Color.md` → `color.structure.surface` for modal background
 
 ### Interactive States
-- **Opacity**: `Token-Family-Opacity.md` → disabled states, hover effects
+- **Opacity**: `Token-Family-Opacity.md` → hover effects
 - **Color**: `Token-Family-Color.md` → `color.feedback.select.*` for selection states
 - **Motion**: `Token-Family-Motion.md` → transition timing
 - **Accessibility**: `Token-Family-Accessibility.md` → focus ring tokens
