@@ -3,11 +3,21 @@
 **Date**: 2026-09-13
 **Spec**: 127 — Completion-Claims Integrity (the F7 disposition)
 **Author**: Thurgood (test governance / spec standards / Civitas steward)
-**Status**: **OUTLINE — R1 INCORPORATED (2026-09-13); awaiting Peter's outline settle.** Not requirements/design/tasks. Authored for the Spec-Feedback-Protocol's sequential formalization gate: this outline settles with Peter and the tagged reviewers before any formal document phase opens.
+**Status**: **SETTLED (2026-09-17) — all seven docket items ruled; requirements phase may open.**
+
+> **OUTLINE SETTLE — Peter, sitting held 2026-09-15 → 2026-09-17.** All seven docket items were ruled in session: the five batched R1 items below (**Q2**, **Q5**, **§ 6.2**, **B4 / § 6.1**, **rider (b)'s reach**) plus two open items routed out of the 125-B wave-3 fold (**O-3**, **O-8**). The ruling of record is the ballot:
+>
+> **`.kiro/docs/ballots/2026-09-17-spec-127-outline-settle.md`** — RATIFIED (Peter, 2026-09-17).
+>
+> Each section below carries a **`RULING (Peter, 2026-09-17)`** block stating its ruling verbatim-in-substance and pointing at the ballot. **The ballot is the authority; these blocks are pointers into it.** Where a section's pre-settle body and its ruling block disagree, the ruling block governs and the body is preserved as the record of what was argued.
+>
+> **Verification review performed** (Stacy, 2026-09-17, verification-grade claims-vs-source — `pre-spec/ballot-review-stacy.md`): **2 blocking + 6 advisory against the ballot; both blockers fixed, five advisories applied, one routed to the requirements phase.** Nothing in the rulings was contested — the findings were transcription and compilation defects in the record itself. Her structural lesson is carried at **ballot § 17.3**: *the transcription risk is highest where the transcriber is most confident of the source.*
+>
+> **The sequential formalization gate advances**: requirements.md may now be authored. **Q1, Q3 and Q4 remain requirements-phase work** — rulings 4 and 5 bear on Q1.3 and Q3 respectively, and settle nothing else about them — **plus one named definitional item: "materially amended" in ruling 4** (ballot § 7, Stacy A-3), which the rule-text formalization owns.
 
 > **R1 round complete** — Stacy (REQUIRED, 4 BLOCKING + 8 advisory + a withdrawn baseline figure), Ada and Lina (light consults, 5 advisory each). All four blockers incorporated; **zero declines**; two concessions by this author (the exemplar misdiagnosis; the ship-parts-1–2 alternative, defeated by a confound in its own trigger). Full round + per-item disposition: `feedback/design-outline.md`. Leonardo's Q3-only review not yet received.
 >
-> **BATCHED DECISION LIST FOR PETER — five items, none settled here:**
+> **BATCHED DECISION LIST FOR PETER — five items, ALL RULED 2026-09-17** *(list preserved as authored; each item's ruling is in its own section's `RULING` block and in the ballot)*:
 > 1. **Q2 — arming timing.** Three options now: arm at campaign close (0 boundary charge) · arm immediately (2 of K=3) · **arm on convention-adoption evidence, capped by the next release publish** (Stacy R1; conditions (a)–(d), with (c) self-flagged as droppable optimization). → §8 Q2
 > 2. **Q5 — ownership of execution-claims verification.** Untouched on the merits; the author is a named party and does not self-adjudicate. §8 Q5 now points at the joint working agreement and both frozen positions rather than summarizing them, with five carried R1 items recorded unadjudicated. → §8 Q5
 > 3. **§6.2 — what binds in-flight specs.** Corrected population: **36 specs**, not 2. Option (ii) is near-total nullification, not a months-long delay. Stacy's option-(iii)-plus-fixed-string-exemption position and her own sunset counter-argument are recorded. → §6.2
@@ -260,6 +270,21 @@ Parent ticked in tasks.md ⇒ `completion/task-N-completion.md` **and** `docs/sp
 - **No mechanization of verification honesty.** It stays ideological; education owns it (§5.3). This spec must not imply otherwise anywhere in its prose.
 - **No change to tasks.md criteria *authorship* standards** beyond what Q1's machine-readable convention requires — in particular, this spec does not tighten what a criterion must say. (That is the Goodhart surface, §3.4, deliberately left to audit rather than rule.)
   - **Live tension, raised at R1 and carried to Peter (Stacy B4 / Q1.3):** does a **total `criteria-mode` declaration** on 153 existing `tasks.md` files count as the authorship-standard creep this non-goal rules out? This author's reading: no — declaring a *mode* does not tighten what a criterion must **say**, so the Goodhart surface this non-goal protects is untouched, and the declaration can be forward-binding like everything else. **This author wrote the non-goal and his rule gains reach from the answer, so the reading is recorded, not applied.** If Peter reads it as creep, B4's exit door needs a different closure and neither party has a cheaper one.
+
+  > **RULING (Peter, 2026-09-17) — FORWARD-TOTAL WITH LEGACY DEFAULT.** *(Ballot § 7; `.kiro/docs/ballots/2026-09-17-spec-127-outline-settle.md`.)*
+  >
+  > - The criteria-mode declaration — **`criteria-mode: per-parent | spec-level`, no third state** — is **mandatory in every `tasks.md` authored or materially amended post-ratification.**
+  > - **Absent declaration = legacy**, routing to § 6.2's exemption path.
+  > - **Adding the declaration is how an in-flight spec opts in.**
+  > - **Legacy is a closed set that only shrinks.**
+  > - **No dormant spec is reopened** to add a declaration.
+  > - **CLARIFIED at the flag fold (Peter, 2026-09-17): a POST-ratification `tasks.md` that omits the declaration is NON-COMPLIANT. Legacy status is determined by AUTHORSHIP DATE — never by absence of the declaration.** This is what keeps "only shrinks" true by construction: omission is not an entrance to the legacy set, so B4's exit door does not reopen one clause over.
+  >
+  > **This resolves the recorded conflict in the NARROWING direction.** Total going forward — which is what B4's exit door required; **not** retrofitted onto 153 existing files — which is what this non-goal protected. This author's reading (declaring a *mode* does not tighten what a criterion must **say**) is vindicated in substance and bounded in reach, and it was **ruled by Peter, not applied by its author**, as the handling note asked.
+  >
+  > **Cheap hedge still live** (§ 3.4): the first claims pass counts criteria-block **omissions** alongside criteria **vagueness**. The legacy set is where B4's prediction — that the omission rate rises once writing criteria creates an auditable obligation — becomes testable.
+  >
+  > *Raised at ballot drafting (§ 17.2 item 1: "mandatory post-ratification" and "absent declaration = legacy" pull against each other, and "legacy only shrinks" says legacy cannot receive it) and **ANSWERED by Peter the same day** — the clarifying sentence above is the resolution. Flag preserved with its resolution at ballot § 17.2.*
 - **No retroactive charge** against any 125-B wave window for the ballot or the register rows — register/ballot PRs are campaign-endogenous by the settled segmentation ruling. **The check ARMING is exogenous** (Q2).
 
 ### 6.2 One scoping edge, flagged for Peter's outline settle (still a one-sentence ruling — but not on the numbers the draft gave)
@@ -277,6 +302,26 @@ Parent ticked in tasks.md ⇒ `completion/task-N-completion.md` **and** `docs/sp
   - **Her own counter-argument, recorded**: (iii) gives every in-flight parent a self-served exemption for an unbounded period, and 36 specs is a large blast radius for a self-served exemption. If that reads as too permissive, the tightening is a **sunset** (available only until the spec's next parent completes after ratification-plus-one-merge) — **not** a switch to (ii), which nullifies.
 
 **Still no recommendation from this author, and the ruling is still Peter's.** It was flagged for his outline review before this round and it remains so — now with corrected numbers, which was the point of flagging it as blocking.
+
+> **RULING (Peter, 2026-09-17) — OPTION (iii), NO SUNSET, PLUS DECOUPLING.** *(Ballot § 6.)*
+>
+> The rule **binds after ratification**. In-flight parents may carry the **FIXED-STRING** exemption note:
+>
+> `Criteria fidelity: exempt — spec in flight at ratification (<date>)`
+>
+> **Free-prose exemptions are non-compliant** — a freely-phrased exemption is an unfalsifiable claim, which is B4's failure mode wearing a different hat.
+>
+> **NO SUNSET CLAUSE.** Stacy's recorded tightening is **declined**: **Q5's claims-pass machinery is the abuse detector** — exemption overuse surfaces as a pattern finding in a pass and routes through the composed learning loop. A tightening, if ever needed, arrives as evidence rather than as a clause that expires on a date nobody is watching.
+>
+> **DECOUPLING (the half most easily lost in transcription): the claims-pass obligation applies to EVERY spec closing after ratification, regardless of exemption status.** An exemption from the new *table format* is **not** an exemption from being audited. The judgment residual a pass covers — M3 evidence quality, M4 forced-negative adoption, promised-artifact gaps, Goodhart/omission — **does not depend on the new table format**, so it does not lapse when the format is exempted.
+>
+> **SCOPE OF THE FIXED STRING, clarified at the flag fold (Peter, 2026-09-17): it is required ONLY where a parent would otherwise owe the table** — i.e. in-flight specs whose `tasks.md` defines **per-parent criteria**. **Zero-criteria legacy specs (e.g. `125-A`) are outside the rule entirely by rider (a): no string, no noise** — and they **still receive claims-passes** per the decoupling. An exemption note asserts something about an obligation; where no obligation exists it is ceremony, and ceremony would degrade the string as a signal exactly where it matters.
+>
+> **CENSUS RECONCILED — the amendment's 39 supersedes this section's 36.** Two recipes, two numbers: this section's B6-incorporated figure (**36**) came from a checkbox scan whose parent regex **missed bold-numbered parents**; the lifecycle amendment § 2.2 (`pre-spec/q5-lifecycle-amendment.md`, PR #165) measured **39 of 153 (25%) partially ticked**. **Delta = 3 specs, including `125-A`**, whose parents are written `- [x] **1. …**` and whose parent 5 (`**5. BAKE-IN GATE …**`) is permanently open by design. Re-derived at ballot drafting: **153 specs with a `tasks.md`; 39 partially ticked — confirmed.**
+>
+> **The RULE text is recipe-independent and inherits neither number**: *any spec with both ticked and unticked parent tasks at ratification.* The census sizes the blast radius; it does not define the population, so a recipe that drifts cannot silently change what the rule binds.
+>
+> *Raised at ballot drafting (§ 17.2 item 2: the 39 is the "both ticked and unticked" population, **not** "in-flight AND bound" — `125-A`, one of the delta-3, defines **zero** per-parent Success Criteria and is exempt by rider (a) regardless; this section's superseded claim that **all** of the in-flight population defines per-parent criteria blocks does not survive the delta) and **ANSWERED by Peter the same day** — the fixed-string scope clause above is the resolution. Flag preserved with its resolution at ballot § 17.2.*
 
 ---
 
@@ -306,6 +351,8 @@ Parent ticked in tasks.md ⇒ `completion/task-N-completion.md` **and** `docs/sp
 ## 8. Open questions for the feedback round
 
 **None of these are settled here.** Each is framed with options and the evidence bearing on it.
+
+> **POST-SETTLE NOTE (2026-09-17).** That sentence describes this section **as authored for the round** and is preserved as such. At the settle sitting Peter ruled **Q2** (guarded deferral), **Q5** (ratified, full package), **Q1 sub-question 3** (the `criteria-mode` declaration — see § 6.1's ruling block) and **rider (b)'s reach** (claim-keyed, Q3's new sub-question). Their `RULING` blocks sit in place below. **Q1 (otherwise), Q3's shape, and Q4 remain open requirements-phase work** — deliberately, per the sequential gate.
 
 ### Q1 — The machine-readable criteria convention
 
@@ -367,6 +414,23 @@ So **≈90.5%** share one form, with a long tail — and the criteria themselves
 
 **Not decided here.** Two facts worth having in front of the decision: the campaign's measured exogenous-event rate is *low* (1 in ~13 months of PR history since campaign open; the U1 pilot measured **zero**), so K=3 is not under pressure — and conversely, the interim is only as long as Wave 3 + closeout take, which at the current bursty cadence is not predictable in calendar terms. **Peter decides, now among three options.**
 
+> **RULING (Peter, 2026-09-17) — GUARDED DEFERRAL.** *(Ballot § 4.)*
+>
+> The arming decision **defers to the campaign-close (5.Z) sitting** for re-evaluation with closeout-and-dial context in hand. Two **pre-committed guards**, decided now so the deferral is not open-ended:
+>
+> **(i) Release guard.** If a release approaches before that sitting, **the Q2 decision fires then instead** — **no release ships with the question unexamined.**
+> **Event anchor, clarified at the flag fold (Peter, 2026-09-17): RELEASE-PREP START — concretely, the creation of the version-bump PR** (the v14.x pattern). **The release checklist carries the line *"if arming is undecided, decide it now."*** The guard fires on an event with a timestamp, not on a judgment that a release "approaches."
+>
+> **(ii) Evidence guard.** Whatever is decided, **the checker does not arm before the Q1 convention has shipped AND the Tier-3 worked example is fixed (B5) AND real parents have passed it, verified by audit** — **evidence, not calendar.**
+> **Quantified at the flag fold (Peter, 2026-09-17): Stacy's N ≥ 5 is RESTORED** — at least five in-scope parents completed under the convention, **with M2 measured BY AUDIT, not by the checker.** Its absence from the first transcription was transcription loss.
+> **Second conjunct restored at the verification-review fold (Stacy A-1, same transcription-loss class): condition (a) was "the Q1 convention has shipped AND the Tier-3 worked example is fixed (B5)."** Both conjuncts bind — arming a verbatim checker against a corpus whose canonical exemplar still models effort-as-evidence is the wall argument one level in. **With both restorations, guard (ii) now carries conditions (a) and (b) in full**; the earlier claim that it did so was, before these folds, stronger than the text supported.
+>
+> Guard (ii) carries Stacy's conditions (a)+(b) — **in full after the A-1 restoration above** — as a floor under *any* decision rather than as one option's terms; a verbatim checker armed against today's authoring style is **not a gate, it is a wall** (§ 1.4: count-parity 7/15, true verbatim plausibly near 0/15). **Guard (i) carries condition (d)'s HARM-BOUNDARY REASONING but adjudicates (d)'s absolute against (b)** (Stacy A-2): (d) capped *arming* — *"arm before the next release publish regardless"* — while guard (i) caps *deciding*, so a release-prep sitting may lawfully decide **not** to arm. Recorded in her words, against her own list: *"my own condition list was internally inconsistent… Ruling in favour of (b) is a legitimate adjudication of my tension, not a transcription loss."* **Her condition (c) is NOT carried** (self-flagged droppable; it couples 127's arming to another spec's schedule).
+>
+> **Unchanged:** the checker is **BUILT in this spec** under every option. Q2 is scoped to the required-flag flip only.
+>
+> *Raised at ballot drafting (§ 17.2 items 3–4: guard (i)'s "approaches" is a judgment where every other trigger is event-anchored; guard (ii) preserves "verified by audit" but drops Stacy's **N ≥ 5**) and **ANSWERED by Peter the same day** — both resolutions are folded into the guards above. Flags preserved with their resolutions at ballot § 17.2.*
+
 ### Q3 — The product per-platform status dimension
 
 **Why it is open:** rider (b) is settled in principle; its shape is not. And it binds a **currently empty surface** — the Product MCP index reports 0 screens, 0 tokens, 0 domain objects. There is no instance to validate the design against, so whatever is chosen will be untested until the first product spec lands.
@@ -393,6 +457,23 @@ So **≈90.5%** share one form, with a long tail — and the criteria themselves
 - **Scoping, from Lina**: most Stemma component parents are **already platform-scoped at the task level** (web/iOS/Android are typically separate subtasks or parents), so this shape binds the smaller set of cross-platform *parity* closing parents, not every component parent.
 
 **NEW sub-question — rider (b)'s reach (Lina R1; flagged for Peter).** Rider (b) as settled says *"product-spec parents."* Component parity claims have the **identical failure shape**. Does rider (b) reach **system-side Stemma parents**, or only product screens? This is an execution consequence of a settled rider, not a reopening of it — and it is not this author's to answer by construction. **Added to the Peter-settle list.**
+
+> **RULING (Peter, 2026-09-17) — OPTION (c), CLAIM-KEYED.** *(Ballot § 8.)*
+>
+> **Any criterion whose promise spans multiple platforms — product tier OR system tier — carries per-platform status. Single-platform criteria keep single rows. The product rider becomes a special case of the general rule.**
+>
+> **CLARIFIED at the flag fold (Peter, 2026-09-17): per-platform STATUS is the requirement** — **rendered** as per-platform columns **or** as the product-side Implementation-Report roll-up. **Evidence-cells-only is INSUFFICIENT for a multi-platform claim**: structuring only the Evidence cell leaves the Status cell free to hide an unmet platform, which is Lina's objection on the substance. **The exact rendering belongs to the Q1 convention at the requirements phase**, because the checker's predicate reads whatever shape the convention fixes.
+>
+> **Why claim-keyed rather than tier-keyed**: tier-keyed-narrow leaves Ada's measured token-generation instances uncovered; tier-keyed-wide taxes single-platform criteria with N/A noise. Keying on **the claim's own reach** puts the obligation exactly where the harm is — a single ✅ standing for three platforms — and nowhere else.
+>
+> **Compositions, part of the ruling:**
+> - **With Stacy's Q3 discharge-through-Implementation-Reports + roll-up rule**: no second parallel structure is required; the roll-up rule (*✅ only if every applicable platform is ✅; otherwise ⚠️, naming the platform*) becomes a **general** rule rather than a product-local one.
+> - **With Method-line honesty**: *"web verified / iOS not re-verified"* must be expressible **per criterion** — the honest form given the platform-toolchain gap (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`).
+> - **With the tasks-round verifiability lens**: the lens carries **the does-this-span-platforms question at authoring time** — inside its existing seat, no new event.
+>
+> **What this does NOT dissolve**: claim-keying decides **which** criteria carry the dimension; status-is-the-requirement decides **what** they must carry; **Q1 decides how it is written.** The rendering choice and the checker's reach into it remain **Q3/Q1 requirements-phase work**, including the live Stacy/Lina disagreement over whether the report roll-up is mechanically verifiable. Leonardo's Q3-only review is still outstanding and Stacy's instruction stands: **weight his input above hers on the product-side shape.**
+>
+> *Raised at ballot drafting (§ 17.2 item 5: the parenthetical offered two shapes without saying who chooses — and evidence-cells-only is precisely the shape Lina identified as reintroducing the roll-up risk) and **ANSWERED by Peter the same day**: status is the requirement, evidence-cells-only is insufficient, rendering goes to Q1. Flag preserved with its resolution at ballot § 17.2.*
 
 **Known system-side instances — Q3 is not product-only (Ada R1, converging with Lina).** A single Rosetta criterion frequently **bundles three platforms** ("Cross-platform generation produces consistent values"; "CSS/Swift/Kotlin outputs match"). An exact-set verbatim row reproducing that bullet as one ✅ can hide *"passed on web and iOS, silently wrong on Android"* — the same problem rider (b) names, on the token-generation surface instead of the screen surface. **Recorded as a known future instance of Q3's shape, not a novel one**, so whichever doc records Q3's resolution carries a forward pointer and the convention is not re-litigated per domain later. (This is also where Lina's Evidence-cell edge lands: one criterion whose evidence is inherently three artifacts either truncates to one platform's proof or turns the cell into a nested table.)
 
@@ -438,6 +519,41 @@ Deferred build; registered now. For the round to shape rather than settle:
 5. **Stacy's ADDITION to the agreement, requiring this author's R2 acknowledgment — GIVEN.** B4 strengthens (d6)(3) beyond what she originally asked: the criteria-mode declaration must be **TOTAL** (`per-parent | spec-level`, no third state), not merely mechanical for the spec-level case, because a spec declaring nothing and defining no criteria is exempt **with no assertion to falsify**. She flagged it as the item most likely to be lost in transcription because it looks like a restatement of (d6)(3) and is not. **Acknowledged explicitly; it is carried into Q1 sub-question 3 with its §6.1 tension flagged to Peter** — accepted as this author's obligation to author *if* Peter rules that way, and **not** treated as settled by the two named parties agreeing.
 
 **Handling note (procedural, and I am asking that it be honored):** because I am a named party, **my R1 incorporation will not self-adjudicate Q5.** I will incorporate all other feedback normally, record Stacy's R1 position on Q5 verbatim alongside any other reviewer's, and carry the question to Peter unresolved. It settles by Peter's decision after the round, with Stacy's R1 on record — not by my summary of it.
+
+> **RULING (Peter, 2026-09-17) — RATIFIED, FULL PACKAGE.** *(Ballot § 5 and § 11; the handling note was honored — this question was carried to Peter unadjudicated and is ruled by him, not by its author.)*
+>
+> **The package is:**
+> 1. **The co-signed joint working agreement** — `pre-spec/q5-joint-working-agreement.md` (Stacy drafted; Thurgood countersigned 2026-09-13). Landed as **PR #158**.
+> 2. **The co-signed lifecycle amendment** — `pre-spec/q5-lifecycle-amendment.md` (Stacy drafted 2026-09-15; Thurgood countersigned 2026-09-15). **PR #165 — MERGED 2026-09-17**; the settle branch is rebased onto that merge, so both co-signed documents are on `main` at their cited paths. **The ratified record is complete at the settle PR's merge.**
+> 3. **Four Peter additions**, below.
+>
+> **(a) THE COMPOSED LEARNING LOOP — Peter's design, recorded verbatim:**
+>
+> > *"Stacy's claims-pass carries a mandatory 'Standards implications: none / or list.' Thurgood reviews EVERY claims-pass in full — mining for standards learnings, never grading the audit — and records a one-line outcome (adopted / declined-with-reason / none). Standards improvements are co-drafted recommendations (either party may initiate; contested items go to Peter); the resulting standard change remains Thurgood's authorship through the normal review round."*
+>
+> **This supersedes the base agreement's N ≥ 3 EDUCATION threshold for standards-implicating findings.** The **standards** route reconciles to one route, not two: the old EDUCATION pattern-threshold route **folds into the loop** (ballot § 11.4).
+>
+> **FINDING ROUTING, clarified at the flag fold (Peter, 2026-09-17) — Ada's carried R1 item 1 is ADOPTED EXPLICITLY. Two routes, different purposes, both recorded:**
+> - **Remediation route** — **a single instance suffices, no threshold**: a claims-pass finding routes to the **OWNING DOMAIN AGENT**, who corrects the record and adjusts the next artifact.
+> - **Standards route** — the composed loop above, firing on **every** claims-pass via its `Standards implications:` line, read in full by Thurgood.
+>
+> **Additive, not alternatives.** This answers Ada in her own terms — *"waiting for an N≥3 EDUCATION threshold before I hear about it seems like the wrong latency"* — without reintroducing a threshold anywhere. It closes the single-instance latency hole the threshold left, at the cost of a standing full-read obligation — accepted, with the anti-rot bound restated at the point of the new duty: **mine for standards learnings; never grade the audit.** Authorship is undisturbed — the resulting standard change remains this author's through the normal review round.
+>
+> **(b) RELEASE-STEP CONDITION.** The release checklist (`.kiro/hooks/RELEASE-FLOW.md`) gains a **named step that RUNS the owed-set query and pastes its output into release-notes prep — an artifact, not a reminder**. **A Spec 127 task deliverable.** Staged mechanization stands as pre-committed: documented pipeline → (**second wrong owed-set result**) committed script + scoped grant → (**Q2 re-evaluation sitting**) publish-hook decision.
+> **Detectors named at the flag fold (Peter, 2026-09-17): any wrong owed-set result noticed in ORDINARY USE counts toward promotion** — the two ordinary-use surfaces being the **LIVENESS read** and **this release step**. The promotion trigger stops being inert without creating a detection project. *(Honest residual: detection-by-use, not detection-by-guard.)* The same deliverable also carries Q2 guard (i)'s line — ***"if arming is undecided, decide it now."***
+>
+> **(c) TOOLCHAIN CHARTER.** `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` — the platform-build verification gap (carried Q5 item 2, Lina R1) is chartered: Kenya/Data design, Ada/Lina are verified parties, interim posture = Method-line honesty + Kenya's local `swiftc`/`xcodebuild` spot-check recipe (Data checks Android SDK presence). **Kenya and Data do NOT become standing per-pass verifiers** — they build tools; the verifier verifies.
+>
+> **(d) TRACKING RULING.** Charters carry **named evaluation triggers + evidence criteria**; the **monthly health check gains an active-charter walk** (fired? / evidence?, against pre-written triggers — **minutes, not sessions**); the **queued issues-dir triage's archive convention is its precondition and is now load-bearing**.
+> **Owner assigned at the flag fold (Peter, 2026-09-17): the issues-dir triage is THURGOOD's, anchored before-or-at the next monthly health check (~2026-09-25)** — the precondition must exist before the first walk it bounds, or that walk runs over an untriaged directory and becomes the session-length obligation this ruling exists to prevent.
+>
+> **EXCLUDED from ratification: the contested (d7) coverage-adequacy line** — *"per-implementation coverage adequacy is Stacy's; suite-level health is Thurgood's."* Contested at countersignature as a **reassignment of two named elements of a current charter** rather than a clean disambiguation. Moving it ever requires **a separate argument with evidence**, scoped as a charter change, not a wording fix.
+>
+> **Carried R1 items — all five disposed.** Item 5 (Stacy's TOTAL `criteria-mode` addition) is ruled at § 6.1 / Q1.3 above. Item 2 (platform-toolchain gap) is chartered per (c). Items 3 and 4 were reads-positively/no-objection and need no ruling. **Item 1 (Ada's finding-routing gap) was raised at ballot drafting as possibly orphaned by the fold and is now ADOPTED EXPLICITLY** — the remediation route in (a) above; ballot § 17.2 item 6 carries the flag with its resolution.
+>
+> **What the ratification obliges of this author** is transcribed unsoftened at **ballot § 16.1** — the full-pass read, the one-line disposition, mining-not-grading, the caller-out duty, LIVENESS-as-a-query, the midpoint-carrier line, and the volunteered standardization of the Declared Merge Units block. **Ballot § 16.2 is its counterpart on Stacy**, added at the verification-review fold and carrying the **mirror anti-rot clause verbatim** — *"Stacy may say a criterion is unverifiable; she may never say what it should say"* — which the caller-out duty exists to call.
+>
+> **The (d8) framing obligation travels with this ruling**: nothing here makes claim honesty owned, solved, or guaranteed. *Any future reading of these numbers that treats a green gate as evidence of claim honesty will have made the error this spec exists to prevent.*
 
 ---
 
@@ -529,18 +645,20 @@ Per the Spec-Feedback-Protocol § "Stakeholder Identification". Feedback doc: **
 
 ## 13. Resolution record
 
-*(Populated as the outline round resolves. R1 incorporated 2026-09-13; no question is settled.)*
+*(R1 incorporated 2026-09-13. **Outline settled 2026-09-17** — all seven docket items ruled; ruling of record: `.kiro/docs/ballots/2026-09-17-spec-127-outline-settle.md`.)*
 
 | Question | Resolution | Decided by | Date |
 |---|---|---|---|
-| Q1 — criteria convention | **open, sharpened.** Leading candidate: **(c′) verbatim CELL** (whitespace/line-wrap normalization only) + **required-if-applicable** additional-verification section + **total `criteria-mode` declaration**. Reviewer support for (c) recorded from Ada, Lina, Stacy — given to (c) as offered, **to be re-tested against (c′) at R2** | — | — |
-| Q2 — arming timing | **open, three options** (was two): arm at campaign close · arm immediately · **arm on convention-adoption evidence, capped by next release** (Stacy R1, conditions (a)–(d), (c) self-flagged droppable) | — | — |
-| Q3 — per-platform shape | **open, genuinely contested**: Stacy (no new shape; Implementation Reports + one roll-up sentence) **vs** Lina (per-platform columns; the roll-up rule is exactly what a checker cannot verify). Known system-side instances recorded (Ada). **Leonardo's R1 to be weighted above Stacy's, per Stacy** | — | — |
-| Q4 — `(modified)`-vs-diff shape | **open, reshaped**: input surface → `**Primary Artifacts:**` (130/153, vs `(modified)` at 14/153); **split into `promised-artifact-exists` (cheap, buildable) + `promised-artifact-shipped` (deferred, not per-PR)**; promotion trigger → retrospective dry run | — | — |
-| Q5 — ownership | **open; NOT self-adjudicated** (author is a named party). Body replaced by a pointer to the joint agreement + both frozen positions; 5 carried R1 items recorded unadjudicated | — | — |
-| §6.2 — in-flight specs | **open, corrected**: population is **36 specs** (not 2), (ii) is near-nullification not a months-long delay; Stacy's (iii)+fixed-string-exemption position and her sunset counter-argument recorded | — | — |
-| **B4 / §6.1 tension** *(new)* | **open** — is a total `criteria-mode` declaration `tasks.md`-authorship creep? | — | — |
-| **Rider (b) reach** *(new)* | **open** — does the per-platform dimension bind system-side Stemma parity parents, or only product screens? | — | — |
+| Q1 — criteria convention | **OPEN — requirements phase** (deliberately not on the settle docket). Leading candidate: **(c′) verbatim CELL** (whitespace/line-wrap normalization only) + **required-if-applicable** additional-verification section. Reviewer support for (c) recorded from Ada, Lina, Stacy — given to (c) as offered, **to be re-tested against (c′) at R2**. *Q1.3 (the `criteria-mode` declaration) IS ruled — see the B4 row* | — | — |
+| Q2 — arming timing | **RULED — GUARDED DEFERRAL.** Defers to the campaign-close (5.Z) sitting, with two pre-committed guards: **(i)** anchored at **RELEASE-PREP START — the version-bump PR's creation** — which fires the decision then instead, with the release checklist carrying *"if arming is undecided, decide it now"*; **(ii)** no arming before the Q1 convention has shipped **and the Tier-3 worked example is fixed (B5)** **and** **N ≥ 5** in-scope parents have passed it with **M2 measured by audit, not by the checker** — evidence, not calendar. Guard (i) carries (d)'s harm-boundary reasoning while adjudicating its "regardless" against (b); Stacy's condition (c) not carried. The checker is **built in this spec** regardless | **Peter** | 2026-09-17 |
+| Q3 — per-platform shape | **OPEN — requirements phase**, on the shape. Stacy (Implementation Reports + roll-up sentence) **vs** Lina (per-platform columns) still contested; **Leonardo's input to be weighted above Stacy's**. *Rider (b)'s **reach** IS ruled — see the rider row* | — | — |
+| Q4 — `(modified)`-vs-diff shape | **OPEN — requirements phase**: input surface → `**Primary Artifacts:**` (130/153, vs `(modified)` at 14/153); **split into `promised-artifact-exists` + `promised-artifact-shipped` (deferred, not per-PR)**; promotion trigger → retrospective dry run | — | — |
+| Q5 — ownership | **RULED — RATIFIED, FULL PACKAGE.** The co-signed joint working agreement (**PR #158**) + the co-signed lifecycle amendment (**PR #165, merged 2026-09-17**) + four Peter additions: **(a)** the composed learning loop (supersedes the N ≥ 3 EDUCATION threshold on the **standards** route) **plus the explicitly adopted remediation route to the OWNING DOMAIN AGENT, single instance, no threshold — two routes, both recorded**; **(b)** the release-step owed-set condition (a 127 task deliverable; staged mechanization pre-committed, with **LIVENESS and the release step named as the promotion trigger's de-facto detectors**); **(c)** the toolchain charter; **(d)** the tracking ruling (named triggers + evidence criteria; health-check active-charter walk; **issues-dir triage = Thurgood, before-or-at ~2026-09-25**, as its precondition). **EXCLUDED: the contested (d7) coverage-adequacy line.** Not self-adjudicated by this author at any point | **Peter** | 2026-09-17 |
+| §6.2 — in-flight specs | **RULED — option (iii), NO SUNSET, plus DECOUPLING.** Binds after ratification; in-flight parents may carry the **FIXED-STRING** note `Criteria fidelity: exempt — spec in flight at ratification (<date>)`; free-prose exemptions non-compliant. **The string is required ONLY where a parent would otherwise owe the table** — zero-criteria legacy specs (e.g. 125-A) are outside the rule per rider (a): no string, no noise, **but still claims-passed**. No sunset — **Q5's claims-pass machinery is the abuse detector**. **Decoupling: the claims-pass obligation applies to EVERY spec closing after ratification regardless of exemption status.** Census reconciled: the amendment's **39** supersedes this outline's 36 (regex missed bold-numbered parents; delta = 3 incl. 125-A); **rule text is recipe-independent** | **Peter** | 2026-09-17 |
+| **B4 / §6.1 tension** | **RULED — FORWARD-TOTAL WITH LEGACY DEFAULT.** `criteria-mode: per-parent \| spec-level`, no third state, **mandatory in every `tasks.md` authored or materially amended post-ratification**; absent declaration = legacy → § 6.2's exemption path; adding it is how an in-flight spec opts in; **legacy is a closed set that only shrinks**; no dormant spec reopened. **Clarified: a POST-ratification `tasks.md` omitting the declaration is NON-COMPLIANT — legacy is keyed on AUTHORSHIP DATE, never on the declaration's absence.** Resolves the conflict in the **narrowing** direction | **Peter** | 2026-09-17 |
+| **Rider (b) reach** | **RULED — option (c), CLAIM-KEYED.** Any criterion whose promise **spans multiple platforms — product OR system tier** — carries **per-platform STATUS** (rendered as columns or as the product-side report roll-up; **evidence-cells-only is INSUFFICIENT**, exact rendering to the **Q1 convention at requirements phase**); single-platform criteria keep single rows; **the product rider becomes a special case of the general rule.** Composes with Stacy's Q3 discharge-through-Implementation-Reports + roll-up rule, with per-criterion Method-line honesty, and with the tasks-round lens carrying the does-this-span-platforms question at authoring time | **Peter** | 2026-09-17 |
+| **O-3** — generated agent files unmarked *(125-B wave-3 item)* | **RULED — option (a), the one-line banner.** Generator-authored body line after frontmatter marking generated agent files as generator output. **Execution = a separate small chore PR** (canonical/generator change + regen + diff-guard green — the fix honors the rule it teaches); **not part of the settle PR**; **owner: Thurgood**, post-settle | **Peter** | 2026-09-17 |
+| **O-8** — `armed` semantics *(125-B wave-3 item)* | **RULED — option (c), OPTIONAL QUALIFIER, and EXECUTED in the settle PR.** Register Entry Schema gains optional `armed_at: pr-gate \| tool-time \| build-time`, default `pr-gate`; existing rows untouched; non-pr-gate rows carry it explicitly; **qualified non-pr-gate rows excluded from `EXPECTED_CONTEXTS` arithmetic**; the C8 row's inline prose note converts to the field. Rides the settle PR because it is **register law matching the record being made**; upgrade path to mandatory noted if tool-time gates multiply | **Peter** | 2026-09-17 |
 
 ### R1 round record
 
