@@ -7,20 +7,17 @@
 
 ---
 
-## Context for Reviewers
+## Context for Reviewers (updated 2026-09-19 — tasks.md authored)
 
-*(Populated by the spec author before requesting review. Will carry: the declared merge units, task-type classifications and validation tiers, agent assignment — which depends on Q5's resolution — and the arming-unit sequencing that depends on Q2's resolution.)*
+**Phase gate discharged**: design accepted at PR #178. The outline's provisional unit sketch above is **superseded**: Q2's guarded deferral removed the arming from 127 entirely, so the units are now **U1 law / U2 instrument / U3 charters** (the arming's old U3 slot is gone; charters take it). The outline's note about self-application is answered: `tasks.md` declares `**Criteria mode**: per-parent` voluntarily (design DD8) and every parent carries convention-form criteria.
 
-**Proposed unit shape from the outline** (§ "7. Artifact inventory"), for review at this phase, not settled:
-- **U1** — ballot + law edits (completion-documentation-guide, Process-Spec-Planning, Task-Completion-Protocol pointer) + register rows. One Peter-merged governance-law PR.
-- **U2** — checker build + gate-bite proof + `verify-gate-registration.sh` wiring.
-- **U3** — arming + register `check_state` flip + F7 disposition on the audit issue.
+**THIS ROUND IS THE LENS SEAT'S FIRST FIRING.** Stacy reviews under two hats, kept distinct per the ratified machinery:
+1. **The LENS** (lifecycle amendment § 1.2, seated at this round by ratified law): the five questions against every parent's criteria set — does a criteria set exist and is the mode declared; could evidence exist and of what kind; is there a state of the world where each criterion reads UNMET; is "met" decidable without consulting the author; do the task texts promise artifacts the criteria don't cover — plus the spanning question. **The mirror clause binds**: findings as defect class + falsification question, never replacement criterion text; a declined objection is a recorded objection, not a block.
+2. **Ordinary tasks-round review** (Spec-Feedback-Protocol): unit declaration correctness (incl. the midpoint carrier and the U1→U2→U3 order fork the design left to this round), sequencing, route naming (the B-3 duty), type/agent assignments, and the routed A-2 accounting note.
 
-U2/U3 are separated so a Q2 decision to defer arming holds U3 without holding the build.
+**Reviewer set**: Stacy only (REQUIRED). Ada/Lina/Leonardo carry no assignments in this plan (all units are Thurgood/main-session), so tagging them would be cost without signal per the outline § 10's own standard; they were bound-party reviewers at every prior phase and their items are encoded in the design the tasks trace to.
 
-**Note**: this spec's own parent tasks will be among the first bound by the rule it creates — the tasks phase should say explicitly whether Spec 127's parents comply with the new form (§ "6.2" interacts).
-
-**Phase gate**: tasks are authored only after the design round closes.
+**Stamp**: `[AGENT R1]` (rounds reset per artifact). Reviewers return text; Thurgood transcribes.
 
 ---
 
