@@ -4,47 +4,55 @@
     {
       "lines": [
         1,
-        252
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        254
       ],
       "op": "passthrough",
       "source": "canonical/agents/sparky.md#body"
     },
     {
       "lines": [
-        253,
-        259
+        255,
+        261
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        260,
-        263
+        262,
+        265
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        264,
-        289
+        266,
+        291
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        290,
-        308
+        292,
+        310
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        309,
-        312
+        311,
+        314
       ],
       "op": "render",
       "source": "writeScope"

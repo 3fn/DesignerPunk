@@ -4,47 +4,55 @@
     {
       "lines": [
         1,
-        255
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        257
       ],
       "op": "passthrough",
       "source": "canonical/agents/kenya.md#body"
     },
     {
       "lines": [
-        256,
-        261
+        258,
+        263
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        262,
-        265
+        264,
+        267
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        266,
-        291
+        268,
+        293
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        292,
-        305
+        294,
+        307
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        306,
-        309
+        308,
+        311
       ],
       "op": "render",
       "source": "writeScope"

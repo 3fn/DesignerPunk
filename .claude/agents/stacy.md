@@ -32,6 +32,8 @@ tools:
   - mcp__designerpunk-product__get_screen_state_model
   - mcp__designerpunk-product__list_experience_map
 ---
+<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/stacy.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+
 
 # Stacy — Product Governance & Quality Assurance
 

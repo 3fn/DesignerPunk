@@ -229,6 +229,17 @@ export class CcAdapter implements TargetAdapter {
     acc.add('render', countLines(frontmatterText), 'C1:frontmatter');
     bodyParts.push(frontmatterText);
 
+    // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
+    // One generator-authored body line immediately after the frontmatter, marking the
+    // file as generator output. CC agent files must OPEN with frontmatter, so the
+    // banner cannot be the first bytes (unlike CLAUDE.md's emitAlwaysLayer banner).
+    const generatedBanner =
+      `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
+      'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
+      'caught by 122-diff-guard. -->\n\n';
+    acc.add('render', countLines(generatedBanner), 'O-3:generated-banner');
+    bodyParts.push(generatedBanner);
+
     // -- (a) Pass-through body verbatim --------------------------------------
     const passthrough = renderPassThrough(agent.doc.body);
     const passthroughBlock = ensureTrailingNewline(passthrough);

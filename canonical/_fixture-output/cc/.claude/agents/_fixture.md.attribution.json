@@ -12,23 +12,31 @@
     {
       "lines": [
         17,
-        27
+        18
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        19,
+        29
       ],
       "op": "passthrough",
       "source": "canonical/agents/_fixture.md#body"
     },
     {
       "lines": [
-        28,
-        29
+        30,
+        31
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        30,
-        120
+        32,
+        122
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,40 +44,40 @@
     },
     {
       "lines": [
-        121,
-        124
+        123,
+        126
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        125,
-        132
+        127,
+        134
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        133,
-        144
+        135,
+        146
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        145,
-        148
+        147,
+        150
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        149,
-        154
+        151,
+        156
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

@@ -4,39 +4,47 @@
     {
       "lines": [
         1,
-        307
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        309
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#body"
     },
     {
       "lines": [
-        308,
-        311
+        310,
+        313
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        312,
-        343
+        314,
+        345
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        344,
-        359
+        346,
+        361
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        360,
-        363
+        362,
+        365
       ],
       "op": "render",
       "source": "writeScope"

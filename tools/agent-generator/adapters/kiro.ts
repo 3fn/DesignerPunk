@@ -308,6 +308,16 @@ export class KiroAdapter implements TargetAdapter {
     const acc = new AttributionAccumulator();
     const bodyParts: string[] = [];
 
+    // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
+    // Kiro prompts carry no frontmatter, so "immediately after the frontmatter"
+    // degenerates to the first bytes of the file.
+    const generatedBanner =
+      `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
+      'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
+      'caught by 122-diff-guard. -->\n\n';
+    acc.add('render', countLines(generatedBanner), 'O-3:generated-banner');
+    bodyParts.push(generatedBanner);
+
     // -- (a) Pass-through body verbatim --------------------------------------
     const passthrough = renderPassThrough(agent.doc.body);
     const passthroughBlock = ensureTrailingNewline(passthrough);

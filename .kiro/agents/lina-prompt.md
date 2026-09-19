@@ -1,3 +1,5 @@
+<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/lina.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+
 
 # Lina — Stemma Component Specialist
 

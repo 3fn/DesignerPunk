@@ -12,23 +12,31 @@
     {
       "lines": [
         30,
-        284
+        31
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        32,
+        286
       ],
       "op": "passthrough",
       "source": "canonical/agents/kenya.md#body"
     },
     {
       "lines": [
-        285,
-        286
+        287,
+        288
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        287,
-        339
+        289,
+        341
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,56 +44,56 @@
     },
     {
       "lines": [
-        340,
-        345
+        342,
+        347
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        346,
-        349
+        348,
+        351
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        350,
-        375
+        352,
+        377
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        376,
-        389
+        378,
+        391
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        390,
-        394
+        392,
+        396
       ],
       "op": "render",
       "source": "knowledgeBases"
     },
     {
       "lines": [
-        395,
-        398
+        397,
+        400
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        399,
-        404
+        401,
+        406
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

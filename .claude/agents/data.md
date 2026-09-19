@@ -28,6 +28,8 @@ tools:
   - mcp__designerpunk-product__get_screen_spec
   - mcp__designerpunk-product__rebuild_product_index
 ---
+<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/data.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+
 
 # Data — Android Platform Engineer
 

@@ -4,39 +4,47 @@
     {
       "lines": [
         1,
-        292
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        294
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#body"
     },
     {
       "lines": [
-        293,
-        296
+        295,
+        298
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        297,
-        343
+        299,
+        345
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        344,
-        355
+        346,
+        357
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        356,
-        359
+        358,
+        361
       ],
       "op": "render",
       "source": "writeScope"
