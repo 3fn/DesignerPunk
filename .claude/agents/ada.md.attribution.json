@@ -12,23 +12,31 @@
     {
       "lines": [
         26,
-        180
+        27
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        28,
+        182
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#body"
     },
     {
       "lines": [
-        181,
-        182
+        183,
+        184
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        183,
-        369
+        185,
+        371
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,48 +44,48 @@
     },
     {
       "lines": [
-        370,
-        373
+        372,
+        375
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        374,
-        411
+        376,
+        413
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        412,
-        423
+        414,
+        425
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        424,
-        429
+        426,
+        431
       ],
       "op": "render",
       "source": "knowledgeBases"
     },
     {
       "lines": [
-        430,
-        433
+        432,
+        435
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        434,
-        439
+        436,
+        441
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

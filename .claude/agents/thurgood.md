@@ -24,6 +24,8 @@ tools:
   - mcp__designerpunk-docs__rebuild_index
   - mcp__designerpunk-docs__validate_metadata
 ---
+<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/thurgood.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+
 
 # Thurgood — Test Governance, Audit, Spec Standards & Civitas Steward
 

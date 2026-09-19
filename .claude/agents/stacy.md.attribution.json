@@ -12,23 +12,31 @@
     {
       "lines": [
         35,
-        283
+        36
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        37,
+        285
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#body"
     },
     {
       "lines": [
-        284,
-        285
+        286,
+        287
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        286,
-        639
+        288,
+        641
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,48 +44,48 @@
     },
     {
       "lines": [
-        640,
-        643
+        642,
+        645
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        644,
-        676
+        646,
+        678
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        677,
-        690
+        679,
+        692
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        691,
-        695
+        693,
+        697
       ],
       "op": "render",
       "source": "knowledgeBases"
     },
     {
       "lines": [
-        696,
-        699
+        698,
+        701
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        700,
-        705
+        702,
+        707
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

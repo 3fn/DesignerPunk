@@ -12,23 +12,31 @@
     {
       "lines": [
         31,
-        302
+        32
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        33,
+        304
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#body"
     },
     {
       "lines": [
-        303,
-        304
+        305,
+        306
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        305,
-        426
+        307,
+        428
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,8 +44,8 @@
     },
     {
       "lines": [
-        427,
-        479
+        429,
+        481
       ],
       "mode": "embed",
       "op": "resolve",
@@ -45,56 +53,56 @@
     },
     {
       "lines": [
-        480,
-        485
+        482,
+        487
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        486,
-        489
+        488,
+        491
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        490,
-        514
+        492,
+        516
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        515,
-        527
+        517,
+        529
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        528,
-        532
+        530,
+        534
       ],
       "op": "render",
       "source": "knowledgeBases"
     },
     {
       "lines": [
-        533,
-        536
+        535,
+        538
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        537,
-        542
+        539,
+        544
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

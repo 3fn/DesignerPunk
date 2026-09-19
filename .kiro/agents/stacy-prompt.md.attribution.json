@@ -4,39 +4,47 @@
     {
       "lines": [
         1,
-        249
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        251
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#body"
     },
     {
       "lines": [
-        250,
-        253
+        252,
+        255
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        254,
-        286
+        256,
+        288
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        287,
-        300
+        289,
+        302
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        301,
-        304
+        303,
+        306
       ],
       "op": "render",
       "source": "writeScope"

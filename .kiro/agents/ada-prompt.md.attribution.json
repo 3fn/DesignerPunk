@@ -4,39 +4,47 @@
     {
       "lines": [
         1,
-        155
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        157
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#body"
     },
     {
       "lines": [
-        156,
-        159
+        158,
+        161
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        160,
-        197
+        162,
+        199
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        198,
-        209
+        200,
+        211
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        210,
-        213
+        212,
+        215
       ],
       "op": "render",
       "source": "writeScope"

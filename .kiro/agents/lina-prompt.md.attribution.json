@@ -4,47 +4,55 @@
     {
       "lines": [
         1,
-        268
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        270
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#body"
     },
     {
       "lines": [
-        269,
-        272
+        271,
+        274
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        273,
-        276
+        275,
+        278
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        277,
-        329
+        279,
+        331
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        330,
-        340
+        332,
+        342
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        341,
-        344
+        343,
+        346
       ],
       "op": "render",
       "source": "writeScope"

@@ -14,6 +14,8 @@ tools:
   - mcp__designerpunk-docs__get_section
   - mcp__designerpunk-product__get_product_overview
 ---
+<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/_fixture.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+
 
 # _fixture — pipeline standing test
 

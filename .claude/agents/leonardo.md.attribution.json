@@ -12,23 +12,31 @@
     {
       "lines": [
         50,
-        341
+        51
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        52,
+        343
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#body"
     },
     {
       "lines": [
-        342,
-        343
+        344,
+        345
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        344,
-        405
+        346,
+        407
       ],
       "mode": "embed",
       "op": "resolve",
@@ -36,40 +44,40 @@
     },
     {
       "lines": [
-        406,
-        409
+        408,
+        411
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        410,
-        456
+        412,
+        458
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        457,
-        468
+        459,
+        470
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        469,
-        472
+        471,
+        474
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        473,
-        478
+        475,
+        480
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

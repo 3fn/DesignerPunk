@@ -4,39 +4,47 @@
     {
       "lines": [
         1,
-        11
+        2
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        3,
+        13
       ],
       "op": "passthrough",
       "source": "canonical/agents/_fixture.md#body"
     },
     {
       "lines": [
-        12,
-        15
+        14,
+        17
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        16,
-        23
+        18,
+        25
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        24,
-        35
+        26,
+        37
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        36,
-        39
+        38,
+        41
       ],
       "op": "render",
       "source": "writeScope"
