@@ -131,7 +131,11 @@ export class InputRadioBaseElement extends HTMLElement {
   // ---------------------------------------------------------------------------
 
   static get observedAttributes(): string[] {
-    return [...INPUT_RADIO_BASE_OBSERVED_ATTRIBUTES];
+    // 'disabled' is observed in addition to INPUT_RADIO_BASE_OBSERVED_ATTRIBUTES
+    // (which stays the shared reactive-attribute contract) purely so
+    // attributeChangedCallback can neutralize it — see the D1 rider comment
+    // in attributeChangedCallback below.
+    return [...INPUT_RADIO_BASE_OBSERVED_ATTRIBUTES, 'disabled'];
   }
 
   // ---------------------------------------------------------------------------
@@ -181,17 +185,55 @@ export class InputRadioBaseElement extends HTMLElement {
     oldValue: string | null,
     newValue: string | null
   ): void {
+    // D1 — form-data hazard neutralization (2026-09-19 ignore-vs-throw
+    // parity ruling). Input-Radio-Base does not observe or react to a
+    // `disabled` input visually — but because this element is
+    // form-associated (formAssociated = true, above), the mere PRESENCE of
+    // a `disabled` attribute makes the UA treat the control as disabled for
+    // form-data-set construction, silently dropping its value from
+    // FormData on submit even though nothing here ever reads it. We
+    // neutralize that hazard by stripping the attribute the instant it is
+    // observed, before a submit can occur. This is a deliberate exception
+    // to the "ignore, don't touch the attribute" shape used elsewhere
+    // (e.g. Button-CTA) — those components aren't form-associated, so the
+    // hazard doesn't apply to them.
+    // @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md (D1)
+    if (name === 'disabled') {
+      if (newValue !== null) {
+        this.removeAttribute('disabled');
+      }
+      return;
+    }
+
     if (oldValue === newValue) return;
     if (this.isConnected) {
       this.render();
       this._attachListeners();
-      
+
       // Update form value when relevant attributes change
       // @see Requirement 8.7 - Form submission includes radio value when selected
       if (name === 'selected' || name === 'value' || name === 'name') {
         this._updateFormValue();
       }
     }
+  }
+
+  /**
+   * Form-associated custom element lifecycle callback, invoked by the UA
+   * when the control's computed disabled state changes — e.g. an ancestor
+   * `<fieldset disabled>`, or (before the attribute-neutralization above
+   * strips it) a `disabled` attribute set directly on this element.
+   *
+   * Intentionally a no-op. Per the ignore-vs-throw parity ruling (D1), this
+   * component does not observe disabled state; the direct
+   * consumer-set-`disabled` case is handled by attribute neutralization in
+   * attributeChangedCallback. A `<fieldset disabled>` ancestor disabling
+   * this control is a platform-level exclusion this component cannot
+   * override from the inside, and is out of D1's scope.
+   * @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md (D1)
+   */
+  formDisabledCallback(disabled: boolean): void {
+    // Intentional no-op — see doc comment above.
   }
 
   // ---------------------------------------------------------------------------

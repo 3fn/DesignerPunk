@@ -248,6 +248,81 @@ describe('Input-Radio-Base Form Integration', () => {
   });
 
   // ============================================================================
+  // Disabled Attribute (D1 — form-data hazard neutralization)
+  // ============================================================================
+
+  describe('Disabled Attribute (D1)', () => {
+    /**
+     * H1 finding (2026-09-17 disabled-guard corpus consult): Input-Radio-Base
+     * is form-associated (formAssociated = true). Per spec, a form-associated
+     * custom element with a `disabled` attribute present is barred from the
+     * form's entry list by the UA at submission time — regardless of whether
+     * the component's own code ever reads or reacts to that attribute. A
+     * consumer setting `disabled` (expecting DesignerPunk's "disabled is
+     * inert" philosophy to apply, per the 2026-09-19 ignore-vs-throw parity
+     * ruling) would silently drop the radio's value from form submission.
+     *
+     * D1 neutralizes this by stripping the `disabled` attribute the instant
+     * it's observed (see attributeChangedCallback in InputRadioBase.web.ts).
+     *
+     * Note: jsdom does not implement ElementInternals.setFormValue (see the
+     * "Form Submission" describe block above), so a real FormData(form)
+     * cannot observe this component's submitted value in this environment.
+     * These tests verify the mechanism directly: the attribute is stripped,
+     * and the component's registered form value is never cleared as a
+     * side effect of a consumer setting `disabled`.
+     * @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md (D1)
+     */
+    it('strips a consumer-set disabled attribute immediately', async () => {
+      const radio = document.createElement('input-radio-base') as InputRadioBaseElement;
+      radio.setAttribute('label', 'Option A');
+      radio.setAttribute('value', 'option-a');
+      document.body.appendChild(radio);
+
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      radio.setAttribute('disabled', '');
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(radio.hasAttribute('disabled')).toBe(false);
+    });
+
+    it('does not clear the registered form value when a consumer sets disabled', async () => {
+      const form = document.createElement('form');
+      const radio = document.createElement('input-radio-base') as InputRadioBaseElement;
+      radio.setAttribute('label', 'Option A');
+      radio.setAttribute('value', 'option-a');
+      radio.setAttribute('name', 'choice');
+      radio.setAttribute('selected', '');
+
+      // Substitute a spy for the ElementInternals the component uses, since
+      // jsdom's setFormValue is not a function (see note above) — this lets
+      // us observe what the component registers as its form value.
+      const setFormValueSpy = jest.fn();
+      (radio as unknown as { _internals: { setFormValue: typeof setFormValueSpy } })._internals = {
+        setFormValue: setFormValueSpy,
+      };
+
+      form.appendChild(radio);
+      document.body.appendChild(form);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      // Initial connect registers the selected value.
+      expect(setFormValueSpy).toHaveBeenLastCalledWith('option-a');
+
+      // A consumer sets `disabled` directly on the host (the H1 hazard).
+      radio.setAttribute('disabled', '');
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(radio.hasAttribute('disabled')).toBe(false);
+      // The registered form value was never reset to null as a side effect
+      // of the disabled attribute lifecycle — the value stays registered.
+      expect(setFormValueSpy).toHaveBeenLastCalledWith('option-a');
+      expect(setFormValueSpy).not.toHaveBeenLastCalledWith(null);
+    });
+  });
+
+  // ============================================================================
   // Form Reset
   // ============================================================================
 

@@ -384,47 +384,34 @@ describe('Button-VerticalList-Item Unit Tests', () => {
       expect(checkmark?.getAttribute('aria-hidden')).toBe('true');
     });
     
-    it('should throw error when disabled attribute is set (Requirement 10.2)', async () => {
-      // Note: In JSDOM, the error thrown in attributeChangedCallback propagates
-      // outside the try-catch context. We verify the behavior by checking that
-      // the component's attributeChangedCallback throws for 'disabled'.
-      // The actual error is thrown and logged by JSDOM.
-      
-      // Instead, we test the disabled property setter which we can catch
+    // ─────────────────────────────────────────────────────────────────
+    // No Disabled State (philosophy exclusion)
+    // ─────────────────────────────────────────────────────────────────
+    // DesignerPunk does not support disabled states: if an action is
+    // unavailable, the parent Set hides the item rather than disabling it.
+    // The prior throw-on-disabled machinery was retired 2026-09-19 per the
+    // ignore-vs-throw parity ruling — Button-VerticalList-Item now mirrors
+    // the Button-CTA guard shape (ignore, not reject).
+    // @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md
+
+    it('should not expose a disabled property or observe a disabled attribute', async () => {
+      expect(ButtonVerticalListItem.observedAttributes).not.toContain('disabled');
+
       button = await createVerticalListButtonItem({ label: 'Test' });
-      
-      // Verify the component observes the disabled attribute
-      const observedAttributes = ButtonVerticalListItem.observedAttributes;
-      expect(observedAttributes).toContain('disabled');
-      
-      // The disabled property setter should throw
-      expect(() => {
-        button.disabled = true;
-      }).toThrow(/disabled.*not supported/i);
+      expect('disabled' in button).toBe(false);
     });
-    
-    it('should throw error when disabled property is set to true (Requirement 10.2)', async () => {
+
+    it('should ignore a disabled attribute set by consumers, leaving the control fully functional', async () => {
+      const onClickMock = jest.fn();
       button = await createVerticalListButtonItem({ label: 'Test' });
-      
-      // Setting disabled property to true should throw
-      expect(() => {
-        button.disabled = true;
-      }).toThrow(/disabled.*not supported/i);
-    });
-    
-    it('should return false for disabled property getter (Requirement 10.2)', async () => {
-      button = await createVerticalListButtonItem({ label: 'Test' });
-      
-      expect(button.disabled).toBe(false);
-    });
-    
-    it('should not throw when disabled property is set to false', async () => {
-      button = await createVerticalListButtonItem({ label: 'Test' });
-      
-      // Setting disabled to false should not throw
-      expect(() => {
-        button.disabled = false;
-      }).not.toThrow();
+      button.onClick = onClickMock;
+      button.setAttribute('disabled', '');
+
+      const shadowButton = getShadowButton(button);
+      expect(shadowButton?.hasAttribute('disabled')).toBe(false);
+
+      clickButton(button);
+      expect(onClickMock).toHaveBeenCalledTimes(1);
     });
   });
 

@@ -368,17 +368,23 @@ describe('Button-VerticalList-Item Integration Tests', () => {
       cleanupDOM();
     });
     
-    it('should throw error when disabled attribute is set', async () => {
+    it('should ignore a disabled attribute set by consumers rather than throwing', async () => {
       // Set up tokens
       setupRequiredTokens();
-      
+
       const button = await createVerticalListButtonItem({ label: 'Test' });
-      
-      // Setting disabled property to true should throw
+
+      // Per the ignore-vs-throw parity ruling (2026-09-19), a consumer-set
+      // `disabled` input is inert — not observed, not rejected. Setting it
+      // must not throw, and the shadow button remains fully functional.
+      // @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md
       expect(() => {
-        button.disabled = true;
-      }).toThrow(/disabled.*not supported/i);
-      
+        button.setAttribute('disabled', '');
+      }).not.toThrow();
+
+      const shadowButton = button.shadowRoot?.querySelector('button');
+      expect(shadowButton?.hasAttribute('disabled')).toBe(false);
+
       cleanupVerticalListButtonItem(button);
     });
     
