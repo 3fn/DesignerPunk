@@ -392,10 +392,14 @@ describe('Behavioral Contract Validation Suite', () => {
 
       // Per-literal presence floor (DD3), THREE literals per Peter's 2026-07-14
       // amendment — NOT the four DD3 originally recorded. `state_disabled` is
-      // EXCLUDED from this floor pending the Button-CTA disabled-state
-      // adjudication (the matcher itself is unchanged: state_disabled contracts
-      // are still selected above and still must carry a valid wcag ref; only the
-      // per-literal PRESENCE floor omits it). See:
+      // EXCLUDED from this floor. The Button-CTA disabled-state adjudication
+      // RULED REMOVE on 2026-07-15 (`.kiro/issues/button-cta-disabled-state-adjudication.md`):
+      // state_disabled carries zero live contract declarations corpus-wide
+      // (Button-CTA was the last holder, and it was removed), so this
+      // exclusion is now permanent-by-outcome, not pending anything (the
+      // matcher itself is unchanged: state_disabled contracts would still be
+      // selected above and still must carry a valid wcag ref if any existed;
+      // only the per-literal PRESENCE floor omits it). See:
       // .kiro/specs/125-B-classification-map/completion/u2/stemma-pre-arm-adjudication.md § 7
       expect(perLiteralCounts.interaction_focusable).toBeGreaterThan(0);
       expect(perLiteralCounts.interaction_focus_ring).toBeGreaterThan(0);

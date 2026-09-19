@@ -237,14 +237,16 @@ export class ButtonVerticalListItem extends HTMLElement {
   
   /**
    * Observed attributes for automatic re-rendering on change.
-   * 
+   *
    * When these attributes change, attributeChangedCallback is invoked.
-   * 
-   * Note: 'disabled' is intentionally observed to throw an error if set.
-   * This component explicitly does NOT support disabled states per accessibility
-   * standards — unavailable options should be hidden, not disabled.
-   * 
-   * @see Requirements 10.2
+   *
+   * Note: 'disabled' is intentionally NOT observed. Per the ignore-vs-throw
+   * parity ruling (2026-09-19), DesignerPunk components SHALL NOT observe,
+   * expose, or reject a consumer-set `disabled` input — the input is inert.
+   * A consumer-set `disabled` attribute is left on the element but has no
+   * effect; unavailable options should be hidden by the parent Set, not
+   * disabled. This mirrors the Button-CTA guard shape.
+   * @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md
    */
   static get observedAttributes(): string[] {
     return [
@@ -258,7 +260,6 @@ export class ButtonVerticalListItem extends HTMLElement {
       'test-id',
       'role',           // ARIA role (button, radio, checkbox) - set by parent Set
       'aria-checked',   // ARIA checked state - set by parent Set
-      'disabled' // Observed to throw error if set (fail loudly)
     ];
   }
   
@@ -393,29 +394,18 @@ export class ButtonVerticalListItem extends HTMLElement {
   
   /**
    * Called when an observed attribute changes.
-   * 
+   *
    * Triggers incremental DOM update to reflect the new attribute value.
-   * Throws error if 'disabled' attribute is set (fail loudly philosophy).
-   * 
+   *
+   * Note: 'disabled' is not in observedAttributes (see above), so a
+   * consumer-set `disabled` attribute never reaches this callback — it is
+   * inert per the ignore-vs-throw parity ruling (2026-09-19).
+   *
    * @param name - Attribute name
    * @param oldValue - Previous attribute value
    * @param newValue - New attribute value
-   * @throws Error if 'disabled' attribute is set
-   * @see Requirements 10.2
    */
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
-    // Fail loudly if disabled attribute is set
-    // This component explicitly does NOT support disabled states per accessibility standards
-    // Unavailable options should be hidden, not disabled
-    // @see Requirements 10.2
-    if (name === 'disabled') {
-      throw new Error(
-        'Button-VerticalList-Item: The "disabled" attribute is not supported. ' +
-        'Per accessibility standards, unavailable options should be hidden rather than disabled. ' +
-        'Remove the disabled attribute and hide the component instead.'
-      );
-    }
-    
     // Only update if the element is connected to the DOM, value changed, and DOM exists
     if (oldValue !== newValue && this.isConnected && this._tokensValidated && this._domCreated) {
       this._updateDOM();
@@ -563,41 +553,12 @@ export class ButtonVerticalListItem extends HTMLElement {
     }
   }
   
-  /**
-   * Disabled property getter.
-   * 
-   * Always returns false because this component does not support disabled states.
-   * Per accessibility standards, unavailable options should be hidden, not disabled.
-   * 
-   * @returns Always false
-   * @see Requirements 10.2
-   */
-  get disabled(): boolean {
-    return false;
-  }
-  
-  /**
-   * Disabled property setter.
-   * 
-   * Throws an error if called with true. This component explicitly does NOT support
-   * disabled states per accessibility standards — unavailable options should be hidden,
-   * not disabled.
-   * 
-   * @param value - The disabled value (must be false)
-   * @throws Error if value is true
-   * @see Requirements 10.2
-   */
-  set disabled(value: boolean) {
-    if (value) {
-      throw new Error(
-        'Button-VerticalList-Item: The "disabled" property is not supported. ' +
-        'Per accessibility standards, unavailable options should be hidden rather than disabled. ' +
-        'Set disabled to false or hide the component instead.'
-      );
-    }
-    // If value is false, do nothing (component is already not disabled)
-  }
-  
+  // Note: No `disabled` property is exposed. Per the ignore-vs-throw parity
+  // ruling (2026-09-19), DesignerPunk components SHALL NOT observe, expose,
+  // or reject a consumer-set `disabled` input — the input is inert. This
+  // mirrors the Button-CTA guard shape.
+  // @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md
+
   // ─────────────────────────────────────────────────────────────────
   // ARIA Properties (controlled by parent Set)
   // ─────────────────────────────────────────────────────────────────

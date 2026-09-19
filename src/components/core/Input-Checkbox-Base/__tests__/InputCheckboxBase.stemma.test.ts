@@ -475,11 +475,11 @@ describe('Input-Checkbox-Base Stemma Validators', () => {
     });
     
     it('should not have disabled prop (by design)', () => {
-      if (!typesSource) {
-        console.warn('Types file not found, skipping test');
-        return;
-      }
-      
+      // Fail on absence rather than vacuously pass on it (wave-3 O-5 class
+      // repair, second instance — a missing types.ts must fail this guard,
+      // not silently skip it).
+      expect(fileExists(TYPES_PATH)).toBe(true);
+
       // Input-Checkbox-Base intentionally does not support disabled state
       const hasDisabledProp = /disabled\s*[?:]/.test(typesSource);
       expect(hasDisabledProp).toBe(false);

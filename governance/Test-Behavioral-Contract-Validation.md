@@ -306,6 +306,8 @@ error_state_validation_checklist:
 
 **Provenance**: As of the 2026-07-15 adjudication (`.kiro/issues/button-cta-disabled-state-adjudication.md`), the no-disabled-states philosophy holds corpus-wide with **zero exceptions** — Button-CTA was the last component carrying `state_disabled`, and it has been removed. No component in the corpus may declare a disabled state as a behavioral contract, and `blend.disabledDesaturate` (along with the other disabled-state blend wrappers) is deprecated. Validation for this contract type has inverted: rather than validating that a disabled state behaves correctly, validation now confirms a disabled state does **not exist** and cannot be reintroduced.
 
+**Ignore-vs-throw parity (2026-09-19)**: An earlier corpus split — Button-CTA ignoring a consumer-set `disabled` silently vs. Button-VerticalList-Item throwing on it — was ruled (option d): DesignerPunk components SHALL NOT observe, expose, or reject a consumer-set `disabled` input; the input is inert (ignore, never throw). Button-VerticalList-Item's throw was retired to the Button-CTA guard shape below. The checklist that follows already taught the ruled mechanism throughout — it was Button-VerticalList-Item's implementation that contradicted it, not this document. See `.kiro/docs/ballots/2026-09-19-disabled-input-parity.md` for the full ruling, including the D1 form-data-hazard rider (Input-Radio-Base) and the D2 optional dev-warn allowance captured below.
+
 **Contract Definition**: Component has no disabled state. Interaction affordances are always active; unavailable actions are handled by not rendering the component (or by another contract — see Philosophy Alternatives below), never by disabling it in place.
 
 **Rationale**: DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered.
@@ -335,6 +337,9 @@ disabled_state_exclusion_guard_checklist:
     - [ ] Web: no disabled/aria-disabled attribute, no tabindex=-1 for disabled reasons
     - [ ] iOS: no `.disabled()` modifier applied
     - [ ] Android: no `enabled = false` in semantics
+
+  optional_dev_warn_validation:
+    - [ ] (D2, optional — not a guard failure either way) A component MAY emit a development-gated warning (e.g. `NODE_ENV === 'development'`) naming the no-disabled-states philosophy and its three alternatives (state_loading, validate-on-press, do-not-render — see Philosophy Alternatives below) when a consumer sets `disabled`. This is adopted at scaffolding time for a new component, not retrofitted onto existing ones. Precedent for the dev-gated pattern (not the disabled topic itself): `Progress-Stepper-Base/platforms/web/ProgressStepperBase.web.ts:202-216`.
 ```
 
 **Philosophy Alternatives** — when a spec's design outline reaches for "disabled," redirect to the pattern that actually fits:

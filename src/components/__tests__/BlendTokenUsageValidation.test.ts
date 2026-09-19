@@ -270,14 +270,24 @@ describe('Layer 2 Validation: Component Blend Token Usage', () => {
         expect(hasBlendTokenValue(source, BLEND_TOKEN_VALUES.pressedDarker)).toBe(true);
       });
       
-      it('should use correct disabled blend token value (0.12)', () => {
-        expect(hasBlendTokenValue(source, BLEND_TOKEN_VALUES.disabledDesaturate)).toBe(true);
-      });
-      
+      // The "disabled blend token value" requirement for Button-CTA Web was
+      // retired 2026-09-19 (disabled-guard corpus repairs, item 6 — MISS-4).
+      // It was a counter-pulling false pass: hasBlendTokenValue()'s
+      // theme-aware disjunct matches ANY getBlendUtilities()/@3fn/core/blend
+      // usage regardless of which state token is being checked, so this
+      // assertion passed whether or not Button-CTA implemented (banned)
+      // disabled-state blending. Button-CTA has never supported a disabled
+      // state (2026-07-15 adjudication) and never will
+      // (no-disabled-states philosophy, corpus-wide). Retained model:
+      // src/blend/__tests__/InteractionStateAudit.test.ts:130-141
+      // (calculator-capability-only reduction) — disabledDesaturate's
+      // mathematical validity is tested there, not against any specific
+      // component's source.
+
       it('should use correct icon optical balance blend token value (0.08)', () => {
         expect(hasBlendTokenValue(source, BLEND_TOKEN_VALUES.iconLighter)).toBe(true);
       });
-      
+
       it('should not contain opacity workarounds', () => {
         const workarounds = findWorkarounds(source);
         const opacityWorkarounds = workarounds.filter(w => w.startsWith('opacity'));
@@ -386,10 +396,15 @@ describe('Layer 2 Validation: Component Blend Token Usage', () => {
         expect(hasBlendTokenValue(source, BLEND_TOKEN_VALUES.focusSaturate)).toBe(true);
       });
       
-      it('should use correct disabled blend token value (0.12)', () => {
-        expect(hasBlendTokenValue(source, BLEND_TOKEN_VALUES.disabledDesaturate)).toBe(true);
-      });
-      
+      // The "disabled blend token value" requirement for Input-Text-Base
+      // (TextInputField) Web was retired 2026-09-19 (disabled-guard corpus
+      // repairs, item 6 — MISS-4) — same counter-pulling false-pass
+      // mechanism as Button-CTA's above: hasBlendTokenValue()'s
+      // theme-aware disjunct matches any blend-utility usage regardless of
+      // state, so this assertion never actually exercised the (banned)
+      // disabled-blend requirement. Model:
+      // src/blend/__tests__/InteractionStateAudit.test.ts:130-141.
+
       it('should not contain opacity workarounds for disabled state', () => {
         // Check that opacity: 0.6 pattern is not used for disabled state
         // Note: opacity: 1 is acceptable (used to override browser defaults)
@@ -689,23 +704,15 @@ describe('Layer 2 Validation: Component Blend Token Usage', () => {
       }
     });
     
-    it('should use same disabled blend value (0.12) across all platforms', () => {
-      const webSource = readComponentSource(COMPONENT_PATHS.buttonCTA.web);
-      const iosSource = readComponentSource(COMPONENT_PATHS.buttonCTA.ios);
-      const androidSource = readComponentSource(COMPONENT_PATHS.buttonCTA.android);
-      
-      const sources = [
-        { name: 'Web', source: webSource },
-        { name: 'iOS', source: iosSource },
-        { name: 'Android', source: androidSource }
-      ].filter(s => s.source !== '');
-      
-      for (const { name, source } of sources) {
-        expect(hasBlendTokenValue(source, BLEND_TOKEN_VALUES.disabledDesaturate))
-          .toBe(true);
-      }
-    });
-    
+    // The cross-platform "disabled blend value" consistency requirement for
+    // Button-CTA was retired 2026-09-19 (disabled-guard corpus repairs, item
+    // 6 — MISS-4): the same counter-pulling false-pass mechanism as the
+    // per-platform Web assertion above (hasBlendTokenValue()'s theme-aware
+    // disjunct is not state-specific). Button-CTA does not support a
+    // disabled state on any platform (2026-07-15 adjudication); there is no
+    // "same disabled value across platforms" to be consistent about. Model:
+    // src/blend/__tests__/InteractionStateAudit.test.ts:130-141.
+
     it('should use same icon optical balance blend value (0.08) across all platforms', () => {
       const webSource = readComponentSource(COMPONENT_PATHS.buttonCTA.web);
       const iosSource = readComponentSource(COMPONENT_PATHS.buttonCTA.ios);

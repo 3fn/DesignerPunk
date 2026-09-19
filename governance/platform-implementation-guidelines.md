@@ -166,7 +166,8 @@ All platforms MUST provide equivalent accessibility support using platform-nativ
 |----------------------|-----|-----|---------|
 | **Label association** | `<label for>` or `aria-labelledby` | `.accessibilityLabel()` | `contentDescription` |
 | **Error announcement** | `role="alert"` + `aria-describedby` | `.accessibilityHint()` | `semantics { error() }` |
-| **Disabled state** | `aria-disabled="true"` | `.disabled()` | `enabled = false` |
+| **Unavailable action** | do not render | do not render | do not render |
+| | *(DesignerPunk has no disabled states — adjudicated 2026-07-15. Use `state_loading` for in-flight actions, validate-on-press for invalid input, or do not render. See Component-Development-Guide § "No Disabled States".)* |
 | **Focus management** | `tabindex`, `:focus-visible` | `@FocusState` | `FocusRequester` |
 | **Screen reader** | ARIA attributes | VoiceOver modifiers | TalkBack semantics |
 

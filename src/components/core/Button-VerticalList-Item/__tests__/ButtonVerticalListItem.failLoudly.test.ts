@@ -4,8 +4,13 @@
  * @jest-environment jsdom
  * 
  * Tests the "fail loudly" philosophy:
- * - Component throws when disabled property is set (accessibility requirement)
  * - Component renders successfully when all tokens are present
+ *
+ * Note: The component no longer throws on a consumer-set `disabled` input.
+ * Per the ignore-vs-throw parity ruling (2026-09-19), `disabled` is inert —
+ * see the "No Disabled State" tests in ButtonVerticalListItem.unit.test.ts
+ * for the current (ignore, not reject) guard shape.
+ * @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md
  * 
  * Stemma System Naming: [Family]-[Type] = Button-VerticalList-Item
  * Component Type: Primitive (VerticalList-Item)
@@ -45,30 +50,13 @@ describe('Button-VerticalList-Item Fail-Loudly Tests', () => {
     cleanupDOM();
   });
 
-  describe('Disabled State Rejection', () => {
-    it('should throw error when disabled property is set to true', async () => {
-      const button = await createVerticalListButtonItem({ label: 'Test' });
-      
-      // Per accessibility requirements (10.2), disabled states are not supported
-      // The component should throw when attempting to set disabled
-      expect(() => {
-        button.disabled = true;
-      }).toThrow(/disabled.*not supported/i);
-      
-      cleanupVerticalListButtonItem(button);
-    });
-    
-    it('should not throw when disabled property is set to false', async () => {
-      const button = await createVerticalListButtonItem({ label: 'Test' });
-      
-      // Setting disabled to false should be a no-op (not throw)
-      expect(() => {
-        button.disabled = false;
-      }).not.toThrow();
-      
-      cleanupVerticalListButtonItem(button);
-    });
-  });
+  // The former "Disabled State Rejection" describe block (throw-on-disabled)
+  // was retired 2026-09-19 per the ignore-vs-throw parity ruling: a
+  // consumer-set `disabled` input is inert, not a failure condition, so it
+  // no longer belongs in a fail-loudly suite. See the "No Disabled State"
+  // tests in ButtonVerticalListItem.unit.test.ts for the current guard
+  // shape (ignore, not reject).
+  // @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md
 
   describe('Successful Rendering with Tokens', () => {
     it('should render successfully when all required CSS variables are present', async () => {
