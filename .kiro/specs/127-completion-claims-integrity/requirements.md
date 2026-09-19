@@ -1,0 +1,231 @@
+# Requirements Document: 127 — Completion-Claims Integrity
+
+**Date**: 2026-09-19
+**Spec**: 127 — Completion-Claims Integrity (the F7 disposition)
+**Author**: Thurgood (test governance / spec standards / Civitas steward)
+**Status**: Requirements Phase — DRAFT, awaiting the requirements feedback round (sequential gate)
+**Dependencies**: Spec 112 completion-claims audit (closed; F7 is its last undisposed item); Spec 125-A (PR gate, required checks — shipped); Spec 122 (agent generator — complete; charter edits are generator output); 125-B (open campaign; Q2's arming decision defers to its 5.Z sitting)
+
+---
+
+## Introduction
+
+Spec 127 executes Peter's 2026-09-13 full-package ruling on F7 (self-attested parent verification tables with no promised-vs-shipped check — two consumer-reaching escapes) and the rulings that followed it. The rulings of record, in authority order where they compose:
+
+1. `.kiro/docs/ballots/2026-09-17-spec-127-outline-settle.md` — **RATIFIED (Peter, 2026-09-17)**: the seven-item docket plus seven same-day clarifications.
+2. `design-outline.md` — **SETTLED (2026-09-17)**, with the **2026-09-19 requirements-phase working session** (`RESOLVED (Peter, 2026-09-19)` blocks, § 8) and the same-day **R2 fold** (`R2 FOLD` blocks, § 8): Q1's eight decisions, Q3's product-side shape, Q4's register pair, the "materially amended" definition, and the three R2 blocking items — all **ruled by Peter**.
+3. `feedback/design-outline.md` — the R1 and R2 rounds with the Thurgood incorporation entries.
+
+**The decision surface is closed.** These requirements formalize the ruled record; they decide nothing and reopen nothing. Every requirement traces to its source (cited inline as *Traces:*); where restatement and source disagree, the source governs in the order above. The requirements feedback round reviews formalization fidelity and surfaces execution consequences — it is not a re-litigation surface.
+
+**Explicit exclusions (decisions, not oversights):**
+
+- **No backfill** of historical completion docs (rider (c)); **no re-audit** of Spec 112. *Traces: outline §§ 3.3, 6.1.*
+- **No mechanization of verification honesty** — ideological forever; no prose in this spec's artifacts may imply otherwise. *Traces: outline § 5.3; ballot § 17.1.*
+- **The checker's ARMING is not a 127 completion condition.** Q2 is ruled GUARDED DEFERRAL; Requirement 6.7 restates the guards as constraints and decides nothing. *Traces: ballot § 4.*
+- **O-3's banner** (executed, PR #171), the **issues-dir triage** (PR #173) and **first active-charter walk** (PR #174) — Thurgood chores outside 127's units. *Traces: ballot §§ 5.5, 9.*
+- **The (d7) coverage-adequacy line** — excluded from the Q5 ratification; untouched here. *Traces: ballot § 5.6.*
+- **The AICP counter-argument fold-back amendment** — queued as its own governance PR; not 127 material. *Traces: outline header note, 2026-09-19.*
+
+**Framing obligation, carried at the top because a requirements reader is a future ballot reader** *(joint (d8); ballot § 17.1)*:
+
+> Nothing in this spec makes claim honesty owned, solved, or guaranteed. Any future reading of a green `completion-criteria-parity` gate as evidence of claim honesty will have made the error this spec exists to prevent.
+
+---
+
+## Requirements
+
+### Requirement 1: The Parent Success-Criteria Fidelity law
+
+**User Story**: As the governance system, I want parent completion docs to reproduce their promised success criteria as an exact set with verified status and evidence, so that unmet criteria can no longer be dropped, reworded, relaxed, invented, absorbed, or silently omitted. *Traces: outline §§ 1.1–1.2, 2, 3.2, 4.1; ballot § 3.*
+
+#### Acceptance Criteria
+
+1. `governance/completion-documentation-guide.md` SHALL gain a subsection "Parent Success-Criteria Fidelity" requiring that a parent task's completion doc reproduce **every** success criterion defined for that parent in `tasks.md` — verbatim, in full, **none dropped, none reworded, none added** (exact set) — as a table with three mandatory columns: `Criterion (verbatim) | Status | Evidence`.
+2. The Status vocabulary SHALL be: **✅ verified met** · **⚠️ verified unmet or partial** (MUST link a tracking issue or follow-up task) · **❌ verified absent** (the "3.3 pattern": a tested module created, the seam it was meant to reach never touched). Each mark SHALL reflect a check actually performed **against shipped source**, never against intent or effort.
+3. The Evidence cell SHALL admit exactly four kinds: **an artifact path · a test name · a command + its result · a decision record / approval citation**. A decision record MUST cite a **locatable** record; the guide's examples SHALL span domains — a ballot path, a dated approval note, a commit, **a PR review comment, a design-critique note, a dated design-outline decision** *(Lina R2)*. **A ✅ with an empty or prose-only Evidence cell is non-compliant on its face.**
+4. Immediately after the table, the doc SHALL carry the **forced-negative line**: `Unmet or partially met criteria: None` — or a list, each item with a follow-up link. Silence SHALL NOT satisfy it. *(Imported from `governance/Product-Handoff-Protocol.md`.)*
+5. WHEN the parent's `tasks.md` block defines promise blocks beyond Success Criteria — the closed vocabulary: `**Primary Artifacts:**` and gate clauses under the frozen label `**Merge gate:**` — THEN the completion doc SHALL carry an **"Additional verification"** section, **required-if-applicable, never optional**: **gate conditions as criterion-style rows** (`Condition (verbatim) | Status | Evidence`, same predicate as Requirement 2.5) and **Primary Artifacts as a single forced-negative line** (`Primary Artifacts: all shipped as declared` / or each deviation listed with its link — including, per the (d2)-at-tick disposition, any artifact deliberately delivered by a later unit, with the delivering unit named). The criteria table admits ONLY criteria. *Traces: outline § 8 Q1 RESOLVED item 7; R2 fold (A-R2-4).*
+6. The rule SHALL bind parents whose `tasks.md` defines **per-parent** criteria (rider (a)); `spec-level` specs discharge once at closeout via the CLOSEOUT claims pass (Requirement 8). A parent MAY carry `**Success Criteria:** none — <one-line reason>` (Requirement 2.2.4), which waives **the criteria table only** — the AV section and its forced-negative line remain owed where applicable. *Traces: rider (a); Q1 RESOLVED item 2 + R2 fold.*
+7. The rule binds **after ratification** (ruling 3, option (iii)). An in-flight parent that would otherwise owe the table MAY carry the fixed-string exemption note, verbatim: `Criteria fidelity: exempt — spec in flight at ratification (<date>)`. **Free-prose exemptions are non-compliant.** The string is required only where a parent would otherwise owe the table; zero-criteria legacy specs carry no string and still receive claims passes (the decoupling). *Traces: ballot § 6.*
+8. The subsection's rationale SHALL name the **six mutation classes** (drop, reword, relax, omit-doc, invent, absorb — absorb's harm stated accurately: the enumerated set stops mapping 1:1 to the promise set) and SHALL carry two authoring notes from the R2 round: **copy the tasks.md bullet, never retranscribe it** (math-glyph drift is where normalization friction will concentrate — Ada R2) and **the decomposition-scope boundary** (Success Criteria bullets decompose per-platform; a Primary Artifacts line bundling platforms does not — it has its own remedy). *Traces: outline § 1.2; R2 fold.*
+9. The subsection SHALL carry the honest-reach statement of the instrument's limits: a plausible-looking Evidence path is green to the checker regardless of truth; for iOS/Android, "command + result" evidence is trust-the-reported-result for any verifier in this environment (toolchain charter: `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`); and artifact truth is owned by **the claims pass today**, with `promised-artifact-exists` its registered, unbuilt mechanical successor. *Traces: outline § 5.3; R2 fold (A-R2-3).*
+
+### Requirement 2: The machine-readable criteria convention (Q1 — ruled 2026-09-19, R2-folded)
+
+**User Story**: As the parity checker and every future `tasks.md` author, I want the criteria convention fixed precisely — mode declaration, materiality, block format, association, match predicate, promise surface, and spanning-claim grain — so that the checker's verdict is mechanical and an honest author can comply on the first read. *Traces: outline § 8 Q1 RESOLVED block + R2 fold; ballot §§ 6, 7, 8.*
+
+#### Acceptance Criteria
+
+**2.1 The criteria-mode declaration** *(ruling 4, FORWARD-TOTAL WITH LEGACY DEFAULT, + declaration format ruled 2026-09-19)*
+1. Every `tasks.md` authored or materially amended post-ratification SHALL declare its mode as a bolded header-block line before the first task, house metadata style: `**Criteria mode**: per-parent` or `**Criteria mode**: spec-level`. **No third state exists.** A post-ratification `tasks.md` omitting the declaration is **NON-COMPLIANT** — never legacy.
+2. Legacy status SHALL be keyed on **authorship date**, never on the declaration's absence. Legacy is a closed set that only shrinks; no dormant spec is reopened to add a declaration. Adding the declaration is how an in-flight spec opts in; `spec-level` specs are skipped by the checker and owe one closeout discharge.
+
+**2.2 Block format and parent-grain coverage** *(ruled 2026-09-19 + R2 fold)*
+1. The frozen form: label line exactly `**Success Criteria:**` (colon inside the bold, any leading indentation), followed by a **flat** bullet list (`- `) — one bullet = one criterion = one table row, no nested sub-bullets; continuation/wrapped lines fold via Requirement 2.5's normalization. *(Corpus verification on record: one nested instance in 153, legacy, outside the checker population.)*
+2. WHEN a spec declares `per-parent` AND the checker cannot locate a well-formed block for a parent THEN the checker SHALL fail loudly — "declared per-parent, block not found for parent N" — never silently select nothing (the dormancy defense, C4-1). An opting-in spec normalizes its blocks to the frozen form as part of opting in.
+3. A block carrying `none` **and** criteria bullets is a **loud malformation failure** *(R2 fold, A-R2-1)*.
+4. A parent MAY declare `**Success Criteria:** none — <one-line reason>` (the reason mandatory). The checker treats it as a valid block owing no table; the claims pass counts none-rates alongside the omission/vagueness hedge (Requirement 8.6). First-line guard: the **LENS's parent-grain mode question** at the tasks round; the claims-pass count is the backstop *(R2 fold, A-R2-2)*.
+
+**2.3 "Materially amended" — the canonical-form comparison** *(the A-3 definitional item, ruled 2026-09-19; extraction + instrument ruled at the R2 fold, B-R2-1)*
+1. Extract the `tasks.md` **promise surface** using the **GENEROUS pattern set** — deliberately over-inclusive, never inheriting the checker's frozen grammar: **every top-level checkbox line regardless of parent form** (checkbox state masked to a token; this absorbs all known parent-line variants and the top-level-criteria-bullet falsifier), criteria labels in **all three census forms** (frozen, colon-outside, headings), `**Primary Artifacts:**` blocks, gate clauses (`merge gate`, case-insensitive), and the Declared Merge Units block in **all three known forms** (both heading spellings and 122's bold-prose declaration).
+2. Whitespace-normalize the extracted surface with Requirement 2.5's function (plus the checkbox mask — **one normalization concept plus one named mask**, stated precisely, never rounded to elegance). **A commit materially amends the file IFF the normalized promise surface differs before and after.** No exclusion list exists or is needed: ticks, dates, annotations outside the surface, and formatting are immaterial automatically. **Strike-through supersession of a parent IS material** — it removes a promise; the 118 pattern stays legal and costs the declaration line.
+3. Material amendment is a **second opt-in path**: it exits legacy, never adds to it, and the amending commit SHALL add the criteria-mode declaration in the same change — a material amendment landing without it is non-compliant per 2.1.1. Parents completed before the amendment stay as written (rider (c)); parents completing after are bound.
+4. **The rationale for the generous direction is normative and travels with the definition**: a false-material costs one declaration line; a false-immaterial reopens B4's side door. The pattern set is **closed**, enumerated verbatim in the law ballot, and **verified once by running the extractor over all 153 `tasks.md` files** with the result recorded.
+5. **The computing instrument, named with Q4-grade honesty**: the parity checker's gate run evaluates materiality on any PR touching a legacy `tasks.md` — *once armed* (Requirement 6.6); until arming, **the claims pass owns materiality as judgment**, stated plainly wherever the definition is taught.
+
+**2.4 Parent association** *(ruled 2026-09-19 + R2 fold, A-R2-6)*
+1. A criteria block associates to the **nearest preceding checkbox line at any indent**; the parent rule reads only blocks whose associated line is a **top-level parent**. The parent-line pattern SHALL accept the plain, bold-numbered, **and `Task N: … (Parent)`** forms. Two blocks on one parent, or a block before any checkbox → loud malformation failure.
+2. The checker SHALL emit its **association manifest** (parent N ← block at line L) in its output. *(Recorded residual: a passing misassociation requires two parents with identical normalized criteria sets — degenerate, accepted. The top-level-checkbox≠parent falsifier is population-gated for the checker and absorbed by 2.3.1's extraction where it actually bites.)*
+
+**2.5 The match predicate — (c′) verbatim CELL** *(ruled 2026-09-19; re-confirmed strengthened by Ada and Lina at R2)*
+1. The `Criterion (verbatim)` cell SHALL be string-equal to its `tasks.md` bullet after the four-rule normalization: **(i)** unescape table-pipe escapes (`\|` → `|`); **(ii)** `<br>` tags → single space; **(iii)** collapse runs of **Unicode** whitespace (including line breaks and non-breaking spaces) to a single space, trim ends; **(iv)** **nothing else** — no case folding, no punctuation or markdown normalization. Total and parameter-free; **shared with 2.3's materiality comparison** — one normalization concept across the whole law.
+2. Set semantics: **multiset equality, order-insensitive** — reordering is not a mutation class; duplicate bullets cannot collapse into one row.
+3. The normalization list is **closed-but-extendable by recorded amendment only** — a false red from an exotic rendering artifact is a loud, author-fixable failure, and a silently growing list is how (c′) would rot into fuzzy matching. Compressed labels failing is the **intended** adoption cost: compression relocates to the Evidence cell.
+
+**2.6 Spanning claims — decomposition-first, the limbs split** *(ruled 2026-09-19; B-R2-2 ruled option (ii) at the R2 fold)*
+1. **Structural limb — convention law**: a promise spanning multiple platforms SHALL be authored as **per-platform criterion bullets** in `tasks.md` (grain, not content; ruling 5's delegated rendering). Exact-set reproduction then delivers per-platform status automatically; no tag grammar, no sub-row grammar, no per-platform checker logic; a single ✅ structurally cannot hide a broken platform.
+2. **Reference limb — judgment layer, NOT convention law**: the expectation that each per-platform bullet names what it verifies against — *the screen spec, or the component contract / token / pattern it delegates to; the registry or formula on the system side* — lives in the **guide as authoring guidance** and in the **LENS's spanning question** ("what does each platform's bullet verify against?"). A missing reference is a **quality observation** at a claims pass, never a compliance violation. **§ 6.1's non-goal stands unamended and uncrossed.**
+3. **Rendering convention**: decomposed rows group **by criterion** (the platform triple adjacent), not by platform — costless under 2.5.2.
+4. **Fallback, named**: a genuinely non-decomposable claim admits the explicit `(platforms: …)` tag form **by recorded amendment only**; the claims pass counts fallback invocations (Requirement 8.6). No real instance existed at R2 in either domain.
+5. **The guarded channels, recorded as judgment territory**: bundled-and-undeclared authoring, and **incomplete decomposition** (two bullets where three platforms apply — compliant, exact-set green, and short one platform: the criteria set itself is wrong). Guards: the LENS spanning question at the tasks round; the claims pass comparing rows to the report set. On the report-set applicability axis **a rule became a judgment** — recorded as a real downgrade, not claimed away.
+
+### Requirement 3: Process-Spec-Planning Tier-3 amendment and the worked example
+
+**User Story**: As every future completion-doc author, I want the Tier-3 standard and its canonical worked example to model verdicts-with-evidence rather than effort-as-evidence, so that following the template produces compliance. *Traces: outline § 4.2; Stacy B5 (BLOCKING, R1); ballot § 17.3.*
+
+#### Acceptance Criteria
+
+1. `governance/Process-Spec-Planning.md` Tier 3 SHALL be amended to the Requirement 1 table form as the required shape, the current prose block preserved as **optional** elaboration, the recorded rationale traveling with the edit.
+2. The Tier-3 standard SHALL gain **failure vocabulary** in the criteria structure itself (⚠️/❌ + the forced-negative line) — M4 = 0/22 is a template defect, fixed at the template.
+3. The **worked example is a named edit site**: the replacement SHALL show (i) at least one **⚠️ row with a follow-up link** and (ii) Evidence cells that are artifact paths / test names / command output — **never activity prose**. IF the example ships unchanged THEN this requirement is failed regardless of the standard's own text.
+4. The flag-discipline standards learning SHALL be carried into the formalization's authoring guidance: **a transcriber's confidence is an inverse signal; compilation-of-one's-own-record is a named flag surface.** *(Adopted at ballot § 17.3; landed here. Its second live instance — the T4 misattribution, caught by Stacy at R2 — is cited as evidence.)*
+
+### Requirement 4: Task-Completion-Protocol pointer
+
+**User Story**: As the always-loaded end-of-task law, I want a pointer to the new rule in both parent sequences, discoverable at the moment it binds, without re-accreting what Wave 1 pruned. *Traces: outline § 4.3.*
+
+#### Acceptance Criteria
+
+1. The "Create completion doc" bullet in **both** parent sequences SHALL gain: *"— reproduce every tasks.md success-criterion row verbatim with Status + Evidence, and carry the forced-negative line (Completion Documentation Guide § 'Parent Success-Criteria Fidelity')."*
+2. The addition SHALL remain a **pointer, never a restated imperative block** (prune-scar constraint, non-negotiable). Direct-edit file; no regeneration; not MCP-served, no reindex.
+
+### Requirement 5: Register rows and the proposed-row walker
+
+**User Story**: As the classification map, I want every rule this spec creates registered at birth with an honest disposition — and a standing read that keeps `proposed` rows from silently reading as coverage. *Traces: outline §§ 5.1–5.5, § 8 Q4 RESOLVED + R2 fold; ballot § 11.2.*
+
+#### Acceptance Criteria
+
+1. **Five entries** SHALL be added to `governance/classification-map.md`, schema-complete with dated+attributed `history`: `completion-criteria-parity`, `promised-artifact-exists`, `promised-artifact-shipped`, `completion-verification-honesty`, `parent-completion-docs-present`. The non-substring constraint SHALL be re-verified across all existing entries (16) plus the five, both directions, at authoring time.
+2. **`completion-criteria-parity`**: functional / barrier / `owner: thurgood` (friction (a), settled) / `check_state: proposed` at ballot; `armed_at` omitted (pr-gate default); the row cites the gate-bite proof once it exists.
+3. **`promised-artifact-exists`**: input surface `**Primary Artifacts:**`; **delta-scoped — fires on the PR that ticks the parent**, against that parent's declared paths only (later file moves are repository evolution, not claims); parsing strips annotation suffixes and **emits its exclusions** (`skipped — not a path`; AV-declared deferrals per 1.5 are emitted exclusions, not reds), never silently skips; verdict phrasing normative — **"task text and reality disagree," never "work was not done"**; `check_state: proposed`. **Named reader for the emissions**: the claims pass at CLOSEOUT reads the check's emission lines for the closing spec (the § 2.4 promised-artifact-gaps dimension made explicit), and the check's PR summary line carries the exclusion count. *(Reader duty pending Stacy's confirm — Requirement 8.9.)*
+4. **`promised-artifact-shipped`**: diff-based, `check_state: proposed`, build **deferred**; **MUST NOT fire per-PR** ((d2)); events **CLOSEOUT and RELEASE**; promotion evidence = **a retrospective dry run over merged history** — recorded honestly as a *procedure, not a firing trigger* (acceptable only because nothing is armed).
+5. **`completion-verification-honesty`**: ideological / `owner: stacy` / **no check owns it — ever**; rationale carries verbatim: *"Any future reading of these numbers that treats a green gate as evidence of claim honesty will have made the error this spec exists to prevent."*
+6. **`parent-completion-docs-present`**: `check_state: proposed`; build/arm deferred to the tasks phase (known false-positive class: docs land at parent completion, possibly before the unit's PR).
+7. The register edits land on the **U1 law-ballot PR** (Peter-merged, governance carve-out); `classification-map.md` is MCP-served → `rebuild_index` owed post-merge.
+8. **The proposed-row walker** *(R2 fold, Stacy R2-5)*: the monthly Civitas health check SHALL gain a one-line register read — **rows at `check_state: proposed`, listed with ages** — on Thurgood's LIVENESS surface, bounded by read-for-records-never-verdicts. Nothing else walks `proposed` rows; without this line their existence reads as coverage, § 9.2's exact error.
+
+### Requirement 6: The `completion-criteria-parity` checker — build, prove, register; arming excluded
+
+**User Story**: As the mechanical arm, I want the checker built, proven to bite, and registered — with its arming held by Q2's guards — so that when the flip is later decided, everything but the flag is already true. *Traces: outline § 5.1, § 8 Q1 RESOLVED + R2 fold; ballot § 4; joint agreement § 3.*
+
+#### Acceptance Criteria
+
+1. `scripts/check-completion-criteria-parity.ts` SHALL implement Requirement 2's predicate as a pure-fs markdown scan, wired as `check:completion-criteria-parity` in `package.json` and as a CI job whose check-context name is fixed at authoring and cited on the register row. A **scoped write grant** for `scripts/**` / `.github/workflows/**` is a named tasks-phase prerequisite (neither candidate owner's writeScope covers them — Stacy A5).
+2. Population and modes: `spec-level` skipped; legacy (2.1.2) skipped for the parity predicate; declared `per-parent` with a missing block fails loudly; declared-none honored per 2.2.4; the fixed-string exemption honored where valid, its free-prose imitation a failure.
+3. The checker SHALL additionally evaluate, on any PR touching a `tasks.md`: **declaration presence** (post-ratification-authored file without a mode declaration → red) and **legacy materiality** (2.3's canonical-form comparison; a material amendment without the declaration in the same change → red) — the named instrument duty, live at arming.
+4. Verdict surface per parent: exact-set parity (2.5); Evidence-cell non-empty and of a permitted kind; forced-negative line present; AV section present-and-shaped when owed (1.5). Output includes the association manifest (2.4.2).
+5. **Fixture obligation** (C3-2 included): Stacy specifies the falsification fixtures — a **named deliverable of the checker-build unit, due at that unit's completion**, not at arming; the checker MUST go red on every fixture before any arming; IF undelivered THEN escalation to **Peter** as a blocked deliverable — neither agent may waive it; contested fixtures go to Peter, and a contested fixture that disappears from the set is the failure.
+6. **Gate-bite** proven red on a throwaway PR (the #121 pattern) before any required flip, cited on the register row. WHEN the arming is later decided THEN the check name SHALL enter `tools/agent-generator/verify-gate-registration.sh`'s `EXPECTED_CONTEXTS` (count-assert included) **in the same recorded change as the arming**. Until then the CI job runs non-required.
+7. **The arming itself is OUT OF SCOPE for 127's completion**, governed by Q2's ruled guards restated as constraints: the decision defers to the 5.Z sitting; guard (i) fires it at **release-prep start** (version-bump PR creation) with the checklist line *"if arming is undecided, decide it now"*; guard (ii) forbids arming before the Q1 convention has shipped AND the Tier-3 worked example is fixed AND **N ≥ 5** in-scope parents have completed under the convention with **M2 measured by audit, not by the checker**.
+
+### Requirement 7: The Q5 charter execution
+
+**User Story**: As the ratified ownership change, I want both charters, the Agent-Directory, and the generated agent files updated through the canonical source, with every countersigned bound carried at strength. *Traces: ballot §§ 5, 11, 16; PRs #158, #165.*
+
+#### Acceptance Criteria
+
+1. The charter cuts SHALL be applied to `canonical/agents/thurgood.md` and `canonical/agents/stacy.md` **as ratified** (ballot § 11.1; dividing verb author/maintain vs adjudicate), Stacy's claims-audit practice and event triggers **written into her charter text**, and the change stated as an **extension to system specs**.
+2. The reconciled trigger set SHALL be carried **as the ballot § 11.4 superset table** — names never bare numbers; the Scope column's binding text intact (the four T2-d restored clauses; CLOSEOUT's rider-(a) discharge; LIVENESS's "Meta-item only" + "Events without records = finding"); BURST retired; MIDPOINT added; LENS seated with the spanning question; ARMING carrying dormancy detection (C4-1); EDUCATION as the composed learning loop.
+3. **The composed loop and both finding routes** in both charters' operative text: the mandatory `Standards implications: none / or list` line on every pass; Thurgood reads every pass **in full**, records the one-line outcome, **mines for standards learnings and never grades the audit**; standards changes co-drafted, contested items to Peter, authorship Thurgood's. Additively, the **remediation route**: a finding routes to the **owning domain agent** — single instance, no threshold — as an **explicit message to the named agent, never only a file in a spec directory** (T4-3's condition).
+4. **Both anti-rot clauses verbatim at countersigned strength**, each with its named caller-out, called at the exchange: Thurgood's (check that an audit happened, never re-decide what it concluded) and the mirror clause (*"Stacy may say a criterion is unverifiable; she may never say what it should say"*).
+5. The **steward-verb carve-out** as the enumerated three verbs as-of-the-agreement (never a live config reference), both falsification conditions live; **ambiguity resolves to Stacy**.
+6. `Agent-Directory.md` updated consistently; **all charter edits via `canonical/**` + regeneration** (Spec 122), on a Peter-merged governance PR, **agent-generator diff-guard green**. Hand-edits to generated files are non-compliant by construction.
+7. Stacy's `knowledgeBases` gain source tree + git history (polish, not a blocker); Thurgood's operative text records **LIVENESS as a query over the owed-set** (never a recollection), and the health-check items gain Requirement 5.8's proposed-row read.
+8. Per § 4.5's separate-ratifiability: the charter-edit unit SHALL be **separable from U1** — if Q5 execution would delay the rule, Q5 yields. Unit shape is the tasks phase's to declare.
+
+### Requirement 8: The claims-pass practice — artifacts, predicate, pilot
+
+**User Story**: As the judgment half of the package, I want the claims pass's firing predicate, owed-set, output form, honesty constraints, and counting duties fixed as law, so that a missed pass is a non-empty list and a clean pass is distinguishable from an absent one. *Traces: lifecycle amendment §§ 2, 5, 6, T4; ballot §§ 5.3, 11.4–11.5; R2 fold.*
+
+#### Acceptance Criteria
+
+1. **CLOSEOUT** fires at the merge of the spec's final declared merge unit (fallback for any spec without a declared-units block that opened more than one PR: the merge of the PR carrying the last parent completion doc). The owed-set predicate SHALL be recorded verbatim: `closeout-owed(S)` ⟺ final declared unit merged AND `.kiro/specs/S/completion/claims-pass.md` does not exist AND the merge is dated on or after the ballot's ratification date.
+2. The date conjunct is **decoupled from the rule's exemption boundary** (T4-2, answered by ruling 3's decoupling): a pass is owed by **every** spec closing after ratification, regardless of table-format exemption status.
+3. `claims-pass.md` SHALL carry three required sections — **Scope**, **Findings** (promised/claimed/shipped per discrepancy, classified per the 112 taxonomy, with routing), and **Method — the sample, named**. The Method line SHALL be honest **per criterion row and per platform**: a platform-unverifiable row recorded as `not re-verified — toolchain unavailable`, never silently omitted (T4-4); an unverifiable row NEVER rolls into a ✅. **The per-row honesty clause is load-bearing for the product tier** (Leonardo R2 — trust-the-reported-result is the default state of two-thirds of product parity claims) and the ballot SHALL say so.
+4. The owed-set query SHALL live as a **documented pipeline** (health-check LIVENESS item + Stacy's command catalog), not a committed script, and SHALL **emit its exclusions** (T4-5) so a wrong answer is visible as a suspicious count. The pre-committed promotion ladder rides with it: second wrong result noticed in ordinary use (the LIVENESS read or the release step — the named de-facto detectors) → committed script + scoped grant; publish-hook decided at the Q2 re-evaluation sitting.
+5. Findings' home is the pass record (Stacy's write scope); **no `.kiro/issues/**` grant** (the cheap exit, endorsed both sides); routing per Requirement 7.3.
+6. **Counting duties, consolidated**: each pass counts criteria-block **omissions** alongside criteria **vagueness** (ruling 4's hedge); **declared-none rates** (2.2.4); **bundled-claim and incomplete-decomposition instances** (2.6.5); and **`(platforms: …)` fallback invocations** (2.6.4). At CLOSEOUT the pass **reads `promised-artifact-exists`'s emission lines** for the closing spec (5.3) and compares decomposed rows to the committed report set (2.6.5).
+7. **The pilot**: Stacy's first pass runs on **Spec 127's own completion docs**, chartered under any Q5 answer, the ceiling-not-typical caveat carried in the record.
+8. **No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR** — post-acceptance audit, on the co-signer ground. This sentence appears wherever the practice is documented.
+9. **Pending confirm (requested, not assumed)**: the two R2 duties placed on Stacy's seats — AV-deferral adjudication (1.5 / 5.3) and CLOSEOUT emission reading (5.3 / 8.6) — carry her confirm-or-contest at this document's feedback round.
+
+### Requirement 9: `tasks.md` structural conventions
+
+**User Story**: As the predicates that key on `tasks.md` structure, I want the Declared Merge Units block standardized and the new conventions documented, so that CLOSEOUT, MIDPOINT, the checker, and the materiality extractor key on structure rather than phrasing. *Traces: lifecycle amendment T2-b/T2-e; ballot § 16.1 items 6–8.*
+
+#### Acceptance Criteria
+
+1. `governance/Process-Spec-Planning.md` SHALL define a **single canonical Declared Merge Units form** — a `## Declared Merge Units` heading + table — noting that predicates key on this structure (the 122 lesson: a title-keyed predicate fails on the spec that most needs it). Forward-binding; no dormant spec reopened.
+2. FOR specs declaring **≥ 3 merge units**, the block SHALL name the **midpoint-carrier unit** — fixed at the tasks round, never judged at merge time.
+3. The criteria-mode declaration (2.1), the declared-none state (2.2.4), the fixed-string exemption (1.7), and the "materially amended" definition (2.3) SHALL be documented on the same formalization surface, the definition beside the declaration rule it serves.
+
+### Requirement 10: The committed Implementation Report (Leonardo B1, ruled)
+
+**User Story**: As the product tier's Evidence substrate, I want Implementation Reports to be committed, citable artifacts rather than relayed messages, so that product-tier Evidence citations are locatable at claim grain. *Traces: R2 fold, Q3 block; outline § 7 (row now definite).*
+
+#### Acceptance Criteria
+
+1. `governance/Product-Handoff-Protocol.md` § Tier 2 SHALL gain the committed-report convention: the Implementation Report is **committed at `.kiro/specs/<spec>/reports/implementation-<platform>.md`**, on that platform parent's own unit branch, as part of that parent's completion — traversing the same PR gate as the work it reports.
+2. Product-tier Evidence citations SHALL resolve to **a specific claim inside the report** (section anchor, or the test/command the report records) — never the report as a whole — and SHOULD cite **the screen-spec revision verified against** (SHA or dated revision; the reference-drift mitigation, carried into the revisit).
+3. The convention also homes fourth-evidence-kind records for visual-direction sign-offs (Leonardo's cross-platform review notes) at no extra cost.
+4. **The named revisit** at the first product spec's tasks round SHALL carry Leonardo's three questions verbatim: (i) is 3× row multiplication livable at the real criterion count — measured, not estimated; (ii) did the committed-report substrate hold — locatable, claim-grain, consistently authored across three platform agents; (iii) did platform-set evolution or reference drift force a shape change. Product specs are **`criteria-mode: per-parent`** (Leonardo A4, on record); a later-added platform is a **new parity parent**.
+
+### Requirement 11: The release-step condition
+
+**User Story**: As the release surface — where both consumer-reaching escapes crossed — I want the checklist to run the owed-set query and confront the arming question, as artifacts rather than reminders. *Traces: ballot §§ 4, 5.3, 14.*
+
+#### Acceptance Criteria
+
+1. `.kiro/hooks/RELEASE-FLOW.md` (the "Deriving the delta" section) SHALL gain a named step that **RUNS the owed-set query and PASTES its output — exclusions included — into release-notes prep**. An empty set is pasted as an empty result; the step produces a record either way.
+2. The same deliverable SHALL carry the second named line: ***"if arming is undecided, decide it now"*** — Q2 guard (i)'s anchor at release-prep start (version-bump PR creation).
+3. The staged-mechanization ladder and its named de-facto detectors SHALL be recorded with the step; successor release tooling inherits it as a requirement (ballot § 14).
+
+### Requirement 12: The law ballot, F7 disposition, and measurement
+
+**User Story**: As the recording form for governance law binding every agent on every parent task, I want a record-first ballot with a verified edit inventory and honest metrics, so the law's own record survives the scrutiny the law demands of completion docs. *Traces: outline §§ 3.5, 3.6, 9; ballot §§ 2, 15; R2 fold.*
+
+#### Acceptance Criteria
+
+1. The law lands via `.kiro/docs/ballots/2026-09-XX-completion-claims-integrity.md` — **record-first**: `RATIFIED (Peter, <date>)` committed before any law edit applies; Peter-merged under the governance carve-out; a checks-only merge is not ratification. **Stacy is the REQUIRED reviewer.**
+2. The ballot SHALL carry a **before→after inventory of every edit site** — the guide subsection; Process-Spec-Planning Tier 3 + worked example + units-block and criteria-mode conventions; the TCP pointer ×2; the five register rows; the RELEASE-FLOW step; **the Product-Handoff-Protocol committed-report convention** — verified by a **mechanical straggler sweep** whose command and actual output are stated matching, never by trusting the enumerated list.
+3. The ballot SHALL re-derive its censuses with **frozen, quoted recipes**, inheriting no historical count: the format census (790/66/17/150); the in-flight population (**39**, with the bold-numbered-parent recipe note and the 37-recipe delta recorded); the zero-criteria trio; the **9-file non-frozen-form enumeration** (2.3's extraction basis); and the materiality pattern set with its one-time 153-file verification result (2.3.4).
+4. **Recorded interpretations and quoting instructions, stated so they are rulings rather than drift**: decomposed rows are a compliant rendering of ruling 5's status floor (the flag-5 parenthetical named columns/roll-up; rows were delegated to this phase — the reading is stated); the **7:1 ratio is quoted only as the promise-surface mechanism's discovery evidence**, never as a projected false-positive rate (A-R2-8); the per-row Method-line honesty clause is stated as **load-bearing for the product tier** (8.3).
+5. The ballot's framing SHALL carry the (d8) sentence verbatim (5.5's rationale line).
+6. `.kiro/issues/2026-09-12-spec-112-completion-claims-audit.md` § F7 SHALL be updated to **addressed by Spec 127**, closing condition stated: F7 closes when the ballot ratifies AND the parity checker arms (Q2 governs when) — not before, not by transcription alone.
+7. The baseline metrics (M1 15/22; M2 count-parity 7/15, verbatim plausibly ~0; M3 ~0; M4 0/22; M5 0/22) SHALL be carried with recipes as the pre-rule record, the post-arming caveat intact: once armed, M2 reads 100% by construction and measures nothing; M3/M4 and the honesty dimension are the informative metrics, and no check owns them.
+8. One docs-MCP `rebuild_index` post-merge covering the changed governance docs (guide, Process-Spec-Planning, Product-Handoff-Protocol, classification-map); `Task-Completion-Protocol.md` is not served.
+
+---
+
+## Open items for this round
+
+The decision surface is closed; this round reviews **formalization fidelity** — does each requirement restate its ruling without gain or loss — and execution consequences. Named asks:
+
+1. **Stacy (REQUIRED)**: the two seat-duty confirms (8.9); verification-grade fidelity pass, your lane.
+2. **Ada / Lina**: bound-party check that Requirements 1–2 encode the convention you re-confirmed at R2, no drift in transit.
+3. **Leonardo**: Requirement 10 encodes your B1 ruling and revisit questions — confirm the encoding.
+
+## Traceability note
+
+Every requirement restates a ruled item; where restatement and source disagree, **the ballot governs** (`2026-09-17-spec-127-outline-settle.md`), then the co-signed Q5 documents (PRs #158/#165 — noting §§ T4 are Thurgood's countersignature items), then the settled outline's `RESOLVED`/`R2 FOLD` blocks (Peter, 2026-09-19), then the feedback record. Nothing in this document is a new commitment.
