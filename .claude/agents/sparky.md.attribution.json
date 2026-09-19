@@ -20,23 +20,23 @@
     {
       "lines": [
         35,
-        286
+        288
       ],
       "op": "passthrough",
       "source": "canonical/agents/sparky.md#body"
     },
     {
       "lines": [
-        287,
-        288
+        289,
+        290
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        289,
-        312
+        291,
+        314
       ],
       "mode": "embed",
       "op": "resolve",
@@ -44,8 +44,8 @@
     },
     {
       "lines": [
-        313,
-        365
+        315,
+        367
       ],
       "mode": "embed",
       "op": "resolve",
@@ -53,8 +53,8 @@
     },
     {
       "lines": [
-        366,
-        511
+        368,
+        513
       ],
       "mode": "embed",
       "op": "resolve",
@@ -62,56 +62,56 @@
     },
     {
       "lines": [
-        512,
-        518
+        514,
+        520
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        519,
-        522
+        521,
+        524
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        523,
-        548
+        525,
+        550
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        549,
-        567
+        551,
+        569
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        568,
-        571
+        570,
+        573
       ],
       "op": "render",
       "source": "knowledgeBases"
     },
     {
       "lines": [
-        572,
-        575
+        574,
+        577
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        576,
-        581
+        578,
+        583
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

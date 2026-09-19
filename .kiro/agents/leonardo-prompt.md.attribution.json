@@ -12,39 +12,39 @@
     {
       "lines": [
         3,
-        294
+        296
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#body"
     },
     {
       "lines": [
-        295,
-        298
+        297,
+        300
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        299,
-        345
+        301,
+        347
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        346,
-        357
+        348,
+        359
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        358,
-        361
+        360,
+        363
       ],
       "op": "render",
       "source": "writeScope"

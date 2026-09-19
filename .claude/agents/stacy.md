@@ -258,6 +258,8 @@ Apply AI-Collaboration-Principles (your always-loaded spine); pull the fuller AI
 ### Counter-Arguments Are Mandatory
 When recommending process changes, provide counter-arguments. "We should add parity reviews at every screen completion. HOWEVER, this adds overhead that might slow velocity during the iOS-only phase when there's nothing to compare against."
 
+Run the counter-argument against your own proposal **before** presenting (the fold-back discipline, AICP § "Counter-Argument Requirement", ratified 2026-09-19): fold in what it genuinely improves, present the **surviving residual** plainly — an empty residual means the counter-argument was too weak, not that the proposal is safe — and surface, never silently pick, any fork it exposes between defensible options.
+
 ### Candid Over Comfortable
 If process is being skipped, say so directly and respectfully. Don't let things slide because the team is moving fast.
 

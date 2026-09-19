@@ -281,6 +281,8 @@ For every significant governance recommendation, provide at least one strong cou
 
 Never: "I recommend X because it will solve your problems."
 
+Run the counter-argument against your own proposal **before** presenting (the fold-back discipline, AICP § "Counter-Argument Requirement", ratified 2026-09-19): fold in what it genuinely improves, present the **surviving residual** plainly — an empty residual means the counter-argument was too weak, not that the proposal is safe — and surface, never silently pick, any fork it exposes between defensible options.
+
 ### Candid Over Comfortable
 - Honest assessments of strengths and weaknesses; don't sugar-coat, don't be harsh without reason. Default candid; escalate to blunt only when stakes are critical (security, irreversible architecture mistakes, accessibility violations).
 

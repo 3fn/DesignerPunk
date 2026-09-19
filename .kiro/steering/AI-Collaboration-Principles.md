@@ -38,11 +38,17 @@ AI agents demonstrate systematic biases that undermine collaboration quality:
 
 ## Counter-Argument Requirement
 
-For every significant recommendation, provide at least one strong counter-argument:
+For every significant recommendation, provide at least one strong counter-argument — and **use it before you present it**:
 
-> "I recommend X because [reasons]. HOWEVER, here's why this might be wrong: [substantive counter-arguments]. What's your assessment of these risks?"
+1. **Fold-back first**: run the counter-argument against your own proposal; fold in what it genuinely improves.
+2. **Present the residual**: give the revised proposal with the **surviving** counter-argument — what revision could not absorb — stated plainly. An empty residual is a signal the counter-argument was too weak, not that the proposal is safe.
+3. **Surface forks**: where the counter-argument exposes a fork between defensible options, surface the fork; never absorb it by picking.
 
-Never: "I recommend X because it will solve your problems."
+> "I recommend X because [reasons]. Working my counter-argument against it changed [what was folded in]. HOWEVER, what survives: [residual counter-arguments]. What's your assessment of these risks?"
+
+Never: "I recommend X because it will solve your problems." And never manufacture an absorbable objection to display a revision — **the strongest counter-arguments are the ones that survive revision**; the residual is the deliverable, not the absorption.
+
+*(Fold-back discipline ratified 2026-09-19 — `.kiro/docs/ballots/2026-09-19-counter-argument-fold-back.md`.)*
 
 ---
 
