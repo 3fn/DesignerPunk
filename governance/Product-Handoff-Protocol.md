@@ -8,7 +8,7 @@ description: Structured communication protocol for implementation-phase work bet
 # Product Handoff Protocol
 
 **Date**: 2026-03-20
-**Last Reviewed**: 2026-03-20
+**Last Reviewed**: 2026-09-19
 **Purpose**: Structured communication protocol for implementation-phase work between product agents
 **Organization**: process-standard
 **Scope**: cross-project
@@ -65,8 +65,33 @@ When a Tier 1 clarification results in a design or implementation decision, the 
 
 **Frequency**: Once per screen or flow completion
 **Direction**: Platform → Leo
-**Format**: Structured, captured for reference
+**Format**: Structured, **committed**, captured for reference
 **Expectation**: Delivered when implementation is complete, before moving to next work
+
+#### The committed-report convention
+
+**The Implementation Report is committed at `.kiro/specs/<spec>/reports/implementation-<platform>.md`**, on that platform parent's own unit branch, as part of that parent's completion — **traversing the same PR gate as the work it reports.** A report that exists only as a relayed message is not citable, and product-tier Evidence cells must cite something a later reader can open.
+
+**Claim-grain citation.** A product-tier Evidence citation SHALL resolve to **a specific claim inside the report** — a section anchor, or the test or command the report records — **never the report as a whole**. `implementation-ios.md` is not evidence; `implementation-ios.md#navigation-stack` is.
+
+**Spec-revision citation (SHOULD).** A citation SHOULD name **the screen-spec revision it was verified against** — a SHA or a dated revision. *This is a stated reading, not a silent one*: SHOULD is the ruled strength of the advisory that proposed it, the reference-drift mitigation is adopted **now at SHOULD strength AND re-examined at the revisit below**, and SHALL would have been an unruled gain. The reading is on the record precisely so no later reader has to infer whether the softer strength was a decision or an omission.
+
+**Fourth-evidence-kind records.** This convention also homes **visual-direction sign-offs** — cross-platform design-review notes and design-critique records — at no extra cost: committed at the same path family, citable at claim grain, and therefore usable as the fourth Evidence kind (a locatable decision record / approval citation) in a completion doc.
+
+#### NAMED REVISIT — at the first product spec's tasks round
+
+This convention is adopted on system-side evidence and a product-side prediction. **The prediction is revisited, on the record, at the first product spec's tasks round**, against three questions carried verbatim:
+
+> **(i)** is 3× row multiplication livable at the real criterion count — **measured, not estimated**;
+> **(ii)** did the committed-report substrate hold — **locatable, claim-grain, consistently authored across three platform agents**;
+> **(iii)** did platform-set evolution or reference drift force a shape change.
+
+Two answers are fixed in advance so the revisit measures the open questions rather than re-litigating the settled ones:
+
+- **Product specs are `**Criteria mode**: per-parent`.**
+- **A later-added platform is a NEW PARITY PARENT** — not an amendment to a completed parent's criteria set.
+
+**Question (ii) is read to include path collision on a future multi-screen spec**: `reports/implementation-<platform>.md` is unique per spec, not per screen, so a spec covering several screens will need either a screen segment in the filename or a section-per-screen discipline. That is folded into the revisit's net deliberately, rather than pre-designed here on zero instances.
 
 Template:
 
