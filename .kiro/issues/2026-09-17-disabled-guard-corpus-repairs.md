@@ -24,8 +24,7 @@ suites green (8/8 suites, 191/191 tests, contract-count baseline unchanged at 23
 BEFORE evidence captured (all five confirmed `"excluded": {}` on the live server). Live-MCP
 AFTER evidence (post-`rebuild_index`) is deferred to post-merge since the server reads
 `main`, not this branch — the merging session runs it. Full evidence:
-`.kiro/issues/evidence-2026-09-18-exclusion-key-normalization.md`. PR: (see PR link reported
-in the completing session's output).
+`.kiro/issues/evidence-2026-09-18-exclusion-key-normalization.md`. PR: #169, MERGED 2026-09-18. **Live-MCP AFTER evidence DISCHARGED post-merge** (five-for-five populated; see the evidence file's closing section).
 
 **Tracked WITH this item, shipped SEPARATELY** (the patch-without-guard lesson): the MCP parser silently accepting an unrecognized top-level key is itself the failure mode — a strict-key warning in `parsers.ts` (warn vs fail is its own design question) would have surfaced this years earlier.
 
