@@ -39,18 +39,48 @@ Release is where both of this repository's consumer-reaching completion-claim es
 
 > **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`.
 
-**The pipeline** — four stages, run as documented commands (not a committed script):
+**The pipeline** — four stages, as **documented commands, not a committed script**. Run it; paste what it prints.
 
-1. **Enumerate and classify.** List every spec with **post-ratification merge activity**, and classify each into exactly one of three classes:
-   - **(a) declared units**, in any recognized form (canonical `## Declared Merge Units` heading; the legacy bold-prose declaration; or a heading containing "merge unit", tried in that precedence order) → CLOSEOUT anchors on the **final declared unit**;
-   - **(b) no units block, a single PR** → that PR **is** the spec's only unit. *(This is the corpus's most common shape; a stage that drops it produces a healthy-looking short list, which is the failure this enumeration exists to make impossible.)*
-   - **(c) no units block, more than one PR** → the anchor is the PR carrying the **last parent completion doc**.
-2. **Resolve the anchor**: the final anchor's merge state and merge date.
-3. **Test the record**: `test -f .kiro/specs/<S>/completion/claims-pass.md`.
-4. **Emit the owed set PLUS the ENUMERATED exclusion counts, by name**:
-   `N closed; M(a) / M(b) / M(c) per class; K excluded as pre-ratification`
+```bash
+BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
+RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
+[ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
+echo "ratification date: $RATIFIED"
 
-   **Named classes, so a wrong answer is a falsifiable count rather than a healthy-looking short list.**
+# Stage 1a — every spec with post-ratification merge activity on main's first-parent line
+SPECS=$(git log --first-parent --since="$RATIFIED" --name-only --pretty=format: -- '.kiro/specs/' \
+        | sed -n 's|^\.kiro/specs/\([^/]*\)/.*|\1|p' | sort -u)
+echo "specs with post-ratification merge activity: $(echo "$SPECS" | grep -c .)"
+
+A=0; B=0; C=0; CLOSED=0; OWED=""
+for S in $SPECS; do
+  T=".kiro/specs/$S/tasks.md"
+  # Stage 1b — classify into exactly one class, units-form precedence first
+  if   grep -qE '^## Declared Merge Units' "$T" 2>/dev/null \
+    || grep -qE '^\*\*Merge units \(' "$T" 2>/dev/null \
+    || grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
+  else
+    n=$(git log --first-parent --oneline --since="$RATIFIED" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
+    if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
+  fi
+  # Stage 2 — the final anchor's merge commit and date
+  ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- ".kiro/specs/$S/")
+  # Stage 3 — does the closeout record exist?
+  if [ -f ".kiro/specs/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
+  else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
+done
+
+# Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name
+echo "OWED SET:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (empty)"
+echo "EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \
+K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
+```
+
+**What each class means, and why class (b) is spelled out**: **(a)** the spec declares units in any recognized form — the canonical `## Declared Merge Units` heading, the legacy bold-prose declaration, or a heading containing "merge unit", tried in that precedence order — so CLOSEOUT anchors on the **final declared unit**. **(b)** no units block and a single PR: that PR **is** the spec's only unit. *This is the corpus's most common shape, and a stage that silently drops it produces a healthy-looking short list — the exact failure this enumeration exists to make impossible.* **(c)** no units block, more than one PR: the anchor is the PR carrying the **last parent completion doc**.
+
+**The one judgment point, named rather than hidden**: stage 2 resolves the anchor as *the most recent first-parent commit touching the spec*. For class (a) that is a proxy for "the final declared unit merged" and for class (c) a proxy for "the PR carrying the last parent completion doc". **Where the proxy and the definition disagree, the definition governs and the operator says so in the pasted output.** A wrong owed-set result noticed here counts toward the promotion ladder below.
+
+**Named classes in the exclusion line, so a wrong answer is a falsifiable count rather than a healthy-looking short list.** Stacy's command catalog (`canonical/agents/stacy.md`, U3) carries this same pipeline as its authoritative home; this step and the monthly health check's LIVENESS item are its two run surfaces.
 
 **An empty set is pasted as an empty result.** The step produces a record either way — that is the whole point of running a query instead of recalling an obligation.
 

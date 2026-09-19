@@ -3,29 +3,34 @@
 **Date**: 2026-09-19
 **Spec**: 127 — Completion-Claims Integrity (`.kiro/specs/127-completion-claims-integrity/`)
 **Drafted by**: Thurgood (Civitas steward) — compiling rulings already made; this ballot legislates nothing new
-**Status**: **DRAFT — submitted for ratification at Task 1.4**
-**Reviewer (verification)**: **Stacy — REQUIRED** (Req 12.1). Round record at § 14; not yet performed.
-**Unit**: U1 (the law) — Peter-merged under the governance carve-out, record-first
+**Status**: **RATIFIED (Peter, 2026-09-19)**
+**Reviewer (verification)**: **Stacy — REQUIRED** (Req 12.1). Review PERFORMED 2026-09-19, verification-grade: **CONDITIONAL — 7 blocking + 11 advisory; all seven dispositioned in this revision.** Record at § 14; her file: `.kiro/specs/127-completion-claims-integrity/feedback/u1-ballot-review-stacy.md`.
+**Unit**: U1 (the law) — Peter-merged under the governance carve-out; record-first on the PR-atomic reading (§ 15)
 
-<!-- RATIFICATION SLOT — written at Task 1.4 submission, per the record-first protocol
-     (.kiro/docs/ballots/README.md § "The Ratification Protocol"). Two lines are written:
+<!-- RATIFICATION SLOT — filled at Task 1.4, per § 15's PR-atomic reading of the
+     record-first protocol (.kiro/docs/ballots/README.md § "The Ratification Protocol").
+     Two things are written, in this same commit:
 
-       1. This header's `Status:` becomes   **RATIFIED (Peter, <date>)**
-       2. The machine line below is filled in, ALONE ON ITS OWN LINE, in this exact form:
+       1. This header's Status line, above.
+       2. The machine line, immediately below this comment — unbolded, alone on its line,
+          with an ISO date. The checker parses THAT LINE ONLY (design C5/C11, B-2's fix);
+          it never parses prose. If this ballot is renamed, or the line is reworded or
+          bolded, the checker goes LOUD RED ("cannot resolve ratification record at
+          <path>") — there is no vacuous-green state.
 
-              Ratified-machine: YYYY-MM-DD
+     DELIBERATELY NOT REPRODUCED HERE: an example of the machine line in its literal form.
+     A commented specimen on its own line is a DECOY for any line-contains parser, and an
+     unfilled specimen would parse as an unparseable date and red the checker against its
+     own ratification record (Stacy A-1). The form is stated in prose at § 4's fixed-string
+     table instead. The decoy case itself is handed to U2's fixture set.
 
-     The machine line is the ONLY thing the checker parses (design C5/C11, B-2's fix).
-     It never parses prose. Its form is fixed here beside the law's other fixed strings
-     (§ 4). If this ballot is renamed, or the line is reworded, the checker goes LOUD RED
-     (`cannot resolve ratification record at <path>`) — there is no vacuous-green state.
+     DATE ERRATUM — scope extended at the 1.4 fold (Stacy BLOCKING-7): if Peter's merge
+     lands on a date other than the one recorded, U2's first commit corrects NOT ONLY this
+     line but every hard-coded 2026-09-19 this PR writes. The enumerated checklist is at
+     § 9 item 5. The in-force date is the MERGE's date; every recorded date is a
+     prediction reconciled at first divergence. -->
 
-     If Peter's merge lands on a different date than the one recorded here, U2's first
-     commit corrects this line as a record-accuracy erratum, Peter-merged with U2
-     (tasks.md § Execution routes; Stacy A-7). The in-force date is the MERGE's date;
-     the recorded date is a prediction reconciled at first divergence. -->
-
-**Ratified-machine:** *(slot — not yet written; see the comment above for its exact final form)*
+Ratified-machine: 2026-09-19
 
 ---
 
@@ -118,7 +123,11 @@ Every machine-readable string this law creates. Each is matched **verbatim**; ea
 
 ## 5. The censuses — frozen recipes, quoted with their actual outputs
 
-**Discipline**: each census is a command block followed by the command's real output. No number below was inherited from an earlier document. All commands run on branch `task/127-u1-law` at `cd5a7b72`, 2026-09-19, from the repository root. Worktrees under `.claude/worktrees/` are outside every glob used here (`.kiro/specs/*/tasks.md`), so no exclusion flag is needed for them.
+**Discipline**: each census is a command block followed by the command's real output, **with every label emitted by the block itself** — no human-added headers presented as machine output, no elided pipelines (three blocks failed this at 1.1 and are corrected at the 1.4 fold: §§ 5.4, 5.9, 5.10, each carrying its correction note). No number below was inherited from an earlier document. Commands run on branch `task/127-u1-law`, 2026-09-19, from the repository root; §§ 5.4, 5.9 and 5.10's corrected forms were re-run at the 1.4 fold, at `28d6d1cf`, and reproduce the same figures.
+
+**Worktree scope**: worktrees under `.claude/worktrees/` are outside every glob used in this section (`.kiro/specs/*/tasks.md`), so no exclusion flag is needed here. **That reasoning is correct for § 5 and does NOT transfer to § 8**, whose commands walk the whole tree — carrying the confidence across was exactly the defect Stacy's BLOCKING-1 found, and § 8.1 now excludes explicitly.
+
+**Named interpreter, because a ruled reconciliation depends on it** (Stacy § 5 item 2): these recipes were run under this session's `grep`, which is a **ugrep 7.8.4 shim**, not GNU or BSD grep. Every § 5 figure was re-derived under both the shim and `command grep` at the verification review and agrees under both. The identity matters beyond ergonomics: U2's `--verify-extraction` digest is **contractually forbidden from attributing differences to extraction behaviour** (its differences must be attributed to enumerated corpus changes), so when that reconciliation runs, **interpreter identity is part of the comparison's terms, not a footnote.**
 
 ### 5.1 Corpus size — and the one change since the requirements phase
 
@@ -207,7 +216,10 @@ Zero files where occurrences ≠ matching lines. **Occurrence-vs-line counting c
 
 Each recipe asks the same question — *does this spec carry both ticked and unticked parent tasks?* — and differs only in how it recognizes a parent line.
 
+*Recipe corrected at the 1.4 fold (Stacy BLOCKING-3): the first draft's block emitted no labels and never cleared its scratch files, so a second run in a dirty directory doubled every count — a non-idempotent recipe offered as a frozen one, with human-added headers presented as command output. Every label below is now emitted by the block itself, and the block cleans up at both ends.*
+
 ```bash
+rm -f A.txt B.txt C.txt
 for f in .kiro/specs/*/tasks.md; do s=$(basename $(dirname "$f"))
   a_x=$(grep -cE '^- \[x\] [0-9]' "$f");        a_o=$(grep -cE '^- \[ \] [0-9]' "$f")
   b_x=$(grep -cE '^- \[x\] (\*\*)?[0-9]' "$f"); b_o=$(grep -cE '^- \[ \] (\*\*)?[0-9]' "$f")
@@ -216,27 +228,29 @@ for f in .kiro/specs/*/tasks.md; do s=$(basename $(dirname "$f"))
   [ "$b_x" -gt 0 ] && [ "$b_o" -gt 0 ] && echo "$s" >> B.txt
   [ "$c_x" -gt 0 ] && [ "$c_o" -gt 0 ] && echo "$s" >> C.txt
 done
-wc -l A.txt B.txt C.txt
-comm -13 <(sort A.txt) <(sort B.txt)   # B \ A
-comm -13 <(sort B.txt) <(sort C.txt)   # C \ B
-comm -13 <(sort A.txt) <(sort C.txt)   # C \ A
+echo "A (strict-numbered):    $(wc -l < A.txt | tr -d ' ')"
+echo "B (numbered-or-bold):   $(wc -l < B.txt | tr -d ' ')"
+echo "C (any top-level):      $(wc -l < C.txt | tr -d ' ')"
+echo "B minus A:"; comm -13 <(sort A.txt) <(sort B.txt) | sed 's/^/  /'
+echo "C minus B:"; comm -13 <(sort B.txt) <(sort C.txt) | sed 's/^/  /'
+echo "C minus A:"; comm -13 <(sort A.txt) <(sort C.txt) | sed 's/^/  /'
+echo "127 present in C: $(grep -c '^127' C.txt)"
+rm -f A.txt B.txt C.txt
 ```
 ```
-      36 A.txt
-      37 B.txt
-      39 C.txt
-
---- B minus A ---
-125-A-pr-gate-mechanical-arming
-
---- C minus B ---
-054a-figma-token-push
-054b-figma-design-extract
-
---- C minus A ---
-054a-figma-token-push
-054b-figma-design-extract
-125-A-pr-gate-mechanical-arming
+A (strict-numbered):    36
+B (numbered-or-bold):   37
+C (any top-level):      39
+B minus A:
+  125-A-pr-gate-mechanical-arming
+C minus B:
+  054a-figma-token-push
+  054b-figma-design-extract
+C minus A:
+  054a-figma-token-push
+  054b-figma-design-extract
+  125-A-pr-gate-mechanical-arming
+127 present in C: 0
 ```
 
 | Recipe | Parent-line pattern | n | What it misses, relative to (C) |
@@ -249,14 +263,7 @@ comm -13 <(sort A.txt) <(sort C.txt)   # C \ A
 
 **Membership check against the ruled delta**: (A)'s miss set is exactly `{054a, 054b, 125-A}` — the settle ballot § 6.1's delta, member-for-member. `125-A` is missed by (A) because its parents are written `- [x] **1. Draft the workflow-law ballot**` (bold-numbered inside the checkbox); `054a`/`054b` are missed by both (A) and (B) because they carry unnumbered top-level checkboxes.
 
-**127's own file is absent from all three sets** (no ticked parents yet):
-
-```bash
-grep -c '127' C.txt
-```
-```
-0
-```
+**127's own file is absent from all three sets** (no ticked parents yet — the block's last `echo` reports it: `127 present in C: 0`).
 
 **And the rule text is recipe-independent, deliberately** — it binds *any spec with both ticked and unticked parent tasks at ratification*. The census sizes the blast radius; it does not define the population (settle ballot § 6.1).
 
@@ -385,22 +392,47 @@ grep -nE '^### ' governance/classification-map.md | grep -i 'illustrative'
 
 The register's hard constraint (§ "Addressing and Citation"): entry-ids are unique **and no entry-id may be a substring of another**, because sweep-1 resolves `§ "heading"` citations by verbatim substring match — a violation mis-resolves silently and still reports green.
 
+*Recipe corrected at the 1.4 fold (Stacy BLOCKING-3): the first draft recorded a `live count: 22` line that no command in the block emitted. Every label below is emitted by the block.*
+
+**At authoring (1.1), before the rows existed** — the five proposed ids swept against the 22 live ones:
+
 ```bash
 LIVE=$(grep -E '^### ' governance/classification-map.md | sed 's/^### //' | grep -v 'Illustrative Example')
 PROPOSED="completion-criteria-parity promised-artifact-exists promised-artifact-shipped \
 completion-verification-honesty parent-completion-docs-present"
 ALL="$LIVE $PROPOSED"; hits=0
+echo "live entry ids: $(echo "$LIVE" | wc -l | tr -d ' ')"
 for a in $ALL; do for b in $ALL; do
   [ "$a" != "$b" ] && case "$b" in *"$a"*) echo "COLLISION: '$a' is a substring of '$b'"; hits=$((hits+1));; esac
 done; done
 echo "relations found: $hits"
 ```
 ```
-live count: 22
+live entry ids: 22
 relations found: 0
 ```
 
-**27 ids (22 live + 5 proposed), 702 ordered pairs, zero substring relations in either direction.** Re-run mechanically at Task 1.3 against the register as it stands at that moment; the recorded output there is the one the completion doc cites.
+**27 ids (22 live + 5 proposed), 702 ordered pairs, zero substring relations in either direction.**
+
+**Re-run at Task 1.3 against the LIVE register, after the rows landed** (Stacy A-7 — the 1.3 run was owed a record and this is it):
+
+```bash
+LIVE=$(grep -E '^### ' governance/classification-map.md | sed 's/^### //' | grep -v 'Illustrative Example')
+hits=0
+echo "live entry ids: $(echo "$LIVE" | wc -l | tr -d ' ')"
+for a in $LIVE; do for b in $LIVE; do
+  [ "$a" != "$b" ] && case "$b" in *"$a"*) echo "COLLISION: '$a' is a substring of '$b'"; hits=$((hits+1));; esac
+done; done
+echo "relations found: $hits"
+echo "duplicate ids: $(echo "$LIVE" | sort | uniq -d | wc -l | tr -d ' ')"
+```
+```
+live entry ids: 27
+relations found: 0
+duplicate ids: 0
+```
+
+The five proposed ids are now live ids; the constraint holds across the whole register, both directions, with no duplicates.
 
 ### 5.10 The M-baseline population recipe re-derives exactly
 
@@ -413,41 +445,52 @@ git log --diff-filter=A --since=2026-07-01 --name-only --pretty=format: \
 41
 ```
 
+*Recipe corrected at the 1.4 fold (Stacy BLOCKING-3): the first draft elided two pipelines with `…` — which is not a command — and carried six labelled output lines against four commands. Written out in full below, every label emitted by the block, run as one unit.*
+
 ```bash
-… | sed 's|.kiro/specs/||;s|/completion/.*||' | sort | uniq -c | sort -rn
+git log --diff-filter=A --since=2026-07-01 --name-only --pretty=format: \
+  -- '.kiro/specs/**/completion/**' \
+  | grep -E '/task-[0-9]+(-parent)?-completion\.md$' | sort -u > /tmp/mpop.txt
+echo "population: $(wc -l < /tmp/mpop.txt | tr -d ' ')"
+
+echo "by spec:"
+sed 's|.kiro/specs/||;s|/completion/.*||' /tmp/mpop.txt | sort | uniq -c | sort -rn | sed 's/^/  /'
+
+grep -E '122-agent-generator|125-B-classification-map' /tmp/mpop.txt > /tmp/min.txt
+echo "in-scope n: $(wc -l < /tmp/min.txt | tr -d ' ')"
+
+echo "M1 in-scope (any criteria section): $(xargs grep -li 'success criteria' < /tmp/min.txt | wc -l | tr -d ' ')"
+echo "the in-scope docs WITHOUT one:"
+xargs grep -Li 'success criteria' < /tmp/min.txt | sed 's|.*/completion/|  |'
+echo "M5 in-scope (any warn/fail marker): $(xargs grep -lE '⚠️|❌|Partial|not met' < /tmp/min.txt | wc -l | tr -d ' ')"
+echo "M1 corpus-wide over all 41: $(xargs grep -li 'success criteria' < /tmp/mpop.txt | wc -l | tr -d ' ')"
+echo "M5 corpus-wide over all 41: $(xargs grep -lE '⚠️|❌|Partial|not met' < /tmp/mpop.txt | wc -l | tr -d ' ')"
+rm -f /tmp/mpop.txt /tmp/min.txt
 ```
 ```
-  18 122-agent-generator
-  10 119-B-capability-routing-measurement
-   8 125-A-pr-gate-mechanical-arming
-   4 125-B-classification-map
-   1 126-avatar-decorative-warn
+population: 41
+by spec:
+    18 122-agent-generator
+    10 119-B-capability-routing-measurement
+     8 125-A-pr-gate-mechanical-arming
+     4 125-B-classification-map
+     1 126-avatar-decorative-warn
+in-scope n: 22
+M1 in-scope (any criteria section): 15
+the in-scope docs WITHOUT one:
+  task-1-parent-completion.md
+  task-2-parent-completion.md
+  task-3-parent-completion.md
+  task-4-parent-completion.md
+  task-5-parent-completion.md
+  task-6-parent-completion.md
+  task-8-parent-completion.md
+M5 in-scope (any warn/fail marker): 0
+M1 corpus-wide over all 41: 16
+M5 corpus-wide over all 41: 2
 ```
 
 In-scope = 122 (18) + 125-B (4) = **22**. Out of scope by the ruling's own rider = 119-B (10, spec-level) + 125-A (8, zero criteria) + 126 (1, issue-driven, no `tasks.md`) = **19**.
-
-```bash
-IN=$(… | grep -E '122-agent-generator|125-B-classification-map')
-echo "$IN" | wc -l                                                # 22
-echo "$IN" | xargs grep -li 'success criteria' | wc -l            # M1 numerator
-echo "$IN" | xargs grep -Li 'success criteria'                    # the 7 without
-echo "$IN" | xargs grep -lE '⚠️|❌|Partial|not met' | wc -l        # M5 numerator
-```
-```
-in-scope n: 22
-M1 (any criteria section): 15
---- the 7 without ---
-task-1-parent-completion.md
-task-2-parent-completion.md
-task-3-parent-completion.md
-task-4-parent-completion.md
-task-5-parent-completion.md
-task-6-parent-completion.md
-task-8-parent-completion.md
-M5 (any warn/fail marker): 0
-corpus-wide M5 over all 41: 2
-corpus-wide M1 over all 41: 16
-```
 
 **The baseline reproduces exactly, three months on**: 41 / 22 / 19; M1 = 15/22 in-scope and 16/41 corpus-wide; the seven docs without a criteria section are 122 parents 1–6 and 8, which is precisely how 22 − 7 = 15 arises; M5 = 0/22 in-scope, 2/41 corpus-wide (both out of scope). **The recipe is frozen and re-runnable at each health check.**
 
@@ -477,9 +520,11 @@ The pre-rule record. **These are the numbers the law is measured against, and th
 
 ## 7. The before→after inventory
 
-**Nine edit sites, matching design C11's list exactly.** Every BEFORE block below was read from the live file on this branch at `cd5a7b72`. Per the ballots-README edit discipline: **apply exactly as written; if a BEFORE text does not match, STOP on that block and report — never adapt silently.**
+**Nineteen applied edit sites: 16 inventoried below, plus three `Last Reviewed` bumps carried at § 9 item 2. All ten of design C11's sites are among them.** *(The 1.1 draft claimed "nine edit sites, matching design C11's list exactly" — wrong on both halves, corrected at the 1.4 fold; the accounting and its correction are at § 8.3's inventory diff check.)* Every BEFORE block below was read from the live file on this branch at `cd5a7b72`. Per the ballots-README edit discipline: **apply exactly as written; if a BEFORE text does not match, STOP on that block and report — never adapt silently.**
 
-A **drafter's judgment call inside ruled scope** is marked 🔸 wherever it occurs, following the settle ballot's edit-site-2 precedent, so a reviewer can strike it without unpicking the ruled substance.
+A **drafter's judgment call inside ruled scope** is marked 🔸 wherever it occurs, following the settle ballot's edit-site-2 precedent, so a reviewer can strike it without unpicking the ruled substance. All four were sustained at the verification review (§ 11).
+
+**Adaptations made at application time are recorded at § 7.10**, with their before→after. The edit discipline says *stop and report, never adapt silently* — three adaptations were made at 1.2/1.3 and went unrecorded until the review found them; § 7.10 is where they now live.
 
 ### 7.1 `governance/completion-documentation-guide.md` — the new § "Parent Success-Criteria Fidelity" *(Req 1; design C8.1)*
 
@@ -865,13 +910,57 @@ Artifact deferred: docs/token-generation-guide.md → U3 (the documentation unit
 - **the forced-negative line listing both ⚠️ rows** — the line is a list, not a ritual "None";
 - **and, negatively: not one Evidence cell contains activity prose.** Every cell is a command + result, a test name, or a path.
 
-**One neutrality line accompanies the example, and belongs in the document**: *the shape applies equally to a component's cross-platform parity parent and a product screen's — the example is generic system content, deliberately. Product-tier specifics (the committed Implementation Report, claim-grain citation) live in the Product-Handoff-Protocol, which is their home.*
+**One neutrality line accompanies the example** — inventoried as its own site at § 7.2d below, with a real anchor. *(At 1.1 this was prose describing a line rather than a BEFORE/AFTER block; it was applied anyway, in adapted wording, at an uninventoried site. BLOCKING-4c. Corrected below.)*
+
+#### 7.2d — the domain-neutrality line *(site unlisted at 1.1; anchored at the 1.4 fold)*
+
+**Placement**: document prose immediately after the worked example's **closing fence**, before the `---` that precedes `### Documentation Workflow`. (Verified: the example's fence closes at `:2255`; this line sits at `:2257`, outside it — it is document prose, not example content.)
+
+**BEFORE** (verbatim):
+
+````markdown
+**BuildOrchestrator**:
+- `orchestrate(platform: string): BuildResult` - Main build coordination method
+- `rollback(): void` - Error recovery method
+```
+
+---
+
+### Documentation Workflow
+````
+
+**AFTER**:
+
+````markdown
+**BuildOrchestrator**:
+- `orchestrate(platform: string): BuildResult` - Main build coordination method
+- `rollback(): void` - Error recovery method
+```
+
+**Domain neutrality**: the shape above applies equally to a component's cross-platform parity parent and a product screen's — the example is generic system content, deliberately. Product-tier specifics (the committed Implementation Report, claim-grain citation) live in `governance/Product-Handoff-Protocol.md` § "Tier 2: Implementation Reports", which is their home.
+
+---
+
+### Documentation Workflow
+````
+
+*The applied wording differs from § 7.2c's italic paraphrase in three ways, all deliberate and all recorded at § 7.10(c): a bold `**Domain neutrality**:` label was added; "the shape **above**" makes the referent explicit now that the line sits after the example rather than inside the prose describing it; and the bare document name became a path plus a `§`, so the pointer resolves under the section-citation grammar the corpus checks mechanically.*
 
 ---
 
 ### 7.3 `governance/Process-Spec-Planning.md` — the new § "`tasks.md` Structural Conventions" *(Req 9; design C8.3)*
 
 **Placement**: inside § "Tasks Document Format", after `### Key Principles` and before `### Task Format Examples` — so an author reading the format standard meets the conventions before the examples that embody them.
+
+> **RECORDED DEVIATION from design C8.3's element list — two elements deliberately NOT carried here** (Stacy BLOCKING-6, sustained).
+>
+> C8.3 enumerates this section's contents as *"the criteria-mode declaration + declared-none + **exemption string** + **deferral form** + the 'materially amended' definition beside the declaration rule, with the flag-discipline authoring guidance."* Two of those — the fixed exemption string `Criteria fidelity: exempt — spec in flight at ratification (<date>)` and the fixed deferral form `Artifact deferred: <path> → <unit>` — **are absent from this section and are not being added.**
+>
+> **The ground**: neither is a `tasks.md` structure. Both describe **completion-doc** content, whose single home is the Completion Documentation Guide (design C8.1), where both are stated verbatim, taught, and given their non-compliance rules. Duplicating a fixed string into a second governance surface creates a second drift surface for a string whose whole value is being matched verbatim — and restated-imperative accretion across surfaces is precisely what the 125-B campaign spent three waves removing. **C8.3's element list is what is wrong here, not the applied text.**
+>
+> **This is stated as a deviation, not resolved by silence**, because Task 1's success criterion reads *"The PSP conventions § contains **every** design-C8.3 element"* and that criterion is reproduced verbatim and marked in this unit's completion doc. Marking it ✅ with two enumerated elements absent and unmentioned would be the **drop** class — on the rule's own first compliance artifact, in the first hour of its life. **The criterion is marked ⚠️ with this deviation cited in its Evidence cell.** A ⚠️ that names a deliberate, reasoned omission is a better artifact than a ✅ that hides it, and it teaches the thing this law is for.
+>
+> *What IS present, and verified: the criteria-mode declaration, the declared-none state, the "materially amended" definition beside the declaration rule, the flag-discipline guidance, and the three elements Stacy's earlier design-round finding added — the structural limb as law, the `(platforms: …)` fallback with its counting note, and the canonical units block.*
 
 **BEFORE** (lines 440–447, verbatim):
 
@@ -1057,18 +1146,39 @@ Release is where both of this repository's consumer-reaching completion-claim es
 
 > **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`.
 
-**The pipeline** — four stages, run as documented commands (not a committed script):
+**The pipeline** — four stages, as **documented commands, not a committed script**.
 
-1. **Enumerate and classify.** List every spec with **post-ratification merge activity**, and classify each into exactly one of three classes:
-   - **(a) declared units**, in any recognized form (canonical `## Declared Merge Units` heading; the legacy bold-prose declaration; or a heading containing "merge unit", tried in that precedence order) → CLOSEOUT anchors on the **final declared unit**;
-   - **(b) no units block, a single PR** → that PR **is** the spec's only unit. *(This is the corpus's most common shape; a stage that drops it produces a healthy-looking short list, which is the failure this enumeration exists to make impossible.)*
-   - **(c) no units block, more than one PR** → the anchor is the PR carrying the **last parent completion doc**.
-2. **Resolve the anchor**: the final anchor's merge state and merge date.
-3. **Test the record**: `test -f .kiro/specs/<S>/completion/claims-pass.md`.
-4. **Emit the owed set PLUS the ENUMERATED exclusion counts, by name**:
-   `N closed; M(a) / M(b) / M(c) per class; K excluded as pre-ratification`
+> **A-2, sustained and folded.** The 1.1 text gave the four stages in prose, of which exactly one (`test -f …`) was a command, while the step's own heading said *"RUN the owed-set query."* **A step that says RUN must have something to run**; implying a runnable artifact at a surface that does not carry one is a silence-shaped gap, and silence-shaped gaps are this spec's named defect cluster. The runnable form is authored below and **verified to execute** (see the § 7.5 verification note). Its authoritative home is Stacy's command catalog at U3; this step and the health check's LIVENESS item are its two run surfaces, which are also the promotion ladder's two named de-facto detectors.
 
-   **Named classes, so a wrong answer is a falsifiable count rather than a healthy-looking short list.**
+*(The full command block as applied is in `.kiro/hooks/RELEASE-FLOW.md` § "Deriving the delta" → Step 5 → 5a — it is ~25 lines of shell and is not duplicated here, to avoid a second drift surface for a block whose value is being run rather than read. It implements: stage 1a, enumerate specs with post-ratification first-parent activity; stage 1b, classify each into exactly one of (a) declared units / (b) single PR / (c) multi-PR-no-units, units-form precedence first; stage 2, resolve the final anchor's commit and date; stage 3, `test -f .kiro/specs/<S>/completion/claims-pass.md`; stage 4, emit the owed set plus the enumerated exclusion counts by name — `N closed; M(a) / M(b) / M(c) per class; K excluded as pre-ratification`.)*
+
+**Verified to execute at the 1.4 fold.** Run at `28d6d1cf` against the real ratification date it parses out of this ballot:
+
+```
+ratification date: 2026-09-19
+specs with post-ratification merge activity: 0
+OWED SET:
+  (empty)
+EXCLUSIONS: 0 closed; 0(a) / 0(b) / 0(c) per class; K excluded as pre-ratification (no first-parent activity since 2026-09-19)
+```
+
+**An empty set pasted as an empty result — the step's own stated requirement, met on its first run.** And because an empty result from a broken pipeline looks identical to an empty result from a working one, the pipeline was also probed against an earlier date to prove it is **not vacuously empty**:
+
+```
+ratification date: 2026-09-01
+specs with post-ratification merge activity: 5
+OWED SET:
+  084-github-pages-showcase (b, anchor 5b51dfc3 2026-09-15)
+  094-portable-pipeline-and-theme-registry (b, anchor 5b51dfc3 2026-09-15)
+  125-B-classification-map (a, anchor 4024fdbe 2026-09-18)
+  127-completion-claims-integrity (a, anchor cd5a7b72 2026-09-19)
+  web-format-cleanup (b, anchor 5b51dfc3 2026-09-15)
+EXCLUSIONS: 0 closed; 2(a) / 3(b) / 0(c) per class; K excluded as pre-ratification (no first-parent activity since 2026-09-01)
+```
+
+The probe exercises all three classification arms that have live instances, and the class-(b) arm returns three specs — the arm whose omission the design called *"the corpus's most common shape"* and *"a healthy-looking short list."* **The probe is a non-vacuity demonstration, not a claim about what is owed**: nothing is owed until this ballot merges.
+
+**The one judgment point is named in the applied text rather than hidden**: stage 2 resolves the anchor as the most recent first-parent commit touching the spec, which is a *proxy* for "the final declared unit merged" (class a) and "the PR carrying the last parent completion doc" (class c). Where proxy and definition disagree, **the definition governs and the operator says so in the pasted output** — and a wrong result noticed there counts toward the promotion ladder.
 
 **An empty set is pasted as an empty result.** The step produces a record either way — that is the whole point of running a query instead of recalling an obligation.
 
@@ -1171,6 +1281,7 @@ education:
 history:
   - { date: <ratification date>, change: "entry created at the Spec 127 law ballot (.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md). check_state: proposed — the checker is BUILT by U2 and lands NON-REQUIRED; the required flip is Q2's decision, guarded by (i) release-prep start and (ii) convention shipped AND Tier-3 worked example fixed AND N >= 5 in-scope parents completed with M2 measured BY AUDIT, not by the checker. owner: thurgood resolves friction (a) on the register's own schema ground — `owner` fuses decision and check, and for an armed barrier the decision IS the check, so the field records who keeps the instrument true (settle ballot § 11.3). The uncheckable residual attaches to completion-verification-honesty (owner: stacy), the row whose entire purpose is that no check owns it", by: thurgood }
   - { date: <ratification date>, change: "GATE-BITE OUTSTANDING, recorded at row creation rather than after the fact: Req 6.4 requires the check be proven RED on a throwaway PR with a deliberately defective completion doc before any required flip. That proof does not exist at this row's creation and is NOT claimed. It rides with the arming — proven at the flip, cited on this row in the same recorded change that adds the context to verify-gate-registration.sh's EXPECTED_CONTEXTS (count-assert included). Until then this row asserts a proposed check with no bite proof, stated as such", by: thurgood }
+  - { date: <ratification date>, change: "FIRST-INSTANCE PRECEDENT, named so a later mechanical count is not silently wrong (Stacy A-5): this is the register's only `proposed` row carrying a NON-EMPTY `checks[]` — verified 1 of 15 proposed rows at creation. The precedent is lawful under a stated condition and only under it: the CI check-context name is fixed at authoring (Req 6.1 requires it be fixed AND cited on the row, and no other schema field exists to hold it), and the string carries its own not-yet-required qualifier in-line. THE CONSEQUENCE, stated rather than left to be discovered: any future query that counts armed or required checks by counting populated `checks[]` will over-count by this row. Count `check_state: armed` instead; `checks[]` records identity, not arming", by: thurgood }
 ```
 
 #### `promised-artifact-exists`
@@ -1182,7 +1293,7 @@ boundary_call:
   rationale: "Path existence at a named commit is a filesystem fact. The check's whole design keeps it factual: it is delta-scoped to the ticking PR, it strips annotation suffixes by rule, and every case it cannot decide is EMITTED rather than silently skipped"
 verification:
   disposition: barrier
-  owner: stacy           # RULED option (B) — Peter, 2026-09-19. Flips to `thurgood` at build time; see history
+  owner: stacy
   check_state: proposed
   checks: []
 education:
@@ -1225,7 +1336,7 @@ verification:
 education:
   disposition: "AUTHOR the honest-reach statement, and never author anything that implies mechanization. completion-documentation-guide § 'Parent Success-Criteria Fidelity' carries the instrument's limits explicitly: a plausible-looking Evidence path is green regardless of truth; for iOS and Android 'command + result' evidence is trust-the-reported-result for any verifier in this environment (charter: .kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md); artifact truth is owned by the claims pass today. PRUNE NOTHING and ADD NO CHECK — ever. M3 (evidence quality), M4 (forced-negative adoption) and M5 (failure markers) are AUDIT output, produced by claims passes, and no check owns them."
 history:
-  - { date: <ratification date>, change: "entry created at the Spec 127 law ballot. NO CHECK OWNS THIS ROW — EVER; that is the row's purpose, not a gap in it. The rationale is carried verbatim, as ruled: 'Any future reading of these numbers that treats a green gate as evidence of claim honesty will have made the error this spec exists to prevent.' Recorded with it, because a barrier's own metric is trivially 100% once armed: M2 measures nothing after arming, and the informative metrics are exactly the ones no check owns", by: thurgood }
+  - { date: <ratification date>, change: "entry created at the Spec 127 law ballot. NO CHECK OWNS THIS ROW — EVER; that is the row's purpose, not a gap in it. The ruled sentence is carried verbatim in boundary_call.rationale above. Recorded with it, because a barrier's own metric is trivially 100% once armed: M2 measures nothing after arming, and the informative metrics are exactly the ones no check owns", by: thurgood }
 ```
 
 #### `parent-completion-docs-present`
@@ -1259,7 +1370,9 @@ history:
 
 **AFTER** — the same line, plus:
 ```markdown
-- [2026-09-19-completion-claims-integrity.md](2026-09-19-completion-claims-integrity.md) — **RATIFIED (Peter, <date>)**. The Spec 127 law ballot: the **Parent Success-Criteria Fidelity** rule (exact-set verbatim criteria table with three mandatory columns, the closed Status vocabulary, the four Evidence kinds, the four normalization rules, the forced-negative line, the Additional verification section with its fixed deferral form, the fixed-string in-flight exemption with no sunset, and the instrument's honest-reach statement). Edit sites: `completion-documentation-guide` § "Parent Success-Criteria Fidelity"; `Process-Spec-Planning` Tier 3 + the replacement worked example + the new § "`tasks.md` Structural Conventions" (criteria-mode declaration, canonical Declared Merge Units block, the spanning-claim structural limb, the "materially amended" definition); `Task-Completion-Protocol` pointer ×2; `Product-Handoff-Protocol` § Tier 2's committed-report convention + named revisit; `RELEASE-FLOW` § "Deriving the delta" step 5 (owed-set run-and-paste + the arming line); five `classification-map` rows; the F7 disposition at `.kiro/issues/archive/2026-09-12-spec-112-completion-claims-audit.md`. Arms nothing — `completion-criteria-parity` is built non-required by U2; the required flip is Q2's, guarded. Stacy is the required reviewer.
+> **APPLIER'S NOTE — the two-step, recorded as a decision rather than left to be discovered** (Stacy BLOCKING-4, final paragraph; her verdict: *"CONFIRM the record-first reading, without reservation"*). This entry was applied at **1.2 with `**DRAFT — submitted for ratification**`**, not with the `RATIFIED` text below, and **flipped at 1.4** in the same commit as this ballot's own `Status` line and its `Ratified-machine:` line. **Writing RATIFIED into the record before Peter ratifies would be a false claim in a record, on a measure whose entire subject is false claims in records.** The AFTER text below is the 1.4 end state.
+
+- [2026-09-19-completion-claims-integrity.md](2026-09-19-completion-claims-integrity.md) — **RATIFIED (Peter, 2026-09-19)**. The Spec 127 law ballot: the **Parent Success-Criteria Fidelity** rule (exact-set verbatim criteria table with three mandatory columns, the closed Status vocabulary, the four Evidence kinds, the four normalization rules, the forced-negative line, the Additional verification section with its fixed deferral form, the fixed-string in-flight exemption with no sunset, and the instrument's honest-reach statement). Edit sites: `completion-documentation-guide` § "Parent Success-Criteria Fidelity"; `Process-Spec-Planning` Tier 3 + the replacement worked example + the new § "`tasks.md` Structural Conventions" (criteria-mode declaration, canonical Declared Merge Units block, the spanning-claim structural limb, the "materially amended" definition); `Task-Completion-Protocol` pointer ×2; `Product-Handoff-Protocol` § Tier 2's committed-report convention + named revisit; `RELEASE-FLOW` § "Deriving the delta" step 5 (owed-set run-and-paste + the arming line); five `classification-map` rows; the F7 disposition at `.kiro/issues/archive/2026-09-12-spec-112-completion-claims-audit.md`. Arms nothing — `completion-criteria-parity` is built non-required by U2; the required flip is Q2's, guarded. Stacy is the required reviewer.
 ```
 
 ---
@@ -1297,13 +1410,87 @@ Parents 4 and 6 each present a criteria table with **fewer rows than tasks.md de
 
 ---
 
+### 7.10 Adaptation record — ballot text changed at application time
+
+The ballots-README edit discipline is explicit: *"apply exactly as written; if a before-text does not match, **stop on that block and report** — never adapt silently."* **Four adaptations were made while applying this measure. Three went unrecorded until the verification review found them** (Stacy BLOCKING-4); the fourth was flagged in the working report but lived only in an HTML comment in a non-ballot file. All four are recorded here, before→after, and all four were **confirmed on the merits** at review.
+
+This section exists because the adaptations were right and the *record* was wrong. That distinction is the whole measure in miniature: a correct action with no record is indistinguishable, later, from an incorrect one.
+
+**(a) `promised-artifact-exists` — the ruled inline comment dropped.** *(1.3; register.)*
+
+| | |
+|---|---|
+| **Ballot authored** | `  owner: stacy           # RULED option (B) — Peter, 2026-09-19. Flips to \`thurgood\` at build time; see history` |
+| **Applied** | `  owner: stacy` |
+
+**Ground, confirmed at review**: no live register row carries an inline comment on `owner` — only the schema's illustrative example does — so **house shape is with the applier**. **§ 7.7's YAML has been amended to the applied form**, so ballot and register no longer disagree. The flip is named in the row's second `history` entry, and the review's caution is noted: that entry is a long prose block, and the flip's visibility now depends on someone reading it.
+
+**(b) `completion-verification-honesty` — the (d8) sentence relocated.** *(1.3; register.)*
+
+| | |
+|---|---|
+| **Ballot authored** (in `history`) | `The rationale is carried verbatim, as ruled: 'Any future reading of these numbers that treats a green gate as evidence of claim honesty will have made the error this spec exists to prevent.'` |
+| **Applied** (in `history`) | `The ruled sentence is carried verbatim in boundary_call.rationale above.` |
+| **and added** (to `boundary_call.rationale`) | `CARRIED VERBATIM, AS RULED (Req 5.5): Any future reading of these numbers that treats a green gate as evidence of claim honesty will have made the error this spec exists to prevent.` |
+
+**Ground, confirmed at review**: Req 5.5 says *"rationale carries verbatim"*, and `history` is not `rationale`; the applied form satisfies the requirement in the field it names, and **a duplicated "carried verbatim" sentence would be a second drift surface for a string whose value is being verbatim**. **§ 7.7's YAML has been amended to the applied form.**
+
+**(c) The domain-neutrality line — an unlisted site, applied in adapted wording.** *(1.2; `Process-Spec-Planning.md:2257`.)*
+
+| | |
+|---|---|
+| **Ballot § 7.2c** (prose, no BEFORE/AFTER block) | *"…the shape applies equally to a component's cross-platform parity parent and a product screen's — the example is generic, deliberately. Product-tier specifics … live in the Product-Handoff-Protocol, which is their home."* |
+| **Applied** | `**Domain neutrality**: the shape above applies equally to a component's cross-platform parity parent and a product screen's — the example is generic system content, deliberately. Product-tier specifics (the committed Implementation Report, claim-grain citation) live in \`governance/Product-Handoff-Protocol.md\` § "Tier 2: Implementation Reports", which is their home.` |
+
+Three changes, each deliberate: a **bold label** (the line is document prose adjacent to a fenced example and needs to read as its own statement); **"the shape above"** (the referent is explicit now that the line follows the example rather than the prose describing it); and **a path plus a `§`** instead of a bare document name (so the pointer resolves under the section-citation grammar this corpus checks mechanically). **Confirmed at review as improvements, at a correct placement — outside the example's closing fence.** The site is now inventoried with a real anchor at **§ 7.2d**.
+
+**(d) The ballots-README entry — applied as DRAFT, not as the AFTER text.** *(1.2 → flipped 1.4.)*
+
+| | |
+|---|---|
+| **Ballot § 7.8 AFTER** | `— **RATIFIED (Peter, <date>)**. The Spec 127 law ballot: …` |
+| **Applied at 1.2** | `— **DRAFT — submitted for ratification** (Spec 127 U1; …)`, plus an HTML `STATUS SLOT` comment stating the flip |
+| **Flipped at 1.4** | `— **RATIFIED (Peter, 2026-09-19)**` — in the same commit as this ballot's `Status` line and `Ratified-machine:` line |
+
+**Ground, endorsed at review without reservation**: a record that says RATIFIED before ratification is exactly the class of false claim this measure exists to stop accepting. **§ 7.8 now carries the applier's note.**
+
+**The pattern across all four, stated because it is the standards learning**: each adaptation improved the artifact, and each was invisible in the repository until an external pass looked for it. There was no completion doc for 1.2 or 1.3 to hold them — the absence the review names at A-8 — and *"the applier judged well"* is not a record. **The correction discipline this ballot follows throughout: visible, in place, against oneself.**
+
+---
+
 ## 8. The straggler sweep
 
 **Per the ballots-README edit discipline**: *"Application should end with a mechanical sweep for the edit-class (a straggler grep), not trust in the enumerated list — every count in this directory's first ballot was wrong at least once (two → three → four occurrences); the sweep caught what the lists missed."*
 
-### 8.1 The sweep command family, fixed here
+### 8.1 The sweep command family — CORRECTED at the 1.4 fold
+
+> **BLOCKING-1, sustained in full — and it is an instrument defect, not an environment note.**
+>
+> The 1.1 command placed its `--exclude-dir=` flags **after `--`**. `--` is the end-of-options marker, so every token after it is a **file operand**. The exclusions were never in effect; both greps said so out loud (`--exclude-dir=node_modules: No such file or directory`) while the sweep walked `node_modules/`, `.claude/worktrees/` and **`.git/`**.
+>
+> **Two contamination mechanisms, both proven directly at the 1.4 fold:**
+>
+> ```bash
+> find .claude/worktrees -type f -name 'tasks.md' | xargs grep -lF -- "## Declared Merge Units" | wc -l   # -> 6
+> command grep -clF -- "promised-artifact-exists" .git/COMMIT_EDITMSG                                     # -> 1
+> ```
+>
+> **(1) Worktrees.** Six `tasks.md` copies under `.claude/worktrees/` — ignored via `.git/info/exclude`, which ugrep's injected `--ignore-files` does not honor (it reads `.gitignore`).
+>
+> **(2) `.git/COMMIT_EDITMSG` — the worse one.** The commit-message buffer. It changes **on every commit**, and every string in this sweep is a string this branch commits about. **A verification gate whose answer moves when you commit is not a gate.**
+>
+> **This is the finding the ballot's own § 5.6 has a name for**: a gate whose mechanism silently does not do what its text says is `check_state: dormant` in prose form — here on the ballot's own final verification instrument, and a verbatim Task-1 success criterion. **The numbers were never wrong; the command was.** A cross-check validates results; it does not repair an instrument a later reader inherits.
+>
+> **Root cause, named so it does not recur**: § 5's worktrees-are-outside-the-glob reasoning is correct *for § 5*, whose globs are `.kiro/specs/*/tasks.md`. It was carried across to § 8, whose commands walk the whole tree. Verified-in-one-section, assumed-in-another — the same shape as the flag-discipline lesson this ballot writes into law at § 7.3, arriving on the ballot that writes it.
+
+#### The fixed recipe — `find`-prune primary, interpreter NAMED
+
+Exclusion is performed by `find`, which has no end-of-options hazard and no per-implementation exclusion semantics at all. **The interpreter is named in the recipe, not left to `PATH`.**
 
 ```bash
+# Interpreter: /usr/bin/grep (BSD grep, macOS 15.6). Named deliberately — see the
+# determinism note below. Exclusion is done by find, not by grep flags.
+SWEEP_GREP=/usr/bin/grep
 for s in "Parent Success-Criteria Fidelity" \
          "Unmet or partially met criteria:" \
          "Criteria fidelity: exempt — spec in flight at ratification" \
@@ -1313,7 +1500,7 @@ for s in "Parent Success-Criteria Fidelity" \
          "reproduce every tasks.md success-criterion row verbatim" \
          "closeout-owed(" \
          "if arming is undecided, decide it now" \
-         "reports/implementation-" \
+         "reports/implementation-<platform>.md" \
          "completion-criteria-parity" \
          "promised-artifact-exists" \
          "promised-artifact-shipped" \
@@ -1321,12 +1508,50 @@ for s in "Parent Success-Criteria Fidelity" \
          "parent-completion-docs-present" \
          "2026-09-19-completion-claims-integrity" \
          "Ratified-machine:"; do
-  n=$(grep -rIF -- "$s" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=worktrees . | wc -l | tr -d ' ')
+  n=$(find . -type d \( -name node_modules -o -name .git -o -name .claude \) -prune -o -type f -print0 \
+      | xargs -0 "$SWEEP_GREP" -cF -- "$s" 2>/dev/null | awk -F: '{t+=$NF} END{print t+0}')
   printf '%-58s %s\n' "$s" "$n"
 done
 ```
 
-### 8.2 BEFORE state — run at authoring, 2026-09-19, `cd5a7b72`
+**Per-hit attribution — the operative form (§ 8.3), same exclusion mechanism:**
+
+```bash
+find . -type d \( -name node_modules -o -name .git -o -name .claude \) -prune -o -type f -print \
+  | xargs "$SWEEP_GREP" -lF -- "$s" 2>/dev/null | sed 's|^\./||' | sort
+```
+
+#### Determinism, measured rather than asserted
+
+All seventeen strings, run **in one invocation** at `28d6d1cf` under the broken form and under three corrected interpreters — the session's ugrep shim, `command grep`, and the `find`-prune pipeline:
+
+| String | BROKEN | ugrep | real grep | find-prune |
+|---|---|---|---|---|
+| `Parent Success-Criteria Fidelity` | 37 | 37 | 37 | 37 |
+| `Unmet or partially met criteria:` | 20 | 20 | 20 | 20 |
+| `Criteria fidelity: exempt …` | 16 | 16 | 16 | 16 |
+| `Artifact deferred:` | 32 | 32 | 32 | 32 |
+| `**Criteria mode**:` | 20 | 20 | 20 | 20 |
+| **`## Declared Merge Units`** | **39** | **33** | **33** | **33** |
+| `reproduce every tasks.md success-criterion row verbatim` | 14 | 14 | 14 | 14 |
+| `closeout-owed(` | 15 | 15 | 15 | 15 |
+| `if arming is undecided, decide it now` | 17 | 17 | 17 | 17 |
+| `reports/implementation-<platform>.md` | 13 | 13 | 13 | 13 |
+| `completion-criteria-parity` | 89 | 89 | 89 | 89 |
+| **`promised-artifact-exists`** | **45** | **44** | **44** | **44** |
+| `promised-artifact-shipped` | 36 | 36 | 36 | 36 |
+| `completion-verification-honesty` | 37 | 37 | 37 | 37 |
+| `parent-completion-docs-present` | 28 | 28 | 28 | 28 |
+| `2026-09-19-completion-claims-integrity` | 21 | 21 | 21 | 21 |
+| `Ratified-machine:` | 22 | 22 | 22 | 22 |
+
+**Two contaminated strings, not four** — `## Declared Merge Units` (−6, the worktrees) and `promised-artifact-exists` (−1, `.git/COMMIT_EDITMSG`). Everything else is Δ0.
+
+**And the result that matters most: under the corrected form, all three interpreters agree on all seventeen strings.** The interpreter divergence observed at review under the *broken* form (`promised-artifact-exists` 34/35, `completion-verification-honesty` 31/32) **does not reproduce here** — including the one the review flagged as having zero `.git` hits and therefore possibly a *second, unchased* mechanism. Recorded precisely: this is a measured non-reproduction under the fixed recipe, not a claim that the observation was wrong. Whatever the second mechanism was, **exclusion-by-`find` plus a named interpreter closes it by construction**, which is why the fix is structural rather than a note.
+
+**The U2 consequence, which is why this is not cosmetic**: U2's `--verify-extraction` reconciliation is **contractually forbidden from attributing differences to extraction behaviour** — every difference must be attributed to an enumerated corpus change. A grep-implementation gap in the U1 baseline would therefore be **misattributed by a ruled check**, silently, to the corpus. The named-interpreter recipe closes that channel before U2 inherits it.
+
+### 8.2 PRE-BALLOT, PRE-EDIT BASELINE — the tree at `cd5a7b72`, before this file existed
 
 ```
 Parent Success-Criteria Fidelity                           11
@@ -1348,11 +1573,23 @@ parent-completion-docs-present                             16
 Ratified-machine:                                           6
 ```
 
-**Every BEFORE hit is inside Spec 127's own documents** (requirements, design, tasks, design-outline, feedback, pre-spec) **or inside this ballot**. Two verified spot-checks establish that the law strings are genuinely new and are not being *moved* from somewhere:
+> **BLOCKING-2, sustained in full — and it is larger than the relabel I had self-found.** Three corrections, all applied:
+>
+> **(1) The label is now truthful.** This baseline was taken **before the ballot file was written**, on a tree that did not contain it, with the uncorrected command family of § 8.1. It is a *pre-ballot, pre-edit* reading of `cd5a7b72`, not a general "BEFORE".
+>
+> **(2) The clause "or inside this ballot" is STRUCK.** It was false of the tree measured, and the recorded numbers falsify it on their face: `2026-09-19-completion-claims-integrity` reads **0**, while the ballot alone contains ≥ 5 occurrences of its own filename. A baseline that counted the ballot could not have returned 0.
+>
+> **(3) COUNT-DIFFERENCING IS RETIRED AS AN ASSERTION FORM.** Not softened — retired. The baseline measured a tree without the ballot; every re-run measures a tree with it; the required reviewer's file then arrived citing **13 of the 17 swept strings**, making a third corpus. Live proof: `reproduce every tasks.md success-criterion row verbatim` was predicted **exactly +2, both in TCP**; the observed raw move is **3 → 14**. The +2 in TCP is real and correct; everything else is this ballot's own body plus the review. **A delta arithmetic that breaks when the required reviewer files her round was never going to survive contact.** § 8.3 is therefore rebuilt on **per-hit classification — every hit named to its file with its reason — and no count-difference is offered as evidence of anything.**
+>
+> **The demonstrated instance, and it is the strongest teaching case available.** The reviewer's own first-pass finding reported **four** contaminated strings. Three of the four were her own review file, counted because she had differenced a broken-form number against a corrected-form number taken at a *later* moment, with her file created in between. Same-moment measurement (§ 8.1's table) gives **two**. **She recorded the correction visibly and in place, against herself** — rather than quietly restating the claim at the value that happens to hold, which would have been the **relax** class this law names at § 7.1. Two lessons ride with it: count-differencing across a moving corpus fails *even in the hands of the reviewer who diagnosed the failure*, and **the correction pattern — visible, in place, against oneself — is the one this § follows for its own relabel above.**
+
+**Every BEFORE hit is inside Spec 127's own working documents** (requirements, design, tasks, design-outline, feedback, pre-spec) — **the ballot did not yet exist**, and the law surfaces had not yet been edited. Two verified spot-checks establish that the law strings are genuinely new and are not being *moved* from somewhere:
+
+*(Recorded as run at 1.1, under the broken command family — these two spot-checks are reproduced here as the historical record of what was run, not as recipes. The fixed recipe is § 8.1's; the operative check is § 8.3's classification.)*
 
 ```bash
-grep -rIln --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=worktrees -- "Unmet or partially met criteria:" .
-grep -rIln --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=worktrees -- "reports/implementation-" .
+grep -rIln -- "Unmet or partially met criteria:" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=worktrees .
+grep -rIln -- "reports/implementation-" --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=worktrees .
 ```
 ```
 .kiro/specs/127-completion-claims-integrity/design.md
@@ -1367,14 +1604,82 @@ grep -rIln --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=worktrees
 
 **A drafting correction that this sweep produced, recorded rather than quietly fixed**: Req 1.4 describes the forced-negative line as *"Imported from `governance/Product-Handoff-Protocol.md`"*. The **string** does not exist in that file — **zero hits** in PHP. What PHP carries is the **pattern**: four `- None / or list each…` forced-negative sections at lines 85, 90, 97, 101. The law text at § 7.1 therefore says *"the shape is imported … the line itself is new here."* An applier who went hunting for a source string would have found nothing and had to guess.
 
-### 8.3 Run at submission — Task 1.4's duty, stated so it is falsifiable
+### 8.3 POST-APPLICATION SWEEP — per-hit classification, run at Task 1.4 on `28d6d1cf`
 
-At Task 1.4, **after** the § 7 edits are applied, the sweep above is **re-run** and:
+**The discipline, restated after BLOCKING-2: every hit is named to its FILE with its reason. No count-difference is offered as evidence of anything.** File membership is stable under a moving corpus; counts are not. A file that should not carry a string is a finding; a count that moved is an observation about the tree, not about the edits.
 
-1. **Every command's recorded output must match its re-run output** — the stated-matching discipline. A count that "was approximately right" is the class of claim this measure exists to stop accepting.
-2. **Every hit is classified** — live reference, historical record, or straggler — in the settle ballot § 10 table form. **A dead reference is a finding; an unaccounted hit is a finding.**
-3. **Expected post-edit deltas are predicted here so a surprise is visible as a surprise**: `Parent Success-Criteria Fidelity` +≥4 (guide heading, guide description, PSP Tier 3 pointer, TCP ×2); `reproduce every tasks.md success-criterion row verbatim` **exactly +2, both in TCP** (the identical-line hazard at § 7.4); `## Declared Merge Units` +1 (the PSP canonical-form block); `2026-09-19-completion-claims-integrity` +≥5 (guide, RELEASE-FLOW, ballots-README, F7, register rows); `Ratified-machine:` +1 (this ballot's own filled line).
-4. **The C11 INVENTORY-COMPLETENESS DIFF CHECK** (Stacy A-2) runs alongside the sweep: **§ 7's nine site headings are diffed against design C11's site list, item by item**, and the comparison is recorded. The sweep proves *the applied edits are complete relative to the inventory*; the diff check proves *the inventory is complete relative to the design*. **Neither substitutes for the other**, and the July-2026 precedent is the reason: that ballot's enumerated list missed a fourth `**Type**:` occurrence even after a dedicated straggler hunt.
+```bash
+find . -type d \( -name node_modules -o -name .git -o -name .claude \) -prune -o -type f -print \
+  | xargs /usr/bin/grep -lF -- "$s" 2>/dev/null | sed 's|^\./||' | sort
+```
+
+Four classes. **`LAW`** = applied governance text this measure ships. **`RECORD`** = this ballot, the ballots-README entry, the F7 disposition, the register. **`SPEC`** = Spec 127's own working documents (requirements, design, outline, tasks, feedback, pre-spec) — the drafting record, correctly retained. **`PRIOR`** = a pre-existing document that legitimately already carried the string.
+
+| String | LAW files | RECORD files | SPEC files | PRIOR files | Unaccounted |
+|---|---|---|---|---|---|
+| `Parent Success-Criteria Fidelity` | guide, PSP, TCP, classification-map | ballot, ballots-README | design-outline, design, requirements, review, 2 pre-spec | — | **none** |
+| `Unmet or partially met criteria:` | guide, PSP | ballot | design-outline, design, requirements, stacy-consult | — | **none** |
+| `Criteria fidelity: exempt …` | guide | ballot | design-outline, design, requirements, feedback/design-outline, pre-spec/ballot-review-stacy | settle ballot (the ruling that fixed the string) | **none** |
+| `Artifact deferred:` | guide, PSP, classification-map | ballot | design, requirements, tasks, feedback/requirements, review | — | **none** |
+| `**Criteria mode**:` | guide, PSP, PHP | ballot | design-outline, design, requirements, tasks, feedback/tasks | — | **none** |
+| `## Declared Merge Units` | PSP, RELEASE-FLOW | ballot | design, requirements, tasks, feedback/design-outline, review | 119-B tasks, 125-B tasks, settle ballot, q5-lifecycle-amendment | **none** |
+| `reproduce every tasks.md success-criterion row verbatim` | **TCP only — both parent sequences** | ballot | design-outline, requirements, thurgood-consult, review | — | **none** |
+| `closeout-owed(` | RELEASE-FLOW | ballot | requirements, tasks, feedback/tasks, pre-spec/ballot-review-stacy, q5-lifecycle-amendment | settle ballot, **`.kiro/docs/civitas-health-checks/2026-09-19.md`** | **none** |
+| `if arming is undecided, decide it now` | RELEASE-FLOW | ballot | design-outline, design, requirements | settle ballot | **none** |
+| `reports/implementation-<platform>.md` | PHP | ballot | design-outline, requirements, feedback/design-outline | — | **none** |
+| `2026-09-19-completion-claims-integrity` | guide, RELEASE-FLOW | ballot, ballots-README, F7 archive, classification-map | review | — | **none** |
+| `Ratified-machine:` | **none — by design** | ballot, ballots-README | design, tasks, review | RELEASE-FLOW *(the owed-set pipeline parses it)* | **none** |
+
+**Every hit is accounted for to a named file. Zero unaccounted. Zero dead references.** Four observations the classification produced — the kind of thing a count-delta cannot surface at all:
+
+- **`reproduce every tasks.md success-criterion row verbatim` appears in exactly ONE law file — `Task-Completion-Protocol.md` — with exactly two occurrences, one per parent sequence.** That is the whole of the pointer's law footprint, and it is the assertion the identical-line hazard threatened. Verified by file, not by delta.
+- **`Ratified-machine:` has zero LAW hits, which is correct**: no governance rule carries the string. It appears in `RELEASE-FLOW.md` only because the owed-set pipeline *parses* it out of this ballot — a consumer, not a restatement. If a genuine LAW hit ever appears, a record field has been copied into a rule.
+
+- **One PRIOR hit was in no inventory and is the most useful thing this sweep found**: `.kiro/docs/civitas-health-checks/2026-09-19.md` carries `closeout-owed(` — the monthly health check's LIVENESS item, **already using the predicate before this ballot pointed at it.** The surface RELEASE-FLOW step 5's promotion ladder names as a de-facto detector was live in advance. A count-delta would have shown `+0` for that file and surfaced nothing.
+- **The five register-id strings appear in exactly one register heading each** — verified at § 5.9 (`duplicate ids: 0`). Their bulk sits in this spec's own design and feedback documents, which discuss them at length; that is SPEC, correctly retained, and is why raw totals for those strings (89, 44, 36, 37, 28 at § 8.1's measurement moment) say nothing about the edits.
+
+#### Count-differencing: RETIRED, not softened (item 3, per BLOCKING-2)
+
+**The 1.1 draft's predicted deltas are withdrawn as an assertion form and are not replaced with better deltas.** Three of the five were open-ended (`+≥4`, `+≥5`), satisfied by any positive number; the two exact ones were measured against a corpus the baseline never contained. **The classification table above is the check.** The withdrawn predictions are left visible rather than deleted, because a prediction quietly removed after it missed is the **drop** class:
+
+| 1.1 prediction | Outcome |
+|---|---|
+| `Parent Success-Criteria Fidelity` **+≥4** | open-ended; unfalsifiable by construction |
+| `reproduce every tasks.md success-criterion row verbatim` **exactly +2, both in TCP** | **the LAW claim is TRUE and is verified by file** (TCP, two occurrences, one per sequence); the raw count moved 3 → 14 for corpus reasons the prediction never modelled |
+| `## Declared Merge Units` **+1** | **MISSED — the true LAW figure is 3** (PSP canonical block, PSP materiality-table row 7, RELEASE-FLOW stage 1). An under-prediction, recorded as a miss rather than retrofitted; all three are deliberate live references |
+| `2026-09-19-completion-claims-integrity` **+≥5** | open-ended; five non-ballot surfaces exist, which satisfies a floor and proves nothing |
+| `Ratified-machine:` **+1** | satisfied trivially |
+
+**One of five predictions was both exact and true, and it survived only because it was re-verified as a file claim rather than a count claim.** That is the finding, and it is why the form is retired.
+
+#### The C11 inventory-completeness diff check
+
+**§ 7's site headings diffed against design C11's list, item by item** — the sweep proves *the applied edits are complete relative to the inventory*; this proves *the inventory is complete relative to the design*. **Neither substitutes for the other**: the July-2026 precedent's enumerated list missed a fourth `**Type**:` occurrence even after a dedicated straggler hunt.
+
+| design C11 site | § 7 | applied |
+|---|---|---|
+| guide subsection | 7.1a | ✅ |
+| PSP Tier 3 | 7.2a–b | ✅ |
+| PSP worked example | 7.2c | ✅ |
+| PSP conventions § | 7.3 | ✅ |
+| TCP pointer ×2 | 7.4 | ✅ (count = 2, verified) |
+| five register rows | 7.7 | ✅ |
+| RELEASE-FLOW step | 7.5 | ✅ |
+| PHP § Tier 2 incl. the revisit block | 7.6 | ✅ |
+| ballots-README "Ballots on record" entry | 7.8 | ✅ (DRAFT at 1.2 → RATIFIED at 1.4; § 7.10(d)) |
+| F7 update at the ARCHIVED path | 7.9a | ✅ |
+
+**C11 coverage: 10 / 10.** Sites applied beyond C11's list, all now inventoried rather than claimed away:
+
+| § | Site | Standing |
+|---|---|---|
+| 7.1b | guide frontmatter `description` | J2 — flagged at 1.1, **SUSTAINED** at review |
+| 7.1c | guide parent-task checklist | J3 — flagged at 1.1, **SUSTAINED with an advisory fold** |
+| 7.2d | PSP domain-neutrality line | **unlisted at 1.1** — given a real BEFORE/AFTER at the 1.4 fold (BLOCKING-4c) |
+| 7.9b | F7 finding-heading pointer | J4 — flagged at 1.1, **SUSTAINED** |
+| 7.1d + § 9 item 2 ×3 | `Last Reviewed` on guide, PSP, PHP, classification-map | accounting corrected per A-11 — all four now in one place |
+
+**The corrected count: 16 inventoried § 7 sites, plus the three non-guide `Last Reviewed` bumps carried at § 9 item 2 — 19 applied edit sites in all, of which 10 are design-C11 sites and all 10 are present.** The 1.1 claim of *"nine edit sites, matching design C11's list exactly"* was wrong on both halves — it undercounted the applied set and it miscounted C11's own list. Corrected at § 7's preamble; recorded here rather than quietly restated, because an enumerated-list count that drifts is the precise failure this section exists to catch.
 
 ---
 
@@ -1384,7 +1689,25 @@ At Task 1.4, **after** the § 7 edits are applied, the sweep above is **re-run**
 2. **`Last Reviewed` bumped** to the ratification date on each of the four served documents.
 3. **`node scripts/validate-steering-metadata.js`** — run post-application; record the result.
 4. **U2 branches from `main` after this PR merges.** The checker reads this ballot at its pinned path; U1-before-U2 is what makes the ratification record present for the checker's entire life, and is why no vacuous-green state exists.
-5. **If Peter's merge date differs from the recorded `Ratified-machine:` date**, U2's first commit corrects the line as a record-accuracy erratum, Peter-merged with U2.
+5. **DATE ERRATUM — the enumerated checklist** *(scope extended at the 1.4 fold; Stacy BLOCKING-7)*. This PR hard-codes `2026-09-19` in **twelve** places. The 1.1 draft's erratum clause covered exactly one of them — the machine line — leaving eleven dated records, **seven of them in the register, which is this system's designated settled-fact surface for future waves**, wrong and unowned if the merge lands on a later date. Given the bursty pace, a later merge date is the likely case, not the edge case.
+
+   **If Peter's merge date differs from `2026-09-19`, U2's first commit corrects ALL TWELVE**, Peter-merged with U2, as a single record-accuracy erratum. Enumerated so the erratum is a checklist rather than a recollection — the same *enumerate-so-a-wrong-answer-is-falsifiable* discipline this ballot imposes on the owed-set pipeline, applied to itself:
+
+   | # | Record | Where |
+   |---|---|---|
+   | 1 | `Ratified-machine: 2026-09-19` | this ballot, header |
+   | 2 | `Status: RATIFIED (Peter, 2026-09-19)` | this ballot, header |
+   | 3 | `RATIFIED (Peter, 2026-09-19)` | `.kiro/docs/ballots/README.md`, the Ballots-on-record entry |
+   | 4–5 | `history` ×2 — entry-created + gate-bite-outstanding + first-instance-precedent | `classification-map.md § "completion-criteria-parity"` |
+   | 6–7 | `history` ×2 — entry-created + owner-ruled | `classification-map.md § "promised-artifact-exists"` |
+   | 8 | `history` ×1 | `classification-map.md § "promised-artifact-shipped"` |
+   | 9 | `history` ×1 | `classification-map.md § "completion-verification-honesty"` |
+   | 10 | `history` ×1 | `classification-map.md § "parent-completion-docs-present"` |
+   | 11–12 + | `**Last Reviewed**: 2026-09-19` ×4 | guide, Process-Spec-Planning, Product-Handoff-Protocol, classification-map |
+
+   **The in-force date is the MERGE's date.** Every date above is a prediction reconciled at first divergence — never a fact until the merge makes it one.
+
+6. **The worked example's follow-up links carry a re-point duty** *(Stacy A-4)*. § 7.2c's canonical example cites two live issues (`2026-06-24-blend-…`, `2026-09-17-platform-build-verification-harness-candidate`). Both are chartered items that will close and move to `.kiro/issues/archive/` — **exactly as this ballot's own F7 target already did**, which § 7.9 had to record as a path erratum. When they move, the exemplar every author copies would teach two dead links, against the guide's own *"MUST cite a **locatable** record."* **The re-point is a named duty of the monthly active-charter walk**, which already visits both issues: when a charter closes, re-point any worked-example citation to its archived path. One line at an existing event; no new process.
 
 ---
 
@@ -1402,9 +1725,21 @@ So the cheaper option is not re-proposed unknowingly.
 
 ---
 
-## 11. Open judgment calls, flagged for the reviewer and for Peter
+## 11. Judgment calls — all adjudicated at the verification review
 
-Marked so a reviewer can strike them without unpicking ruled substance.
+Marked at 1.1 so a reviewer could strike them without unpicking ruled substance. **All seven were adjudicated; none was struck.** J1 was ruled by Peter; J2–J7 were sustained by the required reviewer, three of them with conditions now folded into the applied text.
+
+| # | Reviewer's verdict | Condition folded |
+|---|---|---|
+| J1 | **RULED by Peter — option (B)** | `owner: stacy`, pre-committed flip; § 7.7 + § 7.10(a) |
+| J2 | **SUSTAIN** — MCP discovery is what makes a rule findable | — |
+| J3 | **SUSTAIN**, with an advisory | the checklist line restates four obligations in ~55 words, nearer restatement than pointer. **Not struck**; the shortening is carried as a candidate for the next prune wave rather than applied mid-ballot, since the line is now ratified law text |
+| J4 | **SUSTAIN** | BEFORE anchor verified character-exact independently |
+| J5 | **SUSTAIN both placements** | — |
+| J6 | **SUSTAIN**, with A-5's condition | the first-instance precedent is now named in the parity row's `history`, with the consequence stated: count `check_state: armed`, never populated `checks[]` |
+| J7 | **SUSTAIN**, with A-4's decay duty | the re-point duty is now a named item of the monthly charter walk — § 9 item 6 |
+
+*Detail retained below as the record of what was argued.*
 
 | # | Call | Where | Status |
 |---|---|---|---|
@@ -1475,17 +1810,31 @@ Run against this measure before presenting it; what the counter-arguments improv
 
 *Per the Spec-Feedback-Protocol stamp format. Resolutions live here; the body above is the clean, post-incorporation state.*
 
-**Stacy — REQUIRED reviewer** (Req 12.1). Verification-grade, claims-vs-source. **Review not yet performed**; requested at Task 1.4.
+**Stacy — REQUIRED reviewer** (Req 12.1). Verification-grade, claims-vs-source. **PERFORMED 2026-09-19.** Her full record — method, every command she ran, and her own counter-arguments run against her review before presenting it — is at `.kiro/specs/127-completion-claims-integrity/feedback/u1-ballot-review-stacy.md`. It is authoritative; this section is the disposition, not a replacement.
 
-Her review has standing precedent on exactly this surface: on the July-2026 ballot amending two of these same documents she found **five missed edit sites**, and on the 2026-09-17 settle ballot she found **two blockers, both in the section where the drafter was compiling his own co-signed record**. Both blockers there ran in the direction of *more* constraint, one of them on herself.
+#### [STACY R1] — CONDITIONAL: 7 BLOCKING, 11 advisory
 
-**Every blocking finding will be dispositioned in this document before submission**, with its disposition recorded here — not in a review file, and not by silent absorption.
+**What she cleared, recorded first because it is the larger fact and a disposition that leads with defects mis-reports the artifact**: all eight large § 7 AFTER blocks **byte-identical** to the applied files; the TCP identical-line hazard handled correctly (count = 2); the F7 BEFORE anchor character-exact; all five register rows parsing and schema-conformant with dated, attributed history; **every § 5 census re-derived and reproducing exactly**; metadata validator PASS. Her summary: *"No substantive number in this ballot is wrong. Every blocking finding below is about an **instrument** or a **record**, not a result."*
 
-#### [STACY R1]
-*(awaiting review)*
+#### [THURGOOD R2] — dispositions
 
-#### [THURGOOD R2]
-*(incorporation notes — to be written at the fold)*
+**All seven blockers folded. None required new law text; none required re-applying an edit; none reopened a ruled question — they required records, which on this measure is the correct bar.**
+
+| # | Finding | Disposition |
+|---|---|---|
+| **B-1** | § 8.1's sweep excluded nothing — `--exclude-dir` flags after `--`; contamination from `.claude/worktrees/` **and `.git/COMMIT_EDITMSG`**, the latter making the sweep's answer move on every commit | **SUSTAINED.** Recipe rebuilt on `find`-prune with the **interpreter named** (`/usr/bin/grep`). Both mechanisms proven by direct command; a same-moment 17-string run under four forms recorded; all three corrected interpreters now agree on all 17. The U2 misattribution channel she names is closed before U2 inherits it. § 8.1 |
+| **B-2** | baseline and re-run measure different corpora; predicted deltas incomparable | **SUSTAINED, and taken further than the ask.** § 8.2 relabelled as the pre-ballot baseline it was; *"or inside this ballot"* struck; **count-differencing retired as an assertion form entirely** and § 8.3 rebuilt on per-hit, per-file classification. The withdrawn predictions are left visible with their outcomes — one of five was exact and true, and survived only as a file claim. § 8.2, § 8.3 |
+| **B-3** | three census blocks were edited transcripts, not command output | **SUSTAINED.** §§ 5.4, 5.9, 5.10 rebuilt so every label is emitted by the block; § 5.4 gains `rm -f` at both ends (it was non-idempotent); § 5.10's two elided pipelines written out in full. All re-run; all figures reproduce. Each carries its correction note in place |
+| **B-4** | three application-time adaptations unrecorded; one unlisted edit site | **SUSTAINED.** New **§ 7.10** records all four before→after; § 7.7's YAML amended to the applied form ×2 so ballot and register agree; **§ 7.2d** created with a real BEFORE anchor; § 7.8 gains the applier's note. § 7's site accounting corrected from "nine" to nineteen |
+| **B-5** | § 15 asserted record-first compliance the branch contradicts | **SUSTAINED.** The compliance claim is **withdrawn**, the branch's actual commit order printed, and the **PR-atomic reading stated as a reading** with its precedent (the settle ballot's O-8 pattern + the README's end-state paragraph) — **flagged for Peter at the PR** as a protocol interpretation, not asserted as fact. § 15 |
+| **B-6** | two design-C8.3 elements absent from the PSP conventions § | **SUSTAINED — as a recorded deviation, not as added text.** Her merits finding is adopted: the exemption string and deferral form are **completion-doc** content, single-homed in the guide, and duplicating fixed strings creates drift surfaces. § 7.3 carries the deviation with its ground; **Task 1's criterion is marked ⚠️, not ✅**, with the deviation cited in its Evidence cell |
+| **B-7** | eleven other hard-coded dates outside the erratum's scope | **SUSTAINED.** § 9 item 5 now enumerates **all twelve** dated records as a checklist — seven register `history` entries, four `Last Reviewed` values, the README entry, the machine line |
+
+**Advisories**: A-1 (machine-line slot unbolded; the literal decoy specimen removed from the header comment and described in prose instead — it would have parsed as an unparseable date and reddened the checker against its own record); A-2 (RELEASE-FLOW 5a now carries the **runnable** pipeline, verified to execute and probed for non-vacuity; its authoritative home remains her command catalog at U3, which she is holding); A-3 (folded into B-2's retirement); A-4 (§ 9 item 6); A-5 (precedent named in the parity row's history); A-6 (arrow parenthetical on the `promised-artifact-exists` rule line); A-7 (the 1.3 re-run recorded at § 5.9); A-8 (noted — this unit's completion doc is where 1.2's and 1.3's adaptations now land, via § 7.10); A-9 (the 153-vs-154 trap — handled at the completion doc by verbatim reproduction with attribution in the Evidence cell, never a silent substitution); A-10 (the Primary-Artifacts placeholder path — corrected in `tasks.md` as a declared material amendment, and declared under the AV forced-negative line); A-11 (site accounting, folded with B-4).
+
+**Her self-correction, carried into the law's own rationale.** Her first pass reported four contaminated strings; three were her own review file, counted by differencing across a moving corpus. She corrected it **visibly, in place, against herself** rather than restating the claim at the value that happened to hold — which would have been the **relax** class this ballot defines. **That instance is now cited at § 8.2 as the demonstrated case for classify-hits-not-difference-counts**, because a delta arithmetic that fails in the hands of the reviewer who diagnosed the failure is a form that does not survive contact. It is the strongest teaching example in this record and it exists because she volunteered it.
+
+**Nothing was declined.** The one item deliberately not applied as text is J3's shortening, carried as a prune-wave candidate rather than edited mid-ratification.
 
 ---
 
@@ -1493,10 +1842,27 @@ Her review has standing precedent on exactly this surface: on the July-2026 ball
 
 **This measure records rulings already made.** The docket it executes was ruled by Peter at the outline-settle sitting (2026-09-15 → 17) and at the 2026-09-19 requirements working session; this ballot compiles them **by reference** (§ 2) and authors the law text those rulings delegated to the formalization phase.
 
-**Record-first** (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"): the `RATIFIED` status and the `Ratified-machine:` line are **committed before any law edit applies** — both in this same Peter-merged PR, under the standing governance carve-out (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, `.kiro/hooks/**`, `.kiro/issues/**`). **A checks-only merge is not ratification.**
+**Record-first under merge-as-ratification — the stated reading, flagged for Peter as a reading** *(Stacy BLOCKING-5, sustained; the fork surfaced, the claim withdrawn)*.
+
+The 1.1 draft asserted that the `RATIFIED` status and the `Ratified-machine:` line are *"committed before any law edit applies."* **That assertion is withdrawn: this branch does the opposite**, and the branch is the evidence —
+
+```
+63d7f104  1.1  ballot authored — Status: DRAFT
+81e588d2  1.2  the law edits applied          <-- law edits committed
+28d6d1cf  1.3  register rows applied
+          1.4  the ratification lines written HERE
+```
+
+**The reading adopted, and it is a governance-protocol interpretation rather than a fact**: the `RATIFIED` status and the `Ratified-machine:` line are written at 1.4 and committed **in this same Peter-merged PR**. The repository is squash-merge-only, so **the record and the edits arrive on `main` as one atomic commit** — no state ever exists in which this law is in force without its ratification record. **Peter's merge IS the ratifying act**, so there is no earlier moment at which a truthful `RATIFIED` commit could have been written; a commit claiming ratification before the merge would have been the false record this measure exists to prevent.
+
+**The README protocol's step-1 ordering presumes ratification arriving as a message, before application.** Here it arrives as a merge. This is the stated reading of the protocol for that case — **and it has precedent in the immediately preceding ballot in this directory**: the 2026-09-17 settle ballot carried one law edit (O-8) on its own ratification PR and recorded the same structure — *"the record and the single law edit it authorizes land in **one Peter-merged act**, and the record is auditable from the commit"* — citing the README's own end-state paragraph (*"once the PR-gated workflow exists, ratification of governance-law changes becomes Peter's PR approval … superseding step 1's manual record for the cases the gate covers"*).
+
+**Flagged for Peter at the PR**: this is an interpretation of the ratification protocol, not a mechanical fact, and it is his to accept or reject. If rejected, the remedy is a reorder (ratification lines first, edits re-applied on top), not a rewording. **What is not defensible, and is therefore fixed here, is claiming compliance with a step this artifact cannot satisfy — a false compliance claim in the ratification section of a ballot legislating against false compliance claims.**
+
+The PR is Peter-merged under the standing governance carve-out (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, `.kiro/hooks/**`, `.kiro/issues/**`). **A checks-only merge is not ratification.**
 
 **Peter's merge of this PR is the ratifying record act.** An agent later asked to apply any part of this measure verifies **one mechanical fact** — that the committed ballot says `RATIFIED` — and makes **no authority judgment** about who relayed the instruction. If the committed record is missing or says otherwise, **report that** rather than applying, and rather than refusing-and-stopping.
 
-**Status**: **DRAFT — submitted for ratification at Task 1.4**
+**Status**: **RATIFIED (Peter, 2026-09-19)**
 
-*Drafted by Thurgood, 2026-09-19, on `task/127-u1-law`. No law document is touched by this file; the edits at § 7 apply at Task 1.2, after ratification.*
+*Drafted by Thurgood, 2026-09-19, on `task/127-u1-law`; verification-reviewed by Stacy the same day (7 blocking + 11 advisory, all dispositioned — § 14). The § 7 edits are applied on this branch and arrive on `main` in the same squash-merge as this record.*

@@ -38,7 +38,7 @@
 
 ## Tasks
 
-- [ ] 1. Author and ratify the law (U1)
+- [x] 1. Author and ratify the law (U1)
 
   **Type**: Documentation
   **Agent**: Thurgood (main session; Sonnet-tier subagents only for mechanical census re-derivation, verified in-session)
@@ -61,7 +61,7 @@
   - Stacy's ballot review is recorded in the ballot with every blocking finding dispositioned
 
   **Primary Artifacts:**
-  - .kiro/docs/ballots/2026-09-XX-completion-claims-integrity.md
+  - .kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
   - governance/completion-documentation-guide.md
   - governance/Process-Spec-Planning.md
   - governance/Product-Handoff-Protocol.md
@@ -71,10 +71,10 @@
   - .kiro/docs/ballots/README.md
   - .kiro/issues/archive/2026-09-12-spec-112-completion-claims-audit.md
 
-  - [ ] 1.1 Author the law ballot: rulings compiled by reference; the full before→after inventory (design C11); censuses as fenced commands + outputs, **including the per-pattern-class extraction-verification recipes**; the recorded interpretations and quoting instructions (Req 12.4); the (d8) sentence; the M-baseline with recipes; the `Ratified-machine:` line slot
-  - [ ] 1.2 Apply the law edits per the inventory: guide subsection (C8.1); PSP Tier 3 + worked example (C8.2) + conventions § (C8.3); TCP pointer ×2 (C8.4); RELEASE-FLOW step (C8.5); PHP § Tier 2 incl. the revisit block (C8.6); ballots-README entry; F7 update at the archived path; **then re-verify this file's own units block against the shipped canonical form**
-  - [ ] 1.3 Author the five register rows (C10; owners per Req 5.2–5.6; `promised-artifact-exists`'s owner assigned at this ballot; the gate-bite-outstanding history note on the parity row); run and record the live non-substring sweep
-  - [ ] 1.4 Run the straggler sweep per edit class with stated-matching outputs **plus the C11-inventory diff check**; request Stacy's REQUIRED ballot review; fold; submit for ratification (record-first; Peter's merge is the ratifying act)
+  - [x] 1.1 Author the law ballot: rulings compiled by reference; the full before→after inventory (design C11); censuses as fenced commands + outputs, **including the per-pattern-class extraction-verification recipes**; the recorded interpretations and quoting instructions (Req 12.4); the (d8) sentence; the M-baseline with recipes; the `Ratified-machine:` line slot
+  - [x] 1.2 Apply the law edits per the inventory: guide subsection (C8.1); PSP Tier 3 + worked example (C8.2) + conventions § (C8.3); TCP pointer ×2 (C8.4); RELEASE-FLOW step (C8.5); PHP § Tier 2 incl. the revisit block (C8.6); ballots-README entry; F7 update at the archived path; **then re-verify this file's own units block against the shipped canonical form**
+  - [x] 1.3 Author the five register rows (C10; owners per Req 5.2–5.6; `promised-artifact-exists`'s owner assigned at this ballot; the gate-bite-outstanding history note on the parity row); run and record the live non-substring sweep
+  - [x] 1.4 Run the straggler sweep per edit class with stated-matching outputs **plus the C11-inventory diff check**; request Stacy's REQUIRED ballot review; fold; submit for ratification (record-first; Peter's merge is the ratifying act)
 
 - [ ] 2. Build and prove the instrument (U2)
 
