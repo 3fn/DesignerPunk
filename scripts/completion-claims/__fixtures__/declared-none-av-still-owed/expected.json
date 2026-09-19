@@ -1,0 +1,14 @@
+{
+  "case": "declared-none-av-still-owed",
+  "class": "declared-none",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/declared-none-av-still-owed.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "AV_MISSING_OR_MALFORMED"
+  ],
+  "emissions": [
+    "declared-none-table-waiver"
+  ],
+  "exit": "red"
+}

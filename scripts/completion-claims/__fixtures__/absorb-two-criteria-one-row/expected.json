@@ -1,0 +1,21 @@
+{
+  "case": "absorb-two-criteria-one-row",
+  "class": "absorb",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/absorb-two-criteria-one-row.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mismatch": {
+    "missing": [
+      "The web implementation renders the loading state without layout shift at every size token",
+      "The web implementation announces the loading state to assistive technology"
+    ],
+    "extra": [
+      "The web implementation renders the loading state without layout shift at every size token and announces the loading state to assistive technology"
+    ]
+  }
+}

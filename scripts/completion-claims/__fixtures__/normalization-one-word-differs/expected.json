@@ -1,0 +1,22 @@
+{
+  "case": "normalization-one-word-differs",
+  "class": "normalization",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/normalization-one-word-differs.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mismatch": {
+    "missing": [
+      "Every generated Kotlin token constant is re-verified against its registry entry",
+      "The Android consumer smoke test passes against the published artifact"
+    ],
+    "extra": [
+      "Every generated Kotlin token constant is verified against its registry entry",
+      "The Android consumer smoke test passes against the published artifact."
+    ]
+  }
+}

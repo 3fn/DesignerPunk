@@ -1,0 +1,16 @@
+{
+  "case": "deferral-free-prose-near-miss",
+  "class": "deferral",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/deferral-free-prose-near-miss.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "MALFORMATION"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "malformed deferral: not the fixed form 'Artifact deferred: <path> → <unit>'"
+  ],
+  "notes": "Verdict member MALFORMATION per Thurgood's recorded adjudication of Stacy's contest note (AV_MISSING_OR_MALFORMED specified, MALFORMATION stated defensible; the three non-negotiables hold: catalog message verbatim, deferrals empty, non-zero exit)."
+}

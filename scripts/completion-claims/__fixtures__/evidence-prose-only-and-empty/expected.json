@@ -1,0 +1,20 @@
+{
+  "case": "evidence-prose-only-and-empty",
+  "class": "evidence",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/evidence-prose-only-and-empty.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "EVIDENCE_NONCOMPLIANT",
+    "EVIDENCE_NONCOMPLIANT"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messageContains": [
+    "Divider-Line-Base renders at every thickness token",
+    "The component is exposed to assistive technology"
+  ],
+  "messageNotContains": [
+    "Divider tokens resolve through the semantic layer"
+  ]
+}

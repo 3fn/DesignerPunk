@@ -1,0 +1,19 @@
+{
+  "case": "malformation-criteria-block-defects",
+  "class": "malformation",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/malformation-criteria-block-defects.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "MALFORMATION",
+    "MALFORMATION",
+    "MALFORMATION"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "malformed association: criteria block at line 10 precedes every checkbox",
+    "malformed criteria block: 'none' co-occurs with criteria (parent 1)",
+    "malformed association: two criteria blocks associate to parent 2 (lines 27, 33)"
+  ]
+}

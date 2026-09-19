@@ -1,0 +1,22 @@
+{
+  "case": "relax-threshold-and-scope",
+  "class": "relax",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/relax-threshold-and-scope.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mismatch": {
+    "missing": [
+      "The focus ring meets a contrast ratio of at least 4.5:1 against every surface token it can render on",
+      "The focus-ring parity audit passes on web, iOS and Android"
+    ],
+    "extra": [
+      "The focus ring meets a contrast ratio of at least 3:1 against every surface token it can render on",
+      "The focus-ring parity audit passes on web"
+    ]
+  }
+}

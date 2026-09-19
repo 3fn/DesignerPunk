@@ -1,0 +1,15 @@
+{
+  "case": "av-artifact-line-missing",
+  "class": "av-gate",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/av-artifact-line-missing.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "AV_MISSING_OR_MALFORMED"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messageContains": [
+    "'Primary Artifacts:' forced-negative line owed"
+  ]
+}

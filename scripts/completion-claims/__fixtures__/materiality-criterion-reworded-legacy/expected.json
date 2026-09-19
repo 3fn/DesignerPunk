@@ -1,0 +1,18 @@
+{
+  "case": "materiality-criterion-reworded-legacy",
+  "class": "materiality",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/materiality-criterion-reworded-legacy.md",
+  "kind": "amendment",
+  "ratifiedAt": "2026-09-19",
+  "authoredAt": "2026-06-02",
+  "verdicts": [
+    "MATERIAL_AMENDMENT_WITHOUT_DECLARATION"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "material": true,
+  "messageContains": [
+    "4.5:1",
+    "3:1"
+  ]
+}

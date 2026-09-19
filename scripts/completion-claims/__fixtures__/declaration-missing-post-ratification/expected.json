@@ -1,0 +1,17 @@
+{
+  "case": "declaration-missing-post-ratification",
+  "class": "declaration",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/declaration-missing-post-ratification.md",
+  "kind": "amendment",
+  "ratifiedAt": "2026-09-19",
+  "authoredAt": "2026-12-14",
+  "verdicts": [
+    "NON_COMPLIANT_NO_DECLARATION"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mode": "non-compliant-no-declaration",
+  "messages": [
+    "non-compliant tasks.md: authored post-ratification without a criteria-mode declaration"
+  ]
+}

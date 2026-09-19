@@ -1,0 +1,15 @@
+{
+  "case": "omit-doc-no-completion-doc",
+  "class": "omit-doc",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/omit-doc-no-completion-doc.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [],
+  "emissions": [
+    "completion-doc-not-found"
+  ],
+  "exit": "green",
+  "emissionContains": [
+    "completion doc not found — not evaluated (doc presence is parent-completion-docs-present's surface, proposed/unbuilt; interim owner: the claims pass)"
+  ]
+}

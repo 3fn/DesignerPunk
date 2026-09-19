@@ -1,0 +1,18 @@
+{
+  "case": "invent-extra-row",
+  "class": "invent",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/invent-extra-row.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mismatch": {
+    "missing": [],
+    "extra": [
+      "Component documentation updated in the Badge family guide"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "classes": [
+    "drop",
+    "reword",
+    "relax",
+    "omit-doc",
+    "invent",
+    "absorb",
+    "av-gate",
+    "deferral",
+    "exemption",
+    "declaration",
+    "materiality",
+    "normalization",
+    "evidence",
+    "forced-negative",
+    "declared-none",
+    "malformation",
+    "ratification-record"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "case": "declared-none-compliant-control",
+  "class": "declared-none",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/declared-none-compliant-control.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [],
+  "emissions": [
+    "av-deferral-declared",
+    "declared-none-table-waiver"
+  ],
+  "exit": "green",
+  "emissionContains": [
+    "docs/figma-export-guide.md",
+    "U3",
+    "this parent ships documents only"
+  ],
+  "parentsEvaluated": [
+    "2"
+  ]
+}

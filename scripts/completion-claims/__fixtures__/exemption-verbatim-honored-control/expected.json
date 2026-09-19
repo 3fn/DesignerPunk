@@ -1,0 +1,18 @@
+{
+  "case": "exemption-verbatim-honored-control",
+  "class": "exemption",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/exemption-verbatim-honored-control.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [],
+  "emissions": [
+    "exemption-honored"
+  ],
+  "exit": "green",
+  "emissionContains": [
+    "2026-09-19"
+  ],
+  "parentsEvaluated": [
+    "5"
+  ]
+}

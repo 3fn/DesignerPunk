@@ -1,0 +1,54 @@
+# Completion Criteria Parity — parent success-criteria fidelity check.
+#
+# Sanctioned by register row `governance/classification-map.md § "completion-
+# criteria-parity"` (check_state: proposed). Law: the 2026-09-19 completion-
+# claims-integrity ballot (RATIFIED); build: Spec 127 U2.
+#
+# The check context is `completion-criteria-parity`, FIXED AT AUTHORING and
+# cited on the register row. This job lands NON-REQUIRED (Req 6.6): the
+# required flip + the EXPECTED_CONTEXTS count-assert in
+# tools/agent-generator/verify-gate-registration.sh land together in the same
+# recorded change AT ARMING — Q2's guarded decision (5.Z sitting or
+# release-prep start), with gate-bite proven on a throwaway PR at the flip.
+# Do NOT add this context to EXPECTED_CONTEXTS before that recorded change.
+#
+# fetch-depth: 0 — the checker derives tasks.md authorship dates from history
+# (DD2) and evaluates legacy materiality against the merge base (Req 6.3).
+#
+# Framing (the (d8) sentence): a green run is NOT evidence of claim honesty —
+# any future reading of it as such is the error Spec 127 exists to prevent.
+
+name: Completion Criteria Parity
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  completion-criteria-parity:
+    name: completion-criteria-parity
+    runs-on: ubuntu-latest
+    # Pure-fs markdown scan plus per-file git authorship lookups; npm ci dominates.
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Completion criteria parity
+        run: npm run check:completion-criteria-parity
