@@ -7,7 +7,7 @@ aliases: cross-spec integration dependency management, cross spec integration de
 # Integration Methodology
 
 **Date**: 2026-02-25
-**Last Reviewed**: 2026-02-25
+**Last Reviewed**: 2026-09-19
 **Purpose**: for building 3rd-party integrations in DesignerPunk
 **Organization**: process-standard
 **Scope**: cross-project
@@ -47,7 +47,7 @@ This keeps integrations decoupled from internals, makes the system extensible wi
 
 **Precedents in DesignerPunk:**
 - Rosetta token system → DTCG JSON schema → Figma token sync
-- Stemma component catalog → Component metadata schema → A2UI renderer (in progress)
+- Stemma component catalog → Component metadata schema (Spec 064, complete) → A2UI renderer (not yet started — schema validated against the target; the transformer itself is pending)
 
 ---
 
@@ -124,7 +124,7 @@ Yes. That's why it's versioned and why the governance gate exists. Schema evolut
 
 ## Known Limitations of This Draft
 
-This methodology is based on two implementations (DTCG and agentic UI). It should be treated as a hypothesis until validated against additional integrations. Specific areas likely to need refinement:
+This methodology is based on one full implementation (DTCG: schema + transformer + CLI) and one schema-validated-but-not-yet-transformed target (agentic UI/A2UI — Spec 064 validated the schema against the target; the renderer transformer has not been built). It should be treated as a hypothesis until validated against additional integrations. Specific areas likely to need refinement:
 
 - The right granularity for schema versioning
 - How to handle breaking changes in external tool formats
@@ -138,5 +138,5 @@ This methodology is based on two implementations (DTCG and agentic UI). It shoul
 ## Related Documentation
 
 - `.kiro/docs/agentic-ui-strategy.md` — Strategic context for the agentic UI integration
-- `.kiro/steering/DTCG-Integration-Guide.md` — DTCG format specification (first implementation)
-- `.kiro/steering/Figma-Workflow-Guide.md` — Figma integration workflow (first integration transformer)
+- `governance/DTCG-Integration-Guide.md` — DTCG format specification (first implementation)
+- `governance/Figma-Workflow-Guide.md` — Figma integration workflow (first integration transformer)

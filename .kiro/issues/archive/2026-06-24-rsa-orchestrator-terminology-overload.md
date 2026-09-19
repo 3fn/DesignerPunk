@@ -43,3 +43,9 @@ A small standalone doc-clarity ballot item (or fold into any future branch alrea
 
 - Surfaced in: `.kiro/specs/117-token-index-generation-integrity/completion/task-6-completion.md` (flagged-not-fixed)
 - Affected doc: `.kiro/steering/Rosetta-System-Architecture.md` § Stage 4: Mode Resolution, § Stage 5: Generation
+
+---
+
+## CLOSED — verified executed (2026-09-19, health-check charter walk #1)
+
+The scheduled vehicle (Spec 118 Task 11's steering ballot) ran; verification at the first active-charter walk: **both cited labels are gone** from `governance/Rosetta-System-Architecture.md` — neither `Orchestration (generateTokenFiles.ts)` (Stage 4) nor `TokenFileGenerator (Orchestrator)` (Stage 5) appears; the doc's sole remaining "Orchestrator" (:245, `ValidationCoordinator (Orchestrator)`) is a third component with a single unambiguous label — not the caller/callee overload this issue described. Trigger fired + evidence verified → closed and archived per the issues-dir convention.
