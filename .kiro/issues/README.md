@@ -18,7 +18,7 @@
 
 ---
 
-## Active roster at the founding triage (27 — owners and triggers as recorded in each file)
+## Active roster at the founding triage (27; 26 after the first walk — rsa-orchestrator verified-executed and archived 2026-09-19 — owners and triggers as recorded in each file)
 
 | File | Owner | Trigger / state |
 |---|---|---|
@@ -41,7 +41,6 @@
 | 2026-06-24-mathematical-relationship-parser-validation-gaps.md | Ada | SOON-triaged |
 | 2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md | Ada | LATER-triaged |
 | 2026-06-24-oklch-shadow-color-family-not-migrated.md | Ada | deferred (out of 117 scope) |
-| 2026-06-24-rsa-orchestrator-terminology-overload.md | Ada | **verify-at-first-walk**: was scheduled to ride 118 Task 11's ballot — confirm whether it did |
 | 2026-06-13-module-resolution-strategy.md | Ada | deferred to a dedicated spec |
 | 2026-06-13-blendutilities-not-generated.md | Ada | split 2026-06-24; open doc-accuracy half |
 | 2026-06-12-release-integrity-safety-nets.md | Thurgood | deferred (Peter-approved); revisit at release-manager retirement execution |

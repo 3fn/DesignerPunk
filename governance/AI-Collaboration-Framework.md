@@ -8,7 +8,7 @@ description: Detailed protocols for AI-human collaboration — mandatory bias mi
 # AI Collaboration Framework
 
 **Date**: 2026-01-15
-**Last Reviewed**: 2026-01-15
+**Last Reviewed**: 2026-09-19
 **Purpose**: Detailed protocols for AI-human collaboration with mandatory bias mitigation and candid communication
 **Organization**: process-standard
 **Scope**: cross-project
