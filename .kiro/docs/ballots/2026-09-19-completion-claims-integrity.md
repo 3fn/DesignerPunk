@@ -1182,14 +1182,14 @@ boundary_call:
   rationale: "Path existence at a named commit is a filesystem fact. The check's whole design keeps it factual: it is delta-scoped to the ticking PR, it strips annotation suffixes by rule, and every case it cannot decide is EMITTED rather than silently skipped"
 verification:
   disposition: barrier
-  owner: thurgood        # PROPOSED at this ballot, flagged for Peter — see the ballot's § 11 fork
+  owner: stacy           # RULED option (B) — Peter, 2026-09-19. Flips to `thurgood` at build time; see history
   check_state: proposed
   checks: []
 education:
   disposition: "AUTHOR the input-side convention, which ships with this row's law: the fixed deferral form `Artifact deferred: <path> -> <unit>` is taught in completion-documentation-guide § 'Parent Success-Criteria Fidelity' (Additional verification), and the authoring note that a Primary-Artifacts line bundling platforms does NOT decompose (it has its own remedy in the artifact forced-negative line) is taught beside it. Nothing is pruned — the promised-artifact dimension had no prose predecessor at all, which is why it escaped twice to consumers."
 history:
   - { date: <ratification date>, change: "entry created at the Spec 127 law ballot. SCOPE, as ruled: DELTA-SCOPED — fires on the PR that ticks the parent, against that parent's declared paths only; later file moves are repository evolution, not claims. Parsing strips annotation suffixes and EMITS its exclusions (`skipped — not a path`) rather than silently skipping; an AV-declared deferral in the fixed form is an EMITTED EXCLUSION, not a red (mechanically decidable because the form is fixed — B-6 ruled option 1). VERDICT PHRASING IS NORMATIVE: 'task text and reality disagree', never 'work was not done'. NAMED READER for the emissions: the CLOSEOUT claims pass reads this check's emission lines for the closing spec — once the check is built; UNTIL THEN THE PASS OWNS PROMISED-ARTIFACT GAPS AS JUDGMENT. The PR summary line carries the exclusion count", by: thurgood }
-  - { date: <ratification date>, change: "OWNER ASSIGNED AT THIS BALLOT, and the openness is recorded as openness: this row was split out of the settle ballot's three-row enumeration, so its owner was genuinely open rather than silently defaulted. Assigned `thurgood` on the instrument-owner ground the parity row rests on — a delta-scoped PR-gate check is an instrument, and § 11.3 puts instrument ownership (checker source, CI wiring, EXPECTED_CONTEXTS registration) with Thurgood. SURVIVING COUNTER-ARGUMENT, recorded rather than absorbed: the row's NAMED READER is Stacy's claims pass, the interim judgment owner is Stacy, and the carve-out's tiebreaker direction resolves ambiguity toward the verifier — so `owner: stacy` now, flipped to `thurgood` at build time by a dated history entry, is a defensible alternative that costs one row edit. The fork was surfaced for Peter at ratification rather than picked by the drafter", by: thurgood }
+  - { date: <ratification date>, change: "OWNER RULED AT THIS BALLOT — Peter, 2026-09-19, option (B), and the openness is recorded as openness: this row was split out of the settle ballot's three-row enumeration, so its owner was genuinely open rather than silently defaulted. The drafter surfaced a fork rather than picking one, being a named party to the cut. RULED: `owner: stacy` NOW — the honest record of the present. The row is `proposed` and unbuilt; the dimension is held today by Stacy's claims pass as judgment (Req 5.3's interim clause), and both sibling rows created in this same ballot carry `owner: stacy` while unbuilt. PRE-COMMITTED TRANSITION, decided now so it is a transition and not a later argument: WHEN the check is built and wired, the owner flips to `thurgood` in ONE row edit with its own dated history entry, on the instrument-owner ground § 11.3 established for the parity row (`owner` fuses decision and check; for an armed barrier the decision IS the check, so the field records who keeps the instrument true). THE FLIP IS REPRESENTATIONAL, NOT CLASSIFICATORY — no disposition, boundary call, check_state or education disposition changes with it, and a later reader must not read the handover as a reclassification. RECORDED ALTERNATIVE (option A, argued by the drafter and not taken): assign `thurgood` from creation, on the ground that the row's destination is a mechanical PR-gate instrument; its stated residual was that this records a FUTURE state on a row that is proposed today, naming an owner of an instrument that does not exist while the real holder appears only in prose", by: thurgood }
 ```
 
 #### `promised-artifact-shipped`
@@ -1207,7 +1207,7 @@ verification:
 education:
   disposition: "NOTHING AUTHORED, NOTHING PRUNED at this ballot — the row is registered so the dimension is visible as unowned-by-machinery rather than invisible. The teaching this dimension needs already lands on completion-criteria-parity's surfaces (the AV section's artifact forced-negative line and the fixed deferral form). RE-ASSESS if the dry run promotes the row to built."
 history:
-  - { date: <ratification date>, change: "entry created at the Spec 127 law ballot; build DEFERRED. MUST NOT FIRE PER-PR (ruled): a later unit can legitimately deliver a prior unit's promised artifact, so a per-PR grain would red-light lawful sequencing. Its events are CLOSEOUT and RELEASE — never the PR gate. owner: stacy, ratified at settle ballot § 11.2 and confirmed in her § 16.2 duty table. PROMOTION EVIDENCE, recorded honestly: a retrospective DRY RUN over merged history — a PROCEDURE, NOT A FIRING TRIGGER. That distinction is acceptable only because nothing here is armed; if this row ever moves toward `armed`, the dry run must be replaced by a real trigger with a real event, and this note is the reason why", by: stacy }
+  - { date: <ratification date>, change: "entry created at the Spec 127 law ballot; build DEFERRED. MUST NOT FIRE PER-PR (ruled): a later unit can legitimately deliver a prior unit's promised artifact, so a per-PR grain would red-light lawful sequencing. Its events are CLOSEOUT and RELEASE — never the PR gate. owner: stacy, ratified at settle ballot § 11.2 and confirmed in her § 16.2 duty table. PROMOTION EVIDENCE, recorded honestly: a retrospective DRY RUN over merged history — a PROCEDURE, NOT A FIRING TRIGGER. That distinction is acceptable only because nothing here is armed; if this row ever moves toward `armed`, the dry run must be replaced by a real trigger with a real event, and this note is the reason why", by: thurgood }
 ```
 
 #### `completion-verification-honesty`
@@ -1216,7 +1216,7 @@ history:
 rule: "A completion claim SHALL be true — the ✅ reflects a check actually performed against shipped source, and the Evidence cell points at something real"
 boundary_call:
   class: ideological
-  rationale: "Whether a mark is HONEST is not decidable from any artifact a check can read. A false ✅ with a plausible path is green to every mechanical predicate that exists or could exist here; the dimension is held by practice, culture and audit, or it is not held at all"
+  rationale: "Whether a mark is HONEST is not decidable from any artifact a check can read. A false ✅ with a plausible path is green to every mechanical predicate that exists or could exist here; the dimension is held by practice, culture and audit, or it is not held at all. CARRIED VERBATIM, AS RULED (Req 5.5): Any future reading of these numbers that treats a green gate as evidence of claim honesty will have made the error this spec exists to prevent."
 verification:
   disposition: none
   owner: stacy
@@ -1408,7 +1408,7 @@ Marked so a reviewer can strike them without unpicking ruled substance.
 
 | # | Call | Where | Status |
 |---|---|---|---|
-| **J1** | **`promised-artifact-exists`'s `owner`** — proposed `thurgood`; the alternative is `stacy` now with a dated flip at build time | § 7.7 | **FORK SURFACED, NOT PICKED — for Peter at ratification.** Full argument below |
+| **J1** | **`promised-artifact-exists`'s `owner`** — fork: `thurgood` now (option A) vs `stacy` now with a dated flip at build time (option B) | § 7.7 | **RULED — Peter, 2026-09-19: OPTION (B).** Ships `owner: stacy`; flips to `thurgood` at build time as a pre-committed, representational transition. Option (A) and its residual preserved below as the recorded alternative |
 | **J2** 🔸 | Guide **frontmatter `description`** extended to name the new section | § 7.1b | Drafter's judgment inside ruled scope — the MCP-discovery version of the canonical-example lesson |
 | **J3** 🔸 | Guide **parent-task checklist** gains one line | § 7.1c | Drafter's judgment — the prune-scar constraint binds TCP (a pointer surface), not the rule's home document |
 | **J4** 🔸 | **F7 pointer under the finding heading**, in addition to the disposition line | § 7.9b | Drafter's judgment — a reader at the finding should not have to scroll to learn it was dispositioned |
@@ -1418,7 +1418,11 @@ Marked so a reviewer can strike them without unpicking ruled substance.
 
 ### J1 in full — the `promised-artifact-exists` owner
 
-**Proposal: `owner: thurgood`.**
+> **RULED — Peter, 2026-09-19: OPTION (B).** The row ships **`owner: stacy`** — the honest record of the present: the row is `proposed` and unbuilt, the dimension is held today by the claims pass as judgment, and both sibling rows created in this ballot carry `owner: stacy` while unbuilt. The transition is **pre-committed, not deferred**: when the check is built, the owner flips to `thurgood` in one row edit with its own dated history entry, on the § 11.3 instrument-owner ground. **The flip is representational, not classificatory** — no disposition, boundary call, `check_state` or education disposition moves with it, and the ruling says so in advance precisely so a later reader cannot mistake a handover for a reclassification.
+>
+> **The ruling resolves the fork against the drafter's own proposal.** The argument for option (A) and its surviving residual are preserved below, unedited, as the recorded alternative — not because the decision is open, but because a fork resolved without its losing argument on the record is a decision no later reader can re-weigh.
+
+**Proposal as drafted (option A — NOT TAKEN): `owner: thurgood`.**
 
 **Rationale.** The register's schema defines `owner` as *"the agent who owns the verification decision/check for this rule."* The settle ballot resolved the identical friction on the parity row **against** the drafter's own preference, on a stated principle: *"`owner` fuses decision and check; for an armed barrier the decision IS the check, so the field records who keeps the instrument true"* (§ 11.3). `promised-artifact-exists` is designed as exactly that kind of object — a delta-scoped, PR-gate-shaped mechanical check whose entire content is path existence at a named commit, with annotation-stripping and exclusion-emission rules fixed by law. § 11.3 puts instrument ownership — checker source, CI wiring, `EXPECTED_CONTEXTS` registration and count-assert — with Thurgood. The question-routing test agrees: *"what is a completion doc required to contain?"* → Thurgood.
 
@@ -1428,12 +1432,12 @@ Marked so a reviewer can strike them without unpicking ruled substance.
 
 **The SURVIVING RESIDUAL, stated plainly because an empty residual would mean the counter-argument was too weak:** **`owner: thurgood` records a FUTURE state on a row whose `check_state` is `proposed` TODAY.** For however long this row stays unbuilt — and `promised-artifact-shipped` shows that can be a long time — the field will name an agent who owns an instrument that does not exist, while the agent actually holding the dimension as judgment is named only in prose. That is a real, un-recovered mismatch between the field and the world.
 
-**The fork, surfaced and not picked.** Two defensible options, both cheap:
+**The fork, as surfaced.** Two defensible options, both cheap:
 
-- **(A) `owner: thurgood` now** — records the destination; the interim reality lives in the row's history and education prose. *Cost: the field is aspirational until the check is built.*
-- **(B) `owner: stacy` now, flipped to `thurgood` at build time** by a dated history entry — records the present; matches both sibling rows; costs one row edit and one history line, which is exactly the maintenance the register is designed for. *Cost: the field changes hands mid-life, which a later reader must not mistake for a classification change.*
+- **(A) `owner: thurgood` now** — records the destination; the interim reality lives in the row's history and education prose. *Cost: the field is aspirational until the check is built.* **NOT TAKEN.**
+- **(B) `owner: stacy` now, flipped to `thurgood` at build time** by a dated history entry — records the present; matches both sibling rows; costs one row edit and one history line, which is exactly the maintenance the register is designed for. *Cost: the field changes hands mid-life, which a later reader must not mistake for a classification change — so the ruling names the flip as representational in advance.* **RULED (Peter, 2026-09-19).**
 
-**The drafter is a named party to this cut** (it lands on his own instrument scope), which is itself a reason not to self-adjudicate it. **Peter picks at ratification; the assignment above is a proposal, not a decision.**
+**The drafter is a named party to this cut** (it lands on his own instrument scope), which is why it was surfaced rather than self-adjudicated. **Peter ruled option (B); the row at § 7.7 carries it, and the residual above stands as the recorded reason the other option was defensible.**
 
 ---
 

@@ -9,7 +9,7 @@ aliases: classification map register, rule classification, boundary call, verifi
 # Classification Map
 
 **Date**: 2026-07-14
-**Last Reviewed**: 2026-08-02
+**Last Reviewed**: 2026-09-19
 **Purpose**: The living register of per-rule classification decisions — boundary call, verification disposition + owner, and education disposition — so enforcement ownership is decided once and cited thereafter instead of re-litigated per agent, per prompt, per session
 **Organization**: process-standard
 **Scope**: cross-project
@@ -696,4 +696,96 @@ education:
   disposition: "RECORD-ONLY entry (same class and same audit as consumer-guard-lane). Education layer NOT swept this pass; territory sweeps with any future wave. The npm-publish playbook knowledge (scope-mapping pitfall) is adjacent teaching, out of the served corpus."
 history:
   - { date: 2026-09-18, change: "entry created (U1b 5.6 closeout, §5.6 armed-but-unregistered audit) — see consumer-guard-lane's entry; the two gaps were found and rowed together. Evidence: completion/u1b/campaign-closeout.md §6", by: thurgood }
+```
+
+### completion-criteria-parity
+
+```yaml
+rule: "A parent completion doc SHALL reproduce every success criterion its tasks.md defines for that parent — verbatim, exact set, with a Status mark and a non-empty Evidence cell per row, the forced-negative line, and the Additional verification section where the parent declares Primary Artifacts or a merge gate"
+boundary_call:
+  class: functional
+  rationale: "String-equality of a completion-doc cell against a tasks.md bullet after four fixed normalizations is mechanical by construction — no judgment enters the predicate. The dimensions that DO require judgment (is the ✅ true, is the evidence real) are deliberately a different row: completion-verification-honesty"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: proposed
+  checks: ["completion-criteria-parity (.github/workflows/completion-criteria-parity.yml -> npm run check:completion-criteria-parity; context name FIXED at authoring; built by Spec 127 U2 and introduced NON-REQUIRED)"]
+education:
+  disposition: "AUTHOR, do not prune — this rule has no prose predecessor to prune; it has a prose DEFECT to repair. Three surfaces are authored in the same change as this row: completion-documentation-guide § 'Parent Success-Criteria Fidelity' (the full rule, its normalization list, the mutation classes, the honest-reach statement); Process-Spec-Planning Tier 3 + the replacement worked example (the measured template defect — M4 = 0/22 because the standard offered no failure vocabulary outside the Blocked Task format); Task-Completion-Protocol's two parent sequences (POINTER ONLY, per the Wave-1 prune-scar constraint). RE-ASSESS at the first claims pass after arming: if the check keeps biting, the docs may be teaching the wrong thing — that is the return edge, and it runs on the EDUCATION route."
+history:
+  - { date: 2026-09-19, change: "entry created at the Spec 127 law ballot (.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md). check_state: proposed — the checker is BUILT by U2 and lands NON-REQUIRED; the required flip is Q2's decision, guarded by (i) release-prep start and (ii) convention shipped AND Tier-3 worked example fixed AND N >= 5 in-scope parents completed with M2 measured BY AUDIT, not by the checker. owner: thurgood resolves friction (a) on the register's own schema ground — `owner` fuses decision and check, and for an armed barrier the decision IS the check, so the field records who keeps the instrument true (settle ballot § 11.3). The uncheckable residual attaches to completion-verification-honesty (owner: stacy), the row whose entire purpose is that no check owns it", by: thurgood }
+  - { date: 2026-09-19, change: "GATE-BITE OUTSTANDING, recorded at row creation rather than after the fact: Req 6.4 requires the check be proven RED on a throwaway PR with a deliberately defective completion doc before any required flip. That proof does not exist at this row's creation and is NOT claimed. It rides with the arming — proven at the flip, cited on this row in the same recorded change that adds the context to verify-gate-registration.sh's EXPECTED_CONTEXTS (count-assert included). Until then this row asserts a proposed check with no bite proof, stated as such", by: thurgood }
+```
+
+### promised-artifact-exists
+
+```yaml
+rule: "Every path a parent declares under **Primary Artifacts:** SHALL exist at the merge of the PR that ticks that parent — or be declared deferred in the fixed form `Artifact deferred: <path> -> <unit>`"
+boundary_call:
+  class: functional
+  rationale: "Path existence at a named commit is a filesystem fact. The check's whole design keeps it factual: it is delta-scoped to the ticking PR, it strips annotation suffixes by rule, and every case it cannot decide is EMITTED rather than silently skipped"
+verification:
+  disposition: barrier
+  owner: stacy
+  check_state: proposed
+  checks: []
+education:
+  disposition: "AUTHOR the input-side convention, which ships with this row's law: the fixed deferral form `Artifact deferred: <path> -> <unit>` is taught in completion-documentation-guide § 'Parent Success-Criteria Fidelity' (Additional verification), and the authoring note that a Primary-Artifacts line bundling platforms does NOT decompose (it has its own remedy in the artifact forced-negative line) is taught beside it. Nothing is pruned — the promised-artifact dimension had no prose predecessor at all, which is why it escaped twice to consumers."
+history:
+  - { date: 2026-09-19, change: "entry created at the Spec 127 law ballot. SCOPE, as ruled: DELTA-SCOPED — fires on the PR that ticks the parent, against that parent's declared paths only; later file moves are repository evolution, not claims. Parsing strips annotation suffixes and EMITS its exclusions (`skipped — not a path`) rather than silently skipping; an AV-declared deferral in the fixed form is an EMITTED EXCLUSION, not a red (mechanically decidable because the form is fixed — B-6 ruled option 1). VERDICT PHRASING IS NORMATIVE: 'task text and reality disagree', never 'work was not done'. NAMED READER for the emissions: the CLOSEOUT claims pass reads this check's emission lines for the closing spec — once the check is built; UNTIL THEN THE PASS OWNS PROMISED-ARTIFACT GAPS AS JUDGMENT. The PR summary line carries the exclusion count", by: thurgood }
+  - { date: 2026-09-19, change: "OWNER RULED AT THIS BALLOT — Peter, 2026-09-19, option (B), and the openness is recorded as openness: this row was split out of the settle ballot's three-row enumeration, so its owner was genuinely open rather than silently defaulted. The drafter surfaced a fork rather than picking one, being a named party to the cut. RULED: `owner: stacy` NOW — the honest record of the present. The row is `proposed` and unbuilt; the dimension is held today by Stacy's claims pass as judgment (Req 5.3's interim clause), and both sibling rows created in this same ballot carry `owner: stacy` while unbuilt. PRE-COMMITTED TRANSITION, decided now so it is a transition and not a later argument: WHEN the check is built and wired, the owner flips to `thurgood` in ONE row edit with its own dated history entry, on the instrument-owner ground § 11.3 established for the parity row (`owner` fuses decision and check; for an armed barrier the decision IS the check, so the field records who keeps the instrument true). THE FLIP IS REPRESENTATIONAL, NOT CLASSIFICATORY — no disposition, boundary call, check_state or education disposition changes with it, and a later reader must not read the handover as a reclassification. RECORDED ALTERNATIVE (option A, argued by the drafter and not taken): assign `thurgood` from creation, on the ground that the row's destination is a mechanical PR-gate instrument; its stated residual was that this records a FUTURE state on a row that is proposed today, naming an owner of an instrument that does not exist while the real holder appears only in prose", by: thurgood }
+```
+
+### promised-artifact-shipped
+
+```yaml
+rule: "An artifact a task text annotates as `(modified)` SHALL appear in that task's shipped diff — the Spec 112 task-3.3 signature, where a tested utility is created and the seam it was meant to modify is never touched"
+boundary_call:
+  class: functional
+  rationale: "Diff membership is mechanical. The reason this row is deferred is not classification doubt — it is that the check's natural firing grain is wrong at PR time, which is a scheduling property, not a boundary one"
+verification:
+  disposition: barrier
+  owner: stacy
+  check_state: proposed
+  checks: []
+education:
+  disposition: "NOTHING AUTHORED, NOTHING PRUNED at this ballot — the row is registered so the dimension is visible as unowned-by-machinery rather than invisible. The teaching this dimension needs already lands on completion-criteria-parity's surfaces (the AV section's artifact forced-negative line and the fixed deferral form). RE-ASSESS if the dry run promotes the row to built."
+history:
+  - { date: 2026-09-19, change: "entry created at the Spec 127 law ballot; build DEFERRED. MUST NOT FIRE PER-PR (ruled): a later unit can legitimately deliver a prior unit's promised artifact, so a per-PR grain would red-light lawful sequencing. Its events are CLOSEOUT and RELEASE — never the PR gate. owner: stacy, ratified at settle ballot § 11.2 and confirmed in her § 16.2 duty table. PROMOTION EVIDENCE, recorded honestly: a retrospective DRY RUN over merged history — a PROCEDURE, NOT A FIRING TRIGGER. That distinction is acceptable only because nothing here is armed; if this row ever moves toward `armed`, the dry run must be replaced by a real trigger with a real event, and this note is the reason why", by: thurgood }
+```
+
+### completion-verification-honesty
+
+```yaml
+rule: "A completion claim SHALL be true — the ✅ reflects a check actually performed against shipped source, and the Evidence cell points at something real"
+boundary_call:
+  class: ideological
+  rationale: "Whether a mark is HONEST is not decidable from any artifact a check can read. A false ✅ with a plausible path is green to every mechanical predicate that exists or could exist here; the dimension is held by practice, culture and audit, or it is not held at all. CARRIED VERBATIM, AS RULED (Req 5.5): Any future reading of these numbers that treats a green gate as evidence of claim honesty will have made the error this spec exists to prevent."
+verification:
+  disposition: none
+  owner: stacy
+  check_state: none
+  checks: []
+education:
+  disposition: "AUTHOR the honest-reach statement, and never author anything that implies mechanization. completion-documentation-guide § 'Parent Success-Criteria Fidelity' carries the instrument's limits explicitly: a plausible-looking Evidence path is green regardless of truth; for iOS and Android 'command + result' evidence is trust-the-reported-result for any verifier in this environment (charter: .kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md); artifact truth is owned by the claims pass today. PRUNE NOTHING and ADD NO CHECK — ever. M3 (evidence quality), M4 (forced-negative adoption) and M5 (failure markers) are AUDIT output, produced by claims passes, and no check owns them."
+history:
+  - { date: 2026-09-19, change: "entry created at the Spec 127 law ballot. NO CHECK OWNS THIS ROW — EVER; that is the row's purpose, not a gap in it. The ruled sentence is carried verbatim in boundary_call.rationale above. Recorded with it, because a barrier's own metric is trivially 100% once armed: M2 measures nothing after arming, and the informative metrics are exactly the ones no check owns", by: thurgood }
+```
+
+### parent-completion-docs-present
+
+```yaml
+rule: "Every ticked parent task SHALL have a completion doc and a summary doc — the Spec 112 F6 class, where four required documents were simply never written"
+boundary_call:
+  class: functional
+  rationale: "File existence at a path family is mechanical. It is registered `proposed` rather than built because its naive form has a KNOWN false-positive class, stated below — and a check that red-lights lawful behaviour on day one is how a barrier earns distrust in its first week"
+verification:
+  disposition: barrier
+  owner: stacy
+  check_state: proposed
+  checks: []
+education:
+  disposition: "KEEP the existing teaching, which is already correct and already single-homed: completion-documentation-guide § 'When to Create Each Document' (subtask = detailed doc; parent = detailed doc AND summary doc) and Task-Completion-Protocol's two parent sequences. NOTHING NEW IS AUTHORED for this row — the docs say the right thing; what is missing is a detector, not a lesson."
+history:
+  - { date: 2026-09-19, change: "entry created at the Spec 127 law ballot; build and arming DEFERRED. owner: stacy WHILE UNBUILT/IDEOLOGICAL (settle ballot § 11.2's conditional, carried at strength) — the doc-presence dimension is claims-pass judgment until a check exists to own it. KNOWN FALSE-POSITIVE CLASS, stated at creation rather than discovered at arming: completion docs land AT PARENT COMPLETION, which under the coherent-unit rule can be BEFORE the unit's PR opens — so a naive `test -f` at PR time reds a parent that is behaving exactly as the law requires. INTERIM: the parity checker names this surface explicitly. A ticked parent with no completion doc is neither red nor silent there; it EMITS `completion doc not found — not evaluated (doc presence is parent-completion-docs-present's surface, proposed/unbuilt; interim owner: the claims pass)` — red would build this row by the back door, silence would be the forbidden dormancy, and the named emission is the honest division of labour. The CLOSEOUT pass reads those emissions", by: thurgood }
 ```
