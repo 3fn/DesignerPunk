@@ -232,3 +232,19 @@ change as a result of this edit.
 - Targeted suites: 8/8 green, 191/191 tests passed, contract count baseline (234) unchanged.
 - Live-MCP AFTER evidence: deferred to post-merge (server reads `main`, not this branch) —
   the merging session runs `rebuild_index` + `get_component_full` ×5 to close the loop.
+
+---
+
+## Live-MCP AFTER evidence — post-merge verification (2026-09-18, merging session; the deferred half of this file's evidence obligation)
+
+PR #169 merged; Application MCP `rebuild_index` run (34 components indexed, healthy); `get_component_full` queried for all five components:
+
+| Component | Live exclusions served post-merge |
+|---|---|
+| Nav-TabBar-Base | `state_disabled` + `interaction_hoverable` (both with reasons) — was `{}` in the BEFORE capture above |
+| Nav-Header-App | `state_disabled` ✓ |
+| Nav-Header-Base | `state_disabled` (with design-outline reference) ✓ |
+| Nav-Header-Page | `state_disabled` ✓ |
+| Progress-Bar-Base | `state_disabled` ✓ |
+
+**Before/after obligation DISCHARGED**: five-for-five, empty → populated. Evidence complete; this file is a closed record.
