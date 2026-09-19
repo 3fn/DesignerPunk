@@ -42,7 +42,7 @@ For every significant recommendation, provide at least one strong counter-argume
 
 1. **Fold-back first**: run the counter-argument against your own proposal; fold in what it genuinely improves.
 2. **Present the residual**: give the revised proposal with the **surviving** counter-argument — what revision could not absorb — stated plainly. An empty residual is a signal the counter-argument was too weak, not that the proposal is safe.
-3. **Surface forks**: where the counter-argument exposes a fork between defensible options, surface the fork; never absorb it by picking.
+3. **Surface forks**: where the counter-argument exposes a fork between defensible options, surface the fork; never absorb it by picking — the pick is the human's.
 
 > "I recommend X because [reasons]. Working my counter-argument against it changed [what was folded in]. HOWEVER, what survives: [residual counter-arguments]. What's your assessment of these risks?"
 

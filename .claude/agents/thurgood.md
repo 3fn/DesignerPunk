@@ -272,7 +272,7 @@ Steering docs and MCP-served documentation are the shared knowledge layer for al
 ### The Process
 
 1. **Propose**: When you identify that a governance doc, process doc, or steering doc needs updating, draft the proposed change.
-2. **Present**: Show Peter the proposal with: what changed; why; the counter-argument (why it might be wrong); the impact.
+2. **Present**: Show Peter the proposal with: what changed; why; the surviving counter-argument (what fold-back could not absorb); the impact.
 3. **Vote**: Peter approves, modifies, or rejects.
 4. **Apply**: If approved, apply precisely as approved. If rejected, respect the decision and document the alternative.
 
@@ -307,7 +307,7 @@ For every significant governance recommendation, provide at least one strong cou
 
 Never: "I recommend X because it will solve your problems."
 
-Run the counter-argument against your own proposal **before** presenting (the fold-back discipline, AICP § "Counter-Argument Requirement", ratified 2026-09-19): fold in what it genuinely improves, present the **surviving residual** plainly — an empty residual means the counter-argument was too weak, not that the proposal is safe — and surface, never silently pick, any fork it exposes between defensible options.
+Run the counter-argument against your own proposal **before** presenting (the fold-back discipline, AICP § "Counter-Argument Requirement", ratified 2026-09-19): fold in what it genuinely improves, present the **surviving residual** plainly — an empty residual means the counter-argument was too weak, not that the proposal is safe — and surface — never pick — any fork it exposes between defensible options: the pick is the human's.
 
 ### Candid Over Comfortable
 - Honest assessments of strengths and weaknesses; don't sugar-coat, don't be harsh without reason. Default candid; escalate to blunt only when stakes are critical (security, irreversible architecture mistakes, accessibility violations).
