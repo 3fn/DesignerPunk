@@ -483,3 +483,23 @@ No blocking items from this domain. All four reactions above are advisory input 
 **Three contests raised, all inside items I adopted**: B6's 36-plus-125-B double count; A8's instance severity (the prove-it-bites record is present, in its own section); A3's "17 entries" (16 entries plus an illustrative header — my own § 5.5 text corrected). **Zero declines** — every item in this round survived verification, including both items I was told to verify before considering one.
 
 *End [THURGOOD R1].*
+
+---
+
+## R2 Round — the 2026-09-19 requirements-phase resolutions
+
+### Context for Reviewers (R2)
+
+**What is under review — ONLY the `RESOLVED (Peter, 2026-09-19)` blocks** in design-outline.md § 8 (Q1, Q3, Q4) plus the header's working-session note and the § 13 rows. Everything else is settled law (the 2026-09-17 ballot) or R1-incorporated — do not re-litigate.
+
+**How the resolutions were made.** Peter worked the open items one-by-one in dependency order (Q1's six-decision stack → Q3's product side → Q4) at a 2026-09-19 working session and ruled each. The resolutions bind the requirements formalization and **ratify finally at the law ballot** (record-first, § 3.5). This round attacks execution consequences, checks the recorded residual lists for completeness, and delivers three reserved items:
+
+- **Ada, Lina**: the reserved **(c′) re-test** — your R1 support was given to (c) as offered; (c′) verbatim-cell (§ 8 Q1 RESOLVED item 6) is materially different. Also weigh **decomposition-first** (item 8) against your own domains: Ada, your bundled token-generation criteria decompose against the registry as common reference — does that survive contact with real Rosetta criteria? Lina, decomposition answers your roll-up objection at the root — does it, and does the flat-bullet row multiplication stay livable on parity-closing parents?
+- **Leonardo**: your Q3 input, not received at R1, **weighted above Stacy's on the product-side shape** (her standing instruction). The resolution binds uniform decomposition as a **default with a named revisit** at your first product spec's tasks round. You can overturn the default in this round, before the ballot.
+- **Stacy**: the promise-surface adoption reshapes your B3 (AV shape: gate rows + artifact forced-negative line); Q3 drops your roll-up sentence while keeping the Implementation-Report substrate; Q4 carries two pins on your reshape (delta-scoping; emit-exclusions). Verification-grade review of the resolution blocks against their cited sources is your lane; the walk's new sub-decisions (declared-none, canonical-form materially-amended) touch your B4 and A-3 directly.
+
+**Method note**: each resolution was produced under a counter-argument fold-back discipline; the residuals each block records are claims — check them for completeness and accuracy.
+
+**Write mechanics**: reviewers return feedback text; Thurgood transcribes with stamps preserved (R1 precedent). Stamp format `[AGENT R2]`; reference `design-outline.md § "8 Q1 RESOLVED item N"` style.
+
+[Agent feedback rounds below]
