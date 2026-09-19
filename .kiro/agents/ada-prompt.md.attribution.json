@@ -12,39 +12,39 @@
     {
       "lines": [
         3,
-        157
+        159
       ],
       "op": "passthrough",
       "source": "canonical/agents/ada.md#body"
     },
     {
       "lines": [
-        158,
-        161
+        160,
+        163
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        162,
-        199
+        164,
+        201
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        200,
-        211
+        202,
+        213
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        212,
-        215
+        214,
+        217
       ],
       "op": "render",
       "source": "writeScope"

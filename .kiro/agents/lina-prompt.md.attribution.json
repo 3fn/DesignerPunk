@@ -12,47 +12,47 @@
     {
       "lines": [
         3,
-        270
+        272
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#body"
     },
     {
       "lines": [
-        271,
-        274
+        273,
+        276
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        275,
-        278
+        277,
+        280
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        279,
-        331
+        281,
+        333
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        332,
-        342
+        334,
+        344
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        343,
-        346
+        345,
+        348
       ],
       "op": "render",
       "source": "writeScope"

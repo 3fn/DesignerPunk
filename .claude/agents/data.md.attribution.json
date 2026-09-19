@@ -20,23 +20,23 @@
     {
       "lines": [
         33,
-        304
+        306
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#body"
     },
     {
       "lines": [
-        305,
-        306
+        307,
+        308
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        307,
-        428
+        309,
+        430
       ],
       "mode": "embed",
       "op": "resolve",
@@ -44,8 +44,8 @@
     },
     {
       "lines": [
-        429,
-        481
+        431,
+        483
       ],
       "mode": "embed",
       "op": "resolve",
@@ -53,56 +53,56 @@
     },
     {
       "lines": [
-        482,
-        487
+        484,
+        489
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        488,
-        491
+        490,
+        493
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        492,
-        516
+        494,
+        518
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        517,
-        529
+        519,
+        531
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        530,
-        534
+        532,
+        536
       ],
       "op": "render",
       "source": "knowledgeBases"
     },
     {
       "lines": [
-        535,
-        538
+        537,
+        540
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        539,
-        544
+        541,
+        546
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"

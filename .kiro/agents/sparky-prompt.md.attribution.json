@@ -12,47 +12,47 @@
     {
       "lines": [
         3,
-        254
+        256
       ],
       "op": "passthrough",
       "source": "canonical/agents/sparky.md#body"
     },
     {
       "lines": [
-        255,
-        261
+        257,
+        263
       ],
       "op": "render",
       "source": "ambient.groundTruthManifest"
     },
     {
       "lines": [
-        262,
-        265
+        264,
+        267
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        266,
-        291
+        268,
+        293
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        292,
-        310
+        294,
+        312
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        311,
-        314
+        313,
+        316
       ],
       "op": "render",
       "source": "writeScope"
