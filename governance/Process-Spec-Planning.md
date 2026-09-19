@@ -9,7 +9,7 @@ description: Standards for creating spec documents — requirements format (EARS
 
 **Date**: 2025-01-10
 **Updated**: October 20, 2025
-**Last Reviewed**: 2026-07-05
+**Last Reviewed**: 2026-09-19
 **Purpose**: Standards for creating requirements, design, and task documents for feature specifications
 **Organization**: process-standard
 **Scope**: cross-project
@@ -441,6 +441,103 @@ During spec formalization (design-outline → requirements.md), Thurgood will id
 - Every platform implementation subtask in a component spec must include `_Contracts:` lines listing the contracts that subtask satisfies
 - Format: `_Contracts: interaction_focusable, interaction_pressable, state_loading_`
 - This maps implementation work to behavioral guarantees, enabling review and audit
+
+### `tasks.md` Structural Conventions
+
+Four predicates key on `tasks.md` structure — CLOSEOUT, MIDPOINT, the `completion-criteria-parity` checker, and the materiality extractor. **They key on structure, never on phrasing**, because a title-keyed predicate fails on the spec that most needs it: of the three specs that declared merge units before this convention, only two used a heading, and the third — the corpus's largest multi-unit spec — declared its eleven units in a bold-prose paragraph with no heading at all.
+
+These conventions are **forward-binding**. No dormant spec is reopened to adopt them.
+
+#### The criteria-mode declaration
+
+Every `tasks.md` **authored or materially amended after ratification** SHALL declare its mode as a bolded header-block line before the first task, in house metadata style:
+
+```markdown
+**Criteria mode**: per-parent
+```
+```markdown
+**Criteria mode**: spec-level
+```
+
+**No third state exists.** A post-ratification `tasks.md` that omits the declaration is **NON-COMPLIANT** — it is never legacy.
+
+**Legacy status is keyed on AUTHORSHIP DATE, never on the declaration's absence.** Legacy is a closed set that only shrinks: adding the declaration is how an in-flight spec opts in, and no dormant spec is reopened to add one. `spec-level` specs are skipped by the checker and owe one discharge at closeout.
+
+#### The criteria block
+
+The frozen form is a label line reading exactly `**Success Criteria:**` — colon **inside** the bold, any leading indentation — followed by a **flat** bullet list. **One bullet = one criterion = one table row**; no nested sub-bullets. Wrapped and continuation lines fold under the normalization rules.
+
+**Association**: a criteria block associates to the **nearest preceding checkbox line at any indent**; only blocks whose associated line is a **top-level parent** own parent criteria. Two blocks on one parent, or a block preceding every checkbox, is a loud malformation.
+
+**The declared-none state**: a parent MAY declare
+
+```markdown
+**Success Criteria:** none — <one-line reason>
+```
+
+The reason is mandatory. A block carrying `none` **and** criteria bullets is a loud malformation. Declared-none waives **the criteria table only** — the completion doc's Additional verification duties remain owed where applicable, and claims passes count declared-none rates.
+
+#### Spanning claims — the structural limb, as law
+
+**A promise that spans multiple platforms SHALL be authored as per-platform criterion bullets.** This is a rule about **grain, not content**: three bullets where three platforms apply, one bullet where one does.
+
+Exact-set reproduction then delivers per-platform status automatically — no tag grammar, no sub-row grammar, no per-platform checker logic — and **a single ✅ structurally cannot hide a broken platform.** Decomposed rows group **by criterion** (the platform triple adjacent), which is costless because the match predicate is multiset equality.
+
+**The fallback, named and amendment-gated**: a genuinely non-decomposable claim admits the explicit tag form `(platforms: …)` **by recorded amendment only** — never as an author's convenience. **Counting note**: every `(platforms: …)` invocation is counted by the claims pass, so the fallback's real usage rate is visible rather than assumed. No real instance existed anywhere in the corpus when this convention was written.
+
+#### The Declared Merge Units block — the canonical form
+
+A spec that declares merge units SHALL declare them under this heading, as this table:
+
+```markdown
+## Declared Merge Units
+
+| Unit | Parents | Gating parent | Midpoint carrier (specs ≥ 3 units) |
+|---|---|---|---|
+| **U1 — <name>** | Task 1 | Task 1 | — |
+| **U2 — <name>** | Tasks 2–3 | Task 3 | **U2 (this unit's merge carries the midpoint claims pass)** |
+| **U3 — <name>** | Task 4 | Task 4 | — |
+```
+
+**FOR specs declaring ≥ 3 merge units, the block SHALL name the midpoint-carrier unit** — fixed at the tasks round, **never judged at merge time**.
+
+**The MIDPOINT record's path is `completion/claims-pass-midpoint.md` — never `completion/claims-pass.md`.** The closeout owed-set predicate keys on `completion/claims-pass.md` *exactly*, so a midpoint record written at that path would silently discharge the spec's closeout obligation. The distinct filename resolves the collision without touching the ruled predicate.
+
+#### "Materially amended" — the canonical-form comparison
+
+Ruling 4 binds files *authored **or materially amended** post-ratification*. The definition is mechanical:
+
+**A commit materially amends a `tasks.md` IFF the file's normalized promise surface differs before and after.**
+
+The **promise surface** is extracted with a deliberately **GENEROUS** pattern set, which never inherits the checker's frozen grammar. The set is **closed** and enumerated here:
+
+| # | Class | Pattern |
+|---|---|---|
+| 1 | every top-level checkbox line, any parent form | `^- \[[xX ]\] ` (checkbox state masked to one token) |
+| 2 | criteria label — frozen | `**Success Criteria:**` |
+| 3 | criteria label — colon-outside | `**Success Criteria**:` |
+| 4 | criteria label — heading | `^#{2,4} .*Success Criteria` |
+| 5 | primary-artifact blocks | `**Primary Artifacts:**` with their bullet bodies |
+| 6 | gate clauses | `merge gate`, case-insensitive, with their bullet bodies |
+| 7 | units block — canonical | `^## Declared Merge Units` (one base string; trailing parentheticals vary) |
+| 8 | units block — legacy bold-prose | `^**Merge units (` |
+
+Extracted segments concatenate in document order and are compared after the same four normalization rules the criteria cells use, plus the checkbox mask: **one normalization concept, plus one named mask.** **No exclusion list exists or is needed** — ticks, dates, annotations outside the surface and reformatting are immaterial automatically. **Strike-through supersession of a parent IS material**: it removes a promise.
+
+**The generous direction's rationale is normative and travels with the definition**: a false-material costs one declaration line; a false-immaterial reopens the exit door this rule exists to shut. Over-inclusion is the safe direction, and it is only safe while the set stays **closed and enumerated**.
+
+**Material amendment is a SECOND opt-in path**: it exits legacy, never adds to it, and **the amending commit SHALL add the criteria-mode declaration in the same change**. Parents completed before the amendment stay as written; parents completing after are bound.
+
+**The computing instrument, named with the same honesty as everything else here**: the parity checker evaluates materiality on any PR touching a legacy `tasks.md` — **once it is armed.** Until arming, **the claims pass owns materiality as judgment.** Until "materially amended" has bitten mechanically even once, *adding the declaration* is the unambiguous opt-in path and should be preferred.
+
+#### Authoring guidance — flag discipline
+
+Two standards learnings, recorded because they were each paid for twice:
+
+- **A transcriber's confidence is an INVERSE signal.** Flag discipline pointed only at material you know you are relaying will systematically miss the material you believe you already know.
+- **Compilation of one's own record is a named flag surface.** The highest-magnitude compression found in the 2026-09-17 settle record landed in the one section its drafter was compiling from documents he had co-signed — under a standard he had himself set, and did not apply to himself. The self-audit could not catch it because the self-audit was not pointed there. A second live instance (a misattribution caught at the same spec's R2 round) confirmed the pattern rather than the exception.
+
+The practical instruction: **when compiling your own prior work into a normative document, treat it as a transcription surface and flag it as one.**
 
 ### Task Format Examples
 
@@ -1815,11 +1912,16 @@ The TokenSelector integrates with:
 
 **Additional Sections (Beyond Architecture Tier 3)**:
 
-1. **Success Criteria Verification**
-   - Each success criterion listed separately
-   - Evidence provided for each criterion
-   - Specific examples or test results
-   - Confirmation that overall goals are met
+1. **Success Criteria Verification** — **the table form is the required shape**
+   - **Required**: a three-column table reproducing **every** `tasks.md` success criterion for this parent, verbatim and in full — `Criterion (verbatim) | Status | Evidence` — none dropped, none reworded, none added
+   - **Required**: a Status mark on every row, from the closed vocabulary **✅ verified met · ⚠️ verified unmet or partial (MUST link a tracking issue or follow-up task) · ❌ verified absent**. Each mark reflects a check performed **against shipped source, never against intent or effort**
+   - **Required**: an Evidence cell on every row, of one of four kinds — an artifact path · a test name · a command + its result · a locatable decision record or approval citation. **A ✅ with an empty or prose-only Evidence cell is non-compliant on its face**
+   - **Required**: immediately after the table, the forced-negative line `Unmet or partially met criteria: None` — or a list, each item with a follow-up link. **Silence does not satisfy it**
+   - **Required if applicable**: an **Additional verification** section when the parent declares `**Primary Artifacts:**` or `**Merge gate:**` — gate conditions as criterion-style rows under the same predicate, the artifact forced-negative line, and any deferral in the fixed form `Artifact deferred: <path> → <unit>`
+   - **Optional**: prose elaboration per criterion (the Evidence / Verification / Example block below). It **supplements** the table and never replaces it
+   - Full rule, including the normalization rules, the mutation classes and the in-flight exemption: **Completion Documentation Guide § "Parent Success-Criteria Fidelity"**
+
+   *Recorded rationale, travelling with this edit:* the prior form of this item asked for *"confirmation that overall goals are met"* and supplied no failure vocabulary anywhere outside the Blocked Task format. Measured consequence: **0 of 22** in-scope parent completion docs added since 2026-07-01 carried any ⚠️/❌/forced-negative content. That is a **template defect, not an adoption failure** — the template gave authors nowhere to write "unmet". The failure vocabulary is now part of the required structure.
 
 2. **Overall Integration Story**
    - How all subtasks fit together
@@ -1837,20 +1939,35 @@ The TokenSelector integrates with:
 ```markdown
 ## Success Criteria Verification
 
-### Criterion 1: [Success criterion text]
+| Criterion (verbatim) | Status | Evidence |
+|---|---|---|
+| [criterion 1, copied verbatim from tasks.md — never retyped] | ✅ | [artifact path / test name / command + result / locatable decision record] |
+| [criterion 2, copied verbatim from tasks.md] | ⚠️ | [what was verified] — follow-up: [link to a tracking issue or task] |
+| [criterion 3 — web] | ✅ | [evidence] |
+| [criterion 3 — iOS] | ✅ | [evidence] |
+| [criterion 3 — Android] | ⚠️ | [evidence] — `not re-verified — toolchain unavailable`; follow-up: [link] |
 
-**Evidence**: [Specific evidence that this criterion is met]
+Unmet or partially met criteria: None
+<!-- or: a list, each item carrying a follow-up link. Silence does not satisfy this line. -->
 
-**Verification**: 
-- [Specific test or check 1]
-- [Specific test or check 2]
-- [Specific test or check 3]
+### Additional verification
+<!-- Required if the parent declares **Primary Artifacts:** or **Merge gate:**; omit otherwise. -->
 
-**Example**: [Concrete example demonstrating this criterion is met]
+| Condition (verbatim) | Status | Evidence |
+|---|---|---|
+| [merge-gate condition, copied verbatim from tasks.md] | ✅ | [evidence] |
 
-### Criterion 2: [Success criterion text]
+Primary Artifacts: all shipped as declared
+<!-- or: each deviation listed with its link -->
 
-[Same structure as Criterion 1]
+Artifact deferred: <path> → <unit>
+<!-- one line per deliberately deferred artifact; free prose here is non-compliant -->
+
+### [Optional] Criterion elaboration
+
+<!-- Prose per criterion MAY follow the table. It supplements the table; it never replaces it. -->
+
+**[Criterion text]** — **Evidence**: [detail] · **Verification**: [checks run] · **Example**: [concrete demonstration]
 
 ## Overall Integration Story
 
@@ -2010,50 +2127,25 @@ This bottom-up approach ensured each component was solid before building the coo
 
 ## Success Criteria Verification
 
-### Criterion 1: Build system foundation established
+| Criterion (verbatim) | Status | Evidence |
+|---|---|---|
+| `npm run build` regenerates all three platform outputs with zero drift | ✅ | `npm run build && npm run check:drift` → `drift: none (3 platforms)` |
+| The generator rejects a token whose family hue is absent from the registry | ⚠️ | `TokenFileGenerator.test.ts › rejects unregistered family hue` passes; the CLI surface still exits 0 (`npx designerpunk generate --token bad.hue` → exit 0). Follow-up: `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` |
+| Generated CSS values match the registry (`token-index/primitives.yaml`) | ✅ | `TokenIndexParity.test.ts › css` → 217/217 match |
+| Generated Swift values match the registry (`token-index/primitives.yaml`) | ✅ | `TokenIndexParity.test.ts › swift` → 217/217 match |
+| Generated Kotlin values match the registry (`token-index/primitives.yaml`) | ⚠️ | `TokenIndexParity.test.ts › kotlin` → 217/217 match; `not re-verified — toolchain unavailable` (no Kotlin compile runs in this environment). Follow-up: `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` |
 
-**Evidence**: BuildOrchestrator successfully coordinates token selection, platform-specific generation, and file writing in a single orchestrate() call.
+Unmet or partially met criteria: "The generator rejects a token whose family hue is absent from the registry" (`.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md`); "Generated Kotlin values match the registry (`token-index/primitives.yaml`)" (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`)
 
-**Verification**:
-- Created complete directory structure for build system
-- Implemented TokenSelector with priority logic
-- Implemented BuildOrchestrator with coordination logic
-- All components integrate correctly
+### Additional verification
 
-**Example**: 
-```typescript
-const orchestrator = new BuildOrchestrator(
-  primitiveRegistry,
-  semanticRegistry,
-  platformGenerators
-);
-const result = orchestrator.orchestrate('web');
-// Successfully generates web platform files
-```
+| Condition (verbatim) | Status | Evidence |
+|---|---|---|
+| `npm test` green with the three parity suites in the functional lane | ✅ | `npm test` → 371 suites / 9042 tests / 0 failures |
 
-### Criterion 2: Platform-specific generation working
+Primary Artifacts: all shipped as declared, except as deferred below
 
-**Evidence**: Build system can generate files for web, iOS, and Android platforms with correct platform-specific formatting.
-
-**Verification**:
-- Platform generator interface defined
-- Structure in place for platform-specific generators
-- Orchestrator delegates to appropriate generator based on platform
-- Generated files follow platform conventions
-
-**Example**: Web generates CSS, iOS generates Swift, Android generates Kotlin - all from same token source.
-
-### Criterion 3: Error handling comprehensive
-
-**Evidence**: All error scenarios tested and handled with appropriate recovery strategies.
-
-**Verification**:
-- Token not found errors provide clear messages
-- File write failures trigger rollback
-- Invalid platform specifications caught early
-- All error paths tested
-
-**Example**: When a token reference is invalid, error message indicates which registries were checked and suggests valid alternatives.
+Artifact deferred: docs/token-generation-guide.md → U3 (the documentation unit)
 
 ## Overall Integration Story
 
@@ -2161,6 +2253,8 @@ Developers can now:
 - `orchestrate(platform: string): BuildResult` - Main build coordination method
 - `rollback(): void` - Error recovery method
 ```
+
+**Domain neutrality**: the shape above applies equally to a component's cross-platform parity parent and a product screen's — the example is generic system content, deliberately. Product-tier specifics (the committed Implementation Report, claim-grain citation) live in `governance/Product-Handoff-Protocol.md` § "Tier 2: Implementation Reports", which is their home.
 
 ---
 

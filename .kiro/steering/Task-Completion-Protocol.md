@@ -43,7 +43,7 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
 ### For PARENT TASKS (Implementation or Architecture type)
 1. [ ] Local validation: the unit PR's required checks run the full suite at the gate — validating locally first catches failures before they block the merge (test-command selection: Start Up Tasks)
 2. [ ] Mark parent task complete (use the `taskStatus` tool) — the status change commits with the work and takes effect at merge; a failing suite blocks that merge at the gate
-3. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md` (on the task branch)
+3. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md` (on the task branch) — reproduce every tasks.md success-criterion row verbatim with Status + Evidence, and carry the forced-negative line (Completion Documentation Guide § 'Parent Success-Criteria Fidelity').
 4. [ ] Create summary doc: `docs/specs/[spec]/task-N-summary.md` (on the task branch)
 5. [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."`.
    - **If this parent IS its own merge unit** (a standalone task, or a small single-unit spec): the tooling opens the PR and reports the URL.
@@ -53,7 +53,7 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
 ### For PARENT TASKS (Setup or Documentation type)
 1. [ ] Verify artifacts created/updated as specified
 2. [ ] Mark parent task complete (use the `taskStatus` tool)
-3. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md` (on the task branch)
+3. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md` (on the task branch) — reproduce every tasks.md success-criterion row verbatim with Status + Evidence, and carry the forced-negative line (Completion Documentation Guide § 'Parent Success-Criteria Fidelity').
 4. [ ] Create summary doc: `docs/specs/[spec]/task-N-summary.md` (on the task branch)
 5. [ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh "..."`.
    - **If this parent IS its own merge unit**: the tooling opens the PR and reports the URL.
