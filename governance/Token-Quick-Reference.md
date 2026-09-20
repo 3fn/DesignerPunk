@@ -28,23 +28,26 @@ This document serves as a routing table for token documentation—it helps AI ag
 
 ## Token Documentation Map
 
-| Token Type | Purpose | MCP Document Path |
-|------------|---------|-------------------|
-| Color | Semantic color tokens organized by concept (feedback, identity, action, contrast, structure) | `.kiro/steering/Token-Family-Color.md` |
-| Spacing | Layout spacing values based on 8px baseline grid (stack, inline, inset patterns) | `.kiro/steering/Token-Family-Spacing.md` |
-| Sizing | Component dimensions (width, height, box size) based on 8px grid — separate from spacing | `.kiro/steering/Token-Family-Sizing.md` |
-| Typography | Font styles and sizes combining fontSize, lineHeight, fontFamily, fontWeight, letterSpacing | `.kiro/steering/Token-Family-Typography.md` |
-| Shadow | Elevation shadows for depth and hierarchy (sm, md, lg, xl levels) | `.kiro/steering/Token-Family-Shadow.md` |
-| Glow | Glow effects for emphasis and interactive states | `.kiro/steering/Token-Family-Glow.md` |
-| Blend | Color blending and overlay effects | `.kiro/steering/Token-Family-Blend.md` |
-| Layering | Z-index layers for stacking context (base, dropdown, modal, toast, tooltip) | `.kiro/steering/Token-Family-Layering.md` |
-| Motion | Animation timing and easing (duration, easing curves, transitions) | `.kiro/steering/Token-Family-Motion.md` |
-| Radius | Corner rounding values (none, sm, md, lg, xl, full) | `.kiro/steering/Token-Family-Radius.md` |
-| Border | Border width values (none, thin, medium, thick) for form elements, cards, dividers | `.kiro/steering/Token-Family-Border.md` |
-| Opacity | Transparency values for overlays, hover effects | `.kiro/steering/Token-Family-Opacity.md` |
-| Accessibility | Focus indicators, tap area sizing (WCAG compliance), icon tokens | `.kiro/steering/Token-Family-Accessibility.md` |
-| Responsive | Breakpoints (xs-xxl) and density scaling (compact, normal, comfortable) | `.kiro/steering/Token-Family-Responsive.md` |
-| Semantic Structure | Token architecture patterns and primitive→semantic hierarchy | `.kiro/steering/Token-Semantic-Structure.md` |
+Query these with the docs MCP by `id` (e.g. `get_document_summary({ path: "token-family-color" })`). The source files live in `governance/`.
+
+| Token Type | Purpose | MCP Document ID |
+|------------|---------|-----------------|
+| Color | Semantic color tokens organized by concept (feedback, identity, action, contrast, structure, progress) | `token-family-color` |
+| Spacing | Layout spacing values based on 8-unit baseline grid (grouped, related, separated, sectioned, inset patterns) | `token-family-spacing` |
+| Sizing | Component dimensions (width, height, box size) based on the 8-unit grid — separate from spacing | `token-family-sizing` |
+| Typography | Font styles and sizes combining fontSize, lineHeight, fontFamily, fontWeight, letterSpacing | `token-family-typography` |
+| Shadow | Elevation shadows for depth and hierarchy (container, navigation, dropdown, modal, toast, tooltip) | `token-family-shadow` |
+| Glow | Glow effects for emphasis and interactive states | `token-family-glow` |
+| Blend | Color blending and overlay effects | `token-family-blend` |
+| Blur | Blur radius primitives used by shadow composition and surface effects | `token-family-blur` |
+| Layering | Z-index layers for stacking context (container, navigation, dropdown, modal, toast, tooltip) | `token-family-layering` |
+| Motion | Animation timing and easing (duration, easing curves, transitions) | `token-family-motion` |
+| Radius | Corner rounding values (none, subtle, small, normal, large, full, circle) | `token-family-radius` |
+| Border | Border width values (none, default, emphasis, heavy) for form elements, cards, dividers | `token-family-border` |
+| Opacity | Transparency values for overlays, hover effects | `token-family-opacity` |
+| Accessibility | Focus indicators, tap area sizing (WCAG compliance), icon tokens | `token-family-accessibility` |
+| Responsive | Breakpoints (xs, sm, md, lg) and density scaling (compact, default, comfortable, spacious) | `token-family-responsive` |
+| Semantic Structure | Token architecture patterns and primitive→semantic hierarchy | `token-semantic-structure` |
 
 ---
 
@@ -66,25 +69,25 @@ Semantic color tokens support light/dark mode through a two-level resolution sys
 
 ### Level 1 Example (Falls Back to Base — Same Value in Both Modes)
 
-`color.feedback.error.text` references `pink400`. It has no active dark override; the entry sits commented out in the dark theme file (`src/tokens/themes/dark/SemanticOverrides.ts:27`):
+`color.feedback.error.text` references `pink400` (`src/tokens/semantic/ColorTokens.ts`). It has no active dark override; the entry sits commented out in the dark theme file (`src/tokens/themes/dark/SemanticOverrides.ts` — search the token name):
 ```typescript
 // color.feedback.error.text: { value: 'pink400' }
 ```
-`pink400` resolves to one OKLCH value used in both modes — `l` 0.55 (`channels/lightness/chromatic.ts`), `c` 0.203 (`channels/chroma/chromatic.ts`), `h` 10 (`channels/hues.ts`). The emitted CSS carries a single value with no `light-dark()` wrapper (`dist/DesignTokens.web.css:527`):
+`pink400` resolves to one OKLCH value used in both modes — `l` 0.55 (`src/tokens/color/channels/lightness/chromatic.ts`), `c` 0.203 (`src/tokens/color/channels/chroma/chromatic.ts`), `h` 10 (`src/tokens/color/channels/hues.ts`). The emitted CSS carries a single value with no `light-dark()` wrapper — regenerate with `npm run generate:platform-tokens` and grep `--color-feedback-error-text` in `dist/DesignTokens.web.css` (`dist/` is generated, not committed):
 ```css
 --color-feedback-error-text: oklch(0.55 0.203 10);
 ```
 
 ### Level 2 Example (Semantic Override)
 
-`color.structure.canvas` references `white100` in light mode, but dark mode needs `gray400` (a different primitive). The dark theme overrides the reference (`src/tokens/themes/dark/SemanticOverrides.ts:163`):
+`color.structure.canvas` references `white100` in light mode, but dark mode needs `gray400` (a different primitive). The dark theme overrides the reference — an active entry in `darkSemanticOverrides` (`src/tokens/themes/dark/SemanticOverrides.ts` — search the token name):
 ```typescript
 // Dark theme SemanticOverrides
 export const darkSemanticOverrides: SemanticOverrideMap = {
   'color.structure.canvas': { primitiveReferences: { value: 'gray400' } },
 };
 ```
-Because the modes now resolve to different values, the generator emits a mode-aware value (`dist/DesignTokens.web.css:559`):
+Because the modes now resolve to different values, the generator emits a mode-aware value — regenerate with `npm run generate:platform-tokens` and grep `--color-structure-canvas` in `dist/DesignTokens.web.css`:
 ```css
 --color-structure-canvas: light-dark(oklch(1 0 260), oklch(0.42 0.018 260));
 ```
@@ -95,7 +98,7 @@ Because the modes now resolve to different values, the generator emits a mode-aw
 |------|------|------|
 | Make a semantic token differ by mode | The theme's `SemanticOverrides.ts` (Level 2) | The only mechanism that produces mode variance |
 | Change a primitive's color value | `src/tokens/color/channels/**` (lightness / chroma / hue) | Changes the primitive in **both** modes and every theme; composed into named primitives in `src/tokens/color/primitives/**` |
-| — | ~~`src/tokens/ColorTokens.ts`~~ | **Deprecated (Spec 115).** `SemanticValueResolver.resolveColorPrimitive()` consults `composedColorMap` first, so for all 50 OKLCH primitives the legacy `light`/`dark`/`wcag` slots are never read on the CSS/Swift/Kotlin path. Only the four shadow primitives (`shadowBlack100`, `shadowBlue100`, `shadowOrange100`, `shadowGray100`) still fall through to it. It *is* still the sole source for DTCG/Figma primitive export — see `.kiro/issues/2026-08-25-dual-color-source-divergence.md`. |
+| — | ~~`src/tokens/ColorTokens.ts`~~ | **Deprecated (Spec 115).** `SemanticValueResolver.resolveColorPrimitive()` consults `composedColorMap` first, so for all 50 OKLCH primitives the legacy `light`/`dark`/`wcag` slots are never read on the CSS/Swift/Kotlin path. Only the four shadow primitives (`shadowBlack100`, `shadowBlue100`, `shadowOrange100`, `shadowGray100`) still fall through to it — on **every** path, DTCG/Figma export included. The DTCG/Figma primitive export was repointed at the OKLCH source on 2026-09-12 (`DTCGFormatGenerator.resolveColorValue()` now checks `composedColorMap` first and emits sRGB hex), so it is no longer a second color source. Guarded by `src/generators/__tests__/DTCGColorOklchParity.test.ts`. Full deletion of the legacy file is Spec 115 Phase B. |
 
 ### Context Resolution
 
@@ -225,76 +228,77 @@ Component tokens follow the pattern `color.{component}.{variant}.{property}`:
 
 ## Common Patterns
 
-These are frequently used token combinations for common UI scenarios:
+These are frequently used token combinations for common UI scenarios. Doc references are MCP document IDs.
 
 ### Button Component
-- **Typography**: `Token-Family-Typography.md` → label sizes (labelSm, labelMd, labelLg)
-- **Spacing**: `Token-Family-Spacing.md` → inset patterns for padding
-- **Color**: `Token-Family-Color.md` → `color.action.primary`, `color.action.secondary`, `color.contrast.onAction`
-- **Radius**: `Token-Family-Radius.md` → button radius (typically md)
-- **Border**: `Token-Family-Border.md` → button borders (thin for outlined variants)
+- **Typography**: `token-family-typography` → label styles (`typography.labelSm`, `typography.labelMd`, `typography.labelLg`) or button styles (`typography.buttonSm|buttonMd|buttonLg`)
+- **Spacing**: `token-family-spacing` → inset patterns for padding (`space.inset.150`, `space.inset.200`)
+- **Color**: `token-family-color` → `color.action.primary`, `color.action.secondary`, `color.contrast.onAction`
+- **Radius**: `token-family-radius` → `radiusSmall` / `radiusNormal`
+- **Border**: `token-family-border` → `borderDefault` for outlined variants
 
 ### Card Component
-- **Shadow**: `Token-Family-Shadow.md` → elevation (sm, md for cards)
-- **Radius**: `Token-Family-Radius.md` → card radius (lg)
-- **Spacing**: `Token-Family-Spacing.md` → inset and stack patterns
-- **Border**: `Token-Family-Border.md` → card borders (thin)
-- **Color**: `Token-Family-Color.md` → `color.structure.surface`, `color.structure.border`
+- **Shadow**: `token-family-shadow` → `shadow.container` (resting), `shadow.hover`
+- **Radius**: `token-family-radius` → `radiusNormal` / `radiusLarge`
+- **Spacing**: `token-family-spacing` → inset patterns for padding, `space.related.*` / `space.separated.*` for stacking
+- **Border**: `token-family-border` → `borderDefault`
+- **Color**: `token-family-color` → `color.structure.surface`, `color.structure.border`
 
 ### Form Input
-- **Typography**: `Token-Family-Typography.md` → body sizes for input text
-- **Border**: `Token-Family-Border.md` → input borders (thin, medium for focus)
-- **Radius**: `Token-Family-Radius.md` → input radius (sm, md)
-- **Spacing**: `Token-Family-Spacing.md` → inset for padding
-- **Color**: `Token-Family-Color.md` → `color.feedback.error.text`, `color.feedback.success.text` for validation
-- **Accessibility**: `Token-Family-Accessibility.md` → focus indicators, tap areas
+- **Typography**: `token-family-typography` → `typography.input` for input text, `typography.labelMd` / `typography.labelMdFloat` for labels
+- **Border**: `token-family-border` → `borderDefault` at rest, `borderEmphasis` for focus
+- **Radius**: `token-family-radius` → `radiusSmall` / `radiusNormal`
+- **Spacing**: `token-family-spacing` → inset for padding
+- **Color**: `token-family-color` → `color.feedback.error.text`, `color.feedback.success.text` for validation
+- **Accessibility**: `token-family-accessibility` → focus indicators, tap areas
 
 ### Alert/Notification
-- **Color**: `Token-Family-Color.md` → Feedback concept tokens:
+- **Color**: `token-family-color` → Feedback concept tokens:
   - Success: `color.feedback.success.{text|background|border}`
   - Error: `color.feedback.error.{text|background|border}`
   - Warning: `color.feedback.warning.{text|background|border}`
   - Info: `color.feedback.info.{text|background|border}`
-- **Radius**: `Token-Family-Radius.md` → alert radius (md)
-- **Spacing**: `Token-Family-Spacing.md` → inset patterns
+- **Radius**: `token-family-radius` → `radiusNormal`
+- **Spacing**: `token-family-spacing` → inset patterns
 
 ### Avatar Component
-- **Color**: `Token-Family-Color.md` → Identity and Contrast concepts:
+- **Color**: `token-family-color` → Identity and Contrast concepts:
   - Human: `color.avatar.human.background`, `color.avatar.human.icon`
   - Agent: `color.avatar.agent.background`, `color.avatar.agent.icon`
   - Border: `color.avatar.default.border`
-- **Radius**: `Token-Family-Radius.md` → full (circular)
+- **Radius**: `token-family-radius` → `radiusCircle` (50% — circle from a square); `radiusFull` is the pill/capsule case
 
 ### Progress Indicator (Pagination/Stepper)
-- **Color**: `Token-Family-Color.md` → Progress concept tokens:
+- **Color**: `token-family-color` → Progress concept tokens:
   - Current: `color.progress.current.{background|text}`
   - Pending: `color.progress.pending.{background|text|connector}`
   - Completed: `color.progress.completed.{background|text|connector}`
   - Error: `color.progress.error.{background|text}`
-- **Spacing**: `Token-Family-Spacing.md` → Progress component tokens:
-  - Node sizes: `progress.node.size.{sm|md|lg}` (base), `progress.node.size.{sm|md|lg}.current` (emphasized)
-  - Gaps: `progress.node.gap.{sm|md|lg}`
-  - Connector: `progress.connector.thickness`
-- **Accessibility**: `Token-Family-Accessibility.md` → tap areas for interactive nodes
+- **Sizing**: `token-family-sizing` → Progress component node dimensions:
+  - Node sizes: `progress.node.size.{sm|md|lg}` (base), `progress.node.size.{sm|md|lg}.current` (emphasized, +4 over base)
+  - Connector: `progress.connector.thickness` (references `borderDefault`)
+- **Spacing**: `token-family-spacing` → `progress.node.gap.{sm|md|lg}`
+- **Accessibility**: `token-family-accessibility` → tap areas for interactive nodes
 
 ### Modal/Dialog
-- **Shadow**: `Token-Family-Shadow.md` → elevation (xl for modals)
-- **Layering**: `Token-Family-Layering.md` → modal z-index layer
-- **Opacity**: `Token-Family-Opacity.md` → backdrop overlay
-- **Radius**: `Token-Family-Radius.md` → modal radius (lg, xl)
-- **Motion**: `Token-Family-Motion.md` → enter/exit animations
-- **Color**: `Token-Family-Color.md` → `color.structure.surface` for modal background
+- **Shadow**: `token-family-shadow` → `shadow.modal`
+- **Layering**: `token-family-layering` → `zIndex.modal`, `elevation.modal`
+- **Opacity**: `token-family-opacity` → `opacity.heavy` for backdrop scrim
+- **Radius**: `token-family-radius` → `radiusNormal` / `radiusLarge`
+- **Motion**: `token-family-motion` → `motion.modalSlide` for enter/exit
+- **Color**: `token-family-color` → `color.structure.surface` for modal background, `color.scrim.standard` for the scrim
 
 ### Interactive States
-- **Opacity**: `Token-Family-Opacity.md` → hover effects
-- **Color**: `Token-Family-Color.md` → `color.feedback.select.*` for selection states
-- **Motion**: `Token-Family-Motion.md` → transition timing
-- **Accessibility**: `Token-Family-Accessibility.md` → focus ring tokens
+- **Blend**: `token-family-blend` → `blend.hoverDarker` / `blend.hoverLighter`, `blend.pressedDarker` / `blend.pressedLighter`
+- **Opacity**: `token-family-opacity` → overlay transparency
+- **Color**: `token-family-color` → `color.feedback.select.*` for selection states
+- **Motion**: `token-family-motion` → `motion.focusTransition`, `motion.buttonPress`, `motion.selectionTransition`
+- **Accessibility**: `token-family-accessibility` → `accessibility.focus.{width|offset|color}`
 
 ### Responsive Layout
-- **Responsive**: `Token-Family-Responsive.md` → breakpoints for layout changes
-- **Spacing**: `Token-Family-Spacing.md` → responsive spacing adjustments
-- **Typography**: `Token-Family-Typography.md` → responsive font scaling
+- **Responsive**: `token-family-responsive` → breakpoints (`breakpointXs|Sm|Md|Lg`) for layout changes
+- **Spacing**: `token-family-spacing` → grid gutters and margins (`gridGutter*`, `gridMargin*`)
+- **Typography**: `token-family-typography` → font scale selection per breakpoint
 
 ## MCP Query Examples
 

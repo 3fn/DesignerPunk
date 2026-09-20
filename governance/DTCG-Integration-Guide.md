@@ -63,7 +63,7 @@ Semantic tokens reference primitives using DTCG alias syntax: `{group.tokenName}
 ```json
 {
   "color.feedback.success.text": {
-    "$value": "{color.green400}",
+    "$value": "{color.green500}",
     "$type": "color",
     "$description": "Green text color for success states"
   }
@@ -78,13 +78,15 @@ DTCG-aware tools resolve aliases automatically. If a tool doesn't support aliase
 
 The generated file contains these top-level groups:
 
+Listed in emission order (`src/generators/DTCGFormatGenerator.ts`):
+
 | Group | Type | Description |
 |-------|------|-------------|
-| `space` | dimension | Spacing scale (8px base, modular) |
-| `color` | color | Color primitives (gray, black, white, yellow, orange, purple, pink, green, cyan, teal) |
-| `fontSize` | dimension | Type scale |
-| `fontWeight` | fontWeight | Weight scale (300–700) |
-| `fontFamily` | fontFamily | Body, display, monospace families |
+| `space` | dimension | Spacing scale (base 8, linear multiples with strategic flexibility) |
+| `color` | color | 54 color primitives: gray, black, white, yellow, orange, purple, pink, green, cyan, teal (5 steps each = 50, composed from OKLCH) plus `shadowBlack100`, `shadowBlue100`, `shadowOrange100`, `shadowGray100` |
+| `fontSize` | dimension | Type scale (modular ratio 1.125, base 16) |
+| `fontWeight` | fontWeight | Weight scale (100–900) |
+| `fontFamily` | fontFamily | System, mono, display, body stacks |
 | `lineHeight` | number | Line height ratios |
 | `letterSpacing` | dimension | Letter spacing values |
 | `radius` | dimension | Border radius scale |
@@ -97,22 +99,24 @@ The generated file contains these top-level groups:
 | `easing` | cubicBezier | Animation curves |
 | `scale` | number | Scale multipliers |
 | `blend` | number | Blend operation values |
+| `blur` | dimension | Blur radius primitives |
+| `sizing` | dimension | Component dimension scale |
 | `semanticColor` | color | Semantic color aliases |
-| `semanticSpacing` | dimension | Semantic spacing aliases |
+| `semanticSpace` | dimension | Semantic spacing aliases |
 | `semanticBorderWidth` | dimension | Semantic border width aliases |
 | `semanticRadius` | dimension | Semantic radius aliases |
 | `semanticOpacity` | number | Semantic opacity aliases |
 | `semanticBlend` | number | Semantic blend aliases |
+| `gridSpacing` | dimension | Grid gutter and margin values |
+| `icon` | dimension | Icon size tokens |
+| `accessibility` | dimension | Accessibility tokens (focus width, offset, color) |
+| `progressColor` | color | Progress indicator colors |
 | `zIndex` | number | Z-index layering values |
 | `elevation` | number | Elevation levels |
 | `shadow` | shadow | Shadow compositions |
-| `glow` | number/dimension/color | Glow primitives (partial) |
+| `glow` | dimension / number | Glow primitives (partial) — `glow.blur.*` and `glow.opacity.*` subgroups only; composed glows are not yet implemented |
 | `typography` | typography | Typography compositions |
 | `motion` | transition | Motion compositions |
-| `gridSpacing` | dimension | Grid spacing values |
-| `icon` | dimension | Icon size tokens |
-| `accessibility` | dimension | Accessibility tokens |
-| `progressColor` | color | Progress indicator colors |
 
 ---
 
@@ -139,8 +143,13 @@ interface DesignerPunkExtensions {
   deprecatedSince?: string;
   status?: "partial";        // Indicates incomplete support (e.g., glow primitives only)
   primitiveRefs?: Record<string, string>;  // Maps composite properties to primitive token names
+  modifiers?: Array<{ type: string; reference: string }>;  // e.g. opacity applied to a color
+  modes?: Record<string, string>;          // Mode/theme-conditional resolved values
+  oklch?: { l: number; c: number; h: number };  // OKLCH source of record for composed color primitives
 }
 ```
+
+Canonical definition: `src/generators/types/DTCGTypes.ts` § `DesignerPunkExtensions`.
 
 ### Extension Examples
 
@@ -165,7 +174,7 @@ interface DesignerPunkExtensions {
 ```json
 {
   "container": {
-    "$value": { "offsetX": "0px", "offsetY": "4px", "blur": "12px", "spread": "0px", "color": "#0000004d" },
+    "$value": { "offsetX": "0px", "offsetY": "4px", "blur": "12px", "spread": "0px", "color": "rgba(0, 0, 0, 0.3)" },
     "$type": "shadow",
     "$extensions": {
       "designerpunk": {
@@ -173,7 +182,7 @@ interface DesignerPunkExtensions {
         "primitiveRefs": {
           "offsetX": "shadowOffsetX.000",
           "offsetY": "shadowOffsetY.100",
-          "blur": "shadowBlurModerate",
+          "blur": "blur075",
           "opacity": "shadowOpacityModerate",
           "color": "shadowBlack100"
         },
@@ -186,15 +195,18 @@ interface DesignerPunkExtensions {
 }
 ```
 
-**Partial support** (glow token):
+**Partial support** (glow token — emitted under the `glow.blur` subgroup):
 ```json
 {
-  "glowBlurSubtle": {
-    "$value": "4px",
+  "blur050": {
+    "$value": "8px",
     "$type": "dimension",
+    "$description": "Blur 050 - light blur",
     "$extensions": {
       "designerpunk": {
+        "formula": "base × 0.5 = 16 × 0.5 = 8",
         "family": "glow",
+        "baseValue": 16,
         "glowType": "emission",
         "status": "partial"
       }
@@ -212,36 +224,46 @@ interface DesignerPunkExtensions {
 ```json
 {
   "purple300": {
-    "$value": "#b026ff",
+    "$value": "#b322fb",
     "$type": "color",
     "$description": "Bright purple for primary brand color and focus states",
     "$extensions": {
       "designerpunk": {
-        "family": "color"
+        "formula": "Systematic purple scale progression - primary brand",
+        "family": "color",
+        "oklch": { "l": 0.6, "c": 0.286, "h": 310 }
       }
     }
   }
 }
 ```
 
-**Note**: DTCG color values are output as sRGB hex, converted from the OKLCH source values. This ensures compatibility with DTCG-consuming tools (Figma, Style Dictionary, Tokens Studio) that expect sRGB color format. The canonical OKLCH values are the source of truth in `src/tokens/color/`.
+**Note**: DTCG color values are output as sRGB hex, converted from the OKLCH source values. This ensures compatibility with DTCG-consuming tools (Figma, Style Dictionary, Tokens Studio) that expect sRGB color format. The canonical OKLCH values are the source of truth in `src/tokens/color/`, and are carried alongside the hex in `$extensions.designerpunk.oklch` for traceability.
+
+The four shadow-color primitives (`shadowBlack100`, `shadowBlue100`, `shadowOrange100`, `shadowGray100`) are the exception: they have no OKLCH composition and still resolve from the legacy `src/tokens/ColorTokens.ts` RGBA values, so they carry no `oklch` extension.
 
 ### Color (semantic alias)
 
 ```json
 {
   "color.feedback.success.text": {
-    "$value": "{color.green400}",
+    "$value": "{color.green500}",
     "$type": "color",
-    "$description": "Green text color for success states",
+    "$description": "Green text color for success states - form validation, confirmation messages, positive feedback...",
     "$extensions": {
       "designerpunk": {
-        "family": "color"
+        "family": "color",
+        "modes": {
+          "light": "oklch(0.54 0.14 154)",
+          "dark": "oklch(0.78 0.208 154)"
+        }
       }
     }
   }
 }
 ```
+
+The `modes` extension appears on semantic color tokens whose dark-theme override resolves to a different value than the base (Level 2). Here the dark theme remaps `color.feedback.success.text` to `green300` for WCAG AA contrast against the dark canvas (`src/tokens/themes/dark/SemanticOverrides.ts`).
 
 ### Dimension (spacing)
 
@@ -267,12 +289,14 @@ interface DesignerPunkExtensions {
 ```json
 {
   "fontFamilyBody": {
-    "$value": "Inter",
+    "$value": ["Figtree", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
     "$type": "fontFamily",
-    "$description": "Primary body font family"
+    "$description": "Body font stack for general text content"
   }
 }
 ```
+
+Font family values are emitted as a DTCG font-stack array, not a single string.
 
 ### Font Weight
 
@@ -281,7 +305,7 @@ interface DesignerPunkExtensions {
   "fontWeight400": {
     "$value": 400,
     "$type": "fontWeight",
-    "$description": "Normal/regular weight"
+    "$description": "Normal font weight - base unit"
   }
 }
 ```
@@ -293,7 +317,7 @@ interface DesignerPunkExtensions {
   "duration250": {
     "$value": "250ms",
     "$type": "duration",
-    "$description": "Standard animation duration"
+    "$description": "Standard transitions - 250ms duration for float labels, state changes, and most animations"
   }
 }
 ```
@@ -303,9 +327,9 @@ interface DesignerPunkExtensions {
 ```json
 {
   "easingStandard": {
-    "$value": [0.2, 0, 0, 1],
+    "$value": [0.4, 0, 0.2, 1],
     "$type": "cubicBezier",
-    "$description": "Standard easing curve for balanced animations"
+    "$description": "Standard easing - Balanced acceleration and deceleration for general transitions. Material Design standard curve."
   }
 }
 ```
@@ -317,7 +341,7 @@ interface DesignerPunkExtensions {
   "opacity100": {
     "$value": 1,
     "$type": "number",
-    "$description": "Full opacity"
+    "$description": "Fully opaque - no transparency"
   }
 }
 ```
@@ -332,17 +356,17 @@ interface DesignerPunkExtensions {
       "offsetY": "4px",
       "blur": "12px",
       "spread": "0px",
-      "color": "#0000004d"
+      "color": "rgba(0, 0, 0, 0.3)"
     },
     "$type": "shadow",
-    "$description": "Container shadow",
+    "$description": "Container shadow with no horizontal offset, 4px vertical offset, 12px blur, moderate opacity",
     "$extensions": {
       "designerpunk": {
         "family": "shadow",
         "primitiveRefs": {
           "offsetX": "shadowOffsetX.000",
           "offsetY": "shadowOffsetY.100",
-          "blur": "shadowBlurModerate",
+          "blur": "blur075",
           "opacity": "shadowOpacityModerate",
           "color": "shadowBlack100"
         },
@@ -515,8 +539,8 @@ If you're building DesignerPunk components, you should not consume `dist/DesignT
 
 ```typescript
 // ✅ CORRECT — Import from TypeScript sources
-import { space100, space200 } from '../tokens/primitive/SpacingTokens';
-import { colorPrimary } from '../tokens/semantic/ColorTokens';
+import { spacingTokens } from '../../../tokens/SpacingTokens';
+import { colorTokens } from '../../../tokens/semantic/ColorTokens';
 
 // ❌ WRONG — Don't parse the DTCG file in components
 import dtcg from '../../dist/DesignTokens.dtcg.json';
@@ -542,7 +566,10 @@ The generator accepts these configuration options:
 | `includeDeprecated` | `true` | Include deprecated tokens in output |
 | `prettyPrint` | `true` | Format JSON with 2-space indentation |
 | `schemaUrl` | `https://tr.designtokens.org/format/` | DTCG schema URL |
-| `resolveAliases` | `false` | Resolve alias references to final values |
+| `resolveAliases` | `false` | Resolve alias references to final values (breaks the primitive→semantic hierarchy) |
+| `registeredThemes` | `[]` | Registered themes (`{ name, mode }[]`) surfaced in `$extensions` metadata (Spec 094) |
+
+Canonical defaults: `src/generators/DTCGGeneratorConfig.ts` § `DEFAULT_DTCG_GENERATOR_CONFIG`.
 
 ### Generating Without Extensions
 

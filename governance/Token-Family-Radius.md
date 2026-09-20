@@ -49,7 +49,8 @@ All radius tokens derive from a base unit of **8px** (radius100):
 | `radius250` | 20px | 2.5 × base (radius100) | ❌ | Strategic flexibility for components |
 | `radius300` | 24px | 3 × base (radius100) | ✅ | Huge rounding, feature elements |
 | `radius400` | 32px | 4 × base (radius100) | ✅ | Maximum rounding |
-| `radiusMax` | 9999px | Special case (infinite) | ❌ | Perfect circles, pill shapes |
+| `radiusMax` | 9999px | Special case (effectively infinite) | ❌ | Pill shapes from rectangles |
+| `radiusHalf` | 50% | Special case (percentage) | ❌ | True circles from square elements |
 
 ### Baseline Grid Alignment
 
@@ -93,7 +94,8 @@ Semantic radius tokens provide contextual meaning for specific component pattern
 | `radiusSmall` | radius050 | 4px | Compact elements, chips, small buttons |
 | `radiusNormal` | radius100 | 8px | Standard elements, buttons, cards, modals |
 | `radiusLarge` | radius200 | 16px | Prominent elements, feature cards, hero sections |
-| `radiusFull` | radiusMax | 9999px | Pills, circular avatars, badges |
+| `radiusFull` | radiusMax | 9999px | Pills and capsules from rectangular elements |
+| `radiusCircle` | radiusHalf | 50% | True circles from square elements (Button-Icon, avatars, badges) |
 
 ### Semantic Token Details
 

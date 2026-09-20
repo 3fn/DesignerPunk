@@ -105,8 +105,8 @@ Neutral colors (white, gray, black) occupy **non-overlapping lightness bands**, 
 
 All neutral families share a single `neutralHue` token. The system default is **260°** (cool purple-blue). Products can override this to match their primary color hue, creating a subtle warm/cool relationship between brand identity and neutral surfaces.
 
-- Primary is pink (H≈8°) → neutrals have a warm tint
-- Primary is cyan (H≈204°) → neutrals have a cool tint
+- Primary is pink (H=10°) → neutrals have a warm tint
+- Primary is cyan (H=202.5°) → neutrals have a cool tint
 - Override to any value; set chroma to 0 for pure achromatic
 
 Neutral chroma follows a parabolic curve — higher in the gray mid-range (C≈0.020, where tint is visible on structural elements) and near-zero at the white/black extremes (where tint would be distracting).
@@ -117,15 +117,17 @@ Neutral chroma follows a parabolic curve — higher in the gray mid-range (C≈0
 
 Seven chromatic families, each with a single hue identity:
 
+Hue values are exact, from `src/tokens/color/channels/hues.ts`:
+
 | Family | Hue | Semantic Role | Gamut Note |
 |--------|-----|---------------|------------|
-| **Pink** | ~10° | Error, danger, passion | High chroma capacity |
-| **Orange** | ~42° | Warning, warmth, human identity | Good chroma capacity |
-| **Yellow** | ~109° | Attention, highlights, energy | Max chroma at high lightness |
-| **Green** | ~150° | Success, growth, confirmation | High chroma capacity |
-| **Cyan** | ~204° | Action, navigation, primary interactive | Limited chroma at dark lightness |
-| **Teal** | ~208° | Info, secondary, AI identity | Limited chroma capacity |
-| **Purple** | ~307° | Data, tech, code | Highest chroma capacity |
+| **Pink** | 10.0° | Error, danger, passion | High chroma capacity |
+| **Orange** | 39.5° | Warning, warmth, human identity | Good chroma capacity |
+| **Yellow** | 107.0° | Attention, highlights, energy | Max chroma at high lightness |
+| **Green** | 154.0° | Success, growth, confirmation | High chroma capacity |
+| **Cyan** | 202.5° | Action, navigation, primary interactive | Limited chroma at dark lightness |
+| **Teal** | 209.0° | Info, secondary, AI identity | Limited chroma capacity |
+| **Purple** | 310.0° | Data, tech, code | Highest chroma capacity |
 
 ### Gamut Capacity and Color Strategy
 
@@ -152,7 +154,7 @@ color.{concept}.{role}.{property?}.{state?}
 
 | Token | Primitive | Purpose |
 |-------|-----------|---------|
-| `color.feedback.success.text` | green400 | Success messages, validation |
+| `color.feedback.success.text` | green500 | Success messages, validation (green500 = 4.72:1 on the light canvas; dark theme overrides to green300) |
 | `color.feedback.success.background` | green100 | Success alert backgrounds |
 | `color.feedback.success.border` | green400 | Success borders |
 | `color.feedback.error.text` | pink400 | Error messages |
@@ -173,15 +175,16 @@ These follow the same concept-first pattern documented in semantic token source.
 
 ## Blend Model
 
-Interaction states (hover, pressed, focused, disabled) use **OKLCH-space interpolation**. Blend thresholds are defined as perceptual deltas from the rest state:
+Interaction states (hover, pressed, focused) use **OKLCH-space interpolation**. Blend thresholds are defined as perceptual deltas from the rest state:
 
 | State | ΔL | ΔC | Direction |
 |-------|----|----|-----------|
 | **Hover** | 0.02–0.05 | Preserve | Lighter on dark, darker on light |
 | **Pressed** | 0.05–0.10 | Preserve | Same as hover, further |
 | **Focused** | 0 | +0.02 min | Chroma boost (not lightness) |
-| **Disabled** | 0 | -0.03 min | Desaturate |
 | **Icon lighter** | 0.02–0.04 | Preserve | Lighter (optical balance) |
+
+> **No disabled blend (2026-07-15)**: DesignerPunk does not support disabled states — if an action is unavailable, do not render the component. The corresponding `blend.disabledDesaturate` token is **DEPRECATED** in source and scheduled for removal at the next major version. See Token-Family-Blend § "Anti-Patterns to Avoid".
 
 **Web**: Uses `color-mix(in oklch, ...)` for runtime blending.
 **Native**: Blend results pre-resolved at build time.
@@ -233,14 +236,14 @@ static let pink300 = Color.oklch(0.65, 0.242, 10.0)
 ### Android (colormath)
 
 ```kotlin
-val pink300 = Oklch(0.65f, 0.242f, 10.0f).toComposeColor()
+val pink_300 = Oklch(0.65f, 0.242f, 10f).toComposeColor()
 ```
 
 ### DTCG / Figma
 
 sRGB hex output (backward-compatible):
 ```json
-{ "pink-300": { "$value": "#ff2a6d", "$type": "color" } }
+{ "pink300": { "$value": "#fe286d", "$type": "color" } }
 ```
 
 ---
@@ -261,18 +264,22 @@ These calculations can inform color strategy but don't produce tokens. Document 
 
 ## Validator Constraints
 
-All color tokens are validated at authoring time:
+`src/color/OklchValidator.ts` defines these constraints:
 
 | Constraint | Rule | Applies To |
 |-----------|------|------------|
 | Lightness monotonicity | L[n] > L[n+1] for adjacent steps | All families |
-| Minimum step distance | |L[n] - L[n+1]| ≥ 0.08 | All families |
+| Minimum step distance | \|L[n] - L[n+1]\| ≥ 0.08 (`MIN_STEP_DISTANCE`) | Chromatic families |
 | Chroma monotonicity (300→500) | C[n] ≥ C[n+1] for steps 300→500 | Chromatic families |
 | sRGB gamut compliance | Resolved oklch(L,C,H) within sRGB | All tokens |
 | P3 gamut awareness | Resolved value exceeds sRGB | Warning (not error) |
 | Hue consistency | All tokens in family share one hue | All families |
-| Neutral chroma ceiling | C ≤ 0.035 | White, gray, black |
+| Neutral chroma ceiling | C ≤ 0.035 (`NEUTRAL_CHROMA_CEILING`) | White, gray, black |
 | Neutral partition gaps | White→gray ≥0.08, gray→black ≥0.04 | Neutral families |
+
+**Scope note.** The minimum-step-distance rule holds only for the chromatic families. The neutral scales are deliberately finer — white steps 0.05 apart, black steps 0.07 — so they satisfy monotonicity and the partition gaps, but not `MIN_STEP_DISTANCE`. Neutral spacing is governed by the partition-gap rules instead.
+
+**Enforcement note.** These constraints are defined and unit-tested, but `OklchValidator` is not currently wired into the generation pipeline — it is not run over the shipped families on build. Treat the table as the authoring contract, not as an automated gate.
 
 ---
 
@@ -288,7 +295,7 @@ WCAG contrast is validated by converting OKLCH → sRGB relative luminance → c
 
 ### Perceptual Tolerance (Product Tokens)
 
-When authoring product color tokens, the System-First Value Selection rule applies (see Product-Token-Governance.md). Color tolerance uses **CIEDE2000 ΔE₀₀** — not RGB channel comparison.
+When authoring product color tokens, the System-First Value Selection rule applies (see `product-token-governance`). Color tolerance uses **CIEDE2000 ΔE₀₀** — not RGB channel comparison.
 
 ---
 
@@ -309,8 +316,8 @@ When authoring product color tokens, the System-First Value Selection rule appli
 
 ## Related Documentation
 
-- **Token Governance**: `.kiro/steering/Token-Governance.md`
-- **Product Token Governance**: `.kiro/steering/Product-Token-Governance.md` (System-First Value Selection)
-- **Rosetta Architecture**: `.kiro/steering/Rosetta-System-Architecture.md`
-- **Component Development Guide**: `.kiro/steering/Component-Development-Guide.md`
+- **Token Governance**: `token-governance`
+- **Product Token Governance**: `product-token-governance` (System-First Value Selection)
+- **Rosetta Architecture**: `rosetta-system-architecture`
+- **Component Development Guide**: `component-development-guide`
 - **WCAG Guidelines**: [Web Content Accessibility Guidelines 2.1](https://www.w3.org/WAI/WCAG21/quickref/)

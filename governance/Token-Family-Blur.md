@@ -49,16 +49,16 @@ Different blur contexts consume different ranges of the scale. The blur primitiv
 
 ### Shadow Context
 
-Shadow composites (`shadow.sm`, `shadow.md`, etc.) reference blur primitives as one property among several (offset, opacity, color). The blur value controls edge softness.
+Shadow composites (`shadow.container`, `shadow.modal`, etc.) reference blur primitives as one property among several (offset, opacity, color). The blur value controls edge softness.
 
-| Shadow Use | Blur Token | Value | Effect |
+| Shadow Use | Blur Token | Value | Consuming shadow tokens |
 |-----------|------------|-------|--------|
-| No shadow | `blur000` | 0 | No blur |
-| Sharp edges | `blur025` | 4 | Hard, defined edges |
-| Standard UI | `blur075` | 12 | Balanced definition |
-| Raised elements | `blur100` | 16 | Increased blur for depth |
-| Subtle/hover | `blur125` | 20 | Diffuse, gentle edges |
-| Floating elements | `blur150` | 24 | Maximum shadow blur |
+| No shadow | `blur000` | 0 | `shadow.none` |
+| Sharp edges | `blur025` | 4 | `shadow.fab`, `shadow.navigation.indicator` |
+| Standard UI | `blur075` | 12 | `shadow.container`, `shadow.dropdown`, `shadow.sunrise`–`shadow.sunset` |
+| Raised elements | `blur100` | 16 | `shadow.modal` |
+| Subtle/hover | `blur125` | 20 | `shadow.navigation`, `shadow.hover` |
+| Floating elements | `blur150` | 24 | `shadow.toast`, `shadow.tooltip` |
 
 See also: [Token-Family-Shadow.md](token-family-shadow) for complete shadow composite documentation.
 
