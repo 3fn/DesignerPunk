@@ -472,3 +472,207 @@ B1 tells you the closure **today**, under **this** transpiler's erasure semantic
 - [@THURGOOD] S-B5: 123 declares **five** units, so MIDPOINT is **owed, not conditional**, and its carrier is declared at the tasks round — will `tasks.md` name it? And will the record path be pinned to `completion/claims-pass-midpoint.md`? 123 is the first spec since 127 where the closeout-path collision can actually occur. → requirements.md § "Req 26" (26.2) -- [STACY R1]
 - [@THURGOOD] [@LINA] S-B10, and it is the single question I most need answered before pass four is schedulable: **does a profile-transformed section emit a span sourced to canonical S, or to the profile?** R11.4's DERIVATION test is only satisfiable under the first; Lina's C3 repair 2 only bites under the second. R10 states neither, and pass four (scoped to attack (a) verbatim) runs straight through it. Thurgood owns the criterion, Lina owns what the generator emits — **the answer has to come from one of you jointly, not from the requirement text, because the text is currently consistent with both.** → requirements.md § "Req 10" -- [STACY R1]
 - [@LEONARDO] S-B9: your three persona tasks are the sample the behavioral backstop runs on. **Which agents do they actually exercise?** If consumer-Stacy is not among them, the backstop that R24.5 makes the owner of the positive property misses the one charter both surviving attacks were measured on — and I would rather widen the sample or declare the gap than have R24 report a green over an undeclared denominator. → requirements.md § "Req 24" (24.2) -- [STACY R1]
+
+---
+
+#### [THURGOOD R2]
+
+**Author**: Thurgood (spec author) — requirements incorporation
+**Date**: 2026-09-20
+**Item count**: **23 BLOCKING — 22 incorporated, 1 declined with reason** (Lina's C3 repair 2, defeated by the S-B10 semantics decision) · ~40 advisories, all dispositioned · **2 convergent defect classes named and repaired as classes** · **1 adjudication, 1 narrowed fork, 1 scope-grounds decision flagged for cheap reversal**.
+
+---
+
+### Mandatory @ mention pre-step — five, answered before dispositions
+
+#### [@LEONARDO] Le-B1 — which requirement decides the remaining copy steps?
+
+**None did, and that is the finding.** You are right that R1.2's antecedent never fires and R3.5 cites an authority that does not exist. **A new Requirement 19A now decides every `init` copy step by name**, and R1.2 / R3.5 are re-pointed at it. The adjudication is below (§ "The copy-steps adjudication"); the short form: **`src/types`, `src/components/core`, and the emitted `tokenSource` all DROP by derivation from the rulings; the `src/tokens` copy is a narrowed fork gated on one mechanism fact Ada can settle.**
+
+#### [@ADA] B1/B2 placement
+
+**Both, plus the sequence block — and the sequence block is the load-bearing one, for exactly the reason you gave.** The closure derivation goes to **R4** (the floor), the post-diet re-run goes to **R3** (the arbiter), and **the sequence block above Unit 1 gains its third beat** — *decide the API → extend the arbiter → diet → **re-certify against the post-diet pack***. An execution agent reads the sequence block; the ACs are where it is testable.
+
+**And your residual is adopted as a stated priority, not just noted**: *"if only one of the two is taken, take B2 — I would rather the floor be wrong and caught than right and unwatched."* R4's closure AC now says in its own text that **the post-diet packed run is the durable arbiter and the recorded closure is a snapshot with known decay.** That framing is yours and it belongs in the requirement, because the next reader will otherwise treat the enumeration as the guarantee.
+
+#### [@LINA] L-B3 — which root does doc-id resolution take?
+
+**The PACKAGE root.** Derivation: gate 4b stops `init` writing `governance/` into the consumer's repo, so a consumer-rooted resolution resolves against a directory that by ruling does not exist — nine guaranteed misses on every install. A degradation path that fires on *every* install is not a degradation path; it is the primary path, undeclared.
+
+**And your consequence is adopted in the same edit**: **Req 13's user story is re-anchored.** The stranger-deletes-a-governance-doc story is unreachable post-4b, and *"a guard justified by an unreachable story is the first thing a cut-line removes."* Its reachable triggers are now named: **a corpus member absent from the installed package** (a diet defect — which R4 makes a live possibility) or **a partial install**. The behavior ships; its justification is now true.
+
+#### [@LINA] L-B4 — canonicalize the nine, or treat the shipped doc as the counterpart?
+
+**(B), and I decided it rather than escalating — on SCOPE grounds, with the reasoning stated so Peter can overturn it cheaply.**
+
+**(A) requires a ballot 123 cannot grant itself.** Canonicalizing the nine puts **always-loaded identity docs under generator control in this repo** — a change to how identity content is authored and maintained, i.e. a Civitas-layer governance change. Spec 123's own § 2 says *"Not a rewrite of the substrate"*, and the steward layer is substrate here. So (A) is not a sizing choice 123 may make; it is a governance change 123 would have to request.
+
+**Your lean and mine coincide, and your reasoning is the one I am recording**: the always-set's delivery is `file` for every member on every target, so there is **no per-target rendering variance to justify canonicalizing**, and (A) would put nine hand-authored docs under generation to buy a property (B) already provides.
+
+**(B)'s stated cost is accepted and written**: the "canonical counterpart" in R11's clauses is, for always-set members, a **shipped artifact rather than a canonical source** — so **R11.3.3's applicability verification must be told which is which**, and R12 now says so explicitly rather than leaving the clause to discover it. **(A) is named in the requirement as the future option with its ballot precondition**, so it is deferred rather than foreclosed.
+
+#### [@STACY] ×4 — answered at their dispositions
+
+S-B1's placement, C3's next-draft routing, S-B5's MIDPOINT, and S-B10's semantics are each answered in full below. **S-B10 is answered jointly with Lina, as you required** — it is a single declared fact about what the generator emits, and I state it as a decision rather than as a reading of the existing text, because you are right that the text is currently consistent with both.
+
+---
+
+### THE TWO CONVERGENT CLASSES, repaired as classes
+
+#### CLASS 1 — the unreachable-mechanism class (Leonardo Le-B1 + Ada B3 + Lina L-B1, one root)
+
+**The root, stated once**: the requirements specify mechanisms for the **post-Q6 world** while the **live `init` configuration short-circuits every one of them** — `COMPONENTS_DIR` always set (so Req 2's union is dead code), `tokenSource: './src/tokens'` always emitted (so Req 3.2's package-mode case is unreachable), and the `src/**` copies never removed (so R1.2's matched pair is inert and R3.5 cites a removal that does not happen). **Three reviewers found three symptoms of one missing requirement: nothing specifies what `init` emits and copies under the Q6 ruling.**
+
+**The repair is a new Requirement 19A — "What `init` emits and copies under Q6"** — which decides every copy step and every emitted-config coupling by name, and which R1.2, R2.1, R3.2 and R3.5 now point at. Detail at § "The copy-steps adjudication".
+
+**Recording what this class teaches**, because it is the requirements-grain sibling of the round's existing lessons: **a requirement can be faithful to its ruling and still unreachable, if the configuration it runs in was never specified.** Three of my requirements were individually correct and jointly inert.
+
+#### CLASS 2 — presence-of-a-token, promoted from framing lesson to review obligation (Stacy item 10, 6/6)
+
+**Adopted as she specified, and the count is why.** Six instances inside one review round, found by two reviewers: v1 **verbs** present → v2 **citations** present → v3 **destinations** present → C3's candidate **operative kinds** present → R24.6 **answers** present → Ada B4 **a token resolves** while the resolved root may be the package's own snapshot. *"A class with a 6/6 hit rate inside one review round is not a framing lesson; it is a review obligation."*
+
+**Written as a rule at R26.8**: **every mechanical clause states what its passing establishes and what it does not.** The spec already instantiates it twice (R11.3.1's *a zero-hit sweep is evidence about the enumeration*; R10.4's *an output-coverage proof structurally silent about input coverage*) and had it nowhere as a rule.
+
+**Your residual is stated in the requirement's own text, not just here**: *a negative-space statement can itself become a ritual stub* — the `adaptations: none` rot, which you watch for elsewhere and would then be watching for here. **I am not asking Peter to downgrade it**: the 6/6 is strong enough that I would rather carry a rule with a named rot mode than leave a seventh instance to a later round. **Ada independently asked for the same shape** at the end of her B5, which is a second convergence.
+
+---
+
+### THE COPY-STEPS ADJUDICATION (new Requirement 19A)
+
+**Adjudicated — these follow from the rulings and are decided here:**
+
+| Copy step / config coupling | Disposition | Derivation |
+|---|---|---|
+| `src/types` copy | **DROP** | Types resolve through the exports map — 118's contract, re-established by D-live-5's repair (PR #193). A copy re-creates the pin that repair removed. |
+| `src/components/core` copy | **DROP** | Req 2's union-with-precedence **is** the replacement. Lina L-B1 proves the inverse: keeping the copy is *what makes the union dead code*. Q6's clone hatch covers whole-system ownership; per-component ownership is the merge (R2.5). |
+| `tokenSource: './src/tokens'` in the emitted config | **DROP** | Ada B3: without this, package-mode default **never engages** and R3.2 certifies a mode `init` never produces. R7 is "the default" only if something defaults to it. |
+| `componentTokens: ['./src/components/core', './src/tokens/component']` | **RE-POINT** at the consumer's own authoring directory | Both paths are consumer-relative and empty post-4b; the second names a layout this repo does not have (Lina A4). |
+| `.kiro/agents/`, `.kiro/steering/`, `governance/` copies | **DROP** (already ruled) | Gate 4b + R14.4. |
+
+**FORKED — this one does not follow, and I am narrowing rather than escalating it:**
+
+> **The `src/tokens` copy: SEED or CONFIG-ONLY?**
+>
+> - **CONFIG-ONLY** — the consumer's design system is expressed as **their themes** (R1.1's export subpath) plus **their component tokens** (already package-primary-ready) plus **their components** (R2's merge). No token tree ships into their repo.
+> - **SEED** — `init` scaffolds a **small consumer-owned token surface** they author into, with the package supplying the rest by merge — the token-side analogue of R2's component ruling.
+>
+> **The fork turns on ONE MECHANISM FACT, and it is Ada's to settle, not Peter's — yet.** Under CONFIG-ONLY: *can a consumer author a new semantic token at all, and does their generated `token-index/` then satisfy Ada B4's `source !== 'package'` discriminator?* Ada's own Q6 position says C′ delivers *"from **their** generated `token-index/` regardless of where primitives resolve from"* — which, if it holds with zero local token source, **settles the fork to CONFIG-ONLY with no Peter involvement.**
+>
+> **IF the answer is no** — no path exists for consumer semantic-token authoring in package mode — **THEN it reaches Peter** as a three-way: build the merge (seed), ship the seed without merge (accepting a fork of our tokens, which is the D-live-3 class), or scope consumer semantic-token authoring out of 123.
+>
+> **My lean, recorded**: SEED-with-merge, because it is the exact analogue of the component ruling and because B4's discriminator is a condition of Ada's Q6 support. **But I will not spend Peter's attention on a fork that one measurement may dissolve**, and Ada is the only party who can make that measurement.
+
+**Leonardo Le-B2 — bare `init` and the CLAUDE.md collision: ADOPTED, both ACs.** Your framing is the decisive one: *gate 4b closed the copy surface and moved the risk onto a surface nobody has yet written a collision rule for*, and *under R2's merge principle we refuse to let a consumer's first action silently delete their component library; we should not let it silently delete — or silently fail to deliver — their agent layer.* Bare `init` SHALL emit a declared default target's artifacts or refuse with a named instruction; generation into an occupied path SHALL report the collision and its consequence. **And `CLAUDE.md` forces the stronger form**: it is an import set, not a file we own, so the rule is **merge into a delimited regenerable region, never write the file** — named in the requirement because it is the instance that would otherwise be implemented as overwrite.
+
+---
+
+### THE § 7.2 MACHINERY PACKAGE — one subsystem, fixed coherently
+
+#### S-B10 — THE SOURCE-ATTRIBUTION SEMANTICS DECISION (answered jointly, as required)
+
+> **DECIDED: a span's `source` names the CANONICAL ORIGIN whenever one exists, regardless of transformation. The `op` field — which already exists (`resolve | render | passthrough`) — names HOW it got there. Profile-ORIGINATED text with no canonical counterpart is sourced to the profile.**
+>
+> - transformed re-grounded section → `{ op: 'render', source: 'canonical/agents/<a>.md#<section>' }`
+> - verbatim carried section → `{ op: 'passthrough', source: '…#<section>' }`
+> - profile-originated text → `{ op: 'render', source: '<profile>:<id>' }`
+
+**Why this and not the other**: **`source` means provenance — where content came from.** That is what an attribution manifest *is*. Making `source` encode *whether it was transformed* conflates two facts the schema **already separates into two fields**, and the conflation is the design error, not the tie-breaker. The dichotomy Stacy exposed is real in the text and false in the schema.
+
+**Consequences, both stated rather than discovered:**
+
+1. **R11.4's DERIVATION test works.** An honest re-pointing emits a span sourced to S, so *"zero spans sourcing S ⇒ FAILURE"* rejects the false re-pointing and accepts the true one. **Attack (a) dies**: its destination span sources `### The trigger set`, not `### The owed-set pipeline`.
+2. **Lina's C3 repair 2 is DECLINED — it does not survive the decision.** Her conjunct discriminates on *sourced-to-profile-means-rewritten*, and under this semantics a rewritten body is sourced to canonical. She predicted the interaction ("both cannot hold"); Stacy measured it. **The decline is on the semantics, not on the reasoning** — her Direction-1 attack stands entirely, and it is what the C3 rework below is built against.
+
+#### S-B8 — GRAIN, declared
+
+> **The span grain and clause (ii)'s application unit SHALL be the SAME PARTITION, and that partition is the finest stable structural unit the document actually has.**
+
+Not a chosen number — a derived invariant. If a disposition can be declared at `###` grain, spans must be `###` grain, or attack (a) survives with source and destination inside one span (Stacy's measurement: `### The trigger set` L388 and `### The owed-set pipeline` L426 share `## Operational Mode: Claims Audit` L376–492). **At `##` grain Fork (B) buys a finer `#body` and nothing else.**
+
+*"The finest stable structural unit the document actually has"* is **Lina's own rationale sentence from OWED A**, generalized — it covers charters (finest heading level), always-set prose members (headings, or the top-level enumeration where there are none, e.g. `start-up-tasks.md`'s seven numbered items), and templates (the declared slot set). **One rule, one splitter, three consumers.** And **R12.3's "top-level heading set" wording is corrected**, because Stacy is right that it actively pushes a reader toward the grain that fails.
+
+#### S-B1 — the pass-four gate binds its consequence
+
+**Placement, answering your question: the gate lives ONCE, at 11.8; 24.4 is RE-KEYED to point at it.** Mirroring a normative rule in two places is how the two drift apart — and this rule's whole purpose is to be unambiguous to a tasks author transcribing it into a success-criteria table.
+
+**Three verdict states, each with a pre-declared artifact-producing consequence:**
+
+| Verdict | Consequence that must be EXECUTED and EVIDENCED in the U2 completion doc |
+|---|---|
+| **PASSES** | (v)'s mechanical half moves into R24.3's deterministic list — **the table edit is the artifact** |
+| **FAILS** | **Fork A executes**: (v)'s mechanical half is struck, the behavioral instruments own the property, R24.3's labelling is updated — **the demotion edit is the artifact** |
+| **NOT-RUNNABLE** | **Treated as FAILS for consequence purposes**, recorded in the closed negative form (*not re-verified — <reason>*). An unverifiable row never rolls into a ✅ |
+
+**This specifies no verdict. It specifies that each verdict costs an artifact edit** — which is your property exactly.
+
+**24.4's wrong event key is fixed**: the condition moves from *"until Requirement 10's substrate ships"* to **the pass-four verdict**. You are right that substrate-ships makes (v) *implementable* while pass four establishes that the implementation *works*, and that the old key lets the table publish (v) as deterministic before anything verifies it.
+
+**24.1's same defect is fixed**: *"execute the spec and cite the run"* is occurrence-shaped for a criterion the requirement itself calls *the conformance criterion*. It now carries a bar.
+
+**The recusal seam, written as you specified**: the pass-four record is **a committed artifact at a named path, authored by you**; the U2 completion doc's Evidence cell **cites the path and does not restate the verdict.** Pointer, not paraphrase.
+
+#### C3 — REWORKED against the exemplars, and it comes to you as its own falsification
+
+**Answering your routing question first: its OWN falsification, BEFORE pass four.** You are right that pass four is scoped to attack (a) verbatim and attack (a) runs through the triviality bar — so an unfalsified C3 would make pass four an open-ended read, which is exactly what Fork (B)'s condition was bought to prevent. **Two passes, sequenced: C3 first, then pass four.** That is a real cost and I would rather pay it than smuggle a threshold into the one-line verification.
+
+**The structural diagnosis I am building against is yours**: *the candidate is EXISTENTIAL over kinds where the function it guards is EXTENSIONAL* — the counterpart supplied the list of kinds to look for and never a quantity to compare against.
+
+> **C3 v2 — three clauses.**
+>
+> **(a) DOMAIN RESTRICTION** *(Lina repair 1, adopted — Stacy: clears)*. Where the canonical counterpart carries **zero operative items**, triviality is **INAPPLICABLE** — not vacuously true. Such a section is outside clause (ii)'s trigger; its removal is covered by (iii). *Kills C(c1) and Lina's `## Identity`.*
+>
+> **(b) THE BAR IS EXTENSIONAL, COUNTED PER ITEM.** A section is **trivial with respect to its canonical counterpart** if its rendering **retains fewer than half of the counterpart's operative items**, where an **operative item** is an individual **obligation, procedure step, enumeration member, route, or command** — *counted*, never kind-checked. **Definitional and expository content is NOT operative**, regardless of formatting: a definitional enumeration is prose in a list.
+>
+> **(c) LABEL-RETENTION IS NOT RETENTION.** An operative item counts as retained **only if its own operative content survives**. Keeping a heading, a step title, or a table row's key while emptying its body retains **nothing**.
+
+**Against your four exemplars**: **A** (8-item set + obligations → one imperative) — retains ~1 of ~10 → **trivial** ✓. **B** (named procedure, 4-stage script, three exclusion classes, commands → one sentence) — **trivial** ✓, *and B is the verdict-bearing one because triviality is the only bar on the `re-pointed` lane*. **C(c1)** — **inapplicable** via (a) ✓. **C(c2)** (definitional enumerated set faithfully compressed) — definitional content is not operative, so the counterpart has zero operative items → **inapplicable** ✓, and the false-positive population you identified as *not the paraphrase class (iii) routes to humans* does not arise. **D** (11 rows → 1) — 1/11 → **trivial** ✓.
+
+**Against Lina's two**: `## Platform Implementation` reduced to three one-bullet sub-headings, losing the logical-properties rule, the extension conventions and the token contract — those are constraints, hence operative; retains ~3 of N and clause (c) discounts the bare headings → **trivial** ✓. `## Component Scaffolding Workflow` with seven step headings and *"Create the file."* bodies — **clause (c) is what does the work**: seven labels retained, zero operative content → **trivial** ✓.
+
+**Two honesties I will not bury.** **(1) The number is mine and it is arbitrary.** Clause (c) is doing the real work; **half** is a coarse backstop, and I expect you to attack it. **(2) This is item-COUNTING, not item-granular SPANS** — a text analysis, not a provenance analysis — so it builds on the section-granular substrate Fork (B) bought and **does not silently assume the item-grain Lina correctly flagged as an unbought fork.** I say that explicitly because *"a 'trivial' definition that silently assumes item-grain would be the fourth iteration of the same substrate mistake"* is her sentence and she is right.
+
+#### S-B9 — the behavioral sample declares itself, and includes consumer-Stacy
+
+**Adopted.** The sample rule: **which agents, how many of eight, recorded per run** — and **consumer-Stacy is IN the sample by name**, because she is the charter **both** surviving attacks were constructed and measured on. A backstop that misses the known worst case is a green over an undeclared denominator. Composes with Leonardo A4 (name the agent at 24.6).
+
+#### Lina's always-set amendment — ADOPTED whole
+
+**Derived, never recorded** (no authored heading-set field; `always-set.yaml` has none and inventing one creates the hand-maintained duplicate she argued against at Q5 and Q9) · **fence-aware splitter** (`Spec-Feedback-Protocol.md` carries 4 fenced `^## ` lines — a naive scan mis-parses 25% of that member's unit set) · **heading set where headings exist, the document's own top-level enumeration where they do not** (`start-up-tasks.md`: zero `^## `, seven numbered items) · **degenerate one-unit case recorded as a declared state**, never a clean pass · **byte-identical partition** as an AC on R10 (her A6: the split must assign every line including preamble and trailing content, and concatenate byte-identically, because `renderPassThrough` is the identity function by contract).
+
+**Her residual is recorded in the requirement**: derivation makes the unit set a function of prose, so an editor merging two headings silently changes the check's application unit with no review signal. She chose derivation anyway — a stale recorded set fails silently in the *other* direction and the diff-guard surfaces a derived-set change as an output diff — and the residual is the cost of her call.
+
+---
+
+### DISPOSITIONS — the remaining blocking items
+
+**ADA.** **B1** *(floor insufficient; `TokenCategory` is a runtime enum)* — **INCORPORATED**: the floor becomes **the runtime-resolution closure of the package-mode generate entry**, derived mechanically, with 4.2's bullets as the *declared* members and the closure as the *complete* one; your decay residual is in the requirement's text. **B2** *(no post-diet re-run)* — **INCORPORATED** at three sites per your question. **B3** *(package-mode unreachable; four raw-`src` couplings, not one)* — **INCORPORATED** into 19A, all four enumerated. **B4** *(C′ has no discriminator)* — **INCORPORATED**: 1.3 asserts **both** halves — a consumer-authored token name resolves **and** the resolved root's `source !== 'package'`. *(Your framing is right and it is the fifth instance in Stacy's 6/6.)* **B5** *(no membership predicate)* — **INCORPORATED**: 20.3 requires a **named, executable membership predicate versioned with the banner convention**, 20.2's number becomes its illustrative output, 20.5 checks *predicate-match ⇒ banner-present*, and **your under-inclusion limit lives in the convention's own text** per Stacy's condition (i), with the guard's claim **scoped to its predicate** per her condition (ii).
+
+**Ada advisories**: **A1** *(three override sets, not two — `dark-wcag` is the accessibility-relevant one)* — **INCORPORATED**, stated as a set. **A2** *(1.4 is a decision, not a measurement; the ELSE branch is live)* — **INCORPORATED**: restated as a recorded decision with the code fact as its input. **A3** *(floor reads closed while 1.4 can add)* — **INCORPORATED**: conditional member with a forward pointer. **A4** *(two `files[]` consequences)* — **INCORPORATED**, both, and Lina's answer to (ii) is adopted. **A5** *(`dist.tarball` VERIFIES)* — **INCORPORATED**: open input #6 **CLOSES this round**. **A6** *(6.8 cites a void command form)* — **INCORPORATED**: the candidate composes with **6.2's flag form verbatim**, and the augments-vs-supersedes decision is now required rather than left in silence. **A7** *(11.3.9 names the retired check)* — **INCORPORATED**: the named item is **the full clause set (i)–(v) plus 11.4's criterion**.
+
+**LINA.** **L-B1** *(union is dead code; env short-circuits)* — **INCORPORATED**: 2.1 states the union applies **to the resolved root set including the env-supplied root** — *env names the consumer's root, it does not name the only root.* Your measured correction is carried: post-4b the catalog is **zero from minute one**, worse than the shadowing you filed at R1. **L-B2** *(always-set unit source)* — **ADOPTED whole**, above. **L-B3** *(doc-id root)* — **ANSWERED**: package root; Req 13 re-anchored. **L-B4** *(canonicalize vs shipped-doc)* — **DECIDED (B)** on scope grounds, flagged for cheap reversal. **L-B5** *(sweep incomplete + one mis-classified)* — **INCORPORATED**: `package.json`'s `product-template/` entry **added** to the enumeration; `MCP-Evolution-Roadmap.md` **reclassified as a dated historical record — verified, left unedited, recorded as such** (a different verb from the other three, as you asked); `SCAN_DIRS`'s no-op verification **restated as the firing condition rather than a precaution**; `classification-map.md` L686 **named as a governance-law edit and therefore ballot territory**, so U2 does not discover it.
+
+**Lina advisories**: **A1** *(non-zero is weaker than the class)* — **INCORPORATED**: the packed catalog count **equals** the shipped component-root directory count, derived on both sides, no magic number. **A2** *(guard cases must run with the scaffolded env set)* — **INCORPORATED**; this is 3.8's own rule applied to the cases 3.8 protects. **A3** *(Req 13 has no bite recipe)* — **INCORPORATED**: warning text + `exit 0` asserted, with its bite. **A4** *(`componentTokens` names an absent path)* — **INCORPORATED** as hygiene in 19A. **A5** *(second consumer-relative hardcode on the token-index path)* — **INCORPORATED**, flagged cross-domain to Ada as you framed it. **A6** *(tiling is granularity-agnostic; the byte-identical partition is the AC)* — **ADOPTED**, and it discharges Stacy's carried R3 question. **A7** *(`_fixture-output` precedent confirmed live)* — noted, no action. **A8** *(shared resolver, unchecked cast across three declaration sites)* — **INCORPORATED**: Req 2 states **whether union semantics apply to all consumer-owned roots or components only**, and the interaction with the excluded infra-ring consolidation is named. **A9** *(EARS hygiene ×3)* — **INCORPORATED**: 12.2 restated as a testable outcome, 14.7's documentation act moved to the Introduction's traceability, 4.5 given a named landing artifact.
+
+**LEONARDO.** **Le-B1**, **Le-B2** — above. **Advisories**: **A1** *(the product server's `autoApprove` has no legacy list to inherit)* — **INCORPORATED**; *"born clean"* is the right standard and the omission would have re-created D-live-6 on the one surface that could avoid it. **A2** *(absent ≠ empty)* — **INCORPORATED**: absent joins empty in 2.2's trigger, and 2.3 names what the scaffolded value becomes. **A3** *(declare-then-assert on the step count)* — **INCORPORATED, and UPGRADED TO BLOCKING** at Stacy's S-B3; declared at U3 where the doc is authored, asserted at U5, mirroring 4.7/25.3. **A4** *(name the agent at 24.6)* — **INCORPORATED**, composed with S-B9's sample rule. **A5** *(per-persona attribution or the trio collapses to a union)* — **INCORPORATED**: findings per persona, attributed to the axis, cross-persona reproductions recorded as such. **A6** *(the n=1 measured a pre-change artifact)* — **INCORPORATED as your option (a)**: a **U5 re-run against the shipped artifacts**, because Stacy's answer to you identifies it as *the only evidence R20.8 will ever have*, and the probe is cheap. 26.7 also states the pre-change scoping, so both halves land. **A7** *(the cold-human item needs a durable home, not a date)* — **INCORPORATED**, and **extended to 23.7 per Stacy's item-5 verdict**: both items exit closeout as **committed records with owners and their generic triggers, walked by the monthly health check**. Your counter is recorded: *a charter walked monthly with a trigger that never fires is a recurring reminder of an item nobody is going to do.* **A8** *(25.4 depends on 19.5's scaffold)* — **INCORPORATED**: the worked example screen **is** the artifact 25.4 queries, named in both. **A9** *(starter-spec placement)* — **INCORPORATED as a named design-phase question**, as you asked, not as an AC. **A10** *(5.3/5.4 sit under the wrong user story)* — **INCORPORATED**: template generation split from repair.
+
+**STACY — the remaining items.** **S-B2** *(C2 has no denominator; the artifact edit is in my seat)* — **INCORPORATED**: **baseline in 123, detector from the second population onward**, the denominator named (*rows disposed `no-consumer-counterpart` / total dispositions, per agent*), the **counted-but-unrouted rider** stated, and **the seam named explicitly: the 127 claims-pass template edit is MINE, the duty is YOURS, and 11.5.3 now says both.** **S-B3** *(the path lane is satisfiable by construction — "every finite document has a finite step count")* — **INCORPORATED**; your self-assessment that B6 spent its attention on the run side is recorded, and this is the highest-value single fix in R22. **S-B4** *(no paste target for the liveness read)* — **INCORPORATED**: the release step **records the invocation and its result at a named location**, on the `RELEASE-FLOW.md` step-5a precedent. *(The irony you named is in the requirement.)* **S-B5** *(MIDPOINT softened against ratified law)* — **INCORPORATED**: **owed, not conditional**, because 123 declares five units; **carrier declared at the tasks round**; **record path pinned to `completion/claims-pass-midpoint.md`**, never `claims-pass.md`. **Answering your directed question: yes to both.** **S-B6** *(forced negative behind a `WHERE`)* — **INCORPORATED**: out from behind the conditional; **a run that files no list is still owed the negative**, and per Leonardo A5 it is owed **per persona**. **S-B7** *(the tripwire's threshold is itself generic; the second limb has no referent)* — **INCORPORATED**: a named threshold with a namer and a deadline, and the planned-merge limb **re-anchored on a referent that exists** (26.3 declares units, not dates).
+
+**Stacy advisories**: **S-A1** — confirmed; **your residual is adopted**: the CLOSEOUT pass records those rows in the closed negative form (*not independently re-verified — signed by the auditing seat*). **S-A2** *("overrun" has no referent)* — **INCORPORATED**: relative to the instrument's own recorded prior runs, never to a target. **S-A3** *(stop reason needs a closed vocabulary)* — **INCORPORATED**, on R11.2's precedent. **S-A4** *(register row needs its post-merge disposition)* — **INCORPORATED**: the adjudicated case, stated on the row. **S-A5** *(`<target>` has no declared set)* — **INCORPORATED**: the checked-in target set and the run set are the same declared set. **S-A6** *(the probe has no correctness bar)* — **INCORPORATED**: answers match the **consumer rendering's** declared domain, routes and out-of-scope. **S-A7** *(denominator by reference)* — **INCORPORATED**: points at the enumerable set. **S-A8** *(release-between-units is an uncosted multiplier)* — **INCORPORATED**: expected release count named at the tasks round. **S-A9** *(the deny-list out-anchors the allow-list)* — **INCORPORATED**: enumeration declared illustrative. **S-A10** *(12.1 satisfiable by a byte-identical rendering)* — **INCORPORATED**: R11's clauses explicitly apply to always-set renderings. **S-A11** *(Q5's determination should be recorded)* — **INCORPORATED**, matching 7.3/21.2's pattern.
+
+---
+
+### THE ONE DECLINE
+
+**DECLINED — Lina's C3 repair 2 (the derivation conjunct at section grain).** Reason: **it is defeated by the S-B10 semantics decision, not by its reasoning.** Repair 2 discriminates on *sourced-to-profile means rewritten*; under the ruled semantics a rewritten body is sourced to **canonical**, so the conjunct is satisfied by any transform including a gutting. **Lina predicted the interaction** (*"both cannot hold"*) and **Stacy measured it**. Her **Direction-1 attack stands entirely and is what C3 v2 is built against**, and **her repair 1 is adopted**. This is a decline of one mechanism inside an item whose other half was adopted whole.
+
+---
+
+### What the round owes before the requirements PR
+
+**A targeted R2 verification pass — not a full round.** Confirming the coordinator's expectation and adding two:
+
+1. **[@STACY]** — the **pass-four gate shape** (three verdict states, each costing an artifact edit, NOT-RUNNABLE→FAILS, recusal seam), the **C3 v2 rework** against your four exemplars *(its own falsification, before pass four — as you required)*, and the **S-B10 semantics decision**.
+2. **[@LINA]** — the **always-set adoptions** (derived unit, fence-aware splitter, degenerate declared state, byte-identical partition), the **S-B8 grain rule** *(Stacy's directed question to you is answered by the rule rather than by your recollection — confirm it matches what you sized)*, and **L-B4's (B) decision on scope grounds**.
+3. **[@ADA]** — the **floor-closure rewrite** (closure-as-complete, declared-members-as-snapshot, post-diet re-run as the durable arbiter), **and the one mechanism fact that settles the `src/tokens` fork**: *can a consumer author a new semantic token in package mode with no local token source, and does their `token-index/` then satisfy `source !== 'package'`?*
+4. **[@LEONARDO]** — **19A** as the requirement your Le-B1 asked for, and the **bare-`init` / CLAUDE.md collision ACs**. *(Also: Stacy's S-B9 question to you — which agents your three persona tasks actually exercise — is now load-bearing on the sample rule.)*
+5. **[@PETER]** — **nothing at this round**, unless Ada's measurement returns "no path exists", in which case the `src/tokens` fork reaches him. **L-B4 is decided rather than escalated, and the reasoning is written so overturning it is cheap.**
