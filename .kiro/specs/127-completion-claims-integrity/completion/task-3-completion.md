@@ -1,0 +1,59 @@
+# Task 3 Completion: Execute the charters (U3)
+
+**Date**: 2026-09-19
+**Task**: 3. Execute the charters (U3)
+**Type**: Documentation
+**Status**: Complete
+**Spec**: 127 — Completion-Claims Integrity
+**Unit**: U3 — The charters (single-parent unit; this parent IS the merge unit — 127's FINAL declared unit: its merge fires `closeout-owed(127)` and the CLOSEOUT pilot follows)
+**Delegated-tier** _(exception-based note)_: plan held — main-session execution, **no delegation for canonical edits** (the generated-tree placement hazard, as planned). One scheduled rider: Stacy (Opus-tier subagent) ran the **MIDPOINT claims pass** owed at U2's merge — a post-unit obligation riding this branch as transport, not a U3 deliverable.
+
+> The criteria table below reproduces every `tasks.md` success criterion for Task 3 verbatim, as an exact set, per the guide § "Parent Success-Criteria Fidelity". Zero ⚠️ rows.
+
+---
+
+## Success Criteria Verification
+
+| Criterion (verbatim) | Status | Evidence |
+|---|---|---|
+| `canonical/agents/stacy.md` contains the ratified charter cut (the § 11.1 dividing-verb text) | ✅ | canonical/agents/stacy.md § "The charter cut (ratified verbatim)" — both § 11.1 blockquotes **string-equal to the settle ballot's text** (python substring assertion over ballot + canonical + both mirrors → True) with the dividing-verb sentence ("author/maintain vs adjudicate") and the extension-to-system-specs statement |
+| `canonical/agents/stacy.md` contains all rows of the § 11.4 superset trigger table with the Scope column's binding text | ✅ | canonical/agents/stacy.md § "The trigger set" — all 11 rows present (LENS/RELEASE/SYMPTOM/CLOSEOUT/MIDPOINT/ARMING/GATE/EDUCATION/STRAGGLER/LIVENESS + the struck ~~BURST~~ row with its preserved counter-argument), each with the Scope column's binding text incl. the four T2-d restored clauses, CLOSEOUT's rider-(a) discharge, LIVENESS's "Meta-item only" + "Events without records = finding" (python row-presence assertion → all 11). The Δ-at-ratification column is not carried — ratification history, not binding text (recorded reading) |
+| `canonical/agents/stacy.md` contains the mirror anti-rot clause string-equal to ballot § 16.2's quoted form | ✅ | String-equality assertion vs ballot § 16.2's quoted form → STRING-EQUAL in canonical/agents/stacy.md, .claude/agents/stacy.md, and .kiro/agents/stacy-prompt.md (all three) |
+| `canonical/agents/stacy.md` contains the three enumerated carve-out verbs with both falsification conditions spelled out | ✅ | canonical/agents/stacy.md § "The steward-verb carve-out" — `validate_metadata` / `list_cross_references` / `rebuild_index` enumerated as-of-the-agreement (never a live config reference), both falsification conditions spelled out (invoked >once across the first three passes → narrows; never encountered → dropped, not carried), ambiguity-resolves-to-Stacy (python element assertion → present) |
+| `canonical/agents/stacy.md` contains the owed-set pipeline's four stages with enumerated exclusion classes, **and the MIDPOINT record-path convention (`claims-pass-midpoint.md`, never `claims-pass.md`)** | ✅ | canonical/agents/stacy.md § "The owed-set pipeline" — the four-stage bash pipeline **byte-equal to `.kiro/hooks/RELEASE-FLOW.md` step 5a** (python comparison → True), the (a)/(b)/(c) exclusion classes enumerated, and the MIDPOINT record-path convention (`claims-pass-midpoint.md`, never `claims-pass.md`) stated in § "The claims-pass record" |
+| The claims-pass template in her charter text contains the full design-C9 element list: Scope/Findings/Method with the fraction clause, the per-row per-platform honesty string, the `Standards implications:` line, **the counting block in full (omissions, vagueness, none-rates, exemption-string usage, bundled/incomplete-decomposition instances, fallback invocations, M3/M4/M5), the report-set comparison, the emission-reading duty with its interim-owner clause verbatim, the deferral walk-back, and Req 8.8's never-a-gate sentence** (Stacy BLOCKING-5) | ✅ | canonical/agents/stacy.md § "The claims-pass record" — 20/20 C9 elements present by python assertion: Scope/Findings/Method with the fraction clause, the per-row per-platform honesty string, `Standards implications:`, the full counting block (omissions, vagueness, none-rates, exemption-string usage, bundled/incomplete-decomposition, fallback invocations, M3/M4/M5), the report-set comparison, the emission-reading duty with its interim-owner clause verbatim, the deferral walk-back, and Req 8.8's never-a-gate sentence |
+| `canonical/agents/thurgood.md` contains the composed-loop duties, LIVENESS as a query **with the owed-set pipeline verbatim in the health-check item**, the proposed-row register read, **Thurgood's own anti-rot clause verbatim (check that an audit happened, never re-decide what it concluded), the remediation route's explicit-message clause (never only a file in a spec directory)**, the caller-out duty, and the three Req 7.9 bounds (Stacy BLOCKING-5) | ✅ | canonical/agents/thurgood.md § "The Q5 Boundary" + § "Operational Mode: Civitas Steward" — 15/15 package elements by python assertion: the composed-loop duties (full read, `adopted`/`declined-with-reason`/`none` outcome line), LIVENESS as a query with the owed-set pipeline in the health-check item (content byte-equal to RELEASE-FLOW 5a after list-indent strip — recorded reading), the proposed-row register read with ages, his anti-rot clause verbatim, the remediation route's explicit-message clause, the caller-out duty, and the three Req 7.9 bounds |
+| `.kiro/steering/Agent-Directory.md`'s Stacy and Thurgood sections contain the § 11.1 charter-cut sentences, and a grep for the superseded pre-Q5 ownership phrasings returns zero matches (Stacy BLOCKING-8 + A-4: the mechanical form of "consistent") | ✅ | .kiro/steering/Agent-Directory.md — both § 11.1 charter-cut sentences present in the Stacy and Thurgood sections; superseded pre-Q5 phrasings enumerated and grepped: `Product-level quality auditing` → 0, `Product Governance & Quality Assurance` → 0, `Product governance & QA |` (table row) → 0; the question-routing rows added to Cross-Domain Routing; direct-edit (no canonical source — BLOCKING-8's verified route) |
+| `npx tsx tools/agent-generator/diff-guard.ts` reports green on the branch, and each new charter section appears verbatim in both generated mirrors | ✅ | `npx tsx tools/agent-generator/diff-guard.ts` → `diff-guard: full-run-green (input-closure-changed)`; generation wrote 274 files across 9 guarded roots; each new charter section verified VERBATIM in both mirrors by python substring assertion — stacy claims-audit § (15,604 chars), thurgood Q5-boundary § (5,069 chars), LIVENESS item (4,010 chars), proposed-row read (330 chars), each × `.claude/agents/` + `.kiro/agents/` |
+| `npm test` is green at parent completion — **the generator suites read canonical inputs, and diff-guard alone does not run them** (Stacy A-15: "met" and "mergeable" must not diverge) | ✅ | `npm test` → 365 suites / 9,027 tests, 0 failures, run AFTER regeneration (the generator suites read canonical inputs — A-15); additionally `npm run test:agent-generator` → 333/333 green |
+
+Unmet or partially met criteria: None
+
+### Additional verification
+
+*(Task 3 declares no `**Merge gate:**` clause — no gate-condition rows are owed.)*
+
+Primary Artifacts: all shipped as declared — `canonical/agents/stacy.md`, `canonical/agents/thurgood.md`, `.kiro/steering/Agent-Directory.md` (direct-edit, review date bumped), `.claude/agents/` + `.kiro/agents/` (regenerated, never hand-edited — 274 files, diff-guard green), `canonical/generated.lock`. Additional files on this branch beyond the declared set, recorded rather than silent: `completion/claims-pass-midpoint.md` (Stacy's MIDPOINT record — a post-U2-merge obligation using this PR as transport, per the record's own transport note) and an attributed **erratum appended to `task-1-completion.md`** (MIDPOINT F-1's remediation route — the accepted record corrected honestly, in place, without post-hoc reconstruction of the unreproducible counts).
+
+---
+
+## The MIDPOINT pass (transported here; not a U3 deliverable)
+
+Fired at U2's merge per the declared carrier. Record: `completion/claims-pass-midpoint.md`. Two findings (F-1 evidence insufficiency on Task 1's C8 checklists — Medium; F-2 zero subtask docs vs the TCP subtask duty — Low), both routed to Thurgood; exact-set parity verified BY HAND on both parents (23/23 rows, independent re-implementation — the circularity guard); counting block complete with the ceiling-not-typical caveat. **The composed learning loop's first live firing** is appended to the record: S-1/S-2/S-3 adopted as recorded-amendment candidates, S-4 adopted as a drafted question for Peter (subtask-doc duty: enforce or narrow). **Flagged to Peter for the 5.Z sitting: the N ≥ 5 double-count hazard** — MIDPOINT's 2 parents and the CLOSEOUT pilot's 3 overlap; 127 supplies at most 3 independent in-scope parents toward guard (ii).
+
+## Recorded readings (implementation decisions inside the criteria, none silent)
+
+1. **The § 11.4 table's Δ column is not carried into charter text** — it records what changed AT ratification (history), not binding scope; the criterion's object is "rows + the Scope column's binding text", both carried in full including the retired BURST row.
+2. **Thurgood's pipeline copy is list-indented** (it sits inside a health-check list item); content is byte-equal to RELEASE-FLOW 5a after the two-space list indent is stripped. Stacy's copy is byte-equal with zero transforms. Three copies, one text.
+3. **Git history as a knowledge base is charter text, not frontmatter** — the generator's `knowledgeBases` template requires Grep/Glob globs; git history is not glob-expressible, so the source-tree KB landed in frontmatter and git history as an explicit provisioning line in her claims-audit section (Req 7.7 satisfied across the two surfaces).
+4. **The superseded-phrasings grep set** (BLOCKING-8 + A-4's mechanical predicate) is enumerated in criterion 8's Evidence cell — the three pre-Q5 product-only ownership phrasings, all at zero.
+
+## Subtask contributions
+
+- **3.1** — the Stacy charter package: the ratified cut, the 11-row trigger table with binding Scope text, the full C9 claims-pass template (incl. all BLOCKING-5 elements + the midpoint record-path convention), the owed-set pipeline as her command catalog's entry, the mirror anti-rot clause verbatim, the carve-out with both falsification conditions, the honest-reach statement; knowledgeBases + description + scope updates.
+- **3.2** — the Thurgood package: the Q5 boundary section (cut, retained set, carve-out from his side, composed loop, caller-out duty, three Req 7.9 bounds, remediation-route form), LIVENESS rebuilt as a three-read query with the pipeline verbatim, the proposed-row register read; Agent-Directory updated directly with both cut sentences, the question-routing rows, and zero superseded phrasings.
+- **3.3** — regeneration (274 files), diff-guard green, 8/8 mirror-verbatim assertions, `npm test` 365/9,027 + generator suites 333/333 green.
+
+## Lessons learned
+
+**The charter bound its own author mid-task.** The composed-loop duty written at 3.2 fired before the branch merged — Stacy's MIDPOINT pass arrived and the full-read + outcome-line + remediation duties were exercised against the exact text landing in this PR. The first live loop iteration is on the record before the charter that mandates it is even accepted — the right order for a governance system that distrusts unexercised mechanisms.

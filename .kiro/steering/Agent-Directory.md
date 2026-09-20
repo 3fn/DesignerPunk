@@ -6,7 +6,7 @@ inclusion: always
 # Agent Directory
 
 **Date**: 2026-03-26
-**Last Reviewed**: 2026-03-26
+**Last Reviewed**: 2026-09-19
 **Purpose**: Cross-agent reference for all DesignerPunk AI agents — domains, boundaries, and routing guidance
 **Organization**: process-standard
 **Scope**: cross-project
@@ -53,9 +53,11 @@ Component development, platform implementations (web/iOS/Android), component arc
 
 Test suite health, coverage analysis, test infrastructure standards, audit methodology, spec creation guidelines, accessibility test coverage auditing, and **Civitas governance infrastructure stewardship**.
 
-**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, "Shared" doc maintenance).
+**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration), **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, "Shared" doc maintenance).
 
 **When to involve**: Spec creation, test suite audits, coverage gap analysis, spec feedback coordination, governance questions, completion documentation standards, **steering doc health issues, MCP accuracy concerns, cross-surface content inconsistencies, governance tooling questions**.
+
+**Charter cut (Q5, ratified 2026-09-17)**: Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true. ("What is a completion doc required to contain?" → Thurgood; "was this claim verified?" → Stacy.)
 
 **Key boundary**: Thurgood audits but does not write domain-specific tests. He flags gaps for Ada (token tests) or Lina (component tests).
 
@@ -69,7 +71,7 @@ Test suite health, coverage analysis, test infrastructure standards, audit metho
 | **Sparky** | Web platform engineering | `ctrl+shift+w` | [Sarah Parks](https://www.linkedin.com/in/sarahparks/) |
 | **Kenya** | iOS platform engineering | `ctrl+shift+i` | [Kenya Hara](https://en.wikipedia.org/wiki/Kenya_Hara) |
 | **Data** | Android platform engineering | `ctrl+shift+d` | [Commander Data](https://en.wikipedia.org/wiki/Data_(Star_Trek)) |
-| **Stacy** | Product governance & QA | `ctrl+shift+g` | [Stacey Abrams](https://en.wikipedia.org/wiki/Stacey_Abrams) |
+| **Stacy** | Product governance, QA & execution-claims verification | `ctrl+shift+g` | [Stacey Abrams](https://en.wikipedia.org/wiki/Stacey_Abrams) |
 
 ### Leonardo — Product Architect
 
@@ -103,13 +105,15 @@ Jetpack Compose implementation, DesignerPunk token and component consumption, An
 
 **When to involve**: Android screen implementation, Jetpack Compose consumption patterns, Android accessibility, Android-specific platform questions.
 
-### Stacy — Product Governance & Quality Assurance
+### Stacy — Product Governance, Quality Assurance & Execution-Claims Verification
 
-Process quality, test coverage verification, cross-platform parity auditing, spec structure governance, and lessons-learned capture.
+Process quality, test coverage verification, cross-platform parity auditing, spec structure governance, lessons-learned capture, and execution-claims verification on both product and system specs.
 
-**Owns**: Product-level quality auditing, cross-platform parity verification, spec structure review, process compliance.
+**Owns**: Quality auditing, cross-platform parity verification, spec structure review, process compliance, claims audits (promised vs claimed vs shipped) with their firing events (LENS / CLOSEOUT / MIDPOINT / RELEASE / SYMPTOM / ARMING), and the claims-pass records.
 
-**When to involve**: Product quality audits, cross-platform parity checks, spec structure reviews, process compliance questions.
+**When to involve**: Quality audits (product or system), cross-platform parity checks, spec structure reviews, process compliance questions, claims passes and completion-claims findings, the tasks-round verifiability LENS.
+
+**Charter cut (Q5, ratified 2026-09-17)**: Stacy owns execution-claims verification: auditing whether a completed task's claims match what actually shipped, on both product and system specs, and owning those findings and the events that fire them — against standards she does not author and checks she does not maintain. ("Was this claim verified?" → Stacy; "what is a completion doc required to contain?" → Thurgood.)
 
 ---
 
@@ -125,6 +129,8 @@ Process quality, test coverage verification, cross-platform parity auditing, spe
 | iOS implementation of a product screen | Kenya |
 | Android implementation of a product screen | Data |
 | Product quality audit | Stacy |
+| Execution-claims audit — was this claim verified? (any spec, product or system) | Stacy |
+| Completion-doc standards — what must a completion doc contain? | Thurgood |
 | Token test gap found during audit | Thurgood flags → Ada writes test |
 | Component test gap found during audit | Thurgood flags → Lina writes test |
 | Cross-platform consistency concern in product | Leonardo reviews → platform agents implement |

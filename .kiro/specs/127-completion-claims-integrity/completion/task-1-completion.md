@@ -84,3 +84,9 @@ The other eight declared artifacts shipped at their declared paths: `governance/
 - The law ballot: `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`
 - The verification review: `.kiro/specs/127-completion-claims-integrity/feedback/u1-ballot-review-stacy.md`
 - Summary: `docs/specs/127-completion-claims-integrity/task-1-summary.md`
+
+---
+
+## Erratum (2026-09-19, appended on the U3 branch — MIDPOINT pass F-1; Peter-merged with U3)
+
+The MIDPOINT claims pass (`claims-pass-midpoint.md` § F-1) found criterion 5's Evidence cell **not reproducible from this record**: it carries aggregate checklist results (`C8.1: 25/25`, `C8.2: 14/14`, `C8.6: 14/14`) while the per-element enumeration the criterion names is absent, and the same cell quotes the review's "all 12 C8.1 elements present" — two denominators at (presumably) different enumeration grains, neither stated. The 15-of-47 anchor spot-check corroborates the underlying content; **the counts themselves remain unreproducible as recorded, and this erratum does not reconstruct them post-hoc** — a count re-derived after the finding would be indistinguishable from a fitted one. The forward fix is the S-1 authoring convention (per-element checklists in the doc, not totals); the CLOSEOUT pilot re-audits this surface. Recorded per the remediation route: the record corrected honestly, in place, attributed.
