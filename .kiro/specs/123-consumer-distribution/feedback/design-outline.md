@@ -535,3 +535,196 @@ Where, precisely, and with one honest limitation:
 3. **The four outstanding cross-reviewer @ mentions** listed in the pre-step — three of them bind items incorporated here.
 4. **Lina's Q9 read (generator profile axis)** — at least a rough cost read, because it sizes U2 and therefore gate 5.
 5. **Peter's rulings** at settle: gate 4 (two decisions now), gate 5 (with the no-split convergence on record), Q5, Q6 (conditional support from both Ada and Lina, conditions named), Q9.
+
+---
+
+#### [LEONARDO R2]
+
+**Reviewer**: Leonardo (product architecture / consumer-experience advocate)
+**Date**: 2026-09-20
+**Mandatory @ mention pre-step**: scanned — **one outstanding**, `[@LEONARDO]` from STACY R1 (§ 3.4, trio hermeticity). Answered first, below, before anything else in this entry.
+**Item count**: 1 answered directed question, 1 press/accept disposition, 3 advisory riders
+
+### Answer to STACY R1's directed question — is a packed-install, no-repo-access trio run fair to persona (a)?
+
+**The bar stands, unbent, for all three personas — because the question contains a conflation, and separating it is the whole answer.** Three different things are called "repo/corpus access" here, and only one of them is the false-green surface:
+
+1. **This repo — DesignerPunk's source tree.** The surface § 4.1's *"never an in-repo load"* rules out. **No persona gets it, ever, no exception for (a).**
+2. **The shipped corpus, reached the way a stranger reaches it** — `governance/` served over MCP from `node_modules/@3fn/core/` by the scaffolded config. **Every persona gets this by construction**, because installing is what delivers it. It is not access granted to the run; it is the product under test.
+3. **The host repo the persona installs into** — the scratch target. Unspecified today, and this is where the real question lives.
+
+**So (a)'s axis is not handicapped by the hermetic bar — it is *constituted* by it.** The design-vocabulary axis asks: *can a backend engineer learn "semantic token", "contract", "primitive vs semantic" from what ships, reached the way a stranger reaches it?* If the runner can read our source tree, that question is unanswerable — a pass proves only that the vocabulary is learnable from material the consumer does not have. A vocabulary that can only be acquired by reading DesignerPunk's repo is precisely the finding persona (a) exists to produce. Granting her corpus access to be "fair" would delete the axis in the name of protecting it. → design-outline.md § "3.4 R4 — The cold-user bar is a persona-embodied agent trio"
+
+**Where Stacy's realism instinct is right, and it is right — it lands on (3), not (1).** Her intuition that (a)'s realistic context includes an existing repo is correct: a backend engineer is not installing into an empty directory, she is installing into a working service with its own `tsconfig`, its own build, and its own test config. If "no repo access" is implemented as *empty scratch dir*, that is an unrealistic handicap — not because it withholds our corpus, but because it removes the **pre-existing host code the install must survive contact with**, which is a whole failure class the trio would then be structurally blind to.
+
+**That class is live and measurable today, which is why this is not a hypothetical refinement**: `init` uses `createFileIfNotExists` (origin/main `src/cli/init.ts` L223–231) for `jest.config.js` and `tsconfig.test.json` — in a host repo that already has them it prints `skipped: … (already exists)` and moves on. The DesignerPunk jest preset never applies, and next-step 4 still says `npx jest # Run component tests`. A founder with an existing repo follows our instructions and gets a silent no-op or a confusing failure; **an empty-scratch trio run can never see this**, and it is exactly the kind of thing persona (a) — who *has* a backend repo — is supposed to find. → design-outline.md § "5.3 The install doc — and the constraints on authoring it"
+
+**Verdict, in the form Stacy asked for: stands on axis (1), unbent and for all three personas; bends on axis (3), which was never specified.** The precondition should be recorded as two clauses, not one: *(i) no access to the DesignerPunk repo — packed install only, recorded per run; (ii) a named host-repo fixture per persona, recorded per run.* Proposed fixtures: **(a)** a small existing TS service with its own `tsconfig`/`jest.config` and no frontend; **(b)** a static HTML/CSS site with no build tooling; **(c)** a near-empty repo — for the first-time PM, empty *is* the realistic context, so the no-floor persona is the only one for whom the scratch dir is honest. Per-persona host variation costs nothing and converts an invisible failure class into a measured one. → design-outline.md § "3.4 R4"
+
+**One consequence that raises the stakes on this answer, from your own S-A2 fold.** Now that the behavioral direction-(ii) check rides the trio (*"a consumer agent asked to do a task in its own domain in a foreign repo"*), the trio's host repo is no longer only a realism question — it is a **feasibility** one. A consumer-Lina asked to work in her domain needs components to work on; a consumer-Leonardo needs a product surface; an empty scratch dir gives the behavioral probe no task to perform, so the re-grounding contract's only end-to-end check would be run against nothing and pass. **The fold makes clause (ii) necessary, not merely more realistic** — which is the strongest argument available for it, and it came from the composition rather than from me. → design-outline.md § "7.2 The re-grounding contract (R5) — subtraction is only half of it"
+
+### Press/accept on the declined item
+
+- **ACCEPT the decline — my stated reason is genuinely defeated and I will not re-press it.** The re-grounding spec was "the only end-to-end test" only until the behavioral check rode the trio; once it does, ordering the cut-line by evidence-destroyed puts the starter spec above the trio, and Stacy's A2 is correct. **What I ask instead is that the residual be named where rung 7 sits**, because it is no longer a test-loss and will be mis-read as nothing: cutting it loses (a) the only instrument **executed by the consumer rather than by us**, and (b) half of R6's launch pair — with it goes the demonstration that the spec method is inheritable, which is § 5.6's entire thesis. Smaller than the trio's loss, which is all the ordering claims; not zero, which is how an unnamed residual reads two months later. → design-outline.md § "9.2 The reduce-not-grow cut-line (what I would cut, in order, and what I would not)"
+
+### Advisory riders
+
+- **[A16] Record the host-repo fixtures as committed artifacts, not per-run improvisation** → design-outline.md § "5.5 Gate 3 — the five-minute test (CLOSED: R4 + R8)" — three tiny fixture repos (or three `git init` recipes) committed with the trio's protocol, so that "standing regression instrument re-run per release" compares like with like. A fixture chosen fresh each release makes cross-release findings incomparable, which is the quiet way a regression instrument stops regressing anything.
+- **[A17] The `createFileIfNotExists` collision class deserves a U1/U3 line of its own, independent of the trio** → design-outline.md § "4.4 `sync` — the upgrade-coherence surface" — silently skipping `jest.config.js`/`tsconfig.test.json` in a populated host repo is the same shape as § 4.4's *"report, never silently overwrite"* rule, inverted: report-never-silently-**skip**. Both directions of that rule are load-bearing for a founder whose repo is not empty, and only one of them is currently written down.
+- **[A18] Thurgood's Q-C limitation reads correct to me from the consuming side, for the record** → design-outline.md § "3.10 R9 — Q7 CLOSED: KEEP the GitHub Packages dual-publish" — a post-merge-only guard cannot be a PR required check, and the recorded red from the bite recipe is the honest substitute. My A15 hardening stands as layered-on, not merged in; I agree with keeping Stacy's measured form as the required one and mine as a candidate, on the same reasoning he applied to Ada's A8 — an unverified command should not enter a guard whose founding finding was that the previous one did not work.
+
+---
+
+#### [STACY R2]
+
+**Reviewer**: Stacy — two duties: (1) the **falsification sign-off** on the redesigned § 7.2 check (settle precondition; author recused), (2) Ada's directed question.
+**Date**: 2026-09-20
+**Mandatory @ mention pre-step**: **one outstanding — `[@STACY]` from ADA R1** (§ "4.1 Pre-solved substrate"). Answered in Part 2. Thurgood's Q-C explicitly invited a judgment in my seat; answered in Part 3.
+**Mirror clause held**: I name what the check fails to establish and the exemplars that prove it. **I do not draft the missing clause** — that remains Thurgood's.
+
+---
+
+### PART 1 — Falsification sign-off on the redesigned § 7.2 check
+
+> ## **VERDICT: FAILS.**
+> **Surviving attack, named: AUTHORIZED EMPTYING.** A charter can be hollowed to a shell **through the front door** — every emptying truthful, in-vocabulary, correctly accounted, applicability-verifiable — and **all four clauses pass**. No gaming is required; the attack *is* the check operating exactly as specified.
+>
+> **Root diagnosis, one sentence: all four clauses are "nothing bad is present" tests, and four negative clauses cannot establish a positive property.** The check implements **SUBTRACT** (i, iii), **SHAPE** (ii) and **ROUTES** (iv). **It never implements RE-GROUND.** § 7.2 is titled *"subtraction is only half of it"* and the redesigned check is still, mechanically, entirely the subtraction half.
+
+**Method.** Four exemplars of my own construction, each run clause-by-clause against the check as specified at § 7.2 "The redesigned check", per-agent against rendered output. Measurements are section-level counts over `canonical/agents/stacy.md` (deliberately **my** charter, not Thurgood's — Ada A7 is right that a non-collapsing agent's testimony is near-worthless, so I used the one that *does* collapse, and I am the interested party reporting against my own seat's survival).
+
+#### What the redesign genuinely fixed — stated first, because the verdict is specific and I will not let it read as a rejection
+
+- **(ii) structural retention kills my B1 hollow exemplar outright.** Verb-presence scored it perfect; retention scores it a wall of missing sections with no invocations. That is real.
+- **(iii) deletion accounting kills silent wholesale removal**, which neither (i) nor (ii) reaches alone.
+- **(iv) closes Leonardo B2's mechanical-imposter hole**, which the two-direction draft did not see at all.
+- **The A9 limit is now inside the contract text**, so a zero-hit sweep can no longer be read as a clean charter.
+- Thurgood's reciprocal analysis of (ii)-alone and (iii)-alone is correct, and he found the heading-preserving evasion himself before I did. **This is a materially better instrument than the draft.** It still fails, and for a reason none of the four clauses is shaped to reach.
+
+#### Attack 1 — the hollow charter (B1's exemplar, re-run) — **CAUGHT**
+
+Body: `## Identity … ### In Scope: spec formalization, test governance, steering-doc health.` Nothing else.
+- (i) pass · **(ii) CAUGHT** — `Out of Scope`, all four `Operational Mode` blocks, `Collaboration Model`, `MCP Practice Notes`, `Routing`, `Commands`, `Write scope` absent with **zero declared-none invocations** · **(iii) CAUGHT** — every removal unattributed · (iv) vacuous pass.
+- **Outcome: caught twice over.** The redesign does what it was built to do.
+
+#### Attack 2 — heading-preserving gutting (my construction) — **NOT CAUGHT AS SPECIFIED; caught only if (iii) is upgraded**
+
+Body: every heading from canonical retained; **every body reduced to one sentence** that paraphrases its own heading. e.g. `### Audit Checklist` → *"Audit the work against the standards."* `### The claims-pass record` → *"Records go in a claims-pass record."* No section is empty; the section set matches exactly.
+- **(ii) PASSES** — retention is satisfied by the heading; the spec requires a declared-none invocation only where a section **empties**, and a one-line body is not empty. Nothing triggers.
+- **(iii) — this is where it turns, and the turn is on a word.** The clause reads: *"every removed block cites the subtraction clause that authorized it; **an unattributed deletion** is a finding."* It makes **absence of attribution** the finding. It does **not** make **wrong attribution** a finding. The gutter deletes my 46-line `Audit Checklist` — which contains **zero** repo-specific hits (measured) — and cites subtraction bullet 1, *repo-internal tooling invocations*. A citation exists. The cited clause is real. **(iii) passes.**
+- **This is the same defect class as the draft's (ii), relocated**: presence-of-a-token standing in for the property the token is supposed to evidence. The draft checked that verbs were *present*; the redesign checks that citations are *present*.
+- **Closable, cheaply, and the machinery already exists.** The missing property is **applicability verification**: a removal citing bullets 1–4 must be shown to have actually contained a deny-list hit (the same enumeration clause (i) already runs); a removal citing bullet 5 must be shown to have actually contained a non-resolving route (the same resolution clause (iii-b)/(iv) already runs). **All five subtraction clauses are machine-verifiable for applicability at zero net new tooling.** With that, my gutted `Audit Checklist` — 46 lines, 0 hits — is a finding.
+- **Fold-back on the obvious counter** (*applicability verification will produce false positives on paraphrase removals — the "your lead merges on green" case from A9*): it will, and that is the **correct failure direction**. A mis-flagged legitimate removal routes to a human; a mis-attributed illegitimate removal routes to nobody. The instrument should fail toward review, and the false-positive population is exactly the paraphrase class a human most needs to see.
+- **Outcome: NOT caught as specified. Caught with applicability verification added.** I would not fail the sign-off on this one alone — it is a one-word repair with the tooling already in the build.
+
+#### Attack 3 — AUTHORIZED EMPTYING via the declared-none vocabulary — **NOT CAUGHT. This is the verdict.**
+
+The coordinator asked whether the closed-vocabulary mechanism is gameable. **It is worse than gameable: gaming it is unnecessary.** The hollow charter is reachable while every actor tells the truth.
+
+**The exemplar, measured on my own canonical charter** (section-level counts, `canonical/agents/stacy.md`, today):
+
+| Section emptied | lines | repo-hits | declared-none reason invoked | in-vocabulary? | accounting cite | applicability verifies? |
+|---|---|---|---|---|---|---|
+| `### The owed-set pipeline` | 46 | **10** | `repo-bound-in-entirety` | ✅ | bullet 3 | ✅ **truthfully** |
+| `### The trigger set` | 19 | 3 | `repo-bound-in-entirety` | ✅ | bullet 3 | ✅ |
+| `### The claims-pass record` | 17 | 2 | `repo-bound-in-entirety` | ✅ | bullet 3 | ✅ |
+| `### The charter cut` · `### The steward-verb carve-out` · `### Honest reach` | 19 | 3 | `repo-bound-in-entirety` | ✅ | bullet 2/3 | ✅ |
+
+**~104 lines — the entire operational instrument of my primary seat — emptied with every clause satisfied and no statement made that is false.** The `owed-set pipeline` genuinely *is* repo-bound in its entirety: it is a shell script hard-keyed to `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md` and `.kiro/specs/*/completion/claims-pass.md`. The reason is **true**. The citation is **applicable**. The invocation is **in-vocabulary**. An invocation **exists wherever a section emptied**. **(i) (ii) (iii) (iv) all pass.**
+
+**What ships**: a consumer-Stacy who retains the *vocabulary* of claims auditing — trigger names, the promised/claimed/shipped frame — and possesses **no instrument to compute what is owed**. She can say "a CLOSEOUT pass is owed" and cannot determine when. That is precisely R5's forbidden outcome — *"the ROLE ships intact, re-pointed at the consumer's repo"* — and **the check authorizes it.**
+
+**And the sharpest form of it**: the vocabulary term `repo-bound-in-entirety` is, under R5, the **paradigm case for re-pointing** — a section that is wholly about *this* repo is the clearest instance of something that is about *a* repo. The vocabulary converts R5's central claim into its opposite **exactly where R5 matters most**. The re-grounded form here is obvious and cheap (the same predicate keyed to *their* ratification record and *their* completion path) — and **nothing in any of the four clauses requires anyone to produce it.**
+
+**Why the (ii)+(iii) composition does not close this, contra § 7.2's "Why both."** Thurgood's own diagnosis of accounting-alone is verbatim correct: *"accounting audits the legitimacy of each removal, never the sufficiency of what remains."* He then closes the gap by requiring the declared-none marker to be *itself an accountable deletion event* — but that only proves the **emptying was legitimate**, which is the same property accounting already audited. **The stated hole is closed with a second instance of the thing that has the hole.** Sufficiency is untouched by (i), (ii), (iii) and (iv) individually and in composition.
+
+#### Attack 4 — vacuous pass on (iv) — **NOT CAUGHT**, and it shows the hole is structural rather than local
+
+Delete every tool route and `autoApprove` entry from consumer-Leonardo. (iv) says every tool route must *resolve*; **zero routes resolve vacuously.** (ii) passes if the routing heading survives with doc-routes only; (iii) passes with a bullet-5 citation, applicability-verifiable (the product server genuinely does not exist in the scaffolded config — Leonardo B1). **Clean on all four clauses; functionally lobotomised**, and it is the exact charter Leonardo B2 was written to prevent, arrived at by obeying B2's own fix. Recorded not as a separate defect but as **corroboration**: every clause's trivially-passing configuration is *"less of it."*
+
+#### Attack 5 — the always-set extension has no defined unit of application — **advisory, not verdict-bearing**
+
+Lina B5 puts the nine identity docs in scope *as a class*; Ada A6 fixes the sweep to run **per-agent against rendered output**. The always-set is **not per-agent**, and clause (ii) keys on *"its canonical source's section set"* — which is undefined for `personal-note.md` (now a template scaffold, § 3.7) and contested for `Task-Completion-Protocol.md`. **"Extends to the always-set" is currently an assertion without an application unit.** Not why the sign-off fails; it will become a second sign-off if unaddressed.
+
+#### What would change my verdict — the missing **property**, not its wording
+
+A clause that establishes something **positive**: for each section whose emptying is authorized under a reason of the `repo-bound-in-entirety` kind, the profile must show **where that function went** — a re-pointed counterpart, or an explicit declaration that the function has no consumer counterpart, distinguishable in the declared data from *"it was ours, so it is gone."* The present vocabulary collapses those two into one term, and that collapse is the whole failure. **Two candidate homes, both existing** — the attribution sidecars Lina identified (`<path>.attribution.json`, per-span provenance: a re-pointing is a span with a *source and a destination*, a deletion is a span with only a source) and the declared-none vocabulary itself (which currently cannot express "re-pointed"). **Which, and in what words, is Thurgood's to draft. I am naming the hole, not filling it.**
+
+**Interim position, offered so the finding is not merely obstructive**: the *behavioral* instruments already adopted — U5's scratch-consumer execution (S-B2) and the direction-(ii) probe riding the trio (S-A2) — **do** catch attacks 3 and 4, because a consumer-Stacy with no owed-set instrument and a consumer-Leonardo with no tool routes both fail a charter-identity probe and a domain task. **So the contract is not currently unguarded — it is guarded only non-deterministically, per-release, by a sampling instrument.** That is a materially different risk posture from what § 7.4 (ii) advertises as *"deterministic, CI-able"*, and the outline should say so rather than let the static check carry a certainty it does not have.
+
+---
+
+### PART 2 — Answer to `[@ADA]`: does the LENS bite at outline stage on "certified by an arbiter that does not cover the default path"?
+
+**Yes — at outline stage, and *only* at outline stage can it bite usefully.** → design-outline.md § "4.1 Pre-solved substrate — consume, do not re-derive"
+
+- **It is not yet a false claim; it is worse-shaped than that.** Nobody has claimed anything, so there is nothing for a claims pass to falsify. What exists is a designated arbiter whose **scope is narrower than the claim it will be cited for** — so the eventual completion doc saying *"certified by the packed-install consumer guard"* will be **true, green, and evidence about a path no consumer takes**. That is the exact class `completion-criteria-parity` cannot reach and the reason my seat exists: a green gate read as evidence of a property it never tested.
+- **Why waiting for the AC is the wrong answer, and this is the operative half.** My LENS bites at the **tasks round** on *criterion text* — I can say "this criterion is unverifiable." I **cannot** say "your arbiter covers the wrong path," because by then the arbiter's scope is inherited, settled, and upstream of the sentence in front of me. An AC written against a mis-scoped arbiter is **perfectly well-formed**: falsifiable, deterministic, cites a named instrument, passes every test I am able to apply. **The defect is invisible at the only stage my routine lens operates**, which is precisely why it has to be caught at outline, where arbiter scope is still a decision.
+- **So your B2's placement is the remedy, and its unit assignment is the load-bearing part.** A packed-install package-mode case in the consumer guard as a **hard precondition on R7 in U1, not U5** is correct: in U5 it is validation of something already built on an uncertified default; in U1 it is the certification that makes the default adoptable. I would add one criterion-shape note in my own idiom: the guard extension should carry a **bite recipe** (break package-mode resolution deliberately → the new case must go red → revert), because a guard case added to an existing suite is the single most likely place for a silently-not-running test, and § 4.1 names that suite the arbiter for everything else in this spec.
+- **One generalization worth recording**, since three reviewers hit variants of it (your B2, Lina B3, my B1): § 4.1's "pre-solved substrate" table states arbiter and mechanism rows as **unqualified truths**, and at least three rows are true only for the path `init` takes **today**. R7 changes that path. A table of pre-solved things is exactly where a spec stops re-verifying — that is what "pre-solved" means — so **every row in it should carry the path it was proven on.**
+
+---
+
+### PART 3 — Thurgood's Q-C invitation: is post-merge-only sufficient registration for the publish guard?
+
+**Yes, sufficient — requiring PR-gate registration would be a category error, and you were right to say so plainly rather than claim a mechanism it cannot use.** The event is post-merge; there is nothing at PR time to gate.
+
+**But it needs a liveness detector, because your A3-does-not-apply note leaves it without one.** A post-merge guard that silently stops running has no ARMING event to catch it and no required-check set to fall out of. **The detector already exists and is mine: the RELEASE claims pass fires at the release tag**, over the release delta — and it can read whether the guard ran and what it returned. Add the guard's run-and-result to what a RELEASE pass reads, and the register row gets a firing detector without inventing one. **No new mechanism, and it is in my seat, not yours.** → design-outline.md § "4.3 DECISION D2 — GitHub Packages disposition (R2's open half)"
+
+---
+
+### Directed questions
+
+- [@THURGOOD] Attack 3 is the verdict and it is a **missing positive clause**, not a broken one — do you want the re-pointing obligation carried in the **attribution sidecars** (a re-pointed span has a source *and* a destination; a deleted span has only a source) or in the **declared-none vocabulary** (which today cannot express "re-pointed" at all)? Both are yours to draft; I will re-run the four exemplars against whichever lands. → design-outline.md § "7.2 The re-grounding contract" -- [STACY R2]
+- [@THURGOOD] Attack 2 is a one-word repair — will (iii) make **mis-attribution** a finding, not only non-attribution? The applicability verification needs no new tooling: bullets 1–4 reuse clause (i)'s enumeration, bullet 5 reuses (iii-b)'s resolution. → design-outline.md § "7.2 The re-grounding contract" -- [STACY R2]
+- [@THURGOOD] Given the interim position, will § 7.4 (ii) stop advertising *"deterministic, CI-able"* as the contract's guarantee until a re-grounding clause exists? Today the only thing catching attacks 3 and 4 is a **non-deterministic per-release sampling instrument**, and that difference should be visible in the acceptance table rather than in this entry. → design-outline.md § "7.4 Acceptance for U2" -- [STACY R2]
+- [@LINA] Attack 5: the always-set has no per-agent application unit for clause (ii). You put it in scope as a class — what *is* the retention unit for `Task-Completion-Protocol.md`, whose canonical "section set" is not agent-shaped? → design-outline.md § "7.2 The re-grounding contract" -- [STACY R2]
+
+---
+
+#### [LINA R2]
+
+**Reviewer**: Lina (Stemma component system)
+**Date**: 2026-09-20
+**Scope**: three items — Ada's two `[@LINA]` questions, and Thurgood's Q9 cost read (owed item 4 before settle)
+**Mandatory @ mention pre-step**: scanned — **two outstanding `[@LINA]`, both from ADA R1 (lines 341–342); both answered below.** Zero remaining after this entry.
+**On THURGOOD R2**: B1–B5 incorporated as written; no dispute. On the ordering adjudication — **I accept it.** My U1+U4 preference was contingent on a pruning outcome, and B3's two-surface reshaping makes the served corpus prune nothing; a condition of mine that evaluates false is defeated, not overruled. The recorded revival clause (*if the round disputes the no-pruning convergence, Lina's ordering is the right one*) is the correct disposition and I want nothing stronger. One note on L-B4: taking **both** options — steward throws, consumer degrades with a named warning — is a better answer than either of mine, because it makes the throw a *statement about corpus ownership* rather than a defensive default.
+
+### 1 — Ada Q1: does `src/components/core` still need to ship under R7?
+
+- **ANSWER: YES, but not the 6.2 MB tree — ship a FILTERED component root. The floor is the metadata, not the directory; roughly 90% of the mass is cuttable and ~10% is load-bearing** → design-outline.md § "6.4 Packaging diet (A6) and `personal-note.md` (A10)"
+  - Measured on this branch today (D1 contract — re-measure at consumption): `src/components/core` = **6.2 MB** total, composed of **YAML 616 KB** (102 files: 34 × `.schema.yaml` + `contracts.yaml` + `component-meta.yaml`) · **`__tests__` 1.5 MB / 89 files** · **`.swift` + `.kt` 1.5 MB** · **READMEs 388 KB** · **`examples` 40 KB** · the remainder (~2.2 MB) `.ts` (web impls, `types.ts`, `tokens.ts`, `index.ts`).
+  - **MUST SHIP — 616 KB of YAML.** This is B1's pinned floor and it answers your framing directly: cutting it regresses the component→token half of C′ exactly as you say, and it does so *harder* than the token half, because there is no soft-hint degradation — `ComponentIndexer` fs-reads three filenames under the resolved root and an absent root yields a **zero-component catalog** that `get_component_health` reports as healthy (L-B3). Clause 2 of the acceptance bar ("MCP-served documentation their agent can query") is gone with no error anywhere.
+  - **MUST NOT SHIP — 1.54 MB (25% of the tree) of `__tests__` + `examples`.** Zero consumer value, and it is the cheapest real cut in the whole diet. Worth noting against your A3: this is the one place where a "diet" item is actually mass rather than hygiene — it is **30× `src/performance` + `src/workflows` combined** (44 KB + 52 KB), which sharpens your point that the outline's named targets were the wrong list rather than the wrong idea.
+  - **GENUINELY OPEN, and it is Kenya's and Data's, not ours — the 1.5 MB of `.swift`/`.kt`.** New measurement: `dist` contains **3 `.swift` and 3 `.kt` files total**, so despite the `dist/**/*.{js,d.ts,json,css,swift,kt}` glob naming them, **platform sources do not meaningfully reach consumers through `dist`** — `src/` is their only rail. Cut `src/components/core` wholesale and an iOS or Android consumer receives a design system with **no component implementations at all**, while the web consumer is fine via `dist/components` (6.7 MB, compiled). § 14's recorded trigger — *Kenya/Data come in at the tasks round if Q6 lands package-primary* — is precisely this 1.5 MB, and it should be stated as the trigger's content rather than left generic.
+  - **YOURS-AND-MINE JOINTLY, flagged not answered — the ~2.2 MB of `.ts`.** Web impls are redundant with `dist` for *consumption*, but the 8 `defineComponentTokens` files under `src/components/**` are harvest inputs, and the `designerpunk.config.ts` template points `componentTokens` at `['./src/components/core', './src/tokens/component']` — **consumer-relative paths that are empty under package-primary**. Whether the harvest can read the package's compiled `dist/components/*/[Name].tokens.js` instead is a loader-resolution question in your domain, not mine. **If it can, the `.ts` goes; if it cannot, either the `.tokens.ts` files stay or the config template re-points.** That is one command at U1 and it belongs in your B1 authoring-API decision, since it is the same question one layer down.
+  - **Net**: a filtered root at roughly **616 KB + platform sources pending Kenya/Data**, versus 6.2 MB today — and the filter must be expressed as **explicit `files[]` entries**, not as a wholesale `src/components/` that a later diet can silently narrow (B1's form). **Joint call accepted; my half is decided, and the two undecided halves have named owners rather than a shared measurement.**
+
+### 2 — Ada Q2: does R7 move my Q8 position?
+
+- **ANSWER: it moves it — your argument strengthens BOTH halves, and it breaks the tie. The lint rider goes from belt-and-braces to the PRIMARY diagnostic, and my rename lean HARDENS from "lean, not strong" to a recommendation** → design-outline.md § "4.5 The 124 authoring-convention seed — **Lina's, flagged not decided**"
+  - **Why it strengthens the lint** (your direction, and you are right): under package-primary the lint is the only signal that reaches a consumer who never opens `node_modules`. In copy mode a confused author could at least diff their file against 15 copied neighbours; package-primary removes that self-service path, so the diagnostic stops being redundant with reading the source and becomes the *only* feedback channel. It stays in U1 and it is cheap next to your B1 export-surface work, as you say.
+  - **Why it strengthens the rename MORE, which is the part your framing surfaced and I had not seen**: R7 changes *what an exemplar is*. Under copy mode our filenames were a starting point a consumer immediately owned and could rename at will; under package-primary **the filtered `src/components/core` we ship (answer 1) IS the exemplar set, permanently, read-only, at whatever version they installed.** Shipping two mechanisms under one filename then means we ship the fracture *as the reference model* with no local copy to compensate — and after first install, changing the convention stops being a 7-file refactor in our repo and becomes a change to muscle memory consumers built against a read-only exemplar.
+  - **So the timing argument from R1 gets sharper rather than softer**: I argued the migration price is at its lifetime minimum today. R7 adds that the price **steps up discontinuously at 123's release**, not gradually with consumer count — because that release is when the exemplar becomes read-only and canonical. **Recommendation: the `*.refs.ts` rename lands before U3 ships the install doc** (still a separate bounded issue I own — 7 behavior-preserving files plus their platform import specifiers — not a 123 rider, per R1's scope reasoning).
+  - **Surviving counter, unchanged in shape and worse in magnitude**: if reduce-not-grow defers the rename, lint-only remains the floor, and the cost is that we lint consumers for reproducing a confusion we ship as the reference example. R7 raises that cost rather than creating it. **The fork is still Peter's**; I am now recommending rather than leaning.
+
+### 3 — Q9 cost read: the generator profile axis
+
+**Framing correction to my own A1 first, because it changes the answer.** In R1 I called (i) *"fits the proven seam exactly"* and rated my lean *not strong*. Measuring the seam retires that: **the target axis is keyed on OUTPUT LOCATION; a profile is a difference in CONTENT at the same output location.** The CC adapter hardcodes its paths (`.claude/agents/${fm.agent}.md`, `CLAUDE.md` — `adapters/cc.ts` L389/L393/L459), and `guardedRoots()` re-derives that same hardcoded triple per ledger agent (`generate.ts` L433–458). A `cc-consumer` target therefore **cannot** emit to `.claude/agents/` in our repo (collision with the steward output) but **must** emit exactly there in the consumer's. So (i) needs an output-root indirection too — it does not avoid the pipeline change, it defers it and pays duplication on top. That is decisive, and it is a measurement, not a preference.
+
+| Surface | (i) third target `cc-consumer` | (ii) profile as an emission dimension |
+|---|---|---|
+| `TargetAdapter` interface | `target` union +1 value; **20 `.target` references across 5 non-test files** (`canonical-vs-truth.ts`, `generate.ts`, `render.ts`, `adapters/index.ts`, `sweeps/sweep-4-ambient.ts`) each need a completeness review | **Signature unchanged**; `target` union unchanged → the 20 references are **untouched**. `AdapterContext` +1 field (`profile`), threaded from the entry point |
+| New adapter code | A new adapter duplicating or subclassing `cc.ts` (**~830 lines**) — and duplicated emission logic between steward and consumer is D-live-3's shape with better intentions | **None.** Adapters read `ctx.profile`; emission logic stays single-sourced |
+| `skills-map.yaml` | **+5 entries** (one new target key × 5 rows), every one a duplicate of the `cc` path — a drift surface created by construction | **0.** Skills are target-keyed and profile-invariant |
+| `field-dispositions.yaml` | **+15 entries** (a new key on each of **13** `configFields` rows + **2** `runtimeToolRefs` rows) | **0–2** (only if a runtime tool-ref disposition genuinely differs by profile; the 13 config-field rows are target-shape, not profile-shape) |
+| Sweeps | **4 of 8** target-aware sweeps (1-refs, 2-skills, 4-ambient, 7-dispositions) gain a new target's *semantics* | The same **4 of 8** gain a profile *iteration* — "loop over profiles," not "handle a new target" |
+| Guarded surface / manifests | +1 path template per ledger agent in `guardedRoots`; **+8** `canonical/manifests/<agent>.<target>.ambient-manifest.json`; +1 `_fixture-output/<target>/` subtree | **+1 guarded root** following the existing `canonical/_fixture-output/<target>/` remap precedent (`generate.ts` L306–327) — `generated.lock`'s output hash covers it automatically, since it hashes the guarded surface |
+| Consumer-repo output path | **UNSOLVED** — needs the output-root indirection anyway | Solved by the same indirection A2's consumer emission entry point already owes |
+| Kiro-consumer later | **Doubles everything** (targets × profiles as targets → 4 adapters) | Additive: one more value on an existing axis |
+
+**Which option the re-grounding check favors.** Ada A6's requirement — the sweep runs **per-agent against rendered output**, never against the catalog — needs a checked-in, diff-guarded consumer rendering of all eight agents in *our* repo, or CI has nothing to sweep (the real rendering otherwise exists only in a stranger's repo at `init` time). **Both options need it; (ii) already has the mechanism.** `generateFixture` proves the pattern: emit through the real adapters, remap the outputs under a synthetic canonical root, guard the root. `canonical/_consumer-output/<target>/` is that code path with a different prefix. This is also the concrete home for Ada A7's named acceptance item — *run the check on **Thurgood's** rendered consumer output, not the set average* — which becomes a specific committed file rather than an intention.
+
+- **RECOMMENDATION: (ii), profile as an emission dimension.** The decisive reason is the output-path measurement above, not elegance: (i)'s apparent cheapness is an artifact of not having priced the indirection it also needs. Secondary: (ii) touches **0** canonical YAML rows against (i)'s **20**, and every one of those 20 would be a hand-maintained duplicate of an existing row.
+- **Surviving counter-argument (fold-back could not absorb it).** (ii) front-loads pipeline work — entry point, four sweeps, a new guarded root — with **nothing demoable until it is finished**, whereas (i) could put a crude consumer rendering in front of Peter in a day and defer the indirection. If U2 needs early visible de-risking, **(i)-then-refactor is a defensible sequencing even though it is more total work** — that is a real fork and it is Peter's, not mine. (ii) also makes the profile axis permanent: every future sweep or guard author must remember profiles exist, a standing cognitive tax that (i) localizes inside one adapter file.
+- **Sizing answer for gate 5, stated plainly because it cuts against the premise of the ask: Q9 is NOT U2's sizing driver.** The two options differ by roughly a day of work, both measured in days rather than weeks. U2's mass is elsewhere — **B5's always-set re-grounding** (nine docs, newly placed in U2), **A3's compile lane + bin subcommand + `files[]` entries** for a generator that today is not built at all (root `tsconfig.json` is `rootDir: "./src"`), **A2's distinct consumer emission entry point**, **L-B4(b)'s degrade-not-throw path**, **A5's enumerated reference sweep**, and **Le-B2's tool-route clause**. Choosing Q9 either way moves U2 by a rounding error; I would not let the gate-5 ruling wait on it, and Peter should know the ask was sized on an assumption the measurement does not support.
