@@ -46,9 +46,13 @@ BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
 RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
 [ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
 echo "ratification date: $RATIFIED"
+# Boundary PINNED TO MIDNIGHT: a bare date resolves via git approxidate to the date
+# at the CURRENT time of day, silently dropping same-day-earlier merges from stage 1a
+# (CLOSEOUT pilot F-1, 2026-09-19 — the owed-set's first wrong result, repaired in all
+# three copies in one commit).
 
 # Stage 1a — every spec with post-ratification merge activity on main's first-parent line
-SPECS=$(git log --first-parent --since="$RATIFIED" --name-only --pretty=format: -- '.kiro/specs/' \
+SPECS=$(git log --first-parent --since="$RATIFIED 00:00" --name-only --pretty=format: -- '.kiro/specs/' \
         | sed -n 's|^\.kiro/specs/\([^/]*\)/.*|\1|p' | sort -u)
 echo "specs with post-ratification merge activity: $(echo "$SPECS" | grep -c .)"
 
@@ -60,7 +64,7 @@ for S in $SPECS; do
     || grep -qE '^\*\*Merge units \(' "$T" 2>/dev/null \
     || grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
   else
-    n=$(git log --first-parent --oneline --since="$RATIFIED" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
+    n=$(git log --first-parent --oneline --since="$RATIFIED 00:00" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
     if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
   fi
   # Stage 2 — the final anchor's merge commit and date
