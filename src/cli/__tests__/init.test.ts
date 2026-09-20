@@ -118,7 +118,10 @@ describe('CLI init — integration', () => {
       await runInitIn(scratchDir);
 
       // File-based scaffolds (createFileIfNotExists)
-      expect(fs.existsSync(path.join(scratchDir, '.npmrc'))).toBe(true);
+      // Regression guard: init must NOT scaffold an .npmrc — a @3fn scope
+      // mapping silently pins the consumer to GitHub Packages (npm-primary
+      // ruled 2026-09-20; .kiro/issues/archive/2026-09-20-init-npmrc-registry-pin.md)
+      expect(fs.existsSync(path.join(scratchDir, '.npmrc'))).toBe(false);
       expect(fs.existsSync(path.join(scratchDir, 'designerpunk.config.ts'))).toBe(true);
       expect(fs.existsSync(path.join(scratchDir, 'product/overview.yaml'))).toBe(true);
 

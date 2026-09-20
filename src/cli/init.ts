@@ -39,12 +39,9 @@ export async function runInit(argv: string[]): Promise<void> {
   const pkgRoot = resolvePackageRoot(__dirname);
   const dest = process.cwd();
 
-  // 1. .npmrc
-  createFileIfNotExists(
-    path.join(dest, '.npmrc'),
-    '@3fn:registry=https://npm.pkg.github.com\n',
-    '.npmrc',
-  );
+  // No .npmrc scaffold: @3fn resolves from public npm (the primary registry,
+  // ruled 2026-09-20). A scoped registry mapping here would silently pin every
+  // consumer to GitHub Packages — see .kiro/issues/archive/2026-09-20-init-npmrc-registry-pin.md
 
   // 2. designerpunk.config.ts
   createFileIfNotExists(
@@ -175,11 +172,10 @@ export async function runInit(argv: string[]): Promise<void> {
 Your product "${opts.name}" is ready.
 
 Next steps:
-  1. Set GITHUB_TOKEN env var (read:packages scope)
-  2. npm install
-  3. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
-  4. npx designerpunk generate      # Generate platform tokens
-  5. npx jest                        # Run component tests
+  1. npm install
+  2. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
+  3. npx designerpunk generate      # Generate platform tokens
+  4. npx jest                        # Run component tests
 
 To customize your visual language:
   • Edit src/tokens/ to change base values and design intent
