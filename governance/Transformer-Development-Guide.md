@@ -381,13 +381,14 @@ style.effects = [{
   type: 'TEXT',
   name: 'typography.bodySm',
   properties: {
-    fontFamily: 'Inter',       // resolved from {fontFamily.fontFamilyBody}
-    fontSize: 12,              // resolved from {fontSize.fontSize075}
+    // resolved from {fontFamily.fontFamilyBody} — the full stack, not just the first family
+    fontFamily: 'Figtree, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
+    fontSize: 14,              // resolved from {fontSize.fontSize075}
     fontWeight: 400,           // resolved from {fontWeight.fontWeight400}
-    lineHeight: 16,            // resolved from {lineHeight.lineHeight075}
+    lineHeight: 1.429,         // resolved from {lineHeight.lineHeight075} — a unitless ratio
     letterSpacing: 0           // resolved from {letterSpacing.letterSpacing100}
   },
-  description: 'Source: typography.bodySm — Small body typography'
+  description: 'Source: typography.bodySm — Small body typography with 14px font size, 1.429 line height, body font family, normal weight'
 }
 ```
 

@@ -22,20 +22,20 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('Android Font Resource Availability', () => {
-  const interFontPath = path.join(__dirname, '../inter');
+  const figtreeFontPath = path.join(__dirname, '../figtree/static');
   const rajdhaniFontPath = path.join(__dirname, '../rajdhani');
 
   describe('Font resources exist in res/font/ (Requirement 8.1)', () => {
-    test('Inter font files exist for Android resources', () => {
-      const requiredInterFonts = [
-        'Inter-Regular.ttf',
-        'Inter-Medium.ttf',
-        'Inter-SemiBold.ttf',
-        'Inter-Bold.ttf'
+    test('Figtree font files exist for Android resources', () => {
+      const requiredFigtreeFonts = [
+        'Figtree-Regular.ttf',
+        'Figtree-Medium.ttf',
+        'Figtree-SemiBold.ttf',
+        'Figtree-Bold.ttf'
       ];
 
-      requiredInterFonts.forEach(fontFile => {
-        const filePath = path.join(interFontPath, fontFile);
+      requiredFigtreeFonts.forEach(fontFile => {
+        const filePath = path.join(figtreeFontPath, fontFile);
         expect(fs.existsSync(filePath)).toBe(true);
       });
     });
@@ -55,19 +55,19 @@ describe('Android Font Resource Availability', () => {
     });
 
     test('all 8 font files are TTF format', () => {
-      const interFiles = fs.readdirSync(interFontPath)
+      const figtreeFiles = fs.readdirSync(figtreeFontPath)
         .filter(f => f.endsWith('.ttf'));
       const rajdhaniFiles = fs.readdirSync(rajdhaniFontPath)
         .filter(f => f.endsWith('.ttf'));
 
-      expect(interFiles.length).toBeGreaterThanOrEqual(4);
+      expect(figtreeFiles.length).toBeGreaterThanOrEqual(4);
       expect(rajdhaniFiles.length).toBeGreaterThanOrEqual(4);
     });
 
     test('font files are non-empty', () => {
       const allFonts = [
-        ...['Inter-Regular.ttf', 'Inter-Medium.ttf', 'Inter-SemiBold.ttf', 'Inter-Bold.ttf']
-          .map(f => path.join(interFontPath, f)),
+        ...['Figtree-Regular.ttf', 'Figtree-Medium.ttf', 'Figtree-SemiBold.ttf', 'Figtree-Bold.ttf']
+          .map(f => path.join(figtreeFontPath, f)),
         ...['Rajdhani-Regular.ttf', 'Rajdhani-Medium.ttf', 'Rajdhani-SemiBold.ttf', 'Rajdhani-Bold.ttf']
           .map(f => path.join(rajdhaniFontPath, f))
       ];
@@ -92,10 +92,10 @@ describe('Android Font Resource Availability', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
       const androidResourceNames = [
-        'inter_regular.ttf',
-        'inter_medium.ttf',
-        'inter_semibold.ttf',
-        'inter_bold.ttf',
+        'figtree_regular.ttf',
+        'figtree_medium.ttf',
+        'figtree_semibold.ttf',
+        'figtree_bold.ttf',
         'rajdhani_regular.ttf',
         'rajdhani_medium.ttf',
         'rajdhani_semibold.ttf',
@@ -122,8 +122,8 @@ describe('Android Font Resource Availability', () => {
       const docsPath = path.join(__dirname, '../../../../docs/platform-integration/android-font-setup.md');
       const content = fs.readFileSync(docsPath, 'utf-8');
       
-      expect(content).toContain('cp src/assets/fonts/inter/Inter-Regular.ttf');
-      expect(content).toContain('app/src/main/res/font/inter_regular.ttf');
+      expect(content).toContain('cp src/assets/fonts/figtree/static/Figtree-Regular.ttf');
+      expect(content).toContain('app/src/main/res/font/figtree_regular.ttf');
     });
   });
 });
@@ -140,14 +140,14 @@ describe('Android FontFamily Object Instantiation', () => {
       expect(content).toContain('FontWeight.');
     });
 
-    test('interFamily FontFamily object documented', () => {
+    test('figtreeFamily FontFamily object documented', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
-      expect(content).toContain('val interFamily = FontFamily(');
-      expect(content).toContain('Font(R.font.inter_regular, FontWeight.Normal)');
-      expect(content).toContain('Font(R.font.inter_medium, FontWeight.Medium)');
-      expect(content).toContain('Font(R.font.inter_semibold, FontWeight.SemiBold)');
-      expect(content).toContain('Font(R.font.inter_bold, FontWeight.Bold)');
+      expect(content).toContain('val figtreeFamily = FontFamily(');
+      expect(content).toContain('Font(R.font.figtree_regular, FontWeight.Normal)');
+      expect(content).toContain('Font(R.font.figtree_medium, FontWeight.Medium)');
+      expect(content).toContain('Font(R.font.figtree_semibold, FontWeight.SemiBold)');
+      expect(content).toContain('Font(R.font.figtree_bold, FontWeight.Bold)');
     });
 
     test('rajdhaniFamily FontFamily object documented', () => {
@@ -182,7 +182,7 @@ describe('Android FontFamily Object Instantiation', () => {
     test('documentation includes descriptive comments', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
-      expect(content).toContain('Inter Font Family');
+      expect(content).toContain('Figtree Font Family');
       expect(content).toContain('Body font for general text content');
       expect(content).toContain('Rajdhani Font Family');
       expect(content).toContain('Display font for headings');
@@ -195,7 +195,7 @@ describe('Android FontFamily Object Instantiation', () => {
       
       expect(content).toContain('Text(');
       expect(content).toContain('fontFamily = rajdhaniFamily');
-      expect(content).toContain('fontFamily = interFamily');
+      expect(content).toContain('fontFamily = figtreeFamily');
     });
 
     test('Rajdhani usage examples for display typography', () => {
@@ -207,10 +207,10 @@ describe('Android FontFamily Object Instantiation', () => {
       expect(content).toContain('Label Text');
     });
 
-    test('Inter usage examples for body typography', () => {
+    test('Figtree usage examples for body typography', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
-      expect(content).toContain('fontFamily = interFamily');
+      expect(content).toContain('fontFamily = figtreeFamily');
       expect(content).toContain('Body text content');
       expect(content).toContain('Detailed description');
     });
@@ -249,11 +249,11 @@ describe('Android FontFamily Object Instantiation', () => {
       expect(content).toContain('headlineSmall');
     });
 
-    test('body typography uses Inter', () => {
+    test('body typography uses Figtree', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
       expect(content).toContain('bodyLarge = TextStyle(');
-      expect(content).toContain('fontFamily = interFamily');
+      expect(content).toContain('fontFamily = figtreeFamily');
       expect(content).toContain('bodyMedium');
       expect(content).toContain('bodySmall');
     });
@@ -355,10 +355,10 @@ describe('Android Font Weight Mapping', () => {
       expect(content).toContain('fontWeight = FontWeight.Bold');
     });
 
-    test('weight usage with Inter examples', () => {
+    test('weight usage with Figtree examples', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
-      expect(content).toContain('fontFamily = interFamily');
+      expect(content).toContain('fontFamily = figtreeFamily');
       expect(content).toContain('fontWeight = FontWeight.Normal');
     });
   });
@@ -436,7 +436,7 @@ describe('Android Font Verification', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
       expect(content).toContain('println');
-      expect(content).toContain('R.font.inter_regular');
+      expect(content).toContain('R.font.figtree_regular');
       expect(content).toContain('R.font.rajdhani_bold');
     });
 
@@ -444,7 +444,7 @@ describe('Android Font Verification', () => {
       const content = fs.readFileSync(docsPath, 'utf-8');
       
       expect(content).toContain('try {');
-      expect(content).toContain('FontFamily(Font(R.font.inter_regular))');
+      expect(content).toContain('FontFamily(Font(R.font.figtree_regular))');
       expect(content).toContain('Font loaded successfully');
       expect(content).toContain('catch (e: Exception)');
     });
@@ -472,10 +472,10 @@ describe('Android Font Verification', () => {
       expect(content).toContain('Rajdhani Medium');
       expect(content).toContain('Rajdhani SemiBold');
       expect(content).toContain('Rajdhani Bold');
-      expect(content).toContain('Inter Regular');
-      expect(content).toContain('Inter Medium');
-      expect(content).toContain('Inter SemiBold');
-      expect(content).toContain('Inter Bold');
+      expect(content).toContain('Figtree Regular');
+      expect(content).toContain('Figtree Medium');
+      expect(content).toContain('Figtree SemiBold');
+      expect(content).toContain('Figtree Bold');
     });
   });
 });
@@ -591,9 +591,9 @@ describe('Android Font Configuration Completeness', () => {
     const content = fs.readFileSync(docsPath, 'utf-8');
     
     expect(content).toContain('Summary');
-    expect(content).toContain('Inter');
+    expect(content).toContain('Figtree');
     expect(content).toContain('Rajdhani');
-    expect(content).toContain('interFamily');
+    expect(content).toContain('figtreeFamily');
     expect(content).toContain('rajdhaniFamily');
     expect(content).toContain('Roboto');
   });

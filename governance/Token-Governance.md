@@ -495,6 +495,8 @@ C. Something else?"
 }
 ```
 
+**`baselineGridAlignment` predicate**: `true` iff the token's `baseValue` is an exact multiple of 8 **and** the token's family participates in the baseline grid (dimensional families: spacing, radius, sizing, blur, shadow offset, tap area, font size). Families that do not participate (border width, breakpoint, density, and all non-dimensional families) always carry `false`, meaning "not applicable." Values on the 4-unit subgrid (4, 12, 20) are `false` — they are valid values, not grid-aligned ones. Enforced by `src/tokens/__tests__/BaselineGridAlignmentFlag.test.ts`.
+
 **Detailed guide**: See `.kiro/specs/token-system/token-category-pattern-guide.md`
 
 ---

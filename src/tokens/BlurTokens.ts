@@ -17,7 +17,9 @@
  * - blur200: 32   (base × 2)
  * - blur250: 40   (base × 2.5)
  *
- * All values are multiples of 4 (baseline grid aligned).
+ * All values are multiples of 4 (the 4-unit subgrid). The `baselineGridAlignment`
+ * flag tracks the 8-unit baseline grid, so the 4/12/20 steps carry `false` — see
+ * the predicate on `PrimitiveToken.baselineGridAlignment`.
  */
 
 import { PrimitiveToken, TokenCategory, PlatformValues } from '../types/PrimitiveToken';
@@ -52,7 +54,7 @@ export const blur: Record<string, PrimitiveToken> = {
     familyBaseValue: BLUR_BASE_VALUE,
     description: 'Blur 025 - minimal blur',
     mathematicalRelationship: `base × 0.25 = ${BLUR_BASE_VALUE} × 0.25 = ${BLUR_BASE_VALUE * 0.25}`,
-    baselineGridAlignment: true,
+    baselineGridAlignment: false, // 4-unit subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateBlurPlatformValues(BLUR_BASE_VALUE * 0.25)
@@ -76,7 +78,7 @@ export const blur: Record<string, PrimitiveToken> = {
     familyBaseValue: BLUR_BASE_VALUE,
     description: 'Blur 075 - moderate blur',
     mathematicalRelationship: `base × 0.75 = ${BLUR_BASE_VALUE} × 0.75 = ${BLUR_BASE_VALUE * 0.75}`,
-    baselineGridAlignment: true,
+    baselineGridAlignment: false, // 4-unit subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateBlurPlatformValues(BLUR_BASE_VALUE * 0.75)
@@ -100,7 +102,7 @@ export const blur: Record<string, PrimitiveToken> = {
     familyBaseValue: BLUR_BASE_VALUE,
     description: 'Blur 125 - strong blur',
     mathematicalRelationship: `base × 1.25 = ${BLUR_BASE_VALUE} × 1.25 = ${BLUR_BASE_VALUE * 1.25}`,
-    baselineGridAlignment: true,
+    baselineGridAlignment: false, // 4-unit subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateBlurPlatformValues(BLUR_BASE_VALUE * 1.25)

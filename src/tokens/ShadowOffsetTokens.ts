@@ -51,7 +51,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Sunrise shadow offset - large left offset',
     mathematicalRelationship: 'base × -3 = 4 × -3 = -12',
-    baselineGridAlignment: true, // 12 is 4px baseline grid aligned
+    baselineGridAlignment: false, // 4-unit shadow subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * -3)
@@ -64,7 +64,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Strategic flexibility - medium-large left offset',
     mathematicalRelationship: 'base × -2 = 4 × -2 = -8',
-    baselineGridAlignment: true, // 8 is 4px baseline grid aligned
+    baselineGridAlignment: true, // 8 aligns with the 8-unit baseline grid
     isStrategicFlexibility: true,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * -2)
@@ -77,7 +77,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Morning shadow offset - medium left offset',
     mathematicalRelationship: 'base × -1.5 = 4 × -1.5 = -6',
-    baselineGridAlignment: false, // 6 is not 4px baseline grid aligned (strategic flexibility)
+    baselineGridAlignment: false, // 6 is a strategic flexibility value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: true,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * -1.5)
@@ -90,7 +90,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Strategic flexibility - small left offset',
     mathematicalRelationship: 'base × -1 = 4 × -1 = -4',
-    baselineGridAlignment: true, // 4 is 4px baseline grid aligned
+    baselineGridAlignment: false, // 4-unit shadow subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: true,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * -1)
@@ -103,7 +103,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Noon shadow offset - no horizontal offset',
     mathematicalRelationship: 'base × 0 = 4 × 0 = 0',
-    baselineGridAlignment: true, // 0 is baseline grid aligned
+    baselineGridAlignment: true, // 0 aligns with the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(0)
@@ -116,7 +116,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Strategic flexibility - small right offset',
     mathematicalRelationship: 'base × 1 = 4 × 1 = 4',
-    baselineGridAlignment: true, // 4 is 4px baseline grid aligned
+    baselineGridAlignment: false, // 4-unit shadow subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: true,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE)
@@ -129,7 +129,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Dusk shadow offset - medium right offset',
     mathematicalRelationship: 'base × 1.5 = 4 × 1.5 = 6',
-    baselineGridAlignment: false, // 6 is not 4px baseline grid aligned (strategic flexibility)
+    baselineGridAlignment: false, // 6 is a strategic flexibility value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: true,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * 1.5)
@@ -142,7 +142,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Strategic flexibility - medium-large right offset',
     mathematicalRelationship: 'base × 2 = 4 × 2 = 8',
-    baselineGridAlignment: true, // 8 is 4px baseline grid aligned
+    baselineGridAlignment: true, // 8 aligns with the 8-unit baseline grid
     isStrategicFlexibility: true,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * 2)
@@ -155,7 +155,7 @@ export const shadowOffsetX: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Sunset shadow offset - large right offset',
     mathematicalRelationship: 'base × 3 = 4 × 3 = 12',
-    baselineGridAlignment: true, // 12 is 4px baseline grid aligned
+    baselineGridAlignment: false, // 4-unit shadow subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * 3)
@@ -181,7 +181,7 @@ export const shadowOffsetY: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'No vertical offset - flat surface with no shadow',
     mathematicalRelationship: 'base × 0 = 4 × 0 = 0',
-    baselineGridAlignment: true, // 0 is baseline grid aligned
+    baselineGridAlignment: true, // 0 aligns with the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(0)
@@ -194,7 +194,7 @@ export const shadowOffsetY: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Depth 100 / Noon - short shadow',
     mathematicalRelationship: 'base × 1 = 4 × 1 = 4',
-    baselineGridAlignment: true, // 4 is 4px baseline grid aligned
+    baselineGridAlignment: false, // 4-unit shadow subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE)
@@ -207,7 +207,7 @@ export const shadowOffsetY: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Depth 200 - medium shadow',
     mathematicalRelationship: 'base × 2 = 4 × 2 = 8',
-    baselineGridAlignment: true, // 8 is 4px baseline grid aligned
+    baselineGridAlignment: true, // 8 aligns with the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * 2)
@@ -220,7 +220,7 @@ export const shadowOffsetY: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Morning/Dusk - medium-long shadow',
     mathematicalRelationship: 'base × 3 = 4 × 3 = 12',
-    baselineGridAlignment: true, // 12 is 4px baseline grid aligned
+    baselineGridAlignment: false, // 4-unit shadow subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * 3)
@@ -233,7 +233,7 @@ export const shadowOffsetY: Record<string, PrimitiveToken> = {
     familyBaseValue: SHADOW_OFFSET_BASE_VALUE,
     description: 'Depth 300 / Sunrise/Sunset - long shadow',
     mathematicalRelationship: 'base × 4 = 4 × 4 = 16',
-    baselineGridAlignment: true, // 16 is 4px baseline grid aligned
+    baselineGridAlignment: true, // 16 aligns with the 8-unit baseline grid (8 × 2)
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateShadowOffsetPlatformValues(SHADOW_OFFSET_BASE_VALUE * 4)

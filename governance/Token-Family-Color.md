@@ -269,7 +269,7 @@ These calculations can inform color strategy but don't produce tokens. Document 
 | Constraint | Rule | Applies To |
 |-----------|------|------------|
 | Lightness monotonicity | L[n] > L[n+1] for adjacent steps | All families |
-| Minimum step distance | \|L[n] - L[n+1]\| ≥ 0.08 (`MIN_STEP_DISTANCE`) | Chromatic families |
+| Minimum step distance | \|L[n] - L[n+1]\| ≥ the family class's floor (`MIN_STEP_DISTANCE`) | All families, per class |
 | Chroma monotonicity (300→500) | C[n] ≥ C[n+1] for steps 300→500 | Chromatic families |
 | sRGB gamut compliance | Resolved oklch(L,C,H) within sRGB | All tokens |
 | P3 gamut awareness | Resolved value exceeds sRGB | Warning (not error) |
@@ -277,9 +277,20 @@ These calculations can inform color strategy but don't produce tokens. Document 
 | Neutral chroma ceiling | C ≤ 0.035 (`NEUTRAL_CHROMA_CEILING`) | White, gray, black |
 | Neutral partition gaps | White→gray ≥0.08, gray→black ≥0.04 | Neutral families |
 
-**Scope note.** The minimum-step-distance rule holds only for the chromatic families. The neutral scales are deliberately finer — white steps 0.05 apart, black steps 0.07 — so they satisfy monotonicity and the partition gaps, but not `MIN_STEP_DISTANCE`. Neutral spacing is governed by the partition-gap rules instead.
+**Scope note.** The minimum step distance is scoped per family class, because the neutral bands are narrower by construction than the chromatic ones:
 
-**Enforcement note.** These constraints are defined and unit-tested, but `OklchValidator` is not currently wired into the generation pipeline — it is not run over the shipped families on build. Treat the table as the authoring contract, not as an automated gate.
+| Family class | Floor | Band |
+|--------------|-------|------|
+| Chromatic (7 families) | 0.08 | wide lightness range |
+| White | 0.05 | L 1.00 → 0.80 (0.05 per step) |
+| Gray | 0.08 | L 0.72 → 0.32 (0.10 per step) |
+| Black | 0.07 | L 0.28 → 0.00 (0.07 per step) |
+
+These are floors, not targets. A single chromatic-calibrated constant would report a violation on a correct white scale, so `MIN_STEP_DISTANCE` is a per-class map and `validateLightnessScale` takes the family class.
+
+**Enforcement note.** These constraints are enforced by the standing token test suites, which the PR gate runs: `src/tokens/__tests__/chromatic-channels.test.ts` validates all seven chromatic families through `validateFamily`, and `src/tokens/__tests__/neutral-partition.test.ts` validates the white/gray/black partition, chroma ceilings, and lightness scales. A channel edit that breaks a constraint fails CI.
+
+The validator is deliberately **not** wired into `npm run build` / `build:validate`: a consumer building from source should not have their build fail over the ecosystem's own color math. Authorship errors belong in the authoring repo's test lane.
 
 ---
 

@@ -228,7 +228,7 @@ Text("Standard paragraph text uses Figtree at 16px.")
 <!-- Android -->
 Text(
     text = "Standard paragraph text uses Figtree at 16px.",
-    fontFamily = interFamily,
+    fontFamily = figtreeFamily,
     fontSize = 16.sp,
     fontWeight = FontWeight.Normal
 )
@@ -274,7 +274,7 @@ Text(
 
 Text(
     text = "Smaller Heading in Rajdhani",
-    fontFamily = interFamily,
+    fontFamily = rajdhaniFamily,
     fontSize = 26.sp,
     fontWeight = FontWeight.SemiBold
 )
@@ -306,7 +306,7 @@ Button("Click Me") {
 Button(onClick = { /* action */ }) {
     Text(
         text = "Click Me",
-        fontFamily = interFamily,
+        fontFamily = figtreeFamily,
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium
     )
@@ -344,7 +344,7 @@ TextField("", text: $email)
 <!-- Android -->
 Text(
     text = "Email Address",
-    fontFamily = interFamily,
+    fontFamily = figtreeFamily,
     fontSize = 16.sp,
     fontWeight = FontWeight.Medium
 )
@@ -353,7 +353,7 @@ TextField(
     value = email,
     onValueChange = { email = it },
     textStyle = TextStyle(
-        fontFamily = interFamily,
+        fontFamily = figtreeFamily,
         fontSize = 16.sp
     )
 )
@@ -382,7 +382,7 @@ TextField(
     onValueChange = { inputText = it },
     placeholder = { Text("Enter text...") },
     textStyle = TextStyle(
-        fontFamily = interFamily,
+        fontFamily = figtreeFamily,
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal
     )
@@ -421,14 +421,14 @@ Text("Hero Heading")
 <!-- Android -->
 Text(
     text = "Image caption text",
-    fontFamily = interFamily,
+    fontFamily = figtreeFamily,
     fontSize = 13.sp,
     fontWeight = FontWeight.Light
 )
 
 Text(
     text = "Terms and conditions apply",
-    fontFamily = interFamily,
+    fontFamily = figtreeFamily,
     fontSize = 13.sp
 )
 
@@ -527,10 +527,10 @@ res/font/
   rajdhani_medium.ttf
   rajdhani_semibold.ttf
   rajdhani_bold.ttf
-  inter_regular.ttf
-  inter_medium.ttf
-  inter_semibold.ttf
-  inter_bold.ttf
+  figtree_regular.ttf
+  figtree_medium.ttf
+  figtree_semibold.ttf
+  figtree_bold.ttf
 ```
 
 **FontFamily Configuration**:
@@ -542,11 +542,11 @@ val rajdhaniFamily = FontFamily(
     Font(R.font.rajdhani_bold, FontWeight.Bold)
 )
 
-val interFamily = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semibold, FontWeight.SemiBold),
-    Font(R.font.inter_bold, FontWeight.Bold)
+val figtreeFamily = FontFamily(
+    Font(R.font.figtree_regular, FontWeight.Normal),
+    Font(R.font.figtree_medium, FontWeight.Medium),
+    Font(R.font.figtree_semibold, FontWeight.SemiBold),
+    Font(R.font.figtree_bold, FontWeight.Bold)
 )
 ```
 

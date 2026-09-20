@@ -97,8 +97,15 @@ describe('Bundler Resolution', () => {
     });
 
     it('should have font exports', () => {
-      expect(packageJson.exports['./fonts/inter.css']).toBe('./src/assets/fonts/inter/inter.css');
+      expect(packageJson.exports['./fonts/figtree.css']).toBe('./src/assets/fonts/figtree/figtree.css');
       expect(packageJson.exports['./fonts/rajdhani.css']).toBe('./src/assets/fonts/rajdhani/rajdhani.css');
+      expect(packageJson.exports['./fonts/commit-mono.css']).toBe('./src/assets/fonts/commit-mono/commit-mono.css');
+    });
+
+    it('should NOT export the retired Inter font assets', () => {
+      // Inter was replaced by Figtree as the body font (Spec 107); the assets were
+      // deleted once nothing live consumed them.
+      expect(packageJson.exports['./fonts/inter.css']).toBeUndefined();
     });
 
     it('should NOT have legacy BlendUtilities export', () => {
@@ -151,8 +158,13 @@ describe('Bundler Resolution', () => {
     });
 
     it('should have font CSS files at export paths', () => {
-      expect(fs.existsSync(path.join(PROJECT_ROOT, 'src', 'assets', 'fonts', 'inter', 'inter.css'))).toBe(true);
+      expect(fs.existsSync(path.join(PROJECT_ROOT, 'src', 'assets', 'fonts', 'figtree', 'figtree.css'))).toBe(true);
       expect(fs.existsSync(path.join(PROJECT_ROOT, 'src', 'assets', 'fonts', 'rajdhani', 'rajdhani.css'))).toBe(true);
+      expect(fs.existsSync(path.join(PROJECT_ROOT, 'src', 'assets', 'fonts', 'commit-mono', 'commit-mono.css'))).toBe(true);
+    });
+
+    it('should not ship the retired Inter font directory', () => {
+      expect(fs.existsSync(path.join(PROJECT_ROOT, 'src', 'assets', 'fonts', 'inter'))).toBe(false);
     });
   });
 

@@ -93,6 +93,34 @@ describe('Neutral partition validation (Spec 112 R2)', () => {
         }
       }
     });
+
+    // The neutral bands were previously outside validateLightnessScale's reach: its
+    // minimum step distance was a single chromatic-calibrated constant (0.08), which a
+    // narrow band like white (0.05 per step) cannot satisfy. The floor is now scoped per
+    // family class, so the neutral scales get the same validator treatment the chromatic
+    // families already get.
+    it.each([
+      ['white', wL, 'white'],
+      ['gray', gL, 'gray'],
+      ['black', bL, 'black'],
+    ] as const)('%s lightness scale passes validateLightnessScale for its family class', (_n, scale, familyClass) => {
+      const result = validator.validateLightnessScale(scale, familyClass, familyClass);
+      expect(result.errors).toEqual([]);
+      expect(result.valid).toBe(true);
+    });
+
+    it('flags a neutral scale that violates its own class floor', () => {
+      // white's floor is 0.05 — a 0.02 step must be reported
+      const result = validator.validateLightnessScale([1.0, 0.98, 0.93, 0.88, 0.83], 'white', 'white');
+      expect(result.valid).toBe(false);
+      expect(result.errors[0]).toContain('white minimum');
+    });
+
+    it('does not apply the chromatic floor to neutral bands', () => {
+      // The same white scale fails under the chromatic class — the scoping is load-bearing
+      expect(validator.validateLightnessScale(wL, 'white', 'chromatic').valid).toBe(false);
+      expect(validator.validateLightnessScale(wL, 'white', 'white').valid).toBe(true);
+    });
   });
 
   describe('shared neutralHue', () => {

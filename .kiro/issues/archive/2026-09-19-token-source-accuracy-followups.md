@@ -24,3 +24,13 @@
 ## Corpus-wide residual (unowned surface, named)
 
 The **Inter→Figtree drift almost certainly exists outside the token docs** (Spec 107 landed without a documentation sweep; the pass cleaned only its own 19-doc surface). A corpus grep for `Inter` across the other ~66 served docs is a cheap first probe whenever anyone opens this.
+
+---
+
+## CLOSED (2026-09-19) — all eight items resolved; Peter's rulings recorded
+
+**Rulings**: F6 — Peter ruled the WCAG-accurate reading (44pt = SC 2.5.5 Level AAA; the AA minimum is SC 2.5.8's 24×24, WCAG 2.2); applied across TapAreaTokens, Token-Family-Accessibility, Token-Family-Responsive, the AccessibilityTokens README, and the `validateTapAreaAccessibility` thresholds (a behavior change to an exported, zero-call-site function — accepted as the ruling applied consistently, flagged in the PR for veto). F7 — Peter ruled the Inter assets deadweight; deleted with the full ~4×-larger-than-briefed reference surface reconciled (package export, exports snapshot, four font test suites cut over to Figtree, both platform-integration guides corrected).
+
+**Resolutions**: F1 nine wrong line-height descriptions corrected + a tenth found (labelMdFloat — see residuals). F2 **premise falsified**: OklchValidator was never pipeline-dead (enforced via chromatic-channels + neutral-partition suites on every PR); the real gap — no step-check on neutral bands — closed with per-class MIN_STEP_DISTANCE (white 0.05 / gray 0.08 / black 0.07) + forced-negative and scoping tests; deliberately NOT wired into build:validate (consumer builds shouldn't fail on authoring math; residual: the prepack path runs build without tests — recorded, Peter may overrule, ~20 lines). F3/F4 — no `wcag` mode exists in the DTCG output at all; `collectModes()` now derives declarations from payload; dark overrides flow to Figma (9 tokens with distinct dark values, was 0); dark ships as resolved literal not alias (downstream alias-pair extraction can't express per-mode aliasing) — documented limitation. F5 — predicate settled to the enforcing code's own definition (multiple-of-8 AND participating family); 13 sub-grid flags corrected; standing 14-test guard added; generated artifacts zero-diff. F8 (Lina) — Button-CTA minWidth now references size700/900/1000 (values byte-identical, 110 tests green).
+
+**Second-order residuals**: `2026-09-19-accuracy-pass-residuals.md`.

@@ -316,6 +316,144 @@ describe('FigmaTransformer — Variable Transformation', () => {
       const variable = collections[0].variables[0];
       expect(variable.valuesByMode.light).toEqual(variable.valuesByMode.dark);
     });
+
+    it('applies the dark-mode override when the DTCG token carries modes.dark', () => {
+      const dtcg: DTCGTokenFile = {
+        $schema: 'https://tr.designtokens.org/format/',
+        semanticColor: {
+          $type: 'color',
+          'color.text.default': {
+            $value: '{color.gray300}',
+            $type: 'color',
+            $extensions: {
+              designerpunk: {
+                family: 'color',
+                modes: {
+                  light: 'oklch(0.52 0.02 260)',
+                  dark: 'oklch(1 0 260)',
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const variable = transformer.transformVariables(dtcg)[0].variables[0];
+      // light keeps the primitive alias — the primitive→semantic link survives
+      expect(variable.valuesByMode.light).toEqual({ aliasOf: 'color/gray/300' });
+      // dark carries the override, converted from oklch to the hex Figma expects
+      expect(variable.valuesByMode.dark).toBe('#FFFFFF');
+    });
+
+    it('converts an alpha-carrying oklch override to 8-digit hex', () => {
+      const dtcg: DTCGTokenFile = {
+        $schema: 'https://tr.designtokens.org/format/',
+        semanticColor: {
+          $type: 'color',
+          'color.structure.border.subtle': {
+            $value: '{color.gray100}',
+            $type: 'color',
+            $extensions: {
+              designerpunk: {
+                family: 'color',
+                modes: {
+                  light: 'oklch(0.72 0.018 260 / 0.48)',
+                  dark: 'oklch(0.32 0.015 260 / 0.48)',
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const variable = transformer.transformVariables(dtcg)[0].variables[0];
+      expect(variable.valuesByMode.dark).toMatch(/^#[0-9A-F]{8}$/);
+    });
+
+    it('preserves an alias-form mode override as a Figma alias', () => {
+      const dtcg: DTCGTokenFile = {
+        $schema: 'https://tr.designtokens.org/format/',
+        semanticColor: {
+          $type: 'color',
+          'color.text.default': {
+            $value: '{color.gray300}',
+            $type: 'color',
+            $extensions: {
+              designerpunk: {
+                family: 'color',
+                modes: { dark: '{color.white100}' },
+              },
+            },
+          },
+        },
+      };
+
+      const variable = transformer.transformVariables(dtcg)[0].variables[0];
+      expect(variable.valuesByMode.dark).toEqual({ aliasOf: 'color/white/100' });
+    });
+
+    it('falls back to the base value when a mode override cannot be parsed', () => {
+      const dtcg: DTCGTokenFile = {
+        $schema: 'https://tr.designtokens.org/format/',
+        semanticColor: {
+          $type: 'color',
+          'color.text.default': {
+            $value: '{color.gray300}',
+            $type: 'color',
+            $extensions: {
+              designerpunk: {
+                family: 'color',
+                modes: { dark: 'not-a-color' },
+              },
+            },
+          },
+        },
+      };
+
+      const variable = transformer.transformVariables(dtcg)[0].variables[0];
+      expect(variable.valuesByMode.dark).toEqual({ aliasOf: 'color/gray/300' });
+    });
+
+    it('declares exactly the modes its variables carry', () => {
+      const dtcg: DTCGTokenFile = {
+        $schema: 'https://tr.designtokens.org/format/',
+        semanticColor: {
+          $type: 'color',
+          'color.text.default': {
+            $value: '{color.gray300}',
+            $type: 'color',
+            $extensions: {
+              designerpunk: {
+                family: 'color',
+                modes: { dark: '{color.white100}', wcag: '{color.black100}' },
+              },
+            },
+          },
+        },
+      };
+
+      const collection = transformer.transformVariables(dtcg)[0];
+      expect(collection.modes).toEqual(['light', 'dark', 'wcag']);
+      for (const variable of collection.variables) {
+        expect(Object.keys(variable.valuesByMode).sort()).toEqual(
+          [...collection.modes].sort(),
+        );
+      }
+    });
+
+    it('does not declare a mode no variable carries', () => {
+      const dtcg: DTCGTokenFile = {
+        $schema: 'https://tr.designtokens.org/format/',
+        semanticColor: {
+          $type: 'color',
+          'color.text.default': { $value: '{color.gray300}', $type: 'color' },
+        },
+      };
+
+      const collection = transformer.transformVariables(dtcg)[0];
+      expect(collection.modes).toEqual(['light', 'dark']);
+      expect(collection.variables[0].valuesByMode).not.toHaveProperty('wcag');
+    });
   });
 
   // ─── Naming Conventions ──────────────────────────────────────────

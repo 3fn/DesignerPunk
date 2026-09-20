@@ -3,13 +3,28 @@
  *
  * Enforces:
  * - Lightness monotonicity (100→500 must decrease)
- * - Minimum step distance (≥0.08 between adjacent steps)
+ * - Minimum step distance between adjacent steps (per family class — see below)
  * - sRGB gamut compliance per token
  * - P3 gamut check (warning, not error)
  * - Chroma monotonicity for steps 300→500 (equal or decreasing)
  * - Hue consistency within a family
  * - Neutral chroma ceiling (C ≤ 0.035)
  * - Neutral partition buffer gaps
+ *
+ * **Where this is enforced**: the standing token test suites, which the PR gate runs —
+ * `src/tokens/__tests__/chromatic-channels.test.ts` (all 7 chromatic families through
+ * `validateFamily`) and `src/tokens/__tests__/neutral-partition.test.ts` (white/gray/black
+ * partition, chroma ceilings, and lightness scales). A color-family channel edit that
+ * violates a constraint fails CI. This validator is deliberately NOT wired into
+ * `npm run build` / `build:validate`: a consumer building from source should not have
+ * their build fail over the ecosystem's own color math — authorship errors belong in the
+ * authoring repo's test lane.
+ *
+ * **Minimum step distance is family-class-scoped.** 0.08 is calibrated for the chromatic
+ * families, whose five steps span a wide lightness range. The neutral bands are narrower
+ * by construction (white spans 1.00→0.80, black 0.28→0.00), so applying the chromatic
+ * threshold to them would report a violation where the scale is correct. Each class
+ * carries its own floor; see `MIN_STEP_DISTANCE`.
  *
  * @see Spec 112 R1 AC6, R2 AC4, R8 AC2-3
  */
@@ -27,9 +42,33 @@ export interface ColorFamily {
   hue: number;
   lightness: number[];  // steps 100-500 (index 0=100, 4=500)
   chroma: number[];     // steps 100-500
+  /** Family class for lightness-step calibration. Defaults to 'chromatic'. */
+  familyClass?: ColorFamilyClass;
 }
 
-const MIN_STEP_DISTANCE = 0.08;
+/**
+ * Family classes for lightness-scale validation. Chromatic families share one set of
+ * constraints; each neutral band has its own, because the bands are narrow by design.
+ */
+export type ColorFamilyClass = 'chromatic' | 'white' | 'gray' | 'black';
+
+/**
+ * Minimum lightness distance between adjacent steps, per family class.
+ *
+ * - chromatic (0.08): five steps across a wide lightness range
+ * - white (0.05): band spans 1.00 → 0.80, so 0.05 per step
+ * - gray (0.08): band spans 0.72 → 0.32, so 0.10 per step — the chromatic floor holds
+ * - black (0.07): band spans 0.28 → 0.00, so 0.07 per step
+ *
+ * These are floors, not targets: a family may exceed its floor freely.
+ */
+export const MIN_STEP_DISTANCE: Record<ColorFamilyClass, number> = {
+  chromatic: 0.08,
+  white: 0.05,
+  gray: 0.08,
+  black: 0.07,
+};
+
 const NEUTRAL_CHROMA_CEILING = 0.035;
 
 export class OklchValidator {
@@ -38,7 +77,11 @@ export class OklchValidator {
     const errors: string[] = [];
     const warnings: string[] = [];
 
-    const lResult = this.validateLightnessScale(family.lightness, family.name);
+    const lResult = this.validateLightnessScale(
+      family.lightness,
+      family.name,
+      family.familyClass ?? 'chromatic'
+    );
     errors.push(...lResult.errors);
     warnings.push(...lResult.warnings);
 
@@ -59,19 +102,31 @@ export class OklchValidator {
     return { valid: errors.length === 0, errors, warnings };
   }
 
-  /** Validate lightness scale: must be monotonically decreasing with min step ≥0.08. */
-  validateLightnessScale(steps: number[], familyName = ''): ValidationResult {
+  /**
+   * Validate a lightness scale: monotonically decreasing, with adjacent steps at least
+   * the family class's minimum distance apart.
+   *
+   * `familyClass` defaults to `'chromatic'` — the calibration this method was written
+   * against. Neutral bands must pass their own class, or a correct narrow band reports
+   * a false violation.
+   */
+  validateLightnessScale(
+    steps: number[],
+    familyName = '',
+    familyClass: ColorFamilyClass = 'chromatic'
+  ): ValidationResult {
     const errors: string[] = [];
     const warnings: string[] = [];
     const prefix = familyName ? `${familyName}: ` : '';
+    const minStep = MIN_STEP_DISTANCE[familyClass];
 
     for (let i = 1; i < steps.length; i++) {
       if (steps[i] >= steps[i - 1]) {
         errors.push(`${prefix}Lightness not monotonically decreasing: step ${(i) * 100}(${steps[i - 1]}) → step ${(i + 1) * 100}(${steps[i]})`);
       }
       const distance = steps[i - 1] - steps[i];
-      if (distance > 0 && distance < MIN_STEP_DISTANCE - 1e-10) {
-        errors.push(`${prefix}Lightness step distance ${distance.toFixed(3)} < ${MIN_STEP_DISTANCE} between steps ${i * 100} and ${(i + 1) * 100}`);
+      if (distance > 0 && distance < minStep - 1e-10) {
+        errors.push(`${prefix}Lightness step distance ${distance.toFixed(3)} < ${minStep} (${familyClass} minimum) between steps ${i * 100} and ${(i + 1) * 100}`);
       }
     }
 

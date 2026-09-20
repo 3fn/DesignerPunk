@@ -11,6 +11,8 @@
  */
 
 import { describe, it, expect, beforeAll, afterEach } from '@jest/globals';
+import * as fs from 'fs';
+import * as path from 'path';
 
 describe('Web Font Loading', () => {
   // Mock document.fonts API for testing
@@ -93,45 +95,45 @@ describe('Web Font Loading', () => {
     });
   });
 
-  describe('Inter Font Loading', () => {
-    it('should load Inter Regular (400) successfully', async () => {
-      await document.fonts.load('16px Inter');
+  describe('Figtree Font Loading', () => {
+    it('should load Figtree Regular (400) successfully', async () => {
+      await document.fonts.load('16px Figtree');
       
-      const isLoaded = document.fonts.check('16px Inter');
+      const isLoaded = document.fonts.check('16px Figtree');
       expect(isLoaded).toBe(true);
     });
 
-    it('should load Inter Medium (500) successfully', async () => {
-      await document.fonts.load('500 16px Inter');
+    it('should load Figtree Medium (500) successfully', async () => {
+      await document.fonts.load('500 16px Figtree');
       
-      const isLoaded = document.fonts.check('500 16px Inter');
+      const isLoaded = document.fonts.check('500 16px Figtree');
       expect(isLoaded).toBe(true);
     });
 
-    it('should load Inter SemiBold (600) successfully', async () => {
-      await document.fonts.load('600 16px Inter');
+    it('should load Figtree SemiBold (600) successfully', async () => {
+      await document.fonts.load('600 16px Figtree');
       
-      const isLoaded = document.fonts.check('600 16px Inter');
+      const isLoaded = document.fonts.check('600 16px Figtree');
       expect(isLoaded).toBe(true);
     });
 
-    it('should load Inter Bold (700) successfully', async () => {
-      await document.fonts.load('700 16px Inter');
+    it('should load Figtree Bold (700) successfully', async () => {
+      await document.fonts.load('700 16px Figtree');
       
-      const isLoaded = document.fonts.check('700 16px Inter');
+      const isLoaded = document.fonts.check('700 16px Figtree');
       expect(isLoaded).toBe(true);
     });
 
-    it('should load all Inter weights', async () => {
+    it('should load all Figtree weights', async () => {
       const weights = [400, 500, 600, 700];
       
       for (const weight of weights) {
-        await document.fonts.load(`${weight} 16px Inter`);
+        await document.fonts.load(`${weight} 16px Figtree`);
       }
       
       // Verify all weights loaded
       for (const weight of weights) {
-        const isLoaded = document.fonts.check(`${weight} 16px Inter`);
+        const isLoaded = document.fonts.check(`${weight} 16px Figtree`);
         expect(isLoaded).toBe(true);
       }
     });
@@ -154,13 +156,13 @@ describe('Web Font Loading', () => {
       expect(fontStack).toContain('sans-serif');
     });
 
-    it('should use fallback fonts when Inter unavailable', () => {
-      // Don't load Inter
-      const fontStack = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    it('should use fallback fonts when Figtree unavailable', () => {
+      // Don't load Figtree
+      const fontStack = 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
       
-      // Check if Inter is available
-      const interLoaded = document.fonts.check('16px Inter');
-      expect(interLoaded).toBe(false);
+      // Check if Figtree is available
+      const figtreeLoaded = document.fonts.check('16px Figtree');
+      expect(figtreeLoaded).toBe(false);
       
       // Verify fallback fonts are in stack
       expect(fontStack).toContain('-apple-system');
@@ -173,14 +175,14 @@ describe('Web Font Loading', () => {
     it('should gracefully degrade to system fonts', () => {
       // Simulate custom fonts not loading
       const rajdhaniLoaded = document.fonts.check('16px Rajdhani');
-      const interLoaded = document.fonts.check('16px Inter');
+      const figtreeLoaded = document.fonts.check('16px Figtree');
       
       expect(rajdhaniLoaded).toBe(false);
-      expect(interLoaded).toBe(false);
+      expect(figtreeLoaded).toBe(false);
       
       // System fonts should always be available (implicit in font stack)
       const displayStack = 'Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      const bodyStack = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      const bodyStack = 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
       
       // Verify fallback structure
       expect(displayStack.split(',').length).toBeGreaterThan(1);
@@ -203,14 +205,15 @@ describe('Web Font Loading', () => {
       // - No invisible text period (FOIT prevented)
     });
 
-    it('should use font-display: swap for Inter fonts', () => {
-      // This test verifies the CSS configuration
-      // In actual CSS: font-display: swap;
-      
-      const fontDisplayValue = 'swap';
-      expect(fontDisplayValue).toBe('swap');
-      
-      // Swap prevents FOIT by showing fallback immediately
+    it('should use font-display: swap for Figtree fonts', () => {
+      // Read the shipped CSS — swap is what prevents FOIT
+      const css = fs.readFileSync(
+        path.join(__dirname, '../figtree/figtree.css'),
+        'utf-8',
+      );
+
+      expect(css).toContain('font-display: swap');
+      expect(css).not.toContain('font-display: block');
     });
 
     it('should prevent FOIT (Flash of Invisible Text)', () => {
@@ -264,18 +267,19 @@ describe('Web Font Loading', () => {
       expect(woff2Index).toBeLessThan(ttfIndex);
     });
 
-    it('should prioritize WOFF2 format for Inter', () => {
-      // Verify WOFF2 is listed first in @font-face src
-      const fontSrc = `
-        url('./Inter-Regular.woff2') format('woff2'),
-        url('./Inter-Regular.ttf') format('truetype')
-      `;
-      
-      // WOFF2 should appear before TTF
-      const woff2Index = fontSrc.indexOf('woff2');
-      const ttfIndex = fontSrc.indexOf('truetype');
-      
-      expect(woff2Index).toBeLessThan(ttfIndex);
+    it('ships Figtree as a variable TTF (no static weight files)', () => {
+      // Read the shipped CSS rather than a literal: Figtree replaced Inter in Spec 107
+      // and ships as a single variable font with a weight axis, so there is no
+      // per-weight WOFF2/TTF pair to order.
+      const css = fs.readFileSync(
+        path.join(__dirname, '../figtree/figtree.css'),
+        'utf-8',
+      );
+
+      expect(css).toContain("font-family: 'Figtree'");
+      expect(css).toContain('Figtree-VariableFont_wght.ttf');
+      expect(css).toContain('font-weight: 300 900');
+      expect(css).not.toContain('woff2');
     });
 
     it('should provide TTF fallback for broader compatibility', () => {
@@ -286,14 +290,14 @@ describe('Web Font Loading', () => {
         url('./Rajdhani-Regular.ttf') format('truetype')
       `;
       
-      const interFontSrc = `
-        url('./Inter-Regular.woff2') format('woff2'),
-        url('./Inter-Regular.ttf') format('truetype')
-      `;
-      
+      const figtreeCss = fs.readFileSync(
+        path.join(__dirname, '../figtree/figtree.css'),
+        'utf-8',
+      );
+
       // Verify TTF format present
       expect(rajdhaniFontSrc).toContain('truetype');
-      expect(interFontSrc).toContain('truetype');
+      expect(figtreeCss).toContain("format('truetype')");
     });
   });
 
@@ -313,10 +317,10 @@ describe('Web Font Loading', () => {
     });
 
     it('should have correct body font stack', () => {
-      const bodyStack = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      const bodyStack = 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
       
-      // Verify Inter is primary
-      expect(bodyStack.startsWith('Inter')).toBe(true);
+      // Verify Figtree is primary
+      expect(bodyStack.startsWith('Figtree')).toBe(true);
       
       // Verify system font fallbacks
       expect(bodyStack).toContain('-apple-system');
@@ -328,7 +332,7 @@ describe('Web Font Loading', () => {
 
     it('should have identical fallback chains for display and body', () => {
       const displayStack = 'Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      const bodyStack = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      const bodyStack = 'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
       
       // Extract fallback portions (everything after first comma)
       const displayFallbacks = displayStack.split(',').slice(1).join(',');

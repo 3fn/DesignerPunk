@@ -6,7 +6,7 @@
  * iOS Font Configuration Tests
  * 
  * Validates that iOS font integration documentation is complete and accurate
- * for Inter and Rajdhani font families.
+ * for Figtree and Rajdhani font families.
  * 
  * Requirements: 7.1, 7.2
  */
@@ -22,17 +22,17 @@ describe('iOS Font Configuration', () => {
     expect(fs.existsSync(docsPath)).toBe(true);
   });
 
-  test('documentation includes all required Inter font files', () => {
+  test('documentation includes all required Figtree font files', () => {
     const content = fs.readFileSync(docsPath, 'utf-8');
     
-    const requiredInterFonts = [
-      'Inter-Regular.ttf',
-      'Inter-Medium.ttf',
-      'Inter-SemiBold.ttf',
-      'Inter-Bold.ttf'
+    const requiredFigtreeFonts = [
+      'Figtree-Regular.ttf',
+      'Figtree-Medium.ttf',
+      'Figtree-SemiBold.ttf',
+      'Figtree-Bold.ttf'
     ];
 
-    requiredInterFonts.forEach(fontFile => {
+    requiredFigtreeFonts.forEach(fontFile => {
       expect(content).toContain(fontFile);
     });
   });
@@ -73,7 +73,7 @@ describe('iOS Font Configuration', () => {
     
     expect(content).toContain('SwiftUI');
     expect(content).toContain('.custom("Rajdhani"');
-    expect(content).toContain('.custom("Inter"');
+    expect(content).toContain('.custom("Figtree"');
   });
 
   test('documentation includes UIKit usage examples', () => {
@@ -81,7 +81,7 @@ describe('iOS Font Configuration', () => {
     
     expect(content).toContain('UIKit');
     expect(content).toContain('UIFont(name: "Rajdhani-');
-    expect(content).toContain('UIFont(name: "Inter-');
+    expect(content).toContain('UIFont(name: "Figtree-');
   });
 
   test('documentation includes font weight mapping', () => {
@@ -145,7 +145,7 @@ describe('iOS Font Configuration', () => {
     const content = fs.readFileSync(docsPath, 'utf-8');
     
     expect(content).toContain('PostScript');
-    expect(content).toContain('Inter-Regular');
+    expect(content).toContain('Figtree-Regular');
     expect(content).toContain('Rajdhani-Regular');
   });
 
@@ -160,27 +160,27 @@ describe('iOS Font Configuration', () => {
 });
 
 describe('iOS Font File Validation', () => {
-  const interFontPath = path.join(__dirname, '../inter');
+  const figtreeFontPath = path.join(__dirname, '../figtree/static');
   const rajdhaniFontPath = path.join(__dirname, '../rajdhani');
 
-  test('Inter font directory exists', () => {
-    expect(fs.existsSync(interFontPath)).toBe(true);
+  test('Figtree font directory exists', () => {
+    expect(fs.existsSync(figtreeFontPath)).toBe(true);
   });
 
   test('Rajdhani font directory exists', () => {
     expect(fs.existsSync(rajdhaniFontPath)).toBe(true);
   });
 
-  test('Inter font files exist', () => {
+  test('Figtree font files exist', () => {
     const requiredFiles = [
-      'Inter-Regular.ttf',
-      'Inter-Medium.ttf',
-      'Inter-SemiBold.ttf',
-      'Inter-Bold.ttf'
+      'Figtree-Regular.ttf',
+      'Figtree-Medium.ttf',
+      'Figtree-SemiBold.ttf',
+      'Figtree-Bold.ttf'
     ];
 
     requiredFiles.forEach(file => {
-      const filePath = path.join(interFontPath, file);
+      const filePath = path.join(figtreeFontPath, file);
       expect(fs.existsSync(filePath)).toBe(true);
     });
   });
@@ -200,10 +200,10 @@ describe('iOS Font File Validation', () => {
   });
 
   test('all font files are TTF format', () => {
-    const interFiles = fs.readdirSync(interFontPath).filter(f => f.endsWith('.ttf'));
+    const figtreeFiles = fs.readdirSync(figtreeFontPath).filter(f => f.endsWith('.ttf'));
     const rajdhaniFiles = fs.readdirSync(rajdhaniFontPath).filter(f => f.endsWith('.ttf'));
 
-    expect(interFiles.length).toBeGreaterThanOrEqual(4);
+    expect(figtreeFiles.length).toBeGreaterThanOrEqual(4);
     expect(rajdhaniFiles.length).toBeGreaterThanOrEqual(4);
   });
 });
@@ -243,10 +243,10 @@ describe('iOS Font Configuration Completeness', () => {
       const arrayContent = arrayMatch[1];
       
       // Verify all 8 fonts are listed
-      expect(arrayContent).toContain('Inter-Regular.ttf');
-      expect(arrayContent).toContain('Inter-Medium.ttf');
-      expect(arrayContent).toContain('Inter-SemiBold.ttf');
-      expect(arrayContent).toContain('Inter-Bold.ttf');
+      expect(arrayContent).toContain('Figtree-Regular.ttf');
+      expect(arrayContent).toContain('Figtree-Medium.ttf');
+      expect(arrayContent).toContain('Figtree-SemiBold.ttf');
+      expect(arrayContent).toContain('Figtree-Bold.ttf');
       expect(arrayContent).toContain('Rajdhani-Regular.ttf');
       expect(arrayContent).toContain('Rajdhani-Medium.ttf');
       expect(arrayContent).toContain('Rajdhani-SemiBold.ttf');
