@@ -107,7 +107,9 @@ description: Essential pre-task checklist — date verification, governance heal
    
    **Default assumption**: Use `npm test` for parent tasks unless working on performance systems.
 
-6. **Model-tier calibration — when this task will delegate to subagents**
+6. **Delegation and model tier — before delegating, and before deciding whether to**
+   
+   **First ask WHETHER this work is yours to do at all** (Agent-Directory § "Primary Agent (Orchestrator)"). Then, for anything you do delegate:
    
    Before delegating to a subagent, choose its model tier by the task's cognitive demand — do NOT let it silently inherit the session model:
    - **Implementing** an already-settled design/spec/contract → the cheaper capable tier (currently **Sonnet**).
