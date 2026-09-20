@@ -808,3 +808,28 @@ education:
 history:
   - { date: 2026-09-19, change: "entry created by the orchestrator-role reassessment (.kiro/docs/ballots/2026-09-19-orchestrator-role-and-row.md). ORIGIN: one incident — Spec 127's formalization docs were authored by the main session in Thurgood's seat, with the format difference observed by Peter. THE DIAGNOSIS THAT MATTERS, recorded because it disproved the obvious remedy: Agent-Directory ALREADY assigned spec formalization to Thurgood in three places (:56 Owns, :60 the Q5 charter cut ratified 2026-09-17, :126 routing table), all Layer-1 and always-loaded, and it did not bind — so AVAILABILITY WAS NEVER THE FAILURE and adding more always-loaded text treats a disproven cause. What was missing was a statement of the ORCHESTRATOR'S OWN scope; the Agent-Directory claimed to cover 'all DesignerPunk AI agents' and omitted the one agent that directs the other eight. F11 RULED BY PETER: the section ships on the COMPLETENESS ground (a verified defect in a doc on its own stated terms), NOT on the hypothesis that second-person identity binds better than third-person ownership — that claim is recorded AS A HYPOTHESIS and is falsifiable: recurrence of seat-drift after this lands is evidence, routed to the claims-pass idiom dimension. NO ESCALATION IS PRE-COMMITTED, because there is nothing artifact-side to escalate to; proposing one would be the dishonesty this row is about. F15 adjudication: declined at Stacy's seat, 2026-09-19 — record: the standards-package ballot's annex (PR #185), both on main after both PRs merge. UNCOVERED RESIDUAL, recorded rather than absorbed: the sharpest case — owner-named work carrying NO delegated-tier note at all — is silent on every surface either seat owns (a missing note is not a false note), and both sessions hold that an idiom observation there would manufacture appearance-of-coverage, which is worse than the stated gap", by: thurgood }
 ```
+
+### delegated-tier-capture
+
+```yaml
+rule: "Every parent completion doc SHALL carry exactly one fixed-form `**Delegated-tier**:` line — `plan held`, or the planned→actual divergence form with its class — so that silence about WHO EXECUTED is not a recordable state"
+boundary_call:
+  class: functional
+  rationale: "THE SPLIT IS THE CLASSIFICATION'S SUBSTANCE: line PRESENCE and FORM are mechanically decidable (one anchored regex over the doc's header block — the grammar is fixed in the guide); line TRUTH is not — a false `plan held` is artifact-undetectable, and that residue belongs to owned-artifact-authorship (ideological, no check ever), not to this row. This row is the FALSIFIABLE PERIMETER around that ideological surface: it converts the F15 residual's passive half (omission — a missing note is not a false note) into visible non-compliance. TWO residual paths stay open, stated at the ballot's § 4: deliberate written falsification (owned-artifact-authorship's), and the truthful-`plan held`-against-an-accommodating-plan path — planning-time, NAMED AND UNOWNED by deliberate decision (a quietly widened seat is the F15 error re-run). ORIGIN: the F15 adjudication (2026-09-19) — Stacy declined the unfalsifiable idiom dimension and named delegated-tier accuracy as the under-used falsifiable surface inside her cut; Peter directed the duty drafted the same session"
+verification:
+  disposition: audit
+  owner: stacy
+  check_state: none
+  checks: []
+  # The audit: every claims pass verifies presence+form on every parent doc in the population
+  # (missing/free-prose = a FINDING on the authoring agent), verifies divergence forms against
+  # tasks.md execution routes + the planned `**Agent**:` stamp + git evidence, and spot-checks
+  # `plan held` lines at the pass's stated sample fraction. MECHANIZATION NAMED AND UNPROPOSED
+  # (the S-package precedent): completion-criteria-parity already parses every parent doc; a
+  # missing/malformed-line EMISSION (never a red — the doc-not-found shape) is cheap and remains
+  # a separate, registered proposal with a Stacy fixture if wanted.
+education:
+  disposition: "Law home: completion-documentation-guide § 'The delegated-tier line — unconditional' (forms, grammar, rationale, honest reach). Pointer-grade: Task-Completion-Protocol's Key-Rules bullet (rewritten from exception-based). The audit duty: canonical/agents/stacy.md § 'The claims-pass record' (the delegated-tier read + counting row). HONEST-REACH TEACHING RIDES THE LAW HOME: corpus-wide `plan held` is not evidence seats are respected — the active-falsification case is owned-artifact-authorship's, uncovered by design here"
+history:
+  - { date: 2026-09-19, change: "entry created by the delegated-tier-capture ballot (.kiro/docs/ballots/2026-09-19-delegated-tier-capture.md), drafted at Peter's in-session direction from the F15 adjudication's un-absorbed residual. The amendment: TCP's capture goes exception-based → UNCONDITIONAL ('a plan that held needs no note' was the missing-note gap's root — silence was ambiguous between plan-held and unrecorded divergence). The forced-negative pattern's third application (unmet criteria → promised artifacts → who-executed). Non-substring sweep at authoring: 28 live ids + this one, relations 0, dupes 0. Stacy's verifier-half review recorded in the ballot § 6 before submission", by: thurgood }
+```
