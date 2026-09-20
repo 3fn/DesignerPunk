@@ -834,3 +834,127 @@ Applicability verification reuses clause (i)'s enumeration and (iv)'s resolution
 
 - **D-live-5 is REPAIRED out-of-band** — PR #193 (`fix/init-tsconfig-src-repin`), record `.kiro/issues/archive/2026-09-20-init-tsconfig-src-repin.md` (born-closed), regression guard in `init.test.ts`, consumer-guard-verified. **The R2 routing call was correct and is now load-tested twice**: same discriminator as D-live-1 — *the spec is not the fix*. **Sync-side tsconfig repair joins U1's repair scope** alongside the registry-pin repair. The issue record also confirms a side benefit I had claimed as rationale: with consumers no longer type-resolving into `src/`, **`src/` can leave `files[]`** — the diet constraint is lifted rather than worked around.
 - **The § 8 probe — PARTIAL, and the partial is recorded as evidence rather than as a status.** **Setup half PASSED**, and the facts are worth having on their own: published `14.1.0` installs clean, the **no-init path works as Leonardo A9 specified**, the docs MCP **booted package-relatively with zero env wiring**, and it **served an 8-tool schema**. **Consumption half BLOCKED** on headless CLI auth (Peter's re-login pending). **Gate 4 remains probe-gated** — the setup half proves the mode is *enterable*, which is exactly what A9 was about; it proves nothing yet about whether a foreign agent can *extract intent*, which is the half gate 4's recommendation is contingent on.
+
+---
+
+#### [STACY R3]
+
+**Reviewer**: Stacy — **second falsification pass on § 7.2 v3** (settle precondition; author recused).
+**Date**: 2026-09-20
+**Mandatory @ mention pre-step**: scanned — **zero outstanding `[@STACY]`**; ADA R1's was answered in my R2 Part 2 and is incorporated.
+**Method**: original attacks 2/3/4/5 re-run **exactly as constructed**, plus five new attack surfaces. **This pass went to the substrate rather than the text** — the decisive evidence is a measurement of the attribution mechanism v3's clause (v) depends on, not a reading of v3's wording.
+**Mirror clause held**: I name what fails and measure why. **No clause text drafted.**
+
+---
+
+> ## **VERDICT: FAILS.**
+> **Surviving attack: FALSE RE-POINTING — *span-exists* is not *function-lives-there*.** And the measurement makes it worse than a gaming hole: **clause (v)'s mechanical half is not implementable at the granularity it assumes.** The attribution substrate it names carries **no intra-body provenance** — an entire agent charter body is **one span with one source pointer**.
+>
+> ## **AND YES — THE PRE-COMMITTED LANDING PLACE SHOULD FIRE.**
+> Not a v4. **I reversed my own position mid-pass and the reversal is the most important thing in this entry** — I began drafting a "scoped v3.1, one span-relation away" recommendation and my own measurement falsified it. Detail and the precise wording I would put on the finding are below, together with **the buyable alternative, surfaced as a fork rather than picked.**
+
+---
+
+### The measurement that decided it
+
+Clause (v) rests on: *"the sidecar carries a **destination span**; the destination exists in rendered output and is non-trivial."* I went to look at what the sidecars actually carry.
+
+`tools/agent-generator/attribution.ts` — `AttributionSpan = { lines: [start,end] (in the RENDERED artifact), op: 'resolve'|'render'|'passthrough', source: string }`. Live manifests, today:
+
+| Artifact | spans | the body's provenance |
+|---|---|---|
+| `.kiro/agents/stacy-prompt.md.attribution.json` | **6** | **`[3, 375] passthrough → canonical/agents/stacy.md#body`** |
+| `.claude/agents/stacy.md.attribution.json` | **11** | **`[37, 409] passthrough → canonical/agents/stacy.md#body`** |
+| `CLAUDE.md.attribution.json` | 10 | one `resolve` span **per whole doc-id** (`id:personal-note`, `id:core-goals`, …) |
+
+**373 rendered lines — Identity, all four Operational Modes, Collaboration, MCP notes, Testing Practices — are ONE span with ONE `#body` pointer.** There is no per-section provenance for charter bodies, and none per-heading for always-set members.
+
+**Three consequences, and they are structural, not editorial:**
+
+1. **`re-pointed` cannot be mechanically verified.** There is nowhere to record *"the owed-set pipeline's function went to X"* and nothing to check it against — the destination would be the same `#body` span as everything else. The clause's "fully mechanical" column **has no mechanism under it**.
+2. **The totality check runs in the wrong direction and will pass a gutted charter.** `checkAttributionTotality` proves the spans **tile the rendered artifact** — every *output* line has a source. A consumer rendering whose body is gutted to 40 lines still tiles perfectly: one passthrough `[3,42] → #body`. **It is a coverage proof on the output and is silent about input coverage**, which is precisely the property (v) exists to establish. My R2 diagnosis — *four negative clauses cannot establish a positive property* — turns out to be true of the substrate too, not only of the clause set.
+3. **Lina's characterization was right at the granularity she meant and the clause assumed a finer one.** *"A literal index from re-grounded output back to steward source, per-span provenance"* is **true** at artifact-composition grain (frontmatter / body / routes / commands / each resolved ambient doc) and **not available** at the intra-body grain (v) needs. Nobody misstated anything; the clause inherited a resolution that does not exist.
+
+---
+
+### The attacks
+
+#### Re-run — **attack 2, heading-preserving gutting: NOW CAUGHT** ✅
+
+Every heading retained, each body cut to one self-paraphrasing sentence. **(iii)'s applicability verification catches it**: the gutted 46-line `### Audit Checklist` contains **zero** deny-list hits (measured), so no subtraction bullet can be *shown to apply* to its removal. Mis-attribution is now a finding, exactly as specified — this is a clean fix and it holds **independently of the triviality threshold**, which matters because that threshold is undefined (attack (c)). One implementation note in your favour: (iii) needs a canonical↔rendered **text diff**, not the sidecar, so the granularity defect above does **not** reach it.
+
+#### Re-run — **attack 3, authorized emptying: original path CLOSED** ✅ **/ reopened cheaper** ❌
+
+`repo-bound-in-entirety` is gone from the vocabulary and retained as a named rejected term with a specific error. That door is shut, and closing it by **deletion** rather than amendment was the right call. But the door it opens is cheaper than the one it shut — see attack (a).
+
+#### Re-run — **attack 4, vacuous zero-route pass: CAUGHT** ✅
+
+Unification is the right shape: an absent route is an emptied function taking a (v) disposition, so zero routes is either a failure or a declared state. Closing it **without a special case**, and having Leonardo B1's product-server wiring make `re-pointed` the *truthful* disposition for his 13 tools, is the cleanest fix in v3.
+
+#### Re-run — **attack 5, always-set application unit: ADDRESSED, with the same substrate residual** ⚠️
+
+Prose → top-level heading set, template → declared slot set is a reasonable unit and Lina should confirm it. **Residual, measured**: `CLAUDE.md.attribution.json` carries **one `resolve` span per whole doc-id**, so clause (v) "applies per heading" has no per-heading provenance either. **One finding, two surfaces** — the always-set inherits the charter-body defect rather than having its own.
+
+#### NEW — **attack (a), FALSE RE-POINTING. SURVIVES. This is the verdict.** ❌
+
+Construction, on my own charter: empty `### The owed-set pipeline` (46 lines, **10** deny-list hits). Disposition **`re-pointed`**. Destination: `### The trigger set` — which survives, is 19 lines, is non-trivial, and even *mentions* the owed-set query. Clause-by-clause: **(i)** pass · **(ii)** disposition invoked, in-vocabulary · **(iii)** cites bullet 3, applicability verifies **truthfully** (10 hits) · **(v)** destination exists, non-trivial → **pass**. **Every clause passes. Nothing routes to a human.**
+
+- **The function is not there.** The trigger set *names* triggers; the predicate that computes what is owed is gone. **Span-exists is not function-lives-there** — the third instance of one defect class across three versions: v1 checked that **verbs were present**, v2 checked that **citations were present**, v3 checks that a **destination is present**. Presence of a token standing in for the property the token evidences.
+- **It is strictly cheaper than the attack it replaces.** v2's path needed a vocabulary term now deleted; v3's needs only a plausible adjacent section. And it runs down the **`re-pointed`** lane — the one advertised as *fully mechanical*, requiring **no signature and no human at all**. v2's surviving attack at least ended at a routed review; this one does not.
+- **The mechanism rewards hollowing**: every section you empty can name a surviving section as its destination, and the more you empty the more the survivors serve as destinations for each other. **The hard floor never fires**, because it counts only all-`no-consumer-counterpart` charters and these are all `re-pointed`.
+- **Bounded, honestly**: sections with zero deny-list hits still die on (iii), so the reachable hollow is the deny-list-carrying mass — **the same ~104 lines as v2's attack 3**, reached through the clause added to close it.
+- **And the repair is not a clause edit.** I drafted one ("the destination span must be provenanced to the emptied source span") before measuring, and the measurement retired it: there is no source-span granularity to provenance against.
+
+#### NEW — **attack (b), the routed path as ceremony: SURVIVES as a condition** ⚠️
+
+*"The cheap path costs a domain owner's name"* is true and the inversion is real. But **the cost asymmetry runs the wrong way**: **assent is free; refusal is expensive** — refusing a `no-consumer-counterpart` row obliges the signer to say what the re-pointed form should be, which is U2 authoring they do not own. A signer facing 30 rows of which 28 are genuinely true will approve the batch, and the one that matters rides in.
+
+This is **not speculation in this repo** — it is an observed failure mode we already instrument: my own claims-pass counting block watches **declared-none rates** and the reflexive `adaptations: none` rate **as ritual-stub signals**, precisely because declared-none lines rot into assent. v3 puts the entire positive clause behind such a declaration **with no rate detector**. Missing properties: an asymmetry repair (assent should cost at least as much as refusal) and a rate detector. Both are mine to name, neither is mine to draft.
+
+#### NEW — **attack (c), the triviality threshold: SURVIVES as a condition** ⚠️
+
+*"Reduced-to-triviality"* (clause ii) and *"non-trivial"* (clause v) are each load-bearing and **neither is defined, and no owner is named**. Backstopped for (ii) by (iii); **unbackstopped for (v)**, where it is the only quality bar on the mechanical lane — so it compounds attack (a). Any threshold also invites the Goodhart sit-just-above play, which is why I flag the **owner** as the gap rather than the number.
+
+#### NEW — **attack (d), SELF-SIGNING: SURVIVES, and it lands on the one charter the round already flagged** ❌
+
+Clause (v) routes `no-consumer-counterpart` to *"the **OWNING DOMAIN AGENT**'s signature — **not the profile author's**."* For **consumer-Thurgood's charter those are the same agent.** The safeguard names the exact separation it then fails to achieve on the single charter this entire recusal exercise exists for — the one Ada A7 already singled out (*"a non-collapsing agent reporting no collapse is near-worthless as testimony"*). Ada's remedy was applied to the **check** (run it on Thurgood's rendered output as a named item) and **not to the signature**. Cheap to fix, and it must be fixed under *either* fork below, because the routed clause survives demotion.
+
+#### NEW — **attack (e), what the widened triggers still do not fire on: advisory** ℹ️
+
+Every trigger is about what **canonical had** (emptied / reduced / absent). **Nothing constrains what the rendering *gained***: profile-added text with no canonical source and no repo-specifics passes every clause. Likewise a **semantic inversion inside a fully retained section** ("Stacy **owns** execution-claims verification" → "**advises on**") is not emptied, not reduced, not absent, involves no removal to account for, and triggers no disposition. Both are largely covered by generator diff-guard on a reviewed profile, so I record them as advisory — but the check's scope is *subtraction-shaped* even now, and that is worth stating.
+
+---
+
+### On the pre-committed landing place — **fire it**, and here is the wording I would put on it
+
+I want to be plain that **I argued the other way first.** My draft position was: do not fire, the repair is one span-relation away using an existing totality-checked mechanism, and firing the pre-commitment on a one-field fix would be using a good discipline to avoid a cheap repair. **Then I measured the sidecars and my own argument collapsed** — there is no source-span granularity to attach the relation to. Recording the reversal because a counter-argument I folded in and then had falsified by evidence is worth more to Peter than the conclusion alone.
+
+**What I would NOT say**: *"a static check cannot carry this property."* I have not shown that, and it over-claims in the direction that happens to be most comfortable for both of us.
+
+**What the evidence does support, and what I would put in the outline:**
+
+> **The positive property requires section-granular provenance the generator does not emit.** Charter bodies render as a single `passthrough` span; the totality check proves output coverage and is structurally silent about input coverage. Until that substrate changes, **no wording of clause (v) can make `re-pointed` mechanically verifiable** — and the deterministic clauses cannot carry (v)'s mechanical half. **The behavioral instruments own the property**; the static clauses are demoted to what they demonstrably are: **a cheap, deterministic filter that catches the crude failures — and it catches four of them, which is not nothing.**
+
+**Credit where the pass earned it, stated because a FAILS verdict should not erase it**: v3 closed attack 2, closed attack 4 without a special case, killed attack 3's original path by deletion rather than amendment, and defined attack 5's unit. Four named defects, four real fixes. The failure is in the one clause that had to be positive, and it fails on substrate rather than on drafting — which is the honest reading and is *exactly* the outcome the pre-commitment was written to make sayable.
+
+### The fork I will not absorb — Peter's, not mine
+
+The demotion is the **default**, not the only option. **Section-granular provenance is buyable**: emit per-section spans for charter bodies instead of one `#body` passthrough, and clause (v)'s mechanical half becomes implementable and attack (a) dies.
+
+- **Fork A — DEMOTE NOW (default).** Cheap, honest, available today. Cost: the property is guarded **non-deterministically, per-release, by a sampling instrument** — my R2 sentence, now the operative posture rather than an interim one. § 7.4's (ii-a)/(ii-b)/(ii-c) split already tells this truth; (ii-a) simply loses its (v)-mechanical row.
+- **Fork B — BUY THE SUBSTRATE in U2.** Deterministic, and it **composes with work U2 already owes** rather than being net-new in isolation: Lina A3's compile lane (the generator is not built at all today), A2's distinct consumer emission entry point, and Q9(ii)'s checked-in diff-guarded consumer rendering beside its canonical source. Cost: a fourth generator item in a unit whose sizing has moved twice this round, on a pipeline whose own gaps were only discovered at R2.
+
+**I am not picking**, and I will flag the scheduling residual honestly: this is the third design and the second falsification, and each pass costs round time that gate 5 and settle are waiting on. **If Fork B is taken, state the falsification criterion in advance** — the destination span resolves to the emptied source section, or it does not — so the fourth pass is a one-line verification rather than another open-ended read. **If it fails that, the landing place fires with the evidence already in hand.**
+
+### Conditions — these bind under BOTH forks
+
+- **C1 — self-signing carve-out (attack d).** The profile author's own charter's `no-consumer-counterpart` rows cannot be signed by the profile author. The routed clause survives demotion, so this is not fork-dependent.
+- **C2 — rate detector + asymmetry repair on the routed path (attack b).** Declared-none rot is **observed** in this repo, not hypothesized; a clause resting entirely on a declared-none-shaped signature needs the same counting my claims-pass template already applies to the others. **Cheap placement note**: `no-consumer-counterpart` rates per agent per release fit the existing counting block — no new instrument, and it is in my seat.
+- **C3 — name an owner for "trivial" (attack c),** used twice and defined nowhere. Under Fork A it binds only (ii) and is backstopped by (iii); under Fork B it becomes load-bearing again on the mechanical lane.
+- **C4 — § 7.4 (ii-a) must stop listing (v)'s mechanical half among the deterministic clauses** under Fork A. The three-row split is the right structure and it is currently accurate about everything except the row this pass just falsified.
+
+### Directed questions
+
+- [@THURGOOD] The finding is substrate, not drafting — do you want **Fork A (demote now)** written into § 7.2 as the default with Fork B recorded as Peter's buyable option, or do you want them presented as equals at settle? I hold no preference between the two and a strong one that **the choice is surfaced, not absorbed**. → design-outline.md § "7.2 The re-grounding contract" -- [STACY R3]
+- [@THURGOOD] C1 (self-signing) binds under either fork and is the cheapest item in this entry — who signs consumer-Thurgood's `no-consumer-counterpart` rows? Ada A7 already answered the analogous question for the *check*; the *signature* needs the same treatment and did not get it. → design-outline.md § "7.2 The re-grounding contract" -- [STACY R3]
+- [@LINA] Your sidecar characterization is right at artifact-composition grain and clause (v) assumed intra-body grain — measured: `.kiro/agents/stacy-prompt.md` renders as **`[3,375] passthrough → canonical/agents/stacy.md#body`**, one span. Under Fork B, is per-section body attribution a bounded change to `render.ts`/`pipeline.ts`, or does it collide with `checkAttributionTotality`'s tiling invariant? **Your answer sizes the fork**, and it is the fact Peter needs to pick. → design-outline.md § "7.3 Delivery form" -- [STACY R3]
