@@ -1,0 +1,21 @@
+{
+  "case": "evidence-warn-row-without-followup",
+  "class": "evidence",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/evidence-warn-row-without-followup.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "EVIDENCE_NONCOMPLIANT"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messageContains": [
+    "The Android implementation reports determinate progress to a",
+    "no follow-up link"
+  ],
+  "messageNotContains": [
+    "The web implementation reports determinate progress",
+    "The iOS implementation reports determinate progress"
+  ],
+  "notes": "CONTESTED at review (Thurgood: out-of-scope for the instrument as designed; Stacy: mechanize). PETER RULED DISPOSITION 1 — MECHANIZE (2026-09-19, U2 session): a link-less ⚠️ row is EVIDENCE_NONCOMPLIANT. The link-shaped-token set admits paths, #NNN references, URLs, and §-anchored locatable-record citations (the guide's own locatable shapes), so honest ⚠️ rows citing a ballot § or feedback path stay compliant."
+}

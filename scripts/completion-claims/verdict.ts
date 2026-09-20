@@ -82,6 +82,20 @@ function multisetDiff(a: string[], b: string[]): string[] {
   return missing;
 }
 
+/**
+ * Link-shaped token for the ⚠️ follow-up MUST: a path token, an issue/PR
+ * `#NNN` reference, a URL, or a `§`-anchored locatable-record citation
+ * (`ballot § 8.1`) — the same locatable shapes the law admits as evidence.
+ */
+function hasLinkToken(e: string): boolean {
+  return (
+    /[\w.-]+(?:\/[\w.:*@$#-]+)+/.test(e) ||
+    /#\d+/.test(e) ||
+    /https?:\/\//.test(e) ||
+    /§/.test(e)
+  );
+}
+
 function evidenceFindings(
   rows: Row[],
   parent: Parent,
@@ -90,10 +104,21 @@ function evidenceFindings(
   const findings: Finding[] = [];
   for (const r of rows) {
     if (!r.claiming) continue;
+    const name = `${r.criterion.slice(0, 60)}${r.criterion.length > 60 ? '…' : ''}`;
     if (r.evidence.trim() === '' || r.evidenceKind === 'empty-or-prose') {
       findings.push({
         verdict: 'EVIDENCE_NONCOMPLIANT',
-        message: `parent ${parentId(parent)}: ${label} row "${r.criterion.slice(0, 60)}${r.criterion.length > 60 ? '…' : ''}" has an empty or prose-only Evidence cell`,
+        message: `parent ${parentId(parent)}: ${label} row "${name}" has an empty or prose-only Evidence cell`,
+      });
+    } else if (r.status === '⚠️' && !hasLinkToken(r.evidence)) {
+      // The ⚠️ follow-up-link MUST (guide § Parent Success-Criteria Fidelity),
+      // MECHANIZED BY PETER'S RULING (2026-09-19, U2 session — Stacy's
+      // contested fixture `evidence-warn-row-without-followup`, disposition 1):
+      // a ⚠️ row must link a tracking issue, follow-up task, or locatable
+      // record; a link-less ⚠️ is a more polite ✅.
+      findings.push({
+        verdict: 'EVIDENCE_NONCOMPLIANT',
+        message: `parent ${parentId(parent)}: ${label} row "${name}" is ⚠️ with no follow-up link (tracking issue, follow-up task, or locatable record)`,
       });
     }
   }

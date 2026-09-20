@@ -5,7 +5,7 @@
 **Design**: C7 (fixture pipeline) / DD4 (specification-encoded pairs with provenance headers)
 **Author**: Stacy (product governance & QA)
 **Date**: 2026-09-19
-**Status**: Reviewed on-branch by Thurgood, 2026-09-19 — adjudications recorded in § "Review record". One fixture is **held for Peter** with the contest exercised. **A contested fixture that simply disappears from the set is the failure.**
+**Status**: Reviewed on-branch by Thurgood, 2026-09-19 — adjudications recorded in § "Review record". The one held contest is **RULED (Peter, 2026-09-19, U2 session): disposition 1 — MECHANIZE**; all 31 cases are encoded. **A contested fixture that simply disappears from the set is the failure.**
 
 ---
 
@@ -90,7 +90,7 @@ The first eleven are the ruled floor (design C7) and **cannot shrink** — shrin
 | `materiality-criterion-reworded-legacy` | `MATERIAL_AMENDMENT_WITHOUT_DECLARATION` + attributed segment | RED |
 | `materiality-tick-only-immaterial-control` | immaterial — `material: false`, `verdicts: []` | GREEN |
 | `evidence-prose-only-and-empty` | `EVIDENCE_NONCOMPLIANT` (rows 1–2; set parity clean) | RED |
-| `evidence-warn-row-without-followup` | `EVIDENCE_NONCOMPLIANT` (row 3) — **HELD FOR PETER** | RED (pending ruling) |
+| `evidence-warn-row-without-followup` | `EVIDENCE_NONCOMPLIANT` (row 3) — **RULED: mechanize (Peter, 2026-09-19)** | RED |
 | `forced-negative-missing` | `FORCED_NEGATIVE_MISSING` | RED |
 | `declared-none-av-still-owed` | `AV_MISSING_OR_MALFORMED` **+** `declared-none-table-waiver` | RED + emission |
 | `declared-none-compliant-control` | `PASS` + `declared-none-table-waiver` + `av-deferral-declared` | GREEN + 2 emissions |
@@ -110,6 +110,8 @@ Four cases carry a **Contest note**. Each names a place where the design is sile
 
 1. **`evidence-warn-row-without-followup`** — *the substantive one, and the only open item.* The guide and PSP both make a ⚠️ row's follow-up link a **MUST**; the design's C5 predicate list does not name it. Three dispositions offered (mechanize / route to the claims pass / rule out of scope); my position is mechanize.
    **→ HELD FOR PETER (contest exercised, 2026-09-19).** Thurgood's position: out-of-scope for the instrument as designed — Req 6.4's verdict surface enumerates Evidence duties as *non-empty + permitted kind*, a ⚠️-link detector is a predicate limb the ruled design does not carry, and the MUST's owner today is the claims pass (the same division as artifact truth). That is the legitimate contest ground Req 6.5 names, exercised in the open rather than by deletion — which is the outcome the anti-veto bound exists to produce, and I record it as correctly handled regardless of how Peter rules. **My re-class-don't-delete condition is honored on both branches**: if Peter rules judgment, the fixture re-classes to a documented-limit control with the disposition in its provenance header, and the MUST acquires a named owner instead of falling between two.
+
+   **[THURGOOD, disposition] PETER RULED DISPOSITION 1 — MECHANIZE (2026-09-19, U2 session).** The checker gains the ⚠️-link predicate: a claiming ⚠️ row whose Evidence cell carries no link-shaped token is `EVIDENCE_NONCOMPLIANT`. The link-shaped set admits a path token, a `#NNN` issue/PR reference, a URL, **or a `§`-anchored locatable-record citation** — the guide's own locatable shapes — so an honest ⚠️ row whose follow-up is a ballot § or feedback path (the live Task-1 shape) stays compliant. Recorded as a Peter-ruled amendment to the design's C5 predicate surface in the U2 completion doc; the fixture is encoded as specified.
 2. **`deferral-free-prose-near-miss`** — the catalog fixes the message, not the enclosing `Verdict` member. I specified `AV_MISSING_OR_MALFORMED`; `MALFORMATION` was offered as the defensible alternative.
    **→ RESOLVED to `MALFORMATION`** (Thurgood, 2026-09-19; symmetry with the exemption sibling — both are fixed-form near-misses in the design's Error-Handling catalog). Taken as my stated alternative, not a contest. My three non-negotiables hold in the build: catalog message verbatim, `deferrals` empty, non-zero exit.
 3. **`exemption-paraphrase`** — I specified `MALFORMATION`; `SET_MISMATCH` **in addition** acceptable, **instead** not.

@@ -188,7 +188,15 @@ function main(): number {
       console.log(`  association: ${a}`);
     }
     for (const p of r.parents) {
-      if (p.findings.length === 0) {
+      const notEvaluated =
+        p.findings.length === 0 &&
+        p.emissions.some((e) => e.kind === 'completion-doc-not-found');
+      if (notEvaluated) {
+        // The named third state (C5/B-4): not red, not silent — and never a
+        // PASS: an unevaluated parent counted as passing would be this law's
+        // own misleading-green shape.
+        console.log(`  parent ${p.parent}: not evaluated (completion doc not found)`);
+      } else if (p.findings.length === 0) {
         pass++;
         console.log(`  parent ${p.parent}: PASS`);
       } else {

@@ -76,7 +76,7 @@
   - [x] 1.3 Author the five register rows (C10; owners per Req 5.2–5.6; `promised-artifact-exists`'s owner assigned at this ballot; the gate-bite-outstanding history note on the parity row); run and record the live non-substring sweep
   - [x] 1.4 Run the straggler sweep per edit class with stated-matching outputs **plus the C11-inventory diff check**; request Stacy's REQUIRED ballot review; fold; submit for ratification (record-first; Peter's merge is the ratifying act)
 
-- [ ] 2. Build and prove the instrument (U2)
+- [x] 2. Build and prove the instrument (U2)
 
   **Type**: Implementation
   **Agent**: Thurgood (main session; Sonnet-tier subagent may implement individual modules against design C1–C5 as settled contracts, verified in-session with placement checks)
@@ -103,13 +103,13 @@
   - .github/workflows/completion-criteria-parity.yml
   - package.json (modified)
 
-  - [ ] 2.1 **Invoke Stacy's fixture-specification authoring** (the unit's first act — her specs land in `fixtures/` in parallel with the build); implement `normalize.ts` (four rules + bounded rule-(iii) scope + checkbox mask) with `normalize.test.ts`
-  - [ ] 2.2 Implement `tasks-md.ts` and `completion-doc.ts` per design C2/C3 with their suites
-  - [ ] 2.3 Implement `materiality.ts` (+ `--verify-extraction`) with its suite; run over the corpus; reconcile against the ballot's per-class counts with differences attributed
-  - [ ] 2.4 Implement `verdict.ts` + the CLI (full-scan parity incl. AV gate-row parity, declared-none narrow waiver, doc-not-found emission, catalog strings verbatim, association manifest, emission contract, ratification-record loud-red) with its suite incl. the catalog-conformance cases
-  - [ ] 2.5 Wire `check:completion-criteria-parity` into `package.json` and the CI workflow (context name fixed, non-required)
-  - [ ] 2.6 Review Stacy's fixture specs on-branch (contest path available per Req 6.5); encode 1:1 with provenance headers; author `expected-classes.json`; verify the floor's standing red-at-zero test
-  - [ ] 2.7 Full validation: `npm test` green; the first live in-scope run recorded; the U2 PR's own CI run green over the full population
+  - [x] 2.1 **Invoke Stacy's fixture-specification authoring** (the unit's first act — her specs land in `fixtures/` in parallel with the build); implement `normalize.ts` (four rules + bounded rule-(iii) scope + checkbox mask) with `normalize.test.ts`
+  - [x] 2.2 Implement `tasks-md.ts` and `completion-doc.ts` per design C2/C3 with their suites
+  - [x] 2.3 Implement `materiality.ts` (+ `--verify-extraction`) with its suite; run over the corpus; reconcile against the ballot's per-class counts with differences attributed
+  - [x] 2.4 Implement `verdict.ts` + the CLI (full-scan parity incl. AV gate-row parity, declared-none narrow waiver, doc-not-found emission, catalog strings verbatim, association manifest, emission contract, ratification-record loud-red) with its suite incl. the catalog-conformance cases
+  - [x] 2.5 Wire `check:completion-criteria-parity` into `package.json` and the CI workflow (context name fixed, non-required)
+  - [x] 2.6 Review Stacy's fixture specs on-branch (contest path available per Req 6.5); encode 1:1 with provenance headers; author `expected-classes.json`; verify the floor's standing red-at-zero test
+  - [x] 2.7 Full validation: `npm test` green; the first live in-scope run recorded; the U2 PR's own CI run green over the full population
 
 - [ ] 3. Execute the charters (U3)
 
