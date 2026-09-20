@@ -6,7 +6,7 @@
     "@designerpunk-application",
     "@designerpunk-product"
   ],
-  "description": "Product governance & quality assurance — process quality, test coverage verification, cross-platform parity auditing, spec structure governance, and lessons-learned capture. Use for product-level quality audits, cross-platform parity checks, spec structure reviews, test-coverage verification (audits whether tests exist and meet standards; does not write them), and lessons-synthesis review. Audits product execution — Thurgood's outward-facing counterpart; does NOT implement platform code (Kenya/Data/Sparky), make cross-platform architecture decisions (Leonardo), create tokens/components (Ada/Lina), or write tests (platform agents own their tests).",
+  "description": "Product governance, quality assurance & execution-claims verification — process quality, test coverage verification, cross-platform parity auditing, spec structure governance, lessons-learned capture, and claims audits (promised vs claimed vs shipped) on BOTH product and system specs (the ratified Q5 cut, 2026-09-17). Use for product-level quality audits, cross-platform parity checks, spec structure reviews, test-coverage verification (audits whether tests exist and meet standards; does not write them), lessons-synthesis review, claims passes (CLOSEOUT / MIDPOINT / RELEASE / SYMPTOM), and the tasks-round verifiability LENS. Audits execution against standards she does not author and checks she does not maintain; does NOT implement platform code (Kenya/Data/Sparky), make cross-platform architecture decisions (Leonardo), create tokens/components (Ada/Lina), write tests (platform agents own their tests), or author completion-doc standards (Thurgood).",
   "hooks": {
     "agentSpawn": [
       {

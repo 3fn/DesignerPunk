@@ -111,7 +111,7 @@
   - [x] 2.6 Review Stacy's fixture specs on-branch (contest path available per Req 6.5); encode 1:1 with provenance headers; author `expected-classes.json`; verify the floor's standing red-at-zero test
   - [x] 2.7 Full validation: `npm test` green; the first live in-scope run recorded; the U2 PR's own CI run green over the full population
 
-- [ ] 3. Execute the charters (U3)
+- [x] 3. Execute the charters (U3)
 
   **Type**: Documentation
   **Agent**: Thurgood (main session — canonical edits + regeneration; no delegation: generated-tree placement hazards are the recorded lesson)
@@ -135,9 +135,9 @@
   - .claude/agents/ + .kiro/agents/ (regenerated — never hand-edited)
   - canonical/generated.lock
 
-  - [ ] 3.1 Apply the Stacy charter package to `canonical/agents/stacy.md` (Req 7.1–7.5 + the full C9 template incl. the BLOCKING-5 elements + the midpoint record-path convention + knowledgeBases + command catalog)
-  - [ ] 3.2 Apply the Thurgood package to `canonical/agents/thurgood.md` (composed loop, LIVENESS-as-query with the pipeline, proposed-row read, both anti-rot clauses, remediation route, Req 7.9 bounds); update `.kiro/steering/Agent-Directory.md` **directly** (hand-maintained identity doc)
-  - [ ] 3.3 Regenerate both trees; diff-guard green; verify mirrors verbatim; `npm test` full validation
+  - [x] 3.1 Apply the Stacy charter package to `canonical/agents/stacy.md` (Req 7.1–7.5 + the full C9 template incl. the BLOCKING-5 elements + the midpoint record-path convention + knowledgeBases + command catalog)
+  - [x] 3.2 Apply the Thurgood package to `canonical/agents/thurgood.md` (composed loop, LIVENESS-as-query with the pipeline, proposed-row read, both anti-rot clauses, remediation route, Req 7.9 bounds); update `.kiro/steering/Agent-Directory.md` **directly** (hand-maintained identity doc)
+  - [x] 3.3 Regenerate both trees; diff-guard green; verify mirrors verbatim; `npm test` full validation
 
 ---
 

@@ -5,7 +5,7 @@
     "@designerpunk-docs",
     "@designerpunk-application"
   ],
-  "description": "Test governance, audit, spec standards & Civitas steward. Use for test-suite health audits, coverage-gap analysis, test-failure investigation, formalizing design outlines into specs (requirements/design/tasks), spec quality review (EARS, task types, validation tiers), accessibility/contract/token test-coverage auditing, and governance-infrastructure health (steering-doc metadata, cross-references, MCP health, agent-prompt currency). Audits and sets standards; does NOT write domain-specific tests or implementation (defers token work to Ada, component work to Lina).",
+  "description": "Test governance, audit, spec standards & Civitas steward. Use for test-suite health audits, coverage-gap analysis, test-failure investigation, formalizing design outlines into specs (requirements/design/tasks), spec quality review (EARS, task types, validation tiers), accessibility/contract/token test-coverage auditing, completion-doc standards and the completion-criteria-parity instrument, and governance-infrastructure health (steering-doc metadata, cross-references, MCP health, agent-prompt currency). Audits and sets standards; does NOT write domain-specific tests or implementation (defers token work to Ada, component work to Lina) and does NOT adjudicate whether a particular execution claim was true (execution-claims verification is Stacy's — the ratified Q5 cut).",
   "hooks": {
     "agentSpawn": [
       {

@@ -12,39 +12,39 @@
     {
       "lines": [
         3,
-        311
+        393
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#body"
     },
     {
       "lines": [
-        312,
-        315
+        394,
+        397
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        316,
-        347
+        398,
+        429
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        348,
-        363
+        430,
+        445
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        364,
-        367
+        446,
+        449
       ],
       "op": "render",
       "source": "writeScope"

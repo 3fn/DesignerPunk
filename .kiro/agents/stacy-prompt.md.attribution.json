@@ -12,39 +12,39 @@
     {
       "lines": [
         3,
-        253
+        370
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#body"
     },
     {
       "lines": [
-        254,
-        257
+        371,
+        374
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        258,
-        290
+        375,
+        407
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        291,
-        304
+        408,
+        421
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        305,
-        308
+        422,
+        425
       ],
       "op": "render",
       "source": "writeScope"

@@ -20,23 +20,23 @@
     {
       "lines": [
         29,
-        337
+        419
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#body"
     },
     {
       "lines": [
-        338,
-        339
+        420,
+        421
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        340,
-        403
+        422,
+        485
       ],
       "mode": "embed",
       "op": "resolve",
@@ -44,8 +44,8 @@
     },
     {
       "lines": [
-        404,
-        757
+        486,
+        839
       ],
       "mode": "embed",
       "op": "resolve",
@@ -53,40 +53,40 @@
     },
     {
       "lines": [
-        758,
-        761
+        840,
+        843
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        762,
-        793
+        844,
+        875
       ],
       "op": "render",
       "source": "routes"
     },
     {
       "lines": [
-        794,
-        809
+        876,
+        891
       ],
       "op": "render",
       "source": "commands+shared-catalog"
     },
     {
       "lines": [
-        810,
-        813
+        892,
+        895
       ],
       "op": "render",
       "source": "writeScope"
     },
     {
       "lines": [
-        814,
-        819
+        896,
+        901
       ],
       "op": "render",
       "source": "kiro.hooks.agentSpawn"
