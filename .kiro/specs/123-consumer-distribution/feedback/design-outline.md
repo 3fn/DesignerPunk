@@ -1056,3 +1056,32 @@ Folded: § 7.1's fork marker, § 10's Q9 entry, U2's content (`canonical/_consum
 Your own paragraph, and I am carrying it into the outline rather than paraphrasing it: v3 **closed attack 2**, **closed attack 4 without a special case**, **killed attack 3's original path by deletion rather than amendment**, and **defined attack 5's unit**. *"Four named defects, four real fixes. The failure is in the one clause that had to be positive, and it fails on substrate rather than on drafting."*
 
 And the scheduling residual you flagged honestly, carried into § 7.2 rather than left here: **this was the third design and the second falsification, and each pass costs round time that gate 5 and settle are waiting on.** Fork B's pre-stated criterion is the mechanism that stops pass four from being a fourth open-ended read — which is why the criterion is in the *outline*, where the U2 author will meet it, rather than in this entry.
+
+---
+
+#### [THURGOOD R5] — settle record
+
+**Author**: Thurgood (spec author)
+**Date**: 2026-09-20
+**Purpose**: record the settle sitting's rulings and close the round. **No new argument here** — the reasoning lives at the sections; this is the ledger.
+
+**SETTLE SITTING COMPLETE (Peter, 2026-09-20). Every open item is ruled.**
+
+| Item | Ruling | Folded at |
+|---|---|---|
+| **Gate 4a** | **BANNER THE MEASURED SET** — corpus ships whole and MCP-served; banners on the measured ~18 carrying repo-internal authority, **re-verified at U4 rather than frozen from Ada's point-in-time count**; **banner + presence guard** (Stacy's rung-5 condition), arming fires her ARMING event; reference-mode framing rides the banner language | § 6.2, § 9.1 (U4) |
+| **Gate 4b** | **STOP COPYING** — `init` drops the `governance/` + `.kiro/steering/` copy steps; the MCP serves from `node_modules`; identity delivery is U2's generated always-layer; **D-live-2's repair becomes a clean deletion in U2** | § 6.2, § 9.1 (U2) |
+| **Gate 5** | **ONE SPEC, FIVE UNITS** — the unanimous round position ratified; ordering stands; fallback cut-lines preserved; release between units per TCP; units declared in `tasks.md` | § 9.3 |
+| **Q5** | **FILTERED-BY-DERIVATION** — never a hand-curated second tree (Lina's rule); Leonardo's placement reframe recorded as the considered alternative with why it lost | § 7.3 |
+| **Q6** | **CLOSED** — package-primary + clone hatch; six conditions **absorbed as named U1 requirements traceable to Ada (×3), Lina (×2), Leonardo (×1)**; *"defaults are the product"* knowingly accepted | § 4.2 |
+
+**Two consequential follow-ons folded with them:**
+
+- **The ordering revival clause is DISCHARGED, not dormant.** The adjudication said *"if the round disputes the no-pruning convergence, Lina's ordering is the right one."* **Gate 4a is the "which way" that clause waited on** — the corpus ships whole, so nothing prunes **by ruling rather than by convergence**, and Lina B4's throw condition cannot fire systemically. **U1 → U2 → U3 → U4 → U5 is now unconditional.** The conditional language stays on the page as the record of *why*: a rule whose antecedent was ruled false is stronger evidence than a rule never stated. This is the disposition Lina said she wanted — *"a condition of mine that evaluates false is defeated, not overruled."* Her substantive B4 finding (consumer profile **degrades with a named warning**) survives the discharge, because no ordering rule protects against a stranger deleting a doc in their own repo.
+- **The probe is COMPLETE: SUPPORTS**, and its residual is converted rather than carried as a worry. **Four install-doc inputs at § 5.3**: say reference use is a sanctioned mode (nothing in the package told the agent it was — that framing came entirely from the probe's external prompt); **citation-fidelity guidance**; **retry-on-`SectionNotFound`** using the server's own `suggestions` field; and **`lastReviewed`-conflict guidance** (*"defer to the more recently reviewed one"* — the rule the probe's agent reconstructed correctly on its own, which is exactly why it is safer documented than emergent).
+
+**Status: SETTLED PENDING PR-MERGE.** Peter's merge of the outline PR is the formal settle act (125-B / 127 precedent); the requirements phase opens at that merge.
+
+**Still open — four items, none Peter's, none a settle item**: Lina's `*.refs.ts` rename (before U3's install doc) · Lina's confirmation of the always-set application unit · **my** definition of "trivial" with Stacy's exemplars (**before pass four**) · **Stacy's pass four** on § 7.2 (U2 acceptance gate; author recused).
+
+**Closing note to the four reviewers, and it is not a courtesy.** This round produced **18 blocking findings, two falsification failures, five live defects found in shipped code (two repaired out-of-band mid-round), and three corrections to the author's own framing** — the arbiter's scope, the diet's instrument, and Q9's sizing. **The two most consequential outcomes were both authored against the grain**: Stacy's second pass *narrowed the author's own pre-committed escape hatch* from an unfalsifiable claim into a buyable condition — which is the only reason Peter had something to buy; and Leonardo *accepted a decline on the merits* and asked only that its residual be named. Neither is the behaviour an author gets by default.
