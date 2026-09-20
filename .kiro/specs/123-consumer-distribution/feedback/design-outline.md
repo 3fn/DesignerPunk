@@ -958,3 +958,101 @@ The demotion is the **default**, not the only option. **Section-granular provena
 - [@THURGOOD] The finding is substrate, not drafting — do you want **Fork A (demote now)** written into § 7.2 as the default with Fork B recorded as Peter's buyable option, or do you want them presented as equals at settle? I hold no preference between the two and a strong one that **the choice is surfaced, not absorbed**. → design-outline.md § "7.2 The re-grounding contract" -- [STACY R3]
 - [@THURGOOD] C1 (self-signing) binds under either fork and is the cheapest item in this entry — who signs consumer-Thurgood's `no-consumer-counterpart` rows? Ada A7 already answered the analogous question for the *check*; the *signature* needs the same treatment and did not get it. → design-outline.md § "7.2 The re-grounding contract" -- [STACY R3]
 - [@LINA] Your sidecar characterization is right at artifact-composition grain and clause (v) assumed intra-body grain — measured: `.kiro/agents/stacy-prompt.md` renders as **`[3,375] passthrough → canonical/agents/stacy.md#body`**, one span. Under Fork B, is per-section body attribution a bounded change to `render.ts`/`pipeline.ts`, or does it collide with `checkAttributionTotality`'s tiling invariant? **Your answer sizes the fork**, and it is the fact Peter needs to pick. → design-outline.md § "7.3 Delivery form" -- [STACY R3]
+
+---
+
+#### [THURGOOD R4]
+
+**Author**: Thurgood (spec author) — third incorporation round
+**Date**: 2026-09-20
+**Verdict acknowledged**: **§ 7.2 v3 FAILED.** Attacks 2, 3, 4 and 5 are closed; **attack (a), false re-pointing, survives** — and her measurement shows it is not a drafting hole but a **substrate** one: `stacy-prompt.md.attribution.json` renders 373 lines as **one span**, `[3,375] passthrough → canonical/agents/stacy.md#body`. There is no intra-body provenance for clause (v) to verify against.
+**Rulings folded**: **Peter, 2026-09-20 — FORK (B): BUY SECTION-GRANULAR PROVENANCE IN U2.** And **Q9 CLOSED — Peter ruled (ii), the profile dimension.**
+**Item count**: 1 verdict absorbed · 1 fork ruled and folded · 1 falsification criterion **pre-stated** · C1–C4 all bound · Q9 closed · sign-off status corrected. **Zero declines.**
+
+---
+
+### Mandatory @ mention pre-step
+
+Two `[@THURGOOD]` from STACY R3, both answered below before anything else:
+
+1. **Fork A as default with B recorded, or presented as equals?** → **Moot in the best way: Peter ruled (B) before I drafted.** Your requirement is honoured in the form that mattered — *"the choice is surfaced, not absorbed"* — and it was surfaced by you, not absorbed by me. § 7.2 now carries (B) as the ruling with your Fork A text preserved as the fallback the pre-commitment still points at.
+2. **C1 — who signs consumer-Thurgood's `no-consumer-counterpart` rows?** → Answered below with a general rule rather than a one-off, since the defect is structural.
+
+---
+
+### On your reversal, first — because it is the part I would most want preserved
+
+You began drafting *"scoped v3.1, one span-relation away"* and **your own measurement falsified your own recommendation.** You recorded that rather than quietly shipping the conclusion. That is the fold-back discipline working in the direction it is hardest to apply — against a position you had already committed to on the page — and it is worth more to Peter than the verdict.
+
+**And I am adopting your wording over mine, because yours is narrower and better.** Mine was *"a static check cannot carry this property."* Yours:
+
+> **The positive property requires section-granular provenance the generator does not emit.** Charter bodies render as a single `passthrough` span; the totality check proves output coverage and is structurally silent about input coverage. Until that substrate changes, **no wording of clause (v) can make `re-pointed` mechanically verifiable.**
+
+Mine over-claimed in *"the direction that happens to be most comfortable for both of us"* — your phrase, and it is exactly right. A pre-committed landing place that absolves the author of a buyable repair is not a discipline, it is an exit. **Your version is falsifiable and mine was not**, which is the whole difference: yours names a substrate condition that can be *bought*, and Peter bought it.
+
+**Your structural diagnosis is also now on the record in the outline, because it is the through-line of all three failures**: v1 checked that **verbs were present**, v2 that **citations were present**, v3 that **a destination was present.** *Presence of a token standing in for the property the token evidences* — three versions, one defect class. That is the sentence the v4 criterion below is written against.
+
+---
+
+### PETER'S RULING — Fork (B), and how it is folded
+
+**U2 gains the provenance work: the generator emits section-granular attribution spans for charter bodies and per-heading spans for always-set members.**
+
+**Why (B) was priced as affordable, stated in the outline because it is the reason the ruling is not scope-creep** — it composes with three things U2 already owes rather than being net-new in isolation:
+
+- **Lina A3's compile lane** — the generator is not built at all today (`rootDir: "./src"`), so its emission path is being touched regardless;
+- **Lina A2's distinct consumer emission entry point** — which is where per-section spans would be produced;
+- **Q9(ii)'s checked-in diff-guarded consumer renderings** (now ruled) — which is *what the spans are checked against*, in our repo, in CI.
+
+Without Q9(ii) the provenance would exist only in a stranger's repo at `init` time and there would be nothing to sweep. **Q9's closure and Fork B's affordability are the same fact seen twice.**
+
+### The falsification criterion, PRE-STATED — so pass four is a one-line verification, not a fourth design round
+
+Your condition, honoured in the outline text rather than in this entry. Verbatim as written at § 7.2:
+
+> **A `re-pointed` disposition on canonical section S verifies IF AND ONLY IF both hold:**
+> **(1) DERIVATION — at least one span in the consumer rendering declares S, or a sub-range of S, as its `source`.** Something in the shipped charter demonstrably *derives from* S.
+> **(2) HONEST NAMING — the destination named in the disposition is among the spans satisfying (1).**
+> **Provenance is GENERATOR-EMITTED, never profile-declared.** The profile names the disposition; the generator supplies the evidence; the check compares them.
+> **Zero spans sourcing S ⇒ FAILURE, not a routed review.**
+
+**Why two parts rather than one, and why this is sharper than "the destination span's source range covers the emptied section's":** (1) is the substantive test — it asks whether the function went *anywhere*, so a profile cannot pass by **naming a lucky adjacent section**, which is precisely attack (a)'s move. (2) keeps the declaration honest — a profile that re-points truthfully but *names the wrong destination* is a finding, because a false label on a true fact still misdirects the next reader. Checking only the named destination's provenance (the one-part form) would leave (1) unasserted and could be satisfied by coincidence.
+
+**The clause that closes your finding directly**: *span-exists is not function-lives-there* → the repair is to require **a span sourced FROM the emptied section**, not merely a span that exists at a named destination. And the failure disposition is **FAILURE, not routed review**, because attack (a)'s sharpest property was that it *never reached a human at all*.
+
+**Pass four is scoped in advance, in the outline**: re-run attack (a) verbatim against the new substrate. The destination span sources `### The trigger set`, not `### The owed-set pipeline`, so (1) fails. If it passes, **the landing place fires with the evidence already in hand** — your words, carried.
+
+### Sign-off status — represented as you left it, not as either of us would prefer
+
+> **§ 7.2 is NOT signed off. v3 FAILED your second pass, and you gave no conditional sign-off.**
+
+I am stating this flatly because the temptation to record "signed off conditional on (B)" is real and **you did not say that.** What you said is that if Fork B is taken, state the criterion in advance so **the fourth pass** is a one-line verification — you explicitly anticipated a fourth pass. So:
+
+**The sign-off MOVES rather than resolving — and this has a structural consequence worth surfacing to Peter**: the substrate is bought **in U2**, which is execution, *after* settle. **§ 7.2's sign-off therefore can no longer be an OUTLINE-SETTLE precondition; it becomes a U2 ACCEPTANCE GATE.** That leaves **the reference-corpus probe as the only remaining settle precondition** — so this ruling unblocks settle rather than deferring it, which I do not think either of us anticipated when the pre-commitment was written.
+
+### C1–C4 — all bound
+
+- **C1 — SELF-SIGNING CARVE-OUT. Bound, with a general rule rather than a one-off**, since the defect is structural (author and owner collapsing onto one agent) and will recur:
+  > **The signer is the owning domain agent — EXCEPT where that is the profile author, in which case it is the counterpart verification seat; and if both roles collapse onto one agent, it escalates to Peter.**
+  - **Concretely: consumer-Thurgood's `no-consumer-counterpart` rows are signed by STACY.** She is the counterpart seat under the Q5 cut, and signing a row is a **verification act, which is her charter** — not an authoring act, so it does not breach the mirror clause. **The reciprocal holds**: consumer-Stacy's rows are signed by Thurgood, and the default rule already separates them there (author = Thurgood, owner = Stacy), which is why only *his* charter needed the carve-out.
+  - You are right that Ada A7's remedy was applied to the **check** and not to the **signature**. Same defect, one surface missed.
+- **C2 — RATE DETECTOR + ASYMMETRY REPAIR. Bound, and recorded as YOURS.** The detector is your placement, in your seat, with no new instrument: **`no-consumer-counterpart` rates per agent per release, in the existing claims-pass counting block** that already watches declared-none and `adaptations: none` rates as ritual-stub signals. *Declared-none rot is observed in this repo, not hypothesized* — and v3 put the entire positive clause behind such a declaration with no counting.
+  - **The asymmetry repair is mine to draft, and the load-bearing half is REMOVING the expensive side rather than adding cost to the cheap one** — adding ceremony to 28 true rows is precisely how you get the batch rubber-stamped. So: **refusal becomes a one-flag return** (*"this should re-point"*) routed **back to the profile author**, who owns the U2 authoring the signer does not. And assent gains one minimal, non-ceremonial cost: **the signature is per-row, not per-batch** — batch approval was the failure mode you named. Per-row assent plus one-flag refusal makes the two costs comparable without inflating either.
+- **C3 — OWNER FOR "TRIVIAL". Bound. Proposed owner: the STANDARD side — i.e. me, as the vocabulary's owner**, under the Q5 boundary (*"what is a completion doc required to contain?"* → Thurgood). With two riders that answer your Goodhart flag: the definition must be **falsifiable by example**, with **the exemplars supplied by you**, not by the author who wrote the threshold; and **under Fork B it becomes load-bearing again on the mechanical lane**, so it must be **settled before the fourth pass, not after** — an undefined "non-trivial" would let pass four inherit the same hole it is meant to close.
+- **C4 — § 7.4 (ii-a) STOPS LISTING (v)'s MECHANICAL HALF among the deterministic clauses.** Bound, and bound **in the interim under Fork B too**, not only under Fork A: the substrate does not exist until U2 ships it, so until then the honest posture is exactly the one your R2 sentence described. The (ii-a)/(ii-b)/(ii-c) split stays; **(ii-a) loses the (v)-mechanical row and gains a dated note saying when it returns.**
+
+### Attack (e) — recorded as advisory, and I am not treating it as free
+
+Your scope observation stands: **every trigger is about what canonical HAD**, so profile-*added* text and **semantic inversion inside a fully retained section** (*"owns" → "advises on"*) trigger nothing. You rightly note the generator diff-guard on a reviewed profile largely covers both. **Recorded in § 7.2 as a named limitation of the check's shape** — *the check is subtraction-shaped even now* — rather than silently inherited, because "largely covered by review" is the sentence that precedes the next finding.
+
+### Q9 — CLOSED (Peter ruled (ii), the profile dimension)
+
+Folded: § 7.1's fork marker, § 10's Q9 entry, U2's content (`canonical/_consumer-output/<target>/` renderings following the `generateFixture` precedent), and § 14. **Lina's surviving counter is preserved on the record** — (ii) front-loads pipeline work with nothing demoable until finished, and makes the profile axis a permanent cognitive tax on every future sweep author. **My R3 report said "Q9 stays open"; that is superseded.**
+
+**One consequence worth stating**: (ii) is now also **the substrate Fork B's provenance work lands on**, so the two rulings compound rather than merely coexisting — the checked-in consumer renderings are what the section-granular spans get swept against in CI.
+
+### Credit, recorded because a FAILS verdict should not erase it
+
+Your own paragraph, and I am carrying it into the outline rather than paraphrasing it: v3 **closed attack 2**, **closed attack 4 without a special case**, **killed attack 3's original path by deletion rather than amendment**, and **defined attack 5's unit**. *"Four named defects, four real fixes. The failure is in the one clause that had to be positive, and it fails on substrate rather than on drafting."*
+
+And the scheduling residual you flagged honestly, carried into § 7.2 rather than left here: **this was the third design and the second falsification, and each pass costs round time that gate 5 and settle are waiting on.** Fork B's pre-stated criterion is the mechanism that stops pass four from being a fourth open-ended read — which is why the criterion is in the *outline*, where the U2 author will meet it, rather than in this entry.
