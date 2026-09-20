@@ -104,3 +104,23 @@ Per the U1 pattern: this DRAFT carries the proposed text for review; the verbati
 **Heading rename note** (recorded, not silent): the guide's `### Two authoring notes` became `### Authoring notes` (it now holds three). The only other occurrence of the old heading is the U1 ballot's historical AFTER-snapshot, which is a record of the U1 state and correctly unchanged; no live MCP citation targets the old heading (checked before renaming).
 
 **Post-merge follow-up**: `rebuild_index` over the docs MCP — the guide and PSP are MCP-served; TCP and the ballot are not.
+
+---
+
+## 6. Annex — the F15 adjudication (recorded per the cross-session handoff, 2026-09-19)
+
+**The candidate**: a parallel session's Peter-approved orchestrator-role reassessment routed F15 to Stacy's seat — a standing authorship dimension on the claims-pass template (each pass observes whether an audited artifact's idiom matches its declared author; judgment-only, with register row `owned-artifact-authorship` on that session's ballot — `.kiro/docs/ballots/2026-09-19-orchestrator-role-and-row.md`, PR #186 — recording that no mechanical check can own the surface). Peter pre-approved that, if accepted, it would ride this package.
+
+**Stacy's ruling: DECLINED** — her grounds, compiled from her full response (decision rendered without file writes; recorded here by Thurgood):
+
+1. **Out-of-cut**: "who wrote this prose?" is a provenance question, not a claim the task made — the question-routing test places it with neither seat, and a proposal that must route through her seat to find a home is evidence it has none.
+2. **Unfalsifiable-by-design**: an idiom finding has no repair path and no refutation — *unfalsifiable by the accused* — and sat beside counted findings it teaches readers to discount the counted ones. A register row honest about machinery ("no check can own this") is silent about the deeper problem: no judgment can own it defensibly either.
+3. **The concern is real and already has a falsifiable surface inside her cut**: the **delegated-tier note** (`planned Agent/model → actual`) is a claim in the record, checkable against `tasks.md` execution routes, git authorship, and the doc's own routing statements — promised/claimed/shipped. Her candid admission, carried: she did not audit it in the pilot despite 127 Task 1 carrying exactly such a (self-recorded) divergence — the surface is under-used, and reaching for stylometry before exhausting it is reaching for the weaker instrument first.
+
+**Her decline is scoped to the template duty only** — she does not oppose the `owned-artifact-authorship` register row landing on the originating ballot.
+
+**The surviving residual, held for Peter (neither seat absorbs it)**: an orchestrator producing work under an owner's name with **no delegated-tier note written at all** is silent on the delegated-tier surface — a missing note is not a false note — and stays uncovered by this decline. Stacy's position, which Thurgood endorses: an unfalsifiable idiom observation would produce the *appearance* of coverage there, which is worse than the gap. Whether the residual case warrants a duty, and whose, is Peter's.
+
+**Named future candidate for the loop (not part of this package)**: a written delegated-tier-accuracy audit duty — the falsifiable half Stacy identified — to be drafted by Thurgood as standards authorship if Peter wants it, with the missing-note residual presented alongside.
+
+**Cross-record note**: the originating ballot records this decline in three places (its § 9.1, the row's rationale — cited there as *strengthening* the ideological classification — and the row's history, carrying the missing-note residual routed to Peter verbatim). The two records were coordinated across sessions sharing one working tree; the handshake is cited in that ballot.
