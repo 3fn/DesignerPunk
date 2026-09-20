@@ -159,6 +159,21 @@ describe('CLI init — integration', () => {
       expect(app.env.TOKEN_INDEX_DIR).toBe('./token-index');
       expect(app.autoApprove).toContain('find_components');
     });
+
+    test('scaffolded tsconfig.test.json carries no paths overrides pinning subpaths to raw src', async () => {
+      // Regression guard: subpath types resolve through the package exports map
+      // to compiled dist d.ts (Spec 118). A `paths` block re-pinning
+      // @3fn/core/* to node_modules/@3fn/core/src/*.ts undoes that contract in
+      // every scaffolded consumer — see
+      // .kiro/issues/archive/2026-09-20-init-tsconfig-src-repin.md
+      await runInitIn(scratchDir);
+
+      const tsconfig = JSON.parse(
+        fs.readFileSync(path.join(scratchDir, 'tsconfig.test.json'), 'utf-8'),
+      );
+      expect(tsconfig.compilerOptions.paths).toBeUndefined();
+      expect(JSON.stringify(tsconfig)).not.toContain('@3fn/core/src');
+    });
   });
 
   describe('re-runnability — second run against populated repo', () => {

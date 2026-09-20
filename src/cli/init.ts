@@ -127,6 +127,10 @@ export async function runInit(argv: string[]): Promise<void> {
     'jest.config.js',
   );
 
+  // No `paths` overrides: subpath types resolve through the package exports map
+  // to compiled dist d.ts (Spec 118). Re-pinning them to raw src/ undoes the
+  // package's own resolution contract — see
+  // .kiro/issues/archive/2026-09-20-init-tsconfig-src-repin.md
   createFileIfNotExists(
     path.join(dest, 'tsconfig.test.json'),
     JSON.stringify({
@@ -140,14 +144,6 @@ export async function runInit(argv: string[]): Promise<void> {
         resolveJsonModule: true,
         downlevelIteration: true,
         types: ['jest', 'node'],
-        baseUrl: '.',
-        paths: {
-          '@3fn/core/blend': ['./node_modules/@3fn/core/src/blend/index.ts'],
-          '@3fn/core/build': ['./node_modules/@3fn/core/src/build/tokens/index.ts'],
-          '@3fn/core/types': ['./node_modules/@3fn/core/src/types/index.ts'],
-          '@3fn/core/testing': ['./node_modules/@3fn/core/src/testing/index.ts'],
-          '@3fn/core/config': ['./node_modules/@3fn/core/src/config/index.ts'],
-        },
       },
       include: ['src/**/*'],
     }, null, 2) + '\n',
