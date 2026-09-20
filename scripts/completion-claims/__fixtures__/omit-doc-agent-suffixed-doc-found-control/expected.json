@@ -1,0 +1,16 @@
+{
+  "case": "omit-doc-agent-suffixed-doc-found-control",
+  "class": "omit-doc",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/omit-doc-agent-suffixed-doc-found-control.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [],
+  "emissions": [],
+  "exit": "green",
+  "sourceFiles": [
+    "task-2-kenya-completion.md"
+  ],
+  "parentsEvaluated": [
+    "2"
+  ]
+}

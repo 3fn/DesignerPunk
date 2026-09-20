@@ -1,0 +1,22 @@
+{
+  "case": "reword-paraphrase-and-glyph-drift",
+  "class": "reword",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/reword-paraphrase-and-glyph-drift.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mismatch": {
+    "missing": [
+      "All 24 semantic color pairs pass WCAG AA contrast in both light and dark mode",
+      "Perceptual distance between adjacent steps stays within `ΔE₀₀ < 1`"
+    ],
+    "extra": [
+      "All 24 semantic color pairs evaluated against WCAG AA contrast in both light and dark mode",
+      "Perceptual distance between adjacent steps stays within ΔE00 < 1"
+    ]
+  }
+}

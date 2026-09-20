@@ -1,0 +1,17 @@
+{
+  "case": "malformation-block-not-found",
+  "class": "malformation",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/malformation-block-not-found.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "MALFORMATION"
+  ],
+  "emissions": [
+    "completion-doc-not-found"
+  ],
+  "exit": "red",
+  "messages": [
+    "declared per-parent, block not found for parent 2"
+  ]
+}

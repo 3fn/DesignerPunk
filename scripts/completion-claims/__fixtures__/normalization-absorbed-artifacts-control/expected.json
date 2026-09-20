@@ -1,0 +1,17 @@
+{
+  "case": "normalization-absorbed-artifacts-control",
+  "class": "normalization",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/normalization-absorbed-artifacts-control.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [],
+  "emissions": [],
+  "exit": "green",
+  "parentsEvaluated": [
+    "1"
+  ],
+  "insertions": [
+    "completion.md row 3: U+00A0 between 'mode-parity' and 'audit' (criterion cell only)",
+    "completion.md row 4: U+200B immediately after 'registry' (criterion cell only)"
+  ]
+}

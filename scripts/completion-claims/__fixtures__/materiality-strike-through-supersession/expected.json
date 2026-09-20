@@ -1,0 +1,18 @@
+{
+  "case": "materiality-strike-through-supersession",
+  "class": "materiality",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/materiality-strike-through-supersession.md",
+  "kind": "amendment",
+  "ratifiedAt": "2026-09-19",
+  "authoredAt": "2026-05-14",
+  "verdicts": [
+    "MATERIAL_AMENDMENT_WITHOUT_DECLARATION"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "material": true,
+  "messageContains": [
+    "material amendment without criteria-mode declaration (canonical-form diff attached)",
+    "~~3. Ship the Android consumer path~~"
+  ]
+}

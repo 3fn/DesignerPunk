@@ -1,0 +1,20 @@
+{
+  "case": "av-gate-row-reworded",
+  "class": "av-gate",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/av-gate-row-reworded.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "AV_SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "avMismatch": {
+    "missing": [
+      "Both platform demos reviewed by Leonardo and the review comment linked"
+    ],
+    "extra": [
+      "Platform demos reviewed and approved by Leonardo"
+    ]
+  }
+}

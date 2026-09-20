@@ -1,0 +1,12 @@
+{
+  "case": "forced-negative-missing",
+  "class": "forced-negative",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/forced-negative-missing.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "FORCED_NEGATIVE_MISSING"
+  ],
+  "emissions": [],
+  "exit": "red"
+}

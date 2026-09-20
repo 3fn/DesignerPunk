@@ -1,0 +1,17 @@
+{
+  "case": "ratification-record-ballot-absent",
+  "class": "ratification-record",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/ratification-record-ballot-absent.md",
+  "kind": "ratification",
+  "ratifiedAt": "2026-09-19",
+  "ballotPath": ".kiro/docs/ballots/2026-09-19-completion-claims-integrity.md",
+  "verdicts": [
+    "RATIFICATION_RECORD_UNRESOLVABLE"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "cannot resolve ratification record at .kiro/docs/ballots/2026-09-19-completion-claims-integrity.md"
+  ],
+  "parentsEvaluated": []
+}

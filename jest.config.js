@@ -28,7 +28,14 @@ module.exports = {
   
   // Restrict test discovery to src/ directory only (F1)
   // This prevents duplicate test execution from dist/ directory
-  roots: ['<rootDir>/src', '<rootDir>/product-mcp-server/src'],
+  // scripts/completion-claims: the completion-criteria-parity checker's six
+  // suites (Spec 127 U2) run in the functional lane — the subtree root keeps
+  // the rest of scripts/ out of discovery.
+  roots: [
+    '<rootDir>/src',
+    '<rootDir>/product-mcp-server/src',
+    '<rootDir>/scripts/completion-claims',
+  ],
   
   // Explicit test file patterns (F1, F2)
   // Only match files in __tests__ directories with .test.ts or .test.tsx extension

@@ -1,0 +1,15 @@
+{
+  "case": "av-section-missing-when-owed",
+  "class": "av-gate",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/av-section-missing-when-owed.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "AV_MISSING_OR_MALFORMED"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messageContains": [
+    "'Additional verification' section owed"
+  ]
+}

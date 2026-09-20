@@ -1,0 +1,15 @@
+{
+  "case": "materiality-tick-only-immaterial-control",
+  "class": "materiality",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/materiality-tick-only-immaterial-control.md",
+  "kind": "amendment",
+  "ratifiedAt": "2026-09-19",
+  "authoredAt": "2026-07-02",
+  "verdicts": [],
+  "emissions": [],
+  "exit": "green",
+  "material": false,
+  "insertions": [
+    "tasks.head.md: U+00A0 between 'byte-identical' and 'in' (parent 3 criterion)"
+  ]
+}

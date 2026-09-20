@@ -1,0 +1,15 @@
+{
+  "case": "ratification-record-valid-control",
+  "class": "ratification-record",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/ratification-record-valid-control.md",
+  "kind": "ratification",
+  "ratifiedAt": "2026-09-19",
+  "ballotPath": ".kiro/docs/ballots/2026-09-19-completion-claims-integrity.md",
+  "verdicts": [],
+  "emissions": [],
+  "exit": "green",
+  "ratifiedMachine": "2026-09-19",
+  "parentsEvaluated": [
+    "1"
+  ]
+}

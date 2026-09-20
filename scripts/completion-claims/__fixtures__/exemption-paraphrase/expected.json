@@ -1,0 +1,18 @@
+{
+  "case": "exemption-paraphrase",
+  "class": "exemption",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/exemption-paraphrase.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "MALFORMATION",
+    "SET_MISMATCH",
+    "FORCED_NEGATIVE_MISSING"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "non-compliant exemption: not the fixed string 'Criteria fidelity: exempt — spec in flight at ratification (<date>)' (parent 4)"
+  ],
+  "notes": "SET_MISMATCH and FORCED_NEGATIVE_MISSING accompany the malformation per the spec's 'in addition is acceptable' clause: the table is genuinely absent and un-waived."
+}

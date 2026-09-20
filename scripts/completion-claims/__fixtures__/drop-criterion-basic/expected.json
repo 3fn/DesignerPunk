@@ -1,0 +1,18 @@
+{
+  "case": "drop-criterion-basic",
+  "class": "drop",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/drop-criterion-basic.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mismatch": {
+    "missing": [
+      "The dark-mode elevation set passes `npm run audit:mode-parity` with zero unmatched keys"
+    ],
+    "extra": []
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "case": "exemption-does-not-waive-av",
+  "class": "exemption",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/exemption-does-not-waive-av.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "AV_MISSING_OR_MALFORMED"
+  ],
+  "emissions": [
+    "exemption-honored"
+  ],
+  "exit": "red"
+}

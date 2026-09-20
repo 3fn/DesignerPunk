@@ -1,0 +1,19 @@
+{
+  "case": "compliant-full-control",
+  "class": "av-gate",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/fixtures/compliant-full-control.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [],
+  "emissions": [
+    "av-deferral-declared"
+  ],
+  "exit": "green",
+  "emissionContains": [
+    "src/components/chip/platforms/android/ChipFilterBase.kt",
+    "U2"
+  ],
+  "parentsEvaluated": [
+    "1"
+  ]
+}
