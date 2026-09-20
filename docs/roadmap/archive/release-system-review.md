@@ -5,6 +5,8 @@
 **Surfaced by**: Spec 118 documentation-coherence audit (`.kiro/specs/118-module-resolution-coherence/findings/doc-coherence-audit-2026-06-26.md`, findings B1a/B1b), then expanded on investigation.
 **Owner**: Peter (product intent) → spec TBD when scheduled.
 
+> **SUPERSEDED (2026-09-20 banner; decision 2026-08-12)**: The review this doc proposed was held as **Q6** and resolved — the release manager is **RETIRED, kill-and-rewrite** (ballot `.kiro/docs/ballots/2026-08-12-q6-release-manager-retirement.md`, RATIFIED; PRs #116–#118). Execution issue: `.kiro/issues/2026-08-12-release-manager-retirement-execution.md` (36-file inventory, own session). The rewritten law lives at `governance/release-management-system.md`. Two questions this doc raised route to **Spec 123**: consumer-facing release notes (ship/serve) and the internal-vs-consumer corpus framing — see `.kiro/specs/123-consumer-distribution/inbound-from-q6-release-retirement.md`. Kept for provenance; do not schedule work from this doc.
+
 ---
 
 ## TL;DR
