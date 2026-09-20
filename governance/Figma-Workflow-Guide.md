@@ -159,13 +159,13 @@ npm run figma:push -- --clean
 | Token Type | Figma Artifact | Naming Convention |
 |------------|---------------|-------------------|
 | Primitive variables (space, color, fontSize, etc.) | Figma Variables in "Primitives" collection | `space/100`, `color/purple/300` |
-| Semantic variables (aliases) | Figma Variables in "Semantics" collection | `color/primary`, `space/inset/spacious` |
-| Shadow tokens | Figma Effect Styles | `shadow.elevation200` |
-| Typography tokens | Figma Text Styles | `typography.heading200` |
+| Semantic variables (aliases) | Figma Variables in "Semantics" collection | `color/feedback/success/text`, `space/inset/150` |
+| Shadow tokens | Figma Effect Styles | `shadow.container`, `shadow.modal` |
+| Typography tokens | Figma Text Styles | `typography.bodyMd`, `typography.h1` |
 
 Variables use `/` for Figma's visual grouping hierarchy. Styles use `.` because they appear flat in Figma's style picker.
 
-All variables are pushed to both light and dark modes with identical values (Phase 1), establishing the mode structure for future theme support.
+**Modes.** The Primitives collection declares `light` and `dark`; the Semantics collection declares `light`, `dark`, and `wcag` (`src/generators/transformers/FigmaTransformer.ts`). `light` and `dark` receive the same resolved value — the transformer reads only the `wcag` entry from `$extensions.designerpunk.modes`, so the dark theme's semantic overrides do **not** currently reach Figma. Designers should treat the Figma `dark` mode as structural scaffolding, not as the shipped dark palette; `src/tokens/themes/dark/SemanticOverrides.ts` remains authoritative for dark values.
 
 ### Drift Detection
 
@@ -176,7 +176,7 @@ Drift detected: 3 variables have been edited in Figma since last push
 
 Drifted variables:
   - space/300: Expected 24, found 25 (edited in Figma)
-  - color/primary: Expected #B026FF, found #A020E0 (edited in Figma)
+  - color/purple/300: Expected #b322fb, found #a020e0 (edited in Figma)
 
 Resolution options:
   1. Revert changes in Figma, then re-run: npm run figma:push
@@ -459,11 +459,11 @@ Create the Component-Family doc before re-running extraction for better recommen
 **Symptom:** CLI fails with "DTCG token file not found."
 
 **Solution:**
-Run the DTCG generator first:
+Run the token generator first:
 ```bash
-npm run build
+npm run generate:platform-tokens
 ```
-This produces `dist/DesignTokens.dtcg.json` which both push and extraction workflows require.
+This produces `dist/DesignTokens.dtcg.json` (alongside the CSS/Swift/Kotlin outputs), which both push and extraction workflows require. `npm run build` does **not** generate it — `build` compiles TypeScript and bundles the browser/MCP artifacts only.
 
 ---
 

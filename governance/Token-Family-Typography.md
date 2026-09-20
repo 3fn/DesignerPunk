@@ -24,7 +24,7 @@ The DesignerPunk typography token system provides semantically meaningful typogr
 **Key Principles**:
 - **Compositional Architecture**: Typography tokens compose multiple primitive tokens (fontSize, lineHeight, fontFamily, fontWeight, letterSpacing)
 - **Semantic Naming**: Token names express design intent (body, heading, button, label, etc.)
-- **Font Family Separation**: Display typography uses Rajdhani, body typography uses Inter
+- **Font Family Separation**: Display typography uses Rajdhani, body typography uses Figtree, code uses Commit Mono
 - **Multi-Primitive Structure**: Each token explicitly defines all five typography properties
 - **Cross-Platform Consistency**: Typography tokens generate platform-specific values for web, iOS, and Android
 
@@ -48,29 +48,29 @@ The DesignerPunk typography token system provides semantically meaningful typogr
 - `typography.h1` - Primary heading level for page titles
 - `typography.h2` - Secondary heading level for major subsections
 - `typography.h3` - Tertiary heading level for subsections
+- `typography.h4` - Quaternary heading level
+- `typography.h5` - Quinary heading level
+- `typography.h6` - Senary heading level
 - `typography.display` - Large display text for hero sections
 
-**Total**: 4 semantic tokens use Rajdhani for display typography
+**Total**: 7 semantic tokens use the display stack
 
-### Body Font: Inter
+### Body Font: Figtree
 
 **Purpose**: Body typography for paragraphs, descriptions, form inputs, labels, buttons, and general text content.
 
-**Font Stack**: `'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'`
+**Font Stack**: `'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'`
 
 **Characteristics**:
 - Highly readable at small sizes
 - Excellent for body text and UI elements
 - Optimized for screen rendering
-- Wide range of weights for flexibility
+- Variable-weight font, so the full 100–900 weight range is available
 
-**Semantic Tokens Using Inter** (via `fontFamilyBody`):
+**Semantic Tokens Using Figtree** (via `fontFamilyBody`):
 - `typography.bodySm` - Small body text for secondary content
 - `typography.bodyMd` - Standard body text for paragraphs
 - `typography.bodyLg` - Large body text for emphasis
-- `typography.h4` - Quaternary heading level
-- `typography.h5` - Quinary heading level
-- `typography.h6` - Senary heading level
 - `typography.caption` - Caption text for images and tables
 - `typography.legal` - Legal text and disclaimers
 - `typography.buttonSm` - Small button text
@@ -83,13 +83,13 @@ The DesignerPunk typography token system provides semantically meaningful typogr
 - `typography.labelMdFloat` - Floated label state for text inputs
 - `typography.labelLg` - Large labels for prominent sections
 
-**Total**: 17 semantic tokens use Inter for body typography
+**Total**: 14 semantic tokens use the body stack
 
-### Monospace Font: SF Mono / Roboto Mono
+### Monospace Font: Commit Mono
 
 **Purpose**: Code typography for inline code, code blocks, and technical content.
 
-**Font Stack**: `'SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'`
+**Font Stack**: `'"Commit Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'`
 
 **Semantic Tokens Using Monospace** (via `fontFamilyMono`):
 - `typography.codeSm` - Small code text for inline code
@@ -108,11 +108,15 @@ Typography tokens use font weight primitives that map to specific weight values 
 
 | Weight Name | Numeric Value | CSS Value | iOS UIFont.Weight | Android FontWeight | Use Case |
 |-------------|---------------|-----------|-------------------|-------------------|----------|
+| `fontWeight100` | 100 | `100` | `.ultraLight` | `FontWeight.Thin` | Thin — decorative use only |
+| `fontWeight200` | 200 | `200` | `.thin` | `FontWeight.ExtraLight` | Extra light — decorative use only |
 | `fontWeight300` | 300 | `300` | `.light` | `FontWeight.Light` | Light text, captions |
 | `fontWeight400` | 400 | `400` or `normal` | `.regular` | `FontWeight.Normal` | Body text, standard content |
 | `fontWeight500` | 500 | `500` | `.medium` | `FontWeight.Medium` | Labels, buttons, emphasis |
 | `fontWeight600` | 600 | `600` | `.semibold` | `FontWeight.SemiBold` | Subheadings, strong emphasis |
 | `fontWeight700` | 700 | `700` or `bold` | `.bold` | `FontWeight.Bold` | Headings, high emphasis |
+| `fontWeight800` | 800 | `800` | `.heavy` | `FontWeight.ExtraBold` | Extra bold — rare, maximum emphasis |
+| `fontWeight900` | 900 | `900` | `.black` | `FontWeight.Black` | Black — rare, display impact |
 
 ### Platform-Specific Implementation
 
@@ -203,27 +207,27 @@ Text(
 
 ### Body Text Variants
 
-Body text tokens use **Inter** font family with normal weight (400) for optimal readability.
+Body text tokens use the **body font stack** (Figtree, with system fallbacks) at normal weight (400) for optimal readability.
 
 | Token Name | Font Size | Line Height | Font Family | Font Weight | Use Case |
 |------------|-----------|-------------|-------------|-------------|----------|
-| `typography.bodySm` | 14px | 1.25 | Inter | 400 | Small body text, secondary content |
-| `typography.bodyMd` | 16px | 1.5 | Inter | 400 | Standard body text, paragraphs |
-| `typography.bodyLg` | 18px | 1.75 | Inter | 400 | Large body text, emphasis |
+| `typography.bodySm` | 14px | 1.429 | Figtree | 400 | Small body text, secondary content |
+| `typography.bodyMd` | 16px | 1.5 | Figtree | 400 | Standard body text, paragraphs |
+| `typography.bodyLg` | 18px | 1.556 | Figtree | 400 | Large body text, emphasis |
 
 **Example Usage**:
 ```html
 <!-- Web -->
-<p class="body-md">Standard paragraph text uses Inter at 16px.</p>
+<p class="body-md">Standard paragraph text uses Figtree at 16px.</p>
 
 <!-- iOS -->
-Text("Standard paragraph text uses Inter at 16px.")
-    .font(.custom("Inter", size: 16))
+Text("Standard paragraph text uses Figtree at 16px.")
+    .font(.custom("Figtree", size: 16))
     .fontWeight(.regular)
 
 <!-- Android -->
 Text(
-    text = "Standard paragraph text uses Inter at 16px.",
+    text = "Standard paragraph text uses Figtree at 16px.",
     fontFamily = interFamily,
     fontSize = 16.sp,
     fontWeight = FontWeight.Normal
@@ -232,32 +236,32 @@ Text(
 
 ### Heading Hierarchy (H1-H6)
 
-Heading tokens follow HTML semantic hierarchy with **Rajdhani** for H1-H3 (display emphasis) and **Inter** for H4-H6 (body hierarchy).
+Heading tokens follow HTML semantic hierarchy. All of H1–H6 use the **display font stack** (Rajdhani, with system fallbacks); hierarchy comes from size and weight, not a family switch.
 
 | Token Name | Font Size | Line Height | Font Family | Font Weight | Use Case |
 |------------|-----------|-------------|-------------|-------------|----------|
 | `typography.h1` | 37px | 1.19 | Rajdhani | 700 | Primary page titles |
 | `typography.h2` | 33px | 1.212 | Rajdhani | 700 | Major subsections |
 | `typography.h3` | 29px | 1.241 | Rajdhani | 600 | Subsections |
-| `typography.h4` | 26px | 1.231 | Inter | 600 | Smaller sections |
-| `typography.h5` | 23px | 1.391 | Inter | 600 | Minor sections |
-| `typography.h6` | 20px | 1.4 | Inter | 700 | Smallest sections |
+| `typography.h4` | 26px | 1.231 | Rajdhani | 600 | Smaller sections |
+| `typography.h5` | 23px | 1.391 | Rajdhani | 600 | Minor sections |
+| `typography.h6` | 20px | 1.4 | Rajdhani | 700 | Smallest sections |
 
-**Font Family Transition**: H1-H3 use Rajdhani for strong visual hierarchy, H4-H6 use Inter to maintain consistency with body text while providing heading emphasis through weight and size.
+**Family consistency**: every heading token references `fontFamilyDisplay`. Weight drops from 700 (h1, h2) to 600 (h3–h5) and back to 700 at h6, which is the smallest heading and needs the extra weight to read as a heading at 20px.
 
 **Example Usage**:
 ```html
 <!-- Web -->
 <h1 class="h1">Primary Heading in Rajdhani</h1>
-<h4 class="h4">Smaller Heading in Inter</h4>
+<h4 class="h4">Smaller Heading in Rajdhani</h4>
 
 <!-- iOS -->
 Text("Primary Heading in Rajdhani")
     .font(.custom("Rajdhani", size: 37))
     .fontWeight(.bold)
 
-Text("Smaller Heading in Inter")
-    .font(.custom("Inter", size: 26))
+Text("Smaller Heading in Rajdhani")
+    .font(.custom("Rajdhani", size: 26))
     .fontWeight(.semibold)
 
 <!-- Android -->
@@ -269,7 +273,7 @@ Text(
 )
 
 Text(
-    text = "Smaller Heading in Inter",
+    text = "Smaller Heading in Rajdhani",
     fontFamily = interFamily,
     fontSize = 26.sp,
     fontWeight = FontWeight.SemiBold
@@ -278,13 +282,13 @@ Text(
 
 ### Button Text Variants
 
-Button tokens use **Inter** font family with medium weight (500) for clear, readable button labels.
+Button tokens use the **Figtree** body font family with medium weight (500) for clear, readable button labels.
 
 | Token Name | Font Size | Line Height | Font Family | Font Weight | Use Case |
 |------------|-----------|-------------|-------------|-------------|----------|
-| `typography.buttonSm` | 14px | 1.25 | Inter | 500 | Small buttons, tertiary actions |
-| `typography.buttonMd` | 16px | 1.5 | Inter | 500 | Standard buttons, primary actions |
-| `typography.buttonLg` | 18px | 1.75 | Inter | 500 | Large buttons, prominent CTAs |
+| `typography.buttonSm` | 14px | 1.429 | Figtree | 500 | Small buttons, tertiary actions |
+| `typography.buttonMd` | 16px | 1.5 | Figtree | 500 | Standard buttons, primary actions |
+| `typography.buttonLg` | 18px | 1.556 | Figtree | 500 | Large buttons, prominent CTAs |
 
 **Example Usage**:
 ```html
@@ -295,7 +299,7 @@ Button tokens use **Inter** font family with medium weight (500) for clear, read
 Button("Click Me") {
     // action
 }
-.font(.custom("Inter", size: 16))
+.font(.custom("Figtree", size: 16))
 .fontWeight(.medium)
 
 <!-- Android -->
@@ -311,15 +315,15 @@ Button(onClick = { /* action */ }) {
 
 ### Label Text Variants
 
-Label tokens use **Inter** font family with medium weight (500) for clear form field labels and UI element labels.
+Label tokens use the **Figtree** body font family with medium weight (500) for clear form field labels and UI element labels.
 
 | Token Name | Font Size | Line Height | Font Family | Font Weight | Use Case |
 |------------|-----------|-------------|-------------|-------------|----------|
-| `typography.labelXs` | 13px | 1.0 | Inter | 500 | Floating label patterns |
-| `typography.labelSm` | 14px | 1.25 | Inter | 500 | Compact form fields |
-| `typography.labelMd` | 16px | 1.5 | Inter | 500 | Standard form labels |
-| `typography.labelMdFloat` | 14px | 1.5 | Inter | 500 | Floated label state |
-| `typography.labelLg` | 18px | 1.75 | Inter | 500 | Prominent form sections |
+| `typography.labelXs` | 13px | 1.538 | Figtree | 500 | Floating label patterns |
+| `typography.labelSm` | 14px | 1.429 | Figtree | 500 | Compact form fields |
+| `typography.labelMd` | 16px | 1.5 | Figtree | 500 | Standard form labels |
+| `typography.labelMdFloat` | 14px | 1.429 | Figtree | 500 | Floated label state |
+| `typography.labelLg` | 18px | 1.556 | Figtree | 500 | Prominent form sections |
 
 **Special Note on labelMdFloat**: This token uses a calculated font size (16px × 0.88 = 14px) to create smooth floating label animations while maintaining consistent line height, font family, and weight with `labelMd`.
 
@@ -331,11 +335,11 @@ Label tokens use **Inter** font family with medium weight (500) for clear form f
 
 <!-- iOS -->
 Text("Email Address")
-    .font(.custom("Inter", size: 16))
+    .font(.custom("Figtree", size: 16))
     .fontWeight(.medium)
 
 TextField("", text: $email)
-    .font(.custom("Inter", size: 16))
+    .font(.custom("Figtree", size: 16))
 
 <!-- Android -->
 Text(
@@ -357,11 +361,11 @@ TextField(
 
 ### Input Field Text
 
-Input tokens use **Inter** font family with normal weight (400) for optimal readability in form fields.
+Input tokens use the **Figtree** body font family with normal weight (400) for optimal readability in form fields.
 
 | Token Name | Font Size | Line Height | Font Family | Font Weight | Use Case |
 |------------|-----------|-------------|-------------|-------------|----------|
-| `typography.input` | 16px | 1.5 | Inter | 400 | Input field text |
+| `typography.input` | 16px | 1.5 | Figtree | 400 | Input field text |
 
 **Example Usage**:
 ```html
@@ -370,7 +374,7 @@ Input tokens use **Inter** font family with normal weight (400) for optimal read
 
 <!-- iOS -->
 TextField("Enter text...", text: $inputText)
-    .font(.custom("Inter", size: 16))
+    .font(.custom("Figtree", size: 16))
 
 <!-- Android -->
 TextField(
@@ -387,12 +391,12 @@ TextField(
 
 ### Specialized Text
 
-Specialized tokens use **Inter** font family for caption, legal, and **Rajdhani** for display text.
+Specialized tokens use the **Figtree** body font family for caption and legal, and **Rajdhani** for display text.
 
 | Token Name | Font Size | Line Height | Font Family | Font Weight | Use Case |
 |------------|-----------|-------------|-------------|-------------|----------|
-| `typography.caption` | 13px | 1.538 | Inter | 300 | Image captions, supplementary info |
-| `typography.legal` | 13px | 1.538 | Inter | 400 | Legal text, disclaimers |
+| `typography.caption` | 13px | 1.538 | Figtree | 300 | Image captions, supplementary info |
+| `typography.legal` | 13px | 1.538 | Figtree | 400 | Legal text, disclaimers |
 | `typography.display` | 42px | 1.143 | Rajdhani | 700 | Hero sections, major headings |
 
 **Example Usage**:
@@ -404,11 +408,11 @@ Specialized tokens use **Inter** font family for caption, legal, and **Rajdhani*
 
 <!-- iOS -->
 Text("Image caption text")
-    .font(.custom("Inter", size: 13))
+    .font(.custom("Figtree", size: 13))
     .fontWeight(.light)
 
 Text("Terms and conditions apply")
-    .font(.custom("Inter", size: 13))
+    .font(.custom("Figtree", size: 13))
 
 Text("Hero Heading")
     .font(.custom("Rajdhani", size: 42))
@@ -442,9 +446,9 @@ Code tokens use **monospace** font family with normal weight (400) for technical
 
 | Token Name | Font Size | Line Height | Font Family | Font Weight | Use Case |
 |------------|-----------|-------------|-------------|-------------|----------|
-| `typography.codeSm` | 14px | 1.25 | SF Mono / Roboto Mono | 400 | Inline code, compact layouts |
-| `typography.codeMd` | 16px | 1.5 | SF Mono / Roboto Mono | 400 | Code blocks, standard code |
-| `typography.codeLg` | 18px | 1.75 | SF Mono / Roboto Mono | 400 | Prominent code examples |
+| `typography.codeSm` | 14px | 1.429 | Commit Mono | 400 | Inline code, compact layouts |
+| `typography.codeMd` | 16px | 1.5 | Commit Mono | 400 | Code blocks, standard code |
+| `typography.codeLg` | 18px | 1.556 | Commit Mono | 400 | Prominent code examples |
 
 **Example Usage**:
 ```html
@@ -453,7 +457,7 @@ Code tokens use **monospace** font family with normal weight (400) for technical
 
 <!-- iOS -->
 Text("const value = 42;")
-    .font(.custom("SF Mono", size: 16))
+    .font(.custom("CommitMono-Regular", size: 16))
 
 <!-- Android -->
 Text(
@@ -469,7 +473,7 @@ Text(
 
 ### Web Font Loading
 
-Typography tokens reference custom fonts (Rajdhani, Inter) that must be loaded via `@font-face` declarations. The system includes fallback fonts to ensure text remains visible during font loading.
+Typography tokens reference custom fonts (Rajdhani, Figtree, Commit Mono) that must be loaded via `@font-face` declarations. The system includes fallback fonts to ensure text remains visible during font loading.
 
 **Font Loading Strategy**:
 - Use `font-display: swap` to prevent invisible text (FOIT)
@@ -487,10 +491,9 @@ Typography tokens reference custom fonts (Rajdhani, Inter) that must be loaded v
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/assets/fonts/inter/Inter-Regular.woff2') format('woff2'),
-       url('/assets/fonts/inter/Inter-Regular.woff') format('woff');
-  font-weight: 400;
+  font-family: 'Figtree';
+  src: url('/assets/fonts/figtree/Figtree-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 900;
   font-display: swap;
 }
 ```
@@ -506,10 +509,9 @@ Custom fonts must be bundled in the iOS app and listed in `Info.plist`:
     <string>Rajdhani-Medium.ttf</string>
     <string>Rajdhani-SemiBold.ttf</string>
     <string>Rajdhani-Bold.ttf</string>
-    <string>Inter-Regular.ttf</string>
-    <string>Inter-Medium.ttf</string>
-    <string>Inter-SemiBold.ttf</string>
-    <string>Inter-Bold.ttf</string>
+    <string>Figtree-VariableFont_wght.ttf</string>
+    <string>CommitMono-400-Regular.otf</string>
+    <string>CommitMono-700-Regular.otf</string>
 </array>
 ```
 
@@ -556,18 +558,17 @@ val interFamily = FontFamily(
 
 ### By Font Family
 
-**Rajdhani (Display)**: 4 tokens
-- `typography.h1`, `typography.h2`, `typography.h3`, `typography.display`
+**Rajdhani (Display)**: 7 tokens
+- `typography.h1`–`typography.h6`, `typography.display`
 
-**Inter (Body)**: 17 tokens
+**Figtree (Body)**: 14 tokens
 - Body: `bodySm`, `bodyMd`, `bodyLg`
-- Headings: `h4`, `h5`, `h6`
 - Specialized: `caption`, `legal`
 - Buttons: `buttonSm`, `buttonMd`, `buttonLg`
 - Labels: `labelXs`, `labelSm`, `labelMd`, `labelMdFloat`, `labelLg`
 - Input: `input`
 
-**Monospace (Code)**: 3 tokens
+**Commit Mono (Code)**: 3 tokens
 - `codeSm`, `codeMd`, `codeLg`
 
 **Total**: 24 semantic typography tokens

@@ -96,7 +96,7 @@ Glow opacity determines the transparency of glow effects. Glow opacity tokens us
 ```typescript
 // Single-layer glow with strong opacity
 const singleLayerGlow = {
-  blur: 'glowBlur200',  // 16px
+  blur: 'blur100',  // 16px
   opacity: 'glowOpacity100',  // 0.8
   color: 'glow.neonPurple'
 };
@@ -104,17 +104,17 @@ const singleLayerGlow = {
 // Multi-layer glow (future scope - example only)
 const multiLayerGlow = {
   innerLayer: {
-    blur: 'glowBlur100',  // 8px
+    blur: 'blur050',  // 8px
     opacity: 'glowOpacity100',  // 0.8
     color: 'glow.neonCyan'
   },
   middleLayer: {
-    blur: 'glowBlur200',  // 16px
+    blur: 'blur100',  // 16px
     opacity: 'glowOpacity200',  // 0.6
     color: 'glow.neonCyan'
   },
   outerLayer: {
-    blur: 'glowBlur300',  // 24px
+    blur: 'blur150',  // 24px
     opacity: 'glowOpacity300',  // 0.4
     color: 'glow.neonCyan'
   }
@@ -132,6 +132,8 @@ Glow colors reference existing vibrant primitive colors (purple500, cyan500, yel
 | `glow.neonPurple` | purple500 | Vibrant purple glow | Brand emphasis, primary CTAs |
 | `glow.neonCyan` | cyan500 | Vibrant cyan glow | Tech/digital emphasis, success states |
 | `glow.neonYellow` | yellow500 | Vibrant yellow glow | Attention/warning emphasis, highlights |
+| `glow.neonGreen` | green300 | Vibrant green glow (green300 is the family's highest chroma — brighter for glow) | Success emphasis, confirmation |
+| `glow.neonPink` | pink500 | Vibrant pink glow | Error/danger emphasis, alerts |
 
 **Note**: Glow colors reference existing vibrant colors from the core color system. No new primitive colors are created for glows - semantic glow tokens provide purpose-based naming for emphasis effects.
 
@@ -145,21 +147,21 @@ Glow colors reference existing vibrant primitive colors (purple500, cyan500, yel
 ```typescript
 // Purple glow for brand emphasis
 const brandGlow = {
-  blur: 'glowBlur200',  // 16px
+  blur: 'blur100',  // 16px
   opacity: 'glowOpacity100',  // 0.8
   color: 'glow.neonPurple'  // purple500
 };
 
 // Cyan glow for tech/digital emphasis
 const techGlow = {
-  blur: 'glowBlur300',  // 24px
+  blur: 'blur150',  // 24px
   opacity: 'glowOpacity200',  // 0.6
   color: 'glow.neonCyan'  // cyan500
 };
 
 // Yellow glow for attention/warning
 const attentionGlow = {
-  blur: 'glowBlur400',  // 32px
+  blur: 'blur200',  // 32px
   opacity: 'glowOpacity100',  // 0.8
   color: 'glow.neonYellow'  // yellow500
 };
@@ -180,7 +182,7 @@ Semantic glow tokens will compose primitives to create complete glow styles for 
 Button glow for interactive emphasis.
 
 **Potential Composition**:
-- blur: `glowBlur200` (16px)
+- blur: `blur100` (16px)
 - opacity: `glowOpacity100` (0.8)
 - color: `glow.neonPurple`
 
@@ -191,7 +193,7 @@ Button glow for interactive emphasis.
 Focus state glow for accessibility.
 
 **Potential Composition**:
-- blur: `glowBlur100` (8px)
+- blur: `blur050` (8px)
 - opacity: `glowOpacity200` (0.6)
 - color: `glow.neonCyan`
 
@@ -221,7 +223,7 @@ Multi-layer glow architecture will enable complex glow effects with multiple lay
 // Conceptual multi-layer glow structure
 interface MultiLayerGlow {
   layers: Array<{
-    blur: string;      // Reference to glowBlur token
+    blur: string;      // Reference to a blur token (blur050–blur250)
     opacity: string;   // Reference to glowOpacity token
     color: string;     // Reference to glow color token
   }>;
@@ -231,17 +233,17 @@ interface MultiLayerGlow {
 const threeLayerGlow: MultiLayerGlow = {
   layers: [
     {
-      blur: 'glowBlur100',      // 8px - inner layer
+      blur: 'blur050',      // 8px - inner layer
       opacity: 'glowOpacity100', // 0.8
       color: 'glow.neonPurple'
     },
     {
-      blur: 'glowBlur200',      // 16px - middle layer
+      blur: 'blur100',      // 16px - middle layer
       opacity: 'glowOpacity200', // 0.6
       color: 'glow.neonPurple'
     },
     {
-      blur: 'glowBlur300',      // 24px - outer layer
+      blur: 'blur150',      // 24px - outer layer
       opacity: 'glowOpacity300', // 0.4
       color: 'glow.neonPurple'
     }
@@ -327,17 +329,17 @@ Android glow implementation will require gradient-based approaches or custom dra
 
 ### Glow Intensity Guidelines
 
-**Subtle Glow** (glowBlur100-200, glowOpacity200-300):
+**Subtle Glow** (blur050-200, glowOpacity200-300):
 - Small interactive elements
 - Hover states
 - Subtle emphasis
 
-**Standard Glow** (glowBlur200-300, glowOpacity100-200):
+**Standard Glow** (blur100-300, glowOpacity100-200):
 - Primary buttons and CTAs
 - Focus indicators
 - Standard emphasis
 
-**Dramatic Glow** (glowBlur400-500, glowOpacity100):
+**Dramatic Glow** (blur200-500, glowOpacity100):
 - Hero elements
 - Maximum emphasis
 - Focal points
@@ -403,11 +405,11 @@ Glow blur values align to the 4px baseline grid:
 ### Mathematical Relationships
 
 **Blur Tokens**:
-- glowBlur100 = base × 1 = 8 × 1 = 8
-- glowBlur200 = base × 2 = 8 × 2 = 16
-- glowBlur300 = base × 3 = 8 × 3 = 24
-- glowBlur400 = base × 4 = 8 × 4 = 32
-- glowBlur500 = base × 5 = 8 × 5 = 40
+- blur050 = base × 1 = 8 × 1 = 8
+- blur100 = base × 2 = 8 × 2 = 16
+- blur150 = base × 3 = 8 × 3 = 24
+- blur200 = base × 4 = 8 × 4 = 32
+- blur250 = base × 5 = 8 × 5 = 40
 
 **Opacity Tokens**:
 - glowOpacity100 = base × 1 = 0.8 × 1 = 0.8
@@ -430,10 +432,10 @@ Glow blur values align to the 4px baseline grid:
 
 ### Available Now
 
-✅ **Glow Blur Primitives**: glowBlur100-500 (8px - 40px)  
+✅ **Glow Blur Primitives**: blur050–blur250 (8 – 40), from the unified Blur family  
 ✅ **Glow Opacity Primitives**: glowOpacity100-400 (0.8 - 0.2)  
-✅ **Glow Color Semantics**: glow.neonPurple, glow.neonCyan, glow.neonYellow  
-✅ **Mathematical Foundation**: Base-8 system with baseline grid alignment  
+✅ **Glow Color Semantics**: glow.neonPurple, glow.neonCyan, glow.neonYellow, glow.neonGreen, glow.neonPink  
+✅ **Mathematical Foundation**: blur base 16, glow opacity base 0.8; all blur values are multiples of 4  
 ✅ **Documentation**: Primitive token reference and usage guidelines
 
 ### Future Scope

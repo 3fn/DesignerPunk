@@ -29,3 +29,9 @@ Review `DTCG-Integration-Guide.md` and `Figma-Workflow-Guide.md` end-to-end for 
 ## Verification obligation (D4 convention — stated at capture time)
 
 No gate owns token-doc accuracy. Verification is the pass's own: each corrected claim carries a source citation (`src/tokens/**` path + value) in the fix PR body; post-merge docs-MCP reindex; a closing re-grep of the specific defect patterns above (dist line-number citations; the green400 literal; `.kiro/steering/Token-Family` paths) returning zero.
+
+---
+
+## CLOSED (2026-09-19) — pass executed, both workstreams discharged
+
+Executed by Ada (Opus-tier subagent) at this Peter burst, one session after capture. 88 ledger corrections across 13 files (+393/−306); all four pre-routed items fixed; all 15 Token-Family docs swept (5 CLEAN, 10 corrected); both guides reviewed. The D4 verification obligation discharged: per-correction source citations in the fix PR body; the three closing re-greps at zero (run by Ada, re-run independently by Thurgood); section-citation guard + metadata validator + full suite green. Findings F1–F8 captured at `2026-09-19-token-source-accuracy-followups.md` (F1–F5 Ada source items, F6/F7 Peter adjudications, F8 Lina) — routed, not fixed, per the charter's boundary. Post-merge reindex owed and tracked in the PR.

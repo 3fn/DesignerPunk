@@ -67,7 +67,8 @@ Semantic blend tokens provide contextual meaning for common color modification u
 |------------|-----------|-----------|-------|----------|
 | `blend.hoverDarker` | blend200 | darker | 8% | Standard hover feedback on light backgrounds |
 | `blend.hoverLighter` | blend200 | lighter | 8% | Hover feedback on dark backgrounds |
-| `blend.pressedDarker` | blend300 | darker | 12% | Pressed state feedback |
+| `blend.pressedDarker` | blend300 | darker | 12% | Pressed state feedback on light backgrounds |
+| `blend.pressedLighter` | blend300 | lighter | 12% | Pressed state feedback on dark backgrounds |
 | `blend.focusSaturate` | blend200 | saturate | 8% | Focus state with increased saturation |
 | `blend.disabledDesaturate` | blend300 | desaturate | 12% | **DEPRECATED 2026-07-15** — no disabled states in DesignerPunk; removal at next major |
 | `blend.containerHoverDarker` | blend100 | darker | 4% | Subtle container/surface hover |
@@ -495,10 +496,10 @@ blend500 = base × 5 = 0.04 × 5 = 0.20 (20%)
 - **Semantic Blend Source**: `src/tokens/semantic/BlendTokens.ts` - Semantic blend token definitions
 - **Theme-Aware Utilities**: `src/blend/ThemeAwareBlendUtilities.web.ts` - Web platform utilities
 - **Token System Overview**: `docs/token-system-overview.md` - Complete token system reference
-- **Color Tokens Guide**: `.kiro/steering/Token-Family-Color.md` - Color token reference
+- **Color Tokens Guide**: `token-family-color` - Color token reference
 - **Blend Infrastructure Spec**: `.kiro/specs/031-blend-infrastructure-implementation/design.md` - Architecture and design decisions
-- **Component Development Guide**: `.kiro/steering/Component-Development-Guide.md` - Token usage in component development
-- **Token Resolution Patterns**: `.kiro/steering/Token-Resolution-Patterns.md` - Strategic guidance on token type selection and validation
+- **Component Development Guide**: `component-development-guide` - Token usage in component development
+- **Token Resolution Patterns**: `token-resolution-patterns` - Strategic guidance on token type selection and validation
 
 ---
 

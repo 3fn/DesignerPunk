@@ -28,7 +28,7 @@
 | 2026-09-17-platform-build-verification-harness-candidate.md | Kenya/Data | chartered, not scheduled; no build work authorized |
 | 2026-09-17-disabled-guard-corpus-repairs.md | Lina | items 1–7 + D1 DONE (#169/#172); **residuals remain**: sibling vacuous-skips, CTA iOS/Android blend siblings, strict-key parser hardening, D2 scaffold touchpoint |
 | 2026-09-13-component-meta-extractor-clobbers-handedits.md | Lina | next Lina session with extractor capacity |
-| 2026-09-18-ada-token-doc-accuracy-pass.md | Ada | next Ada token-doc session; walked monthly |
+| 2026-09-19-token-source-accuracy-followups.md | Ada (F1–F5) / Peter (F6–F7) / Lina (F8) | from the completed accuracy pass; F1 first (doc-vs-source contradiction live); walked monthly |
 | 2026-08-25-contract-education-content-debt.md | Lina | batch authorized 2026-08-25; next Lina docs session |
 | 2026-08-12-release-manager-retirement-execution.md | Thurgood | own dedicated session (36-file inventory) |
 | 2026-08-13-component-token-platform-references-noncompiling.md | Ada/Lina | open defect |

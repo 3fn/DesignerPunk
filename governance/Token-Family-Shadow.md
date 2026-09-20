@@ -44,9 +44,9 @@ Horizontal offsets represent the sun's position throughout the day:
 | `shadowOffsetX.n150` | -6px | Morning - medium left offset | Morning lighting |
 | `shadowOffsetX.n100` | -4px | Strategic flexibility - small left | Subtle morning shadows |
 | `shadowOffsetX.000` | 0px | Noon - no horizontal offset | Standard UI shadows |
-| `shadowOffsetX.100` | 4px | Strategic flexibility - small right | Subtle afternoon shadows |
-| `shadowOffsetX.150` | 6px | Afternoon - medium right offset | Afternoon lighting |
-| `shadowOffsetX.200` | 8px | Strategic flexibility - medium-large right | Afternoon variations |
+| `shadowOffsetX.100` | 4px | Strategic flexibility - small right | Subtle dusk shadows |
+| `shadowOffsetX.150` | 6px | Dusk - medium right offset | Dusk lighting |
+| `shadowOffsetX.200` | 8px | Strategic flexibility - medium-large right | Dusk variations |
 | `shadowOffsetX.300` | 12px | Sunset - large right offset | Dramatic sunset lighting |
 
 **Mathematical Foundation**: Base value = 4px (4px baseline grid alignment)
@@ -54,7 +54,7 @@ Horizontal offsets represent the sun's position throughout the day:
 **Sun Arc Framework**:
 - **Negative values**: Sunrise/morning shadows (shadow falls left)
 - **Zero value**: Noon shadows (no horizontal offset)
-- **Positive values**: Afternoon/sunset shadows (shadow falls right)
+- **Positive values**: Dusk/sunset shadows (shadow falls right)
 
 #### Shadow Offset Y (Vertical Direction)
 
@@ -64,7 +64,7 @@ Vertical offsets scale with depth (all positive - shadows fall downward):
 |-------|-------|-------------|----------|
 | `shadowOffsetY.100` | 4px | Depth 100 / Noon - short shadow | Low elevation elements |
 | `shadowOffsetY.200` | 8px | Depth 200 - medium shadow | Raised elements (cards, modals) |
-| `shadowOffsetY.300` | 12px | Morning/Afternoon - medium-long | Directional lighting |
+| `shadowOffsetY.300` | 12px | Morning/Dusk - medium-long | Directional lighting |
 | `shadowOffsetY.400` | 16px | Depth 300 / Sunrise/Sunset - long | Floating elements (FABs) |
 
 **Mathematical Foundation**: Base value = 4px, scales with multipliers (1x, 2x, 3x, 4x)
@@ -92,6 +92,7 @@ Shadow opacity determines shadow darkness based on quality and depth.
 
 | Token | Value | Description | Use Case |
 |-------|-------|-------------|----------|
+| `shadowOpacityNone` | 0 | No shadow — flat surface | `shadow.none` |
 | `shadowOpacityHard` | 0.4 | Darker for sharp shadows | Strong, defined shadows |
 | `shadowOpacityModerate` | 0.3 | Balanced opacity | Standard UI shadows |
 | `shadowOpacitySoft` | 0.2 | Lighter for diffuse shadows | Subtle, gentle shadows |
@@ -118,22 +119,44 @@ Shadow colors are based on art theory: shadows are rarely pure black but tinted 
 | `shadowOrange100` | rgb(25, 20, 15) | Warm tint | Cool light creates warm shadows |
 | `shadowGray100` | rgb(15, 20, 30) | Blue-gray tint | Ambient/overcast lighting |
 
-#### Semantic Shadow Colors
+#### No Semantic Shadow Color Layer
 
-| Token | References | Description | Use Case |
-|-------|-----------|-------------|----------|
-| `color.shadow.default` | shadowBlack100 | Default shadow color | Standard UI shadows (noon) |
-| `color.shadow.warm` | shadowBlue100 | Warm shadow color | Sunrise/sunset lighting |
-| `color.shadow.cool` | shadowOrange100 | Cool shadow color | Cool lighting environments |
-| `color.shadow.ambient` | shadowGray100 | Ambient shadow color | Overcast/ambient lighting |
+There is **no** `color.shadow.*` semantic tier. Shadow tokens reference the primitive shadow colors
+directly (`shadow.container` → `shadowBlack100`), matching how typography tokens compose primitives
+without an intermediate semantic layer. The rationale is recorded in `src/tokens/semantic/ColorTokens.ts`
+§ "ARCHITECTURAL DECISION: Shadow Color Semantic Layer Removed".
 
-**Note**: Shadow colors are mode-agnostic (always dark) regardless of light/dark theme.
+**Note**: Shadow colors are mode-agnostic (always dark) regardless of light/dark theme. They are also
+the four primitives that still resolve from the legacy `src/tokens/ColorTokens.ts` RGBA source rather
+than from the OKLCH channel model.
 
 ---
 
 ## Shadow Semantic Tokens
 
 Semantic shadow tokens compose primitives to create complete shadow styles for specific use cases.
+
+**Complete set** (`src/tokens/semantic/ShadowTokens.ts`) — 15 tokens:
+
+| Token | offsetX | offsetY | blur | opacity | color |
+|-------|---------|---------|------|---------|-------|
+| `shadow.none` | `shadowOffsetX.000` | `shadowOffsetY.000` | `blur000` | `shadowOpacityNone` | `shadowBlack100` |
+| `shadow.container` | `shadowOffsetX.000` | `shadowOffsetY.100` | `blur075` | `shadowOpacityModerate` | `shadowBlack100` |
+| `shadow.navigation` | `shadowOffsetX.000` | `shadowOffsetY.100` | `blur125` | `shadowOpacitySoft` | `shadowBlack100` |
+| `shadow.dropdown` | `shadowOffsetX.000` | `shadowOffsetY.100` | `blur075` | `shadowOpacityModerate` | `shadowBlack100` |
+| `shadow.modal` | `shadowOffsetX.000` | `shadowOffsetY.200` | `blur100` | `shadowOpacityDepth200` | `shadowBlack100` |
+| `shadow.toast` | `shadowOffsetX.000` | `shadowOffsetY.300` | `blur150` | `shadowOpacityDepth300` | `shadowBlack100` |
+| `shadow.tooltip` | `shadowOffsetX.000` | `shadowOffsetY.300` | `blur150` | `shadowOpacityDepth300` | `shadowBlack100` |
+| `shadow.fab` | `shadowOffsetX.300` | `shadowOffsetY.400` | `blur025` | `shadowOpacityHard` | `shadowBlue100` |
+| `shadow.hover` | `shadowOffsetX.000` | `shadowOffsetY.100` | `blur125` | `shadowOpacitySoft` | `shadowBlack100` |
+| `shadow.navigation.indicator` | `shadowOffsetX.000` | `shadowOffsetY.000` | `blur025` | `shadowOpacitySoft` | `shadowBlack100` |
+| `shadow.sunrise` | `shadowOffsetX.n300` | `shadowOffsetY.200` | `blur075` | `shadowOpacityModerate` | `shadowBlue100` |
+| `shadow.morning` | `shadowOffsetX.n150` | `shadowOffsetY.200` | `blur075` | `shadowOpacityModerate` | `shadowBlack100` |
+| `shadow.noon` | `shadowOffsetX.000` | `shadowOffsetY.200` | `blur075` | `shadowOpacityModerate` | `shadowBlack100` |
+| `shadow.dusk` | `shadowOffsetX.150` | `shadowOffsetY.200` | `blur075` | `shadowOpacityModerate` | `shadowBlack100` |
+| `shadow.sunset` | `shadowOffsetX.300` | `shadowOffsetY.200` | `blur075` | `shadowOpacityModerate` | `shadowBlue100` |
+
+The sections below detail the most frequently used of these.
 
 ### Standard UI Shadows
 
@@ -144,9 +167,9 @@ Standard container shadow with noon lighting and moderate quality.
 **Composition**:
 - offsetX: `shadowOffsetX.000` (0px)
 - offsetY: `shadowOffsetY.100` (4px)
-- blur: `shadowBlurModerate` (12px)
+- blur: `blur075` (12px)
 - opacity: `shadowOpacityModerate` (0.3)
-- color: `color.shadow.default` (black)
+- color: `shadowBlack100` (black)
 
 **Use Cases**: Cards, panels, containers with subtle elevation
 
@@ -159,9 +182,9 @@ Modal shadow with noon lighting and depth 200.
 **Composition**:
 - offsetX: `shadowOffsetX.000` (0px)
 - offsetY: `shadowOffsetY.200` (8px)
-- blur: `shadowBlurDepth200` (16px)
+- blur: `blur100` (16px)
 - opacity: `shadowOpacityDepth200` (0.35)
-- color: `color.shadow.default` (black)
+- color: `shadowBlack100` (black)
 
 **Use Cases**: Modals, dialogs, overlays with medium elevation
 
@@ -174,9 +197,9 @@ Hover state shadow with noon lighting and soft quality.
 **Composition**:
 - offsetX: `shadowOffsetX.000` (0px)
 - offsetY: `shadowOffsetY.100` (4px)
-- blur: `shadowBlurSoft` (20px)
+- blur: `blur125` (20px)
 - opacity: `shadowOpacitySoft` (0.2)
-- color: `color.shadow.default` (black)
+- color: `shadowBlack100` (black)
 
 **Use Cases**: Hover states, interactive elements with subtle elevation change
 
@@ -189,9 +212,9 @@ Floating action button shadow with sunset lighting and hard quality.
 **Composition**:
 - offsetX: `shadowOffsetX.300` (12px)
 - offsetY: `shadowOffsetY.400` (16px)
-- blur: `shadowBlurHard` (4px)
+- blur: `blur025` (4px)
 - opacity: `shadowOpacityHard` (0.4)
-- color: `color.shadow.warm` (blue-gray)
+- color: `shadowBlue100` (blue-gray)
 
 **Use Cases**: Floating action buttons, prominent CTAs with dramatic elevation
 
@@ -204,7 +227,7 @@ Navigation indicator shadow for active segment/tab indicators within navigation 
 **Composition**:
 - offsetX: `shadowOffsetX.000` (0px)
 - offsetY: `shadowOffsetY.000` (0px)
-- blur: `shadowBlurHard` (4px)
+- blur: `blur025` (4px)
 - opacity: `shadowOpacitySoft` (0.2)
 - color: `shadowBlack100` (black)
 
@@ -227,9 +250,9 @@ Sunrise lighting shadow with left offset and warm color.
 **Composition**:
 - offsetX: `shadowOffsetX.n300` (-12px)
 - offsetY: `shadowOffsetY.200` (8px)
-- blur: `shadowBlurModerate` (12px)
+- blur: `blur075` (12px)
 - opacity: `shadowOpacityModerate` (0.3)
-- color: `color.shadow.warm` (blue-gray)
+- color: `shadowBlue100` (blue-gray)
 
 **Use Cases**: Sunrise-themed interfaces, morning dashboards
 
@@ -242,9 +265,9 @@ Morning lighting shadow with medium left offset and default color.
 **Composition**:
 - offsetX: `shadowOffsetX.n150` (-6px)
 - offsetY: `shadowOffsetY.200` (8px)
-- blur: `shadowBlurModerate` (12px)
+- blur: `blur075` (12px)
 - opacity: `shadowOpacityModerate` (0.3)
-- color: `color.shadow.default` (black)
+- color: `shadowBlack100` (black)
 
 **Use Cases**: Morning-themed interfaces, subtle directional lighting
 
@@ -257,9 +280,9 @@ Noon lighting shadow with no horizontal offset and default color.
 **Composition**:
 - offsetX: `shadowOffsetX.000` (0px)
 - offsetY: `shadowOffsetY.200` (8px)
-- blur: `shadowBlurModerate` (12px)
+- blur: `blur075` (12px)
 - opacity: `shadowOpacityModerate` (0.3)
-- color: `color.shadow.default` (black)
+- color: `shadowBlack100` (black)
 
 **Use Cases**: Noon-themed interfaces, neutral directional lighting, completing the sun arc series
 
@@ -267,18 +290,18 @@ Noon lighting shadow with no horizontal offset and default color.
 
 **Relationship to shadow.container**: This token uses the same noon lighting pattern as `shadow.container` (no horizontal offset, default color). The difference is semantic naming: `shadow.noon` explicitly indicates noon lighting in a directional series, while `shadow.container` is named for its use case (standard container shadows). Both are valid choices depending on whether you want to emphasize lighting (noon) or use case (container).
 
-#### shadow.afternoon
+#### shadow.dusk
 
-Afternoon lighting shadow with medium right offset and default color.
+Dusk lighting shadow with medium right offset and default color.
 
 **Composition**:
 - offsetX: `shadowOffsetX.150` (6px)
 - offsetY: `shadowOffsetY.200` (8px)
-- blur: `shadowBlurModerate` (12px)
+- blur: `blur075` (12px)
 - opacity: `shadowOpacityModerate` (0.3)
-- color: `color.shadow.default` (black)
+- color: `shadowBlack100` (black)
 
-**Use Cases**: Afternoon-themed interfaces, subtle directional lighting
+**Use Cases**: Dusk-themed interfaces, subtle directional lighting
 
 **Visual Effect**: Shadow falls to the right with neutral color
 
@@ -289,9 +312,9 @@ Sunset lighting shadow with right offset and warm color.
 **Composition**:
 - offsetX: `shadowOffsetX.300` (12px)
 - offsetY: `shadowOffsetY.200` (8px)
-- blur: `shadowBlurModerate` (12px)
+- blur: `blur075` (12px)
 - opacity: `shadowOpacityModerate` (0.3)
-- color: `color.shadow.warm` (blue-gray)
+- color: `shadowBlue100` (blue-gray)
 
 **Use Cases**: Sunset-themed interfaces, evening dashboards
 
@@ -651,11 +674,11 @@ For precise shadow control beyond elevation approximation, custom drawable gener
 - **Visual weight**: Very subtle, omnidirectional
 - **Lighting**: None (no directional offset — element is inside a container, not floating)
 
-#### Directional Shadows (sunrise, morning, noon, afternoon, sunset)
+#### Directional Shadows (sunrise, morning, noon, dusk, sunset)
 - **Use for**: Themed interfaces, time-of-day experiences, completing the sun arc series
 - **Elevation level**: Medium (depth 200)
 - **Visual weight**: Moderate with directional character
-- **Lighting**: Varies by time of day (sunrise → morning → noon → afternoon → sunset)
+- **Lighting**: Varies by time of day (sunrise → morning → noon → dusk → sunset)
 
 **Note**: For standard UI shadows without directional theming, use `shadow.container` instead of `shadow.noon`. Both use noon lighting, but `shadow.container` is semantically named for its use case.
 
@@ -666,11 +689,11 @@ When semantic shadows don't meet your needs, compose custom shadows from primiti
 ```typescript
 // Example: Custom shadow for a specific use case
 const customShadow = {
-  offsetX: 'shadowOffsetX.150',      // Afternoon offset
+  offsetX: 'shadowOffsetX.150',      // Dusk offset
   offsetY: 'shadowOffsetY.200',      // Medium depth
-  blur: 'shadowBlurSoft',            // Soft edges
+  blur: 'blur125',                   // Soft edges (20)
   opacity: 'shadowOpacityModerate',  // Balanced opacity
-  color: 'color.shadow.default'      // Neutral color
+  color: 'shadowBlack100'            // Neutral color
 };
 ```
 
@@ -727,12 +750,12 @@ Shadow values preferably align to the 4px baseline grid:
 - shadowOffsetY.100 = base × 1 = 4 × 1 = 4
 - shadowOffsetY.400 = base × 4 = 4 × 4 = 16
 
-**Blur Tokens**:
-- shadowBlurHard = base × 1 = 4 × 1 = 4
-- shadowBlurModerate = base × 3 = 4 × 3 = 12
-- shadowBlurSoft = base × 5 = 4 × 5 = 20
-- shadowBlurDepth200 = base × 4 = 4 × 4 = 16
-- shadowBlurDepth300 = base × 6 = 4 × 6 = 24
+**Blur Tokens** (unified `blur` family, base 16 — Spec 089 replaced the old `shadowBlur*` family; see `token-family-blur`):
+- blur025 = base × 0.25 = 16 × 0.25 = 4
+- blur075 = base × 0.75 = 16 × 0.75 = 12
+- blur100 = base × 1 = 16 × 1 = 16
+- blur125 = base × 1.25 = 16 × 1.25 = 20
+- blur150 = base × 1.5 = 16 × 1.5 = 24
 
 **Opacity Tokens**:
 - shadowOpacityHard = base × 1.33 = 0.3 × 1.33 ≈ 0.4

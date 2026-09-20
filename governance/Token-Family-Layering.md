@@ -175,6 +175,7 @@ Elevation tokens provide Material Design elevation values for Android. Elevation
 
 | Token | Value | Shadow Reference | Context |
 |-------|-------|------------------|---------|
+| `elevation.none` | 0dp | shadow.none | Flat surface — no elevation, no shadow |
 | `elevation.container` | 8dp | shadow.container | Container elevation (handles z-order and shadow) |
 | `elevation.navigation` | 4dp | shadow.navigation | Navigation elevation (handles z-order and shadow) |
 | `elevation.dropdown` | 8dp | shadow.dropdown | Dropdown elevation (handles z-order and shadow) |

@@ -40,6 +40,8 @@ All spacing tokens derive from a base unit of **8px** (space100):
 
 | Token Name | Value | Mathematical Relationship | Use Case |
 |------------|-------|---------------------------|----------|
+| `space000` | 0px | 0 × base (space100) | Explicit zero spacing |
+| `space025` | 2px | 0.25 × base (space100) | Hairline separation, minimal gaps |
 | `space050` | 4px | 0.5 × base (space100) | Minimal spacing, tight padding |
 | `space075` | 6px | 0.75 × base (space100) | Strategic flexibility for components |
 | `space100` | 8px | 1 × base (baseline unit) | Standard spacing unit |
@@ -56,9 +58,9 @@ All spacing tokens derive from a base unit of **8px** (space100):
 
 ### Baseline Grid Alignment
 
-**8px Baseline Grid**: Primary spacing tokens (050, 100, 150, 200, 300, 400, 500, 600, 700, 800) align to the 8px baseline grid, ensuring consistent vertical rhythm across layouts.
+**8-unit Baseline Grid**: Spacing tokens 000, 100, 200, 300, 400, 500, 600, 700 and 800 carry `baselineGridAlignment: true` in source — they are exact multiples of 8 and drive vertical rhythm. Tokens 025 (2), 050 (4) and 150 (12) are flagged `false`: they are valid, frequently-used values, but they are sub-grid rather than grid-aligned.
 
-**4px Subgrid**: space050 (4px) provides subgrid alignment for fine-tuned spacing needs while maintaining mathematical relationships.
+**4px Subgrid**: space050 (4px) — and space025 (2px) below it — provide subgrid alignment for fine-tuned spacing needs while maintaining mathematical relationships to the base unit.
 
 **Strategic Flexibility Tokens**: space075 (6px), space125 (10px), and space250 (20px) are mathematically derived exceptions that don't align to the 8px grid but maintain clear relationships to the base unit.
 
@@ -95,6 +97,7 @@ Inset spacing tokens define internal spacing (padding) within containers and com
 
 | Token Name | Primitive Reference | Value | Mathematical Relationship | Use Case |
 |------------|---------------------|-------|---------------------------|----------|
+| `space.inset.none` | space000 | 0px | 0 × base (space100) | No internal spacing - edge-to-edge content |
 | `space.inset.050` | space050 | 4px | 0.5 × base (space100) | Minimal internal spacing - compact chips, dense toolbars, tight buttons |
 | `space.inset.075` | space075 | 6px | 0.75 × base (space100) | Compact internal spacing - medium-density components, checkbox medium size |
 | `space.inset.100` | space100 | 8px | 1 × base (space100) | Compact internal spacing - small buttons, compact cards, dense forms |
@@ -130,8 +133,9 @@ Elements that form a cohesive unit (form fields in a group, list items, navigati
 
 | Token Name | Primitive Reference | Value | Density | Use Case |
 |------------|---------------------|-------|---------|----------|
-| `space.grouped.minimal` | space050 | 4px | Tight | Minimal separation - compact lists, dense navigation |
-| `space.grouped.tight` | space075 | 6px | Tight | Tight grouping - form field groups, compact menus |
+| `space.grouped.none` | space000 | 0px | — | No separation - flush/abutting elements |
+| `space.grouped.minimal` | space025 | 2px | Tight | Minimal separation - compact lists, dense navigation |
+| `space.grouped.tight` | space050 | 4px | Tight | Tight grouping - form field groups, compact menus |
 | `space.grouped.normal` | space100 | 8px | Normal | Standard grouping - default list spacing, form groups |
 | `space.grouped.loose` | space150 | 12px | Loose | Loose grouping - comfortable lists, relaxed forms |
 
@@ -141,7 +145,8 @@ Elements that share context but aren't tightly grouped (related cards, sidebar s
 
 | Token Name | Primitive Reference | Value | Density | Use Case |
 |------------|---------------------|-------|---------|----------|
-| `space.related.tight` | space150 | 12px | Tight | Tight relationship - compact card grids, dense sidebars |
+| `space.related.none` | space000 | 0px | — | No separation between related elements |
+| `space.related.tight` | space100 | 8px | Tight | Tight relationship - compact card grids, dense sidebars |
 | `space.related.normal` | space200 | 16px | Normal | Standard relationship - default card spacing, content blocks |
 | `space.related.loose` | space300 | 24px | Loose | Loose relationship - comfortable card grids, relaxed layouts |
 
@@ -151,9 +156,10 @@ Elements that are distinct but share a common context (page sections, major cont
 
 | Token Name | Primitive Reference | Value | Density | Use Case |
 |------------|---------------------|-------|---------|----------|
-| `space.separated.tight` | space300 | 24px | Tight | Tight separation - compact sections, dense pages |
-| `space.separated.normal` | space400 | 32px | Normal | Standard separation - default section spacing |
-| `space.separated.loose` | space600 | 48px | Loose | Loose separation - generous section spacing, breathing room |
+| `space.separated.none` | space000 | 0px | — | No separation |
+| `space.separated.tight` | space200 | 16px | Tight | Tight separation - compact sections, dense pages |
+| `space.separated.normal` | space300 | 24px | Normal | Standard separation - default section spacing |
+| `space.separated.loose` | space400 | 32px | Loose | Loose separation - generous section spacing, breathing room |
 
 #### Sectioned Spacing (Major Page Divisions)
 
@@ -161,9 +167,10 @@ Major divisions between distinct page sections or content areas.
 
 | Token Name | Primitive Reference | Value | Density | Use Case |
 |------------|---------------------|-------|---------|----------|
-| `space.sectioned.tight` | space600 | 48px | Tight | Tight sectioning - compact page divisions |
-| `space.sectioned.normal` | space800 | 64px | Normal | Standard sectioning - default major divisions |
-| `space.sectioned.loose` | space1000 | 80px | Loose | Loose sectioning - generous page divisions, maximum breathing room |
+| `space.sectioned.none` | space000 | 0px | — | No sectioning gap |
+| `space.sectioned.tight` | space400 | 32px | Tight | Tight sectioning - compact page divisions |
+| `space.sectioned.normal` | space500 | 40px | Normal | Standard sectioning - default major divisions |
+| `space.sectioned.loose` | space600 | 48px | Loose | Loose sectioning - generous page divisions, maximum breathing room |
 
 ---
 
@@ -185,9 +192,12 @@ space300 = space100 × 3    = 24px
 space400 = space100 × 4    = 32px
 space500 = space100 × 5    = 40px
 space600 = space100 × 6    = 48px
+space700 = space100 × 7    = 56px
 space800 = space100 × 8    = 64px
-space1000 = space100 × 10  = 80px
 ```
+
+The scale ends at `space800` (64). There is no `space900` or `space1000` — component dimensions
+beyond 64 come from the Sizing family (`size900`, `size1000`, `size1600`), not from spacing.
 
 ### Doubling Pattern
 

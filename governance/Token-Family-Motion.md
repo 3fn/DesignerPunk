@@ -58,16 +58,16 @@ Easing tokens determine animation acceleration curves. The system supports two t
 | Token | Type | Value | Description | Use Case |
 |-------|------|-------|-------------|----------|
 | `easingStandard` | cubicBezier | cubic-bezier(0.4, 0.0, 0.2, 1) | Balanced acceleration | Standard UI transitions, float labels, most animations |
-| `easingDecelerate` | cubicBezier | cubic-bezier(0.0, 0.0, 0.2, 1) | Slow start, fast end | Entering elements, expanding panels, appearing content |
-| `easingAccelerate` | cubicBezier | cubic-bezier(0.4, 0.0, 1, 1) | Fast start, slow end | Exiting elements, collapsing panels, disappearing content |
+| `easingDecelerate` | cubicBezier | cubic-bezier(0.0, 0.0, 0.2, 1) | Fast start, gradual slowdown | Entering elements, expanding panels, appearing content |
+| `easingAccelerate` | cubicBezier | cubic-bezier(0.4, 0.0, 1, 1) | Gradual start, fast finish | Exiting elements, collapsing panels, disappearing content |
 | `easingGlideDecelerate` | linear | 15 stops | Aggressive deceleration, long settle | Indicator glide, weighted slide-to-stop motion |
 
 **Mathematical Foundation**: Cubic-bezier curves for natural, physics-based motion feel. Piecewise linear curves for complex motion that can't be expressed as a single cubic bezier.
 
 **Design Philosophy**:
 - **easingStandard**: Most versatile curve for general UI animations
-- **easingDecelerate**: Elements entering the screen feel natural with slow start
-- **easingAccelerate**: Elements leaving the screen feel natural with fast start
+- **easingDecelerate**: Elements entering the screen feel natural arriving fast and settling gently
+- **easingAccelerate**: Elements leaving the screen feel natural easing away then speeding off
 - **easingGlideDecelerate**: Heavy object sliding to a stop — 41% of movement in first 10% of time, then long gentle settle. No overshoot.
 
 **Platform-Specific Output (cubic bezier)**:
@@ -128,7 +128,16 @@ Components receive pre-rounded values, ensuring consistent rendering across plat
 
 ## Motion Semantic Tokens
 
-Semantic motion tokens compose primitives to create complete motion styles for specific use cases.
+Semantic motion tokens compose primitives to create complete motion styles for specific use cases. The full set (`src/tokens/semantic/MotionTokens.ts`):
+
+| Token | Duration | Easing | Use Case |
+|-------|----------|--------|----------|
+| `motion.floatLabel` | `duration250` | `easingStandard` | Text input label floating up on focus |
+| `motion.focusTransition` | `duration150` | `easingStandard` | Focus gained/lost — quick visual feedback |
+| `motion.buttonPress` | `duration150` | `easingAccelerate` | Scale transform on button press |
+| `motion.modalSlide` | `duration350` | `easingDecelerate` | Modals, drawers, overlays sliding into view |
+| `motion.selectionTransition` | `duration250` | `easingStandard` | Selected/unselected state changes |
+| `motion.settleTransition` | `duration350` | `easingDecelerate` | Color fades and positional slides following a faster state-change snap |
 
 ### motion.floatLabel
 
@@ -528,16 +537,16 @@ val labelOffset by animateFloatAsState(
 - **Feel**: Natural, versatile
 - **Examples**: Float labels, menu animations, general UI transitions
 
-#### easingDecelerate (Slow Start)
+#### easingDecelerate (Decelerating)
 - **Use for**: Entering elements, expanding panels, appearing content
-- **Acceleration**: Slow start, fast end
-- **Feel**: Elements entering the screen
+- **Acceleration**: Fast start, gradual slowdown into rest
+- **Feel**: Elements entering the screen and settling
 - **Examples**: Modal appearing, panel expanding, content fading in
 
-#### easingAccelerate (Fast Start)
+#### easingAccelerate (Accelerating)
 - **Use for**: Exiting elements, collapsing panels, disappearing content
-- **Acceleration**: Fast start, slow end
-- **Feel**: Elements leaving the screen
+- **Acceleration**: Gradual start, fast finish
+- **Feel**: Elements leaving the screen and speeding away
 - **Examples**: Modal dismissing, panel collapsing, content fading out
 
 #### easingGlideDecelerate (Weighted Slide)
@@ -630,8 +639,8 @@ Duration tokens follow a linear +100ms progression:
 Cubic bezier easing tokens use industry-standard curves for natural motion:
 
 - **easingStandard**: cubic-bezier(0.4, 0.0, 0.2, 1) - Balanced acceleration
-- **easingDecelerate**: cubic-bezier(0.0, 0.0, 0.2, 1) - Slow start, fast end
-- **easingAccelerate**: cubic-bezier(0.4, 0.0, 1, 1) - Fast start, slow end
+- **easingDecelerate**: cubic-bezier(0.0, 0.0, 0.2, 1) - Fast start, gradual slowdown
+- **easingAccelerate**: cubic-bezier(0.4, 0.0, 1, 1) - Gradual start, fast finish
 
 **Design Philosophy**: These curves are industry-proven and feel natural across platforms. They provide consistent motion feel that users recognize.
 
