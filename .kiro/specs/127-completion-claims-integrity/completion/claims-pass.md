@@ -293,3 +293,11 @@ Read in full, per the charter duty. Outcomes:
 **Ladder accounting**: F-1 is logged as wrong-owed-set-result **instance one**, noticed by a claims pass. Whether a pass-noticed wrong result counts toward the pre-committed "second wrong result noticed in ordinary use" trigger is Peter's fork (three readings in § "Flagged for Peter"); pending his ruling, the conservative log is kept: **count = 1, trigger not yet fired, next wrong result promotes under any reading.**
 
 The standards-amendment queue now holds S-1 … S-7 (S-1/S-3 with two independent instances each); the vehicle is a recorded guide/PSP amendment via the ballot model, drafted by Thurgood, at Peter's convenience — deliberately NOT bundled into 127's closeout PR.
+
+---
+
+## [THURGOOD] Peter's rulings on the flagged items (2026-09-19, this session — recorded at the exchange)
+
+1. **The mechanization-trigger fork: RULED — F-1 counts as strike one.** Reading (b): the detector list enumerated where we expected to notice, not what counts. Peter's ground, quoted for the record because it is itself a standards principle: *"if the agents and methods that are already fully informed of the expectations can't adhere to them, what chances do the agents without the context have?"* The ladder log is confirmed (no longer conservative-pending): **wrong-owed-set-result count = 1; the next wrong result, noticed anywhere, promotes the pipeline to a committed script with a scoped grant.**
+2. **The N ≥ 5 accounting: RULED — 127 supplies 3, not 5.** The MIDPOINT and CLOSEOUT populations are not independent evidence. Carried to the 5.Z sitting as settled: guard (ii)'s floor needs **at least 2 more in-scope parents from other specs** completing under the convention before the arming can be considered on the evidence limb.
+3. **S-4 (the subtask completion-doc duty): RULED — ENFORCE**, not narrow. Executed via the standards package ballot (drafted this session; see `.kiro/docs/ballots/2026-09-19-completion-audit-standards-package.md`), where the enforcement text and its instruments live.
