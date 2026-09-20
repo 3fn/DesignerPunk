@@ -146,6 +146,21 @@ Unmet or partially met criteria: None
 
 — or a list, **each item carrying a follow-up link**. **Silence does not satisfy it.** (The shape is imported from the Product-Handoff-Protocol's four `None / or list each` forced-negative sections; the line itself is new here.)
 
+### The delegated-tier line — unconditional
+
+*(S-package sibling; ratified by the 2026-09-19 delegated-tier-capture ballot. The forced-negative pattern applied to WHO EXECUTED.)*
+
+Every **parent** completion doc carries, in its header block, **exactly one** `**Delegated-tier**:` line, in one of two fixed forms:
+
+- `**Delegated-tier**: plan held` — the executing agent and model tier matched the task's planned `**Agent**:` stamp, and no additional agents were pulled in.
+- `**Delegated-tier**: planned <agent> (<tier>) → actual <agent> (<tier>) — <one-line reason>; class: agent-evolution` *(or `model-evolution`, or `both`)*.
+
+Both forms admit an **optional free tail after ` — `** — tier data-points and context ride there and are preserved, never dropped for compliance — and the label may carry a parenthetical annotation. The grammar, decidable by rule (the head decides; the tail is free): `^\*\*Delegated-tier\*\*(?: _\([^)]*\)_)?: (?:plan held(?: — .+)?|planned .+ → actual .+ — .+; class: (?:agent-evolution|model-evolution|both)(?: — .+)?)$`
+
+**A missing line, or a free-prose variant, is non-compliant on its face.** Under the previous exception-based rule, silence was ambiguous between "the plan held" and "a divergence went unrecorded" — the missing-note gap recorded at the 2026-09-19 F15 adjudication. A recorded divergence is a **data point, never a charge**; overriding a stale or rote stamp remains the correct move.
+
+**Honest reach**: this line converts passive omission into visible non-compliance and gives the claims passes a falsifiable claim to verify (presence + form on every parent doc; accuracy on divergence forms; spot-checks on `plan held`). It does **not** verify itself — a false `plan held` is artifact-undetectable (`governance/classification-map.md § "owned-artifact-authorship"`), and a truthful `plan held` against a plan authored to the delegated shape is a named, deliberately **unowned** planning-time residual (the ballot's § 4); the perimeter shrinks the uncovered surface, it does not seal it. Binding is forward from ratification; parent grain only — the subtask-doc floor is untouched.
+
 ### Additional verification — required if applicable, never optional
 
 WHEN the parent's `tasks.md` block defines promise blocks beyond Success Criteria — the closed vocabulary being `**Primary Artifacts:**` and gate clauses under the frozen label `**Merge gate:**` — THEN the completion doc SHALL carry an **"Additional verification"** section containing:
