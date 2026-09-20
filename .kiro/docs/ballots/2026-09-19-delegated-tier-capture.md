@@ -1,7 +1,7 @@
 # Ballot: Delegated-tier capture — unconditional, fixed-form, audited
 
 **Date**: 2026-09-19
-**Status**: **DRAFT — submitted for Peter's review** (record-first; on his ratification this line flips in the same PR, and his merge is the record act — PR-atomic; no `Ratified-machine:` line, per the orchestrator ballot's stated ground: that mechanism belongs to the one ballot the checker parses)
+**Status**: **RATIFIED (Peter, 2026-09-19)** — draft reviewed in-session with the § 6 fold presented; ratification directed ("Ratify — flip it and open the PR"); **Peter's merge of this PR is the record act** (PR-atomic; no `Ratified-machine:` line, per the orchestrator ballot's stated ground: that mechanism belongs to the one ballot the checker parses)
 **Author**: Thurgood (standards authorship, per the Q5 cut), with Stacy's verifier-half review recorded in § 6 before submission
 **Origin**: the F15 adjudication's un-absorbed residual (2026-09-19, recorded three times: the standards-package ballot's annex, the orchestrator ballot § 9.1/§ 10, and the `owned-artifact-authorship` row's history) — *owner-named work carrying no delegated-tier note at all is silent on every surface either seat owns, because a missing note is not a false note.* Peter directed the draft in-session ("Let's go ahead and draft the delegated-tier-accuracy duty").
 
@@ -76,4 +76,4 @@ Fold-back applied: the first draft made the audit verify every `plan held` line;
 
 ---
 
-**Status**: DRAFT — awaiting Peter's ruling; the § 6 review slot fills first.
+**Status**: **RATIFIED (Peter, 2026-09-19)** — the § 6 review folded before submission; ruled in-session; merge is the record act.
