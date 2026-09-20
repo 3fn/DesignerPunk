@@ -3,9 +3,13 @@
 **Date**: 2026-09-20
 **Spec**: 123 — Consumer Distribution (the former "121-C")
 **Author**: Thurgood (test governance / spec standards / Civitas steward)
-**Status**: **DRAFT (revised 2026-09-20 after Peter's second sitting) — awaiting the design-outline feedback round, then Peter's outline settle.** Not a settled outline; no requirements phase opens until settle (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Status**: **DRAFT — ROUND-READY (revised 2026-09-20 after Peter's second and third sittings). This is the text R1 reviewers read.** Not a settled outline; no requirements phase opens until settle (Spec-Feedback-Protocol § "Sequential Formalization Gate").
 
-> **SECOND SITTING FOLDED IN (Peter, 2026-09-20, main-loop).** Ruling on this draft: **R4** persona-embodied cold-user trio (resolves the draft's Q3) → § 3.4 · **R5** all eight agents ship, contract = subtraction **+ re-grounding** (resolves the draft's Q4) → § 3.5 · **R6** pre-installed starter specs, launch set of two → § 3.6 · **`personal-note.md` template-ized** (dissolves audit A10) → § 3.7 · **R7 RECORDED LEAN** package-consumed-primary with the repo clone as ownership hatch — *open for round input, Ada named* → § 3.8. Out-of-band: **D-live-1 repaired** (PR #192) → § 1.3. Q1/Q2/Q5/Q7/Q8 and gates 4–5 remain open.
+> **SECOND SITTING FOLDED IN (Peter, 2026-09-20, main-loop).** **R4** persona-embodied cold-user trio (resolves the draft's Q3) → § 3.4 · **R5** all eight agents ship, contract = subtraction **+ re-grounding** (resolves the draft's Q4) → § 3.5 · **R6** pre-installed starter specs, launch set of two → § 3.6 · **`personal-note.md` template-ized** (dissolves audit A10) → § 3.7 · **R7 RECORDED LEAN** package-consumed-primary with the repo clone as ownership hatch — *open for round input, Ada named* → § 3.8. Out-of-band: **D-live-1 repaired** (PR #192) → § 1.3.
+>
+> **THIRD SITTING FOLDED IN (Peter, 2026-09-20, final pre-round).** **R8** the five-minute test IS a formal requirement; *"five-minute" is philosophical, not literal*; runs are never truncated at a time boundary — **closes Q1 and gate 3 entire** → § 3.9 · **R9** KEEP the GH-Packages dual-publish — **closes Q7**, ruled **against this outline's recommendation**, tax accepted knowingly → § 3.10 · **cold-human trigger named generically** ("the first willing stranger"), with the survives-closeout consequence recorded → § 5.5 · **gate 5 held with NO PRIOR** — the round weighs scope shape fresh → § 9.3. Also confirmed: the `eject` retirement (§ 4.2) and the R5 author-stake handling (Stacy's press stands).
+>
+> **STILL OPEN for the round**: **gate 4** (Q2), **gate 5** (§ 9.3 — no prior held), **Q5**, **Q6** (lean recorded), **Q8**.
 
 > **PROVENANCE — this document supersedes the 2026-06-23 PLACEHOLDER STUB.** The stub (in git history at `.kiro/specs/123-consumer-distribution/design-outline.md`, last modified at `3507a0b4`, 2026-08-12) recorded scope, dependencies, and cross-references only, under an explicit "no design decisions recorded here" rule, because formalization was **direction-gated on Spec 118**. Gate history, preserved: 118's direction decision landed and 118 COMPLETED (v13.0.0, 2026-07-05); the 125-B U1-c verdict ratified (#105); 119-B completed (#107) with its handoff. The stub's own dated note (2026-08-12) recorded **ALL formalization gates OPEN**. Peter's ratified order of 2026-09-19 made 123 the next major arc. The stub's scope survives here — refined, not discarded — in § 4.
 
@@ -151,9 +155,35 @@ Peter **leans** package-consumed-primary, with the **GitHub repo clone blessed a
 
 **He explicitly wants feedback-round input on this**, and named **Ada** in particular: what does package-primary mean for **consumer token authoring**? The question is therefore framed **open-with-a-lean** (§ 4.2, § 10 Q6), not settled. Reviewers should argue the substance; the lean tells you where the burden of persuasion sits, not that the matter is closed.
 
-### 3.9 What the rulings do NOT settle
+### 3.9 R8 — GATE 3 CLOSED: the five-minute test is a formal requirement, and "five-minute" is philosophical, not literal
 
-R1–R6 fix the persona, the rail, the agent-shipping question, the cold-user bar, the charter contract, and the starter-spec mechanism. They leave open: the five-minute test's *definition* (gate 3's remaining half — step-count bar), consumer corpus policy and packaging diet (gate 4), unit structure (gate 5), and Q5/Q6/Q7/Q8 (§ 10). **Do not read a ruling as having settled an adjacent question by implication** — R5 in particular settles *what ships*, not *how it is delivered* (Q5) or *what a consumer imports* (Q6).
+*Third sitting, 2026-09-20. Closes Q1 and therefore gate 3 entire.*
+
+**It is a formal requirement.** Peter's framing, verbatim: *"Keep it relatively short, but don't cut off important learnings just to satisfy an arbitrary time requirement. Good data is valuable."*
+
+Concretely, three clauses the requirement must carry:
+
+1. **The bounded step count is the assertable bar.** That is what an acceptance criterion may be written against.
+2. **Wall-clock is recorded per run as evidence, never asserted.** A stranger's machine and network are not ours to promise (§ 5.5), but the number is worth having across runs.
+3. **A run is NEVER truncated at a time boundary.** A run that goes long is **good data about where onboarding drags** — the single most useful output the trio produces — not a failure to abort. Anyone writing the AC should read a long run as a finding, not a violation.
+
+**Why this is the better shape than the draft's instinct**: the draft treated "five minutes" as a measurement problem to be defined away. The ruling treats it as a *design intent* — short is the goal, learning is the constraint — which is the only version compatible with R4's trio being a **triage** instrument. A bar that stopped the clock at five minutes would destroy exactly the data the trio exists to collect.
+
+### 3.10 R9 — Q7 CLOSED: KEEP the GitHub Packages dual-publish
+
+*Third sitting, 2026-09-20. Closes Q7.*
+
+**Ruled: keep dual-publishing.** Public npm remains primary (R2) and remains the only rail named in consumer-facing docs, templates, and scaffolds (§ 4.3); the GH-Packages mirror continues to be published.
+
+**Recorded plainly, per AICP: this ruling went against the outline's recorded recommendation** (§ 4.3 recommended mirror-but-undocumented while surfacing the drop as the fork; the drop was the cheaper option and is the one not taken). The trade-off is **accepted knowingly**, and it recurs:
+
+- **The tax**: the dual-publish release friction is real and per-release — the 2FA-on-publish / `--access public` / scope-mapping flag playbook, and the **false-live `npm view` hazard** (at 13.0.0 a scope-mapping caused `npm view` to answer from GH Packages and report a version as published when it was not).
+- **What it buys**: continuity for any GH-pinned consumer, and the private/gated rail stays available without a re-decision.
+- **Where the cost lands**: the release-playbook cost **rides into U1 / release-process scope as a known tax, not a surprise**. It should appear in the release recipe as a step with its verification, not as tribal knowledge — an undocumented mirror nobody checks is how the false-live happened the first time.
+
+### 3.11 What the rulings do NOT settle
+
+R1–R6, R8 and R9 fix the persona, the rail (both halves), the agent-shipping question, the cold-user bar, the charter contract, the starter-spec mechanism, and gate 3. They leave open: **consumer corpus policy and packaging diet (gate 4)**, **unit structure (gate 5 — deliberately held open for the round; § 9.3)**, and **Q5**, **Q6** (lean recorded), **Q8**. **Do not read a ruling as having settled an adjacent question by implication** — R5 in particular settles *what ships*, not *how it is delivered* (Q5) or *what a consumer imports* (Q6).
 
 ---
 
@@ -197,6 +227,8 @@ The proposal, as the lean reshapes it:
 
 ### 4.3 DECISION D2 — GitHub Packages disposition (R2's open half)
 
+**RULED (R9, § 3.10): keep the dual-publish.** The analysis below is preserved as the record of what was argued — it recommended mirror-but-undocumented and surfaced drop-the-mirror as the fork; **the fork was taken toward keeping**, and the recurring tax is accepted knowingly. What survives operationally from this section is (1) the consumer-facing silence about GH Packages, and (2) the verification discipline the mirror requires.
+
 Two separable things got bundled together in the C3 framing, and separating them changes the answer:
 
 1. **The `init` `.npmrc` template writing a GH-Packages scope-mapping was a defect** (D-live-1) — repairable unconditionally, under any disposition. **✅ DONE out-of-band, 2026-09-20** (PR #192 + the born-closed issue record; § 1.3). The separation argued here was load-tested by that fix: it landed while Q7 remains open, exactly as predicted. **What remains in 123**: `sync` detects a pre-existing `@3fn` → GH-Packages mapping in a consumer repo and offers repair *with a named explanation* (per P4's priced-optionality discipline: never silent, never fine print). That is U1 scope, and it is now U1's *only* registry obligation.
@@ -204,7 +236,9 @@ Two separable things got bundled together in the C3 framing, and separating them
 
 **Recommendation: mirror-but-undocumented.** Keep the dual publish (near-zero marginal publish cost; preserves a private/gated rail if Peter ever wants early access or a paid tier), but remove GitHub Packages from **all** consumer-facing documentation, templates, and scaffolds, so no new consumer can land there by following our own instructions.
 
-**Surviving counter-argument (the fork).** An undocumented mirror still carries a real verification tax, and we have already paid it once: at 13.0.0 a scope-mapping caused `npm view` to answer from GH Packages and produce a **false "it's live"** (`inbound-from-13.0.0-release.md` §2(c)). A mirror nobody documents is a mirror nobody checks — and a stale mirror version reads as current to exactly the tooling we verify with. **The fork for Peter**: accept the per-release verification tax to keep the private rail, or drop the mirror and delete the tax. I do not pick this one; both are defensible and the choice is about optionality Peter may want later, not about engineering.
+**Surviving counter-argument (the fork, as it was put to Peter).** An undocumented mirror still carries a real verification tax, and we have already paid it once: at 13.0.0 a scope-mapping caused `npm view` to answer from GH Packages and produce a **false "it's live"** (`inbound-from-13.0.0-release.md` §2(c)). A mirror nobody documents is a mirror nobody checks — and a stale mirror version reads as current to exactly the tooling we verify with. **The fork**: accept the per-release verification tax to keep the private rail, or drop the mirror and delete the tax.
+
+**→ TAKEN: keep** (R9, § 3.10). The counter-argument above is therefore **not retired — it is the accepted cost**, and it recurs every release. Two operational consequences follow and belong in U1's scope: (i) the dual-publish steps and their flags are a **documented release-recipe step**, not tribal knowledge; (ii) publish verification must **name the registry explicitly** (`npm view --registry`), because the failure mode is a green-looking answer from the wrong rail. This section's recommendation was the other option; the ruling is recorded here rather than quietly overwritten so the trade-off stays legible the next time the tax is felt.
 
 ### 4.4 `sync` — the upgrade-coherence surface
 
@@ -264,11 +298,15 @@ An onboarding step (optionally skippable, priced per P4) scaffolds a **spec in t
 
 Under **R6** this is no longer a one-off scaffold but the **first of two shipped starter specs** — the P2 vehicle. See § 5.6 for the pair and its per-spec growth discipline.
 
-### 5.5 Gate 3 — the five-minute test
+### 5.5 Gate 3 — the five-minute test (CLOSED: R4 + R8)
 
-**The cold-user half is RULED (R4, § 3.4)**: the blocking bar is the **persona-embodied agent trio** (backend engineer / designer / first-time PM), a standing regression instrument re-run per release; Peter's own run is non-blocking mechanics validation and is explicitly not a cold-human run; a cold-human run stays an open obligation triggered by the first willing stranger. The carried caveat — the trio measures **instruction clarity and path completeness**, a human measures **confusion** — is a limitation of the instrument, not a defect in it, and belongs in the requirement's own text so nobody later reads a green trio as "a stranger succeeded."
+**The cold-user half (R4, § 3.4)**: the blocking bar is the **persona-embodied agent trio** (backend engineer / designer / first-time PM), a standing regression instrument re-run per release; Peter's own run is non-blocking mechanics validation and is explicitly not a cold-human run. The carried caveat — the trio measures **instruction clarity and path completeness**, a human measures **confusion** — is a limitation of the instrument, not a defect in it, and **belongs in the requirement's own text** so nobody later reads a green trio as "a stranger succeeded."
 
-**What remains open is the bar's definition** (§ 10 Q1): explicit requirement (recommended), stated as a **bounded step count** with wall-clock **observed and recorded but not asserted** as an acceptance condition — a stranger's machine and network are not ours to promise.
+**The definition half (R8, § 3.9)**: it **is** a formal requirement; "five-minute" is **philosophical, not literal**. The **bounded step count** is the assertable bar; **wall-clock is recorded per run as evidence, never asserted**; and **no run is truncated at a time boundary** — a long run is good data about where onboarding drags, which is precisely what a triage instrument is for.
+
+**The cold-human obligation — trigger NAMED, and named generically: "the first willing stranger."** No individual is designated.
+
+> **Honest caveat, recorded because the failure mode is predictable**: a generic trigger is the easiest kind to let slide. There is no date, no name, and no mechanism that fires it — it depends on someone noticing an opportunity. **Consequence, stated up front: if unfired, the obligation survives 123's closeout as an open item** — it does not close with the spec, and closing 123 is not evidence it was discharged. Anyone reading a completed 123 should expect to find this still open.
 
 ### 5.6 Starter specs as onboarding curriculum (R6, § 3.6)
 
@@ -437,19 +475,32 @@ Saying plainly what goes first, as instructed:
 - U5's **persona-trio run** in whatever reduced form survives (R4's bar, by definition)
 - The reference-corpus **probe** stays even under maximum reduction — it is the cheapest item in the spec (one transcript) and it is live input to U4.
 
-**Candid note on the cut-line**: even fully cut, this is a four-unit spec. If Peter wants 123 genuinely small, the honest lever is not trimming items — it is **splitting U3+U4 into a successor spec (123-B, "Onboarding & Corpus Policy")** and landing U1+U2+U5 as "123 — Consumer Distribution: the package is correct and the agents ship." That is a real option and I am surfacing it rather than picking it; it costs a second formalization cycle and it delays the experience spine, which is the half Peter's own vision session was most animated about.
+**Candid note on the cut-line**: even fully cut, this is a four-unit spec. If 123 should be genuinely small, the honest lever is not trimming items — it is **splitting U3+U4 into a successor spec (123-B, "Onboarding & Corpus Policy")** and landing U1+U2+U5 as "123 — Consumer Distribution: the package is correct and the agents ship." It costs a second formalization cycle and delays the experience spine, which is the half Peter's own vision session was most animated about.
+
+### 9.3 Gate 5 is deliberately held OPEN — the round weighs scope shape FRESH
+
+**Peter is deliberately holding no prior on gate 5** (third sitting, 2026-09-20). One spec with five declared units versus a 123 / 123-B split is **genuinely open**, and **reviewer input is wanted before he rules at outline settle**.
+
+This changes how reviewers should read § 9.1 and § 9.2: the five-unit structure and the cut-line are **a proposal to be argued with, not a default to be trimmed**. Concretely, the round should say:
+
+- Is **U1 → U2 → U3 → U5 with U4 sequential** the right shape, or does U4 need to move ahead of U2 (§ 9.1's gate-4 dependency)?
+- Is the **U2-authors / U3-delivers seam** on the starter specs sound, or is it a between-units drop waiting to happen? **Stacy's input is specifically wanted here** — this is the kind of seam her verifiability lens is for.
+- Is the **123 / 123-B split** the better answer, and if so does the line fall at U3+U4 or somewhere else?
+- Does the cut-line's **order** match what reviewers would actually give up first? (Items 6 and 7 carry named capability losses; if a reviewer would cut something above them instead, say so.)
+
+An author's proposal that nobody argued with is not a validated structure — it is an unexamined one. This is the section where that matters most.
 
 ---
 
 ## 10. Open decision points for the feedback round and Peter
 
-Gates 3 (remaining half), 4, 5 plus four execution questions. **Q3 and Q4 are RESOLVED by the second sitting and are retained below as closed items with their rulings, not deleted** — a question that vanishes silently invites its own re-asking.
+**Gate 4 and gate 5 plus three execution questions (Q5, Q6, Q8).** **Q1, Q3, Q4 and Q7 are RESOLVED and are retained below as closed items with their rulings, not deleted** — a question that vanishes silently invites its own re-asking. **Gate 3 is closed entire** (R4 + R8).
 
-**Q1 — GATE 3's remaining half: the bar's definition.** Make the five-minute test an explicit requirement (recommended by the record)? What does "minutes" mean — a measured wall-clock number, or a bounded step count? *Recommendation, unchanged by the sitting: an explicit requirement, stated as a bounded **step count**, with a wall-clock observation **recorded but not asserted** as an acceptance condition, because wall-clock on a stranger's machine and network is not ours to promise.* The *who* half is settled (R4).
+**Q1 — RESOLVED (Peter, 2026-09-20, third sitting) → R8, § 3.9.** *Was: is the five-minute test an explicit requirement, and what does "minutes" mean?* Ruled: **yes, a formal requirement**, and **"five-minute" is philosophical, not literal** — *"Keep it relatively short, but don't cut off important learnings just to satisfy an arbitrary time requirement. Good data is valuable."* The recommended **bounded step count** stands as the assertable bar; **wall-clock is recorded per run, never asserted**; and **runs are never truncated at a time boundary** — a long run is a finding about where onboarding drags, not a failed run. The third clause is the one the draft did not have and the one most likely to be lost in AC authoring; § 5.5 carries it.
 
 **Q2 — GATE 4: consumer corpus policy.** Banner / split / both, plus release-notes and packaging diet. Recommendations in § 6; the R1 tension is named in § 6.2. **This gate should settle at outline settle** because U2's route set depends on it (§ 9.1). *(The `personal-note.md` sub-item has left this gate — ruled, § 3.7.)*
 
-**Q3 — RESOLVED (Peter, 2026-09-20) → R4, § 3.4.** *Was: who is the cold user?* Ruled: **persona-embodied agent trio** (backend engineer / designer / first-time PM) as the blocking bar and a standing per-release regression instrument; Peter's own run is non-blocking mechanics validation and explicitly not a cold-human run; **cold-human remains an open obligation** with a named trigger (first willing stranger). The counter this outline could not answer — *an agent proxy cannot feel confusion* — was **not dissolved but institutionalized**: the trio measures instruction clarity and path completeness; the human measures confusion. Recording that distinction is the better outcome than a resolution would have been, because the limitation now travels with the instrument instead of being forgotten once the bar goes green.
+**Q3 — RESOLVED (Peter, 2026-09-20) → R4, § 3.4.** *Was: who is the cold user?* Ruled: **persona-embodied agent trio** (backend engineer / designer / first-time PM) as the blocking bar and a standing per-release regression instrument; Peter's own run is non-blocking mechanics validation and explicitly not a cold-human run; **cold-human remains an open obligation**, trigger named **generically — "the first willing stranger," no individual designated** (third sitting), with the honest consequence recorded at § 5.5: a generic trigger is the easiest kind to let slide, so **if unfired the obligation survives 123's closeout as an open item**. The counter this outline could not answer — *an agent proxy cannot feel confusion* — was **not dissolved but institutionalized**: the trio measures instruction clarity and path completeness; the human measures confusion. Recording that distinction is the better outcome than a resolution would have been, because the limitation now travels with the instrument instead of being forgotten once the bar goes green.
 
 **Q4 — RESOLVED (Peter, 2026-09-20) → R5, § 3.5.** *Was: does "full agent org" mean all eight charters, and what happens to one that collapses under subtraction?* Ruled: **all eight ship**, and the contract is **subtraction + re-grounding** — the role ships intact, re-pointed at the consumer's repo; only this repo's specifics are removed. **The collapse case was a framing artifact** and is dissolved (§ 7.2). The author was a named party and did not self-adjudicate; the reframe happens to preserve his charter, which is stated on the record so the round can press on it. **Note the ruling's reach**: it settles *what ships* and *what the charter must contain* — not Q5 (how it is delivered) or Q6 (what a consumer imports).
 
@@ -457,9 +508,11 @@ Gates 3 (remaining half), 4, 5 plus four execution questions. **Q3 and Q4 are RE
 
 **Q6 — D1, OPEN WITH A RECORDED LEAN** (§ 4.2, § 3.8). Peter **leans package-consumed-primary**, with the GitHub repo clone as the DIY-ownership hatch and package mode positioned as the path for continual updates. He **explicitly wants round input**, and named **Ada** in particular: *what does package-primary mean for consumer token authoring?* The positioning counter (defaults are the product; package-primary reads as dependency, not capability) survives and is live. Argue the substance — the lean sets where the burden of persuasion sits, not that the matter is closed.
 
-**Q7 — D2's mirror tax** (§ 4.3). Keep the undocumented GH-Packages mirror and pay per-release verification, or drop it and delete the tax. **Not picked, and unaffected by PR #192** — the template repair landed under either disposition, which is the separation argued in § 4.3, now load-tested rather than merely asserted.
+**Q7 — RESOLVED (Peter, 2026-09-20, third sitting) → R9, § 3.10.** *Was: keep the GH-Packages mirror and pay the per-release verification tax, or drop it?* Ruled: **KEEP the dual-publish**. **This went against the outline's recommendation** (mirror-but-undocumented was recommended; drop was the surfaced alternative and is the cheaper one not taken). The tax — 2FA/flags playbook, and the false-live `npm view` hazard — is **accepted knowingly and recurs each release**; what it buys is continuity for any GH-pinned consumer and a private rail available without re-deciding. **The cost rides into U1 / release-process scope as a known tax**: documented recipe step + registry-explicit publish verification (§ 4.3). Unaffected by PR #192 — the template repair landed under either disposition, which is the separation § 4.3 argued, now load-tested rather than merely asserted.
 
 **Q8 — Lina's 124 authoring convention** (§ 4.5). Lint rider (small, inside 123) vs rename-by-mechanism (breaking, its own spec). **Lina's call; wanted early in the round because it moves 123's scope.**
+
+**GATE 5 — unit structure: OPEN, and deliberately held with NO PRIOR** (§ 9.3). Peter holds no position going in; the round weighs scope shape **fresh**. One spec with five declared units vs a 123 / 123-B split; the U1→U2→U3→U5 ordering with U4 sequential; the U2-authors/U3-delivers seam (**Stacy specifically**); and whether the cut-line's order matches what reviewers would actually give up first. **He rules at outline settle, after the round** — so this is the item where reviewer input has the most leverage.
 
 ---
 
@@ -473,6 +526,8 @@ Carried from the onboarding inbound, unerased, plus new ones this outline create
 - **R3's scope growth.** Peter took this on deliberately; § 9.2 states the cut-line rather than pretending the growth is free — and records that the second sitting was close to scope-neutral (R7 and PR #192 gave back roughly what R4 and R6 added).
 - **Two profiles to guard.** One canonical source, two rendered profiles, two guard surfaces. 122's machinery makes this cheap, but "cheap" is not "free," and the steward profile carries all the ongoing churn — the consumer profile will be the one that quietly rots. *The bidirectional re-grounding sweep is the mitigation; its absence would be the rot.*
 - **Persona agents under-simulate confusion (new, R4's carried caveat).** They **role-play** ignorance rather than possessing it. The trio measures instruction clarity and path completeness; a human measures confusion. **The named rot mode: a green trio read as "a stranger succeeded."** The mitigation is textual — the limitation belongs in the requirement itself (§ 5.5), not only in this outline — and it is weak precisely because it is textual. The cold-human obligation is the real mitigation, and it is unscheduled by construction.
+- **The dual-publish tax, accepted knowingly (new, R9).** Keeping the GH-Packages mirror was ruled **against this outline's recommendation**, and the cost is not one-time: every release carries the 2FA/flags playbook and the **false-live `npm view` hazard** that already produced one wrong "it's live" at 13.0.0. Mitigations are procedural only (documented recipe step, registry-explicit verification) — there is no mechanical guard proposed, which means the mitigation is exactly the kind that decays. **Named as a standing tax rather than a solved problem**, and worth re-examining if it ever bites a release under time pressure.
+- **A generically-triggered obligation is a weakly-held one (new).** The cold-human run's trigger is "the first willing stranger" — no name, no date, no firing mechanism. Recorded at § 5.5 with its consequence: the obligation **outlives 123's closeout if unfired**, and a completed 123 is not evidence it was discharged.
 - **Starter specs are shipped surface we cannot observe running (new).** Two executable specs in strangers' repos, executed by agents of unknown quality, against environments we never see. P2's bite proofs cover the CI spec's failure mode; **Thurgood's re-grounding spec has no equivalent proof-of-arming**, and its deliverable ("what did not transfer") only reaches us if a consumer chooses to send it. Accepted: the spec's value is local to the consumer even when we learn nothing.
 - **The secondary mode is unproven (new).** One observed behavior. § 8's probe is sized to that uncertainty, and § 6.2's recommendation is explicitly contingent on the probe's outcome.
 - **The strategic counter still standing** (WordPress-thesis note): *the plan optimizes toward an unvalidated market.* Zero external consumers today. The lean counter-position — get the rough package into three strangers' hands now rather than hardening it — has real merit, and 123 is precisely the spec where that argument bites hardest, because 123 IS the hardening. **The honest framing: if U1+U2 land and U3/U4 start sprawling, that is the signal to ship what exists and find a stranger.**
@@ -513,7 +568,7 @@ Selected per Spec-Feedback-Protocol § "Stakeholder Identification" — domain o
 | **Stacy** | **REQUIRED** | Process quality + claims (she was required on 127); owns the verifiability LENS on acceptance criteria — **especially Q1 and R4's trio**: "five-minute test", "persona-embodied trio", and "one recorded transcript" are exactly the criteria shapes that read as verifiable and are not. Two specific asks: (i) does the § 7.2 re-grounding check **falsify in both directions**, or only the subtraction one? (ii) is the U2-authors / U3-delivers seam on the starter specs (§ 9.1) a between-units drop waiting to happen? |
 | **Leonardo** | **REQUIRED** | Product MCP consumer-side population (§ 4.6) is his routed surface; he is the closest thing we have to the consuming persona's advocate, so R1's install UX and **R4's three personas** are his to critique — are those the right three failure axes? |
 | **Kenya / Data / Sparky** | **NOT TAGGED for R1** | Justification: 123 ships no platform implementations and changes no platform APIs. The cross-platform *generation* a consumer gets is Ada's pipeline and Lina's components; the platform agents' consumption patterns are unchanged by distribution form. **They come in at the tasks round IF Q6 lands on package-primary** (which is now the recorded lean, so treat this trigger as likely rather than hypothetical) — that changes what a platform implementer imports in a consumer repo. The trigger is recorded so the omission stays a decision, not an oversight |
-| **Peter** | Settles | Gates 3 (remaining half), 4, 5 and Q5–Q8. Q3/Q4 already ruled (§ 3.4, § 3.5) |
+| **Peter** | Settles, at outline settle | **Gate 4** and **gate 5** (gate 5 held with **no prior** — the round's input is wanted first, § 9.3), plus **Q5**, **Q6** (lean recorded), **Q8**. Already ruled: Q1/R8, Q3/R4, Q4/R5, Q7/R9, R6, `personal-note.md` |
 
 ---
 
