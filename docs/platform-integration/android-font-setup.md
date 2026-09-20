@@ -1,22 +1,23 @@
 # Android Font Setup Guide
 
 **Date**: December 8, 2025  
-**Purpose**: Guide for configuring Inter and Rajdhani fonts in Android applications  
+**Purpose**: Guide for configuring Figtree and Rajdhani fonts in Android applications  
 **Requirements**: 8.1, 8.2, 8.3, 8.4, 8.5
 
 ---
 
 ## Overview
 
-This guide explains how to configure and use the Inter and Rajdhani font families in Android applications using Jetpack Compose. The fonts are provided as TTF files in the `src/assets/fonts/` directory and must be copied to the Android project's `res/font/` directory.
+This guide explains how to configure and use the Figtree and Rajdhani font families in Android applications using Jetpack Compose. The fonts are provided as TTF files in the `src/assets/fonts/` directory and must be copied to the Android project's `res/font/` directory.
 
 ## Font Files
 
-### Inter Font Family
-- **inter_regular.ttf** - Regular weight (400)
-- **inter_medium.ttf** - Medium weight (500)
-- **inter_semibold.ttf** - SemiBold weight (600)
-- **inter_bold.ttf** - Bold weight (700)
+### Figtree Font Family
+Copied from the static weights in `src/assets/fonts/figtree/static/` (the web build uses the variable font instead):
+- **figtree_regular.ttf** - Regular weight (400)
+- **figtree_medium.ttf** - Medium weight (500)
+- **figtree_semibold.ttf** - SemiBold weight (600)
+- **figtree_bold.ttf** - Bold weight (700)
 
 ### Rajdhani Font Family
 - **rajdhani_regular.ttf** - Regular weight (400)
@@ -34,10 +35,10 @@ Copy the TTF files from `src/assets/fonts/` to your Android project's `app/src/m
 
 ```bash
 # From project root
-cp src/assets/fonts/inter/Inter-Regular.ttf app/src/main/res/font/inter_regular.ttf
-cp src/assets/fonts/inter/Inter-Medium.ttf app/src/main/res/font/inter_medium.ttf
-cp src/assets/fonts/inter/Inter-SemiBold.ttf app/src/main/res/font/inter_semibold.ttf
-cp src/assets/fonts/inter/Inter-Bold.ttf app/src/main/res/font/inter_bold.ttf
+cp src/assets/fonts/figtree/static/Figtree-Regular.ttf app/src/main/res/font/figtree_regular.ttf
+cp src/assets/fonts/figtree/static/Figtree-Medium.ttf app/src/main/res/font/figtree_medium.ttf
+cp src/assets/fonts/figtree/static/Figtree-SemiBold.ttf app/src/main/res/font/figtree_semibold.ttf
+cp src/assets/fonts/figtree/static/Figtree-Bold.ttf app/src/main/res/font/figtree_bold.ttf
 
 cp src/assets/fonts/rajdhani/Rajdhani-Regular.ttf app/src/main/res/font/rajdhani_regular.ttf
 cp src/assets/fonts/rajdhani/Rajdhani-Medium.ttf app/src/main/res/font/rajdhani_medium.ttf
@@ -61,16 +62,16 @@ import androidx.compose.ui.text.font.FontWeight
 import com.designerpunk.R
 
 /**
- * Inter Font Family
+ * Figtree Font Family
  * 
  * Body font for general text content, paragraphs, and descriptions.
  * Provides excellent readability at small sizes.
  */
-val interFamily = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),    // 400
-    Font(R.font.inter_medium, FontWeight.Medium),     // 500
-    Font(R.font.inter_semibold, FontWeight.SemiBold), // 600
-    Font(R.font.inter_bold, FontWeight.Bold)          // 700
+val figtreeFamily = FontFamily(
+    Font(R.font.figtree_regular, FontWeight.Normal),    // 400
+    Font(R.font.figtree_medium, FontWeight.Medium),     // 500
+    Font(R.font.figtree_semibold, FontWeight.SemiBold), // 600
+    Font(R.font.figtree_bold, FontWeight.Bold)          // 700
 )
 
 /**
@@ -124,26 +125,26 @@ Text(
 )
 ```
 
-### Body Typography (Inter)
+### Body Typography (Figtree)
 
-Use `interFamily` for paragraphs, descriptions, and general text content:
+Use `figtreeFamily` for paragraphs, descriptions, and general text content:
 
 ```kotlin
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontWeight
-import com.designerpunk.ui.theme.interFamily
+import com.designerpunk.ui.theme.figtreeFamily
 
 // Body text
 Text(
-    text = "Body text content goes here. Inter provides excellent readability.",
-    fontFamily = interFamily,
+    text = "Body text content goes here. Figtree provides excellent readability.",
+    fontFamily = figtreeFamily,
     fontWeight = FontWeight.Normal
 )
 
 // Description
 Text(
     text = "Detailed description text",
-    fontFamily = interFamily,
+    fontFamily = figtreeFamily,
     fontWeight = FontWeight.Normal
 )
 ```
@@ -210,19 +211,19 @@ val AppTypography = Typography(
         fontSize = 14.sp
     ),
     
-    // Body typography uses Inter
+    // Body typography uses Figtree
     bodyLarge = TextStyle(
-        fontFamily = interFamily,
+        fontFamily = figtreeFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
     bodyMedium = TextStyle(
-        fontFamily = interFamily,
+        fontFamily = figtreeFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
     bodySmall = TextStyle(
-        fontFamily = interFamily,
+        fontFamily = figtreeFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
@@ -290,7 +291,7 @@ Text(
 
 ### Font Not Loading
 
-**Symptom**: Text renders in Roboto instead of Inter or Rajdhani
+**Symptom**: Text renders in Roboto instead of Figtree or Rajdhani
 
 **Possible Causes**:
 1. Font files not in `res/font/` directory
@@ -301,12 +302,12 @@ Text(
 **Solution**:
 ```kotlin
 // Verify font resources exist
-println("Inter Regular: ${R.font.inter_regular}")
+println("Figtree Regular: ${R.font.figtree_regular}")
 println("Rajdhani Bold: ${R.font.rajdhani_bold}")
 
 // Check FontFamily instantiation
 try {
-    val testFamily = FontFamily(Font(R.font.inter_regular))
+    val testFamily = FontFamily(Font(R.font.figtree_regular))
     println("Font loaded successfully")
 } catch (e: Exception) {
     println("Font loading failed: ${e.message}")
@@ -320,9 +321,9 @@ try {
 **Cause**: Font file names don't follow Android naming conventions
 
 **Solution**: Ensure all font files use lowercase names with underscores:
-- ✅ `inter_regular.ttf`
-- ❌ `Inter-Regular.ttf`
-- ❌ `InterRegular.ttf`
+- ✅ `figtree_regular.ttf`
+- ❌ `Figtree-Regular.ttf`
+- ❌ `FigtreeRegular.ttf`
 
 ### Font Weight Not Working
 
@@ -332,11 +333,11 @@ try {
 
 **Solution**: Ensure all four weights are included in FontFamily:
 ```kotlin
-val interFamily = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),    // Required
-    Font(R.font.inter_medium, FontWeight.Medium),     // Required
-    Font(R.font.inter_semibold, FontWeight.SemiBold), // Required
-    Font(R.font.inter_bold, FontWeight.Bold)          // Required
+val figtreeFamily = FontFamily(
+    Font(R.font.figtree_regular, FontWeight.Normal),    // Required
+    Font(R.font.figtree_medium, FontWeight.Medium),     // Required
+    Font(R.font.figtree_semibold, FontWeight.SemiBold), // Required
+    Font(R.font.figtree_bold, FontWeight.Bold)          // Required
 )
 ```
 
@@ -357,11 +358,11 @@ Text(
 
 ### Material Design Integration
 
-Rajdhani and Inter integrate seamlessly with Material Design 3:
+Rajdhani and Figtree integrate seamlessly with Material Design 3:
 
 ```kotlin
 MaterialTheme(
-    typography = AppTypography  // Uses Rajdhani and Inter
+    typography = AppTypography  // Uses Rajdhani and Figtree
 ) {
     // Your app content
 }
@@ -394,10 +395,10 @@ fun FontTestScreen() {
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        Text("Inter Regular", fontFamily = interFamily, fontWeight = FontWeight.Normal)
-        Text("Inter Medium", fontFamily = interFamily, fontWeight = FontWeight.Medium)
-        Text("Inter SemiBold", fontFamily = interFamily, fontWeight = FontWeight.SemiBold)
-        Text("Inter Bold", fontFamily = interFamily, fontWeight = FontWeight.Bold)
+        Text("Figtree Regular", fontFamily = figtreeFamily, fontWeight = FontWeight.Normal)
+        Text("Figtree Medium", fontFamily = figtreeFamily, fontWeight = FontWeight.Medium)
+        Text("Figtree SemiBold", fontFamily = figtreeFamily, fontWeight = FontWeight.SemiBold)
+        Text("Figtree Bold", fontFamily = figtreeFamily, fontWeight = FontWeight.Bold)
     }
 }
 ```
@@ -406,10 +407,10 @@ fun FontTestScreen() {
 
 ## Summary
 
-- **Inter**: Body font for general text content (`interFamily`)
+- **Figtree**: Body font for general text content (`figtreeFamily`)
 - **Rajdhani**: Display font for headings, labels, and UI elements (`rajdhaniFamily`)
 - **Font Files**: Must be in `res/font/` with lowercase, underscore-separated names
-- **Usage**: `fontFamily = rajdhaniFamily` for display, `fontFamily = interFamily` for body
+- **Usage**: `fontFamily = rajdhaniFamily` for display, `fontFamily = figtreeFamily` for body
 - **Fallback**: Roboto (system default) if custom fonts fail to load
 - **Weights**: Normal (400), Medium (500), SemiBold (600), Bold (700)
 

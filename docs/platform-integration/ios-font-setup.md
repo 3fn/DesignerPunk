@@ -1,24 +1,27 @@
 # iOS Font Integration Guide
 
 **Date**: December 8, 2025  
-**Purpose**: Guide for integrating Inter and Rajdhani fonts in iOS applications  
+**Purpose**: Guide for integrating Figtree and Rajdhani fonts in iOS applications  
 **Spec**: 015 - Color Palette & Display Font Update
 
 ---
 
 ## Overview
 
-This guide provides instructions for integrating the Inter and Rajdhani custom fonts into an iOS application using the DesignerPunk design system.
+This guide provides instructions for integrating the Figtree and Rajdhani custom fonts into an iOS application using the DesignerPunk design system.
 
 ## Font Files Required
 
 The following font files must be included in your iOS project:
 
-### Inter Font Family
-- `Inter-Regular.ttf` (400 weight)
-- `Inter-Medium.ttf` (500 weight)
-- `Inter-SemiBold.ttf` (600 weight)
-- `Inter-Bold.ttf` (700 weight)
+### Figtree Font Family
+Static weight files, from `src/assets/fonts/figtree/static/`:
+- `Figtree-Regular.ttf` (400 weight)
+- `Figtree-Medium.ttf` (500 weight)
+- `Figtree-SemiBold.ttf` (600 weight)
+- `Figtree-Bold.ttf` (700 weight)
+
+(The web build uses the variable font at `src/assets/fonts/figtree/Figtree-VariableFont_wght.ttf`; iOS bundles the static weights.)
 
 ### Rajdhani Font Family
 - `Rajdhani-Regular.ttf` (400 weight)
@@ -26,7 +29,7 @@ The following font files must be included in your iOS project:
 - `Rajdhani-SemiBold.ttf` (600 weight)
 - `Rajdhani-Bold.ttf` (700 weight)
 
-**Total**: 8 font files (4 Inter + 4 Rajdhani)
+**Total**: 8 font files (4 Figtree + 4 Rajdhani)
 
 ---
 
@@ -37,11 +40,11 @@ Add the following entries to your iOS application's `Info.plist` file under the 
 ```xml
 <key>UIAppFonts</key>
 <array>
-    <!-- Inter Font Family -->
-    <string>Inter-Regular.ttf</string>
-    <string>Inter-Medium.ttf</string>
-    <string>Inter-SemiBold.ttf</string>
-    <string>Inter-Bold.ttf</string>
+    <!-- Figtree Font Family -->
+    <string>Figtree-Regular.ttf</string>
+    <string>Figtree-Medium.ttf</string>
+    <string>Figtree-SemiBold.ttf</string>
+    <string>Figtree-Bold.ttf</string>
     
     <!-- Rajdhani Font Family -->
     <string>Rajdhani-Regular.ttf</string>
@@ -62,11 +65,11 @@ Add the following entries to your iOS application's `Info.plist` file under the 
     
     <key>UIAppFonts</key>
     <array>
-        <!-- Inter Font Family -->
-        <string>Inter-Regular.ttf</string>
-        <string>Inter-Medium.ttf</string>
-        <string>Inter-SemiBold.ttf</string>
-        <string>Inter-Bold.ttf</string>
+        <!-- Figtree Font Family -->
+        <string>Figtree-Regular.ttf</string>
+        <string>Figtree-Medium.ttf</string>
+        <string>Figtree-SemiBold.ttf</string>
+        <string>Figtree-Bold.ttf</string>
         
         <!-- Rajdhani Font Family -->
         <string>Rajdhani-Regular.ttf</string>
@@ -89,7 +92,7 @@ Add the following entries to your iOS application's `Info.plist` file under the 
 1. In Xcode, select your project in the Project Navigator
 2. Right-click on your project folder and select "Add Files to [ProjectName]"
 3. Navigate to the font files location (typically `src/assets/fonts/`)
-4. Select all 8 font files (4 Inter + 4 Rajdhani)
+4. Select all 8 font files (4 Figtree + 4 Rajdhani)
 5. Ensure "Copy items if needed" is checked
 6. Ensure your app target is selected in "Add to targets"
 7. Click "Add"
@@ -100,10 +103,10 @@ Add the following entries to your iOS application's `Info.plist` file under the 
 2. Go to "Build Phases" tab
 3. Expand "Copy Bundle Resources"
 4. Verify all 8 font files are listed:
-   - Inter-Regular.ttf
-   - Inter-Medium.ttf
-   - Inter-SemiBold.ttf
-   - Inter-Bold.ttf
+   - Figtree-Regular.ttf
+   - Figtree-Medium.ttf
+   - Figtree-SemiBold.ttf
+   - Figtree-Bold.ttf
    - Rajdhani-Regular.ttf
    - Rajdhani-Medium.ttf
    - Rajdhani-SemiBold.ttf
@@ -146,25 +149,25 @@ Button("Button Text") {
 
 **Usage Pattern**: `.custom("Rajdhani", size: [size])` + `.fontWeight([weight])`
 
-### Body Text with Inter
+### Body Text with Figtree
 
-**Requirement 7.4**: Use `.custom("Inter", size:)` for body text (paragraphs, descriptions)
+**Requirement 7.4**: Use `.custom("Figtree", size:)` for body text (paragraphs, descriptions)
 
 ```swift
 import SwiftUI
 
 // Body text
 Text("Body text content goes here")
-    .font(.custom("Inter", size: 16))
+    .font(.custom("Figtree", size: 16))
     .fontWeight(.regular)
 
 // Descriptions
 Text("Description text")
-    .font(.custom("Inter", size: 14))
+    .font(.custom("Figtree", size: 14))
     .fontWeight(.regular)
 ```
 
-**Usage Pattern**: `.custom("Inter", size: [size])` + `.fontWeight([weight])`
+**Usage Pattern**: `.custom("Figtree", size: [size])` + `.fontWeight([weight])`
 
 ### Font Weight Mapping
 
@@ -172,10 +175,10 @@ Text("Description text")
 
 | Design System Weight | SwiftUI FontWeight | Font File |
 |---------------------|-------------------|-----------|
-| 400 (Regular) | `.regular` | Inter-Regular.ttf / Rajdhani-Regular.ttf |
-| 500 (Medium) | `.medium` | Inter-Medium.ttf / Rajdhani-Medium.ttf |
-| 600 (SemiBold) | `.semibold` | Inter-SemiBold.ttf / Rajdhani-SemiBold.ttf |
-| 700 (Bold) | `.bold` | Inter-Bold.ttf / Rajdhani-Bold.ttf |
+| 400 (Regular) | `.regular` | Figtree-Regular.ttf / Rajdhani-Regular.ttf |
+| 500 (Medium) | `.medium` | Figtree-Medium.ttf / Rajdhani-Medium.ttf |
+| 600 (SemiBold) | `.semibold` | Figtree-SemiBold.ttf / Rajdhani-SemiBold.ttf |
+| 700 (Bold) | `.bold` | Figtree-Bold.ttf / Rajdhani-Bold.ttf |
 
 **Example with explicit weight**:
 ```swift
@@ -186,8 +189,8 @@ Text("Medium Display")
 
 // Body text with SemiBold weight (600)
 Text("SemiBold Body")
-    .font(.custom("Inter", size: 16))
-    .fontWeight(.semibold)  // Maps to Inter-SemiBold.ttf
+    .font(.custom("Figtree", size: 16))
+    .fontWeight(.semibold)  // Maps to Figtree-SemiBold.ttf
 ```
 
 ---
@@ -215,19 +218,19 @@ button.titleLabel?.font = UIFont(name: "Rajdhani-SemiBold", size: 16)
 button.setTitle("Button Text", for: .normal)
 ```
 
-### Using Inter (Body Font)
+### Using Figtree (Body Font)
 
 ```swift
 import UIKit
 
 // Body text
 let bodyLabel = UILabel()
-bodyLabel.font = UIFont(name: "Inter-Regular", size: 16)
+bodyLabel.font = UIFont(name: "Figtree-Regular", size: 16)
 bodyLabel.text = "Body text content"
 
 // Descriptions
 let descriptionLabel = UILabel()
-descriptionLabel.font = UIFont(name: "Inter-Regular", size: 14)
+descriptionLabel.font = UIFont(name: "Figtree-Regular", size: 14)
 descriptionLabel.text = "Description text"
 ```
 
@@ -235,10 +238,10 @@ descriptionLabel.text = "Description text"
 
 | Font Family | Weight | PostScript Name |
 |------------|--------|----------------|
-| Inter | Regular | Inter-Regular |
-| Inter | Medium | Inter-Medium |
-| Inter | SemiBold | Inter-SemiBold |
-| Inter | Bold | Inter-Bold |
+| Figtree | Regular | Figtree-Regular |
+| Figtree | Medium | Figtree-Medium |
+| Figtree | SemiBold | Figtree-SemiBold |
+| Figtree | Bold | Figtree-Bold |
 | Rajdhani | Regular | Rajdhani-Regular |
 | Rajdhani | Medium | Rajdhani-Medium |
 | Rajdhani | SemiBold | Rajdhani-SemiBold |
@@ -253,7 +256,7 @@ descriptionLabel.text = "Description text"
 If custom fonts fail to load, the system will fall back to native iOS fonts:
 
 - **Display text fallback**: SF Pro Display (for Rajdhani)
-- **Body text fallback**: SF Pro Text (for Inter)
+- **Body text fallback**: SF Pro Text (for Figtree)
 
 ### SwiftUI Fallback Pattern
 
@@ -267,8 +270,8 @@ Text("Display Text")
 
 // Body font with automatic fallback to SF Pro Text
 Text("Body Text")
-    .font(.custom("Inter", size: 16))
-    // If Inter unavailable, SwiftUI falls back to SF Pro Text
+    .font(.custom("Figtree", size: 16))
+    // If Figtree unavailable, SwiftUI falls back to SF Pro Text
 ```
 
 **Note**: SwiftUI automatically handles fallback to system fonts when custom fonts are unavailable. No additional code is required for basic fallback behavior.
@@ -283,7 +286,7 @@ let displayFont = UIFont(name: "Rajdhani-Regular", size: 16)
     ?? UIFont.systemFont(ofSize: 16, weight: .regular)
 
 // Body font with fallback to SF Pro Text
-let bodyFont = UIFont(name: "Inter-Regular", size: 16) 
+let bodyFont = UIFont(name: "Figtree-Regular", size: 16) 
     ?? UIFont.systemFont(ofSize: 16, weight: .regular)
 ```
 
@@ -292,7 +295,7 @@ let bodyFont = UIFont(name: "Inter-Regular", size: 16)
 | Custom Font | Fallback Font | Platform Default |
 |------------|---------------|------------------|
 | Rajdhani (Display) | SF Pro Display | System font with matching weight |
-| Inter (Body) | SF Pro Text | System font with matching weight |
+| Figtree (Body) | SF Pro Text | System font with matching weight |
 
 **Fallback Trigger**: Fonts fall back when:
 - Font files are missing from bundle
@@ -313,10 +316,10 @@ import UIKit
 
 func verifyCustomFonts() {
     let requiredFonts = [
-        "Inter-Regular",
-        "Inter-Medium",
-        "Inter-SemiBold",
-        "Inter-Bold",
+        "Figtree-Regular",
+        "Figtree-Medium",
+        "Figtree-SemiBold",
+        "Figtree-Bold",
         "Rajdhani-Regular",
         "Rajdhani-Medium",
         "Rajdhani-SemiBold",
@@ -380,7 +383,7 @@ for family in UIFont.familyNames.sorted() {
 
 **Solutions**:
 1. Verify all 4 weight files are included for each font family
-2. Use correct PostScript names (e.g., "Inter-SemiBold" not "Inter-Semibold")
+2. Use correct PostScript names (e.g., "Figtree-SemiBold" not "Figtree-SemiBold")
 3. Check that font files contain the expected weights
 4. Test each weight individually to isolate the issue
 
@@ -390,10 +393,10 @@ for family in UIFont.familyNames.sorted() {
 
 This documentation addresses the following requirements from Spec 015:
 
-- **Requirement 7.1**: Inter and Rajdhani TTF files bundled in iOS app
+- **Requirement 7.1**: Figtree and Rajdhani TTF files bundled in iOS app
 - **Requirement 7.2**: Info.plist lists all font files in UIAppFonts array
 - **Requirement 7.3**: SwiftUI code uses `.custom("Rajdhani", size:)` for display text
-- **Requirement 7.4**: SwiftUI code uses `.custom("Inter", size:)` for body text
+- **Requirement 7.4**: SwiftUI code uses `.custom("Figtree", size:)` for body text
 - **Requirement 7.5**: Font weight mapping and fallback behavior documented
   - Regular=400, Medium=500, SemiBold=600, Bold=700
   - Fallback to SF Pro Display for display text

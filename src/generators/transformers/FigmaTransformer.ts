@@ -20,6 +20,7 @@ import type {
   TransformerConfig,
   TransformResult,
 } from './ITokenTransformer';
+import { toSrgbHex } from '../../color/OklchConverter';
 
 /**
  * Figma variable type mapping.
@@ -258,7 +259,7 @@ export class FigmaTransformer implements ITokenTransformer {
 
     return {
       name: 'Primitives',
-      modes: ['light', 'dark'],
+      modes: this.collectModes(variables),
       variables,
     };
   }
@@ -290,9 +291,31 @@ export class FigmaTransformer implements ITokenTransformer {
 
     return {
       name: 'Semantics',
-      modes: ['light', 'dark', 'wcag'],
+      modes: this.collectModes(variables),
       variables,
     };
+  }
+
+  /**
+   * Derive a collection's declared modes from the modes its variables actually carry.
+   *
+   * The declaration and the emitted `valuesByMode` keys must agree — a collection that
+   * declares a mode no variable carries (or carries one it never declares) produces an
+   * invalid Figma payload. `light` and `dark` are always present because every variable
+   * emits both; additional modes appear only when the DTCG source supplies them
+   * (`$extensions.designerpunk.modes`), so a future `wcag` emission flows through with
+   * no change here.
+   */
+  private collectModes(variables: FigmaVariable[]): string[] {
+    const seen = new Set<string>(['light', 'dark']);
+    for (const variable of variables) {
+      for (const mode of Object.keys(variable.valuesByMode)) {
+        seen.add(mode);
+      }
+    }
+    // Stable order: the base pair first, then any additional modes alphabetically.
+    const extra = [...seen].filter((m) => m !== 'light' && m !== 'dark').sort();
+    return ['light', 'dark', ...extra];
   }
 
   /**
@@ -317,10 +340,9 @@ export class FigmaTransformer implements ITokenTransformer {
       if ('$value' in value && value.$value !== undefined) {
         const token = value as DTCGToken;
 
-        // Read WCAG mode override from extensions
+        // Mode overrides from extensions (e.g. { light: '…', dark: '…' })
         const ext = token.$extensions?.designerpunk as Record<string, unknown> | undefined;
         const modes = ext?.modes as Record<string, string> | undefined;
-        const wcagAlias = modes?.wcag;
 
         const tokenType = token.$type ?? inheritedType;
         const figmaName = this.toFigmaVariableName(parentPath, key);
@@ -330,21 +352,25 @@ export class FigmaTransformer implements ITokenTransformer {
           ? this.resolveAliasValue(token.$value)
           : this.resolveDirectValue(token.$value, tokenType);
 
-        // Resolve WCAG value if present, otherwise fall back to default
-        const wcagValue = wcagAlias && isSemantic
-          ? this.resolveAliasValue(wcagAlias)
-          : resolvedValue;
+        // The base value carries the primitive alias (semantics) or the literal
+        // (primitives). `light` keeps it so the primitive→semantic link survives
+        // into Figma; any mode the DTCG source overrides gets its own value.
+        const valuesByMode: Record<string, unknown> = {
+          light: resolvedValue,
+          dark: resolvedValue,
+        };
+
+        for (const [modeName, modeValue] of Object.entries(modes ?? {})) {
+          if (modeName === 'light') continue; // the alias is strictly more useful
+          valuesByMode[modeName] = this.resolveModeValue(modeValue, tokenType, resolvedValue);
+        }
 
         const description = this.buildVariableDescription(token);
 
         variables.push({
           name: figmaName,
           resolvedType: figmaType,
-          valuesByMode: {
-            light: resolvedValue,
-            dark: resolvedValue,
-            wcag: wcagValue,
-          },
+          valuesByMode,
           ...(description ? { description } : {}),
         });
       } else {
@@ -812,6 +838,84 @@ export class FigmaTransformer implements ITokenTransformer {
 
     // Fallback: return as-is
     return value;
+  }
+
+  /**
+   * Resolve a per-mode override value from `$extensions.designerpunk.modes`.
+   *
+   * Mode overrides arrive in whatever form the DTCG generator resolved them to:
+   * an alias (`{color.white100}`), an `oklch(…)` string (the current semantic-color
+   * form — `DTCGFormatGenerator` resolves both modes to concrete values and does not
+   * retain the overriding primitive's name), or an `rgba()`/hex literal.
+   *
+   * Aliases stay aliases. Concrete colors convert to the hex form Figma expects.
+   * Anything unrecognised falls back to the base value rather than shipping a string
+   * Figma cannot parse.
+   *
+   * Note: a concrete override loses the primitive→semantic link for that mode — the
+   * variable references a primitive in light and carries a literal in dark. Restoring
+   * the link needs the overriding primitive's NAME in the DTCG extension, which the
+   * generator does not currently emit.
+   */
+  resolveModeValue(
+    rawValue: unknown,
+    tokenType: DTCGType | undefined,
+    fallback: unknown,
+  ): unknown {
+    if (typeof rawValue !== 'string') {
+      return rawValue ?? fallback;
+    }
+
+    // Alias reference — preserve the Figma variable link
+    if (rawValue.startsWith('{') && rawValue.endsWith('}')) {
+      return this.resolveAliasValue(rawValue);
+    }
+
+    if (rawValue.startsWith('oklch(')) {
+      const hex = this.oklchToHex(rawValue);
+      return hex ?? fallback;
+    }
+
+    if (rawValue.startsWith('rgb')) {
+      return this.rgbaToHex(rawValue);
+    }
+
+    if (rawValue.startsWith('#')) {
+      return rawValue;
+    }
+
+    // Non-color modes (dimensions, durations, …) resolve like direct values
+    if (tokenType && tokenType !== 'color') {
+      return this.resolveDirectValue(rawValue, tokenType);
+    }
+
+    return fallback;
+  }
+
+  /**
+   * Convert an `oklch(L C H)` or `oklch(L C H / A)` string to hex, gamut-clamped
+   * to sRGB. Alpha below 1 produces the 8-digit form, matching `rgbaToHex`.
+   * Returns null when the string cannot be parsed.
+   */
+  private oklchToHex(value: string): string | null {
+    const match = value.match(
+      /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+)\s*)?\)$/i,
+    );
+    if (!match) return null;
+
+    const l = parseFloat(match[1]);
+    const c = parseFloat(match[2]);
+    const h = parseFloat(match[3]);
+    const a = match[4] !== undefined ? parseFloat(match[4]) : 1;
+    if (!Number.isFinite(l) || !Number.isFinite(c) || !Number.isFinite(h) || !Number.isFinite(a)) {
+      return null;
+    }
+
+    const hex = toSrgbHex(l, c, h).toUpperCase();
+    if (a < 1) {
+      return hex + Math.round(a * 255).toString(16).padStart(2, '0').toUpperCase();
+    }
+    return hex;
   }
 
   /**

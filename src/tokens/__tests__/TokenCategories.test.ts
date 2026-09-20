@@ -240,7 +240,7 @@ describe('Token Categories', () => {
       const tapAreaMinimum = getTapAreaToken('tapAreaMinimum');
       const tapAreaRecommended = getTapAreaToken('tapAreaRecommended');
 
-      expect(tapAreaMinimum?.baseValue).toBe(44); // WCAG 2.1 AA minimum
+      expect(tapAreaMinimum?.baseValue).toBe(44); // WCAG 2.5.5 Target Size (Level AAA)
       expect(tapAreaRecommended?.baseValue).toBe(48); // Enhanced usability
     });
 

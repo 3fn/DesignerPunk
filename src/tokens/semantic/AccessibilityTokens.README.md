@@ -451,7 +451,7 @@ Use accessibility tokens when implementing features that:
 **Analysis**:
 - Benefits all users on touch devices (not just users with disabilities)
 - Improves usability for everyone (not specific to accessibility needs)
-- No specific WCAG criterion for touch target size (general usability guideline)
+- WCAG does define target-size criteria (SC 2.5.5 Target Size, Level AAA at 44×44; SC 2.5.8 Target Size (Minimum), Level AA at 24×24), but they set a floor for a dimension every touch UI needs — they do not make the value accessibility-*specific* the way a focus indicator is
 
 **Decision**: ❌ NOT an accessibility token
 **Where it belongs**: Component-level sizing token (`button.minHeight: space550`)
@@ -742,7 +742,7 @@ Text(
 
 **Why NOT in accessibility family**:
 - Benefits all users on touch devices (general usability)
-- No specific WCAG criterion for touch target size
+- WCAG's target-size criteria (SC 2.5.5 at Level AAA, SC 2.5.8 at Level AA) set a floor on a dimension every touch UI needs — they do not make it accessibility-specific
 - Should be in component-level sizing tokens instead
 
 **Where they belong**:

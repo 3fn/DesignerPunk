@@ -59,10 +59,18 @@ describe('Unified Blur Tokens', () => {
       }
     });
 
-    it('should have all values as multiples of 4 (baseline grid aligned)', () => {
+    it('should have all values as multiples of 4 (4-unit subgrid)', () => {
       for (const token of getAllBlurTokens()) {
         expect(token.baseValue % 4).toBe(0);
-        expect(token.baselineGridAlignment).toBe(true);
+      }
+    });
+
+    it('should set baselineGridAlignment iff the value is an exact multiple of 8', () => {
+      // System-wide predicate: the flag records 8-unit baseline grid alignment,
+      // not 4-unit subgrid membership. blur025 (4), blur075 (12) and blur125 (20)
+      // are valid blur values on the 4-unit subgrid but are not grid-aligned.
+      for (const token of getAllBlurTokens()) {
+        expect(token.baselineGridAlignment).toBe(token.baseValue % 8 === 0);
       }
     });
 

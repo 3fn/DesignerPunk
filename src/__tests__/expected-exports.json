@@ -43,10 +43,6 @@
     "type": "css",
     "description": "Responsive grid CSS"
   },
-  "./fonts/inter.css": {
-    "type": "css",
-    "description": "Inter font face declarations"
-  },
   "./fonts/rajdhani.css": {
     "type": "css",
     "description": "Rajdhani font face declarations"

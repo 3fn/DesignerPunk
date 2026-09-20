@@ -47,7 +47,7 @@ export const sizingTokens: Record<string, PrimitiveToken> = {
     familyBaseValue: SIZING_BASE_VALUE,
     description: 'Size 050 - smallest component dimension',
     mathematicalRelationship: `base × 0.5 = ${SIZING_BASE_VALUE} × 0.5 = ${SIZING_BASE_VALUE * 0.5}`,
-    baselineGridAlignment: true,
+    baselineGridAlignment: false, // 4-unit subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateSizingPlatformValues(SIZING_BASE_VALUE * 0.5)
@@ -71,7 +71,7 @@ export const sizingTokens: Record<string, PrimitiveToken> = {
     familyBaseValue: SIZING_BASE_VALUE,
     description: 'Size 150 - small component dimension',
     mathematicalRelationship: `base × 1.5 = ${SIZING_BASE_VALUE} × 1.5 = ${SIZING_BASE_VALUE * 1.5}`,
-    baselineGridAlignment: true,
+    baselineGridAlignment: false, // 4-unit subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateSizingPlatformValues(SIZING_BASE_VALUE * 1.5)
@@ -95,7 +95,7 @@ export const sizingTokens: Record<string, PrimitiveToken> = {
     familyBaseValue: SIZING_BASE_VALUE,
     description: 'Size 250 - medium component dimension',
     mathematicalRelationship: `base × 2.5 = ${SIZING_BASE_VALUE} × 2.5 = ${SIZING_BASE_VALUE * 2.5}`,
-    baselineGridAlignment: true,
+    baselineGridAlignment: false, // 4-unit subgrid value; not a multiple of the 8-unit baseline grid
     isStrategicFlexibility: false,
     isPrecisionTargeted: false,
     platforms: generateSizingPlatformValues(SIZING_BASE_VALUE * 2.5)

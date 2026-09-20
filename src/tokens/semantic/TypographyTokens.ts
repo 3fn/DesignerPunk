@@ -43,7 +43,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Small body text for secondary content and compact layouts',
-    description: 'Small body typography with 14px font size, 1.25 line height, body font family, normal weight'
+    description: 'Small body typography with 14px font size, 1.429 line height, body font family, normal weight'
   },
 
   'typography.bodyMd': {
@@ -71,7 +71,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Large body text for emphasis, lead paragraphs, and prominent content',
-    description: 'Large body typography with 18px font size, 1.75 line height, body font family, normal weight'
+    description: 'Large body typography with 18px font size, 1.556 line height, body font family, normal weight'
   },
 
   // Heading Hierarchy (H1-H6 following HTML semantics)
@@ -215,7 +215,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Small button text for compact buttons and tertiary actions',
-    description: 'Small button typography with 14px font size, 1.25 line height, body font family, medium weight'
+    description: 'Small button typography with 14px font size, 1.429 line height, body font family, medium weight'
   },
 
   'typography.buttonMd': {
@@ -243,7 +243,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Large button text for prominent CTAs and hero buttons',
-    description: 'Large button typography with 18px font size, 1.75 line height, body font family, medium weight'
+    description: 'Large button typography with 18px font size, 1.556 line height, body font family, medium weight'
   },
 
   'typography.input': {
@@ -272,7 +272,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Extra small labels for floating label patterns in form inputs',
-    description: 'Extra small label typography with 13px font size, 1.0 line height, body font family, medium weight for floating labels'
+    description: 'Extra small label typography with 13px font size, 1.538 line height, body font family, medium weight for floating labels'
   },
 
   'typography.labelSm': {
@@ -286,7 +286,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Small labels for compact form fields and UI elements',
-    description: 'Small label typography with 14px font size, 1.25 line height, body font family, medium weight'
+    description: 'Small label typography with 14px font size, 1.429 line height, body font family, medium weight'
   },
 
   'typography.labelMd': {
@@ -318,7 +318,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Floated label state for text input fields with float label pattern',
-    description: `Medium label typography scaled to ${labelMdFloatFontSize}px (fontSize100 × scale088) for floated label state, maintains same lineHeight, fontFamily, fontWeight, and letterSpacing as labelMd to prevent layout shift during animation`
+    description: `Medium label typography scaled to ${labelMdFloatFontSize}px (fontSize100 × scale088) for floated label state, 1.429 line height (lineHeight075, the pairing for the scaled fontSize), body font family, medium weight, default letter spacing — fontFamily, fontWeight, and letterSpacing match labelMd`
   },
 
   'typography.labelLg': {
@@ -332,7 +332,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Large labels for prominent form sections and UI headers',
-    description: 'Large label typography with 18px font size, 1.75 line height, body font family, medium weight'
+    description: 'Large label typography with 18px font size, 1.556 line height, body font family, medium weight'
   },
 
   // Code Text Size Variants
@@ -347,7 +347,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Small code text for inline code in compact layouts',
-    description: 'Small code typography with 14px font size, 1.25 line height, monospace font family, normal weight'
+    description: 'Small code typography with 14px font size, 1.429 line height, monospace font family, normal weight'
   },
 
   'typography.codeMd': {
@@ -375,7 +375,7 @@ export const typographyTokens: Record<string, Omit<SemanticToken, 'primitiveToke
     },
     category: SemanticCategory.TYPOGRAPHY,
     context: 'Large code text for prominent code examples and documentation',
-    description: 'Large code typography with 18px font size, 1.75 line height, monospace font family, normal weight'
+    description: 'Large code typography with 18px font size, 1.556 line height, monospace font family, normal weight'
   }
 };
 

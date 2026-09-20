@@ -642,10 +642,10 @@ Density scaling affects touch target sizes. Ensure accessibility compliance:
 
 | Density | Scaling | 44pt Base Target | WCAG Compliance |
 |---------|---------|------------------|-----------------|
-| Compact | 0.75× | 33pt | ⚠️ Below minimum |
-| Default | 1.0× | 44pt | ✅ Meets minimum |
-| Comfortable | 1.25× | 55pt | ✅ Exceeds minimum |
-| Spacious | 1.5× | 66pt | ✅ Exceeds minimum |
+| Compact | 0.75× | 33pt | ⚠️ Meets AA (SC 2.5.8, ≥24pt); below the AAA 44pt target |
+| Default | 1.0× | 44pt | ✅ Meets AAA (SC 2.5.5, 44×44) |
+| Comfortable | 1.25× | 55pt | ✅ Exceeds AAA target |
+| Spacious | 1.5× | 66pt | ✅ Exceeds AAA target |
 
 **Recommendation**: Use compact density only for mouse/keyboard interfaces. For touch interfaces, use default or higher density.
 

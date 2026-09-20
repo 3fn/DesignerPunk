@@ -165,7 +165,14 @@ npm run figma:push -- --clean
 
 Variables use `/` for Figma's visual grouping hierarchy. Styles use `.` because they appear flat in Figma's style picker.
 
-**Modes.** The Primitives collection declares `light` and `dark`; the Semantics collection declares `light`, `dark`, and `wcag` (`src/generators/transformers/FigmaTransformer.ts`). `light` and `dark` receive the same resolved value — the transformer reads only the `wcag` entry from `$extensions.designerpunk.modes`, so the dark theme's semantic overrides do **not** currently reach Figma. Designers should treat the Figma `dark` mode as structural scaffolding, not as the shipped dark palette; `src/tokens/themes/dark/SemanticOverrides.ts` remains authoritative for dark values.
+**Modes.** Each collection declares exactly the modes its variables carry (`src/generators/transformers/FigmaTransformer.ts`, `collectModes()`). Today that is `light` and `dark` for both collections — the DTCG source emits no `wcag` mode entries, so no `wcag` mode is declared. If WCAG-theme emission is added to the DTCG generator, it flows into Figma with no transformer change.
+
+Every variable carries a value in every declared mode:
+
+- **Primitives** are mode-invariant — `light` and `dark` hold the same value.
+- **Semantics** hold the primitive alias in `light`. A token with a dark-theme override (`$extensions.designerpunk.modes.dark`) carries that override's value in `dark`; a token without one mirrors the light alias. Nine semantic color tokens currently differ between modes.
+
+**Known limitation.** A dark override arrives in the DTCG file as a resolved color, not as the overriding primitive's name (`DTCGFormatGenerator` resolves both modes to concrete values). Figma therefore shows a *literal* color in `dark` where `light` shows a variable alias — the value is correct, but the primitive→semantic link is not visible in dark mode. Restoring it requires the DTCG extension to carry the overriding primitive's name. `src/tokens/themes/dark/SemanticOverrides.ts` remains the authoritative source for dark values.
 
 ### Drift Detection
 

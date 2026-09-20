@@ -170,7 +170,7 @@ object DesignTokens {
 
 ## Tap Area Tokens
 
-Tap area tokens ensure touch targets meet accessibility requirements for users with motor impairments. The system uses precision-targeted multipliers from a 44-unit base (WCAG 2.1 AA minimum).
+Tap area tokens ensure touch targets meet accessibility requirements for users with motor impairments. The system uses precision-targeted multipliers from a 44-unit base — the WCAG 2.5.5 Target Size (Level AAA) threshold, which also exceeds the 24×24 WCAG 2.2 AA minimum (SC 2.5.8).
 
 ### WCAG Requirements
 
@@ -186,7 +186,7 @@ Tap area tokens ensure touch targets meet accessibility requirements for users w
 
 | Token Name | Value | Multiplier | Grid Alignment | Use Case |
 |------------|-------|------------|----------------|----------|
-| `tapAreaMinimum` | 44px/pt/dp | 1.00× | No | WCAG 2.1 AA minimum |
+| `tapAreaMinimum` | 44px/pt/dp | 1.00× | No | WCAG 2.5.5 AAA target size |
 | `tapAreaRecommended` | 48px/pt/dp | 1.09× | Yes (8×6) | Enhanced usability |
 | `tapAreaComfortable` | 56px/pt/dp | 1.27× | Yes (8×7) | Spacious interaction |
 | `tapAreaGenerous` | 64px/pt/dp | 1.45× | Yes (8×8) | Extra spacious |
@@ -197,7 +197,7 @@ Tap area tokens ensure touch targets meet accessibility requirements for users w
 
 **Mathematical Relationship**: base × 1 = 44 × 1 = 44
 
-**WCAG Compliance**: 2.5.5 Target Size (Level AAA)
+**WCAG Compliance**: 2.5.5 Target Size (Level AAA). Also exceeds SC 2.5.8 Target Size (Minimum), the WCAG 2.2 Level AA threshold of 24×24.
 
 **Use Cases**:
 - Minimum acceptable touch target size
@@ -209,7 +209,7 @@ Tap area tokens ensure touch targets meet accessibility requirements for users w
 - iOS: 44pt
 - Android: 44dp
 
-**Note**: While this meets WCAG AAA, consider using `tapAreaRecommended` for better usability.
+**Note**: This is the system's floor, not a ceiling — it already satisfies the AAA target-size criterion, but consider `tapAreaRecommended` (48) for better usability and Material Design alignment.
 
 #### tapAreaRecommended (48 units)
 
@@ -339,10 +339,12 @@ validateTapAreaAccessibility(tapAreaValue: number): {
 }
 
 // Examples:
-validateTapAreaAccessibility(44)  // { isAccessible: true, level: 'AA' }
-validateTapAreaAccessibility(48)  // { isAccessible: true, level: 'AAA' }
-validateTapAreaAccessibility(32)  // { isAccessible: false, level: 'Below AA', recommendation: '...' }
+validateTapAreaAccessibility(44)  // { isAccessible: true, level: 'AAA' }  — SC 2.5.5
+validateTapAreaAccessibility(32)  // { isAccessible: true, level: 'AA' }   — SC 2.5.8 (≥24)
+validateTapAreaAccessibility(20)  // { isAccessible: false, level: 'Below AA', recommendation: '...' }
 ```
+
+**Thresholds**: `≥44` → AAA (SC 2.5.5 Target Size); `≥24` → AA (SC 2.5.8 Target Size (Minimum), WCAG 2.2); `<24` → below the AA minimum. The function checks size only — SC 2.5.8's spacing and equivalent-alternative exceptions must be evaluated in component context.
 
 ---
 
@@ -511,16 +513,18 @@ Icon(
 
 ---
 
-## WCAG 2.1 AA Compliance Summary
+## WCAG Compliance Summary
+
+The system's baseline posture is WCAG 2.1 AA. Tap area tokens go beyond that baseline: the 44-unit floor satisfies the Level AAA target-size criterion.
 
 ### Success Criteria Coverage
 
-| WCAG Criterion | Level | Token Category | Implementation |
-|----------------|-------|----------------|----------------|
-| 2.4.7 Focus Visible | AA | Focus Indicators | `accessibility.focus.*` tokens |
-| 1.4.11 Non-text Contrast | AA | Focus Indicators | `accessibility.focus.color` (3:1 minimum) |
-| 2.5.5 Target Size | AAA | Tap Areas | `tapAreaMinimum` (44px) |
-| 2.5.8 Target Size (Minimum) | AA | Tap Areas | All tap area tokens exceed 24px minimum |
+| WCAG Criterion | Version | Level | Token Category | Implementation |
+|----------------|---------|-------|----------------|----------------|
+| 2.4.7 Focus Visible | 2.1 | AA | Focus Indicators | `accessibility.focus.*` tokens |
+| 1.4.11 Non-text Contrast | 2.1 | AA | Focus Indicators | `accessibility.focus.color` (3:1 minimum) |
+| 2.5.5 Target Size | 2.1 | AAA | Tap Areas | `tapAreaMinimum` (44px) |
+| 2.5.8 Target Size (Minimum) | 2.2 | AA | Tap Areas | All tap area tokens exceed the 24px minimum |
 
 ### Compliance Checklist
 

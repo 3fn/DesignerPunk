@@ -248,23 +248,24 @@ describe('Shadow Offset Tokens', () => {
 
   describe('Token Properties', () => {
     test('should have correct baselineGridAlignment for shadowOffsetX tokens', () => {
-      // Tokens with values divisible by 4 should be baseline aligned
-      expect(getShadowOffsetXToken('n300')?.baselineGridAlignment).toBe(true); // -12
+      // System-wide predicate: the flag records 8-unit baseline grid alignment.
+      // Shadow offsets live on a 4-unit subgrid; only the 8-multiples are grid-aligned.
+      expect(getShadowOffsetXToken('n300')?.baselineGridAlignment).toBe(false); // -12
       expect(getShadowOffsetXToken('n200')?.baselineGridAlignment).toBe(true); // -8
       expect(getShadowOffsetXToken('n150')?.baselineGridAlignment).toBe(false); // -6
-      expect(getShadowOffsetXToken('n100')?.baselineGridAlignment).toBe(true); // -4
+      expect(getShadowOffsetXToken('n100')?.baselineGridAlignment).toBe(false); // -4
       expect(getShadowOffsetXToken('000')?.baselineGridAlignment).toBe(true); // 0
-      expect(getShadowOffsetXToken('100')?.baselineGridAlignment).toBe(true); // 4
+      expect(getShadowOffsetXToken('100')?.baselineGridAlignment).toBe(false); // 4
       expect(getShadowOffsetXToken('150')?.baselineGridAlignment).toBe(false); // 6
       expect(getShadowOffsetXToken('200')?.baselineGridAlignment).toBe(true); // 8
-      expect(getShadowOffsetXToken('300')?.baselineGridAlignment).toBe(true); // 12
+      expect(getShadowOffsetXToken('300')?.baselineGridAlignment).toBe(false); // 12
     });
 
     test('should have correct baselineGridAlignment for shadowOffsetY tokens', () => {
-      // All Y tokens should be baseline aligned (4, 8, 12, 16)
+      // Y tokens are 0, 4, 8, 12, 16 — the 8-multiples are grid-aligned, the rest are subgrid
       const allYTokens = getAllShadowOffsetYTokens();
       allYTokens.forEach(token => {
-        expect(token.baselineGridAlignment).toBe(true);
+        expect(token.baselineGridAlignment).toBe(Math.abs(token.baseValue) % 8 === 0);
       });
     });
 
