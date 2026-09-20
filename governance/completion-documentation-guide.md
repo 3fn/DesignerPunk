@@ -81,6 +81,16 @@ Documentation tiers define the depth and comprehensiveness of completion documen
 get_section({ path: "process-spec-planning", heading: "Three-Tier Completion Documentation System" })
 ```
 
+### The subtask completion doc — mandatory, and deliberately light (S-4, ratified 2026-09-19)
+
+The subtask-doc duty (Task-Completion-Protocol § "For SUBTASKS" step 2) is **enforced**: the claims passes count subtask-doc presence per spec, and a ticked subtask without its doc is a **finding** on the authoring agent. The floor is deliberately light so enforcement breeds records, not ritual — a compliant subtask doc is **three elements**:
+
+1. **What changed** — a sentence or two.
+2. **Targeted tests run** — command + result.
+3. **Application-time adaptations made** — the element whose absence is the recorded loss this rule exists to prevent; **`none` is a valid entry and must be written**, never implied by silence.
+
+No summary doc, no criteria table, no ceremony at subtask grain. Binding is forward from ratification — no backfill. *(Watch-item for the passes, recorded at ratification: a reflexive `adaptations: none` rate is the ritual-stub signal — counted the way declared-none rates are.)*
+
 ---
 
 ## Parent Success-Criteria Fidelity
@@ -181,10 +191,13 @@ The rule is exact-set because self-authored verification tables fail in six name
 | **invent** | a criterion appears in the table that `tasks.md` never defined |
 | **absorb** | two criteria are merged into one row — **harm stated accurately: the enumerated set stops mapping 1:1 to the promise set**, so a per-criterion verdict can no longer be read off the table even when nothing is hidden |
 
-### Two authoring notes
+**A seventh named finding class sits at a different tier** *(S-3, ratified 2026-09-19 — two audit instances)*: **`unreproducible-evidence`** — a verbatim criterion, a present row, and a ✅ whose stated verification instrument cannot be re-derived from the record. The six classes above are promised-vs-claimed mutations; this one is claimed-vs-shipped. It is an **audit-finding class only**: claims passes count and route it, it is never a checker verdict, and it is never a gate (no pass, at any grain, is ever a required check).
+
+### Authoring notes
 
 1. **Copy the `tasks.md` bullet; never retranscribe it.** Retyping is where math-glyph and punctuation drift is produced, and normalization friction will concentrate there.
 2. **The decomposition-scope boundary.** Success Criteria bullets decompose per-platform (the convention is in Process-Spec-Planning § "`tasks.md` Structural Conventions"). A `**Primary Artifacts:**` line that bundles platforms does **not** decompose — it has its own remedy in the Additional verification section's forced-negative line.
+3. **Denominators must be enumerable from the record** *(S-1, ratified 2026-09-19 — two audit instances)*. A criterion whose denominator is a list SHALL make that list enumerable: either the criterion enumerates its elements inline in `tasks.md`, or the completion doc's Evidence carries the **per-element checklist — the elements themselves, never only their total**. An aggregate count over an unenumerated prose list ("contains every element of that section": `25/25`) is non-compliant evidence for the criterion it totals.
 
 ### Authoring guidance — what each platform bullet verifies against
 
