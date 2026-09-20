@@ -1,7 +1,7 @@
 # M0a Roadmap — Scope & Sequence
 
 **Date**: 2026-04-06
-**Status**: Tentative — sequence based on dependencies, no time commitments
+**Status**: HISTORICAL (banner added 2026-09-20) — Phase 1 (WS1–WS8) shipped across Specs 094/081/117/118/121/122 and successors; `@3fn/core` is dual-published (public npm + GitHub Packages, v13/v14). This doc's GitHub-Packages-as-the-registry framing is superseded: the distribution-channel decision is an OPEN Spec 123 gate (see `docs/roadmap/2026-09-20-consumer-distribution-roadmap-update.md` § Conflicts C3). Kept for provenance; do not sequence work from it.
 **Purpose**: High-level view of what gets built and in what order
 
 ---

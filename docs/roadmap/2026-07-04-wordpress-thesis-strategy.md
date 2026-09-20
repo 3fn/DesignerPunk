@@ -5,6 +5,8 @@
 **Purpose**: Capture the strategic direction discussion following the 2026-07-04 full project audit and the analysis of Meta's Astryx launch (2026-06-27)
 **Context**: Peter's stated goal: "the WordPress for AI-driven development," better than what Meta offers. Component count explicitly NOT the metric of concern.
 
+> **STATUS UPDATE (2026-09-20)**: The recommended sequence below is **executed up to 123** — 125-A complete (2026-07-10), 122 complete (2026-07-11), 125-B campaign closed (2026-09-18), Spec 127 closed (2026-09-19). Spec 123 is the next major arc (Peter's ratified order, 2026-09-19). The thesis, positioning, loops lens, and counter-arguments here still stand. **Current strategic view + decision gates + recorded conflicts: `docs/roadmap/2026-09-20-consumer-distribution-roadmap-update.md`.** Note: this doc's five-minute-test wording ("working agents in their chosen tool") is in recorded tension with the onboarding vision's P6 deferral of the consumer-agent profile — see that update's Conflicts § C2; do not treat either as settled.
+
 ---
 
 ## The Astryx Situation (summary — full analysis in session 2026-07-04)
