@@ -530,6 +530,16 @@ Extracted segments concatenate in document order and are compared after the same
 
 **The computing instrument, named with the same honesty as everything else here**: the parity checker evaluates materiality on any PR touching a legacy `tasks.md` — **once it is armed.** Until arming, **the claims pass owns materiality as judgment.** Until "materially amended" has bitten mechanically even once, *adding the declaration* is the unambiguous opt-in path and should be preferred.
 
+#### Criteria measurement discipline and documented commands (the S-package, ratified 2026-09-19)
+
+Five conventions from the first two claims passes, each with a measured instance behind it:
+
+- **Enumerable denominators (S-1)**: a criterion whose denominator is a list SHALL make that list enumerable from the record — enumerate inline in `tasks.md`, or require the completion doc to carry the per-element checklist, never only its total.
+- **Volatile embedded measurements (S-2)**: a criterion embedding a measurement that can move between authoring and completion ("all 153 files") is reproduced **verbatim** in the completion doc with the delta attributed in the Evidence cell — never updated in place (in-place substitution is the **reword** class).
+- **Date boundaries and probe honesty (S-5)**: a documented command embedding a date comparison SHALL pin its boundary explicitly — a bare date inherits the interpreter's defaulting behaviour (git approxidate resolves it to the *current time of day*). And a verification recipe SHALL distinguish its probes: **"it can return non-empty" is not "it returns the right set"** — a non-vacuity probe is not a correctness probe, and a recipe shipping with only the former says so.
+- **Multi-homed commands (S-6)**: a command maintained as byte-identical copies in multiple homes SHALL name the full copy set at each home; a repair moves **all copies in one commit**, with byte-equality re-verified and recorded.
+- **Post-unit obligations (S-7)**: a post-unit obligation assigned to the claims passes SHALL name its verification surface; where that surface is gated behind the steward MCP verbs, it SHALL say so (the ambiguity-resolves-to-Stacy tiebreaker remains the fallback, now with written law above it).
+
 #### Authoring guidance — flag discipline
 
 Two standards learnings, recorded because they were each paid for twice:

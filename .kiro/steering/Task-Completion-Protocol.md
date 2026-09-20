@@ -35,7 +35,7 @@ get_section({ path: "completion-documentation-guide", heading: "Documentation Ti
 
 ### For SUBTASKS
 1. [ ] Run targeted tests relevant to the change (not the full suite)
-2. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-M-completion.md`
+2. [ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-M-completion.md` — **enforced (S-4, ratified 2026-09-19)**: the claims passes count subtask-doc presence, and a ticked subtask without its doc is a **finding** on the authoring agent. The floor is three light elements (what changed · targeted tests + result · application-time adaptations, `none` written, never implied) — Completion Documentation Guide § "The subtask completion doc"
 3. [ ] Mark subtask complete (use the `taskStatus` tool)
 4. [ ] **Commit is optional and judgment-based — not mechanical per subtask.** When you commit, **commit AND push the unit branch** (`task/<spec>-<unit-slug>` or `task/<spec>-<N>-<slug>`, created at the first subtask — `git switch -c` or the completion tooling's equivalent); the two stay coupled because the push is the off-machine backup guarantee (a local-only commit is not backed up). Commit-and-push at a **checkpoint** (delicate or potentially-breaking work — a restore point worth having), when **backup-worthy work has accumulated** (a unit branch is longer-lived than a single task, so more unpushed work sits at risk between merges — push before the pile grows), or at a **session/handoff boundary**. Do NOT commit mechanically after every trivial subtask — the unit squash-merges anyway, so subtask granularity is cosmetic to `main`'s history. No PR opens and no required checks fire until unit completion. Subtasks do NOT open PRs.
 5. [ ] **STOP** and wait for user authorization
