@@ -93,6 +93,72 @@ async function runValidateCommand() {
   }
 }
 
+/**
+ * Resolve the component-schema scan root the token-index's consumer map reads
+ * (Class C′, Spec 118 Task 9.5.2; Spec 123 U1 fix-up, 2026-09-26 —
+ * `.kiro/issues/2026-09-26-product-server-component-root.md`'s sibling defect).
+ *
+ * Design intent, confirmed against requirements.md Req 3.5 (the tasks-round text):
+ * "The Class C′ fixture SHALL be re-premised: it builds on the `src/components/core`
+ * copy, which Requirement 19A removes ... It SHALL be re-authored to build the
+ * consumer's component tree FROM NOTHING" — i.e. in a BORN repo, the consumer's own
+ * (Model B) component tree is `<bornRoot>/src/components`, never `.../core` (Req
+ * 19A.2 removes the `core` copy; Req 19A.6 creates `src/components/` directly,
+ * empty). The consumer map SHALL therefore reflect THAT tree, not a path `init`
+ * no longer writes to.
+ *
+ * Every other state (package-mode — including the steward repo's own dev-mode
+ * classification — partial, unborn) is UNCHANGED: `<configDir>/src/components/core`,
+ * exactly as before this fix. `generate` already refuses outright on `partial`
+ * before this function is ever called (see the caller), so only 'born' and
+ * 'package-mode'/'unborn' are live branches here in practice.
+ *
+ * Legacy `core/` level (born only): a pre-123 consumer who has not yet run
+ * `sync --migrate-components` may still have real components nested at
+ * `src/components/core/<Name>/` (the pre-123 copy layout). Mirrors
+ * `ComponentIndexer.collectComponentSources`'s own precedence (Task 1.4): a
+ * `core/` directory that is NOT itself a component dir but CONTAINS component
+ * dirs is a legacy level, used only when the flat (post-123) root holds none.
+ */
+export function resolveComponentSchemaDir(
+  dsRoot: Pick<import('./shared/bornRepo').DesignSystemRoot, 'state' | 'root'>,
+  configDir: string,
+): string {
+  if (dsRoot.state !== 'born' || !dsRoot.root) {
+    return path.resolve(configDir, 'src/components/core');
+  }
+
+  const isComponentDir = (dir: string): boolean => {
+    try {
+      const files = fs.readdirSync(dir);
+      return files.some((f) => f.endsWith('.schema.yaml')) || files.includes('contracts.yaml');
+    } catch {
+      return false;
+    }
+  };
+  const hasComponentDirs = (dir: string): boolean => {
+    try {
+      return fs
+        .readdirSync(dir, { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .some((d) => isComponentDir(path.join(dir, d.name)));
+    } catch {
+      return false;
+    }
+  };
+
+  const flatRoot = path.resolve(dsRoot.root, 'src/components');
+  if (hasComponentDirs(flatRoot)) return flatRoot;
+
+  const legacyRoot = path.join(flatRoot, 'core');
+  if (!isComponentDir(legacyRoot) && hasComponentDirs(legacyRoot)) return legacyRoot;
+
+  // Neither holds components yet (a freshly-born repo, README-only) — the flat
+  // (post-123) convention is the correct root regardless; buildConsumerMap
+  // returns an empty map for it, which is correct (no consumers to report).
+  return flatRoot;
+}
+
 /** @internal Exported for testing */
 export async function runGenerate(force = false) {
   // Spec 123 Task 1.5 (C2 consumer #4): BOTH the read side (the config) and the
@@ -146,13 +212,17 @@ export async function runGenerate(force = false) {
     // returns the resolved truth; the index consumes the SAME object — no re-derivation.
     const modeResolved = generateTokenFiles(tokens, config);
 
-    // Class C′ (Spec 118 Task 9.5.2, ratified default-only): resolve the component-schema
-    // scan root from the consumer's config so the token-index's consumer map reflects the
-    // consumer's design system — the same source the application MCP reads. Default to
-    // `<configDir>/src/components/core` (the location `init` writes to and MCP's
-    // COMPONENTS_DIR points at). Resolved HERE (config in scope), passed into the
-    // generator, which stays a pure function of its inputs.
-    const componentSchemaDir = path.resolve(config.configDir, 'src/components/core');
+    // Class C′ (Spec 118 Task 9.5.2, ratified default-only; U1 fix-up 2026-09-26 —
+    // `.kiro/issues/2026-09-26-product-server-component-root.md`): resolve the
+    // component-schema scan root from the consumer's config so the token-index's
+    // consumer map reflects the consumer's design system — the same source the
+    // application MCP reads. In a BORN repo that is `<bornRoot>/src/components`
+    // (Req 19A.2/19A.6 — `init` no longer writes a `core/` copy); every other
+    // state keeps `<configDir>/src/components/core` (the steward repo's own
+    // package-mode classification is UNCHANGED). See `resolveComponentSchemaDir`
+    // above. Resolved HERE (config + dsRoot in scope), passed into the generator,
+    // which stays a pure function of its inputs.
+    const componentSchemaDir = resolveComponentSchemaDir(dsRoot, config.configDir);
 
     // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
     generateTokenIndex(path.resolve(generateRoot, 'token-index'), {

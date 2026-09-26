@@ -64,3 +64,62 @@ Smaller adaptations (naming fallback for contracts-less components, `COMPONENT_D
 ## Subtask completion docs
 
 `.kiro/specs/123-consumer-distribution/completion/task-1-1-completion.md` (Ada, incl. 2026-09-26 addendum), `task-1-2-completion.md` (Ada, incl. addendum), `task-1-3-completion.md` (Ada), `task-1-4-completion.md` (Lina), `task-1-5-completion.md` (Ada), `task-1-6-completion.md` (Ada).
+
+---
+
+## Addendum (2026-09-26, U1 fix-up — before Task 4, Peter-authorized)
+
+Two born-repo regressions in Task 1's Primary Artifacts, found by the steward during U1 verification and fixed on this branch as a Task 1 fix-up (not a new parent). Both are cases the parent's own verification walk did not exercise: my "release-1 consumer path" trace (`feedback/tasks.md` § "[ADA R2]" answer (b)) confirmed birth detection, config emission, token/component copy, and MCP config, but never actually ran a screen-spec query or a `generate` invocation against a BORN fixture with real component content on one side and package content on the other — both defects only manifest once real DATA is walked through the born-vs-package split, which the trace's table-of-steps format didn't surface. **The orchestrator's miss, stated plainly**: neither Task 1's parent verification nor its independent re-run (the "Orchestrator independently re-ran and confirmed" line above) exercised the product server's gap-detection path or `generate`'s component-schema scan in a BORN fixture — both were verified only by config-shape and birth-state assertions, never by an end-to-end data walk. Filed and resolved per `.kiro/issues/2026-09-26-product-server-component-root.md` (main-side fix in #209; this addendum is the U1-side half).
+
+### Fix 1 — product-server bootstrap passed only `roots[0]`, not the union
+
+`product-mcp-server/src/index.ts`'s bootstrap (Task 1.5) resolved the precedence-ordered component root set (`resolveComponentRoots`) but then took only `roots[0]` (the precedence WINNER) rather than passing the whole set through to `GapDetector`. In a born repo, `roots[0]` is `<bornRoot>/src/components`, which post-`init` (Task 2) holds only a README — so `GapDetector.loadCatalog()` found zero components, and every DesignerPunk component named in a screen spec reported `not-found`. Gap detection silently became "everything is a gap" in exactly the repos 123 exists to serve.
+
+**Fix** (mirrors #209's main-side `GapDetector`/`ProductIndexer`/`ProductMCPServer` widening to `string | string[]`, already merged):
+- `componentDir` is now typed `string | string[]`.
+- The `const component: ResolvedDataRoot = { path: componentRoots.roots[0], ... }` single-root extraction is removed.
+- The boot log now logs every root (`components[0]`, `components[1]`, …), not one.
+- `componentDir = componentRoots.roots` (the load-bearing line) — the FULL precedence-ordered set flows into `ProductIndexer` → `GapDetector`, which builds its catalog as the union (consumer ∪ package), the same rule the application server's `ComponentIndexer` follows at pass 1 (Task 1.4).
+- The catch-path comment (the `DEFAULT_COMPONENT_DIR` fallback, reached only when root `dist/` is unbuilt) reworded to state plainly that this path is dev-repo-only and birth-aware resolution is unavailable there — `DEFAULT_COMPONENT_DIR` itself is UNCHANGED, per the issue's own "Resolution (main side)" § "Item 2" (changing it would regress the dev-repo path, since in this repo cwd == the package root and `src/components/core` is exactly where components live).
+
+**Test**: `product-mcp-server/src/__tests__/ProductIndexerBornRepoRootSet.test.ts` (new, 2 tests), exercising `ProductIndexer` directly (the level the bootstrap constructs), not just `GapDetector` in isolation (already covered by #209's own `GapDetector.test.ts` additions):
+- A born-repo fixture (consumer `src/components/` holding only a README) plus a package root, with a screen spec naming a package component (`Button-CTA`) → `indexer.getGaps('test-screen')` is `[]` — no gap.
+- **Bite** (a standing regression test, not a one-off revert-and-restore — it literally reproduces the pre-fix construction): passing `roots[0]` only (`new ProductIndexer(productDir, consumerComponentsRoot)`, the exact pre-fix bootstrap shape) → `getGaps('test-screen')` returns `[{ component: 'Button-CTA', issue: 'not-found' }]` — **RED**, reproducing the defect exactly.
+
+Run: `npx jest product-mcp-server/src/__tests__/` from the repo root → **10 suites, 106 tests, all pass** (was 9/96 pre-#209; #209 added `GapDetector.test.ts`'s 8-test describe block, this fix-up adds 2 more).
+
+### Fix 2 — `generate`'s component-schema scan root pointed at a path `init` no longer writes to
+
+`src/cli/designerpunk.ts:155`'s `componentSchemaDir = path.resolve(config.configDir, 'src/components/core')` fed the token-index's Class C′ consumer map (`generateTokenIndex.ts`'s `buildConsumerMap`). Its own comment said this was "the location `init` writes to" — true before Task 2, false after: `init` now gives a born repo an empty `src/components/` (no `core/` copy; Req 19A.2 removes it, Req 19A.6 creates the flat directory directly), so a born repo's token-index consumer map scanned a directory that either doesn't exist or holds only the consumer's README, and the `consumers:` field for every semantic/primitive token stayed empty for that consumer's own components.
+
+**Design citation, checked before touching anything** (per the coordinator's instruction to search design intent first, not assume): `requirements.md` Req 3.5 states — *"The Class C′ fixture SHALL be re-premised: it builds on the `src/components/core` copy, which Requirement 19A removes ... It SHALL be re-authored to build the consumer's component tree **FROM NOTHING** — which is the stronger test, proving C′ for a consumer owning zero schemas."* This settles the question: the design's own intent is that Class C′ (the token-index consumer map) reflects the BORN CONSUMER'S OWN component tree at `src/components/` (never the removed `core/` copy), proven specifically for the from-nothing case. No other design.md/requirements.md text names `componentSchemaDir` directly; Req 3.5 is the load-bearing citation.
+
+**Fix**: new exported `resolveComponentSchemaDir(dsRoot, configDir)` in `src/cli/designerpunk.ts`:
+- `dsRoot.state === 'born'` → `<dsRoot.root>/src/components` (the flat, post-123 convention), UNLESS that directory holds no components AND a legacy `src/components/core/` nested level (a pre-123, not-yet-`sync`-migrated consumer) DOES hold components — mirroring `ComponentIndexer.collectComponentSources`'s own precedence (Task 1.4): a `core/` that is not itself a component dir but contains component dirs is a legacy level.
+- Every other state (`package-mode` — including the steward repo's own dev-mode classification — `partial`, `unborn`) → UNCHANGED: `<configDir>/src/components/core`, exactly as before. `generate` already refuses outright on `partial` before this function is reached, so only `born` and `package-mode`/`unborn` are live branches in practice.
+- Verified live against THIS repo (not just simulated): `findDesignSystemRoot(process.cwd())` here classifies `state: 'package-mode'`, and `resolveComponentSchemaDir` returns the byte-identical `src/components/core` path the old hardcoded line produced — confirmed via a direct `npx tsx -e` run, not inferred.
+
+**Test**: `src/cli/__tests__/resolveComponentSchemaDir.test.ts` (new, 6 tests):
+- Born repo, flat component (`src/components/MyButton/`) → the flat root.
+- Born repo, freshly born (README only, no components) → still the flat root (never the legacy path).
+- Born repo, legacy pre-123 layout (`src/components/core/LegacyButton/`, no flat components) → the legacy root.
+- `package-mode` (the steward repo's own dev-mode classification) → unchanged, `<configDir>/src/components/core`.
+- `unborn` → falls through to the same unchanged default.
+- **Bite**: asserts the fixed resolver's output for a born, flat-tree fixture is NOT the pre-fix hardcoded `<configDir>/src/components/core` path, and that the pre-fix path resolves to nothing on disk while the fixed path resolves to the consumer's real tree — i.e., restoring the hardcoded path is the exact regression this test would catch.
+
+`backward-compat.test.ts`'s existing `componentSchemaDir` expectation (`require('path').resolve('/tmp', 'src/components/core')`) is UNCHANGED and still passes: that test calls the real (unmocked) `findDesignSystemRoot(process.cwd())`, which — running under Jest from this repo's root — classifies `package-mode`, so `resolveComponentSchemaDir` takes the unchanged branch.
+
+### Validation (this addendum)
+
+- `npx tsc --noEmit` → clean.
+- `npm test` (root) → **380 suites, 9187 tests, all pass** (was 378/9171 at Task 3's own completion; +2 suites / +16 tests — 8 from #209's `GapDetector.test.ts` additions already on `main`, 6 from `resolveComponentSchemaDir.test.ts`, 2 from `ProductIndexerBornRepoRootSet.test.ts`).
+- `npx jest product-mcp-server/src/__tests__/` (from repo root) → **10 suites, 106 tests, all pass**.
+- `npx jest` from `application-mcp-server/` → **29 suites, 369 tests, all pass** (unaffected — no `application-mcp-server` files touched).
+- `npm run test:scripts` → **8 suites, 168 tests, all pass** (unaffected).
+- `npx tsx scripts/pack-assert.ts` (after a fresh `npm run build`) → **40/40 assertions still pass**; `product-mcp-server/src/**` still confirmed NOT ADDED (unchanged shipping status) — no packaging-floor regression from this fix-up.
+- `npx tsx scripts/check-completion-criteria-parity.ts` → re-run after this addendum; **`parent 1: PASS`** (unchanged — this addendum adds to Task 1's completion doc but does not alter its Success Criteria table, which is unaffected by a fix-up scoped to Primary Artifacts, not criteria text).
+- Both bites (the `ProductIndexer` roots[0]-only reproduction; the `resolveComponentSchemaDir` pre-fix-path comparison) are standing regression tests, kept red-if-reverted, not one-off revert-and-restore checks against the working tree.
+
+### Files touched
+
+`product-mcp-server/src/index.ts` (Task 1 Primary Artifact), `src/cli/designerpunk.ts` (Task 1 Primary Artifact), plus two new test files: `product-mcp-server/src/__tests__/ProductIndexerBornRepoRootSet.test.ts`, `src/cli/__tests__/resolveComponentSchemaDir.test.ts`. Cites `.kiro/issues/2026-09-26-product-server-component-root.md` (moved to `.kiro/issues/archive/` in this same commit, status RESOLVED) and PR #209 (the main-side `GapDetector` fix this addendum's Fix 1 depends on).

@@ -582,7 +582,7 @@ if (require.main === module) {
   };
 
   let productDir: string = process.env.PRODUCT_DIR || DEFAULT_PRODUCT_DIR;
-  let componentDir: string = process.env.COMPONENT_DIR || DEFAULT_COMPONENT_DIR;
+  let componentDir: string | string[] = process.env.COMPONENT_DIR || DEFAULT_COMPONENT_DIR;
   let tokenIndexDir: string = process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR;
   try {
     const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
@@ -604,18 +604,16 @@ if (require.main === module) {
     });
 
     // COMPONENT root (C3): the consumer ∪ package union, precedence-ordered.
-    // ProductIndexer (unlike the application server's ComponentIndexer) has not
-    // been upgraded to multi-root in this spec — take the precedence WINNER
-    // (roots[0]: consumer when born, else the package root) rather than the union.
+    // GapDetector builds its catalog as the UNION of the full root set (a born
+    // repo's own components ∪ the package's), the same rule the application
+    // server's ComponentIndexer follows at pass 1 (Task 1.4) — see
+    // `.kiro/issues/2026-09-26-product-server-component-root.md`. So the whole
+    // precedence-ordered root set is passed through, never just roots[0].
     const componentRoots = shared.resolveComponentRoots({
       envValue: process.env.COMPONENT_DIR,
       dsRoot,
       packageRoot,
     });
-    const component: ResolvedDataRoot = {
-      path: componentRoots.roots[0],
-      source: componentRoots.sources[0],
-    };
 
     // TOKEN INDEX (C3): birth-aware. A structural reason is logged when no index
     // can be served, via the same design.md catalog strings the application
@@ -630,7 +628,7 @@ if (require.main === module) {
     // NEVER stdout — stdout is the JSON-RPC channel.
     console.error(`[${SERVER_NAME}] Design-system root: ${dsRoot.state}${dsRoot.partialCase ? ` (${dsRoot.partialCase})` : ''}`);
     logRoot('product', product);
-    logRoot('components', component);
+    componentRoots.roots.forEach((r, i) => logRoot(`components[${i}]`, { path: r, source: componentRoots.sources[i] }));
     if (tokenIndex.ok) {
       logRoot(
         'token-index',
@@ -649,11 +647,16 @@ if (require.main === module) {
     }
 
     productDir = product.path;
-    componentDir = component.path;
+    componentDir = componentRoots.roots;
     tokenIndexDir = tokenIndex.ok ? tokenIndex.path : DEFAULT_TOKEN_INDEX_DIR;
   } catch {
-    // Root dist not built (dev-repo edge; in-repo cwd == package root, so the
-    // legacy env/cwd-relative defaults still land on the right data).
+    // Root dist not built — birth-aware root resolution is unavailable, so this
+    // path is effectively dev-repo only (a consumer's esbuild bundle inlines the
+    // `dist/cli/shared/*` requires at build time, so it can never hit this catch).
+    // DEFAULT_COMPONENT_DIR ('src/components/core') is deliberately left
+    // unchanged: in THIS repo cwd == the package root, and that is exactly where
+    // components live — see `.kiro/issues/2026-09-26-product-server-component-root.md`
+    // item 2 for why changing it would regress this path, not fix anything.
     console.error(
       `[${SERVER_NAME}] WARNING: shared data-root resolution unavailable (root dist not built?) — using legacy env/cwd-relative defaults`
     );

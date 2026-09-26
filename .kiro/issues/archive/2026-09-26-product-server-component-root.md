@@ -1,7 +1,7 @@
 # Issue: product server's component root — gap detection breaks in born repos (U1-introduced), plus a stale fallback constant
 
 **Date**: 2026-09-26
-**Status**: ACTIVE
+**Status**: RESOLVED (2026-09-26 — see "Resolution (U1 side)" below)
 **Owner**: Lina (the `GapDetector` / component-catalog side); the U1 bootstrap line is a Task 1 artifact on `task/123-u1-substrate`
 **Trigger**: **before the U1 unit PR merges (Spec 123 Task 9)** — item 1 is a regression that exists only on the U1 branch and would ship in release 1. Item 2 rides the same fix.
 **Source**: steward verification of Spec 123 U1 Task 2 (Ada flagged item 2 in her Task 2 handoff); item 1 found while scoping item 2. Peter ruled 2026-09-26: own Lina issue, not folded into Task 4.
@@ -76,3 +76,33 @@ Other call sites were checked and need nothing further:
 - Existing string callers (the `ProductIndexerWalk`/`Spec108` tests and `src/__tests__/integration/Spec107-DesignLanguageContext.test.ts`) keep working unchanged.
 
 Suggested U1 test: a bootstrap-level or `ProductIndexer`-level born-repo case, passing `[bornRoot/src/components, packageRoot/src/components/core]`, with a screen spec naming a package component and asserting no `_componentGaps`. The bite is passing `roots[0]` → the gap appears.
+
+## Resolution (U1 side) — 2026-09-26
+
+**By**: Ada, on `task/123-u1-substrate` (after Task 3, syncing from `main` @ `7cd2c411`, which includes #209). Peter authorized a U1 fix-up batch before Task 4; recorded as a dated addendum to `.kiro/specs/123-consumer-distribution/completion/task-1-completion.md`, not a new parent task.
+
+### Item 1 — the U1 bootstrap now passes the whole root set
+
+Applied exactly the five line-numbered edits this issue's "U1-side change" section specified above (line numbers confirmed still current at the synced head), plus the optional catch-path comment reword:
+- `componentDir` typed `string | string[]`.
+- The comment above `resolveComponentRoots` now states that `GapDetector` builds its catalog as the union of the full root set, never the precedence winner.
+- The single-root `const component: ResolvedDataRoot = { ... }` extraction removed.
+- The boot log now logs every root (`components[0]`, `components[1]`, …).
+- `componentDir = componentRoots.roots` — the load-bearing line.
+- The catch-path comment reworded to state the fallback is dev-repo-only and birth-aware resolution is unavailable there; `DEFAULT_COMPONENT_DIR` itself is UNCHANGED per this issue's own "Item 2" resolution.
+
+**Test**: `product-mcp-server/src/__tests__/ProductIndexerBornRepoRootSet.test.ts` (new, 2 tests) — a born-repo fixture (consumer `src/components/` README-only) plus a package root, with a screen spec naming a package component, asserts `getGaps('test-screen')` is `[]`. **Bite** (a standing regression test): constructing `ProductIndexer` with `roots[0]` only reproduces the exact pre-fix defect — `getGaps` returns the `Button-CTA`/`not-found` gap. `npx jest product-mcp-server/src/__tests__/` from the repo root → 10 suites, 106 tests, all pass.
+
+### Item 2 (sibling defect, found while scoping this issue, same fix) — `generate`'s component-schema scan root
+
+`src/cli/designerpunk.ts:155`'s `componentSchemaDir` fed the token-index's Class C′ consumer map from `<configDir>/src/components/core` unconditionally — stale in a born repo for the same reason as item 1 (that path is no longer where a born consumer's components live; `init` writes `src/components/` directly, per Req 19A.2/19A.6). Design citation (Req 3.5, requirements.md): *"The Class C′ fixture SHALL be re-premised: it builds on the `src/components/core` copy, which Requirement 19A removes ... It SHALL be re-authored to build the consumer's component tree FROM NOTHING"* — settling that the consumer map should reflect the born consumer's own `src/components/` tree.
+
+**Fix**: new `resolveComponentSchemaDir(dsRoot, configDir)` in `src/cli/designerpunk.ts` — born repos get `<bornRoot>/src/components` (falling back to a legacy nested `core/` level only when it holds real components and the flat root doesn't, mirroring `ComponentIndexer.collectComponentSources`'s Task 1.4 precedence); every other state (package-mode, including the steward repo's own dev-mode classification; partial; unborn) is byte-identical to the old hardcoded path — verified live against this repo, not just simulated.
+
+**Test**: `src/cli/__tests__/resolveComponentSchemaDir.test.ts` (new, 6 tests: flat born, freshly-born/no-components, legacy-core born, package-mode, unborn, and a bite comparing the fixed output against the pre-fix hardcoded path). `backward-compat.test.ts`'s existing `componentSchemaDir` expectation is unchanged and still passes (it runs under real `package-mode` classification).
+
+### Validation
+
+`npx tsc --noEmit` clean; root `npm test` 380/9187 all pass; `product-mcp-server` jest 10/106; `application-mcp-server` jest 29/369 (unaffected); `npm run test:scripts` 8/168; `npx tsx scripts/pack-assert.ts` 40/40 (product-mcp-server/src/ still confirmed NOT ADDED — no packaging regression); `check-completion-criteria-parity` — parent 1 and parent 3 both still PASS.
+
+**Status: RESOLVED.** Both items closed on the U1 branch. Moved to `.kiro/issues/archive/` in the same commit as this resolution, per `.kiro/issues/README.md` rule 5.
