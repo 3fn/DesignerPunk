@@ -140,7 +140,7 @@ describe('Container-Card-Base Component', () => {
     describe('cardBorderTokenMap', () => {
       it('should map card border values to correct tokens', () => {
         expect(cardBorderTokenMap['none']).toBe('');
-        expect(cardBorderTokenMap['default']).toBe('border.border.default');
+        expect(cardBorderTokenMap['default']).toBe('border.default');
       });
 
       it('should only include none and default (curated subset)', () => {
@@ -241,7 +241,7 @@ describe('Container-Card-Base Component', () => {
 
     describe('getCardBorderToken', () => {
       it('should return correct token for border value', () => {
-        expect(getCardBorderToken('default')).toBe('border.border.default');
+        expect(getCardBorderToken('default')).toBe('border.default');
         expect(getCardBorderToken('none')).toBe('');
       });
     });

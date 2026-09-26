@@ -17,7 +17,7 @@
  * @see Requirements 10.1, 11.1, 11.2
  */
 
-import { buildContainerBaseStyles } from './token-mapping';
+import { buildContainerBaseStyles, tokenToCssCustomProperty } from './token-mapping';
 import type { 
   PaddingValue, 
   BorderValue, 
@@ -221,7 +221,7 @@ export class ContainerBaseWeb extends HTMLElement {
     
     if (background) {
       // Convert token name to CSS custom property format
-      const cssVarName = `--${background.replace(/\./g, '-')}`;
+      const cssVarName = tokenToCssCustomProperty(background);
       baseColor = computedStyle.getPropertyValue(cssVarName).trim();
     }
     

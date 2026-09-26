@@ -20,6 +20,7 @@
 import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 // Ensure Container-Base is registered before Card uses it
 import '../../../Container-Base/platforms/web/ContainerBase.web';
+import { tokenToCssCustomProperty } from '../../../Container-Base/platforms/web/token-mapping';
 import type {
   CardPaddingValue,
   CardVerticalPaddingValue,
@@ -163,7 +164,7 @@ export class ContainerCardBaseWeb extends HTMLElement {
     if (background) {
       const tokenName = cardBackgroundTokenMap[background];
       if (tokenName) {
-        const cssVarName = `--${tokenName.replace(/\./g, '-')}`;
+        const cssVarName = tokenToCssCustomProperty(tokenName);
         baseColor = computedStyle.getPropertyValue(cssVarName).trim();
       }
     }

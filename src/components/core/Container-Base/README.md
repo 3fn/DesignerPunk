@@ -300,9 +300,9 @@ The web implementation uses CSS logical properties for internationalization supp
 | Value | Token | Width |
 |-------|-------|-------|
 | `'none'` | - | 0px |
-| `'default'` | `border.border.default` | 1px |
-| `'emphasis'` | `border.border.emphasis` | 2px |
-| `'heavy'` | `border.border.heavy` | 4px |
+| `'default'` | `border.default` | 1px |
+| `'emphasis'` | `border.emphasis` | 2px |
+| `'heavy'` | `border.heavy` | 4px |
 
 ### Border Color
 

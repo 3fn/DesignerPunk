@@ -50,24 +50,54 @@ import type {
 } from '@3fn/core/types';
 
 /**
- * Convert token name to CSS custom property format
- * 
- * Transforms dot-notation token names to CSS variable format with var() wrapper:
- * - 'space.inset.200' -> 'var(--space-inset-200)'
- * - 'color.primary' -> 'var(--color-primary)'
+ * Convert a token name to its generated CSS custom property name (`--…`).
+ *
+ * Mirrors the web generator's naming (the `platforms.web` names in token-index/,
+ * i.e. what DesignTokens.web.css emits): split on dots, kebab-case camelCase
+ * boundaries, hyphenate letter→digit boundaries, lowercase, join with '-':
+ * - 'space.inset.200'          -> '--space-inset-200'
+ * - 'zIndex.container'         -> '--z-index-container'
+ * - 'color.select.notSelected' -> '--color-select-not-selected'
+ * - 'icon.size100'             -> '--icon-size-100'
+ * - 'radius-050' (legacy form) -> '--radius-050'
+ *
+ * Parity with the generator is guarded: ContainerBase.token-resolution.test.ts
+ * asserts this function reproduces every token-index web name exactly.
+ *
+ * @param tokenName - Token name (dot notation)
+ * @returns The CSS custom property name, including the leading `--`
+ */
+export function tokenToCssCustomProperty(tokenName: string): string {
+  const kebab = tokenName
+    .split('.')
+    .map(part =>
+      part
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/([a-zA-Z])(\d)/g, '$1-$2')
+        .toLowerCase()
+    )
+    .join('-');
+  return `--${kebab}`;
+}
+
+/**
+ * Convert token name to a CSS `var()` reference.
+ *
+ * - 'space.inset.200'  -> 'var(--space-inset-200)'
+ * - 'zIndex.modal'     -> 'var(--z-index-modal)'
  * - 'shadow.container' -> 'var(--shadow-container)'
- * 
+ *
  * @param tokenName - Token name in dot notation
  * @returns CSS custom property with var() wrapper
- * 
+ *
  * @example
  * ```typescript
  * tokenToCssVar('space.inset.200') // Returns 'var(--space-inset-200)'
- * tokenToCssVar('color.primary') // Returns 'var(--color-primary)'
+ * tokenToCssVar('zIndex.modal') // Returns 'var(--z-index-modal)'
  * ```
  */
 export function tokenToCssVar(tokenName: string): string {
-  return `var(--${tokenName.replace(/\./g, '-')})`;
+  return `var(${tokenToCssCustomProperty(tokenName)})`;
 }
 
 /**
@@ -299,7 +329,7 @@ export function mapPaddingInlineEndToCSS(paddingInlineEnd: PaddingValue | null):
  * 
  * @example
  * ```typescript
- * mapBorderToCSS('default') // Returns 'border: var(--border-default) solid var(--color-border)'
+ * mapBorderToCSS('default') // Returns 'border: var(--border-default) solid var(--color-structure-border)'
  * mapBorderToCSS('default', 'color.structure.border.subtle') // Returns 'border: var(--border-default) solid var(--color-structure-border-subtle)'
  * mapBorderToCSS('none') // Returns ''
  * ```
@@ -363,7 +393,7 @@ export function mapBorderRadiusToCSS(borderRadius: BorderRadiusValue | null): st
  * 
  * @example
  * ```typescript
- * mapColorToCSS('color.primary') // Returns 'background: var(--color-primary)'
+ * mapColorToCSS('color.structure.surface') // Returns 'background: var(--color-structure-surface)'
  * mapColorToCSS('color.structure.surface') // Returns 'background: var(--color-structure-surface)'
  * ```
  * 
@@ -488,7 +518,7 @@ export function mapLayeringToCSS(layering: LayeringValue | null): string {
  *   padding: '200',
  *   paddingVertical: '100',
  *   paddingBlockStart: '050',
- *   background: 'color.surface',
+ *   background: 'color.structure.surface',
  *   shadow: 'shadow.container',
  *   borderRadius: 'normal'
  * })
@@ -496,7 +526,7 @@ export function mapLayeringToCSS(layering: LayeringValue | null): string {
  * // padding: var(--space-inset-200);
  * // padding-block: var(--space-inset-100);
  * // padding-block-start: var(--space-inset-050);
- * // background: var(--color-surface);
+ * // background: var(--color-structure-surface);
  * // box-shadow: var(--shadow-container);
  * // border-radius: var(--radius-100)
  * ```

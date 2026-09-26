@@ -768,7 +768,7 @@ func mapCardBorderRadiusToCornerRadius(_ borderRadius: CardBorderRadius) -> CGFl
 func mapCardBorderToLineWidth(_ border: CardBorder) -> CGFloat {
     switch border {
     case .none: return 0
-    case .default: return borderDefault /* border.border.default */
+    case .default: return borderDefault /* border.default */
     }
 }
 

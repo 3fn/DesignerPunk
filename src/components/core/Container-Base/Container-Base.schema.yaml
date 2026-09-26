@@ -197,9 +197,9 @@ properties:
     description: |
       Border width for the container. Maps to border tokens.
       - none: No border
-      - default: 1px (border.border.default)
-      - emphasis: 2px (border.border.emphasis)
-      - heavy: 4px (border.border.heavy)
+      - default: 1px (border.default)
+      - emphasis: 2px (border.emphasis)
+      - heavy: 4px (border.heavy)
       Border color uses borderColor prop or defaults to color.border.default.
   
   borderColor:
@@ -311,7 +311,7 @@ tokens:
   color:
     - color.background
     - color.surface
-    - color.border.default
+    - color.structure.border
     - color.structure.border.subtle
     - color.border.emphasis
     - color.canvas
@@ -323,9 +323,9 @@ tokens:
     - shadow.toast
     - shadow.tooltip
   border:
-    - border.border.default
-    - border.border.emphasis
-    - border.border.heavy
+    - border.default
+    - border.emphasis
+    - border.heavy
   radius:
     - radius-050
     - radius-100

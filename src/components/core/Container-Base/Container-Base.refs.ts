@@ -54,24 +54,26 @@ export const paddingTokenMap: Record<PaddingValue, string> = {
  * Border token mapping
  * 
  * Maps border prop values to border width token names.
- * Border color is always color.border token.
+ * Border color defaults to the color.structure.border token (BORDER_COLOR_TOKEN).
  * 
  * Token values:
- * - border.border.default: 1px
- * - border.border.emphasis: 2px
- * - border.border.heavy: 4px
+ * - border.default: 1px
+ * - border.emphasis: 2px
+ * - border.heavy: 4px
  * 
- * Note: The double "border" in the token name (border.border.default) is intentional.
- * The first "border" is the category prefix, the second is part of the semantic name.
- * This converts to CSS custom property: --border-default
+ * Values are canonical semantic token names (as registered in the token index), so
+ * `tokenToCssVar` resolves them to generated custom properties: border.default ->
+ * --border-default. (These were previously 'border.border.*', which assumed a
+ * category-prefix strip that tokenToCssVar never performed and emitted the
+ * nonexistent --border-border-*.)
  * 
  * @see Requirements 2.4, 6.1-6.5
  */
 export const borderTokenMap: Record<BorderValue, string> = {
   'none': '',
-  'default': 'border.border.default',
-  'emphasis': 'border.border.emphasis',
-  'heavy': 'border.border.heavy'
+  'default': 'border.default',
+  'emphasis': 'border.emphasis',
+  'heavy': 'border.heavy'
 };
 
 /**
@@ -185,7 +187,7 @@ export function getPaddingToken(padding: PaddingValue): string {
  * 
  * @example
  * ```typescript
- * getBorderToken('default') // Returns 'border.border.default'
+ * getBorderToken('default') // Returns 'border.default'
  * getBorderToken('none') // Returns ''
  * ```
  */
@@ -238,4 +240,4 @@ export function getLayeringToken(layering: LayeringValue, platform: Platform): s
  * 
  * @see Requirements 6.5
  */
-export const BORDER_COLOR_TOKEN = 'color.border';
+export const BORDER_COLOR_TOKEN = 'color.structure.border';
