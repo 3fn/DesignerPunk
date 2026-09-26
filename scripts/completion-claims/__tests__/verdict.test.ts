@@ -17,6 +17,7 @@ import {
   resolveMode,
   parseRatificationRecord,
   uncoveredClasses,
+  formatUntickedLine,
   DOC_NOT_FOUND_EMISSION,
   RATIFICATION_BALLOT_PATH,
 } from '../verdict';
@@ -254,6 +255,82 @@ describe('population and modes (Req 6.2; DD2)', () => {
     const tasks = parseTasksMd(HEADER + '- [ ] 1. T\n  **Success Criteria:**\n  - c\n', 's');
     const r = evaluateSpec(tasks, 'per-parent', () => undefined);
     expect(r.parents).toEqual([]);
+  });
+});
+
+describe('the per-spec unticked count (Peter, 2026-09-26)', () => {
+  test('counts unticked parents alongside a mix of ticked ones, without disturbing the ticked verdicts', () => {
+    const tasks = parseTasksMd(
+      HEADER +
+        '- [ ] 1. A\n  **Success Criteria:**\n  - c1\n\n' +
+        '- [x] 2. B\n  **Success Criteria:**\n  - c2\n\n' +
+        '- [ ] 3. C\n  **Success Criteria:**\n  - c3\n',
+      's'
+    );
+    const r = evaluateSpec(tasks, 'per-parent', () => docWith([['c2', '✅', 'a/b.ts']]));
+    expect(r.unticked).toBe(2);
+    // The ticked parent's own verdict is untouched by the new field.
+    expect(r.parents).toHaveLength(1);
+    expect(r.parents[0].parent).toBe('2');
+    expect(r.parents[0].findings).toEqual([]);
+  });
+
+  test('is 0 when every parent is ticked (or none exist), and the formatter prints nothing', () => {
+    const tasks = parseTasksMd(HEADER + '- [x] 1. T\n  **Success Criteria:**\n  - c\n', 's');
+    const r = evaluateSpec(tasks, 'per-parent', () => docWith([['c', '✅', 'a/b.ts']]));
+    expect(r.unticked).toBe(0);
+    expect(formatUntickedLine(r)).toBeUndefined();
+  });
+
+  test('is 0 for spec-level and legacy specs (out of scope for the per-parent predicate entirely)', () => {
+    const tasks = parseTasksMd(HEADER + '- [ ] 1. T\n  **Success Criteria:**\n  - c\n', 's');
+    for (const mode of ['spec-level', 'legacy'] as const) {
+      const r = evaluateSpec(tasks, mode, () => undefined);
+      expect(r.unticked).toBe(0);
+      expect(formatUntickedLine(r)).toBeUndefined();
+    }
+  });
+
+  test('a poisoned (malformed-block) unticked parent is EXCLUDED from the count — it already fails loudly', () => {
+    // Two criteria blocks on one parent is a loud spec-level MALFORMATION,
+    // independent of tick state (tasks-md.test.ts covers the ticked case).
+    const tasks = parseTasksMd(
+      HEADER + '- [ ] 2. T\n  **Success Criteria:**\n  - a\n  **Success Criteria:**\n  - b\n',
+      's'
+    );
+    const r = evaluateSpec(tasks, 'per-parent', () => undefined);
+    expect(r.findings.map((f) => f.message)).toContain(
+      'malformed association: two criteria blocks associate to parent 2 (lines 4, 6)'
+    );
+    expect(r.unticked).toBe(0);
+  });
+
+  test('formatUntickedLine matches the ruled format exactly', () => {
+    const tasks = parseTasksMd(
+      HEADER +
+        Array.from({ length: 27 }, (_, i) => `- [ ] ${i + 1}. P${i + 1}\n  **Success Criteria:**\n  - c\n\n`).join(''),
+      '123-consumer-distribution'
+    );
+    const r = evaluateSpec(tasks, 'per-parent', () => undefined);
+    expect(r.unticked).toBe(27);
+    expect(formatUntickedLine(r)).toBe(
+      'spec 123-consumer-distribution: 27 parent(s) unticked — not evaluated (no completion claim yet)'
+    );
+  });
+
+  test('the count never contributes to pass/fail/reds/emissions — only r.unticked and the formatter carry it', () => {
+    const tasks = parseTasksMd(
+      HEADER + '- [ ] 1. A\n  **Success Criteria:**\n  - c1\n\n- [x] 2. B\n  **Success Criteria:**\n  - c2\n',
+      's'
+    );
+    const r = evaluateSpec(tasks, 'per-parent', () => docWith([['c2', '✅', 'a/b.ts']]));
+    // Spec-level findings and the one ticked parent's own findings/emissions
+    // are exactly what they'd be without any unticked sibling present.
+    expect(r.findings).toEqual([]);
+    expect(r.parents).toHaveLength(1);
+    expect(r.parents[0].findings).toEqual([]);
+    expect(r.parents[0].emissions).toEqual([]);
+    expect(r.unticked).toBe(1);
   });
 });
 

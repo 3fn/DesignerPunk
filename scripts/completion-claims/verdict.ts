@@ -286,6 +286,18 @@ export interface SpecResult {
   findings: Finding[]; // spec-level findings (malformations, declaration duty)
   parents: ParentResult[];
   associations: string[]; // `parent N ← block at line L` (Req 2.4.2)
+  /**
+   * Count of unticked, non-poisoned parents (Peter, 2026-09-26): a parent that
+   * has made no completion claim yet is out of scope for the Req 2.5.3
+   * predicate (design.md § C5/DD1, "per ticked parent") — this is a purely
+   * INFORMATIONAL count, never a Finding/Emission, and MUST NOT be counted
+   * toward pass/fail/reds/emissions or the exit code. Poisoned (malformed-
+   * block) parents are excluded from the count: they already produce a loud
+   * spec-level MALFORMATION finding regardless of tick state, so folding them
+   * into "unticked, not evaluated" would misrepresent an already-flagged
+   * parent as quietly skipped.
+   */
+  unticked: number;
 }
 
 /**
@@ -323,10 +335,10 @@ export function evaluateSpec(
       verdict: 'NON_COMPLIANT_NO_DECLARATION',
       message: `non-compliant tasks.md: authored post-ratification without a criteria-mode declaration`,
     });
-    return { spec: tasks.spec, mode, findings, parents, associations };
+    return { spec: tasks.spec, mode, findings, parents, associations, unticked: 0 };
   }
   if (mode !== 'per-parent') {
-    return { spec: tasks.spec, mode, findings, parents, associations };
+    return { spec: tasks.spec, mode, findings, parents, associations, unticked: 0 };
   }
 
   const poisoned = new Set<number>();
@@ -335,11 +347,17 @@ export function evaluateSpec(
     if (m.parentLine !== undefined) poisoned.add(m.parentLine);
   }
 
+  let unticked = 0;
   for (const p of tasks.parents) {
     if (p.criteriaBlockLine !== undefined) {
       associations.push(`parent ${parentId(p)} ← block at line ${p.criteriaBlockLine}`);
     }
-    if (!p.ticked) continue;
+    if (!p.ticked) {
+      // Excluded from the count when poisoned (see the `unticked` field's
+      // doc comment) — a poisoned parent already fails loudly above.
+      if (!poisoned.has(p.line)) unticked++;
+      continue;
+    }
     // A parent poisoned by a criteria-block malformation has NO computed
     // promise set — evaluating a fabricated one would assert parity against
     // fiction (Req 2.2.2's "never silently select nothing"); the malformation
@@ -348,7 +366,22 @@ export function evaluateSpec(
     parents.push(evaluateParent(p, locateDoc(p)));
   }
 
-  return { spec: tasks.spec, mode, findings, parents, associations };
+  return { spec: tasks.spec, mode, findings, parents, associations, unticked };
+}
+
+/**
+ * The per-spec unticked-parent count line (Peter, 2026-09-26). Purely
+ * informational — returns `undefined` when the count is 0 so a fully-ticked
+ * (or fully-evaluated) spec's output is byte-identical to before this change.
+ * A single line per spec, deliberately NOT interleaved with per-parent verdict
+ * lines and printed at un-indented "spec header" weight — the association
+ * manifest already names which parents are unticked (Req 2.4.2); this line
+ * only carries the count, so it stays legible regardless of how long a spec's
+ * per-parent verdict list grows.
+ */
+export function formatUntickedLine(r: SpecResult): string | undefined {
+  if (r.unticked <= 0) return undefined;
+  return `spec ${r.spec}: ${r.unticked} parent(s) unticked — not evaluated (no completion claim yet)`;
 }
 
 /**
