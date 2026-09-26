@@ -220,27 +220,31 @@ export async function runProductOnly(force = false) {
 async function runMcpApp() {
   const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/application-mcp.js');
-  const componentsDir = path.join(pkgRoot, 'src/components/core');
+  // CONSUMER-OWNED roots (COMPONENTS_DIR, TOKEN_INDEX_DIR) get NO runner default
+  // (Spec 123 Task 1.3, design.md § "C3. The root-policy table as code" — the
+  // Runner table's "Runner default: none" row). The server's own bootstrap now
+  // resolves these itself via `findDesignSystemRoot` + the birth-aware resolvers
+  // (`resolveComponentRoots` / `resolveTokenIndexRoot`), which know about
+  // born/package-mode/partial/unborn — a hardcoded pkgRoot value here would
+  // silently shadow that resolution (and any user-set env) forever.
   const patternsDir = path.join(pkgRoot, 'experience-patterns');
   const templatesDir = path.join(pkgRoot, 'layout-templates');
   const guidanceDir = path.join(pkgRoot, 'family-guidance');
   const registryPath = path.join(pkgRoot, 'family-registry.yaml');
-  const tokenIndexDir = path.join(pkgRoot, 'token-index');
   const designLanguagePath = path.join(pkgRoot, 'design-philosophy.yaml');
 
   console.error('DesignerPunk Application MCP');
   console.error(`  Protocol: stdio`);
-  console.error(`  Data: ${componentsDir}`);
   console.error(`  Server: ${serverBundle}`);
   console.error('  Starting...\n');
 
+  // PACKAGE-OWNED roots keep their pkgRoot default (Runner table: "Runner
+  // default: pkgRoot"). `spawnServer` still lets a user-set env value win.
   const envVars: Record<string, string> = {
-    COMPONENTS_DIR: componentsDir,
     PATTERNS_DIR: patternsDir,
     TEMPLATES_DIR: templatesDir,
     GUIDANCE_DIR: guidanceDir,
     REGISTRY_PATH: registryPath,
-    TOKEN_INDEX_DIR: tokenIndexDir,
   };
   if (fs.existsSync(designLanguagePath)) {
     envVars.DESIGN_LANGUAGE_PATH = designLanguagePath;
@@ -266,29 +270,37 @@ async function runMcpDocs() {
 async function runMcpProduct() {
   const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/product-mcp.js');
-  const productDir = process.env.PRODUCT_DIR || path.resolve(process.cwd(), 'product');
-  const componentDir = path.join(pkgRoot, 'src/components/core');
-  const tokenIndexDir = path.join(pkgRoot, 'token-index');
 
   console.error('DesignerPunk Product MCP');
   console.error(`  Protocol: stdio`);
-  console.error(`  Data: ${productDir}`);
   console.error(`  Server: ${serverBundle}`);
   console.error('  Starting...\n');
 
-  spawnServer(serverBundle, {
-    PRODUCT_DIR: productDir,
-    COMPONENT_DIR: componentDir,
-    TOKEN_INDEX_DIR: tokenIndexDir,
-  }, true);
+  // PRODUCT_DIR, COMPONENT_DIR and TOKEN_INDEX_DIR are all CONSUMER-OWNED roots
+  // (Spec 123 Task 1.3): the runner sets NO default for any of them. The
+  // server's own bootstrap resolves them via `findDesignSystemRoot` +
+  // `resolveProductRoot` / `resolveComponentRoots` / `resolveTokenIndexRoot`.
+  spawnServer(serverBundle, {}, true);
 }
 
-/** Spawn a server as a child process. Uses node for bundled JS, tsx for TypeScript. */
-function spawnServer(entryPoint: string, envVars: Record<string, string>, bundled: boolean = false) {
+/**
+ * Spawn a server as a child process. Uses node for bundled JS, tsx for TypeScript.
+ *
+ * Spec 123 Task 1.3 (C2 D-B3 / C3):
+ * - **User-set data-root env wins**: `process.env` is spread AFTER `envVars`, so
+ *   any data-root value the invoking shell/harness already set (e.g. a user's own
+ *   `COMPONENTS_DIR`) is never shadowed by this runner's own defaults.
+ * - **No `cwd` option is passed** — load-bearing: the spawned server's
+ *   `process.cwd()` is whatever the launching harness set, and `findDesignSystemRoot`
+ *   (C2) requires that inherited cwd to walk from the right place.
+ *
+ * @internal Exported for testing.
+ */
+export function spawnServer(entryPoint: string, envVars: Record<string, string>, bundled: boolean = false) {
   const runner = bundled ? 'node' : resolveTsRunner();
 
   const child = spawn(runner, [entryPoint], {
-    env: { ...process.env, ...envVars },
+    env: { ...envVars, ...process.env },
     stdio: 'inherit',
   });
 

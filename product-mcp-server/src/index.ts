@@ -472,16 +472,49 @@ class ProductMCPServer {
  * the esbuild bundle (dist/mcp/product-mcp.js) inlines the require at build time.
  * Types are declared locally (shape-only, no logic).
  */
-interface ResolvedDataRoot {
-  path: string;
-  source: 'env' | 'cwd' | 'package';
+/** Shape-only mirror of `bornRepo.ts`'s `DesignSystemRoot` (Spec 123 Task 1.2) — no logic, avoids a cross-sub-package import. */
+export interface DesignSystemRootShape {
+  state: 'born' | 'package-mode' | 'partial' | 'unborn';
+  root: string | null;
+  tierDir: string | null;
+  partialCase?: 'config-no-tier' | 'unused-local-tier' | 'tier-no-config' | 'manifest-only';
+  signals: { config: boolean; tier: boolean; manifest: boolean; legacyManifest: boolean };
 }
-interface McpDataRootsModule {
+export interface ResolvedDataRoot {
+  path: string;
+  source: 'env' | 'cwd' | 'package' | 'package-consume';
+}
+export interface ComponentRootsResult {
+  roots: string[];
+  sources: ResolvedDataRoot['source'][];
+}
+export type TokenIndexResolution =
+  | { ok: true; path: string; source: ResolvedDataRoot['source']; tokenOrigin?: 'designerpunk-package-mode' | 'designerpunk-reference' }
+  | { ok: false; reason: 'empty-env-value' }
+  | { ok: false; reason: 'run-generate' }
+  | { ok: false; reason: 'partial'; partialCase?: DesignSystemRootShape['partialCase'] };
+export interface McpDataRootsModule {
   resolvePackageRoot(fromDir: string): string;
+  /** @deprecated Spec 123 Task 1.2 — superseded by the birth-aware resolvers below. Kept so this bootstrap block keeps compiling until Tasks 1.4–1.6 rewire it. */
   resolveConsumerOwnedRoot(opts: {
     envValue?: string;
     relPath: string;
     packageRoot?: string;
+  }): ResolvedDataRoot;
+  resolveComponentRoots(opts: {
+    envValue?: string;
+    dsRoot: DesignSystemRootShape;
+    packageRoot: string;
+  }): ComponentRootsResult;
+  resolveTokenIndexRoot(opts: {
+    envValue?: string;
+    dsRoot: DesignSystemRootShape;
+    packageRoot: string;
+  }): TokenIndexResolution;
+  resolveProductRoot(opts: {
+    envValue?: string;
+    dsRoot: DesignSystemRootShape;
+    cwd: string;
   }): ResolvedDataRoot;
 }
 
