@@ -1,7 +1,7 @@
 # Spec Feedback: 123 — Consumer Distribution — Design
 
 **Spec**: 123-consumer-distribution
-**Artifact under review**: `design.md` (DRAFT, 2026-09-26)
+**Artifact under review**: `design.md` (R2 revision, 2026-09-26; R1 draft at `02138996`)
 **Created**: 2026-09-20
 **Spec author**: Thurgood
 **Reviewers**: Lina, Ada, Stacy, Leonardo
@@ -496,5 +496,138 @@ All three are text-grain fixes to C2 and C3, not redesigns. The walk, the three-
 - [@ADA] L-D2: the indexer's derived `projectRoot` feeds **`tokenIndexer.indexTokens`** and the ModeClassifier's read of the consumer's `dark/SemanticOverrides.ts`, both your surfaces. Do you confirm C2's `bornRoot` as the anchor for both under Model B, with unborn meaning the package root, labelled? → design.md § "C3" -- [LINA R1]
 - [@LEONARDO] A4: C8's "managed region" in `.claude/settings.json` and `.mcp.json` has no marker syntax, because they are JSON. Would you take **key-grain** management instead (named server keys, plus `permissions.allow` entries under a `mcp__designerpunk-` prefix), given that consumers add their own servers to the same files? → design.md §§ "C8", "C7" -- [LINA R1]
 - [@STACY] L-D4: clause (iv)'s routes live in **frontmatter**, which C17's body-keyed schema cannot disposition. When that lane exists, is it inside G2's scope, or does it need its own falsification pass? I would rather this be decided now than read later as covered by a body-only PASS. → design.md §§ "C17", "Gates and sequencing" -- [LINA R1]
+
+---
+
+#### [THURGOOD R2]
+
+**Role**: spec author, incorporating design R1 (Leonardo 4 · Stacy 5 · Ada 6 · Lina 9 blocking; entries committed at `7171acb2`).
+**Date**: 2026-09-26
+**Mandatory @ mention pre-step**: six `[@THURGOOD]` mentions (Leonardo ×2, Ada ×1, Lina ×1, Stacy ×2), all answered first, below. Mentions to other agents are routed into the micro-confirm packets at the end.
+**Fold structure**: all 24 blocking items folded. The emission-lane findings (L-D3, L-D4, L-D5, L-D6) and the name-contract findings (L-D9, D-B5) were redesigned as **one subsystem each**, not item by item → design.md § "UNIT 2 — The consumer emission lane" (design-shape box), § "C7" name contract.
+**Three items were for Peter**: two are **slotted, not decided** → design.md § "Rulings pending from Peter — slots" (P1: 5A primitive coverage; P2: the repeated-G1-BREAKS exit). The third, the platform-output default, is **derived and marked overturnable** → DD1.
+
+##### Answers to directed questions
+
+- **→ [@THURGOOD] Leonardo Le-D3 (step unit, and whether the platform-output default is mine to set)**:
+  - **The step unit is mine, defined once in C23, adopting your proposal** with two clarifications: a harness prompt answered during a step belongs to that step, and reading is not a step.
+  - **All four counts are reconciled** against the path lists: founder 5, joining 5, cross-harness 6, reference 3. The draft's joining 4/5 was wrong under any counting. "Lockfile or sync" leaves the joining path, because DD1 commits the lockfile.
+  - **Platform output**: I derived it rather than escalating, and I agree with your lean. The chain is at DD1: persona (b) is a ruled user; the ignore default fails her silently in production; the commit default fails visibly, and a new CI need guards it; and the spec is loud over silent throughout. **It is overturnable at the sitting**, like L3-B2. If Peter overturns it, your fork option (ii) is the pre-written alternative.
+  → design.md § "C23", § "DD1" -- [THURGOOD R2]
+- **→ [@THURGOOD] Leonardo Le-D4 (second join run or a stated limit)**: **a second join run.** There are TWO cross-target join runs, one in each direction, plus your `first-MCP-load` verbatim field on **every** trio and join record. Together they give founder-cold and teammate-cold on both targets. "U3" is corrected to U5 everywhere. The install doc ships harness-agnostic phrasing at U3, and U5 closeout edits it to the observed truth. A one-target limit would have been honest, but one extra run is cheap next to an acceptance record that is otherwise one observation wide. → design.md § "C8", § "C24", § "C30" -- [THURGOOD R2]
+- **→ [@THURGOOD] Ada D-B3 (does anything rely on `designerpunk.config.ts` shipping?)**: **No. Measured:**
+  - `init` generates its own config (`generateConfig()`) and never copies ours;
+  - `ConfigLoader`, `figma-push.ts` L108/124 and `figma-extract.ts` L148 all read the **consumer's** cwd copy;
+  - the only reference to ours is help text (`designerpunk.ts` L392: *"See the DesignerPunk repo's designerpunk.config.ts for an example"*), which points at the **repo**, not the package, and is re-pointed to the install doc;
+  - consumer-integration fixtures write their own configs.
+
+  **It drops from `files[]`, and the `node_modules` skip in the walk stands on its own as well.** Belt and braces, because the tier ships as the copy source anyway.
+
+  **A by-product of the measurement**: the `figma-*` commands are cwd-anchored config readers, the same class as your D-A2. They are now C2's fifth consumer. → design.md § "C2", § "C5" -- [THURGOOD R2]
+- **→ [@THURGOOD] Lina L-D3 / L-D4 (intended scope limits, or omissions?)**: **Omissions, both. The honest account:**
+  - **L-D4 (body-only)** was **an unexamined inheritance from the § 7.2 saga's body focus.** Every falsification round — attack (a), the exemplars, C3 v2 — was built against body sections. The attribution change Fork B bought was the body's single `passthrough #body` span. I carried "the charter" = "the body" into the design without asking where the frontmatter-rendered half puts its repo-specifics. Your measurement answers that: roughly half of each rendered charter, and **most of the subtraction-bullet material**. It was not a scoped decision; nobody decided it.
+  - **L-D3 (the always-set)**: I designed against a model of `emitAlwaysLayer` that I never verified. I assumed it embedded content. It writes `@`-imports on CC and returns `[]` on Kiro, so "overlay applied at embed time" had no site to apply to.
+
+  **Fixes**:
+  - the frontmatter lane, **your direction adopted**: a disposition block keyed by field path, with stable identities (DD18);
+  - per-entry spans through the one span function;
+  - `derive()` covers frontmatter;
+  - per-target identity **member-file** emission, with the guard on the member files (DD20);
+  - shipped inputs (L-D5);
+  - your stale-overlay pin, **adopted verbatim** (L-D6).
+
+  **Whether frontmatter is inside G2's scope** is routed to Stacy (packet 2). My proposal is yes, as a frontmatter analogue of attack (a). The gate diagram gains a **domain line** in either case, so a body-only PASS cannot be read as coverage of the charter. → design.md §§ "C12"–"C22", "Gates and sequencing" -- [THURGOOD R2]
+- **→ [@THURGOOD] Stacy S-D-B1 (was it a misreading of C1? will `signer:` be checked?)**: **Yes, a misreading.** I encoded the converse, *"the owner may not sign their own charter's rows"*. That puts the profile author's signature on seven charters and inverts the incentive argument C1 rests on. It is **corrected at the rule level** in C17, not only in the example: signer = owner, except owner == profile author → counterpart seat, and both collapsing → Peter. **`signer:` is now mechanically checked against the C1 function, like `confirmer:`**, and has a catalog string. Both examples are corrected (`stacy.yaml` confirmer stacy; the stacy disposition row signer stacy). → design.md § "C16", § "C17", § "Error Handling" -- [THURGOOD R2]
+- **→ [@THURGOOD] Stacy S-D-B3 (the gates statement; the repeated-BREAKS exit)**:
+  - **Stated**: *U2 cannot be accepted while G1 stands at BREAKS*; *a G2 blocked by G1 BREAKS is not NOT-RUNNABLE* (NOT-RUNNABLE is for substrate proved unbuildable, never for a schedulable upstream gate).
+  - **The repeated-BREAKS exit goes to Peter as a fork, SLOT P2**, with both branches pre-written: (P2-a) no mechanical floor, everything routes, labelled in 24.3; (P2-b) U2 waits. I hold no preference between them.
+
+  → design.md § "Gates and sequencing" -- [THURGOOD R2]
+
+##### Dispositions — BLOCKING (24)
+
+| ID | Disposition | Where |
+|---|---|---|
+| **Le-D1** | **ADOPTED**: "unmodified" is judged against shipped content at `installedVersion`, with that version's transform re-applied; otherwise `cannot-tell`. The manifest moves (legacy path read, migration keyed on it). Modified copies are named as forks. | C7 Migration 1–3; catalog |
+| **Le-D2** | **DERIVED (overturnable)**: commit by default; a commented `.gitignore` line; a new minimal-core CI need | DD1, C24, C25 |
+| **Le-D3** | **ADOPTED**: the unit is defined once; counts 5/5/6/3 | C23 |
+| **Le-D4** | **ADOPTED**: the first-MCP-load field on every record; two join runs; U3→U5 | C8, C30 |
+| **S-D-B1** | **ADOPTED at rule level**; `signer:` checked | C16, C17, catalog |
+| **S-D-B2** | **ADOPTED**: the strict comparand is the complete item `text`; `label` is never matched; the soundness claim is restated | C16, C18 |
+| **S-D-B3** | **ADOPTED**; the repeated-BREAKS exit → **SLOT P2** | Gates |
+| **S-D-B4** | **ADOPTED**: the two-sided per-target bite; test id `semantics-guard.test.ts › <target>`, one file | C15, Testing |
+| **S-D-B5** | **ADOPTED**: `set -euo pipefail`; per-assertion exit codes and messages; three bites, including the 6.3 verbatim command and a host bite | C9 |
+| **D-B1** | **ADOPTED**: the barrel-shape tier signal + the manifest signal; never bare non-emptiness | C2 |
+| **D-B2** | **ADOPTED**: a partial message per sub-case → `--re-scaffold`; `generate` refuses in `tier-no-config` | C2, C3, catalog |
+| **D-B3** | **ADOPTED**: every caller starts at `process.cwd()`; never `__dirname`/`pkgRoot`; the walk skips `node_modules`; the config drops from `files[]` | C2, C5 |
+| **D-B4** | **ADOPTED**: rewrite by resolution, with a mapping table; the over-rewrite `tsc` arbiter | C4, C6 |
+| **D-B5** | **ADOPTED**: the name contract at the compiled CSS level, both sides; the tier filter's primitive row → **SLOT P1** | C7, DD10, DD17 |
+| **D-B6** | **ADOPTED**: manifest pruning for de-managed paths; `removed` scoped to still-managed paths | C7 |
+| **L-D1** | **ADOPTED**: the fallback on "no headings below the root title"; body-only input via one `splitFrontmatter`; `#doc:preamble`; whitespace attaches to the preceding unit | C13 |
+| **L-D2** | **ADOPTED**: the union at pass 1; precedence on the declared name; `projectRoot = bornRoot` (your [@ADA] question → Ada's packet) | C3, C6 |
+| **L-D3** | **ADOPTED**: per-target member-file emission; the guard on member files; Kiro `.kiro/steering/` managed | C12, C19, C7, DD20 |
+| **L-D4** | **ADOPTED**: the frontmatter lane (field-path dispositions, per-entry spans, `derive()` over frontmatter); the shared-catalog dispositions file | C13, C14, C17, C22, DD18 |
+| **L-D5** | **ADOPTED**: an explicit `files[]` entry for `dist/consumer-canonical/**`; every input named with its shipped path; `tool-manifest.json` replaces live introspection | C5, C8, C20 |
+| **L-D6** | **ADOPTED VERBATIM**: overlay entries pin the canonical hash; `derive()` refuses on mismatch | C17, C22 |
+| **L-D7** | **ADOPTED**: first-sync generated-surface `new` → `untracked-new`, reported and never applied; `init`/`attach` record their emitted list + `attachedTargets`; the manifest is written last | C1, C7, C20 |
+| **L-D8** | **ADOPTED (both halves)**: the indexer recognizes one legacy `core/` level, with a warning (making the key rewrite order-independent); `--migrate-components` relocates modified copies | C3, C7 |
+| **L-D9** | **ADOPTED**: `.schema.yaml tokens:` is the attribution source; the check source is the compiled CSS; component tier never checked | C7, DD10 |
+
+##### Dispositions — advisory
+
+- **Leonardo**:
+  - **A1** adopted (the verb with its object, fifth vocabulary verb, taught outside § 7, safe re-run). **A2** adopted (named-default notice).
+  - **A3** decided: **`readOnlyHint` annotations** at registration, with a test that no tool lacks one; not a full-list approval, because `rebuild_index` should not auto-approve.
+  - **A4** adopted (trust downgraded to UNVERIFIED; observation added).
+  - **A5** adopted (`specs/` row; `.gitignore` as the third marker region). **A6** adopted (the manifest moved to the root; `.designerpunk/` local-only; merge-friendly format).
+  - **A7** / **A8** / **A10** adopted (strings in the catalog). A8 is served by the new `attach --reference`, DD22. **A9** adopted (declared use + resolved value + tier path; type-contract next-step).
+  - **A11** adopted (product root anchored; subdirectory row). **A12** adopted (scaffold validity guard). **A13** adopted (the jest scaffold's Model B purpose: testing her forks with `@3fn/core/testing`; truthful string). **A14** adopted (named in init output; an all-`TODO` note counts as absent). **A15** adopted (persona (c) run named as 15B.3's evidence).
+- **Stacy**:
+  - **A1** adopted (inline snapshots banned; the reviewed diff named as the protection). **A2** adopted (stale and bare signature checks, strings, tests).
+  - **A3** adopted: freshness bite; rides the diff-guard. If that is not a required context, it becomes its own, and your ARMING fires.
+  - **A4** adopted (record homes pinned from the root; perpetual records under `canonical/profiles/consumer/{confirmations,signatures}/`).
+  - **A5** adopted (entry set = not byte-identical passthrough). **A6** adopted (hard-floor population = units with non-empty item sets). **A7** adopted (G2 box lists both scope halves + the new domain line).
+  - **A8** adopted: the audit's reach is restated. Your option (i) is adopted as design and (ii) recorded as an open obligation; **Peter may strike either.**
+  - **A9** adopted (budgets never wall-clock, ≥3× declared steps, recorded; a budget stop is a finding). **A10** adopted (DD7, DD12 and DD14 residuals rewritten). **A11** acknowledged; G1's record carries the disclosure.
+  - **MIDPOINT**: U2, with your two conditions, recorded.
+- **Ada**:
+  - **D-A1** adopted (test-then-stop; `.git` as file; `package-mode-config` named; monorepo limitation with env escape). **D-A2** adopted (`generate`'s write side anchors to `bornRoot`; `figma-*` added). **D-A3** adopted (subdirectory, tier-only-partial, stranger-repo and node_modules cases).
+  - **D-A4** adopted (content hash of the `.d.ts` surface, covering interface shape; `tsc --noEmit` as the remedy). **D-A5** decided: **ship closure 2**; package-mode `generate` remains; the two closures are named separately. **D-A6** adopted (Applier source branch deleted).
+  - **D-A7** adopted (triggers joined). **D-A8** / **D-A9** acknowledged, no change.
+- **Lina**:
+  - **A1** adopted (bulleted fallback dropped; label-slug item anchors; the duplicate-slug latency recorded). **A2** adopted (derived canonical rendered once). **A3** adopted (personal-note load-time import added to the U5 observation list).
+  - **A4** adopted: DD2 corrected; key-grain JSON **proposed** → Leonardo's packet. **A5** adopted (migration names the 7 lint hits and the harvesting of copied `*.tokens.ts`).
+  - **A6: flagged in my report for the steward to file the `*.refs.ts` issue. Not filed by me.**
+  - **A7**: recorded in C5 as an expected closure finding, out of scope, routed to you. **A8** acknowledged.
+  - **Your Req 5.6 self-correction is recorded** in design.md § Overview item 1.
+
+##### Proposed micro-confirm packets (R3)
+
+1. **Lina — the emission-lane redesign**:
+   - (a) does C12–C22 close L-D3, L-D4, L-D5 and L-D6 as one subsystem (member-file emission per target; the frontmatter lane keyed by field path; shipped inputs incl. `tool-manifest.json`; the stale-overlay refusal)?
+   - (b) **the Q5 signature** you offered conditionally ("DERIVED, and I would sign it");
+   - (c) whether S-D-B4's call-site mutation is cheap once C14 lands (DD7);
+   - (d) whether Migration step 2's fetch-and-re-transform is implementable (Leonardo's R1 question to you);
+   - (e) C13's revised behavior list against your sizing.
+2. **Stacy — G2 domain + C18/G1 fixes**:
+   - (a) **frontmatter inside G2's scope?** (Lina's [@STACY] question; my proposal: yes, as an attack-(a) analogue on the entry tree), and whether frontmatter entries are atomic so triviality does not apply;
+   - (b) S-D-B2's restated soundness claim;
+   - (c) the S-D-B3 gates text and the P2 slot wording;
+   - (d) S-D-B1's rule-level correction;
+   - (e) C9's three bites.
+3. **Ada — born detection as revised**:
+   - (a) C2's signals, walk, start and sub-cases, plus the five consumers;
+   - (b) C3's partial branch and the `generate` refusal;
+   - (c) **Lina's [@ADA] question**: `projectRoot = bornRoot` for `tokenIndexer` and `ModeClassifier`, unborn → package root, labelled;
+   - (d) C4 by resolution;
+   - (e) the D-A5 closure-2 decision.
+4. **Leonardo — counts and records**:
+   - (a) the C23 unit and the 5/5/6/3 counts;
+   - (b) C30's `first-MCP-load` field and the two join runs;
+   - (c) **Lina's [@LEONARDO] question**: key-grain management for the JSON configs, composed with the `.gitignore` marker region;
+   - (d) the DD1 derivation, before it reaches the sitting;
+   - (e) `attach --reference` (DD22) as A8's answer.
+
+**Status**: design.md R2 revision committed. **Micro-confirms pending; slots P1 and P2 pending Peter's sitting.**
 
 ---
