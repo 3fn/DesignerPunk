@@ -34,6 +34,12 @@ export type {
 // Component Types
 export type { InsetPadding } from './ComponentTypes';
 
+// Oklch color type (Spec 123 Task 2, 19A.7 — the two type-only Oklch escapes in
+// src/tokens/color/primitives/{chromatic,neutral}.ts need a public home to
+// resolve for consumer type-checking after `src/types` stops being copied;
+// design.md C4's mapping table rewrites those escapes to `@3fn/core/types`).
+export type { Oklch } from '../color/OklchConverter';
+
 // Generated Token Name Types
 export type {
   ColorTokenName,

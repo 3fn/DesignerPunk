@@ -15,6 +15,11 @@ import {
   packageModeIndexAbsentMessage,
   bornIndexAbsentMessage,
   explicitTokenIndexMissingMessage,
+  initBornRepoMessage,
+  restartLineSequencedMessage,
+  cloneHatchMessage,
+  personalNoteNamingMessage,
+  jestConfigCollisionMessage,
 } from '../shared/errorCatalog';
 
 // Verbatim transcriptions from design.md's catalog table — the comparands.
@@ -78,5 +83,51 @@ describe('errorCatalog — string conformance (Task 1.6)', () => {
     expect(explicitTokenIndexMissingMessage('/explicit/path')).toBe(
       DESIGN_ROWS['explicit TOKEN_INDEX_DIR missing']('/explicit/path')
     );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Task 2 additions — `init`'s own catalog rows (design.md C1 row 0 / C27 erratum).
+// A SEPARATE describe block, additive to Task 1.6's frozen seven-row count above.
+// ---------------------------------------------------------------------------
+
+const INIT_DESIGN_ROWS = {
+  'init in a born repo': (root: string) =>
+    `this repo already has a design system (${root}) — init is the birth event and runs once. To join it: npm install → npx designerpunk generate → fill in .designerpunk/personal-note.local.md (generate creates it) → restart your agent session (approve DesignerPunk's MCP servers if asked). Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: npx designerpunk init --re-scaffold`,
+  'restart line — sequenced': () =>
+    `when the steps above are done, restart your agent session — DesignerPunk's MCP servers and your personal note load when a session starts, so this session cannot see them yet (approve the servers if your tool asks)`,
+  'clone hatch': () =>
+    `want to own the engine too? Clone github.com/3fn/DesignerPunk — init already made the token language yours; the clone adds the engine and the components`,
+  'personal-note naming': () =>
+    `fill in .designerpunk/personal-note.local.md — who you are and how you want to be worked with; your agents read it every session (it stays on your machine)`,
+  'jest.config.js collision (C27 A13)': () =>
+    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`,
+};
+
+describe('errorCatalog — string conformance (Task 2 additions)', () => {
+  test('exactly five covered rows', () => {
+    // BITE (recorded red in the Task 2.2 completion doc): removing a key
+    // from INIT_DESIGN_ROWS turns this red.
+    expect(Object.keys(INIT_DESIGN_ROWS).length).toBe(5);
+  });
+
+  test('init in a born repo', () => {
+    expect(initBornRepoMessage('/root')).toBe(INIT_DESIGN_ROWS['init in a born repo']('/root'));
+  });
+
+  test('restart line — sequenced', () => {
+    expect(restartLineSequencedMessage()).toBe(INIT_DESIGN_ROWS['restart line — sequenced']());
+  });
+
+  test('clone hatch', () => {
+    expect(cloneHatchMessage()).toBe(INIT_DESIGN_ROWS['clone hatch']());
+  });
+
+  test('personal-note naming', () => {
+    expect(personalNoteNamingMessage()).toBe(INIT_DESIGN_ROWS['personal-note naming']());
+  });
+
+  test('jest.config.js collision (C27 A13)', () => {
+    expect(jestConfigCollisionMessage()).toBe(INIT_DESIGN_ROWS['jest.config.js collision (C27 A13)']());
   });
 });

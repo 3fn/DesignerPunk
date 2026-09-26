@@ -83,3 +83,61 @@ export function bornIndexAbsentMessage(root: string): string {
 export function explicitTokenIndexMissingMessage(explicitPath: string): string {
   return `TOKEN_INDEX_DIR is set to ${explicitPath}, which is absent or empty — unset it, or run generate`;
 }
+
+// ---------------------------------------------------------------------------
+// `init`-specific catalog strings (Spec 123 Task 2 — design.md C1 row 0 /
+// C27 / Req 15A.3, 15.8, 15.9, 2.5). Extends the catalog established at Task
+// 1.6 rather than duplicating it in a second file (per the project's
+// duplicated-resolution-logic warning) — `init.ts` is the only caller today.
+// ---------------------------------------------------------------------------
+
+/** design.md catalog row: `init` in a born repo (A7). */
+export function initBornRepoMessage(root: string): string {
+  return (
+    `this repo already has a design system (${root}) — init is the birth event and runs once. ` +
+    `To join it: npm install → npx designerpunk generate → fill in .designerpunk/personal-note.local.md ` +
+    `(generate creates it) → restart your agent session (approve DesignerPunk's MCP servers if asked). ` +
+    `Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach ` +
+    `--target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: ` +
+    `npx designerpunk init --re-scaffold`
+  );
+}
+
+/**
+ * design.md catalog row: **restart line — sequenced** (erratum, Le-T1 + Le-T5).
+ * `init` and born-repo `attach` output; printed LAST, as the final next step.
+ */
+export function restartLineSequencedMessage(): string {
+  return (
+    `when the steps above are done, restart your agent session — DesignerPunk's MCP servers and your ` +
+    `personal note load when a session starts, so this session cannot see them yet (approve the servers ` +
+    `if your tool asks)`
+  );
+}
+
+/** design.md catalog row: **clone hatch** (erratum, Le-T1; `init` output). */
+export function cloneHatchMessage(): string {
+  return (
+    `want to own the engine too? Clone github.com/3fn/DesignerPunk — init already made the token language ` +
+    `yours; the clone adds the engine and the components`
+  );
+}
+
+/** design.md catalog row: **personal-note naming** (erratum, Le-T1; `init` output). */
+export function personalNoteNamingMessage(): string {
+  return (
+    `fill in .designerpunk/personal-note.local.md — who you are and how you want to be worked with; your ` +
+    `agents read it every session (it stays on your machine)`
+  );
+}
+
+/**
+ * design.md § C27 (A13): the truthful `jest.config.js` collision string — states
+ * the CONSEQUENCE of the skip, not just the skip (Req 19.3).
+ */
+export function jestConfigCollisionMessage(): string {
+  return (
+    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your ` +
+    `own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`
+  );
+}

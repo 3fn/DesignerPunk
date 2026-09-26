@@ -294,10 +294,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `src/cli/init.ts`, `src/cli/shared/transforms.ts`, `src/types/index.ts`, `src/cli/__tests__/init.test.ts`, `governance/DesignerPunk-Integration-Guide.md` (the U1 lines)
 
   - [x] 2.1 `rewriteByResolution` + the mapping table + the tier boundary; per-row unit tests
-  - [ ] 2.2 Step 0 (birth check, refusals, `--re-scaffold` listing); steps 3/3b/3c/4/4′; `--skip-components` deprecation note
-  - [ ] 2.3 Config generation (1.2 i–iv); the test-config purpose + truthful collision string
-  - [ ] 2.4 Manifest written last, with `origin` per entry, `posture: 'born'`, `installedVersion`
-  - [ ] 2.5 The `tsc` over-rewrite arbiter + its bite; U1 next steps + the restart line
+  - [x] 2.2 Step 0 (birth check, refusals, `--re-scaffold` listing); steps 3/3b/3c/4/4′; `--skip-components` deprecation note
+  - [x] 2.3 Config generation (1.2 i–iv); the test-config purpose + truthful collision string
+  - [x] 2.4 Manifest written last, with `origin` per entry, `posture: 'born'`, `installedVersion`
+  - [x] 2.5 The `tsc` over-rewrite arbiter + its bite; U1 next steps + the restart line
   - [ ] 2.6 (Thurgood) Integration Guide: the lines U1 falsifies
 
 - [ ] 3. The packaging floor, `files[]`, and the platform closures
