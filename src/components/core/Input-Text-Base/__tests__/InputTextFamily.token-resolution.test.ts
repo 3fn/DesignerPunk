@@ -19,13 +19,21 @@
  * `.browser.ts` / `.web.ts` files, or the bare `'color-error'` icon-color literal in
  * InputTextBase.web.ts → this suite goes red.
  *
- * `--color-background-hover` (Input-Text-Password's toggle-button hover background) is a
- * DEFERRED, known-open item: hover state here likely needs a blend-based background (see
- * blend.hoverDarker/hoverLighter, both interaction-category *blend* tokens, not literal
- * color tokens — the DesignerPunk blend spec is chartered but not built), so no existing
- * semantic color token is a clean match. It is explicitly allow-listed below rather than
- * silently exempted, so the guard still fails loudly if a NEW unresolved literal is
- * introduced anywhere in the family.
+ * `--color-background-hover` (Input-Text-Password's toggle-button hover background):
+ * Peter ruled option (a) 2026-09-26 — wire the existing blend pattern (Button-Icon /
+ * Chip-Base's `darkerBlend(surface, blend.hoverDarker)` computed via `getBlendUtilities()`
+ * into a private, JS-set custom property). Done for `InputTextPassword.web.ts`
+ * (`--_itp-hover-bg`, see KNOWN_JS_COMPUTED below — a JS-computed value is not a token
+ * reference and can't be checked against the static index; a companion behavioral test,
+ * `toggleButtonHoverBlend.test.ts`, verifies the actual computed value instead). It is
+ * NOT done for `InputTextPassword.browser.ts`: that file is a standalone, zero-import
+ * bundle by design (see its own header comment), and the blend utility depends on ~650
+ * lines of real OKLCH/RGB color-space math (`src/blend/ColorSpaceUtils.ts` +
+ * `ThemeAwareBlendUtilities.web.ts`) with no precedent anywhere in the repo for inlining
+ * into a standalone bundle. That literal remains in KNOWN_DEFERRED, explicitly
+ * allow-listed rather than silently exempted, so the guard still fails loudly if a NEW
+ * unresolved literal is introduced anywhere in the family. See
+ * `.kiro/issues/archive/2026-09-26-input-text-phantom-css-vars.md`.
  */
 
 import * as fs from 'fs';
@@ -61,8 +69,22 @@ const GENERATED_WEB_NAMES: Set<string> = new Set(
  * exact file:name pair so a fix removes it here too — the guard then re-covers that literal.
  */
 const KNOWN_DEFERRED: ReadonlyArray<{ file: string; name: string }> = [
-  { file: 'src/components/core/Input-Text-Password/platforms/web/InputTextPassword.browser.ts', name: '--color-background-hover' },
-  { file: 'src/components/core/Input-Text-Password/platforms/web/InputTextPassword.web.ts', name: '--color-background-hover' }
+  { file: 'src/components/core/Input-Text-Password/platforms/web/InputTextPassword.browser.ts', name: '--color-background-hover' }
+];
+
+/**
+ * Custom properties that are intentionally NOT token references — their value is computed
+ * in JS at render time (blend math) and written directly into the `<style>` block, so they
+ * will never appear in `token-index/`. Each entry is named individually (not a `--_`-prefix
+ * blanket exemption) so a future unrelated `--_…` typo still fails loudly here; the actual
+ * correctness of each one is verified by its own behavioral test, named alongside it.
+ */
+const KNOWN_JS_COMPUTED: ReadonlyArray<{ file: string; name: string; verifiedBy: string }> = [
+  {
+    file: 'src/components/core/Input-Text-Password/platforms/web/InputTextPassword.web.ts',
+    name: '--_itp-hover-bg',
+    verifiedBy: 'Input-Text-Password/__tests__/toggleButtonHoverBlend.test.ts'
+  }
 ];
 
 const FAMILY_WEB_FILES = [
@@ -92,7 +114,7 @@ function literalCssVarReads(): Array<{ file: string; name: string }> {
   const out: Array<{ file: string; name: string }> = [];
   for (const relPath of FAMILY_WEB_FILES) {
     const src = fs.readFileSync(path.join(REPO_ROOT, relPath), 'utf8');
-    for (const m of src.matchAll(/var\(\s*(--[a-z0-9-]+)\s*\)/g)) {
+    for (const m of src.matchAll(/var\(\s*(--[a-z0-9_-]+)\s*\)/g)) {
       const name = m[1];
       if (COMPOSITE_EXPANSION_PREFIXES.some(prefix => name.startsWith(prefix))) continue;
       out.push({ file: relPath, name });
@@ -128,28 +150,40 @@ describe('Input-Text family — emitted CSS custom properties resolve (resolve-g
     expect(FAMILY_WEB_FILES.length).toBeGreaterThanOrEqual(6);
   });
 
-  it('every literal var(--…) reference in the family resolves (deferred items allow-listed)', () => {
+  it('every literal var(--…) reference in the family resolves (deferred/JS-computed items allow-listed)', () => {
     const reads = literalCssVarReads();
     expect(reads.length).toBeGreaterThan(20);
 
     const isDeferred = (r: { file: string; name: string }) =>
       KNOWN_DEFERRED.some(d => d.file === r.file && d.name === r.name);
+    const isJsComputed = (r: { file: string; name: string }) =>
+      KNOWN_JS_COMPUTED.some(d => d.file === r.file && d.name === r.name);
 
     const unresolved = reads
       .filter(r => !GENERATED_WEB_NAMES.has(r.name))
       .filter(r => !isDeferred(r))
+      .filter(r => !isJsComputed(r))
       .map(r => `${r.file}: ${r.name}`);
     expect(unresolved).toEqual([]);
   });
 
-  it('the deferred allow-list is exactly the known-open hover item (no silent growth)', () => {
+  it('the deferred + JS-computed allow-lists are exactly this known set (no silent growth)', () => {
     const reads = literalCssVarReads();
-    const unresolvedIncludingDeferred = reads
+    const unresolvedIncludingAllowListed = reads
       .filter(r => !GENERATED_WEB_NAMES.has(r.name))
       .map(r => `${r.file}: ${r.name}`)
       .sort();
-    const expected = KNOWN_DEFERRED.map(d => `${d.file}: ${d.name}`).sort();
-    expect(unresolvedIncludingDeferred).toEqual(expected);
+    const expected = [...KNOWN_DEFERRED, ...KNOWN_JS_COMPUTED]
+      .map(d => `${d.file}: ${d.name}`)
+      .sort();
+    expect(unresolvedIncludingAllowListed).toEqual(expected);
+  });
+
+  it('every JS-computed allow-list entry names an existing behavioral-test file', () => {
+    for (const entry of KNOWN_JS_COMPUTED) {
+      const testPath = path.join(REPO_ROOT, 'src/components/core', entry.verifiedBy);
+      expect(fs.existsSync(testPath)).toBe(true);
+    }
   });
 
   it('every literal icon-color string in the family resolves', () => {
