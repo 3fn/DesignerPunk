@@ -16,6 +16,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { parseSemanticOverrides } from './SemanticOverrideReader';
+import { resolveThemeTierRoot } from './resolveThemeTierRoot';
 
 export type ModeLevel = 'level-1' | 'level-2' | 'mode-invariant';
 
@@ -60,10 +61,24 @@ export class ModeClassifier {
 
   /**
    * Load classification data from the project's SemanticOverrides file.
-   * @param projectRoot Absolute path to the project root
+   *
+   * Spec 123 Task 1.5 (DD24 — "the theme root travels with the index"): the theme
+   * root is resolved via `resolveThemeTierRoot` (meta.json's `tierDir` → the
+   * caller's explicit tier → the legacy `<projectRoot>/src/tokens` default), NOT
+   * hardcoded to `<projectRoot>/src/tokens` — that hardcoding is wrong for
+   * package-mode consumers, whose live tier is the PACKAGE's `src/tokens`.
+   *
+   * @param projectRoot Absolute path to the project root (the LEGACY fallback tier
+   *   base — kept as the third-precedence source; unchanged callers see identical
+   *   behavior when neither `tokenIndexDir` nor `explicitTierDir` is passed).
+   * @param tokenIndexDir The served token-index directory, so `meta.json`'s
+   *   recorded `tierDir` can be read (optional — omit when unknown).
+   * @param explicitTierDir The caller's own resolved tier (e.g.
+   *   `DesignSystemRoot.tierDir`), used when `meta.json` is absent (optional).
    */
-  load(projectRoot: string): void {
-    const overridesPath = path.join(projectRoot, 'src/tokens/themes/dark/SemanticOverrides.ts');
+  load(projectRoot: string, tokenIndexDir?: string, explicitTierDir?: string): void {
+    const tierRoot = resolveThemeTierRoot(tokenIndexDir, explicitTierDir, projectRoot);
+    const overridesPath = path.join(tierRoot, 'themes/dark/SemanticOverrides.ts');
     this.level2Keys = extractOverrideKeys(overridesPath);
     if (!fs.existsSync(overridesPath)) {
       this.warnings.push('SemanticOverrides.ts not found — mode classification unavailable');

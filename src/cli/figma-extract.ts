@@ -33,6 +33,16 @@ import { cleanupStalePorts } from '../figma/portCleanup';
 import type { DTCGTokenFile } from '../generators/types/DTCGTypes';
 import type { MCPDocClient } from '../figma/VariantAnalyzer';
 import type { ComponentAnalysis } from '../figma/ComponentAnalysis';
+import { findDesignSystemRoot } from './shared/bornRepo';
+
+/**
+ * Anchor `designerpunk.config.ts` lookup at the DesignerPunk root (Spec 123 C2
+ * consumer #5), not a bare `process.cwd()` — a script run from a subdirectory of a
+ * born repo still finds the real config instead of silently falling back to `dist/`.
+ */
+function resolveConfigDir(): string {
+  return findDesignSystemRoot(process.cwd()).root ?? process.cwd();
+}
 
 // ---------------------------------------------------------------------------
 // Argument parsing
@@ -145,7 +155,7 @@ export function parseArgs(argv: string[]): FigmaExtractArgs {
 /** Default path to the DTCG token file — checks config output dir first, falls back to dist/. */
 const DTCG_INPUT_PATH = (() => {
   // Try config-specified output directory
-  const configPath = path.resolve('designerpunk.config.ts');
+  const configPath = path.join(resolveConfigDir(), 'designerpunk.config.ts');
   if (fs.existsSync(configPath)) {
     try {
       const raw = fs.readFileSync(configPath, 'utf-8');

@@ -36,3 +36,21 @@
 - `resolveComponentRoots(dsRoot, packageRoot, envValue?)` is ready to feed `ComponentIndexer`'s pass-1 union once it accepts an array of roots — call it with the result of `findDesignSystemRoot(process.cwd())` as `dsRoot`.
 - `resolveTokenIndexRoot` returns a discriminated union (`ok: true/false` with a `reason`) — no message strings are constructed yet; that's Task 1.6's catalog-string job. Consumers should switch on `reason` (`'empty-env-value' | 'run-generate' | 'partial'`) to select the right catalog message, and read `.partialCase` when `reason === 'partial'`.
 - `resolveProductRoot` is a straightforward drop-in for the product server's bootstrap once it's wired to call `findDesignSystemRoot` first.
+
+---
+
+## Addendum (2026-09-26, orchestrator verification pass)
+
+### Fixup — the "C3 root-policy table conformance" test was tautological
+
+The criterion reads: "The resolvers return C3's table values for every row … a table-driven test whose row count equals C3's table rows." The original test only checked `typeof resolvesVia === 'function'` and a **self-declared** `runnerDefault` field on the row object itself — it never called a resolver or compared against anything C3 actually specifies, so it could not fail from a real regression.
+
+Rewrote the table (`C3_TABLE`) so each row carries a `call()` that invokes the REAL resolver with representative inputs, and an `expected` value transcribed directly from design.md § "C3" (e.g. the component row expects the literal `bornRoot/src/components` ∪ package-root union; the token-index row expects `unborn`'s exact `{ ok: true, path, source: 'package-consume', tokenOrigin: 'designerpunk-reference' }`). `test.each(C3_TABLE)` now asserts `expect(call()).toEqual(expected)`. The row-count assertion (`expect(C3_TABLE.length).toBe(4)`) is unchanged in spirit but now reads from the same array the data-driven rows run from, so deleting a row shrinks both.
+
+**Bites**:
+1. Deleted the `package-owned` row from `C3_TABLE` → re-ran `-t "exactly four rows"` → **RED**: `Expected: 4, Received: 3`. Restored.
+2. Mutated `resolveTokenIndexRoot`'s unborn branch to return `source: 'package'` instead of `'package-consume'` → re-ran `-t "resolves to the value C3 specifies"` → **RED**: `toEqual` diff showing `- "source": "package-consume" / + "source": "package"`. Restored; `git status --porcelain src/cli/shared/mcpDataRoots.ts` confirmed no diff after restore.
+
+Full re-run: `npx jest src/cli/__tests__/mcpDataRoots.test.ts` → 21/21 passed. `npx tsc --noEmit` → clean.
+
+**Application-time adaptations (addendum)**: none beyond what's stated above.

@@ -400,9 +400,14 @@ class ComponentMCPServer {
 
     const health = this.indexer.getHealth();
     console.error(`[${SERVER_NAME}] Indexed ${health.componentsIndexed} components (${health.warnings.length} warnings)`);
-    if (!this.paths.tokenIndexDir) {
-      console.error(`[${SERVER_NAME}] Token index not available (Spec 096 pending)`);
-    }
+    // Spec 123 Task 1.6: this line USED TO print a stale, wrong "(Spec 096 pending)"
+    // excuse whenever `tokenIndexDir` was undefined. It fires now for real
+    // birth-detection reasons (a partial refusal, an absent/empty index, an
+    // unreadable explicit TOKEN_INDEX_DIR) — the SPECIFIC catalog-string message for
+    // that reason is already printed earlier, in the `require.main` bootstrap block
+    // (before this server is even constructed). Printing a second, vaguer, wrong-spec
+    // message here would just contradict the accurate one — removed rather than
+    // reworded.
 
     // Design philosophy
     if (this.paths.designLanguagePath) {
@@ -563,6 +568,8 @@ export interface DesignSystemRootShape {
   root: string | null;
   tierDir: string | null;
   partialCase?: 'config-no-tier' | 'unused-local-tier' | 'tier-no-config' | 'manifest-only';
+  /** `config-no-tier` only; `undefined` for a non-literal `tokenSource` (Peter, 2026-09-26). */
+  attemptedTokenSource?: string;
   signals: { config: boolean; tier: boolean; manifest: boolean; legacyManifest: boolean };
 }
 export interface ResolvedDataRoot {
@@ -611,6 +618,51 @@ export interface BornRepoModule {
   findDesignSystemRoot(startDir: string): DesignSystemRootShape;
 }
 
+/**
+ * Shape-only declaration of the root-compiled `errorCatalog` module (Spec 123 Task 1.6) —
+ * the same CONSUMPTION CONTRACT as `McpDataRootsModule`/`BornRepoModule`.
+ */
+export interface ErrorCatalogModule {
+  partialCaseMessage(
+    root: string,
+    partialCase: NonNullable<DesignSystemRootShape['partialCase']>,
+    attemptedTokenSource: string | undefined
+  ): string;
+  packageModeIndexAbsentMessage(): string;
+  bornIndexAbsentMessage(root: string): string;
+  explicitTokenIndexMissingMessage(explicitPath: string): string;
+}
+
+/**
+ * Pick the design.md catalog string for a refused token-index resolution (Spec 123
+ * Task 1.6). Extracted as a pure, exported function (rather than inlined in the
+ * `require.main` bootstrap guard below) so it is unit-testable without the
+ * dist-require machinery — see `errorCatalogWiring.test.ts`.
+ *
+ * `run-generate` picks born vs package-mode by `dsRoot.state`, because the
+ * resolver's `reason` alone doesn't carry which posture produced it.
+ */
+export function resolveTokenIndexUnavailableMessage(
+  reason: 'empty-env-value' | 'run-generate' | 'partial',
+  dsRoot: DesignSystemRootShape,
+  packageRoot: string,
+  errorCatalog: ErrorCatalogModule,
+  explicitTokenIndexDirEnv: string | undefined
+): string {
+  switch (reason) {
+    case 'empty-env-value':
+      return errorCatalog.explicitTokenIndexMissingMessage(explicitTokenIndexDirEnv ?? '');
+    case 'run-generate':
+      return dsRoot.state === 'package-mode'
+        ? errorCatalog.packageModeIndexAbsentMessage()
+        : errorCatalog.bornIndexAbsentMessage(dsRoot.root ?? packageRoot);
+    case 'partial':
+      return dsRoot.partialCase
+        ? errorCatalog.partialCaseMessage(dsRoot.root ?? packageRoot, dsRoot.partialCase, dsRoot.attemptedTokenSource)
+        : `token index unavailable: partial state with no named sub-case`;
+  }
+}
+
 // Start server — resolve data roots (Spec 121 F-C2), then boot.
 // Guard: skip auto-start when this module is imported (e.g. by the tool-boundary contract test).
 // The `require.main === module` check is the standard Node.js "am I the entry point?" idiom.
@@ -625,6 +677,7 @@ if (require.main === module) {
   try {
     const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
     const bornRepo = require('../../dist/cli/shared/bornRepo') as BornRepoModule;
+    const errorCatalog = require('../../dist/cli/shared/errorCatalog') as ErrorCatalogModule;
     const packageRoot = shared.resolvePackageRoot(__dirname);
 
     // Spec 123 C2/C3: birth detection from the INVOKING process's cwd (D-B3 — never
@@ -694,12 +747,17 @@ if (require.main === module) {
         tokenIndex.tokenOrigin ? ` (tokenOrigin: ${tokenIndex.tokenOrigin})` : ''
       );
     } else {
-      // TODO(Spec 123 Task 1.6): replace with the catalog string for this reason.
-      console.error(
-        `[${SERVER_NAME}] Token index unavailable (reason: ${tokenIndex.reason}${
-          tokenIndex.reason === 'partial' && tokenIndex.partialCase ? `, ${tokenIndex.partialCase}` : ''
-        })`
+      // Spec 123 Task 1.6: the design.md catalog string for this reason — never a
+      // paraphrase. Extracted to `resolveTokenIndexUnavailableMessage` (above) so
+      // it's unit-testable outside this bootstrap guard.
+      const tokenIndexMessage = resolveTokenIndexUnavailableMessage(
+        tokenIndex.reason,
+        dsRoot,
+        packageRoot,
+        errorCatalog,
+        process.env.TOKEN_INDEX_DIR
       );
+      console.error(`[${SERVER_NAME}] ${tokenIndexMessage}`);
     }
     logRoot('experience-patterns', patterns);
     logRoot('layout-templates', templates);

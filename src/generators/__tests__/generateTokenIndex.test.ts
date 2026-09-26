@@ -201,4 +201,36 @@ describe('generateTokenIndex', () => {
       fs.rmSync(schemaRoot, { recursive: true, force: true });
     }
   });
+
+  // Spec 123 Task 1.5 (DD24): meta.json's tierDir is what lets the application MCP's
+  // theme readers follow the served index instead of guessing a project root.
+  describe('meta.json (Spec 123 Task 1.5, DD24)', () => {
+    it('writes tierDir when provided', () => {
+      generateTokenIndex(outputDir, {
+        primitiveTokens: [],
+        semanticTokens: [],
+        componentTokens: [],
+        modeResolved: makeModeResolved(),
+        componentSchemaDir: NO_SCHEMA_DIR,
+        tierDir: '/consumer/src/tokens',
+      });
+
+      const meta = JSON.parse(fs.readFileSync(path.join(outputDir, 'meta.json'), 'utf-8'));
+      expect(meta).toEqual({ tierDir: '/consumer/src/tokens' });
+    });
+
+    it('omits tierDir (never writes it as null/undefined) when not provided', () => {
+      generateTokenIndex(outputDir, {
+        primitiveTokens: [],
+        semanticTokens: [],
+        componentTokens: [],
+        modeResolved: makeModeResolved(),
+        componentSchemaDir: NO_SCHEMA_DIR,
+      });
+
+      const meta = JSON.parse(fs.readFileSync(path.join(outputDir, 'meta.json'), 'utf-8'));
+      expect(meta).toEqual({});
+      expect(Object.prototype.hasOwnProperty.call(meta, 'tierDir')).toBe(false);
+    });
+  });
 });

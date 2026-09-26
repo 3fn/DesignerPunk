@@ -104,7 +104,10 @@ describe('ComponentIndexer — multi-root (Spec 123 Task 1.4)', () => {
     const bornA = fx.base;
     await indexer.indexComponents([fx.consumerRoot, fx.packageRoot], undefined, undefined, undefined, undefined, { projectRoot: bornA });
     await indexer.reindexTokens('/tokens-a');
-    expect(spy).toHaveBeenLastCalledWith('/tokens-a', bornA);
+    // Spec 123 Task 1.5: `reindexTokens` now also threads `explicitTierDir` (the
+    // `options.tierDir` from the last full index — `undefined` here, since none was
+    // passed) as indexTokens' third argument (DD24 — the theme root resolution).
+    expect(spy).toHaveBeenLastCalledWith('/tokens-a', bornA, undefined);
     // Non-vacuity: the pre-123 derivation from the consumer root would NOT have been bornA.
     expect(path.resolve(fx.consumerRoot, '..', '..', '..')).not.toBe(bornA);
 
@@ -112,7 +115,7 @@ describe('ComponentIndexer — multi-root (Spec 123 Task 1.4)', () => {
     const bornB = path.join(fx.base, 'elsewhere');
     await indexer.indexComponents([fx.consumerRoot, fx.packageRoot], undefined, undefined, undefined, undefined, { projectRoot: bornB });
     await indexer.reindexTokens('/tokens-b');
-    expect(spy).toHaveBeenLastCalledWith('/tokens-b', bornB);
+    expect(spy).toHaveBeenLastCalledWith('/tokens-b', bornB, undefined);
     spy.mockRestore();
   });
 

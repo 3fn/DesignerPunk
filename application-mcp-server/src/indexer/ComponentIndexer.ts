@@ -48,6 +48,14 @@ export interface IndexComponentsOptions {
    * behavior, kept for single-root callers.
    */
   projectRoot?: string;
+  /**
+   * The caller's own resolved live tier (`DesignSystemRoot.tierDir`, from
+   * `findDesignSystemRoot` — Spec 123 Task 1.5, DD24). Threaded to `resolveThemeTierRoot`
+   * as the SECOND-precedence theme-root source (after `token-index/meta.json`'s `tierDir`,
+   * before the legacy `<projectRoot>/src/tokens` default). OMITTED → meta.json or the
+   * legacy default decide alone.
+   */
+  tierDir?: string;
 }
 
 /**
@@ -146,6 +154,8 @@ export class ComponentIndexer {
    * token reindex path reads it (Spec 123 Task 1.4 (iv); replaces `lastProjectRoot`, issue 2026-09-12).
    */
   private bornRoot: string | undefined;
+  /** `options.tierDir` from the last full index (Spec 123 Task 1.5) — threaded to the theme readers. */
+  private explicitTierDir: string | undefined;
   /** The pass-1 root set, precedence order (consumer first, package last). */
   private componentRoots: string[] = [];
   /** Declared component name → the precedence winner's source (Spec 123 C3: precedence keys on the DECLARED name). */
@@ -193,6 +203,7 @@ export class ComponentIndexer {
     // C3: projectRoot = bornRoot (explicit anchor); the legacy derivation only for single-root callers.
     const projectRoot = options.projectRoot ? path.resolve(options.projectRoot) : legacyProjectRoot;
     this.bornRoot = projectRoot;
+    this.explicitTierDir = options.tierDir;
 
     // ComponentIndexer.dataDirs: the MUTABLE component roots (the package root in a consumer
     // install is exempt as immutable) plus the other data dirs.
@@ -231,7 +242,7 @@ export class ComponentIndexer {
     }
 
     // Load mode classifier (reads SemanticOverrides.ts for Level 2 keys)
-    this.modeClassifier.load(projectRoot);
+    this.modeClassifier.load(projectRoot, tokenIndexDir, options.tierDir);
 
     // Second pass: assemble the precedence-resolved set
     for (const source of winners) {
@@ -263,7 +274,7 @@ export class ComponentIndexer {
     // the token indexer reads the SAME theme override files the mode classifier does
     // (issue 2026-09-12 — get_token_details reporting light values as dark).
     if (tokenIndexDir) {
-      await this.tokenIndexer.indexTokens(tokenIndexDir, projectRoot);
+      await this.tokenIndexer.indexTokens(tokenIndexDir, projectRoot, options.tierDir);
     }
 
     this.lastIndexTime = new Date().toISOString();
@@ -362,9 +373,14 @@ export class ComponentIndexer {
    * Anchors on `bornRoot` — the explicit anchor the last full index was given (C3
    * `projectRoot = bornRoot`) — so theme overrides resolve from the same place a full reindex
    * uses (issue 2026-09-12). Never re-derived from a component root (Spec 123 Task 1.4 (iv)).
+   *
+   * Spec 123 Task 1.5 (DD24): `indexTokens` re-reads `<tokenIndexDir>/meta.json` on EVERY
+   * call (including this one), so a `generate` re-run that changes the recorded `tierDir`
+   * is picked up here too — the theme root "follows the served index," never a stale
+   * snapshot from the last full index.
    */
   async reindexTokens(tokenIndexDir: string): Promise<void> {
-    await this.tokenIndexer.indexTokens(tokenIndexDir, this.bornRoot);
+    await this.tokenIndexer.indexTokens(tokenIndexDir, this.bornRoot, this.explicitTierDir);
     this.lastIndexTime = new Date().toISOString();
     this.lastIndexTimeMs = this.computeMaxMtime();
   }

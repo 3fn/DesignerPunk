@@ -12,6 +12,7 @@ import * as path from 'path';
 import * as yaml from 'js-yaml';
 import { TokenRefResolver } from './TokenRefResolver';
 import { parseSemanticOverrides, OverrideRefs } from './SemanticOverrideReader';
+import { resolveThemeTierRoot } from './resolveThemeTierRoot';
 
 export interface TokenIndexEntry {
   name: string;
@@ -152,12 +153,17 @@ export class TokenIndexer {
   private darkOverrides = new Map<string, OverrideRefs>();
 
   /**
-   * @param tokenIndexDir Directory holding primitives/semantics/components.yaml
-   * @param projectRoot   Repo/package root used to locate theme override files. Defaults to
-   *                      the token index's parent (`<root>/token-index` is the standard
-   *                      layout); ComponentIndexer passes its own resolved root explicitly.
+   * @param tokenIndexDir Directory holding primitives/semantics/components.yaml. Also where
+   *                      `meta.json`'s `tierDir` is read from (Spec 123 Task 1.5, DD24) —
+   *                      the AUTHORITATIVE theme-root source when present.
+   * @param projectRoot   LEGACY fallback used only when neither `meta.json` nor
+   *                      `explicitTierDir` resolves a tier. Defaults to the token index's
+   *                      parent (`<root>/token-index` is the standard layout).
+   * @param explicitTierDir The caller's own resolved tier (e.g. `DesignSystemRoot.tierDir`),
+   *                      used when `meta.json` is absent (a pre-1.5 index) — second
+   *                      precedence, per `resolveThemeTierRoot`.
    */
-  async indexTokens(tokenIndexDir: string, projectRoot?: string): Promise<void> {
+  async indexTokens(tokenIndexDir: string, projectRoot?: string, explicitTierDir?: string): Promise<void> {
     this.primitives.clear();
     this.semantics.clear();
     this.componentTokens.clear();
@@ -165,7 +171,9 @@ export class TokenIndexer {
     this.darkOverrides.clear();
     this.warnings = [];
 
-    this.loadThemeOverrides(projectRoot ?? path.resolve(tokenIndexDir, '..'));
+    this.loadThemeOverrides(
+      resolveThemeTierRoot(tokenIndexDir, explicitTierDir, projectRoot ?? path.resolve(tokenIndexDir, '..'))
+    );
 
     if (!fs.existsSync(tokenIndexDir)) {
       this.warnings.push(`Token index directory not found: ${tokenIndexDir}`);
@@ -298,9 +306,13 @@ export class TokenIndexer {
    * Load theme override files. Text-parsed — no coupling to the token pipeline.
    * A missing file is WARNED (not silent): without it every token reports `dark: null`,
    * which is indistinguishable from "no override" at the field level.
+   *
+   * @param tierRoot The resolved theme TIER ROOT (`resolveThemeTierRoot`'s return) — NOT a
+   *   project root. `themes/dark/SemanticOverrides.ts` is read directly under it (Spec 123
+   *   Task 1.5, DD24).
    */
-  private loadThemeOverrides(projectRoot: string): void {
-    const darkPath = path.join(projectRoot, 'src/tokens/themes/dark/SemanticOverrides.ts');
+  private loadThemeOverrides(tierRoot: string): void {
+    const darkPath = path.join(tierRoot, 'themes/dark/SemanticOverrides.ts');
     const { overrides, fileFound } = parseSemanticOverrides(darkPath);
     if (!fileFound) {
       this.warnings.push(

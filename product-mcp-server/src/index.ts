@@ -478,6 +478,8 @@ export interface DesignSystemRootShape {
   root: string | null;
   tierDir: string | null;
   partialCase?: 'config-no-tier' | 'unused-local-tier' | 'tier-no-config' | 'manifest-only';
+  /** `config-no-tier` only; `undefined` for a non-literal `tokenSource` (Peter, 2026-09-26). */
+  attemptedTokenSource?: string;
   signals: { config: boolean; tier: boolean; manifest: boolean; legacyManifest: boolean };
 }
 export interface ResolvedDataRoot {
@@ -518,6 +520,59 @@ export interface McpDataRootsModule {
   }): ResolvedDataRoot;
 }
 
+/**
+ * Shape-only declaration of the root-compiled `bornRepo` module (Spec 123 Task 1.5) — the same
+ * CONSUMPTION CONTRACT as `McpDataRootsModule`.
+ */
+export interface BornRepoModule {
+  findDesignSystemRoot(startDir: string): DesignSystemRootShape;
+}
+
+/**
+ * Shape-only declaration of the root-compiled `errorCatalog` module (Spec 123 Task 1.6) —
+ * the same CONSUMPTION CONTRACT as `McpDataRootsModule`/`BornRepoModule`.
+ */
+export interface ErrorCatalogModule {
+  partialCaseMessage(
+    root: string,
+    partialCase: NonNullable<DesignSystemRootShape['partialCase']>,
+    attemptedTokenSource: string | undefined
+  ): string;
+  packageModeIndexAbsentMessage(): string;
+  bornIndexAbsentMessage(root: string): string;
+  explicitTokenIndexMissingMessage(explicitPath: string): string;
+}
+
+/**
+ * Pick the design.md catalog string for a refused token-index resolution (Spec 123
+ * Task 1.6). Extracted as a pure, exported function so it's unit-testable outside
+ * the `require.main` bootstrap guard — identical logic to the application server's
+ * `resolveTokenIndexUnavailableMessage` (kept as two copies, not a shared import,
+ * because each sub-package cannot statically import the other's `index.ts` — the
+ * same `rootDir` boundary the CONSUMPTION CONTRACT works around for the shared
+ * root-level modules).
+ */
+export function resolveTokenIndexUnavailableMessage(
+  reason: 'empty-env-value' | 'run-generate' | 'partial',
+  dsRoot: DesignSystemRootShape,
+  packageRoot: string,
+  errorCatalog: ErrorCatalogModule,
+  explicitTokenIndexDirEnv: string | undefined
+): string {
+  switch (reason) {
+    case 'empty-env-value':
+      return errorCatalog.explicitTokenIndexMissingMessage(explicitTokenIndexDirEnv ?? '');
+    case 'run-generate':
+      return dsRoot.state === 'package-mode'
+        ? errorCatalog.packageModeIndexAbsentMessage()
+        : errorCatalog.bornIndexAbsentMessage(dsRoot.root ?? packageRoot);
+    case 'partial':
+      return dsRoot.partialCase
+        ? errorCatalog.partialCaseMessage(dsRoot.root ?? packageRoot, dsRoot.partialCase, dsRoot.attemptedTokenSource)
+        : `token index unavailable: partial state with no named sub-case`;
+  }
+}
+
 // Start server — resolve data roots (Spec 121 F-C2), then boot.
 // Guard: skip auto-start when this module is imported (standard Node.js entry-point
 // idiom; keeps root resolution out of any future test import of this module).
@@ -531,42 +586,71 @@ if (require.main === module) {
   let tokenIndexDir: string = process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR;
   try {
     const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
+    const bornRepo = require('../../dist/cli/shared/bornRepo') as BornRepoModule;
+    const errorCatalog = require('../../dist/cli/shared/errorCatalog') as ErrorCatalogModule;
     const packageRoot = shared.resolvePackageRoot(__dirname);
 
-    // CONSUMER-OWNED roots (env → cwd non-empty → package fallback), with one
-    // exception: `product/` gets NO package fallback — it is consumer-owned by
-    // definition, and an empty index there is expected/correct (the server's
-    // "starting with empty data" path).
-    const product = shared.resolveConsumerOwnedRoot({
+    // Spec 123 Task 1.5: birth detection from the INVOKING process's cwd (D-B3 —
+    // the runner spawns this server with no `cwd` option, so it inherits).
+    const dsRoot = bornRepo.findDesignSystemRoot(process.cwd());
+
+    // PRODUCT root (C3): env, else bornRoot/product (any resolved root), else
+    // cwd/product (unborn — unchanged pre-123 behavior). No package fallback —
+    // product/ is consumer-owned by definition; an empty index is expected/correct.
+    const product = shared.resolveProductRoot({
       envValue: process.env.PRODUCT_DIR,
-      relPath: DEFAULT_PRODUCT_DIR,
+      dsRoot,
+      cwd: process.cwd(),
     });
-    const component = shared.resolveConsumerOwnedRoot({
+
+    // COMPONENT root (C3): the consumer ∪ package union, precedence-ordered.
+    // ProductIndexer (unlike the application server's ComponentIndexer) has not
+    // been upgraded to multi-root in this spec — take the precedence WINNER
+    // (roots[0]: consumer when born, else the package root) rather than the union.
+    const componentRoots = shared.resolveComponentRoots({
       envValue: process.env.COMPONENT_DIR,
-      relPath: DEFAULT_COMPONENT_DIR,
+      dsRoot,
       packageRoot,
     });
-    const tokenIndex = shared.resolveConsumerOwnedRoot({
+    const component: ResolvedDataRoot = {
+      path: componentRoots.roots[0],
+      source: componentRoots.sources[0],
+    };
+
+    // TOKEN INDEX (C3): birth-aware. A structural reason is logged when no index
+    // can be served, via the same design.md catalog strings the application
+    // server uses (Task 1.6) — never a paraphrase.
+    const tokenIndex = shared.resolveTokenIndexRoot({
       envValue: process.env.TOKEN_INDEX_DIR,
-      relPath: DEFAULT_TOKEN_INDEX_DIR,
+      dsRoot,
       packageRoot,
     });
 
     // Boot log: one stderr line per data root, BEFORE the startup sentinel.
     // NEVER stdout — stdout is the JSON-RPC channel.
+    console.error(`[${SERVER_NAME}] Design-system root: ${dsRoot.state}${dsRoot.partialCase ? ` (${dsRoot.partialCase})` : ''}`);
     logRoot('product', product);
     logRoot('components', component);
-    logRoot(
-      'token-index',
-      tokenIndex,
-      tokenIndex.source === 'package'
-        ? " — package token snapshot in use; if this project customizes tokens, run 'npx designerpunk generate' to build a local token-index"
-        : ''
-    );
+    if (tokenIndex.ok) {
+      logRoot(
+        'token-index',
+        { path: tokenIndex.path, source: tokenIndex.source },
+        tokenIndex.tokenOrigin ? ` (tokenOrigin: ${tokenIndex.tokenOrigin})` : ''
+      );
+    } else {
+      const message = resolveTokenIndexUnavailableMessage(
+        tokenIndex.reason,
+        dsRoot,
+        packageRoot,
+        errorCatalog,
+        process.env.TOKEN_INDEX_DIR
+      );
+      console.error(`[${SERVER_NAME}] ${message}`);
+    }
 
     productDir = product.path;
     componentDir = component.path;
-    tokenIndexDir = tokenIndex.path;
+    tokenIndexDir = tokenIndex.ok ? tokenIndex.path : DEFAULT_TOKEN_INDEX_DIR;
   } catch {
     // Root dist not built (dev-repo edge; in-repo cwd == package root, so the
     // legacy env/cwd-relative defaults still land on the right data).

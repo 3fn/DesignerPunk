@@ -43,6 +43,13 @@ export interface DesignSystemRoot {
   /** The LIVE tier, resolved exactly as ConfigLoader resolves it (Ada D2-B1); `null` iff no tier is live. */
   tierDir: string | null;
   partialCase?: PartialCase;
+  /**
+   * `config-no-tier` ONLY: the resolved absolute path the config's `tokenSource` names,
+   * where no DesignerPunk tier was found — the `<tokenSource>` slot in that partial
+   * case's catalog string (Task 1.6). `undefined` when `tokenSource` was present but
+   * non-literal (Peter, 2026-09-26) — we cannot resolve a path we never read.
+   */
+  attemptedTokenSource?: string;
   signals: { config: boolean; tier: boolean; manifest: boolean; legacyManifest: boolean };
 }
 
@@ -84,7 +91,11 @@ function exportsTextually(source: string, exportName: string): boolean {
 
 function readFileTextSafe(filePath: string): string | null {
   try {
-    return fs.readFileSync(filePath, 'utf8');
+    const text = fs.readFileSync(filePath, 'utf8');
+    // Defensive: some test doubles mock `fs.readFileSync` to return `undefined`
+    // instead of throwing for a "file that doesn't exist" — never trust the
+    // return type is a string just because nothing threw.
+    return typeof text === 'string' ? text : null;
   } catch {
     return null;
   }
@@ -111,17 +122,41 @@ export function isDesignerPunkTier(dir: string): boolean {
  * `tokenSource: '<value>'` (single/double/backtick quotes), skipping lines that
  * are commented out with a leading `//`.
  */
-function readConfigTokenSource(configPath: string): string | null {
+/**
+ * The result of textually reading a `tokenSource` key out of a config file.
+ *
+ * `present: false` means no `tokenSource:` key was found at all — the ConfigLoader-
+ * exact "config without tokenSource" shape (package-mode candidate). `present: true,
+ * literal: false` means the key IS there but its value isn't a plain string literal
+ * (a variable reference, a computed path, a template with expressions, …) — **Peter
+ * ruled 2026-09-26, option (a)**: this case is NOT a silent fall-through to
+ * package-mode. It classifies the same as a literal `tokenSource` whose tier can't be
+ * found (`partial` / `config-no-tier`) — refuse rather than guess, since we cannot
+ * establish there IS no tier at an unreadable location any more than we can establish
+ * there is one. `full ConfigLoader parity` (loading the module to get the real
+ * value) was the alternative and was declined in favor of keeping this function
+ * synchronous and execution-free (see this module's header).
+ */
+type TokenSourceRead =
+  | { present: false }
+  | { present: true; literal: true; value: string }
+  | { present: true; literal: false };
+
+function readConfigTokenSource(configPath: string): TokenSourceRead {
   const text = readFileTextSafe(configPath);
-  if (text === null) return null;
+  if (text === null) return { present: false };
 
   const uncommented = text
     .split('\n')
     .filter((line) => !/^\s*\/\//.test(line))
     .join('\n');
 
-  const match = uncommented.match(/\btokenSource\s*:\s*['"`]([^'"`]+)['"`]/);
-  return match ? match[1] : null;
+  const literalMatch = uncommented.match(/\btokenSource\s*:\s*['"`]([^'"`]+)['"`]/);
+  if (literalMatch) return { present: true, literal: true, value: literalMatch[1] };
+
+  if (/\btokenSource\s*:/.test(uncommented)) return { present: true, literal: false };
+
+  return { present: false };
 }
 
 /** Read `posture` out of a manifest JSON file. Returns `null` if unreadable/absent. */
@@ -144,6 +179,7 @@ interface DirectoryEvaluation {
   state: BirthState;
   partialCase?: PartialCase;
   tierDir: string | null;
+  attemptedTokenSource?: string;
   signals: { config: boolean; tier: boolean; manifest: boolean; legacyManifest: boolean };
 }
 
@@ -155,13 +191,20 @@ function evaluateDirectory(dir: string, packageRoot: string): DirectoryEvaluatio
   const configPath = path.join(dir, CONFIG_FILE);
   const hasConfig = fs.existsSync(configPath);
 
-  const tokenSourceValue = hasConfig ? readConfigTokenSource(configPath) : null;
-  const hasTokenSource = tokenSourceValue !== null;
+  const tokenSourceRead: TokenSourceRead = hasConfig ? readConfigTokenSource(configPath) : { present: false };
+  // `hasTokenSource` covers BOTH a literal value and a present-but-non-literal one —
+  // Peter's ruling (2026-09-26, option (a)): a non-literal `tokenSource` is never
+  // treated as "no tokenSource" (which would fall through to package-mode). It takes
+  // the SAME branch a literal-with-no-findable-tier does, below.
+  const hasTokenSource = tokenSourceRead.present;
 
   const localTierDir = path.join(dir, TOKEN_SOURCE_RELPATH);
   const localBarrelIsTier = isDesignerPunkTier(localTierDir);
 
-  const tokenSourceRoot = hasTokenSource ? path.resolve(dir, tokenSourceValue as string) : null;
+  const tokenSourceRoot =
+    tokenSourceRead.present && tokenSourceRead.literal ? path.resolve(dir, tokenSourceRead.value) : null;
+  // A non-literal `tokenSource` never resolves a tier — we cannot read its real value
+  // without loading the config, which this function deliberately never does.
   const tierPresentAtTokenSource = tokenSourceRoot !== null && isDesignerPunkTier(tokenSourceRoot);
 
   const packageOwnedTierDir = path.resolve(packageRoot, TOKEN_SOURCE_RELPATH);
@@ -186,6 +229,9 @@ function evaluateDirectory(dir: string, packageRoot: string): DirectoryEvaluatio
       state = 'born';
       tierDir = tokenSourceRoot;
     } else {
+      // Covers BOTH: a literal tokenSource with no tier found there, AND a
+      // non-literal tokenSource (Peter, 2026-09-26, option (a) — refuse rather
+      // than fall through to package-mode when we can't read the real value).
       state = 'partial';
       partialCase = 'config-no-tier';
     }
@@ -215,12 +261,16 @@ function evaluateDirectory(dir: string, packageRoot: string): DirectoryEvaluatio
 
   const anySignal = hasConfig || localBarrelIsTier || manifestSignal;
   const tierSignal = localBarrelIsTier || tierPresentAtTokenSource;
+  // Only meaningful for config-no-tier, and only when tokenSource was a literal we
+  // could resolve to a path (undefined for the non-literal case — Peter, 2026-09-26).
+  const attemptedTokenSource = partialCase === 'config-no-tier' && tokenSourceRoot !== null ? tokenSourceRoot : undefined;
 
   return {
     anySignal,
     state,
     partialCase,
     tierDir,
+    attemptedTokenSource,
     signals: {
       config: hasConfig,
       tier: tierSignal,
@@ -271,6 +321,7 @@ export function findDesignSystemRoot(startDir: string): DesignSystemRoot {
           root: dir,
           tierDir: evaluation.tierDir,
           partialCase: evaluation.partialCase,
+          attemptedTokenSource: evaluation.attemptedTokenSource,
           signals: evaluation.signals,
         };
       }

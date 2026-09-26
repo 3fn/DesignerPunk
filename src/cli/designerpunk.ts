@@ -28,6 +28,8 @@ import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
 import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
 import { runSync } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
+import { findDesignSystemRoot } from './shared/bornRepo';
+import { partialCaseMessage } from './shared/errorCatalog';
 
 async function main() {
   const command = process.argv[2];
@@ -93,7 +95,20 @@ async function runValidateCommand() {
 
 /** @internal Exported for testing */
 export async function runGenerate(force = false) {
-  const config = await loadConfig(process.cwd());
+  // Spec 123 Task 1.5 (C2 consumer #4): BOTH the read side (the config) and the
+  // write side (token-index/ and platform output) anchor to the discovered ROOT —
+  // never a bare process.cwd() — so `generate` behaves correctly from a
+  // subdirectory of a born/package-mode repo, and REFUSES in a partial one rather
+  // than guessing (all four partial sub-cases carry their own catalog string).
+  const dsRoot = findDesignSystemRoot(process.cwd());
+  if (dsRoot.state === 'partial' && dsRoot.partialCase) {
+    console.error(`❌ ${partialCaseMessage(dsRoot.root ?? process.cwd(), dsRoot.partialCase, dsRoot.attemptedTokenSource)}`);
+    process.exit(1);
+    return;
+  }
+  const generateRoot = dsRoot.root ?? process.cwd();
+
+  const config = await loadConfig(generateRoot);
   const tokens = resolveTokens(config);
 
   // Load component tokens from source presence (the convention dir
@@ -139,12 +154,17 @@ export async function runGenerate(force = false) {
     // generator, which stays a pure function of its inputs.
     const componentSchemaDir = path.resolve(config.configDir, 'src/components/core');
 
-    generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
+    // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
+    generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
       modeResolved,
       componentSchemaDir,
+      // DD24: the live tier this index's data came from — written into
+      // token-index/meta.json so the theme readers can follow it later,
+      // wherever this index ends up being served from.
+      tierDir: config.tokenSourceRoot,
     });
     console.log('✅ System tokens generated');
   } catch (err) {

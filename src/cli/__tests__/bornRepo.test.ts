@@ -55,7 +55,144 @@ function markGitBoundaryAsDir(dir: string): void {
   fs.mkdirSync(path.join(dir, '.git'), { recursive: true });
 }
 
+/**
+ * The nine named cases (Spec 123 Task 1.1 criterion: "with the count asserted") —
+ * a DATA TABLE, not nine independent `test()` calls, so removing a case shrinks
+ * `NINE_NAMED_CASES.length` and the count assertion below goes red with it (the
+ * fixup: `Ada 2026-09-26 addendum` in the Task 1.1 completion doc — previously
+ * nothing asserted the count).
+ */
+interface NamedCase {
+  name: string;
+  run: (tmpDir: string) => void;
+}
+
+const NINE_NAMED_CASES: NamedCase[] = [
+  {
+    name: 'case 1: born — config with tokenSource + a DesignerPunk tier at it',
+    run: (tmpDir) => {
+      writeConfig(tmpDir, './src/tokens');
+      writeTier(tmpDir, 'src/tokens');
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('born');
+      expect(result.root).toBe(tmpDir);
+      expect(result.tierDir).toBe(path.resolve(tmpDir, 'src/tokens'));
+      expect(result.partialCase).toBeUndefined();
+      expect(result.signals).toEqual({ config: true, tier: true, manifest: false, legacyManifest: false });
+    },
+  },
+  {
+    name: 'case 2: package-mode — config without tokenSource, no local barrel',
+    run: (tmpDir) => {
+      writeConfig(tmpDir);
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('package-mode');
+      expect(result.root).toBe(tmpDir);
+      expect(result.tierDir).toBe(path.resolve(resolvePackageRoot(path.dirname(__dirname)), 'src/tokens'));
+    },
+  },
+  {
+    name: 'case 3: partial config-no-tier — tokenSource is set but no tier is at it',
+    run: (tmpDir) => {
+      writeConfig(tmpDir, './src/tokens');
+      // No tier files written at src/tokens.
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('partial');
+      expect(result.partialCase).toBe('config-no-tier');
+      expect(result.tierDir).toBeNull();
+      expect(result.attemptedTokenSource).toBe(path.resolve(tmpDir, 'src/tokens'));
+    },
+  },
+  {
+    name: 'case 4: partial unused-local-tier — config without tokenSource PLUS a local barrel',
+    run: (tmpDir) => {
+      writeConfig(tmpDir);
+      writeTier(tmpDir, 'src/tokens');
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('partial');
+      expect(result.partialCase).toBe('unused-local-tier');
+    },
+  },
+  {
+    name: 'case 5: partial tier-no-config — a local barrel with no config at all',
+    run: (tmpDir) => {
+      writeTier(tmpDir, 'src/tokens');
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('partial');
+      expect(result.partialCase).toBe('tier-no-config');
+    },
+  },
+  {
+    name: 'case 6: partial manifest-only — a born-posture manifest with no config and no tier',
+    run: (tmpDir) => {
+      writeManifest(tmpDir, 'born');
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('partial');
+      expect(result.partialCase).toBe('manifest-only');
+      expect(result.signals.manifest).toBe(true);
+    },
+  },
+  {
+    name: 'case 7: unborn — no signal at all',
+    run: (tmpDir) => {
+      writeFile(tmpDir, 'README.md', '# nothing here\n');
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('unborn');
+      expect(result.root).toBeNull();
+      expect(result.tierDir).toBeNull();
+    },
+  },
+  {
+    name: 'case 8: the steward exemption — this repo classifies package-mode, never unused-local-tier',
+    run: () => {
+      // `resolvePackageRoot`'s traversal expects an anchor two levels below the
+      // package root (e.g. `src/cli/`); this test file lives one level deeper.
+      const packageRoot = resolvePackageRoot(path.dirname(__dirname));
+
+      const result = findDesignSystemRoot(packageRoot);
+
+      // The package's own root has a config without tokenSource AND a local
+      // DesignerPunk-shaped src/tokens tier — ordinarily "unused-local-tier", but
+      // here "the package's tree" IS the local tier (C2 Steward exemption).
+      expect(result.state).toBe('package-mode');
+      expect(result.partialCase).toBeUndefined();
+      expect(result.root).toBe(packageRoot);
+    },
+  },
+  {
+    name: 'case 9: a consume-posture manifest alone → unborn',
+    run: (tmpDir) => {
+      writeManifest(tmpDir, 'consume');
+
+      const result = findDesignSystemRoot(tmpDir);
+
+      expect(result.state).toBe('unborn');
+      expect(result.signals.manifest).toBe(false);
+    },
+  },
+];
+
 describe('findDesignSystemRoot — nine named cases', () => {
+  test('exactly nine named cases are defined', () => {
+    // BITE (recorded red in the Task 1.1 completion doc's 2026-09-26 addendum):
+    // deleting any entry from NINE_NAMED_CASES turns this red.
+    expect(NINE_NAMED_CASES.length).toBe(9);
+  });
+
   let tmpDir: string;
 
   beforeEach(() => {
@@ -67,101 +204,48 @@ describe('findDesignSystemRoot — nine named cases', () => {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 
-  test('case 1: born — config with tokenSource + a DesignerPunk tier at it', () => {
-    writeConfig(tmpDir, './src/tokens');
+  test.each(NINE_NAMED_CASES)('$name', ({ run }) => run(tmpDir));
+});
+
+describe('findDesignSystemRoot — non-literal tokenSource (Peter, 2026-09-26, option (a))', () => {
+  let tmpDir: string;
+
+  beforeEach(() => {
+    tmpDir = mkTmpDir();
+    markGitBoundaryAsDir(tmpDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  test('a tokenSource key present with a NON-LITERAL value classifies partial/config-no-tier, never package-mode', () => {
+    // tokenSource is a variable reference, not a string literal — this function
+    // never loads the config, so it cannot read the real value. Per Peter's
+    // ruling, this refuses (classifies partial) rather than silently falling
+    // through to package-mode as if tokenSource were absent.
+    writeFile(
+      tmpDir,
+      'designerpunk.config.ts',
+      "import { defineConfig } from '@3fn/core';\n" +
+        "const TOKEN_DIR = './src/tokens';\n" +
+        'export default defineConfig({ name: \'T\', abbreviation: \'T\', tokenSource: TOKEN_DIR });\n'
+    );
+    // A real, findable tier exists at the (unreadable) intended location — proves
+    // this is refuse-on-unreadability, not refuse-because-no-tier-exists.
     writeTier(tmpDir, 'src/tokens');
-
-    const result = findDesignSystemRoot(tmpDir);
-
-    expect(result.state).toBe('born');
-    expect(result.root).toBe(tmpDir);
-    expect(result.tierDir).toBe(path.resolve(tmpDir, 'src/tokens'));
-    expect(result.partialCase).toBeUndefined();
-    expect(result.signals).toEqual({ config: true, tier: true, manifest: false, legacyManifest: false });
-  });
-
-  test('case 2: package-mode — config without tokenSource, no local barrel', () => {
-    writeConfig(tmpDir);
-
-    const result = findDesignSystemRoot(tmpDir);
-
-    expect(result.state).toBe('package-mode');
-    expect(result.root).toBe(tmpDir);
-    expect(result.tierDir).toBe(path.resolve(resolvePackageRoot(path.dirname(__dirname)), 'src/tokens'));
-  });
-
-  test('case 3: partial config-no-tier — tokenSource is set but no tier is at it', () => {
-    writeConfig(tmpDir, './src/tokens');
-    // No tier files written at src/tokens.
 
     const result = findDesignSystemRoot(tmpDir);
 
     expect(result.state).toBe('partial');
     expect(result.partialCase).toBe('config-no-tier');
     expect(result.tierDir).toBeNull();
-  });
-
-  test('case 4: partial unused-local-tier — config without tokenSource PLUS a local barrel', () => {
-    writeConfig(tmpDir);
-    writeTier(tmpDir, 'src/tokens');
-
-    const result = findDesignSystemRoot(tmpDir);
-
-    expect(result.state).toBe('partial');
-    expect(result.partialCase).toBe('unused-local-tier');
-  });
-
-  test('case 5: partial tier-no-config — a local barrel with no config at all', () => {
-    writeTier(tmpDir, 'src/tokens');
-
-    const result = findDesignSystemRoot(tmpDir);
-
-    expect(result.state).toBe('partial');
-    expect(result.partialCase).toBe('tier-no-config');
-  });
-
-  test('case 6: partial manifest-only — a born-posture manifest with no config and no tier', () => {
-    writeManifest(tmpDir, 'born');
-
-    const result = findDesignSystemRoot(tmpDir);
-
-    expect(result.state).toBe('partial');
-    expect(result.partialCase).toBe('manifest-only');
-    expect(result.signals.manifest).toBe(true);
-  });
-
-  test('case 7: unborn — no signal at all', () => {
-    writeFile(tmpDir, 'README.md', '# nothing here\n');
-
-    const result = findDesignSystemRoot(tmpDir);
-
-    expect(result.state).toBe('unborn');
-    expect(result.root).toBeNull();
-    expect(result.tierDir).toBeNull();
-  });
-
-  test('case 8: the steward exemption — this repo classifies package-mode, never unused-local-tier', () => {
-    // `resolvePackageRoot`'s traversal expects an anchor two levels below the
-    // package root (e.g. `src/cli/`); this test file lives one level deeper.
-    const packageRoot = resolvePackageRoot(path.dirname(__dirname));
-
-    const result = findDesignSystemRoot(packageRoot);
-
-    // The package's own root has a config without tokenSource AND a local
-    // DesignerPunk-shaped src/tokens tier — ordinarily "unused-local-tier", but
-    // here "the package's tree" IS the local tier (C2 Steward exemption).
-    expect(result.state).toBe('package-mode');
-    expect(result.partialCase).toBeUndefined();
-    expect(result.root).toBe(packageRoot);
-  });
-
-  test('case 9: a consume-posture manifest alone → unborn', () => {
-    writeManifest(tmpDir, 'consume');
-
-    const result = findDesignSystemRoot(tmpDir);
-
-    expect(result.state).toBe('unborn');
-    expect(result.signals.manifest).toBe(false);
+    // We never read the real value, so there is no resolved path to report.
+    expect(result.attemptedTokenSource).toBeUndefined();
+    // BITE (recorded red in the Task 1.5 completion doc): removing the
+    // present-but-non-literal guard (treating `hasTokenSource` as `false` for a
+    // non-literal key, i.e. reverting to the pre-ruling behavior) turns this
+    // package-mode instead of partial.
   });
 });
 

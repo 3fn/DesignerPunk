@@ -155,28 +155,77 @@ describe('resolveProductRoot', () => {
 });
 
 describe('C3 root-policy table conformance — "Root | Keys | Resolves via | Runner default"', () => {
-  // Each row names: which resolver serves the root, and whether the RUNNER
-  // (designerpunk.ts, Task 1.3) sets a default for it. Component/token-index/
-  // product get NO runner default (the resolver — birth-aware — decides);
-  // package-owned roots keep the pkgRoot default. Row count is asserted.
-  const table: Array<{ root: string; resolvesVia: (...args: never[]) => unknown; runnerDefault: 'none' | 'pkgRoot' }> = [
-    { root: 'component', resolvesVia: resolveComponentRoots as never, runnerDefault: 'none' },
-    { root: 'token index', resolvesVia: resolveTokenIndexRoot as never, runnerDefault: 'none' },
-    { root: 'product', resolvesVia: resolveProductRoot as never, runnerDefault: 'none' },
-    { root: 'package-owned', resolvesVia: resolvePackageOwnedRoot as never, runnerDefault: 'pkgRoot' },
+  // Fixup (Ada 2026-09-26 addendum, per orchestrator review): the prior version of
+  // this table only asserted "resolvesVia is a function" and a SELF-DECLARED
+  // `runnerDefault` field — tautological, since nothing called the resolver or
+  // checked its output against C3. Each row now carries REAL inputs and the
+  // EXACT expected output straight from design.md § "C3", and actually calls the
+  // resolver. Row count is still asserted (four rows: component / token index /
+  // product / package-owned), tied to the array `test.each` reads from.
+  interface C3Row {
+    root: string;
+    runnerDefault: 'none' | 'pkgRoot';
+    call: () => unknown;
+    expected: unknown;
+  }
+
+  const bornConsumer = dsRoot({ state: 'born', root: '/consumer' });
+  const unborn = dsRoot({});
+
+  const C3_TABLE: C3Row[] = [
+    {
+      root: 'component',
+      runnerDefault: 'none',
+      // C3: consumerRoot = bornRoot/src/components when born ∪ packageRoot, always both.
+      call: () => resolveComponentRoots({ dsRoot: bornConsumer, packageRoot: PACKAGE_ROOT }),
+      expected: {
+        roots: [path.join('/consumer', 'src', 'components'), path.resolve(PACKAGE_ROOT, 'src', 'components', 'core')],
+        sources: ['cwd', 'package'],
+      },
+    },
+    {
+      root: 'token index',
+      runnerDefault: 'none',
+      // C3: unborn → the package index, source 'package-consume', tokenOrigin 'designerpunk-reference'.
+      call: () => resolveTokenIndexRoot({ dsRoot: unborn, packageRoot: PACKAGE_ROOT }),
+      expected: {
+        ok: true,
+        path: path.resolve(PACKAGE_ROOT, 'token-index'),
+        source: 'package-consume',
+        tokenOrigin: 'designerpunk-reference',
+      },
+    },
+    {
+      root: 'product',
+      runnerDefault: 'none',
+      // C3: env, else bornRoot/product (born/package-mode/partial), else cwd/product (unborn).
+      call: () => resolveProductRoot({ dsRoot: bornConsumer, cwd: CWD }),
+      expected: { path: path.join('/consumer', 'product'), source: 'cwd' },
+    },
+    {
+      root: 'package-owned',
+      runnerDefault: 'pkgRoot',
+      // C3 header: package-owned roots resolve env → package-relative, no cwd preference.
+      call: () => resolvePackageOwnedRoot({ packageRoot: PACKAGE_ROOT, relPath: 'governance' }),
+      expected: { path: path.resolve(PACKAGE_ROOT, 'governance'), source: 'package' },
+    },
   ];
 
   test('exactly four rows', () => {
-    expect(table.length).toBe(4);
+    // BITE (recorded red in the Task 1.2 completion doc's 2026-09-26 addendum):
+    // deleting any entry from C3_TABLE turns this red.
+    expect(C3_TABLE.length).toBe(4);
   });
 
-  test.each(table)('row "$root" resolves via a defined function', ({ resolvesVia }) => {
-    expect(typeof resolvesVia).toBe('function');
+  test.each(C3_TABLE)('row "$root" resolves to the value C3 specifies', ({ call, expected }) => {
+    // BITE: changing the row's resolver call, or the resolver's own behavior, to
+    // return anything other than the C3-specified value turns this red.
+    expect(call()).toEqual(expected);
   });
 
   test('the three consumer-owned rows get no runner default; the package-owned row keeps pkgRoot', () => {
-    const consumerOwnedRows = table.filter((row) => row.root !== 'package-owned');
-    const packageOwnedRows = table.filter((row) => row.root === 'package-owned');
+    const consumerOwnedRows = C3_TABLE.filter((row) => row.root !== 'package-owned');
+    const packageOwnedRows = C3_TABLE.filter((row) => row.root === 'package-owned');
     expect(consumerOwnedRows.every((row) => row.runnerDefault === 'none')).toBe(true);
     expect(packageOwnedRows.every((row) => row.runnerDefault === 'pkgRoot')).toBe(true);
     expect(consumerOwnedRows.length).toBe(3);
