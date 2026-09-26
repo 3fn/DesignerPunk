@@ -8,7 +8,7 @@ description: Visual architecture overview of DesignerPunk's three foundational s
 # DesignerPunk Systems Overview
 
 **Date**: 2026-05-03
-**Last Reviewed**: 2026-07-05
+**Last Reviewed**: 2026-09-21
 **Purpose**: Visual architecture overview of DesignerPunk's three foundational systems
 **Organization**: architecture-overview
 **Scope**: cross-project
@@ -68,7 +68,7 @@ flowchart TB
         subgraph Civitas["Civitas System — Governance Foundation"]
             direction TB
             C_Desc["How the system is governed<br/>Standards, processes, coordination"]
-            C_Steer["Steering Docs (90: 81 MCP-served + 9 identity)"]
+            C_Steer["Steering Docs (92: 83 MCP-served + 9 identity)"]
             C_MCP["MCP Servers (3)"]
             C_Agents["Agent Configs (8)"]
             C_Auto["Hooks & Tooling"]
@@ -175,7 +175,7 @@ flowchart TB
         end
 
         subgraph MCPs["MCP Servers"]
-            DocsMCP["Docs MCP<br/>81 docs, 2,759 sections"]
+            DocsMCP["Docs MCP<br/>83 docs, 2,833 sections"]
             AppMCP["Application MCP<br/>34 components, 443 tokens"]
             ProdMCP["Product MCP<br/>(conceptual)"]
         end
