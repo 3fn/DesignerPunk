@@ -36,7 +36,7 @@ import {
   borderRadiusTokenMap,
   layeringTokenMap,
   BORDER_COLOR_TOKEN
-} from '../../tokens';
+} from '../../Container-Base.refs';
 import type {
   PaddingValue,
   BorderValue,

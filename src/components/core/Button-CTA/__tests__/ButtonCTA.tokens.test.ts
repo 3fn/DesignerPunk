@@ -11,7 +11,7 @@
  * Component Type: Standalone (no behavioral variants)
  */
 
-import { ButtonCTATokens, getButtonCTAMinWidth } from '../Button-CTA.tokens';
+import { ButtonCTATokens, getButtonCTAMinWidth } from '../Button-CTA.refs';
 
 describe('Button-CTA Component Tokens', () => {
   describe('minWidth tokens', () => {
