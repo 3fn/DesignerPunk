@@ -1,7 +1,7 @@
 # Spec Feedback: 123 — Consumer Distribution — Design
 
 **Spec**: 123-consumer-distribution
-**Artifact under review**: `design.md` — **ROUND COMPLETE · READY FOR PR** (P2 slot open, both branches pre-written)
+**Artifact under review**: `design.md` — **ROUND FULLY CLOSED · NO OPEN SLOTS** (PR #197; P1 and P2 ruled 2026-09-26)
 **Created**: 2026-09-20
 **Spec author**: Thurgood
 **Reviewers**: Lina, Ada, Stacy, Leonardo
@@ -954,5 +954,24 @@ Both are text-grain changes to C2 and C3. Everything else in the packet is **cle
 | R2 micro-confirms | 9 — Leonardo 3 · Stacy 1 · Ada 2 · Lina 3 | folded here |
 
 **Status**: **ROUND COMPLETE · READY FOR PR.** Slot P2 is open, both branches pre-written; Peter's ruling drops in at PR review or before. Remaining design inputs pass to the tasks round (see the report).
+
+---
+
+#### [THURGOOD R4]
+
+**Role**: spec author, recording Peter's P2 ruling. There are no reviewer items to fold.
+**Date**: 2026-09-26
+
+- **P2 — RULED BRANCH A (Peter, 2026-09-26)**: after the **second consecutive** G1 BREAKS, the mechanical floor retires, every unit routes to human review, and U2 proceeds.
+  - **Rationale**: the automated check is an efficiency device, not the protection. The protection is per-section verification, which A keeps by moving it wholly to the routed path. The labor cost is ours, bounded by carry-forward. B would gate shipping on a judgment that may not be mechanizable.
+  - **Misreading, corrected and recorded**: branch A was first read as "skip without fixing". It removes only the verbatim floor. C3 has been reworked once before the trigger fires, every unit is human-judged with itemized assent, and G2 still runs. It is also distinct from Req 11.8's pass-four **Fork A**.
+  - **Stacy's conditions are carried intact**:
+    - (i) the trigger is the second consecutive BREAKS;
+    - (ii) under A, G2's scope half (2) records "not applicable", never a pass;
+    - (iii) the 24.3 labelling.
+  - **Branch B is recorded as not taken.**
+
+  → design.md § "Rulings from Peter — slots", § "Gates and sequencing"
+- **Status**: **ROUND FULLY CLOSED · NO OPEN SLOTS.**
 
 ---

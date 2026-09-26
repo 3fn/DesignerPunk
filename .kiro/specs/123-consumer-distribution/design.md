@@ -3,7 +3,7 @@
 **Date**: 2026-09-26 (R2 revision, same day)
 **Spec**: 123 — Consumer Distribution (the former "121-C")
 **Author**: Thurgood (test governance / spec standards / Civitas steward)
-**Status**: Design Phase — **ROUND COMPLETE · READY FOR PR** (slot P2 open, both branches pre-written). R1 (24 blocking) was folded at R2, and the R2 micro-confirms (9 blocking, all one-clause text fixes) are folded in this closing revision. **Peter ruled P1 on 2026-09-26; P2 is pending** and drops in at PR review or before. `tasks.md` opens after this merges.
+**Status**: Design Phase — **ROUND FULLY CLOSED · NO OPEN SLOTS** (PR #197). R1 (24 blocking) was folded at R2, and the R2 micro-confirms (9 blocking, all one-clause text fixes) were folded in the closing revision. **Peter ruled P1 (yes) and P2 (branch A) on 2026-09-26.** `tasks.md` opens after this merges.
 **Dependencies**: `requirements.md` (30 requirements, 282 ACs — PR #196, `aabb59fd`); `design-outline.md` (settled, PR #194); the Model B identity statement (Peter, 2026-09-26); Specs 111 (sync), 118, 122, 124, 127
 
 ---
@@ -16,16 +16,25 @@
 
 ## Rulings from Peter — slots
 
-Each ruling fills one line. **No branch is picked by this document.**
+Both rulings are recorded below. **This document picked neither branch; Peter did.**
 
 - **SLOT P1 — RULED YES (Peter, 2026-09-26): 5A covers the primitive names referenced by the compiled component surface.** *(Ada R1 [@PETER], her lean.)*
   - **Where it lands**: C7's tier filter is **semantic ALWAYS · primitive YES · component NEVER**.
   - **The counter-argument, knowingly accepted**: this widens what the consumer's language must honour, from "our semantic names" to "our primitive names too", which is a real tax on a language the thesis calls theirs.
   - **What bounds the tax**: the check **reports, never writes** (5A.1). A consumer who renames a primitive is told which component references it and what value it carried. Nothing is added to her set, and her rename stands.
-- **SLOT P2 — PENDING: after the SECOND CONSECUTIVE G1 BREAKS, "no mechanical floor, every unit routes" vs "U2 waits"** *(Stacy R1 S-D-B3; she holds no preference between the branches, and a strong one that the Fork-A path is not silently available)*.
-  - **The trigger count is fixed independently of the branch** (Stacy S-D2-A2), so a first BREAKS can never invoke P2.
-  - **Where it lands**: § "Gates and sequencing". Both branches are pre-written there.
-  - **Ruling: `____`**
+- **SLOT P2 — RULED BRANCH A (Peter, 2026-09-26): after the SECOND CONSECUTIVE G1 BREAKS, the mechanical floor retires, every unit routes to human review, and U2 proceeds.** *(Stacy R1 S-D-B3 surfaced the fork, holding no preference between the branches.)*
+  - **Rationale, as ruled**: *the automated check is an efficiency device, not the protection.* The protection is **per-section verification**, and branch A **preserves it by moving it wholly to the routed path** — arguably more scrutiny, not less. The cost is borne by us, in labor, and is bounded by the carry-forward valve (11.5.6). Branch B would gate shipping on a judgment that may not be mechanizable.
+  - **Misreading, corrected, recorded so the text cannot be misread the same way later**: branch A was first read as *"skip the check without fixing it."* **It is not.**
+    - C3 has already been reworked and re-falsified once (two BREAKS, one rework cycle) before the trigger can fire.
+    - Branch A removes **only the mechanical shortcut** (C18 clause 2, the verbatim floor). **Every unit that the floor would have cleared is instead judged by a human signer, per section, with itemized assent.**
+    - Nothing is waived, and G2 still runs.
+    - *(Also distinct from **Fork A** of Req 11.8, the pass-four demotion. Branch A is P2's first branch; it is not that fork, and it does not invoke it.)*
+  - **Stacy's conditions, carried intact**:
+    - (i) **the trigger = the second consecutive G1 BREAKS**, so a first BREAKS never invokes it (S-D2-A2);
+    - (ii) under branch A, **G2's scope half (2) is recorded "NOT APPLICABLE — no mechanical floor (P2 branch A)", never as a pass** (S-D2-A3);
+    - (iii) **24.3's acceptance table is labelled** *"no mechanical triviality floor — all re-grounded units human-judged"*, so (v)'s mechanical half never appears on the deterministic list under branch A.
+  - **Branch B, NOT TAKEN, recorded**: *"U2 waits"* — no exit; U2 stays open until a G1 HOLDS.
+  - **Where it lands**: § "Gates and sequencing".
 - *(Leonardo's platform-output default was the third candidate. It is **derived** from the rulings rather than escalated, and recorded as **overturnable at the sitting**. See DD1, whose lead premise is dev/prod parity, per Leonardo R2 (d).)*
 
 ---
@@ -752,7 +761,7 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 
 ---
 
-## Gates and sequencing (Stacy S-D-B3, S-D-A7; SLOT P2)
+## Gates and sequencing (Stacy S-D-B3, S-D-A7; P2 ruled branch A)
 
 ```
 U2 step 1  splitFrontmatter + partition (C13) + golden bite (Bite 1)
@@ -763,11 +772,11 @@ U2 step 4  ══ G1 — C3 FALSIFICATION (Stacy) ══
              HOLDS        → continue
              BREAKS       → C3 returns to its owner (Thurgood); rework; G1 RE-RUNS. U2 CANNOT BE ACCEPTED while G1 stands at BREAKS.
              NOT-RUNNABLE → treated as BREAKS
-             SECOND CONSECUTIVE BREAKS → SLOT P2 (trigger count fixed regardless of branch — S-D2-A2; a first BREAKS never invokes P2):
-               (P2-a) "no mechanical floor": C18's clause 2 is removed; EVERY unit in the entry set ROUTES; labelled in 24.3
+             SECOND CONSECUTIVE BREAKS → P2, RULED BRANCH A (Peter, 2026-09-26; a first BREAKS never invokes it — S-D2-A2):
+               (P2-a) SELECTED — "no mechanical floor": C18's clause 2 is removed; EVERY unit in the entry set ROUTES; U2 proceeds; labelled in 24.3
                       as "no mechanical triviality floor — all re-grounded units human-judged"; volume rises; never clears wrongly.
                       G2's scope half (2) is then recorded "NOT APPLICABLE — no mechanical floor (P2-a)", NEVER as a pass (S-D2-A3)
-               (P2-b) "U2 waits": no exit; U2 remains open until a G1 HOLDS
+               (P2-b) NOT TAKEN — "U2 waits": no exit; U2 would remain open until a G1 HOLDS
              G1 DOMAIN LINE (S-D2-A4): the G1 record names the unit kinds and domains its exemplars exercised; the current set
                exercises heading + preamble units on charters and one family doc — ALWAYS-SET MEMBERS and ENUMERATION-KIND
                units are NOT in it, and are written "not exercised" unless exemplars for them are added at step 3
@@ -976,4 +985,4 @@ type G2Verdict = 'PASSES' | 'FAILS' | 'NOT-RUNNABLE';   // never NOT-RUNNABLE on
 
 ## Cross-References
 
-Requirement traces are inline. **R1 and R2-confirm feedback IDs are cited inline at every changed component**. Dispositions are in `feedback/design.md` § `[THURGOOD R2]` (R1) and § `[THURGOOD R3]` (the R2 confirms). **This design introduces no new law.** The governance edits ride DD13's ballot. **P1 is ruled (yes); P2 is pending, with both branches pre-written.**
+Requirement traces are inline. **R1 and R2-confirm feedback IDs are cited inline at every changed component**. Dispositions are in `feedback/design.md` § `[THURGOOD R2]` (R1) and § `[THURGOOD R3]` (the R2 confirms). **This design introduces no new law.** The governance edits ride DD13's ballot. **P1 ruled yes; P2 ruled branch A (both Peter, 2026-09-26). No open slots.**
