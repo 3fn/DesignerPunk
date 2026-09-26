@@ -298,7 +298,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 2.3 Config generation (1.2 i–iv); the test-config purpose + truthful collision string
   - [x] 2.4 Manifest written last, with `origin` per entry, `posture: 'born'`, `installedVersion`
   - [x] 2.5 The `tsc` over-rewrite arbiter + its bite; U1 next steps + the restart line
-  - [ ] 2.6 (Thurgood) Integration Guide: the lines U1 falsifies
+  - [x] 2.6 (Thurgood) Integration Guide: the lines U1 falsifies
 
 - [ ] 3. The packaging floor, `files[]`, and the platform closures
 
