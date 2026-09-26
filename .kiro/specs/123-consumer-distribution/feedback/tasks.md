@@ -732,3 +732,239 @@ The release-1 path is `npm install @3fn/core@R1` → `init` → `generate` → t
 **Status**: tasks.md R2 revision committed; **micro-confirms pending; slots T1 and T2 pending Peter's sitting**.
 
 ---
+
+#### [KENYA R2]
+*Micro-confirm against `5c20e23f`: Task 3 as revised; THURGOOD R2 § "Kenya / Data" and the adopted-rows table; `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`. Tree re-checked: `src/blend/` has 1 `.ios.swift`; `src/tokens/platforms/ios/` has 3 files (`MotionTokens.swift`, `MotionTokens.md`, `README.md`).*
+- **(a) Pack-assertion rows — CONFIRMED COMPLETE; my R1 blocking item is closed.** The rows keep the whole iOS closure: the 39 production component `.swift` files, `*Preview.swift` included and counted, plus the blend helper and the platform tokens. `*Tests.swift` is asserted absent. *Advisory tightening*: only the component row carries a count. An "every X present" row whose glob matches zero files is true by construction, so assert counts on the other two rows as well (`src/blend/*.ios.swift` = 1; `src/tokens/platforms/ios/**` = 3, or 1 if only `.swift` is intended) and attribute any differences. → tasks.md § "Task 3" (3.4)
+- **(b) Verdict and label — FAITHFUL**, both the quoted verdict and the label form (with each platform's named causes). **Placement is only partly right: neither the 3.5 record nor the install doc is where a `node_modules` or npm-page reader meets these files.** The surface they do meet is the package **`README.md`**. npm ships it in every tarball regardless of `files[]`, and the registry page renders it. Today it says *"True native implementations (Web Components, SwiftUI, Jetpack Compose)"* (README L57), which is the false affordance my R1 residual named. *Advisory*: carry the same label onto that README line as an asserted string, alongside Task 19.1's install-doc assertion. This rests on the same Req 4.5 truthfulness ground Thurgood used to judge the install-doc label within C23. If README is judged outside 123's surface, record it as the residual instead. → tasks.md § "Task 19" (19.1), § "Task 3" (3.5)
+- **(c) Follow-up owner and trigger — OWNERS CONFIRMED** (Kenya + Data design it; Lina owns component content; Ada owns the theme-conformance generator change). **The trigger line is narrower than our joint intent.** Task 3 says "shared with harness trigger 1", which means only the first product-spec kickoff. Data's R1 and the steward-filed defect issue both say *"first iOS/Android product-spec kickoff, or the platform build-verification charter's evaluation, whichever fires first"*. *Advisory*: align the committed issue's trigger to that two-limb form, so a charter evaluation fired by its trigger 2 or 3 also opens the follow-up. → tasks.md § "Task 3" (3.5)
+- None of the three is blocking. From my seat, Task 3 is ready once the steward folds or declines these advisories.
+
+#### [DATA R2]
+*Micro-confirm packet 5 (Data half), against `5c20e23f`. Re-measured on the tree.*
+- **(a) Pack-assertion rows — CONFIRMED, with a count erratum that is MINE (non-blocking).** The paths, the `res/**` inclusion and the `*Test.kt` exclusion are complete per my R1 blocking item. **My R1 "51 drawable XMLs" was wrong.** `res/` holds **51 files = 50 drawable XMLs + 1 `README.md`**. Fix: Task 3's "(51 drawables measured)" → "(51 files under `res/`: 50 drawable XMLs + README.md)". The counts to assert, so "counts asserted" has a denominator:
+  - PRESENT: **39** component `.kt` (41 minus 2 `*Test.kt`; this includes 2 `*Preview.kt`); **51** `res/` files; **1** `src/blend/*.android.kt`; **2** under `src/tokens/platforms/android/` (`MotionTokens.kt` + `MotionTokens.md`); **8** `.gitkeep`, which the `**` glob sweeps in (harmless; count them or exclude them, but state which).
+  - ABSENT: **2** `*Test.kt`.
+  → tasks.md § "Task 3" (3.4)
+- **(b) Verdict quote + label placement — CONFIRMED faithful.** The generic label is my wording. My named causes (hardcoded `LocalDPTheme`, no Gradle module) are carried by "plus each platform's named causes". Placement in 3.5 **and** in the install doc as asserted strings (Task 19) is what I asked for. → tasks.md § "Task 3" (3.5), § "Task 19"
+- **(c) Follow-up owner/trigger + Task 25 wording — CONFIRMED, with one trigger-wording fix (non-blocking).**
+  - The owner split is right, and Kenya's and my joint intent: Kenya + Data design; Lina owns content; Ada owns the generator change.
+  - Task 25 carries my corrected reason verbatim.
+  - The fix: "trigger shared with harness trigger 1" is **narrower than our intent**. Harness trigger 1 is only "first product spec kickoff". We meant **first Android/iOS product spec kickoff OR the harness charter's evaluation by ANY of its triggers, whichever fires first**. Trigger 2, an invalid-platform-code incident such as Kenya's `:816`, should also wake the distribution issue.
+  - Suggested line: *"trigger: first Android/iOS product-spec kickoff, or any evaluation of the harness charter, whichever fires first"*.
+
+  → tasks.md § "Task 3" (3.5)
+
+---
+
+#### [LEONARDO R2]
+
+**Reviewer**: Leonardo — micro-confirm of packet 4, items (a)–(d) only. No new findings requested beyond them.
+**Date**: 2026-09-26
+**Basis**: `5c20e23f`. Measured: design.md C27 erratum and catalog rows 886–889; tasks.md Tasks 2, 7, 16, 19, 22, § "Run discipline", Tasks 25–27; the clone-hatch URL resolves publicly (HTTP 200).
+**Mandatory @ mention pre-step**: **two outstanding from R1, both landed concurrently with my R1 entry, so they are answered now**:
+- **[@LEONARDO] from LINA R1 (22.3)** — **Yes, I will author `example-home.yaml`**, with Lina building the scaffold mechanics. It references only content the scaffold itself contains, so 22.3's validity guard passes by construction and 28.3's query has a known answer. It demonstrates what the `product/` tree is for (19.5), and is not placeholder text. **Write-scope note**: my scope is `.kiro/specs/**` and `docs/specs/**`, so I author it at `.kiro/specs/123-consumer-distribution/design-inputs/example-home.yaml` and **Lina places it** into the scaffold template path. The 22.3 row should name both of us.
+- **[@LEONARDO] from STACY R1 (S-T4 / S-T-A6)** — **Frozen prompts: yes, and I hold that floor as strongly as you do.** **Operator ≠ profile author: yes.** I accept the seat below with conditions. You held the operator choice loosely and handed it to me or Peter; I take it, and the conditions are the price.
+
+**Verdicts**: (a) **one word blocks** — the restart row's *"now"* contradicts the declared path order. (b) **RIGHT**, and the guide is inside 15B.5. (c) **ACCEPT, with three conditions.** (d) **Le-T3 CLOSES.**
+**Still blocking**: **Le-T5** (one word, plus print order).
+
+---
+
+**(a) The three restored strings — Le-T1 and A5 are satisfied, except for one word in the restart row.**
+
+- The **clone hatch** is re-anchored exactly right: *"init already made the token language yours; the clone adds the engine and the components"*. The URL is public.
+- The **personal-note naming** row and the **generate-created** row share their wording, which is what 15B.5 wants.
+- **A5 is met.** Tasks 2.5 and 16.2 land truthful next steps and the restart line **with** the `init`/`attach` changes that need them; U1 drops `npx jest # Run component tests`. **CHANGELOG starts at 7.4**, and release 1's entry names the retained copied agents, so dp-portfolio's MAJOR arrives with notes.
+
+- **[BLOCKING] Le-T5 — The restart row says *"restart your agent session **now**"*, and on two of the three paths that print it, now is the wrong moment** → design.md catalog row 887 (C27 erratum); tasks.md Tasks 2 (2.5), 16 (16.2), 22; C23's path tables
+  - **Founder path**: `init` is step **2**; generate (3) and fill in the note (4) come **before** restart (5). The note is loaded at session start through the always-layer. **A founder who obeys "now" restarts before writing her note**, so her agents never see it until she restarts again. And depending on when the application server reads `token-index/`, she may hit the fail-loud "run generate" error in the session she just opened.
+  - **Cross-harness join**: `attach` is step 4; the note (5) precedes restart (6). Same problem.
+  - **Only `attach --reference`** (step 2 → restart 3) is correctly "now".
+  - **Why this blocks rather than advises**: Tasks 2, 16 and 22 assert this row **string-equal**. The tests would lock the wrong order in, on the path whose step order 22.2 asserts.
+  - **Fix**:
+    - For `init` and born-repo `attach`, the row reads *"when the steps above are done, restart your agent session — DesignerPunk's MCP servers and your personal note load when a session starts, so this session cannot see them yet (approve the servers if your tool asks)"*, printed **last**, as the final next step.
+    - **`attach --reference` keeps "now"**, as a second catalog row, since its next step *is* the restart.
+    - The reason gains *"and your personal note"*, which is the second thing the restart delivers.
+
+**(b) The 19.4 guide implementation — RIGHT, and the guide is now under the 15B.5 test.**
+
+This is the shape I leaned toward, done properly:
+- the **served** guide is the source, under the unchanged doc-id, so every charter route stays valid with no alias;
+- `INSTALL.md` is **derived at build**;
+- a **body-identity test** means the two cannot drift;
+- `vocabulary.ts` consistency now names **both** files.
+
+The interim fixes land as each unit falsifies a line (2.6 → L202/L454/L576; 17.2 → § 4b; 19.4 → the full replacement, incl. 3.5's native labels). That is A5's with-the-change logic applied to the doc, so no release ships the guide wrong about its own behavior. The residual grep over `product-template|src/components/core/`, with each surviving line dispositioned, is the right closing check.
+
+**(c) The conformance-operator seat for Tasks 25–27 — ACCEPTED, with three conditions.**
+
+Why I am a fit seat, and why it is not stake-free:
+- I am **not** the profile author, not beat 2's verifier, and I hold no authorship stake in any charter under test **except my own rendering**.
+- I **did design much of the instrument** (the persona axes, fixtures, outcome fields, cold-observation rules). An instrument designer operating his own instrument can steer, in either direction.
+- The frozen prompts close the largest channel. The conditions close the rest.
+
+- **[C1] An operator-intervention log, verbatim, default none.** Every operator message after the frozen prompt is reproduced verbatim in the record, with its reason, and **`operator-halt:<reason>` is the only operator-initiated stop**. A frozen prompt followed by unlogged steering is a frozen prompt in name only. The log makes the in-run channel as auditable as the opening. Add it as a C30 field; the schema check covers presence, and CLOSEOUT audits content.
+- **[C2] My one real stake, disclosed and cross-read.** Consumer-Leonardo is **a subject** of the trio (persona (a)'s vocabulary questions and persona (c)'s product questions land on him) and of 28.3. **Every trio finding whose subject is consumer-Leonardo is tagged `subject: leonardo`**, and **Stacy's CLOSEOUT pass cross-reads the tagged findings**. That uses her existing pass and adds no seat. *(28.3 already sits with Thurgood, which is correct, and should stay there.)*
+- **[C3] Capability and write scope, stated rather than assumed.**
+  - (i) **I cannot claim to physically drive every harness session.** A fresh-`HOME` Kiro session, a re-login, or an IDE launch may need Peter's or the orchestrator's hands. **Each record carries `session-launched-by: <who>`**. I own the frozen prompts, protocol adherence, the in-run judgments, and the records.
+  - (ii) **My write scope is `.kiro/specs/**` and `docs/specs/**`.** The run discipline pins prompts at **`tests/onboarding-trio/prompts/<run-id>.md`**, and the protocol and fixtures under `tests/onboarding-trio/`, all **outside** it. Either re-pin prompts to `.kiro/specs/123-consumer-distribution/validation/prompts/` (records already live beside them), **or** name the committer for `tests/onboarding-trio/**` in the delegated-tier table. **Otherwise the ancestry rule (prompt commit before record commit) has no writer.** I lean toward re-pinning the prompts into the spec directory and leaving protocol and fixtures with the orchestrator. This is the same class as slot T1 (Lina's write-scope fork), so it may simply compose with however Peter rules T1.
+
+  **If Peter or the orchestrator prefers the fallback, I will not contest it.** Accepting is on the merits, not a claim to the seat.
+
+**(d) Task 26's outcome fields — Le-T3 CLOSES.**
+
+All five land as I asked:
+- per-step outcomes for the 6 cross-harness steps;
+- findings;
+- the forced negative;
+- the stop event from the closed vocabulary;
+- **one post-restart query answered by an attached agent and checked against its rendered charter**.
+
+*"'Joined' means the agent answers, not that files exist"* is in the criterion itself, which is where it needs to be. **A3 (fixtures born from the same packed artifact) also landed.** The frozen prompt names which attached agent is queried, so the query target is fixed by construction rather than chosen in-run.
+
+---
+
+- [@THURGOOD] Le-T5: two restart rows (sequenced-last for `init` and born-repo `attach`; "now" for `--reference`), or one row with a path-dependent lead clause? I lean toward two rows, since string-equal assertions stay simple. → design.md catalog 887 -- [LEONARDO R2]
+- [@THURGOOD] (c) C3(ii): re-pin frozen prompts to `validation/prompts/` inside the spec directory, or name a committer for `tests/onboarding-trio/**`? → tasks.md § "Run discipline" -- [LEONARDO R2]
+
+#### [STACY R2]
+
+**Reviewer**: Stacy — **tasks micro-confirm**, the five named items only: (a) the gate seat split and Lina as G2's executing agent; (b) ARMING as corrected; (c) G/G′ and the eleven-exemplar count; (d) zero standing refusals; (e) the `G1 runs: <k>` field.
+**Date**: 2026-09-26
+**Item count**: **5 verdicts — all five CLEAR. 0 BLOCKING.** 3 advisory, each a tightening of text that is already right. No findings outside the five.
+**Method, with its fraction**: read `[THURGOOD R2]`'s dispositions for my items and tasks.md § "Gate seat layout", § "Split tripwire", the MIDPOINT conditions, Tasks 11, 12, 13 (the freshness/ARMING and B-U2 criteria), 15 (refusals), 18, and Task 23's registration line, at `5c20e23f`. **Measured today**: `canonical/coverage-manifest.yaml` has **no broad `canonical/**` glob** — every check's globs are specific (`canonical/agents/**`, `canonical/shared/*.yaml`, …) — so the new operative-set and consumer-profile paths would be genuinely blank without a derived glob. That bears on (b).
+**@ mention pre-step**: no `[@STACY]` after `[THURGOOD R2]`.
+
+- **(a) The gate seat split — CLEAR. I COUNTERSIGN Lina as G2's executing agent.** → tasks.md § "Gate seat layout", § "Task 18"
+  - **The redraw is the S-B1 shape exactly**: verdict records are mine, outside every delegated-tier line; each gate parent belongs to an executing agent whose completion doc **cites and never paraphrases**; branch execution, validation and the PR sit with that agent. **MIDPOINT condition 2 now audits a seat other than mine, which is the whole point.**
+  - **Why Lina over Thurgood is the better call, beyond keeping the acceptance claim off the recused seat**: an executing agent's interest in G2 is bounded by three things — **the verdict is mine**; **the artifact edit is mechanical given the verdict** (PASSES → promote for the named domains only; FAILS → demote); and **MIDPOINT condition 2 audits that edit against my record.** Thurgood's interest would be the larger one (profile author and definition owner). Lina's is the ordinary interest every gating parent's agent has in its unit passing.
+  - **One disclosure, for the MIDPOINT record, not a plan change**: Lina authored the machinery pass four tests (C13–C15). **The MIDPOINT pass will state that, and will check that the PASSES edit is confined to the domains my record names** — the one place an interested executor could over-apply a verdict. That is exactly what condition 2 is for.
+  - Task 12 → Thurgood is right too. As C3's owner he runs the rework loop, and invoking branch A (retiring his own floor) runs **against** his interest, not with it.
+- **(b) ARMING as corrected — RIGHT.** → tasks.md § "Open inputs" (4), § "Task 13" (13.6), § "Task 23"
+  - Recording the R1 disposition as wrong, with the reason (*"I reasoned from the context set alone"*), is the correct way to carry it. **The standing stale-fixture end-to-end test (i) is the real did-it-really-run proof**, and making it standing rather than one-time is what catches the future restructure.
+  - **[S-T2-A1] Tighten (ii) from "zero blank rows" to "the rows list the guard".** Zero blank proves **some** check covers a surface, not that **this** one does. For 13.6 the zero-blank run is meaningful, because I measured no broad `canonical/**` glob, so those paths are really blank today — but it would be equally green if, say, the dispositions sweep's globs grew to cover `canonical/profiles/consumer/**` and diff-guard's did not. The property is that **the coverage-map rows for `canonical/operative-sets/**` list `122-diff-guard`.**
+  - **For Task 23 the gap is sharper**: the banner guard's surfaces are existing `governance/*.md` docs, which other checks likely already cover. There, **"zero blank rows for the guard's surfaces" is satisfiable by construction** — true before the guard exists. The criterion should be *"each governed doc's coverage-map row lists the banner guard"*.
+- **(c) G, G′ and the eleven-exemplar count — FAITHFUL.** → tasks.md § "Task 11", § "Task 12"
+  - The units are named exactly as I built them (`#item-critical-wait-for-user-authorization-before-starting-new-tasks` → TRIVIAL; `#item-civitas-governance-health-check` → NOT TRIVIAL). **"Required verdicts committed before G1 runs"** is the table rule. The count reads eleven in both criteria. My disclosure is enumerated in full (confirmed A–E, G, G′; constructed G, G′). The C1 carve-out commits are `Agent: stacy`.
+  - **11.3 is where I commit the full construction text** (the gutted rendering and the re-grounded rendering), alongside the verdicts.
+- **(d) Zero standing refusals + refusal count — AS MEANT in substance; one wording tightening.** → tasks.md § "Task 15"
+  - **[S-T2-A2] *"Every refusal … re-authored and re-judged INTO ITEMIZED ASSENT"* makes assent the only exit, and that reintroduces the assent pressure the one-flag repair removed.** A legitimate resolution can also be a **changed disposition under its own C1 signature** — for example, a unit re-disposed `superseded-by` after the signer's flag. The property I asked for is *zero standing refusals — each re-authored and re-judged*, **not** *each ends in assent*.
+  - Also, *"the refusal count"* should read **refusals issued** during first render. The *standing* count is zero by this very criterion, so an unqualified "count" can be read as the trivially-zero number.
+- **(e) `G1 runs: <k>` — BINDING where Peter reads it.** → tasks.md § "Split tripwire", § "Task 12", § "Task 18"
+  - It is now in **four** places, and the operative one is the PR-body line: the § "Split tripwire" reading marked *binding*, with **k > 1 is a scope signal regardless of the subtask count**; Task 12 reporting k; and **Task 18's criterion requiring the U2 PR body to carry the line with `G1 runs: <k>`**. That makes an honest line un-omittable, and its **k is countable from the pinned `run-<n>` records**, so the claim is checkable against artifacts. The template's `[; G1 runs: <k>]` bracket reads as optional, but Task 18 makes it mandatory for U2, which is the only unit it applies to. Fine as written.
+
+##### Still blocking
+
+**Nothing.** S-T1, S-T3, S-T5 and S-T6, and my (a) contest, are all resolved as I meant them; S-T2 rides B-U2. The three advisories (S-T2-A1 for 13.6 and 23, S-T2-A2 for 15) are pre-PR wording, or can carry into execution as named notes — the author's call.
+
+
+#### [ADA R2]
+
+**Reviewer**: Ada (Rosetta token system). Micro-confirm of THURGOOD R2's packet for me, items (a)–(c). **No findings beyond the three items.** Measured at `5c20e23f`.
+
+##### (a) The `origin` erratum, Task 2.4 and Task 16's cohort case: **D-T-B2 CLOSES. The erratum is correctly scoped.**
+
+- **Why this is an erratum and nothing bigger.** It adds one field to the entry schema of a data model C7 already owns. The only reason for the field is a sequencing decision made at tasks grain. It changes no requirement (WHAT), and it changes no other component's behavior. C7's classification and migration logic now *read* the field; they are not redesigned.
+- **What makes it close.** Task 2.4 writes `origin` and asserts it on one entry of each kind. Task 16's cohort fixture is born by **release-1 `init`**, not hand-authored JSON that would only encode what we believe release 1 writes. The bite (key on manifest version → red) proves the rule really keys on `origin`.
+- **[Advisory] The token tier must not be recorded as manifest entries at all.** Task 2.4's line reads *"`copy` for copied files incl. the U1-copied agents…"*. If `init` also records the copied `src/tokens/**` files as `origin: 'copy'`, the consumer's **first** `sync` after birth prunes every one of them as de-managed and prints the prune report. That is noise about their own language, immediately after `init`, and it cuts against Req 5.8 ("no baseline applies"). **Criterion**: `init` writes entries **only for managed paths**. No `src/tokens/**` entries exist after birth; assert it in `init.test.ts`.
+- **[Advisory] Say what the manifest holds after migration.** After `--migrate-legacy` + `attach`, the cohort's `copy` entries under those paths are replaced by `generated` entries, and none remain. Add that to the cohort case's assertions, so a migrated consumer cannot be re-detected as a cohort member on every later `sync`.
+
+→ design.md § "C7" (erratum); tasks.md § "Task 2" (2.4), § "Task 16"
+
+##### (b) The closure-2 arbiter as folded: **D-T-B1 CLOSES, and the founding class is shut. I traced the bite, and it bites on the path that actually runs.**
+
+- **The bite is on the executed path.** I checked whether dropping `src/constants/**` really reddens a **packed package-mode `generate`**, or whether `src/constants` is reached only through a file that path never loads. It is on the path:
+  1. Source 1 scans `{pkg}/src/tokens/component/*.ts`, which loads `progress.ts`.
+  2. `progress.ts` imports `../../build/tokens`, whose barrel value-exports `TokenIntegratorImpl`, `TokenSelector` and `ComponentTokenGenerator` (`index.ts:41–43`).
+  3. Each of those value-imports `PrimitiveTokenRegistry` (`TokenIntegrator.ts:10`, `TokenSelector.ts:14`, `ComponentTokenGenerator.ts:74`).
+  4. `PrimitiveTokenRegistry` value-imports `../constants/StrategicFlexibilityTokens` (`PrimitiveTokenRegistry.ts:3`).
+
+  So the bite reddens for the right reason.
+- **What each check covers.** The packed run certifies **the subset of closure 2 that package-mode `generate` executes**. The directory-scoped closure also carries files not on that path (it walks all of `src/tokens/**`). The static tool covers those, and over-inclusion is the safe direction. **That split is correct, and it could be stated in Task 3's scope line**: the static closure governs inclusion; the packed run certifies the executed path.
+- **The other two folds are right.** The `method` attribution class is exactly my R2 method, and the added **tool-defect** class is a good third bucket. The pack-assertion rule (regenerated JSON, never a copied list) is what keeps the check true as the tree changes.
+
+→ tasks.md § "Task 3", § "Task 9" (9.1)
+
+##### (c) Task 6.1 as rewritten: **THE SHAPE IS RIGHT. Two additions keep it true over time, and Lina's answer may add a third disposition.**
+
+- **Right.** Opus, every site enumerated, each site resolved or declared uncovered, the count reconciled, and the scope sentence saying why the subset check cannot see these sites.
+- **[Advisory] "Six today" freezes unless the enumeration is mechanical.** Name the scan pattern in the criterion: `` var(--${ `` / `` `--${ `` / `` getPropertyValue(` `` / `'--' +`. Then **the build fails when the scan finds a site that is not in the resolved/uncovered record.** A seventh site added in a later component PR is caught at build rather than missed. This is the same fix as closure 2's regenerated-JSON rule.
+- **[Advisory] Say where each disposition goes.**
+  - **Resolved** literals join `referencedNames` in `dist/name-contract.json`, under P1's tier filter.
+  - **Uncovered** sites surface in the `sync` report as a standing *"not checked: <component> builds token names dynamically"* line. Per R26.8, a clean report must say what it does not establish, and a component with an uncovered site must never be reported as silently clean.
+- **What Lina's answer could change: an open set is not always "uncovered". It may be "not ours".** For example, if `IconBase`'s `color` prop accepts **any** token name the consumer passes, those names come from the **consumer's call sites**. That is their use of their own language, not our contract, so it is out of 5A's scope. The one exception is the **default value in our code**, which *is* ours and should be resolved. **The criterion would then need a third disposition, `consumer-supplied — out of 5A scope`, with the default resolved.** If Lina reports closed sets throughout, no change is needed.
+
+→ tasks.md § "Task 6" (6.1)
+
+##### Still blocking
+
+**None.** D-T-B1 and D-T-B2 both close. The four advisories above are one-line criterion edits: token-tier entries absent after birth; the post-migration manifest state; a mechanical dynamic-site scan with a build failure on an unrecorded site; and disposition destinations. Lina's answer may add the `consumer-supplied` class.
+
+---
+
+#### [LINA R2]
+
+**Reviewer**: Lina — tasks micro-confirm, five scoped items (a)–(e)
+**Date**: 2026-09-26
+**Result**: (a) ✔ · (b) ✔ · (c) ✔ · (d) answered: **three classes, not two, and resolving the closed sets exposed a live defect in my components** · (e) **seat accepted, with two conditions**. **One new BLOCKING criterion edit, to 6.1**, which falls straight out of answering (d).
+**Mandatory @ mention pre-step**: Ada R1's `[@LINA]` (the closed sets) is answered at (d). Zero outstanding.
+
+- **(a) T-L1 as folded — RIGHT.** All three placements match what I asked:
+  - `--migrate-legacy` is offered only in the same flow as `attach` (Task 16, L603), with a never-offered-alone test;
+  - U1's report keeps copied agents, steering and governance, as a string-equal criterion (L350);
+  - U1's `init` emits both targets' MCP configs, asserted (L249).
+
+  Ada's release-1 cohort case (L604, keyed on `origin`, not manifest version) closes the one path I had not named: consumers born by release-1 `init` meeting U2's `sync`.
+
+- **(b) Tiers — MATCH my corrections.**
+  - 1.4 is Opus, with all four interactions written in (L238), plus the edited-while-running criterion and its bite (L227). That closes T-L2.
+  - Task 16 is split: 16.1 and 16.5 Opus; 16.4 (mechanical, ~1 day) and the rest Sonnet.
+  - 15.2 `derive.ts` is Opus.
+  - 5.2 is re-sized to ¾–1 day.
+
+- **(c) 5.3 = PARSED VALUES — the reading I needed.**
+  - Consumer entries survive by parsed value; nothing is written when our keys are unchanged; key order is preserved on re-serialize; there are three shapes, including `permissions.allow` array-entry grain.
+  - ~1–1¼ days is right for that reading.
+  - The no-write-when-unchanged rule is the detail that makes it livable. A consumer who never changes our keys never sees their file reformatted.
+
+- **(d) Ada's closed-sets question — the six sites fall into THREE classes, not "closed or uncovered".** Ada R2 predicted the third; here it is, with the evidence.
+  - **CLOSED — ours; enumerate and check:**
+    - **`token-mapping.ts:70` — PARTLY closed.** `tokenToCssVar` is fed by four closed maps in `Container-Base/tokens.ts`:
+      - `paddingTokenMap` → `space.inset.{050,100,150,200,300,400}`;
+      - `borderTokenMap` → 3 values;
+      - `borderRadiusTokenMap` → `radius-{050,100,200}`;
+      - `layeringTokenMap.web` → 6 values;
+      - plus `BORDER_COLOR_TOKEN`.
+
+      It is **also** fed by consumer-chosen typed props: `mapColorToCSS`, `mapShadowToCSS`, `mapOpacityToCSS` and the `borderColor` argument (see consumer-supplied below).
+    - **`ContainerCardBase.web.ts:166` — CLOSED.** `cardBackgroundTokenMap` → `color.structure.surface.{primary,secondary,tertiary}`. The fallback `--color-structure-surface-primary` is a literal.
+    - **`ProgressPaginationBase.web.ts:232` — CLOSED, and COMPONENT tier.** `--progress-node-size-${size}-current` over the `NodeSize` union. Those are our component tokens, so the P1 tier filter excludes them. **Enumerate them; never check them.**
+  - **CONSUMER-SUPPLIED — outside the contract, and not "uncovered":**
+    - **`IconBase.web.ts:200` / `:476`** — `var(--${color})` over the consumer's `color` attribute (`types.ts` L257–258: `'inherit'` or any token name).
+    - **`ContainerBase.web.ts:224`** — the raw `background` attribute. Its fallback `--color-structure-surface` is a literal.
+    - The typed props at `token-mapping.ts:70`.
+    - In all of these **the consumer names the variable**. Our component does not depend on any specific member, so a missing name is the consumer's reference, not our expectation. Declaring these "uncovered" would misstate the contract.
+    - *(A note, not a finding: the typed props are constrained to **our** generated `ColorTokenName` union, so a consumer who adds a new semantic colour must cast to pass it. Under Model B that is friction on their language. Out of 123's scope; I will carry it to my component backlog.)*
+  - **[BLOCKING] T2-L1 — resolving the closed sets found 10 dangling references in Container-Base TODAY. 6.1 must validate resolved names against the PACKAGE's own index first, or the name contract reports our bug to every consumer as "missing from your set."**
+    - Recipe: each map value, dots → hyphens, grepped as `--<name>:` in `dist/DesignTokens.web.css` + `dist/ComponentTokens.web.css`.
+    - **Absent**:
+      - `--border-border-{default,emphasis,heavy}` (the real tokens are `--border-{default,emphasis,heavy}`);
+      - `--zIndex-{container,navigation,dropdown,modal,toast,tooltip}` (real: `--z-index-*`);
+      - `--color-border` from `BORDER_COLOR_TOKEN` (the real token is `--color-structure-border`).
+    - Container-Base's `border` and `layering` props therefore emit unresolved `var()` on web **now**, and fail silently.
+    - **The tests pin the broken strings.** `Container-Base/__tests__/ContainerBase.test.ts` L404, L408, L466 and L473 assert `var(--border-border-default) solid var(--color-border)`. That is the patch-without-guard shape: they check the text, not that it resolves.
+    - **Fix to 6.1**: resolved closed-set names are checked against **our** index at build. A name missing from ours **fails the build as a component defect routed to Lina**, and never becomes a consumer report.
+    - **The defect itself is mine, and it is NOT 123 work.** It is in my write scope (`src/components/**`) and bounded: 10 map values, 1 constant, 4 test lines. I will fix it as a separate chore PR with a resolves-against-generated-CSS guard test, **before U1's Task 6 runs**, so 6.1's own-index check starts green.
+  - **Net for Ada's tier question**: two sites resolve mechanically; one is component tier, enumerated and excluded; three are consumer-supplied and excluded with a stated reason. Nothing is left "uncovered". **6.1's class assignment is now settled by this answer, so Sonnet would suffice for the enumeration.** But the own-index validation is a new build-failure path, so **I would keep 6.1 at Opus until that path has its bite**, then accept a downgrade.
+
+- **(e) G2 gate parent (Task 18) — SEAT ACCEPTED, on two conditions.**
+  - **Why I can hold it**: the verdict is Stacy's, and both artifact edits are pre-declared (PASSES → the 24.3 table for the named domains; FAILS or NOT-RUNNABLE → the Fork A demotion). The seat applies one of two fixed texts and has no discretion over which.
+  - **Why conditions are needed**: I built the machinery pass four judges (Tasks 10, 14, 15.2). The PASSES edit promotes my own work to "deterministic", and the one move my seat must never make is exactly the one its author would reach for.
+  - **Condition 1**: the artifact edit applied is **byte-equal to the pre-declared text for the verdict**, cited against its source line. The MIDPOINT pass (Stacy's condition 2: *each G1/G2 branch executed and evidenced*) can then check it as a diff, not as a reading.
+  - **Condition 2**: **on FAILS or NOT-RUNNABLE, I apply the Fork A demotion and submit. I do NOT patch the machinery and re-request pass four inside the same unit.** A fix to the machinery is a new falsification cycle, with its own record and a new G2 request. Write this into Task 18 as a criterion, so the temptation has a rule rather than a resolve.
+  - **Write scope**: Task 18 edits `CHANGELOG.md` at the repo root, which is outside my declared scope. It rides SLOT T1 like the rest of my seats, and that dependency should be stated in Task 18's preamble.
+
+**Still blocking**: **T2-L1** — 6.1 must validate resolved closed-set names against our own index, with a build failure routed to me. The Container-Base defect it found is mine to fix separately, before Task 6. **SLOT T1** remains Peter's and still gates U1.
+
+---
