@@ -569,12 +569,12 @@ fun resolveContainerBaseBorderColor(borderColor: String?, theme: DesignerPunkThe
 }
 
 fun mapContainerBaseBorderToWidth(border: ContainerBaseBorderValue): Dp {
-    // Token references: border.border.default, border.border.emphasis, border.border.heavy
+    // Token references: border.default, border.emphasis, border.heavy
     return when (border) {
         ContainerBaseBorderValue.None -> 0.dp
-        ContainerBaseBorderValue.Default -> borderDefault /* border.border.default */
-        ContainerBaseBorderValue.Emphasis -> borderEmphasis /* border.border.emphasis */
-        ContainerBaseBorderValue.Heavy -> borderHeavy /* border.border.heavy */
+        ContainerBaseBorderValue.Default -> borderDefault /* border.default */
+        ContainerBaseBorderValue.Emphasis -> borderEmphasis /* border.emphasis */
+        ContainerBaseBorderValue.Heavy -> borderHeavy /* border.heavy */
     }
 }
 

@@ -103,7 +103,7 @@ export const cardShadowTokenMap: Record<CardShadowValue, string> = {
  */
 export const cardBorderTokenMap: Record<CardBorderValue, string> = {
   'none': '',
-  'default': 'border.border.default'
+  'default': 'border.default'
 };
 
 /**

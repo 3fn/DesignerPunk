@@ -658,12 +658,12 @@ func mapContainerBaseBorderRadiusToCornerRadius(_ borderRadius: ContainerBaseBor
 }
 
 func mapContainerBaseBorderToLineWidth(_ border: ContainerBaseBorderValue) -> CGFloat {
-    // Token references: border.border.default, border.border.emphasis, border.border.heavy
+    // Token references: border.default, border.emphasis, border.heavy
     switch border {
     case .none: return 0
-    case .default: return borderDefault /* border.border.default */
-    case .emphasis: return borderEmphasis /* border.border.emphasis */
-    case .heavy: return borderHeavy /* border.border.heavy */
+    case .default: return borderDefault /* border.default */
+    case .emphasis: return borderEmphasis /* border.emphasis */
+    case .heavy: return borderHeavy /* border.heavy */
     }
 }
 

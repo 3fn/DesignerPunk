@@ -625,7 +625,7 @@ fun getCardRoundedCornerShape(borderRadius: CardBorderRadius): RoundedCornerShap
 fun mapCardBorderToWidth(border: CardBorder): Dp {
     return when (border) {
         CardBorder.None -> 0.dp
-        CardBorder.Default -> borderDefault /* border.border.default */
+        CardBorder.Default -> borderDefault /* border.default */
     }
 }
 
@@ -691,7 +691,7 @@ private val radius100: Dp = DesignTokens.radius_100 /* radius-100 */
 private val radius200: Dp = DesignTokens.radius_200 /* radius-200 */
 
 // Border tokens
-private val borderDefault: Dp = DesignTokens.border_default /* border.border.default */
+private val borderDefault: Dp = DesignTokens.border_default /* border.default */
 
 // Color tokens
 

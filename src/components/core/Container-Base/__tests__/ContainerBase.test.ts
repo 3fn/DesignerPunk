@@ -89,9 +89,9 @@ describe('Container-Base Component', () => {
     describe('borderTokenMap', () => {
       it('should map border values to correct tokens', () => {
         expect(borderTokenMap['none']).toBe('');
-        expect(borderTokenMap['default']).toBe('border.border.default');
-        expect(borderTokenMap['emphasis']).toBe('border.border.emphasis');
-        expect(borderTokenMap['heavy']).toBe('border.border.heavy');
+        expect(borderTokenMap['default']).toBe('border.default');
+        expect(borderTokenMap['emphasis']).toBe('border.emphasis');
+        expect(borderTokenMap['heavy']).toBe('border.heavy');
       });
 
       it('should have all border values defined', () => {
@@ -149,7 +149,7 @@ describe('Container-Base Component', () => {
 
     describe('BORDER_COLOR_TOKEN', () => {
       it('should be defined as color.border', () => {
-        expect(BORDER_COLOR_TOKEN).toBe('color.border');
+        expect(BORDER_COLOR_TOKEN).toBe('color.structure.border');
       });
     });
   });
@@ -164,7 +164,7 @@ describe('Container-Base Component', () => {
 
     describe('getBorderToken', () => {
       it('should return correct token for border value', () => {
-        expect(getBorderToken('default')).toBe('border.border.default');
+        expect(getBorderToken('default')).toBe('border.default');
         expect(getBorderToken('none')).toBe('');
       });
     });
@@ -401,11 +401,11 @@ describe('Container-Base Component', () => {
   describe('Border Color CSS Mapping (Web)', () => {
     describe('mapBorderToCSS with borderColor', () => {
       it('should use default border color when borderColor not provided', () => {
-        expect(mapBorderToCSS('default')).toBe('border: var(--border-border-default) solid var(--color-border)');
+        expect(mapBorderToCSS('default')).toBe('border: var(--border-default) solid var(--color-structure-border)');
       });
 
       it('should use provided borderColor when specified', () => {
-        expect(mapBorderToCSS('default', 'color.structure.border.subtle' as any)).toBe('border: var(--border-border-default) solid var(--color-structure-border-subtle)');
+        expect(mapBorderToCSS('default', 'color.structure.border.subtle' as any)).toBe('border: var(--border-default) solid var(--color-structure-border-subtle)');
       });
 
       it('should return empty string for none border regardless of borderColor', () => {
@@ -463,14 +463,14 @@ describe('Container-Base Component', () => {
         border: 'default',
         borderColor: 'color.structure.border.subtle' as any
       });
-      expect(styles).toContain('border: var(--border-border-default) solid var(--color-structure-border-subtle)');
+      expect(styles).toContain('border: var(--border-default) solid var(--color-structure-border-subtle)');
     });
 
     it('should use default border color when borderColor not provided', () => {
       const styles = buildContainerBaseStyles({
         border: 'default'
       });
-      expect(styles).toContain('border: var(--border-border-default) solid var(--color-border)');
+      expect(styles).toContain('border: var(--border-default) solid var(--color-structure-border)');
     });
   });
 
@@ -553,7 +553,7 @@ describe('Container-Base Component', () => {
     describe('Border Color Support', () => {
       it('should document borderColor defaults to color.border.default', () => {
         // When borderColor is nil, iOS uses colorBorder (color.border.default)
-        expect(BORDER_COLOR_TOKEN).toBe('color.border');
+        expect(BORDER_COLOR_TOKEN).toBe('color.structure.border');
       });
 
       it('should document borderColor supports subtle variant', () => {
@@ -664,7 +664,7 @@ describe('Container-Base Component', () => {
     describe('Border Color Support', () => {
       it('should document borderColor defaults to color.border.default', () => {
         // When borderColor is null, Android uses colorBorder (color.border.default)
-        expect(BORDER_COLOR_TOKEN).toBe('color.border');
+        expect(BORDER_COLOR_TOKEN).toBe('color.structure.border');
       });
 
       it('should document borderColor supports subtle variant', () => {
