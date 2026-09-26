@@ -631,3 +631,253 @@ All three are text-grain fixes to C2 and C3, not redesigns. The walk, the three-
 **Status**: design.md R2 revision committed. **Micro-confirms pending; slots P1 and P2 pending Peter's sitting.**
 
 ---
+
+#### [LEONARDO R2]
+
+**Reviewer**: Leonardo. This is a micro-confirm of packet 4, items (a)–(e) only. I am not requesting new findings beyond them.
+**Date**: 2026-09-26
+**Basis**: `ec32707a` — design.md §§ C2, C7, C8, C20, C23–C27, C30, DD1, DD22, and the error catalog.
+**Mandatory @ mention pre-step**: one outstanding, **[@LEONARDO] from LINA R1** (key-grain). It is answered as item (c).
+**Verdicts**: (a) the unit is RIGHT and the counts are right, but one counted step cannot be executed. (b) Le-D4 CLOSES on both targets, with one precondition clause missing. (c) Key-grain is RIGHT, with one namespace rule. (d) DD1's conclusion is SOUND and one link in its reasoning should be swapped; it stays derived and overturnable and is not escalated as a fork. (e) `--reference` is the RIGHT answer to A8, but as wired it breaks itself.
+**Still blocking**: 3 items, each fixable with one clause: **Le-R1**, **Le-R2**, **Le-R3**.
+
+---
+
+**(a) The step unit and the 5 / 5 / 6 / 3 counts — RIGHT under my proposal, with one step that has no mechanism.**
+
+Both clarifications improve on what I wrote. *"A harness prompt answered during a step belongs to that step"* keeps the approval prompt from padding the count. *"Reading is not a step"* keeps the notices and the posture section out of it. Recounted against C23's tables, all four numbers hold, and dropping "lockfile or sync" from the joining path is correct: DD1 commits the lockfile, so version drift belongs to the update lifecycle. As a side benefit, DD9's emit branch now provably costs **zero** steps, since the notice is reading. That closes A12's coupling to 22.2 cleanly.
+
+- **[BLOCKING] Le-R1 — Joining step 4, *"fill in your personal note"*, names a file nothing creates on a clone.** → design.md § "C23" (joining rows), § "C26", § "C24"
+  - Only `init` personalizes the template into `.designerpunk/personal-note.local.md` (C26). That directory is **local-only and ignored whole** (C24), so Priya's fresh clone does not have it. She never runs `init`, and `generate` does not create it. `attach` appears only on the cross-harness path. **The one counted step with no command behind it is on the path both U5 join runs execute.** She has to know to copy a template out of `node_modules`, which is a hidden action and a second one.
+  - **Fix**: when the local note is **absent**, `generate` creates it from the template with `TODO` slots and prints its name, as `init` does. C26 already treats an all-`TODO` note as absent, so creating it is harmless. Step 4 then reads *"fill in `.designerpunk/personal-note.local.md` (created by `generate`)"*. **The born-repo refusal string should gain the same step**: its join line currently goes npm install → generate → restart and skips it.
+- *(Advisory, one line)* The unit does not say where **prerequisites** live (Node installed, an agent harness installed). They are correctly not steps, but they need a prerequisites section. Persona (b), a static site with no build tooling, may have no Node at all, and her run would otherwise record that as a step-1 failure rather than a missing prerequisite.
+
+**(b) The first-MCP-load field and the two cross-target join runs — CLOSES Le-D4 on both targets, founder-cold and teammate-cold, once one precondition is added.**
+
+The coverage arithmetic is now right. 23.6 spreads the three birth runs across both targets, so the field on every trio record observes **founder-cold on both**. CC→Kiro and Kiro→CC observe **teammate-cold on both**. Correcting U3 to U5, and shipping the install doc with harness-agnostic phrasing until C32 edits it, is the honest sequencing. The C8(c) observation list (was a committed `settings.json` honored? did the gitignored note's `@`-import load?) turns my hedged A4 into something U5 will actually record.
+
+- **[BLOCKING] Le-R2 — "Cold" is defined on the repo side and never on the harness side, so the field can record a warm observation as cold, and C32 then publishes it.** → design.md § "C8" (a)(b), § "C30", § "C32"
+  - Trio clause (i) makes the run hermetic against **our source tree**. Nothing requires the harness's **user-level** state to be free of DesignerPunk. CC keeps per-project server enablement in `~/.claude.json` and user-scope permission rules in `~/.claude/settings.json`; Kiro has its own user profile. A run on a machine that has driven DesignerPunk before can observe *"nothing asked"* because of **the operator's history**, not the harness's cold behavior. **C32 then edits the install doc to that observation**, and every genuinely cold user is told that no approval step exists. The instrument exists to prevent exactly that.
+  - **Fix, one precondition clause on every trio and join record**: *harness user-level state — a clean profile or HOME, or the recorded DesignerPunk-relevant entries — and the observation is interpretable only as cold when that state is clean.* A fresh clone path is probably cold for CC's per-path enablement. "Probably" is what the field was built to replace.
+
+**(c) Key-grain for the JSON configs, beside the `.gitignore` marker region — RIGHT (answering LINA R1's [@LEONARDO]).**
+
+From the consumer's side this is the only honest model. JSON has no comments. `.mcp.json` and `.claude/settings.json` are the files the founder **and** her other tools write to. Whole-file management would stomp her own servers, and a JSON "region" would be a fiction. Key-grain touches exactly what we emit and nothing else. Two ways the model degrades are already handled well. **A consumer who edits one of our server keys** (for example, to correct a root by hand, which C3's user-env-wins precedence invites) gets a `conflict`: reported, never overwritten. **A consumer who deletes one of our approvals** because she wants the prompt gets `deleted-by-you`, which is never re-added. **The `designerpunk-*` prefix *is* the self-label** that marker text provides in `CLAUDE.md` and `.gitignore`, which satisfies A13's announce-before property without an in-file comment, provided the install doc's § "Your agent layer" states the rule in one sentence.
+
+- **[A-R1] Make the namespace rule uniform across all three grains, and say what happens to a consumer's key inside our prefix.** → § "C7" managed-set table
+  - (i) A rule the consumer writes herself inside our prefix, such as a server-wide `mcp__designerpunk-docs`, is not something we emitted. It should be **hers**: never pruned as `removed`, and at most reported.
+  - (ii) The Kiro identity member files are file-grain in **`.kiro/steering/`**, which is the one managed location **without** a namespace. Her own steering docs live beside ours under unprefixed ids. 19.8's collision rule covers an overlap, but a prefix such as `designerpunk-<id>.md` would make the rule the same everywhere: *prefix for keys and files, markers for text.*
+
+**(d) The DD1 platform-output derivation — conclusion SOUND. Keep it derived and overturnable; it is not a genuine fork. Replace step (3)–(4)'s premise before Peter reads it.**
+
+The conclusion follows from a ruled persona, not from a values preference. That is the same shape as L3-B2, so marking it derived and overturnable is the right handling, and escalating it as a fork would present a derivation as a coin-flip. **But the derivation leads with its weakest link.** Steps (3)–(4) argue *loud over silent*, and at the sitting that cuts both ways. Under the ignore default, a page with no token CSS is **visibly** broken the first time anyone loads it. Under the commit default, the failure is **stale** values, which is the quieter of the two.
+
+**The stronger premise, and the one that actually decides it, is dev/prod parity.** Under ignore, her local preview reads files that exist on her machine and nowhere she deploys from, so **the failure sits exactly where she is not looking**. Under commit, **the bytes she previews are the bytes she ships**. If she edits a token and forgets `generate`, her own preview shows no change, and she catches it in the dev loop. The only path to stale output in production is *edit, skip the preview, commit*, and that is the path the new CI need guards.
+
+**Residual that survives, stated plainly for the sitting**: persona (b), with no build tooling, is also the persona **least likely to adopt CI**, so the need's guard reaches her last. For her, the commit default's protection is the preview loop, not the check. That is still better than ignore's zero protection, and it is not the full guarantee the current (3) implies. *(Minor: the commented `.gitignore` line must carry her **configured** output path, not a placeholder, or "uncomment" becomes "uncomment and work out what to write".)*
+
+**(e) `attach --reference` as the CONSUME wiring command — RIGHT answer to A8, and the refusal string now names both postures. As wired, it classifies its own repo as partially born.**
+
+The refusal now reads *"To create one: init … Only reading DesignerPunk's docs and components? No init needed: attach --reference"*. That no longer pushes a consume-only reader toward BECOME, and the reference path becomes three counted steps with a real command instead of hand-wiring. DD22's residual (a mode on a verb whose object is "a harness") is honestly acceptable: she **is** attaching a harness, just to the reference corpus rather than to a design system.
+
+- **[BLOCKING] Le-R3 — `attach --reference` writes the manifest, and C2 treats a manifest alone as a partial birth, so the CONSUME wiring breaks the CONSUME posture the first time it runs.** → design.md § "C20" (modes; *"the returned file and key list is what `init` and `attach` record in the manifest"*), § "C7" (manifest *"written by `init` and `attach`"*), § "C2" (`PartialCase` includes **`manifest-only`**), § "C3" (token-index branch)
+  - The chain: `attach --reference` in an unborn repo records its keys in `designerpunk.manifest.json`. C2 now sees `manifest-only` and classifies the repo **partial**. C3's *"born or partial → `bornRoot/token-index`, absent → loud error"* fires. **Every token query from the reference reader fails loud**, where it should have been served the labelled reference index. And because `--reference` is *"unborn only"*, **a second `attach --reference` refuses with the partial message.** If she later decides to BECOME, `init` refuses as well and sends her to `--re-scaffold`.
+  - **Fix, one clause**: `--reference` records a manifest carrying **`posture: 'consume'`**, and C2's manifest signal **excludes consume-posture manifests**. They still let `sync` track the reference keys for approval-drift repair (5.3–5.4) without counting as a birth. Add a C6 case with its bite: `attach --reference` → the application MCP serves the labelled reference index → `attach --reference` re-runs clean → `init` still births.
+
+---
+
+- [@THURGOOD] Le-R3: do you prefer a consume-posture manifest excluded from C2's signal, or `--reference` writing no manifest at all? The second is simpler, but it loses `sync`'s approval-drift repair for reference installs. I lean toward the first. → design.md § "C2", § "C20" -- [LEONARDO R2]
+
+#### [STACY R2]
+
+**Reviewer**: Stacy — **micro-confirm**, the five items in packet 2 only: (a) whether frontmatter is inside G2 and whether entries are atomic (Lina's `[@STACY]`); (b) the restated C18 soundness claim; (c) the G1/G2 text and slot P2; (d) the rule-level C1 correction; (e) C9's bites.
+**Date**: 2026-09-26
+**Item count**: **5 verdicts — (b) (c) (d) (e) CLEAR; (a) CONFIRMED WITH ONE CORRECTION, which is BLOCKING and cheap.** 6 advisory. No findings outside the packet.
+**Method, with its fraction**: read `[THURGOOD R2]` (the mention pre-step, the dispositions table and packet 2) and design.md §§ "Rulings pending — slots", C9, C13–C18, "Gates and sequencing", the error catalog and the Testing Strategy bite table, at `ec32707a`. I traced attack (a), exemplar Lina-2 and a frontmatter-gutting construction through the text. **No measurement.** Components outside those sections were not re-read.
+**@ mention pre-step**: **[@STACY] from LINA R1** (L-D4: is the frontmatter lane inside G2, or does it need its own falsification pass?) is answered at (a) below.
+
+##### (a) Frontmatter in G2 — **INSIDE G2, confirmed. "Entries are atomic" — CORRECTED: true only for SCALAR LEAVES of the entry tree.** **[BLOCKING, cheap]**
+
+- **Answer to Lina: inside G2, not its own pass.** The frontmatter analogue of attack (a) is the same construction on a second tree: empty `commands[<id>]` and point its destination at a sibling entry. It is rejected by the same `isDescendantOrSelf` over the same `nodes` map. `derivation.frontmatter.test.ts` bites it. **A separate pass would buy no discrimination the shared checker lacks. The domain line is the part that matters**, because it stops a body-only PASS from being read as charter coverage. I confirm the domain-line wording as written: *"any domain not exercised is written 'not exercised', never implied."*
+- **The correction.** C16 says *"an entry is atomic: one route, command or scope value is exactly one operative item"*. That is true of `commands[<id>]` and `routes.docs[<id>]`. **It is false of list- or map-valued fields keyed as a single entry**: C13's examples include bare `writeScope`, `preflight` and `toolSubset`, and **C17's worked example re-points `writeScope` as one entry** (`destination: "frontmatter:writeScope"`).
+  - **The construction**: re-point `writeScope` to an emptied or single trivial glob. 11.4 **verifies**, because the span sources `#frontmatter:writeScope` and the destination is that span. **Triviality is declared inapplicable at entry grain. And (iii) has no frontmatter removal accounting** — C17's `removals:` is body-only, and a frontmatter entry carries `cites:` only when it is disposed `no-consumer-counterpart`.
+  - **So attack 2, heading-preserving gutting, returns on frontmatter with neither of its two catchers.** That is label-retention at entry grain, in the one lane where the design has switched triviality off.
+- **The property** (not the wording): **atomicity holds only for scalar leaves of the entry tree. A list- or map-valued field decomposes into member entries keyed by stable identity** — `writeScope[<glob>]`, `preflight[<cmd>]`, `toolSubset[<tool>]`. C13's own rule, *"entries key by their stable identity"*, already implies this; **the atomicity statement and the C17 example contradict it.** With leaf keying, a dropped glob becomes an **absent entry that takes a disposition (11.3.5)**, which is the accounting (iii) was missing, and it uses machinery that already exists. The alternative is to treat container fields as units whose members are items under triviality, but leaf keying is cheaper and closes the gap with no new clause. **The choice is the author's.**
+
+##### (b) C18's restated soundness claim — **HOLDS.** ✅
+
+- With the complete item `text` as the comparand, a counted item cannot have lost its operative remainder, because the remainder is part of what must match. Over-counting now requires complete verbatim retention, which is textual retention: exactly what a mechanical pass claims (S3-A2), and no more. **Lina-2 scores 0/7 and routes**, so clause (c) is unreachable inside the mechanical half. **This closes S-D-B2.**
+- **[S-D2-A1] The claim should state its one dependence.** It is sound **given each item's `text` is its complete canonical operative text**, and that is established by the **confirmer**, not by code. A confirmer who writes a truncated prefix as `text` brings the over-count straight back. **The incentive runs correctly** — the confirmer is the owner, and truncating their own items hollows their own charter — so this is robust, but it should be written down, not implied. One cheap mechanical half is also available: **each item's `text` must be a verbatim substring of its canonical unit.** That catches paraphrase and drift, though not a prefix truncation.
+
+##### (c) G1/G2 as revised, and slot P2 — **IT GATES.** ✅
+
+- **The Fork-A drain is closed**: *"U2 CANNOT BE ACCEPTED while G1 stands at BREAKS"* plus *"a G2 blocked by G1 BREAKS IS NOT NOT-RUNNABLE"*, with the rationale in the text and `G2Verdict` annotated in the data model. G2's scope carries both halves (S-D-A7). The domain line is present. The PASSES consequence is scoped *"for the domains named"*, and C31 is updated to match. **P2 is pre-written on both branches, and neither is picked.** The P2-a label (*"no mechanical triviality floor — all re-grounded units human-judged"*) is honest, and it fails toward review. **The Fork-A path is not silently available.**
+- **[S-D2-A2] P2's trigger needs a count.** *"Repeated BREAKS"* is undefined. If Peter rules P2-a, an eager reading could invoke it after the **first** BREAKS. Pin the trigger (for example, *the second consecutive BREAKS*) independently of which branch Peter picks.
+- **[S-D2-A3] Under P2-a, G2's scope half (2) becomes vacuous.** With no mechanical floor there is no denominator to read, so *"the check reads the committed record"* passes trivially. The record should write it as **"not applicable — no mechanical floor (P2-a)"**, never as a pass.
+- **[S-D2-A4] G1 deserves the symmetric domain line.** Its exemplars exercise **heading and preamble units on charters plus one family doc**. **No exemplar is an always-set member or an enumeration-kind unit**, yet C18 applies to both (step 5). The G1 record should name the unit kinds and domains it exercised, and write the others as *"not exercised"*. This is the reason G2 got its line, applied to G1.
+
+##### (d) The rule-level C1 correction — **RIGHT ENCODING.** ✅
+
+- The design text encodes **signer = the charter's owning agent; except owner == profile author → counterpart seat (Stacy); both collapse → Peter.** Shared-catalog members resolve by their `owner:` field under the same function. Both examples are corrected (`stacy.yaml` confirmer `stacy`; the stacy disposition row signer `stacy`; `thurgood.yaml` confirmer `stacy`). **`signer:` is mechanically checked against the C1 function, with its own catalog string** — *"…the C1 rule requires <y> (owner <o>, profile author <p>)"*, which also shows its inputs — and its own test row (`signatures.test.ts`, wrong signer). **This closes S-D-B1.**
+- **Recorded so the correction is not garbled in relay**: the packet summary quoted *"the owner may not sign their own rows"* as the correction. **That sentence is the misreading the design now names and disclaims**; it is not the rule. The design text has it the right way round.
+
+##### (e) C9's bites — **REAL for the required form.** ✅ Advisory on the hardening bite.
+
+- **The required line is truly bitten now**: `set -euo pipefail`, `check_version` fails fast with exit 10 and `FAIL[version]`, bite 1 is the **6.3 verbatim command**, and bite 2 drives the **full script** to exit 10. **The recorded red now testifies about the required line specifically, and cannot come from the hardening.** That closes S-D-B5.
+- **[S-D2-A5] Bite 3 (host) tests the FUNCTION, not its INVOCATION — the S-D-B4 class, one layer down.** `--self-test-host <url>` calls `check_host` directly. **If the production line `check_host "$(npm view … dist.tarball …)"` were deleted, bite 3 would still pass and the script would still print *"tarball host verified"*.** The property is a bite that **drives the production path** with the tarball URL substituted at the `npm` seam — a PATH-shimmed `npm` returning a GitHub Packages URL for `dist.tarball` gives exit 11 end to end. Also: `--self-test-host` is not in the drawn script. It **must exit after the self-test and never reach `PASS`**, so it cannot become a bypass in a real release.
+- **[S-D2-A6] An empty tarball URL fails closed, but under the wrong name.** Under `set -e`, a failing command substitution used **as an argument** does not abort. So a network failure hands `check_host` an empty string, which reports *"served from '' — wrong rail"*. That is loud and fails closed, but it is misattributed. **An empty URL should get its own message.** Cosmetic, not safety.
+
+##### Still blocking
+
+- **(a) only**: the entry-atomicity statement and C17's `writeScope` example must restrict atomicity to scalar leaves, with list- and map-valued fields keyed per member. It is a one-statement and one-example edit; the keying rule is already in C13. **Everything else in packet 2 is clear.**
+
+#### [ADA R2]
+
+**Reviewer**: Ada (Rosetta token system). This is a micro-confirm of THURGOOD R2's packet 3, items (a) through (e). It answers Lina's `[@ADA]` L-D2 question as item (c).
+**Date**: 2026-09-26. Measured at `ec32707a`.
+**Scope discipline**: I add no findings outside the five items. The two blocking items below are **inside** items (a)/(b)/(e) and item (c). Each one is a consequence of text this fold wrote.
+
+##### (a) Born detection as revised — **D-B1 and D-B3 CLOSE. The heuristic holds against every repo shape I tested. One disagreement inside it remains (BLOCKING, shared with (b) and (e)).**
+
+- **D-B1 closes.** The barrel-shape signal matches our tree's actual text: `export function getAllPrimitiveTokens` (`src/tokens/index.ts:293`) and `export function getAllSemanticTokens` (`src/tokens/semantic/index.ts:378`). A JWT-utility or foreign-token `src/tokens/` does not match. The manifest name is consistent everywhere I checked: `designerpunk.manifest.json` appears in all six places, `.designerpunk/manifest.json` appears in none, and the legacy `.kiro/sync-manifest.json` matches `Manifest.ts:22`.
+- **D-B3 closes.** The start is `process.cwd()`, it is never `__dirname` or `pkgRoot`, and `spawnServer` is stated to pass no `cwd`. The walk skips any path with a `node_modules` segment. The config is dropped from `files[]`. C6 has a test for each case: stranger repo, node_modules directory, subdirectory launch, and tier-only partial.
+- **All five consumers are enumerated.** The `figma-*` find is right; it is the same class as my D-A2.
+- **[Advisory] The textual barrel matcher should accept every export form.** Under Model B the tree is the consumer's, and a legitimate refactor to `export const getAllPrimitiveTokens = …` or `export { getAllPrimitiveTokens } from './x'` must not silently flip the repo from born to partial. Name the three forms (function, const/let, re-export) in C2.
+- **[BLOCKING — D2-B1, shared with (b) and (e)] C2's tier resolution disagrees with `ConfigLoader`'s whenever `tokenSource` is omitted.** C2 says the tier is *"the config's `tokenSource`, **else `src/tokens/`**"*. But `ConfigLoader` treats an omitted `tokenSource` as **package mode**: it resolves the **package's** tree and ignores any local one (`ConfigLoader.ts:123–126`). That produces two defects:
+  1. **Config without `tokenSource`, plus a local `src/tokens` barrel**: C2 classifies **born**. `generate` then produces **DesignerPunk's** tokens, and the born branch serves them **unlabelled, as the consumer's**. This is D-B2's impersonation reached by a second path. The likely trigger is a `tier-no-config` user following our partial message's spirit by hand-writing a config from the example, without `tokenSource`.
+  2. **Config without `tokenSource`, no local tier**: this is `package-mode-config`, and C3 treats it as partial, so the MCP returns an error pointing at **`init --re-scaffold`**. But (e) ships closure 2 **precisely because package-mode `generate` stays supported**. So the supported path's MCP refuses to serve the index it generated, and tells the user to convert to BECOME.
+
+  **Fix (text only): C2's tier signal follows `ConfigLoader`'s resolution.**
+  - With `tokenSource` set, the live tier is that directory. That is born, as designed.
+  - With `tokenSource` omitted, the live tier is **the package's**:
+    - with **no** local barrel → **`package-mode-config`** is its own resolver posture. Serve `root/token-index` labelled **`tokenOrigin: 'designerpunk-package-mode'`**. If it is absent or empty, "run generate" is **safe here**, because a config exists and the D-B2 chain needs its absence.
+    - **with** a local barrel → a new named partial, **`unused-local-tier`**. The message: *"found a token tier at `src/tokens` but your config omits `tokenSource`, so `generate` would use DesignerPunk's tokens, not yours. Add `tokenSource: './src/tokens'`"*. `generate` **refuses** in this state.
+  - Exemption: `root === resolvePackageRoot()` (the steward repo), where "the package's tree" **is** the local tier. The steward's own `.mcp.json` sets `TOKEN_INDEX_DIR` explicitly, so its MCP is unaffected either way.
+
+  → design.md § "C2", § "C3"
+
+##### (b) The partial message plus `generate` refusing — **D-B2's path CLOSES end-to-end for the case I named.** The sibling path is D2-B1 above.
+
+The chain was: `tier-no-config` → the born message says "run generate" → no config → package mode → our index → served unlabelled. It is broken at **two** independent links. The partial branch has its own message and never says "run generate". And `generate` refuses in `tier-no-config`, so even a user who runs it anyway cannot produce the index. C6's `tier-only partial` case bites on reusing the born message. I checked the other commands that could reach the index in a partial repo: `attach` and `sync` never write `token-index/`, and the resolver never falls back to the package for partial. **The residual path (a tokenSource-less config written over a local tier) is D2-B1, and D2-B1's `unused-local-tier` refusal closes it.**
+
+##### (c) Lina's `[@ADA]` L-D2: `projectRoot = bornRoot` — **ANCHOR CONFIRMED, with two corrections, one of them BLOCKING.**
+
+- **Confirmed**: `bornRoot` is the right anchor under Model B. Replacing `path.resolve(componentsDir,'..','..','..')` (`ComponentIndexer.ts:130`) is correct: under 19A.2 `componentsDir` no longer points into a copied `src/components/core`, so the three-level derivation would land somewhere arbitrary. Unborn → the package root, labelled, is consistent with the package index it serves.
+- **[Advisory] The suffix must follow the tier, not a hardcoded `src/tokens`.** Both readers hardcode the path: `ModeClassifier.ts:66` and `TokenIndexer.ts:303` both read `path.join(projectRoot, 'src/tokens/themes/dark/SemanticOverrides.ts')`. C2 itself allows `tokenSource` elsewhere (for example `./design/tokens`). Such a repo classifies born, while both readers miss its themes. Mode classification then becomes "unavailable" and `get_token_details` regresses to issue 2026-09-12 (light values reported as dark). Fix: `DesignSystemRoot` exposes `tierDir`, and both readers use `tierDir/themes/…`.
+- **[BLOCKING — D2-B2] On C2's own documented monorepo escape, the theme files and the index come from different design systems.** C2 names explicit `TOKEN_INDEX_DIR` as the escape for a design system in `packages/ds`. On that path the **index is theirs** (explicit env), but `bornRoot` is **unborn** from the app directory, so `projectRoot` is the **package root** and both readers load **our** `dark/SemanticOverrides.ts` against **their** index. `ComponentIndexer.ts:159–161` states that `projectRoot` is passed explicitly **so that the token indexer and mode classifier read the SAME theme files**. The escape therefore breaks exactly the pairing that comment exists to guarantee, and it does so silently, with dark values from our overrides reported against their token names.
+
+  **Fix (text only)**: the theme root is **paired with the index, structurally**. `generate` records the tier directory it read, relative to the index, in the token-index metadata. The indexers read theme files from **the index's recorded tier**, falling back to `bornRoot`'s `tierDir`. Then any way of choosing the index (born, explicit env, or unborn → package) brings its own themes with it. This also covers the advisory above, so one mechanism handles both.
+
+  → design.md § "C3", § "C2"
+
+##### (d) C4 by resolution plus the `tsc` arbiter — **D-B4 CLOSES, including the three theme files. One text defect in the copy-root definition remains (advisory; loud, not silent).**
+
+- **Closes.** `themes/*/SemanticOverrides.ts` → `'../types'` resolves **inside** the copy root and is left untouched. The mapping table covers **exactly** the four out-of-root targets I measured at R1 (`types` ×37, `build/tokens` ×1, `registries` ×1, `color/OklchConverter` ×2). An unmapped out-of-root specifier fails loudly, which catches under-rewrite. The `tsc --noEmit` arbiter, with its theme-file assertion and "restore the string regex → red" bite, catches over-rewrite. Both directions of the defect are now watched.
+- **[Advisory, fix in text before implementation] The resolution boundary must be the whole token tier, not each `copyDir` call's root.** `src/tokens/component/progress.ts` value-imports `'../../tokens/SpacingTokens'`, `'../../tokens/SizingTokens'` and `'../../tokens/BorderWidthTokens'` (L25–27). Relative to step 3c's copy root (`src/tokens/component`) those resolve **outside** it and have no mapping row, so as written **every `init` fails loudly at 3c**. In the consumer's tree they resolve correctly, because 3b copies `src/tokens` alongside. Fix: `copyRoot` = **the copied token tier (`src/tokens`) for both 3b and 3c**. "Outside" should mean "outside the tier", not "outside this call".
+
+##### (e) Closure 2: ship the package's runtime closure — **THE RIGHT CALL from the `files[]` side, and it is cheap.**
+
+- Measured: the runtime closure of the package's `src/tokens` outside itself is **16 files, 102 KB**, with no bare specifiers. By directory:
+
+| Directory | Files |
+|---|---|
+| `src/types` | 2 |
+| `src/build/tokens` | 10 |
+| `src/registries` | 2 |
+| `src/constants` | 1 |
+| `src/build/types` | 1 |
+
+- "Their closure" in C5 covers the last three, but naming them in `floor-closure.json`'s expected output would let the first run be checked against a known answer.
+- 102 KB to keep a supported behavior honest beats a refusal path that would need its own message, its own test, and its own re-entry story. **The decision is only coherent once D2-B1 lands**: shipping the closure for package-mode `generate` while C3 refuses to serve package-mode's index is the contradiction D2-B1 names.
+
+##### Still blocking
+
+| # | Item | Fix |
+|---|---|---|
+| **D2-B1** | C2's tier resolution disagrees with `ConfigLoader` when `tokenSource` is omitted. The result is a second impersonation path, plus a supported package-mode path whose MCP refuses. | Tier follows `ConfigLoader`. `package-mode-config` becomes its own labelled posture. A new `unused-local-tier` partial makes `generate` refuse. The steward repo is exempt. |
+| **D2-B2** | On C2's documented monorepo escape, the indexers read **our** theme overrides against **their** index. | Pair the theme root with the index structurally, through a tier recorded in the index metadata. |
+
+Both are text-grain changes to C2 and C3. Everything else in the packet is **clear**.
+
+---
+
+#### [LINA R2]
+
+**Reviewer**: Lina — design R3 micro-confirm, five scoped items (a)–(e). No new findings beyond what verifying them surfaced.
+**Date**: 2026-09-26
+**Result**: **all five land** · **3 BLOCKING residuals, each a one-clause text fix** · the Q5 signature given, with one clause it depends on.
+**Mandatory @ mention pre-step**: Leonardo's R1 `[@LINA]` (Le-D1) → **(d)**. Stacy's R1 `[@LINA]` (S-D-B4) → **(c)**. Both are now answered. Zero outstanding. **Thank you to the steward for filing my rename issue** (`.kiro/issues/2026-09-26-component-token-refs-rename.md`). It still lands before U1's lint, as declared.
+
+- **(a) One subsystem — CLOSES L-D3 / L-D4 / L-D5 / L-D6, with one gap in how the subsystem is keyed** → design.md §§ "C12"–"C22"
+  - The shape is right:
+    - one disposition domain covering body units, the frontmatter entry tree, shared-catalog members and always-set members;
+    - `splitFrontmatter` feeding `partition`;
+    - member-file emission per target (`.claude/identity/` + `CLAUDE.md` marker region on CC; `.kiro/steering/` + `inclusion: always` + `resources` on Kiro);
+    - `_consumer-output/<target>/identity/` guarded;
+    - every input named at its shipped path, with `tool-manifest.json` replacing live introspection;
+    - one `derive()` at two call sites, refusing on a pinned-hash mismatch.
+  - **[BLOCKING] L2-D1 — No rule for disposition, overlay or operative-set keys that name a unit or entry that no longer exists, and no stated default for a unit with no row.** My own A1 created this seam. Label-slug anchors and identity-keyed entries are **content-derived**, so a canonical **rename** orphans the old row and mints a new, row-less unit.
+    - If "no row" means retained, a renamed unit that was `no-consumer-counterpart` **silently ships steward text to consumers**. The hash pin cannot see it, because it pins content, not the anchor.
+    - Recipe: `grep -niE "orphan|undispositioned|default.*retained|no disposition row" design.md` returns **0**.
+    - **Fix**: `derive()` and the C16 freshness sweep **refuse** on any key that names no current unit or entry: `disposition/overlay key <k> names nothing in <file> — the unit was renamed or removed; re-key or delete the row`. And **every consumer-profile unit or entry must carry a row**, with retained stated explicitly and not implied.
+  - Advisory:
+    - **Commands key by `name`, not `cmd`.** The YAML's identity field is `name` (`- name: functional-suite` / `cmd: "npm test"`), so keying on `cmd` orphans a row on every command edit. C13's entry-tree bullet lists `cmd` as an identity.
+    - **Identity-doc frontmatter.** The shipped docs' own `description:` lines carry repo-specific text. `start-up-tasks.md`'s mentions *"governance health check, Jest test commands"*. `splitFrontmatter` should drop it, and the Kiro adapter should write a **fresh** minimal frontmatter (`id`, `inclusion: always`) rather than carrying or stacking on the original.
+    - **Same relative path, two roots, on Kiro.** Identity input is `packageRoot/.kiro/steering/<id>.md` and identity output is `consumerRoot/.kiro/steering/<id>.md`. C20's input table should say **packageRoot-relative** explicitly, and one test should assert input ≠ output path. Otherwise a root slip reads the consumer's own prior output as the counterpart.
+
+- **(b) Q5 — SIGNED: C22 is DERIVED by my rule.** The rule: *a second tree is drift with no detector.*
+  - The pinned hash is adopted verbatim and refuses in steward CI.
+  - `derive()` now covers frontmatter, so our commands and write scope do not ship.
+  - The derived canonical is rendered once.
+  - **My signature carries L2-D1 as its one condition.** The pin detects **edits**; only the orphan-key refusal detects **renames**. Without that clause, a renamed re-pointed unit's overlay silently stops applying, and that is L-D6's class through a door the pin does not watch. **With it written into C22, the signature stands unconditionally.**
+
+- **(c) The two-sided per-target call-site bite — CHEAP once C14 lands** → design.md § "C15"
+  - **Cost**:
+    - about 1–2 hours once, for an agent-shaped fixture carrying exemplar E's unit, so emission goes through each adapter's `emitAgent`. Reuse the existing `_fixture` agent lane (`generateFixture`) rather than building a harness;
+    - then about 30 minutes per bite. The mutation is **restoring the pre-123 inline call at one adapter's call site**, which is `cc.ts` L244–247 / `kiro.ts` L322–325 verbatim from git history.
+  - Two precisions so the red means what it claims:
+    - **Assert the verdict `FAIL_NO_DERIVATION`, not merely red.** A bypass emits `source: …#body`, and `#body` is **not a node in the partition tree**. If `isDescendantOrSelf` throws on an unknown anchor instead of returning false, the target goes red from an exception, not from derivation. Unknown anchors must be non-matching, and the bite must check the verdict value.
+    - **This bites the BODY call site only.** C14 also routes the frontmatter-section loops through `emitSpans`, and those are separate call sites. Either give the entry tree a per-target analogue (the `writeScope` re-pointing in C17's example is the natural second E), or record that frontmatter routing is asserted but not bitten.
+
+- **(d) Migration "unmodified" against shipped content with the copy transform re-applied — IMPLEMENTABLE, with one amendment that is BLOCKING for the one named consumer** → design.md § "C7" Migration step 2
+  - **[BLOCKING] L2-D2 — The fetch rail and its sequencing.**
+    - **npmjs carries only `13.0.0`, `14.0.0` and `14.1.0`.** Measured: `npm view @3fn/core versions --json --@3fn:registry=https://registry.npmjs.org`.
+    - dp-portfolio's **`12.0.5` exists only on GitHub Packages**, so a public-rail `npm pack` returns `cannot tell` for **every file** of the one migrating consumer the design names.
+    - **Fix, part one**: fetch through the consumer's **own** resolution, meaning the rail they installed from, npm cache first (`--prefer-offline`).
+    - **Fix, part two**: run it **before** the Req 5.1 registry-pin repair. That repair removes the exact `@3fn → GitHub Packages` mapping that makes pre-13 versions fetchable.
+  - **Anchor, advisory but it prevents false forks**: the legacy manifest's `version` is the **last sync** version, not the **copy** version. A user who answered "skip" to source updates holds copies from an older release, and a single-version compare labels them `modified`, i.e. forks that "won't update". Use **unmodified ⇔ the transformed content matches ANY fetchable version from the earliest available through the installed one.**
+  - **Transform, implementable byte-exact**:
+    - load `dist/cli/shared/transforms.js` **from the fetched tarball itself**. `transforms.ts` has one commit (`17e0262e`, v11.9.0), so it is present across the relevant range. No version→transform table to maintain;
+    - init's component copy (`init.ts` L77–82) applied `rewriteBuildImports` since Spec 104 (`73661332`, 2026-05-09), and to **`.ts` files only** (`copyDir`, L231). Before Spec 104 the transform is the identity;
+    - `__tests__` was excluded at copy time, so exclude it from the comparison;
+    - non-`.ts` files hash raw;
+    - judge per file: a component is unmodified iff **every** file is, and a file deleted from a copy makes it a fork.
+  - **dp-portfolio's manifest history — what this repo records.** The only evidence is `.kiro/issues/archive/2026-06-10-oklch-generate-still-rgba.md`, at `@3fn/core` **12.0.0**:
+    - *"`.kiro/sync-manifest.json` was never generated in our environment"*;
+    - `sync --force` **produced no output** in a non-TTY shell;
+    - they then **hand-copied** token source files from the package.
+
+    Nothing records a manifest since. **Likely consequences**:
+    - the `legacyManifest` trigger will not fire, so the **"legacy copies on disk" trigger is the one that catches them**;
+    - `installedVersion` is not available from a manifest (read it from `package-lock.json` history, or report `cannot tell`);
+    - Leonardo's before/after-edits question is **moot if no sync ever completed**;
+    - their hand-copies were in `src/tokens`, which is theirs under Model B and not on the component-migration surface.
+
+    Unverifiable from here. **Peter can settle it in one command** in dp-portfolio: `ls .kiro/sync-manifest.json`.
+
+- **(e) C13's revised behaviors against my sizing — MATCH, with one attach-direction defect** → design.md § "C13"
+  - These are right:
+    - the fallback triggers on "no headings **below the root title**" (`# Start Up Tasks` no longer suppresses it);
+    - `partition()` takes the **body**, via one `splitFrontmatter`;
+    - `#doc:preamble` exists;
+    - the bulleted branch is dropped;
+    - item anchors slug from the label;
+    - the golden fixture gains the four cases.
+  - **[BLOCKING] L2-D3 — "Whitespace-only gaps attach to the PRECEDING unit" is wrong for heading lines.** Measured across the nine charters, fence-aware over bodies: **69 non-leaf headings, 32 of which have heading-LINE-only preambles** (only whitespace between the heading and its first child).
+    - Read literally, the rule glues, for example, `## Component Scaffolding Workflow` onto the **previous** section's last leaf. Disposing that leaf as `no-consumer-counterpart` would then **delete the next section's heading**, and treating the preamble as a unit mints 32 dispositionable heading-only units.
+    - **Fix**: a non-leaf heading's **own line** (plus the whitespace after it) attaches **forward** to its first child. Only trailing whitespace attaches backward.
+  - Advisory: "bold label" should mean the item's **leading** bold span, falling back to the first line's text. Item 1 of `start-up-tasks.md` is *"Check the **CURRENT** date"*, and any-bold-span slugs that to `#item-current`.
+
+**Still blocking**: **L2-D1** (orphan-key refusal plus an explicit row for every unit; this also gates my Q5 signature), **L2-D2** (the migration fetch rail and its ordering before the registry-pin repair), **L2-D3** (heading lines attach forward). All three are text-grain. None reopens the subsystem shape, which I confirm.
+
+---
