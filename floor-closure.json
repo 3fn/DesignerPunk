@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-26T23:06:08.719Z",
+  "generatedAt": "2026-09-26T23:23:20.952Z",
   "note": "snapshot; the arbiter is the post-diet packed consumer-guard run (Req 3.9, Task 9).",
   "closure1": {
     "description": "rewrite completeness over the transformed copy (governs C4, never files[])",

@@ -67,6 +67,7 @@
     "src/components/core/**/platforms/android/*.kt",
     "!src/components/core/**/platforms/android/*Test.kt",
     "src/components/core/**/platforms/android/res/**",
+    "src/components/core/**/platforms/android/.gitkeep",
     "src/blend/*.ios.swift",
     "src/blend/*.android.kt"
   ],

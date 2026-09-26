@@ -153,11 +153,14 @@ function main(): void {
   check(androidRes.length === 51, 'Android res/** PRESENT = 51 (50 drawable XML + README.md)', `measured ${androidRes.length}`);
   check(androidBlend.length === 1, 'Android src/blend/*.android.kt PRESENT = 1', `measured ${androidBlend.length}`);
   check(androidTokenPlatform.length === 2, 'Android src/tokens/platforms/android/** PRESENT = 2', `measured ${androidTokenPlatform.length}`);
-  // Data R2 counted 8 .gitkeep files as "swept in by ** (harmless)". This
-  // implementation's globs (*.kt, res/**) do NOT sweep the 8 bare
-  // `platforms/android/.gitkeep` placeholders in — a deliberate divergence,
-  // recorded in the completion doc, not a defect.
-  check(androidGitkeepSwept.length === 0, 'Android bare platforms/android/.gitkeep NOT swept in (deliberate; see completion doc)', `measured ${androidGitkeepSwept.length}`);
+  // CORRECTED at verification (task-3-4-completion.md addendum): the SETTLED
+  // tasks.md criterion reads "`.gitkeep` = 8, INCLUDED and counted (swept in
+  // by `**`; harmless)" — a ruled INCLUDE, not an open choice. An earlier
+  // version of this assertion asserted 0 (excluded); corrected to assert the
+  // ruled PRESENT count of 8, backed by an explicit `files[]` entry
+  // (`src/components/core/**/platforms/android/.gitkeep`) rather than an
+  // incidental sweep.
+  check(androidGitkeepSwept.length === 8, 'Android platforms/android/.gitkeep PRESENT = 8 (ruled INCLUDE)', `measured ${androidGitkeepSwept.length}`);
 
   // --- Report ---
   const failed = findings.filter((f) => !f.ok);

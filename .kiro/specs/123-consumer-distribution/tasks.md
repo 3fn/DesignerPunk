@@ -300,7 +300,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 2.5 The `tsc` over-rewrite arbiter + its bite; U1 next steps + the restart line
   - [x] 2.6 (Thurgood) Integration Guide: the lines U1 falsifies
 
-- [ ] 3. The packaging floor, `files[]`, and the platform closures
+- [x] 3. The packaging floor, `files[]`, and the platform closures
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet) — **ESCALATES to Opus / Ada-decide** if: closure 2 shows an unattributed difference; the pack assertion needs a list change not in C5; or a 3.5 verdict is CUT
   **Traces**: Reqs 4.1–4.7, 3.9 · design C5, DD14

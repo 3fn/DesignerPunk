@@ -1,24 +1,25 @@
 {
-  "generatedAt": "2026-09-26T23:11:46.024Z",
+  "generatedAt": "2026-09-26T23:45:00.000Z",
   "description": "Tarball target declared from the post-diet npm pack (Spec 123 Task 3.6; Req 4.7). Names WHICH LEVER it measures: entryCount and unpackedSize, both derived from the post-U1-diet npm pack --dry-run --json. U5 (Req 25.3) re-measures and asserts against this target, naming which lever moved.",
   "lever": "entryCount and unpackedSize (npm pack --dry-run --json, --ignore-scripts, against a fresh npm run build)",
   "measuredAt": {
     "commit": "82051e7bc65296421a44c9c67c29cb9d086f5915 (base commit this Task 3 branch built on; package.json narrowing lands in commits after this one)",
+    "note": "Regenerated after the verification-stage .gitkeep correction (task-3-4-completion.md addendum, 2026-09-26) — the 8 platforms/android/.gitkeep files are now INCLUDED per the settled tasks.md criterion, adding 8 entries vs. the first pass.",
     "preDiet": {
       "entryCount": 2567,
       "size": 7294942,
       "unpackedSize": 29820463
     },
     "postDiet": {
-      "entryCount": 1589,
-      "size": 5863028,
-      "unpackedSize": 21307954
+      "entryCount": 1597,
+      "size": 5863534,
+      "unpackedSize": 21308710
     }
   },
   "target": {
-    "entryCount": 1589,
-    "size": 5863028,
-    "unpackedSize": 21307954
+    "entryCount": 1597,
+    "size": 5863534,
+    "unpackedSize": 21308710
   },
   "note": "This is a SNAPSHOT declared at U1 (files[] narrowed; src narrowed to the declared floor). Later units (U2 agent-layer files[] changes, U3 onboarding docs) will shift these numbers again — U5 re-measures and asserts against THIS target, per lever, not a frozen absolute never expected to move."
 }
