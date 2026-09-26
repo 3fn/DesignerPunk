@@ -42,6 +42,10 @@
 # `scripts/check-completion-criteria-parity.ts` before committing and print
 # its output. Non-zero output is a LOUD warning, never a block — pass
 # --skip-parity to bypass entirely (e.g. the checker itself is broken).
+# RULED (Peter, 2026-09-26, PR #205): this authoring-time check stays advisory
+# until the Q2 sitting decides otherwise — that same sitting decides both the
+# CI required-flag AND this script's local mode. See RELEASE-FLOW.md § 5b
+# (the note adjacent to the ratified arming-decision paragraph).
 #
 # Credential discipline (Req 4.3): preflights gh auth + repo push permission and
 # fails LOUD with an actionable message when credentials are missing/under-scoped.
@@ -343,9 +347,11 @@ fi
 # Register row `completion-criteria-parity` (governance/classification-map.md)
 # is check_state: proposed — ARMING is Q2's decision, not this script's. This
 # call is deliberately non-blocking: it prints the checker's own output and,
-# on a non-zero exit, prints a loud warning and CONTINUES. A future blocking
-# mode is a fork for Peter, not something this drift fix decides. --skip-parity
-# bypasses entirely (e.g. the checker itself is broken).
+# on a non-zero exit, prints a loud warning and CONTINUES. RULED (Peter,
+# 2026-09-26, PR #205): stays advisory until the Q2 sitting decides otherwise
+# — that sitting decides this script's local mode alongside the CI
+# required-flag (RELEASE-FLOW.md § 5b note). --skip-parity bypasses entirely
+# (e.g. the checker itself is broken).
 # ---------------------------------------------------------------------------
 if [[ "$MODE" != "subtask" && "$RUN_PARITY" == true ]]; then
   if [[ -f "scripts/check-completion-criteria-parity.ts" ]]; then

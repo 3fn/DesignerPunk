@@ -94,6 +94,8 @@ K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
 
 **Release-prep start — concretely, the creation of the version-bump PR — is the event anchor for the `completion-criteria-parity` arming decision.** If that decision is still open when this step runs, **it is decided here**, not deferred past a release. Deciding **not** to arm is a lawful outcome: the evidence guard forbids arming before the convention has shipped, the Tier-3 worked example is fixed, and **N ≥ 5** in-scope parents have completed under the convention with parity **measured by audit, not by the checker**. What is not lawful is shipping a release with the question unexamined.
 
+> **Note (Peter, 2026-09-26, PR #205 — added adjacent to the ratified paragraph above, not part of it):** this same sitting also decides `.kiro/hooks/complete-task.sh`'s **authoring-time** parity check — whether it stays advisory or becomes blocking. That check is **advisory until this sitting decides otherwise**; see the script's header comment and its parity-check block.
+
 #### The staged-mechanization ladder, and its named de-facto detectors
 
 The owed-set pipeline is **documented commands, not a committed script**, deliberately. Its promotion path is pre-committed and is the only path:
