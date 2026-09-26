@@ -3,7 +3,7 @@
 **Date**: 2026-09-26 (R2 revision, same day)
 **Spec**: 123 — Consumer Distribution (the former "121-C")
 **Author**: Thurgood
-**Status**: Tasks Phase — **R2 REVISION**. Six R1 reviews (17 blocking) are folded; dispositions are in `feedback/tasks.md` § `[THURGOOD R2]`. **Micro-confirms are pending, and two rulings are pending from Peter (slots T1 and T2).** Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
+**Status**: Tasks Phase — **ROUND COMPLETE · READY FOR PR.** **Slot T1 stays open: it gates U1's START, not the plan's settle.** R1 (17 blocking) was folded at R2 (`[THURGOOD R2]`); the R2 micro-confirms (1 blocking + advisories) are folded in this closing revision (`[THURGOOD R3]`). **Peter ruled T2 on 2026-09-26 (plain sequential publishing).** Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 **Criteria mode**: per-parent
 **Sources**: `requirements.md` (PR #196); `design.md` (PR #197, `5e98bd8f`; P1 ruled YES, P2 ruled branch A), plus **two tasks-round errata on this branch**: C27 (Le-T1 — the terminal-output line restored) and C7 (D-T-B2 — manifest entry `origin`). **This plan decides sequencing and evidence, never WHAT.** Where tasks grain moved a design component's placement, § "Sequencing decisions" says so.
 
@@ -16,18 +16,26 @@
 
 ---
 
-## Rulings pending from Peter — slots (both branches pre-written; this document picks neither)
+## Rulings from Peter — slots (this document picks neither branch)
 
 - **SLOT T1 — write scope for seated agents** (Lina R1 T-L3; **needed before U1 starts**). Most parents sit outside their seated agent's declared write scope, so as the charters read today the agent must decline those edits.
   - **(A)** A record-first ballot widens each seated agent's write scope to the paths its 123 parents list (canonical charters regenerated; governance carve-out). *Cost: one ballot and one regeneration, before U1.*
   - **(B)** A **standing ruling that a merged `tasks.md` assignment row grants write scope over that parent's enumerated Primary Artifacts**, for the parent's duration (Lina's lean). A claims pass can audit whether edits stayed inside the listed artifacts. *Counter: the tasks author becomes a de facto scope granter, through an artifact that is not a ballot.*
   - **Where it lands**: § "Delegated-tier plan" (a preamble line) and every parent's Primary Artifacts list, which under (B) becomes the grant's exact extent.
-  - **Ruling: `____`**
-- **SLOT T2 — dist-tag strategy for releases 1–2** (Leonardo R1 A6).
-  - **(A)** Publish releases 1–2 under a **`next` dist-tag**, and promote to `latest` at release 3, the first release carrying the install doc. Then Task 7's rail guard, and every RELEASE pass's rail read, **name the tag queried**: `npm view @3fn/core@next …` for releases 1–2, and `@latest` after promotion. *Counter: it withholds time-to-first-value from anyone who has not opted in, which is 26.3's reason for releasing between units, and it adds a tag the guard must name.*
-  - **(B)** Plain sequential publishing to `latest` (the current plan).
-  - **Where it lands**: § "Expected release count", Task 7's criteria (the guard's queried tag), and the RELEASE passes' read.
-  - **Ruling: `____`**
+  - **Vehicle, pre-drafted so the ruling ratifies without another round**:
+    - **(A)** → a scope-widening ballot, authored on the ruling.
+    - **(B)** → the standing-rule text below, which is **B-U1 § "T1-(B)"**. **Because U1 cannot start until the grant is in force, and B-U1's other content ratifies only at U1's merge**, the T1-(B) section is committed as a **standalone record-first ballot record, Peter-merged ahead of `task/123-u1-substrate`**. The rest of B-U1 cross-references it.
+  - > **STANDING RULE T1-(B) (pre-drafted; ratifies only on Peter's (B) ruling):**
+    > 1. A parent task's assignment row in a **merged** `tasks.md` — its PRIMARY and secondary agents in that spec's Delegated-tier plan — **grants each named agent write access to exactly the paths enumerated in that parent's Primary Artifacts list**, for the parent's duration (from its first subtask commit until its unit merges).
+    > 2. The grant **adds to, never replaces**, the agent's charter write scope, and **confers no ratification authority**. Governance-law paths remain subject to record-first ballots and the Peter-merge carve-out.
+    > 3. Edits outside a parent's listed artifacts remain out of scope. **The claims pass audits edit paths against the list; a path outside it is a finding on the executing agent.**
+    > 4. A Primary Artifact must trace to the parent's requirements or design components. A listed path with no such trace is a tasks-round finding, so the list cannot be used to widen scope beyond the work.
+  - **Ruling: `____` — OPEN. It gates U1's start, not this plan's settle.**
+- **SLOT T2 — dist-tag strategy — RULED (B) PLAIN SEQUENTIAL PUBLISHING (Peter, 2026-09-26).** Releases 1–2 publish normally to `latest`, as MAJORs where the recipe says so, **with honest CHANGELOG entries** (the CHANGELOG starts in U1 — Task 7.4). **The package README and the install doc do not advertise the onboarding path to strangers until release 3.** **The counter-argument (stranger protection) is declined, on the ground that there are zero known stranger consumers** (dp-portfolio is the only known consumer). Branch (A), not taken, is recorded below. Leonardo R1 A6.
+  - **(A) — NOT TAKEN**: publish releases 1–2 under a **`next` dist-tag**, and promote to `latest` at release 3, the first release carrying the install doc. Then Task 7's rail guard, and every RELEASE pass's rail read, **name the tag queried**: `npm view @3fn/core@next …` for releases 1–2, and `@latest` after promotion. *Counter: it withholds time-to-first-value from anyone who has not opted in, which is 26.3's reason for releasing between units, and it adds a tag the guard must name.*
+  - **(B) — SELECTED**: plain sequential publishing to `latest`.
+  - **Lands**: Task 7's guard queries the version as drawn (no tag). No fourth bite.
+  - **Ruling: (B)**
 
 ---
 
@@ -52,8 +60,8 @@
 **MIDPOINT — carrier U2.**
 - **Record path pinned: `.kiro/specs/123-consumer-distribution/completion/claims-pass-midpoint.md`, NEVER `.kiro/specs/123-consumer-distribution/completion/claims-pass.md`.**
 - **Stacy's two conditions**:
-  - **(1)** U2's merge is the **first-render release**. C2 rates, per-signer assent rates **and refusal counts** are recorded as ***"first render — not a baseline"***. **The first-render marking applies to BOTH U2-merge records** (MIDPOINT and the release-2 RELEASE record).
-  - **(2)** The pass audits that **each G1/G2 branch was executed and evidenced by the executing agent** (Tasks 12 and 18's primary agents — § "Gate seat layout"), **never the verdict content**.
+  - **(1)** U2's merge is the **first-render release**. C2 rates, per-signer assent rates **and refusals issued** are recorded as ***"first render — not a baseline"***. **The first-render marking applies to BOTH U2-merge records** (MIDPOINT and the release-2 RELEASE record).
+  - **(2)** The pass audits that **each G1/G2 branch was executed and evidenced by the executing agent** (Tasks 12 and 18's primary agents — § "Gate seat layout"), **never the verdict content**. **Disclosure (Stacy R2)**: Lina authored the machinery pass four tests (C13–C15), so the pass **checks that Task 18's applied edit is byte-equal to its pre-declared text and confined to the domains the verdict names.**
 - Two records, each with its own scope line, never merged. **Within 123 every C2 / assent / refusal reading is baseline-only**; detection begins at the first post-123 release (Stacy R1 (c)).
 - Findings route to owning agents as explicit messages.
 
@@ -77,7 +85,7 @@
 
 - **Cost**: four RELEASE passes (each with the owed-set paste and the rail log), plus MIDPOINT and CLOSEOUT, **= six claims passes**.
 - RELEASE fires at the release tag, before publish.
-- Release 1 is a coherent **substrate** release. **Release 3 is the first release a stranger should be pointed at** (Leonardo A5). Slot T2 decides whether the tags say so.
+- Release 1 is a coherent **substrate** release. **Release 3 is the first release a stranger should be pointed at** (Leonardo A5). **Under T2 (B), the README and install doc do not advertise onboarding before release 3.**
 - *Residual: four dual-registry publishes (the accepted dual-publish tax, 26.6). Hotfixes would add RELEASE passes.*
 
 ### Split tripwire (Req 26.5)
@@ -97,13 +105,13 @@
 
 | Unit | Declared subtasks | Threshold |
 |---|---|---|
-| U1 | 42 | **+4** |
-| U2 | 41 | **+4** |
+| U1 | 43 | **+4** |
+| U2 | 42 | **+4** |
 | U3 | 16 | **+3** |
 | U4 | 6 | **+2** |
 | U5 | 18 | **+3** |
 
-*Thresholds are ~10% rounded up, with a floor of +2 and small-unit allowance of +3. **Totals: 28 parents, 123 subtasks.***
+*Thresholds are ~10% rounded up, with a floor of +2 and small-unit allowance of +3. **Totals: 28 parents, 125 subtasks.***
 
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
@@ -123,7 +131,7 @@
 | 3 | Ada (Sonnet) — **escalates to Opus / Ada-decide** on a named signal (Task 3) | — |
 | 4 | Lina (Sonnet) | — |
 | 5 | Lina (Opus) | Ada (Sonnet) — token-side migration strings (5.5) |
-| 6 | Ada (Opus) | — (Lina consulted on the closed-sets question, no code) |
+| 6 | Ada (Opus) — **6.1 stays Opus until the own-index check has a recorded bite** (Lina R2); a downgrade after that is recorded as a divergence | — (Lina's Container-Base chore PR is a gate, not a secondary) |
 | 7 | Thurgood (Sonnet) | — |
 | 8 | Ada (Sonnet) | — |
 | 9 | Thurgood (Sonnet) | — |
@@ -139,7 +147,7 @@
 | 19 | Thurgood (Opus) | — (Leonardo reviews on-branch) |
 | 20 | Lina (Sonnet) | — |
 | 21 | Thurgood (Opus) | — |
-| 22 | Lina (Sonnet) | Leonardo (Opus) — authors `example-home.yaml` (22.3) + DD9 confirmation (22.5) |
+| 22 | Lina (Sonnet) | Leonardo (Opus) — authors `example-home.yaml` at `.kiro/specs/123-consumer-distribution/design-inputs/` (Lina places it, 22.3) + DD9 confirmation (22.5) |
 | 23 | Thurgood (Sonnet) | — (Ada owns the predicate text) |
 | 24 | Thurgood (Opus) | — |
 | 25 | **Leonardo (Opus)** — operator | — |
@@ -152,7 +160,7 @@
 - He has **no authorship stake** in the profile, the install doc or the starter specs.
 - He is **not the verifier** of beat 2's claims (Stacy's claims passes audit the records later).
 
-**Frozen prompts are the floor either way**: every session's initial prompt is committed before its run, and reproduced verbatim in its record.
+**Leonardo accepted the seat on three conditions (R2), adopted in § "Run discipline"**: an operator-intervention log; `subject: leonardo` tagging with Stacy's CLOSEOUT cross-read; and `session-launched-by`. **Frozen prompts are the floor**: every session's initial prompt is committed before its run, reproduced verbatim in its record, and **pinned inside the spec directory**, so the ancestry rule is executable regardless of T1.
 
 **Post-unit obligations** (claims passes verify, not completion docs):
 - docs-MCP `rebuild_index` after U1, U2, U3 and U4 (each edits a served doc);
@@ -178,9 +186,9 @@
 | # | Input | Disposition |
 |---|---|---|
 | 1 | Release count + tripwire | **DECIDED**: four releases, six claims passes (Stacy confirmed); thresholds above; U2's `G1 runs: <k>` field (S-T5). |
-| 2 | **`.swift`/`.kt`** | **DECIDED BY KENYA AND DATA: KEEP-WITH-FOLLOW-UP**, verdicts quoted in Task 3.5.<br>• The kept trees are the **whole platform closures** (pack-assertion rows, Task 3).<br>• Both are **labelled honestly** as reference source, not a build input.<br>• **One shared follow-up issue**, "native component distribution" (SPM source package + Compose source module), committed at 3.5. It cites the steward-filed defect **`.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`** and the harness charter `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`. |
+| 2 | **`.swift`/`.kt`** | **DECIDED BY KENYA AND DATA: KEEP-WITH-FOLLOW-UP**, verdicts quoted in Task 3.5.<br>• The kept trees are the **whole platform closures** (pack-assertion rows, Task 3).<br>• Both are **labelled honestly** as reference source, not a build input.<br>• **One shared follow-up issue**, "native component distribution" (SPM source package + Compose source module), committed at 3.5. It cites the steward-filed defect **`.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`** and the harness charter `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`.<br>• **Trigger (Kenya/Data joint wording)**: *"first Android/iOS product-spec kickoff, or any evaluation of the harness charter, whichever fires first"*. |
 | 3 | Region/key-grain sizing (DD2) | **DECIDED, re-sized per Lina**:<br>• 5.2 keyed manifest **¾–1 day**;<br>• 5.3 key-grain JSON **~1–1¼ days**, reading = parsed values (below; three shapes incl. `permissions.allow` array-entry grain);<br>• 16.4 region extractor **~1 day (Sonnet)**;<br>• 16.5 generated-surface `sync` + `attachedTargets` **~1 day (Opus)** — **split**. |
-| 4 | Freshness check context | **CORRECTED** (Stacy R1 (a), she won on measurement). **The context stays `122-diff-guard` (no new context), BUT ARMING FIRES**, because ARMING's trigger is *a new barrier arms*, not only *the context set changes*.<br>• `coverage-map.ts` derives rows for **every canonical file**. `canonical/operative-sets/**` and `canonical/profiles/consumer/**` are new guarded surfaces, and would be **blank rows** if diff-guard's `surfaceGlobs()` did not reach them.<br>• Task 13.6 therefore carries **zero blank rows over those surfaces (output cited)** and a **STANDING stale-fixture end-to-end test**, not a one-time record.<br>• Stacy runs `audit:coverage-map` at U2's merge.<br>• **My R1 disposition, "no ARMING", was wrong**: I reasoned from the context set alone. |
+| 4 | Freshness check context | **CORRECTED; Stacy confirmed at R2, with the rows-list-the-guard tightening folded** (Stacy R1 (a), she won on measurement). **The context stays `122-diff-guard` (no new context), BUT ARMING FIRES**, because ARMING's trigger is *a new barrier arms*, not only *the context set changes*.<br>• `coverage-map.ts` derives rows for **every canonical file**. `canonical/operative-sets/**` and `canonical/profiles/consumer/**` are new guarded surfaces, and would be **blank rows** if diff-guard's `surfaceGlobs()` did not reach them.<br>• Task 13.6 therefore carries **zero blank rows over those surfaces (output cited)** and a **STANDING stale-fixture end-to-end test**, not a one-time record.<br>• Stacy runs `audit:coverage-map` at U2's merge.<br>• **My R1 disposition, "no ARMING", was wrong**: I reasoned from the context set alone. |
 | 5 | DD9 placement | **DECIDED**: Task 22.5 (Leonardo), with the U5 re-read scoped (Task 25):<br>• it establishes **recovery via the notice**, never **majority harness**;<br>• **persona (c) runs bare `init` in Kiro**. |
 | 6 | E-fm bite | **DECIDED: build** (14.4); forced-negative fallback. |
 | 7 | G1 exemplars | **DECIDED: G and G′** (Stacy's constructions, adopted verbatim) → **eleven exemplars**. |
@@ -204,7 +212,8 @@
 | Lina's rename gating C11's lint | **Task 8.1**. Lina lands the rename on `main` before `task/123-u1-substrate` branches; 8.1 pairs the file count with the zero-warning property |
 | 23.7 recurring trio; 23.9 cold-human run | **Task 28.4** + **B-U4** |
 | C2 counting-block edit | **Task 13.7**, **under ballot B-U2** (S-T2) |
-| Native component distribution (Kenya/Data) | **Task 3.5** (committed issue) |
+| Native component distribution (Kenya/Data) | **Task 3.5** (committed issue; joint trigger) |
+| **Lina's Container-Base dangling-reference fix** (T2-L1: 10 map values + 1 constant; tests pinning broken strings) — **hers, NOT 123 work**: a separate chore PR with a resolves-against-generated-CSS guard test | **Gate at Task 6.0**: merged before Task 6 runs, like the rename gate at 8.1 |
 | Routed defects (out of scope; for Lina): `ContainerCardBase.ios.swift:816` unterminated comment; `LocalDPTheme` / `dpTheme` hardcoding; per-component `dist` `.css` requires (A7) | Filed by the steward: `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`. Task 3.5 cites it, and routes the A7 finding and the `:816` parse defect as messages |
 
 ---
@@ -252,8 +261,8 @@
   - **Over-rewrite is caught**: consumer `tsc --noEmit` over the copied tree passes; the three `themes/*/SemanticOverrides.ts` still read `'../types'`. Bite (the string regex) recorded red. *Scope: type resolution only.*
   - An unmapped out-of-tier specifier fails the copy with a named error (bite recorded).
   - `init` refuses in born, partial and package-mode repos with the exact catalog strings. `--re-scaffold` lists every re-add before writing.
-  - **The manifest is written last and every entry records `origin`**: `copy` for copied files incl. the U1-copied agents, steering and governance; `emitted-key` for MCP keys (C7 erratum). **Instrument**: `init.test.ts` asserts `origin` on one entry of each kind.
-  - **`init`'s U1 terminal output**: next steps list only steps true for U1's behavior (no `npx jest # Run component tests`), and it carries **the restart-line catalog row**. String-equal assertions (Leonardo A5 (i); C27 erratum).
+  - **The manifest is written last, with entries ONLY for managed paths, and every entry records `origin`**: `copy` for the U1-copied agents, steering and governance (still managed in U1); `emitted-key` for MCP keys (C7 erratum). **No `src/tokens/**` entry exists after birth** (Req 5.8 — no baseline applies to their language; otherwise the first `sync` would print a prune report about it). **Instrument**: `init.test.ts` asserts `origin` on one entry of each kind, and **asserts zero `src/tokens/**` entries**.
+  - **`init`'s U1 terminal output**: next steps list only steps true for U1's behavior (no `npx jest # Run component tests`), and **the sequenced restart row is the LAST next step** (Le-T5). String-equal assertions **on the expected order** (Leonardo A5 (i); C27 erratum).
   - **The Integration Guide lines U1 falsifies are corrected**: L202 (`COMPONENTS_DIR`), L454 (`npx jest src/components/core/`), L576 (the default root). `grep -n "src/components/core" governance/DesignerPunk-Integration-Guide.md` output is recorded, **with each remaining hit dispositioned** (the platform paths are handled at Task 19.4).
   - `Oklch` is exported from the public types barrel (packed `tsc` check at Task 9).
 
@@ -282,16 +291,25 @@
     - no `__tests__`/`examples` paths;
     - **and the platform-closure rows below**.
   - **iOS closure rows (Kenya)**:
-    - PRESENT: every `src/components/core/*/platforms/ios/**` production `.swift` (incl. `*Preview.swift`), `src/blend/*.ios.swift`, `src/tokens/platforms/ios/**`;
-    - ABSENT: every `platforms/ios/*Tests.swift`.
-    - The present-row count is asserted (Kenya measured 39 production component files) and differences attributed.
+    - PRESENT, **with counts asserted on every row** (Kenya R2):
+      - component production `.swift` incl. `*Preview.swift` = **39**;
+      - `src/blend/*.ios.swift` = **1**;
+      - `src/tokens/platforms/ios/**` = **3** (`MotionTokens.swift`, `MotionTokens.md`, `README.md` — all three ship).
+    - ABSENT: `platforms/ios/*Tests.swift` = **2**.
+    - Differences are attributed. *(A row whose glob matches zero files is true by construction; counts close that.)*
   - **Android closure rows (Data)**:
-    - PRESENT: every `src/components/core/*/platforms/android/**` **incl. `res/**`** (51 drawables measured), `src/blend/*.android.kt`, `src/tokens/platforms/android/**`;
-    - ABSENT: every `platforms/android/*Test.kt`.
-    - The counts are asserted and differences attributed.
+    - PRESENT, **with counts asserted on every row** (Data R2, his corrected numbers):
+      - component `.kt` = **39** (incl. 2 `*Preview.kt`);
+      - `res/` = **51 files** (50 drawable XMLs + `README.md`);
+      - `src/blend/*.android.kt` = **1**;
+      - `src/tokens/platforms/android/**` = **2** (`MotionTokens.kt` + `MotionTokens.md`);
+      - **`.gitkeep` = 8, INCLUDED and counted** (swept in by `**`; harmless).
+    - ABSENT: `platforms/android/*Test.kt` = **2**.
+    - Differences are attributed.
     - *(Both reviewers: the existing `__tests__` exclusion misses side-by-side platform tests. A `*.swift`/`*.kt` glob alone would orphan blend imports and IconBase's resources.)*
   - `tarball-target.json` is committed from the post-diet pack.
-  - **3.5 records Kenya's and Data's verdicts QUOTED from `feedback/tasks.md`** (both KEEP-WITH-FOLLOW-UP), with the honest label: *"reference source, not a build input; does not compile against a born repo's own tier as shipped"* (plus each platform's named causes). **The follow-up is a COMMITTED ISSUE with owner and trigger**, "native component distribution" (Kenya + Data design it; Lina owns component content; Ada owns the theme-conformance generator change; trigger shared with harness trigger 1). It cites `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md` and the harness charter by path. **Had a verdict been CUT**, it would land only with a named replacement rail **or** a *"no iOS/Android component implementations ship"* line in CHANGELOG and the install doc (Ada D-T-A4 (ii)) — recorded as the rule, and not exercised.
+  - **Scope sentence (Ada R2)**: the static closure governs **inclusion**, walking all of `src/tokens/**`; over-inclusion is the safe direction. **The packed run at Task 9 certifies the executed path** — the subset of closure 2 that package-mode `generate` loads.
+  - **3.5 records Kenya's and Data's verdicts QUOTED from `feedback/tasks.md`** (both KEEP-WITH-FOLLOW-UP), with the honest label: *"reference source, not a build input; does not compile against a born repo's own tier as shipped"* (plus each platform's named causes). **The follow-up is a COMMITTED ISSUE with owner and trigger**, "native component distribution" (Kenya + Data design it; Lina owns component content; Ada owns the theme-conformance generator change). **Trigger: "first Android/iOS product-spec kickoff, or any evaluation of the harness charter, whichever fires first"** (their joint wording). It cites `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md` and the harness charter by path. **Had a verdict been CUT**, it would land only with a named replacement rail **or** a *"no iOS/Android component implementations ship"* line in CHANGELOG and the install doc (Ada D-T-A4 (ii)) — recorded as the rule, and not exercised.
   - **The Lina A7 finding and the `ContainerCardBase.ios.swift:816` parse defect are routed to Lina as messages**, cited by reference.
 
   **Primary Artifacts:** `scripts/floor-closure.ts`, `floor-closure.json`, `scripts/pack-assert.ts`, `package.json`, `tarball-target.json`, `.kiro/issues/<date>-native-component-distribution.md`
@@ -366,8 +384,19 @@
   **Traces**: Reqs 5A.1–5A.7 · design C7 (name contract), DD10, DD11, DD17, **P1 (YES)**
 
   **Success Criteria:**
+  - **GATE — Lina's Container-Base fix has merged before this parent runs** (T2-L1; like 8.1's rename gate). **Instrument**: her resolves-against-generated-CSS guard test passes on `main` at the U1 branch point, **and** 6.1's own-index check (below) is green over the Container-Base maps. **If it has not merged, this parent BLOCKS.** *(Today: 10 dangling references — `--border-border-{default,emphasis,heavy}`, `--zIndex-*` ×6, and `--color-border` — with tests pinning the broken strings.)*
   - `dist/name-contract.json` builds from the compiled surface. The bundle ⊆ src cross-check fails the build on a bundle-only name (bite recorded). Counts are reconciled against the design's 183 / 7, with differences attributed.
-  - **Every template-literal `--${…}` site in component source is enumerated** (six today: `Container-Base/platforms/web/token-mapping.ts:70`, `ContainerBase.web.ts:224`, `ContainerCardBase.web.ts:166`, `IconBase.web.ts:200` and `:476`, `ProgressPaginationBase.web.ts:232`). Each is **resolved to a finite literal set** or **declared uncovered** in the completion doc, with the count reconciled (Ada D-T-A1). *The bundle ⊆ src check cannot see these, because both sides miss them equally. This criterion is what covers them.* Lina's closed-sets answer determines which ones resolve.
+  - **Dynamic sites — enumerated MECHANICALLY, with a build failure on an unrecorded site** (Ada R2):
+    - **The scan patterns**: `` var(--${ `` · `` `--${ `` · `` getPropertyValue(` `` · `'--' +`, over component source.
+    - **The build fails when the scan finds a site absent from the committed site record.** A seventh site is caught at build, not missed.
+    - *The bundle ⊆ src check cannot see these sites; this criterion is what covers them.*
+  - **Each site takes one of THREE dispositions** (Lina R2's taxonomy + Ada's pre-positioned third):
+    - (i) **closed — ours**: the finite literal set joins `referencedNames` in `dist/name-contract.json` under P1's filter;
+    - (ii) **component tier**: enumerated, **excluded** by P1 (recorded in `name-contract.json` `excluded[]` with its reason);
+    - (iii) **consumer-supplied — out of 5A scope, default value resolved**: the consumer names the variable. Recorded in `excluded[]` with its reason, while **any default value in our code is resolved as class (i)**.
+    - **Expected today**: `ContainerCardBase:166` and `token-mapping.ts:70`'s closed maps → (i); `ProgressPaginationBase:232` → (ii); `IconBase:200/:476`, `ContainerBase:224` and `token-mapping.ts:70`'s typed props → (iii).
+    - **Nothing is uncovered today.** If a future site is uncovered, the `sync` report carries a standing *"not checked: <component> builds token names dynamically"* line. A component with an uncovered site is never reported silently clean (R26.8).
+  - **OWN-INDEX CHECK (T2-L1)**: every class-(i) resolved name is validated **against OUR OWN generated index** (`dist/DesignTokens.web.css` + `dist/ComponentTokens.web.css`) **before** it can enter the contract. **A name missing from ours FAILS THE BUILD as a component defect routed to Lina**, and never reaches a consumer report. **Bite recorded**: re-introduce `--border-border-default` → the build fails with the routed message. *(6.1 stays Opus until this bite is recorded.)*
   - **Tier filter: semantic ALWAYS · primitive YES · component NEVER.** `sync.name-contract.test.ts`: removed semantic → reported; removed primitive → reported; a component-tier name → not reported.
   - No generated web output → `cannot check`, never clean.
   - The report string is string-equal to its catalog row over one fixture.
@@ -376,7 +405,8 @@
 
   **Primary Artifacts:** `scripts/build-name-contract.ts`, `src/cli/sync/NameContract.ts`, tests
 
-  - [ ] 6.1 `build-name-contract.ts` + the dynamic-site enumeration
+  - [ ] 6.0 **Gate**: verify Lina's Container-Base chore PR has merged (guard test green on `main`)
+  - [ ] 6.1 `build-name-contract.ts` + the mechanical dynamic-site scan + the three dispositions + **the own-index check with its bite**
   - [ ] 6.2 The check + the P1 tier filter + `cannot check` + the report string
   - [ ] 6.3 `contractHash`; the type-contract report
   - [ ] 6.4 Tests and bites
@@ -392,15 +422,15 @@
     - (1) the 6.3 verbatim command;
     - (2) `VERSION=99.99.99` → exit 10;
     - (3) a PATH-shimmed `npm` returning a GitHub Packages tarball URL → exit 11 **through the production line**.
-  - **Under SLOT T2 (A)**: the guard queries the tag named for the release (`@next` for releases 1–2), and a fourth bite shows `@latest` does not satisfy a `next`-only publish. **Under (B)**: the version query as drawn. *(The ruling fills this row before U1 executes.)*
-  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded.
+  - **T2 ruled (B)**: the guard queries the version as drawn; no tag is involved.
+  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 § "T1-(B)"** carries the pre-drafted standing rule, **active only if Peter rules T1 (B)** — in which case that section was already ratified as a standalone record ahead of U1 (§ "Slots"), and B-U1 cross-references it.
   - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)).
   - *Scope stated*: npmjs visibility and tarball host only.
 
   **Primary Artifacts:** `scripts/verify-publish-rail.sh`, `scripts/__bites__/`, `.kiro/docs/ballots/<date>-123-b-u1-publish-rail.md`, `.kiro/hooks/RELEASE-FLOW.md`, `governance/classification-map.md`, `CHANGELOG.md`, `package.json`
 
   - [ ] 7.1 Script + self-test + empty-URL branch
-  - [ ] 7.2 The three bites (and the T2-(A) fourth, if ruled)
+  - [ ] 7.2 The three bites
   - [ ] 7.3 B-U1 record-first; Stacy's review of the register row
   - [ ] 7.4 `CHANGELOG.md` with release 1's entry + the `files[]` entry
 
@@ -483,7 +513,7 @@
 
   - [ ] 11.1 Draft the exemplar records
   - [ ] 11.2 Owner confirmations under C1; carve-out commits
-  - [ ] 11.3 (Stacy) Construct **G and G′** with required verdicts, committed
+  - [ ] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
   - [ ] 11.4 Confirmer + verbatim checks green
 
 - [ ] 12. **G1 gate parent — C3's falsification** (step 4)
@@ -529,7 +559,7 @@
     Count asserted.
   - **`operative-set-freshness` inside `122-diff-guard`, with ARMING read-ready** (input 4, corrected):
     - (i) **a STANDING test** runs `npx tsx tools/agent-generator/diff-guard.ts` against a **committed stale-unit fixture** and expects non-zero. *This catches a future restructure that drops the sweep.*
-    - (ii) **`npm run audit:coverage-map` shows ZERO blank rows over `canonical/operative-sets/**` and `canonical/profiles/consumer/**`**, output cited.
+    - (ii) **`npm run audit:coverage-map` shows that the rows for `canonical/operative-sets/**` and `canonical/profiles/consumer/**` LIST `122-diff-guard`**, output cited. *(Stacy R2: zero blank rows would prove only that some check covers them, not this one. She measured no broad `canonical/**` glob.)*
     - (iii) Stacy is notified that ARMING fires at U2's merge.
   - **Ballot B-U2 is RATIFIED before its edits apply.** It carries **the C2 counting-block edit** (per-agent `no-consumer-counterpart` rate, per-signer assent rate, refusal count; baseline-in-123 / first-render annotations) **and the `classification-map` L686 edit** (applied at 17.3) (S-T2).
     - After the counting-block edit, **Stacy re-confirms the changed unit of her charter** before 15.4 runs (the freshness check demands it).
@@ -542,7 +572,7 @@
   - [ ] 13.3 Confirmer/signer checks; verbatim-substring check
   - [ ] 13.4 (Lina) `triviality.ts` incl. the branch-A configuration
   - [ ] 13.5 (Lina) Orphan and missing-row refusals
-  - [ ] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` zero-blank-rows run + the ARMING notice
+  - [ ] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice
   - [ ] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
   - [ ] 13.8 Apply the counting-block edit (regenerate); Stacy re-confirms her changed unit
 
@@ -577,7 +607,7 @@
   - `derive()` produces `_consumer-output/_canonical/` (once) and `<target>/` covering 8 agents plus identity members for both targets. `guardedRoots()` covers all three, and diff-guard is green.
   - Identity members carry no source frontmatter; Kiro members carry exactly `id` + `inclusion: always`; all are prefixed `designerpunk-<id>.md` (test over rendered output).
   - **Every unit and entry, for all 8 agents, shared members and 8 identity docs, has an explicit row.** The missing-row refusal passes over the full profile; counts per agent recorded.
-  - **ZERO STANDING REFUSALS at U2 acceptance** (S-T3). Every `refuse: should-re-point` row was re-authored and re-judged into itemized assent. **The refusal count is recorded** in the "first render — not a baseline" block with the `no-consumer-counterpart` and assent rates. Every ROUTED row carries a C1-correct signature, and the hard floor passes for all 8.
+  - **ZERO STANDING REFUSALS at U2 acceptance** (S-T3). Every `refuse: should-re-point` row was re-authored and re-judged, and **resolved EITHER by itemized assent OR by a changed disposition under its own C1 signature** (e.g. re-disposed `superseded-by`). **Never assent-only** (Stacy R2). **Refusals issued** during first render are recorded in the "first render — not a baseline" block with the `no-consumer-counterpart` and assent rates. Every ROUTED row carries a C1-correct signature, and the hard floor passes for all 8.
   - **Consumer-Kenya's and consumer-Data's knowledge-fallback paths** (`src/components/core/*/platforms/{ios,android}/**`) are re-grounded to `node_modules/@3fn/core/src/…` in their consumer renderings (Kenya/Data R1). Assert by grepping the rendered files; the path's existence in a packed install is checked at Task 16.
   - `derive()` refuses on a stale overlay and an orphaned key over the real profile.
   - *Scope*: declared-and-signed-by-the-right-seat only. Discrimination is G2's question; authorship is not establishable.
@@ -588,7 +618,7 @@
   - [ ] 15.2 (Lina, Opus) `derive.ts`
   - [ ] 15.3 `emitIdentityMembers` per target
   - [ ] 15.4 Operative sets for all units; dispositions/overlays for all 8 charters, shared substrate and identity docs; knowledge-fallback re-points
-  - [ ] 15.5 First-render routing: confirmations and signatures per C1; refusal re-authoring to zero standing; rates and refusal count recorded
+  - [ ] 15.5 First-render routing: confirmations and signatures per C1; refusals resolved to zero standing (assent or re-disposition); rates and refusals issued recorded
 
 - [ ] 16. Consumer emission lane, `attach`, the `init` agent layer, legacy migration, and generated-surface `sync`
 
@@ -599,9 +629,9 @@
   - `emitConsumer` reads only C20's inputs, **`packageRoot`-relative**. `consumer-entry.paths.test.ts` shows inputs under `packageRoot`, outputs under `consumerRoot`, and differing paths on Kiro. `registry.fromManifest` is used and no server starts.
   - **The packed install emits a working agent layer for both targets**: pack → `init --target=cc` and `--target=kiro` → the expected file set and keys, and **zero `complete-task.sh|Peter merges|RATIFIED` in emitted charters**. *Scope: clause (i)'s deny-list tokens, not re-grounding quality.* Consumer-Kenya/Data's re-pointed knowledge paths **resolve** in the packed install.
   - The agent-layer rows, row 10's comment edit, and the deferred `files[]` rows are implemented (`init.test.ts` + Ada's `pack-assert.ts` re-run with the deferred rows).
-  - **`attach`**: refusals and exact strings; `--reference` writes a `posture: 'consume'` manifest; **`attach --reference stays CONSUME` passes, bite recorded red.** **`attach`'s output and `init`'s U2 output carry the restart-line catalog row** (C27 erratum).
+  - **`attach`**: refusals and exact strings; `--reference` writes a `posture: 'consume'` manifest; **`attach --reference stays CONSUME` passes, bite recorded red.** **Restart rows (Le-T5)**: born-repo `attach` and `init`'s U2 output print the **sequenced** row **LAST**; `attach --reference` prints the **now** row. String-equal assertions on the expected order.
   - **Legacy migration** (T-L1; design Migration item 4): `--migrate-legacy` is **offered only when `attach` is available and runs in the same flow** (removal then attach). A test asserts that it is never offered without the attach step.
-  - **The release-1 cohort** (Ada D-T-B2): a fixture born by **release-1 `init`** (a current-format manifest with `origin: 'copy'` entries under `.kiro/agents` / `.kiro/steering` / `governance`) → U2 `sync` reports them as legacy copies and offers `--migrate-legacy` + `attach`. **It neither leaves them silently beside generated agents nor classifies them as conflicts.** Bite (key on manifest version instead of `origin`) recorded red.
+  - **The release-1 cohort** (Ada D-T-B2): a fixture born by **release-1 `init`** (a current-format manifest with `origin: 'copy'` entries under `.kiro/agents` / `.kiro/steering` / `governance`) → U2 `sync` reports them as legacy copies and offers `--migrate-legacy` + `attach`. **It neither leaves them silently beside generated agents nor classifies them as conflicts.** Bite (key on manifest version instead of `origin`) recorded red. **After `--migrate-legacy` + `attach`, ZERO `origin: 'copy'` entries remain under those paths** (they are replaced by `generated`), so a migrated consumer is never re-detected as a cohort member (Ada R2).
   - **Region grain**: the `CLAUDE.md` region is spliced; outside bytes unchanged; missing markers → string, no write (`sync.region.test.ts`).
   - Generated-surface `sync` for `attachedTargets` only. A deleted generated file → `deleted-by-you` (generated-surface cases).
   - Degradation: warning, exit 0 (`consumer-entry.degradation.test.ts`, bite recorded).
@@ -637,19 +667,24 @@
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Lina (Opus)** — executing agent; **Stacy authors the verdict record (outside the line); Thurgood recused**
   **Traces**: Reqs 11.8, 11.8.4, 24.3 · design § "Gates and sequencing" (G2)
+  **Preamble**: Lina accepted the seat on two conditions (R2), written as criteria below. **This parent's `CHANGELOG.md` edit sits outside her declared write scope and rides SLOT T1.** She authored the machinery pass four tests, and the MIDPOINT disclosure covers that.
 
   **Success Criteria:**
+  - **The two consequence texts are PRE-DECLARED**: the PASSES edit to the 24.3 table (per domain) and the Fork A demotion edit are committed at `.kiro/specs/123-consumer-distribution/completion/g2-consequence-texts.md` **before pass four is requested** (ancestry cited).
   - **Stacy's verdict record** exists at `.kiro/specs/123-consumer-distribution/completion/re-grounding-pass-four.md`, with exactly one verdict.
     - **Scope half (1)** is attack (a) verbatim.
     - **Half (2)** is that the check reads the committed record — **or, under branch A, "NOT APPLICABLE — no mechanical floor (P2 branch A)"**, never a pass.
     - The domain line names body / frontmatter / always-set as exercised or "not exercised".
   - **This parent's completion doc CITES the record path and never paraphrases the verdict** (11.8.4). **Thurgood authors no line of it**, and the U2 PR body states the recusal.
-  - **The verdict's consequence is applied as an artifact edit in this PR by this parent's agent**: PASSES → the 24.3 table lists (v)'s mechanical half as deterministic for the named domains only; FAILS / NOT-RUNNABLE → the Fork A demotion edit. **A G2 blocked by G1 at BREAKS is not NOT-RUNNABLE, and U2 is not submitted.**
+  - **The verdict's consequence is applied as an artifact edit in this PR by this parent's agent, BYTE-EQUAL to its pre-declared text**, cited against its source line in `g2-consequence-texts.md` (Lina condition 1; MIDPOINT checks it as a diff): PASSES → the 24.3 table lists (v)'s mechanical half as deterministic for the named domains only; FAILS / NOT-RUNNABLE → the Fork A demotion edit.
+  - **On FAILS or NOT-RUNNABLE, the agent applies the Fork A demotion and SUBMITS. It never patches the machinery and re-requests pass four inside U2** (Lina condition 2). A machinery fix is a new falsification cycle, with its own record and a new G2 request after U2.
+  - **A G2 blocked by G1 at BREAKS is not NOT-RUNNABLE, and U2 is not submitted.**
   - **The U2 PR body carries the tripwire line with `G1 runs: <k>`**, and the release-2 CHANGELOG entry is committed.
   - `npm test` and full `tsc` are green on the branch.
 
   **Primary Artifacts:** Stacy's verdict record (cited); the U2 completion doc's 24.3 table; `CHANGELOG.md` (release 2)
 
+  - [ ] 18.0 Commit the two pre-declared consequence texts
   - [ ] 18.1 Request pass four from Stacy
   - [ ] 18.2 Apply the verdict's artifact edit; the release-2 CHANGELOG entry
   - [ ] 18.3 Full validation; open the U2 PR (tripwire incl. `G1 runs`)
@@ -666,7 +701,7 @@
   - The section order matches C23 (heading-order test).
   - **Owed contents — one row per owed AC, with the install-doc passage QUOTED as Evidence** (Le-T2). The rows are 15.3 · 15.4 · 15.5 · 15.6 · 15.7 · 15.8 · 15.9 · 15B.4 · 15B.6 · 15B.8 — **ten rows**, count asserted in the completion doc. **String assertions** are also committed for the single-string residuals 15.5, 15.6 and 15.7. *Instrument: inspection plus string checks, stated as such.*
   - The 119-B lint passes. The approval instruction is harness-agnostic (asserted string).
-  - **The native honest labels appear** for iOS and Android implementers, matching Task 3.5's decision record (asserted strings).
+  - **The native honest labels appear** for iOS and Android implementers, matching Task 3.5's decision record (asserted strings), **in the install doc AND in the package `README.md`**. The README's *"True native implementations (Web Components, SwiftUI, Jetpack Compose)"* line (L57) is **replaced by the labelled form, with an asserted string**. *(Kenya R2: npm ships the README in every tarball and the registry renders it, so it is the surface a `node_modules` or npm-page reader actually meets. Adopted on the same Req 4.5 truthfulness ground as the install-doc label.)* **Per T2 (B), the README does not advertise the onboarding path before release 3.**
   - `vocabulary.ts` consistency covers **INSTALL.md and the Integration Guide**. *Scope: it establishes 15B.5 only; 15B.3 is evidenced by persona (c) at U5.*
   - **Integration Guide disposition** (Le-T4; adjudicated as below): INSTALL.md's content is **served under the existing `designerpunk-integration-guide` doc-id**.
     - `governance/DesignerPunk-Integration-Guide.md` becomes the served source carrying INSTALL.md's body. `docs/consumer/INSTALL.md` is derived from it at build.
@@ -675,9 +710,9 @@
     - A grep over the guide for `product-template|src/components/core/` returns only lines dispositioned in the completion doc.
   - Leonardo's on-branch review is recorded with every item dispositioned.
 
-  **Primary Artifacts:** `docs/consumer/INSTALL.md`, `governance/DesignerPunk-Integration-Guide.md`, `src/cli/shared/vocabulary.ts`, tests, the build step deriving INSTALL.md
+  **Primary Artifacts:** `docs/consumer/INSTALL.md`, `governance/DesignerPunk-Integration-Guide.md`, `README.md`, `src/cli/shared/vocabulary.ts`, tests, the build step deriving INSTALL.md
 
-  - [ ] 19.1 `vocabulary.ts`; the doc in C23 order with prerequisites and native labels
+  - [ ] 19.1 `vocabulary.ts`; the doc in C23 order with prerequisites and native labels; the README L57 label + its string assertion
   - [ ] 19.2 Path-step counting test; heading-order test; 119-B lint; residual string assertions
   - [ ] 19.3 The ten owed-AC rows with quoted passages
   - [ ] 19.4 **Integration Guide → served source of INSTALL.md content** (same doc-id; derived INSTALL.md; body-identity test)
@@ -723,9 +758,9 @@
 
   **Success Criteria:**
   - `generate` creates an absent note from the template and prints its name; an all-`TODO` note counts as absent (tests).
-  - **`init`'s terminal output is string-equal to the catalog rows for the restart line (with its reason), the re-anchored clone hatch, and the personal-note naming, and its next steps list positively what the repo needs next** (Le-T1; the C27 erratum). `init.test.ts` string assertions.
+  - **`init`'s terminal output is string-equal to the catalog rows for the re-anchored clone hatch and the personal-note naming, its next steps list positively what the repo needs next, and the SEQUENCED restart row is the LAST next step** (Le-T1 + Le-T5; the C27 erratum). `init.test.ts` string assertions **on the expected order**.
   - Collision strings are truthful, and next steps omit steps a skip made untrue.
-  - **The scaffolded `product/` tree indexes with zero errors and zero unresolved references.** Bite recorded. **`example-home.yaml` is authored by Leonardo** (commit `Agent: leonardo`).
+  - **The scaffolded `product/` tree indexes with zero errors and zero unresolved references.** Bite recorded. **Handoff recorded**: Leonardo authors `example-home.yaml` at `.kiro/specs/123-consumer-distribution/design-inputs/example-home.yaml` (commit `Agent: leonardo`, inside his write scope), and **Lina places it byte-identical** into the scaffold template path (a test asserts the two files are equal).
   - **DD9 confirmed or flipped by Leonardo, his words quoted.** The notice string matches the catalog, and the founder count is unchanged.
   - The U3 PR body carries the tripwire line, the release-3 CHANGELOG entry is committed, and `npm test` + full `tsc` are green.
 
@@ -733,7 +768,7 @@
 
   - [ ] 22.1 Personal note: template, personalization, create-if-absent, all-`TODO`-as-absent
   - [ ] 22.2 C27 completion: restart line, hatch, note naming, next steps; collision strings
-  - [ ] 22.3 (Leonardo) `example-home.yaml`; (Lina) scaffold mechanics + validity guard
+  - [ ] 22.3 (Leonardo) `example-home.yaml` in `design-inputs/`; (Lina) placement (equality test) + scaffold mechanics + validity guard
   - [ ] 22.4 Release-3 CHANGELOG entry; full validation
   - [ ] 22.5 (Leonardo) DD9 confirmation; open the U3 PR
 
@@ -748,13 +783,13 @@
   - The predicate implements Ada's text, with the under-inclusion header.
   - `audience-banner.test.ts` asserts predicate-match ⇒ banner-present and reports `N match; N carry`. Bite recorded. *Scope in its output: predicate coverage, never "the corpus is bannered".*
   - Each banner uses a template and states what is worked example and what is transferable (inspection per doc, listed).
-  - **Registration**: if it is a new CI context, Stacy's ARMING fires and the notice is recorded; if it runs in an existing lane, that lane is named **and `audit:coverage-map` shows zero blank rows for the guard's surfaces** (cited).
+  - **Registration**: if it is a new CI context, Stacy's ARMING fires and the notice is recorded; if it runs in an existing lane, that lane is named. **Either way, each governed doc's coverage-map row LISTS the banner guard** (cited). *(Stacy R2: "zero blank rows" would be true before the guard existed, since other checks already cover those docs.)*
 
   **Primary Artifacts:** `scripts/audience-banner/predicate.ts`, the test, `governance/*.md`
 
   - [ ] 23.1 Predicate + guard + bite
   - [ ] 23.2 Banners on the matched set; owners notified
-  - [ ] 23.3 Registration decision; the ARMING notice or the coverage-map evidence
+  - [ ] 23.3 Registration decision; the ARMING notice; the rows-list-the-guard evidence
 
 - [ ] 24. U1b backward check, the release recipe (B-U4), and the changelog step (**U4 gating parent**)
 
@@ -775,8 +810,11 @@
 ### UNIT 5 — Validation & closeout
 
 **Run discipline (Tasks 25–27; S-T4, S-T-A6)**:
-- **Every session's initial prompt is frozen and committed under `tests/onboarding-trio/prompts/<run-id>.md` BEFORE the run.** Its commit is an ancestor of the record's commit, and it is reproduced verbatim in the record.
-- **Operator: Leonardo** (§ "Delegated-tier plan").
+- **Every session's initial prompt is frozen and committed under `.kiro/specs/123-consumer-distribution/validation/prompts/<run-id>.md` BEFORE the run.** Its commit is an ancestor of the record's commit, and it is reproduced verbatim in the record. **Pinned inside the spec directory** (Leonardo's lean, adopted), so the prompts sit within the operator's write scope and the rule is executable regardless of T1. The protocol and fixtures under `tests/onboarding-trio/` are Task 25's Primary Artifacts, and their writer rides T1.
+- **Operator: Leonardo** (§ "Delegated-tier plan"), **with his three conditions as record fields on every trio, join and conformance record**:
+  - **C1 `operator-log:`** — every operator message after the frozen prompt, reproduced verbatim with its reason (default `none`). **`operator-halt:<reason>` is the only operator-initiated stop.**
+  - **C2 `subject: leonardo`** — every finding whose subject is consumer-Leonardo is tagged. **Stacy's CLOSEOUT pass cross-reads the tagged findings.**
+  - **C3 `session-launched-by: <who>`** — who physically launched each harness session (Leonardo, Peter or the orchestrator). Leonardo owns the prompts, protocol adherence, in-run judgments and records.
 - **`harness-user-state` is EVIDENCE, not a word** (Leonardo A2). Either the inspection commands and output over the harness's user-level stores, or the mechanism used. **The default mechanism is a fresh temporary `HOME` per run**; any re-login cost is recorded.
 
 - [ ] 25. The persona trio
@@ -786,13 +824,13 @@
 
   **Success Criteria:**
   - Three records at `.kiro/specs/123-consumer-distribution/validation/trio-<n>-<persona>.md`. Each runs against a packed install with no source access, on its committed fixture, **from its frozen prompt**. Both targets appear.
-  - **Every record carries every C30 field**, with the field list reproduced. **Schema check scope: it establishes field presence, not observation quality** (S-T-A3). The forced negative per persona is what makes an empty findings list auditable.
+  - **Every record carries every C30 field, plus `operator-log`, `session-launched-by` and `subject:` tags**, with the field list reproduced. **Schema check scope: it establishes field presence, not observation quality** (S-T-A3). The forced negative per persona is what makes an empty findings list auditable, and Stacy's CLOSEOUT reads the operator logs' content and the `subject: leonardo` findings.
   - **"Not exercised" reasons use Kenya's and Data's corrected wording**: *"Kenya/Data unexercised — no native component consumption path, and no platform toolchain on the host"* (never "for want of a platform fixture").
   - Budgets are agent turns ≥ 3× the declared `path-steps`; `budget-exhausted` is a finding.
   - **Persona (c) runs bare `init` in Kiro** (still counting toward Kiro), and her record states whether 15B.3's distinction held (evidence quoted).
   - **DD9 re-read, scoped** (Leonardo A1): it states whether a founder who got the wrong default **recovered via the notice**, and states that it **cannot** establish which harness is the majority.
 
-  **Primary Artifacts:** `tests/onboarding-trio/{protocol.md,fixtures/,prompts/}`, `validation/trio-*.md`
+  **Primary Artifacts:** `tests/onboarding-trio/{protocol.md,fixtures/}`, `.kiro/specs/123-consumer-distribution/validation/prompts/`, `validation/trio-*.md`
 
   - [ ] 25.1 Protocol + committed fixtures + frozen prompts
   - [ ] 25.2 Run (a)
@@ -806,7 +844,7 @@
   **Traces**: Reqs 15A.4, 15A.1 · design C8, C24, DD8
 
   **Success Criteria:**
-  - **Two join records** (CC-born → Kiro; Kiro-born → CC), each cloned from a **committed born-repo fixture born by `init --target=<t>` from the same packed artifact the join installs** (Leonardo A3), and run from a frozen prompt.
+  - **Two join records** (CC-born → Kiro; Kiro-born → CC), each cloned from a **committed born-repo fixture born by `init --target=<t>` from the same packed artifact the join installs** (Leonardo A3), run from a frozen prompt, and carrying `operator-log` and `session-launched-by`.
   - **Each record carries the joining path's OUTCOME** (Le-T3):
     - a per-step outcome for `joining-cross-harness`'s **6 steps**;
     - findings;
@@ -839,7 +877,7 @@
   - The charter-identity probe runs on both, and answers are checked against the **consumer rendering's** declared domain, routes and out-of-scope list (file cited).
   - The 24.3 labelling: (v)'s mechanical half is deterministic only if G2 PASSES, and only for the named domains.
 
-  **Primary Artifacts:** `validation/conformance-beat-{1,2}.md`, `tests/onboarding-trio/prompts/conformance-*.md`
+  **Primary Artifacts:** `validation/conformance-beat-{1,2}.md`, `.kiro/specs/123-consumer-distribution/validation/prompts/conformance-*.md`
 
   - [ ] 27.1 Freeze and commit both prompts
   - [ ] 27.2 Beat 1
@@ -877,8 +915,9 @@
 2. **The first-render signature volume** is irreducible and falls ~2× on Stacy, now plus **refusal re-authoring to zero standing** (S-T3), which can add loop time the tripwire does not count.
 3. **Seat authentication** stays declared-not-proven until 125-B U3.
 4. **A fresh `HOME` makes "clean" true by construction, but costs a harness re-login per run** (unverified per harness). The cold cells may still read "not observed cold" if a harness cannot run under a fresh HOME.
-5. **The release count assumes no hotfixes.** Under slot T2 (A), each tag's promotion is also a guard read.
-6. **Slot T1 (write scope) blocks U1's start** until ruled.
+5. **The release count assumes no hotfixes.** (T2 ruled plain sequential: no tag promotion to verify.)
+6. **Slot T1 (write scope) blocks U1's start** until ruled. The (B) vehicle is pre-drafted (§ "Slots"). **Under (B) it must be ratified as a standalone record ahead of U1**, because B-U1's own merge comes too late to grant U1's execution scope.
+7. **The operator cannot physically drive every harness session** (Leonardo C3). `session-launched-by` makes whose hands were involved auditable, but it cannot make the run hands-free.
 
 ---
 

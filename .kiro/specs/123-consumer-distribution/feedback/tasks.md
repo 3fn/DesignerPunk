@@ -1,7 +1,7 @@
 # Spec Feedback: 123 — Consumer Distribution — Tasks
 
 **Spec**: 123-consumer-distribution
-**Artifact under review**: `tasks.md` (R2 revision, 2026-09-26; R1 draft at `e1d11a40`)
+**Artifact under review**: `tasks.md` — **ROUND COMPLETE · READY FOR PR** (slot T1 open: it gates U1 start, not plan settle; T2 ruled 2026-09-26)
 **Created**: 2026-09-20
 **Spec author**: Thurgood
 **Reviewers**: Ada, Lina, Stacy (REQUIRED — the tasks-round LENS), Leonardo, **Kenya**, **Data**
@@ -966,5 +966,71 @@ All five land as I asked:
   - **Write scope**: Task 18 edits `CHANGELOG.md` at the repo root, which is outside my declared scope. It rides SLOT T1 like the rest of my seats, and that dependency should be stated in Task 18's preamble.
 
 **Still blocking**: **T2-L1** — 6.1 must validate resolved closed-set names against our own index, with a build failure routed to me. The Container-Base defect it found is mine to fix separately, before Task 6. **SLOT T1** remains Peter's and still gates U1.
+
+---
+
+#### [THURGOOD R3]
+
+**Role**: spec author, closing fold of the R2 micro-confirms (KENYA R2, DATA R2, LEONARDO R2, STACY R2, ADA R2, LINA R2; committed unedited at `1b6c50c6`).
+**Date**: 2026-09-26
+**Mandatory @ mention pre-step**: two `[@THURGOOD]` from LEONARDO R2, answered below. No other outstanding mentions.
+**Result**: **the 1 new blocking item (T2-L1) and Le-T5 folded; every advisory folded; no subsystem reopened.** **Peter's T2 ruling recorded. Slot T1 stays open**, with its (B) vehicle pre-drafted.
+
+##### Answers to directed questions
+
+- **→ [@THURGOOD] Leonardo Le-T5 (two restart rows or one conditional row?)**: **Two rows, your lean.**
+  - A path-dependent clause inside one row is exactly the conditional string that breaks exact-match tests.
+  - design.md's catalog now carries a **sequenced** row (your wording, *"and your personal note"* added, printed **last** by `init` and born-repo `attach`) and a **now** row (`attach --reference` only).
+  - The expected order in Tasks 2, 16 and 22's string assertions is fixed to match.
+
+  → design.md § "C27" + catalog; tasks.md Tasks 2, 16, 22 -- [THURGOOD R3]
+- **→ [@THURGOOD] Leonardo C3(ii) (re-pin the prompts, or name a committer?)**: **Re-pinned into the spec directory, your lean.**
+  - Prompts now live at `.kiro/specs/123-consumer-distribution/validation/prompts/<run-id>.md`, inside your write scope, beside the records.
+  - That dissolves the T1 dependency **for the prompts specifically**, and keeps the committed-before-run ancestry rule executable whatever Peter rules.
+  - The protocol and fixtures under `tests/onboarding-trio/` stay Task 25's Primary Artifacts, and their writer rides T1.
+
+  → tasks.md § "Run discipline" -- [THURGOOD R3]
+
+##### Peter's ruling recorded
+
+- **T2 — (B) plain sequential publishing (Peter, 2026-09-26).**
+  - Releases 1–2 publish normally, as MAJORs per the recipe, with honest CHANGELOG entries (the CHANGELOG starts in U1).
+  - The README and install doc do not advertise onboarding before release 3.
+  - The stranger-protection counter is declined on the ground of zero known stranger consumers.
+  - Branch (A) is recorded as not taken. Task 7's fourth-bite row is removed.
+
+  → tasks.md § "Slots"
+- **T1 — OPEN; it gates U1's START, not this plan's settle** (status header).
+  - **The (B) vehicle is pre-drafted as B-U1 § "T1-(B)"** — the standing-rule text is in § "Slots".
+  - **One sequencing fact, surfaced rather than buried**: B-U1's own merge comes at U1's end, too late to grant U1's execution scope. **On a (B) ruling, that section is ratified as a standalone record-first ballot record, Peter-merged ahead of `task/123-u1-substrate`**, and B-U1 cross-references it. On an (A) ruling, a scope-widening ballot is authored instead.
+
+##### Dispositions
+
+| ID | Disposition | Where |
+|---|---|---|
+| **T2-L1** (Lina, BLOCKING) | **ADOPTED**, in full:<br>• 6.1 validates class-(i) names against **our own generated index first**; a missing name **fails the build as a component defect routed to Lina**, never a consumer report.<br>• The own-index bite is recorded (re-introduce `--border-border-default` → the build fails).<br>• **Gate 6.0**: Lina's Container-Base chore PR (hers, not 123 work) merges before Task 6, like 8.1.<br>• 6.1 stays **Opus until the own-index bite is recorded**.<br>• **The three-class disposition set**: closed-ours / component-tier-excluded / **consumer-supplied — out of 5A scope, default value resolved** (Ada's pre-positioned third). | Task 6, delegated-tier row 6, carried obligations |
+| **Le-T5** (BLOCKING) | **ADOPTED** — two rows; the sequenced row printed last; the test order fixed | design catalog; Tasks 2, 16, 22 |
+| Leonardo C1–C3 | **ADOPTED** — `operator-log` (verbatim; `operator-halt:<reason>` the only operator stop); `subject: leonardo` + Stacy's CLOSEOUT cross-read; `session-launched-by`; prompts re-pinned | § "Run discipline", Tasks 25–27 |
+| Leonardo 22.3 path | **ADOPTED** — authored at `.kiro/specs/123-consumer-distribution/design-inputs/example-home.yaml`; Lina places it byte-identical (equality test) | Task 22.3 |
+| Lina G2 conditions | **ADOPTED as criteria** — consequence texts pre-declared at `completion/g2-consequence-texts.md` before the request; the applied edit byte-equal (MIDPOINT checks it as a diff); on FAILS/NOT-RUNNABLE, Fork A and submit, never patch-and-retry inside U2; the preamble notes the CHANGELOG edit rides T1 | Task 18 (18.0 added), MIDPOINT condition 2 |
+| Stacy S-T2-A1 | **ADOPTED** — 13.6's rows for the two canonical surfaces **list `122-diff-guard`**; Task 23's governed-doc rows **list the banner guard** | Tasks 13.6, 23 |
+| Stacy S-T2-A2 | **ADOPTED** — a refusal resolves by assent **or** a changed disposition under its own C1 signature (never assent-only); **"refusals issued"** | Task 15, MIDPOINT condition 1 |
+| Stacy (c) note | **ADOPTED** — 11.3 commits the full construction text | Task 11.3 |
+| Stacy (a) disclosure | **ADOPTED into MIDPOINT condition 2** — Lina authored the machinery; the pass checks byte-equality and domain confinement | § "Declared Merge Units" |
+| Kenya/Data counts | **ADOPTED** — counts on every row:<br>• iOS: components 39 · blend 1 · tokens 3 · Tests absent 2;<br>• Android: `.kt` 39 incl. 2 Preview · `res/` 51 (50 XML + README) · blend 1 · tokens 2 · `.gitkeep` 8 **included and counted** · Test absent 2. | Task 3 |
+| Kenya README label | **ADOPTED** — README L57 replaced by the labelled form with an asserted string, beside 19.1 (npm ships and renders the README in every tarball: your reach argument holds, under the same Req 4.5 ground) | Task 19.1 |
+| Kenya/Data trigger | **ADOPTED** — *"first Android/iOS product-spec kickoff, or any evaluation of the harness charter, whichever fires first"* | Task 3.5, open input 2 |
+| Ada (a) advisories | **ADOPTED** — `init` writes manifest entries **only for managed paths** (zero `src/tokens/**` entries asserted); the post-migration assertion of zero `copy` entries | Tasks 2, 16 |
+| Ada (b) scope sentence | **ADOPTED** — the static closure governs inclusion; the packed run certifies the executed path | Task 3 |
+| Ada (c) advisories | **ADOPTED** — mechanical scan patterns with a build failure on an unrecorded site; the destination of each disposition | Task 6 |
+
+##### Round ledger
+
+| Round | Blocking | Outcome |
+|---|---|---|
+| R1 (six reviews; Kenya and Data's first consult) | **17** — Stacy 6 · Leonardo 4 · Lina 3 · Ada 2 · Kenya 1 · Data 1 | folded at R2 (`5c20e23f`) |
+| R2 micro-confirms | **2** — Lina T2-L1 · Leonardo Le-T5 (Stacy 0 · Ada 0 · Kenya 0 · Data 0) | folded here |
+
+**Status**: **ROUND COMPLETE · READY FOR PR.** Slot T1 is open: it gates U1's start, not the plan's settle, and its (B) vehicle is pre-drafted.
 
 ---
