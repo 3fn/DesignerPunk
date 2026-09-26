@@ -8,7 +8,7 @@ description: Operational law for ending a task — when to write completion docs
 # Task Completion Protocol
 
 **Date**: 2026-06-29
-**Last Reviewed**: 2026-08-12
+**Last Reviewed**: 2026-09-26
 **Purpose**: The end-of-task operational sequence (completion docs, tiers, parent vs. subtask, stop-and-wait, PR flow) — operational law, always loaded
 **Organization**: process-standard
 **Scope**: cross-project
@@ -99,6 +99,7 @@ Branch → PR → required checks → merge.
 - **Large spec → units DECLARED in tasks.md**: the spec's tasks.md names its units as a task grouping (substrate / each cutover / closeout, etc.). Units are named up front and reviewed in the tasks feedback round — never judged at merge time.
 - **One branch per unit**: subtasks commit+push the branch at judgment-based checkpoints (not mechanically per subtask); parent completions commit their docs on the branch; the unit's completion opens the PR; Peter merges (squash).
 - **Dependent units branch from `main` after the prior unit's PR merges** — the unit is the dependency grain (stacking only on Peter's explicit direction, `Stacked-on: #<PR>`).
+- **Write scope inside a unit**: a parent's assignment row in a **merged** `tasks.md` grants its PRIMARY and tiered secondary agents write access to **exactly that parent's listed Primary Artifacts**, on the unit's branch, until the unit merges. It supplements the charter's write scope, grants no ratification authority, and an out-of-list edit is a claims-pass finding. Rule and limits: `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md` (register row `tasks-row-write-scope-grant`).
 - **On merge, the unit's branch is deleted** (remote auto-deleted by repo setting; local deleted on return to `main`); stale/unmerged branches are swept in the monthly Civitas health check — see § "Branch Cleanup".
 
 ### Branch Cleanup

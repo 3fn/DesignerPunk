@@ -9,7 +9,7 @@ aliases: classification map register, rule classification, boundary call, verifi
 # Classification Map
 
 **Date**: 2026-07-14
-**Last Reviewed**: 2026-09-19
+**Last Reviewed**: 2026-09-26
 **Purpose**: The living register of per-rule classification decisions — boundary call, verification disposition + owner, and education disposition — so enforcement ownership is decided once and cited thereafter instead of re-litigated per agent, per prompt, per session
 **Organization**: process-standard
 **Scope**: cross-project
@@ -832,4 +832,26 @@ education:
   disposition: "Law home: completion-documentation-guide § 'The delegated-tier line — unconditional' (forms, grammar, rationale, honest reach). Pointer-grade: Task-Completion-Protocol's Key-Rules bullet (rewritten from exception-based). The audit duty: canonical/agents/stacy.md § 'The claims-pass record' (the delegated-tier read + counting row). HONEST-REACH TEACHING RIDES THE LAW HOME: corpus-wide `plan held` is not evidence seats are respected — the active-falsification case is owned-artifact-authorship's, uncovered by design here"
 history:
   - { date: 2026-09-19, change: "entry created by the delegated-tier-capture ballot (.kiro/docs/ballots/2026-09-19-delegated-tier-capture.md), drafted at Peter's in-session direction from the F15 adjudication's un-absorbed residual. The amendment: TCP's capture goes exception-based → UNCONDITIONAL ('a plan that held needs no note' was the missing-note gap's root — silence was ambiguous between plan-held and unrecorded divergence). The forced-negative pattern's third application (unmet criteria → promised artifacts → who-executed). Non-substring sweep at authoring: 28 live ids + this one, relations 0, dupes 0. Stacy's verifier-half review recorded in the ballot § 6 before submission", by: thurgood }
+```
+
+### tasks-row-write-scope-grant
+
+```yaml
+rule: "A parent task's assignment row in a MERGED tasks.md grants its PRIMARY and tiered secondary agents write access to exactly that parent's listed Primary Artifacts, on that unit's branch, expiring when the unit merges — additive to charter write scope, conveying no ratification authority; an out-of-list edit is a claims-pass finding; every listed artifact must trace to requirements or design"
+boundary_call:
+  class: functional
+  rationale: "THE AUDITED PROPERTY IS MECHANICALLY DECIDABLE: a unit PR's edit paths against the union of its parents' Primary Artifacts lists is a set comparison over git and tasks.md. It is held by AUDIT, not by a check, because no check exists yet and the grant's first application (Spec 123) is its calibration — MECHANIZATION NAMED AND UNPROPOSED (a completion-criteria-parity-style EMISSION, never a red, is the cheap later form). TWO RESIDUALS STAY JUDGMENT, stated so the functional call is not read as wider than it is: (a) clause 7's TRACE (does a listed artifact trace to requirements/design?) is a tasks-round judgment, and (b) OVER-BROAD GLOBS in a Primary Artifacts list grant a directory — the tasks round is the only check on breadth. ENFORCEMENT IS POST-MERGE: an out-of-list edit is caught as a FINDING, not prevented"
+verification:
+  disposition: audit
+  owner: stacy
+  check_state: none
+  checks: []
+  # The audit (clause 6): each claims pass whose population includes a unit executed under the
+  # grant compares the unit's edit paths (the unit PR's diff) with the union of its parents'
+  # Primary Artifacts lists; a path outside the union, outside the editing agent's charter scope,
+  # is a FINDING on the executing agent. Clause 7 (trace) rides the tasks-round LENS.
+education:
+  disposition: "LAW HOME, single: .kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md § 2 (the seven-clause rule). POINTER-GRADE: Task-Completion-Protocol § 'Coherent Units' (one bullet, pointing here — S-6 copy set: none; a pointer, not a copy). NOT EDITED, DELIBERATELY: the charters' `## Write scope` blocks (clause 5 — charter scopes unchanged; a charter line would read as a permanent grant for temporary work, the NOT-TAKEN fork (A)'s own defect). APPLICATION HOME: each spec's tasks.md § 'Delegated-tier plan' preamble names the grant; its Primary Artifacts lists are the grant's exact extent"
+history:
+  - { date: 2026-09-26, change: "entry created by the tasks-row write-scope ballot (.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md), RATIFIED by Peter at the Spec 123 tasks-round sitting (record-first; PR-atomic). ORIGIN: Lina R1 T-L3 — most Spec 123 seats sat outside their agent's declared charter write scope, so the seated agents would have had to decline their own work. FORK: (A) charter-widening ballot NOT TAKEN — counter recorded: permanent scope for temporary work; (B) SELECTED. PETER'S CLARIFICATION RECORDED: the rule grants authorization records, not scope self-expansion — activation is Peter's merge of the tasks.md. KNOWINGLY ACCEPTED: the tasks author as scope-granter outside the per-case ballot path, mitigated by activation-at-merge and the tasks feedback round. FIRST APPLICATION: Spec 123's five units. Non-substring sweep at authoring: 29 live ids + this one, relations 0, dupes 0", by: thurgood }
 ```

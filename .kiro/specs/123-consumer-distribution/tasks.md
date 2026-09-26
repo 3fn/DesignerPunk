@@ -6,7 +6,7 @@
 **Status**: Tasks Phase — **ROUND FULLY CLOSED · NO OPEN SLOTS · READY FOR PR.**
 - R1 (17 blocking) was folded at R2 (`[THURGOOD R2]`); the R2 micro-confirms (2 blocking + advisories) were folded in the closing revision (`[THURGOOD R3]`).
 - **Peter ruled T2 (plain sequential publishing) and T1 ((B), the standing write-scope rule), both 2026-09-26** (`[THURGOOD R4]`).
-- **U1's start gate is now only**: (1) this tasks PR's merge, which activates the assignment rows; and (2) **B-U1 § "T1-(B)" committed RATIFIED-in-record as the U1 branch's first commit** (Task 7.0), before any edit outside standing scopes. B-U1's remaining content rides U1 itself, per the record-first protocol.
+- **U1's start gate is now only**: (1) this tasks PR's merge, which activates the assignment rows; and (2) **the standalone T1-(B) ballot merged by Peter** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`), before any edit outside standing scopes. B-U1's own content (publish rail, register row) rides U1 itself, per the record-first protocol, and cross-references that ballot. *(Erratum 2026-09-26: the vehicle is the standalone ballot `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, authorized by Peter after this plan settled.)*
 
 Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 **Criteria mode**: per-parent
@@ -40,7 +40,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **(A) — NOT TAKEN**: a record-first ballot widens each seated agent's write scope to the paths its 123 parents list (canonical charters regenerated; governance carve-out). *Cost: one ballot and one regeneration, before U1.*
   - **(B) — SELECTED**: a **standing ruling that a merged `tasks.md` assignment row grants write scope over that parent's enumerated Primary Artifacts**, for the parent's duration (Lina's lean). A claims pass can audit whether edits stayed inside the listed artifacts. *Counter: the tasks author becomes a de facto scope granter, through an artifact that is not a ballot.*
   - **Where it lands**: § "Delegated-tier plan" (a preamble line) and every parent's Primary Artifacts list, which under (B) becomes the grant's exact extent.
-  - **Ratification vehicle — B-U1 § "T1-(B)", as planned** (the text below).
+  - **Ratification vehicle — SUPERSEDED BY THE STANDALONE BALLOT** *(Erratum 2026-09-26: the vehicle is the standalone ballot `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, authorized by Peter after this plan settled.)* The ballot carries the text below verbatim; B-U1 cross-references it. The original plan follows, for the record:
+  - **(Original) Ratification vehicle — B-U1 § "T1-(B)"** (the text below).
     - **Ordering, per the record-first precedent**: that section is **authored and committed as RATIFIED-in-record** — `Status: RATIFIED (Peter, 2026-09-26)` plus its `Ratified-machine:` line — **as the U1 branch's FIRST commit (Task 7.0), before any U1 work on surfaces outside standing scopes.**
     - Peter's recorded ruling is the authority, and the U1 merge confirms it.
     - B-U1's other content (the publish rail and register row) rides U1 in the same PR.
@@ -138,7 +139,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
-**Preamble**: write-scope authority for every seat below is **granted by the T1-(B) standing rule** (§ "Slots"). Each PRIMARY and each tiered secondary may write exactly its parent's listed Primary Artifacts, on its unit's branch, until the unit merges. **Activation is this tasks PR's merge; ratification is B-U1 § "T1-(B)" committed first on the U1 branch (Task 7.0).**
+**Preamble**: write-scope authority for every seat below is **granted by the T1-(B) standing rule** (§ "Slots"). Each PRIMARY and each tiered secondary may write exactly its parent's listed Primary Artifacts, on its unit's branch, until the unit merges. **Activation is this tasks PR's merge; ratification is the standalone ballot `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`** (erratum 2026-09-26; it was planned as B-U1 § "T1-(B)" at Task 7.0).
 
 **Tier rule**:
 - Sonnet implements settled design.
@@ -249,7 +250,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet); Lina (Opus) — 1.4
   **Traces**: Reqs 2.1, 2.1a, 2.5, 15A.3, 19A.5a, 3.7a · design C2, C3, DD3, DD23, DD24
-  **U1 start ordering (applies to every U1 parent)**: **no U1 work on a surface outside the assigned agent's standing charter scope begins until Task 7.0 has committed B-U1 § "T1-(B)" as RATIFIED-in-record, as the branch's first commit.** Executing agents verify that the record reads RATIFIED before their first out-of-scope edit — the mechanical check, per standing practice.
+  **U1 start ordering (applies to every U1 parent)**: **no U1 work on a surface outside the assigned agent's standing charter scope begins until the standalone T1-(B) ballot (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`) is merged and reads RATIFIED** (erratum 2026-09-26; it was planned as Task 7.0's first-commit section). Executing agents verify that the record reads RATIFIED before their first out-of-scope edit — the mechanical check, per standing practice.
 
   **Success Criteria:**
   - `findDesignSystemRoot` returns the specified `state`, `partialCase` and `tierDir` for **nine named cases**: (1) born · (2) package-mode · (3) partial `config-no-tier` · (4) partial `unused-local-tier` · (5) partial `tier-no-config` · (6) partial `manifest-only` · (7) unborn · (8) the steward exemption · (9) a consume-posture manifest alone → unborn. **Instrument**: `bornRepo.test.ts`, one test per case, with the count asserted.
@@ -447,13 +448,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - (2) `VERSION=99.99.99` → exit 10;
     - (3) a PATH-shimmed `npm` returning a GitHub Packages tarball URL → exit 11 **through the production line**.
   - **T2 ruled (B)**: the guard queries the version as drawn; no tag is involved.
-  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 § "T1-(B)" carries the standing rule verbatim from § "Slots", committed RATIFIED-in-record (Peter, 2026-09-26) as the U1 branch's FIRST commit (Task 7.0)** — its commit is an ancestor of every U1 commit touching a surface outside standing scopes (ancestry cited against the U1 PR ref).
+  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 cross-references the standalone T1-(B) ballot** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, RATIFIED Peter 2026-09-26), **whose merge precedes the U1 branch point** (cited by merge commit) (erratum 2026-09-26; it replaces the planned first-commit section).
   - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)).
   - *Scope stated*: npmjs visibility and tarball host only.
 
   **Primary Artifacts:** `scripts/verify-publish-rail.sh`, `scripts/__bites__/`, `.kiro/docs/ballots/<date>-123-b-u1-publish-rail.md`, `.kiro/hooks/RELEASE-FLOW.md`, `governance/classification-map.md`, `CHANGELOG.md`, `package.json`
 
-  - [ ] 7.0 **FIRST on the U1 branch**: commit B-U1 § "T1-(B)" as RATIFIED-in-record (Peter, 2026-09-26), with its `Ratified-machine:` line
+  - [ ] 7.0 **FIRST on the U1 branch**: verify that the standalone T1-(B) ballot is merged on `main` and reads RATIFIED; record its merge SHA; B-U1 cross-references it (erratum 2026-09-26: it replaces committing the section here)
   - [ ] 7.1 Script + self-test + empty-URL branch
   - [ ] 7.2 The three bites
   - [ ] 7.3 B-U1 record-first; Stacy's review of the register row
@@ -941,7 +942,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 3. **Seat authentication** stays declared-not-proven until 125-B U3.
 4. **A fresh `HOME` makes "clean" true by construction, but costs a harness re-login per run** (unverified per harness). The cold cells may still read "not observed cold" if a harness cannot run under a fresh HOME.
 5. **The release count assumes no hotfixes.** (T2 ruled plain sequential: no tag promotion to verify.)
-6. **T1 is RULED (B).** U1's start gate is the tasks PR's merge plus Task 7.0's ratified-in-record commit. *Residual: the grant's audit is post-merge (claims passes), so an out-of-list edit is caught as a finding, not prevented.*
+6. **T1 is RULED (B).** U1's start gate is the tasks PR's merge plus the standalone T1-(B) ballot's merge (erratum 2026-09-26). *Residual: the grant's audit is post-merge (claims passes), so an out-of-list edit is caught as a finding, not prevented.*
 7. **The operator cannot physically drive every harness session** (Leonardo C3). `session-launched-by` makes whose hands were involved auditable, but it cannot make the run hands-free.
 
 ---
