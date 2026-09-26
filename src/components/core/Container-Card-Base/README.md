@@ -312,7 +312,7 @@ These Container-Base props are intentionally excluded from Container-Card-Base:
 | Value | Token | Width |
 |-------|-------|-------|
 | `'none'` | - | 0px |
-| `'default'` | `border.border.default` | 1px |
+| `'default'` | `border.default` | 1px |
 
 ### Border Color Values
 
