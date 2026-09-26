@@ -37,7 +37,7 @@ import {
   cardBackgroundTokenMap,
   cardShadowTokenMap,
   cardBorderColorTokenMap
-} from '../../tokens';
+} from '../../Container-Card-Base.refs';
 
 /**
  * Base styles for Container-Card-Base component

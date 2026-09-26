@@ -348,7 +348,7 @@ src/components/core/Input-Text-Password/
 ├── types.ts                            # TypeScript types
 ├── validation.ts                       # Password validation logic
 ├── stateManagement.ts                  # State management
-├── tokens.ts                           # Token references
+├── Input-Text-Password.refs.ts # Token references
 └── platforms/
     ├── web/
     │   ├── InputTextPassword.web.ts    # Web component

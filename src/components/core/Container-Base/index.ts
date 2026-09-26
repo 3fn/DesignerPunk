@@ -32,7 +32,7 @@ export {
 } from './types';
 
 // Export tokens
-export type { Platform, PlatformTokenMap } from './tokens';
+export type { Platform, PlatformTokenMap } from './Container-Base.refs';
 
 export {
   paddingTokenMap,
@@ -44,4 +44,4 @@ export {
   getBorderRadiusToken,
   getLayeringToken,
   BORDER_COLOR_TOKEN
-} from './tokens';
+} from './Container-Base.refs';

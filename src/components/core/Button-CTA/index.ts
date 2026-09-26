@@ -13,8 +13,8 @@
 export type { ButtonProps, ButtonSize, ButtonStyle } from './types';
 
 // Component tokens
-export { ButtonCTATokens, getButtonCTAMinWidth } from './Button-CTA.tokens';
-export type { ButtonCTAMinWidthVariant } from './Button-CTA.tokens';
+export { ButtonCTATokens, getButtonCTAMinWidth } from './Button-CTA.refs';
+export type { ButtonCTAMinWidthVariant } from './Button-CTA.refs';
 
 // Platform implementations are imported directly from their platform-specific paths
 // e.g., import { ButtonCTA } from './platforms/web/ButtonCTA.web';

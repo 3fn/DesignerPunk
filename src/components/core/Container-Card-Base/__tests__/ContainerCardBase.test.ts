@@ -31,7 +31,7 @@ import {
   getCardBorderToken,
   getCardBorderColorToken,
   getCardBorderRadiusToken
-} from '../tokens';
+} from '../Container-Card-Base.refs';
 
 import {
   isCardPaddingValue,
@@ -528,7 +528,7 @@ describe('Container-Card-Base Component', () => {
     /**
      * These tests validate that the token mappings used by all platform implementations
      * (Web, iOS, Android) are consistent. The Android implementation uses the same
-     * token references as defined in tokens.ts.
+     * token references as defined in Container-Card-Base.refs.ts.
      */
     
     describe('Android Token Mapping Consistency', () => {

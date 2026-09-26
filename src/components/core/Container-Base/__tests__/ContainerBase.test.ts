@@ -21,7 +21,7 @@ import {
   getBorderRadiusToken,
   getLayeringToken,
   BORDER_COLOR_TOKEN
-} from '../tokens';
+} from '../Container-Base.refs';
 
 import {
   isPaddingValue,

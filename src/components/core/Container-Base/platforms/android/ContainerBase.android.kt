@@ -23,7 +23,7 @@
  * - Hover state support via blend utilities (desktop/ChromeOS with pointer)
  * 
  * @see ../../../types.ts for ContainerBaseProps interface
- * @see ../../../tokens.ts for token reference mappings
+ * @see ../../../Container-Base.refs.ts for token reference mappings
  * @see .kiro/specs/010-container-component/design.md for complete design documentation
  * @see .kiro/specs/034-component-architecture-system for Stemma System details
  * @see .kiro/specs/031-blend-infrastructure-implementation for blend utilities
