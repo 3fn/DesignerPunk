@@ -3,7 +3,12 @@
 **Date**: 2026-09-26 (R2 revision, same day)
 **Spec**: 123 — Consumer Distribution (the former "121-C")
 **Author**: Thurgood
-**Status**: Tasks Phase — **ROUND COMPLETE · READY FOR PR.** **Slot T1 stays open: it gates U1's START, not the plan's settle.** R1 (17 blocking) was folded at R2 (`[THURGOOD R2]`); the R2 micro-confirms (1 blocking + advisories) are folded in this closing revision (`[THURGOOD R3]`). **Peter ruled T2 on 2026-09-26 (plain sequential publishing).** Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
+**Status**: Tasks Phase — **ROUND FULLY CLOSED · NO OPEN SLOTS · READY FOR PR.**
+- R1 (17 blocking) was folded at R2 (`[THURGOOD R2]`); the R2 micro-confirms (2 blocking + advisories) were folded in the closing revision (`[THURGOOD R3]`).
+- **Peter ruled T2 (plain sequential publishing) and T1 ((B), the standing write-scope rule), both 2026-09-26** (`[THURGOOD R4]`).
+- **U1's start gate is now only**: (1) this tasks PR's merge, which activates the assignment rows; and (2) **B-U1 § "T1-(B)" committed RATIFIED-in-record as the U1 branch's first commit** (Task 7.0), before any edit outside standing scopes. B-U1's remaining content rides U1 itself, per the record-first protocol.
+
+Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 **Criteria mode**: per-parent
 **Sources**: `requirements.md` (PR #196); `design.md` (PR #197, `5e98bd8f`; P1 ruled YES, P2 ruled branch A), plus **two tasks-round errata on this branch**: C27 (Le-T1 — the terminal-output line restored) and C7 (D-T-B2 — manifest entry `origin`). **This plan decides sequencing and evidence, never WHAT.** Where tasks grain moved a design component's placement, § "Sequencing decisions" says so.
 
@@ -16,21 +21,39 @@
 
 ---
 
-## Rulings from Peter — slots (this document picks neither branch)
+## Rulings from Peter — slots (both RULED; this document picked neither branch)
 
-- **SLOT T1 — write scope for seated agents** (Lina R1 T-L3; **needed before U1 starts**). Most parents sit outside their seated agent's declared write scope, so as the charters read today the agent must decline those edits.
-  - **(A)** A record-first ballot widens each seated agent's write scope to the paths its 123 parents list (canonical charters regenerated; governance carve-out). *Cost: one ballot and one regeneration, before U1.*
-  - **(B)** A **standing ruling that a merged `tasks.md` assignment row grants write scope over that parent's enumerated Primary Artifacts**, for the parent's duration (Lina's lean). A claims pass can audit whether edits stayed inside the listed artifacts. *Counter: the tasks author becomes a de facto scope granter, through an artifact that is not a ballot.*
+- **SLOT T1 — write scope for seated agents — RULED (B) (Peter, 2026-09-26)**: *a merged `tasks.md` assignment row grants the assigned agent write scope over exactly that parent's listed Primary Artifacts, on that unit's branch, expiring when the unit merges.* (Lina R1 T-L3; most parents sat outside their seated agent's declared write scope.)
+  - **Rationale, as ruled**:
+    - the grant is **exact** (the enumerated Primary Artifacts, nothing else);
+    - it is **per-parent**;
+    - it is **auditable** (claims passes compare edit paths to the list);
+    - it is **temporary by construction** (the unit branch's lifetime);
+    - **Peter's merge of the tasks PR is the activating act**, composing with merge-is-acceptance law.
+  - **The recorded counter, KNOWINGLY ACCEPTED**: the tasks author becomes a scope-granter outside the per-case ballot path. It is mitigated by **activation at Peter's merge** and by **the six-seat round that reviewed every assignment row**.
+  - **Instances this dissolves, recorded as RESOLVED**:
+    - Lina's Task 18 `CHANGELOG.md` edit (a listed Primary Artifact);
+    - Leonardo's writer for `tests/onboarding-trio/**` (Task 25's listed artifacts; the prompts were already re-pinned into the spec directory);
+    - every seat Lina's T-L3 enumerated (Ada, Lina, Thurgood, Stacy, Leonardo).
+  - **Charter write scopes are otherwise UNCHANGED.** The rule adds a per-parent grant; it edits no charter.
+  - **Branch (A) — NOT TAKEN**, recorded below.
+  - **(A) — NOT TAKEN**: a record-first ballot widens each seated agent's write scope to the paths its 123 parents list (canonical charters regenerated; governance carve-out). *Cost: one ballot and one regeneration, before U1.*
+  - **(B) — SELECTED**: a **standing ruling that a merged `tasks.md` assignment row grants write scope over that parent's enumerated Primary Artifacts**, for the parent's duration (Lina's lean). A claims pass can audit whether edits stayed inside the listed artifacts. *Counter: the tasks author becomes a de facto scope granter, through an artifact that is not a ballot.*
   - **Where it lands**: § "Delegated-tier plan" (a preamble line) and every parent's Primary Artifacts list, which under (B) becomes the grant's exact extent.
-  - **Vehicle, pre-drafted so the ruling ratifies without another round**:
-    - **(A)** → a scope-widening ballot, authored on the ruling.
-    - **(B)** → the standing-rule text below, which is **B-U1 § "T1-(B)"**. **Because U1 cannot start until the grant is in force, and B-U1's other content ratifies only at U1's merge**, the T1-(B) section is committed as a **standalone record-first ballot record, Peter-merged ahead of `task/123-u1-substrate`**. The rest of B-U1 cross-references it.
-  - > **STANDING RULE T1-(B) (pre-drafted; ratifies only on Peter's (B) ruling):**
-    > 1. A parent task's assignment row in a **merged** `tasks.md` — its PRIMARY and secondary agents in that spec's Delegated-tier plan — **grants each named agent write access to exactly the paths enumerated in that parent's Primary Artifacts list**, for the parent's duration (from its first subtask commit until its unit merges).
-    > 2. The grant **adds to, never replaces**, the agent's charter write scope, and **confers no ratification authority**. Governance-law paths remain subject to record-first ballots and the Peter-merge carve-out.
-    > 3. Edits outside a parent's listed artifacts remain out of scope. **The claims pass audits edit paths against the list; a path outside it is a finding on the executing agent.**
-    > 4. A Primary Artifact must trace to the parent's requirements or design components. A listed path with no such trace is a tasks-round finding, so the list cannot be used to widen scope beyond the work.
-  - **Ruling: `____` — OPEN. It gates U1's start, not this plan's settle.**
+  - **Ratification vehicle — B-U1 § "T1-(B)", as planned** (the text below).
+    - **Ordering, per the record-first precedent**: that section is **authored and committed as RATIFIED-in-record** — `Status: RATIFIED (Peter, 2026-09-26)` plus its `Ratified-machine:` line — **as the U1 branch's FIRST commit (Task 7.0), before any U1 work on surfaces outside standing scopes.**
+    - Peter's recorded ruling is the authority, and the U1 merge confirms it.
+    - B-U1's other content (the publish rail and register row) rides U1 in the same PR.
+    - *(This replaces the R3 note that proposed a standalone PR ahead of U1. The record-first protocol already provides the ordering, as in 127 U1: ratified-in-record before the edits apply, same PR.)*
+  - > **STANDING RULE T1-(B) — RATIFIED (Peter, 2026-09-26):**
+    > 1. **Extent.** A parent task's assignment row in a **merged** `tasks.md` grants write access to **exactly the paths enumerated in that parent's Primary Artifacts list**, and to nothing else.
+    > 2. **Who.** The grant covers the parent's PRIMARY agent **and every secondary agent named on the same row**. **A secondary's access rides the same row, under the same extent and duration.** Consulted agents named without a tier receive no grant.
+    > 3. **Duration.** The grant holds **on that unit's branch only**, and **expires when the unit merges**. It does not carry to `main`, to other branches, or to later units.
+    > 4. **Activation.** The grant is activated by **Peter's merge of the `tasks.md` that contains the row**. An unmerged row grants nothing.
+    > 5. **What it does not change.** The grant **adds to, never replaces**, the agent's charter write scope. **Charter write scopes are otherwise unchanged.** The grant **confers no ratification authority**: governance-law paths remain subject to record-first ballots and the Peter-merge carve-out.
+    > 6. **Audit.** Edits outside a parent's listed artifacts remain out of scope. **Claims passes audit edit paths against the list; a path outside it is a finding on the executing agent.**
+    > 7. **Trace.** A Primary Artifact must trace to the parent's requirements or design components. A listed path with no such trace is a tasks-round finding, so the list cannot be used to widen scope beyond the work.
+  - **Ruling: (B)**
 - **SLOT T2 — dist-tag strategy — RULED (B) PLAIN SEQUENTIAL PUBLISHING (Peter, 2026-09-26).** Releases 1–2 publish normally to `latest`, as MAJORs where the recipe says so, **with honest CHANGELOG entries** (the CHANGELOG starts in U1 — Task 7.4). **The package README and the install doc do not advertise the onboarding path to strangers until release 3.** **The counter-argument (stranger protection) is declined, on the ground that there are zero known stranger consumers** (dp-portfolio is the only known consumer). Branch (A), not taken, is recorded below. Leonardo R1 A6.
   - **(A) — NOT TAKEN**: publish releases 1–2 under a **`next` dist-tag**, and promote to `latest` at release 3, the first release carrying the install doc. Then Task 7's rail guard, and every RELEASE pass's rail read, **name the tag queried**: `npm view @3fn/core@next …` for releases 1–2, and `@latest` after promotion. *Counter: it withholds time-to-first-value from anyone who has not opted in, which is 26.3's reason for releasing between units, and it adds a tag the guard must name.*
   - **(B) — SELECTED**: plain sequential publishing to `latest`.
@@ -105,17 +128,17 @@
 
 | Unit | Declared subtasks | Threshold |
 |---|---|---|
-| U1 | 43 | **+4** |
+| U1 | 44 | **+4** |
 | U2 | 42 | **+4** |
 | U3 | 16 | **+3** |
 | U4 | 6 | **+2** |
 | U5 | 18 | **+3** |
 
-*Thresholds are ~10% rounded up, with a floor of +2 and small-unit allowance of +3. **Totals: 28 parents, 125 subtasks.***
+*Thresholds are ~10% rounded up, with a floor of +2 and small-unit allowance of +3. **Totals: 28 parents, 126 subtasks.***
 
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
-**Preamble**: write-scope authority for every seat below rests on **SLOT T1**'s ruling.
+**Preamble**: write-scope authority for every seat below is **granted by the T1-(B) standing rule** (§ "Slots"). Each PRIMARY and each tiered secondary may write exactly its parent's listed Primary Artifacts, on its unit's branch, until the unit merges. **Activation is this tasks PR's merge; ratification is B-U1 § "T1-(B)" committed first on the U1 branch (Task 7.0).**
 
 **Tier rule**:
 - Sonnet implements settled design.
@@ -226,6 +249,7 @@
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet); Lina (Opus) — 1.4
   **Traces**: Reqs 2.1, 2.1a, 2.5, 15A.3, 19A.5a, 3.7a · design C2, C3, DD3, DD23, DD24
+  **U1 start ordering (applies to every U1 parent)**: **no U1 work on a surface outside the assigned agent's standing charter scope begins until Task 7.0 has committed B-U1 § "T1-(B)" as RATIFIED-in-record, as the branch's first commit.** Executing agents verify that the record reads RATIFIED before their first out-of-scope edit — the mechanical check, per standing practice.
 
   **Success Criteria:**
   - `findDesignSystemRoot` returns the specified `state`, `partialCase` and `tierDir` for **nine named cases**: (1) born · (2) package-mode · (3) partial `config-no-tier` · (4) partial `unused-local-tier` · (5) partial `tier-no-config` · (6) partial `manifest-only` · (7) unborn · (8) the steward exemption · (9) a consume-posture manifest alone → unborn. **Instrument**: `bornRepo.test.ts`, one test per case, with the count asserted.
@@ -423,12 +447,13 @@
     - (2) `VERSION=99.99.99` → exit 10;
     - (3) a PATH-shimmed `npm` returning a GitHub Packages tarball URL → exit 11 **through the production line**.
   - **T2 ruled (B)**: the guard queries the version as drawn; no tag is involved.
-  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 § "T1-(B)"** carries the pre-drafted standing rule, **active only if Peter rules T1 (B)** — in which case that section was already ratified as a standalone record ahead of U1 (§ "Slots"), and B-U1 cross-references it.
+  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 § "T1-(B)" carries the standing rule verbatim from § "Slots", committed RATIFIED-in-record (Peter, 2026-09-26) as the U1 branch's FIRST commit (Task 7.0)** — its commit is an ancestor of every U1 commit touching a surface outside standing scopes (ancestry cited against the U1 PR ref).
   - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)).
   - *Scope stated*: npmjs visibility and tarball host only.
 
   **Primary Artifacts:** `scripts/verify-publish-rail.sh`, `scripts/__bites__/`, `.kiro/docs/ballots/<date>-123-b-u1-publish-rail.md`, `.kiro/hooks/RELEASE-FLOW.md`, `governance/classification-map.md`, `CHANGELOG.md`, `package.json`
 
+  - [ ] 7.0 **FIRST on the U1 branch**: commit B-U1 § "T1-(B)" as RATIFIED-in-record (Peter, 2026-09-26), with its `Ratified-machine:` line
   - [ ] 7.1 Script + self-test + empty-URL branch
   - [ ] 7.2 The three bites
   - [ ] 7.3 B-U1 record-first; Stacy's review of the register row
@@ -667,7 +692,7 @@
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Lina (Opus)** — executing agent; **Stacy authors the verdict record (outside the line); Thurgood recused**
   **Traces**: Reqs 11.8, 11.8.4, 24.3 · design § "Gates and sequencing" (G2)
-  **Preamble**: Lina accepted the seat on two conditions (R2), written as criteria below. **This parent's `CHANGELOG.md` edit sits outside her declared write scope and rides SLOT T1.** She authored the machinery pass four tests, and the MIDPOINT disclosure covers that.
+  **Preamble**: Lina accepted the seat on two conditions (R2), written as criteria below. **This parent's `CHANGELOG.md` edit sits outside her charter scope. It is granted under T1-(B) as a listed Primary Artifact** (resolved). She authored the machinery pass four tests, and the MIDPOINT disclosure covers that.
 
   **Success Criteria:**
   - **The two consequence texts are PRE-DECLARED**: the PASSES edit to the 24.3 table (per domain) and the Fork A demotion edit are committed at `.kiro/specs/123-consumer-distribution/completion/g2-consequence-texts.md` **before pass four is requested** (ancestry cited).
@@ -810,7 +835,7 @@
 ### UNIT 5 — Validation & closeout
 
 **Run discipline (Tasks 25–27; S-T4, S-T-A6)**:
-- **Every session's initial prompt is frozen and committed under `.kiro/specs/123-consumer-distribution/validation/prompts/<run-id>.md` BEFORE the run.** Its commit is an ancestor of the record's commit, and it is reproduced verbatim in the record. **Pinned inside the spec directory** (Leonardo's lean, adopted), so the prompts sit within the operator's write scope and the rule is executable regardless of T1. The protocol and fixtures under `tests/onboarding-trio/` are Task 25's Primary Artifacts, and their writer rides T1.
+- **Every session's initial prompt is frozen and committed under `.kiro/specs/123-consumer-distribution/validation/prompts/<run-id>.md` BEFORE the run.** Its commit is an ancestor of the record's commit, and it is reproduced verbatim in the record. **Pinned inside the spec directory** (Leonardo's lean, adopted), so the prompts sit within the operator's charter scope. The protocol and fixtures under `tests/onboarding-trio/` are Task 25's Primary Artifacts, **granted to Leonardo under T1-(B)** (resolved).
 - **Operator: Leonardo** (§ "Delegated-tier plan"), **with his three conditions as record fields on every trio, join and conformance record**:
   - **C1 `operator-log:`** — every operator message after the frozen prompt, reproduced verbatim with its reason (default `none`). **`operator-halt:<reason>` is the only operator-initiated stop.**
   - **C2 `subject: leonardo`** — every finding whose subject is consumer-Leonardo is tagged. **Stacy's CLOSEOUT pass cross-reads the tagged findings.**
@@ -916,7 +941,7 @@
 3. **Seat authentication** stays declared-not-proven until 125-B U3.
 4. **A fresh `HOME` makes "clean" true by construction, but costs a harness re-login per run** (unverified per harness). The cold cells may still read "not observed cold" if a harness cannot run under a fresh HOME.
 5. **The release count assumes no hotfixes.** (T2 ruled plain sequential: no tag promotion to verify.)
-6. **Slot T1 (write scope) blocks U1's start** until ruled. The (B) vehicle is pre-drafted (§ "Slots"). **Under (B) it must be ratified as a standalone record ahead of U1**, because B-U1's own merge comes too late to grant U1's execution scope.
+6. **T1 is RULED (B).** U1's start gate is the tasks PR's merge plus Task 7.0's ratified-in-record commit. *Residual: the grant's audit is post-merge (claims passes), so an out-of-list edit is caught as a finding, not prevented.*
 7. **The operator cannot physically drive every harness session** (Leonardo C3). `session-launched-by` makes whose hands were involved auditable, but it cannot make the run hands-free.
 
 ---

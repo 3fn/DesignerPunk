@@ -1,7 +1,7 @@
 # Spec Feedback: 123 — Consumer Distribution — Tasks
 
 **Spec**: 123-consumer-distribution
-**Artifact under review**: `tasks.md` — **ROUND COMPLETE · READY FOR PR** (slot T1 open: it gates U1 start, not plan settle; T2 ruled 2026-09-26)
+**Artifact under review**: `tasks.md` — **ROUND FULLY CLOSED · NO OPEN SLOTS · READY FOR PR** (T1 and T2 ruled 2026-09-26)
 **Created**: 2026-09-20
 **Spec author**: Thurgood
 **Reviewers**: Ada, Lina, Stacy (REQUIRED — the tasks-round LENS), Leonardo, **Kenya**, **Data**
@@ -1032,5 +1032,25 @@ All five land as I asked:
 | R2 micro-confirms | **2** — Lina T2-L1 · Leonardo Le-T5 (Stacy 0 · Ada 0 · Kenya 0 · Data 0) | folded here |
 
 **Status**: **ROUND COMPLETE · READY FOR PR.** Slot T1 is open: it gates U1's start, not the plan's settle, and its (B) vehicle is pre-drafted.
+
+---
+
+#### [THURGOOD R4]
+
+**Role**: spec author, recording Peter's T1 ruling. There are no reviewer items to fold.
+**Date**: 2026-09-26
+
+- **T1 — RULED (B) (Peter, 2026-09-26)**: a merged `tasks.md` assignment row grants the assigned agent write scope over exactly that parent's listed Primary Artifacts, on that unit's branch, expiring when the unit merges.
+  - **Rationale**: the grant is exact, per-parent, auditable, and temporary by construction; Peter's merge of the tasks PR is the activating act, composing with merge-is-acceptance law.
+  - **The counter-argument, knowingly accepted**: the tasks author becomes a scope-granter outside the per-case ballot path. It is mitigated by activation at Peter's merge and by the six-seat round that reviewed every assignment.
+
+  → tasks.md § "Slots"
+- **Standing-rule wording confirmed and tightened** into seven clauses: extent (Primary Artifacts only) · who (PRIMARY **plus tiered secondaries on the same row**; untiered consultees receive nothing) · duration (on the unit's branch; expires at the unit's merge) · activation (Peter's merge of the tasks.md) · what it does not change (**charter write scopes otherwise unchanged**; no ratification authority) · audit (claims passes; an out-of-list edit is a finding) · trace (listed artifacts must trace to requirements or design).
+- **Resolved under (B)**:
+  - Lina's Task 18 `CHANGELOG.md` edit;
+  - Leonardo's writer for `tests/onboarding-trio/**` (the prompts were already re-pinned);
+  - every seat T-L3 enumerated.
+- **Ordering, corrected from my R3 note**: my R3 proposed ratifying T1-(B) as a standalone PR ahead of U1. **That is superseded.** Per the record-first precedent (127 U1), **Task 7.0 commits B-U1 § "T1-(B)" RATIFIED-in-record as the U1 branch's first commit, before any work on surfaces outside standing scopes.** Task 1's preamble states the ordering for every U1 parent, and executing agents verify the RATIFIED record before their first out-of-scope edit. B-U1's remaining content rides U1.
+- **Status**: **ROUND FULLY CLOSED · NO OPEN SLOTS · READY FOR PR.**
 
 ---
