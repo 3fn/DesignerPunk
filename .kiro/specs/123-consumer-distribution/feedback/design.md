@@ -1,7 +1,7 @@
 # Spec Feedback: 123 — Consumer Distribution — Design
 
 **Spec**: 123-consumer-distribution
-**Artifact under review**: `design.md` (R2 revision, 2026-09-26; R1 draft at `02138996`)
+**Artifact under review**: `design.md` — **ROUND COMPLETE · READY FOR PR** (P2 slot open, both branches pre-written)
 **Created**: 2026-09-20
 **Spec author**: Thurgood
 **Reviewers**: Lina, Ada, Stacy, Leonardo
@@ -879,5 +879,80 @@ Both are text-grain changes to C2 and C3. Everything else in the packet is **cle
   - Advisory: "bold label" should mean the item's **leading** bold span, falling back to the first line's text. Item 1 of `start-up-tasks.md` is *"Check the **CURRENT** date"*, and any-bold-span slugs that to `#item-current`.
 
 **Still blocking**: **L2-D1** (orphan-key refusal plus an explicit row for every unit; this also gates my Q5 signature), **L2-D2** (the migration fetch rail and its ordering before the registry-pin repair), **L2-D3** (heading lines attach forward). All three are text-grain. None reopens the subsystem shape, which I confirm.
+
+---
+
+#### [THURGOOD R3]
+
+**Role**: spec author, closing fold of the R2 micro-confirms (LEONARDO R2, STACY R2, ADA R2, LINA R2; committed unedited at `17e79738`).
+**Date**: 2026-09-26
+**Mandatory @ mention pre-step**: one `[@THURGOOD]` mention (Leonardo Le-R3), answered below. Every other directed question from R1 was answered at R2 and confirmed.
+**Result**: **all 9 blocking folded as each reviewer specified; the advisories folded; no subsystem reopened.**
+
+##### Answer to the directed question
+
+- **→ [@THURGOOD] Leonardo Le-R3 (a consume-posture manifest, or no manifest at all?)**: **the consume-posture manifest, excluded from C2's signal. Your lean, adopted.**
+  - `attach --reference` writes `designerpunk.manifest.json` with `posture: 'consume'`.
+  - C2's manifest signal ignores that posture, so it never counts as a birth.
+  - `sync` keeps its approval-drift repair for reference installs (5.3–5.4).
+  - Your C6 case is added with your bite: let C2 count it → the reference MCP fails loud → red.
+
+  → design.md § "C2", § "C20", § "C6", DD22 -- [THURGOOD R3]
+
+##### Peter's ruling recorded
+
+- **P1 — YES (Peter, 2026-09-26): 5A covers primitive names.**
+  - C7's tier filter: **semantic always · primitive YES · component never**.
+  - The counter-argument (it taxes the consumer's language) is **recorded as knowingly accepted**, bounded by *reports, never writes*.
+
+  → design.md § "Rulings from Peter — slots", § "C7"
+- **P2 — PENDING.** Both branches are pre-written. The trigger is pinned at the **second consecutive** BREAKS (S-D2-A2).
+
+##### Dispositions — the nine blocking
+
+| ID | Disposition | Where |
+|---|---|---|
+| **S-D2-(a)** | **ADOPTED**: list- and map-valued fields keyed per member (`writeScope[<glob>]`, `preflight[…]`, `toolSubset[<tool>]`, …); atomicity scoped to scalar leaves; the C17 example corrected to per-member `writeScope` rows | C13, C16, C17, DD26 |
+| **Le-R1** | **ADOPTED**: `generate` creates an absent personal note from the template with `TODO` slots and prints its name; joining step 4 names the file; the born-refusal string gains the step | C2, C23, C26, catalog |
+| **Le-R2** | **ADOPTED**: `harness-user-state:` precondition on every trio and join record (clean profile/HOME, or entries recorded); cold only when clean; C32 never edits from a warm observation | C30 |
+| **Le-R3** | **ADOPTED**: consume-posture manifest ignored by C2; C6 case with your bite | C2, C20, C6, DD22 |
+| **D2-B1** | **ADOPTED**: the tier follows `ConfigLoader`; `package-mode` is its own posture, serving the index labelled `designerpunk-package-mode` ("run generate" is safe there); new partial `unused-local-tier`, where `generate` refuses with the add-`tokenSource` message; steward repo exempt | C2, C3, C1, catalog, DD23 |
+| **D2-B2** | **ADOPTED**: `generate` records `tierDir` in the token-index metadata; `ModeClassifier` and `TokenIndexer` read themes from the index's recorded tier, falling back to `bornRoot`'s `tierDir`. This also replaces the hardcoded `src/tokens/themes/dark` paths (the 2026-09-12 class) | C2, C3, C6, DD24 |
+| **L2-D1** | **ADOPTED**: an explicit row for every unit and entry (`retained` written, never implied); `derive()` and the freshness sweep refuse on orphaned keys. **This converts Lina's Q5 signature to UNCONDITIONAL, as recorded in C22** | C17, C22, catalog, DD25 |
+| **L2-D2** | **ADOPTED**: the migration fetches through the consumer's own rail, npm cache first, **sequenced before the Req 5.1 registry-pin repair**; any-version-in-range comparison (the manifest version is last-sync, not copy); `transforms.js` loaded from the fetched tarball; identity transform before Spec 104; judged per file; the dp-portfolio likely-no-manifest note + **`ls .kiro/sync-manifest.json` for Peter** | C7 Migration |
+| **L2-D3** | **ADOPTED**: a non-leaf heading's own line attaches **forward** to its first child (32 of 69 measured); only trailing whitespace attaches backward; the golden fixture gains the case | C13 |
+
+##### Dispositions — advisory
+
+- **Stacy**:
+  - **S-D2-A1**: the dependence is stated, plus the verbatim-substring check with its own string (it catches paraphrase, not prefix truncation).
+  - **A2**: the P2 trigger count. **A3**: under P2-a, G2 half (2) records "not applicable". **A4**: the G1 domain line, with always-set and enumeration-kind units named as not exercised unless exemplars are added.
+  - **A5**: the host bite drives the production path through a PATH-shimmed `npm`; `--self-test-host` is in the drawn script and exits 12, never reaching PASS. **A6**: `FAIL[host-empty]`, exit 13.
+  - Your garble-in-relay note is recorded: the design text encodes the rule the right way round.
+- **Leonardo**:
+  - DD1's lead premise **swapped to dev/prod parity**, with your preview-loop residual stated for the sitting. The `.gitignore` commented line carries her configured output path.
+  - A prerequisites section precedes the posture choice.
+  - **A-R1**: consumer keys under our prefix are hers (membership = what the manifest recorded as emitted), never pruned. Kiro and CC identity files are prefixed `designerpunk-<id>.md` — *prefix for keys and files, markers for text*.
+- **Ada**:
+  - The barrel matcher accepts function, const/let and re-export forms (C6 case added).
+  - **The C4 boundary is the whole token tier for both 3b and 3c** (a pre-implementation fix; as first written, every `init` would have failed at 3c).
+  - The closure-2 expected answer (16 files, 102 KB, by directory) is recorded in C5.
+- **Lina**:
+  - Commands key by `name`, not `cmd`.
+  - Identity-doc frontmatter is dropped, and the Kiro adapter writes fresh minimal frontmatter.
+  - A `packageRoot`-relative input row, plus `consumer-entry.paths.test.ts` (input ≠ output).
+  - Bites assert `FAIL_NO_DERIVATION`; unknown anchors are non-matching, never a throw.
+  - The frontmatter call sites get their own per-target case (E-fm on `writeScope[<glob>]`), or the record says "asserted, not bitten".
+  - Slug from the leading bold span only.
+  - The refs-rename issue is recorded as filed in C11.
+
+##### Round ledger
+
+| Round | Blocking | Outcome |
+|---|---|---|
+| R1 (four full reviews) | 24 — Leonardo 4 · Stacy 5 · Ada 6 · Lina 9 | folded at R2 (`ec32707a`) |
+| R2 micro-confirms | 9 — Leonardo 3 · Stacy 1 · Ada 2 · Lina 3 | folded here |
+
+**Status**: **ROUND COMPLETE · READY FOR PR.** Slot P2 is open, both branches pre-written; Peter's ruling drops in at PR review or before. Remaining design inputs pass to the tasks round (see the report).
 
 ---
