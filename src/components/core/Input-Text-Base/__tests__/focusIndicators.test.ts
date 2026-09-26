@@ -97,22 +97,22 @@ describe('Input-Text-Base Focus Indicators', () => {
 
   describe('Focus Ring Token Usage', () => {
     it('should use accessibility.focus.width token for focus ring width', () => {
-      // Verify token reference exists in tokens.ts
-      const { accessibilityTokens } = require('../tokens');
+      // Verify token reference exists in Input-Text-Base.refs.ts
+      const { accessibilityTokens } = require('../Input-Text-Base.refs');
       
       expect(accessibilityTokens.focusWidth).toBe('accessibility.focus.width');
     });
     
     it('should use accessibility.focus.color token for focus ring color', () => {
-      // Verify token reference exists in tokens.ts
-      const { accessibilityTokens } = require('../tokens');
+      // Verify token reference exists in Input-Text-Base.refs.ts
+      const { accessibilityTokens } = require('../Input-Text-Base.refs');
       
       expect(accessibilityTokens.focusColor).toBe('accessibility.focus.color');
     });
     
     it('should use accessibility.focus.offset token for focus ring offset', () => {
-      // Verify token reference exists in tokens.ts
-      const { accessibilityTokens } = require('../tokens');
+      // Verify token reference exists in Input-Text-Base.refs.ts
+      const { accessibilityTokens } = require('../Input-Text-Base.refs');
       
       expect(accessibilityTokens.focusOffset).toBe('accessibility.focus.offset');
     });

@@ -239,7 +239,7 @@ src/components/core/Input-Text-Email/
 ├── types.ts                         # TypeScript types
 ├── validation.ts                    # Email validation logic
 ├── stateManagement.ts               # State management
-├── tokens.ts                        # Token references
+├── Input-Text-Email.refs.ts # Token references
 └── platforms/
     ├── web/
     │   ├── InputTextEmail.web.ts    # Web component

@@ -262,7 +262,7 @@ src/components/core/Input-Text-PhoneNumber/
 ├── types.ts                               # TypeScript types
 ├── validation.ts                          # Phone validation logic
 ├── stateManagement.ts                     # State management
-├── tokens.ts                              # Token references
+├── Input-Text-PhoneNumber.refs.ts # Token references
 ├── __tests__/
 │   └── validation.test.ts                 # Validation tests
 └── platforms/

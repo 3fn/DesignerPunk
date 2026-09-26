@@ -18,7 +18,7 @@
  * This ensures cross-platform consistency with Web and iOS implementations.
  * 
  * @see ../../../types.ts for ContainerCardBaseProps interface
- * @see ../../../tokens.ts for token reference mappings
+ * @see ../../../Container-Card-Base.refs.ts for token reference mappings
  * @see .kiro/specs/043-container-card-base/design.md for complete design documentation
  * @see .kiro/specs/034-component-architecture-system for Stemma System details
  * @see src/tokens/semantic/AccessibilityTokens.ts for focus indicator tokens

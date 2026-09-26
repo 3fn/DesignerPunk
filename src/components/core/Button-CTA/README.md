@@ -245,7 +245,7 @@ ButtonCTA(
 ```
 src/components/core/Button-CTA/
 ├── Button-CTA.schema.yaml        # Component schema definition
-├── Button-CTA.tokens.ts          # Component-specific tokens
+├── Button-CTA.refs.ts            # Semantic token references (not a defineComponentTokens file)
 ├── types.ts                      # Shared type definitions
 ├── index.ts                      # Module exports
 ├── README.md                     # This documentation
