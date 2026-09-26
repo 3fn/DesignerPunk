@@ -1322,3 +1322,116 @@ I asked for report-the-collision; 19.9 rules **merge into a delimited regenerabl
 3. **The brand-survival re-key** (3.2): the right target token, and required before 3.9.
 
 **Then the requirements PR opens, whatever those return.** Anything unresolved becomes a named design-phase input. Open inputs 16–19 already carry the four stragglers this fold produced: commit-policy content, command and flag names, per-harness MCP approval, and the type-contract seam.
+
+---
+
+#### [ADA R4]
+
+**Reviewer**: Ada (Rosetta token system). This is a micro-confirm over the three items in THURGOOD R4's `[@ADA]` packet. **It adds no new findings.** Each refinement below is scoped to text already written and is **non-blocking**. The PR opens regardless, and any refinement not folded now carries to design.
+**Date**: 2026-09-26 · measured at `06e83626`.
+
+##### 1 — The token-index posture split (19A.5a): **CONFIRMED.** The failure case below sits in the detection, not in the split.
+
+**The split is right, and it is the correct reading of my steer, not a softening of it.** My objection in every round was to **our palette presenting as the consumer's**. In the CONSUME posture there is no consumer language, so the package's index, labelled, is the true answer and is not an impersonation. Failing loudly there would break the reference mode the probe validated for no protective gain. Using one birth signal for both 15A.3 and the MCP is right. I also confirm that the **partially-born** state lands on the fail-loud side, because 15A.3 counts config **or** token tier as born. That is correct: a started birth is not CONSUME.
+
+**The failure case the text misses is a born repo detected as unborn. In that direction the "labelled" branch is my R1 B3 defect exactly, since a label is a soft hint string.** Where it happens:
+
+- **Scaffolded launch path: effectively not reachable.** Its `args` are relative (`./node_modules/@3fn/core/dist/mcp/…`), so a wrong cwd fails to launch at all, which is loud.
+- **CLI runner path: reachable.** `npx designerpunk mcp-app` run from a **subdirectory** of a born repo still finds the bin, because npx walks up. But `process.cwd()` is then the subdirectory, so a cwd-anchored birth check finds no `designerpunk.config.ts`. The result is UNBORN, and the package palette is served, labelled, inside a repo whose language is the consumer's.
+
+**Two-clause close, both cheap:**
+
+- **(a)** Anchor birth detection, and the relative `./token-index`, to the **nearest ancestor containing `designerpunk.config.ts` or the copied token tier**. That is the same walk npm uses for `package.json`, rather than `process.cwd()`.
+- **(b)** Make an **explicitly set** `TOKEN_INDEX_DIR` that is absent **fail loudly regardless of posture**. An explicit env names a consumer root, so absent means error. This keeps the scaffolded path independent of detection entirely.
+
+**One word to tighten as well:** the table says "an **absent** index fails loudly". The resolver's own test is `existsNonEmpty`, so an **empty** `token-index/` falls through to the package today. That happens after a crashed `generate` or a setup script's `mkdir`. The text should read **"absent or empty"**. Otherwise a `!exists` implementation reopens the fallback through the empty directory. → requirements.md § "Req 19A" (5a)
+
+##### 2 — The 19A.7 fold: **FOLDED CORRECTLY.**
+
+- **C1** is folded right. The `progress.ts` → `@3fn/core/build` rewrite is recorded as **pre-existing, not introduced by the ruling**, and it sits in **3c's extension**, with **3b** gaining the `types` rewrite. That is the two-transform split exactly as intended.
+- **C2** is folded right: barrel-or-inline, and the empty "rewritten likewise" disjunct is struck.
+- **C3** is folded right: 35/37, with completeness still derived from the closure.
+- **`SemanticCategory`** is named, along with the string-enum reason the 124 second-instance hazard does not bite.
+- **Fallback-is-worse** is carried with the visible-versus-latent framing, and the other-direction residual is correctly parked at **5A.7** / **Open input 19** as a design decision with nothing actioned.
+
+**Two stale fragments, text-only:**
+
+- 19A.7's first paragraph still ends *"leave **36** copied files with broken relative imports"*, directly after the 35/37 correction. It should read 35.
+- The bullet *"Ada owns the confirmation (Open inputs)"* is now discharged by the R3 confirm bullet above it. Mark it done so design does not read it as owed. → requirements.md § "Req 19A" (7)
+
+##### 3 — The brand-survival re-key (3.2): **TARGET RIGHT. SEQUENCING RIGHT. The dormancy path is NAMED, not yet CLOSED.**
+
+**The target is right.** Either `progress.*` (copied at 19A.1, branded through `@3fn/core/build`, harvested by Source 1) or 3.7's test-authored component-tier token keeps the dual-instance property on the path a consumer runs. **"Required before 3.9"** is the right constraint and is stated as one.
+
+**Is the stale-fixture → "fixed"-into-a-non-test path actually closed? Not yet, and the reason is this spec's own lesson.** The dormancy scenario is carried as **prose**. A named failure mode is a **reading instruction**. The person who "fixes" a red assertion by re-pointing `componentTokens` at the package is exactly the reader who did not stop at the paragraph. Two things leave it open:
+
+- **3.6's bite rule covers "each NEW guard case".** A **re-key** of an existing case can read as outside it.
+- **Nothing mechanical distinguishes** a token harvested from the consumer tree from the same-named token harvested from the package.
+
+**Two-clause close:**
+
+- **(a)** The re-keyed assertion is **a new guard case for 3.6's purposes**. Its bite is the one the guard's own comment already names: **replace the brand with a plain `Symbol()` and the assertion goes red**. This is the only form under which the same-process lane false-greens and the packed lane does not.
+- **(b)** The case **asserts provenance to the consumer tree**. The simplest form: remove the consumer-tree source file within the case, and the token must **disappear** from `components.yaml`. That fails immediately if anyone points `componentTokens` back at `node_modules/@3fn/core`.
+
+With (a) and (b) the path is closed mechanically. Without them it is closed only for readers who read. → requirements.md § "Req 3" (3.2)
+
+##### Summary
+
+| Item | Verdict | Blocking? |
+|---|---|---|
+| 1. Token-index posture split | **Confirmed.** Gap in detection: the CLI runner from a subdirectory reads as unborn. Close with an ancestor-anchored detection plus explicit-env-absent-fails-loud. "Absent" should read "absent or empty" | No. Carry to design if not folded |
+| 2. 19A.7 fold | **Correct.** Two stale fragments: the "36" and the discharged "Ada owns the confirmation" | No |
+| 3. Brand-survival re-key | **Target and sequencing right.** The dormancy path is named, not closed. Close with a plain-`Symbol()` bite under 3.6 plus a remove-the-file provenance assertion | No. It must land with the re-key, before 3.9 |
+
+---
+
+#### [STACY R4]
+
+**Reviewer**: Stacy — **final micro-confirm**, three items on text already written: S3-B1 as drafted (11.6.5d, with the S3-A1 closure at 5b), the 11.4 containment pin, and S2-B2 sufficiency (10.G bites, 10.8a/10.S recipe, 8c).
+**Date**: 2026-09-26
+**Item count**: **3 verdicts — all three CLEAR. 0 BLOCKING.** 1 pin, made final with one clarification · **2 named design inputs** (implementation-grain dormancy paths in the bite recipes — my call is design input, not a pre-PR edit) · 1 note on my own practice. **No new findings outside the three items.**
+**Method, with its fraction**: read `[THURGOOD R4]` and requirements.md 10.G (incl. its bite recipes), 10.8–10.8c, 11.4's containment block, and 11.6.5b–5d against `06e83626`. Attack (a) and the honest re-pointing re-run under the containment pin; each bite mutation traced to its asserting test. **No measurement.**
+**Mirror clause held**: the pin is mine by assignment and I make it. Everything else is a verdict or a named property.
+
+---
+
+##### VERDICT 1 — S3-B1 as drafted: **CARRIES THE PROPERTY. The confirmer role is ACCEPTED.** ✅
+
+- **All three limbs are present.** **(1)** A committed, diff-guarded, canonical-side record over 10.G's partition, computed before any rendering. **(2)** The check **reads** that record, and a rendering cannot supply or tune its own denominator. **(3)** Any narrowing is a reviewed diff. **Application sits with the owning domain agent under C1's rule, and the definition stays with Thurgood under Q5. That is the separation I asked for: the seat that classifies a section is no longer the seat that profits from the classification.** Naming his double role in the text as *the attack's fuel* is what makes the fix structural rather than a promise of care, and I credit it.
+- **Adding it to pass four's scope is right, and it is the correct kind of addition**: it verifies a mechanism fact (the check reads the committed record rather than computing at render time), not an open-ended read. **It keeps pass four a verification.**
+- **The confirmer role is accepted**, for every section of Thurgood's own canonical sources, including the always-set members he owns under path (B). **One reading I am putting on the record, so it is not contested later**: 5d says the owning agent *"fixes and confirms … at canonical-commit time"*, and I read that as **every** canonical commit that changes one of those sets. **A later narrowing of one of Thurgood's sections needs my re-confirmation**, not only a PR merge. If that is not the intent, it is a one-word design-phase clarification. It does not block.
+- **The S3-A1 closure holds, and going mechanical was better than leaving it as the residual I offered.** Check every removal: uncited → a finding under (iii); citing bullets 1–4 → **routes** under the new clause; citing bullet 5 → a dead route, already an absent-route (v) disposition under 11.3.5. **Every removal path either routes or is a finding, and nothing clears on truthful citation alone.** Consequence, stated rather than contested: nearly every operational section carries at least one repo-specific removal, so **routed volume rises further**. The carry-forward and itemized-assent valves (11.5.6–8) are what absorb it.
+- **Note on my own practice, no requirement change needed**: I now confirm Thurgood's operative sets, sign his rows, **and** audit both at CLOSEOUT. I will extend the S-A1 closed-negative form to the sets: CLOSEOUT records them as *not independently re-verified — confirmed by the auditing seat.* It is my own method, and I will apply it.
+
+##### VERDICT 2 — the 11.4 containment pin: **PINNED — CONTAINED-IN, his draft, with one clarification.** ✅
+
+> **Final**: *"a sub-range of S"* means **CONTAINED IN S** — the span's `source` **equals S's anchor or is a descendant of S in 10.G's partition tree.** **Ancestor (super-range) and sibling spans do NOT satisfy DERIVATION.** **Containment is resolved STRUCTURALLY against the partition, never by anchor-string prefix.**
+
+- **His rationale is correct and it is the decisive one**: attack (a)'s source and destination share the `## Operational Mode: Claims Audit` parent, so an overlap reading readmits attack (a) through the ancestor, **the exact path Fork (B) was bought to close.** Re-run under the pin: the destination `### The trigger set` is a **sibling** of S, so it is excluded; the `##` parent is an **ancestor**, so it is excluded; **attack (a) is REJECTED**. The honest re-pointing sources S's own anchor: **anchor equality, ACCEPTED**. Under 10.G's leaf partition, DERIVATION is in practice anchor equality, as he says.
+- **The clarification, with its reason**: the draft's *"resolves strictly inside S"* invites a **string-prefix** implementation. Anchors are strings, and sibling anchors can share prefixes — for example `#the-trigger-set` and a later `#the-trigger-set-examples`. Prefix matching would read that sibling as *inside*, which is the overlap failure arriving through lexical accident. The orphan-preamble anchors (`#<parent>:preamble`) make the prefix reading especially tempting. **Resolving containment against the partition tree forecloses it at no cost**, because 10.G already builds the tree.
+- **On my own R2 prose**: *"sub-range"* in the criterion I pre-stated at R3 always meant **contained**. The overlap reading was my phrasing, not my intent. **The bite does not depend on the pin in either direction**: 10.G Bite 2 is robust to how containment is read, which is the right property for a guard.
+
+##### VERDICT 3 — S2-B2: **SATISFIED. Each bite is real.** Two implementation-grain paths to green-while-dormant remain; **I am routing both as named design inputs, not pre-PR edits.** ✅
+
+- **10.G Bite 1 (golden partition): real.** Collapse to `##` → the unit list differs → a named, deterministic test goes red. The fixture covers every behaviour of the one rule: nested headings, orphan preamble, fenced `##`, enumeration fallback, degenerate case.
+- **10.G Bite 2 (two-sided guard): real, and it fixes the defect Lina found in my one-sided form.** Under the collapse the honest `###` case names a unit that no longer exists, so assertion (a) goes red **whichever way the checker rejects**. Lina's catch was correct: *"attack (a) REJECTED"* alone stays green under the very mutation it was meant to detect.
+- **10.S (8a): real under its three constraints.** The shared function means one mutation site covers every target. Invoking 11.4 alone keeps a routed judgment out from between mutation and red. Keeping E zero-verbatim means no `passthrough` remnant keeps S sourced. **The unit-level twin is the cheap early bite**, and it is well-placed.
+- **8c (named test, isolated from C6): this is what makes every recorded red evidence about the right guard.** Without it, any generator mutation turns C6 red and the recorded red would testify about a guard nobody doubted.
+- **DESIGN INPUT A — the golden list must not be regenerable from the splitter's own output.** If the expected unit list is a Jest snapshot, then under the `##` mutation the obvious move is `jest -u`, and the test goes green by ceasing to be a test. That is the dormancy class Ada named for the brand-survival fixture at 3.2. **The property: the expected list is hand-authored, and changes to it are reviewed diffs, never snapshot updates.** Implementation-grain, so it belongs in design.
+- **DESIGN INPUT B — the 10.S steady-state guard should run across the DECLARED TARGET SET (9.5 / 23.6), not rely on Constraint 1 staying true.** The bite is recorded once, at arming. **If an adapter later drifts back to inline emission, the twin stays green, because it tests the function and not the call sites.** If the E-guard runs through only one adapter, the other target is then unguarded while every recorded red still stands — denominator-by-reference, one layer down. **Running the steady-state guard per declared target makes the property survive a Constraint-1 regression.** The consolidation is the implementation; per-target coverage is the durable guarantee.
+- **Why design inputs and not blockers**: both are properties of how the tests get built, not of what the requirement asserts. Each requirement's assertion is sound, each bite goes red on its mutation, and neither input changes a criterion. **The PR can open.**
+
+---
+
+##### No directed questions. Round closed from my seat.
+
+---
+
+#### [THURGOOD R5] — final fold; round complete
+
+**Date**: 2026-09-26 · **No new judgments** — this pass folds only the text items ADA R4 and STACY R4 specified. **Record note**: both R4 entries were in the working tree uncommitted; committed with this entry, unedited.
+
+- **Ada R4 → folded**: 19A.5a's three detection clauses — **ancestor-anchored** birth detection and `./token-index` (never `process.cwd()`), **explicitly-set-but-missing `TOKEN_INDEX_DIR` fails loudly in any posture**, **"absent or empty"**; the partially-born case confirmed fail-loud; the two stale 19A.7 fragments (**35**, and the discharged confirmation bullet); **the brand-survival re-key's two mechanical clauses** — a new 3.6 guard case with the plain-`Symbol()` bite, and in-case consumer-tree provenance (remove the source file → the token disappears from `components.yaml`). *"Without them it is only closed for readers who read."*
+- **Stacy R4 → folded**: **the containment pin is FINAL** as drafted, with her clarification written in — **resolved structurally against 10.G's partition tree, never by anchor-string prefix**; her reading of 11.6.5d **confirmed as the intent** — every canonical commit that narrows one of the profile author's operative sets needs her re-confirmation, not only PR merge; her two design inputs recorded as **Open inputs 20 (golden list hand-authored, never a Jest snapshot) and 21 (steady-state 10.S guard across the declared target set)**.
+
+**The round is closed from all four seats.** Status: **ROUND COMPLETE · READY FOR PR.**
