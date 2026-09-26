@@ -166,7 +166,7 @@ class ProductMCPServer {
   private stalenessGate: StalenessGate;
   private fileWatcher: fs.FSWatcher | null = null;
 
-  constructor(productDir: string, componentDir: string, tokenIndexDir: string = DEFAULT_TOKEN_INDEX_DIR) {
+  constructor(productDir: string, componentDir: string | string[], tokenIndexDir: string = DEFAULT_TOKEN_INDEX_DIR) {
     this.productDir = productDir;
     this.indexer = new ProductIndexer(productDir, componentDir, tokenIndexDir);
     this.server = new Server(
