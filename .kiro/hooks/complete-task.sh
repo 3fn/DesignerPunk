@@ -20,6 +20,13 @@
 #                          INSIDE a declared multi-parent unit but is NOT that
 #                          unit's final/gating parent — its completion docs land
 #                          on the branch, and it is accepted at the unit's merge.
+#                          This mode NEVER derives a branch name from MESSAGE
+#                          (unlike parent mode): it belongs on the shared unit
+#                          branch (task/<spec>-<unit-slug>), which can't be
+#                          derived from a single parent's message — deriving a
+#                          per-task branch here would silently split the unit
+#                          across branches. On main, be already on the unit
+#                          branch or pass --branch explicitly.
 #   Subtask mode (--subtask): commit on the task branch and push it. NO PR opens;
 #                          no required checks fire until UNIT completion.
 #
@@ -104,9 +111,12 @@ OPTIONS:
                          Default when omitted: "(single-parent unit — see Task)".
   --branch NAME          Task branch to create/use when currently on main
                          (convention: task/<spec>-<N>-<slug>, e.g. task/125-A-2-tooling-rework).
-                         In parent or unit-member mode the branch name is
-                         derived from a conventional MESSAGE when --branch is
-                         omitted.
+                         Derivation from a conventional MESSAGE when --branch
+                         is omitted is PARENT MODE ONLY. Unit-member mode
+                         belongs on the shared unit branch (task/<spec>-
+                         <unit-slug>) — that can't be derived from MESSAGE, so
+                         on main you must either already be on the unit branch
+                         or pass --branch explicitly.
   --agent NAME           Authoring agent for the PR body (default: $DP_AGENT or "Peter").
   --spec-dir NAME        Full spec directory name for the PR body's Spec: field
                          (default: derived from the (<spec>) suffix in MESSAGE).
@@ -222,7 +232,7 @@ CREATE_BRANCH=false
 if [[ "$CURRENT_BRANCH" == "$PROTECTED_BRANCH" ]]; then
   if [[ -n "$BRANCH_OPT" ]]; then
     TASK_BRANCH="$BRANCH_OPT"
-  elif [[ ( "$MODE" == "parent" || "$MODE" == "unit-member" ) && -n "$SPEC_ID" && -n "$TASK_NUM" ]]; then
+  elif [[ "$MODE" == "parent" && -n "$SPEC_ID" && -n "$TASK_NUM" ]]; then
     TASK_BRANCH="task/${SPEC_ID}-${TASK_NUM}-$(slugify "$TASK_DESC")"
   else
     die "Refusing to run on '$PROTECTED_BRANCH' — no task branch to work on. Nothing was staged, committed, or pushed." \
@@ -231,7 +241,10 @@ if [[ "$CURRENT_BRANCH" == "$PROTECTED_BRANCH" ]]; then
         "  - pass --branch task/<spec>-<N>-<slug>   (e.g. --branch task/125-A-2-tooling-rework), or" \
         "  - in parent mode, use the conventional message \"Task <N> Complete: <Description> (<spec>)\"" \
         "    so the branch name can be derived, or" \
-        "  - create the branch yourself first: git switch -c task/<spec>-<N>-<slug>"
+        "  - create the branch yourself first: git switch -c task/<spec>-<N>-<slug>" \
+        "  - in --unit-member mode, switch to the unit branch (task/<spec>-<unit-slug>) or pass --branch" \
+        "    (a unit-member parent's branch name can't be derived from MESSAGE — it belongs on the" \
+        "    unit's shared branch, not a per-task branch, or the unit would silently split across branches)"
   fi
   if git show-ref --verify --quiet "refs/heads/$TASK_BRANCH"; then
     die "Branch '$TASK_BRANCH' already exists but you are on '$PROTECTED_BRANCH' with local changes." \
