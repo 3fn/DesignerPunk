@@ -246,7 +246,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 1 — Distribution substrate & packaging truth
 
-- [ ] 1. Birth detection, root policy, indexer anchoring, and live reindex
+- [x] 1. Birth detection, root policy, indexer anchoring, and live reindex
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet); Lina (Opus) — 1.4
   **Traces**: Reqs 2.1, 2.1a, 2.5, 15A.3, 19A.5a, 3.7a · design C2, C3, DD3, DD23, DD24
