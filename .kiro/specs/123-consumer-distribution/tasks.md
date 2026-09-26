@@ -269,7 +269,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 1.1 `bornRepo.ts` + `bornRepo.test.ts` (nine cases; boundaries; barrel forms)
   - [x] 1.2 The resolvers + the type-level declaration test for both servers
   - [x] 1.3 Runner changes (consumer-root defaults removed; user env wins; no `cwd`)
-  - [ ] 1.4 (Lina, Opus) Indexer — **all four written interactions**: (i) multi-root at pass 1 with declared-name precedence and the legacy `core/` level; (ii) **`FileWatcher` + `StalenessGate` + `ComponentIndexer.dataDirs` over the consumer root** (package root exempt); (iii) **pass 3 across roots**; (iv) the reindex path's `lastProjectRoot` replaced by `bornRoot`
+  - [x] 1.4 (Lina, Opus) Indexer — **all four written interactions**: (i) multi-root at pass 1 with declared-name precedence and the legacy `core/` level; (ii) **`FileWatcher` + `StalenessGate` + `ComponentIndexer.dataDirs` over the consumer root** (package root exempt); (iii) **pass 3 across roots**; (iv) the reindex path's `lastProjectRoot` replaced by `bornRoot`
   - [ ] 1.5 `generate`: `token-index/meta.json` `tierDir`; the theme readers use the recorded tier; the write side anchored; the refusals; `figma-*` anchored
   - [ ] 1.6 The string-conformance test
 

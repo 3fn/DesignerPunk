@@ -6,6 +6,9 @@
  *
  * Data sources:
  * - components: schema.yaml, contracts.yaml, component-meta.yaml → reindexComponent
+ *   (one watcher per MUTABLE component root — Spec 123 C3: the consumer root is watched; the
+ *   package root is exempt as immutable. The caller passes the mutable set, see
+ *   `mutableComponentRoots` in ComponentIndexer.ts.)
  * - patterns: *.yaml → reindexPatterns
  * - templates: *.yaml → reindexTemplates
  * - guidance: *.yaml → reindexGuidance
@@ -28,23 +31,32 @@ interface WatchConfig {
 export class FileWatcher {
   private watchers: fs.FSWatcher[] = [];
   private debounceTimers = new Map<string, NodeJS.Timeout>();
+  private componentsDirs: string[];
 
   constructor(
     private indexer: ComponentIndexer,
-    private componentsDir: string,
+    componentsDir: string | string[],
     private patternsDir?: string,
     private templatesDir?: string,
     private guidanceDir?: string,
     private tokenIndexDir?: string,
     private debounceMs: number = 100,
-  ) {}
+  ) {
+    this.componentsDirs = (Array.isArray(componentsDir) ? componentsDir : [componentsDir]).filter(Boolean);
+  }
+
+  /** The component roots this watcher watches (the mutable set it was given). */
+  getWatchedComponentRoots(): string[] {
+    return [...this.componentsDirs];
+  }
 
   start(): void {
     this.stop();
 
-    const configs: WatchConfig[] = [
-      { dir: this.componentsDir, handler: (f) => this.handleComponentChange(f) },
-    ];
+    const configs: WatchConfig[] = this.componentsDirs.map(root => ({
+      dir: root,
+      handler: (f: string) => this.handleComponentChange(root, f),
+    }));
 
     if (this.patternsDir) configs.push({ dir: this.patternsDir, handler: () => this.debounceReindex('patterns', () => this.indexer.reindexPatterns(this.patternsDir!)) });
     if (this.templatesDir) configs.push({ dir: this.templatesDir, handler: () => this.debounceReindex('templates', () => this.indexer.reindexTemplates(this.templatesDir!)) });
@@ -77,11 +89,12 @@ export class FileWatcher {
     return this.watchers.length > 0;
   }
 
-  private handleComponentChange(filename: string): void {
+  private handleComponentChange(root: string, filename: string): void {
     const base = path.basename(filename);
     if (!base.endsWith('.schema.yaml') && !COMPONENT_FILES.has(base)) return;
 
-    const componentDir = path.join(this.componentsDir, path.dirname(filename));
+    // `filename` is root-relative; under a legacy `core/` level it is `core/<Name>/<file>`.
+    const componentDir = path.join(root, path.dirname(filename));
     this.debounceReindex(componentDir, () => this.indexer.reindexComponent(componentDir));
   }
 

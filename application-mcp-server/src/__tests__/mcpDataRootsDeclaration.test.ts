@@ -15,7 +15,7 @@
  * @see .kiro/specs/123-consumer-distribution/design.md § "C3. The root-policy table as code"
  */
 import * as path from 'path';
-import type { McpDataRootsModule, DesignSystemRootShape } from '../index';
+import type { McpDataRootsModule, DesignSystemRootShape, BornRepoModule } from '../index';
 
 function loadRealModule(): McpDataRootsModule {
   // Same CONSUMPTION CONTRACT require the production bootstrap uses.
@@ -79,5 +79,18 @@ describe('application-mcp-server McpDataRootsModule — declaration parity with 
     const unborn = real.resolveTokenIndexRoot({ dsRoot: unbornDsRoot, packageRoot: '/pkg' });
     expect(unborn.ok).toBe(true);
     if (unborn.ok) expect(unborn.tokenOrigin).toBe('designerpunk-reference');
+  });
+});
+
+describe('application-mcp-server BornRepoModule — declaration parity with the real module (Spec 123 Task 1.4)', () => {
+  test('findDesignSystemRoot exists and returns the DesignSystemRootShape the local interface declares', () => {
+    // Same CONSUMPTION CONTRACT require the production bootstrap uses.
+    const real = require('../../../dist/cli/shared/bornRepo') as BornRepoModule;
+    expect(typeof real.findDesignSystemRoot).toBe('function');
+    const result = real.findDesignSystemRoot(path.resolve(__dirname, '../../..'));
+    expect(['born', 'package-mode', 'partial', 'unborn']).toContain(result.state);
+    expect(result.root === null || typeof result.root === 'string').toBe(true);
+    expect(result.tierDir === null || typeof result.tierDir === 'string').toBe(true);
+    expect(Object.keys(result.signals).sort()).toEqual(['config', 'legacyManifest', 'manifest', 'tier']);
   });
 });

@@ -12,7 +12,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
-import { ComponentIndexer } from './indexer/ComponentIndexer';
+import { ComponentIndexer, mutableComponentRoots } from './indexer/ComponentIndexer';
 import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
 import { FileWatcher } from './watcher/FileWatcher';
@@ -26,7 +26,16 @@ const DEFAULT_TOKEN_INDEX_DIR = 'token-index';
 
 /** Explicit data paths for the Application MCP. All optional — defaults derive from package root. */
 interface DataPaths {
-  componentsDir: string;
+  /**
+   * The component ROOT SET, precedence order — consumer root first, package root last (Spec 123
+   * C3, from `resolveComponentRoots`). A single string is the legacy single-root form.
+   */
+  componentsDir: string | string[];
+  /**
+   * C3 `projectRoot = bornRoot` (unborn → the package root). Omitted → the indexer's legacy
+   * derivation from the package root (single-root callers).
+   */
+  projectRoot?: string;
   patternsDir?: string;
   templatesDir?: string;
   guidanceDir?: string;
@@ -250,6 +259,18 @@ export interface TestableServer {
   callTool(name: string, args: Record<string, unknown>): Promise<unknown>;
   /** Index components + tokens so the test server is ready to serve requests. */
   initialize(): Promise<void>;
+  /** Start the server's file watcher (the live server starts it in `start()`). Spec 123 Task 1.4. */
+  startWatching(): void;
+  /** Stop the server's file watcher. */
+  stopWatching(): void;
+  /** The directories the staleness gate scans / the component roots the watcher watches. Spec 123 Task 1.4. */
+  getWatchedDirs(): { stalenessDataDirs: string[]; watchedComponentRoots: string[] };
+}
+
+/** Test-only server options (Spec 123 Task 1.4). */
+export interface TestableServerOptions {
+  /** Staleness-gate threshold; the live server uses the gate's default (30s). */
+  stalenessThresholdMs?: number;
 }
 
 /**
@@ -259,19 +280,18 @@ export interface TestableServer {
  *
  * @param paths - same DataPaths contract as ComponentMCPServer; defaults match real-corpus layout
  */
-export function createTestableServer(paths: DataPaths): TestableServer {
-  const server = new ComponentMCPServer(paths);
+export function createTestableServer(paths: DataPaths, options: TestableServerOptions = {}): TestableServer {
+  const server = new ComponentMCPServer(paths, options);
   return {
-    initialize: () =>
-      server.indexer.indexComponents(
-        paths.componentsDir,
-        paths.patternsDir,
-        paths.templatesDir,
-        paths.guidanceDir,
-        paths.tokenIndexDir,
-      ),
+    initialize: async () => {
+      await server.fullIndex();
+      server.markIndexed();
+    },
     callTool: (name: string, args: Record<string, unknown>) =>
       server.handleTool(name, args),
+    startWatching: () => server.startWatching(),
+    stopWatching: () => server.stopWatching(),
+    getWatchedDirs: () => server.getWatchedDirs(),
   };
 }
 
@@ -283,15 +303,23 @@ class ComponentMCPServer {
   private fileWatcher: FileWatcher;
   private philosophyIndexer: DesignPhilosophyIndexer;
   private stalenessGate: StalenessGate;
+  private readonly stalenessDataDirs: string[];
+  private readonly watchedComponentRoots: string[];
 
-  constructor(private paths: DataPaths) {
+  constructor(private paths: DataPaths, options: TestableServerOptions = {}) {
     this.server = new Server({ name: SERVER_NAME, version: SERVER_VERSION }, { capabilities: { tools: {} } });
     this.indexer = new ComponentIndexer();
     this.queryEngine = new ComponentQueryEngine(this.indexer);
     this.assemblyValidator = new AssemblyValidator(this.indexer);
+
+    // Spec 123 C3: the watcher and the staleness gate watch the CONSUMER root; the package root
+    // is exempt as immutable (it lives under node_modules in every consumer install).
+    const componentRoots = Array.isArray(this.paths.componentsDir) ? this.paths.componentsDir : [this.paths.componentsDir];
+    this.watchedComponentRoots = mutableComponentRoots(componentRoots);
+
     this.fileWatcher = new FileWatcher(
       this.indexer,
-      this.paths.componentsDir,
+      this.watchedComponentRoots,
       this.paths.patternsDir,
       this.paths.templatesDir,
       this.paths.guidanceDir,
@@ -299,26 +327,23 @@ class ComponentMCPServer {
     );
     this.philosophyIndexer = new DesignPhilosophyIndexer();
 
-    const dataDirs = [
-      this.paths.componentsDir,
+    // Every non-component data dir keeps the pre-123 rule: immutable (node_modules) data is not scanned.
+    const otherDirs = [
       this.paths.patternsDir,
       this.paths.templatesDir,
       this.paths.guidanceDir,
       this.paths.tokenIndexDir,
-    ].filter(Boolean) as string[];
+    ].filter((d): d is string => Boolean(d) && !isImmutableContext(d as string));
+    this.stalenessDataDirs = [...this.watchedComponentRoots, ...otherDirs];
 
     this.stalenessGate = new StalenessGate({
-      dataDirs,
+      dataDirs: this.stalenessDataDirs,
       fileExtensions: ['.yaml', '.ts', '.md'],
-      isImmutable: isImmutableContext(this.paths.componentsDir),
+      thresholdMs: options.stalenessThresholdMs,
+      // Nothing mutable to scan (e.g. an unborn consumer: everything is package data) → skip all checks.
+      isImmutable: this.stalenessDataDirs.length === 0,
       onRebuild: async () => {
-        await this.indexer.indexComponents(
-          this.paths.componentsDir,
-          this.paths.patternsDir,
-          this.paths.templatesDir,
-          this.paths.guidanceDir,
-          this.paths.tokenIndexDir
-        );
+        await this.fullIndex();
         if (this.paths.designLanguagePath) {
           await this.philosophyIndexer.index(this.paths.designLanguagePath);
         }
@@ -328,14 +353,43 @@ class ComponentMCPServer {
     this.registerHandlers();
   }
 
-  async start(): Promise<void> {
+  /** Full index over the component root set, anchored on `projectRoot` (C3 `projectRoot = bornRoot`). */
+  async fullIndex(): Promise<void> {
     await this.indexer.indexComponents(
       this.paths.componentsDir,
       this.paths.patternsDir,
       this.paths.templatesDir,
       this.paths.guidanceDir,
-      this.paths.tokenIndexDir
+      this.paths.tokenIndexDir,
+      { projectRoot: this.paths.projectRoot },
     );
+  }
+
+  /** @internal Test seam (Spec 123 Task 1.4). */
+  markIndexed(): void {
+    this.stalenessGate.markIndexed();
+  }
+
+  /** @internal Test seam (Spec 123 Task 1.4). */
+  startWatching(): void {
+    this.fileWatcher.start();
+  }
+
+  /** @internal Test seam (Spec 123 Task 1.4). */
+  stopWatching(): void {
+    this.fileWatcher.stop();
+  }
+
+  /** @internal Test seam (Spec 123 Task 1.4). */
+  getWatchedDirs(): { stalenessDataDirs: string[]; watchedComponentRoots: string[] } {
+    return {
+      stalenessDataDirs: [...this.stalenessDataDirs],
+      watchedComponentRoots: this.fileWatcher.getWatchedComponentRoots(),
+    };
+  }
+
+  async start(): Promise<void> {
+    await this.fullIndex();
     this.fileWatcher.start();
 
     // Token index status (loaded inside indexComponents if tokenIndexDir provided)
@@ -432,13 +486,7 @@ class ComponentMCPServer {
       case 'get_component_health':
         return this.queryEngine.getHealth();
       case 'rebuild_index':
-        await this.indexer.indexComponents(
-          this.paths.componentsDir,
-          this.paths.patternsDir,
-          this.paths.templatesDir,
-          this.paths.guidanceDir,
-          this.paths.tokenIndexDir
-        );
+        await this.fullIndex();
         if (this.paths.designLanguagePath) {
           await this.philosophyIndexer.index(this.paths.designLanguagePath);
         }
@@ -555,6 +603,14 @@ export interface McpDataRootsModule {
   }): TokenIndexResolution;
 }
 
+/**
+ * Shape-only declaration of the root-compiled `bornRepo` module (Spec 123 Task 1.4) — the same
+ * CONSUMPTION CONTRACT as `McpDataRootsModule`; `mcpDataRootsDeclaration.test.ts` guards parity.
+ */
+export interface BornRepoModule {
+  findDesignSystemRoot(startDir: string): DesignSystemRootShape;
+}
+
 // Start server — resolve data roots (Spec 121 F-C2), then boot.
 // Guard: skip auto-start when this module is imported (e.g. by the tool-boundary contract test).
 // The `require.main === module` check is the standard Node.js "am I the entry point?" idiom.
@@ -568,18 +624,29 @@ if (require.main === module) {
   let dataPaths: DataPaths;
   try {
     const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
+    const bornRepo = require('../../dist/cli/shared/bornRepo') as BornRepoModule;
     const packageRoot = shared.resolvePackageRoot(__dirname);
 
-    // CONSUMER-OWNED roots: env → cwd (exists AND non-empty) → package fallback.
-    // The consumer's own regenerated data wins when present (Spec 118 Class C′).
-    const components = shared.resolveConsumerOwnedRoot({
-      envValue: process.env.COMPONENTS_DIR,
-      relPath: DEFAULT_COMPONENTS_DIR,
+    // Spec 123 C2/C3: birth detection from the INVOKING process's cwd (D-B3 — never
+    // __dirname/pkgRoot; the runner spawns this server with no `cwd` option, so it inherits).
+    const dsRoot = bornRepo.findDesignSystemRoot(process.cwd());
+
+    // COMPONENT ROOT SET (C3): consumer root (env, else bornRoot/src/components when born)
+    // UNION the package root — the env value names the consumer root, never the only root.
+    const componentRoots = shared.resolveComponentRoots({
+      envValue: process.env.COMPONENTS_DIR || process.env.COMPONENT_DIR,
+      dsRoot,
       packageRoot,
     });
-    const tokenIndex = shared.resolveConsumerOwnedRoot({
+
+    // C3: projectRoot = bornRoot (any state with a resolved root); unborn → the package root, labelled.
+    const projectRoot = dsRoot.root ?? packageRoot;
+
+    // TOKEN INDEX (C3): birth-aware. A structural reason is logged when no index can be served;
+    // the catalog message strings for those reasons are Task 1.6's.
+    const tokenIndex = shared.resolveTokenIndexRoot({
       envValue: process.env.TOKEN_INDEX_DIR,
-      relPath: DEFAULT_TOKEN_INDEX_DIR,
+      dsRoot,
       packageRoot,
     });
 
@@ -613,14 +680,27 @@ if (require.main === module) {
 
     // Boot log: one stderr line per data root, BEFORE the startup sentinel.
     // NEVER stdout — stdout is the JSON-RPC channel.
-    logRoot('components', components);
-    logRoot(
-      'token-index',
-      tokenIndex,
-      tokenIndex.source === 'package'
-        ? " — package token snapshot in use; if this project customizes tokens, run 'npx designerpunk generate' to build a local token-index"
-        : ''
+    console.error(`[${SERVER_NAME}] Design-system root: ${dsRoot.state}${dsRoot.partialCase ? ` (${dsRoot.partialCase})` : ''}`);
+    console.error(
+      `[${SERVER_NAME}] Project root: ${projectRoot} (source: ${dsRoot.root ? dsRoot.state : 'unborn → package'})`
     );
+    componentRoots.roots.forEach((root, i) => {
+      logRoot(`components[${i}]`, { path: root, source: componentRoots.sources[i] });
+    });
+    if (tokenIndex.ok) {
+      logRoot(
+        'token-index',
+        { path: tokenIndex.path, source: tokenIndex.source },
+        tokenIndex.tokenOrigin ? ` (tokenOrigin: ${tokenIndex.tokenOrigin})` : ''
+      );
+    } else {
+      // TODO(Spec 123 Task 1.6): replace with the catalog string for this reason.
+      console.error(
+        `[${SERVER_NAME}] Token index unavailable (reason: ${tokenIndex.reason}${
+          tokenIndex.reason === 'partial' && tokenIndex.partialCase ? `, ${tokenIndex.partialCase}` : ''
+        })`
+      );
+    }
     logRoot('experience-patterns', patterns);
     logRoot('layout-templates', templates);
     logRoot('family-guidance', guidance);
@@ -628,12 +708,13 @@ if (require.main === module) {
     logRoot('design-language', designLanguage);
 
     dataPaths = {
-      componentsDir: components.path,
+      componentsDir: componentRoots.roots,
+      projectRoot,
       patternsDir: patterns.path,
       templatesDir: templates.path,
       guidanceDir: guidance.path,
       registryPath: registry.path,
-      tokenIndexDir: tokenIndex.path,
+      tokenIndexDir: tokenIndex.ok ? tokenIndex.path : undefined,
       designLanguagePath: designLanguage.path,
     };
   } catch {
