@@ -26,7 +26,7 @@ export {
   accessibilityTokens,
   blendTokens,
   inputTextBaseTokens
-} from '../Input-Text-Base/tokens';
+} from '../Input-Text-Base/Input-Text-Base.refs';
 
 // Alias for semantic naming
-export { inputTextBaseTokens as inputTextPasswordTokens } from '../Input-Text-Base/tokens';
+export { inputTextBaseTokens as inputTextPasswordTokens } from '../Input-Text-Base/Input-Text-Base.refs';
