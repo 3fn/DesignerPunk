@@ -25,7 +25,7 @@
         "./node_modules/@3fn/core/dist/mcp/application-mcp.js"
       ],
       "env": {
-        "COMPONENTS_DIR": "./src/components/core",
+        "COMPONENTS_DIR": "./src/components",
         "PATTERNS_DIR": "./node_modules/@3fn/core/experience-patterns",
         "TEMPLATES_DIR": "./node_modules/@3fn/core/layout-templates",
         "GUIDANCE_DIR": "./node_modules/@3fn/core/family-guidance",

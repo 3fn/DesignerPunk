@@ -244,6 +244,11 @@ describe('CLI init — both targets\' MCP config (Task 2.3; C8 U1 emission)', ()
     const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
     expect(Object.keys(config.mcpServers).sort()).toEqual(['designerpunk-application', 'designerpunk-docs']);
     expect(config.mcpServers['designerpunk-docs'].autoApprove).toContain('get_document_full');
+    // Regression guard: the scaffolded COMPONENTS_DIR must point at the NEW
+    // consumer components dir (src/components, Task 2.2's row 4′) — NOT the
+    // removed src/components/core (Req 19A.2). This template value was found
+    // stale during this subtask and fixed alongside it.
+    expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
   });
 
   test('Claude Code: .mcp.json has both entries WITHOUT autoApprove/disabled fields', async () => {
@@ -255,6 +260,7 @@ describe('CLI init — both targets\' MCP config (Task 2.3; C8 U1 emission)', ()
     expect(config.mcpServers['designerpunk-docs'].autoApprove).toBeUndefined();
     expect(config.mcpServers['designerpunk-docs'].disabled).toBeUndefined();
     expect(config.mcpServers['designerpunk-docs'].command).toBe('node');
+    expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
   });
 
   test('Claude Code: .claude/settings.json permissions.allow uses the mcp__<server>__<tool> grain', async () => {
