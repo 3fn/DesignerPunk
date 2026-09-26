@@ -6,12 +6,42 @@
 # (.kiro/specs/125-A-pr-gate-mechanical-arming/task-1-workflow-ballot.md,
 # Items 1a/1b/1d/11a — RATIFIED, Peter, 2026-07-05).
 #
-# One completion command, two context-aware modes (ballot 11a):
+# One completion command, THREE context-aware modes (Task-Completion-Protocol.md
+# § "Completion State in the PR Flow" points 2/4; drift fix 2026-09-26 —
+# tooling brought to match existing law, no law change):
 #   Parent mode (default): commit on the task branch, push, OPEN A PR, report the
 #                          PR URL, and STOP. The script NEVER merges. The task is
-#                          complete when Peter merges (ballot 1d).
+#                          complete when Peter merges (ballot 1d). Use this when
+#                          the parent IS its unit's final/gating parent (a
+#                          standalone task, a single-unit spec, or the parent
+#                          that completes a declared multi-parent unit).
+#   Unit-member mode (--unit-member): commit on the task branch and push it.
+#                          NO PR opens. Use this for a parent that completes
+#                          INSIDE a declared multi-parent unit but is NOT that
+#                          unit's final/gating parent — its completion docs land
+#                          on the branch, and it is accepted at the unit's merge.
+#                          This mode NEVER derives a branch name from MESSAGE
+#                          (unlike parent mode): it belongs on the shared unit
+#                          branch (task/<spec>-<unit-slug>), which can't be
+#                          derived from a single parent's message — deriving a
+#                          per-task branch here would silently split the unit
+#                          across branches. On main, be already on the unit
+#                          branch or pass --branch explicitly.
 #   Subtask mode (--subtask): commit on the task branch and push it. NO PR opens;
-#                          no required checks fire until parent completion.
+#                          no required checks fire until UNIT completion.
+#
+# --unit-member and --subtask are mutually exclusive.
+#
+# --unit NAME threads a Unit: field into the PR body opened in parent mode
+# (Branch and PR Conventions: "PR body additionally carries a Unit: field").
+# Omit it for a single-parent unit; the PR body falls back to a fixed note.
+#
+# Advisory completion-criteria-parity check (Spec 127 register row
+# `completion-criteria-parity`, check_state: proposed — arming is Q2's
+# decision, NOT this script's): parent and unit-member modes run
+# `scripts/check-completion-criteria-parity.ts` before committing and print
+# its output. Non-zero output is a LOUD warning, never a block — pass
+# --skip-parity to bypass entirely (e.g. the checker itself is broken).
 #
 # Credential discipline (Req 4.3): preflights gh auth + repo push permission and
 # fails LOUD with an actionable message when credentials are missing/under-scoped.
@@ -43,28 +73,50 @@ show_usage() {
   cat << 'EOF'
 Usage: ./.kiro/hooks/complete-task.sh [OPTIONS] "MESSAGE"
 
-One completion command, two context-aware modes (ballot 125-A Task 1, Item 11a):
+One completion command, THREE context-aware modes (Task-Completion-Protocol.md
+§ "Completion State in the PR Flow"):
 
   PARENT MODE (default)
     Commits on the task branch, pushes it, opens the task PR, prints the PR URL,
     and stops. Never merges. The task is complete when Peter merges on green.
+    Use this when the parent IS its unit's final/gating parent (a standalone
+    task, a single-unit spec, or the parent that completes a declared
+    multi-parent unit).
     MESSAGE becomes both the commit message and the PR title, and squash-merge
     makes the PR title the main commit subject — so it MUST follow the standard:
         "Task <N> Complete: <Description> (<spec>)"
     e.g. ./.kiro/hooks/complete-task.sh "Task 2 Complete: Rework task tooling for PR flow (125-A)"
 
+  UNIT-MEMBER MODE (--unit-member)
+    Commits on the task branch with MESSAGE and pushes the branch. NO PR opens.
+    Use this for a parent that completes INSIDE a declared multi-parent unit
+    but is NOT that unit's final/gating parent — its completion+summary docs
+    land on the branch; it is done-on-branch and accepted when the UNIT's PR
+    (opened later, in parent mode, by the gating parent) merges.
+    e.g. ./.kiro/hooks/complete-task.sh --unit-member "Task 1 Complete: Substrate setup (123)"
+
   SUBTASK MODE (--subtask)
     Commits on the task branch with MESSAGE (a plain conventional message) and
-    pushes the branch. NO PR opens; no required checks fire until parent
+    pushes the branch. NO PR opens; no required checks fire until UNIT
     completion. Subtasks never open PRs.
     e.g. ./.kiro/hooks/complete-task.sh --subtask "Task 2.1: add credential preflight"
 
+  --unit-member and --subtask are mutually exclusive.
+
 OPTIONS:
+  --unit-member          Unit-member mode (see above).
   --subtask              Subtask mode (see above). Parent mode is the default.
+  --unit NAME            Unit label for the PR body's Unit: field (parent mode
+                         only — e.g. "U1: substrate" or a unit branch slug).
+                         Default when omitted: "(single-parent unit — see Task)".
   --branch NAME          Task branch to create/use when currently on main
                          (convention: task/<spec>-<N>-<slug>, e.g. task/125-A-2-tooling-rework).
-                         In parent mode the branch name is derived from a
-                         conventional MESSAGE when --branch is omitted.
+                         Derivation from a conventional MESSAGE when --branch
+                         is omitted is PARENT MODE ONLY. Unit-member mode
+                         belongs on the shared unit branch (task/<spec>-
+                         <unit-slug>) — that can't be derived from MESSAGE, so
+                         on main you must either already be on the unit branch
+                         or pass --branch explicitly.
   --agent NAME           Authoring agent for the PR body (default: $DP_AGENT or "Peter").
   --spec-dir NAME        Full spec directory name for the PR body's Spec: field
                          (default: derived from the (<spec>) suffix in MESSAGE).
@@ -75,6 +127,9 @@ OPTIONS:
   --organize             Run .kiro/hooks/organize-by-metadata.sh before staging
                          (folded in from commit-task-organized.sh per ballot 11c).
   --validate-metadata    Run organize-by-metadata.sh --validate-only before staging.
+  --skip-parity          Skip the advisory completion-criteria-parity check
+                         (e.g. when the checker itself is broken). Parity is
+                         never run in subtask mode regardless of this flag.
   -h, --help             Show this help.
 
 BEHAVIOR NOTES:
@@ -85,32 +140,41 @@ BEHAVIOR NOTES:
     credentials fail loud with what's missing — there is no direct-push fallback.
   - If an open PR already exists for the branch (change-request resume, ballot
     1d.7), parent mode pushes and re-reports the existing PR URL.
+  - Parent and unit-member modes run the advisory completion-criteria-parity
+    checker before committing (register row completion-criteria-parity,
+    check_state: proposed — this is a warning, never a block).
 EOF
 }
 
 # ---------------------------------------------------------------------------
 # Argument parsing (no git mutation happens in or before this section)
 # ---------------------------------------------------------------------------
-MODE="parent"
+SUBTASK_FLAG=false
+UNIT_MEMBER_FLAG=false
 MESSAGE=""
 BRANCH_OPT=""
 AGENT="${DP_AGENT:-Peter}"
 SPEC_DIR_OPT=""
+UNIT_OPT=""
 COMPLETION_DOCS=()
 VALIDATION_NOTE=""
 RUN_ORGANIZE=false
 RUN_VALIDATE=false
+RUN_PARITY=true
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --subtask)           MODE="subtask"; shift ;;
+    --subtask)           SUBTASK_FLAG=true; shift ;;
+    --unit-member)       UNIT_MEMBER_FLAG=true; shift ;;
     --branch)            BRANCH_OPT="${2:-}"; shift 2 ;;
     --agent)             AGENT="${2:-}"; shift 2 ;;
     --spec-dir)          SPEC_DIR_OPT="${2:-}"; shift 2 ;;
+    --unit)              UNIT_OPT="${2:-}"; shift 2 ;;
     --completion-doc)    COMPLETION_DOCS+=("${2:-}"); shift 2 ;;
     --validation)        VALIDATION_NOTE="${2:-}"; shift 2 ;;
     --organize)          RUN_ORGANIZE=true; shift ;;
     --validate-metadata) RUN_VALIDATE=true; shift ;;
+    --skip-parity)       RUN_PARITY=false; shift ;;
     -h|--help)           show_usage; exit 0 ;;
     -*)                  die "Unknown option: $1" "Use --help for usage." ;;
     *)
@@ -123,6 +187,18 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ "$SUBTASK_FLAG" == true && "$UNIT_MEMBER_FLAG" == true ]]; then
+  die "--subtask and --unit-member are mutually exclusive." \
+      "Use --subtask for a subtask commit, or --unit-member for a parent that is not its unit's final/gating parent."
+fi
+if [[ "$SUBTASK_FLAG" == true ]]; then
+  MODE="subtask"
+elif [[ "$UNIT_MEMBER_FLAG" == true ]]; then
+  MODE="unit-member"
+else
+  MODE="parent"
+fi
 
 [[ -n "$MESSAGE" ]] || die "A commit/PR message is required." "Use --help for usage."
 [[ "$BRANCH_OPT" == "$PROTECTED_BRANCH" ]] && die "--branch $PROTECTED_BRANCH is not a task branch. Direct work on $PROTECTED_BRANCH is retired (ballot 125-A)."
@@ -165,7 +241,10 @@ if [[ "$CURRENT_BRANCH" == "$PROTECTED_BRANCH" ]]; then
         "  - pass --branch task/<spec>-<N>-<slug>   (e.g. --branch task/125-A-2-tooling-rework), or" \
         "  - in parent mode, use the conventional message \"Task <N> Complete: <Description> (<spec>)\"" \
         "    so the branch name can be derived, or" \
-        "  - create the branch yourself first: git switch -c task/<spec>-<N>-<slug>"
+        "  - create the branch yourself first: git switch -c task/<spec>-<N>-<slug>" \
+        "  - in --unit-member mode, switch to the unit branch (task/<spec>-<unit-slug>) or pass --branch" \
+        "    (a unit-member parent's branch name can't be derived from MESSAGE — it belongs on the" \
+        "    unit's shared branch, not a per-task branch, or the unit would silently split across branches)"
   fi
   if git show-ref --verify --quiet "refs/heads/$TASK_BRANCH"; then
     die "Branch '$TASK_BRANCH' already exists but you are on '$PROTECTED_BRANCH' with local changes." \
@@ -259,6 +338,28 @@ if [[ "$RUN_ORGANIZE" == true ]]; then
 fi
 
 # ---------------------------------------------------------------------------
+# Advisory completion-criteria-parity check (parent + unit-member modes only).
+#
+# Register row `completion-criteria-parity` (governance/classification-map.md)
+# is check_state: proposed — ARMING is Q2's decision, not this script's. This
+# call is deliberately non-blocking: it prints the checker's own output and,
+# on a non-zero exit, prints a loud warning and CONTINUES. A future blocking
+# mode is a fork for Peter, not something this drift fix decides. --skip-parity
+# bypasses entirely (e.g. the checker itself is broken).
+# ---------------------------------------------------------------------------
+if [[ "$MODE" != "subtask" && "$RUN_PARITY" == true ]]; then
+  if [[ -f "scripts/check-completion-criteria-parity.ts" ]]; then
+    say "Running completion-criteria-parity (advisory — not blocking)..."
+    if ! npx tsx scripts/check-completion-criteria-parity.ts; then
+      warn "completion-criteria-parity reported RED findings above."
+      warn "ADVISORY ONLY — not blocking this completion (register row completion-criteria-parity is check_state: proposed; arming is Q2's decision). Review before your unit's PR merges."
+    fi
+  else
+    warn "scripts/check-completion-criteria-parity.ts not found — skipping advisory parity check."
+  fi
+fi
+
+# ---------------------------------------------------------------------------
 # Branch, stage, commit
 # ---------------------------------------------------------------------------
 if [[ "$CREATE_BRANCH" == true ]]; then
@@ -291,7 +392,22 @@ ok "Branch pushed: $TASK_BRANCH"
 if [[ "$MODE" == "subtask" ]]; then
   echo ""
   ok "Subtask committed and pushed on '$TASK_BRANCH'."
-  echo "   No PR opened (subtask mode) — the PR opens at PARENT completion."
+  echo "   No PR opened (subtask mode) — the PR opens at UNIT completion."
+  echo "   STOP: wait for user authorization before the next task."
+  exit 0
+fi
+
+# ---------------------------------------------------------------------------
+# Unit-member mode stops here: parent is done-on-branch, no PR.
+# The PR opens later, in parent mode, when the unit's final/gating parent
+# completes (Task-Completion-Protocol.md § "Completion State in the PR Flow").
+# ---------------------------------------------------------------------------
+if [[ "$MODE" == "unit-member" ]]; then
+  echo ""
+  ok "Parent completion docs committed and pushed on '$TASK_BRANCH'."
+  echo "   No PR opened (unit-member mode) — this parent is done-on-branch."
+  echo "   The PR opens at UNIT completion (the gating parent, in parent mode)."
+  echo "   This parent is accepted when Peter merges the unit's PR."
   echo "   STOP: wait for user authorization before the next task."
   exit 0
 fi
@@ -337,8 +453,12 @@ fi
 TASK_FIELD="(see title)"
 [[ -n "$TASK_NUM" ]] && TASK_FIELD="$TASK_NUM — $TASK_DESC"
 
+UNIT_FIELD="$UNIT_OPT"
+[[ -n "$UNIT_FIELD" ]] || UNIT_FIELD="(single-parent unit — see Task)"
+
 PR_BODY="**Spec**: $SPEC_DIR
 **Task**: $TASK_FIELD
+**Unit**: $UNIT_FIELD
 **Agent**: $AGENT
 **Completion docs**:
 $(printf -- '- %s\n' "${COMPLETION_DOCS[@]}")

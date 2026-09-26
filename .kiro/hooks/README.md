@@ -8,12 +8,12 @@ This directory contains the task-completion tooling for the PR-gated workflow an
 
 ## Task Completion: `complete-task.sh`
 
-**Purpose**: One completion command, two context-aware modes (ballot Item 11a)
+**Purpose**: One completion command, THREE context-aware modes (ballot Item 11a; third mode added 2026-09-26 as a drift fix bringing the script in line with Task-Completion-Protocol.md's multi-parent-unit law — no law change)
 **Usage**: `./.kiro/hooks/complete-task.sh [OPTIONS] "MESSAGE"`
 
 ### Parent mode (default)
 
-Commits on the task branch, pushes it, **opens the task PR**, prints the PR URL, and stops. Never merges — the task is complete when Peter merges on green.
+Commits on the task branch, pushes it, **opens the task PR**, prints the PR URL, and stops. Never merges — the task is complete when Peter merges on green. Use this when the parent IS its unit's final/gating parent (a standalone task, a single-unit spec, or the parent that completes a declared multi-parent unit).
 
 ```bash
 ./.kiro/hooks/complete-task.sh "Task 2 Complete: Rework task tooling for PR flow (125-A)"
@@ -21,9 +21,19 @@ Commits on the task branch, pushes it, **opens the task PR**, prints the PR URL,
 
 The MESSAGE becomes both the commit message and the PR title, and squash-merge makes the PR title the `main` commit subject — so it MUST follow the standard: `Task <N> Complete: <Description> (<spec>)`.
 
+### Unit-member mode (`--unit-member`)
+
+Commits on the task branch with MESSAGE and pushes the branch. **No PR opens.** Use this for a parent that completes **inside** a declared multi-parent unit but is **not** that unit's final/gating parent — its completion+summary docs land on the branch, it is done-on-branch, and it is accepted when the unit's PR (opened later, in parent mode, by the gating parent) merges.
+
+```bash
+./.kiro/hooks/complete-task.sh --unit-member "Task 1 Complete: Substrate setup (123)"
+```
+
+Mutually exclusive with `--subtask`.
+
 ### Subtask mode (`--subtask`)
 
-Commits on the task branch with a plain message and pushes the branch. **No PR opens**; no required checks fire until parent completion. Subtasks never open PRs.
+Commits on the task branch with a plain message and pushes the branch. **No PR opens**; no required checks fire until UNIT completion. Subtasks never open PRs.
 
 ```bash
 ./.kiro/hooks/complete-task.sh --subtask "Task 2.1: add credential preflight"
@@ -32,18 +42,25 @@ Commits on the task branch with a plain message and pushes the branch. **No PR o
 ### Conventions (ballot Item 1b)
 
 - **`<spec>`** = the spec ID (`125-A` from `125-A-pr-gate-mechanical-arming`). Branch names and PR titles use the spec ID; the PR body's `Spec:` field carries the full directory name.
-- **Branch names**: `task/<spec>-<task-number>-<short-slug>` (e.g., `task/125-A-2-tooling-rework`); `fix/<slug>` or `chore/<slug>` for non-spec work.
-- **PR title**: `Task <N> Complete: <Description> (<spec>)` — title discipline IS commit-message discipline under squash-merge.
-- **PR body**: `Spec:` / `Task:` / `Agent:` / completion-doc path(s) on the branch / one-line validation note. The script derives these from a conventional MESSAGE; override with `--spec-dir`, `--agent`, `--completion-doc`, `--validation`.
+- **Branch names**: `task/<spec>-<task-number>-<short-slug>` (e.g., `task/125-A-2-tooling-rework`); `fix/<slug>` or `chore/<slug>` for non-spec work. A multi-parent unit uses a unit slug instead: `task/<spec>-<unit-slug>`.
+- **PR title**: `Task <N> Complete: <Description> (<spec>)` for a single-parent unit, or `<Unit description> (<spec>)` for a multi-parent unit — title discipline IS commit-message discipline under squash-merge.
+- **PR body**: `Spec:` / `Task:` / `Unit:` / `Agent:` / completion-doc path(s) on the branch / one-line validation note. The script derives `Spec:`/`Task:` from a conventional MESSAGE; `Unit:` from `--unit` (defaults to `(single-parent unit — see Task)` when omitted); override the rest with `--spec-dir`, `--agent`, `--completion-doc`, `--validation`.
 
 ### Options
 
-- `--subtask` — subtask mode (see above)
+- `--unit-member` — unit-member mode (see above)
+- `--subtask` — subtask mode (see above); mutually exclusive with `--unit-member`
+- `--unit NAME` — unit label for the PR body's `Unit:` field (parent mode only, since that's the only mode that opens a PR)
 - `--branch NAME` — task branch to create/use when currently on `main`
 - `--agent NAME` — authoring agent for the PR body (default: `$DP_AGENT` or `Peter`)
 - `--spec-dir NAME` / `--completion-doc PATH` / `--validation NOTE` — PR body fields
 - `--organize` / `--validate-metadata` — run `organize-by-metadata.sh` before staging (folded in from the retired organized-commit script, ballot Item 11c)
+- `--skip-parity` — skip the advisory `completion-criteria-parity` check (see below); never runs in subtask mode regardless
 - `-h, --help` — full usage
+
+### Advisory completion-criteria-parity check
+
+Parent and unit-member modes run `npx tsx scripts/check-completion-criteria-parity.ts` before committing and print its output. This is a Spec 127 register-row instrument (`completion-criteria-parity`, `check_state: proposed`) — **arming (making it a required/blocking check) is Q2's decision, not this script's**. A non-zero result here prints a loud warning and the script **continues** — it never blocks. Use `--skip-parity` when the checker itself is broken.
 
 ### Failure modes (all fail LOUD — Req 4.3, no silent fallback)
 
@@ -52,6 +69,7 @@ Commits on the task branch with a plain message and pushes the branch. **No PR o
 - **Never pushes to `main`** in any mode or failure path: refuses on `main`, re-asserts branch != `main` before commit AND before push, and pins the push refspec to the task branch.
 - **PR creation fails after push**: reports the cause (usually PAT missing `Pull requests: write`); re-running reuses the pushed branch.
 - **Open PR already exists for the branch** (change-request resume, ballot 1d.7): pushes and re-reports the existing PR URL — no duplicate PR.
+- **`--subtask` and `--unit-member` together**: refuses before touching git — they are mutually exclusive.
 
 ### Release analysis
 
