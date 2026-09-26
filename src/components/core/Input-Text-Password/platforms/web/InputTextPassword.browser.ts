@@ -191,12 +191,12 @@ class InputTextPassword extends HTMLElement {
         }
 
         .input-container.error {
-          border-color: var(--color-error);
-          background: var(--color-error-background);
+          border-color: var(--color-feedback-error-border);
+          background: var(--color-feedback-error-background);
         }
 
         .input-container.success {
-          border-color: var(--color-success-strong);
+          border-color: var(--color-feedback-success-border);
         }
 
         input {
@@ -241,7 +241,7 @@ class InputTextPassword extends HTMLElement {
         }
 
         .input-container.error label {
-          color: var(--color-error);
+          color: var(--color-feedback-error-text);
         }
 
         .toggle-button {
@@ -292,7 +292,7 @@ class InputTextPassword extends HTMLElement {
         }
 
         .error-message {
-          color: var(--color-error);
+          color: var(--color-feedback-error-text);
         }
 
         :host(:focus-within) .input-container {

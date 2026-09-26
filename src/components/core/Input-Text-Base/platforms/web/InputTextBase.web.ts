@@ -260,7 +260,7 @@ export class InputTextBase extends HTMLElement {
       trailingIconHTML = createIconBase({
         name: 'x',
         size: iconSize,
-        color: 'color-error',
+        color: 'color-feedback-error-text',
         className: 'trailing-icon error-icon'
       });
     } else if (iconVisibility.showSuccessIcon) {
