@@ -21,7 +21,8 @@ const SERVER_NAME = 'mcp-product-server';
 
 export class ProductIndexer {
   private productDir: string;
-  private componentDir: string;
+  /** Component root set in precedence order (consumer first, package last), or a single root. */
+  private componentDir: string | string[];
   private tokenIndexDir: string | undefined;
   private indexed: boolean = false;
   private lastIndexTime: string = '';
@@ -42,7 +43,7 @@ export class ProductIndexer {
   private templateToScreens: Map<string, string[]> = new Map();
   private productTokenIndexer: ProductTokenIndexer;
 
-  constructor(productDir: string, componentDir: string = 'src/components/core', tokenIndexDir?: string) {
+  constructor(productDir: string, componentDir: string | string[] = 'src/components/core', tokenIndexDir?: string) {
     this.productDir = productDir;
     this.componentDir = componentDir;
     this.tokenIndexDir = tokenIndexDir;
