@@ -339,12 +339,12 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/floor-closure.ts`, `floor-closure.json`, `scripts/pack-assert.ts`, `package.json`, `tarball-target.json`, `.kiro/issues/<date>-native-component-distribution.md`
 
-  - [ ] 3.1 `floor-closure.ts` (both closures)
-  - [ ] 3.2 Run it; reconcile closure 2 with attribution classes; the closure-1 bite
-  - [ ] 3.3 The U1 `files[]` diff; `pack-assert.ts` reading `floor-closure.json`
-  - [ ] 3.4 The platform-closure rows (iOS + Android) with counts
-  - [ ] 3.5 **Record Kenya's and Data's KEEP-WITH-FOLLOW-UP verdicts quoted; the honest label; commit the shared follow-up issue; route the two defects**
-  - [ ] 3.6 `tarball-target.json` from the post-diet pack
+  - [x] 3.1 `floor-closure.ts` (both closures)
+  - [x] 3.2 Run it; reconcile closure 2 with attribution classes; the closure-1 bite
+  - [x] 3.3 The U1 `files[]` diff; `pack-assert.ts` reading `floor-closure.json`
+  - [x] 3.4 The platform-closure rows (iOS + Android) with counts
+  - [x] 3.5 **Record Kenya's and Data's KEEP-WITH-FOLLOW-UP verdicts quoted; the honest label; commit the shared follow-up issue; route the two defects**
+  - [x] 3.6 `tarball-target.json` from the post-diet pack
 
 - [ ] 4. Per-harness MCP configuration, tool manifest, and product MCP wiring
 

@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-09-26T23:06:08.719Z",
+  "note": "snapshot; the arbiter is the post-diet packed consumer-guard run (Req 3.9, Task 9).",
+  "closure1": {
+    "description": "rewrite completeness over the transformed copy (governs C4, never files[])",
+    "filesChecked": 54,
+    "escapingReferences": [],
+    "zeroEscapes": true
+  },
+  "closure2": {
+    "description": "the package's own runtime closure of src/tokens (governs files[])",
+    "seedFileCount": 54,
+    "files": [
+      "src/build/tokens/ComponentToken.ts",
+      "src/build/tokens/ComponentTokenGenerator.ts",
+      "src/build/tokens/PlatformTokens.ts",
+      "src/build/tokens/TokenIntegrator.ts",
+      "src/build/tokens/TokenSelection.ts",
+      "src/build/tokens/TokenSelector.ts",
+      "src/build/tokens/UnitConverter.ts",
+      "src/build/tokens/defineComponentTokens.ts",
+      "src/build/tokens/index.ts",
+      "src/build/tokens/types.ts",
+      "src/build/types/Platform.ts",
+      "src/constants/StrategicFlexibilityTokens.ts",
+      "src/registries/PrimitiveTokenRegistry.ts",
+      "src/registries/SemanticTokenRegistry.ts",
+      "src/types/PrimitiveToken.ts",
+      "src/types/SemanticToken.ts"
+    ],
+    "byDirectory": {
+      "src/build/tokens": 10,
+      "src/build/types": 1,
+      "src/constants": 1,
+      "src/registries": 2,
+      "src/types": 2
+    },
+    "bareSpecifiers": [],
+    "totalFiles": 16
+  }
+}

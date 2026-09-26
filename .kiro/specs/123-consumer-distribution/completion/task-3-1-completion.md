@@ -1,0 +1,31 @@
+# Task 3.1 Completion — `floor-closure.ts` (both closures)
+
+**Spec**: 123 — Consumer Distribution · **Unit**: U1 · **Parent**: Task 3 · **Agent**: Ada (Sonnet)
+
+## What changed
+
+- New `scripts/floor-closure.ts`, computing both named closures from design.md § "C5" / Req 4.2:
+  - **Closure 1** (rewrite completeness over the transformed copy): copies every non-test file under `src/tokens/**` into a scratch directory at `<scratch>/src/tokens/**` (mirroring `init.ts`'s ACTUAL destination depth — `<consumerRepoRoot>/src/tokens/**` — not a flattened scratch root; see "Application-time adaptations" below), applying `rewriteByResolution` (Task 2's C4 mechanism, reused not reinvented) to each file exactly as `init.ts` steps 3b/3c do. An INDEPENDENT re-scan of the OUTPUT (a fresh regex pass, not a reuse of `rewriteByResolution`'s own escape detection) then checks for any relative specifier still escaping the mirrored tier root.
+  - **Closure 2** (the package's own runtime closure of `src/tokens`): walks every non-test `.ts` file under `src/tokens/**` as an independent scan root (Req 4.2: "computed over the DIRECTORY, not by import-graph traversal from an entry"). For each file, `extractSpecifiers` finds every `import ... from`, `export ... from`, `require(...)` (anywhere, including function bodies — GAP 1), and dynamic `import(...)`, SKIPPING whole-declaration `import type`/`export type` forms (Req 4.2's "non-import-type"). A relative specifier resolving outside `src/tokens/**` joins the closure and is followed transitively; a bare specifier is recorded and classified against Node's `builtinModules` and `package.json`'s `dependencies`.
+  - `extractSpecifiers` strips `/* */` and `//` comments before scanning (Req 4.2 GAP 2: `defineComponentTokens.ts`'s `@example` docblock contains specifier-shaped text — `'../../../build/tokens/defineComponentTokens'` — that is not a real reference; an earlier version of this scan threw trying to resolve it before the comment-stripping was added).
+  - CLI: `npx tsx scripts/floor-closure.ts` writes `floor-closure.json` (both closures, labelled, with the header note: *"snapshot; the arbiter is the post-diet packed consumer-guard run (Req 3.9, Task 9)"*). `--bite-closure-1 <relPath>` skips the rewrite transform on one file and reports (never writes the JSON) — the closure-1 bite instrument (Task 3.2).
+- New `scripts/__tests__/floor-closure.test.ts` (15 tests) — colocated Jest config (`scripts/jest.config.js`, `npm run test:scripts`), matching the existing `extract-component-meta.test.ts` pattern (scripts/ is intentionally outside the root `npm test`'s `roots`, per Spec 025 F1).
+
+## Targeted tests + result
+
+`npx jest --config scripts/jest.config.js scripts/__tests__/floor-closure.test.ts` → **15/15 passed**:
+- `extractSpecifiers` (9 tests): plain `from` followed; whole-declaration `import type`/`export type` skipped; a MIXED per-specifier form (`{ type X, Y }`) followed (Y is a value, so the whole statement is a real `require()`); `require()` inside a function body followed (GAP 1); dynamic `import()` followed; bare specifiers recorded; block-comment and line-comment specifier-shaped text ignored (GAP 2).
+- `walkNonTestTsFiles` (1 test): `__tests__` dirs and `.test.ts` files excluded.
+- `resolveRelativeSpecifier` (1 test): exact file, then `.ts`, then `/index.ts`; unresolvable → `null`.
+- `computeClosure2` over the REAL repo tree (2 tests): reproduces the exact 16-file closure by directory bucket AND by file identity (see Task 3.2's reconciliation for the count comparison against Ada's R2 measurement); zero bare specifiers.
+- `computeClosure1` over the REAL repo tree (2 tests): zero escapes on the current tree; the `--bite-closure-1`-equivalent (`biteSkipFile` option) produces a red escape when `component/progress.ts`'s rewrite is skipped.
+
+## Application-time adaptations
+
+1. **Scratch-copy depth mirrors `init.ts`'s real destination, not a flattened tier root — found via a genuine red, not anticipated.** My first implementation copied `src/tokens/**` directly into the scratch root (i.e., `<scratch>/component/progress.ts`, not `<scratch>/src/tokens/component/progress.ts`). Running the tool against the real tree immediately produced 3 false escapes, all from `component/progress.ts`'s intra-tier references (`'../../tokens/SpacingTokens'`, `'../../tokens/SizingTokens'`, `'../../tokens/BorderWidthTokens'`) — the exact case Task 2's own test comment already names: *"progress.ts's '../../tokens/SpacingTokens' resolves INSIDE the tier when the boundary is the WHOLE tier, not step 3c's own root."* The specifier is written assuming two `..` levels reach past `src/tokens` and back into `tokens/`, which only resolves correctly when the copy preserves `src/tokens`'s TRUE depth below its parent (`src/`). Fixed by mirroring `init.ts`'s actual destination (`<dest>/src/tokens/**` — confirmed against `src/cli/init.ts` lines 171–186) rather than inventing a flatter scratch layout. This is exactly the kind of thing a bite is supposed to catch, and it caught it on the first real run, before any bite was deliberately introduced.
+2. **Comment-stripping added reactively, not planned up front.** The first run against the real tree threw `Error: cannot resolve relative specifier '../../../build/tokens/defineComponentTokens' from src/build/tokens/defineComponentTokens.ts` — a docblock `@example` line, not code. Added `stripComments()` (block + line comments, replacing stripped characters with spaces so match indices inside the stripped string stay internally consistent — no downstream code depends on indices lining up with the ORIGINAL unstripped source). This is exactly Req 4.2 GAP 2's named risk ("the root-absolute `src/components/core/...` forms in `ColorTokens.ts` are in docblocks"), reproduced mechanically against a different file than the one GAP 2 named.
+3. **`main()`'s bite mode reports `BITE CONFIRMED RED` / `BITE FAILED TO FIRE` and exits 0 on the expected-red case** (rather than a bare non-zero exit), since a bite run's purpose is to PROVE liveness, not to fail a pipeline — the completion doc's evidence is the printed confirmation line, not an exit code alone. `main()` exits non-zero only if the bite unexpectedly stayed green (the failure mode a bite exists to catch).
+
+## Known issues
+
+None carried from this subtask.
