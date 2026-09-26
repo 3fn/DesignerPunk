@@ -309,12 +309,10 @@ tokens:
     - space.inset.300
     - space.inset.400
   color:
-    - color.background
-    - color.surface
+    - color.structure.surface
     - color.structure.border
     - color.structure.border.subtle
-    - color.border.emphasis
-    - color.canvas
+    - color.structure.canvas
   shadow:
     - shadow.container
     - shadow.navigation
