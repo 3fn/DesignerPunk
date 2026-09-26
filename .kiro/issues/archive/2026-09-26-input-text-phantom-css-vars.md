@@ -1,7 +1,7 @@
 # Issue: Input-Text family emitted CSS custom properties that do not exist
 
 **Date**: 2026-09-26
-**Status**: RESOLVED (2026-09-26) — born closed, three of four sites; one deliberately left open. Fixed in PR `fix/input-text-phantom-vars`.
+**Status**: RESOLVED (2026-09-26) — born closed, three of four sites in PR `fix/input-text-phantom-vars` (merged as `3401e030`, #202); the fourth (`--color-background-hover`) resolved for `.web.ts` in follow-up PR `fix/input-text-password-hover-blend` per Peter's ruling below. `InputTextPassword.browser.ts` remains open — see § "Follow-up: hover-blend ruling and its limit" below.
 **Owner**: Lina
 **Source**: Follow-ups (1) and (3) from `.kiro/issues/archive/2026-09-26-container-base-phantom-css-vars.md` § "Left open, deliberately" — the same defect class, found while resolving Container-Base's closed token maps against generated CSS, deferred to its own fix.
 
@@ -42,6 +42,29 @@ Files touched: `Input-Text-Base/platforms/web/{InputTextBase.browser.ts,InputTex
 - This is also the same infrastructure the Container-Base issue's own § "Left open" item 4 names as chartered-but-not-built at the repo-wide-guard level (composite/blend expansion isn't index-resolvable), reinforcing that this isn't a quick local fix.
 
 **Fork for Peter**: (a) wire the toggle-button hover to `blendUtils`-computed `darkerBlend(color.text.muted-or-similar-base, blend.hoverDarker)` the way `Button-Icon` does — a small but real design decision on the base color; (b) pick a plain existing semantic background token as an approximation (e.g. `color.structure.surface` variants) even though it wouldn't be a true "hover-darkened" effect; (c) leave it broken (silently render nothing) until the blend spec lands. Not resolved in this PR.
+
+## Follow-up: hover-blend ruling and its limit
+
+**Ruled by Peter, 2026-09-26: option (a).** Wire the toggle-button hover to the existing blend pattern the way `Button-Icon`/`Chip-Base` do it. Fixed in PR `fix/input-text-password-hover-blend`.
+
+**Base colour + blend token chosen**: `darkerBlend(color.structure.canvas, blend.hoverDarker)`. Reasoning: the toggle button's resting background is `transparent` — it has no background of its own to darken. It sits directly on the input container's own background, `--color-structure-canvas` (`.input-container { background: var(--color-structure-canvas); }`). This mirrors Chip-Base's exact precedent — `darkerBlend(color.structure.surface, blend.hoverDarker)`, where the *chip's own resting background* is the base — except here the "surface the element visually sits on" is the parent container's canvas rather than the element's own background, since the toggle button is a transparent overlay. `blend.hoverDarker` (not `hoverLighter`) matches every other hover site in the codebase — no component uses `hoverLighter` for hover.
+
+**Implementation** — `InputTextPassword.web.ts` only (bundler build):
+- Imports `getBlendUtilities`/`BlendUtilitiesResult` from `@3fn/core/blend` (same import as Button-Icon/Chip-Base).
+- `connectedCallback` defers blend calculation with the same DOMContentLoaded/`requestAnimationFrame`-retry pattern as those siblings, then renders.
+- `_calculateBlendColors()` reads `--color-structure-canvas` via `getComputedStyle(document.documentElement)`, throws if missing (fail-loud, matching sibling convention), and stores `getBlendUtilities().hoverColor(canvasColor)`.
+- The computed value is written directly into the regenerated `<style>` block's `:host { --_itp-hover-bg: ${value}; }` (no incremental `element.style.setProperty` step needed — unlike Button-Icon/Chip-Base, this component always fully rebuilds its shadow DOM on every `render()`, so embedding the value in the freshly-generated `<style>` text is equivalent and simpler).
+- `.toggle-button:hover { background-color: var(--_itp-hover-bg); }` replaces the phantom `var(--color-background-hover)`.
+
+**`InputTextPassword.browser.ts` is NOT fixed — a genuine stop-and-report, not an oversight.** That file is a standalone, zero-import bundle by design (see its own header: "bundles all dependencies inline for direct browser usage" — confirmed zero `import` statements anywhere in the file, unlike every other component in the repo). The blend utility this fix depends on is not a small constant: `getBlendUtilities()` sits on top of `src/blend/ThemeAwareBlendUtilities.web.ts` (323 lines) and `src/blend/ColorSpaceUtils.ts` (325 lines) of real OKLCH/RGB color-space math (`hexToRgb`, `rgbToHex`, `calculateDarkerBlend`, etc.). No `.browser.ts` file anywhere in the repo inlines blend math today (`grep -rl "blend" src/components/core/*/platforms/web/*.browser.ts` returns nothing), and no other `.browser.ts` variant exists for Button-Icon or Chip-Base to check against. Two real options, neither exercised: (i) duplicate ~650 lines of color-math into the standalone bundle — a first-of-its-kind pattern with real drift/correctness risk (this file's existing self-contained sections are small, mechanical inlines like regex password-validation patterns, not a math library); (ii) break the file's zero-import convention with a single import — the opposite kind of first-of-its-kind change. Left as-is (`--color-background-hover`, still phantom, still renders nothing on hover in the standalone build) pending Peter's call on which precedent to set. Recorded in the resolve-guard's `KNOWN_DEFERRED` list (see below).
+
+**Guard update**: `--color-background-hover` removed from `KNOWN_DEFERRED` for `InputTextPassword.web.ts` only (still listed for `.browser.ts`). Added `KNOWN_JS_COMPUTED`, a narrowly-scoped allow-list (exact file+name pairs, not a blanket `--_`-prefix exemption — the resolve-guard's regex was widened to actually scan underscore-containing custom properties, `[a-z0-9-]` → `[a-z0-9_-]`, so it could see `--_itp-hover-bg` and correctly flag it if unrecognized) for custom properties whose value is JS-computed and therefore can never appear in `token-index/`; each entry names the behavioral test file that verifies its actual correctness, and a new test asserts that file exists.
+
+**New behavioral test**: `Input-Text-Password/__tests__/toggleButtonHoverBlend.test.ts` — instantiates the real custom element in jsdom, sets `--color-structure-canvas`, and asserts the rendered `--_itp-hover-bg` value (a) is non-empty, (b) equals `getBlendUtilities().hoverColor(canvasColor)` computed independently in the test (exact match, not just presence), and (c) differs from the raw canvas color (catches a pass-through no-op). Button-Icon/Chip-Base have no equivalent value-level test today (their hover tests only check that `--_bi-hover-bg`/`--_chip-hover-bg` strings appear in source/CSS) — this is a stronger check than existing precedent, not a weaker mirror of it.
+
+**Bite recorded red**: reverted `var(--_itp-hover-bg)` → `var(--color-background-hover)` in `InputTextPassword.web.ts` → both the "resolves" and "exactly this known set" guard assertions failed, correctly naming `--color-background-hover`; restored, `git diff --stat` clean.
+
+**Validation**: `npm test` 369/369 suites, 9069 tests (was 368/9064 immediately before this follow-up branch). `npx tsc --noEmit` clean.
 
 ## The guard
 

@@ -28,6 +28,7 @@
 import { InputTextBase } from '../../../Input-Text-Base/platforms/web/InputTextBase.web';
 import { validatePassword, DEFAULT_INVALID_PASSWORD_MESSAGE } from '../../validation';
 import { PasswordRequirements } from '../../types';
+import { getBlendUtilities, BlendUtilitiesResult } from '@3fn/core/blend';
 
 /**
  * Input-Text-Password Web Component
@@ -46,12 +47,22 @@ export class InputTextPassword extends HTMLElement {
   private _isPasswordVisible: boolean = false;
   private _hasBeenValidated: boolean = false;
   private _isPasswordValid: boolean = true;
-  
+
+  // Theme-aware blend utilities instance (toggle-button hover background)
+  // @see Button-Icon.web.ts / ChipBase.web.ts for the same pattern
+  private _blendUtils: BlendUtilitiesResult;
+
+  // Cached blend color for toggle-button hover state
+  private _toggleHoverColor: string = '';
+
   constructor() {
     super();
-    
+
     // Initialize shadow DOM
     this._shadowRoot = this.attachShadow({ mode: 'open' });
+
+    // Initialize theme-aware blend utilities
+    this._blendUtils = getBlendUtilities();
   }
   
   /**
@@ -94,10 +105,72 @@ export class InputTextPassword extends HTMLElement {
   
   /**
    * Connected callback - called when element is added to DOM
+   *
+   * Defers blend color calculation until document is ready to ensure CSS custom
+   * properties are available from parsed stylesheets (same deferral pattern as
+   * Button-Icon / Chip-Base).
    */
   connectedCallback(): void {
-    this.render();
-    this.attachEventListeners();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        this._calculateBlendColorsWithRetry();
+        this.render();
+        this.attachEventListeners();
+      }, { once: true });
+    } else {
+      this._calculateBlendColorsWithRetry();
+      this.render();
+      this.attachEventListeners();
+    }
+  }
+
+  /**
+   * Calculate blend colors with retry logic for CSS loading race conditions.
+   *
+   * Uses requestAnimationFrame to ensure CSS is fully applied before reading
+   * custom properties. Falls back to the CSS-in-JS render default if tokens are
+   * still unavailable.
+   */
+  private _calculateBlendColorsWithRetry(): void {
+    try {
+      this._calculateBlendColors();
+    } catch (error) {
+      requestAnimationFrame(() => {
+        try {
+          this._calculateBlendColors();
+          this.render();
+          this.attachEventListeners();
+        } catch (retryError) {
+          console.warn('InputTextPassword: Could not calculate blend colors, using CSS fallback', retryError);
+        }
+      });
+    }
+  }
+
+  /**
+   * Calculate the toggle-button hover background color from CSS custom properties.
+   *
+   * The toggle button's resting background is transparent — it sits directly on the
+   * input container's canvas background (`--color-structure-canvas`). On hover, the
+   * button darkens relative to that surface, matching the pattern Chip-Base uses for
+   * its own resting-background hover (`darkerBlend(color.structure.surface,
+   * blend.hoverDarker)`) — here the "surface the element sits on" is the input's
+   * canvas rather than the chip's own background, since the toggle button itself has
+   * no background of its own to darken.
+   *
+   * - Hover: darkerBlend(color.structure.canvas, blend.hoverDarker) - 8% darker
+   *
+   * @throws Error if the required token is missing from CSS custom properties
+   */
+  private _calculateBlendColors(): void {
+    const computedStyle = getComputedStyle(document.documentElement);
+    const canvasColor = computedStyle.getPropertyValue('--color-structure-canvas').trim();
+
+    if (!canvasColor) {
+      throw new Error('InputTextPassword: Required token --color-structure-canvas is missing from CSS custom properties');
+    }
+
+    this._toggleHoverColor = this._blendUtils.hoverColor(canvasColor);
   }
   
   /**
@@ -220,6 +293,9 @@ export class InputTextPassword extends HTMLElement {
       :host {
         display: block;
         width: 100%;
+        /* JS-computed hover background for the toggle button — darkerBlend(color.structure.canvas,
+           blend.hoverDarker), NOT a token reference. See _calculateBlendColors(). */
+        --_itp-hover-bg: ${this._toggleHoverColor};
       }
       
       .password-container {
@@ -255,7 +331,7 @@ export class InputTextPassword extends HTMLElement {
       
       .toggle-button:hover {
         color: var(--color-text-default);
-        background-color: var(--color-background-hover);
+        background-color: var(--_itp-hover-bg);
       }
       
       .toggle-button:focus {
