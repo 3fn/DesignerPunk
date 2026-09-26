@@ -40,6 +40,7 @@ import {
   resolveMode,
   evaluateSpec,
   evaluateAmendment,
+  formatUntickedLine,
   Finding,
   SpecResult,
 } from './completion-claims/verdict';
@@ -211,6 +212,13 @@ function main(): number {
         console.log(`  emission [${e.kind}] ${e.detail}`);
       }
     }
+    // Informational only (Peter, 2026-09-26) — never counted toward
+    // pass/fail/reds/emissions or the exit code. Printed once per spec, at
+    // spec-header weight (un-indented) rather than interleaved with the
+    // per-parent verdict lines above, so it stays legible regardless of how
+    // long that list grows. Omitted entirely when the count is 0.
+    const untickedLine = formatUntickedLine(r);
+    if (untickedLine) console.log(untickedLine);
   }
   for (const d of diffFindings) {
     reds++;
