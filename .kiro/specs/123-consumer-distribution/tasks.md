@@ -273,7 +273,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 1.5 `generate`: `token-index/meta.json` `tierDir`; the theme readers use the recorded tier; the write side anchored; the refusals; `figma-*` anchored
   - [x] 1.6 The string-conformance test
 
-- [ ] 2. The birth event: `init`'s copy table and rewrite-by-resolution
+- [x] 2. The birth event: `init`'s copy table and rewrite-by-resolution
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet); Thurgood (Sonnet) — 2.6
   **Traces**: Reqs 19A (.1–.7), 19, 19.4, 15.8, 15A.3, 1.2 · design C1 (rows 0, 2, 3, 3b, 3c, 4, 4′, 9, manifest; **row 5 at Task 22; row 10 at Task 16**), C4, C8 (U1 emission), C27 erratum (the restart line)
