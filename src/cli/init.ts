@@ -18,6 +18,7 @@ import * as crypto from 'crypto';
 import * as readline from 'readline';
 import { rewriteByResolution, UnmappedSpecifierError } from './shared/transforms';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
+import { readContractHash } from './sync/NameContract';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import {
   initBornRepoMessage,
@@ -81,15 +82,15 @@ export class ManifestBuilder {
     };
   }
 
-  build(installedVersion: string): Record<string, unknown> {
+  build(installedVersion: string, contractHash = ''): Record<string, unknown> {
     return {
       version: '1',
       posture: 'born',
       installedVersion,
-      // Populated once Task 6 builds the type-contract hash mechanism
-      // (dist/name-contract.json's contractHash — design.md C7). No Task 2
-      // criterion tests this value; left explicitly empty rather than faked.
-      contractHash: '',
+      // The installed package's type-contract hash (dist/name-contract.json
+      // `typeContract.hash`, Spec 123 Task 6 / DD11) — '' only when the package
+      // ships no contract, never a faked value.
+      contractHash,
       attachedTargets: ['cc', 'kiro'],
       entries: this.entries,
     };
@@ -332,7 +333,7 @@ export async function runInit(argv: string[]): Promise<void> {
   const installedVersion = readPackageVersion(pkgRoot);
   const manifestPath = path.join(dest, 'designerpunk.manifest.json');
   // Serialized by sync's manifest writer (stable order, one entry per line — C7), so the first sync does not rewrite it.
-  fs.writeFileSync(manifestPath, serializeManifest(manifest.build(installedVersion) as unknown as DesignerPunkManifest), 'utf-8');
+  fs.writeFileSync(manifestPath, serializeManifest(manifest.build(installedVersion, readContractHash(pkgRoot)) as unknown as DesignerPunkManifest), 'utf-8');
   console.log('✓ Created designerpunk.manifest.json');
 
   // --- Next steps (C27 erratum; Req 15.8, 15.9, 19.6) ----------------------

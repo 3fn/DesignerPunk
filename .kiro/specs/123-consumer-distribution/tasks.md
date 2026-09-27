@@ -430,11 +430,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/build-name-contract.ts`, `src/cli/sync/NameContract.ts`, tests
 
-  - [ ] 6.0 **Gate**: verify Lina's Container-Base chore PR has merged (guard test green on `main`)
-  - [ ] 6.1 `build-name-contract.ts` + the mechanical dynamic-site scan + the three dispositions + **the own-index check with its bite**
-  - [ ] 6.2 The check + the P1 tier filter + `cannot check` + the report string
+  - [x] 6.0 **Gate**: verify Lina's Container-Base chore PR has merged (guard test green on `main`)
+  - [x] 6.1 `build-name-contract.ts` + the mechanical dynamic-site scan + the three dispositions + **the own-index check with its bite**
+  - [x] 6.2 The check + the P1 tier filter + `cannot check` + the report string
   - [ ] 6.3 `contractHash`; the type-contract report
-  - [ ] 6.4 Tests and bites
+  - [x] 6.4 Tests and bites
 
 - [ ] 7. The publish-rail guard, ballot B-U1, and the CHANGELOG's start
 

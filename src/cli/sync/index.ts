@@ -73,6 +73,16 @@ import {
   LEGACY_AGENTS_RETAINED_MESSAGE,
 } from './Migration';
 import type { MigrationAssessment, PackageFetcher, RelocationResult } from './Migration';
+import {
+  loadNameContract,
+  readPresentNames,
+  checkNameContract,
+  contractMissingMessage,
+  configUnreadableMessage,
+} from './NameContract';
+import type { NameContractResult } from './NameContract';
+import { loadConfig } from '../../config/ConfigLoader';
+import type { ConfigModuleLoader } from '../../config/ConfigLoader';
 
 export interface SyncOptions {
   projectRoot: string;
@@ -98,6 +108,8 @@ export interface SyncOptions {
   repairNpmrc?: boolean;
   /** `--repair-tsconfig`: remove tsconfig.test.json's raw-src re-pins (Req 5.2). */
   repairTsconfig?: boolean;
+  /** Test seam — the config-module loader for the name contract's output directory (Task 6). */
+  configLoader?: ConfigModuleLoader;
 }
 
 export interface SyncOutcome {
@@ -111,6 +123,8 @@ export interface SyncOutcome {
   relocation?: RelocationResult;
   /** Ordered events (fetches, repair offers) — the ordering instrument (C7 step 6). */
   trace: string[];
+  /** The name-contract check (Req 5A) — report only, never a write. */
+  nameContract?: NameContractResult | { status: 'cannot-check'; lines: string[] };
 }
 
 /** Parse `sync`'s CLI flags (everything after `sync`). */
@@ -262,6 +276,12 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
   for (const o of offers) outcome.trace.push(`repair-offered:${o.kind}`);
   if (offers.length > 0) sections.push({ title: '🔧 Repairs offered:', lines: offers.flatMap((o) => o.lines) });
 
+  // 6b. The name contract (Req 5A; Task 6) — REPORT ONLY: the consumer's token
+  //     tier is never written (5.8). Reads the package's compiled contract and her
+  //     generated web CSS; no output → `cannot check`, never clean.
+  outcome.nameContract = await nameContractSection(projectRoot, pkg.root, options.configLoader);
+  sections.push({ title: '🔤 Name contract (your tokens vs. the names our components reference):', lines: outcome.nameContract.lines });
+
   // 7. REPORT — always, before anything applies.
   const report = buildReport({ dryRun: Boolean(options.dryRun), manifestLines, files, keys: keyResults, sections });
   displayReport(report);
@@ -357,4 +377,33 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
   if (outcome.applied.length > 0) console.log(`\n  ✓ ${outcome.applied.length} change${outcome.applied.length === 1 ? '' : 's'} applied`);
   console.log(outcome.manifestWritten ? `✅ Sync complete. ${MANIFEST_FILE} updated.` : '✅ Sync complete.');
   return outcome;
+}
+
+const displayPath = (projectRoot: string, abs: string, dir = false): string => {
+  const rel = path.relative(projectRoot, abs).split(path.sep).join('/');
+  const shown = rel === '' ? '.' : rel.startsWith('..') ? abs : rel;
+  return dir && !shown.endsWith('/') ? `${shown}/` : shown;
+};
+
+async function nameContractSection(
+  projectRoot: string,
+  pkgRoot: string,
+  configLoader?: ConfigModuleLoader,
+): Promise<NameContractResult | { status: 'cannot-check'; lines: string[] }> {
+  const contract = loadNameContract(pkgRoot);
+  if (!contract) return { status: 'cannot-check', lines: [contractMissingMessage(pkgRoot)] };
+  let outputDir: string;
+  let tokenRoot: string;
+  try {
+    const config = configLoader ? await loadConfig(projectRoot, configLoader) : await loadConfig(projectRoot);
+    outputDir = config.outputDir;
+    tokenRoot = config.tokenSourceMode === 'local' ? config.tokenSourceRoot : path.join(projectRoot, 'src', 'tokens');
+  } catch (err) {
+    return { status: 'cannot-check', lines: [configUnreadableMessage(err instanceof Error ? err.message : String(err))] };
+  }
+  return checkNameContract(contract, readPresentNames(outputDir), {
+    outputDirDisplay: displayPath(projectRoot, outputDir),
+    semanticTierPath: displayPath(projectRoot, path.join(tokenRoot, 'semantic'), true),
+    primitiveTierPath: displayPath(projectRoot, tokenRoot, true),
+  });
 }
