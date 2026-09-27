@@ -1,6 +1,7 @@
 # Task 10.4 Completion — `emitSpans`; replace both adapters' inline sites and frontmatter loops
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U2a · **Parent**: Task 10 · **Agent**: Lina (Opus)
+**CI-provenance**: branch-head dispatch @ 4c39fc4c038243a799a9ebf47830e56d44f4b6f1 — https://github.com/3fn/DesignerPunk/actions/runs/36345223866, https://github.com/3fn/DesignerPunk/actions/runs/36345227715, https://github.com/3fn/DesignerPunk/actions/runs/36345231813, https://github.com/3fn/DesignerPunk/actions/runs/36345235755, https://github.com/3fn/DesignerPunk/actions/runs/36345239944, https://github.com/3fn/DesignerPunk/actions/runs/36345243932
 
 ## What changed
 

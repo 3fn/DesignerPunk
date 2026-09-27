@@ -535,7 +535,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 > **Framing, carried**: § 7.2's check is **NOT signed off**. No U2 criterion claims the check discriminates. G1 and G2 test it; **the verdicts are Stacy's, in verdict records outside every parent** (§ "Gate seat layout"). P2 is ruled branch A.
 
-- [ ] 10. Splitter family, span function, and adapter consolidation (steps 1–2)
+- [x] 10. Splitter family, span function, and adapter consolidation (steps 1–2)
 
   **Type**: Architecture · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Opus)
   **Traces**: Reqs 10.G, 10.S, 10.8, 10.8a · design C13, C14
