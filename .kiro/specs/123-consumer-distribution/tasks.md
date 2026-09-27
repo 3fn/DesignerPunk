@@ -467,7 +467,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 7.3 B-U1 record-first; Stacy's review of the register row
   - [x] 7.4 `CHANGELOG.md` with release 1's entry (incl. 9.0's two changes, taken from the 9.0 subtask doc) + the `files[]` entry
 
-- [ ] 8. The harvest-zero lint
+- [x] 8. The harvest-zero lint
 
   **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Ada (Sonnet)
   **Traces**: Reqs 8.1–8.4 · design C11
