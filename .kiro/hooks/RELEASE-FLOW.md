@@ -129,6 +129,39 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
      on a branch; the release PR was incomplete).
    - `postpublish` never pushes. If `token-index/` somehow changed during publish
      anyway, it prints a warning telling you to route the diff through a PR.
+6. **Run the publish-rail guard and land its result via a release-record PR**
+   (Req 6.4, 6.6, 6.7 — Spec 123 C9; `governance/classification-map.md` §
+   "publish-rail-guard"):
+   ```bash
+   VERSION=<published-version> ./scripts/verify-publish-rail.sh
+   ```
+   This queries `registry.npmjs.org` directly over HTTP — no `npm` CLI, no
+   `.npmrc` of any kind is read *(nor `~/.curlrc`; standard proxy environment
+   variables such as `HTTPS_PROXY` are honoured)*. A non-zero exit means the release did not land
+   where consumers install from: **do not announce it.** Fix and re-run before
+   proceeding. **If it fails within the first few minutes of publishing, the
+   registry may just not have indexed the version yet — wait a minute and
+   re-run by hand; this step never retries automatically.**
+
+   **Land the result on `main`** — `main` is branch-protected, so a working-tree
+   file is not enough. Paste the **full output, including the exit code**, to
+   `docs/releases/<v>/publish-verification.txt` (`.txt`, not `.log` — this
+   repo's `*.log` gitignore rule would otherwise silently drop the file, the
+   same trap Task 7.1's own bites hit once already) and open a small
+   **release-record PR** for it, using the same mechanism step 3 already
+   names (`gh pr create`, or `./.kiro/hooks/complete-task.sh` for a spec-task
+   release) — Peter merges it like any other PR. This is a SECOND, POST-publish
+   PR, distinct from step 3's PRE-publish release PR: step 3's PR cannot carry
+   this file because the guard has nothing to verify until after step 5's
+   publish has happened.
+
+   This step is **mandatory**, not a documented instruction — the guard is a
+   committed script, not a checklist reminder — and it is **never a PR check**
+   (Req 6.6: the event it verifies, registry visibility, happens after merge,
+   so there is nothing at PR time to gate). The RELEASE claims pass reads the
+   committed `.txt` file to determine liveness (Req 6.7): a guard run is an
+   event in the release *process*, not a diff in the release *delta*, so
+   without a committed record the pass has nothing to read.
 
 ## What changed and why (Req 4.4 justification)
 

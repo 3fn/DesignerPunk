@@ -442,7 +442,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 6.3 `contractHash`; the type-contract report
   - [x] 6.4 Tests and bites
 
-- [ ] 7. The publish-rail guard, ballot B-U1, and the CHANGELOG's start
+- [x] 7. The publish-rail guard, ballot B-U1, and the CHANGELOG's start
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
   **Traces**: Reqs 6.1–6.8, 21.2 · design C9, DD12, DD13 (split), DD16 · **SLOT T2** (the queried tag)
@@ -455,7 +455,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - (2) a PATH-shimmed **`curl`** (not `npm`) returning a fixture JSON body whose `dist.tarball` is a GitHub Packages URL → exit 11 **through the production line**;
     - (3) unset `VERSION` → exit 2, the `USAGE` message (new, second erratum).
   - **T2 ruled (B)**: the guard queries the version as drawn; no tag is involved.
-  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 cross-references the standalone T1-(B) ballot** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, RATIFIED Peter 2026-09-26), **whose merge precedes the U1 branch point** (cited by merge commit) (erratum 2026-09-26; it replaces the planned first-commit section).
+  - **B-U1** is RATIFIED *(Erratum 2026-09-27, Task 7.3: the `Ratified-machine:` line is OMITTED, deliberately — following the T1-(B)/`delegated-tier-capture` precedent, not the `2026-09-19-completion-claims-integrity.md` precedent. That mechanism belongs to the one ballot `completion-criteria-parity` parses for its in-force date; reproducing it on B-U1 would create a second parseable record for a checker built to read exactly one. See the ballot's own `Status` block for the reasoning stated in full.)*, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 cross-references the standalone T1-(B) ballot** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, RATIFIED Peter 2026-09-26), **whose merge precedes the U1 branch point** (cited by merge commit) (erratum 2026-09-26; it replaces the planned first-commit section).
   - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)), **the removal of the four orphaned Input-Text `.browser.ts` files, and the browser bundles no longer carrying build-machine paths** (both Task 9.0, which runs before Task 7; amendment 2026-09-27).
   - *Scope stated*: npmjs visibility and tarball host only.
 
@@ -464,7 +464,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 7.0 **FIRST on the U1 branch**: verify that the standalone T1-(B) ballot is merged on `main` and reads RATIFIED; record its merge SHA; B-U1 cross-references it (erratum 2026-09-26: it replaces committing the section here)
   - [x] 7.1 Script + self-test + empty-URL branch
   - [x] 7.2 The three bites
-  - [ ] 7.3 B-U1 record-first; Stacy's review of the register row
+  - [x] 7.3 B-U1 record-first; Stacy's review of the register row
   - [x] 7.4 `CHANGELOG.md` with release 1's entry (incl. 9.0's two changes, taken from the 9.0 subtask doc) + the `files[]` entry
 
 - [ ] 8. The harvest-zero lint
