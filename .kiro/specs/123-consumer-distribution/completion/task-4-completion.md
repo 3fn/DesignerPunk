@@ -23,7 +23,7 @@ Unmet or partially met criteria: None
 
 ## Additional verification
 
-**Primary Artifacts (as declared in tasks.md): `scripts/build-tool-manifest.ts`, the three servers' registration modules, `src/cli/shared/mcpConfig/{kiro,cc}.ts`, `src/cli/__tests__/init.test.ts` — all shipped as declared.**
+**Primary Artifacts: all shipped as declared — `scripts/build-tool-manifest.ts`, the three servers' registration modules, `src/cli/shared/mcpConfig/{kiro,cc}.ts`, `src/cli/__tests__/init.test.ts`.**
 
 **Disclosed out-of-list edits (three, all outside the declared Primary Artifacts list):**
 
@@ -32,6 +32,8 @@ Unmet or partially met criteria: None
 3. **`src/cli/templates/mcp-config.json.template`** — removed the (now-dead) `autoApprove` arrays from all server entries; added the `designerpunk-product` entry's connection info (`command`, `args`, `env: { PRODUCT_DIR: './product', COMPONENT_DIR: './src/components', TOKEN_INDEX_DIR: './token-index' }`, `disabled: false`). **NOT pre-named in the orchestrator's brief** — flagged explicitly for review in this task's report. **ACCEPTED by the orchestrator (verification message, this session)**, on authority of **Requirements.md § 19A.5a's root-policy table**: the three scaffolded values this edit sets — component root `./src/components`, token index `./token-index`, product root `./product` — are EXACTLY that table's "Scaffolded config value" column for the Component root, Token index, and Product root rows respectively. The explicit `TOKEN_INDEX_DIR` value on the new `designerpunk-product` entry is 19A.5a clause (b)'s intended behavior (*"An EXPLICITLY SET `TOKEN_INDEX_DIR` that is missing SHALL FAIL LOUDLY, WHATEVER THE POSTURE... which keeps the scaffolded path independent of detection entirely"*) — setting it explicitly, rather than leaving it unset, is what makes a missing/misconfigured token index on the product server fail loud rather than silently falling through to a stale default. Disclosed in task-4-3-completion.md.
 
 No `**Merge gate:**` block is declared for this parent (confirmed via `parseTasksMd` — `mergeGate: []`), so no gate-conditions sub-section applies. No Primary Artifact of Task 4's own is deferred to a later unit.
+
+**Addendum (2026-09-27)**: the Primary-Artifacts line above was reworded to start exactly `Primary Artifacts:` — the parity parser's forced-negative check (D2, PR #211) never recognized the prior inline `Primary Artifacts (as declared in tasks.md): …` phrasing. No status or evidence changed.
 
 ---
 

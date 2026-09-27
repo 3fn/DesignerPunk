@@ -9,7 +9,7 @@
 
 ## Success Criteria
 
-These rows are exactly what `parseTasksMd` (`scripts/completion-claims/tasks-md.ts`) extracts for parent 5 — **7 rows**. The parser stops collecting at the blank line before the `**Instrument**:` paragraph, so the remaining **14** criterion rows of the Task 5 block are not extracted. They are reproduced verbatim, with status and evidence, in § "Additional verification › Criterion rows the parity parser does not extract" below. The truncation is reported as a finding to the instrument owner (§ "Findings routed").
+**Addendum (2026-09-27)**: this table originally held only the first 7 rows below. `parseTasksMd`'s D1 defect (PR #211) stopped a criteria block at the blank line before the `**Instrument**:` paragraph, so the remaining 14 rows were reproduced, verbatim with status and evidence, in a separate table (§ "Criterion rows the parity parser does not extract"). D1 is now fixed, tasks.md's Task 5 block has been normalized to bulleted lines, and all 21 rows below are extracted by the parser as a single table — the separate table is retired and its rows merged here, in tasks.md order. No status or evidence changed.
 
 | Criterion (verbatim) | Status | Evidence |
 |---|---|---|
@@ -20,21 +20,6 @@ These rows are exactly what `parseTasksMd` (`scripts/completion-claims/tasks-md.
 | a consumer's own server key, and a consumer-authored `mcp__designerpunk-*` rule, survive `sync` **with parsed value unchanged**; | ✅ verified met | `src/cli/__tests__/sync.keygrain.test.ts › consumer entries survive an UPDATING sync with parsed value unchanged (all three shapes)`. Every surface is written in that test, and consumer entries are deep-equal before and after. Bite (the writer drops consumer servers) → 2 failed, recorded in `.kiro/specs/123-consumer-distribution/completion/task-5-3-completion.md`. |
 | **when our keys are unchanged, the file's bytes are unchanged** (no write); | ✅ verified met | `src/cli/__tests__/sync.keygrain.test.ts › <file> › our keys unchanged → the file bytes are unchanged (no write), even with hand formatting` ×3 (bytes and mtime asserted on a hand-reformatted file). Bite (`unchanged` misread as `updated-safe`) → 3 failed, recorded in `.kiro/specs/123-consumer-distribution/completion/task-5-3-completion.md`. |
 | editing our key → `conflict`; deleting it → `deleted-by-you`. | ✅ verified met | `src/cli/__tests__/sync.keygrain.test.ts › .kiro/settings/mcp.json › editing our key → conflict…`, `› .mcp.json › editing our key → conflict…`, and `› <file> › deleting our key → deleted-by-you…` ×3. Scope: at the `permissions.allow` array-entry grain an entry's identity IS its string, so an edit reads as `deleted-by-you` plus "yours" (`› .claude/settings.json › editing an allow entry reads as deleted-by-you + yours`). Bites: conflict→updated-safe (2 failed) and deleted-by-you→new (4 failed), recorded in `.kiro/specs/123-consumer-distribution/completion/task-5-3-completion.md`. |
-
-Unmet or partially met criteria: None
-
----
-
-## Additional verification
-
-Primary Artifacts: all shipped as declared — `src/cli/sync/{FileScanner,Classifier,Manifest,Applier,Reporter,index,Migration,KeyGrain}.ts` (`Migration.ts` and `KeyGrain.ts` new; the rest rewritten), plus tests (`src/cli/__tests__/{sync,sync.classify,sync.keygrain,sync.migration,sync.catalog,Manifest,FileScanner}.test.ts`, `syncTestKit.ts`, `fixtures/sync/*.json`; `Applier.test.ts`, `Classifier.test.ts` and `Reporter.test.ts` deleted as superseded).
-
-No `**Merge gate:**` block is declared for this parent (`parseTasksMd` → `mergeGate: []`). No artifact is deferred to a later unit.
-
-### Criterion rows the parity parser does not extract (verbatim from tasks.md)
-
-| Row (verbatim, tasks.md Task 5) | Status | Evidence |
-|---|---|---|
 | **Instrument**: `sync.keygrain.test.ts` over **three shapes**: `mcpServers.<key>` ×2 files and the `permissions.allow` array-entry grain. | ✅ verified met | `src/cli/__tests__/sync.keygrain.test.ts` (`describe.each` over `KEY_SURFACES`, count 3 asserted) → `npx jest src/cli/__tests__/sync.keygrain.test.ts → 13/13` |
 | Manifest: the root path; stable order; one entry per line (re-serialize-equals-file); the legacy path read and relocated; pruning with its report. | ✅ verified met | `src/cli/__tests__/Manifest.test.ts` (13/13: root path, stable order, one entry per line, re-serialize equals file, legacy read/convert/pointer, pruning groups). `src/cli/__tests__/sync.test.ts › manifest relocation › legacy → root manifest (one entry per line), pointer left in the old file; the next run writes nothing`. Bites in `.kiro/specs/123-consumer-distribution/completion/task-5-2-completion.md`. |
 | **The de-managed `src/types` pruning line states that the files remain required by their token tier's relative imports** (Ada D-T-A5). | ✅ verified met | `src/cli/sync/Manifest.ts` `SRC_TYPES_PRUNE_CLAUSE` (authored by Ada, `f7470dcf`). `src/cli/__tests__/Manifest.test.ts › one report line per pruned group; the src/types line states the files remain required (Ada D-T-A5)`. Ada's bite is in `.kiro/specs/123-consumer-distribution/completion/task-5-5-token-strings-completion.md`. |
@@ -50,7 +35,15 @@ No `**Merge gate:**` block is declared for this parent (`parseTasksMd` → `merg
 | **dp-portfolio input**: Peter's `ls .kiro/sync-manifest.json` result is quoted, **or** the doc records *"not obtained — both branches covered by fixtures"*. Fixtures cover manifest-present and manifest-absent either way. | ✅ verified met | Quoted in `.kiro/specs/123-consumer-distribution/completion/task-5-1-completion.md` (PRESENT, 142,698 bytes, 12.0.3 lagging the installed 12.0.5). `src/cli/__tests__/sync.migration.test.ts › the two manifest branches (5.1) and the lag › manifest PRESENT…` and `› manifest ABSENT…`; fixture `src/cli/__tests__/fixtures/sync/dp-portfolio.legacy-manifest.json` |
 | The Applier source branch is deleted: `grep -n "isSourceTs" src/cli/sync/` → 0. | ✅ verified met | `grep -rn "isSourceTs" src/cli/sync/ \| wc -l → 0` at `d19cb50a` (the source tier is gone from `src/cli/sync/Applier.ts`) |
 
-14 rows above plus the 7 extracted rows = **21 rows**, the whole Task 5 Success Criteria block.
+Unmet or partially met criteria: None
+
+---
+
+## Additional verification
+
+Primary Artifacts: all shipped as declared — `src/cli/sync/{FileScanner,Classifier,Manifest,Applier,Reporter,index,Migration,KeyGrain}.ts` (`Migration.ts` and `KeyGrain.ts` new; the rest rewritten), plus tests (`src/cli/__tests__/{sync,sync.classify,sync.keygrain,sync.migration,sync.catalog,Manifest,FileScanner}.test.ts`, `syncTestKit.ts`, `fixtures/sync/*.json`; `Applier.test.ts`, `Classifier.test.ts` and `Reporter.test.ts` deleted as superseded).
+
+No `**Merge gate:**` block is declared for this parent (`parseTasksMd` → `mergeGate: []`). No artifact is deferred to a later unit.
 
 ### Validation (at `d19cb50a`, before this doc's commit)
 
@@ -129,7 +122,7 @@ The migration loads 11.9.0–12.x's transform from `src/cli/shared/transforms.ts
 
 ## Findings routed
 
-- **For Thurgood (owner of the `completion-criteria-parity` instrument)**: `parseTasksMd` stops a criteria block at its first blank line. Task 5's block has a blank line before its `**Instrument**:` paragraph, so **14 of 21 criterion rows are not extracted**. A parity PASS on parent 5 covers the 7 extracted rows only. The other 14 are verified above, but outside the predicate's reach. The instrument's own principle is that absorbing a row is not the same as dropping it. Either the parser should continue past an indented or blank-separated paragraph within the block, or `tasks.md` authoring guidance should forbid blank lines inside a criteria block (a tasks-round lint).
+- **For Thurgood (owner of the `completion-criteria-parity` instrument)**: `parseTasksMd` stops a criteria block at its first blank line. Task 5's block has a blank line before its `**Instrument**:` paragraph, so **14 of 21 criterion rows are not extracted**. A parity PASS on parent 5 covers the 7 extracted rows only. The other 14 are verified above, but outside the predicate's reach. The instrument's own principle is that absorbing a row is not the same as dropping it. Either the parser should continue past an indented or blank-separated paragraph within the block, or `tasks.md` authoring guidance should forbid blank lines inside a criteria block (a tasks-round lint). **Resolved (2026-09-27, PR #211)**: this defect (D1) is fixed, and tasks.md's Task 5 block is normalized to bulleted lines — see the addendum in § "Success Criteria" above.
 
 ## Subtask completion docs
 
