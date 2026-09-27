@@ -346,7 +346,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 3.5 **Record Kenya's and Data's KEEP-WITH-FOLLOW-UP verdicts quoted; the honest label; commit the shared follow-up issue; route the two defects**
   - [x] 3.6 `tarball-target.json` from the post-diet pack
 
-- [ ] 4. Per-harness MCP configuration, tool manifest, and product MCP wiring
+- [x] 4. Per-harness MCP configuration, tool manifest, and product MCP wiring
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Sonnet)
   **Traces**: Reqs 5.3, 5.4, 7.1–7.4, 15A.1 · design C8, C10, DD8
