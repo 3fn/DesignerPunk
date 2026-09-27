@@ -163,6 +163,19 @@ describe('Additional verification — the same predicate, never shape-only (B-3)
     );
   });
 
+  test('an INLINE Primary Artifacts line owes AV exactly like the bullet form (fix 2026-09-26, D2 — the Spec 123 shape)', () => {
+    const inline = tasksWith(['criterion A'], '\n  **Primary Artifacts:** `src/cli/sync/{A,B}.ts`, tests\n');
+    const p = parent(inline);
+    // No AV section → red (pre-fix: PA = [], AV never owed, silent PASS).
+    const bare = docWith([['criterion A', '✅', 'a/b.test.ts']]);
+    expect(evaluateParent(p, bare).findings.map((f) => f.verdict)).toEqual(['AV_MISSING_OR_MALFORMED']);
+    // AV section present, forced-negative line in the fixed form → PASS.
+    const good = docWith([['criterion A', '✅', 'a/b.test.ts']], {
+      av: '\n## Additional verification\n\nPrimary Artifacts: all shipped as declared — `src/cli/sync/{A,B}.ts`, tests\n',
+    });
+    expect(evaluateParent(p, good).findings).toEqual([]);
+  });
+
   test('an em-dash annotation row is excluded from the claimed gate multiset (the live Task-1 shape)', () => {
     const noGateTasks = tasksWith(['criterion A'], '\n  **Primary Artifacts:**\n  - scripts/out.ts\n');
     const p = parent(noGateTasks);
@@ -360,6 +373,31 @@ describe('CATALOG CONFORMANCE — every loud string equals its design-table row'
     );
     expect(tasks.malformations.map((m) => m.message)).toContain(
       'malformed association: two criteria blocks associate to parent 2 (lines 4, 6)'
+    );
+  });
+
+  test('non-bullet line inside a criteria block (fix 2026-09-26, D1) — and the parent is poisoned', () => {
+    const tasks = parseTasksMd(
+      HEADER + '- [x] 2. T\n  **Success Criteria:**\n  - a\n\n    **Instrument**: t\n  - b\n',
+      's'
+    );
+    expect(tasks.malformations.map((m) => m.message)).toContain(
+      'malformed criteria block: non-bullet line inside block at line 7 (parent 2)'
+    );
+    // Poisoned: no parity verdict computed over a truncated set, even with a
+    // doc that would match the pre-fix truncation exactly.
+    const r = evaluateSpec(tasks, 'per-parent', () => docWith([['a', '✅', 'a/b.test.ts']]));
+    expect(r.findings.map((f) => f.verdict)).toEqual(['MALFORMATION']);
+    expect(r.parents).toEqual([]);
+  });
+
+  test('inline Merge gate conditions (fix 2026-09-26, D2)', () => {
+    const tasks = parseTasksMd(
+      HEADER + '- [x] 2. T\n  **Success Criteria:**\n  - a\n  **Merge gate:** `npm test` green\n',
+      's'
+    );
+    expect(tasks.malformations.map((m) => m.message)).toContain(
+      "malformed promise block: inline '**Merge gate:**' conditions at line 6 (parent 2) — gate conditions must be bullets"
     );
   });
 
