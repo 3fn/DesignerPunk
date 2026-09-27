@@ -34,3 +34,8 @@ Every bite for Task 6 is recorded in its subtask doc, with its red line and a `c
 1. **Two of the three suites run in the `test:scripts` lane, which no CI workflow runs** (pre-existing; see `task-6-3-completion.md` adaptation 1). What CI does enforce is the build itself: `lane-timing` runs `npm run build`, which now runs `build:name-contract`, and every failure mode exits 1.
    - **For Thurgood (test governance)**: the `scripts/__tests__` lane has no CI home. `tool-manifest.test.ts` (Task 4) is in the same position.
 2. **The real-surface cases need a built `dist`** (the bundle, the token CSS and the emitted `.d.ts`), as `pack-assert.ts` does. On a fresh tree they fail loudly with the `name-contract: <file> not found — build order is …` message. They never skip silently.
+
+## Addendum — fork-1 ruling (B), 2026-09-27
+
+- A fourth suite, `src/cli/__tests__/sync.type-contract.run.test.ts` (functional lane, **10 tests**), covers the type contract through `sync`. Its eight bites are recorded in `task-6-3-completion.md`, including the one that did not bite at first and was fixed with a same-version case.
+- `npm test` → **383 suites, 9251 tests passed**. `npm run test:scripts` is unchanged at 11 / 206.

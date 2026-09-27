@@ -206,3 +206,94 @@ export function checkTypeContract(
   const { removed, added } = diffMembers(recorded.members, current.members);
   return typeContractChangedMessage(removed, added);
 }
+
+// ---------------------------------------------------------------------------
+// The type contract through `sync` — Peter's fork-1 ruling (B), 2026-09-27
+// ---------------------------------------------------------------------------
+//
+// The manifest records only `contractHash`. When it differs from the installed
+// package's, the PREVIOUS contract's members come from the previously installed
+// version's own `dist/name-contract.json`, fetched through her npm rail (Task 5's
+// fetcher, cache first). A failed fetch is `cannot tell` — never silently clean.
+// No recorded hash, or a previous version that predates the contract, is
+// `no baseline`. `sync` re-records `contractHash` only when it writes the manifest.
+
+/** Why there is no baseline (Peter's ruling: a clear "no baseline" outcome). */
+export type NoBaselineCause = { kind: 'no-recorded-hash' } | { kind: 'predates-contract'; version: string };
+/** Why the change cannot be itemized (a `cannot tell`, never clean). */
+export type TypeCannotTellCause = { kind: 'fetch-failed'; version: string } | { kind: 'baseline-mismatch'; version: string };
+
+/** PROPOSED catalog row "type contract — no baseline" (no design row yet; routed as an erratum). */
+export function typeContractNoBaselineMessage(cause: NoBaselineCause): string {
+  const why =
+    cause.kind === 'no-recorded-hash'
+      ? 'your manifest records no contractHash'
+      : `version ${cause.version} predates DesignerPunk's name contract (it ships no ${NAME_CONTRACT_REL})`;
+  return `no baseline to compare the token type contract against — ${why}. sync records the installed contract as the baseline the next time it writes the manifest.`;
+}
+
+/** PROPOSED catalog row "type contract — cannot tell" (no design row yet; routed as an erratum). */
+export function typeContractCannotTellMessage(cause: TypeCannotTellCause): string {
+  const why =
+    cause.kind === 'fetch-failed'
+      ? `the package content for version ${cause.version} could not be retrieved`
+      : `version ${cause.version}'s contract does not match the contractHash your manifest recorded`;
+  return `cannot tell what changed in the token type contract — ${why}. It did change: run 'npx tsc --noEmit' — fix each file it names. (This is not a clean report.)`;
+}
+
+/** What fetching the previous version's contract produced. */
+export type PreviousContract =
+  | { kind: 'ok'; typeContract: { hash: string; members: string[] } }
+  | { kind: 'fetch-failed' }
+  | { kind: 'no-contract' };
+
+export type TypeContractOutcome =
+  | { kind: 'unavailable'; lines: string[] }
+  | { kind: 'unchanged'; lines: string[] }
+  | { kind: 'no-baseline'; cause: NoBaselineCause; lines: string[] }
+  | { kind: 'changed'; removed: string[]; added: string[]; lines: string[] }
+  | { kind: 'cannot-tell'; cause: TypeCannotTellCause; lines: string[] };
+
+/**
+ * Assess the type contract for one `sync` run. `fetchPrevious` is called ONLY when the
+ * recorded hash is present and differs from the installed one.
+ */
+export function assessTypeContract(a: {
+  recordedHash: string;
+  recordedVersion: string;
+  current: { hash: string; members: string[] } | undefined;
+  fetchPrevious: (version: string) => PreviousContract;
+}): TypeContractOutcome {
+  if (!a.current) return { kind: 'unavailable', lines: [] };
+  if (!a.recordedHash) {
+    const cause: NoBaselineCause = { kind: 'no-recorded-hash' };
+    return { kind: 'no-baseline', cause, lines: [typeContractNoBaselineMessage(cause)] };
+  }
+  if (a.recordedHash === a.current.hash) return { kind: 'unchanged', lines: [] };
+  const prev = a.fetchPrevious(a.recordedVersion);
+  if (prev.kind === 'fetch-failed') {
+    const cause: TypeCannotTellCause = { kind: 'fetch-failed', version: a.recordedVersion };
+    return { kind: 'cannot-tell', cause, lines: [typeContractCannotTellMessage(cause)] };
+  }
+  if (prev.kind === 'no-contract') {
+    const cause: NoBaselineCause = { kind: 'predates-contract', version: a.recordedVersion };
+    return { kind: 'no-baseline', cause, lines: [typeContractNoBaselineMessage(cause)] };
+  }
+  if (prev.typeContract.hash !== a.recordedHash) {
+    const cause: TypeCannotTellCause = { kind: 'baseline-mismatch', version: a.recordedVersion };
+    return { kind: 'cannot-tell', cause, lines: [typeContractCannotTellMessage(cause)] };
+  }
+  const { removed, added } = diffMembers(prev.typeContract.members, a.current.members);
+  return { kind: 'changed', removed, added, lines: [typeContractChangedMessage(removed, added)] };
+}
+
+/** Read a fetched package root's contract (`no-contract` when that version predates it). */
+export function previousContractAt(root: string | null): PreviousContract {
+  if (!root) return { kind: 'fetch-failed' };
+  try {
+    const c = loadNameContract(root);
+    return c?.typeContract ? { kind: 'ok', typeContract: c.typeContract } : { kind: 'no-contract' };
+  } catch {
+    return { kind: 'fetch-failed' };
+  }
+}

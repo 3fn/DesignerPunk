@@ -1,67 +1,88 @@
-# Task 6.3 Completion — `contractHash`; the type-contract report — **PARTIAL (a fork is open; subtask NOT ticked)**
+# Task 6.3 Completion — `contractHash`; the type-contract report
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U1 · **Parent**: Task 6 · **Agent**: Ada (Opus)
 
+> **History.** First landed PARTIAL at `23e3afcc`: the build and the report functions were done, and `sync` wiring was blocked on the prior-members fork. **Peter ruled fork 1 = (B) on 2026-09-27.** The wiring below completes the subtask.
+
 ## What changed
 
-**Built and bitten:**
-- **`contractHash` is computed at build** (`scripts/build-name-contract.ts` → `buildTypeContract`) and shipped in `dist/name-contract.json` → `typeContract: { hash, members }`.
-  - The hash is `sha256:` over the **emitted** `.d.ts` text of exactly the four DD11 declarations: `PrimitiveToken` and `SemanticToken` (interfaces), `TokenCategory` and `SemanticCategory` (enums), from `dist/types/{PrimitiveToken,SemanticToken}.d.ts`.
-  - The text includes leading JSDoc. That makes it the design's own residual: a comment-only edit moves the hash. It is deterministic, and it cannot be hand-bumped.
-  - `members` is the normalized list, e.g. `PrimitiveToken.baseValue: number` and `TokenCategory.SPACING = "spacing"`.
-- **`init` records it**: `ManifestBuilder.build(installedVersion, readContractHash(pkgRoot))` puts the installed package's hash into `designerpunk.manifest.json` → `contractHash`.
-  - Measured on a real `init`: `"contractHash": "sha256:bb42c68b…"`.
-  - It is `''` only when the package ships no contract, and never a faked value.
-- **The report**: `src/cli/sync/NameContract.ts` provides:
-  - `typeContractChangedMessage(removed, added)`, string-equal to the catalog row "type contract changed";
-  - DD11's residual `NO_MEMBER_CHANGES` (*"no member changes detected — shape or formatting changed"*), used when the hash moved but no member did;
-  - `diffMembers`;
-  - `checkTypeContract(recorded, current)`.
+**The build side** (`scripts/build-name-contract.ts` → `buildTypeContract`, at `23e3afcc`):
+- `contractHash` is `sha256:` over the **emitted** `.d.ts` text of exactly the four DD11 declarations: `PrimitiveToken` and `SemanticToken` (interfaces), `TokenCategory` and `SemanticCategory` (enums), from `dist/types/{PrimitiveToken,SemanticToken}.d.ts`.
+- The text includes leading JSDoc, so a comment-only edit moves the hash. That is DD11's residual.
+- It is shipped as `dist/name-contract.json` → `typeContract: { hash, members }`, with members normalized, e.g. `PrimitiveToken.baseValue: number` and `TokenCategory.SPACING = "spacing"`. There are 54 today.
+- **`init` records it** in the manifest's `contractHash`, via `ManifestBuilder.build(installedVersion, readContractHash(pkgRoot))`.
 
-**NOT built: `sync` does not yet run the type-contract report.** This is the open fork below.
+**The `sync` side — Peter's fork-1 ruling (B)** (`src/cli/sync/NameContract.ts` + `src/cli/sync/index.ts` step 6c):
+- `assessTypeContract({ recordedHash, recordedVersion, current, fetchPrevious })` has five outcomes:
+  - **unchanged**: the recorded hash equals the installed one. No line, and **no fetch**.
+  - **changed**: the recorded hash differs. `sync` fetches the **previously installed version** (the manifest's `installedVersion`) through **Task 5's fetcher**: her own npm rail, `npm pack --prefer-offline`, cache first. It then reads that tarball's `dist/name-contract.json` and diffs the members.
+    - The line is string-equal to the "type contract changed" row.
+    - A hash move with equal members gives DD11's *"no member changes detected — shape or formatting changed"*.
+  - **cannot tell** (never clean), for two causes:
+    - the fetch failed or you are offline;
+    - the fetched previous contract's hash ≠ the recorded `contractHash`. In that case the diff would be against the wrong baseline, so it is refused.
+  - **no baseline**, for two causes:
+    - the manifest records `contractHash: ''` (legacy-converted, or written by a pre-contract `init`). Nothing is fetched;
+    - the previous version's tarball ships no `dist/name-contract.json`, i.e. it predates release 1.
+  - **unavailable**: the installed package ships no contract. The name-contract section already says "cannot check".
+- It is reported under a `🧾 Type contract:` section, before anything applies. It runs only for a repo **with** a manifest; with no manifest nothing is recorded, nothing is written, and no line is printed.
+- **Re-recording**:
+  - `manifest.contractHash = installed hash` is set **only in the save step**, i.e. only when `sync` actually writes the manifest.
+  - A differing hash counts as a manifest change, so it follows Task 5's rules exactly: the report comes first, then `--apply` off a terminal (or one confirmation on a terminal).
+  - Off a terminal without `--apply`, nothing is written, and the next run reports again.
+- The fetched roots live in the fetcher's own temp directory (Task 5's), which is disposed after use.
+- The trace records `type-contract-fetch:<v>`.
 
-### The fork (stop-and-report per the brief) — where do the PRIOR members come from?
+**End to end on the compiled CLI** (the scratch consumer from 6.2, `node bin/designerpunk.js sync --dry-run`):
+- hash unchanged → no type-contract section;
+- `contractHash: ""` → `no baseline … your manifest records no contractHash. …`;
+- a stale hash at `installedVersion: 14.1.0` → **a real npm-rail fetch of `@3fn/core@14.1.0`** (public npmjs, no credentials read) → `no baseline … version 14.1.0 predates DesignerPunk's name contract (it ships no dist/name-contract.json). …`;
+- a stale hash at `99.0.0` → the fetch fails → `cannot tell what changed in the token type contract — the package content for version 99.0.0 could not be retrieved. It did change: …`.
 
-The catalog row reports **"removed: X; added: Y"**, and the criterion wants a `PrimitiveToken` field change → reported. Both need the **previous** contract's member list at `sync` time.
-- The manifest (design C7 § "Fields") records only `contractHash: string`.
-- By the time `sync` runs, `node_modules` already holds the **new** package.
-- **Nothing in the design names a source for the old members.**
+### Proposed catalog rows (no design row yet; the coordinator routes them to Thurgood as an erratum)
 
-Options (I have not picked; the choice is a design/manifest change either way):
-- **(A) The manifest records the members** beside the hash, e.g. `contractMembers: string[]`, written by `init` and by `sync` when it persists.
-  - Offline-safe and deterministic.
-  - **Cost**: it extends C7's manifest field list (a design erratum, like Ada D-T-B2's `origin`) and edits Lina's Task 5 `Manifest.ts` (key order, parse, serialize, and its 13-test suite). That is larger than the brief's "minimal" out-of-list allowance.
-  - It adds 54 lines today to a committed file (one member per line, which is merge-friendly).
-- **(B) `sync` fetches the previously installed version's `dist/name-contract.json` through her own npm rail**, using Task 5's migration fetcher (`npm pack --prefer-offline`), only when the hash differs.
-  - No manifest change.
-  - **Cost**: a network touch on the upgrade path, and a new catalog row for the fetch-failed case (*"the type contract changed; its members could not be listed …"*). The first 123-era baseline (a hash recorded by a pre-Task-6 package) has no contract to fetch, but `''` baselines are skipped anyway.
-- *(Considered and set aside)*: shipping a cumulative hash → members history in the contract. That needs release history at build (it is not derivable from the tree), and it can be hand-edited, which contradicts "cannot be hand-bumped".
-
-**Counter-argument to my own lean (A)**: (A) makes every born consumer's committed manifest carry our type surface's member list. That is a second copy of package internals in *her* repo, and it churns on each contract change. (B) keeps her manifest lean, at the price of network and a new string.
-
-**Also pending on the same fork**: whether `sync` should (re)record `contractHash` when it persists the manifest, which would establish the baseline for legacy-converted manifests (`convertLegacyManifest` writes `''`). Today `sync` leaves `contractHash` untouched, and that is the conservative, no-silent-swallow behavior until the report is wired.
+| Condition | Proposed message (as coded; `sync.type-contract.run.test.ts` pins it) |
+|---|---|
+| type contract — cannot tell | `cannot tell what changed in the token type contract — <the package content for version <v> could not be retrieved\|version <v>'s contract does not match the contractHash your manifest recorded>. It did change: run 'npx tsc --noEmit' — fix each file it names. (This is not a clean report.)` |
+| type contract — no baseline | `no baseline to compare the token type contract against — <your manifest records no contractHash\|version <v> predates DesignerPunk's name contract (it ships no dist/name-contract.json)>. sync records the installed contract as the baseline the next time it writes the manifest.` |
 
 ## Targeted tests + result
 
-- `npx jest --config scripts/jest.config.js scripts/__tests__/sync.type-contract.test.ts` → **8 passed, 8 total**:
-  - the four declarations;
-  - determinism;
-  - **a `PrimitiveToken` field change** (`baseValue: number` → `string`) → the hash changes → `the token type contract changed (removed: PrimitiveToken.baseValue: number; added: PrimitiveToken.baseValue: string). Run 'npx tsc --noEmit' — …`, string-equal to the design row;
-  - **a comment-only change** → the hash changes with equal members → *"no member changes detected — shape or formatting changed"*;
-  - an enum removal → `removed:`;
-  - unchanged or no baseline → no report;
-  - the catalog string;
-  - the shipped hash equals the computed one.
-- `npx jest src/cli/__tests__/sync.name-contract.test.ts -t contractHash` → `init` records `sha256:…` equal to `readContractHash(REPO_ROOT)`.
+- `npx jest src/cli/__tests__/sync.type-contract.run.test.ts` → **10 passed, 10 total**:
+  - **previous A,B → current A,C → "removed: B; added: C"**, string-equal to the design row, fetched from `15.0.0`;
+  - **a comment-only change** → "no member changes detected";
+  - **offline → cannot tell**, with the exact string;
+  - a baseline mismatch → cannot tell;
+  - a `''` manifest → no baseline, with no fetch;
+  - a predating version → no baseline;
+  - unchanged → no line and no fetch;
+  - **RE-RECORD**: off a terminal without `--apply`, the manifest hash stays unchanged and `dirHash` is identical. With `--apply` it is written with the new hash, and the next run is unchanged with no fetch;
+  - re-record alone triggers the write (same version, no baseline);
+  - no manifest → no report.
+- `npx jest --config scripts/jest.config.js scripts/__tests__/sync.type-contract.test.ts` → **8 passed** (the build-side `.d.ts` hash: a `PrimitiveToken` field change, a comment-only change, an enum removal, determinism).
+- `npx jest src/cli/__tests__/sync.name-contract.test.ts -t contractHash` → `init` records `sha256:…`.
 
-### Bites (mutate → run → restore; `cmp` confirmed)
+### Bites (mutate → run → restore; `cmp` confirmed each restore)
 
-1. **The hash computed over the members only** (comments invisible) → `✕ a comment-only change → the hash changes → "no member changes detected"`, `✕ the hash is the one dist/name-contract.json ships` — **2 failed**.
-2. **The hash covers the enums only** (interfaces invisible) → `✕ a PrimitiveToken field change → the hash changes → reported…`, plus the two above — **3 failed**.
-3. **`init` stops passing the hash** (`manifest.build(installedVersion)`) → `✕ contractHash (DD11): init records the installed package's type-contract hash…` — **1 failed**.
+| Mutation | Red |
+|---|---|
+| The diff direction reversed | `✕ previous A,B → current A,C → "removed: B; added: C"…` (1 failed) |
+| Equal members swallowed as `unchanged` | `✕ a comment-only change … → "no member changes detected"` (1 failed) |
+| A fetch failure returns `unchanged` | `✕ offline (the fetch fails) → cannot tell, NEVER silently clean` (1 failed) |
+| No recorded hash returns `unchanged` | `✕ a legacy / pre-contract manifest (contractHash "") → no baseline…` (1 failed) |
+| A predating version read as a fetch failure | `✕ a previous version that predates name-contract.json → no baseline` (1 failed) |
+| The mismatch guard removed (diff against the wrong baseline) | `✕ the fetched previous contract does not match the recorded hash → cannot tell` (1 failed) |
+| The save step does not re-record | `✕ RE-RECORD: contractHash moves to the installed hash only when sync WRITES the manifest` (1 failed) |
+| A hash change does not count as a manifest change | first run: **did not bite** (every case also changed `installedVersion`). I added the same-version case, and it then went red: `✕ RE-RECORD alone triggers the write…` (1 failed) |
+| (at `23e3afcc`) the hash over members only / enums only / `init` not passing it | 2 / 3 / 1 failed (`sync.type-contract.test.ts`, `sync.name-contract.test.ts`) |
 
 ## Application-time adaptations
 
-1. **The test lives at `scripts/__tests__/sync.type-contract.test.ts`, not under `src/`.** The hash needs the TypeScript AST, and `typescript` is a devDependency, never a consumer runtime dependency. A `src/` test importing `scripts/` breaks `tsc`'s `rootDir`. It therefore runs in `npm run test:scripts`, which **no CI workflow runs** (pre-existing; `tool-manifest.test.ts` is in the same position). CI still enforces the BUILD-level failures, because `lane-timing` runs `npm run build`.
-2. **How the no-member-diff case composes**: when both member lists are empty, the row's parenthetical `(removed: <X>; added: <Y>)` is replaced by DD11's residual string. The remainder of the row is unchanged.
-3. **Out-of-list edit, disclosed**: `src/cli/init.ts`. `ManifestBuilder.build` gains an optional `contractHash` parameter, the call site passes `readContractHash(pkgRoot)`, and the comment is updated. Authority: the brief's rule (*"filling `contractHash` where `init`/`Manifest` write it"*).
+1. **The previous version is the manifest's `installedVersion`**, the version recorded at the last manifest write. `sync` now writes `installedVersion` and `contractHash` together, so the two stay paired.
+2. **The baseline-mismatch guard** is a second `cannot tell` cause. If the fetched version's hash is not the recorded one, a member diff would be against the wrong baseline, so it is refused. This can happen, for example, when an older 123-era `sync` wrote `installedVersion` without `contractHash`.
+3. **No manifest → no type-contract report.** There is nothing recorded and no write to re-record on.
+4. **The `sync.type-contract.test.ts` id is split**: the build-side hash (`scripts/__tests__/`, because `typescript` is a devDependency) and the `sync`-side run (`src/cli/__tests__/sync.type-contract.run.test.ts`, in the functional lane).
+5. **Out-of-list edits, disclosed**:
+   - `src/cli/init.ts` (the `contractHash` fill, at `23e3afcc`);
+   - `src/cli/sync/index.ts` (step 6c, the hash in `manifestChanges`, the re-record in the save step, `SyncOutcome.typeContract`, and a `loadNameContractSafe` helper).
+   - Authority: the brief's rule, and Peter's fork-1 ruling.

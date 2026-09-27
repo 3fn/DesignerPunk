@@ -78,9 +78,11 @@ import {
   readPresentNames,
   checkNameContract,
   contractMissingMessage,
+  assessTypeContract,
+  previousContractAt,
   configUnreadableMessage,
 } from './NameContract';
-import type { NameContractResult } from './NameContract';
+import type { NameContractResult, TypeContractOutcome } from './NameContract';
 import { loadConfig } from '../../config/ConfigLoader';
 import type { ConfigModuleLoader } from '../../config/ConfigLoader';
 
@@ -125,6 +127,8 @@ export interface SyncOutcome {
   trace: string[];
   /** The name-contract check (Req 5A) — report only, never a write. */
   nameContract?: NameContractResult | { status: 'cannot-check'; lines: string[] };
+  /** The type contract (DD11; fork-1 ruling B) — report only; the hash is re-recorded only when the manifest is written. */
+  typeContract?: TypeContractOutcome;
 }
 
 /** Parse `sync`'s CLI flags (everything after `sync`). */
@@ -282,6 +286,29 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
   outcome.nameContract = await nameContractSection(projectRoot, pkg.root, options.configLoader);
   sections.push({ title: '🔤 Name contract (your tokens vs. the names our components reference):', lines: outcome.nameContract.lines });
 
+  // 6c. The type contract (DD11; Peter's fork-1 ruling (B), 2026-09-27). Only for a
+  //     repo with a manifest. When the recorded hash differs, the PREVIOUS members come
+  //     from the previously installed version's own contract, fetched through her rail.
+  const installedContract = loadNameContractSafe(pkg.root)?.typeContract;
+  if (persistManifest) {
+    let typeFetcher: PackageFetcher | undefined;
+    try {
+      outcome.typeContract = assessTypeContract({
+        recordedHash: manifest.contractHash,
+        recordedVersion: manifest.installedVersion,
+        current: installedContract,
+        fetchPrevious: (version) => {
+          typeFetcher = options.fetcher ?? npmRailFetcher(projectRoot);
+          outcome.trace.push(`type-contract-fetch:${version}`);
+          return previousContractAt(typeFetcher.fetch(version));
+        },
+      });
+    } finally {
+      typeFetcher?.dispose?.();
+    }
+    if (outcome.typeContract.lines.length > 0) sections.push({ title: '🧾 Type contract:', lines: outcome.typeContract.lines });
+  }
+
   // 7. REPORT — always, before anything applies.
   const report = buildReport({ dryRun: Boolean(options.dryRun), manifestLines, files, keys: keyResults, sections });
   displayReport(report);
@@ -336,7 +363,8 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
     files.adoptable.length > 0 ||
     files.dropEntries.length > 0 ||
     keyResults.some((s) => s.dropEntries.length > 0) ||
-    (persistManifest && manifest.installedVersion !== pkg.version);
+    (persistManifest && manifest.installedVersion !== pkg.version) ||
+    (persistManifest && installedContract !== undefined && manifest.contractHash !== installedContract.hash);
   const workCount = fileBatch.length + fileRestore.length + fileOverwrite.length + keyCount;
   if (workCount === 0 && !manifestChanges) return outcome;
 
@@ -371,6 +399,8 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
   // 10. Save — the root manifest; relocation leaves the legacy file a pointer.
   if (persistManifest) {
     manifest.installedVersion = pkg.version;
+    // Re-record the baseline AFTER the report, and only on this write (fork-1 ruling).
+    if (installedContract) manifest.contractHash = installedContract.hash;
     outcome.manifestWritten = saveManifest(projectRoot, manifest);
     if (relocateLegacy && !legacyHasPointer(projectRoot)) writeLegacyPointer(projectRoot);
   }
@@ -406,4 +436,12 @@ async function nameContractSection(
     semanticTierPath: displayPath(projectRoot, path.join(tokenRoot, 'semantic'), true),
     primitiveTierPath: displayPath(projectRoot, tokenRoot, true),
   });
+}
+
+function loadNameContractSafe(pkgRoot: string): ReturnType<typeof loadNameContract> {
+  try {
+    return loadNameContract(pkgRoot);
+  } catch {
+    return null;
+  }
 }
