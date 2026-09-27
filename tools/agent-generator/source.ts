@@ -26,6 +26,7 @@
 
 import { load as loadYaml } from 'js-yaml';
 import type { AgentFrontmatter, CanonicalAgentDoc } from './schema';
+import { splitFrontmatterText } from './frontmatter';
 
 /** Thrown when a canonical agent source file is structurally malformed. */
 export class CanonicalSourceParseError extends Error {
@@ -34,9 +35,6 @@ export class CanonicalSourceParseError extends Error {
     this.name = 'CanonicalSourceParseError';
   }
 }
-
-/** A leading `---` fence, then a YAML block, then a closing `---` on its own line, then the body. */
-const FRONTMATTER_FENCE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;
 
 /** Matches an inline `# asserts: <text>` YAML comment, capturing the plain-English text. */
 const ASSERTS_COMMENT = /#\s*asserts:\s*(.+?)\s*$/;
@@ -48,14 +46,16 @@ const PATTERN_KEY_LINE = /^\s*(?:-\s*)?pattern\s*:/;
  * fence is absent — a canonical agent file MUST carry frontmatter (Req 2 AC1).
  */
 function splitFrontmatter(raw: string, sourcePath?: string): { rawFrontmatter: string; body: string } {
-  const match = FRONTMATTER_FENCE.exec(raw);
-  if (!match) {
+  // Delegates to the ONE shared splitter (frontmatter.ts, Spec 123 C13) so the body the
+  // adapters emit and the body `partition()` tiles are split by the same function.
+  const split = splitFrontmatterText(raw);
+  if (!split) {
     throw new CanonicalSourceParseError(
       'Canonical agent source is missing a leading `---` YAML frontmatter fence',
       sourcePath
     );
   }
-  return { rawFrontmatter: match[1], body: match[2] };
+  return split;
 }
 
 /**

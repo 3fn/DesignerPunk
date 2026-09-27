@@ -462,6 +462,8 @@ describe('KiroAdapter.emitAgent — ground truth faithfulness cue (prompt body, 
         faithfulnessVerbs: ['get_component_full', 'get_component_health'],
       },
     };
+    // The directive's frontmatter origin (Spec 123 C14: emitSpans sources the block to it).
+    agent.doc.frontmatter.ambient = { groundTruthManifest: { verdict: 'catalog-is-manifest' } };
     const files = adapter.emitAgent(agent, ctx());
     const prompt = files.find((f) => f.path.endsWith('-prompt.md'))!;
     expect(prompt.content).toContain('## Ground truth');

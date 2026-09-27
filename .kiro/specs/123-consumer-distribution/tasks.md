@@ -553,11 +553,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tools/agent-generator/{frontmatter,partition,spans}.ts`, `adapters/{cc,kiro}.ts`, `__fixtures__/golden-partition/`
 
-  - [ ] 10.1 `splitFrontmatter`; `partition` (all behaviors incl. forward attachment and leading-bold slugs)
-  - [ ] 10.2 Hand-authored `expected-units.json` + fixture; snapshot ban + companion
-  - [ ] 10.3 Entry tree
-  - [ ] 10.4 `emitSpans`; replace both adapters' inline sites and frontmatter loops
-  - [ ] 10.5 Unit twin; the 17-file invariant; diff-guard green
+  - [x] 10.1 `splitFrontmatter`; `partition` (all behaviors incl. forward attachment and leading-bold slugs)
+  - [x] 10.2 Hand-authored `expected-units.json` + fixture; snapshot ban + companion
+  - [x] 10.3 Entry tree
+  - [x] 10.4 `emitSpans`; replace both adapters' inline sites and frontmatter loops
+  - [x] 10.5 Unit twin; the 17-file invariant; diff-guard green
 
 - [ ] 11. Exemplar operative sets for G1 (step 3)
 

@@ -28,9 +28,10 @@
  *
  * ATTRIBUTION: the `.json` config is machine-rendered — a single `render` span over the whole
  * file (every byte derives from structured canonical fields), per `adapters/index.ts`'s header
- * rule. The `-prompt.md` companion is prose-bearing — a multi-span manifest built with
- * `AttributionAccumulator`, mirroring `cc.ts`'s body construction minus the two CC-only
- * sections (per-agent ambient inline embeds, knowledge fallback — see `emitAgent` below).
+ * rule. The `-prompt.md` companion is prose-bearing — a multi-span manifest, mirroring `cc.ts`'s
+ * body construction minus the two CC-only sections (per-agent ambient inline embeds, knowledge
+ * fallback — see `emitAgent` below). Both files' spans are constructed by `emitSpans`
+ * (spans.ts, Spec 123 C14); this adapter supplies only the rendered text.
  *
  * Traces to: Req 11, Req 15, Req 24 AC1/AC3; design C4.
  */
@@ -44,7 +45,6 @@ import { isNamedGapCommandEntry } from '../schema';
 import type { SkillsMapRow, SkillsMap } from '../skills';
 import { kiroSkillRef } from '../skills';
 import {
-  renderPassThrough,
   renderWorkflowRules,
   renderWriteScopeNote,
   renderRunContextAnnotation,
@@ -55,6 +55,8 @@ import {
   renderGroundTruthTrims,
 } from '../render';
 import { AttributionAccumulator } from '../attribution';
+import { emitSpans, type SpanPiece, type SpanPlan, type SpanSource } from '../spans';
+import type { YamlDoc } from '../frontmatter';
 import { canonicalStringify, type JsonValue } from '../canonical-json';
 import type {
   TargetAdapter,
@@ -288,12 +290,13 @@ export class KiroAdapter implements TargetAdapter {
       config.welcomeMessage = kiroFields.welcomeMessage;
     }
 
-    const content = canonicalStringify(config as JsonValue);
-    const totalLines = countLines(content);
-    const attribution = {
-      artifact: path,
-      spans: [{ lines: [1, Math.max(totalLines, 1)] as [number, number], op: 'render' as const, source: 'C1:frontmatter+ambient-manifest' }],
-    };
+    // Machine JSON: one `render` span over the whole file, still constructed by `emitSpans`
+    // (C14) — a per-entry attribution INSIDE the JSON is not attempted (carried to Task 14/15).
+    const acc = new AttributionAccumulator();
+    const content = emitSpans(acc, spanSource(agent), 'steward', undefined, undefined, [
+      { kind: 'glue', glue: 'kiro-config', text: canonicalStringify(config as JsonValue) },
+    ]).text;
+    const attribution = acc.build(path);
 
     return { path, content, attribution };
   }
@@ -308,6 +311,12 @@ export class KiroAdapter implements TargetAdapter {
     const acc = new AttributionAccumulator();
     const bodyParts: string[] = [];
 
+    // EVERY span below is constructed by `emitSpans` (C14, Spec 123 Task 10.4): this adapter
+    // supplies only the per-target RENDERING of each piece — never a span, never a source.
+    // (`AdapterContext.profile` lands at Task 15.1; until then this is the steward rendering.)
+    const src = spanSource(agent);
+    const emit = (plan: SpanPlan): string => emitSpans(acc, src, 'steward', undefined, undefined, plan).text;
+
     // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
     // Kiro prompts carry no frontmatter, so "immediately after the frontmatter"
     // degenerates to the first bytes of the file.
@@ -315,14 +324,10 @@ export class KiroAdapter implements TargetAdapter {
       `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
       'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
       'caught by 122-diff-guard. -->\n\n';
-    acc.add('render', countLines(generatedBanner), 'O-3:generated-banner');
-    bodyParts.push(generatedBanner);
+    bodyParts.push(emit([{ kind: 'glue', glue: 'generated-banner', text: generatedBanner }]));
 
-    // -- (a) Pass-through body verbatim --------------------------------------
-    const passthrough = renderPassThrough(agent.doc.body);
-    const passthroughBlock = ensureTrailingNewline(passthrough);
-    acc.add('passthrough', countLines(passthroughBlock), `canonical/agents/${fm.agent}.md#body`);
-    bodyParts.push(passthroughBlock);
+    // -- (a) Pass-through body — one span per partition unit (C13/C14) --------
+    bodyParts.push(emit('body'));
 
     // NOTE: no "## Ambient (per-agent)" inline-embed section here (unlike cc.ts). Kiro
     // delivers ambient membership (shared AND per-agent lane) via the config's `resources`
@@ -342,9 +347,9 @@ export class KiroAdapter implements TargetAdapter {
         renderGroundTruthFaithfulness(kiroManifest.groundTruth, toolName) ??
         renderGroundTruthTrims(kiroManifest.groundTruth, toolName);
       if (groundTruthBody !== undefined) {
-        const block = `## Ground truth\n\n${groundTruthBody}\n\n`;
-        acc.add('render', countLines(block), 'ambient.groundTruthManifest');
-        bodyParts.push(block);
+        bodyParts.push(
+          emit([{ kind: 'entry', path: 'ambient.groundTruthManifest', text: `## Ground truth\n\n${groundTruthBody}\n\n` }])
+        );
       }
     }
 
@@ -352,52 +357,46 @@ export class KiroAdapter implements TargetAdapter {
     const flatTools = allFlatTools(subset);
     const workflowRulesText = renderWorkflowRules(ctx.workflowRules, flatTools);
     if (workflowRulesText.length > 0) {
-      const block = `## Workflow rules\n\n${workflowRulesText}\n\n`;
-      acc.add('render', countLines(block), 'WORKFLOW_RULES');
-      bodyParts.push(block);
+      bodyParts.push(emit([{ kind: 'glue', glue: 'workflow-rules', text: `## Workflow rules\n\n${workflowRulesText}\n\n` }]));
     }
 
-    // -- (c) Routing (native, non-namespaced tool names in cues) ---------------
+    // -- (c) Routing — one entry span per route (native, non-namespaced cue tools) ---
     const docRoutes = (fm.routes?.docs ?? []) as DocRoute[];
     const cueRoutes = (fm.routes?.cues ?? []) as ToolCueRoute[];
     const agentRoutes = fm.routes?.agents ?? [];
     if (docRoutes.length > 0 || cueRoutes.length > 0 || agentRoutes.length > 0) {
-      const lines: string[] = ['## Routing', ''];
-      for (const route of docRoutes) {
-        lines.push(`- ${renderDocRoute(route)}`);
-      }
-      // Inter-agent routes rendered per LE-D1 (Stacy's U2 row-3 finding: the structured
-      // routes must also be DELIVERED, or body pointers at "your routing section" dangle).
-      for (const route of agentRoutes) {
-        lines.push(`- ${renderAgentRoute(route)}`);
-      }
-      for (const cue of cueRoutes) {
-        const native = toolRefImpl(subset, cue.tool);
-        lines.push(`- ${renderToolCue({ ...cue, tool: native })}`);
-      }
-      lines.push('');
-      const block = `${lines.join('\n')}\n`;
-      acc.add('render', countLines(block), 'routes');
-      bodyParts.push(block);
+      bodyParts.push(
+        emit([
+          { kind: 'entry', path: 'routes', text: '## Routing\n\n' },
+          ...docRoutes.map((route, i): SpanPiece => ({ kind: 'member', list: 'routes.docs', index: i, text: `- ${renderDocRoute(route)}\n` })),
+          // Inter-agent routes rendered per LE-D1 (Stacy's U2 row-3 finding: the structured
+          // routes must also be DELIVERED, or body pointers at "your routing section" dangle).
+          ...agentRoutes.map((route, i): SpanPiece => ({ kind: 'member', list: 'routes.agents', index: i, text: `- ${renderAgentRoute(route)}\n` })),
+          ...cueRoutes.map((cue, i): SpanPiece => {
+            const native = toolRefImpl(subset, cue.tool);
+            return { kind: 'member', list: 'routes.cues', index: i, text: `- ${renderToolCue({ ...cue, tool: native })}\n` };
+          }),
+          { kind: 'entry', path: 'routes', text: '\n' },
+        ])
+      );
     }
 
-    // -- (d) Commands + shared catalog (native find_docs cue) -------------------
+    // -- (d) Commands + shared catalog (native find_docs cue) — one span per entry ---
     const commandEntries = fm.commands ?? [];
     const sharedMembers = ctx.sharedCatalog
       .slice()
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
     if (commandEntries.length > 0 || sharedMembers.length > 0) {
-      const lines: string[] = ['## Commands', ''];
-      for (const entry of commandEntries) {
-        lines.push(renderCommandEntry(entry));
-      }
-      for (const member of sharedMembers) {
-        lines.push(renderSharedCatalogMember(member, subset));
-      }
-      lines.push('');
-      const block = `${lines.join('\n')}\n`;
-      acc.add('render', countLines(block), 'commands+shared-catalog');
-      bodyParts.push(block);
+      const glue = (text: string): SpanPiece =>
+        fm.commands !== undefined ? { kind: 'entry', path: 'commands', text } : { kind: 'glue', glue: 'shared-catalog-section', text };
+      bodyParts.push(
+        emit([
+          glue('## Commands\n\n'),
+          ...commandEntries.map((entry, i): SpanPiece => ({ kind: 'member', list: 'commands', index: i, text: `${renderCommandEntry(entry)}\n` })),
+          ...sharedMembers.map((member): SpanPiece => ({ kind: 'shared', id: member.id, text: `${renderSharedCatalogMember(member, subset)}\n` })),
+          glue('\n'),
+        ])
+      );
     }
 
     // -- (e) Knowledge fallback: NOT emitted for Kiro --------------------------
@@ -409,11 +408,11 @@ export class KiroAdapter implements TargetAdapter {
     // knowledge-base surface, so it renders a textual fallback instead).
 
     // -- (f) Write scope (base note only — Kiro has a declarative field) --------
+    // ONE rendered sentence names every glob, so its span is the `writeScope` container, not
+    // a member (a line cannot carry per-member spans) — recorded for Task 14's E-fm.
     const writeScope = fm.writeScope;
     if (writeScope && writeScope.length > 0) {
-      const block = `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n`;
-      acc.add('render', countLines(block), 'writeScope');
-      bodyParts.push(block);
+      bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
     }
 
     const content = bodyParts.join('');
@@ -443,6 +442,12 @@ export class KiroAdapter implements TargetAdapter {
 // Local helpers
 // ============================================================================
 
+/** The span source for an agent's canonical file — the provenance prefix `emitSpans` cites. */
+function spanSource(agent: ResolvedAgent): SpanSource {
+  const fm = agent.doc.frontmatter;
+  return { file: `canonical/agents/${fm.agent}.md`, body: agent.doc.body, frontmatter: fm as unknown as YamlDoc };
+}
+
 /** Local re-implementation of skills.ts's resolveSkillRow error contract (importing keeps a single source of truth). */
 function resolveSkillKey(map: SkillsMap, key: string): SkillsMapRow {
   const row = map.rows.find((r) => skillRowKey(r) === key);
@@ -462,10 +467,6 @@ function countLines(text: string): number {
   const withoutTrailingNewline = text.endsWith('\n') ? text.slice(0, -1) : text;
   if (withoutTrailingNewline.length === 0) return 1;
   return withoutTrailingNewline.split('\n').length;
-}
-
-function ensureTrailingNewline(text: string): string {
-  return text.endsWith('\n') ? text : `${text}\n`;
 }
 
 /**

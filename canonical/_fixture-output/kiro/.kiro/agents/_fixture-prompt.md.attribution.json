@@ -15,7 +15,7 @@
         13
       ],
       "op": "passthrough",
-      "source": "canonical/agents/_fixture.md#body"
+      "source": "canonical/agents/_fixture.md#doc"
     },
     {
       "lines": [
@@ -28,18 +28,138 @@
     {
       "lines": [
         18,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:routes"
+    },
+    {
+      "lines": [
+        20,
+        20
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:routes.docs[completion-doc-workflow]"
+    },
+    {
+      "lines": [
+        21,
+        21
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:routes.agents[_fixture-peer]"
+    },
+    {
+      "lines": [
+        22,
+        22
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:routes.cues[0]"
+    },
+    {
+      "lines": [
+        23,
+        23
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:routes.cues[1]"
+    },
+    {
+      "lines": [
+        24,
+        24
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:routes.cues[2]"
+    },
+    {
+      "lines": [
+        25,
         25
       ],
       "op": "render",
-      "source": "routes"
+      "source": "canonical/agents/_fixture.md#frontmatter:routes"
     },
     {
       "lines": [
         26,
+        27
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:commands"
+    },
+    {
+      "lines": [
+        28,
+        28
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:commands[fixture-functional-suite]"
+    },
+    {
+      "lines": [
+        29,
+        29
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:commands[fixture-consumer-build]"
+    },
+    {
+      "lines": [
+        30,
+        30
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:commands[fixture-product-dev]"
+    },
+    {
+      "lines": [
+        31,
+        31
+      ],
+      "op": "render",
+      "source": "canonical/agents/_fixture.md#frontmatter:commands[fixture-named-gap]"
+    },
+    {
+      "lines": [
+        32,
+        32
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+    },
+    {
+      "lines": [
+        33,
+        33
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+    },
+    {
+      "lines": [
+        34,
+        34
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        35,
+        36
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
+    },
+    {
+      "lines": [
+        37,
         37
       ],
       "op": "render",
-      "source": "commands+shared-catalog"
+      "source": "canonical/agents/_fixture.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -47,7 +167,7 @@
         41
       ],
       "op": "render",
-      "source": "writeScope"
+      "source": "canonical/agents/_fixture.md#frontmatter:writeScope"
     }
   ]
 }

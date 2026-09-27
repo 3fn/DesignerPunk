@@ -12,10 +12,274 @@
     {
       "lines": [
         3,
+        21
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#identity"
+    },
+    {
+      "lines": [
+        22,
+        34
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#in-scope"
+    },
+    {
+      "lines": [
+        35,
+        43
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#android-theming-spec-094"
+    },
+    {
+      "lines": [
+        44,
+        52
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#product-tokens-spec-108109"
+    },
+    {
+      "lines": [
+        53,
+        62
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#out-of-scope"
+    },
+    {
+      "lines": [
+        63,
+        68
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#blocking-exception-direct-escalation-to-peter"
+    },
+    {
+      "lines": [
+        69,
+        79
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#the-implement-vs-direct-distinction"
+    },
+    {
+      "lines": [
+        80,
+        83
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#operational-mode-screen-implementation:preamble"
+    },
+    {
+      "lines": [
+        84,
+        88
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#step-1-review-the-specification"
+    },
+    {
+      "lines": [
+        89,
+        93
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#step-2-set-up-the-screen"
+    },
+    {
+      "lines": [
+        94,
+        100
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#step-3-implement"
+    },
+    {
+      "lines": [
+        101,
+        106
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#step-4-test"
+    },
+    {
+      "lines": [
+        107,
+        113
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#step-5-report-back"
+    },
+    {
+      "lines": [
+        114,
+        117
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#operational-mode-platform-expertise:preamble"
+    },
+    {
+      "lines": [
+        118,
+        124
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#what-you-provide"
+    },
+    {
+      "lines": [
+        125,
+        132
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#how-you-provide-it"
+    },
+    {
+      "lines": [
+        133,
+        144
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#with-leonardo-primary"
+    },
+    {
+      "lines": [
+        145,
+        149
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#with-sibling-platform-agents"
+    },
+    {
+      "lines": [
+        150,
+        154
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#with-stacy-product-governance"
+    },
+    {
+      "lines": [
+        155,
+        162
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#with-peter"
+    },
+    {
+      "lines": [
+        163,
+        172
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#how-to-use-designerpunk-tokens-on-android"
+    },
+    {
+      "lines": [
+        173,
+        177
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#token-reference-pattern"
+    },
+    {
+      "lines": [
+        178,
+        189
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#platform-currency-expectations"
+    },
+    {
+      "lines": [
+        190,
+        202
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#platform-reference-pointers"
+    },
+    {
+      "lines": [
+        203,
+        212
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#android-specific-guidance:preamble"
+    },
+    {
+      "lines": [
+        213,
+        230
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#android-skills-official-google-patterns"
+    },
+    {
+      "lines": [
+        231,
+        242
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        243,
+        246
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        247,
+        251
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        252,
+        254
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        255,
+        257
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        258,
+        262
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#ask-if-unsure"
+    },
+    {
+      "lines": [
+        263,
+        270
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/data.md#what-you-own"
+    },
+    {
+      "lines": [
+        271,
         276
       ],
       "op": "passthrough",
-      "source": "canonical/agents/data.md#body"
+      "source": "canonical/agents/data.md#what-you-dont-own"
     },
     {
       "lines": [
@@ -23,7 +287,7 @@
         282
       ],
       "op": "render",
-      "source": "ambient.groundTruthManifest"
+      "source": "canonical/agents/data.md#frontmatter:ambient.groundTruthManifest"
     },
     {
       "lines": [
@@ -36,18 +300,282 @@
     {
       "lines": [
         287,
+        288
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes"
+    },
+    {
+      "lines": [
+        289,
+        289
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[token-doc-map]"
+    },
+    {
+      "lines": [
+        290,
+        290
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[product-token-naming]"
+    },
+    {
+      "lines": [
+        291,
+        291
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[completion-doc-guidance]"
+    },
+    {
+      "lines": [
+        292,
+        292
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[contract-concept-names]"
+    },
+    {
+      "lines": [
+        293,
+        293
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[stemma-principles]"
+    },
+    {
+      "lines": [
+        294,
+        294
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[test-dev-standards]"
+    },
+    {
+      "lines": [
+        295,
+        295
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[bcv-guidance]"
+    },
+    {
+      "lines": [
+        296,
+        296
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[token-lookup-beyond]"
+    },
+    {
+      "lines": [
+        297,
+        297
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[dev-workflow-detail]"
+    },
+    {
+      "lines": [
+        298,
+        298
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[file-organization]"
+    },
+    {
+      "lines": [
+        299,
+        299
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[android-implementation-patterns]"
+    },
+    {
+      "lines": [
+        300,
+        300
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.agents[leonardo]"
+    },
+    {
+      "lines": [
+        301,
+        301
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[0]"
+    },
+    {
+      "lines": [
+        302,
+        302
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[1]"
+    },
+    {
+      "lines": [
+        303,
+        303
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[2]"
+    },
+    {
+      "lines": [
+        304,
+        304
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[3]"
+    },
+    {
+      "lines": [
+        305,
+        305
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[4]"
+    },
+    {
+      "lines": [
+        306,
+        306
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[5]"
+    },
+    {
+      "lines": [
+        307,
+        307
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[6]"
+    },
+    {
+      "lines": [
+        308,
+        308
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[7]"
+    },
+    {
+      "lines": [
+        309,
+        309
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[8]"
+    },
+    {
+      "lines": [
+        310,
+        310
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[9]"
+    },
+    {
+      "lines": [
+        311,
         311
       ],
       "op": "render",
-      "source": "routes"
+      "source": "canonical/agents/data.md#frontmatter:routes"
     },
     {
       "lines": [
         312,
+        313
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:commands"
+    },
+    {
+      "lines": [
+        314,
+        314
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:commands[platform-tokens]"
+    },
+    {
+      "lines": [
+        315,
+        315
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:commands[functional-suite]"
+    },
+    {
+      "lines": [
+        316,
+        316
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:commands[audit-tokens]"
+    },
+    {
+      "lines": [
+        317,
+        317
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:commands[android-build-test]"
+    },
+    {
+      "lines": [
+        318,
+        318
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:commands[product-screen-commands]"
+    },
+    {
+      "lines": [
+        319,
+        319
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+    },
+    {
+      "lines": [
+        320,
+        320
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+    },
+    {
+      "lines": [
+        321,
+        321
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        322,
+        323
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
+    },
+    {
+      "lines": [
+        324,
         324
       ],
       "op": "render",
-      "source": "commands+shared-catalog"
+      "source": "canonical/agents/data.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -55,7 +583,7 @@
         328
       ],
       "op": "render",
-      "source": "writeScope"
+      "source": "canonical/agents/data.md#frontmatter:writeScope"
     }
   ]
 }
