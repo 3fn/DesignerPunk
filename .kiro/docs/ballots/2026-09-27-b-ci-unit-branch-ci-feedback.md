@@ -94,7 +94,7 @@ File: `governance/completion-documentation-guide.md`. **Where it lands**: a new 
 
 **Text to insert, verbatim:**
 
-```markdown
+````markdown
 ### CI provenance — where a green was measured (ballot B-CI)
 
 Every run result a completion doc reports — a test, build, typecheck, lint or check and its outcome — was measured somewhere: on the author's machine, on the unit branch's head by a dispatched CI run, or on the pull request's merge ref by the gate. **The doc declares which, in a fixed-form line; the reader never infers it from phrasing.**
@@ -105,8 +105,9 @@ Every run result a completion doc reports — a test, build, typecheck, lint or 
 - `**CI-provenance**: branch-head dispatch @ <S> — <run URL>, <run URL>, …` — runs dispatched against the unit branch at commit `<S>`.
 - `**CI-provenance**: PR gate #<n> @ <S> (merge ref) — <checks URL>` — the pull request's required checks, run on its merge ref, with `<S>` the PR head they ran for.
 
-Either CI form may end with `; not green: <context>, <context>, …` naming every required context that was red or missing, verbatim. `local` excludes the other two forms; the two CI forms may appear together. The grammar, decidable by rule:
-`^\*\*CI-provenance\*\*: (?:local|branch-head dispatch @ [0-9a-f]{7,40} — .+|PR gate #\d+ @ [0-9a-f]{7,40} \(merge ref\) — .+)$`
+A `<run URL>` is a GitHub Actions run (`https://github.com/<owner>/<repo>/actions/runs/<id>`). A `<checks URL>` is the pull request's checks page (`https://github.com/<owner>/<repo>/pull/<n>/checks`, optionally `?sha=<S>`), for the same `<n>` the line names. Either CI form may end with `; not green: <context>, <context>, …`, naming every required context that was red or missing, verbatim. **Nothing else may follow the URLs**: no free text, and no CI line without a URL. `local` takes no tail and excludes the other two forms; the two CI forms may appear together. The grammar, decidable by rule:
+
+`^\*\*CI-provenance\*\*: (?:local|branch-head dispatch @ [0-9a-f]{7,40} — https://github\.com/[\w.-]+/[\w.-]+/actions/runs/\d+(?:, https://github\.com/[\w.-]+/[\w.-]+/actions/runs/\d+)*(?:; not green: [A-Za-z0-9][A-Za-z0-9 ._()-]*(?:, [A-Za-z0-9][A-Za-z0-9 ._()-]*)*)?|PR gate #(\d+) @ [0-9a-f]{7,40} \(merge ref\) — https://github\.com/[\w.-]+/[\w.-]+/pull/\1/checks(?:\?sha=[0-9a-f]{7,40})?(?:; not green: [A-Za-z0-9][A-Za-z0-9 ._()-]*(?:, [A-Za-z0-9][A-Za-z0-9 ._()-]*)*)?)$`
 
 **Rules.**
 
@@ -124,10 +125,26 @@ Either CI form may end with `; not green: <context>, <context>, …` naming ever
    The citation may be added in a docs-only commit after the runs finish. **This rule rests on a premise**: no required check reads those paths. That holds for today's 18 contexts (verified 2026-09-27). **It stops holding when `completion-criteria-parity` becomes a required check (the Q2 flip)**, because that check reads exactly those paths. Rule 5 is re-evaluated at that flip, before it lands.
 6. **How a claims pass records a missing line, a non-compliant line, or a dispatch line written up as the gate is Stacy's.** See her charter § "The claims-pass record". The verdict vocabulary, and whether a case is a finding on the authoring agent, are hers; this guide does not restate them.
 
-**In force** for every completion doc **first added in a commit that descends from `R`**. `R` is the first commit on `main`'s first-parent line whose copy of `.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md` reads `Status: RATIFIED`: `git log --first-parent --reverse --format=%H -G'^\*\*Status\*\*: \*\*RATIFIED' main -- .kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md | head -1`. A doc is bound if and only if `git merge-base --is-ancestor R <the commit that first added it>` exits 0. **No backfill.** For Spec 123 this is **U2a onward; U1's docs are not re-audited.** The fixed-string in-flight exemption does not apply to this subsection.
+**In force** for completion docs authored after B-CI's ratification. Two commits decide it, and **both are read on `main`'s first-parent history**:
+
+- **`R`, the ratification commit**: the first first-parent commit on `main` whose change adds this ballot's Status line in its pinned ratified form, `**Status**: **RATIFIED (Peter, <date>)**`. The command:
+  ```bash
+  BALLOT=.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md
+  R=$(git log --first-parent --reverse --format=%H -G'^\*\*Status\*\*: \*\*RATIFIED .Peter, ' main -- "$BALLOT" | head -1)
+  [ -n "$R" ] || { echo "FATAL: B-CI ratification commit R not found in $BALLOT's first-parent history"; exit 1; }
+  ```
+  **An empty `R` is a fatal error — never "no doc is bound".**
+- **`M`, the doc's arrival on `main`**: `M=$(git log --first-parent --diff-filter=A --format=%H main -- <doc> | tail -1)`.
+
+A doc is bound **if and only if** both of these exit 0:
+
+1. `git merge-base --is-ancestor "$R" "$M"`;
+2. **its unit branch was cut from a `main` that already contained `R`**. Take `<n>` from the `(#<n>)` in `M`'s subject, fetch `refs/pull/<n>/head`, and run `git merge-base --is-ancestor "$R" "$(git merge-base "$M^" refs/pull/<n>/head)"`.
+
+**No backfill.** Test 2 exists because a pull request squash-merges into one first-parent commit that descends from `R` even when its docs were written before ratification. A branch cut before `R` and merged after it is therefore **not** bound. A branch that later merged `main` in after `R` counts as cut after `R`, because its base then contains `R`. A first-parent `M` whose subject carries no `(#<n>)` is a fatal error, never a silent "unbound". For Spec 123 this is **U2a onward; U1's docs are not re-audited.** The fixed-string in-flight exemption does not apply to this subsection.
 
 **Honest reach.** The line makes provenance checkable from the doc alone: the grammar and the rules above are decidable. It does not verify itself. A doc can declare a dispatch line at `<S>` that the runs do not bear out, which a claims pass finds by opening them. **A doc that declares `local` throughout is fully compliant: nothing here requires CI evidence.** The rule makes a narrower-surface green *visible*; it does not make it wrong. It detects after merge and prevents nothing. Prevention stays where it always was: the unit PR's required checks.
-```
+````
 
 **Notification duty** (charter boundary bound 2 — a notification, not a permission): on ratification, the steward sends Stacy the before→after (the before is the absence of this subsection) and the effective commit `R`, as an explicit message.
 
@@ -226,9 +243,9 @@ This supersedes the issue spec's § "Grant" (which named the orchestrator) once 
 
 ---
 
-## 9. Application (on ratification — not in this PR)
+## 9. Application (on ratification)
 
-1. Flip this ballot's `Status` to `RATIFIED (Peter, <date>)` and commit it first. Add the `README.md` § "Ballots on record" entry in the same commit.
+1. Flip this ballot's `Status` line to **exactly** `**Status**: **RATIFIED (Peter, <date>)** — <tail>`: bold label, bold `RATIFIED (Peter, ` prefix, the date, a closing `)**`, then free text. **This is the only form § 4's `R` command matches** (Stacy R2-2: of 11 sampled ratified Status lines in this directory, 3 used forms that pattern would miss). Add the `README.md` § "Ballots on record" entry in the same change. Bump `**Last Reviewed**` to the ratification date in the two files that § 2 and § 4 edit (TCP and the guide).
 2. Apply § 4 (M2) before or with § 2 (M1), so that S2's and S3's citation of § "CI provenance — where a green was measured" resolves when it lands.
 3. Run the straggler sweep (§ 2.2), `check:section-citations`, and `rebuild_index` (the guide is a served doc). Run the metadata validation.
 4. Send Stacy the § 4 notification, naming `R`.
@@ -259,6 +276,48 @@ Every item in her record (§ 11) is applied. None is declined.
 | **E1, E2, E3** | Applied as dated errata in the issue spec. |
 | **F3 conditions (a)–(d)** + edge case | Applied in `tasks.md`: counts N at both ends; `record` carries her ruling-note path and the expiry string; new subtask 11.5 carries the step; `ruling: assessment-gap`; Task 12 guards against rework-added `canonical/` files. |
 | MIDPOINT/ARMING confirmation | Not given by this review, as she says; it is still owed as a separate item. |
+| **R2-1** (Medium) | Applied. The grammar's tails are now run URLs (dispatch) or the same-numbered PR's checks URL (gate), plus the optional `; not green:` list, and nothing else. Proven on the 27 cases in § 10.1: 8 accept, 19 reject, 27/27 as expected, including her three loose matches. |
+| **R2-2** (Medium) | Applied. § 9 step 1 pins the flip form, and § 4's `R` command matches exactly that form (`.Peter, ` also stands for the parenthesis, so the pattern means the same in BRE and ERE). An empty `R` is FATAL, by the owed-set pipeline's guard. The ratification commit uses the pinned form, and `R` resolves on this branch's history (§ 10.2). |
+| **R2-3** (Low) | Applied. `M` is named on `main`'s first-parent history. The pre-`R` branch case is **excluded** by test 2 (branch base contains `R`), in one clause, so "No backfill" holds as written. A missing `(#<n>)` is fatal. |
+| R2 MIDPOINT/ARMING | Still owed separately, as she restates. |
+
+### 10.1 R2-1 — grammar cases (run with node against the § 4 regex, 2026-09-27)
+
+| # | Case | Expected | Result |
+|---|---|---|---|
+| 1 | local | accept | accept |
+| 2 | dispatch, one run URL | accept | accept |
+| 3 | dispatch, three run URLs | accept | accept |
+| 4 | dispatch + not-green tail | accept | accept |
+| 5 | gate, checks URL | accept | accept |
+| 6 | gate, checks URL with ?sha | accept | accept |
+| 7 | gate + not-green tail (dispatch-named context) | accept | accept |
+| 8 | 40-char SHA | accept | accept |
+| 9 | local with a tail | reject | reject |
+| 10 | label wrong case | reject | reject |
+| 11 | uppercase SHA | reject | reject |
+| 12 | short SHA (6) | reject | reject |
+| 13 | hyphen for em dash | reject | reject |
+| 14 | gate missing (merge ref) | reject | reject |
+| 15 | trailing space | reject | reject |
+| 16 | list bullet prefix | reject | reject |
+| 17 | dispatch, no URL: 'trust me, all green' | reject | reject |
+| 18 | gate, no URL: 'green' | reject | reject |
+| 19 | dispatch: 'the gate is green' | reject | reject |
+| 20 | dispatch, no tail at all | reject | reject |
+| 21 | gate #215 citing another PR's checks | reject | reject |
+| 22 | run URL followed by free text | reject | reject |
+| 23 | dispatch citing a checks URL | reject | reject |
+| 24 | gate citing a run URL | reject | reject |
+| 25 | empty not-green list | reject | reject |
+| 26 | non-GitHub URL | reject | reject |
+| 27 | free text after not-green tail | reject | reject |
+
+*Residual*: the `; not green:` list admits any context-shaped text; it is not checked against the 18 names. It can only name failures, never assert a green.
+
+### 10.2 R2-2 — anchor check
+
+Recorded as a comment on PR #217 after the ratification commit is pushed: the command in § 4, run against this branch's history in place of `main`, returns the ratification commit and not an empty string. The same command re-runs on `main` after the merge, where the squash commit becomes `R`.
 
 **Where her review is recorded**: here, § 11, verbatim. `.kiro/docs/ballots/README.md` § "Lifecycle" step 2 has the author record the round **in the ballot**, the precedent being § 14 of the Spec 127 law ballot and § 6 of the delegated-tier ballot. No `reviews/` directory convention exists, so none is created.
 
@@ -428,3 +487,64 @@ Every item in her record (§ 11) is applied. None is declined.
 ---
 
 **Standards implications:** C1, C2, C4 and C5 are inputs to the steward's M2 wording. Under the Q5 cut, the wording is his.
+
+*Stacy's R2 re-check, reproduced verbatim as she delivered it on 2026-09-27. Its heading is already at the level of the R1 record above, so it is not shifted.*
+
+###### [STACY R2] — re-check, 2026-09-27
+
+**Read at**: `origin/chore/123-u2-rulings-and-b-ci` @ `cd3f888b` (PR #217, OPEN), covering the ballot, the issue spec and `tasks.md`.
+
+**Verdict: ACCEPT-WITH-CHANGES — two small Medium fixes and one Low.** Once R2-1 and R2-2 land, the ballot is ready for Peter's ruling. No R3 round is needed: both fixes can be checked mechanically (the test for each is given below).
+
+**1. What was applied, and what I verified:**
+
+- **C1/C2 — U1's escape can no longer be written up as a green gate.** I walked U1 Task 9 under the new rules.
+  - With `**CI-provenance**: local`, rule 2 makes "`npm test` and full `tsc` are green. ✅ / `npm test → 9268 passed`" a local claim, and it is classifiable without judgment.
+  - A dispatch line at `10061e6a` could only say "the required checks were green at branch head" (rule 3). It would also have to carry `; not green: Consumer Guard, lane-application-mcp-server-suite` (rule 4).
+  - A `PR gate #215` line must carry the same tail.
+  - Every way of writing it up is either honest or non-compliant on its face. Detection still happens after merge, which the "Honest reach" section says.
+  - One judgment residue is left, and it is acceptable: whether a free-prose *sentence* asserts "the gate" still needs reading. It can no longer turn a result into a gate result, because the line decides that, not the sentence.
+- **C3–C9, C7a/b/c, the errata and the minors are applied as intended.**
+  - C3: rule 6 is now a pointer, with nothing restated.
+  - C4: rule 5 uses both commands, path-defined classes, and the Q2 premise with its trigger.
+  - C5: anchored to `R` (see R2-2).
+  - C6: S7 is added and S3 carries the pointer.
+  - C7a: covered by grant clause 2(e).
+  - C7b: covered by clauses 5 and 7, with the MIDPOINT named.
+  - C7c: covered by clause 5.
+  - C9: covered by § 7 and the "Honest reach" section.
+  - E1: the issue now says four workflows lack dispatch, and package-name-drift is noted as dispatchable under its required name.
+  - E2 and E3: fixed.
+  - The PAT scope, the no-new-test-file rule and the deferred `verify-gate-registration.sh` straggler are all recorded.
+- **The F3 conditions are all in `tasks.md`.**
+  - (a) N is counted at both ends, and 13.6 (iv) requires the same N paths.
+  - (b) `record` carries both the note path (`completion/f3-coverage-map-adjudication-ruling.md`, also listed in Primary Artifacts) and the exact expiry string.
+  - (c) Subtask 11.5 exists, and the Delegated-tier row names it.
+  - (d) `ruling: assessment-gap`.
+  - The edge case is a new Task 12 criterion (`git diff --diff-filter=A … -- canonical/`).
+  - My R1 conditions on F3 are satisfied.
+
+**2. Remaining changes:**
+
+- **R2-1 (Medium) — the regex is looser than the three forms.**
+  - I tested it (node, 15 cases). It **matches** all three forms and the `; not green:` tail. It **rejects** a local line with a tail, wrong case, an uppercase or short SHA, a hyphen in place of the em dash, a missing `(merge ref)`, trailing space and a list bullet.
+  - It **also matches**:
+    - `branch-head dispatch @ 10061e6a — trust me, all green` (no URL);
+    - `PR gate #1 @ abcdef0 (merge ref) — green` (no URL);
+    - `branch-head dispatch @ abcdef0 — the gate is green`.
+  - The `— .+` tail admits anything, so the grammar does not enforce what the prose requires.
+  - **Property needed**: the tail is a list of run URLs (dispatch form) or the PR's checks URL (gate form), optionally followed by the `; not green:` tail and nothing else.
+  - My passes would still catch a URL-less line by opening the runs. The fix matters because § 9.5's future parity presence-and-grammar check would inherit this regex as it stands.
+- **R2-2 (Medium) — the in-force anchor can resolve to nothing, and it would do so silently.**
+  - The `-G'^\*\*Status\*\*: \*\*RATIFIED'` pattern matches only the bold form.
+  - Of the 11 ratified Status lines in `.kiro/docs/ballots/` I sampled, 3 would not match: two plain `RATIFIED (Peter…` and one backticked `` `RATIFIED (Peter…)` ``. § 9 step 1 does not pin which form the flip uses.
+  - If the flip is not bold, `R` comes back empty and **no doc is ever bound**. That is the silent wrong answer the owed-set pipeline produced at the CLOSEOUT pilot (F-1).
+  - **Property needed**: the flip form in § 9 step 1 is pinned to exactly what the pattern matches, **and** an empty `R` is a fatal error, never "nothing bound". The owed-set pipeline has the same `[ -n "$RATIFIED" ] || FATAL` guard.
+- **R2-3 (Low) — "the commit that first added it" does not name its history.**
+  - On `main`'s first-parent line, the squash commit of any unit merged after `R` descends from `R`. So docs written before ratification, on a branch cut before `R`, would be bound. That is a small backfill, and it contradicts "No backfill".
+  - Name the history, and either accept or exclude that case in one clause.
+  - Impact is nil for Spec 123, because U2a is cut after PR-1 merges.
+
+**Still owed separately, and not given here**: my confirmation of the MIDPOINT and ARMING placements.
+
+**Standards implications**: R2-1 and R2-2 are inputs to the steward's § 4 and § 9 wording. The wording itself is his.
