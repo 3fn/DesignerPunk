@@ -70,9 +70,44 @@ const CRITERIA_LABEL_RE = /^\s*\*\*Success Criteria:\*\*\s*(.*)$/;
 /** Declared-none: `**Success Criteria:** none — <one-line reason>` (Req 2.2.4). */
 const NONE_RE = /^none\s*—\s*(.+)$/;
 
-/** Closed promise-block vocabulary (Req 1.5). */
-const PRIMARY_ARTIFACTS_RE = /^\s*\*\*Primary Artifacts:\*\*\s*$/;
-const MERGE_GATE_RE = /^\s*\*\*Merge gate:\*\*\s*$/;
+/**
+ * Closed promise-block vocabulary (Req 1.5). Both labels are recognized in the
+ * label-then-bullets form AND the inline form (`**Primary Artifacts:** \`a\`,
+ * \`b\``) — the trailing capture is empty for the former. (Fix 2026-09-26, D2:
+ * the `\s*$` anchoring silently missed Spec 123's inline form on all 28
+ * parents, so none of them owed Additional verification.)
+ */
+const PRIMARY_ARTIFACTS_RE = /^\s*\*\*Primary Artifacts:\*\*(.*)$/;
+const MERGE_GATE_RE = /^\s*\*\*Merge gate:\*\*(.*)$/;
+
+/** A heading or thematic break — a structural boundary that ends any block. */
+const HEADING_RE = /^#{1,6}\s/;
+const THEMATIC_BREAK_RE = /^\s{0,3}(?:-\s*){3,}$|^\s{0,3}(?:\*\s*){3,}$|^\s{0,3}(?:_\s*){3,}$/;
+
+/**
+ * Split an inline Primary Artifacts list on TOP-LEVEL commas only — commas
+ * inside backticks, braces, parentheses or brackets belong to the entry
+ * (`src/cli/sync/{FileScanner,Classifier}.ts`, `index.ts` (StalenessGate, x)).
+ */
+function splitInlineList(text: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let inTick = false;
+  let cur = '';
+  for (const ch of text) {
+    if (ch === '`') inTick = !inTick;
+    else if (!inTick && (ch === '{' || ch === '(' || ch === '[')) depth++;
+    else if (!inTick && (ch === '}' || ch === ')' || ch === ']')) depth = Math.max(0, depth - 1);
+    if (ch === ',' && !inTick && depth === 0) {
+      out.push(cur);
+      cur = '';
+      continue;
+    }
+    cur += ch;
+  }
+  out.push(cur);
+  return out.map((e) => e.trim()).filter(Boolean);
+}
 
 /**
  * Parent-line form classification (C2.2): plain-numbered, bold-numbered, and
@@ -239,26 +274,54 @@ export function parseTasksMd(text: string, spec = ''): TasksFile {
       continue;
     }
 
-    if (PRIMARY_ARTIFACTS_RE.test(line)) {
+    const pa = line.match(PRIMARY_ARTIFACTS_RE);
+    if (pa) {
       collector = currentScope?.topLevel && currentScope.parent
         ? { kind: 'artifacts', parent: currentScope.parent }
         : undefined;
       lastBullet = undefined;
+      // Inline form: the list is on the label line. Extraction is safe here —
+      // the verdict layer reads only presence (the AV duty) and the unbuilt
+      // promised-artifact-exists reads paths; any bullets that follow still
+      // collect below.
+      const inline = pa[1].trim();
+      if (collector && inline) {
+        for (const entry of splitInlineList(inline)) {
+          collector.parent.primaryArtifacts.push(extractArtifactEntry(entry));
+        }
+      }
       continue;
     }
-    if (MERGE_GATE_RE.test(line)) {
-      collector = currentScope?.topLevel && currentScope.parent
-        ? { kind: 'gate', parent: currentScope.parent }
-        : undefined;
+    const gate = line.match(MERGE_GATE_RE);
+    if (gate) {
+      const owner = currentScope?.topLevel ? currentScope.parent : undefined;
+      collector = owner ? { kind: 'gate', parent: owner } : undefined;
       lastBullet = undefined;
+      if (owner && gate[1].trim()) {
+        // Inline gate conditions are NOT extracted: each condition is a
+        // verbatim-matched row (Req 1.5, same predicate as 2.5), and splitting
+        // prose into conditions would be a guess. Loud, never silent.
+        malformations.push({
+          line: lineNo,
+          message: `malformed promise block: inline '**Merge gate:**' conditions at line ${lineNo} (parent ${parentId(owner)}) — gate conditions must be bullets`,
+          parentLine: owner.line,
+        });
+        collector = undefined;
+      }
       continue;
     }
 
     if (!collector) continue;
 
     if (line.trim() === '') {
-      // Blank lines inside a block are tolerated; a subsequent non-bullet,
-      // non-label line ends the block below.
+      // Blank lines inside a block are tolerated, but a blank ends the
+      // previous bullet: a non-bullet line after it is never a continuation.
+      lastBullet = undefined;
+      continue;
+    }
+
+    if (HEADING_RE.test(line) || THEMATIC_BREAK_RE.test(line)) {
+      collector = undefined;
       lastBullet = undefined;
       continue;
     }
@@ -287,14 +350,38 @@ export function parseTasksMd(text: string, spec = ''): TasksFile {
       continue;
     }
 
-    // Continuation line: folds into the previous bullet (Req 2.2.1). Any other
-    // non-bullet line (a new label, prose, a heading) ends the block.
-    if (lastBullet && /^\s+\S/.test(line) && !/^\s*\*\*[^*]+\*\*/.test(line) && !/^#/.test(line)) {
-      lastBullet.list[lastBullet.list.length - 1] += ' ' + line.trim();
-    } else {
+    // Continuation line: an indented, non-bold-leading line DIRECTLY after a
+    // bullet (no blank between) folds into it (Req 2.2.1).
+    const isContinuation =
+      lastBullet !== undefined && /^\s+\S/.test(line) && !/^\s*\*\*[^*]+\*\*/.test(line);
+    if (isContinuation) {
+      lastBullet!.list[lastBullet!.list.length - 1] += ' ' + line.trim();
+      continue;
+    }
+
+    if (collector.kind === 'criteria') {
+      // A criteria block runs to its structural boundary — the next checkbox,
+      // criteria label, promise-block label, heading or thematic break (all
+      // handled above). Any other non-bullet line inside it (a paragraph after
+      // a blank, an indented bold-leading line such as `**Instrument**:`, an
+      // italic scope line) is a LOUD malformation: the checker never guesses
+      // which criterion it belongs to and never silently drops it or the
+      // bullets after it (Req 2.2.1 one bullet = one criterion; Req 2.2.2 never
+      // silently select nothing). Fix 2026-09-26, D1 — ruled (d), Peter.
+      malformations.push({
+        line: lineNo,
+        message: `malformed criteria block: non-bullet line inside block at line ${lineNo} (parent ${parentId(collector.parent)})`,
+        parentLine: collector.parent.line,
+      });
       collector = undefined;
       lastBullet = undefined;
+      continue;
     }
+
+    // Artifact and gate bodies keep the original end-of-block rule: any other
+    // non-bullet line ends them.
+    collector = undefined;
+    lastBullet = undefined;
   }
 
   return { spec, declaredMode, parents, unitsBlock, malformations };
