@@ -42,10 +42,14 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   consumer-guard:
-    name: Consumer Guard
+    # Ballot B-CI a2: a dispatched run tests the branch HEAD, not the PR's merge ref, and
+    # must never be able to satisfy or shadow the required "Consumer Guard" context — hence
+    # the distinct name on workflow_dispatch. pull_request/push runs are unaffected.
+    name: ${{ github.event_name == 'workflow_dispatch' && 'Consumer Guard (unit-branch)' || 'Consumer Guard' }}
     runs-on: ubuntu-latest
     # Generous timeout: pack → install → init → generate + MCP/browser build is slow.
     # Task 5 adds build:mcp (~30s) + build:browser (~30s) + guard spawns (~30s each).
@@ -111,7 +115,7 @@ jobs:
         # Verified baseline (2026-06-24): ZERO violations — this guards future regressions.
         # Runs as a targeted jest invocation so it attaches to this lane without
         # wiring the full npm test suite into CI (which is a separate, future decision).
-        run: npx jest --testPathPatterns='DynamicImportGuard' --no-coverage --runInBand
+        run: npm run test:guard:dynamic-import
 
       - name: Run consumer guard
         # Runs the full consumer-integration test suite including:
@@ -145,7 +149,7 @@ jobs:
         # Resolves Decision 2: bundled subsystems are exempt from the runtime-resolution
         # contract, but the exemption is paired with this boot/smoke guard.
         # @see tests/mcp-boot-smoke.test.ts
-        run: npx jest --roots='<rootDir>/tests' --testMatch='**/mcp-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000
+        run: npm run test:smoke:mcp-boot
 
       - name: Browser bundle boot/smoke guard (Spec 118 Task 5.1b)
         # Loads the ESM bundle in a jsdom environment (customElements defined) and
@@ -153,4 +157,4 @@ jobs:
         # customElements.define() at module top-level — reaching the assertion without
         # throwing = the bundle resolved all its dependencies at build time.
         # @see tests/browser-boot-smoke.test.ts
-        run: npx jest --roots='<rootDir>/tests' --testMatch='**/browser-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000
+        run: npm run test:smoke:browser-boot

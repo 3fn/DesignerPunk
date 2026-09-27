@@ -36,6 +36,7 @@ name: Agent Generator (122)
 
 on:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   setup:
@@ -63,7 +64,11 @@ jobs:
 
       - name: C6 no-op probe (prints both hash pairs as evidence)
         id: probe
-        run: npx tsx tools/agent-generator/sweeps/noop-probe.ts | tee -a "$GITHUB_OUTPUT"
+        # --silent suppresses npm's "> pkg@ver script" banner: this line is piped into
+        # $GITHUB_OUTPUT (a key=value file GH Actions parses), and the banner would
+        # corrupt it. Verified locally (2026-09-27): `npm run <script>` prints the banner
+        # to stdout by default; `npm run --silent <script>` does not.
+        run: npm run --silent check:122:noop-probe | tee -a "$GITHUB_OUTPUT"
 
       # The three MCPs boot from HETEROGENEOUS artifacts (registry.ts serverTable, mirroring
       # .mcp.json truth): docs + application from their SUB-PACKAGE tsc dists
@@ -92,7 +97,9 @@ jobs:
           retention-days: 1
 
   check:
-    name: ${{ matrix.context }}
+    # Ballot B-CI a2: distinct name on workflow_dispatch so a branch-head dispatch run
+    # can never satisfy or shadow any of the nine required "122-*" contexts.
+    name: ${{ github.event_name == 'workflow_dispatch' && format('{0} (unit-branch)', matrix.context) || matrix.context }}
     needs: setup
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -102,36 +109,36 @@ jobs:
         include:
           # cmd = the check CLI; mcp = whether the job needs the built MCP dist artifact.
           - context: 122-diff-guard
-            cmd: npx tsx tools/agent-generator/diff-guard.ts
+            cmd: npm run check:122:diff-guard
             mcp: true
           - context: 122-canonical-vs-truth
-            cmd: npx tsx tools/agent-generator/canonical-vs-truth.ts
+            cmd: npm run check:122:canonical-vs-truth
             mcp: true
           - context: 122-sweep-1-refs
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-1-refs.ts
+            cmd: npm run check:122:sweep-1-refs
             mcp: true
           - context: 122-sweep-2-skills
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-2-skills.ts
+            cmd: npm run check:122:sweep-2-skills
             mcp: false
           - context: 122-sweep-3-dupes
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-3-dupes.ts
+            cmd: npm run check:122:sweep-3-dupes
             mcp: false
           - context: 122-sweep-4-ambient
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-4-ambient.ts
+            cmd: npm run check:122:sweep-4-ambient
             mcp: false
           # PRE-CUTOVER WINDOW ONLY (Req 19 AC1 named exception) — removal after the last
           # cutover is a recorded protection-list change.
           - context: 122-sweep-5-corrected-state
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-5-corrected.ts
+            cmd: npm run check:122:sweep-5-corrected-state
             mcp: false
           - context: 122-sweep-6-declarations
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-6-declarations.ts
+            cmd: npm run check:122:sweep-6-declarations
             mcp: true
           - context: 122-sweep-7-dispositions
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-7-dispositions.ts
+            cmd: npm run check:122:sweep-7-dispositions
             mcp: false
           - context: 122-sweep-8-demotion
-            cmd: npx tsx tools/agent-generator/sweeps/sweep-8-demotion.ts
+            cmd: npm run check:122:sweep-8-demotion
             mcp: false
     steps:
       - name: Early-exit green (C6 no-op lock matched — hashes printed by 122-setup)

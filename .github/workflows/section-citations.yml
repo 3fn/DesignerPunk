@@ -26,10 +26,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   section-citations:
-    name: Section Citation Guard
+    # Ballot B-CI a2: distinct name on workflow_dispatch so a branch-head dispatch run can
+    # never satisfy or shadow the required "Section Citation Guard" context.
+    name: ${{ github.event_name == 'workflow_dispatch' && 'Section Citation Guard (unit-branch)' || 'Section Citation Guard' }}
     runs-on: ubuntu-latest
     # The script is a pure-fs scan (no builds, no MCP boot); npm ci dominates.
     timeout-minutes: 10

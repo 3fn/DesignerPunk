@@ -8,13 +8,21 @@
 #
 # One completion command, THREE context-aware modes (Task-Completion-Protocol.md
 # § "Completion State in the PR Flow" points 2/4; drift fix 2026-09-26 —
-# tooling brought to match existing law, no law change):
+# tooling brought to match existing law; CI-dispatch behavior added 2026-09-27
+# per ballot B-CI, `.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md`,
+# M1-b — a RATIFIED law change, TCP §§ "The Sequence by Task Scope" / "Completion
+# State in the PR Flow" S1/S4/S6/S7):
 #   Parent mode (default): commit on the task branch, push, OPEN A PR, report the
 #                          PR URL, and STOP. The script NEVER merges. The task is
 #                          complete when Peter merges (ballot 1d). Use this when
 #                          the parent IS its unit's final/gating parent (a
 #                          standalone task, a single-unit spec, or the parent
-#                          that completes a declared multi-parent unit).
+#                          that completes a declared multi-parent unit). After
+#                          opening (or re-reporting) the PR, this mode checks
+#                          that CI actually started on it (the #148/#194
+#                          dropped-pull_request-event class) and FAILS LOUDLY —
+#                          non-zero exit, remedy printed — on zero registered
+#                          check runs. It never auto-pushes a fix.
 #   Unit-member mode (--unit-member): commit on the task branch and push it.
 #                          NO PR opens. Use this for a parent that completes
 #                          INSIDE a declared multi-parent unit but is NOT that
@@ -26,15 +34,36 @@
 #                          derived from a single parent's message — deriving a
 #                          per-task branch here would silently split the unit
 #                          across branches. On main, be already on the unit
-#                          branch or pass --branch explicitly.
-#   Subtask mode (--subtask): commit on the task branch and push it. NO PR opens;
-#                          no required checks fire until UNIT completion.
+#                          branch or pass --branch explicitly. After pushing,
+#                          it DISPATCHES the six required workflows against the
+#                          unit branch (`gh workflow run … --ref`) and prints a
+#                          ready-to-paste `**CI-provenance**: branch-head
+#                          dispatch @ <sha> — <urls>` line (ballot B-CI § 4).
+#   Subtask mode (--subtask): commit on the task branch and push it. NO PR opens
+#                          until unit completion; subtasks never open PRs. At
+#                          a judgment-based checkpoint this mode ALSO dispatches
+#                          the six required workflows against the unit branch
+#                          and prints the ready-to-paste provenance line — pass
+#                          --no-ci for a checkpoint you know is red (its use is
+#                          on the honour system; nothing records it).
+#
+# Dispatched runs (both modes above) are FEEDBACK, NOT THE GATE: each reports
+# under a context name distinct from its required name (e.g. "Consumer Guard
+# (unit-branch)") — ballot B-CI a2 — so a branch-head run can never satisfy or
+# shadow the unit PR's required check. They test the branch HEAD, not the PR's
+# merge ref. The gate still runs only on the unit PR.
 #
 # --unit-member and --subtask are mutually exclusive.
 #
 # --unit NAME threads a Unit: field into the PR body opened in parent mode
 # (Branch and PR Conventions: "PR body additionally carries a Unit: field").
 # Omit it for a single-parent unit; the PR body falls back to a fixed note.
+#
+# --dry-run-ci: a standalone diagnostic mode (no MESSAGE required, no git/gh
+# mutation). Prints the six `gh workflow run` dispatch commands it would issue
+# and demonstrates the zero-runs detector against a stubbed zero-run result
+# (its non-zero return, without terminating this invocation) — see ballot B-CI
+# § 6 step 3. Ignores every other flag.
 #
 # Advisory completion-criteria-parity check (Spec 127 register row
 # `completion-criteria-parity`, check_state: proposed — arming is Q2's
@@ -73,19 +102,212 @@ ok()   { echo "✅ $1"; }
 warn() { echo "⚠️  $1"; }
 die()  { echo "" >&2; echo "❌ $1" >&2; shift; for line in "$@"; do echo "   $line" >&2; done; exit 1; }
 
+# ---------------------------------------------------------------------------
+# Ballot B-CI — the required-workflows list (multi-homed copy set, S-6).
+# This array is count-asserted (six) against the six workflow files that
+# together produce tools/agent-generator/verify-gate-registration.sh's 18
+# required contexts. If that script's workflow set ever changes, this array
+# moves with it in the SAME recorded change (C9 discipline extended to CI
+# dispatch — ballot B-CI § 5 grant item 2(a)).
+# ---------------------------------------------------------------------------
+REQUIRED_WORKFLOWS=(
+  "consumer-guard.yml"
+  "tool-boot-smoke.yml"
+  "section-citations.yml"
+  "agent-generator.yml"
+  "package-name-drift.yml"
+  "lane-timing.yml"
+)
+if [[ ${#REQUIRED_WORKFLOWS[@]} -ne 6 ]]; then
+  echo "❌ Internal error: REQUIRED_WORKFLOWS must have exactly 6 entries (it is a" >&2
+  echo "   multi-homed copy set with verify-gate-registration.sh's 6 workflow files" >&2
+  echo "   producing 18 required contexts) — found ${#REQUIRED_WORKFLOWS[@]}." >&2
+  exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# Ballot B-CI — unit-branch CI dispatch + the zero-runs detector.
+#
+# Dispatched runs are FEEDBACK, NOT THE GATE: every required workflow reports
+# under a context name distinct from its required name when triggered by
+# workflow_dispatch (ballot B-CI a2 — e.g. "Consumer Guard (unit-branch)"), so
+# a branch-head run can never satisfy or shadow the unit PR's required check.
+# They test the branch HEAD, not the PR's merge ref. The gate runs only on the
+# unit PR.
+# ---------------------------------------------------------------------------
+
+# dispatch_required_workflows BRANCH SHA
+# Fires `gh workflow run` for every entry in REQUIRED_WORKFLOWS against BRANCH,
+# then polls for the newly created run at SHA (dispatch is async — the run can
+# take a few seconds to register) and resolves its URL. Populates the global
+# arrays DISPATCH_RUN_URLS (resolved) and DISPATCH_UNCONFIRMED (workflow file
+# names whose run did not register within the poll window — the "confirm each
+# dispatch registered a run" duty, issue spec a3 / ballot B-CI grant item 3).
+# Non-fatal by design in subtask/unit-member modes: dispatch is feedback, not
+# the gate, so a registration miss here is a loud warning, not a hard failure
+# (the hard-failure zero-runs detector is check_ci_started, PARENT mode only —
+# F-A, ruled Peter 2026-09-27).
+# Set DRY_RUN_CI=true to print the commands instead of executing them.
+dispatch_required_workflows() {
+  local branch="$1" sha="$2"
+  DISPATCH_RUN_URLS=()
+  DISPATCH_UNCONFIRMED=()
+  local wf run_url attempt err_file
+  for wf in "${REQUIRED_WORKFLOWS[@]}"; do
+    if [[ "${DRY_RUN_CI:-false}" == true ]]; then
+      echo "  [DRY RUN] gh workflow run \"$wf\" --ref \"$branch\""
+      DISPATCH_RUN_URLS+=("https://github.com/${REPO_SLUG:-<owner>/<repo>}/actions/runs/DRYRUN-${wf%.yml}")
+      continue
+    fi
+    say "Dispatching $wf against '$branch'..."
+    err_file="$(mktemp)"
+    if ! gh workflow run "$wf" --ref "$branch" 2>"$err_file"; then
+      warn "Failed to dispatch $wf: $(cat "$err_file" 2>/dev/null)"
+      warn "  Dispatch needs the PAT scope Actions: write (granted 2026-07-10, inbound-to-125-B-from-125-A.md §5) in addition to Contents: write + Pull requests: write."
+      rm -f "$err_file"
+      DISPATCH_UNCONFIRMED+=("$wf")
+      continue
+    fi
+    rm -f "$err_file"
+    run_url=""
+    attempt=0
+    while [[ -z "$run_url" && $attempt -lt 15 ]]; do
+      sleep 2
+      run_url="$(gh run list --workflow "$wf" --branch "$branch" --event workflow_dispatch --limit 5 --json url,headSha \
+                   --jq "[.[] | select(.headSha == \"$sha\")][0].url" 2>/dev/null || true)"
+      attempt=$((attempt + 1))
+    done
+    if [[ -z "$run_url" ]]; then
+      warn "Dispatched $wf but no run registered at $sha within ~30s (zero-runs class — the #148/#194 pattern)."
+      DISPATCH_UNCONFIRMED+=("$wf")
+    else
+      ok "  $wf → $run_url"
+      DISPATCH_RUN_URLS+=("$run_url")
+    fi
+  done
+}
+
+# print_ci_provenance_line SHA
+# Prints a ready-to-paste `**CI-provenance**: branch-head dispatch @ <SHA> —
+# <urls>` line (ballot B-CI § 4 grammar, governance/completion-documentation-guide.md
+# § "CI provenance — where a green was measured") from the DISPATCH_RUN_URLS
+# populated by the most recent dispatch_required_workflows call. The script
+# never appends a `; not green:` tail — it does not wait for run conclusions
+# (dispatch is non-blocking, issue spec a3), so it cannot know results at
+# dispatch time; add that tail by hand once you have checked the runs.
+print_ci_provenance_line() {
+  local sha="$1"
+  if [[ ${#DISPATCH_RUN_URLS[@]} -eq 0 ]]; then
+    warn "No dispatch runs registered — nothing to cite. Investigate before writing a CI-provenance line."
+    return 0
+  fi
+  # NOTE: "${arr[*]}" joins on only the FIRST character of IFS — `IFS=', '`
+  # would silently produce "," (no space), not the ballot's ", " grammar.
+  # printf + sed builds the literal ", "-joined list explicitly.
+  local joined
+  joined="$(printf '%s, ' "${DISPATCH_RUN_URLS[@]}" | sed -E 's/, $//')"
+  echo ""
+  echo "Ready-to-paste completion-doc line:"
+  echo "**CI-provenance**: branch-head dispatch @ $sha — $joined"
+  if [[ ${#DISPATCH_UNCONFIRMED[@]} -gt 0 ]]; then
+    warn "Unconfirmed dispatches (not in the line above — investigate before citing): ${DISPATCH_UNCONFIRMED[*]}"
+  fi
+}
+
+# check_ci_started PR_NUMBER HEAD_SHA
+# The F-A zero-runs detector (ballot B-CI, RULED Peter 2026-09-27, parent/unit
+# mode only): polls the PR head's check runs for a bounded window (~3 min).
+# Zero registered check runs is the #148/#194 dropped-pull_request-event class
+# — this FAILS LOUDLY (non-zero return) with the diagnosis and remedy printed.
+# It never auto-pushes a fix; the caller decides.
+check_ci_started() {
+  local pr_number="$1" head_sha="$2"
+  local attempt=0 max_attempts=18 count=0  # 18 * 10s ≈ 3 minutes
+  say "Confirming CI started on PR #$pr_number (head $head_sha)..."
+  while [[ $attempt -lt $max_attempts ]]; do
+    count="$(gh api "repos/$REPO_SLUG/commits/$head_sha/check-runs" --jq '.total_count' 2>/dev/null || echo 0)"
+    [[ "$count" -gt 0 ]] && break
+    sleep 10
+    attempt=$((attempt + 1))
+  done
+  if [[ "${count:-0}" -eq 0 ]]; then
+    echo "" >&2
+    echo "❌ ZERO CHECK RUNS registered on PR #$pr_number after $((max_attempts * 10))s (head $head_sha)." >&2
+    echo "   This is the #148/#194 dropped pull_request-event class: GitHub can silently drop the" >&2
+    echo "   event when a PR opens while mergeability is still UNKNOWN." >&2
+    echo "   Known remedies:" >&2
+    echo "     1. Poll mergeability: gh pr view $pr_number --json mergeable" >&2
+    echo "     2. Re-trigger:        git commit --allow-empty -m \"ci: re-trigger\" && git push" >&2
+    echo "   Nothing was auto-pushed — pick a remedy and re-run this command to re-check." >&2
+    return 1
+  fi
+  ok "CI started: $count check run(s) registered on PR #$pr_number at $head_sha."
+  return 0
+}
+
+# demo_check_ci_started_zero — stubbed version of check_ci_started for
+# --dry-run-ci (ballot B-CI § 6 step 3): demonstrates the diagnosis text and
+# non-zero return without polling anything real.
+demo_check_ci_started_zero() {
+  echo "" >&2
+  echo "❌ ZERO CHECK RUNS registered on PR #999 after 180s (head 0123456789abcdef0123456789abcdef01234567) [STUBBED — --dry-run-ci]." >&2
+  echo "   This is the #148/#194 dropped pull_request-event class: GitHub can silently drop the" >&2
+  echo "   event when a PR opens while mergeability is still UNKNOWN." >&2
+  echo "   Known remedies:" >&2
+  echo "     1. Poll mergeability: gh pr view 999 --json mergeable" >&2
+  echo "     2. Re-trigger:        git commit --allow-empty -m \"ci: re-trigger\" && git push" >&2
+  return 1
+}
+
+# run_dry_run_ci_demo — the --dry-run-ci standalone action (ballot B-CI § 6
+# step 3). No git or gh mutation. Prints the six dispatch commands it would
+# issue and demonstrates the zero-runs detector against a stubbed zero-run
+# result, without terminating this invocation.
+run_dry_run_ci_demo() {
+  local demo_branch="${BRANCH_OPT:-task/example-123-unit-slug}"
+  local demo_sha="0123456789abcdef0123456789abcdef01234567"
+  echo "=============================================================="
+  echo "  DRY RUN — unit-branch CI dispatch (ballot B-CI § 6 step 3)"
+  echo "  No git or gh mutation happens in this mode."
+  echo "=============================================================="
+  echo ""
+  echo "Would dispatch these ${#REQUIRED_WORKFLOWS[@]} required workflows against '$demo_branch':"
+  DRY_RUN_CI=true dispatch_required_workflows "$demo_branch" "$demo_sha"
+  print_ci_provenance_line "$demo_sha"
+  echo ""
+  echo "Would then poll (per workflow) until the run at that SHA registers:"
+  echo "  gh run list --workflow <wf> --branch \"$demo_branch\" --event workflow_dispatch --limit 5 \\"
+  echo "    --json url,headSha --jq '[.[] | select(.headSha == \"<sha>\")][0].url'"
+  echo ""
+  echo "--------------------------------------------------------------"
+  echo "  DRY RUN — the parent-mode zero-runs detector (F-A), stubbed at zero"
+  echo "--------------------------------------------------------------"
+  if demo_check_ci_started_zero; then
+    warn "[DRY RUN] demo detector unexpectedly reported CI started — check demo_check_ci_started_zero."
+  else
+    warn "[DRY RUN] detector returned non-zero, as expected for a stubbed zero-run result."
+    echo "   In a real run, complete-task.sh would exit non-zero at this point (F-A)."
+  fi
+  echo ""
+  ok "DRY RUN complete — no git or gh state was changed."
+}
+
 show_usage() {
   cat << 'EOF'
 Usage: ./.kiro/hooks/complete-task.sh [OPTIONS] "MESSAGE"
 
 One completion command, THREE context-aware modes (Task-Completion-Protocol.md
-§ "Completion State in the PR Flow"):
+§ "Completion State in the PR Flow"; unit-branch CI dispatch added 2026-09-27
+per ballot B-CI):
 
   PARENT MODE (default)
     Commits on the task branch, pushes it, opens the task PR, prints the PR URL,
     and stops. Never merges. The task is complete when Peter merges on green.
     Use this when the parent IS its unit's final/gating parent (a standalone
     task, a single-unit spec, or the parent that completes a declared
-    multi-parent unit).
+    multi-parent unit). After opening (or re-reporting) the PR, checks that CI
+    actually started on it and FAILS LOUDLY on zero registered check runs (the
+    #148/#194 dropped-event class, F-A) — it never auto-pushes a fix.
     MESSAGE becomes both the commit message and the PR title, and squash-merge
     makes the PR title the main commit subject — so it MUST follow the standard:
         "Task <N> Complete: <Description> (<spec>)"
@@ -96,14 +318,25 @@ One completion command, THREE context-aware modes (Task-Completion-Protocol.md
     Use this for a parent that completes INSIDE a declared multi-parent unit
     but is NOT that unit's final/gating parent — its completion+summary docs
     land on the branch; it is done-on-branch and accepted when the UNIT's PR
-    (opened later, in parent mode, by the gating parent) merges.
+    (opened later, in parent mode, by the gating parent) merges. After pushing,
+    DISPATCHES the six required workflows against the unit branch and prints a
+    ready-to-paste `**CI-provenance**: branch-head dispatch @ <sha> — <urls>`
+    line (ballot B-CI § 4) — pass --no-ci to skip.
     e.g. ./.kiro/hooks/complete-task.sh --unit-member "Task 1 Complete: Substrate setup (123)"
 
   SUBTASK MODE (--subtask)
     Commits on the task branch with MESSAGE (a plain conventional message) and
-    pushes the branch. NO PR opens; no required checks fire until UNIT
-    completion. Subtasks never open PRs.
+    pushes the branch. NO PR opens until UNIT completion; subtasks never open
+    PRs. At a judgment-based checkpoint, ALSO dispatches the six required
+    workflows against the unit branch and prints the ready-to-paste
+    CI-provenance line — pass --no-ci for a checkpoint you know is red (the
+    honour system; nothing records its use).
     e.g. ./.kiro/hooks/complete-task.sh --subtask "Task 2.1: add credential preflight"
+
+  Dispatched runs (subtask/unit-member modes) are FEEDBACK, NOT THE GATE: each
+  reports under a context name distinct from its required name (ballot B-CI
+  a2), so a branch-head run can never satisfy or shadow the unit PR's required
+  check. They test the branch HEAD, not the PR's merge ref.
 
   --unit-member and --subtask are mutually exclusive.
 
@@ -134,6 +367,15 @@ OPTIONS:
   --skip-parity          Skip the advisory completion-criteria-parity check
                          (e.g. when the checker itself is broken). Parity is
                          never run in subtask mode regardless of this flag.
+  --no-ci                Skip the unit-branch CI dispatch (subtask/unit-member
+                         modes only) — for a checkpoint you know is red. Its
+                         use is on the honour system; nothing records it
+                         (ballot B-CI § 2.1).
+  --dry-run-ci           Standalone diagnostic mode: no MESSAGE, no git/gh
+                         mutation. Prints the six `gh workflow run` dispatch
+                         commands it would issue and demonstrates the
+                         zero-runs detector against a stubbed zero-run result
+                         (ballot B-CI § 6 step 3). Ignores every other flag.
   -h, --help             Show this help.
 
 BEHAVIOR NOTES:
@@ -142,11 +384,19 @@ BEHAVIOR NOTES:
   - Credentials: uses $GH_TOKEN / $GITHUB_TOKEN from the environment, else reads
     GITHUB_TOKEN/GH_TOKEN from .env at the repo root. Missing or under-scoped
     credentials fail loud with what's missing — there is no direct-push fallback.
+    Dispatching CI additionally needs the PAT scope Actions: write (granted
+    2026-07-10, inbound-to-125-B-from-125-A.md §5) alongside Contents: write +
+    Pull requests: write.
   - If an open PR already exists for the branch (change-request resume, ballot
-    1d.7), parent mode pushes and re-reports the existing PR URL.
+    1d.7), parent mode pushes, re-reports the existing PR URL, and re-runs the
+    zero-runs detector against the new push.
   - Parent and unit-member modes run the advisory completion-criteria-parity
     checker before committing (register row completion-criteria-parity,
     check_state: proposed — this is a warning, never a block).
+  - Unit-branch dispatch runs (subtask/unit-member) report under context names
+    distinct from the required set (ballot B-CI a2) — feedback, not the gate.
+    The parent-mode zero-runs detector (F-A) DOES fail loudly (non-zero exit)
+    on zero registered check runs on the PR itself.
 EOF
 }
 
@@ -165,6 +415,8 @@ VALIDATION_NOTE=""
 RUN_ORGANIZE=false
 RUN_VALIDATE=false
 RUN_PARITY=true
+NO_CI_FLAG=false
+DRY_RUN_CI_MODE=false
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -179,6 +431,8 @@ while [[ $# -gt 0 ]]; do
     --organize)          RUN_ORGANIZE=true; shift ;;
     --validate-metadata) RUN_VALIDATE=true; shift ;;
     --skip-parity)       RUN_PARITY=false; shift ;;
+    --no-ci)             NO_CI_FLAG=true; shift ;;
+    --dry-run-ci)        DRY_RUN_CI_MODE=true; shift ;;
     -h|--help)           show_usage; exit 0 ;;
     -*)                  die "Unknown option: $1" "Use --help for usage." ;;
     *)
@@ -191,6 +445,17 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+# --dry-run-ci is a standalone diagnostic action (ballot B-CI § 6 step 3): no
+# MESSAGE, no other flag, and no git/gh mutation. Exits before every other
+# requirement below (MESSAGE, mode exclusivity, credential preflight).
+if [[ "$DRY_RUN_CI_MODE" == true ]]; then
+  REPO_ROOT="$(git rev-parse --show-toplevel)"
+  cd "$REPO_ROOT"
+  REPO_SLUG="$(git remote get-url origin 2>/dev/null | sed -E 's#(git@github\.com:|https://github\.com/)##; s#\.git$##')"
+  run_dry_run_ci_demo
+  exit 0
+fi
 
 if [[ "$SUBTASK_FLAG" == true && "$UNIT_MEMBER_FLAG" == true ]]; then
   die "--subtask and --unit-member are mutually exclusive." \
@@ -393,12 +658,21 @@ git_push_verified -u origin "refs/heads/$TASK_BRANCH:refs/heads/$TASK_BRANCH"
 ok "Branch pushed: $TASK_BRANCH"
 
 # ---------------------------------------------------------------------------
-# Subtask mode stops here: no PR, no checks (ballot 1a.2)
+# Subtask mode stops here: no PR until unit completion (ballot 1a.2). Ballot
+# B-CI M1-b: dispatch the required workflows against the unit branch at this
+# checkpoint, unless --no-ci (a checkpoint known to be red).
 # ---------------------------------------------------------------------------
 if [[ "$MODE" == "subtask" ]]; then
   echo ""
   ok "Subtask committed and pushed on '$TASK_BRANCH'."
   echo "   No PR opened (subtask mode) — the PR opens at UNIT completion."
+  if [[ "$NO_CI_FLAG" == true ]]; then
+    warn "Skipping CI dispatch (--no-ci) — this checkpoint is known-red. Its use is on the honour system; nothing records it (ballot B-CI § 2.1)."
+  else
+    SUBTASK_SHA="$(git rev-parse HEAD)"
+    dispatch_required_workflows "$TASK_BRANCH" "$SUBTASK_SHA"
+    print_ci_provenance_line "$SUBTASK_SHA"
+  fi
   echo "   STOP: wait for user authorization before the next task."
   exit 0
 fi
@@ -407,12 +681,21 @@ fi
 # Unit-member mode stops here: parent is done-on-branch, no PR.
 # The PR opens later, in parent mode, when the unit's final/gating parent
 # completes (Task-Completion-Protocol.md § "Completion State in the PR Flow").
+# Ballot B-CI: dispatch the required workflows against the unit branch, unless
+# --no-ci.
 # ---------------------------------------------------------------------------
 if [[ "$MODE" == "unit-member" ]]; then
   echo ""
   ok "Parent completion docs committed and pushed on '$TASK_BRANCH'."
   echo "   No PR opened (unit-member mode) — this parent is done-on-branch."
   echo "   The PR opens at UNIT completion (the gating parent, in parent mode)."
+  if [[ "$NO_CI_FLAG" == true ]]; then
+    warn "Skipping CI dispatch (--no-ci)."
+  else
+    UNIT_MEMBER_SHA="$(git rev-parse HEAD)"
+    dispatch_required_workflows "$TASK_BRANCH" "$UNIT_MEMBER_SHA"
+    print_ci_provenance_line "$UNIT_MEMBER_SHA"
+  fi
   echo "   This parent is accepted when Peter merges the unit's PR."
   echo "   STOP: wait for user authorization before the next task."
   exit 0
@@ -436,6 +719,13 @@ if [[ -n "$EXISTING_PR_URL" ]]; then
   echo "  PR URL: $EXISTING_PR_URL"
   echo "=============================================================="
   echo ""
+  EXISTING_PR_NUMBER="$(basename "$EXISTING_PR_URL")"
+  PARENT_HEAD_SHA="$(git rev-parse HEAD)"
+  if ! check_ci_started "$EXISTING_PR_NUMBER" "$PARENT_HEAD_SHA"; then
+    die "CI did not start on PR #$EXISTING_PR_NUMBER after this push (F-A zero-runs detector, ballot B-CI)." \
+        "The PR URL above is still valid — this is a diagnostic failure, not a lost PR." \
+        "Apply a remedy (see above) and re-run this command to re-check."
+  fi
   echo "STOP: report the PR URL and wait. The task is complete when Peter merges."
   exit 0
 fi
@@ -489,6 +779,20 @@ echo "  $PR_URL"
 echo ""
 echo "=============================================================="
 echo ""
+
+# F-A zero-runs detector (ballot B-CI, RULED Peter 2026-09-27): the #148/#194
+# class is a PR that opens while GitHub is still computing mergeability, and
+# the pull_request event is silently dropped — zero workflows run. Confirm CI
+# actually started before declaring this step done; fail loudly, non-zero
+# exit, with the remedy printed, if it did not. Never auto-pushes a fix.
+NEW_PR_NUMBER="$(basename "$PR_URL")"
+NEW_PR_HEAD_SHA="$(git rev-parse HEAD)"
+if ! check_ci_started "$NEW_PR_NUMBER" "$NEW_PR_HEAD_SHA"; then
+  die "CI did not start on PR #$NEW_PR_NUMBER (F-A zero-runs detector, ballot B-CI)." \
+      "The PR is open at the URL above — this is a diagnostic failure, not a lost PR." \
+      "Apply a remedy (see above), then re-run this command; it will reuse the pushed branch and re-check."
+fi
+
 echo "STOP: report the PR URL and wait."
 echo "  - Required checks run on the PR; fix on this branch if they fail."
 echo "  - The task is complete when Peter merges (merge on green = the authorization act)."

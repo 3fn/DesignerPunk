@@ -19,7 +19,10 @@ on:
 
 jobs:
   check-drift:
-    name: Check package name drift
+    # Ballot B-CI a2: this workflow already had workflow_dispatch (Spec 101 Task 1.8), so
+    # a dispatch run reported under the required name today — the distinct name closes
+    # that so a branch-head dispatch run can never satisfy or shadow the gate.
+    name: ${{ github.event_name == 'workflow_dispatch' && 'Check package name drift (unit-branch)' || 'Check package name drift' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -32,4 +35,4 @@ jobs:
           node-version: '22'
 
       - name: Run drift detection
-        run: node scripts/check-package-name-drift.js
+        run: npm run check:drift
