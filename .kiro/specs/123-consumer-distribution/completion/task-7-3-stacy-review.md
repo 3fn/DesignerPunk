@@ -200,3 +200,103 @@ I did not re-run the Task 4/5/6 Jest suites. Their recorded results are trusted,
 1. **The `armed_at` enum has no value for a check that runs after the event and is halted by a human.** `tool-time` is stretched to cover it (R1-3). This is the first such row. If a second appears, the enum needs its own amendment with its own record, and should not be stretched again.
 2. **The `*.log` gitignore rule silently defeats any "paste the output to `X.log`" convention.** It has now bitten twice in one task (7.1's bites and R1-2's paste target). Any standard that names a committed record location should name a filename git will commit.
 3. **An invocation quoted inside a requirement is still a claim that needs a run.** R1-1's env vars travelled from feedback → requirement → design → ballot without ever being executed. The spec-standards question for Thurgood is whether requirement text quoting a command should carry its evidence.
+
+---
+
+## Re-check addendum — 2026-09-27 (branch head `9fd5dd0a`)
+
+**Scope**: Thurgood's rework, checked against my first review and against Peter's R1-1 ruling (drop the `npm` CLI and query `registry.npmjs.org` directly over HTTP).
+- **What I read**: the ballot § 0–§ 6; `scripts/verify-publish-rail.sh`; `scripts/__bites__/`; the errata to Req 6.2, 6.3 and 6.8, design C9 and tasks.md Task 7; `CHANGELOG.md`; and the reworked 7.1, 7.2 and 7.4 docs.
+- **Method**: I re-ran everything myself. I did not rely on the recorded transcripts.
+
+### Verdict: **ACCEPT.** B-U1 is ready for Peter's ratification ruling, and so is the CHANGELOG.
+
+One small correction to the 7.4 doc, which is outside the ratification surface, is routed below. It does not block ratification.
+
+### 1. R1-1: CLOSED
+
+- **Every exit path reproduces at head** (no shims unless stated):
+  - `VERSION=14.1.0` → `PASS`, exit 0, against the real registry;
+  - `VERSION=99.99.99` → `FAIL[version] (HTTP 404)`, exit 10;
+  - PATH-shimmed `curl` (GitHub Packages tarball) → `FAIL[host]`, exit 11, through the production `check_host` line;
+  - empty-tarball shim → exit 13;
+  - `--self-test-host` → exit 12.
+- **The 6.3 recipe run verbatim** (`curl -sS --max-time 15 -w '\n%{http_code}' https://registry.npmjs.org/@3fn%2fcore/99.99.99`) returns `"version not found: 99.99.99"` and `404`. That matches the erratum's quoted body.
+- **Forcing a network failure** (a proxy at a dead port) → `FAIL[version]: could not reach … (network error)`, exit 10. So the new form gives a network failure its own message, which closes my R1-8 residual as well.
+- **shellcheck** (official 0.10.0) is clean on the script and on both shims.
+- **The script is free of npm entirely.** It contains no `npm` invocation, and it reads no `.npmrc` at any layer.
+- **The errata honestly supersede the old measured form.** Each one:
+  - marks the `npm view` form SUPERSEDED rather than deleting it;
+  - records that the hermetic env vars were never run and would not have been hermetic anyway;
+  - names the lost intent: the script header says plainly that it "does NOT tell you what a real consumer's own npm config would resolve".
+- **The 6.8(ii) augment decision survives.** `version` and `dist.tarball` now come from one response, and the host assertion still augments the version check, as DD12 already decided.
+
+### 2. R1-2: CLOSED
+
+- The paste target is `docs/releases/<v>/publish-verification.txt`, which git will track (`.txt`, not `.log`).
+- Step 6 names a post-publish release-record PR as its route to protected `main`. It uses step 3's existing mechanism and is explicitly distinct from the pre-publish release PR.
+- The row's education text names the committed `.txt` as the thing the RELEASE claims pass reads.
+
+### 3. R1-3 to R1-7: FOLDED IN, verbatim or in substance
+
+- **R1-3**: the in-field statement of reach sits in `checks`, including "no downstream tool consumes its exit code".
+- **R1-4**: the reader is now the ARMING-event register reader plus `EXPECTED_CONTEXTS`, with `audit:coverage-map` explicitly excluded.
+- **R1-5**: "REQ 6.1 IS NOT VERIFIED BY THIS ROW", plus a committed issue (`.kiro/issues/2026-09-27-integration-guide-install-section-stale.md`, PR #214).
+- **R1-6**: the count is "30 live ids + this one (31)". I re-ran the sweep: 0 relations, 0 duplicates.
+- **R1-7**: the ordering half is now marked operational in the rationale.
+
+### 4. The `armed` fork, my ruling: **`check_state: armed` stands. No two-step.**
+
+**Why armed is honest:**
+- Both conditions my first review set are now met:
+  1. the row and step 6 land in one commit, and the row's own `checks` string says so;
+  2. R1-1 is fixed, with a committed `PASS` from the exact step-6 command against a live version.
+- Before application, the draft ballot is not a register state, so no "armed" claim exists yet to be true or false.
+- The `completion-criteria-parity` comparison does not carry over. That row is `proposed` because a separate, later Q2 decision gates its required-flag. No such gate exists here: step 6 is the wiring, and it lands with the row.
+
+**Why I declined the two-step** (`proposed` until step 6 first fires in a real release):
+- It would make `check_state` wait on liveness.
+- Req 6.7 and this row's own education assign liveness to the RELEASE claims pass, and "never … this row".
+- The two-step would therefore fuse back together what the split was ratified to separate.
+
+**Binding condition:** if application is ever split, with the row committed without step 6, the row lands as `proposed`. Only the same-commit case earns `armed`.
+
+**What survives my ruling:**
+- The guard has never run right after a real publish.
+- The registry's per-version endpoint may briefly 404 immediately after `npm publish`. That would be a loud false red on release day.
+- Step 6's "Fix and re-run" covers it, and my RELEASE pass will see it in the committed record.
+- This is a liveness and usability risk, not an arming defect. I record it so it is expected, not discovered.
+
+### 5. CHANGELOG: C1–C10 applied as written; no new claim errors
+
+- **All ten corrections are present verbatim or in substance**, and the `### Publishing` section is deleted.
+- **L1–L3 and L9 re-checked:**
+  - I checked every changed sentence against my first-review sources again. None is new.
+  - The new pointer, `https://github.com/3fn/DesignerPunk/releases`, resolves publicly (HTTP 200). The GitHub API lists v14.1.0, v14.0.0 and v13.0.0 with non-empty notes, so "full hand-authored delta" is true.
+- **GitHub Packages:** `grep` finds 0 hits for "GitHub Packages" or `pkg.github` in `CHANGELOG.md`.
+- **T2 still holds**: nothing in the entry invites strangers to onboard.
+- **Note for release-prep (not a correction):** the new parenthetical "(This figure is re-measured at release-prep …)" is a process note inside consumer text. It should be removed when the figure is re-measured, or the published entry will still promise a future measurement.
+
+### 6. Task 7.2's corrected `.npmrc` wording: ACCEPTED
+
+- The correction keeps the false claim on record next to its fix; it does not silently replace it.
+- It states precisely what was true: npm loaded its config layers as usual.
+- It correctly notes that the correction is moot for the rewritten guard.
+
+### Routed correction (non-blocking; Thurgood, as the author of the 7.4 doc)
+
+- **The 7.4 doc overstates.** Its closing sentence says "no consumer-facing surface names GitHub Packages (Req 6.1)". That is false. `governance/DesignerPunk-Integration-Guide.md` L25 and L36–40 still do, and `governance/` ships and is copied by `init`. The register row itself cites that as a live 6.1 finding (issue #214).
+- **Fix:** scope the sentence to the file, for example "`CHANGELOG.md` names no GitHub Packages surface (Req 6.1)". This should land before the U1 unit PR.
+
+### Low notes (no change required; recorded so they are not rediscovered)
+
+- **"Hermetic-from-config by construction"** (in the Req 6.8 and C9 errata and the row's history) is broader than the evidence.
+  - The `.npmrc` half is exactly true.
+  - But `curl` has its own config layer: `~/.curlrc` (absent on this machine) and proxy environment variables. My network-failure probe was redirected by a proxy env var, and the script failed loudly.
+  - If Thurgood wants the broad phrase to be literal, a leading `curl -q` disables `.curlrc`. Otherwise, narrowing the wording to "npm config" makes it exact.
+- **The row's `checks` string counts a live PASS among its "three recorded bites".** In this register, "bite" has meant a recorded red. The precise wording would be two recorded reds plus a recorded live PASS. The evidence itself is sound.
+- **An unset `VERSION` exits 1** ("unbound variable") rather than one of the named codes. It fails loudly, so this is a contract gap, not a hazard.
+
+### Standards implications
+
+**None new.** My first review's items 1–3 stand: the `armed_at` enum has no value for a check that runs after the event and is halted by a human; the `*.log` gitignore rule defeats named paste targets; and a command quoted in a requirement still needs a run. The rework is a worked instance of item 3 being honoured.
