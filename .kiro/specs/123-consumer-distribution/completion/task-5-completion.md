@@ -110,6 +110,8 @@ The migration loads 11.9.0–12.x's transform from `src/cli/shared/transforms.ts
 - This repo's stale `.kiro/sync-manifest.json` is **left untouched and routed to Thurgood** (Civitas steward). It is asserted by `mcp-server/src/relocation-integrity-gate/relocation-integrity-gate.ts:254`.
 - Record: `task-5-4-completion.md`.
 
+**Addendum (2026-09-27, Thurgood, CI gatefix on U1 PR #215)**: routed item investigated, not a code fix. The gate's A1 check on `.kiro/sync-manifest.json` (line 254) currently PASSES (82 governance keys, 9 identity keys, meta-guide dropped). It was NOT the cause of the `lane-mcp-server-suite` CI failure on U1 — that was a different check (A7, the `FileScanner.ts` `MANAGED_DIRS` shape Task 5.4 itself retired; fixed by re-pointing to `Manifest.ts`'s `COPY_ROOTS`, see `task-9-ci-gatefix-completion.md`). The steward guard means `sync` never reads or writes `.kiro/sync-manifest.json` in this repo, so the file is frozen and cannot be corrupted going forward — A1 is a fossil check on inert content, not a live risk. Left unchanged: it currently passes, protects a real historical fact, and this repo has no `designerpunk.manifest.json` to re-point it to (the steward guard prevents one from ever being created here). Treating the routed item as resolved in the sense that mattered — confirmed non-blocking, confirmed non-corruptible — not in the sense of a code change.
+
 ---
 
 ## Carried, not fixed in this task
