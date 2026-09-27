@@ -30,6 +30,8 @@ import {
 } from './shared/errorCatalog';
 import { scaffoldKiroMcpConfig } from './shared/mcpConfig/kiro';
 import { scaffoldClaudeCodeMcpConfig } from './shared/mcpConfig/cc';
+import { serializeManifest } from './sync/Manifest';
+import type { DesignerPunkManifest } from './sync/Manifest';
 
 interface InitOptions {
   name?: string;
@@ -329,7 +331,8 @@ export async function runInit(argv: string[]): Promise<void> {
   // --- Manifest — written LAST (design.md C1's manifest row) ---------------
   const installedVersion = readPackageVersion(pkgRoot);
   const manifestPath = path.join(dest, 'designerpunk.manifest.json');
-  fs.writeFileSync(manifestPath, JSON.stringify(manifest.build(installedVersion), null, 2) + '\n', 'utf-8');
+  // Serialized by sync's manifest writer (stable order, one entry per line — C7), so the first sync does not rewrite it.
+  fs.writeFileSync(manifestPath, serializeManifest(manifest.build(installedVersion) as unknown as DesignerPunkManifest), 'utf-8');
   console.log('✓ Created designerpunk.manifest.json');
 
   // --- Next steps (C27 erratum; Req 15.8, 15.9, 19.6) ----------------------

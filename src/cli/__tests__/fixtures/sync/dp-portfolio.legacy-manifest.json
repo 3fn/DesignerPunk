@@ -1,0 +1,142 @@
+{
+  "_provenance": "TRIMMED, FAITHFUL SUBSET of dp-portfolio (/Users/3fn/Documents/Work Projects/Kiro/test01, remote dreamhost designerpunk.ai.git) .kiro/sync-manifest.json, read-only on 2026-09-26 for Spec 123 Task 5.1. Paths, hashes, managed flags, version and syncedAt are verbatim; only the entry SET is trimmed. Full file: 142,698 bytes, 773 entries, 105 managed. dp-portfolio package.json pins @3fn/core 12.0.5 (manifest version 12.0.3 LAGS the installed version).",
+  "_fullCounts": {
+    ".kiro/steering": 89,
+    ".kiro/agents": 16,
+    "src/tokens": 59,
+    "src/types": 7,
+    "src/components/core": 602
+  },
+  "version": "12.0.3",
+  "syncedAt": "2026-06-11T02:46:38.045Z",
+  "files": {
+    ".kiro/steering/00-Steering Documentation Directional Priorities.md": {
+      "hash": "b468027255609f4f1e22a88b8531afa7a642d9cf4b9a0352453987dc1b7c01f4",
+      "managed": true
+    },
+    ".kiro/steering/A Vision of the Future.md": {
+      "hash": "ad5858dd77e994bc8bbdb173a967653d2aef75d05f3180f842c039991b968538",
+      "managed": true
+    },
+    ".kiro/steering/AI-Collaboration-Framework.md": {
+      "hash": "8be42a0d32fc5b8806158137819e8dc28f560c83c4e4035647463edb1a399358",
+      "managed": true
+    },
+    ".kiro/agents/ada-prompt.md": {
+      "hash": "f3c4dcf311edf8c9784fa210f7efd17f70aa97f8f48fe8a15986ef022eb3e488",
+      "managed": true
+    },
+    ".kiro/agents/ada.json": {
+      "hash": "f1f6cf767a2aa6ca3ce5bb66f93278b1b193906c52cca01ba697ecad873dbeb2",
+      "managed": true
+    },
+    "src/tokens/BlendTokens.ts": {
+      "hash": "ad4b373455fc762c311e042e1313f38982e4a2eafa3c6c7b0d93bc2491e2f069",
+      "managed": false
+    },
+    "src/tokens/BlurTokens.ts": {
+      "hash": "8568493136dc63b08b8870794cef65eff082d1a75317681feea0551e3d31b136",
+      "managed": false
+    },
+    "src/tokens/BorderWidthTokens.ts": {
+      "hash": "bcd6a1dcecbd17f314436adb4d6b5f5f973e563c3bbc3d2619cd0ad35cec5155",
+      "managed": false
+    },
+    "src/types/ComponentTypes.ts": {
+      "hash": "a151bddf8f77b7f43cb507b9e6cf99979f53c51da98a66ae9d498b2c3634b456",
+      "managed": false
+    },
+    "src/types/PrimitiveToken.ts": {
+      "hash": "3bd7cdbefa3585867147e5171edf3fe9fd0d2d85faf20444b5be03dcd02a146f",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/Badge-Label-Base.schema.yaml": {
+      "hash": "74be40a1bd2e3e167ae04c7e07582fdb2d1a3260a3440aea5082f05eb4073f6e",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/README.md": {
+      "hash": "21d7101961331419807193bc62265343f6df369c0f711ec52e8b0d694e754bf0",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/component-meta.yaml": {
+      "hash": "7a0edd9eb2b6b2f2e4098a4aaabbf6545e5300c2d5449edaad908ebbc813ef41",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/contracts.yaml": {
+      "hash": "6dd26f369252559cca0c1c97d9745ec69e04d2aa46c769b7ed3d4bf0d8041071",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/index.ts": {
+      "hash": "d725d460b136c9ad208cea7112017a92bedd34346116f0b0c649e75fab809988",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt": {
+      "hash": "7fba972349f09d9550dfebdf8e832b809d5ad6203e532dff5eed5202d364e28d",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift": {
+      "hash": "0e0d8ab7b0412679f9ae415d6132d6efcae3cba2d6ddf383ec2b81ef0d703fb9",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/web/BadgeLabelBase.styles.css": {
+      "hash": "cb7a21879700ad48d351ca0e4f3ba202dd1abbfb8e386e9b56b9e9dd4c3e3bad",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/platforms/web/BadgeLabelBase.web.ts": {
+      "hash": "437d9fa650427ceea9cb5b31351b3be03bb0a29d47bc4968909a36950fdfcc92",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/tokens.ts": {
+      "hash": "ec6d10e834c089c524a1a5822ef5f89173c680429eaea845c663659ef1d18dce",
+      "managed": false
+    },
+    "src/components/core/Badge-Label-Base/types.ts": {
+      "hash": "343779ada6c2abc81b331b707319816d2b23831f7d41c2f648d45967011fa89e",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/Button-Icon.schema.yaml": {
+      "hash": "b312478a3926bbe59314c206d16295043161d6e50be33442178fe0624915cd28",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/README.md": {
+      "hash": "8b5bdfcabc45e22a1a4f9ab8e3277d762a582500404c14ffce109efd13497863",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/buttonIcon.tokens.ts": {
+      "hash": "000700157d35c6ccea0993ff00d0b5f5ec141b3d4d037c25a2dd1fbb205261e4",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/component-meta.yaml": {
+      "hash": "27cfb7371c6c3be2ba98e6efb9cf557e4dddbf96980ae658b04ba3e73ad20a2f",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/contracts.yaml": {
+      "hash": "a2a0a8986819bd6497fb7a9e04f0ac990c088f560ce5140a78280a9889a306bb",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt": {
+      "hash": "90d2c85fbaab7bc42e6dacb7213f3125c097cc9b93ec165cec72a387e747ac26",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift": {
+      "hash": "72837d7bbac2fb0a1e9e3884de0fa04a1f21293cf04de54a489a8878e7afa1fd",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/web/.gitkeep": {
+      "hash": "a607b98124e5f4888daa9ab88dc7315157813b93b98699641f7ec1c1751cdb50",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/web/ButtonIcon.web.css": {
+      "hash": "a9f3b1c227d346a3a4fed89b3f478d37c8b15db76a5a393806fb4d6f7faa994b",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/platforms/web/ButtonIcon.web.ts": {
+      "hash": "e55d51fea4f325fb9fbabb190514c3540e7823910ad36b63641719da3cc0bf84",
+      "managed": false
+    },
+    "src/components/core/Button-Icon/types.ts": {
+      "hash": "773c75c2b8db2e146f956ee7dfe569ca8b5a1546defd6afe358c44184c7b3ef5",
+      "managed": false
+    }
+  }
+}

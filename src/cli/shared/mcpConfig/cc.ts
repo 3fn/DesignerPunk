@@ -90,7 +90,8 @@ export function scaffoldClaudeCodeMcpConfig(
     fs.mkdirSync(path.dirname(settingsPath), { recursive: true });
     fs.writeFileSync(settingsPath, JSON.stringify({ permissions: { allow: allowEntries } }, null, 2) + '\n', 'utf-8');
     console.log(`✓ Created .claude/settings.json (${allowEntries.length} approved tools)`);
-    manifest.recordFile('.claude/settings.json', settingsPath, 'generated');
+    // Key grain, one entry per allow string (Spec 123 Task 5.3 — C7's `permissions.allow` row).
+    for (const entry of allowEntries) manifest.recordKey('.claude/settings.json', entry, entry);
     return;
   }
 
@@ -110,7 +111,8 @@ export function scaffoldClaudeCodeMcpConfig(
     existingSettings.permissions.allow = [...existingAllow, ...newEntries];
     fs.writeFileSync(settingsPath, JSON.stringify(existingSettings, null, 2) + '\n', 'utf-8');
     console.log(`✓ .claude/settings.json: added ${newEntries.length} approved tool(s)`);
-    manifest.recordFile('.claude/settings.json', settingsPath, 'generated');
+    // Key grain — only the entries WE added; pre-existing ones are hers (C7 namespace rule).
+    for (const entry of newEntries) manifest.recordKey('.claude/settings.json', entry, entry);
   } else {
     console.log(`  skipped: .claude/settings.json (all DesignerPunk approvals already present)`);
   }

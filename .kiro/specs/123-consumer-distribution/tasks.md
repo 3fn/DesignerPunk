@@ -396,10 +396,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `src/cli/sync/{FileScanner,Classifier,Manifest,Applier,Reporter,index,Migration,KeyGrain}.ts`, tests
 
-  - [ ] 5.1 Obtain or record Peter's dp-portfolio check (with its forced negative); fixtures for both branches
-  - [ ] 5.2 Manifest: path, format, fields incl. `posture` and `origin`, keyed entries, pruning incl. the `src/types` string (**¾–1 day**)
-  - [ ] 5.3 Key-grain JSON manager, parsed-value reading, no-write-when-unchanged, three shapes (**~1–1¼ days**)
-  - [ ] 5.4 Managed set; classifications; `removed` scoping; apply behavior; Applier deletion
+  - [x] 5.1 Obtain or record Peter's dp-portfolio check (with its forced negative); fixtures for both branches
+  - [x] 5.2 Manifest: path, format, fields incl. `posture` and `origin`, keyed entries, pruning incl. the `src/types` string (**¾–1 day**)
+  - [x] 5.3 Key-grain JSON manager, parsed-value reading, no-write-when-unchanged, three shapes (**~1–1¼ days**)
+  - [x] 5.4 Managed set; classifications; `removed` scoping; apply behavior; Applier deletion
   - [ ] 5.5 Component-copy migration (the consumer's rail, cache first; the version range; `transforms.js` from the tarball; per-file; relocation; ordering); **legacy agents/steering retained with the U1 report string**
   - [ ] 5.6 Repairs (registry pin, tsconfig pin), after the migration fetch
 

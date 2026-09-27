@@ -26,7 +26,7 @@ import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
 import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
-import { runSync } from './sync';
+import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import { partialCaseMessage } from './shared/errorCatalog';
@@ -449,12 +449,7 @@ async function runFigmaCommand(script: 'figma-push' | 'figma-extract') {
 }
 
 async function runSyncCommand() {
-  const flags = process.argv.slice(3);
-  await runSync({
-    dryRun: flags.includes('--dry-run'),
-    force: flags.includes('--accept-all') || flags.includes('--force'),
-    projectRoot: process.cwd(),
-  });
+  await runSync({ ...parseSyncArgs(process.argv.slice(3)), projectRoot: process.cwd() });
 }
 
 function printHelp() {
@@ -465,7 +460,7 @@ Usage:
   npx designerpunk init            Bootstrap a new product repo
   npx designerpunk sync            Detect and apply package updates
   npx designerpunk sync --dry-run  Preview what sync would do (no changes)
-  npx designerpunk sync --accept-all    Accept all updates without prompting
+  npx designerpunk sync --apply   Apply updates without the confirmation prompt (off a terminal)
   npx designerpunk generate        Generate token files from designerpunk.config.ts
   npx designerpunk generate --force              Regenerate all (skip staleness check)
   npx designerpunk generate --product-only       Skip system tokens, regenerate product only

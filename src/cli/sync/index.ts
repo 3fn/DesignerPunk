@@ -1,115 +1,334 @@
 /**
- * `npx designerpunk sync` — Detect and apply package updates.
+ * `npx designerpunk sync` — reconcile what DesignerPunk manages in a consumer
+ * repo with the installed package, and report (never write) everything else.
  *
- * Orchestrates: resolve → manifest → ignore → scan → classify → report → apply → save.
+ * Spec 123 Task 5 (design.md § "C7"; Reqs 5.1, 5.2, 5.5–5.8). Re-scoped from
+ * Spec 111 under Model B:
+ *  - **Ours never flows into theirs.** The token tier (`src/tokens`), `src/types`
+ *    and the pre-123 component copies are NOT managed: never scanned for
+ *    reconciliation, never written (Req 5.8). Their old manifest entries are
+ *    PRUNED with a one-line report per group.
+ *  - **What is managed is what the manifest recorded** — U1: the package-copy
+ *    roots (`origin: 'copy'`, file grain) and the MCP keys (`grain: 'key'`).
+ *  - **No class applies without the report first.** Off a terminal, nothing is
+ *    written without `--apply`; on a terminal, one batch confirmation. A
+ *    `conflict` applies only with `--overwrite <path>`, a `deleted-by-you` only
+ *    with `--restore <path>`.
  *
- * @see Spec 111 — Requirements 1-9
+ * Order: resolve → steward guard → manifest (load | relocate legacy) → prune →
+ * classify (files, keys) → migration → repairs → REPORT → decide → apply → save.
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
+import * as readline from 'readline';
 import { resolvePackage } from './PackageResolver';
-import { scanFiles, MANAGED_DIRS } from './FileScanner';
-import { loadManifest, saveManifest, bootstrapManifest } from './Manifest';
+import { scanFiles } from './FileScanner';
+import {
+  loadManifest,
+  loadLegacyManifest,
+  saveManifest,
+  convertLegacyManifest,
+  pruneDemanaged,
+  pruneReportLines,
+  writeLegacyPointer,
+  legacyHasPointer,
+  MANIFEST_FILE,
+  LEGACY_MANIFEST_PATH,
+  MANIFEST_SCHEMA_VERSION,
+} from './Manifest';
+import type { DesignerPunkManifest, PrunedGroup } from './Manifest';
 import { loadIgnoreFilter } from './IgnoreFilter';
-import { classifyFiles } from './Classifier';
-import { displayReport } from './Reporter';
-import { resolveConflicts, confirmSourceUpdates } from './Prompter';
-import { applyGovernance, applySource, applyForce, applyFile } from './Applier';
+import { classifyFiles, managedCopyRoots } from './Classifier';
+import type { ClassificationResult } from './Classifier';
+import {
+  KEY_SURFACES,
+  computePackageKeys,
+  readProjectKeys,
+  classifySurfaceKeys,
+} from './KeyGrain';
+import type { SurfaceKeyResult } from './KeyGrain';
+import {
+  buildReport,
+  displayReport,
+  STEWARD_REPO_MESSAGE,
+  OFF_TTY_REPORT_ONLY_MESSAGE,
+  RETIRED_FORCE_MESSAGE,
+  corruptManifestMessage,
+  packageKeysUnavailableMessage,
+} from './Reporter';
+import { applyCopyFile, adoptCopyFile, applyKeys } from './Applier';
 import { reportAndMaybeFixStaleSteeringDir } from './SteeringDirCheck';
-import type { SyncManifest } from './Manifest';
+import {
+  migrationTrigger,
+  hasLegacyCopies,
+  assessComponentCopies,
+  resolveUpperBound,
+  migrationReportLines,
+  relocateComponents,
+  npmRailFetcher,
+  LEGACY_AGENTS_RETAINED_MESSAGE,
+} from './Migration';
+import type { MigrationAssessment, PackageFetcher, RelocationResult } from './Migration';
 
 export interface SyncOptions {
-  dryRun: boolean;
-  force: boolean;
   projectRoot: string;
+  /** Report only; never write (any TTY state). */
+  dryRun?: boolean;
+  /** Apply updates without the terminal confirmation (the off-TTY path). */
+  apply?: boolean;
+  /** `deleted-by-you` paths (or `<file>#<key>` ids) to re-add. */
+  restore?: string[];
+  /** `conflict` paths (or `<file>#<key>` ids) to overwrite. */
+  overwrite?: string[];
+  /** The retired `--force` / `--accept-all` flags were passed (reported, not honored). */
+  retiredForce?: boolean;
+  /** Test seam — defaults to `process.stdin.isTTY`. */
+  isTTY?: boolean;
+  /** Test seam — the terminal batch confirmation. */
+  confirm?: (question: string) => Promise<boolean>;
+  /** `--migrate-components`: relocate forks to src/components/<Name>/, remove unmodified copies. */
+  migrateComponents?: boolean;
+  /** Test seam — the migration's package fetcher (default: the consumer's own npm rail). */
+  fetcher?: PackageFetcher;
 }
 
-export async function runSync(options: SyncOptions): Promise<void> {
-  const { dryRun, force, projectRoot } = options;
+export interface SyncOutcome {
+  /** Why the run ended early, if it did. */
+  stopped?: 'steward' | 'corrupt-manifest' | 'dry-run' | 'off-tty' | 'declined';
+  applied: string[];
+  manifestWritten: boolean;
+  report: string[];
+  /** The migration assessment, when the pre-123 surface triggered it. */
+  migration?: MigrationAssessment;
+  relocation?: RelocationResult;
+  /** Ordered events (fetches, repair offers) — the ordering instrument (C7 step 6). */
+  trace: string[];
+}
 
-  // Non-TTY guard
-  if (!process.stdin.isTTY && !force && !dryRun) {
-    console.log('Non-interactive environment detected — running in dry-run mode.\n');
-    return runSync({ ...options, dryRun: true });
+/** Parse `sync`'s CLI flags (everything after `sync`). */
+export function parseSyncArgs(argv: string[]): Omit<SyncOptions, 'projectRoot'> {
+  const opts: Omit<SyncOptions, 'projectRoot'> = { restore: [], overwrite: [] };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--dry-run') opts.dryRun = true;
+    else if (a === '--apply') opts.apply = true;
+    else if (a === '--force' || a === '--accept-all') opts.retiredForce = true;
+    else if (a === '--restore' && argv[i + 1]) opts.restore!.push(argv[++i]);
+    else if (a.startsWith('--restore=')) opts.restore!.push(a.slice('--restore='.length));
+    else if (a === '--overwrite' && argv[i + 1]) opts.overwrite!.push(argv[++i]);
+    else if (a.startsWith('--overwrite=')) opts.overwrite!.push(a.slice('--overwrite='.length));
+    else if (a === '--migrate-components') opts.migrateComponents = true;
   }
+  return opts;
+}
 
-  // 1. Resolve package
+function realpathOr(p: string): string {
+  try {
+    return fs.realpathSync(p);
+  } catch {
+    return path.resolve(p);
+  }
+}
+
+async function terminalConfirm(question: string): Promise<boolean> {
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const answer = await new Promise<string>((resolve) => rl.question(`${question} [y/N]: `, resolve));
+  rl.close();
+  return answer.trim().toLowerCase() === 'y' || answer.trim().toLowerCase() === 'yes';
+}
+
+export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
+  const { projectRoot } = options;
+  const outcome: SyncOutcome = { applied: [], manifestWritten: false, report: [], trace: [] };
+  const isTTY = options.isTTY ?? Boolean(process.stdin.isTTY);
+
+  // 1. Resolve the installed package.
   const pkg = resolvePackage(projectRoot);
+
+  // 1b. Steward exemption (design C2; found-not-fixed item 5): the package's own
+  //     tree is not a consumer. Nothing is read or written — including this
+  //     repo's own stale `.kiro/sync-manifest.json`, which sync does not own here.
+  if (realpathOr(pkg.root) === realpathOr(projectRoot)) {
+    console.log(STEWARD_REPO_MESSAGE);
+    return { ...outcome, stopped: 'steward', report: [STEWARD_REPO_MESSAGE] };
+  }
   console.log(`📦 @3fn/core v${pkg.version}\n`);
+  if (options.retiredForce) console.log(`${RETIRED_FORCE_MESSAGE}\n`);
 
-  // 2. Load manifest (or null for first-time)
-  let manifest = loadManifest(projectRoot);
-  const isFirstSync = !manifest;
-
-  // 3. Load ignore filter
-  const ignore = loadIgnoreFilter(projectRoot);
-
-  // 4. Scan package and project files
-  const packageFiles = scanFiles(pkg.root, MANAGED_DIRS);
-  const projectFiles = scanFiles(projectRoot, MANAGED_DIRS);
-
-  // 5. Bootstrap manifest on first sync
-  if (isFirstSync) {
-    manifest = bootstrapManifest(projectFiles, pkg.version);
-    console.log('📋 First sync — bootstrapping manifest from current project state.\n');
+  // 2. Manifest — the root manifest, else the legacy one (relocated on apply).
+  const manifestLines: string[] = [];
+  const loaded = loadManifest(projectRoot);
+  if (loaded.kind === 'corrupt') {
+    const msg = corruptManifestMessage(loaded.error);
+    console.log(msg);
+    return { ...outcome, stopped: 'corrupt-manifest', report: [msg] };
   }
-
-  // 6. Classify
-  const classified = classifyFiles(packageFiles, projectFiles, manifest, ignore);
-
-  // 7. Report
-  displayReport(classified, { dryRun });
-
-  // 7b. Net-new: detect a stale MCP_STEERING_DIR (pre-119-A '.kiro/steering')
-  //     in the consumer's MCP config and prompt to repoint it at 'governance/'.
-  await reportAndMaybeFixStaleSteeringDir(projectRoot, { dryRun });
-
-  // 8. Early exit for dry-run
-  if (dryRun) return;
-
-  // 9. Apply
-  const allUpdatable = [...classified.new, ...classified.updatedSafe];
-
-  if (force) {
-    // Force mode: apply everything without prompting
-    const allFiles = [...allUpdatable, ...classified.conflicts];
-    applyForce(allFiles, pkg.root, projectRoot, manifest!);
+  let manifest: DesignerPunkManifest;
+  let pruned: PrunedGroup[] = [];
+  let relocateLegacy = false;
+  let persistManifest: boolean;
+  if (loaded.kind === 'ok') {
+    manifest = loaded.manifest;
+    persistManifest = true;
   } else {
-    // Auto-apply governance tier
-    const govResult = applyGovernance(allUpdatable, pkg.root, projectRoot, manifest!);
-    if (govResult.applied.length > 0) {
-      console.log(`\n  ✓ ${govResult.applied.length} governance file${govResult.applied.length === 1 ? '' : 's'} applied`);
-    }
-
-    // Confirm and apply source tier
-    const sourceFiles = allUpdatable.filter(f => f.tier === 'source');
-    if (sourceFiles.length > 0) {
-      const confirmed = await confirmSourceUpdates(sourceFiles);
-      if (confirmed) {
-        applySource(allUpdatable, pkg.root, projectRoot, manifest!);
-        console.log(`  ✓ ${sourceFiles.length} source file${sourceFiles.length === 1 ? '' : 's'} applied`);
-      } else {
-        console.log('  ⏭ Source updates skipped.');
-      }
-    }
-
-    // Interactive conflict resolution
-    if (classified.conflicts.length > 0) {
-      const decisions = await resolveConflicts(
-        classified.conflicts,
-        pkg.root,
-        projectRoot,
+    const legacy = loadLegacyManifest(projectRoot);
+    if (legacy) {
+      const conv = convertLegacyManifest(legacy, pkg.version);
+      manifest = conv.manifest;
+      pruned = conv.pruned;
+      relocateLegacy = true;
+      persistManifest = true;
+      manifestLines.push(
+        `found the pre-123 manifest ${LEGACY_MANIFEST_PATH} (last synced at ${legacy.version}) — it moves to ${MANIFEST_FILE} at the repo root when changes apply`,
       );
-      for (const d of decisions) {
-        if (d.decision === 'overwrite') {
-          applyFile(d.file, pkg.root, projectRoot, manifest!);
-        }
+    } else {
+      manifest = {
+        version: MANIFEST_SCHEMA_VERSION,
+        posture: 'born',
+        installedVersion: pkg.version,
+        contractHash: '',
+        attachedTargets: [],
+        entries: {},
+      };
+      persistManifest = false;
+      manifestLines.push(`no ${MANIFEST_FILE} and no ${LEGACY_MANIFEST_PATH} — nothing here was recorded as DesignerPunk's, so nothing is managed`);
+    }
+  }
+  const entries = manifest.entries;
+  pruned = [...pruned, ...pruneDemanaged(entries)];
+  manifestLines.push(...pruneReportLines(pruned));
+
+  // 3. File grain — the copy roots this manifest manages.
+  const ignore = loadIgnoreFilter(projectRoot);
+  const roots = managedCopyRoots(entries);
+  const files: ClassificationResult = classifyFiles(
+    scanFiles(pkg.root, roots),
+    scanFiles(projectRoot, roots),
+    entries,
+    ignore,
+    roots,
+  );
+
+  // 4. Key grain — the package side for the manifest's attachedTargets.
+  const keyResults: SurfaceKeyResult[] = [];
+  const sections: Array<{ title: string; lines: string[] }> = [];
+  if (manifest.attachedTargets.length > 0) {
+    const pkgKeys = computePackageKeys(pkg.root, manifest.attachedTargets);
+    if (pkgKeys.kind === 'unavailable') {
+      sections.push({ title: '⚠️  MCP configuration:', lines: [packageKeysUnavailableMessage(pkgKeys.reason)] });
+    } else {
+      for (const surface of KEY_SURFACES) {
+        const pkgSurfaceKeys = pkgKeys.keys.get(surface.file);
+        if (!pkgSurfaceKeys) continue;
+        keyResults.push(classifySurfaceKeys(surface, pkgSurfaceKeys, readProjectKeys(projectRoot, surface), entries));
       }
     }
   }
 
-  // 10. Save manifest
-  manifest!.version = pkg.version;
-  manifest!.syncedAt = new Date().toISOString();
-  saveManifest(projectRoot, manifest!);
-  console.log('\n✅ Sync complete. Manifest updated.');
+  // 5. Migration — pre-123 component copies (C7 steps 2–5), judged against shipped content.
+  const trigger = migrationTrigger(projectRoot, relocateLegacy);
+  if (trigger) {
+    const lines: string[] = [];
+    if (hasLegacyCopies(projectRoot)) {
+      const fetcher = options.fetcher ?? npmRailFetcher(projectRoot);
+      try {
+        const upperBound = resolveUpperBound(projectRoot, loaded.kind === 'ok' ? manifest.installedVersion : null);
+        outcome.migration = assessComponentCopies(projectRoot, { fetcher, upperBound, trigger });
+      } finally {
+        fetcher.dispose?.();
+      }
+      for (const v of outcome.migration.fetchLog) outcome.trace.push(`fetch:${v}`);
+      lines.push(...migrationReportLines(outcome.migration));
+    }
+    if (roots.some((r) => r !== '.kiro/skills') || ['.kiro/agents', '.kiro/steering', 'governance'].some((d) => fs.existsSync(path.join(projectRoot, d)))) {
+      lines.push(LEGACY_AGENTS_RETAINED_MESSAGE);
+    }
+    sections.push({ title: '🧬 Migrating from a pre-123 install:', lines });
+  }
+
+  // 7. REPORT — always, before anything applies.
+  const report = buildReport({ dryRun: Boolean(options.dryRun), manifestLines, files, keys: keyResults, sections });
+  displayReport(report);
+  outcome.report = report;
+  await reportAndMaybeFixStaleSteeringDir(projectRoot, { dryRun: Boolean(options.dryRun) || !isTTY });
+
+  // 8. Decide.
+  if (options.dryRun) return { ...outcome, stopped: 'dry-run' };
+  if (options.migrateComponents && outcome.migration) {
+    // The explicit flag IS the per-run authorization (nothing is removed without it).
+    outcome.relocation = relocateComponents(projectRoot, outcome.migration);
+    const r = outcome.relocation;
+    console.log(
+      `\n  ✓ --migrate-components: removed ${r.removed.length} unmodified cop${r.removed.length === 1 ? 'y' : 'ies'}, ` +
+        `relocated ${r.relocated.length} to ${'src/components/<Name>/'}` +
+        (r.skipped.length ? `; not moved (src/components/<Name>/ exists): ${r.skipped.join(', ')}` : '') +
+        (r.leftInPlace.length ? `; left in place (cannot tell): ${r.leftInPlace.join(', ')}` : ''),
+    );
+  }
+  const restore = new Set(options.restore ?? []);
+  const overwrite = new Set(options.overwrite ?? []);
+  const keyOf = (s: SurfaceKeyResult, key: string) => `${s.surface.file}#${key}`;
+
+  const fileBatch = [...files.new, ...files.updatedSafe].map((f) => f.relativePath);
+  const fileRestore = files.deletedByYou.filter((f) => restore.has(f.relativePath)).map((f) => f.relativePath);
+  const fileOverwrite = files.conflicts.filter((f) => overwrite.has(f.relativePath)).map((f) => f.relativePath);
+  const keyWork = keyResults.map((s) => ({
+    s,
+    items: s.classified.filter(
+      (c) =>
+        c.classification === 'new' ||
+        c.classification === 'updated-safe' ||
+        (c.classification === 'deleted-by-you' && restore.has(keyOf(s, c.key))) ||
+        (c.classification === 'conflict' && overwrite.has(keyOf(s, c.key))),
+    ),
+  }));
+  const keyCount = keyWork.reduce((n, w) => n + w.items.length, 0);
+  const manifestChanges =
+    relocateLegacy ||
+    pruned.length > 0 ||
+    files.adoptable.length > 0 ||
+    files.dropEntries.length > 0 ||
+    keyResults.some((s) => s.dropEntries.length > 0) ||
+    (persistManifest && manifest.installedVersion !== pkg.version);
+  const workCount = fileBatch.length + fileRestore.length + fileOverwrite.length + keyCount;
+  if (workCount === 0 && !manifestChanges) return outcome;
+
+  if (!options.apply) {
+    if (!isTTY) {
+      console.log(`\n${OFF_TTY_REPORT_ONLY_MESSAGE}`);
+      return { ...outcome, stopped: 'off-tty' };
+    }
+    const confirm = options.confirm ?? terminalConfirm;
+    const ok = await confirm(
+      `\nApply ${workCount} change${workCount === 1 ? '' : 's'}${manifestChanges ? ' and update the manifest' : ''}?`,
+    );
+    if (!ok) {
+      console.log('  ⏭ Nothing applied.');
+      return { ...outcome, stopped: 'declined' };
+    }
+  }
+
+  // 9. Apply.
+  for (const rel of [...fileBatch, ...fileRestore, ...fileOverwrite]) {
+    if (applyCopyFile(pkg.root, projectRoot, rel, entries)) outcome.applied.push(rel);
+  }
+  for (const f of files.adoptable) adoptCopyFile(projectRoot, f.relativePath, entries);
+  for (const rel of files.dropEntries) delete entries[rel];
+  for (const { s, items } of keyWork) {
+    for (const id of s.dropEntries) delete entries[id];
+    if (items.length === 0) continue;
+    applyKeys(projectRoot, s.surface, items.map((c) => ({ key: c.key, value: c.packageValue })), entries);
+    for (const c of items) outcome.applied.push(keyOf(s, c.key));
+  }
+
+  // 10. Save — the root manifest; relocation leaves the legacy file a pointer.
+  if (persistManifest) {
+    manifest.installedVersion = pkg.version;
+    outcome.manifestWritten = saveManifest(projectRoot, manifest);
+    if (relocateLegacy && !legacyHasPointer(projectRoot)) writeLegacyPointer(projectRoot);
+  }
+  if (outcome.applied.length > 0) console.log(`\n  ✓ ${outcome.applied.length} change${outcome.applied.length === 1 ? '' : 's'} applied`);
+  console.log(outcome.manifestWritten ? `✅ Sync complete. ${MANIFEST_FILE} updated.` : '✅ Sync complete.');
+  return outcome;
 }

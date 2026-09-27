@@ -1,108 +1,48 @@
 /**
  * @category evergreen
- * @purpose Verify FileScanner hashes files, respects excludeDirs, handles missing dirs (Spec 111, R1 AC2/AC4/AC5)
+ * @purpose FileScanner: hashes files, respects excludeDirs, skips missing dirs,
+ * forward-slash relative paths (Spec 111 R1; re-scoped at Spec 123 Task 5.4 —
+ * the fixed MANAGED_DIRS list is gone, callers pass the managed roots).
  */
 
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as crypto from 'crypto';
-import { scanFiles, ManagedDir } from '../sync/FileScanner';
+import { scanFiles, hashFile } from '../sync/FileScanner';
+import * as FileScannerModule from '../sync/FileScanner';
 
 describe('FileScanner', () => {
-  let tmpDir: string;
-
+  let tmp: string;
   beforeEach(() => {
-    tmpDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'dp-scanner-')));
+    tmp = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'dp-scan-')));
   });
+  afterEach(() => fs.rmSync(tmp, { recursive: true, force: true }));
 
-  afterEach(() => {
-    fs.rmSync(tmpDir, { recursive: true, force: true });
-  });
-
-  function writeFile(relativePath: string, content: string): void {
-    const abs = path.join(tmpDir, relativePath);
-    fs.mkdirSync(path.dirname(abs), { recursive: true });
-    fs.writeFileSync(abs, content, 'utf-8');
+  function write(rel: string, content: string) {
+    fs.mkdirSync(path.dirname(path.join(tmp, rel)), { recursive: true });
+    fs.writeFileSync(path.join(tmp, rel), content);
   }
 
-  function expectedHash(content: string): string {
-    return crypto.createHash('sha256').update(Buffer.from(content, 'utf-8')).digest('hex');
-  }
-
-  test('scans files and produces correct SHA-256 hashes', () => {
-    writeFile('src/tokens/Color.ts', 'export const color = "red";');
-    const dirs: ManagedDir[] = [{ path: 'src/tokens', tier: 'source' }];
-
-    const results = scanFiles(tmpDir, dirs);
-
-    expect(results).toHaveLength(1);
-    expect(results[0].relativePath).toBe('src/tokens/Color.ts');
-    expect(results[0].hash).toBe(expectedHash('export const color = "red";'));
-    expect(results[0].tier).toBe('source');
+  test('hashes every file under the given roots with SHA-256; paths are forward-slash and sorted', () => {
+    write('governance/b.md', 'B');
+    write('governance/a/c.md', 'C');
+    write('.kiro/steering/x.md', 'X');
+    const files = scanFiles(tmp, ['governance', '.kiro/steering']);
+    expect(files.map((f) => f.relativePath)).toEqual(['governance/a/c.md', 'governance/b.md', '.kiro/steering/x.md']);
+    expect(files[1].hash).toBe(crypto.createHash('sha256').update('B').digest('hex'));
+    expect(hashFile(path.join(tmp, 'governance/b.md'))).toBe(files[1].hash);
   });
 
-  test('excludes directories listed in excludeDirs', () => {
-    writeFile('src/tokens/Color.ts', 'color');
-    writeFile('src/tokens/__tests__/Color.test.ts', 'test');
-    writeFile('src/tokens/generated/output.ts', 'gen');
-    const dirs: ManagedDir[] = [
-      { path: 'src/tokens', tier: 'source', excludeDirs: ['__tests__', 'generated'] },
-    ];
-
-    const results = scanFiles(tmpDir, dirs);
-
-    expect(results).toHaveLength(1);
-    expect(results[0].relativePath).toBe('src/tokens/Color.ts');
-  });
-
-  test('handles missing directories gracefully (returns empty)', () => {
-    const dirs: ManagedDir[] = [{ path: 'nonexistent/dir', tier: 'governance' }];
-
-    const results = scanFiles(tmpDir, dirs);
-
-    expect(results).toHaveLength(0);
-  });
-
-  test('scans multiple managed directories with correct tier assignment', () => {
-    writeFile('.kiro/steering/Goals.md', '# Goals');
-    writeFile('src/tokens/Space.ts', 'space');
-    const dirs: ManagedDir[] = [
-      { path: '.kiro/steering', tier: 'governance' },
-      { path: 'src/tokens', tier: 'source' },
-    ];
-
-    const results = scanFiles(tmpDir, dirs);
-
-    expect(results).toHaveLength(2);
-    const governance = results.find(f => f.relativePath === '.kiro/steering/Goals.md');
-    const source = results.find(f => f.relativePath === 'src/tokens/Space.ts');
-    expect(governance!.tier).toBe('governance');
-    expect(source!.tier).toBe('source');
-  });
-
-  test('scans nested subdirectories recursively', () => {
-    writeFile('src/tokens/primitives/spacing.ts', 'spacing');
-    writeFile('src/tokens/semantic/color.ts', 'color');
-    const dirs: ManagedDir[] = [{ path: 'src/tokens', tier: 'source' }];
-
-    const results = scanFiles(tmpDir, dirs);
-
-    expect(results).toHaveLength(2);
-    const paths = results.map(r => r.relativePath).sort();
-    expect(paths).toEqual([
-      'src/tokens/primitives/spacing.ts',
-      'src/tokens/semantic/color.ts',
+  test('missing roots are skipped; excludeDirs apply at any depth', () => {
+    write('governance/__tests__/t.md', 'T');
+    write('governance/keep.md', 'K');
+    expect(scanFiles(tmp, ['governance', 'absent'], { excludeDirs: ['__tests__'] }).map((f) => f.relativePath)).toEqual([
+      'governance/keep.md',
     ]);
   });
 
-  test('returns absolute paths', () => {
-    writeFile('.kiro/steering/doc.md', 'content');
-    const dirs: ManagedDir[] = [{ path: '.kiro/steering', tier: 'governance' }];
-
-    const results = scanFiles(tmpDir, dirs);
-
-    expect(path.isAbsolute(results[0].absolutePath)).toBe(true);
-    expect(results[0].absolutePath).toBe(path.join(tmpDir, '.kiro/steering/doc.md'));
+  test('there is no fixed managed-directory list any more (what is managed is what the manifest recorded)', () => {
+    expect((FileScannerModule as Record<string, unknown>).MANAGED_DIRS).toBeUndefined();
   });
 });

@@ -1,19 +1,39 @@
 /**
- * Classify files by comparing package, project, and manifest state.
+ * File-grain classification — package baseline vs consumer current vs manifest.
  *
- * @see Spec 111 — Requirement 2
+ * Spec 123 Task 5.4 (design.md § "C7" Classification). Reused from Spec 111's
+ * three-way comparison; changed in WHAT is managed:
+ *  - only paths under a MANAGED copy root (a root holding ≥1 manifest entry with
+ *    `origin: 'copy'`) are classified;
+ *  - `deleted-by-you` (NEW): a manifest entry exists and the project lacks the
+ *    file → reported, never re-added (`--restore <path>` re-adds);
+ *  - `removed` is scoped to entries under currently managed roots (D-B6) —
+ *    de-managed entries are PRUNED before classification, never `removed`;
+ *  - `untracked-new` (NEW) lives in the shared type; at file grain in U1 it has
+ *    no producer (a copy root the consumer never received is simply not managed —
+ *    U2's gate 4b retires these copies), so it is produced by key grain
+ *    (`KeyGrain.ts`) for a generated surface that was never recorded.
+ *
+ * @see Spec 111 — Requirement 2; Spec 123 design.md § "C7"
  */
 
 import type { ScannedFile } from './FileScanner';
-import type { SyncManifest } from './Manifest';
 import type { IgnoreFilter } from './IgnoreFilter';
+import type { ManifestEntry } from './Manifest';
+import { COPY_ROOTS, isUnder } from './Manifest';
 
-export type FileClassification = 'new' | 'updated-safe' | 'conflict' | 'unchanged' | 'removed';
+export type FileClassification =
+  | 'new'
+  | 'updated-safe'
+  | 'conflict'
+  | 'unchanged'
+  | 'removed'
+  | 'deleted-by-you'
+  | 'untracked-new';
 
 export interface ClassifiedFile {
   relativePath: string;
   classification: FileClassification;
-  tier: 'governance' | 'source';
   packageHash: string;
   projectHash?: string;
   manifestHash?: string;
@@ -26,13 +46,26 @@ export interface ClassificationResult {
   conflicts: ClassifiedFile[];
   unchanged: ClassifiedFile[];
   removed: ClassifiedFile[];
+  deletedByYou: ClassifiedFile[];
+  /** Unrecorded project files byte-identical to the package's — adopted into the manifest on apply. */
+  adoptable: ClassifiedFile[];
+  /** Manifest entries whose package file AND project file are both gone — dropped on apply. */
+  dropEntries: string[];
+}
+
+/** The copy roots this manifest actually manages (≥1 `origin: 'copy'` file entry under the root). */
+export function managedCopyRoots(entries: Record<string, ManifestEntry>): string[] {
+  return COPY_ROOTS.filter((root) =>
+    Object.entries(entries).some(([key, e]) => e.origin === 'copy' && e.grain === 'file' && isUnder(key, root)),
+  );
 }
 
 export function classifyFiles(
   packageFiles: ScannedFile[],
   projectFiles: ScannedFile[],
-  manifest: SyncManifest | null,
+  entries: Record<string, ManifestEntry>,
   ignore: IgnoreFilter,
+  managedRoots: string[],
 ): ClassificationResult {
   const result: ClassificationResult = {
     new: [],
@@ -40,89 +73,48 @@ export function classifyFiles(
     conflicts: [],
     unchanged: [],
     removed: [],
+    deletedByYou: [],
+    adoptable: [],
+    dropEntries: [],
   };
+  const underManaged = (p: string) => managedRoots.some((r) => isUnder(p, r));
+  const projectMap = new Map(projectFiles.map((f) => [f.relativePath, f]));
+  const packageMap = new Map(packageFiles.map((f) => [f.relativePath, f]));
 
-  // Index project files by relative path for O(1) lookup
-  const projectMap = new Map<string, ScannedFile>();
-  for (const f of projectFiles) {
-    projectMap.set(f.relativePath, f);
-  }
-
-  const manifestFiles = manifest?.files ?? {};
-
-  // Iterate package files only (package-direction guarantee)
-  for (const pkgFile of packageFiles) {
-    if (ignore.isIgnored(pkgFile.relativePath)) continue;
-
-    const projFile = projectMap.get(pkgFile.relativePath);
-    const manifestEntry = manifestFiles[pkgFile.relativePath];
-
-    if (!projFile) {
-      // R2 AC1: In package but not in project → New
-      result.new.push({
-        relativePath: pkgFile.relativePath,
-        classification: 'new',
-        tier: pkgFile.tier,
-        packageHash: pkgFile.hash,
-      });
-    } else if (pkgFile.hash === projFile.hash) {
-      // R2 AC4: Package hash equals project hash → Unchanged
-      result.unchanged.push({
-        relativePath: pkgFile.relativePath,
-        classification: 'unchanged',
-        tier: pkgFile.tier,
-        packageHash: pkgFile.hash,
-        projectHash: projFile.hash,
-        manifestHash: manifestEntry?.hash,
-      });
-    } else if (!manifestEntry) {
-      // R2 AC5: No manifest entry + hashes differ → Conflict (first encounter)
-      result.conflicts.push({
-        relativePath: pkgFile.relativePath,
-        classification: 'conflict',
-        tier: pkgFile.tier,
-        packageHash: pkgFile.hash,
-        projectHash: projFile.hash,
-        reason: 'no sync history (first encounter)',
-      });
-    } else if (manifestEntry.hash === projFile.hash) {
-      // R2 AC2: Manifest matches project (consumer hasn't edited) + package differs → Updated-safe
-      result.updatedSafe.push({
-        relativePath: pkgFile.relativePath,
-        classification: 'updated-safe',
-        tier: pkgFile.tier,
-        packageHash: pkgFile.hash,
-        projectHash: projFile.hash,
-        manifestHash: manifestEntry.hash,
-        reason: 'unchanged by you — package updated',
-      });
+  // 1. Every recorded copy entry under a managed root.
+  for (const [rel, entry] of Object.entries(entries)) {
+    if (entry.grain !== 'file' || entry.origin !== 'copy' || !underManaged(rel)) continue;
+    if (ignore.isIgnored(rel)) continue;
+    const pkg = packageMap.get(rel);
+    const proj = projectMap.get(rel);
+    if (pkg && proj) {
+      if (pkg.hash === proj.hash) {
+        result.unchanged.push({ relativePath: rel, classification: 'unchanged', packageHash: pkg.hash, projectHash: proj.hash, manifestHash: entry.hash });
+      } else if (proj.hash === entry.hash) {
+        result.updatedSafe.push({ relativePath: rel, classification: 'updated-safe', packageHash: pkg.hash, projectHash: proj.hash, manifestHash: entry.hash, reason: 'unchanged by you — package updated' });
+      } else {
+        result.conflicts.push({ relativePath: rel, classification: 'conflict', packageHash: pkg.hash, projectHash: proj.hash, manifestHash: entry.hash, reason: 'locally modified' });
+      }
+    } else if (pkg && !proj) {
+      result.deletedByYou.push({ relativePath: rel, classification: 'deleted-by-you', packageHash: pkg.hash, manifestHash: entry.hash });
+    } else if (!pkg && proj) {
+      result.removed.push({ relativePath: rel, classification: 'removed', packageHash: '', projectHash: proj.hash, manifestHash: entry.hash, reason: 'removed from package' });
     } else {
-      // R2 AC3: Manifest differs from project (consumer edited) + package differs → Conflict
-      result.conflicts.push({
-        relativePath: pkgFile.relativePath,
-        classification: 'conflict',
-        tier: pkgFile.tier,
-        packageHash: pkgFile.hash,
-        projectHash: projFile.hash,
-        manifestHash: manifestEntry.hash,
-        reason: 'locally modified',
-      });
+      result.dropEntries.push(rel);
     }
   }
 
-  // R2 AC6: Files in manifest but not in package → Removed
-  for (const manifestPath of Object.keys(manifestFiles)) {
-    if (ignore.isIgnored(manifestPath)) continue;
-    const inPackage = packageFiles.some(f => f.relativePath === manifestPath);
-    if (!inPackage) {
-      result.removed.push({
-        relativePath: manifestPath,
-        classification: 'removed',
-        tier: manifestFiles[manifestPath].managed ? 'governance' : 'source',
-        packageHash: '',
-        manifestHash: manifestFiles[manifestPath].hash,
-        reason: 'removed from package',
-      });
+  // 2. Package files under a managed root with no manifest entry.
+  for (const pkg of packageFiles) {
+    const rel = pkg.relativePath;
+    if (!underManaged(rel) || entries[rel] || ignore.isIgnored(rel)) continue;
+    const proj = projectMap.get(rel);
+    if (!proj) {
+      result.new.push({ relativePath: rel, classification: 'new', packageHash: pkg.hash });
+    } else if (proj.hash === pkg.hash) {
+      result.adoptable.push({ relativePath: rel, classification: 'unchanged', packageHash: pkg.hash, projectHash: proj.hash });
+    } else {
+      result.conflicts.push({ relativePath: rel, classification: 'conflict', packageHash: pkg.hash, projectHash: proj.hash, reason: 'no sync history (first encounter)' });
     }
   }
 
