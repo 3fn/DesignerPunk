@@ -2,18 +2,30 @@
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U1 · **Parent**: Task 7 · **Agent**: Thurgood (Sonnet)
 
+**Reworked 2026-09-27** after Stacy's review (`.kiro/specs/123-consumer-distribution/completion/task-7-3-stacy-review.md`, R1-1) and Peter's ruling: the guard is rewritten from an `npm view`-based form to a direct HTTP form. This doc replaces the original 7.1 doc's content in full; the npm-based script it described no longer exists.
+
 ## What changed
 
-- **`scripts/verify-publish-rail.sh`** (new): the drawn form from design.md C9, reproduced exactly — `set -euo pipefail`; `check_version` (the 6.2 scope-explicit `npm view` form, verbatim); `check_host` (the 6.8 hardening, host-pattern match on `https://registry.npmjs.org/*`); `--self-test-host` (exits 12, never reaches `PASS`, never runs `check_version`); the empty-tarball-URL branch (`FAIL[host-empty]`, exit 13, guarding the `set -e` command-substitution gap named in C9). Made executable (`chmod +x`).
+- **`scripts/verify-publish-rail.sh`** (rewritten): queries `registry.npmjs.org` directly over HTTP with `curl -sS --max-time 15 -w '\n%{http_code}' https://registry.npmjs.org/@3fn%2fcore/${VERSION}`, parsing `version` and `dist.tarball` from the JSON response with `node -e` (no `jq` dependency). **No `npm` CLI is invoked anywhere in the script, and no `.npmrc` — project, user, or global — is ever read.** `set -euo pipefail`, `--self-test-host` (exits 12, never reaches `PASS`, never runs the version check), and the empty-tarball-URL branch (`FAIL[host-empty]`, exit 13) are all retained from the drawn form, re-expressed over the HTTP response instead of two sequential `npm view` calls.
+
+### Why the rewrite (R1-1, Stacy's finding, Peter's ruling)
+
+The original `npm view --@3fn:registry=https://registry.npmjs.org` form required Leonardo A15's hermetic isolation env vars (`npm_config_userconfig=/dev/null npm_config_globalconfig=/dev/null`, Req 6.8) to be honest about not reading local npm config. Stacy reproduced, at head, that those env vars make npm 10.9.3 (Node 22.20.0) **exit before it resolves config at all** — `double-loading config "/dev/null" as "global", previously loaded as "user"` — which `check_version`'s `>/dev/null 2>&1` silently swallowed, reporting `FAIL[version]` on a version that was actually live. Worse, even with two distinct empty files, the isolation would not have been hermetic: `npm config get @3fn:registry` from the repo root still returns the project `.npmrc`'s GitHub Packages mapping regardless of user/global isolation. **No committed bite ever exercised the hermetic form as drafted** — every prior bite ran without the env vars. Peter's ruling: drop `npm` entirely. An HTTP GET has no config layer to isolate, so hermeticity is achieved by construction rather than by env-var isolation that was never proven to work.
 
 ## shellcheck
 
-Two runs, both clean:
+Per the coordinator's instruction: **the official `/Users/3fn/bin/shellcheck` binary only, never `npx shellcheck`** (a third-party wrapper). Full transcript committed at `scripts/__bites__/shellcheck.txt`.
 
-1. **Initial pass, `npx --no-install shellcheck`** (a cached npm-distributed binary, version 0.11.0): `scripts/verify-publish-rail.sh` → exit 0, no findings.
-2. **Re-run per the coordinator's mid-task note**: Peter installed the official ShellCheck binary at `/Users/3fn/bin/shellcheck` on 2026-09-27 (not on `PATH` — called by full path). `/Users/3fn/bin/shellcheck --version` → `ShellCheck - shell script analysis tool, version: 0.10.0`. Re-ran against `scripts/verify-publish-rail.sh` and both fake-`npm` shims under `scripts/__bites__/` → **all three exit 0, no findings**, matching the earlier `npx` result. Full transcript committed at `scripts/__bites__/shellcheck.txt`.
+```
+ShellCheck - shell script analysis tool
+version: 0.10.0
+```
 
-**This replaces an earlier draft of this note that would have read "⚠️ not installed"** — by the time that draft would have been written, `npx --no-install shellcheck` had already succeeded (a cached binary was available), so no such gap was ever recorded; the coordinator's note is addressed here regardless, with the official-binary re-run as the recorded result of record.
+- `scripts/verify-publish-rail.sh` → exit 0, no findings.
+- `scripts/__bites__/fake-curl-github-tarball/curl` → exit 0, no findings.
+- `scripts/__bites__/fake-curl-empty-tarball/curl` → exit 0, no findings.
+
+The old fake-`npm` shims (`fake-npm-github-packages/`, `fake-npm-empty-tarball/`) are **deleted**, not superseded-in-place — an `npm`-based fixture has nothing left to shim now that the script never calls `npm`.
 
 ## Exit-path outputs — each committed under `scripts/__bites__/`
 
@@ -21,22 +33,23 @@ Files use `.txt`, not `.log` — the repo's `*.log` gitignore rule would otherwi
 
 | Path | File | Exit |
 |---|---|---|
-| PASS | `pass-real-version.txt` | 0 (real registry, `VERSION=14.1.0`) |
-| `FAIL[version]` | `bite-2-version-mismatch-exit10.txt` | 10 (real registry, `VERSION=99.99.99`) |
-| `FAIL[host]` | `bite-3-host-shim-exit11.txt` | 11 (PATH-shimmed `npm`, production path) |
+| PASS | `pass-real-version.txt` | 0 (real registry, `VERSION=14.1.0` — **the new measurement Stacy's R1-1 precondition required**: the exact step-6 command, run against a live version, with the env vars gone) |
+| `FAIL[version]` | `bite-2-version-mismatch-exit10.txt` | 10 (real registry, `VERSION=99.99.99`, a real HTTP 404) |
+| `FAIL[host]` | `bite-3-host-shim-exit11.txt` | 11 (PATH-shimmed `curl`, production path) |
 | `--self-test-host` (good host) | `self-test-host-exit12.txt` | 12 |
-| `--self-test-host` (bad host) | `self-test-host-exit12.txt` (second block) | 11 — a bad host fails inside `check_host` before the self-test's own `exit 12` is reached, proving `check_host` fires identically whether called from the self-test or the production line |
-| **Empty-URL branch** | `empty-url-branch-exit13.txt` | 13 (PATH-shimmed `npm`: valid version, empty `dist.tarball`) |
+| `--self-test-host` (bad host) | `self-test-host-exit12.txt` (second block) | 11 — a bad host fails inside `check_host` before the self-test's own `exit 12` is reached |
+| **Empty-tarball branch** | `empty-url-branch-exit13.txt` | 13 (PATH-shimmed `curl`: HTTP 200, valid matching version, no `dist.tarball` field) |
 
-The empty-URL branch was exercised with a second fake-`npm` shim (`scripts/__bites__/fake-npm-empty-tarball/npm`) that returns a valid version string but an empty string for `dist.tarball` — simulating the network/registry-error case the branch exists for (under `set -e`, a failing command substitution used as an argument does not itself abort, so without this branch a network failure would misreport as "wrong rail").
+The empty-tarball branch uses a second fake-`curl` shim (`scripts/__bites__/fake-curl-empty-tarball/curl`) that returns HTTP 200 with a JSON body whose `version` matches but whose `dist` object has no `tarball` field — simulating a registry response the guard cannot read a tarball URL from.
 
 ## Targeted tests + result
 
 - `bash -n scripts/verify-publish-rail.sh` — syntax check, clean.
-- Manual exercise of all five exit codes (0, 10, 11, 12, 13) plus the self-test's bad-host sub-case, all captured to committed logs above.
+- Manual exercise of all five exit codes (0, 10, 11, 12, 13) plus the self-test's bad-host sub-case, all captured to committed `.txt` files above, against the real public registry where the check involves a real network call (PASS, exit 10) and against PATH-shimmed `curl` fixtures where it doesn't (exit 11, exit 13, per Task 7.2).
 - No Jest suite exercises this script (it is a release-time shell tool, not code Jest can import); `npm test` and `npm run test:scripts` both pass in full (see Task 7 parent's Additional Verification).
 
 ## Application-time adaptations
 
-- **The empty-URL branch required a second fake-`npm` shim**, not reachable via the real registry (a real 404 always returns a non-empty error, not an empty success) — built `scripts/__bites__/fake-npm-empty-tarball/npm` alongside the host-shim used for bite 3.
-- **shellcheck was run twice**: once via a cached `npx --no-install shellcheck` before Peter's install note arrived, once via the official `/Users/3fn/bin/shellcheck` per his instruction. Both agree (clean, 0 findings); the official-binary run is recorded as the result of record per his note.
+- **The empty-tarball branch required a second fake-`curl` shim**, not reachable via the real registry (a real 404 always returns a non-200 status, not a 200 with a missing field) — built `scripts/__bites__/fake-curl-empty-tarball/curl` alongside the host-shim used for bite 3.
+- **The whole script was rewritten mid-task**, after an initial `npm view`-based version was reviewed by Stacy and found broken under its own required hermetic isolation (R1-1). The rewrite is a redesign, not a patch: no line of the original `check_version`/`check_host` npm-calling code survives; only the exit-code contract (10/11/12/13) and the `--self-test-host` behavior are unchanged.
+- **shellcheck was run only via the official `/Users/3fn/bin/shellcheck` binary in this rework**, per the coordinator's explicit instruction not to use `npx shellcheck` (a third-party wrapper). The first draft's `npx`-based run is superseded, not carried forward as a second data point.

@@ -3,6 +3,20 @@
 # LIVE on registry.npmjs.org and that its tarball is served from that same
 # registry (not GitHub Packages, not any other rail).
 #
+# SCOPE (Peter's ruling, 2026-09-27 — erratum to Req 6.2/6.8, design C9):
+# this checks REGISTRY PUBLICATION STATE ONLY, over plain unauthenticated
+# HTTP — exactly what an anonymous stranger's browser or `curl` sees at
+# registry.npmjs.org. It never invokes the `npm` CLI and never reads any
+# `.npmrc` (project, user, or global), so it cannot be broken by an npm-CLI
+# version quirk and cannot be fooled by a project's scope mapping (this
+# repo's own `.npmrc` maps `@3fn` to GitHub Packages — this script never
+# consults it). It does NOT tell you what a real consumer's own npm config
+# would resolve to install; that was the earlier `npm view
+# --@3fn:registry=...` form's intent (superseded here — it broke under the
+# hermetic npm_config_* env vars this same erratum removes; see Stacy's
+# R1-1 review, .kiro/specs/123-consumer-distribution/completion/
+# task-7-3-stacy-review.md).
+#
 # Req 6 (Spec 123, design C9). Mandatory step in the release recipe
 # (.kiro/hooks/RELEASE-FLOW.md) — invoked AFTER `npm publish`, never as a
 # PR check (Req 6.6: the event it verifies happens after merge, so there
@@ -14,26 +28,51 @@
 #
 # Exit codes:
 #   0  — PASS: version visible on npmjs AND tarball host verified
-#   10 — FAIL[version]: the version is not visible on registry.npmjs.org
+#   10 — FAIL[version]: not visible on registry.npmjs.org — an HTTP error
+#        (incl. 404), a network error reaching the registry, or a returned
+#        `version` field that does not match ${VERSION}
 #   11 — FAIL[host]: the tarball is served from a host other than registry.npmjs.org
-#   12 — self-test only (never reaches PASS; never runs check_version)
-#   13 — FAIL[host-empty]: could not read the tarball URL at all (network/registry error)
+#   12 — self-test only (never reaches PASS; never runs the version check)
+#   13 — FAIL[host-empty]: could not read a tarball URL from the registry response
 set -euo pipefail
 
-check_version() {   # REQUIRED FORM (6.2), verbatim inside:
-  npm view "@3fn/core@${VERSION}" version --@3fn:registry=https://registry.npmjs.org >/dev/null 2>&1 \
-    || { echo "FAIL[version]: @3fn/core@${VERSION} is not visible on registry.npmjs.org (checked scope-explicitly) — do not announce this release"; exit 10; }
-}
+PKG="@3fn/core"
+PKG_PATH="@3fn%2fcore"   # scoped-package path-escape for the registry API (literal '/' -> %2f)
+REGISTRY="https://registry.npmjs.org"
 
 check_host() {      # HARDENING (6.8, augments): takes the tarball URL as input so it is independently bitable
-  case "$1" in https://registry.npmjs.org/*) ;; *)
-    echo "FAIL[host]: tarball for @3fn/core@${VERSION} is served from '$1', not registry.npmjs.org — wrong rail"; exit 11;; esac
+  case "$1" in "${REGISTRY}"/*) ;; *)
+    echo "FAIL[host]: tarball for ${PKG}@${VERSION} is served from '$1', not ${REGISTRY} — wrong rail"; exit 11;; esac
 }
 
 if [ "${1:-}" = "--self-test-host" ]; then check_host "${2:-}"; echo "SELF-TEST ONLY — no release verified"; exit 12; fi
 
-check_version                                   # fail-fast: host never runs if version fails
-URL="$(npm view "@3fn/core@${VERSION}" dist.tarball --@3fn:registry=https://registry.npmjs.org || true)"
-[ -n "$URL" ] || { echo "FAIL[host-empty]: could not read the tarball URL for @3fn/core@${VERSION} (network or registry error) — host NOT verified"; exit 13; }
-check_host "$URL"
-echo "PASS: @3fn/core@${VERSION} visible on npmjs; tarball host verified"
+# REQUIRED FORM (6.2, erratum 2026-09-27): a direct, unauthenticated HTTP GET
+# against the public registry's version endpoint. No `npm` CLI, no npmrc,
+# no scope mapping is consulted anywhere in this line.
+RESPONSE="$(curl -sS --max-time 15 -w '\n%{http_code}' "${REGISTRY}/${PKG_PATH}/${VERSION}")" \
+  || { echo "FAIL[version]: could not reach ${REGISTRY} for ${PKG}@${VERSION} (network error) — do not announce this release"; exit 10; }
+HTTP_CODE="${RESPONSE##*$'\n'}"
+BODY="${RESPONSE%$'\n'*}"
+if [ "$HTTP_CODE" != "200" ]; then
+  echo "FAIL[version]: ${PKG}@${VERSION} is not visible on ${REGISTRY} (HTTP ${HTTP_CODE}) — do not announce this release"
+  exit 10
+fi
+
+# Parse with `node -e` (guaranteed present; no dependency on `jq`).
+RETURNED_VERSION="$(printf '%s' "$BODY" | node -e '
+let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{
+  try { process.stdout.write(String(JSON.parse(d).version || "")); } catch { process.stdout.write(""); }
+});')"
+if [ "$RETURNED_VERSION" != "$VERSION" ]; then
+  echo "FAIL[version]: ${REGISTRY} returned version '${RETURNED_VERSION:-<none>}' for ${PKG}@${VERSION} (mismatch) — do not announce this release"
+  exit 10
+fi
+
+TARBALL="$(printf '%s' "$BODY" | node -e '
+let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{
+  try { process.stdout.write(String((JSON.parse(d).dist || {}).tarball || "")); } catch { process.stdout.write(""); }
+});')"
+[ -n "$TARBALL" ] || { echo "FAIL[host-empty]: could not read the tarball URL for ${PKG}@${VERSION} from the registry response — host NOT verified"; exit 13; }
+check_host "$TARBALL"
+echo "PASS: ${PKG}@${VERSION} visible on npmjs; tarball host verified"

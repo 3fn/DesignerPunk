@@ -448,11 +448,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Traces**: Reqs 6.1–6.8, 21.2 · design C9, DD12, DD13 (split), DD16 · **SLOT T2** (the queried tag)
 
   **Success Criteria:**
-  - The script matches the drawn form (`set -euo pipefail`; exits 10/11/12/13; `--self-test-host` exits 12 before `PASS`). `shellcheck` is clean, and each exit path's output is committed.
-  - **Three bites committed**:
-    - (1) the 6.3 verbatim command;
-    - (2) `VERSION=99.99.99` → exit 10;
-    - (3) a PATH-shimmed `npm` returning a GitHub Packages tarball URL → exit 11 **through the production line**.
+  - The script matches the drawn form (`set -euo pipefail`; exits 10/11/12/13; `--self-test-host` exits 12 before `PASS`) *(Erratum 2026-09-27 — Stacy R1-1, Peter's ruling: "the drawn form" now means design.md C9's corrected HTTP form — a direct, unauthenticated `curl` GET against `registry.npmjs.org`, with `node -e` parsing and no `npm` CLI anywhere in the line. The original `npm view`-based drawn form is SUPERSEDED; it broke under its own required hermetic isolation env vars and would not have been hermetic even fixed, per C9's own erratum note.)*. `shellcheck` (the official `/Users/3fn/bin/shellcheck` binary only — never `npx shellcheck`, a third-party wrapper) is clean, and each exit path's output is committed.
+  - **Three bites committed** *(Erratum 2026-09-27: re-measured against the HTTP form)*:
+    - (1) the exact step-6 command, run against the real registry for the real published version (`14.1.0`) → **PASS** — supersedes the original "6.3 verbatim command → red" bite, which quoted the now-superseded `npm view` form;
+    - (2) `VERSION=99.99.99` → exit 10, via a real HTTP 404 from the live registry;
+    - (3) a PATH-shimmed **`curl`** (not `npm`) returning a fixture JSON body whose `dist.tarball` is a GitHub Packages URL → exit 11 **through the production line**.
   - **T2 ruled (B)**: the guard queries the version as drawn; no tag is involved.
   - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 cross-references the standalone T1-(B) ballot** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, RATIFIED Peter 2026-09-26), **whose merge precedes the U1 branch point** (cited by merge commit) (erratum 2026-09-26; it replaces the planned first-commit section).
   - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)), **the removal of the four orphaned Input-Text `.browser.ts` files, and the browser bundles no longer carrying build-machine paths** (both Task 9.0, which runs before Task 7; amendment 2026-09-27).

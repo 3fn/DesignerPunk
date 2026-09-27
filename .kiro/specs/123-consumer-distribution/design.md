@@ -414,33 +414,41 @@ function findDesignSystemRoot(startDir: string): DesignSystemRoot;
 
 #### C9. The publish-rail guard (Req 6; Stacy S-D-B5, S-D-A10)
 
+*(Erratum 2026-09-27 — Stacy R1-1/R1-2 review, `.kiro/specs/123-consumer-distribution/completion/task-7-3-stacy-review.md`; Peter's ruling, same date: the `npm view`-based form below is SUPERSEDED. The hermetic isolation env vars (`npm_config_userconfig=/dev/null npm_config_globalconfig=/dev/null`, Leonardo A15, cited in Req 6.8) make npm 10.9.3 exit before it resolves config at all — Stacy reproduced this at head: the guard reported `FAIL[version]` on a version that was actually live. Worse, even with two DISTINCT empty files the isolation would not have been hermetic anyway, because the project's own `.npmrc` (which maps `@3fn` to GitHub Packages) is loaded from the repo root regardless of user/global config isolation. Peter's ruling: drop `npm` entirely. The guard now queries `registry.npmjs.org` directly over plain HTTP — exactly what an anonymous stranger's HTTP client sees, with no npm CLI and no `.npmrc` (project, user, or global) ever consulted. The drawn form below is the corrected, shipped form; see `scripts/verify-publish-rail.sh`.)*
+
 ```sh
 #!/usr/bin/env bash
 set -euo pipefail
-check_version() {   # REQUIRED FORM (6.2), verbatim inside:
-  npm view "@3fn/core@${VERSION}" version --@3fn:registry=https://registry.npmjs.org >/dev/null 2>&1 \
-    || { echo "FAIL[version]: @3fn/core@${VERSION} is not visible on registry.npmjs.org (checked scope-explicitly) — do not announce this release"; exit 10; }
-}
+PKG="@3fn/core"; PKG_PATH="@3fn%2fcore"; REGISTRY="https://registry.npmjs.org"
 check_host() {      # HARDENING (6.8, augments): takes the tarball URL as input so it is independently bitable
-  case "$1" in https://registry.npmjs.org/*) ;; *)
-    echo "FAIL[host]: tarball for @3fn/core@${VERSION} is served from '$1', not registry.npmjs.org — wrong rail"; exit 11;; esac
+  case "$1" in "${REGISTRY}"/*) ;; *)
+    echo "FAIL[host]: tarball for ${PKG}@${VERSION} is served from '$1', not ${REGISTRY} — wrong rail"; exit 11;; esac
 }
 if [ "${1:-}" = "--self-test-host" ]; then check_host "${2:-}"; echo "SELF-TEST ONLY — no release verified"; exit 12; fi
-check_version                                   # fail-fast: host never runs if version fails
-URL="$(npm view "@3fn/core@${VERSION}" dist.tarball --@3fn:registry=https://registry.npmjs.org || true)"
-[ -n "$URL" ] || { echo "FAIL[host-empty]: could not read the tarball URL for @3fn/core@${VERSION} (network or registry error) — host NOT verified"; exit 13; }
-check_host "$URL"
-echo "PASS: @3fn/core@${VERSION} visible on npmjs; tarball host verified"
+# REQUIRED FORM (6.2, erratum 2026-09-27): a direct, unauthenticated HTTP GET
+# against the public registry's version endpoint. No npm CLI, no npmrc.
+RESPONSE="$(curl -sS --max-time 15 -w '\n%{http_code}' "${REGISTRY}/${PKG_PATH}/${VERSION}")" \
+  || { echo "FAIL[version]: could not reach ${REGISTRY} for ${PKG}@${VERSION} (network error) — do not announce this release"; exit 10; }
+HTTP_CODE="${RESPONSE##*$'\n'}"; BODY="${RESPONSE%$'\n'*}"
+[ "$HTTP_CODE" = "200" ] \
+  || { echo "FAIL[version]: ${PKG}@${VERSION} is not visible on ${REGISTRY} (HTTP ${HTTP_CODE}) — do not announce this release"; exit 10; }
+RETURNED_VERSION="$(printf '%s' "$BODY" | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{try{process.stdout.write(String(JSON.parse(d).version||""))}catch{process.stdout.write("")}})')"
+[ "$RETURNED_VERSION" = "$VERSION" ] \
+  || { echo "FAIL[version]: ${REGISTRY} returned version '${RETURNED_VERSION:-<none>}' for ${PKG}@${VERSION} (mismatch) — do not announce this release"; exit 10; }
+TARBALL="$(printf '%s' "$BODY" | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{try{process.stdout.write(String((JSON.parse(d).dist||{}).tarball||""))}catch{process.stdout.write("")}})')"
+[ -n "$TARBALL" ] || { echo "FAIL[host-empty]: could not read the tarball URL for ${PKG}@${VERSION} from the registry response — host NOT verified"; exit 13; }
+check_host "$TARBALL"
+echo "PASS: ${PKG}@${VERSION} visible on npmjs; tarball host verified"
 ```
 
 - **Per-assertion exit codes and named messages.** The log shows **which** assertion failed.
-- **Three recorded bites**, committed under `scripts/__bites__/`:
-  1. **the 6.3 verbatim command, as written** — `npm view @3fn/core@99.99.99 version --@3fn:registry=https://registry.npmjs.org` → red;
-  2. the script with `VERSION=99.99.99` → **exit 10, `FAIL[version]`** (this proves the red came from the required line);
-  3. **the host check driven through the PRODUCTION path** (Stacy S-D2-A5): a **PATH-shimmed `npm`** returns a version for `version` and a `https://npm.pkg.github.com/…` URL for `dist.tarball`. The full script runs and exits **11, `FAIL[host]`** end to end. *(If the production `check_host` line were deleted, this bite would go green-with-PASS, which is exactly the red the bite exists to show. A direct function call could not.)*
-- **`--self-test-host` constraints** (S-D2-A5): it is **in the drawn script**, it **exits (12) after the self-test and never reaches `PASS`**, and it never runs `check_version`. So it cannot become a bypass in a real release. It is a developer convenience, never a recorded bite.
+- **Three recorded bites**, committed under `scripts/__bites__/` *(Erratum 2026-09-27: re-measured against the HTTP form; the first bite is now the step-6 command's own PASS, not a separate verbatim-red — see below)*:
+  1. **the exact step-6 command, run against the real registry for the real published version (`14.1.0`)** → `PASS` — this is the new measurement the erratum requires before ratification (Stacy R1-1's evidence precondition), committed at `scripts/__bites__/pass-real-version.txt`;
+  2. the script with `VERSION=99.99.99` against the real registry → **exit 10, `FAIL[version]`, HTTP 404** (this proves the red came from the required line, using a real, non-shimmed network call);
+  3. **the host check driven through the PRODUCTION path** (Stacy S-D2-A5): a **PATH-shimmed `curl`** returns HTTP 200 with a fixture JSON body whose `version` matches and whose `dist.tarball` is a `https://npm.pkg.github.com/…` URL. The full script runs and exits **11, `FAIL[host]`** end to end. *(If the production `check_host` line were deleted, this bite would go green-with-PASS, which is exactly the red the bite exists to show. A direct function call could not.)* A sibling PATH-shimmed-`curl` fixture (HTTP 200, matching version, no `dist.tarball` field) drives the empty-tarball branch to **exit 13**.
+- **`--self-test-host` constraints** (S-D2-A5): it is **in the drawn script**, it **exits (12) after the self-test and never reaches `PASS`**, and it never runs the version check. So it cannot become a bypass in a real release. It is a developer convenience, never a recorded bite.
 - **An empty tarball URL gets its own message** (S-D2-A6): `FAIL[host-empty]`, exit 13. *(Under `set -e`, a failing command substitution used as an argument does not abort, so without this a network failure would be misreported as "wrong rail".)*
-- The hermetic invocation environment (Leonardo's A15 from the requirements round) and the paste target `docs/releases/<v>/publish-verification.log` are **unchanged**. The register row is `post-merge — adjudicated; not a PR check`.
+- *(Erratum 2026-09-27: the "hermetic invocation environment" clause is DROPPED, not merely re-stated.* Leonardo A15's `npm_config_*` env vars targeted an `npm` invocation that no longer exists — the guard queries the registry directly over HTTP, so there is no npm CLI and no npm config layer to isolate. Hermetic-from-config is now true by construction, not by env-var isolation. *The paste target changes from `docs/releases/<v>/publish-verification.log` to `docs/releases/<v>/publish-verification.txt`* (the repo's `*.log` gitignore rule would otherwise silently exclude the committed record — the same trap Task 7.1's bites already hit once). *Step 6 also now names the route by which that file reaches protected `main`* — see `.kiro/hooks/RELEASE-FLOW.md`'s release-record PR step, which the guard's paste rides rather than inventing a second route. The register row is `post-merge — adjudicated; not a PR check`.)*
 
 #### C10. Product MCP wiring (Req 7) — the third key per target (C8); `init.test.ts:142` updated deliberately to three servers; product scaffold C27.
 

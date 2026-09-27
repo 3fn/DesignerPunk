@@ -1,12 +1,28 @@
 # Ballot Measure: B-U1 — the publish-rail guard's release-recipe step and register row
 
-**Date**: 2026-09-27
+**Date**: 2026-09-27 (drafted); **reworked same day** after Stacy's first review
 **Drafted by**: Thurgood (Sonnet), PRIMARY on Spec 123 Task 7
-**Status**: **DRAFT** — not yet ratified. Per the record-first protocol (`.kiro/docs/ballots/README.md`), the edits in § 3 below are NOT YET APPLIED to `.kiro/hooks/RELEASE-FLOW.md` or `governance/classification-map.md`. They apply only after this file's `Status` reads `RATIFIED (Peter, <date>)`, committed, per the protocol's step 1.
+**Status**: **DRAFT** — not yet ratified. Per the record-first protocol (`.kiro/docs/ballots/README.md`), the edits in § 3–4 below are NOT YET APPLIED to `.kiro/hooks/RELEASE-FLOW.md` or `governance/classification-map.md`. They apply only after this file's `Status` reads `RATIFIED (Peter, <date>)`, committed, per the protocol's step 1.
 **Origin**: Spec 123 Task 7 (design C9; requirements.md Req 6, esp. 6.4–6.7; tasks.md Task 7's `B-U1` criterion)
 **Unit**: rides Spec 123's U1 branch (`task/123-u1-substrate`); the register row and RELEASE-FLOW step are U1 artifacts, but — per DD13's three-way ballot split and the standing governance carve-out (`Task-Completion-Protocol.md` § "The Merge Rule") — the two governance-law files this ballot touches (`.kiro/hooks/RELEASE-FLOW.md`, `governance/classification-map.md`) are Peter-merged and require this record-first ballot, distinct from the T1-(B) per-parent write-scope grant that authorizes the *editing*, not the *ratification*.
-**Reviewed**: not yet — this DRAFT is presented for review now. **Stacy is a required reviewer of § 4 (the register row)**, per the coordinating brief. Peter rules on ratification per the record-first protocol.
-**Cross-references**: `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md` (T1-(B); **RATIFIED Peter 2026-09-26; merged to `main` at commit `314dbaa7`, PR #199**), which this ballot's write-scope authority rides — verified merged and RATIFIED at Task 7.0, before this draft was authored.
+**Reviewed**: **Stacy reviewed the first draft** — `.kiro/specs/123-consumer-distribution/completion/task-7-3-stacy-review.md` (ACCEPT-WITH-CHANGES on both the register row and the CHANGELOG; two Critical findings, R1-1 and R1-2, named as ratification preconditions). **Peter ruled on R1-1 same day: drop the `npm` CLI entirely; the guard queries the registry directly over HTTP.** This revision applies all six required changes (R1-1..R1-6) plus the recommended R1-7 (folded into `boundary_call`). **Stacy re-checks this revision; Peter then rules on ratification.**
+**Cross-references**: `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md` (T1-(B); **RATIFIED Peter 2026-09-26; merged to `main` at commit `314dbaa7`, PR #199**), which this ballot's write-scope authority rides — verified merged and RATIFIED at Task 7.0, before this draft was authored. `.kiro/issues/2026-09-27-integration-guide-install-section-stale.md` (PR #214, merged to `main`, routed to Task 19.4) — the committed record for the Req 6.1 finding this row cites honestly rather than claiming coverage of.
+
+---
+
+## 0. What changed in this revision (for Stacy's re-check)
+
+Stacy's review found two Critical defects in the first draft and four required corrections to the register row. Peter ruled on the first Critical directly. This revision:
+
+1. **R1-1 [Critical, Peter ruled]** — the `npm view --@3fn:registry=...` form plus its required hermetic `npm_config_userconfig=/dev/null npm_config_globalconfig=/dev/null` env vars made npm 10.9.3 exit before resolving config, false-redding every release; even fixed, the isolation would not have excluded the project's own `.npmrc` scope mapping. **Peter's ruling: drop `npm` entirely.** The guard now issues a direct, unauthenticated HTTP GET against `registry.npmjs.org`'s version endpoint (`curl`), parsing `version` and `dist.tarball` with `node -e`. Applied to: `scripts/verify-publish-rail.sh` (rewritten), design.md C9 (erratum), requirements.md Reqs 6.2/6.3/6.8 (errata), tasks.md Task 7 criteria (erratum), this ballot §§ 2–3.
+2. **R1-2 [Critical]** — the paste target `docs/releases/<v>/publish-verification.log` is gitignored (`*.log`) and step 6 named no route from a post-publish working tree to protected `main`. Fixed: renamed to `.txt`; § 3 now names the release-record PR route.
+3. **R1-3 [High]** — `checks` now states what `tool-time` actually blocks (it blocks nothing mechanically; a human reads the result).
+4. **R1-4 [Medium]** — education now names the real ARMING-event reader and `EXPECTED_CONTEXTS`, not `audit:coverage-map` (Stacy's own requirements-round imprecision, which she flagged and I've corrected).
+5. **R1-5 [Medium]** — the Req 6.1 sentence now states plainly that this row does **not** verify 6.1, and cites the committed issue (`.kiro/issues/2026-09-27-integration-guide-install-section-stale.md`) rather than an unrecorded "reported separately."
+6. **R1-6 [Low]** — the sweep count corrected to **30 live ids + this one (31)**.
+7. **R1-7 [Recommended]** — folded into `boundary_call.rationale`: the ordering half of the rule ("before it is announced") is operational, not functional, per the `npm-test-before-complete` precedent.
+8. **R1-8 [Recommended, routed as a design residual, not a B-U1 blocker]** — noted here for the record: `check_version`'s old npm-based form treated "npm failed" the same as "not visible"; the new HTTP form narrows this (a real network failure gets its own message, distinct from a real 404), but a curl-level failure and an HTTP 404 both still resolve to the same `FAIL[version]`/exit 10 outcome, which Stacy's finding accepted as adequate for a script that fails loud and fails closed either way.
+9. **CHANGELOG.md** (Review 2, C1–C10): all ten corrections applied, including deleting the `### Publishing` section entirely (C3, fork (a) — recommended) since it named GitHub Packages inside a file that ships in the package, and no consumer-facing behavior changed. No disagreements — see Task 7's parent report for the one-line confirmation.
 
 ---
 
@@ -14,14 +30,14 @@
 
 Per tasks.md's DD13 split ("DD13's ballot splits into three: **B-U1** (publish rail), B-U2 (…), B-U4 (…)"), **B-U1 carries exactly two edits**, both required by Requirement 6 (the publish-rail guard):
 
-1. **A mandatory step in the release recipe** (`.kiro/hooks/RELEASE-FLOW.md`) that invokes `scripts/verify-publish-rail.sh` after publish and pastes its output to a named location (Req 6.4, 6.7).
-2. **A register row** in `governance/classification-map.md` recording the guard's owner and `check_state`, with its post-merge disposition **stated explicitly as the ADJUDICATED case** — so a future `audit:coverage-map` / ARMING pass reads this row as accounted-for, never as an unmarked gap inviting "repair" into a PR check, which Req 6.6 forbids outright (Req 6.5; Stacy R2 S-A4).
+1. **A mandatory step in the release recipe** (`.kiro/hooks/RELEASE-FLOW.md`) that invokes `scripts/verify-publish-rail.sh` after publish, and commits its output to a named, git-trackable location via a small follow-up PR (Req 6.4, 6.7).
+2. **A register row** in `governance/classification-map.md` recording the guard's owner and `check_state`, with its post-merge disposition **stated explicitly** — so a future ARMING-event reader treats this row as accounted-for, never as an unmarked gap inviting "repair" into a PR check, which Req 6.6 forbids outright (Req 6.5).
 
-Both the script (`scripts/verify-publish-rail.sh`) and its three committed bites (`scripts/__bites__/`) are **code artifacts**, not governance law — they are built directly under the T1-(B) grant (Task 7's Primary Artifacts list) and need no ballot. This ballot covers only the two **governance-law** edits.
+Both the script (`scripts/verify-publish-rail.sh`) and its committed bites (`scripts/__bites__/`) are **code artifacts**, not governance law — they are built directly under the T1-(B) grant (Task 7's Primary Artifacts list) and need no ballot. This ballot covers only the two **governance-law** edits.
 
 ## 2. Why `governance/release-management-system.md` needs no edit
 
-Req 6.4 names the guard as a mandatory step in "the release recipe (`.kiro/hooks/RELEASE-FLOW.md` + `governance/release-management-system.md`)". `release-management-system.md` does not duplicate the operational sequence — its own text says so: *"The operational sequence lives in `.kiro/hooks/RELEASE-FLOW.md`"* (line 35), and its § "Publish per RELEASE-FLOW.md" step already delegates by reference. Adding the guard step to `RELEASE-FLOW.md` therefore makes it a mandatory step in `release-management-system.md`'s release recipe too, by the pointer already in place — no second edit site exists to carry the same text into, and creating one would be the S-6 copy-set violation (byte-identical copies of an operative step, forbidden by the same reasoning the T1-(B) ballot's § 7 applied to its own TCP pointer). **Recorded here so it is not later mistaken for an omission.**
+Req 6.4 names the guard as a mandatory step in "the release recipe (`.kiro/hooks/RELEASE-FLOW.md` + `governance/release-management-system.md`)". `release-management-system.md` does not duplicate the operational sequence — its own text says so: *"The operational sequence lives in `.kiro/hooks/RELEASE-FLOW.md`"* (line 35), and its § "Publish per RELEASE-FLOW.md" step already delegates by reference. Adding the guard step to `RELEASE-FLOW.md` therefore makes it a mandatory step in `release-management-system.md`'s release recipe too, by the pointer already in place — no second edit site exists to carry the same text into, and creating one would be the S-6 copy-set violation. **Unaffected by the R1-1 HTTP rewrite** — this reasoning holds regardless of what step 6's command is.
 
 ## 3. The RELEASE-FLOW.md edit (verbatim, to apply on ratification)
 
@@ -51,27 +67,39 @@ Req 6.4 names the guard as a mandatory step in "the release recipe (`.kiro/hooks
      on a branch; the release PR was incomplete).
    - `postpublish` never pushes. If `token-index/` somehow changed during publish
      anyway, it prints a warning telling you to route the diff through a PR.
-6. **Run the publish-rail guard and paste its result** (Req 6.4, 6.6, 6.7 — Spec 123
-   C9; `governance/classification-map.md` § "publish-rail-guard"):
+6. **Run the publish-rail guard and land its result via a release-record PR**
+   (Req 6.4, 6.6, 6.7 — Spec 123 C9; `governance/classification-map.md` §
+   "publish-rail-guard"):
    ```bash
-   npm_config_userconfig=/dev/null npm_config_globalconfig=/dev/null \
-     VERSION=<published-version> ./scripts/verify-publish-rail.sh
+   VERSION=<published-version> ./scripts/verify-publish-rail.sh
    ```
-   Paste the **full output, including the exit code**, to
-   `docs/releases/<v>/publish-verification.log` — the named location the RELEASE
-   claims pass reads to determine liveness (Req 6.7: a guard run is an event in the
-   release *process*, not a diff in the delta, so without a paste target the pass has
-   nothing to read). A non-zero exit means the release did not land where consumers
-   install from: **do not announce it.** Fix and re-run before proceeding.
+   This queries `registry.npmjs.org` directly over HTTP — no `npm` CLI, no
+   `.npmrc` of any kind is read. A non-zero exit means the release did not land
+   where consumers install from: **do not announce it.** Fix and re-run before
+   proceeding.
+
+   **Land the result on `main`** — `main` is branch-protected, so a working-tree
+   file is not enough. Paste the **full output, including the exit code**, to
+   `docs/releases/<v>/publish-verification.txt` (`.txt`, not `.log` — this
+   repo's `*.log` gitignore rule would otherwise silently drop the file, the
+   same trap Task 7.1's own bites hit once already) and open a small
+   **release-record PR** for it, using the same mechanism step 3 already
+   names (`gh pr create`, or `./.kiro/hooks/complete-task.sh` for a spec-task
+   release) — Peter merges it like any other PR. This is a SECOND, POST-publish
+   PR, distinct from step 3's PRE-publish release PR: step 3's PR cannot carry
+   this file because the guard has nothing to verify until after step 5's
+   publish has happened.
+
    This step is **mandatory**, not a documented instruction — the guard is a
    committed script, not a checklist reminder — and it is **never a PR check**
-   (Req 6.6: the event it verifies, registry visibility, happens after merge, so
-   there is nothing at PR time to gate). The hermetic invocation env vars
-   (`npm_config_userconfig=/dev/null npm_config_globalconfig=/dev/null`, Leonardo
-   A15) keep the check from reading a developer's local `.npmrc` scope mapping.
+   (Req 6.6: the event it verifies, registry visibility, happens after merge,
+   so there is nothing at PR time to gate). The RELEASE claims pass reads the
+   committed `.txt` file to determine liveness (Req 6.7): a guard run is an
+   event in the release *process*, not a diff in the release *delta*, so
+   without a committed record the pass has nothing to read.
 ```
 
-## 4. The register row (verbatim, to apply on ratification) — **Stacy's review requested**
+## 4. The register row (verbatim, to apply on ratification) — **Stacy re-checks**
 
 **Site**: `governance/classification-map.md` § "Entries", new entry appended in commit order (after `tasks-row-write-scope-grant`).
 
@@ -79,20 +107,20 @@ Req 6.4 names the guard as a mandatory step in "the release recipe (`.kiro/hooks
 ### publish-rail-guard
 
 \`\`\`yaml
-rule: "Every @3fn/core release SHALL be verified live on registry.npmjs.org — including the tarball's actual host, not only the version string — before it is announced; verification runs as a mandatory step in the release recipe (RELEASE-FLOW.md step 6), never as a PR check, because the event it verifies (registry visibility) cannot exist before the release it verifies"
+rule: "Every @3fn/core release SHALL be verified live on registry.npmjs.org — including the tarball's actual host, not only the version string — before it is announced; verification runs as a mandatory step in the release recipe (RELEASE-FLOW.md step 6), never as a PR check, because the event it verifies (registry publication) cannot exist before the release it verifies"
 boundary_call:
   class: functional
-  rationale: "Registry visibility and tarball host are machine-checkable facts with named, per-assertion exit codes (10 version / 11 host / 12 self-test / 13 host-empty) and a scope-explicit npm view form measured to beat an npmrc scope map (Req 6.2) — no judgment enters the predicate. The check is barrier-shaped but structurally post-merge: nothing exists to gate at PR time (Req 6.6)"
+  rationale: "The artifact half is a mechanical fact: a direct, unauthenticated HTTP GET against registry.npmjs.org's version endpoint, parsed with node -e, with named per-assertion exit codes (10 version / 11 host / 12 self-test / 13 empty-tarball) — no judgment enters the predicate, and no npm CLI or .npmrc is ever consulted (erratum 2026-09-27, Stacy R1-1: the earlier npm-view form plus its required hermetic env vars broke every release and would not have been hermetic even fixed). The ORDERING half of the rule ('before it is announced'; 'runs as a mandatory step') is OPERATIONAL, not functional (Stacy R1-7, by this register's own npm-test-before-complete precedent) — carried by the committed evidence file and the RELEASE claims pass, not by this check itself"
 verification:
   disposition: barrier
   owner: thurgood
   check_state: armed
   armed_at: tool-time
-  checks: ["scripts/verify-publish-rail.sh (invoked as a mandatory step in .kiro/hooks/RELEASE-FLOW.md's release sequence, step 6; three recorded bites under scripts/__bites__/ prove the required 6.3 line, the VERSION-mismatch red (exit 10), and the host check firing through the PRODUCTION path via a PATH-shimmed npm (exit 11) — Task 7.2; armed evidence is the recorded red, not PR-gate registration, per Req 6.6)"
+  checks: ["scripts/verify-publish-rail.sh, invoked as a mandatory step in .kiro/hooks/RELEASE-FLOW.md's release sequence, step 6 (landing in the same commit as this row); three recorded bites under scripts/__bites__/ prove the required line — a real PASS against the live registry for 14.1.0, a real HTTP-404 red for VERSION=99.99.99 (exit 10), and the host check firing through the PRODUCTION path via a PATH-shimmed curl (exit 11) — Task 7.2. HONEST REACH (Stacy R1-3, required in-field): tool-time here = the script's non-zero exit halts the human-run recipe before announcement — it runs after publish (it cannot un-publish), no downstream tool consumes its exit code, and a skipped run is not mechanically prevented; a skipped or failed run is detected post hoc by Stacy's RELEASE claims pass reading the committed evidence file (see education)"]
 education:
-  disposition: "AUTHOR: RELEASE-FLOW.md step 6 (this ballot § 3) and this row are the two artifacts Req 6.4/6.5 require; both are new — no prose predecessor to prune. ADJUDICATED, STATED EXPLICITLY (Req 6.5, Stacy R2 S-A4): this row's post-merge disposition is recorded here, in-line, so a future audit:coverage-map / ARMING pass reads it as accounted-for rather than an unmarked row inviting 'repair' into a required PR check — which Req 6.6 forbids outright. LIVENESS SPLIT (Req 6.7): whether the guard actually ran on a given release, and what it returned, is read by Stacy's RELEASE claims pass from the pasted docs/releases/<v>/publish-verification.log — never by this row or by re-deciding the guard's verdict. That split mirrors completion-criteria-parity's owner/audit split (this register's own entry, history note dated 2026-09-19): owner records who keeps the INSTRUMENT true; the claims pass records whether it FIRED. GitHub Packages, the dual-publish's mirrored target, is deliberately absent from every consumer-facing surface this row's checks touch (Req 6.1) — a pre-123 exception, found during this ballot's straggler sweep and NOT fixed here (out of Task 7's write scope), is reported separately rather than silently left unrecorded."
+  disposition: "AUTHOR: RELEASE-FLOW.md step 6 (this ballot § 3) and this row are the two artifacts Req 6.4/6.5 require, landing in the same commit; both are new — no prose predecessor to prune. ADJUDICATED, STATED EXPLICITLY (Req 6.5): a future ARMING-event reader of this register — and verify-gate-registration.sh's EXPECTED_CONTEXTS arithmetic, from which armed_at: tool-time already excludes this row (audit:coverage-map does NOT read this register at all — Stacy R1-4, correcting her own earlier requirements-round S-A4 imprecision at feedback/requirements.md:420, which had named audit:coverage-map as the reader) — should read this row as accounted-for, never as an unmarked gap inviting repair into a required PR check, which Req 6.6 forbids outright. LIVENESS SPLIT (Req 6.7): whether the guard actually ran on a given release, and what it returned, is read by Stacy's RELEASE claims pass from the committed docs/releases/<v>/publish-verification.txt (renamed from .log, erratum 2026-09-27, Stacy R1-2 — the gitignored extension would have silently dropped every release's evidence file) — never by this row, and never by re-deciding the guard's verdict. REQ 6.1 IS NOT VERIFIED BY THIS ROW (Stacy R1-5, correcting the prior draft's overclaim): this check's own queries touch only the public registry, never a consumer-facing document, so it establishes nothing about whether GitHub Packages appears in one. Two live Req 6.1 findings exist independently of this check, both routed rather than left as an unrecorded 'reported separately': governance/DesignerPunk-Integration-Guide.md's install section (committed issue: .kiro/issues/2026-09-27-integration-guide-install-section-stale.md, PR #214, routed to Task 19.4) and CHANGELOG.md's now-DELETED Publishing section (Stacy Review 2, C3 — removed in this same Task 7 rework rather than reworded, since no consumer-facing behavior belonged in that file to begin with)"
 history:
-  - { date: 2026-09-27, change: "entry created at the B-U1 ballot (.kiro/docs/ballots/2026-09-27-123-b-u1-publish-rail.md), Spec 123 Task 7.3. Cross-references the T1-(B) ballot (.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md, RATIFIED Peter 2026-09-26, merged 314dbaa7, PR #199), whose grant authorized this row's drafting but confers no ratification authority of its own (T1-(B) clause 5) — this row's law home is this ballot, Peter-merged under the standing governance carve-out. Non-substring sweep at authoring: 31 live ids + this one, relations 0, dupes 0", by: thurgood }
+  - { date: 2026-09-27, change: "entry created at the B-U1 ballot (.kiro/docs/ballots/2026-09-27-123-b-u1-publish-rail.md), Spec 123 Task 7.3, REWORKED same day after Stacy's first review (completion/task-7-3-stacy-review.md, ACCEPT-WITH-CHANGES). R1-1 [Critical, Peter ruled]: the npm-view form + its required hermetic npm_config_* env vars made npm 10.9.3 exit before resolving config, false-redding a live release (reproduced by Stacy at head); even fixed, the isolation would not have excluded the project's own .npmrc @3fn scope mapping. Peter's ruling: drop npm entirely for a direct HTTP GET against registry.npmjs.org, parsed with node -e — hermetic-from-config by construction, not by env-var isolation. R1-2 [Critical]: the .log paste target is gitignored and named no route to protected main — fixed via the .txt rename and a named post-publish release-record PR (RELEASE-FLOW.md step 6). R1-3..R1-7 applied as required/recommended (see this ballot § 0). Cross-references the T1-(B) ballot (.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md, RATIFIED Peter 2026-09-26, merged 314dbaa7, PR #199). Non-substring sweep at authoring: 30 live ids + this one (31 total), relations 0, dupes 0", by: thurgood }
 \`\`\`
 ```
 
@@ -103,22 +131,23 @@ history:
 Swept for other references this ballot's edit-class might need to touch:
 
 - **`governance/release-management-system.md`**: no edit needed — it delegates by reference (§ 2 above).
-- **`governance/classification-map.md`**: non-substring sweep for the new id run at authoring — **31 live ids + `publish-rail-guard`, relations 0, dupes 0** (§ 4's history line carries the count).
-- **`docs/releases/`**: no existing release-note file references a publish-rail guard (grep: 0 hits for `verify-publish-rail` under `docs/releases/`); the paste-target convention (`docs/releases/<v>/publish-verification.log`) is new as of this ballot and needs no backfill — it applies starting with release 1.
+- **`governance/classification-map.md`**: non-substring sweep for the new id, re-run at this revision — **30 live ids + `publish-rail-guard`, relations 0, dupes 0 (31 total `### ` headings including the one non-entry "Illustrative Example" heading, per Stacy R1-6's correction of the first draft's miscount)**.
+- **`docs/releases/`**: no existing release-note file references a publish-rail guard; the paste-target convention (`docs/releases/<v>/publish-verification.txt`) is new as of this ballot and needs no backfill — it applies starting with release 1.
 - **`.kiro/hooks/RELEASE-FLOW.md`**: grep for `publish-rail` / `verify-publish-rail` in the file pre-edit → 0 hits (confirms this is a net-new step, not a rename of an existing one).
 
-**One finding surfaced by the sweep, recorded rather than silently fixed (out of Task 7's write scope)**: `governance/DesignerPunk-Integration-Guide.md` §§ "Prerequisites" and "1. Install" (lines ~22–47) currently document installing `@3fn/core` **from GitHub Packages** via a committed `.npmrc` (`@designerpunk:registry=https://npm.pkg.github.com` — note the scope string doesn't even match the package's real `@3fn` scope, a second, independent defect in the same lines). This is a live violation of **Req 6.1**: *"GitHub Packages SHALL NOT appear in any consumer-facing document, template or scaffold."* It predates Spec 123, was not in Task 2.6's named line list (L202/L454/L576), and is not a Task 7 Primary Artifact. **Routed, not fixed here**: reported to the orchestrator in this task's handback for routing — most likely Task 19 (`19.4`, which reconciles the Integration Guide into the served install doc) or a standalone issue if Task 19's scope doesn't already cover it.
+**One finding surfaced by the first-draft sweep, now discharged rather than left "reported separately"** (Stacy R1-5 called this out by name): `governance/DesignerPunk-Integration-Guide.md` §§ "Prerequisites" and "1. Install" document installing `@3fn/core` from **GitHub Packages** via a committed `.npmrc` with the **wrong scope** (`@designerpunk`, not `@3fn`) — a live Req 6.1 violation, predating Spec 123. **Now a committed record**: `.kiro/issues/2026-09-27-integration-guide-install-section-stale.md` (PR #214, merged to `main`, routed to Task 19.4).
 
 ## 6. Counter-argument (fold-back applied)
 
-- **Folded in**: the register row states its ADJUDICATED post-merge disposition in-line (not left implicit), precisely because Req 6.5/Stacy's S-A4 named the failure mode (an unmarked row inviting a future ARMING "repair" into a forbidden PR check) — the row is written to make that misreading structurally harder, not just technically avoidable.
+- **Folded in**: the register row states its post-merge disposition and its Req 6.1 non-coverage in-line (not left implicit), and the checks field states its tool-time reach in-field rather than only in this ballot's own prose — precisely because Stacy's review named these as the failure modes a future reader would otherwise hit.
 - **What survives, stated plainly**:
-  - **(1) A tool-time barrier has no platform-enforced trigger.** Unlike a PR-gate check, nothing stops a release owner from skipping step 6 by hand — the guard's "mandatory" status is a documented convention plus Stacy's post-hoc RELEASE claims-pass read, not a mechanical block on the release itself. This is the same residual DD12 already names for the host-assertion pattern, one layer up: the enforcement is real but it is a *process* enforcement, not a *platform* one, until/unless a future release-tooling layer wires it as a hard precondition.
-  - **(2) The register row's `owner: thurgood` / Stacy's-claims-pass-reads-liveness split is a convention borrowed from `completion-criteria-parity`, not a schema-enforced distinction.** A future reader could conflate "owner keeps the instrument true" with "owner verifies each release's liveness" if the education-disposition prose isn't read in full — the risk is a documentation-discoverability one, not a structural one.
+  - **(1) A tool-time barrier has no platform-enforced trigger.** Nothing stops a release owner from skipping step 6 by hand — the guard's "mandatory" status is a documented convention plus Stacy's post-hoc RELEASE claims-pass read, not a mechanical block on the release itself. This is the same residual DD12 already names for the host-assertion pattern, one layer up.
+  - **(2) The register row's `owner: thurgood` / Stacy's-claims-pass-reads-liveness split is a convention borrowed from `completion-criteria-parity`, not a schema-enforced distinction.** A future reader could conflate "owner keeps the instrument true" with "owner verifies each release's liveness" if the education-disposition prose isn't read in full.
+  - **(3) [New, surfaced by this rework]** The register row's `check_state: armed` is drafted to describe the state true **upon application** (row and step 6 land in the same commit, and R1-1 is already fixed before that commit) rather than the state true **today**, while this ballot sits as an unapplied draft file. Stacy's review compared this row to `completion-criteria-parity`'s `proposed` state ("built, not wired → proposed") and asked whether "armed" is honestly claimable "today." **This draft's position, surfaced rather than silently picked**: unlike `completion-criteria-parity` (whose required-flip waits on a *separate*, later, Q2-gated decision even though the checker is fully built), this row's arming has no such separate gate — the moment RELEASE-FLOW.md step 6 and this row land together, the guard IS wired into the mandatory recipe, with real PASS/red evidence already in hand. There is no intermediate state where the row is committed-but-not-yet-wired. **If Stacy's re-check disagrees** — for example, preferring an auditable two-step (commit as `proposed`, then a second, later commit flips to `armed` once step 6 has actually fired once in a real release) — that is a live fork for her re-check to call, not one this draft resolves unilaterally.
 
 ## 7. What happens next
 
-1. **This DRAFT is presented for review** — Stacy reviews § 4 (the register row); any agent may comment on §§ 2–3.
+1. **This revision is presented for Stacy's re-check** — § 0 lists every required/recommended change and where it landed; § 6's item (3) surfaces one live fork for her explicit call.
 2. **Peter rules**: ratify, modify, or reject, per the ballots README's Lifecycle.
 3. **On ratification**: the session that receives it updates `Status` to `RATIFIED (Peter, <date>)` and commits that record **before** applying § 3's `RELEASE-FLOW.md` edit and § 4's register row (record-first, per the protocol).
 4. **After application**: `rebuild_index` runs (classification-map is docs-MCP-served); this ballot is added to `.kiro/docs/ballots/README.md` § "Ballots on record".

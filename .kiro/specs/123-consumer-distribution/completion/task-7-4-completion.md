@@ -2,17 +2,29 @@
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U1 · **Parent**: Task 7 · **Agent**: Thurgood (Sonnet)
 
+**Reworked 2026-09-27** after Stacy's Review 2 (`task-7-3-stacy-review.md`), which checked every sentence of the entry against source code and the last published release and returned ACCEPT-WITH-CHANGES with ten corrections (C1–C10). All ten are applied, as written, with no disagreements — see Task 7's parent report for the one-line confirmation.
+
 ## What changed
 
-- **`CHANGELOG.md`** (new, repo root): one `[Unreleased] — planned Release 1` section, plain and consumer-facing (per T2's ruling — no advertisement of the onboarding path to strangers, since the install doc doesn't ship until release 3). Drew consumer-facing content from Tasks 1–6's summary docs (`docs/specs/123-consumer-distribution/task-{1..6}-summary.md`) and Task 9.0's completion doc's own hand-off section:
-  - **Breaking**: narrowed package surface (`src/` no longer ships wholesale; `designerpunk.config.ts` dropped); `init` refuses in born/partial/package-mode repos; `sync` no longer refreshes the consumer's token tier, `src/types`, or component copies; the opt-in component-copy migration.
-  - **Changed**: key-grained `sync` for MCP config keys; generated (not hand-maintained) MCP approval lists on both harnesses; the third `designerpunk-product` MCP server entry; the name contract + type contract now reported by `sync`; the smaller tarball.
-  - **Retained for now**: the still-copied agents/steering/governance files (sequencing decision 7, Leonardo A5 (ii)) — named explicitly so it isn't read as an oversight.
-  - **Fixed**: Task 9.0's two items, using its own hand-off wording near-verbatim (browser-bundle absolute-path leak; the four orphaned Input-Text `.browser.ts` files removed).
-  - **Publishing**: one line naming the new publish-rail guard (Task 7) as a release-process improvement, without naming GitHub Packages as an install path (Req 6.1).
-- **`package.json`**: added `"CHANGELOG.md"` to `files[]` (first entry in the array, ahead of the `dist/browser/...` glob).
+- **`CHANGELOG.md`** (repo root): one `[Unreleased] — planned Release 1` section, plain and consumer-facing (per T2's ruling — no advertisement of the onboarding path to strangers, since the install doc doesn't ship until release 3; Stacy's Review 2 independently confirmed T2 holds). Drew consumer-facing content from Tasks 1–6's summary docs, Task 9.0's completion doc's own hand-off section, source code (`init.ts`, `transforms.ts`, `sync/{index,Migration,Reporter}.ts`), and — after this rework — Stacy's own direct reads of the same sources plus the last published release (`@3fn/core@14.1.0`, downloaded and inspected).
+- **`package.json`**: `"CHANGELOG.md"` in `files[]` (unaffected by this rework).
 
-## The CHANGELOG entry, as written
+### Stacy's Review 2 corrections (C1–C10), applied
+
+| # | Severity | What was wrong | Fix |
+|---|---|---|---|
+| C1 | High | The "authoring surface" bullet misdescribed what `init` copies: it claimed `src/types` is created by `init` (false — token types import from `@3fn/core/types`) and that only build/runtime pieces ship (incomplete — `src/tokens/**` and the iOS/Android component sources ship too) | Rewritten per Stacy's exact replacement text |
+| C2 | High | A real breaking change was missing entirely: `sync --force`/`--accept-all` are retired (reported, not honoured) | New Breaking bullet added |
+| C3 | High | The `### Publishing` section named GitHub Packages inside a file that ships in the package (`files[]`) — a direct Req 6.1 violation that also overstated B-U1 as ratified/mandatory while it is still DRAFT | **Section deleted entirely** (fork (a), the recommended fork) — no consumer-facing behavior changed, so per the file's own "internal-only changes are not listed" rule it never belonged here |
+| C4 | Medium | Component-copy migration described as comparing against "your installed version," but the code compares against the whole version range up to it | Reworded per Stacy's exact text |
+| C5 | Medium | MCP-approval bullet: (a) didn't say existing installs aren't auto-corrected; (b) said `validate_component` "no longer exists" when it was never registered at all | (a) sentence appended; (b) "no longer exists" → "no server provides" |
+| C6 | Medium | Name contract described as "your components'" token names — it's DesignerPunk's own components | Reworded |
+| C7 | Medium | Tarball-size baseline (7.3MB) was Task 3's pre-diet branch measurement, not the last actual release; "closure-verified" overstated coverage (only `src/` is closure-verified; the rest is globs) | Baseline corrected to Stacy's measured 14.1.0 figure (≈8.4MB packed); overstatement softened; a re-measure-at-release-prep note added |
+| C8 | Medium | A real breaking change was missing: `generate` now refuses in a half-set-up (partial) repo instead of guessing | New Breaking bullet added |
+| C9 | Low | Two lines contradicted each other: "for this release only" (L16) vs. "planned for a later release" (L29) for the retained agent/steering/governance files | "for this release only" → "for now" |
+| C10 | Low | Two pointers (`docs/releases/`, `.kiro/hooks/RELEASE-FLOW.md`) don't resolve for a consumer reading the file from `node_modules` — neither ships in `files[]` | Replaced with a public repository URL / dropped |
+
+## The CHANGELOG entry, as written (post-rework)
 
 See `/CHANGELOG.md` in full — reproduced here is the header and section list for the record:
 
@@ -23,10 +35,9 @@ See `/CHANGELOG.md` in full — reproduced here is the header and section list f
 ### Changed
 ### Retained for now
 ### Fixed
-### Publishing
 ```
 
-Each bullet under those five headings is drawn from a named source (Tasks 1–6 summaries, Task 9.0's hand-off section) — no bullet describes work this branch has not actually shipped, and Task 7's own publish-rail guard is described only as a process improvement, not as a consumer-facing behavior change.
+**The `### Publishing` section is gone** (C3) — four sections remain, not five. Every bullet under them is drawn from a named source and has survived a second, independent verification pass (Stacy's, against source code and the actual last published release) — no bullet describes work this branch has not actually shipped, and no consumer-facing surface names GitHub Packages (Req 6.1).
 
 ## Proof: `CHANGELOG.md` ships in the tarball
 

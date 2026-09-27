@@ -1,3 +1,3 @@
-=== Bite 3: PATH-shimmed npm -> GitHub Packages tarball URL -> exit 11 through production line ===
-FAIL[host]: tarball for @3fn/core@99.99.99-fake is served from 'https://npm.pkg.github.com/download/@3fn/core/99.99.99-fake/abcd1234.tgz', not registry.npmjs.org — wrong rail
+=== Bite 3: PATH-shimmed curl -> GitHub Packages tarball URL -> exit 11 through production line ===
+FAIL[host]: tarball for @3fn/core@99.99.99-fake is served from 'https://npm.pkg.github.com/download/@3fn/core/99.99.99-fake/abcd1234.tgz', not https://registry.npmjs.org — wrong rail
 exit code: 11
