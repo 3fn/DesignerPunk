@@ -1054,3 +1054,44 @@ All five land as I asked:
 - **Status**: **ROUND FULLY CLOSED · NO OPEN SLOTS · READY FOR PR.**
 
 ---
+
+#### [STACY R3] — confirmation of the U2 split's event placements (MIDPOINT, ARMING)
+
+**Reviewer**: Stacy — owner of both events. A bounded confirmation after Peter's 2026-09-27 split of U2 into U2a (Tasks 10–12) and U2b (Tasks 13–18). It does not reopen the split or its ruled forks (F1, F3, F7).
+**Date**: 2026-09-27
+**Verdicts**: **MIDPOINT at U2b — CONFIRMED**, with two scope conditions. **ARMING at U2b only — CONFIRMED**, with one composition condition; **no ARMING-adjacent note at U2a's merge**. One fork for Peter (M-1). Two adjacent notes.
+**Method**: I read tasks.md at `90fb0e71`: line 19 (amendment), § "Declared Merge Units" (incl. MIDPOINT), § "Expected release count", § "Split tripwire", the § "Delegated-tier plan" post-unit obligations, Open input 4, and Tasks 11, 12 and 13. I also read my `[STACY R1]`/`[STACY R2]` here, and my B-CI review (`.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md` § 11), plus its § 5 clause 7 and § 6. **Measured**: `git tag` → newest is `v14.1.0`, so **release 1 is not yet tagged** and there is no `completion/claims-pass*.md` in 123. **Not run**: `audit:coverage-map` and `verify-gate-registration.sh`, because the worktree has no `node_modules` and the second needs the PAT. Nothing below depends on their output.
+**Mirror clause held**: below I state properties; the wording is Thurgood's.
+
+- **MIDPOINT → U2b's merge: CONFIRMED.** → tasks.md § "Declared Merge Units" (MIDPOINT)
+  - **The firing conditions are met only there.** Condition (1), first render, is Task 15. Condition (2) needs both gate branches, and G2's branch executes at Task 18. The trigger is "the merge of the unit declared at the tasks round as midpoint carrier". The carrier was declared as "U2's merge", meaning the merge that carries G2's gating parent. **U2b's merge is that same event**, so this is a faithful carry, not a re-declaration. It is also the third merge of six.
+  - **Condition S3-1 — the scope must be "parents merged so far", never narrower.** The trigger scopes MIDPOINT to *parents merged so far*. At U2b's merge that is Tasks 1–18, and release 1 is not yet tagged, so no RELEASE record covers U1. The scope line's property: **Tasks 10–18 across both PRs, each named by number and squash SHA, plus every U1 parent (1–9) that no committed release-1 RELEASE record covers by then.** If release 1 is tagged first, its record carries U1 (and U2a too, if the tag falls after U2a's merge), and the MIDPOINT scope line cites that record instead of re-auditing. It must never be silently narrower.
+  - **Condition S3-2 — the scope names the B-CI extent check.** B-CI § 5 clause 7 (ratified) rides the PR-1 (#218) extent check on this pass. The scope line should list it as its own population item, so the MIDPOINT record is the place a reader finds it.
+  - **The "first render — not a baseline" marking is unchanged**: it applies to both U2b-merge records (MIDPOINT and the release-2 RELEASE record). **The record path is unchanged**: `completion/claims-pass-midpoint.md`, never `claims-pass.md`.
+  - **The residual: G1's branch execution is audited one unit late.** I considered a lighter read at U2a's merge and folded back:
+    - **I am structurally present during G1.** Every run's verdict is my record, kept per run, and branch A is determined by two of my records. So which verdict stands, the premise U2b is cut on, is not unobserved.
+    - **Task 12's other claims are each command-evidenced**, and Peter reads them at the U2a merge: no shipped file, no `triviality.ts`, no canonical file added outside the tasks list, and `G1 runs: <k>`.
+    - **An extra read is a trigger-set change.** The § 11.4 set is ratified, and the retired BURST row is the recorded lesson against event-less sampling reads.
+    - **What survives**: a false ✅ in U2a's own completion docs sits on `main` for one unit, and U2b is cut on top of it. Examples: a green `npm test`/`tsc` that was not green, or the pack intersection run against the wrong base. The C3 rework commits' *content* is judged by G1 re-runs but is not claims-audited until U2b. B-CI § 7 already names this one-unit latency.
+  - **FORK M-1 (Peter's): U2a-merge read, (A) none, or (B) a scoped read.**
+    - **(A) None.** The residual above is accepted, as the plan stands. This is my lean.
+    - **(B) A scoped, post-acceptance read of Task 12's evidence only**, recorded at a path that is neither `claims-pass.md` nor `claims-pass-midpoint.md`, and **never a gate on the U2b cut**.
+    - *Counter to (A)*: U2b is 31 subtasks built on U2a. *Counter to (B)*: it adds an event the ratified set does not have, and it duplicates evidence Peter reads at the merge.
+- **ARMING → U2b's merge only: CONFIRMED.** → tasks.md § "Delegated-tier plan" (post-unit obligations), § "Open inputs" (4), § "Task 13" (13.6)
+  - **U2a arms nothing.** No barrier arms and no context changes. Task 11's adjudications waive blank rows; they arm no guard. The barrier, `operative-set-freshness` inside `122-diff-guard`, arms at 13.6 in U2b.
+  - **No ARMING-adjacent note at U2a's merge.** The F3 window's at-merge state is already mine, in two places: my 11.5 subtask doc and the ruling note (`grep -c` → N equals the `adjudicated-blank` count, with the paths listed). A second note would restate my own evidence. **The window fails loud, not silent**: the adjudication keys are exact file paths, so any new file under those roots during the window shows up as a blank row and the audit goes red.
+  - **Condition S3-3 — the U2b read's composition.** My trigger row reads "`audit:coverage-map` + `verify-gate-registration.sh`, plus `completion-criteria-parity` dormancy". Post-unit obligations line 211 names only the first. The property is **all three**, and the record carries:
+    - (i) the rows for `canonical/operative-sets/**` and `canonical/profiles/consumer/**` list `122-diff-guard`;
+    - (ii) my **independent re-run of 13.6 (iv)**: the grep returns 0, and the same N paths are now non-blank;
+    - (iii) the registration count is **unchanged**, since no context is added;
+    - (iv) parity is not dormant;
+    - (v) which `coverage-map.ts` ran. B-CI's PR-2 changes that command's output and may land inside the window.
+  - **What survives**: the time-box is contingent on an event, not a date. If U2b is abandoned or re-scoped so that 13.6 never lands, the rows persist and nothing fires. The rows carry `owner: stacy`, so re-adjudicating them returns to me as a finding at the first LIVENESS walk or re-plan that sees it. That is recorded here, and it is not mechanized.
+- **Adjacent notes, outside the placement question:**
+  - **N-1 — #218 is ARMING-class, and its read is owed now, not at U2b.** PR-1 folded `test:scripts` into a required lane, a new barrier. It also made the required job `name:` fields computed expressions. B-CI § 6 step 5 is the steward re-checking his own change. My ARMING read of `main` after #218, and of PR-2 at its merge, is separate from 123. I will run it standalone and not defer it to U2b. → B-CI § 5, § 6
+  - **N-2 — citation ambiguity (Low).** Several places cite "Stacy R1 condition (a)–(d)" for F3: the line-157 amendment, Task 11 and Task 13 (iv). Those conditions live in the **B-CI ballot § 11 `[STACY R1]` § 6**. This file's `[STACY R1]` is the 2026-09-26 LENS entry, whose (a)–(c) are different items. A reader who resolves the stamp inside the spec lands on the wrong (a). The property: F3 citations name the ballot. The wording is the author's. → tasks.md line 157, § "Task 11", § "Task 13"
+
+**Resolves**: the three "awaits her confirmation" parentheticals: line 19 (amendment), line 93 (MIDPOINT heading), line 211 (ARMING obligation). S3-1 and S3-2 bear on the line-95 scope bullet; S3-3 bears on line 211's composition.
+**Standards implications**: none. The conditions apply existing trigger text to a moved carrier.
+
+---
