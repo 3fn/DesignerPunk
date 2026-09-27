@@ -403,7 +403,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 5.5 Component-copy migration (the consumer's rail, cache first; the version range; `transforms.js` from the tarball; per-file; relocation; ordering); **legacy agents/steering retained with the U1 report string**
   - [x] 5.6 Repairs (registry pin, tsconfig pin), after the migration fetch
 
-- [ ] 6. The name contract and the type contract
+- [x] 6. The name contract and the type contract
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Opus)
   **Traces**: Reqs 5A.1–5A.7 · design C7 (name contract), DD10, DD11, DD17, **P1 (YES)**
@@ -433,7 +433,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 6.0 **Gate**: verify Lina's Container-Base chore PR has merged (guard test green on `main`)
   - [x] 6.1 `build-name-contract.ts` + the mechanical dynamic-site scan + the three dispositions + **the own-index check with its bite**
   - [x] 6.2 The check + the P1 tier filter + `cannot check` + the report string
-  - [ ] 6.3 `contractHash`; the type-contract report
+  - [x] 6.3 `contractHash`; the type-contract report
   - [x] 6.4 Tests and bites
 
 - [ ] 7. The publish-rail guard, ballot B-U1, and the CHANGELOG's start
