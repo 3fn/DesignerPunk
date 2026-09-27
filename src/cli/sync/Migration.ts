@@ -413,17 +413,24 @@ export const LEGACY_AGENTS_RETAINED_MESSAGE =
   'your copied DesignerPunk agents, steering and governance files (.kiro/agents, .kiro/steering, governance) are retained until the next release — nothing to do for them now.';
 
 /**
- * ⟦TOKEN-SIDE STRING SLOTS — Ada (5.5 secondary seat)⟧ Lina A5 / C7 step 5.
- * DRAFTS by Lina, pending Ada's authorship. Each takes the file list the
- * assessment found (names are always printed with the line).
+ * Lina A5 / C7 step 5. Authored at Task 5.5 (Ada). Each takes the file list
+ * the assessment found (names are always printed with the line).
+ *
+ * `oldNameReferenceMaps` is deliberately ownership-agnostic: `scanTokenFiles`
+ * classifies by filename + content alone, so this list mixes DesignerPunk's
+ * own old-name files (the 7 renamed to `*.refs.ts` in #200 — a pre-123 copy
+ * predates that rename and still carries the old name) with a consumer's own
+ * semantic-reference map that happens to be named `tokens.ts` — the exact
+ * collision Req 8's user story names. The string must not claim authorship it
+ * cannot verify per-file.
  */
 export const TOKEN_SIDE_SLOTS = {
   /** C7 5 (i): old-name `tokens.ts` reference maps in the copied tree → C11's lint on first generate. */
   oldNameReferenceMaps: (files: string[]) =>
-    `${files.length} copied reference map${files.length === 1 ? '' : 's'} named like token files (${files.join(', ')}) will trip the component-token lint on your first 'npx designerpunk generate' — DesignerPunk authored them under the old naming; they register no tokens.`,
+    `${files.length} copied reference map${files.length === 1 ? '' : 's'} named like token files (${files.join(', ')}) will trip the component-token lint on your first 'npx designerpunk generate' — a tokens.ts or *.tokens.ts file that doesn't call defineComponentTokens registers no tokens, whether it's one of ours or one you named yourself. It's a warning, not an error, so generate still runs. Rename the file${files.length === 1 ? '' : 's'} off the tokens.ts pattern (e.g., <Name>.refs.ts) to stop it, or leave as is.`,
   /** C7 5 (ii): branded copied `*.tokens.ts` now harvest as the consumer's component tokens. */
   brandedTokenFiles: (files: string[]) =>
-    `${files.length} copied component token file${files.length === 1 ? '' : 's'} (${files.join(', ')}) now register as YOUR component tokens when you run generate — they are yours while the copies stay.`,
+    `${files.length} copied component token file${files.length === 1 ? '' : 's'} (${files.join(', ')}) now register as YOUR component tokens when you run generate — they're yours while the copies stay, and DesignerPunk's release won't overwrite them. Keep the copy and they stay registered; remove it (see above) and they go with it.`,
 };
 
 export function migrationReportLines(a: MigrationAssessment): string[] {

@@ -238,10 +238,11 @@ export function prunedMessage(count: number, paths: string): string {
 }
 
 /**
- * ⟦TOKEN-SIDE STRING SLOT — Ada (5.5 secondary seat)⟧ The clause appended to the
- * `src/types` pruning line (Ada D-T-A5: a pre-123 consumer's copied `src/tokens`
- * still imports `../types` relatively, so the de-managed `src/types` must not
- * read as "safe to delete"). DRAFT text by Lina, pending Ada's authorship.
+ * The clause appended to the `src/types` pruning line (Ada D-T-A5: a pre-123
+ * consumer's copied `src/tokens` still imports `../types` relatively, so the
+ * de-managed `src/types` must not read as "safe to delete"). Authored at Task
+ * 5.5 (Ada); text carried unchanged from Lina's draft — it already said the
+ * right thing.
  */
 export const SRC_TYPES_PRUNE_CLAUSE =
   ' — keep them: your token tier still imports them through relative ../types paths, so deleting src/types breaks generate';
