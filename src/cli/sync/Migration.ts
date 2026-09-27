@@ -493,7 +493,7 @@ export const LEGACY_AGENTS_RETAINED_MESSAGE =
 export const TOKEN_SIDE_SLOTS = {
   /** C7 5 (i): old-name `tokens.ts` reference maps in the copied tree → C11's lint on first generate. */
   oldNameReferenceMaps: (files: string[]) =>
-    `${files.length} copied reference map${files.length === 1 ? '' : 's'} named like token files (${files.join(', ')}) will trip the component-token lint on your first 'npx designerpunk generate' — a tokens.ts or *.tokens.ts file that doesn't call defineComponentTokens registers no tokens, whether it's one of ours or one you named yourself. It's a warning, not an error, so generate still runs. Rename the file${files.length === 1 ? '' : 's'} off the tokens.ts pattern (e.g., <Name>.refs.ts) to stop it, or leave as is.`,
+    `${files.length} reference map${files.length === 1 ? '' : 's'} named like token files (${files.join(', ')}) will trip the component-token lint on your first 'npx designerpunk generate' — a tokens.ts or *.tokens.ts file that doesn't call defineComponentTokens registers no tokens, whether it's one of ours or one you named yourself. It's a warning, not an error, so generate still runs. Rename the file${files.length === 1 ? '' : 's'} off the tokens.ts pattern (e.g., <Name>.refs.ts) to stop it, or leave as is.`,
   /** C7 5 (ii): branded copied `*.tokens.ts` now harvest as the consumer's component tokens. */
   brandedTokenFiles: (files: string[]) =>
     `${files.length} copied component token file${files.length === 1 ? '' : 's'} (${files.join(', ')}) now register as YOUR component tokens when you run generate — they're yours while the copies stay, and DesignerPunk's release won't overwrite them. Keep the copy and they stay registered; remove it (see above) and they go with it.`,

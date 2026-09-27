@@ -349,6 +349,11 @@ describe('sync — component-copy migration (Task 5.5)', () => {
     ]);
     expect(con.output()).toContain(TOKEN_SIDE_SLOTS.oldNameReferenceMaps(out.migration!.oldNameReferenceMaps));
     expect(con.output()).toContain(TOKEN_SIDE_SLOTS.brandedTokenFiles(out.migration!.brandedTokenFiles));
+    // Owner-neutral: Nav-Header-App is `kind: 'yours'`, not a DesignerPunk copy, yet its
+    // tokens.ts is the sole entry in oldNameReferenceMaps here — the string must not call
+    // the file "copied" (Lina's finding). brandedTokenFiles IS copy-scoped, so "copied" stays correct there.
+    expect(TOKEN_SIDE_SLOTS.oldNameReferenceMaps(out.migration!.oldNameReferenceMaps)).not.toContain('copied reference map');
+    expect(TOKEN_SIDE_SLOTS.brandedTokenFiles(out.migration!.brandedTokenFiles)).toContain('copied component token file');
   });
 
   describe('token-file detection (Lina A5; Ada\'s detection-rule finding)', () => {

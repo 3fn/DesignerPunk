@@ -61,3 +61,24 @@ I did not add a bite for the two `Migration.ts` strings because their only test 
 ## Application-time adaptations
 
 None.
+
+---
+
+## Addendum (2026-09-26) — owner-neutral wording fix on `oldNameReferenceMaps`
+
+Peter authorized; Lina's finding on `task/123-u1-substrate` (head `c33c54ef`).
+
+**Finding**: `TOKEN_SIDE_SLOTS.oldNameReferenceMaps` stays deliberately unscoped by ownership (right — the lint fires on consumer-authored files too, and the string already addresses both owners in its body). But the string *opened* with "N **copied** reference map(s)", and in the (f) fixture `Nav-Header-App/tokens.ts` is hers, not a copy — the opening clause contradicted the rest of the sentence.
+
+**Fix**: dropped "copied" from `oldNameReferenceMaps`'s leading clause only. `brandedTokenFiles` is correctly copy-scoped (its whole premise is that a *copy* now harvests as the consumer's own token registration) and was left alone, per Lina's instruction.
+
+**Final string** (`src/cli/sync/Migration.ts`, `TOKEN_SIDE_SLOTS.oldNameReferenceMaps`):
+> `${n} reference map${s} named like token files (${files}) will trip the component-token lint on your first 'npx designerpunk generate' — a tokens.ts or *.tokens.ts file that doesn't call defineComponentTokens registers no tokens, whether it's one of ours or one you named yourself. It's a warning, not an error, so generate still runs. Rename the file${s} off the tokens.ts pattern (e.g., <Name>.refs.ts) to stop it, or leave as is.`
+
+**Test**: no existing test pinned the literal text (same property noted above — the (f) test calls the function directly). Added two new assertions to that same test (`src/cli/__tests__/sync.migration.test.ts`, "(f)"), pinning the property this fix establishes: `oldNameReferenceMaps(...)` does NOT contain `'copied reference map'` (Nav-Header-App is `kind: 'yours'` in this fixture), and `brandedTokenFiles(...)` DOES still contain `'copied component token file'` (unchanged, copy-scoped).
+
+**Bite recorded**: reintroduced "copied" into `oldNameReferenceMaps`'s template literal → `sync.migration.test.ts` went red (`Expected substring: not "copied reference map"` / `Received: "1 copied reference map named like token files (...)"`, 1 failed / 34 passed) → restored verbatim (`git diff` confirmed only the intended one-word removal survives) → re-ran, 35/35 green.
+
+**Validation**: `npx jest src/cli/__tests__/sync src/cli/sync` → 5 suites, 77/77 passed. `npx tsc --noEmit` → clean. `npm test` (full) → 381 suites, 9229 tests passed. `git status --porcelain` clean before commit (only the two intended files touched; no build artifacts).
+
+**Commit**: on `task/123-u1-substrate`, plain git, Sonnet attribution.
