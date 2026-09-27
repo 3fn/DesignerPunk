@@ -52,7 +52,7 @@
 - **a1.** Add `workflow_dispatch:` to the five required workflows that lack it: consumer-guard, tool-boot-smoke, section-citations, agent-generator and package-name-drift.
 - **a2. Dispatched runs report under context names distinct from the required contexts** (steward addition). For example, a job's `name:` becomes `${{ github.event_name == 'workflow_dispatch' && format('{0} (unit-branch)', '<required name>') || '<required name>' }}`; the matrix form is the same over `matrix.context`. **This applies to `lane-timing.yml` too**, which already has dispatch and today would report under the required names.
   - **Why**: required contexts match by name on a commit. A dispatched run tests the **branch head**, not the PR's **merge ref**, and must never be able to stand in for the gate. Whether a dispatch-event check run with a required name satisfies or shadows the PR's run is **unverified in this repo**; renaming makes the question moot.
-  - **Verify in the implementing PR** by one real dispatch per workflow, citing the reported context names.
+  - **Verify in the implementing PR** by one real dispatch per workflow, citing the reported context names. *(Erratum 2026-09-27: `workflow_dispatch` can only be triggered once the workflow file carrying it is on the default branch, so this verification cannot run on the PR-1 branch. It runs immediately after PR-1 merges, before U2a's first work commit; the plan is ballot B-CI § 6.)*
   - **Also verify** that `noop-probe.ts` behaves identically under dispatch. On the steward's read it computes in-tree hashes and uses no PR base, but that is a read, not a run.
 - **a3. `complete-task.sh` unit-member mode** (a parent completing inside a multi-parent unit), after its push, runs `gh workflow run <wf> --ref <unit-branch>` **for every required workflow** (the six files above). It then resolves each run's URL (`gh run list --workflow <wf> --branch <unit-branch> --event workflow_dispatch --limit 1`) and **prints the URLs**.
   - It is non-blocking: the script does not wait for results. The agent reads them before the next parent's completion claim — see (c).
@@ -63,7 +63,8 @@
   - **Steward refinement (recommended)**: in parent mode, the PR's own `pull_request` event runs the gate, so dispatching as well duplicates every run. What parent mode lacks is **detection of the #194 class**. It gains a **zero-runs detector**: after `gh pr create` (or re-reporting an existing PR), poll the PR head's check runs for up to a bounded window (~3 min). On zero, print a loud warning with the remedy — poll mergeability (`gh pr view --json mergeable`), then `git commit --allow-empty -m "ci: re-trigger" && git push`.
   - It **prints the remedy and does not auto-push**, since an automatic commit on the branch is an action the agent should see.
   - *Counter, surviving*: the detector cannot distinguish a slow queue from a dropped event inside its window, so a false alarm is possible on a busy runner.
-- **Subtask mode is unchanged** (no dispatch by default). An opt-in `--ci` flag is **optional**, not proposed: subtask commits are judgment-based checkpoints, and a mid-parent state is expected to be red.
+  - **F-A RULED (Peter, 2026-09-27): the zero-runs detector, not a second dispatch.** It **fails loudly**: on zero runs after the window, the script prints the PR URL, the #148/#194 diagnosis and the remedy, then **exits non-zero**, so the completion step visibly did not finish. It still never auto-pushes.
+- **Subtask mode is unchanged** (no dispatch by default). An opt-in `--ci` flag is **optional**, not proposed: subtask commits are judgment-based checkpoints, and a mid-parent state is expected to be red. *(2026-09-27: the coordinator's brief for ballot B-CI has dispatch firing at subtask checkpoints too. B-CI drafts that as its primary text, with a `--no-ci` opt-out for knowingly-red checkpoints, and carries this line's parent-only design as the alternative text. **Peter picks at ratification** (B-CI § 3, fork M1-a/M1-b); until then this line stands.)*
 
 ### (b) Every required lane's test command becomes a named npm script, and the workflows call it
 
@@ -125,7 +126,7 @@ Ballot B-CI, M1. **Before → after, draft:**
 
 ## Vehicles, grant and sequencing
 
-**Ballot B-CI** — `.kiro/docs/ballots/2026-09-27-unit-branch-ci-feedback.md`, plus its `README.md` entry:
+**Ballot B-CI** — `.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md` (filename as drafted, 2026-09-27; DRAFT), plus its `README.md` entry:
 - Two measures: **M1** (e) and **M2** (c). Authored by the steward; **Stacy is the required reviewer** (M2 changes what her passes read).
 - **Record-first**: ratified-in-record as **PR-1's first commit**, before any law edit applies (the 127 U1 / B-U1 precedent). The ballot states whether a `governance/classification-map.md` row is owed.
 - **A checks-only merge is not ratification.**
@@ -139,18 +140,20 @@ Ballot B-CI, M1. **Before → after, draft:**
 - `.kiro/steering/Task-Completion-Protocol.md` and `governance/completion-documentation-guide.md` — **only the ratified ballot's exact before→after edits** (application, not authorship);
 - the regenerated `CLAUDE.md` / agent outputs.
 
+*(2026-09-27: the orchestrator proposes moving this implementation grant to **Thurgood**, as CI-regime owner, through ballot B-CI § 5 (`.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md`, DRAFT). If B-CI ratifies, its § 5 supersedes the list above; until then the list above stands as written.)*
+
 The grant confers no ratification authority. **Branch-protection and required-context settings are Peter's actions** and none is proposed: a2 keeps the required set at 18.
 
 **PR-1 — must merge before U2a's first commit** (Peter-merged, governance carve-out):
 1. B-CI ratified-in-record (first commit).
-2. (a) a1–a3, and a4 per fork F-A.
+2. (a) a1–a3, and a4 as ruled (F-A: the zero-runs detector).
 3. (b) — it touches the same workflow files as (a), so one edit pass and one reviewable diff. Named scripts also make a dispatched failure reproducible locally.
 4. (e) applied, so the law never contradicts the tooling at U2a's first unit-member completion.
 5. (c) applied, so U2a's parent docs are the first written under it.
 6. The `test:scripts` fold-in, or its recorded deferral.
 
 **PR-1 validation**:
-- one dispatch per workflow on the PR-1 branch, run URLs cited, context names observed distinct;
+- one dispatch per workflow, run URLs cited, context names observed distinct — **after PR-1 merges, not on its branch** (erratum 2026-09-27; see a2 and B-CI § 6);
 - `verify-gate-registration.sh` green (the count stays 18);
 - the straggler grep returns 0;
 - 122 diff-guard green after regeneration.
@@ -167,6 +170,7 @@ The grant confers no ratification authority. **Branch-protection and required-co
   - **Only option 2 closes this**: open a **draft PR at the unit's first push**, so `pull_request` runs every push against the merge ref.
   - Option 2 needs **its own ballot**: TCP's "no PR opens until unit completion" and the PR-open-is-submission semantics both change (a draft would have to be defined as not-a-submission). It is not in B-CI.
   - **FORK F-B for Peter**: take (a) now (the recommendation — no change to PR semantics), or go straight to option 2's ballot instead. *Counter, surviving*: option 2 is the stronger fix, and (a) is partly scaffolding that option 2 would retire.
+  - **F-B RULED (Peter, 2026-09-27): take the dispatch package now.** The option-2 (early draft PR) ballot is drafted **only if the merge-ref residual actually bites**. **Its trigger**: a unit PR whose required checks fail at the merge ref, when the unit-branch dispatch runs at the same head SHA were green, and the failure is attributable to `main` having moved. The claims passes and the steward's health-check walk watch for it.
 - **The gaps between parents.** Dispatch fires at parent completions, so work between completions (subtask checkpoints) gets no CI unless the optional `--ci` flag exists and is used.
   - The final parent's gap is closed by the PR itself.
   - U2a has three parents, so its interior gaps are two parent-lengths.

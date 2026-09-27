@@ -18,6 +18,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Amendment 2026-09-27: **U2 is split at the G1 gate into two merge units, by Peter's ruling (2026-09-27)** — **U2a** (Tasks 10–12, gated by Task 12 = G1) and **U2b** (Tasks 13–18, gated by Task 18 = G2). **Why**: U1 ran nine parents over ~2 days with no CI feedback until its PR opened (#215); smaller units put the required checks on the work sooner and keep each PR reviewable as one diff; and the steward's sizing consult put U2 — 42 subtasks and two Stacy-verdict gates — as the plan's largest unit, with G1 as its natural seam, since nothing after G1 may begin before its verdict anyway. **Naming**: "U2" still names the *stage* (Tasks 10–18; design § "Gates and sequencing" steps 1–8; release 2's content); "U2a" and "U2b" name the *merge units* (branch, PR, merge, tripwire, claims events). Carried in: § "Declared Merge Units" (rows, carve-out, MIDPOINT, gate seats), § "Expected release count", § "Split tripwire", § "Delegated-tier plan" (rows 12 and 18; post-unit obligations), § "Sequencing decisions" item 9, Open inputs 1 and 4, and Tasks 11, 12 (new 12.3), 13, 15, 16 and 18. Placements that were judgment calls are marked **(fork F<n>)** and listed in this amendment's PR for Peter; **the MIDPOINT and ARMING placements are Stacy's events and await her confirmation.** **Companion**: `.kiro/issues/2026-09-27-unit-branch-ci-feedback.md` — the unit-branch CI-feedback package, triggered before any U2 execution starts.)*
 
+*(Rulings 2026-09-27 (Peter), on the split's forks, following the orchestrator's recommendations: **F1** — U2a cuts no release (§ "Expected release count"); **F3** — Stacy records time-boxed `audit:coverage-map` adjudications at U2a's merge, expiring when 13.6 lands in U2b (Tasks 11 and 13); **F7** — U2b waits strictly for U2a's merge, no stacking (§ "Declared Merge Units"). **F-A** and **F-B** are the CI package's and are recorded in `.kiro/issues/2026-09-27-unit-branch-ci-feedback.md`. Each ruling is also noted where its fork was written.)*
+
 > **Law binding execution (Req 26.1 — Spec 127, ratified)**:
 > - Every parent completion doc reproduces **every Success Criteria row VERBATIM**, with Status + Evidence, and carries the **forced-negative line** and the **unconditional delegated-tier line**. The line's referent is the parent's **primary agent** in § "Delegated-tier plan".
 > - Every ticked subtask carries its subtask completion doc.
@@ -74,7 +76,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | Unit | Slug · branch | Parents | Gating parent | PR title form | Claims events |
 |---|---|---|---|---|---|
 | **U1 — Distribution substrate & packaging truth** | `u1-substrate` · `task/123-u1-substrate` | 1–9 | **9** | `U1 substrate & packaging truth (123)` | RELEASE (release 1) |
-| **U2a — Consumer generation profile: splitter, exemplars & G1** | `u2a-g1` · `task/123-u2a-g1` | 10–12 | **12 (G1 gate parent)** | `U2a consumer generation profile: splitter, exemplars & G1 (123)` | — (**no release**; its content rides release 2 — fork F1) |
+| **U2a — Consumer generation profile: splitter, exemplars & G1** | `u2a-g1` · `task/123-u2a-g1` | 10–12 | **12 (G1 gate parent)** | `U2a consumer generation profile: splitter, exemplars & G1 (123)` | — (**no release**; its content rides release 2 — F1 RULED, Peter 2026-09-27) |
 | **U2b — Consumer generation profile: machinery, rendering & G2** | `u2b-profile` · `task/123-u2b-profile` | 13–18 | **18 (G2 gate parent)** | `U2b consumer generation profile: machinery, rendering & G2 (123)` | **MIDPOINT (declared carrier)** + **ARMING** + RELEASE (release 2) |
 | **U3 — Onboarding** | `u3-onboarding` · `task/123-u3-onboarding` | 19–22 | **22** | `U3 onboarding (123)` | RELEASE (release 3) |
 | **U4 — Content policy** | `u4-content` · `task/123-u4-content` | 23–24 | **24** | `U4 content policy (123)` | — (rides release 4) |
@@ -82,7 +84,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 **How the units run**:
 - Order is unconditional: U1 → U2a → U2b → U3 → U4 → U5 (Req 26.3's U1 → U2 → U3 → U4 → U5, with the U2 stage declared as two merge units in order — amendment 2026-09-27).
-- One branch per unit, each branched from `main` after the prior unit merges. **U2b's branch is cut only after U2a merges** (stacking only on Peter's explicit direction, `Stacked-on: #<PR>` — fork F7).
+- One branch per unit, each branched from `main` after the prior unit merges. **U2b's branch is cut only after U2a merges — no stacking** (F7 RULED, Peter 2026-09-27: strict wait; the `Stacked-on:` exception is not pre-authorized for U2b).
 - The gating parent's completion opens the unit PR; every other parent commits its docs on the branch.
 - Peter merges each unit. Agents never merge.
 - **Governance carve-out (Peter-merged, record-first)**: U1 (B-U1; the Integration Guide line fixes), U2a (`canonical/**` — Task 11's exemplar records and confirmations; no ballot, since no rendered text changes), U2b (B-U2; `canonical/**`), U3 (`governance/DesignerPunk-Integration-Guide.md` — Task 19.4), U4 (B-U4; banners).
@@ -120,7 +122,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 - RELEASE fires at the release tag, before publish.
 - Release 1 is a coherent **substrate** release. **Release 3 is the first release a stranger should be pointed at** (Leonardo A5). **Under T2 (B), the README and install doc do not advertise onboarding before release 3.**
 - *Residual: four dual-registry publishes (the accepted dual-publish tax, 26.6). Hotfixes would add RELEASE passes.*
-- **U2a cuts no release — the count stays FOUR** *(amendment 2026-09-27; fork F1, proposed)*. U2a changes **no shipped file**: Tasks 10–12 touch `tools/agent-generator/**`, `canonical/**` and spec records, none of which is in `files[]` or compiles into `dist/`, and Task 10 expects the rendered agent text (shipped under `.kiro/agents/`) to stay unchanged (its diff-guard criterion). Task 12 checks this at U2a's merge; **if the check finds a shipped path, the release decision returns to Peter before U2a merges.** A release with no consumer delta would cost a RELEASE pass and a dual publish for nothing. *Residual: `main` carries U2a's merged-but-unreleased content for one unit's length; a hotfix cut in that window would carry it (harmless under the same check), and release 1, if tagged after U2a merges, would too.*
+- **U2a cuts no release — the count stays FOUR** *(amendment 2026-09-27; F1 RULED, Peter 2026-09-27 — the proposal stands)*. U2a changes **no shipped file**: Tasks 10–12 touch `tools/agent-generator/**`, `canonical/**` and spec records, none of which is in `files[]` or compiles into `dist/`, and Task 10 expects the rendered agent text (shipped under `.kiro/agents/`) to stay unchanged (its diff-guard criterion). Task 12 checks this at U2a's merge; **if the check finds a shipped path, the release decision returns to Peter before U2a merges.** A release with no consumer delta would cost a RELEASE pass and a dual publish for nothing. *Residual: `main` carries U2a's merged-but-unreleased content for one unit's length; a hotfix cut in that window would carry it (harmless under the same check), and release 1, if tagged after U2a merges, would too.*
 
 ### Split tripwire (Req 26.5)
 
@@ -567,9 +569,9 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - Each `confirmation:` path resolves to a committed note.
   - C1 carve-out confirmations (Thurgood-maintained sources, incl. G/G′'s `start-up-tasks`) land as `Agent: stacy` commits, listed with SHAs.
   - *Scope*: the checks establish the declared seat and verbatim text. **They do not establish authorship** (one git identity) **or completeness** (the confirmer's responsibility).
-  - **The coverage-map rows for this parent's new canonical files are cited** from `npm run audit:coverage-map` output, and the regenerated `canonical/coverage-map.yaml` is committed (122 diff-guard green). **Those rows are blank at U2a's merge by construction**: the freshness sweep that lists `122-diff-guard` on `canonical/operative-sets/**` and `canonical/profiles/consumer/**` lands at 13.6, in U2b. Each blank row is either **adjudicated by Stacy** (`sweep: audit:coverage-map`, naming 13.6 as its closure) or **stated in the U2a PR body as a known-red `audit:coverage-map` window that 13.6 closes** (amendment 2026-09-27; fork F3). *Scope: the citation establishes the rows' state at U2a; it establishes no guard over those files.*
+  - **The coverage-map rows for this parent's new canonical files are cited** from `npm run audit:coverage-map` output, and the regenerated `canonical/coverage-map.yaml` is committed (122 diff-guard green). **Those rows are blank at U2a's merge by construction**: the freshness sweep that lists `122-diff-guard` on `canonical/operative-sets/**` and `canonical/profiles/consumer/**` lands at 13.6, in U2b. **Stacy records a time-boxed adjudication for each blank row, committed on the U2a branch so it is on `main` at U2a's merge**: one `canonical/adjudications.yaml` row per new file (keys are file paths, not globs), `sweep: audit:coverage-map`, `owner: stacy`, the ruling value hers, and a `record` stating **"expires when 123 Task 13.6 lands in U2b"**. `npm run audit:coverage-map` passes at U2a's merge, output cited (F3 RULED, Peter 2026-09-27; replaces the merged "disclose a known-red window" default). *Scope: the citation establishes the rows' state at U2a; it establishes no guard over those files. The schema has no expiry field, so the time-box is text until 13.6 removes the rows.*
 
-  **Primary Artifacts:** `canonical/operative-sets/*.yaml` (exemplar units), `canonical/profiles/consumer/confirmations/*.md`, `canonical/coverage-map.yaml` (regenerated), `canonical/adjudications.yaml` (Stacy's `audit:coverage-map` entries only, if fork F3 resolves to adjudication)
+  **Primary Artifacts:** `canonical/operative-sets/*.yaml` (exemplar units), `canonical/profiles/consumer/confirmations/*.md`, `canonical/coverage-map.yaml` (regenerated), `canonical/adjudications.yaml` (Stacy's time-boxed `audit:coverage-map` entries only — F3)
 
   - [ ] 11.1 Draft the exemplar records
   - [ ] 11.2 Owner confirmations under C1; carve-out commits
@@ -627,19 +629,20 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **`operative-set-freshness` inside `122-diff-guard`, with ARMING read-ready** (input 4, corrected):
     - (i) **a STANDING test** runs `npx tsx tools/agent-generator/diff-guard.ts` against a **committed stale-unit fixture** and expects non-zero. *This catches a future restructure that drops the sweep.*
     - (ii) **`npm run audit:coverage-map` shows that the rows for `canonical/operative-sets/**` and `canonical/profiles/consumer/**` LIST `122-diff-guard`**, output cited. *(Stacy R2: zero blank rows would prove only that some check covers them, not this one. She measured no broad `canonical/**` glob.)*
+    - (iv) **The U2a time-boxed adjudications expire here**: the same change removes every `canonical/adjudications.yaml` row whose `record` reads "expires when 123 Task 13.6 lands in U2b" — `grep -c "expires when 123 Task 13.6" canonical/adjudications.yaml` → 0, output cited — and (ii)'s output shows those rows non-blank without them (F3 RULED, Peter 2026-09-27). *Limit: the audit consults adjudications only for blank rows, so an unremoved row would linger silently; the grep is what catches it.*
     - (iii) Stacy is notified that ARMING fires at U2b's merge (amended 2026-09-27; was U2's merge).
   - **Ballot B-U2 is RATIFIED before its edits apply.** It carries **the C2 counting-block edit** (per-agent `no-consumer-counterpart` rate, per-signer assent rate, refusal count; baseline-in-123 / first-render annotations) **and the `classification-map` L686 edit** (applied at 17.3) (S-T2).
     - After the counting-block edit, **Stacy re-confirms the changed unit of her charter** before 15.4 runs (the freshness check demands it).
   - *Scope*: mechanics only. Discrimination is G2's question.
 
-  **Primary Artifacts:** `tools/agent-generator/regrounding/triviality.ts`, `tools/agent-generator/derive.ts` (key checks), schemas + validator, `tools/agent-generator/diff-guard.ts`, `__fixtures__/stale-unit/`, `.kiro/docs/ballots/<date>-123-b-u2.md`, `canonical/agents/stacy.md`
+  **Primary Artifacts:** `tools/agent-generator/regrounding/triviality.ts`, `tools/agent-generator/derive.ts` (key checks), schemas + validator, `tools/agent-generator/diff-guard.ts`, `__fixtures__/stale-unit/`, `.kiro/docs/ballots/<date>-123-b-u2.md`, `canonical/agents/stacy.md`, `canonical/adjudications.yaml` (13.6 removes the expired U2a rows only — F3)
 
   - [ ] 13.1 Dispositions schema (explicit rows; per-member frontmatter; no re-pointed embeds; rejected term)
   - [ ] 13.2 Overlay + signature formats; stale and bare checks
   - [ ] 13.3 Confirmer/signer checks; verbatim-substring check
   - [ ] 13.4 (Lina) `triviality.ts` incl. the branch-A configuration
   - [ ] 13.5 (Lina) Orphan and missing-row refusals
-  - [ ] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice
+  - [ ] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice + removal of the expired U2a adjudications (F3; Stacy is told in the same notice)
   - [ ] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
   - [ ] 13.8 Apply the counting-block edit (regenerate); Stacy re-confirms her changed unit
 
