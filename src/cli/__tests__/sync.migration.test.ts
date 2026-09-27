@@ -184,6 +184,8 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(badge.files.find((f) => f.file === 'tokens.ts')!.verdict).toBe('cannot-tell');
       expect(badge.files.find((f) => f.file === 'index.ts')!.verdict).toBe('cannot-tell');
       expect(a.unknownTransform['11.3.0']).toMatch(/does not export/);
+      // Cause selection (erratum 2026-09-26): the content WAS retrieved; the transform is the unknown part.
+      expect(badge.files.find((f) => f.file === 'tokens.ts')!.cause).toEqual({ kind: 'transform-unrecoverable', version: '11.3.0' });
     });
   });
 
@@ -264,7 +266,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
       expect(out.migration!.components.map((c) => c.verdict)).toEqual(['cannot-tell', 'cannot-tell']);
       expect(calls).toHaveLength(0);
-      for (const n of COMPONENTS) expect(con.output()).toContain(cannotTellMessage(`src/components/core/${n}/`, '12.0.5'));
+      for (const n of COMPONENTS) expect(con.output()).toContain(cannotTellMessage(`src/components/core/${n}/`, { kind: 'fetch-failed', version: '12.0.5' }));
       // Peter's ruling (2026-09-26), condition 1: the cannot-tell outcome is ACTIONABLE.
       expect(con.output()).toContain(cannotTellRemedyMessage(COMPONENTS));
     });
@@ -284,6 +286,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(a.failed).toEqual(['12.0.5', '11.3.0', '11.2.1']);
       const bi = a.components.find((c) => c.name === 'Button-Icon')!;
       expect(bi.files.find((f) => f.file === 'contracts.yaml')!.verdict).toBe('cannot-tell');
+      expect(bi.files.find((f) => f.file === 'contracts.yaml')!.cause).toEqual({ kind: 'fetch-failed', version: '12.0.5, 11.3.0, 11.2.1' });
       expect(bi.verdict).toBe('cannot-tell');
     });
 
@@ -292,6 +295,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       const { fetcher, calls } = snapshotFetcher(scratch);
       const a = assess(scratch, fetcher, null);
       expect(a.components.every((c) => c.verdict === 'cannot-tell')).toBe(true);
+      expect(a.components.flatMap((c) => c.files).every((f) => f.cause?.kind === 'version-unknown')).toBe(true);
       expect(calls).toHaveLength(0);
     });
   });

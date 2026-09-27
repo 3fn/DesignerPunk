@@ -193,6 +193,8 @@ export interface FileVerdict {
   verdict: MigrationVerdict;
   /** The version whose shipped content it matched, if any. */
   matchedVersion?: string;
+  /** Why the verdict is `cannot-tell` (design.md catalog row "migration — cannot tell", erratum 2026-09-26). */
+  cause?: CannotTellCause;
 }
 
 export interface ComponentVerdict {
@@ -295,12 +297,12 @@ export function assessComponentCopies(
 
   // Per-file state.
   const matched = new Map<string, Map<string, string>>(); // name → file → version
-  const poisoned = new Map<string, Set<string>>(); // name → files an unknown transform left undecidable
+  const poisoned = new Map<string, Map<string, Set<string>>>(); // name → file → unknown-transform versions that left it undecidable
   const presentIn = new Map<string, string[]>(); // name → versions shipping the component
   const versionFileSets = new Map<string, Map<string, Set<string>>>(); // version → name → files
   for (const name of names) {
     matched.set(name, new Map());
-    poisoned.set(name, new Set());
+    poisoned.set(name, new Map());
     presentIn.set(name, []);
   }
   const allMatched = () =>
@@ -332,7 +334,11 @@ export function assessComponentCopies(
         if (!file.endsWith('.ts') || side.transform.kind === 'identity') candidate = hashBuffer(raw);
         else if (side.transform.kind === 'fn') candidate = hashBuffer(side.transform.fn(raw.toString('utf-8')));
         else candidate = null;
-        if (candidate === null) poisoned.get(name)!.add(file);
+        if (candidate === null) {
+          const byFile = poisoned.get(name)!;
+          if (!byFile.has(file)) byFile.set(file, new Set());
+          byFile.get(file)!.add(version);
+        }
         else if (candidate === hash) matched.get(name)!.set(file, version);
       }
     }
@@ -344,7 +350,16 @@ export function assessComponentCopies(
     for (const file of consumer.get(name)!.keys()) {
       const v = matched.get(name)!.get(file);
       if (v) files.push({ file, verdict: 'unmodified', matchedVersion: v });
-      else if (undecidableRange || poisoned.get(name)!.has(file)) files.push({ file, verdict: 'cannot-tell' });
+      else if (undecidableRange || poisoned.get(name)!.has(file)) {
+        // Cause precedence: an unknown installed version, then a retrieval failure
+        // (the version list or a version's tarball), then an unrecoverable transform.
+        let cause: CannotTellCause;
+        if (!opts.upperBound.version) cause = { kind: 'version-unknown' };
+        else if (!rangeKnown) cause = { kind: 'fetch-failed', version: opts.upperBound.version };
+        else if (assessment.failed.length > 0) cause = { kind: 'fetch-failed', version: assessment.failed.join(', ') };
+        else cause = { kind: 'transform-unrecoverable', version: [...poisoned.get(name)!.get(file)!].sort(compareVersions).join(', ') };
+        files.push({ file, verdict: 'cannot-tell', cause });
+      }
       else files.push({ file, verdict: 'modified' });
     }
     const shippedBy = presentIn.get(name)!;
@@ -412,9 +427,26 @@ export function modifiedCopiesMessage(n: number, names: string[]): string {
   return `these ${n} modified copies now override the package's ${names.join(', ')} and will not receive updates. Keep them as your forks, or move them with 'sync --migrate-components' (relocates modified copies to src/components/<Name>/).`;
 }
 
-/** Design catalog row "migration — cannot tell". */
-export function cannotTellMessage(p: string, v: string): string {
-  return `cannot tell whether ${p} was modified — the package content for version ${v} could not be retrieved. Review before removing.`;
+export type CannotTellCause =
+  | { kind: 'fetch-failed'; version: string }
+  | { kind: 'transform-unrecoverable'; version: string }
+  | { kind: 'version-unknown' };
+
+/**
+ * Design catalog row "migration — cannot tell" — THREE-CAUSE per the design.md
+ * erratum of 2026-09-26 (Thurgood, `completion/task-5-erratum-cannot-tell.md`):
+ * `cannot tell whether <path> was modified — <the package content for version <v>
+ * could not be retrieved|version <v>'s copy transform cannot be recovered|the
+ * installed version is unknown>. Review before removing.`
+ */
+export function cannotTellMessage(p: string, cause: CannotTellCause): string {
+  const reason =
+    cause.kind === 'fetch-failed'
+      ? `the package content for version ${cause.version} could not be retrieved`
+      : cause.kind === 'transform-unrecoverable'
+        ? `version ${cause.version}'s copy transform cannot be recovered`
+        : 'the installed version is unknown';
+  return `cannot tell whether ${p} was modified — ${reason}. Review before removing.`;
 }
 
 /**
@@ -483,13 +515,14 @@ export function migrationReportLines(a: MigrationAssessment): string[] {
   if (unmodified.length > 0) lines.push(unmodifiedCopiesMessage(unmodified.length, unmodified.map((c) => c.name)));
   if (forks.length > 0) lines.push(modifiedCopiesMessage(forks.length, forks.map((c) => c.name)));
   if (yours.length > 0) lines.push(yoursUnderCoreMessage(yours.length, yours.map((c) => c.name)));
-  const unknownVersions = Object.keys(a.unknownTransform);
-  const v =
-    a.failed.length > 0 ? a.failed.join(', ') : unknownVersions.length > 0 ? unknownVersions.join(', ') : a.upperBound.version ?? 'unknown';
   for (const c of unknown) {
     const undecided = c.files.filter((f) => f.verdict === 'cannot-tell');
-    if (undecided.length === c.files.length) lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/`, v));
-    else for (const f of undecided) lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/${f.file}`, v));
+    const causes = new Set(undecided.map((f) => JSON.stringify(f.cause)));
+    if (undecided.length === c.files.length && causes.size === 1) {
+      lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/`, undecided[0].cause!));
+    } else {
+      for (const f of undecided) lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/${f.file}`, f.cause!));
+    }
   }
   if (unknown.length > 0) lines.push(cannotTellRemedyMessage(unknown.map((c) => c.name)));
   if (a.oldNameReferenceMaps.length > 0) lines.push(TOKEN_SIDE_SLOTS.oldNameReferenceMaps(a.oldNameReferenceMaps));

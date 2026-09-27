@@ -116,3 +116,35 @@ This session:
 4. **A fork is "a file every matched version ships that the copy lacks"**, scoped to the versions that explained its other files, so a file added in a later release is not read as her deletion.
 5. **The ordering-caution cross-link with 5.6**: while copies remain on disk, the registry-pin offer tells her to migrate first.
 6. **`requireTs` picks the loader by environment**: Jest's own require under ts-jest, tsx's scoped require at runtime.
+
+## Addendum (2026-09-26) — the cannot-tell message is three-cause, matching the design erratum
+
+**Trigger**: Thurgood's design.md erratum at `d4ff5eab` (`completion/task-5-erratum-cannot-tell.md`), step 2 of Peter's "fix both, then complete the parent". It makes the row "migration — cannot tell" three-cause, and adds the row "migration — cannot tell (remedy)", transcribed verbatim from `cannotTellRemedyMessage`.
+
+**What changed**:
+- `cannotTellMessage(path, cause)` now takes a `CannotTellCause` and is string-equal to the erratum'd row for each cause:
+  - `fetch-failed` → `… — the package content for version <v> could not be retrieved. Review before removing.`
+  - `transform-unrecoverable` → `… — version <v>'s copy transform cannot be recovered. Review before removing.`
+  - `version-unknown` → `… — the installed version is unknown. Review before removing.`
+- The assessment records the cause on each `cannot-tell` file (`FileVerdict.cause`). The precedence:
+  1. an unknown installed version;
+  2. a retrieval failure: the version list could not be read (`<v>` = the installed version), or a tarball fetch failed (`<v>` = the failed versions);
+  3. an unrecoverable transform (`<v>` = the 11.3–11.8 versions that left that file undecidable).
+- The report prints one line per component when every file shares one cause, and per-file lines otherwise.
+- The remedy line is unchanged. It is now pinned by the new catalog row.
+- This corrects the inaccuracy recorded above under "Design-text erratum". Before this change, the 11.3–11.8 case printed "`… for version 11.3.0 could not be retrieved`", and an unknown version printed "`version unknown`".
+
+**Tests**:
+- `sync.catalog.test.ts` → **11/11**. It covers seven rows (count asserted) and the three cause variants of the cannot-tell row, each string-equal to the row with its reason transcribed verbatim from the erratum's alternation (`CANNOT_TELL_REASONS`, count 3 asserted). It also covers the remedy row, singular (`it`) and plural (`them`).
+- `sync.migration.test.ts` now also asserts that each cause is **selected** in context:
+  - `transform-unrecoverable` (`11.3.0`) in the window test;
+  - `fetch-failed` (`12.0.5, 11.3.0, 11.2.1`) on the public-rail test and (`12.0.5`) offline;
+  - `version-unknown` when the installed version is unknown.
+- Sync suites: 5 suites, 77/77.
+
+**Bite recorded red**: I gave the `transform-unrecoverable` cause the fetch-failed reason → `✕ migration — cannot tell — cause 2/3: the 11.3–11.8 copy transform cannot be recovered`.
+- `Expected: "… — version 11.3.0's copy transform cannot be recovered. Review before removing."`
+- `Received: "… — the package content for version 11.3.0 could not be retrieved. Review before removing."`
+- Result: 1 failed, 10 passed. Restored; `cmp` confirmed; 11/11.
+
+**Application-time adaptations**: none.

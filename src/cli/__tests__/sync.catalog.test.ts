@@ -2,19 +2,33 @@
  * @category evergreen
  * @purpose Spec 123 Task 5 — `sync`'s catalog strings are string-EQUAL to their
  * design rows. Comparands transcribed verbatim from design.md § "Error Handling —
- * the loud-failure catalog (exact strings)" (six rows; the count is asserted),
+ * the loud-failure catalog (exact strings)" (seven rows; the count is asserted),
  * plus the C7 step-3 phrase quoted in the design text.
+ *
+ * Erratum 2026-09-26 (Thurgood, completion/task-5-erratum-cannot-tell.md): the
+ * "migration — cannot tell" row is THREE-CAUSE — its alternation
+ * `<a|b|c>` is transcribed as CANNOT_TELL_REASONS, one comparand per cause —
+ * and the new row "migration — cannot tell (remedy)" pins the remedy line.
  */
+
+/** The erratum'd row's alternation, verbatim, one entry per cause. */
+const CANNOT_TELL_REASONS = {
+  'fetch-failed': (v: string) => `the package content for version ${v} could not be retrieved`,
+  'transform-unrecoverable': (v: string) => `version ${v}'s copy transform cannot be recovered`,
+  'version-unknown': () => 'the installed version is unknown',
+};
 
 import { deletedByYouMessage, untrackedNewMessage, yoursUnderPrefixMessage } from '../sync/Reporter';
 import { prunedMessage } from '../sync/Manifest';
-import { modifiedCopiesMessage, cannotTellMessage, unmodifiedCopiesMessage } from '../sync/Migration';
+import { modifiedCopiesMessage, cannotTellMessage, cannotTellRemedyMessage, unmodifiedCopiesMessage } from '../sync/Migration';
 
 const DESIGN_ROWS = {
   'migration — modified copies (Le-D1(3))': (n: number, names: string) =>
     `these ${n} modified copies now override the package's ${names} and will not receive updates. Keep them as your forks, or move them with 'sync --migrate-components' (relocates modified copies to src/components/<Name>/).`,
-  'migration — cannot tell': (p: string, v: string) =>
-    `cannot tell whether ${p} was modified — the package content for version ${v} could not be retrieved. Review before removing.`,
+  'migration — cannot tell': (p: string, reason: string) =>
+    `cannot tell whether ${p} was modified — ${reason}. Review before removing.`,
+  'migration — cannot tell (remedy)': (names: string, itThem: 'it' | 'them') =>
+    `sync cannot judge ${names}, so 'sync --migrate-components' leaves ${itThem} in src/components/core/. Decide each by hand: if you edited it, move it to src/components/<Name>/ (it becomes your fork); if you didn't, delete it and you'll get the package's version. Until then, the old core/ level keeps logging its legacy warning each time the component index loads.`,
   'deleted-by-you': (p: string) =>
     `${p} was generated earlier and you deleted it — not re-adding. To restore: npx designerpunk sync --restore ${p}`,
   'untracked-new': (p: string, t: string) =>
@@ -26,8 +40,9 @@ const DESIGN_ROWS = {
 };
 
 describe('sync — catalog string conformance', () => {
-  test('exactly six catalog rows are covered', () => {
-    expect(Object.keys(DESIGN_ROWS)).toHaveLength(6);
+  test('exactly seven catalog rows are covered, and the cannot-tell row has exactly three causes', () => {
+    expect(Object.keys(DESIGN_ROWS)).toHaveLength(7);
+    expect(Object.keys(CANNOT_TELL_REASONS)).toHaveLength(3);
   });
 
   test('migration — modified copies', () => {
@@ -36,9 +51,28 @@ describe('sync — catalog string conformance', () => {
     );
   });
 
-  test('migration — cannot tell', () => {
-    expect(cannotTellMessage('src/components/core/X/', '12.0.5')).toBe(
-      DESIGN_ROWS['migration — cannot tell']('src/components/core/X/', '12.0.5'),
+  test('migration — cannot tell — cause 1/3: offline / fetch failed', () => {
+    expect(cannotTellMessage('src/components/core/X/', { kind: 'fetch-failed', version: '12.0.5' })).toBe(
+      DESIGN_ROWS['migration — cannot tell']('src/components/core/X/', CANNOT_TELL_REASONS['fetch-failed']('12.0.5')),
+    );
+  });
+
+  test('migration — cannot tell — cause 2/3: the 11.3–11.8 copy transform cannot be recovered', () => {
+    expect(cannotTellMessage('src/components/core/X/a.ts', { kind: 'transform-unrecoverable', version: '11.3.0' })).toBe(
+      DESIGN_ROWS['migration — cannot tell']('src/components/core/X/a.ts', CANNOT_TELL_REASONS['transform-unrecoverable']('11.3.0')),
+    );
+  });
+
+  test('migration — cannot tell — cause 3/3: the installed version is unknown', () => {
+    expect(cannotTellMessage('src/components/core/X/', { kind: 'version-unknown' })).toBe(
+      DESIGN_ROWS['migration — cannot tell']('src/components/core/X/', CANNOT_TELL_REASONS['version-unknown']()),
+    );
+  });
+
+  test('migration — cannot tell (remedy), singular and plural', () => {
+    expect(cannotTellRemedyMessage(['Button-Icon'])).toBe(DESIGN_ROWS['migration — cannot tell (remedy)']('Button-Icon', 'it'));
+    expect(cannotTellRemedyMessage(['Button-Icon', 'Chip-Base'])).toBe(
+      DESIGN_ROWS['migration — cannot tell (remedy)']('Button-Icon, Chip-Base', 'them'),
     );
   });
 
