@@ -14,6 +14,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Erratum 2026-09-27: three stray in-block paragraphs — Task 5's `**Instrument**:` line, Task 13's "Count asserted." and Task 26's italic "Joined" line — are now parent-level criterion bullets, text verbatim, so each is its own criterion row under the parity parser's loud-malformation rule (PR #211, Peter's ruling (d), 2026-09-26). No criterion text changed.)*
 
+*(Amendment 2026-09-27: **subtask 9.0 added to Task 9 mid-unit by Peter's ruling (2026-09-27)** — Lina (Sonnet), tiered secondary; it runs before Task 7. It folds two items that must land before release 1 into U1: the absolute build-machine paths in the browser bundles (`.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`) and the orphaned Input-Text `.browser.ts` files (#204, `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md`). **Why here**: T1-(B) grants write scope only from a merged `tasks.md` row, so recording the items in the plan makes 9.0's write scope real instead of leaving them as disclosed out-of-list edits, and puts both on the record before release 1. Task 9 gains nine criterion rows and its Primary Artifacts widen; Task 7's CHANGELOG criterion and 7.4 name the two changes; U1's subtask count moves 44 → 45 against the frozen declared 44 (§ "Split tripwire").)*
+
 > **Law binding execution (Req 26.1 — Spec 127, ratified)**:
 > - Every parent completion doc reproduces **every Success Criteria row VERBATIM**, with Status + Evidence, and carries the **forced-negative line** and the **unconditional delegated-tier line**. The line's referent is the parent's **primary agent** in § "Delegated-tier plan".
 > - Every ticked subtask carries its subtask completion doc.
@@ -137,7 +139,9 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | U4 | 6 | **+2** |
 | U5 | 18 | **+3** |
 
-*Thresholds are ~10% rounded up, with a floor of +2 and small-unit allowance of +3. **Totals: 28 parents, 126 subtasks.***
+*Thresholds are ~10% rounded up, with a floor of +2 and small-unit allowance of +3. **Totals at the round's close: 28 parents, 126 subtasks.***
+
+*(Amendment 2026-09-27: 9.0 adds one U1 subtask by Peter's ruling. The declared counts above stay frozen at the round's close, as Limb 1 requires; U1's tripwire line therefore reads `declared 44, now 45; parents unchanged`, within +4. **Totals now: 28 parents, 127 subtasks.**)*
 
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
@@ -160,7 +164,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | 6 | Ada (Opus) — **6.1 stays Opus until the own-index check has a recorded bite** (Lina R2); a downgrade after that is recorded as a divergence | — (Lina's Container-Base chore PR is a gate, not a secondary) |
 | 7 | Thurgood (Sonnet) | — |
 | 8 | Ada (Sonnet) | — |
-| 9 | Thurgood (Sonnet) | — |
+| 9 | Thurgood (Sonnet) | Lina (Sonnet) — 9.0 pre-release-1 hygiene: the bundle path leak and the #204 orphan deletion (amendment 2026-09-27) |
 | 10 | Lina (Opus) | — |
 | 11 | Thurgood (Opus) | Stacy (Opus) — constructs exemplars G and G′ (11.3) |
 | 12 | **Thurgood (Opus)** — G1 gate parent | — (Stacy's verdict record is outside the line) |
@@ -451,7 +455,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - (3) a PATH-shimmed `npm` returning a GitHub Packages tarball URL → exit 11 **through the production line**.
   - **T2 ruled (B)**: the guard queries the version as drawn; no tag is involved.
   - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 cross-references the standalone T1-(B) ballot** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, RATIFIED Peter 2026-09-26), **whose merge precedes the U1 branch point** (cited by merge commit) (erratum 2026-09-26; it replaces the planned first-commit section).
-  - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)).
+  - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)), **the removal of the four orphaned Input-Text `.browser.ts` files, and the browser bundles no longer carrying build-machine paths** (both Task 9.0, which runs before Task 7; amendment 2026-09-27).
   - *Scope stated*: npmjs visibility and tarball host only.
 
   **Primary Artifacts:** `scripts/verify-publish-rail.sh`, `scripts/__bites__/`, `.kiro/docs/ballots/<date>-123-b-u1-publish-rail.md`, `.kiro/hooks/RELEASE-FLOW.md`, `governance/classification-map.md`, `CHANGELOG.md`, `package.json`
@@ -460,7 +464,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [ ] 7.1 Script + self-test + empty-URL branch
   - [ ] 7.2 The three bites
   - [ ] 7.3 B-U1 record-first; Stacy's review of the register row
-  - [ ] 7.4 `CHANGELOG.md` with release 1's entry + the `files[]` entry
+  - [ ] 7.4 `CHANGELOG.md` with release 1's entry (incl. 9.0's two changes, taken from the 9.0 subtask doc) + the `files[]` entry
 
 - [ ] 8. The harvest-zero lint
 
@@ -478,8 +482,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 - [ ] 9. Consumer-guard extensions and U1 post-diet re-certification (**U1 gating parent**)
 
-  **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
-  **Traces**: Reqs 3.1–3.9, 5A · design C6
+  **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Sonnet); Lina (Sonnet) — 9.0
+  **Traces**: Reqs 3.1–3.9, 5A · design C6 · **9.0: Peter's ruling 2026-09-27 (amendment; pre-release-1 hygiene — `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`, `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md`)**
 
   **Success Criteria:**
   - **The 19 U1-scheduled C6 cases exist as named tests, each bite recorded red; the 19 names are reproduced in the completion doc.**
@@ -488,9 +492,19 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **`npm run test:consumer` passes against the post-diet pack. The cited run's SHA has `git log -1 --format=%H -- package.json` as an ancestor** (Ada D-T-A3). *Scope: U1's surface. The lane half of 3.9 is certified at Task 16.*
   - `npm test` and full `tsc` are green.
   - **The U1 PR body carries the tripwire line**, and the U1 CHANGELOG entry exists (Task 7.4).
+  - **9.0 (a) — no build-machine path ships in the browser bundles**: the ESM and UMD bundles that `npm run build:browser` writes contain no absolute build-machine path — no `/Users/`, `/home/` or drive-letter (`X:\` or `X:/`) prefix. A guard test in `npm test` (CI: `lane-timing`) asserts it over the bundles built from the tested commit, never `test:scripts`, which no CI workflow runs (`.kiro/issues/2026-09-27-test-scripts-lane-not-in-ci.md`). Bite (the absolute-path plugin behaviour restored) recorded red. *Limit (R26.8): the guard knows three prefix families; a build root outside them passes.*
+  - **9.0 (a) — the name contract survives the fix**: `scripts/build-name-contract.ts` parses the new comment form in the same change, with its test fixture updated to match; `npm run build:name-contract` passes, and the bundle ⊆ src check's Task 6 bite, re-run after the fix, still goes red. Both outputs are recorded in the 9.0 subtask doc.
+  - **9.0 (b) — orphan status confirmed before deletion**: the four Input-Text `.browser.ts` files are shown imported by nothing — the build entry (`src/browser-entry.ts`, `scripts/build-browser-bundles.js`), `package.json` `exports`, the tests other than the Input-Text guard, the demos and the Application MCP index name none of them. The commands and their output are recorded. If a consumer surfaces, 9.0 stops and reports it (#204's stop condition), and this row reads ⚠️ with the consumer named.
+  - **9.0 (b) — deleted, and not shipped**: the four files are deleted, and `npm pack --dry-run` lists zero `.browser.ts` paths (the count is recorded).
+  - **9.0 (b) — the Input-Text guard stays meaningful**: `InputTextFamily.token-resolution.test.ts` loses its `KNOWN_DEFERRED` entry and its `.browser.ts` scan; its non-vacuity assertion still holds over the `.web.ts` files, and a phantom variable planted in one `.web.ts` file turns it red (bite recorded).
+  - **9.0 (b) — no doc names a deleted file**: `git grep -n "\.browser\.ts" -- src/components` returns 0 lines (the Email, Password and PhoneNumber READMEs updated).
+  - **9.0 (b) — the #202 records are corrected, not rewritten**: `.kiro/issues/archive/2026-09-26-input-text-phantom-css-vars.md` and `.kiro/issues/archive/2026-09-26-container-base-phantom-css-vars.md` ("Left open" item 1) each carry a dated addendum stating that the live `.web.ts` path had two phantoms (fixed in #202 and #203) and the rest were in the orphaned files. The original text is unchanged.
+  - **9.0 — both issues close**: `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md` and `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md` each record their dated outcome and move to `.kiro/issues/archive/` by `git mv`.
+  - **9.0 — the CHANGELOG hand-off**: the 9.0 subtask doc lists the deleted paths and the bundle path fix in consumer-facing words, for Task 7.4's release-1 entry. *Ownership: Task 7 (Thurgood) writes and verifies the entry; 9.0 supplies its content.*
 
-  **Primary Artifacts:** `tests/consumer-integration.test.ts`, fixtures
+  **Primary Artifacts:** `tests/consumer-integration.test.ts`, fixtures, **9.0:** `scripts/esbuild-css-plugin.js`, `scripts/build-browser-bundles.js`, `scripts/build-name-contract.ts`, `scripts/__tests__/build-name-contract.test.ts`, `src/__tests__/browser-bundle-no-absolute-paths.test.ts` (new), `src/components/core/Input-Text-{Base,Email,Password,PhoneNumber}/platforms/web/*.browser.ts` (the four files, deleted), `src/components/core/Input-Text-Base/__tests__/InputTextFamily.token-resolution.test.ts`, `src/components/core/Input-Text-{Email,Password,PhoneNumber}/README.md`, `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`, `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md` (both closed and moved to `.kiro/issues/archive/`), `.kiro/issues/archive/2026-09-26-input-text-phantom-css-vars.md`, `.kiro/issues/archive/2026-09-26-container-base-phantom-css-vars.md` (dated addenda)
 
+  - [ ] 9.0 (Lina, Sonnet) **Runs before Task 7** (amendment 2026-09-27): (a) the bundle absolute-path fix, with the name-contract parser updated in the same change and its ⊆ bite re-run; (b) #204 — confirm orphaned, delete the four `.browser.ts` files, trim the Input-Text guard, update the READMEs, add the #202 addenda; close both issues; hand the CHANGELOG content to 7.4
   - [ ] 9.1 Birth/posture cases, **incl. package-mode generate from the packed install + the drop-a-file bite**
   - [ ] 9.2 Root/union cases
   - [ ] 9.3 Copy cases; the packed name-contract case
