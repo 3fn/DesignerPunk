@@ -365,7 +365,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 4.3 The Kiro and CC emitters
   - [x] 4.4 Product entry; the `init.test.ts:142` change
 
-- [ ] 5. `sync` re-scope, key-grain JSON, manifest, and component-copy migration
+- [x] 5. `sync` re-scope, key-grain JSON, manifest, and component-copy migration
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Opus); Ada (Sonnet) — 5.5 token-side strings
   **Traces**: Reqs 5.1, 5.2, 5.5–5.8, 21 · design C7, DD2, DD21
