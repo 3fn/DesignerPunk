@@ -400,8 +400,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 5.2 Manifest: path, format, fields incl. `posture` and `origin`, keyed entries, pruning incl. the `src/types` string (**¾–1 day**)
   - [x] 5.3 Key-grain JSON manager, parsed-value reading, no-write-when-unchanged, three shapes (**~1–1¼ days**)
   - [x] 5.4 Managed set; classifications; `removed` scoping; apply behavior; Applier deletion
-  - [ ] 5.5 Component-copy migration (the consumer's rail, cache first; the version range; `transforms.js` from the tarball; per-file; relocation; ordering); **legacy agents/steering retained with the U1 report string**
-  - [ ] 5.6 Repairs (registry pin, tsconfig pin), after the migration fetch
+  - [x] 5.5 Component-copy migration (the consumer's rail, cache first; the version range; `transforms.js` from the tarball; per-file; relocation; ordering); **legacy agents/steering retained with the U1 report string**
+  - [x] 5.6 Repairs (registry pin, tsconfig pin), after the migration fetch
 
 - [ ] 6. The name contract and the type contract
 

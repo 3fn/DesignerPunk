@@ -282,7 +282,6 @@ export function assessComponentCopies(
     oldNameReferenceMaps: [],
     brandedTokenFiles: [],
   };
-  scanTokenFiles(projectRoot, names, assessment);
 
   // The range: earliest available → the installed version, newest first.
   let listed: string[] | null = null;
@@ -364,18 +363,42 @@ export function assessComponentCopies(
     else verdict = 'unmodified';
     assessment.components.push({ name, kind, verdict, files, deletedFiles: deletedFiles.sort() });
   }
+  scanTokenFiles(projectRoot, assessment);
   return assessment;
 }
 
-/** Lina A5: find the copied tree's token files that `generate`'s recursive scan will reach. */
-function scanTokenFiles(projectRoot: string, names: string[], a: MigrationAssessment): void {
-  for (const name of names) {
-    for (const f of listFiles(path.join(projectRoot, LEGACY_COMPONENT_ROOT, name))) {
+/**
+ * Comments blanked out (same approach as `scripts/floor-closure.ts`'s
+ * `stripComments`): block comments, then `//` line comments not preceded by `:`
+ * (so `https://` inside a string survives). Not a tokenizer.
+ */
+export function stripComments(content: string): string {
+  const noBlock = content.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+  return noBlock.replace(/([^:]|^)\/\/.*$/gm, (m, prefix: string) => prefix + ' '.repeat(m.length - prefix.length));
+}
+
+/**
+ * Lina A5: find the token files `generate`'s recursive scan will reach under
+ * `core/`. A TEXT approximation of Task 8's runtime brand count (the migration
+ * never executes the consumer's copied `.ts`): a file counts as branded iff
+ * `defineComponentTokens` appears OUTSIDE comments. Known residual: an aliased
+ * import (`import { defineComponentTokens as dct }`) still reads as branded,
+ * because the identifier appears in code.
+ *
+ * `brandedTokenFiles` is scoped to COPIES — a consumer-authored ("yours")
+ * component's branded file was always hers, so "now register as YOUR component
+ * tokens" is no news for it. `oldNameReferenceMaps` keeps every component: the
+ * lint fires on hers too.
+ */
+function scanTokenFiles(projectRoot: string, a: MigrationAssessment): void {
+  for (const c of a.components) {
+    for (const f of listFiles(path.join(projectRoot, LEGACY_COMPONENT_ROOT, c.name))) {
       const base = path.posix.basename(f);
       if (base !== 'tokens.ts' && !base.endsWith('.tokens.ts')) continue;
-      const rel = `${LEGACY_COMPONENT_ROOT}/${name}/${f}`;
-      const text = fs.readFileSync(path.join(projectRoot, rel), 'utf-8');
-      (text.includes('defineComponentTokens') ? a.brandedTokenFiles : a.oldNameReferenceMaps).push(rel);
+      const rel = `${LEGACY_COMPONENT_ROOT}/${c.name}/${f}`;
+      const code = stripComments(fs.readFileSync(path.join(projectRoot, rel), 'utf-8'));
+      if (!code.includes('defineComponentTokens')) a.oldNameReferenceMaps.push(rel);
+      else if (c.kind === 'copy') a.brandedTokenFiles.push(rel);
     }
   }
 }
@@ -392,6 +415,17 @@ export function modifiedCopiesMessage(n: number, names: string[]): string {
 /** Design catalog row "migration — cannot tell". */
 export function cannotTellMessage(p: string, v: string): string {
   return `cannot tell whether ${p} was modified — the package content for version ${v} could not be retrieved. Review before removing.`;
+}
+
+/**
+ * Follows the catalog `cannot tell` lines (Peter's 2026-09-26 ruling on the
+ * migration fork, condition 1: the cannot-tell outcome must be ACTIONABLE —
+ * both manual paths, and the legacy warning's persistence). The catalog row
+ * itself stays string-equal; this line is additional.
+ */
+export function cannotTellRemedyMessage(names: string[]): string {
+  const them = names.length === 1 ? 'it' : 'them';
+  return `sync cannot judge ${names.join(', ')}, so 'sync --migrate-components' leaves ${them} in src/components/core/. Decide each by hand: if you edited it, move it to src/components/<Name>/ (it becomes your fork); if you didn't, delete it and you'll get the package's version. Until then, the old core/ level keeps logging its legacy warning each time the component index loads.`;
 }
 
 /** C7 step 3: unmodified copies shadow updates (the design's quoted phrase, verbatim inside). */
@@ -457,6 +491,7 @@ export function migrationReportLines(a: MigrationAssessment): string[] {
     if (undecided.length === c.files.length) lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/`, v));
     else for (const f of undecided) lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/${f.file}`, v));
   }
+  if (unknown.length > 0) lines.push(cannotTellRemedyMessage(unknown.map((c) => c.name)));
   if (a.oldNameReferenceMaps.length > 0) lines.push(TOKEN_SIDE_SLOTS.oldNameReferenceMaps(a.oldNameReferenceMaps));
   if (a.brandedTokenFiles.length > 0) lines.push(TOKEN_SIDE_SLOTS.brandedTokenFiles(a.brandedTokenFiles));
   return lines;
@@ -497,4 +532,104 @@ export function relocateComponents(projectRoot: string, a: MigrationAssessment):
   }
   if (fs.existsSync(coreDir) && fs.readdirSync(coreDir).length === 0) fs.rmdirSync(coreDir);
   return r;
+}
+
+// ---------------------------------------------------------------------------
+// Repairs (C7 step 6; Reqs 5.1, 5.2) — OFFERED only after the migration fetch
+// ---------------------------------------------------------------------------
+
+/** The exact line the pre-2026-09-20 `init` scaffolded (issue archive/2026-09-20-init-npmrc-registry-pin). */
+const REGISTRY_PIN_RE = /^\s*@3fn:registry\s*=\s*https:\/\/npm\.pkg\.github\.com\/?\s*$/;
+
+export interface RepairOffer {
+  kind: 'npmrc' | 'tsconfig';
+  /** The named explanation + the command (Req 5.1: never silently, never as fine print). */
+  lines: string[];
+}
+
+/** Req 5.1: detect the `@3fn` → GitHub Packages scope mapping in the consumer's `.npmrc`. Reads only that line's shape; never prints other lines. */
+export function detectRegistryPin(projectRoot: string): boolean {
+  const p = path.join(projectRoot, '.npmrc');
+  if (!fs.existsSync(p)) return false;
+  return fs.readFileSync(p, 'utf-8').split(/\r?\n/).some((l) => REGISTRY_PIN_RE.test(l));
+}
+
+/** Req 5.2: the scaffolded `tsconfig.test.json` `paths` keys that re-pin `@3fn/core` subpaths to raw `src/`. */
+export function detectTsconfigPins(projectRoot: string): { keys: string[]; unparseable: boolean } {
+  const p = path.join(projectRoot, 'tsconfig.test.json');
+  if (!fs.existsSync(p)) return { keys: [], unparseable: false };
+  const text = fs.readFileSync(p, 'utf-8');
+  let doc: { compilerOptions?: { paths?: Record<string, unknown> } };
+  try {
+    doc = JSON.parse(text);
+  } catch {
+    return { keys: [], unparseable: text.includes('@3fn/core/src/') };
+  }
+  const paths = doc.compilerOptions?.paths ?? {};
+  const keys = Object.entries(paths)
+    .filter(([k, v]) => k.startsWith('@3fn/core') && JSON.stringify(v).includes('@3fn/core/src/'))
+    .map(([k]) => k);
+  return { keys, unparseable: false };
+}
+
+export const REGISTRY_PIN_MESSAGE =
+  ".npmrc maps @3fn to GitHub Packages (@3fn:registry=https://npm.pkg.github.com). An older 'init' wrote that line; DesignerPunk now publishes to the public npm registry, and the mapping makes every install of @3fn/core need a GitHub token and can leave you on versions npm no longer serves. To remove just that line (your other settings, including any auth lines, stay): npx designerpunk sync --repair-npmrc";
+
+export const REGISTRY_PIN_ORDER_CAUTION =
+  "Do this after 'sync --migrate-components': once the mapping is gone, versions before 13.0.0 can no longer be fetched to judge your component copies.";
+
+export function tsconfigPinMessage(keys: string[]): string {
+  return `tsconfig.test.json re-pins ${keys.join(', ')} to raw TypeScript in node_modules/@3fn/core/src — an older 'init' wrote that. The package resolves those subpaths to its compiled types, and several of the pinned source files no longer ship. To remove just those paths entries: npx designerpunk sync --repair-tsconfig`;
+}
+
+export const TSCONFIG_UNPARSEABLE_MESSAGE =
+  "tsconfig.test.json points @3fn/core subpaths at node_modules/@3fn/core/src, but it is not plain JSON (comments?), so sync will not rewrite it. Remove the compilerOptions.paths entries for @3fn/core/* by hand.";
+
+/**
+ * Build the offers. Called AFTER the migration assessment (the fetch runs
+ * through the pin the npmrc repair removes — L2-D2). `copiesPending` adds the
+ * ordering caution while pre-123 copies are still on disk.
+ */
+export function repairOffers(projectRoot: string, copiesPending: boolean): RepairOffer[] {
+  const offers: RepairOffer[] = [];
+  if (detectRegistryPin(projectRoot)) {
+    offers.push({ kind: 'npmrc', lines: copiesPending ? [REGISTRY_PIN_MESSAGE, REGISTRY_PIN_ORDER_CAUTION] : [REGISTRY_PIN_MESSAGE] });
+  }
+  const ts = detectTsconfigPins(projectRoot);
+  if (ts.keys.length > 0) offers.push({ kind: 'tsconfig', lines: [tsconfigPinMessage(ts.keys)] });
+  else if (ts.unparseable) offers.push({ kind: 'tsconfig', lines: [TSCONFIG_UNPARSEABLE_MESSAGE] });
+  return offers;
+}
+
+/** Remove only the pin line(s). Returns true iff the file changed. */
+export function repairRegistryPin(projectRoot: string): boolean {
+  const p = path.join(projectRoot, '.npmrc');
+  if (!fs.existsSync(p)) return false;
+  const text = fs.readFileSync(p, 'utf-8');
+  const kept = text.split(/(\r?\n)/);
+  const out: string[] = [];
+  let changed = false;
+  for (let i = 0; i < kept.length; i += 2) {
+    const line = kept[i];
+    const eol = kept[i + 1] ?? '';
+    if (REGISTRY_PIN_RE.test(line)) {
+      changed = true;
+      continue;
+    }
+    out.push(line + eol);
+  }
+  if (changed) fs.writeFileSync(p, out.join(''), 'utf-8');
+  return changed;
+}
+
+/** Remove only the re-pinning `paths` entries (and `paths` itself if emptied); `baseUrl` is kept. */
+export function repairTsconfigPins(projectRoot: string): boolean {
+  const { keys } = detectTsconfigPins(projectRoot);
+  if (keys.length === 0) return false;
+  const p = path.join(projectRoot, 'tsconfig.test.json');
+  const doc = JSON.parse(fs.readFileSync(p, 'utf-8'));
+  for (const k of keys) delete doc.compilerOptions.paths[k];
+  if (Object.keys(doc.compilerOptions.paths).length === 0) delete doc.compilerOptions.paths;
+  fs.writeFileSync(p, JSON.stringify(doc, null, 2) + '\n', 'utf-8');
+  return true;
 }

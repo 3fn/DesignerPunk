@@ -67,6 +67,9 @@ import {
   migrationReportLines,
   relocateComponents,
   npmRailFetcher,
+  repairOffers,
+  repairRegistryPin,
+  repairTsconfigPins,
   LEGACY_AGENTS_RETAINED_MESSAGE,
 } from './Migration';
 import type { MigrationAssessment, PackageFetcher, RelocationResult } from './Migration';
@@ -91,6 +94,10 @@ export interface SyncOptions {
   migrateComponents?: boolean;
   /** Test seam — the migration's package fetcher (default: the consumer's own npm rail). */
   fetcher?: PackageFetcher;
+  /** `--repair-npmrc`: remove the `@3fn` → GitHub Packages mapping line (Req 5.1). */
+  repairNpmrc?: boolean;
+  /** `--repair-tsconfig`: remove tsconfig.test.json's raw-src re-pins (Req 5.2). */
+  repairTsconfig?: boolean;
 }
 
 export interface SyncOutcome {
@@ -119,6 +126,8 @@ export function parseSyncArgs(argv: string[]): Omit<SyncOptions, 'projectRoot'> 
     else if (a === '--overwrite' && argv[i + 1]) opts.overwrite!.push(argv[++i]);
     else if (a.startsWith('--overwrite=')) opts.overwrite!.push(a.slice('--overwrite='.length));
     else if (a === '--migrate-components') opts.migrateComponents = true;
+    else if (a === '--repair-npmrc') opts.repairNpmrc = true;
+    else if (a === '--repair-tsconfig') opts.repairTsconfig = true;
   }
   return opts;
 }
@@ -247,6 +256,12 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
     sections.push({ title: '🧬 Migrating from a pre-123 install:', lines });
   }
 
+  // 6. Repairs (C7 step 6) — OFFERED only now, after the migration fetch ran
+  //    through the consumer's rail (the npmrc repair removes that rail).
+  const offers = repairOffers(projectRoot, hasLegacyCopies(projectRoot));
+  for (const o of offers) outcome.trace.push(`repair-offered:${o.kind}`);
+  if (offers.length > 0) sections.push({ title: '🔧 Repairs offered:', lines: offers.flatMap((o) => o.lines) });
+
   // 7. REPORT — always, before anything applies.
   const report = buildReport({ dryRun: Boolean(options.dryRun), manifestLines, files, keys: keyResults, sections });
   displayReport(report);
@@ -255,6 +270,17 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
 
   // 8. Decide.
   if (options.dryRun) return { ...outcome, stopped: 'dry-run' };
+  // Explicit per-repair flags are their own authorization (after the report).
+  if (options.repairNpmrc && offers.some((o) => o.kind === 'npmrc') && repairRegistryPin(projectRoot)) {
+    outcome.trace.push('repair-applied:npmrc');
+    outcome.applied.push('.npmrc');
+    console.log('  ✓ .npmrc: removed the @3fn → GitHub Packages mapping line');
+  }
+  if (options.repairTsconfig && offers.some((o) => o.kind === 'tsconfig') && repairTsconfigPins(projectRoot)) {
+    outcome.trace.push('repair-applied:tsconfig');
+    outcome.applied.push('tsconfig.test.json');
+    console.log('  ✓ tsconfig.test.json: removed the raw-src @3fn/core paths entries');
+  }
   if (options.migrateComponents && outcome.migration) {
     // The explicit flag IS the per-run authorization (nothing is removed without it).
     outcome.relocation = relocateComponents(projectRoot, outcome.migration);

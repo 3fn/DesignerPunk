@@ -29,6 +29,12 @@ import {
   LEGACY_AGENTS_RETAINED_MESSAGE,
   TOKEN_SIDE_SLOTS,
   compareVersions,
+  cannotTellRemedyMessage,
+  stripComments,
+  REGISTRY_PIN_MESSAGE,
+  REGISTRY_PIN_ORDER_CAUTION,
+  tsconfigPinMessage,
+  TSCONFIG_UNPARSEABLE_MESSAGE,
 } from '../sync/Migration';
 import type { PackageFetcher, MigrationAssessment } from '../sync/Migration';
 import { createScratch, setupPackage, writeFile, captureConsole, sha, readText } from './syncTestKit';
@@ -259,6 +265,16 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(out.migration!.components.map((c) => c.verdict)).toEqual(['cannot-tell', 'cannot-tell']);
       expect(calls).toHaveLength(0);
       for (const n of COMPONENTS) expect(con.output()).toContain(cannotTellMessage(`src/components/core/${n}/`, '12.0.5'));
+      // Peter's ruling (2026-09-26), condition 1: the cannot-tell outcome is ACTIONABLE.
+      expect(con.output()).toContain(cannotTellRemedyMessage(COMPONENTS));
+    });
+
+    test('the cannot-tell remedy names both manual paths and the legacy warning (ruled condition 1)', () => {
+      const m = cannotTellRemedyMessage(['Button-Icon']);
+      expect(m).toMatch(/if you edited it, move it to src\/components\/<Name>\//);
+      expect(m).toMatch(/if you didn't, delete it and you'll get the package's version/);
+      expect(m).toMatch(/core\/ level keeps logging its legacy warning/);
+      expect(m).toMatch(/leaves it in src\/components\/core\//);
     });
 
     test('the public rail (npmjs: 13.0.0/14.0.0/14.1.0 only) for an 11.2.1-era copy → cannot-tell, not modified', () => {
@@ -329,6 +345,103 @@ describe('sync — component-copy migration (Task 5.5)', () => {
     ]);
     expect(con.output()).toContain(TOKEN_SIDE_SLOTS.oldNameReferenceMaps(out.migration!.oldNameReferenceMaps));
     expect(con.output()).toContain(TOKEN_SIDE_SLOTS.brandedTokenFiles(out.migration!.brandedTokenFiles));
+  });
+
+  describe('token-file detection (Lina A5; Ada\'s detection-rule finding)', () => {
+    test('a defineComponentTokens mention ONLY in a comment does not read as branded (comments stripped first)', () => {
+      writeCopiesAt(scratch, '14.1.0');
+      writeFile(scratch, 'src/components/core/Badge-Label-Base/tokens.ts',
+        '/* was: defineComponentTokens({...}) */\n// defineComponentTokens moved away\nexport const refs = { url: "https://x" };\n');
+      const a = assess(scratch, snapshotFetcher(scratch).fetcher, '14.1.0');
+      expect(a.oldNameReferenceMaps).toEqual(['src/components/core/Badge-Label-Base/tokens.ts']);
+      expect(a.brandedTokenFiles).toEqual(['src/components/core/Button-Icon/buttonIcon.tokens.ts']);
+    });
+
+    test('stripComments blanks block and line comments but keeps "https://" inside strings', () => {
+      expect(stripComments('a /* x */ b // y\nc = "https://z"')).toBe('a         b     \nc = "https://z"');
+    });
+
+    test('brandedTokenFiles is scoped to COPIES — a consumer-authored component\'s branded file is not listed', () => {
+      writeCopiesAt(scratch, '14.1.0');
+      writeFile(scratch, 'src/components/core/Nav-Header-App/nav.tokens.ts',
+        "import { defineComponentTokens } from '@3fn/core/build';\nexport const t = defineComponentTokens({});\n");
+      const a = assess(scratch, snapshotFetcher(scratch).fetcher, '14.1.0');
+      expect(a.components.find((c) => c.name === 'Nav-Header-App')!.kind).toBe('yours');
+      expect(a.brandedTokenFiles).toEqual([
+        'src/components/core/Badge-Label-Base/tokens.ts',
+        'src/components/core/Button-Icon/buttonIcon.tokens.ts',
+      ]);
+    });
+  });
+
+  describe('5.6 — repairs, offered only AFTER the migration fetch', () => {
+    const PIN_NPMRC = '@3fn:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=FIXTURE_NOT_A_TOKEN\nsave-exact=true\n';
+    const OLD_TSCONFIG = {
+      compilerOptions: {
+        strict: true,
+        baseUrl: '.',
+        paths: {
+          '@3fn/core/blend': ['./node_modules/@3fn/core/src/blend/index.ts'],
+          '@3fn/core/build': ['./node_modules/@3fn/core/src/build/tokens/index.ts'],
+          '@my/alias': ['./src/alias.ts'],
+        },
+      },
+      include: ['src/**/*'],
+    };
+    function pinnedRepo() {
+      setupPackage(scratch, { version: '15.0.0' });
+      lockAt(scratch, '12.0.5');
+      writeCopiesAt(scratch, '12.0.5');
+      writeFile(scratch, '.npmrc', PIN_NPMRC);
+      writeFile(scratch, 'tsconfig.test.json', JSON.stringify(OLD_TSCONFIG, null, 2) + '\n');
+    }
+
+    test('(d) the registry-pin repair is not offered before the fetch (trace order), with its named explanation', async () => {
+      pinnedRepo();
+      const { fetcher } = snapshotFetcher(scratch);
+      const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+      const firstFetch = out.trace.findIndex((e) => e.startsWith('fetch:'));
+      const offered = out.trace.indexOf('repair-offered:npmrc');
+      expect(firstFetch).toBeGreaterThanOrEqual(0);
+      expect(offered).toBeGreaterThan(firstFetch);
+      expect(out.trace.filter((e) => e.startsWith('fetch:')).every((_, i) => i < offered)).toBe(true);
+      expect(con.output()).toContain(REGISTRY_PIN_MESSAGE);
+      expect(con.output()).toContain(REGISTRY_PIN_ORDER_CAUTION);
+      expect(con.output()).toContain(tsconfigPinMessage(['@3fn/core/blend', '@3fn/core/build']));
+      expect(con.output()).not.toContain('FIXTURE_NOT_A_TOKEN');
+      expect(readText(scratch, '.npmrc')).toBe(PIN_NPMRC);
+    });
+
+    test('nothing repairs without its flag — --apply alone leaves .npmrc and tsconfig.test.json', async () => {
+      pinnedRepo();
+      await runSync({ projectRoot: scratch, apply: true, isTTY: false, fetcher: snapshotFetcher(scratch).fetcher });
+      expect(readText(scratch, '.npmrc')).toBe(PIN_NPMRC);
+      expect(JSON.parse(readText(scratch, 'tsconfig.test.json'))).toEqual(OLD_TSCONFIG);
+    });
+
+    test('--repair-npmrc removes ONLY the mapping line; --repair-tsconfig removes ONLY the raw-src re-pins', async () => {
+      pinnedRepo();
+      const out = await runSync({ projectRoot: scratch, isTTY: false, fetcher: snapshotFetcher(scratch).fetcher, repairNpmrc: true, repairTsconfig: true });
+      expect(out.trace.indexOf('repair-applied:npmrc')).toBeGreaterThan(out.trace.findIndex((e) => e.startsWith('fetch:')));
+      expect(readText(scratch, '.npmrc')).toBe('//npm.pkg.github.com/:_authToken=FIXTURE_NOT_A_TOKEN\nsave-exact=true\n');
+      const ts = JSON.parse(readText(scratch, 'tsconfig.test.json'));
+      expect(ts.compilerOptions.paths).toEqual({ '@my/alias': ['./src/alias.ts'] });
+      expect(ts.compilerOptions.baseUrl).toBe('.');
+      expect(ts.compilerOptions.strict).toBe(true);
+    });
+
+    test('no copies left → no ordering caution; a JSONC tsconfig is reported, never rewritten', async () => {
+      setupPackage(scratch, { version: '15.0.0' });
+      writeFile(scratch, '.npmrc', PIN_NPMRC);
+      const jsonc = '{\n  // mine\n  "compilerOptions": { "paths": { "@3fn/core/types": ["./node_modules/@3fn/core/src/types/index.ts"] } }\n}\n';
+      writeFile(scratch, 'tsconfig.test.json', jsonc);
+      const out = await runSync({ projectRoot: scratch, isTTY: false, repairTsconfig: true });
+      expect(con.output()).toContain(REGISTRY_PIN_MESSAGE);
+      expect(con.output()).not.toContain(REGISTRY_PIN_ORDER_CAUTION);
+      expect(con.output()).toContain(TSCONFIG_UNPARSEABLE_MESSAGE);
+      expect(readText(scratch, 'tsconfig.test.json')).toBe(jsonc);
+      expect(out.trace).toEqual(['repair-offered:npmrc', 'repair-offered:tsconfig']);
+    });
   });
 
   test('U1 RETAINS copied agents, steering and governance — string-equal, and no removal is offered (T-L1)', async () => {
