@@ -12,14 +12,25 @@
  * interface declares actually exists with a call that satisfies the interface's declared
  * return shape.
  *
+ * SOURCE, NOT DIST (U1 CI fix-up, 2026-09-27): the "real module" is loaded from its TS
+ * source (`src/cli/shared/*.ts`, transpiled by ts-jest) rather than the root-built
+ * `dist/cli/shared/*.js`. The production bootstrap requires the dist artifact, but that
+ * artifact is a straight esbuild compile of this same source — the exported shape this
+ * test checks is identical. Requiring dist made the suite depend on a prior ROOT build
+ * that `lane-application-mcp-server-suite` (deliberately root-install-free) never runs:
+ * green on any warm machine with a stale `dist/`, red on a clean CI checkout. The dist
+ * require path itself is exercised end-to-end by the consumer-guard lane
+ * (`tests/mcp-boot-smoke.test.ts`, bundled servers) and by the root lane's
+ * product-mcp-server twin of this test (which runs after `npm run build`).
+ *
  * @see .kiro/specs/123-consumer-distribution/design.md § "C3. The root-policy table as code"
  */
 import * as path from 'path';
 import type { McpDataRootsModule, DesignSystemRootShape, BornRepoModule } from '../index';
 
 function loadRealModule(): McpDataRootsModule {
-  // Same CONSUMPTION CONTRACT require the production bootstrap uses.
-  return require('../../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
+  // The real module's SOURCE — see "SOURCE, NOT DIST" in this file's header.
+  return require('../../../src/cli/shared/mcpDataRoots') as McpDataRootsModule;
 }
 
 const bornDsRoot: DesignSystemRootShape = {
@@ -84,8 +95,8 @@ describe('application-mcp-server McpDataRootsModule — declaration parity with 
 
 describe('application-mcp-server BornRepoModule — declaration parity with the real module (Spec 123 Task 1.4)', () => {
   test('findDesignSystemRoot exists and returns the DesignSystemRootShape the local interface declares', () => {
-    // Same CONSUMPTION CONTRACT require the production bootstrap uses.
-    const real = require('../../../dist/cli/shared/bornRepo') as BornRepoModule;
+    // The real module's SOURCE — see "SOURCE, NOT DIST" in this file's header.
+    const real = require('../../../src/cli/shared/bornRepo') as BornRepoModule;
     expect(typeof real.findDesignSystemRoot).toBe('function');
     const result = real.findDesignSystemRoot(path.resolve(__dirname, '../../..'));
     expect(['born', 'package-mode', 'partial', 'unborn']).toContain(result.state);

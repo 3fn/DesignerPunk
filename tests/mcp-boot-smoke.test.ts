@@ -200,11 +200,11 @@ if (!distMcpExists) {
       fs.rmSync(isolatedCwd, { recursive: true, force: true });
     });
 
-    function spawnIsolated(file: string): { child: ChildProcess; stderr: () => string } {
+    function spawnIsolated(file: string, cwd: string = isolatedCwd): { child: ChildProcess; stderr: () => string } {
       const env: NodeJS.ProcessEnv = { ...process.env, NODE_ENV: 'test' };
       for (const key of DATA_ROOT_ENV_VARS) delete env[key];
       const child = spawn('node', [file], {
-        cwd: isolatedCwd,
+        cwd,
         stdio: ['pipe', 'pipe', 'pipe'],
         env,
       });
@@ -284,15 +284,30 @@ if (!distMcpExists) {
     );
 
     it(
-      'application-mcp serves a NON-EMPTY index from the package fallback (and recommends regenerating the token-index)',
+      'application-mcp serves a NON-EMPTY index from the package fallback (token index labelled designerpunk-reference — design C3 unborn row)',
       async () => {
         const { child, stderr } = spawnIsolated(path.join(DIST_MCP, 'application-mcp.js'));
         try {
           await waitForSentinel(child, 'running on stdio');
-          expect(stderr()).toContain('Data root components:');
-          expect(stderr()).toContain('(source: package)');
-          // Package token snapshot won → the boot log must recommend regenerating.
-          expect(stderr()).toContain('npx designerpunk generate');
+          // The bundle's inlined bornRepo must resolve its OWN package root without
+          // the cwd fallback (U1 CI fix-up 2026-09-27 — see bornRepo.ts
+          // `resolveOwnPackageRoot`). The warning is the fallback's only signature.
+          expect(stderr()).not.toContain('[resolvePackageRoot] WARNING');
+          expect(stderr()).toContain('Design-system root: unborn');
+          // Component root SET (Spec 123 Task 1.4, design C3): one line per root,
+          // indexed. From an unborn cwd the set is exactly the package root —
+          // `components[0]`, labelled `source: package`, AT the package's tree.
+          const componentsLine = stderr().match(/Data root components\[0\]: (.+) \(source: package\)/);
+          expect(componentsLine).not.toBeNull();
+          expect(fs.realpathSync(componentsLine![1])).toBe(
+            fs.realpathSync(path.join(PKG_ROOT, 'src', 'components', 'core')),
+          );
+          expect(stderr()).not.toContain('Data root components[1]:');
+          // Token index (design C3, unborn row): the package index, served as a
+          // LABELLED reference — never passed off as the consumer's own.
+          expect(stderr()).toMatch(
+            /Data root token-index: .+ \(source: package-consume\) \(tokenOrigin: designerpunk-reference\)/,
+          );
 
           await initializeMcp(child);
           const health = parseToolResult(
@@ -312,8 +327,49 @@ if (!distMcpExists) {
         const { child, stderr } = spawnIsolated(path.join(DIST_MCP, 'product-mcp.js'));
         try {
           await waitForSentinel(child, 'running on stdio');
+          // product-mcp.js inlines bornRepo too — same own-package-root guard.
+          expect(stderr()).not.toContain('[resolvePackageRoot] WARNING');
           expect(stderr()).toContain('Product directory not found');
           expect(stderr()).toContain('starting with empty data');
+        } finally {
+          child.kill('SIGTERM');
+        }
+      },
+      30_000,
+    );
+
+    it(
+      'application-mcp classifies unused-local-tier correctly from a consumer cwd (bundled bornRepo isSteward — U1 CI fix-up 2026-09-27)',
+      async () => {
+        // A config WITHOUT tokenSource PLUS a local DesignerPunk-shaped barrel is
+        // `partial (unused-local-tier)` everywhere except AT the package's own root
+        // (the steward exemption). Before the fix, the bundle's inlined bornRepo fell
+        // back to cwd for its package root, so `isSteward` was TRUE for the launch
+        // directory and this fixture misclassified as `package-mode` — serving
+        // DesignerPunk's tokens while the consumer's tier sat unused.
+        // @see .kiro/issues/archive/2026-09-27-bundled-resolvepackageroot-isSteward-drift.md
+        const fixture = path.join(isolatedCwd, 'unused-local-tier');
+        fs.mkdirSync(path.join(fixture, '.git'), { recursive: true });
+        fs.mkdirSync(path.join(fixture, 'src', 'tokens', 'semantic'), { recursive: true });
+        fs.writeFileSync(
+          path.join(fixture, 'designerpunk.config.ts'),
+          `export default { name: 'Unused', abbreviation: 'UN' };\n`,
+        );
+        fs.writeFileSync(
+          path.join(fixture, 'src', 'tokens', 'index.ts'),
+          `export function getAllPrimitiveTokens() { return []; }\n`,
+        );
+        fs.writeFileSync(
+          path.join(fixture, 'src', 'tokens', 'semantic', 'index.ts'),
+          `export function getAllSemanticTokens() { return []; }\n`,
+        );
+
+        const { child, stderr } = spawnIsolated(path.join(DIST_MCP, 'application-mcp.js'), fixture);
+        try {
+          await waitForSentinel(child, 'running on stdio');
+          expect(stderr()).not.toContain('[resolvePackageRoot] WARNING');
+          expect(stderr()).toContain('Design-system root: partial (unused-local-tier)');
+          expect(stderr()).not.toContain('Design-system root: package-mode');
         } finally {
           child.kill('SIGTERM');
         }

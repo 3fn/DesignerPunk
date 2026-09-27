@@ -280,6 +280,43 @@ function evaluateDirectory(dir: string, packageRoot: string): DirectoryEvaluatio
   };
 }
 
+/**
+ * The DesignerPunk package root THIS module ships in — the `isSteward` comparand
+ * and the package-mode `tierDir` anchor.
+ *
+ * DEPTH-INDEPENDENT BY NECESSITY (U1 CI fix-up, 2026-09-27; closes
+ * `.kiro/issues/2026-09-27-bundled-resolvepackageroot-isSteward-drift.md`): this
+ * module's own depth below the package root is NOT fixed. It runs at
+ * `src/cli/shared/` (source/ts-jest), at `dist/cli/shared/` (compiled, required at
+ * runtime by the sub-package tsc builds), and — because esbuild statically resolves
+ * the servers' `require('../../dist/cli/shared/bornRepo')` and INLINES it — at
+ * `dist/mcp/` inside `application-mcp.js` and `product-mcp.js`, where `__dirname` is
+ * the BUNDLE's directory. The former `resolvePackageRoot(path.dirname(__dirname))`
+ * hard-coded the un-bundled depth; inside a bundle it resolved one level above the
+ * package (`node_modules/@3fn/` in a consumer install), warned, and fell back to
+ * `process.cwd()` — which made `isSteward` TRUE for whatever directory the consumer
+ * launched from (misclassifying `unused-local-tier` as `package-mode`) and pointed
+ * `package-mode`'s `tierDir` at the consumer's `src/tokens`.
+ *
+ * The nearest ancestor (inclusive) holding a `package.json` is correct at all three
+ * depths — no `package.json` sits between this module and the package root in any of
+ * them. (`resolvePackageRoot`'s fixed two-levels rule stays right for ITS callers:
+ * the sub-package entry points sit under their own `package.json`, which a
+ * nearest-ancestor walk would wrongly stop at. This module never sits in a
+ * sub-package.) If the walk finds nothing, defer to `resolvePackageRoot`'s
+ * warn-then-cwd fallback so the failure is never silent.
+ */
+function resolveOwnPackageRoot(): string {
+  let dir = __dirname;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    if (fs.existsSync(path.join(dir, 'package.json'))) return dir;
+    const parent = path.dirname(dir);
+    if (parent === dir) return resolvePackageRoot(path.dirname(__dirname));
+    dir = parent;
+  }
+}
+
 const UNBORN_RESULT: DesignSystemRoot = {
   state: 'unborn',
   root: null,
@@ -304,11 +341,7 @@ const UNBORN_RESULT: DesignSystemRoot = {
  * @param startDir - The directory to start the walk from (see note above).
  */
 export function findDesignSystemRoot(startDir: string): DesignSystemRoot {
-  // resolvePackageRoot's LEVELS-UP ASSUMPTION is "two levels below the package
-  // root" (e.g. `src/cli/`). This module lives one level deeper, at
-  // `src/cli/shared/` — so we hand it `path.dirname(__dirname)` (`src/cli/`) as
-  // the anchor, reusing the same self-checking traversal without forking it.
-  const packageRoot = resolvePackageRoot(path.dirname(__dirname));
+  const packageRoot = resolveOwnPackageRoot();
   let dir = path.resolve(startDir);
 
   // eslint-disable-next-line no-constant-condition
