@@ -48,7 +48,10 @@ on:
 jobs:
   # ── Lane 1: root typecheck ────────────────────────────────────────────────
   lane-typecheck:
-    name: lane-typecheck
+    # Ballot B-CI a2: this workflow already had workflow_dispatch (the `cold` timing
+    # input), so a dispatch run reported under the required name today — the distinct
+    # name closes that so a branch-head dispatch run can never satisfy or shadow the gate.
+    name: ${{ github.event_name == 'workflow_dispatch' && 'lane-typecheck (unit-branch)' || 'lane-typecheck' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -96,11 +99,12 @@ jobs:
           [ "$COUNT" -ge 400 ]
 
       - name: Typecheck (full, no skipLibCheck)
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
   # ── Lane 2: build:validate ──────────────────────────────────────────────
   lane-build-validate:
-    name: lane-build-validate
+    # Ballot B-CI a2 (see lane-typecheck above for rationale).
+    name: ${{ github.event_name == 'workflow_dispatch' && 'lane-build-validate (unit-branch)' || 'lane-build-validate' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -147,7 +151,8 @@ jobs:
 
   # ── Lane 3: root functional test suite ──────────────────────────────────
   lane-functional-root:
-    name: lane-functional-root
+    # Ballot B-CI a2 (see lane-typecheck above for rationale).
+    name: ${{ github.event_name == 'workflow_dispatch' && 'lane-functional-root (unit-branch)' || 'lane-functional-root' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -208,9 +213,28 @@ jobs:
       - name: Run functional test suite
         run: npm test
 
+      # Fold-in (ballot B-CI item 3, PR-1 / .kiro/issues/2026-09-27-test-scripts-lane-not-in-ci.md):
+      # scripts/** (the completion-criteria-parity checker's own parser/verdict tests, the
+      # tool-manifest/name-contract/floor-closure suites, etc.) previously ran in NO CI
+      # workflow — `npm run test:scripts` had no caller. This is a NEW did-it-really-run
+      # guard (non-vacuity floor), not a modification of any pre-existing guard in this
+      # file — the five pre-existing selection-floor/execution-assertion steps in this
+      # workflow are unchanged. Floor 1, derived from 11 resolved test files on 2026-09-27.
+      - name: Selection floor — resolved scripts/** test files ≥ 1
+        run: |
+          npx jest --config scripts/jest.config.js --listTests > resolved-scripts-tests.txt
+          COUNT=$(wc -l < resolved-scripts-tests.txt | tr -d ' ')
+          echo "jest resolved $COUNT scripts/** test files (floor: 1; derived from 11 on 2026-09-27)"
+          echo "--- resolved selection ---"; cat resolved-scripts-tests.txt
+          [ "$COUNT" -ge 1 ]
+
+      - name: Run scripts/** test suite (npm run test:scripts)
+        run: npm run test:scripts
+
   # ── Lane 4: mcp-server suite ─────────────────────────────────────────────
   lane-mcp-server-suite:
-    name: lane-mcp-server-suite
+    # Ballot B-CI a2 (see lane-typecheck above for rationale).
+    name: ${{ github.event_name == 'workflow_dispatch' && 'lane-mcp-server-suite (unit-branch)' || 'lane-mcp-server-suite' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -262,7 +286,8 @@ jobs:
 
   # ── Lane 5: application-mcp-server suite ─────────────────────────────────
   lane-application-mcp-server-suite:
-    name: lane-application-mcp-server-suite
+    # Ballot B-CI a2 (see lane-typecheck above for rationale).
+    name: ${{ github.event_name == 'workflow_dispatch' && 'lane-application-mcp-server-suite (unit-branch)' || 'lane-application-mcp-server-suite' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:

@@ -43,10 +43,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   tool-boot-smoke:
-    name: 125B-tool-boot-smoke
+    # Ballot B-CI a2: distinct name on workflow_dispatch so a branch-head dispatch run can
+    # never satisfy or shadow the required "125B-tool-boot-smoke" context.
+    name: ${{ github.event_name == 'workflow_dispatch' && '125B-tool-boot-smoke (unit-branch)' || '125B-tool-boot-smoke' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -84,4 +87,4 @@ jobs:
         run: npm run build:mcp
 
       - name: Run the tool-boot smoke
-        run: npx jest --roots='<rootDir>/tests' --testMatch='**/tool-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000
+        run: npm run test:smoke:tool-boot

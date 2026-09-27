@@ -8,12 +8,14 @@ This directory contains the task-completion tooling for the PR-gated workflow an
 
 ## Task Completion: `complete-task.sh`
 
-**Purpose**: One completion command, THREE context-aware modes (ballot Item 11a; third mode added 2026-09-26 as a drift fix bringing the script in line with Task-Completion-Protocol.md's multi-parent-unit law — no law change)
+**Purpose**: One completion command, THREE context-aware modes (ballot Item 11a; third mode added 2026-09-26 as a drift fix bringing the script in line with Task-Completion-Protocol.md's multi-parent-unit law; unit-branch CI dispatch + the zero-runs detector added 2026-09-27 per ballot B-CI, `.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md` — a RATIFIED law change, applied to TCP in PR #217)
 **Usage**: `./.kiro/hooks/complete-task.sh [OPTIONS] "MESSAGE"`
+
+**Unit-branch CI dispatch, in one line**: subtask checkpoints and unit-member parent completions now dispatch the six required workflows against the unit branch and print a ready-to-paste `**CI-provenance**:` line; parent mode (the mode that opens the PR) confirms CI actually started on the PR and fails loudly if it did not. Dispatched runs are **feedback, not the gate** — each reports under a context name distinct from its required name (e.g. `Consumer Guard (unit-branch)`), so a branch-head run can never satisfy or shadow the unit PR's required check.
 
 ### Parent mode (default)
 
-Commits on the task branch, pushes it, **opens the task PR**, prints the PR URL, and stops. Never merges — the task is complete when Peter merges on green. Use this when the parent IS its unit's final/gating parent (a standalone task, a single-unit spec, or the parent that completes a declared multi-parent unit).
+Commits on the task branch, pushes it, **opens the task PR**, prints the PR URL, and stops. Never merges — the task is complete when Peter merges on green. Use this when the parent IS its unit's final/gating parent (a standalone task, a single-unit spec, or the parent that completes a declared multi-parent unit). After opening (or re-reporting) the PR, it confirms CI actually started on it — the **F-A zero-runs detector** (ballot B-CI, the #148/#194 dropped-`pull_request`-event class) — and **fails loudly (non-zero exit)** on zero registered check runs, printing the diagnosis and the known remedies (poll mergeability; push an empty commit to re-trigger). It never auto-pushes a fix.
 
 ```bash
 ./.kiro/hooks/complete-task.sh "Task 2 Complete: Rework task tooling for PR flow (125-A)"
@@ -23,7 +25,7 @@ The MESSAGE becomes both the commit message and the PR title, and squash-merge m
 
 ### Unit-member mode (`--unit-member`)
 
-Commits on the task branch with MESSAGE and pushes the branch. **No PR opens.** Use this for a parent that completes **inside** a declared multi-parent unit but is **not** that unit's final/gating parent — its completion+summary docs land on the branch, it is done-on-branch, and it is accepted when the unit's PR (opened later, in parent mode, by the gating parent) merges.
+Commits on the task branch with MESSAGE and pushes the branch. **No PR opens.** Use this for a parent that completes **inside** a declared multi-parent unit but is **not** that unit's final/gating parent — its completion+summary docs land on the branch, it is done-on-branch, and it is accepted when the unit's PR (opened later, in parent mode, by the gating parent) merges. After pushing, it **dispatches the six required workflows against the unit branch** (`gh workflow run … --ref`) and prints a ready-to-paste `**CI-provenance**: branch-head dispatch @ <sha> — <urls>` line (ballot B-CI § 4 grammar) — pass `--no-ci` to skip.
 
 ```bash
 ./.kiro/hooks/complete-task.sh --unit-member "Task 1 Complete: Substrate setup (123)"
@@ -33,7 +35,7 @@ Mutually exclusive with `--subtask`.
 
 ### Subtask mode (`--subtask`)
 
-Commits on the task branch with a plain message and pushes the branch. **No PR opens**; no required checks fire until UNIT completion. Subtasks never open PRs.
+Commits on the task branch with a plain message and pushes the branch. **No PR opens until UNIT completion**; subtasks never open PRs. At a judgment-based checkpoint, this mode **also dispatches** the six required workflows against the unit branch and prints the ready-to-paste CI-provenance line — pass `--no-ci` for a checkpoint you know is red (the honour system; nothing records its use).
 
 ```bash
 ./.kiro/hooks/complete-task.sh --subtask "Task 2.1: add credential preflight"
@@ -56,7 +58,17 @@ Commits on the task branch with a plain message and pushes the branch. **No PR o
 - `--spec-dir NAME` / `--completion-doc PATH` / `--validation NOTE` — PR body fields
 - `--organize` / `--validate-metadata` — run `organize-by-metadata.sh` before staging (folded in from the retired organized-commit script, ballot Item 11c)
 - `--skip-parity` — skip the advisory `completion-criteria-parity` check (see below); never runs in subtask mode regardless
+- `--no-ci` — skip the unit-branch CI dispatch (subtask/unit-member modes only), for a checkpoint you know is red (ballot B-CI § 2.1; the honour system — nothing records its use)
+- `--dry-run-ci` — standalone diagnostic mode: no MESSAGE, no git/gh mutation. Prints the six `gh workflow run` dispatch commands it would issue and demonstrates the zero-runs detector against a stubbed zero-run result (ballot B-CI § 6 step 3). Ignores every other flag.
 - `-h, --help` — full usage
+
+### Unit-branch CI dispatch and the zero-runs detector (ballot B-CI)
+
+- **Dispatch (subtask/unit-member modes)**: after pushing, the script fires `gh workflow run <wf> --ref <unit-branch>` for each of the six required workflows (`consumer-guard.yml`, `tool-boot-smoke.yml`, `section-citations.yml`, `agent-generator.yml`, `package-name-drift.yml`, `lane-timing.yml` — one array in the script, count-asserted against `verify-gate-registration.sh`'s 6 workflows / 18 contexts), polls for each run to register, and prints a ready-to-paste completion-doc line: `**CI-provenance**: branch-head dispatch @ <sha> — <run URL>, <run URL>, …` (the exact grammar in `governance/completion-documentation-guide.md` § "CI provenance — where a green was measured"). A dispatch that fails to register within the poll window is a loud warning (not fatal) — dispatch is feedback, not the gate.
+- **Distinct context names**: every required workflow reports under a name distinct from its required context when triggered by `workflow_dispatch` (e.g. `Consumer Guard (unit-branch)`) — ballot B-CI a2. A branch-head dispatch run can never satisfy or shadow the unit PR's required check; it tests the branch HEAD, not the PR's merge ref.
+- **The F-A zero-runs detector (parent mode only)**: after opening (or re-reporting) the PR, the script polls the PR head's check runs for a bounded window (~3 minutes). Zero registered runs is the `#148`/`#194` dropped-`pull_request`-event class — the script **fails loudly (non-zero exit)**, printing the diagnosis and the known remedies (poll mergeability with `gh pr view --json mergeable`; or push an empty commit to re-trigger: `git commit --allow-empty -m "ci: re-trigger" && git push`). It never auto-pushes.
+- **PAT scope**: dispatching requires the token scope **Actions: write** (granted 2026-07-10, `inbound-to-125-B-from-125-A.md` §5) in addition to the existing `Contents: write` + `Pull requests: write`.
+- **`--dry-run-ci`** exercises both the dispatch path and the detector's stubbed-zero branch without any git/gh mutation — its output is cited as evidence in the implementing PR body rather than a new test file.
 
 ### Advisory completion-criteria-parity check
 
@@ -68,8 +80,9 @@ Parent and unit-member modes run `npx tsx scripts/check-completion-criteria-pari
 - **On `main` with no derivable task branch**: refuses before touching git.
 - **Never pushes to `main`** in any mode or failure path: refuses on `main`, re-asserts branch != `main` before commit AND before push, and pins the push refspec to the task branch.
 - **PR creation fails after push**: reports the cause (usually PAT missing `Pull requests: write`); re-running reuses the pushed branch.
-- **Open PR already exists for the branch** (change-request resume, ballot 1d.7): pushes and re-reports the existing PR URL — no duplicate PR.
+- **Open PR already exists for the branch** (change-request resume, ballot 1d.7): pushes and re-reports the existing PR URL — no duplicate PR. Also re-runs the zero-runs detector against the new push.
 - **`--subtask` and `--unit-member` together**: refuses before touching git — they are mutually exclusive.
+- **Zero CI runs registered on the PR** (parent mode; ballot B-CI F-A, the `#148`/`#194` dropped-event class): fails loudly with the PR URL, the diagnosis, and the remedies — the PR itself is not lost, this is a diagnostic failure.
 
 ### Release analysis
 
