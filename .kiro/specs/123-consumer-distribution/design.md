@@ -464,6 +464,11 @@ echo "PASS: ${PKG}@${VERSION} visible on npmjs; tarball host verified"
 
 - **Unchanged.** It is sequenced after Lina's `*.refs.ts` rename.
 - **The rename's issue record now exists**, filed by the steward: `.kiro/issues/2026-09-26-component-token-refs-rename.md` (Lina A6).
+- *(Erratum 2026-09-27, Task 9 — this section carried no catalog row for the lint's own warning string, unlike most 123 catalog strings elsewhere in the spec; `harvestZeroWarning`'s own docstring flagged the gap.)* **Catalog row — the harvest-zero warning**, verbatim from `src/cli/loadComponentTokens.ts:133`:
+
+  ```
+  ⚠️  ${file}: this scanned file harvested zero component tokens; if you meant to register values, call `defineComponentTokens`.
+  ```
 
 ---
 

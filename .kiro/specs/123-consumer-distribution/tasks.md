@@ -481,7 +481,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 8.1 Gate: the rename merged; the zero-warning run before the lint lands
   - [x] 8.2 Tally + warning + fixture test
 
-- [ ] 9. Consumer-guard extensions and U1 post-diet re-certification (**U1 gating parent**)
+- [x] 9. Consumer-guard extensions and U1 post-diet re-certification (**U1 gating parent**)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Sonnet); Lina (Sonnet) — 9.0
   **Traces**: Reqs 3.1–3.9, 5A · design C6 · **9.0: Peter's ruling 2026-09-27 (amendment; pre-release-1 hygiene — `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`, `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md`)**
@@ -506,10 +506,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `tests/consumer-integration.test.ts`, fixtures, **9.0:** `scripts/esbuild-css-plugin.js`, `scripts/build-browser-bundles.js`, `scripts/build-name-contract.ts`, `scripts/__tests__/build-name-contract.test.ts`, `src/__tests__/browser-bundle-no-absolute-paths.test.ts` (new), `src/components/core/Input-Text-{Base,Email,Password,PhoneNumber}/platforms/web/*.browser.ts` (the four files, deleted), `src/components/core/Input-Text-Base/__tests__/InputTextFamily.token-resolution.test.ts`, `src/components/core/Input-Text-{Email,Password,PhoneNumber}/README.md`, `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`, `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md` (both closed and moved to `.kiro/issues/archive/`), `.kiro/issues/archive/2026-09-26-input-text-phantom-css-vars.md`, `.kiro/issues/archive/2026-09-26-container-base-phantom-css-vars.md` (dated addenda)
 
   - [x] 9.0 (Lina, Sonnet) **Runs before Task 7** (amendment 2026-09-27): (a) the bundle absolute-path fix, with the name-contract parser updated in the same change and its ⊆ bite re-run; (b) #204 — confirm orphaned, delete the four `.browser.ts` files, trim the Input-Text guard, update the READMEs, add the #202 addenda; close both issues; hand the CHANGELOG content to 7.4
-  - [ ] 9.1 Birth/posture cases, **incl. package-mode generate from the packed install + the drop-a-file bite**
-  - [ ] 9.2 Root/union cases
-  - [ ] 9.3 Copy cases; the packed name-contract case
-  - [ ] 9.4 Bites recorded; the post-diet re-certification (ancestry-checked); full validation; open the U1 PR
+  - [x] 9.1 Birth/posture cases, **incl. package-mode generate from the packed install + the drop-a-file bite**
+  - [x] 9.2 Root/union cases
+  - [x] 9.3 Copy cases; the packed name-contract case
+  - [x] 9.4 Bites recorded; the post-diet re-certification (ancestry-checked); full validation; open the U1 PR
 
 ### UNIT 2 — Consumer generation profile (the § 7.2 machinery; G1 and G2)
 
