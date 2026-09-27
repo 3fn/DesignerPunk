@@ -123,3 +123,70 @@ Run: `npx jest product-mcp-server/src/__tests__/` from the repo root → **10 su
 ### Files touched
 
 `product-mcp-server/src/index.ts` (Task 1 Primary Artifact), `src/cli/designerpunk.ts` (Task 1 Primary Artifact), plus two new test files: `product-mcp-server/src/__tests__/ProductIndexerBornRepoRootSet.test.ts`, `src/cli/__tests__/resolveComponentSchemaDir.test.ts`. Cites `.kiro/issues/2026-09-26-product-server-component-root.md` (moved to `.kiro/issues/archive/` in this same commit, status RESOLVED) and PR #209 (the main-side `GapDetector` fix this addendum's Fix 1 depends on).
+
+---
+
+## Addendum (2026-09-27, U1 CI fix-up — change request on PR #215, Peter-authorized)
+
+Two **required** CI checks on the U1 unit PR (#215) went red on Task 1 code: `Consumer Guard` and `lane-application-mcp-server-suite`. `main` was green. Both are fixed on this branch as a Task 1 fix-up, not a new parent.
+
+### What was wrong
+
+**Failure 1 — `Consumer Guard`, `tests/mcp-boot-smoke.test.ts` › isolated-cwd boot › `application-mcp serves a NON-EMPTY index from the package fallback`.** There were two distinct things here. They are recorded separately because only one of them was the failing assertion.
+
+1. **The assertion that failed was a stale log-string expectation, not a data failure.** The server booted, indexed **34 components** from the package, and served them. The test looked for `Data root components:`, but Task 1.4 changed the boot log to one line per root in the precedence-ordered set (`Data root components[0]: … (source: package)`). The test's next expectation, `npx designerpunk generate`, also came from the pre-123 F-C2 behavior ("package token snapshot won, so recommend regenerating"). Design C3's unborn row now serves the package index as `source: 'package-consume'`, labelled `tokenOrigin: 'designerpunk-reference'`. `generate` is the wrong advice to an unborn directory anyway: birth is `init`. Both moves were legitimate.
+2. **The `[resolvePackageRoot] WARNING` on stderr was a real, consumer-facing defect, and it was also Thurgood's isSteward issue.** `bornRepo.findDesignSystemRoot` computed its package root as `resolvePackageRoot(path.dirname(__dirname))`, which hard-coded this module's *un-bundled* depth (`src/cli/shared/` or `dist/cli/shared/`). esbuild statically resolves the servers' `require('../../dist/cli/shared/bornRepo')` and **inlines** it into `dist/mcp/application-mcp.js` and `dist/mcp/product-mcp.js`, where `__dirname` is `dist/mcp/`. The anchor landed one level above the package, the self-check failed, and the root fell back to `process.cwd()`. Consequences inside a bundled server:
+   - `isSteward` was true for whatever directory the consumer launched from, so `unused-local-tier` was misclassified as `package-mode`. **Reproduced red** against the pre-fix bundle: an `unused-local-tier` fixture cwd logged `Design-system root: package-mode`.
+   - `package-mode`'s `tierDir` pointed at `<consumer cwd>/src/tokens`. That is the theme-root fallback whenever `token-index/meta.json` is absent.
+   - Every consumer boot printed the alarming WARNING line.
+   - `docs-mcp.js` does not use `bornRepo` and was unaffected. No other bundled caller has the pattern: the servers' own `shared.resolvePackageRoot(__dirname)` calls are genuinely two levels deep in `dist/mcp/`, and they resolve correctly (their data roots logged `source: package` at the right paths).
+
+**Failure 2 — `lane-application-mcp-server-suite`, `mcpDataRootsDeclaration.test.ts`: `Cannot find module '../../../dist/cli/shared/mcpDataRoots'`.** The test required the root-built `dist/cli/shared/*.js`. That lane is deliberately root-install-free: it runs only the sub-package's `npm ci`, and no root `dist/` build exists there.
+
+### Why local validation missed them
+
+- **Failure 2 — a pre-built `dist/` on a warm machine.** `dist/cli/shared/` existed from earlier builds in the working checkout, so the require resolved locally and passed. On a clean checkout it can't resolve.
+- **Failure 1 — the guard was outside every command run locally.** `mcp-boot-smoke.test.ts` lives in root `tests/`. The functional lane's `roots` (`src`, `product-mcp-server/src`, `scripts/completion-claims`) exclude that directory, and `test:consumer` matches only `consumer-integration.test.ts`. The guard runs only as a targeted step in `consumer-guard.yml`. The warm checkout's bundle *did* carry the new log format, so running that step locally would have been red. Nobody ran it: Task 1.4 changed the log format, and neither Task 1's validation nor Task 9's re-certification invoked the boot-smoke step. The lesson generalizes: **validate by running each required workflow's own steps from a clean worktree, not by the local lane commands alone.**
+
+### Fixes
+
+1. **`src/cli/shared/bornRepo.ts`** (Task 1 Primary Artifact) — new module-private `resolveOwnPackageRoot()`. It returns the nearest ancestor of `__dirname` (inclusive) holding a `package.json`, which is correct at all three depths this module runs at. If the walk finds nothing, it defers to `resolvePackageRoot`'s warn-then-cwd fallback, so the failure is never silent. `resolvePackageRoot.ts` itself is **unchanged**: its fixed two-levels rule is correct for its own callers, because the sub-package entry points sit under their own `package.json`, where a nearest-ancestor walk would wrongly stop.
+   - *Disclosed alternative:* that file's header says to generalize it rather than add a second anchoring mechanism elsewhere. I kept the fix in `bornRepo.ts` because `resolvePackageRoot.ts` is not a listed Task 1 Primary Artifact, and a nearest-ancestor walk would be wrong for most of its callers. Moving the walk into that module as a second, named export is a reasonable later consolidation.
+2. **`tests/mcp-boot-smoke.test.ts`** — expectations moved to the current contract. The replacement assertions are *strictly stronger* than the old ones:
+   - the `components[0]` line must carry `(source: package)` **on that line**, and its path must realpath-equal `<PKG_ROOT>/src/components/core`, with no `components[1]` from an unborn cwd;
+   - the token-index line must carry `(source: package-consume) (tokenOrigin: designerpunk-reference)`;
+   - `Design-system root: unborn` is asserted;
+   - `componentsIndexed > 0` is kept unchanged, which is the non-empty-index proof;
+   - the isolated application and product boots now assert that `[resolvePackageRoot] WARNING` is absent;
+   - **a new case** boots the bundled application server from an `unused-local-tier` fixture cwd and asserts `partial (unused-local-tier)`, never `package-mode`.
+   The retitled test name is a jest title, not a required-check name.
+3. **`application-mcp-server/src/__tests__/mcpDataRootsDeclaration.test.ts`** — option (a): the test now loads the real module from its **TS source** (`src/cli/shared/*.ts`, transpiled by ts-jest) instead of the root-built dist. The declaration-parity purpose survives: the dist artifact is a straight esbuild compile of the same source, so it has the same exported shape. The dist require path itself stays exercised end-to-end by the Consumer Guard boot-smoke (bundled servers) and by the root lane's product-mcp-server twin of this test, which runs after `npm run build`. **Why not (b)**: (b) would add a root `npm ci` plus a `build:mcp-shared` step to a lane whose documented property is "no root install needed", and it would edit `.github/workflows/lane-timing.yml`. With (a), no workflow changed. *Residual:* this test alone no longer proves that `build:mcp-shared`'s entry list emits `bornRepo`. The bundle build and the boot-smoke would catch that break.
+
+### Clean-state reproduction (the lesson of this PR)
+
+- **Before — scratch worktree at `10061e6a`**, via `git worktree add --detach`, with no `dist/` and no `node_modules`:
+  - The application-mcp-server lane steps (sub-package `npm ci` → `npm test`) went **RED**: `mcpDataRootsDeclaration.test.ts` failed 6/6 with the CI error verbatim (28/29 suites passed).
+  - The `consumer-guard.yml` steps in order went green through `test:consumer` (30 passed / 1 skipped): `npm ci`, `prebuild`, `typecheck:scripts`, `lint`, `check:id-uniqueness`, the DynamicImportGuard, `test:consumer`, `build:mcp`, `build:browser`. The boot-smoke then went **RED**: 1 failed / 5 passed, with the CI stderr including the WARNING.
+  - The updated boot-smoke file run against the pre-fix bundle went **RED on 3 cases**. These are the new bites: no-WARNING ×2, and `unused-local-tier` logged `package-mode`.
+- **After — a *fresh* scratch worktree at the fix commit**, with no `dist/` and no `node_modules`:
+  - the application-mcp-server lane passed 29/29 suites, 369 tests, with the selection floor at 29 ≥ 15 and no root `node_modules` present;
+  - Consumer Guard, every step in order, all exited rc=0: `test:consumer` 30 passed / 1 skipped, mcp-boot-smoke 7/7, browser-boot-smoke 1/1;
+  - `npx tsc --noEmit` was clean;
+  - `npm run build`, then the mcp-server sub-package build, then `npm test` gave **384 suites, 9268 tests, all passing**.
+- Both scratch worktrees were removed afterward.
+
+### Isolation note
+
+The concurrent Thurgood seat's worktree (`DP-wt-gatefix`, `mcp-server/src/relocation-integrity-gate/**`) was not touched.
+
+### Parity
+
+`npm run check:completion-criteria-parity` still shows **12/12 PASS** after this addendum. The addendum does not alter the Success Criteria table.
+
+### Files touched
+
+- `src/cli/shared/bornRepo.ts`
+- `tests/mcp-boot-smoke.test.ts`
+- `application-mcp-server/src/__tests__/mcpDataRootsDeclaration.test.ts`
+- this addendum
+- `.kiro/issues/2026-09-27-bundled-resolvepackageroot-isSteward-drift.md` — outcome recorded, status RESOLVED, `git mv`'d to `.kiro/issues/archive/`
