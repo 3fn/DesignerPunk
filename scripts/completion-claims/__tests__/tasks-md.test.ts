@@ -132,6 +132,117 @@ describe('criteria blocks (Req 2.2)', () => {
   });
 });
 
+describe('criteria block extent — stray non-bullet lines are loud (fix 2026-09-26, D1 ruled (d))', () => {
+  // Provenance: Spec 123 U1 tasks.md parents 5 (L382 `**Instrument**:`),
+  // 13 (L585 `Count asserted.`) and 26 (L881 italic scope line). Before the
+  // fix each block was silently truncated at the stray line and every bullet
+  // after it was dropped (parent 5: 7 of 21 rows extracted, parity PASS).
+  const MSG = (line: number, parent: string) =>
+    `malformed criteria block: non-bullet line inside block at line ${line} (parent ${parent})`;
+
+  test('a blank line between two bullets alone is NOT a malformation (tolerated; not the trigger)', () => {
+    const f = parseTasksMd(
+      HEADER +
+        '- [x] 1. Build\n' +
+        '  **Success Criteria:**\n' +
+        '  - first\n' +
+        '\n' +
+        '  - second\n' +
+        '\n' +
+        '  **Primary Artifacts:**\n' +
+        '  - a/b.ts\n'
+    );
+    expect(f.malformations).toEqual([]);
+    expect(f.parents[0].criteria).toEqual(['first', 'second']);
+  });
+
+  test('parent-5 shape: an indented bold-leading paragraph after a blank, bullets after it', () => {
+    const text =
+      HEADER +
+      '- [x] 5. Sync\n' + //                                          L5
+      '\n' + //                                                       L6
+      '  **Success Criteria:**\n' + //                                L7
+      '  - key-grain JSON:\n' + //                                    L8
+      '    - a nested case;\n' + //                                   L9
+      '\n' + //                                                       L10
+      '    **Instrument**: `sync.keygrain.test.ts` over three shapes.\n' + // L11
+      '  - Manifest: the root path.\n' + //                           L12
+      '  - The Applier source branch is deleted.\n' + //              L13
+      '\n' +
+      '  **Primary Artifacts:** `src/cli/sync/{A,B}.ts`, tests\n';
+    const f = parseTasksMd(text);
+    expect(f.malformations).toEqual([{ line: 11, message: MSG(11, '5'), parentLine: 5 }]);
+  });
+
+  test('parent-13 shape: an indented plain paragraph after a blank', () => {
+    const f = parseTasksMd(
+      HEADER +
+        '- [ ] 13. Floor\n' + //            L5
+        '  **Success Criteria:**\n' + //    L6
+        '  - Nine checks:\n' + //           L7
+        '    - orphaned key;\n' + //        L8
+        '\n' + //                           L9
+        '    Count asserted.\n' + //        L10
+        '  - freshness inside diff-guard\n'
+    );
+    expect(f.malformations.map((m) => m.message)).toEqual([MSG(10, '13')]);
+    expect(f.malformations[0].parentLine).toBe(5);
+  });
+
+  test('parent-26 shape: an italic scope line after a blank', () => {
+    const f = parseTasksMd(
+      HEADER +
+        '- [ ] 26. Join\n' +
+        '  **Success Criteria:**\n' +
+        '  - Each record carries:\n' +
+        '    - findings;\n' +
+        '\n' +
+        '    *"Joined" means the agent answers, not that files exist.*\n' +
+        '  - Only clean-state records count as cold.\n'
+    );
+    expect(f.malformations.map((m) => m.message)).toEqual([MSG(10, '26')]);
+  });
+
+  test('an indented bold-leading line DIRECTLY after a bullet (no blank) is loud too', () => {
+    const f = parseTasksMd(
+      HEADER + '- [x] 2. T\n  **Success Criteria:**\n  - a criterion\n    **Instrument**: a test\n  - another\n'
+    );
+    expect(f.malformations.map((m) => m.message)).toEqual([MSG(8, '2')]);
+  });
+
+  test('a plain wrapped line directly after a bullet still folds (continuation unchanged)', () => {
+    const f = parseTasksMd(
+      HEADER + '- [x] 2. T\n  **Success Criteria:**\n  - a criterion that\n    wraps here\n  - another\n'
+    );
+    expect(f.malformations).toEqual([]);
+    expect(f.parents[0].criteria).toEqual(['a criterion that wraps here', 'another']);
+  });
+
+  test('structural boundaries end the block without a malformation: heading, thematic break, checkbox', () => {
+    const viaHeading = parseTasksMd(
+      HEADER + '- [x] 1. T\n  **Success Criteria:**\n  - a\n\n## Next section\n\nProse paragraph.\n'
+    );
+    expect(viaHeading.malformations).toEqual([]);
+    const viaRule = parseTasksMd(
+      HEADER + '- [x] 1. T\n  **Success Criteria:**\n  - a\n\n---\n\nProse paragraph.\n'
+    );
+    expect(viaRule.malformations).toEqual([]);
+    const viaCheckbox = parseTasksMd(
+      HEADER + '- [x] 1. T\n  **Success Criteria:**\n  - a\n\n  - [x] 1.1 Sub\n- [ ] 2. Next\n'
+    );
+    expect(viaCheckbox.malformations).toEqual([]);
+    expect(viaCheckbox.parents[0].criteria).toEqual(['a']);
+  });
+
+  test('nested bullets stay accepted as rows (D4 deferred to the Q2-sitting ballot)', () => {
+    const f = parseTasksMd(
+      HEADER + '- [x] 1. T\n  **Success Criteria:**\n  - outer:\n    - inner one;\n    - inner two.\n'
+    );
+    expect(f.malformations).toEqual([]);
+    expect(f.parents[0].criteria).toEqual(['outer:', 'inner one;', 'inner two.']);
+  });
+});
+
 describe('promise blocks (Req 1.5 closed vocabulary)', () => {
   test('Primary Artifacts paths extract from anywhere in the bullet (Ada R1 sentence form)', () => {
     const f = parseTasksMd(
@@ -150,6 +261,54 @@ describe('promise blocks (Req 1.5 closed vocabulary)', () => {
     expect(arts[1].path).toBe('dist/css/tokens.css');
     expect(arts[2].path).toBe('package.json');
     expect(arts[3].notAPath).toBe(true);
+  });
+
+  test('inline Primary Artifacts form extracts, splitting on TOP-LEVEL commas only (fix 2026-09-26, D2)', () => {
+    // Provenance: Spec 123 tasks.md — all 28 parents use the inline form; the
+    // `\s*$`-anchored label regex silently missed every one (PA = [], AV never owed).
+    const f = parseTasksMd(
+      HEADER +
+        '- [x] 5. Sync\n' +
+        '  **Success Criteria:**\n' +
+        '  - done\n\n' +
+        '  **Primary Artifacts:** `src/cli/sync/{FileScanner,Classifier}.ts`, `application-mcp-server/src/index.ts` (StalenessGate, gate), package.json, tests\n'
+    );
+    const arts = f.parents[0].primaryArtifacts;
+    expect(arts.map((a) => a.raw)).toEqual([
+      '`src/cli/sync/{FileScanner,Classifier}.ts`',
+      '`application-mcp-server/src/index.ts` (StalenessGate, gate)',
+      'package.json',
+      'tests',
+    ]);
+    // The entry stays whole (the split respects braces). Path extraction for a
+    // brace-glob stops at its first comma — PATH_RE's pre-existing behaviour,
+    // identical in the bullet form, and only read by the unbuilt
+    // promised-artifact-exists; presence is all the AV duty needs.
+    expect(arts[0].notAPath).toBeUndefined();
+    expect(arts[0].path).toBe('src/cli/sync/{FileScanner');
+    expect(arts[1].path).toBe('application-mcp-server/src/index.ts');
+    expect(arts[2].path).toBe('package.json');
+    expect(arts[3].notAPath).toBe(true);
+    expect(f.malformations).toEqual([]);
+  });
+
+  test('inline Merge gate conditions are a loud malformation, never split by guess (fix 2026-09-26, D2)', () => {
+    const f = parseTasksMd(
+      HEADER +
+        '- [x] 3. Build\n' + //                            L5
+        '  **Success Criteria:**\n' +
+        '  - done\n\n' +
+        '  **Merge gate:** `npm test` green, diff-guard clean\n' // L9
+    );
+    expect(f.malformations).toEqual([
+      {
+        line: 9,
+        message:
+          "malformed promise block: inline '**Merge gate:**' conditions at line 9 (parent 3) — gate conditions must be bullets",
+        parentLine: 5,
+      },
+    ]);
+    expect(f.parents[0].mergeGate).toEqual([]);
   });
 
   test('Merge gate bullets collect as conditions', () => {

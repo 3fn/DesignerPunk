@@ -12,6 +12,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 **Criteria mode**: per-parent
 **Sources**: `requirements.md` (PR #196); `design.md` (PR #197, `5e98bd8f`; P1 ruled YES, P2 ruled branch A), plus **two tasks-round errata on this branch**: C27 (Le-T1 — the terminal-output line restored) and C7 (D-T-B2 — manifest entry `origin`). **This plan decides sequencing and evidence, never WHAT.** Where tasks grain moved a design component's placement, § "Sequencing decisions" says so.
 
+*(Erratum 2026-09-27: three stray in-block paragraphs — Task 5's `**Instrument**:` line, Task 13's "Count asserted." and Task 26's italic "Joined" line — are now parent-level criterion bullets, text verbatim, so each is its own criterion row under the parity parser's loud-malformation rule (PR #211, Peter's ruling (d), 2026-09-26). No criterion text changed.)*
+
 > **Law binding execution (Req 26.1 — Spec 127, ratified)**:
 > - Every parent completion doc reproduces **every Success Criteria row VERBATIM**, with Status + Evidence, and carries the **forced-negative line** and the **unconditional delegated-tier line**. The line's referent is the parent's **primary agent** in § "Delegated-tier plan".
 > - Every ticked subtask carries its subtask completion doc.
@@ -379,7 +381,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - **when our keys are unchanged, the file's bytes are unchanged** (no write);
     - editing our key → `conflict`; deleting it → `deleted-by-you`.
 
-    **Instrument**: `sync.keygrain.test.ts` over **three shapes**: `mcpServers.<key>` ×2 files and the `permissions.allow` array-entry grain.
+  - **Instrument**: `sync.keygrain.test.ts` over **three shapes**: `mcpServers.<key>` ×2 files and the `permissions.allow` array-entry grain.
   - Manifest: the root path; stable order; one entry per line (re-serialize-equals-file); the legacy path read and relocated; pruning with its report.
     - **The de-managed `src/types` pruning line states that the files remain required by their token tier's relative imports** (Ada D-T-A5).
     - **A fixture shows `generate` green after pruning.**
@@ -582,7 +584,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - item text not verbatim;
     - `repo-bound-in-entirety`.
 
-    Count asserted.
+  - Count asserted.
   - **`operative-set-freshness` inside `122-diff-guard`, with ARMING read-ready** (input 4, corrected):
     - (i) **a STANDING test** runs `npx tsx tools/agent-generator/diff-guard.ts` against a **committed stale-unit fixture** and expects non-zero. *This catches a future restructure that drops the sweep.*
     - (ii) **`npm run audit:coverage-map` shows that the rows for `canonical/operative-sets/**` and `canonical/profiles/consumer/**` LIST `122-diff-guard`**, output cited. *(Stacy R2: zero blank rows would prove only that some check covers them, not this one. She measured no broad `canonical/**` glob.)*
@@ -878,7 +880,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - the stop event from the closed vocabulary;
     - **one post-restart query answered by an attached agent, with its answer checked against that agent's rendered charter** (24.6's bar in miniature).
 
-    *"Joined" means the agent answers, not that files exist.*
+  - *"Joined" means the agent answers, not that files exist.*
   - **Only clean-state records count as cold.** The table per target × {founder-cold (Task 25), teammate-cold (this task)} reads "observed" or "not observed cold — state not clean".
   - The C8(c) observations are recorded (committed `.claude/settings.json` honored? the gitignored note's `@`-import on a fresh clone?).
   - **The install doc (via the Integration Guide source, Task 19.4) is corrected only for cells observed cold.** Diff cited.
