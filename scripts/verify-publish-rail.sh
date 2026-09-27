@@ -17,6 +17,15 @@
 # R1-1 review, .kiro/specs/123-consumer-distribution/completion/
 # task-7-3-stacy-review.md).
 #
+# CURL'S OWN CONFIG (Stacy re-check, low note): `curl` has a config file too
+# (`~/.curlrc`). The `-q` flag below is passed FIRST — curl requires it to
+# be the first argument to take effect — so `.curlrc` is never read either.
+# Standard proxy environment variables (`http_proxy`, `https_proxy`, `no_proxy`,
+# etc.) are DELIBERATELY HONOURED, not overridden: a release run from behind
+# a corporate or CI proxy should still succeed. So the precise claim is: no
+# npm config, no curl config file, is ever read; proxy env vars are the one
+# environment input this script intentionally respects.
+#
 # Req 6 (Spec 123, design C9). Mandatory step in the release recipe
 # (.kiro/hooks/RELEASE-FLOW.md) — invoked AFTER `npm publish`, never as a
 # PR check (Req 6.6: the event it verifies happens after merge, so there
@@ -24,17 +33,25 @@
 #
 # Usage:
 #   VERSION=<published-version> ./scripts/verify-publish-rail.sh
-#   ./scripts/verify-publish-rail.sh --self-test-host <tarball-url>   # dev convenience only
+#   VERSION=<published-version> ./scripts/verify-publish-rail.sh --self-test-host <tarball-url>   # dev convenience only
 #
 # Exit codes:
 #   0  — PASS: version visible on npmjs AND tarball host verified
+#   2  — USAGE: VERSION is unset or empty
 #   10 — FAIL[version]: not visible on registry.npmjs.org — an HTTP error
 #        (incl. 404), a network error reaching the registry, or a returned
-#        `version` field that does not match ${VERSION}
+#        `version` field that does not match ${VERSION}. A 404 in the first
+#        few minutes after `npm publish` may just mean the registry hasn't
+#        finished indexing it yet (the message says so; re-run by hand).
 #   11 — FAIL[host]: the tarball is served from a host other than registry.npmjs.org
 #   12 — self-test only (never reaches PASS; never runs the version check)
 #   13 — FAIL[host-empty]: could not read a tarball URL from the registry response
 set -euo pipefail
+
+if [ -z "${VERSION:-}" ]; then
+  echo "USAGE: VERSION=<version> $0 [--self-test-host <tarball-url>] — VERSION is required and was not set" >&2
+  exit 2
+fi
 
 PKG="@3fn/core"
 PKG_PATH="@3fn%2fcore"   # scoped-package path-escape for the registry API (literal '/' -> %2f)
@@ -48,14 +65,16 @@ check_host() {      # HARDENING (6.8, augments): takes the tarball URL as input 
 if [ "${1:-}" = "--self-test-host" ]; then check_host "${2:-}"; echo "SELF-TEST ONLY — no release verified"; exit 12; fi
 
 # REQUIRED FORM (6.2, erratum 2026-09-27): a direct, unauthenticated HTTP GET
-# against the public registry's version endpoint. No `npm` CLI, no npmrc,
-# no scope mapping is consulted anywhere in this line.
-RESPONSE="$(curl -sS --max-time 15 -w '\n%{http_code}' "${REGISTRY}/${PKG_PATH}/${VERSION}")" \
+# against the public registry's version endpoint. `-q` MUST be first (curl's
+# own requirement) so `~/.curlrc` is never read. No `npm` CLI, no `.npmrc`,
+# no curl config file is consulted anywhere in this line; proxy env vars ARE
+# honoured (see header).
+RESPONSE="$(curl -q -sS --max-time 15 -w '\n%{http_code}' "${REGISTRY}/${PKG_PATH}/${VERSION}")" \
   || { echo "FAIL[version]: could not reach ${REGISTRY} for ${PKG}@${VERSION} (network error) — do not announce this release"; exit 10; }
 HTTP_CODE="${RESPONSE##*$'\n'}"
 BODY="${RESPONSE%$'\n'*}"
 if [ "$HTTP_CODE" != "200" ]; then
-  echo "FAIL[version]: ${PKG}@${VERSION} is not visible on ${REGISTRY} (HTTP ${HTTP_CODE}) — do not announce this release"
+  echo "FAIL[version]: ${PKG}@${VERSION} is not visible on ${REGISTRY} (HTTP ${HTTP_CODE}) — do not announce this release. If you published in the last few minutes, the registry may not show it yet — wait a minute and re-run."
   exit 10
 fi
 

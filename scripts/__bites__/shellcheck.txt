@@ -1,4 +1,4 @@
-=== shellcheck (official binary ONLY, /Users/3fn/bin/shellcheck, per Peter's instruction — never npx shellcheck) ===
+=== shellcheck (official binary ONLY, /Users/3fn/bin/shellcheck, per instruction) ===
 ShellCheck - shell script analysis tool
 version: 0.10.0
 license: GNU General Public License, version 3

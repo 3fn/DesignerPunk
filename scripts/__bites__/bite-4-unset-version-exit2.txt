@@ -1,0 +1,3 @@
+=== Unset VERSION -> exit 2, usage error (new bite) ===
+USAGE: VERSION=<version> ./scripts/verify-publish-rail.sh [--self-test-host <tarball-url>] — VERSION is required and was not set
+exit code: 2

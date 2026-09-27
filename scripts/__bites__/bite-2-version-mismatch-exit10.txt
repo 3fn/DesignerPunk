@@ -1,3 +1,3 @@
-=== Bite 2: VERSION=99.99.99 -> exit 10, real 404 ===
-FAIL[version]: @3fn/core@99.99.99 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release
+=== VERSION=99.99.99 -> exit 10, real 404, with the 404-after-publish note ===
+FAIL[version]: @3fn/core@99.99.99 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release. If you published in the last few minutes, the registry may not show it yet — wait a minute and re-run.
 exit code: 10

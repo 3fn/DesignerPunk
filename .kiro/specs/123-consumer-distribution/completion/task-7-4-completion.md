@@ -37,7 +37,7 @@ See `/CHANGELOG.md` in full — reproduced here is the header and section list f
 ### Fixed
 ```
 
-**The `### Publishing` section is gone** (C3) — four sections remain, not five. Every bullet under them is drawn from a named source and has survived a second, independent verification pass (Stacy's, against source code and the actual last published release) — no bullet describes work this branch has not actually shipped, and no consumer-facing surface names GitHub Packages (Req 6.1).
+**The `### Publishing` section is gone** (C3) — four sections remain, not five. Every bullet under them is drawn from a named source and has survived a second, independent verification pass (Stacy's, against source code and the actual last published release) — no bullet describes work this branch has not actually shipped, and **`CHANGELOG.md` names no GitHub Packages surface (Req 6.1)**. *(Corrected 2026-09-27, Stacy's re-check: this line originally overclaimed "no consumer-facing surface names GitHub Packages" — narrowed here to this file only. `governance/DesignerPunk-Integration-Guide.md` still does, in its install section — a live, separately-tracked Req 6.1 finding, not this file's, with a committed issue: `.kiro/issues/2026-09-27-integration-guide-install-section-stale.md`, PR #214, routed to Task 19.4.)*
 
 ## Proof: `CHANGELOG.md` ships in the tarball
 
