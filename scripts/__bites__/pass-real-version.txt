@@ -1,0 +1,3 @@
+=== PASS path: real published version (14.1.0) over the real registry ===
+PASS: @3fn/core@14.1.0 visible on npmjs; tarball host verified
+exit code: 0

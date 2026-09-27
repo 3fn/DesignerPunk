@@ -1,0 +1,3 @@
+=== Empty-URL branch: PATH-shimmed npm returns empty dist.tarball -> exit 13 ===
+FAIL[host-empty]: could not read the tarball URL for @3fn/core@99.99.99-fake (network or registry error) — host NOT verified
+exit code: 13

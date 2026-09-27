@@ -1,0 +1,6 @@
+=== self-test-host: GOOD host -> exit 12 (never reaches PASS, never runs check_version) ===
+SELF-TEST ONLY — no release verified
+exit code: 12
+--- BAD host given to --self-test-host (fails inside check_host, exit 11 -- self-test never reaches its own exit 12 on a bad host) ---
+FAIL[host]: tarball for @3fn/core@14.1.0 is served from 'https://npm.pkg.github.com/download/@3fn/core/14.1.0/abc.tgz', not registry.npmjs.org — wrong rail
+exit code: 11

@@ -13,6 +13,7 @@
   "browser": "./dist/browser/designerpunk.esm.js",
   "types": "./dist/browser-entry.d.ts",
   "files": [
+    "CHANGELOG.md",
     "dist/browser/designerpunk.esm.js",
     "dist/browser/designerpunk.esm.min.js",
     "dist/browser-entry.d.ts",

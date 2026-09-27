@@ -1,0 +1,3 @@
+=== Bite 2: VERSION=99.99.99 -> exit 10 ===
+FAIL[version]: @3fn/core@99.99.99 is not visible on registry.npmjs.org (checked scope-explicitly) — do not announce this release
+exit code: 10

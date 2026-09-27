@@ -460,11 +460,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/verify-publish-rail.sh`, `scripts/__bites__/`, `.kiro/docs/ballots/<date>-123-b-u1-publish-rail.md`, `.kiro/hooks/RELEASE-FLOW.md`, `governance/classification-map.md`, `CHANGELOG.md`, `package.json`
 
-  - [ ] 7.0 **FIRST on the U1 branch**: verify that the standalone T1-(B) ballot is merged on `main` and reads RATIFIED; record its merge SHA; B-U1 cross-references it (erratum 2026-09-26: it replaces committing the section here)
-  - [ ] 7.1 Script + self-test + empty-URL branch
-  - [ ] 7.2 The three bites
+  - [x] 7.0 **FIRST on the U1 branch**: verify that the standalone T1-(B) ballot is merged on `main` and reads RATIFIED; record its merge SHA; B-U1 cross-references it (erratum 2026-09-26: it replaces committing the section here)
+  - [x] 7.1 Script + self-test + empty-URL branch
+  - [x] 7.2 The three bites
   - [ ] 7.3 B-U1 record-first; Stacy's review of the register row
-  - [ ] 7.4 `CHANGELOG.md` with release 1's entry (incl. 9.0's two changes, taken from the 9.0 subtask doc) + the `files[]` entry
+  - [x] 7.4 `CHANGELOG.md` with release 1's entry (incl. 9.0's two changes, taken from the 9.0 subtask doc) + the `files[]` entry
 
 - [ ] 8. The harvest-zero lint
 
