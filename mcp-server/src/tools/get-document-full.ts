@@ -16,6 +16,7 @@ import { ErrorHandler, MCPError } from '../utils/error-handler';
  */
 export const getDocumentFullTool = {
   name: 'get_document_full',
+  annotations: { readOnlyHint: true },
   description: 'Get complete document content with metadata. Use when summaries are insufficient and full content is needed.',
   inputSchema: {
     type: 'object' as const,

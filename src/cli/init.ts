@@ -28,6 +28,8 @@ import {
   personalNoteNamingMessage,
   jestConfigCollisionMessage,
 } from './shared/errorCatalog';
+import { scaffoldKiroMcpConfig } from './shared/mcpConfig/kiro';
+import { scaffoldClaudeCodeMcpConfig } from './shared/mcpConfig/cc';
 
 interface InitOptions {
   name?: string;
@@ -244,17 +246,26 @@ export async function runInit(argv: string[]): Promise<void> {
   recordCopiedTree(manifest, governanceDestRoot, dest);
 
   // --- Step 8: MCP config — BOTH targets emitted in U1 (C8; --target arrives Task 16) ---
-  scaffoldKiroMcpConfig(
-    path.join(pkgRoot, 'src/cli/templates/mcp-config.json.template'),
-    path.join(dest, '.kiro/settings/mcp.json'),
-    manifest,
-    dest,
-  );
-  scaffoldClaudeCodeMcpConfig(
-    path.join(pkgRoot, 'src/cli/templates/mcp-config.json.template'),
-    dest,
-    manifest,
-  );
+  // Task 4: the template is read ONCE here (structural connection info — command/
+  // args/env — for all three servers, incl. designerpunk-product); each target's
+  // emitter (src/cli/shared/mcpConfig/{kiro,cc}.ts) generates its own approval
+  // list from dist/mcp/tool-manifest.json's readOnlyHint annotations.
+  const mcpTemplate = readMcpTemplate(path.join(pkgRoot, 'src/cli/templates/mcp-config.json.template'));
+  if (mcpTemplate) {
+    scaffoldKiroMcpConfig(
+      mcpTemplate,
+      path.join(dest, '.kiro/settings/mcp.json'),
+      manifest,
+      dest,
+      pkgRoot,
+    );
+    scaffoldClaudeCodeMcpConfig(
+      mcpTemplate,
+      dest,
+      manifest,
+      pkgRoot,
+    );
+  }
 
   // --- Step 9: test configuration — KEPT, purpose stated (C27 A13) ---
   const jestConfigPath = path.join(dest, 'jest.config.js');
@@ -613,169 +624,6 @@ function reportCopy(label: string, result: CopyResult): void {
     for (const file of result.skippedFiles) {
       console.log(`    preserved: ${file}`);
     }
-  }
-}
-
-/**
- * Scaffold Kiro's `.kiro/settings/mcp.json` from the canonical template (Spec 102 Gap 5).
- * UNCHANGED from pre-123 behavior in U1 — the third (product) key arrives at Task 4 (C10).
- *
- * Three behaviors depending on destination state:
- *
- * 1. **Destination doesn't exist** → create from template verbatim.
- * 2. **Destination exists, neither DesignerPunk entry present** → merge.
- * 3. **Destination exists, one or both DesignerPunk entries already present** →
- *    skip the conflicting entries with a prominent warning (partial merge).
- *
- * NOTE: The output format emitted here is part of Gap 5's public behavior —
- * asserted by the integration test at `src/cli/__tests__/init.test.ts`.
- */
-function scaffoldKiroMcpConfig(templatePath: string, destPath: string, manifest: ManifestBuilder, repoRoot: string): void {
-  const template = readMcpTemplate(templatePath);
-  if (!template) return;
-
-  if (!fs.existsSync(destPath)) {
-    fs.mkdirSync(path.dirname(destPath), { recursive: true });
-    fs.writeFileSync(destPath, JSON.stringify(template, null, 2) + '\n', 'utf-8');
-    const keys = Object.keys(template.mcpServers);
-    console.log(`✓ Created .kiro/settings/mcp.json (${keys.join(' + ')})`);
-    for (const key of keys) manifest.recordKey(path.relative(repoRoot, destPath), key, template.mcpServers[key]);
-    return;
-  }
-
-  let existing: { mcpServers?: Record<string, unknown>; [key: string]: unknown };
-  try {
-    existing = JSON.parse(fs.readFileSync(destPath, 'utf-8'));
-  } catch {
-    console.log(`  warning: .kiro/settings/mcp.json exists but is not valid JSON; leaving unchanged`);
-    return;
-  }
-  if (!existing.mcpServers || typeof existing.mcpServers !== 'object') {
-    existing.mcpServers = {};
-  }
-
-  const added: string[] = [];
-  const skipped: string[] = [];
-  for (const [key, value] of Object.entries(template.mcpServers)) {
-    if (key in (existing.mcpServers as Record<string, unknown>)) {
-      skipped.push(key);
-    } else {
-      (existing.mcpServers as Record<string, unknown>)[key] = value;
-      added.push(key);
-      manifest.recordKey(path.relative(repoRoot, destPath), key, value);
-    }
-  }
-
-  if (added.length > 0) {
-    fs.writeFileSync(destPath, JSON.stringify(existing, null, 2) + '\n', 'utf-8');
-    console.log(`✓ .kiro/settings/mcp.json: added ${added.join(' + ')}`);
-  } else if (skipped.length === Object.keys(template.mcpServers).length) {
-    console.log(`  skipped: .kiro/settings/mcp.json (all DesignerPunk entries already present)`);
-  }
-  for (const key of skipped) {
-    console.log(`  ⚠️  .kiro/settings/mcp.json already has '${key}' entry; left unchanged. If outdated, delete the entry and re-run init, or update manually.`);
-  }
-}
-
-/**
- * Scaffold Claude Code's `.mcp.json` (server config, no `autoApprove`/`disabled`
- * fields — CC's approvals live separately in `.claude/settings.json`) plus the
- * `.claude/settings.json` `permissions.allow` keys (Spec 123 Task 2, C8 U1
- * emission). NEW in U1 — U1's `init` emits BOTH targets unconditionally;
- * `--target` selection arrives at Task 16.
- *
- * Approvals here are derived from the SAME static template's `autoApprove`
- * arrays Kiro's scaffold already uses (`mcp__<server>__<tool>` per entry) — a
- * reasonable U1 starting point. Task 4 replaces the computation for BOTH
- * targets with one derived from each tool's registered `readOnlyHint`
- * (`dist/mcp/tool-manifest.json`); this function's approval SOURCE, not its
- * output shape, is what Task 4 will change.
- */
-function scaffoldClaudeCodeMcpConfig(templatePath: string, dest: string, manifest: ManifestBuilder): void {
-  const template = readMcpTemplate(templatePath);
-  if (!template) return;
-
-  // --- .mcp.json ---
-  const mcpJsonPath = path.join(dest, '.mcp.json');
-  const ccServers: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(template.mcpServers)) {
-    const { autoApprove, disabled, ...rest } = value as Record<string, unknown>;
-    void autoApprove; void disabled;
-    ccServers[key] = rest;
-  }
-
-  if (!fs.existsSync(mcpJsonPath)) {
-    fs.writeFileSync(mcpJsonPath, JSON.stringify({ mcpServers: ccServers }, null, 2) + '\n', 'utf-8');
-    console.log(`✓ Created .mcp.json (${Object.keys(ccServers).join(' + ')})`);
-    for (const key of Object.keys(ccServers)) manifest.recordKey('.mcp.json', key, ccServers[key]);
-  } else {
-    let existing: { mcpServers?: Record<string, unknown>; [key: string]: unknown };
-    try {
-      existing = JSON.parse(fs.readFileSync(mcpJsonPath, 'utf-8'));
-    } catch {
-      console.log(`  warning: .mcp.json exists but is not valid JSON; leaving unchanged`);
-      existing = { mcpServers: {} };
-    }
-    if (!existing.mcpServers || typeof existing.mcpServers !== 'object') existing.mcpServers = {};
-    const added: string[] = [];
-    const skipped: string[] = [];
-    for (const [key, value] of Object.entries(ccServers)) {
-      if (key in (existing.mcpServers as Record<string, unknown>)) {
-        skipped.push(key);
-      } else {
-        (existing.mcpServers as Record<string, unknown>)[key] = value;
-        added.push(key);
-        manifest.recordKey('.mcp.json', key, value);
-      }
-    }
-    if (added.length > 0) {
-      fs.writeFileSync(mcpJsonPath, JSON.stringify(existing, null, 2) + '\n', 'utf-8');
-      console.log(`✓ .mcp.json: added ${added.join(' + ')}`);
-    } else if (skipped.length === Object.keys(ccServers).length) {
-      console.log(`  skipped: .mcp.json (all DesignerPunk entries already present)`);
-    }
-    for (const key of skipped) {
-      console.log(`  ⚠️  .mcp.json already has '${key}' entry; left unchanged. If outdated, delete the entry and re-run init, or update manually.`);
-    }
-  }
-
-  // --- .claude/settings.json (permissions.allow) ---
-  const settingsPath = path.join(dest, '.claude/settings.json');
-  const allowEntries: string[] = [];
-  for (const [serverKey, value] of Object.entries(template.mcpServers)) {
-    const autoApprove = (value as { autoApprove?: string[] }).autoApprove ?? [];
-    for (const tool of autoApprove) {
-      allowEntries.push(`mcp__${serverKey}__${tool}`);
-    }
-  }
-
-  if (!fs.existsSync(settingsPath)) {
-    fs.mkdirSync(path.dirname(settingsPath), { recursive: true });
-    fs.writeFileSync(settingsPath, JSON.stringify({ permissions: { allow: allowEntries } }, null, 2) + '\n', 'utf-8');
-    console.log(`✓ Created .claude/settings.json (${allowEntries.length} approved tools)`);
-    manifest.recordFile('.claude/settings.json', settingsPath, 'generated');
-    return;
-  }
-
-  let existingSettings: { permissions?: { allow?: string[]; [k: string]: unknown }; [key: string]: unknown };
-  try {
-    existingSettings = JSON.parse(fs.readFileSync(settingsPath, 'utf-8'));
-  } catch {
-    console.log(`  warning: .claude/settings.json exists but is not valid JSON; leaving unchanged`);
-    return;
-  }
-  if (!existingSettings.permissions || typeof existingSettings.permissions !== 'object') {
-    existingSettings.permissions = {};
-  }
-  const existingAllow = Array.isArray(existingSettings.permissions.allow) ? existingSettings.permissions.allow : [];
-  const newEntries = allowEntries.filter((e) => !existingAllow.includes(e));
-  if (newEntries.length > 0) {
-    existingSettings.permissions.allow = [...existingAllow, ...newEntries];
-    fs.writeFileSync(settingsPath, JSON.stringify(existingSettings, null, 2) + '\n', 'utf-8');
-    console.log(`✓ .claude/settings.json: added ${newEntries.length} approved tool(s)`);
-    manifest.recordFile('.claude/settings.json', settingsPath, 'generated');
-  } else {
-    console.log(`  skipped: .claude/settings.json (all DesignerPunk approvals already present)`);
   }
 }
 

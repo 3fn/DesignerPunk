@@ -34,29 +34,37 @@ const filterSchema = {
   usesToken: { type: 'string', description: 'Screens whose UI tree tokens: blocks reference this token' },
 };
 
-const tools = [
+// Tool definitions (Spec 123 Task 4, C8: every registration carries an explicit
+// `readOnlyHint` — the manifest and the servers' own approval computation read
+// this array as the registration module, never a hand-maintained list).
+export const tools = [
   {
     name: 'get_product_overview',
+    annotations: { readOnlyHint: true },
     description: 'Get product context, configuration, and principles.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_brand_context',
+    annotations: { readOnlyHint: true },
     description: 'Get product brand identity: personality, voice, tone, anti-references, register. Returns structured "not configured" response if brand fields are absent.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'find_screens',
+    annotations: { readOnlyHint: true },
     description: 'Find screens by component usage, token usage, domain object usage, status, platform, or context. All filters are conjunctive (AND). No params returns all screens.',
     inputSchema: { type: 'object' as const, properties: filterSchema },
   },
   {
     name: 'list_experience_map',
+    annotations: { readOnlyHint: true },
     description: 'List experience map entries with referenced components, domain objects, and blocked reasons. Supports same filters as find_screens.',
     inputSchema: { type: 'object' as const, properties: filterSchema },
   },
   {
     name: 'get_screen_spec',
+    annotations: { readOnlyHint: true },
     description: 'Get full spec for a screen (UI tree, state model, data sources, accessibility, status). Includes _componentGaps for unmatched components. Optional platform filter.',
     inputSchema: {
       type: 'object' as const,
@@ -69,6 +77,7 @@ const tools = [
   },
   {
     name: 'get_screen_state_model',
+    annotations: { readOnlyHint: true },
     description: 'Get just the state model of a screen (data, states, actions, transitions) without the full spec.',
     inputSchema: {
       type: 'object' as const,
@@ -80,6 +89,7 @@ const tools = [
   },
   {
     name: 'get_product_component',
+    annotations: { readOnlyHint: true },
     description: 'Get a product-specific (one-off) component by name — schema, contracts, and composition details.',
     inputSchema: {
       type: 'object' as const,
@@ -91,6 +101,7 @@ const tools = [
   },
   {
     name: 'get_domain_object',
+    annotations: { readOnlyHint: true },
     description: 'Get domain object definition and list of screens that reference it.',
     inputSchema: {
       type: 'object' as const,
@@ -102,6 +113,7 @@ const tools = [
   },
   {
     name: 'find_principles',
+    annotations: { readOnlyHint: true },
     description: 'Find design principles by keyword.',
     inputSchema: {
       type: 'object' as const,
@@ -113,6 +125,7 @@ const tools = [
   },
   {
     name: 'find_templates',
+    annotations: { readOnlyHint: true },
     description: 'Find product templates by category or by which screen uses them.',
     inputSchema: {
       type: 'object' as const,
@@ -124,16 +137,19 @@ const tools = [
   },
   {
     name: 'list_product_templates',
+    annotations: { readOnlyHint: true },
     description: 'List all product-specific layout and content patterns.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_product_health',
+    annotations: { readOnlyHint: true },
     description: 'Get index status, data counts, reverse index sizes, gap counts, and warnings.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_product_tokens',
+    annotations: { readOnlyHint: true },
     description: 'Get product tokens by category, name, or platform. Returns structured values with resolved system token references. All filters optional and conjunctive.',
     inputSchema: {
       type: 'object' as const,
@@ -147,6 +163,7 @@ const tools = [
   },
   {
     name: 'rebuild_product_index',
+    annotations: { readOnlyHint: false },
     description: 'Re-index all product data. Returns new health status.',
     inputSchema: { type: 'object' as const, properties: {} },
   },

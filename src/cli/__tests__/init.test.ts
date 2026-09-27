@@ -226,8 +226,16 @@ describe('CLI init — first run against empty scratch repo (Task 2.2)', () => {
   });
 });
 
-describe('CLI init — both targets\' MCP config (Task 2.3; C8 U1 emission)', () => {
+describe('CLI init — THREE servers\' MCP config, approvals GENERATED from readOnlyHint (Task 4; C8/C10; Req 7.2)', () => {
   let scratchDir: string;
+
+  // The manifest built by `npm run build:mcp` (Task 4.2) is this test's ground
+  // truth for what "correct" approvals look like — never a second hand-list
+  // that could drift from the one `mcpConfig/{kiro,cc}.ts` actually reads.
+  const manifestPath = path.join(process.cwd(), 'dist/mcp/tool-manifest.json');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+  const readOnlyNames = (serverKey: string): string[] =>
+    manifest.servers[serverKey].filter((t: { readOnlyHint: boolean }) => t.readOnlyHint).map((t: { name: string }) => t.name).sort();
 
   beforeEach(() => {
     scratchDir = createScratchDir();
@@ -238,37 +246,70 @@ describe('CLI init — both targets\' MCP config (Task 2.3; C8 U1 emission)', ()
     fs.rmSync(scratchDir, { recursive: true, force: true });
   });
 
-  test('Kiro: .kiro/settings/mcp.json has both DesignerPunk entries with direct-node paths', async () => {
+  test('Kiro: .kiro/settings/mcp.json has all THREE DesignerPunk entries (Req 7.2\'s deliberate three-server update)', async () => {
     await runInitIn(scratchDir);
 
     const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
-    expect(Object.keys(config.mcpServers).sort()).toEqual(['designerpunk-application', 'designerpunk-docs']);
-    expect(config.mcpServers['designerpunk-docs'].autoApprove).toContain('get_document_full');
+    expect(Object.keys(config.mcpServers).sort()).toEqual([
+      'designerpunk-application',
+      'designerpunk-docs',
+      'designerpunk-product',
+    ]);
     // Regression guard: the scaffolded COMPONENTS_DIR must point at the NEW
     // consumer components dir (src/components, Task 2.2's row 4′) — NOT the
     // removed src/components/core (Req 19A.2). This template value was found
-    // stale during this subtask and fixed alongside it.
+    // stale during Task 2.3 and fixed alongside it.
     expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
+    // Req 7.1 — the third entry declares PRODUCT_DIR.
+    expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
   });
 
-  test('Claude Code: .mcp.json has both entries WITHOUT autoApprove/disabled fields', async () => {
+  test('Kiro: each server\'s autoApprove is SET-EQUAL to the manifest\'s readOnlyHint:true set — rebuild_index absent, find_docs present, validate_component absent', async () => {
+    await runInitIn(scratchDir);
+
+    const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
+    for (const serverKey of ['designerpunk-docs', 'designerpunk-application', 'designerpunk-product']) {
+      expect([...config.mcpServers[serverKey].autoApprove].sort()).toEqual(readOnlyNames(serverKey));
+    }
+    expect(config.mcpServers['designerpunk-docs'].autoApprove).toContain('find_docs');
+    expect(config.mcpServers['designerpunk-docs'].autoApprove).not.toContain('rebuild_index');
+    expect(config.mcpServers['designerpunk-application'].autoApprove).not.toContain('rebuild_index');
+    expect(config.mcpServers['designerpunk-application'].autoApprove).not.toContain('validate_component');
+    expect(config.mcpServers['designerpunk-product'].autoApprove).not.toContain('rebuild_product_index');
+  });
+
+  test('Claude Code: .mcp.json has all THREE entries WITHOUT autoApprove/disabled fields', async () => {
     await runInitIn(scratchDir);
 
     expect(fs.existsSync(path.join(scratchDir, '.mcp.json'))).toBe(true);
     const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.mcp.json'), 'utf-8'));
-    expect(Object.keys(config.mcpServers).sort()).toEqual(['designerpunk-application', 'designerpunk-docs']);
+    expect(Object.keys(config.mcpServers).sort()).toEqual([
+      'designerpunk-application',
+      'designerpunk-docs',
+      'designerpunk-product',
+    ]);
     expect(config.mcpServers['designerpunk-docs'].autoApprove).toBeUndefined();
     expect(config.mcpServers['designerpunk-docs'].disabled).toBeUndefined();
     expect(config.mcpServers['designerpunk-docs'].command).toBe('node');
     expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
+    expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
   });
 
-  test('Claude Code: .claude/settings.json permissions.allow uses the mcp__<server>__<tool> grain', async () => {
+  test('Claude Code: .claude/settings.json permissions.allow is SET-EQUAL (per server, mcp__<server>__<tool> grain) to the manifest\'s readOnlyHint:true set', async () => {
     await runInitIn(scratchDir);
 
     expect(fs.existsSync(path.join(scratchDir, '.claude/settings.json'))).toBe(true);
     const settings = JSON.parse(fs.readFileSync(path.join(scratchDir, '.claude/settings.json'), 'utf-8'));
-    expect(settings.permissions.allow).toContain('mcp__designerpunk-docs__get_document_full');
+    for (const serverKey of ['designerpunk-docs', 'designerpunk-application', 'designerpunk-product']) {
+      const actual = settings.permissions.allow
+        .filter((e: string) => e.startsWith(`mcp__${serverKey}__`))
+        .map((e: string) => e.slice(`mcp__${serverKey}__`.length))
+        .sort();
+      expect(actual).toEqual(readOnlyNames(serverKey));
+    }
+    expect(settings.permissions.allow).toContain('mcp__designerpunk-docs__find_docs');
+    expect(settings.permissions.allow).not.toContain('mcp__designerpunk-docs__rebuild_index');
+    expect(settings.permissions.allow).not.toContain('mcp__designerpunk-application__validate_component');
     expect(settings.permissions.allow).toContain('mcp__designerpunk-application__find_components');
   });
 });

@@ -16,6 +16,7 @@ import { ErrorHandler, MCPError } from '../utils/error-handler';
  */
 export const validateMetadataTool = {
   name: 'validate_metadata',
+  annotations: { readOnlyHint: true },
   description: 'Validate document metadata schema. Checks for required fields (Date, Purpose, Organization, Scope, Layer, Relevant Tasks) and returns specific error messages for each issue.',
   inputSchema: {
     type: 'object' as const,

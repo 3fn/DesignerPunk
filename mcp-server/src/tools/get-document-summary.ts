@@ -17,6 +17,7 @@ import { ErrorHandler, MCPError } from '../utils/error-handler';
  */
 export const getDocumentSummaryTool = {
   name: 'get_document_summary',
+  annotations: { readOnlyHint: true },
   description: 'Get document summary with metadata and outline. Returns ~200 tokens to enable informed decisions about loading full content.',
   inputSchema: {
     type: 'object' as const,

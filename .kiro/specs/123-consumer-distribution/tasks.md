@@ -360,10 +360,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/build-tool-manifest.ts`, the three servers' registration modules, `src/cli/shared/mcpConfig/{kiro,cc}.ts`, `src/cli/__tests__/init.test.ts`
 
-  - [ ] 4.1 `readOnlyHint` everywhere; `tool-manifest.test.ts`
-  - [ ] 4.2 `build-tool-manifest.ts` wired into the build
-  - [ ] 4.3 The Kiro and CC emitters
-  - [ ] 4.4 Product entry; the `init.test.ts:142` change
+  - [x] 4.1 `readOnlyHint` everywhere; `tool-manifest.test.ts`
+  - [x] 4.2 `build-tool-manifest.ts` wired into the build
+  - [x] 4.3 The Kiro and CC emitters
+  - [x] 4.4 Product entry; the `init.test.ts:142` change
 
 - [ ] 5. `sync` re-scope, key-grain JSON, manifest, and component-copy migration
 

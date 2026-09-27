@@ -15,6 +15,7 @@ import { IndexHealth } from '../models';
  */
 export const rebuildIndexTool = {
   name: 'rebuild_index',
+  annotations: { readOnlyHint: false },
   description: 'Rebuild the documentation index from scratch. Use this when the index is corrupted or out of sync. Returns the new index health status after rebuild.',
   inputSchema: {
     type: 'object' as const,

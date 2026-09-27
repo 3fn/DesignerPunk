@@ -44,15 +44,19 @@ interface DataPaths {
   designLanguagePath?: string;
 }
 
-// Tool definitions
-const tools = [
+// Tool definitions (Spec 123 Task 4, C8: every registration carries an explicit
+// `readOnlyHint` — the manifest and the servers' own approval computation read
+// this array as the registration module, never a hand-maintained list).
+export const tools = [
   {
     name: 'get_component_catalog',
+    annotations: { readOnlyHint: true },
     description: 'Get lightweight catalog of all components with name, type, family, purpose, and readiness. ~50 tokens per component.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_component_summary',
+    annotations: { readOnlyHint: true },
     description: 'Get component summary: identity, contract categories, token count, annotations. ~200 tokens.',
     inputSchema: {
       type: 'object' as const,
@@ -62,6 +66,7 @@ const tools = [
   },
   {
     name: 'get_component_full',
+    annotations: { readOnlyHint: true },
     description: 'Get complete assembled metadata including all contracts, composition rules, and token relationships.',
     inputSchema: {
       type: 'object' as const,
@@ -71,6 +76,7 @@ const tools = [
   },
   {
     name: 'find_components',
+    annotations: { readOnlyHint: true },
     description: 'Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. "primary action button", "login", "text input field").',
     inputSchema: {
       type: 'object' as const,
@@ -87,6 +93,7 @@ const tools = [
   },
   {
     name: 'check_composition',
+    annotations: { readOnlyHint: true },
     description: 'Check if a parent component can contain a child component, with optional prop context.',
     inputSchema: {
       type: 'object' as const,
@@ -100,21 +107,25 @@ const tools = [
   },
   {
     name: 'get_component_health',
+    annotations: { readOnlyHint: true },
     description: 'Get index health: status, component count, pattern count, warnings, gaps.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'rebuild_index',
+    annotations: { readOnlyHint: false },
     description: 'Rebuild the component index from scratch. Use when index is stale or out of sync. Returns new health status after reindex.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'list_experience_patterns',
+    annotations: { readOnlyHint: true },
     description: 'List all experience patterns with name, description, category, tags, step count, and component count.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_experience_pattern',
+    annotations: { readOnlyHint: true },
     description: 'Get full experience pattern by name: steps, components with roles and hints, accessibility notes, and alternatives.',
     inputSchema: {
       type: 'object' as const,
@@ -124,11 +135,13 @@ const tools = [
   },
   {
     name: 'list_layout_templates',
+    annotations: { readOnlyHint: true },
     description: 'List all layout templates with name, description, category, tags, and region count.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_layout_template',
+    annotations: { readOnlyHint: true },
     description: 'Get full layout template by name: regions with grid behavior per breakpoint, stacking rules, and token references.',
     inputSchema: {
       type: 'object' as const,
@@ -138,6 +151,7 @@ const tools = [
   },
   {
     name: 'validate_assembly',
+    annotations: { readOnlyHint: true },
     description: 'Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths.',
     inputSchema: {
       type: 'object' as const,
@@ -152,6 +166,7 @@ const tools = [
   },
   {
     name: 'get_prop_guidance',
+    annotations: { readOnlyHint: true },
     description: 'Get prop selection and family member guidance for a component or family. Returns whenToUse, whenNotToUse, selectionRules (scenario→recommendation with optional props), accessibilityNotes, and family-scoped patterns. Query by component name (returns its family guidance) or family name.',
     inputSchema: {
       type: 'object' as const,
@@ -165,6 +180,7 @@ const tools = [
   // Token query tools (Spec 096)
   {
     name: 'search_tokens',
+    annotations: { readOnlyHint: true },
     description: 'Search tokens by family, tier (primitive/semantic/component), or name. All parameters optional and combinable.',
     inputSchema: {
       type: 'object' as const,
@@ -177,6 +193,7 @@ const tools = [
   },
   {
     name: 'get_token_details',
+    annotations: { readOnlyHint: true },
     description: 'Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers.',
     inputSchema: {
       type: 'object' as const,
@@ -188,6 +205,7 @@ const tools = [
   },
   {
     name: 'get_token_family',
+    annotations: { readOnlyHint: true },
     description: 'Get all tokens in a family across all tiers.',
     inputSchema: {
       type: 'object' as const,
@@ -199,6 +217,7 @@ const tools = [
   },
   {
     name: 'get_token_consumers',
+    annotations: { readOnlyHint: true },
     description: 'Get all components that reference a token.',
     inputSchema: {
       type: 'object' as const,
@@ -210,16 +229,19 @@ const tools = [
   },
   {
     name: 'get_design_philosophy',
+    annotations: { readOnlyHint: true },
     description: 'Get the design system\'s creative north star, aesthetic philosophy, and key characteristics.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_design_rules',
+    annotations: { readOnlyHint: true },
     description: 'Get named design rules as structured data (name, constraint, rationale).',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_design_guidance',
+    annotations: { readOnlyHint: true },
     description: 'Get design do\'s and don\'ts as categorized directives. Optionally filter by category.',
     inputSchema: {
       type: 'object' as const,
@@ -230,6 +252,7 @@ const tools = [
   },
   {
     name: 'get_color_strategy',
+    annotations: { readOnlyHint: true },
     description: 'Get color strategy vocabulary (Restrained/Committed/Full/Drenched) with usage guidance. Optionally filter by tier.',
     inputSchema: {
       type: 'object' as const,

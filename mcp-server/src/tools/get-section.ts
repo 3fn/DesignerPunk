@@ -26,6 +26,7 @@ import { ErrorHandler, MCPError } from '../utils/error-handler';
  */
 export const getSectionTool = {
   name: 'get_section',
+  annotations: { readOnlyHint: true },
   description:
     'Get specific document section by heading. Returns section content with parent ' +
     'context, a stable sectionId, and siblingHeadings (adjacent sections under the ' +

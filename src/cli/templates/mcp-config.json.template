@@ -8,16 +8,7 @@
       "env": {
         "MCP_STEERING_DIR": "./node_modules/@3fn/core/governance"
       },
-      "disabled": false,
-      "autoApprove": [
-        "get_document_summary",
-        "get_document_full",
-        "get_section",
-        "list_cross_references",
-        "validate_metadata",
-        "get_index_health",
-        "rebuild_index"
-      ]
+      "disabled": false
     },
     "designerpunk-application": {
       "command": "node",
@@ -32,15 +23,19 @@
         "REGISTRY_PATH": "./node_modules/@3fn/core/family-registry.yaml",
         "TOKEN_INDEX_DIR": "./token-index"
       },
-      "disabled": false,
-      "autoApprove": [
-        "get_component_catalog",
-        "get_component_summary",
-        "get_component_full",
-        "find_components",
-        "validate_component",
-        "get_component_health"
-      ]
+      "disabled": false
+    },
+    "designerpunk-product": {
+      "command": "node",
+      "args": [
+        "./node_modules/@3fn/core/dist/mcp/product-mcp.js"
+      ],
+      "env": {
+        "PRODUCT_DIR": "./product",
+        "COMPONENT_DIR": "./src/components",
+        "TOKEN_INDEX_DIR": "./token-index"
+      },
+      "disabled": false
     }
   }
 }
