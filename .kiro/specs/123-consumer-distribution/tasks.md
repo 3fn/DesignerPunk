@@ -154,6 +154,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Amendment 2026-09-27, the U2 split: **U2's frozen 42 is partitioned, not recounted** — U2a (Tasks 10–12) = 5 + 4 + 2 = **11**; U2b (Tasks 13–18) = 8 + 5 + 5 + 6 + 3 + 4 = **31**; the sum is conserved, so no threshold is named after the growth it measures. Thresholds: U2b's +4 is the ~10% rule (3.1, rounded up); U2a's +3 applies the small-unit allowance rather than the +2 floor, because the split itself adds **12.3** (U2a's full validation and PR opening, which Task 18.3 did for the whole of U2), so U2a's line reads `declared 11, now 12`. Limb 2 now reads across the new successor pairs U1 → U2a and U2a → U2b. **Totals now: 28 parents, 128 subtasks.**)*
 
+*(Amendment 2026-09-27, F3 conditions: **11.5 added** (Stacy's F3 step, Stacy R1 condition (c)). U2a's line now reads `declared 11, now 13`, within +3. **Totals now: 28 parents, 129 subtasks.**)*
+
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
 **Preamble**: write-scope authority for every seat below is **granted by the T1-(B) standing rule** (§ "Slots"). Each PRIMARY and each tiered secondary may write exactly its parent's listed Primary Artifacts, on its unit's branch, until the unit merges. **Activation is this tasks PR's merge; ratification is the standalone ballot `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`** (erratum 2026-09-26; it was planned as B-U1 § "T1-(B)" at Task 7.0).
@@ -177,7 +179,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | 8 | Ada (Sonnet) | — |
 | 9 | Thurgood (Sonnet) | Lina (Sonnet) — 9.0 pre-release-1 hygiene: the bundle path leak and the #204 orphan deletion (amendment 2026-09-27) |
 | 10 | Lina (Opus) | — |
-| 11 | Thurgood (Opus) | Stacy (Opus) — constructs exemplars G and G′ (11.3) |
+| 11 | Thurgood (Opus) | Stacy (Opus) — constructs exemplars G and G′ (11.3); the F3 adjudications (11.5, added 2026-09-27) |
 | 12 | **Thurgood (Opus)** — G1 gate parent · U2a gating parent | — (Stacy's verdict record is outside the line) |
 | 13 | Thurgood (Opus) | Lina (Opus) — generator code (13.4–13.6) |
 | 14 | Lina (Opus) | — |
@@ -569,14 +571,15 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - Each `confirmation:` path resolves to a committed note.
   - C1 carve-out confirmations (Thurgood-maintained sources, incl. G/G′'s `start-up-tasks`) land as `Agent: stacy` commits, listed with SHAs.
   - *Scope*: the checks establish the declared seat and verbatim text. **They do not establish authorship** (one git identity) **or completeness** (the confirmer's responsibility).
-  - **The coverage-map rows for this parent's new canonical files are cited** from `npm run audit:coverage-map` output, and the regenerated `canonical/coverage-map.yaml` is committed (122 diff-guard green). **Those rows are blank at U2a's merge by construction**: the freshness sweep that lists `122-diff-guard` on `canonical/operative-sets/**` and `canonical/profiles/consumer/**` lands at 13.6, in U2b. **Stacy records a time-boxed adjudication for each blank row, committed on the U2a branch so it is on `main` at U2a's merge**: one `canonical/adjudications.yaml` row per new file (keys are file paths, not globs), `sweep: audit:coverage-map`, `owner: stacy`, the ruling value hers, and a `record` stating **"expires when 123 Task 13.6 lands in U2b"**. `npm run audit:coverage-map` passes at U2a's merge, output cited (F3 RULED, Peter 2026-09-27; replaces the merged "disclose a known-red window" default). *Scope: the citation establishes the rows' state at U2a; it establishes no guard over those files. The schema has no expiry field, so the time-box is text until 13.6 removes the rows.*
+  - **The coverage-map rows for this parent's new canonical files are cited** from `npm run audit:coverage-map` output, and the regenerated `canonical/coverage-map.yaml` is committed (122 diff-guard green). **Those rows are blank at U2a's merge by construction**: the freshness sweep that lists `122-diff-guard` on `canonical/operative-sets/**` and `canonical/profiles/consumer/**` lands at 13.6, in U2b. **Stacy records a time-boxed adjudication for each blank row at 11.5, committed on the U2a branch so it is on `main` at U2a's merge** (F3 RULED, Peter 2026-09-27; replaces the merged "disclose a known-red window" default). Each row is one `canonical/adjudications.yaml` entry per new file — keys are file paths, not globs — with `sweep: audit:coverage-map`, `ruling: assessment-gap`, `owner: stacy`, and a `record` carrying **both** the path of her ruling note, `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md`, **and** the exact string **"expires when 123 Task 13.6 lands in U2b"** (Stacy R1 conditions (b) and (d)). **Counts at U2a** (condition (a)): `grep -c "expires when 123 Task 13.6" canonical/adjudications.yaml` → **N**, where N equals the audit's `adjudicated-blank` count, and the N paths are listed. `npm run audit:coverage-map` passes, output cited. *Scope: the citation establishes the rows' state at U2a; it establishes no guard over those files. The schema has no expiry field, so the time-box is text until 13.6 removes the rows.*
 
-  **Primary Artifacts:** `canonical/operative-sets/*.yaml` (exemplar units), `canonical/profiles/consumer/confirmations/*.md`, `canonical/coverage-map.yaml` (regenerated), `canonical/adjudications.yaml` (Stacy's time-boxed `audit:coverage-map` entries only — F3)
+  **Primary Artifacts:** `canonical/operative-sets/*.yaml` (exemplar units), `canonical/profiles/consumer/confirmations/*.md`, `canonical/coverage-map.yaml` (regenerated), `canonical/adjudications.yaml` (Stacy's time-boxed `audit:coverage-map` entries only — F3), `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md` (Stacy's ruling note — F3)
 
   - [ ] 11.1 Draft the exemplar records
   - [ ] 11.2 Owner confirmations under C1; carve-out commits
   - [ ] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
   - [ ] 11.4 Confirmer + verbatim checks green
+  - [ ] 11.5 (Stacy) **F3**: after 11.1–11.4, regenerate the coverage map, commit the ruling note and the time-boxed adjudications, and cite the U2a count N *(added 2026-09-27, Stacy R1 condition (c): the step needs a subtask so the subtask-doc duty covers it)*
 
 - [ ] 12. **G1 gate parent — C3's falsification** (step 4; **U2a gating parent**)
 
@@ -595,6 +598,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **U2a changes no shipped file**: the paths from `git diff --name-only <U2a merge-base>..refs/pull/<U2a>/head`, intersected with the file list from `npm pack --dry-run --json`, are empty (command and output cited). *Scope: path-level only. It does not see build outputs; Tasks 10–12 list no path that compiles into `dist/`. It is the ground for U2a cutting no release (§ "Expected release count"); if it is non-empty, the release decision returns to Peter before U2a merges.*
   - **The U2a PR body carries the tripwire line with `G1 runs: <k>`.**
   - `npm test` and full `tsc` are green on the branch.
+
+  - **No C3 rework commit adds a file under `canonical/` outside a tasks amendment**: `git diff --name-only --diff-filter=A <U2a merge-base>..refs/pull/<U2a>/head -- canonical/` lists only Task 11's files and the regenerated map, output cited. A rework-added `canonical/` file would be a blank coverage-map row with no adjudication grant on this parent, so it returns to Peter as a tasks amendment before U2a is submitted (Stacy R1, F3 edge case).
 
   **Primary Artifacts:** Stacy's verdict records (cited); the C3 rework commits (if any)
 
@@ -629,7 +634,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **`operative-set-freshness` inside `122-diff-guard`, with ARMING read-ready** (input 4, corrected):
     - (i) **a STANDING test** runs `npx tsx tools/agent-generator/diff-guard.ts` against a **committed stale-unit fixture** and expects non-zero. *This catches a future restructure that drops the sweep.*
     - (ii) **`npm run audit:coverage-map` shows that the rows for `canonical/operative-sets/**` and `canonical/profiles/consumer/**` LIST `122-diff-guard`**, output cited. *(Stacy R2: zero blank rows would prove only that some check covers them, not this one. She measured no broad `canonical/**` glob.)*
-    - (iv) **The U2a time-boxed adjudications expire here**: the same change removes every `canonical/adjudications.yaml` row whose `record` reads "expires when 123 Task 13.6 lands in U2b" — `grep -c "expires when 123 Task 13.6" canonical/adjudications.yaml` → 0, output cited — and (ii)'s output shows those rows non-blank without them (F3 RULED, Peter 2026-09-27). *Limit: the audit consults adjudications only for blank rows, so an unremoved row would linger silently; the grep is what catches it.*
+    - (iv) **The U2a time-boxed adjudications expire here**: the same change removes every `canonical/adjudications.yaml` row whose `record` reads "expires when 123 Task 13.6 lands in U2b" — `grep -c "expires when 123 Task 13.6" canonical/adjudications.yaml` → 0, output cited — and (ii)'s output shows **the same N paths U2a listed** (Task 11) now non-blank, without them (F3 RULED, Peter 2026-09-27; Stacy R1 condition (a): the → 0 alone would pass vacuously if the rows never carried the string). *Limit: the audit consults adjudications only for blank rows, so an unremoved row would linger silently; the grep is what catches it.*
     - (iii) Stacy is notified that ARMING fires at U2b's merge (amended 2026-09-27; was U2's merge).
   - **Ballot B-U2 is RATIFIED before its edits apply.** It carries **the C2 counting-block edit** (per-agent `no-consumer-counterpart` rate, per-signer assent rate, refusal count; baseline-in-123 / first-render annotations) **and the `classification-map` L686 edit** (applied at 17.3) (S-T2).
     - After the counting-block edit, **Stacy re-confirms the changed unit of her charter** before 15.4 runs (the freshness check demands it).
