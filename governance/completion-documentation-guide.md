@@ -8,7 +8,7 @@ description: Comprehensive completion and summary documentation guide — two-do
 # Completion Documentation Guide
 
 **Date**: 2026-01-03
-**Last Reviewed**: 2026-09-19
+**Last Reviewed**: 2026-09-27
 **Purpose**: Comprehensive guide for creating completion and summary documentation
 **Organization**: process-standard
 **Scope**: cross-project
@@ -160,6 +160,56 @@ Both forms admit an **optional free tail after ` — `** — tier data-points an
 **A missing line, or a free-prose variant, is non-compliant on its face.** Under the previous exception-based rule, silence was ambiguous between "the plan held" and "a divergence went unrecorded" — the missing-note gap recorded at the 2026-09-19 F15 adjudication. A recorded divergence is a **data point, never a charge**; overriding a stale or rote stamp remains the correct move.
 
 **Honest reach**: this line converts passive omission into visible non-compliance and gives the claims passes a falsifiable claim to verify (presence + form on every parent doc; accuracy on divergence forms; spot-checks on `plan held`). It does **not** verify itself — a false `plan held` is artifact-undetectable (`governance/classification-map.md § "owned-artifact-authorship"`), and a truthful `plan held` against a plan authored to the delegated shape is a named, deliberately **unowned** planning-time residual (the ballot's § 4); the perimeter shrinks the uncovered surface, it does not seal it. Binding is forward from ratification; parent grain only — the subtask-doc floor is untouched.
+
+### CI provenance — where a green was measured (ballot B-CI)
+
+Every run result a completion doc reports — a test, build, typecheck, lint or check and its outcome — was measured somewhere: on the author's machine, on the unit branch's head by a dispatched CI run, or on the pull request's merge ref by the gate. **The doc declares which, in a fixed-form line; the reader never infers it from phrasing.**
+
+**The line.** In its header block, a completion doc carries one or more `**CI-provenance**:` lines, each in one of three fixed forms:
+
+- `**CI-provenance**: local` — no CI run is cited. Every run result in the doc was measured locally.
+- `**CI-provenance**: branch-head dispatch @ <S> — <run URL>, <run URL>, …` — runs dispatched against the unit branch at commit `<S>`.
+- `**CI-provenance**: PR gate #<n> @ <S> (merge ref) — <checks URL>` — the pull request's required checks, run on its merge ref, with `<S>` the PR head they ran for.
+
+A `<run URL>` is a GitHub Actions run (`https://github.com/<owner>/<repo>/actions/runs/<id>`). A `<checks URL>` is the pull request's checks page (`https://github.com/<owner>/<repo>/pull/<n>/checks`, optionally `?sha=<S>`), for the same `<n>` the line names. Either CI form may end with `; not green: <context>, <context>, …`, naming every required context that was red or missing, verbatim. **Nothing else may follow the URLs**: no free text, and no CI line without a URL. `local` takes no tail and excludes the other two forms; the two CI forms may appear together. The grammar, decidable by rule:
+
+`^\*\*CI-provenance\*\*: (?:local|branch-head dispatch @ [0-9a-f]{7,40} — https://github\.com/[\w.-]+/[\w.-]+/actions/runs/\d+(?:, https://github\.com/[\w.-]+/[\w.-]+/actions/runs/\d+)*(?:; not green: [A-Za-z0-9][A-Za-z0-9 ._()-]*(?:, [A-Za-z0-9][A-Za-z0-9 ._()-]*)*)?|PR gate #(\d+) @ [0-9a-f]{7,40} \(merge ref\) — https://github\.com/[\w.-]+/[\w.-]+/pull/\1/checks(?:\?sha=[0-9a-f]{7,40})?(?:; not green: [A-Za-z0-9][A-Za-z0-9 ._()-]*(?:, [A-Za-z0-9][A-Za-z0-9 ._()-]*)*)?)$`
+
+**Rules.**
+
+1. **Presence.** Every **parent** completion doc carries the line; **a missing line is non-compliant on its face.** A subtask doc that carries no line is read as `local`.
+2. **The line decides, not the wording.** Every run result in the doc — in an Evidence cell, a Validation section or anywhere else — is **local unless its run is listed on a CI-provenance line.** A verbatim criterion cell never decides provenance. A criterion that says "green" is the promise being reported, not a claim; its row's claim is its Status and Evidence, read under the doc's provenance. So "`npm test` and full `tsc` are green." carried with `**CI-provenance**: local` is an honest local claim, classifiable without judgment.
+3. **What each form supports.**
+   - **Only a `PR gate` line supports a statement that the gate is green.**
+   - A `branch-head dispatch` line supports only **"the required checks were green at branch head `<S>`"**. It SHALL NOT be written up as the gate, because the gate tests the merge ref, which a branch-head run never reaches.
+   - A `local` result supports only a claim about the command run, on the machine it ran on.
+4. **Every required check, one SHA.** A CI line without a `; not green:` tail asserts that **every** required status context — the set `tools/agent-generator/verify-gate-registration.sh` asserts — was green at `<S>`: under its required name for a gate line, and under its unit-branch dispatch name for a dispatch line. All of a line's runs are at the one commit `<S>` (each run's `headSha` shows it).
+5. **The doc's own commit.** A doc cannot cite a run on its own commit, because the run follows the commit. A CI line therefore binds to `<S>`, and it is compliant **if and only if both hold** for `D`, the commit that carries the doc:
+   - `git diff --name-only <S>..<D>` lists only paths under `.kiro/specs/<spec>/completion/`, paths under `docs/specs/<spec>/`, and `.kiro/specs/<spec>/tasks.md`;
+   - `git diff -U0 <S>..<D> -- .kiro/specs/<spec>/tasks.md` changes only checkbox marks (`- [ ]` ↔ `- [x]`).
+
+   The citation may be added in a docs-only commit after the runs finish. **This rule rests on a premise**: no required check reads those paths. That holds for today's 18 contexts (verified 2026-09-27). **It stops holding when `completion-criteria-parity` becomes a required check (the Q2 flip)**, because that check reads exactly those paths. Rule 5 is re-evaluated at that flip, before it lands.
+6. **How a claims pass records a missing line, a non-compliant line, or a dispatch line written up as the gate is Stacy's.** See her charter § "The claims-pass record". The verdict vocabulary, and whether a case is a finding on the authoring agent, are hers; this guide does not restate them.
+
+**In force** for completion docs authored after B-CI's ratification. Two commits decide it, and **both are read on `main`'s first-parent history**:
+
+- **`R`, the ratification commit**: the first first-parent commit on `main` whose change adds this ballot's Status line in its pinned ratified form, `**Status**: **RATIFIED (Peter, <date>)**`. The command:
+  ```bash
+  BALLOT=.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md
+  R=$(git log --first-parent --reverse --format=%H -G'^\*\*Status\*\*: \*\*RATIFIED .Peter, ' main -- "$BALLOT" | head -1)
+  [ -n "$R" ] || { echo "FATAL: B-CI ratification commit R not found in $BALLOT's first-parent history"; exit 1; }
+  ```
+  **An empty `R` is a fatal error — never "no doc is bound".**
+- **`M`, the doc's arrival on `main`**: `M=$(git log --first-parent --diff-filter=A --format=%H main -- <doc> | tail -1)`.
+
+A doc is bound **if and only if** both of these exit 0:
+
+1. `git merge-base --is-ancestor "$R" "$M"`;
+2. **its unit branch was cut from a `main` that already contained `R`**. Take `<n>` from the `(#<n>)` in `M`'s subject, fetch `refs/pull/<n>/head`, and run `git merge-base --is-ancestor "$R" "$(git merge-base "$M^" refs/pull/<n>/head)"`.
+
+**No backfill.** Test 2 exists because a pull request squash-merges into one first-parent commit that descends from `R` even when its docs were written before ratification. A branch cut before `R` and merged after it is therefore **not** bound. A branch that later merged `main` in after `R` counts as cut after `R`, because its base then contains `R`. A first-parent `M` whose subject carries no `(#<n>)` is a fatal error, never a silent "unbound". For Spec 123 this is **U2a onward; U1's docs are not re-audited.** The fixed-string in-flight exemption does not apply to this subsection.
+
+**Honest reach.** The line makes provenance checkable from the doc alone: the grammar and the rules above are decidable. It does not verify itself. A doc can declare a dispatch line at `<S>` that the runs do not bear out, which a claims pass finds by opening them. **A doc that declares `local` throughout is fully compliant: nothing here requires CI evidence.** The rule makes a narrower-surface green *visible*; it does not make it wrong. It detects after merge and prevents nothing. Prevention stays where it always was: the unit PR's required checks.
 
 ### Additional verification — required if applicable, never optional
 
