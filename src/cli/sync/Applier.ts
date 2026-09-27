@@ -1,128 +1,66 @@
 /**
- * Apply files from package to project, with tier-appropriate behavior.
+ * Apply package content into the project — FILE grain (copy surfaces) and KEY
+ * grain (the three JSON surfaces).
  *
- * @see Spec 111 — Requirement 4, Requirement 7
+ * Spec 123 Task 5.4 (design.md § "C7" Apply behavior; C4 "sync's Applier source
+ * branch is DELETED"): there is no source tier any more. `sync` never writes the
+ * consumer's token tier (Req 5.8), so no content transform exists here — a file
+ * is copied byte-for-byte, and the manifest records the hash of exactly the
+ * bytes written (Spec 111 recorded the PACKAGE hash after writing TRANSFORMED
+ * bytes, which read every such file as "locally modified" on the next sync).
+ *
+ * Callers decide WHAT applies (report first; batch confirmation or `--apply`;
+ * per-path flags for `conflict` and `deleted-by-you`) — this module only writes.
+ *
+ * @see Spec 111 — Requirement 4; Spec 123 design.md § "C7"
  */
 
 import * as fs from 'fs';
 import * as path from 'path';
-import type { ClassifiedFile } from './Classifier';
-import type { SyncManifest } from './Manifest';
-import { rewriteBuildImports } from '../shared/transforms';
+import type { ManifestEntry } from './Manifest';
+import { hashFile } from './FileScanner';
+import type { KeySurface } from './KeyGrain';
+import { hashKeyValue, keyEntryId, writeSurfaceKeys } from './KeyGrain';
 
-export interface ApplyResult {
-  applied: string[];
-  skipped: string[];
-  errors: string[];
-}
-
-/**
- * Apply a single file from package to project.
- * Applies rewriteBuildImports transform for source-tier .ts files.
- */
-export function applyFile(
-  file: ClassifiedFile,
+/** Copy one package file into the project and record it (`origin: 'copy'`). */
+export function applyCopyFile(
   packageRoot: string,
   projectRoot: string,
-  manifest: SyncManifest,
-  options?: { force?: boolean },
+  relativePath: string,
+  entries: Record<string, ManifestEntry>,
 ): boolean {
-  const srcPath = path.join(packageRoot, file.relativePath);
-  const destPath = path.join(projectRoot, file.relativePath);
-
+  const srcPath = path.join(packageRoot, relativePath);
+  const destPath = path.join(projectRoot, relativePath);
   try {
     fs.mkdirSync(path.dirname(destPath), { recursive: true });
-
-    const isSourceTs = file.tier === 'source' && file.relativePath.endsWith('.ts');
-
-    if (isSourceTs) {
-      const content = fs.readFileSync(srcPath, 'utf-8');
-      fs.writeFileSync(destPath, rewriteBuildImports(content), 'utf-8');
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-    }
-
-    // Update manifest
-    manifest.files[file.relativePath] = {
-      hash: file.packageHash,
-      managed: file.tier === 'governance',
-    };
-
-    if (options?.force && file.classification === 'conflict') {
-      console.log(`  ⚠️ overwritten (was locally modified): ${file.relativePath}`);
-    }
-
+    fs.copyFileSync(srcPath, destPath);
+    entries[relativePath] = { hash: hashFile(destPath), grain: 'file', origin: 'copy' };
     return true;
   } catch (err) {
-    console.error(`  ❌ Failed to apply ${file.relativePath}: ${(err as Error).message}`);
+    console.error(`  ❌ Failed to apply ${relativePath}: ${(err as Error).message}`);
     return false;
   }
 }
 
-/**
- * Apply governance-tier files (auto-apply without prompting).
- */
-export function applyGovernance(
-  files: ClassifiedFile[],
-  packageRoot: string,
-  projectRoot: string,
-  manifest: SyncManifest,
-): ApplyResult {
-  const governance = files.filter(f => f.tier === 'governance');
-  const result: ApplyResult = { applied: [], skipped: [], errors: [] };
-
-  for (const file of governance) {
-    if (applyFile(file, packageRoot, projectRoot, manifest)) {
-      result.applied.push(file.relativePath);
-    } else {
-      result.errors.push(file.relativePath);
-    }
-  }
-
-  return result;
+/** Record an unrecorded, byte-identical copy (no write to the project file). */
+export function adoptCopyFile(projectRoot: string, relativePath: string, entries: Record<string, ManifestEntry>): void {
+  entries[relativePath] = { hash: hashFile(path.join(projectRoot, relativePath)), grain: 'file', origin: 'copy' };
 }
 
 /**
- * Apply source-tier files (after confirmation).
+ * Set our keys into one surface and record each (`grain: 'key'`,
+ * `origin: 'emitted-key'`). Returns true iff the surface file was written.
  */
-export function applySource(
-  files: ClassifiedFile[],
-  packageRoot: string,
+export function applyKeys(
   projectRoot: string,
-  manifest: SyncManifest,
-): ApplyResult {
-  const source = files.filter(f => f.tier === 'source');
-  const result: ApplyResult = { applied: [], skipped: [], errors: [] };
-
-  for (const file of source) {
-    if (applyFile(file, packageRoot, projectRoot, manifest)) {
-      result.applied.push(file.relativePath);
-    } else {
-      result.errors.push(file.relativePath);
-    }
+  surface: KeySurface,
+  items: Array<{ key: string; value: unknown }>,
+  entries: Record<string, ManifestEntry>,
+): boolean {
+  if (items.length === 0) return false;
+  const wrote = writeSurfaceKeys(projectRoot, surface, items);
+  for (const { key, value } of items) {
+    entries[keyEntryId(surface.file, key)] = { hash: hashKeyValue(value), grain: 'key', origin: 'emitted-key' };
   }
-
-  return result;
-}
-
-/**
- * Apply force mode — all files without prompting.
- */
-export function applyForce(
-  files: ClassifiedFile[],
-  packageRoot: string,
-  projectRoot: string,
-  manifest: SyncManifest,
-): ApplyResult {
-  const result: ApplyResult = { applied: [], skipped: [], errors: [] };
-
-  for (const file of files) {
-    if (applyFile(file, packageRoot, projectRoot, manifest, { force: true })) {
-      result.applied.push(file.relativePath);
-    } else {
-      result.errors.push(file.relativePath);
-    }
-  }
-
-  return result;
+  return wrote;
 }

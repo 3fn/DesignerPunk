@@ -32,6 +32,16 @@ import { ConsoleMCPClientImpl } from '../figma/ConsoleMCPClientImpl';
 import { checkDesktopBridge } from '../figma/preflight';
 import { cleanupStalePorts } from '../figma/portCleanup';
 import type { DTCGTokenFile } from '../generators/types/DTCGTypes';
+import { findDesignSystemRoot } from './shared/bornRepo';
+
+/**
+ * Anchor `designerpunk.config.ts` lookup at the DesignerPunk root (Spec 123 C2
+ * consumer #5), not a bare `process.cwd()` — a script run from a subdirectory of a
+ * born repo still finds the real config instead of silently falling back to `dist/`.
+ */
+function resolveConfigDir(): string {
+  return findDesignSystemRoot(process.cwd()).root ?? process.cwd();
+}
 
 // ---------------------------------------------------------------------------
 // Argument parsing
@@ -105,7 +115,7 @@ export function parseArgs(argv: string[]): FigmaPushArgs {
 /** Default path to the DTCG token file. */
 /** Resolve DTCG input path — checks config output dir first, falls back to dist/. */
 const DTCG_INPUT_PATH = (() => {
-  const configPath = path.resolve('designerpunk.config.ts');
+  const configPath = path.join(resolveConfigDir(), 'designerpunk.config.ts');
   if (fs.existsSync(configPath)) {
     try {
       const raw = fs.readFileSync(configPath, 'utf-8');
@@ -121,7 +131,7 @@ const DTCG_INPUT_PATH = (() => {
 
 /** Default path for the Figma format output. */
 const FIGMA_OUTPUT_PATH = (() => {
-  const configPath = path.resolve('designerpunk.config.ts');
+  const configPath = path.join(resolveConfigDir(), 'designerpunk.config.ts');
   if (fs.existsSync(configPath)) {
     try {
       const raw = fs.readFileSync(configPath, 'utf-8');

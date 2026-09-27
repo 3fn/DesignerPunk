@@ -93,3 +93,13 @@ Container-Base issue follow-up item 3. `Container-Base.schema.yaml`'s `tokens.co
 A repo-wide grep for the four literals turned up two more files, both **text-only matches in test strings**, not actual CSS emission — no runtime effect, not touched:
 - `src/components/core/Input-Checkbox-Base/__tests__/InputCheckboxBase.stemma.test.ts`
 - `src/components/core/Button-VerticalList-Set/__tests__/ButtonVerticalListSet.property2.test.ts`
+
+## Addendum (2026-09-27): the user-visibility claim, corrected
+
+This record's opening (§ "The defect") states the effect as rendering nothing "on web across the whole family" — true of the source, but overstated as *shipped, user-visible* impact. Spec 123 Task 9.0(b) (`.kiro/issues/archive/2026-09-26-input-text-browser-ts-orphans.md`) established that `Input-Text-{Base,Email,Password,PhoneNumber}.browser.ts` were a standalone, zero-import build imported by nothing — not `src/browser-entry.ts` (the real bundle entry, which imports the `.web.ts` files only), not `package.json` `exports`, not any demo. They have since been deleted.
+
+Of the four phantom literals this record fixes, **almost all instances lived only in those unused `.browser.ts` files.** The live, actually-shipped `.web.ts` path carried exactly two: the `InputTextBase.web.ts` error-icon-color literal (`'color-error'`, fixed in this PR, #202) and the `InputTextPassword.web.ts` toggle-button hover background (`--color-background-hover`, left open here, fixed in follow-up PR `fix/input-text-password-hover-blend`, #203 — see § "Follow-up: hover-blend ruling and its limit" above). Every other site this record names — the border-color and background phantoms across all four components, and the success-border phantom on Email/Password/PhoneNumber — existed in the `.browser.ts` copies alongside the `.web.ts` fix, so the `.web.ts` fix already carried the real, user-facing correction; the `.browser.ts` half of each fix corrected a file nothing consumed.
+
+The fixes recorded above remain correct and were the right thing to do at the time (the orphan status wasn't yet known). This addendum corrects only the claimed *scope of live impact* — it does not reopen or reverse anything.
+
+**Filed by**: Lina, Spec 123 U1 Task 9.0(b), 2026-09-27.

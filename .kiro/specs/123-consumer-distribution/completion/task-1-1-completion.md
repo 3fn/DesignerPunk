@@ -1,0 +1,62 @@
+# Task 1.1 Completion — `bornRepo.ts` + `bornRepo.test.ts` (nine cases; boundaries; barrel forms)
+
+**Spec**: 123 — Consumer Distribution · **Unit**: U1 · **Parent**: Task 1 · **Agent**: Ada (Sonnet)
+
+## What changed
+
+- Added `src/cli/shared/bornRepo.ts`: `findDesignSystemRoot(startDir)`, implementing C2/C3's birth-detection walk — ascend from `startDir`, test signals (config, tier, manifest, legacyManifest) at each level before checking the `.git` stop, skip any directory with a `node_modules` path segment, and classify `born` / `package-mode` / `partial` (four named sub-cases) / `unborn`. The tier barrel check (`index.ts` + `semantic/index.ts` exporting `getAllPrimitiveTokens` / `getAllSemanticTokens`) and the config's `tokenSource` key are both read **textually** (regex over file content), never loaded/executed — see the file's header comment for why (the function sits on the indexer's watch-triggered reindex path, Task 1.4, which can fire per file change; executing arbitrary consumer TS on every trigger is unsafe and slow). The steward exemption (`root === resolvePackageRoot()`) is implemented: a config without `tokenSource` plus a local barrel classifies `package-mode`, not `unused-local-tier`, at the package's own root.
+- Added `src/cli/__tests__/bornRepo.test.ts`: 16 tests — the nine named cases (born, package-mode, config-no-tier, unused-local-tier, tier-no-config, manifest-only, unborn, steward exemption, consume-posture-manifest-alone), the walk's four boundary behaviors (each with an in-file bite comment cross-referencing the recorded red run below), and the three accepted barrel export forms (function, const/let, re-export).
+
+## Targeted tests + result
+
+`npx jest src/cli/__tests__/bornRepo.test.ts` → **16/16 passed** (Test Suites: 1 passed).
+
+### Bites recorded red (each reverted, run, confirmed red, then restored — `git status --porcelain src/cli/shared/` confirmed clean/untracked-only after each restore)
+
+1. **Boundary 1 (start at `startDir` itself, inclusive)** — mutated `let dir = path.resolve(startDir)` → `let dir = path.dirname(path.resolve(startDir))`. Re-ran `-t "boundary 1"` → **RED**: `expect(result.state).toBe('born')` received `'unborn'`. Restored; re-ran full suite → green.
+2. **Boundary 2 (test-then-stop at `.git`, incl. `.git` as a file)** — mutated `isGitBoundary` from `fs.existsSync(...)` to `fs.statSync(...).isDirectory()` (ignoring the file form). Re-ran `-t "boundary 2"` → **RED**: `expect(result.state).toBe('unborn')` received `'born'` (walk ascended past the file-form `.git` into the born ancestor). Restored; re-ran full suite → green.
+3. **Boundary 3 (`node_modules` skip)** — mutated `hasNodeModulesSegment` to always return `false`. Re-ran `-t "boundary 3"` → **RED**: `expect(result.root).toBe(consumerRoot)` received the installed-package path (`.../node_modules/@3fn/core`). Restored; re-ran full suite → green.
+4. **Boundary 4 (consume-posture manifests ignored)** — mutated `manifestSignal` from `manifestExists && manifestPosture !== 'consume'` to `manifestExists`. Re-ran `-t "boundary 4"` → **RED**: `expect(result.state).toBe('unborn')` received `'partial'`. Restored; re-ran full suite → green.
+
+Full suite re-confirmed green after every restore; `git status --porcelain src/cli/shared/` shows only the new untracked `bornRepo.ts` (no stray `.bak*` files) after the last restore.
+
+## Application-time adaptations
+
+1. **`resolvePackageRoot` anchor depth**: `resolvePackageRoot(fromDir)`'s documented "LEVELS-UP ASSUMPTION" expects callers two levels below the package root (e.g. `src/cli/`). `bornRepo.ts` lives one level deeper, at `src/cli/shared/`. Rather than forking `resolvePackageRoot`'s traversal logic, `findDesignSystemRoot` calls it with `path.dirname(__dirname)` (i.e. the synthetic `src/cli/` anchor), reusing the shared self-checking utility unmodified. The test file (also at `src/cli/__tests__/`, the same depth) uses the same adjustment for its steward-exemption case (case 8).
+2. **Textual `tokenSource` read, not a full config load** — flagged prominently in the file's header comment (see "What changed" above) since design.md's C2 text explicitly marks only the TIER barrel check as "read without loading," and is less explicit about the `tokenSource` key extraction mechanism (it says resolution "follows `ConfigLoader` exactly," and `ConfigLoader.ts:123-126` in fact *loads* the config module to read `userConfig.tokenSource`). I judged textual-regex extraction (matching `tokenSource: '<value>'`, skipping `//`-commented lines) as the correct application-time choice because: (a) it keeps `findDesignSystemRoot` fully synchronous with zero code execution, consistent with the sibling tier check's stated rationale; (b) it avoids running arbitrary consumer TS via `tsx` on the indexer's watch-triggered reindex path (Task 1.4), which can fire on every file save; (c) DD3's already-accepted residual ("a deliberately mimicking repo... accepted; mimicry is not a stranger's accident") extends naturally to this same class of approximation. **Residual risk, surfaced for review**: a `tokenSource` value that is not a plain string literal (e.g. a variable reference, a computed path, a multi-line expression) will not be detected by the regex, and such a config would misclassify as `package-mode`/`unused-local-tier` instead of `born`/`config-no-tier`. This is a real behavioral difference from "follows ConfigLoader exactly" in the literal-execution sense, and I'm flagging it rather than treating it as fully absorbed by DD3's residual — if the intent was a genuine full-load parity with `ConfigLoader`, that would require an injectable loader parameter on `findDesignSystemRoot` (mirroring `resolveTokens`'s `TsModuleLoader` seam) and a design amendment to the synchronous, no-side-effects signature. Surfacing this fork rather than resolving it myself.
+3. Manifest JSON parse failures are treated as "file exists, posture unreadable → treated as non-`'consume'`" (so `manifestSignal` stays `true`) rather than as "manifest signal absent." Not explicitly specified in C2; a defensible reading of "manifest: `designerpunk.manifest.json` exists **and** its posture is not `'consume'`" where an unreadable posture is not affirmatively `'consume'`.
+
+## Notes for Lina (Task 1.4)
+
+- `findDesignSystemRoot(startDir): DesignSystemRoot` is exported from `src/cli/shared/bornRepo.ts`. `DesignSystemRoot` = `{ state, root, tierDir, partialCase?, signals }`.
+- `tierDir` is populated for `born` (the resolved `tokenSource` path) and `package-mode` (the package's own `src/tokens`, via `resolvePackageRoot`); it is `null` for `partial` and `unborn`.
+- `root` is the absolute anchoring directory (what 1.4's `bornRoot` should be sourced from) — `null` iff `unborn`.
+- The function is **synchronous** and does **not** execute any consumer code (pure fs + regex reads) — safe to call from a file-watcher callback without `tsx` register/unregister overhead per call.
+
+---
+
+## Addendum (2026-09-26, orchestrator verification pass)
+
+Two items found during parent verification, fixed in this addendum. Both land in this same commit set as Tasks 1.5/1.6 (folded per the orchestrator's instruction).
+
+### Fixup 1 — the nine-case count was never asserted
+
+The criterion reads "**nine named cases** … with the count asserted"; the original `bornRepo.test.ts` had nine independent `test(...)` blocks but nothing that would go red if one were deleted. Refactored the nine cases into a `NINE_NAMED_CASES: NamedCase[]` data table consumed by `test.each`, plus a dedicated `test('exactly nine named cases are defined', () => expect(NINE_NAMED_CASES.length).toBe(9))`.
+
+**Bite**: deleted the case-9 entry from `NINE_NAMED_CASES` → re-ran `-t "exactly nine"` → **RED**: `Expected: 9, Received: 8`. Restored from a pre-edit copy; re-ran the full file → 18/18 green (17 pre-existing tests + the new count test — one net new test, since the ninth case itself was already counted).
+
+### Fixup 2 — a real defensive bug surfaced while wiring 1.5's figma-anchoring change (see task-1-5-completion.md)
+
+`readFileTextSafe` returned whatever `fs.readFileSync` produced without checking its type. `src/cli/__tests__/figma-push.test.ts` and `figma-extract.test.ts` mock `fs.readFileSync` to return `undefined` (with `existsSync` forced `true`) for their own unrelated coverage — a legitimate test double, but one `bornRepo.ts` didn't defend against. Once 1.5 added a `findDesignSystemRoot` call inside those two CLIs' module-level IIFEs (see task-1-5-completion.md), both suites failed with `TypeError: Cannot read properties of undefined (reading 'split')`. Fixed by hardening `readFileTextSafe` to require `typeof text === 'string'` before returning it (treating any other return as "unreadable", same as a thrown error). Re-ran `figma-push.test.ts` + `figma-extract.test.ts` → 41/41 green. This is a genuine robustness fix to `bornRepo.ts`, not a workaround in the consuming test files.
+
+### Peter's ruling (2026-09-26) on the textual `tokenSource` HOLD raised in the original completion doc
+
+Peter ruled **option (a)**: keep the textual read (decline full `ConfigLoader` parity), but when `tokenSource` is present with a **non-literal** value, classify `partial` / `config-no-tier` and refuse — never fall through to `package-mode` as if the key were absent. Implemented in `readConfigTokenSource` (now returns a `TokenSourceRead` discriminated union: `present: false` / `present: true, literal: true, value` / `present: true, literal: false`) and `evaluateDirectory` (`hasTokenSource` is now true for BOTH literal and non-literal presence, so the existing `config-no-tier` branch already covers the non-literal case with no new branch needed).
+
+**Sub-case mapping decided**: reused `config-no-tier` rather than adding a new `PartialCase` — the existing catalog string ("found designerpunk.config.ts at `<root>` but no DesignerPunk token tier at `<tokenSource>` …") is honest enough to cover "we cannot establish there is a tier at the configured (unreadable) location," even though it reads slightly oddly when `<tokenSource>` can't be filled with a real path. **Flagged for Peter's review at 1.6** (see task-1-6-completion.md) rather than treated as fully settled — the classification (enum-level) is sound; only the presentation-layer wording is a residual quality question, not a scope fork.
+
+**New test + bite**: `findDesignSystemRoot — non-literal tokenSource (Peter, 2026-09-26, option (a))` in `bornRepo.test.ts` — a config with `tokenSource: TOKEN_DIR` (a variable reference) where a REAL, findable tier exists at the intended path (proving this is refuse-on-unreadability, not refuse-because-absent). Bite: reverted `hasTokenSource` to `tokenSourceRead.present && tokenSourceRead.literal === true` (the pre-ruling behavior) → **RED**: `Expected: "config-no-tier", Received: "unused-local-tier"` (misclassified as package-mode's sibling partial case instead of refusing). Restored; full `bornRepo.test.ts` → 18/18 green.
+
+**Targeted tests + result (addendum)**: `npx jest src/cli/__tests__/bornRepo.test.ts` → 18/18 passed. `npx jest src/cli/__tests__/figma-push.test.ts src/cli/__tests__/figma-extract.test.ts` → 41/41 passed. `npx tsc --noEmit` → clean.
+
+**Application-time adaptations (addendum)**: none beyond what's stated above.

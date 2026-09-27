@@ -31,6 +31,72 @@ import { FamilyGuidanceIndexer } from './FamilyGuidanceIndexer';
 import { LayoutTemplateIndexer } from './LayoutTemplateIndexer';
 import { TokenIndexer } from './TokenIndexer';
 import { ModeClassifier } from './ModeClassifier';
+import { isImmutableContext } from '../staleness/StalenessGate';
+
+// ---------------------------------------------------------------------------
+// Multi-root component indexing (Spec 123 Task 1.4 — design C3 "Indexer", L-D2/L-D8)
+// ---------------------------------------------------------------------------
+
+/**
+ * Options for a full index beyond the legacy positional data dirs (Spec 123 C3).
+ */
+export interface IndexComponentsOptions {
+  /**
+   * C3 `projectRoot = bornRoot` (unborn → the package root). The anchor for the guidance
+   * companion check, the theme readers and the token reindex path. OMITTED → the legacy
+   * derivation from the LOWEST-precedence (package) root, `root/../../..` — the pre-123
+   * behavior, kept for single-root callers.
+   */
+  projectRoot?: string;
+  /**
+   * The caller's own resolved live tier (`DesignSystemRoot.tierDir`, from
+   * `findDesignSystemRoot` — Spec 123 Task 1.5, DD24). Threaded to `resolveThemeTierRoot`
+   * as the SECOND-precedence theme-root source (after `token-index/meta.json`'s `tierDir`,
+   * before the legacy `<projectRoot>/src/tokens` default). OMITTED → meta.json or the
+   * legacy default decide alone.
+   */
+  tierDir?: string;
+}
+
+/**
+ * The component roots that are MUTABLE — the ones the file watcher, the staleness gate and
+ * `ComponentIndexer.dataDirs` scan (Spec 123 C3 / Task 1 criterion "the watcher and
+ * StalenessGate watch the consumer root; the package root is exempt as immutable").
+ *
+ * The exemption keys on actual immutability (`isImmutableContext` — the data lives under
+ * `node_modules/`), which is where the package root always sits in a consumer install. In the
+ * steward repo the package root is the working tree and stays watched (it is not immutable
+ * there, and the steward's own env names it as the consumer root anyway).
+ */
+export function mutableComponentRoots(roots: string[]): string[] {
+  return roots.filter(r => !isImmutableContext(r));
+}
+
+/** Normalize the pass-1 root set: accept a single root (legacy callers), resolve, dedupe. */
+function normalizeRoots(componentsDir: string | string[]): string[] {
+  const list = Array.isArray(componentsDir) ? componentsDir : [componentsDir];
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const r of list) {
+    if (!r) continue;
+    const abs = path.resolve(r);
+    if (seen.has(abs)) continue;
+    seen.add(abs);
+    out.push(abs);
+  }
+  return out;
+}
+
+/** The legacy pre-123 consumer layout level (L-D8): a `core/` directory holding component dirs. */
+const LEGACY_LEVEL_DIR = 'core';
+
+/** One component directory found at pass 1, with its root's precedence rank (0 = highest). */
+interface ComponentSource {
+  dirPath: string;
+  dir: string;
+  rank: number;
+  declaredName: string;
+}
 
 // ---------------------------------------------------------------------------
 // Keyword index structures (Task 2 — Spec 121)
@@ -82,8 +148,20 @@ export class ComponentIndexer {
   private layoutTemplateIndexer = new LayoutTemplateIndexer();
   private tokenIndexer = new TokenIndexer();
   private modeClassifier = new ModeClassifier();
-  /** Project root resolved by the last full index — reused by reindexTokens (issue 2026-09-12). */
-  private lastProjectRoot: string | undefined;
+  /**
+   * The anchoring root (C3 `projectRoot = bornRoot`; unborn → the package root), set by every
+   * full index from the caller's explicit anchor — never re-derived from a component root. The
+   * token reindex path reads it (Spec 123 Task 1.4 (iv); replaces `lastProjectRoot`, issue 2026-09-12).
+   */
+  private bornRoot: string | undefined;
+  /** `options.tierDir` from the last full index (Spec 123 Task 1.5) — threaded to the theme readers. */
+  private explicitTierDir: string | undefined;
+  /** The pass-1 root set, precedence order (consumer first, package last). */
+  private componentRoots: string[] = [];
+  /** Declared component name → the precedence winner's source (Spec 123 C3: precedence keys on the DECLARED name). */
+  private ownerByDeclaredName = new Map<string, { dirPath: string; rank: number }>();
+  /** Component directory → the index key (schema name) it produced — lets a reindex remove exactly its own entry. */
+  private indexKeyByDir = new Map<string, string>();
   private lastIndexTime = '';
   private lastIndexTimeMs = 0;
   private indexWarnings: string[] = [];
@@ -92,63 +170,99 @@ export class ComponentIndexer {
   private keywordIndex: KeywordIndex = new Map();
 
   /**
-   * Scan component directories and build initial index.
+   * Scan the component root set and build the index.
+   *
+   * `componentsDir` is the pass-1 ROOT SET in precedence order — consumer root first, package
+   * root last (Spec 123 C3; `resolveComponentRoots` produces it). A single string is the legacy
+   * single-root form. The union is applied AT PASS 1: the contracts cache is filled from every
+   * root before any component is assembled, so a consumer fork inheriting a package parent
+   * resolves (Req 2.5). Precedence keys on the DECLARED component name (the contracts
+   * `component` field; the schema `name` when a component has no contracts), never the
+   * directory name.
    */
   async indexComponents(
-    componentsDir: string,
+    componentsDir: string | string[],
     patternsDir?: string,
     templatesDir?: string,
     guidanceDir?: string,
-    tokenIndexDir?: string
+    tokenIndexDir?: string,
+    options: IndexComponentsOptions = {}
   ): Promise<void> {
     this.index.clear();
     this.contractsCache.clear();
     this.keywordIndex.clear();
+    this.ownerByDeclaredName.clear();
+    this.indexKeyByDir.clear();
     this.indexWarnings = [];
-    this.dataDirs = [componentsDir, patternsDir, templatesDir, guidanceDir, tokenIndexDir].filter(Boolean) as string[];
 
-    if (!fs.existsSync(componentsDir)) {
-      this.indexWarnings.push(`Components directory not found: ${componentsDir}`);
+    const roots = normalizeRoots(componentsDir);
+    this.componentRoots = roots;
+    // The package root is the LOWEST-precedence root; package-relative legacy defaults derive from it.
+    const packageComponentsRoot = roots[roots.length - 1] ?? path.resolve(String(componentsDir));
+    const legacyProjectRoot = path.resolve(packageComponentsRoot, '..', '..', '..');
+    // C3: projectRoot = bornRoot (explicit anchor); the legacy derivation only for single-root callers.
+    const projectRoot = options.projectRoot ? path.resolve(options.projectRoot) : legacyProjectRoot;
+    this.bornRoot = projectRoot;
+    this.explicitTierDir = options.tierDir;
+
+    // ComponentIndexer.dataDirs: the MUTABLE component roots (the package root in a consumer
+    // install is exempt as immutable) plus the other data dirs.
+    this.dataDirs = [...mutableComponentRoots(roots), patternsDir, templatesDir, guidanceDir, tokenIndexDir]
+      .filter(Boolean) as string[];
+
+    const existingRoots = roots.filter(r => fs.existsSync(r));
+    if (existingRoots.length === 0) {
+      for (const r of roots) this.indexWarnings.push(`Components directory not found: ${r}`);
       this.lastIndexTime = new Date().toISOString();
       return;
     }
 
-    const dirs = fs.readdirSync(componentsDir, { withFileTypes: true })
-      .filter(d => d.isDirectory())
-      .map(d => d.name);
-
-    // First pass: parse all contracts (needed for inheritance resolution)
-    for (const dir of dirs) {
-      const contractsPath = path.join(componentsDir, dir, 'contracts.yaml');
-      const contractsResult = parseContractsYaml(contractsPath);
+    // First pass: the UNION, applied here (Spec 123 C3 / L-D2). Every root's component dirs are
+    // collected in precedence order and resolved to one winner per DECLARED name; the contracts
+    // cache is filled from the winners (consumer first, then package) BEFORE assembly, so an
+    // inheritance lookup from any root sees every root's parents.
+    const winners: ComponentSource[] = [];
+    for (const source of this.collectComponentSources(roots)) {
+      const owner = this.ownerByDeclaredName.get(source.declaredName);
+      if (owner) {
+        if (owner.rank === source.rank) {
+          this.indexWarnings.push(
+            `Duplicate declared component name ${source.declaredName}: ${source.dirPath} is shadowed by ${owner.dirPath}`
+          );
+        }
+        // A lower-precedence root's same-named component is shadowed (the consumer's fork wins).
+        continue;
+      }
+      this.ownerByDeclaredName.set(source.declaredName, { dirPath: source.dirPath, rank: source.rank });
+      winners.push(source);
+      const contractsResult = parseContractsYaml(path.join(source.dirPath, 'contracts.yaml'));
       if (contractsResult.data) {
         this.contractsCache.set(contractsResult.data.component, contractsResult.data);
       }
     }
 
     // Load mode classifier (reads SemanticOverrides.ts for Level 2 keys)
-    const projectRoot = path.resolve(componentsDir, '..', '..', '..');
-    this.lastProjectRoot = projectRoot;
-    this.modeClassifier.load(projectRoot);
+    this.modeClassifier.load(projectRoot, tokenIndexDir, options.tierDir);
 
-    // Second pass: assemble full metadata
-    for (const dir of dirs) {
-      this.assembleComponent(componentsDir, dir);
+    // Second pass: assemble the precedence-resolved set
+    for (const source of winners) {
+      const key = this.assembleComponent(source.dirPath);
+      if (key) this.indexKeyByDir.set(source.dirPath, key);
     }
 
-    // Third pass: resolve composed tokens (needs all components indexed first)
+    // Third pass: resolve composed tokens across BOTH roots (the index is already the union)
     this.resolveComposedTokens();
 
     // Index experience patterns
-    const effectivePatternsDir = patternsDir || path.resolve(componentsDir, '..', '..', '..', 'experience-patterns');
+    const effectivePatternsDir = patternsDir || path.join(legacyProjectRoot, 'experience-patterns');
     await this.patternIndexer.indexPatterns(effectivePatternsDir);
 
     // Index layout templates
-    const effectiveTemplatesDir = templatesDir || path.resolve(componentsDir, '..', '..', '..', 'layout-templates');
+    const effectiveTemplatesDir = templatesDir || path.join(legacyProjectRoot, 'layout-templates');
     await this.layoutTemplateIndexer.indexTemplates(effectiveTemplatesDir);
 
     // Index family guidance (must run after components and patterns for cross-reference validation)
-    const effectiveGuidanceDir = guidanceDir || path.resolve(componentsDir, '..', '..', '..', 'family-guidance');
+    const effectiveGuidanceDir = guidanceDir || path.join(legacyProjectRoot, 'family-guidance');
     await this.guidanceIndexer.indexGuidance(effectiveGuidanceDir);
 
     // Cross-reference validation (components + patterns must be indexed first)
@@ -160,7 +274,7 @@ export class ComponentIndexer {
     // the token indexer reads the SAME theme override files the mode classifier does
     // (issue 2026-09-12 — get_token_details reporting light values as dark).
     if (tokenIndexDir) {
-      await this.tokenIndexer.indexTokens(tokenIndexDir, projectRoot);
+      await this.tokenIndexer.indexTokens(tokenIndexDir, projectRoot, options.tierDir);
     }
 
     this.lastIndexTime = new Date().toISOString();
@@ -191,29 +305,44 @@ export class ComponentIndexer {
   }
 
   /**
-   * Re-index a single component after file change.
+   * Re-index a single component after a file change (watcher path).
+   *
+   * Precedence-aware (Spec 123 C3): a directory whose declared name is owned by a
+   * higher-precedence source is shadowed and left out; a consumer component ADDED over a
+   * package one of the same declared name replaces it. Only the entry this directory
+   * produced is removed first (the pre-123 removal loop deleted an arbitrary first entry —
+   * `path.basename(componentDir) === dir` was always true).
    */
   async reindexComponent(componentDir: string): Promise<void> {
-    const dir = path.basename(componentDir);
-    const componentsDir = path.dirname(componentDir);
+    const dirPath = path.resolve(componentDir);
+    const rank = this.rankOf(dirPath);
+    const declaredName = this.declaredNameOf(dirPath);
+
+    const owner = this.ownerByDeclaredName.get(declaredName);
+    if (owner && owner.dirPath !== dirPath && owner.rank <= rank && fs.existsSync(owner.dirPath)) {
+      return; // shadowed by a higher-precedence (or earlier same-root) source
+    }
+
+    // Remove exactly the entry this directory produced (its name may have changed)
+    const oldKey = this.indexKeyByDir.get(dirPath);
+    if (oldKey !== undefined) {
+      this.index.delete(oldKey);
+      this.keywordIndex.delete(oldKey);
+      this.indexKeyByDir.delete(dirPath);
+    }
+    for (const [name, src] of this.ownerByDeclaredName) {
+      if (src.dirPath === dirPath) this.ownerByDeclaredName.delete(name);
+    }
 
     // Re-parse contracts for cache
-    const contractsPath = path.join(componentDir, 'contracts.yaml');
-    const contractsResult = parseContractsYaml(contractsPath);
+    const contractsResult = parseContractsYaml(path.join(dirPath, 'contracts.yaml'));
     if (contractsResult.data) {
       this.contractsCache.set(contractsResult.data.component, contractsResult.data);
     }
 
-    // Remove old entry (might have different name)
-    for (const [name, meta] of this.index) {
-      if (meta.name === dir || path.basename(componentDir) === dir) {
-        this.index.delete(name);
-        this.keywordIndex.delete(name);
-        break;
-      }
-    }
-
-    this.assembleComponent(componentsDir, dir);
+    this.ownerByDeclaredName.set(declaredName, { dirPath, rank });
+    const key = this.assembleComponent(dirPath);
+    if (key) this.indexKeyByDir.set(dirPath, key);
     this.resolveComposedTokens();
     this.lastIndexTime = new Date().toISOString();
   }
@@ -241,11 +370,17 @@ export class ComponentIndexer {
 
   /**
    * Re-index token data from the given directory (file-watcher path).
-   * Reuses the project root resolved by the last full index so theme overrides keep resolving
-   * from the same place a full reindex would use (issue 2026-09-12).
+   * Anchors on `bornRoot` — the explicit anchor the last full index was given (C3
+   * `projectRoot = bornRoot`) — so theme overrides resolve from the same place a full reindex
+   * uses (issue 2026-09-12). Never re-derived from a component root (Spec 123 Task 1.4 (iv)).
+   *
+   * Spec 123 Task 1.5 (DD24): `indexTokens` re-reads `<tokenIndexDir>/meta.json` on EVERY
+   * call (including this one), so a `generate` re-run that changes the recorded `tierDir`
+   * is picked up here too — the theme root "follows the served index," never a stale
+   * snapshot from the last full index.
    */
   async reindexTokens(tokenIndexDir: string): Promise<void> {
-    await this.tokenIndexer.indexTokens(tokenIndexDir, this.lastProjectRoot);
+    await this.tokenIndexer.indexTokens(tokenIndexDir, this.bornRoot, this.explicitTierDir);
     this.lastIndexTime = new Date().toISOString();
     this.lastIndexTimeMs = this.computeMaxMtime();
   }
@@ -386,20 +521,102 @@ export class ComponentIndexer {
   // Private
   // ---------------------------------------------------------------------------
 
-  private assembleComponent(componentsDir: string, dir: string): void {
-    const dirPath = path.join(componentsDir, dir);
+  /**
+   * Collect every component directory across the root set, in precedence order.
+   * Under a root, a `core/` directory that holds component directories is recognized as ONE
+   * legacy level (L-D8 — the pre-123 copy layout), with a named warning on each load; its
+   * components rank with that root. A legacy level that IS another root in the set (the steward
+   * repo: `src/components/core` is the package root) is left to that root.
+   */
+  private collectComponentSources(roots: string[]): ComponentSource[] {
+    const sources: ComponentSource[] = [];
+    const rootSet = new Set(roots);
+    roots.forEach((root, rank) => {
+      if (!fs.existsSync(root)) return;
+      const children = fs.readdirSync(root, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name);
+      const legacyDirs: string[] = [];
+      for (const dir of children) {
+        const dirPath = path.join(root, dir);
+        if (dir === LEGACY_LEVEL_DIR && !rootSet.has(dirPath)) {
+          const nested = fs.readdirSync(dirPath, { withFileTypes: true })
+            .filter(d => d.isDirectory() && this.isComponentDir(path.join(dirPath, d.name)))
+            .map(d => d.name);
+          if (nested.length > 0 && !this.isComponentDir(dirPath)) {
+            legacyDirs.push(...nested);
+            continue;
+          }
+        }
+        if (dir === LEGACY_LEVEL_DIR && rootSet.has(dirPath)) continue;
+        sources.push({ dirPath, dir, rank, declaredName: this.declaredNameOf(dirPath) });
+      }
+      if (legacyDirs.length > 0) {
+        const legacyRoot = path.join(root, LEGACY_LEVEL_DIR);
+        this.indexWarnings.push(
+          `Legacy component level: ${legacyRoot} holds ${legacyDirs.length} component(s) in the pre-123 'core/' layout — indexed as one legacy level; move them up to ${root}`
+        );
+        for (const dir of legacyDirs) {
+          const dirPath = path.join(legacyRoot, dir);
+          sources.push({ dirPath, dir, rank, declaredName: this.declaredNameOf(dirPath) });
+        }
+      }
+    });
+    return sources;
+  }
+
+  /** A component directory holds a `*.schema.yaml` or a `contracts.yaml`. */
+  private isComponentDir(dirPath: string): boolean {
+    try {
+      const files = fs.readdirSync(dirPath);
+      return files.some(f => f.endsWith('.schema.yaml')) || files.includes('contracts.yaml');
+    } catch { return false; }
+  }
+
+  /**
+   * The DECLARED component name of a directory — the contracts `component` field; the schema
+   * `name` when there are no contracts; the directory name only as a last resort (so the
+   * assembly step still reports the directory's own warning).
+   */
+  private declaredNameOf(dirPath: string): string {
+    const contracts = parseContractsYaml(path.join(dirPath, 'contracts.yaml')).data;
+    if (contracts?.component) return contracts.component;
+    try {
+      const schemaFile = fs.readdirSync(dirPath).find(f => f.endsWith('.schema.yaml'));
+      if (schemaFile) {
+        const schema = parseSchemaYaml(path.join(dirPath, schemaFile)).data;
+        if (schema?.name) return schema.name;
+      }
+    } catch { /* fall through */ }
+    return path.basename(dirPath);
+  }
+
+  /** Precedence rank of a component directory: the index of the longest root containing it. */
+  private rankOf(dirPath: string): number {
+    let best = -1;
+    let bestLen = -1;
+    this.componentRoots.forEach((root, i) => {
+      if ((dirPath === root || dirPath.startsWith(root + path.sep)) && root.length > bestLen) {
+        best = i;
+        bestLen = root.length;
+      }
+    });
+    return best === -1 ? 0 : best;
+  }
+
+  /** Assemble one component directory into the index; returns its index key (schema name) or null. */
+  private assembleComponent(dirPath: string): string | null {
+    const dir = path.basename(dirPath);
 
     // Find schema.yaml (named {ComponentName}.schema.yaml)
     const schemaFile = fs.readdirSync(dirPath).find(f => f.endsWith('.schema.yaml'));
     if (!schemaFile) {
       this.indexWarnings.push(`Component directory has no schema.yaml: ${dir}`);
-      return;
+      return null;
     }
 
     const schemaResult = parseSchemaYaml(path.join(dirPath, schemaFile));
     if (!schemaResult.data) {
       if (schemaResult.warning) this.indexWarnings.push(schemaResult.warning);
-      return;
+      return null;
     }
     const schema = schemaResult.data;
 
@@ -472,6 +689,7 @@ export class ComponentIndexer {
 
     // Build keyword index entry for this component (Task 2.1, Spec 121)
     this.buildKeywordEntry(schema.name, metadata);
+    return schema.name;
   }
 
   /**

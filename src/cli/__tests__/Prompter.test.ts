@@ -12,7 +12,6 @@ function makeConflict(relativePath: string, reason = 'locally modified'): Classi
   return {
     relativePath,
     classification: 'conflict',
-    tier: 'source',
     packageHash: 'pkg',
     projectHash: 'proj',
     reason,

@@ -45,6 +45,14 @@ export interface TokenIndexInput {
    * same source the application MCP already reads via `COMPONENTS_DIR`).
    */
   componentSchemaDir: string;
+  /**
+   * Absolute path to the LIVE token tier this index's data came from (e.g.
+   * `config.tokenSourceRoot` — the consumer's own tier when born, or the package's
+   * `src/tokens` in package-mode). Written into `token-index/meta.json` as `tierDir`
+   * so the application MCP's theme readers can find `themes/dark/SemanticOverrides.ts`
+   * relative to the SERVED index, not a guessed project root (Spec 123 Task 1.5, DD24).
+   */
+  tierDir?: string;
 }
 
 /** Build the mode-nested OKLCH value + sibling channel metadata for a color primitive. */
@@ -242,6 +250,15 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   fs.writeFileSync(
     path.join(outputDir, 'components.yaml'),
     yaml.dump({ tokens: componentTokensIndex }, { lineWidth: -1 }),
+    'utf-8'
+  );
+
+  // Spec 123 Task 1.5 (DD24): record the live tier this index's data came from, so
+  // the application MCP's theme readers can find `themes/dark/SemanticOverrides.ts`
+  // relative to whichever index actually got served, not a guessed project root.
+  fs.writeFileSync(
+    path.join(outputDir, 'meta.json'),
+    JSON.stringify({ tierDir: input.tierDir }, null, 2) + '\n',
     'utf-8'
   );
 

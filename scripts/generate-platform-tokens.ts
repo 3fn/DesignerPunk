@@ -149,6 +149,8 @@ async function main() {
       componentTokens: ComponentTokenRegistry.getAll(),
       modeResolved,
       componentSchemaDir,
+      // Spec 123 Task 1.5 (DD24): record the live tier for the theme readers.
+      tierDir: config.tokenSourceRoot,
     });
 
     if (allComponentValid) {

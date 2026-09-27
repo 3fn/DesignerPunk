@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Fake `curl` for the empty-tarball-URL branch (exit 13): the registry GET
+# succeeds (HTTP 200) and the version matches, but `dist.tarball` is
+# missing from the response — simulates a registry response the guard
+# cannot read a tarball URL from. PATH-shim only; never touches the
+# network, never installs.
+echo '{"version":"99.99.99-fake","dist":{}}'
+printf '\n200'

@@ -16,6 +16,7 @@ import { ErrorHandler, MCPError } from '../utils/error-handler';
  */
 export const listCrossReferencesTool = {
   name: 'list_cross_references',
+  annotations: { readOnlyHint: true },
   description: 'List cross-references in a document. Returns all referenced documents with context, source section, and line number. Enumerates both `.md`-path links (target = the linked path, verbatim) and bare-id links validated against the doc-id index (target = the doc id); unresolvable bare-id targets are excluded (surfaced via index-health). Addressing contract (D5): the `path` parameter resolves through the same strategy chain as the other document tools — doc id, then indexed relative path, then legacy `.kiro/steering/…` path.',
   inputSchema: {
     type: 'object' as const,

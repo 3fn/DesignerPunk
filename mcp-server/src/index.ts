@@ -60,6 +60,21 @@ const SERVER_VERSION = '0.1.0';
 const DEFAULT_STEERING_DIR = 'governance/';
 const DEFAULT_LOGS_DIR = 'mcp-server/logs';
 
+// Tool registration (Spec 123 Task 4, C8) — the single source of truth for what
+// this server actually registers. `getHealthStatusTool` is exported from `./tools`
+// but deliberately NOT included here (never wired into ListToolsRequestSchema) —
+// see the tool-manifest build script and its test for the disclosed gap.
+export const tools = [
+  findDocsTool,
+  getDocumentSummaryTool,
+  getDocumentFullTool,
+  getSectionTool,
+  listCrossReferencesTool,
+  validateMetadataTool,
+  getIndexHealthTool,
+  rebuildIndexTool,
+];
+
 /**
  * MCP Documentation Server
  * 
@@ -130,18 +145,7 @@ class MCPDocumentationServer {
    */
   private registerHandlers(): void {
     // Register tools list handler
-    this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
-      tools: [
-        findDocsTool,
-        getDocumentSummaryTool,
-        getDocumentFullTool,
-        getSectionTool,
-        listCrossReferencesTool,
-        validateMetadataTool,
-        getIndexHealthTool,
-        rebuildIndexTool,
-      ],
-    }));
+    this.server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
 
     // Register tool call handler
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {

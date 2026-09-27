@@ -1,46 +1,36 @@
 /**
- * Integration test for `npx designerpunk init`.
+ * Integration test for `npx designerpunk init` (Spec 123 Task 2 — the birth event).
  *
- * Validates the re-runnability contract established by Spec 102 Gaps 3 and 5:
- * - First run against a fresh scratch repo produces all expected artifacts
- *   (including `.kiro/settings/mcp.json` from Gap 5)
- * - Second run against the same repo adds new files alongside consumer
- *   customizations without overwriting existing files
- * - Summary output format matches the contract documented in `init.ts`
- *   (CopyResult JSDoc + scaffoldMcpConfig JSDoc). The format is asserted
- *   verbatim here; intentional format changes should update the code AND
- *   these assertions together.
+ * `init` now:
+ * - REFUSES in a born, partial, or package-mode repo (design.md C1 row 0;
+ *   Req 15A.3) — `--re-scaffold` overrides, listing every file it would
+ *   RE-ADD before writing.
+ * - Does NOT copy `src/types` or `src/components/core` (Req 19A.2/19A.3);
+ *   creates the empty consumer `src/components/` dir instead (row 4′).
+ * - Rewrites the copied token tree BY RESOLUTION (design.md C4), not by string.
+ * - Emits BOTH targets' MCP configs unconditionally (Kiro + Claude Code — C8
+ *   U1 emission; `--target` selection arrives at Task 16).
+ * - Writes `designerpunk.manifest.json` LAST, with an `origin` per entry and
+ *   ZERO `src/tokens/**` entries (Req 5.8).
  *
  * This is an integration test — uses a real temp directory and runs the
  * actual `runInit` function against real filesystem operations. No mocking
  * of `fs`. This catches real-world integration bugs that unit-level mocking
  * would miss.
  *
- * @see .kiro/specs/102-consumer-onboarding-completion/design.md § "Workflow Integration Points"
+ * @see .kiro/specs/123-consumer-distribution/design.md § "C1. The birth event"
  */
 
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import { runInit } from '../init';
+import { runInit, ManifestBuilder } from '../init';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-/**
- * Count files recursively under `dir`, matching `copyDir()`'s counting semantics
- * in init.ts (files only, descending into subdirectories).
- *
- * Used to DERIVE the expected governance-doc count from the same source `init`
- * copies from, rather than hard-coding a literal. The governance corpus is the
- * relocated non-identity docs (Spec 119-A) and grows by design — a hard-coded
- * count drifts (and repeatedly HAS drifted, e.g. 80 → 81 → 82) every time a doc
- * is added, with no relation to the behavior under test. Deriving from source
- * keeps the real check — "init copies EVERY governance doc, dropping none" —
- * while decoupling it from the corpus's exact size.
- */
 function countFilesRecursive(dir: string): number {
   let count = 0;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -58,32 +48,35 @@ function countFilesRecursive(dir: string): number {
 // (`src/cli/__tests__/`), so pass its parent (`src/cli/`) to resolve the SAME root.
 const PKG_ROOT = resolvePackageRoot(path.join(__dirname, '..'));
 
-// Expected governance-doc count, derived from source (see countFilesRecursive).
-// NOT hard-coded: governance/ grows as the corpus grows.
+// Expected governance-doc count, derived from source — NOT hard-coded.
 const GOVERNANCE_DOC_COUNT = countFilesRecursive(path.join(PKG_ROOT, 'governance'));
 
-/**
- * Create a unique scratch directory under the OS temp dir.
- * Returns the absolute path. Caller is responsible for cleanup.
- */
+/** Create a unique scratch directory under the OS temp dir, resolved through any symlinks (macOS /var -> /private/var) so it matches what `process.cwd()` reports after chdir. */
 function createScratchDir(): string {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'dp-init-test-'));
+  return fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'dp-init-test-')));
+}
+
+/** Mark `dir` as a `.git` boundary (directory form) so findDesignSystemRoot's walk stops there, isolating the scratch repo from the real repo above it. */
+function markGitBoundary(dir: string): void {
+  fs.mkdirSync(path.join(dir, '.git'), { recursive: true });
 }
 
 /**
  * Run `runInit` against a scratch directory by chdir'ing into it first.
- * Returns the captured console.log output as a joined string.
- * Restores the original CWD after the run.
+ * Returns the captured console.log + console.error output as a joined string.
+ * Restores the original CWD after the run. Captures a `process.exit` call
+ * (refusals) without killing the test process.
  */
 async function runInitIn(
   scratchDir: string,
-  args: string[] = ['--name', 'Test', '--abbreviation', 'T', '--skip-components', '--skip-agents'],
-): Promise<string> {
+  args: string[] = ['--name', 'Test', '--abbreviation', 'T', '--skip-agents'],
+): Promise<{ output: string; exitCode: number | undefined }> {
   const originalCwd = process.cwd();
   process.chdir(scratchDir);
 
   const logSpy = jest.spyOn(console, 'log').mockImplementation();
   const errorSpy = jest.spyOn(console, 'error').mockImplementation();
+  const exitSpy = jest.spyOn(process, 'exit').mockImplementation(((() => undefined) as unknown) as () => never);
 
   try {
     await runInit(args);
@@ -91,221 +84,427 @@ async function runInitIn(
     process.chdir(originalCwd);
   }
 
-  const output = logSpy.mock.calls.map((call) => call.join(' ')).join('\n');
+  const output = [...logSpy.mock.calls, ...errorSpy.mock.calls].map((call) => call.join(' ')).join('\n');
+  const exitCode = exitSpy.mock.calls[0]?.[0] as number | undefined;
   logSpy.mockRestore();
   errorSpy.mockRestore();
+  exitSpy.mockRestore();
 
-  return output;
+  return { output, exitCode };
 }
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
-describe('CLI init — integration', () => {
+describe('CLI init — birth check (Task 2.2; design.md C1 row 0; Req 15A.3)', () => {
   let scratchDir: string;
 
   beforeEach(() => {
     scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
   });
 
   afterEach(() => {
     fs.rmSync(scratchDir, { recursive: true, force: true });
   });
 
-  describe('first run against empty scratch repo', () => {
-    test('creates all expected artifacts', async () => {
-      await runInitIn(scratchDir);
+  test('refuses in a born repo with the exact catalog string; writes nothing new', async () => {
+    // First run births the repo.
+    await runInitIn(scratchDir);
+    const filesAfterFirstRun = fs.readdirSync(scratchDir).sort();
 
-      // File-based scaffolds (createFileIfNotExists)
-      // Regression guard: init must NOT scaffold an .npmrc — a @3fn scope
-      // mapping silently pins the consumer to GitHub Packages (npm-primary
-      // ruled 2026-09-20; .kiro/issues/archive/2026-09-20-init-npmrc-registry-pin.md)
-      expect(fs.existsSync(path.join(scratchDir, '.npmrc'))).toBe(false);
-      expect(fs.existsSync(path.join(scratchDir, 'designerpunk.config.ts'))).toBe(true);
-      expect(fs.existsSync(path.join(scratchDir, 'product/overview.yaml'))).toBe(true);
+    // Second run against the now-born repo — refuses.
+    const { output, exitCode } = await runInitIn(scratchDir);
 
-      // Directory copies (copyDir)
-      expect(fs.existsSync(path.join(scratchDir, 'src/tokens'))).toBe(true);
-      expect(fs.existsSync(path.join(scratchDir, '.kiro/steering'))).toBe(true);
-
-      // MCP config scaffold (Gap 5)
-      expect(fs.existsSync(path.join(scratchDir, '.kiro/settings/mcp.json'))).toBe(true);
-    });
-
-    test('scaffolded .kiro/settings/mcp.json has both DesignerPunk entries with direct-node paths', async () => {
-      await runInitIn(scratchDir);
-
-      const mcpConfigPath = path.join(scratchDir, '.kiro/settings/mcp.json');
-      const config = JSON.parse(fs.readFileSync(mcpConfigPath, 'utf-8'));
-
-      expect(Object.keys(config.mcpServers).sort()).toEqual([
-        'designerpunk-application',
-        'designerpunk-docs',
-      ]);
-
-      // Docs entry — direct-node invocation + MCP_STEERING_DIR env
-      const docs = config.mcpServers['designerpunk-docs'];
-      expect(docs.command).toBe('node');
-      expect(docs.args[0]).toContain('node_modules/@3fn/core/dist/mcp/docs-mcp.js');
-      expect(docs.env.MCP_STEERING_DIR).toContain('node_modules/@3fn/core/governance');
-      expect(docs.autoApprove).toContain('get_document_full');
-
-      // Application entry — includes TOKEN_INDEX_DIR (Gap 2 fix at template level)
-      const app = config.mcpServers['designerpunk-application'];
-      expect(app.command).toBe('node');
-      expect(app.args[0]).toContain('node_modules/@3fn/core/dist/mcp/application-mcp.js');
-      expect(app.env.COMPONENTS_DIR).toBe('./src/components/core');
-      expect(app.env.TOKEN_INDEX_DIR).toBe('./token-index');
-      expect(app.autoApprove).toContain('find_components');
-    });
-
-    test('scaffolded tsconfig.test.json carries no paths overrides pinning subpaths to raw src', async () => {
-      // Regression guard: subpath types resolve through the package exports map
-      // to compiled dist d.ts (Spec 118). A `paths` block re-pinning
-      // @3fn/core/* to node_modules/@3fn/core/src/*.ts undoes that contract in
-      // every scaffolded consumer — see
-      // .kiro/issues/archive/2026-09-20-init-tsconfig-src-repin.md
-      await runInitIn(scratchDir);
-
-      const tsconfig = JSON.parse(
-        fs.readFileSync(path.join(scratchDir, 'tsconfig.test.json'), 'utf-8'),
-      );
-      expect(tsconfig.compilerOptions.paths).toBeUndefined();
-      expect(JSON.stringify(tsconfig)).not.toContain('@3fn/core/src');
-    });
+    expect(exitCode).toBe(1);
+    expect(output).toContain('this repo already has a design system');
+    expect(output).toContain('init is the birth event and runs once');
+    expect(output).toContain('npx designerpunk init --re-scaffold');
+    // Nothing new was written.
+    expect(fs.readdirSync(scratchDir).sort()).toEqual(filesAfterFirstRun);
   });
 
-  describe('re-runnability — second run against populated repo', () => {
-    test('emits "N existing files preserved" summary format verbatim', async () => {
-      // First run — populate the scratch dir
-      await runInitIn(scratchDir);
+  test('refuses in a package-mode repo (config without tokenSource, no local tier) with the exact catalog string', async () => {
+    fs.writeFileSync(
+      path.join(scratchDir, 'designerpunk.config.ts'),
+      "import { defineConfig } from '@3fn/core';\nexport default defineConfig({ name: 'T', abbreviation: 'T' });\n"
+    );
 
-      // Second run — everything is now pre-existing
-      const secondOutput = await runInitIn(scratchDir);
+    const { output, exitCode } = await runInitIn(scratchDir);
 
-      // Exact format assertions from Task 1.4 CopyResult JSDoc contract:
-      // "✓ {label}: {N} existing file[s] preserved"
-      // Token source is now split: types + primitives/semantics + component tokens
-      expect(secondOutput).toContain('✓ type definitions:');
-      expect(secondOutput).toContain('✓ token source:');
-      expect(secondOutput).toContain('existing files preserved');
-      // Spec 119-A two-root split: 9 identity docs ship in .kiro/steering/
-      // (8 identity + the NEW Task-Completion-Protocol added in Task 8; the
-      // meta-guide was removed in 119-A Task 10.5 → back to 9). The identity set
-      // is a LOCKED always-set — asserted as exactly 9 on purpose, so a change to
-      // it is a signal worth catching. The governance corpus, by contrast, grows
-      // routinely, so its count is derived from source (GOVERNANCE_DOC_COUNT).
-      expect(secondOutput).toContain('✓ steering docs: 9 existing files preserved');
-      expect(secondOutput).toContain(`✓ governance docs: ${GOVERNANCE_DOC_COUNT} existing files preserved`);
-    });
-
-    test('preserves existing files — no overwrites after second run', async () => {
-      await runInitIn(scratchDir);
-
-      // Mutate a file the consumer "edited" after first init
-      const customPath = path.join(scratchDir, 'src/tokens/CustomMarker.ts');
-      fs.writeFileSync(customPath, '// consumer edit', 'utf-8');
-
-      // Find one of the token files to mutate and verify it's preserved
-      const tokenFiles = fs.readdirSync(path.join(scratchDir, 'src/tokens')).filter((f) => f.endsWith('.ts'));
-      const victimPath = path.join(scratchDir, 'src/tokens', tokenFiles[0]);
-      const victimOriginal = fs.readFileSync(victimPath, 'utf-8');
-      fs.writeFileSync(victimPath, '// consumer-edited version', 'utf-8');
-
-      // Second run
-      await runInitIn(scratchDir);
-
-      // Custom marker still exists and unchanged
-      expect(fs.existsSync(customPath)).toBe(true);
-      expect(fs.readFileSync(customPath, 'utf-8')).toBe('// consumer edit');
-
-      // Victim file is still the consumer-edited version, NOT the package version
-      expect(fs.readFileSync(victimPath, 'utf-8')).toBe('// consumer-edited version');
-      expect(fs.readFileSync(victimPath, 'utf-8')).not.toBe(victimOriginal);
-    });
+    expect(exitCode).toBe(1);
+    expect(output).toContain('this repo runs in package mode');
+    expect(output).toContain('npx designerpunk init --re-scaffold');
   });
 
-  describe('first run with pre-seeded customization', () => {
-    test('merges package files alongside consumer customizations (Gap 3 scenario)', async () => {
-      // Pre-seed a custom file in .kiro/steering/ BEFORE running init.
-      // This mirrors Peter's DP-PortfolioSite scenario that exposed the original
-      // directory-skip bug.
-      fs.mkdirSync(path.join(scratchDir, '.kiro/steering'), { recursive: true });
-      fs.writeFileSync(
-        path.join(scratchDir, '.kiro/steering/designerpunk.md'),
-        '# Custom product steering\n',
-        'utf-8',
-      );
+  test('refuses in a partial repo (tier-no-config) with the exact catalog string', async () => {
+    fs.mkdirSync(path.join(scratchDir, 'src/tokens/semantic'), { recursive: true });
+    fs.writeFileSync(path.join(scratchDir, 'src/tokens/index.ts'), 'export function getAllPrimitiveTokens() { return []; }\n');
+    fs.writeFileSync(path.join(scratchDir, 'src/tokens/semantic/index.ts'), 'export function getAllSemanticTokens() { return []; }\n');
 
-      const output = await runInitIn(scratchDir);
+    const { output, exitCode } = await runInitIn(scratchDir);
 
-      // Spec 119-A two-root split: the package contributes 9 identity steering
-      // files (8 identity + the NEW Task-Completion-Protocol from Task 8; the
-      // meta-guide was removed in Task 10.5; no conflict with designerpunk.md
-      // because the package doesn't have a file by that name) and the relocated
-      // non-identity docs into the separate governance/ dir. Steering is the
-      // locked 9; governance is derived from source (grows with the corpus).
-      expect(output).toContain('✓ steering docs: 9 new files');
-      expect(output).toContain(`✓ governance docs: ${GOVERNANCE_DOC_COUNT} new files`);
-
-      // Custom file preserved
-      expect(
-        fs.readFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), 'utf-8'),
-      ).toBe('# Custom product steering\n');
-
-      // Plus 9 package identity files merged alongside it (total 10)
-      const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
-      expect(steeringFiles.length).toBe(10);
-
-      // The relocated docs land in governance/ — every one init copied from source.
-      const governanceFiles = fs.readdirSync(path.join(scratchDir, 'governance'));
-      expect(governanceFiles.length).toBe(GOVERNANCE_DOC_COUNT);
-    });
+    expect(exitCode).toBe(1);
+    expect(output).toContain('found a DesignerPunk token tier at');
+    expect(output).toContain('but no designerpunk.config.ts');
   });
 
-  describe('mcp.json scaffold — partial merge (Gap 5 Case 3)', () => {
-    test('skips conflicting designerpunk-docs entry with warning, adds designerpunk-application', async () => {
-      // Pre-seed a consumer-customized designerpunk-docs entry
-      fs.mkdirSync(path.join(scratchDir, '.kiro/settings'), { recursive: true });
-      fs.writeFileSync(
-        path.join(scratchDir, '.kiro/settings/mcp.json'),
-        JSON.stringify(
-          {
-            mcpServers: {
-              'designerpunk-docs': {
-                command: 'node',
-                args: ['/custom/experimental/docs-mcp.js'],
-              },
-            },
-          },
-          null,
-          2,
-        ),
-        'utf-8',
-      );
+  test('--re-scaffold lists every file it would re-add, then proceeds under --yes', async () => {
+    // First run births the repo.
+    await runInitIn(scratchDir);
 
-      const output = await runInitIn(scratchDir);
+    // The founder deliberately deleted their token tree.
+    fs.rmSync(path.join(scratchDir, 'src/tokens'), { recursive: true, force: true });
 
-      // Exact format: "✓ .kiro/settings/mcp.json: added designerpunk-application"
-      // (not both entries — docs is skipped due to conflict)
-      expect(output).toContain('✓ .kiro/settings/mcp.json: added designerpunk-application');
+    const { output, exitCode } = await runInitIn(scratchDir, [
+      '--name', 'Test', '--abbreviation', 'T', '--skip-agents', '--re-scaffold', '--yes',
+    ]);
 
-      // Warning about the conflict — exact prefix/suffix (with ⚠️ emoji)
-      expect(output).toContain("⚠️  .kiro/settings/mcp.json already has 'designerpunk-docs' entry");
+    expect(exitCode).toBeUndefined(); // did not refuse
+    expect(output).toContain('the following files will be RE-ADDED');
+    expect(output).toContain('src/tokens/index.ts');
+    expect(fs.existsSync(path.join(scratchDir, 'src/tokens/index.ts'))).toBe(true);
+  });
+});
 
-      // Verify consumer's custom designerpunk-docs path is NOT overwritten
-      const config = JSON.parse(
-        fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'),
-      );
-      expect(config.mcpServers['designerpunk-docs'].args[0]).toBe(
-        '/custom/experimental/docs-mcp.js',
-      );
+describe('CLI init — first run against empty scratch repo (Task 2.2)', () => {
+  let scratchDir: string;
 
-      // But designerpunk-application WAS added (partial merge delivers value
-      // rather than blocking on unrelated conflict)
-      expect(config.mcpServers['designerpunk-application']).toBeDefined();
-      expect(config.mcpServers['designerpunk-application'].command).toBe('node');
-    });
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('creates all expected artifacts, and does NOT copy src/types or src/components/core', async () => {
+    await runInitIn(scratchDir);
+
+    expect(fs.existsSync(path.join(scratchDir, '.npmrc'))).toBe(false);
+    expect(fs.existsSync(path.join(scratchDir, 'designerpunk.config.ts'))).toBe(true);
+    expect(fs.existsSync(path.join(scratchDir, 'product/overview.yaml'))).toBe(true);
+    expect(fs.existsSync(path.join(scratchDir, 'src/tokens'))).toBe(true);
+    expect(fs.existsSync(path.join(scratchDir, '.kiro/steering'))).toBe(true);
+    expect(fs.existsSync(path.join(scratchDir, 'designerpunk.manifest.json'))).toBe(true);
+
+    // Req 19A.2/19A.3 — REMOVED from init.
+    expect(fs.existsSync(path.join(scratchDir, 'src/types'))).toBe(false);
+    expect(fs.existsSync(path.join(scratchDir, 'src/components/core'))).toBe(false);
+
+    // Req 19A.6 — the consumer's OWN components dir, created empty.
+    expect(fs.existsSync(path.join(scratchDir, 'src/components/README.md'))).toBe(true);
+    const componentsEntries = fs.readdirSync(path.join(scratchDir, 'src/components'));
+    expect(componentsEntries).toEqual(['README.md']);
+  });
+
+  test('the copied token tree resolves with zero unmapped specifiers (rewriteByResolution, Task 2.1)', async () => {
+    const { output } = await runInitIn(scratchDir);
+    expect(output).not.toContain('UnmappedSpecifierError');
+    expect(output).not.toMatch(/relative specifier.*resolves outside/);
+    // The three theme files still read '../types' (intra-tree — D-B4's finding).
+    for (const theme of ['dark', 'dark-wcag', 'wcag']) {
+      const themeFile = path.join(scratchDir, `src/tokens/themes/${theme}/SemanticOverrides.ts`);
+      if (fs.existsSync(themeFile)) {
+        expect(fs.readFileSync(themeFile, 'utf-8')).toContain("from '../types'");
+      }
+    }
+  });
+
+  test('emitted config re-points componentTokens at the consumer components dir', async () => {
+    await runInitIn(scratchDir);
+    const config = fs.readFileSync(path.join(scratchDir, 'designerpunk.config.ts'), 'utf-8');
+    expect(config).toContain("componentTokens: ['./src/components', './src/tokens/component']");
+    expect(config).not.toContain('./src/components/core');
+  });
+
+  test('--skip-components is a deprecated no-op with a note', async () => {
+    const { output } = await runInitIn(scratchDir, ['--name', 'Test', '--abbreviation', 'T', '--skip-agents', '--skip-components']);
+    expect(output).toContain('--skip-components is a deprecated no-op');
+  });
+});
+
+describe('CLI init — THREE servers\' MCP config, approvals GENERATED from readOnlyHint (Task 4; C8/C10; Req 7.2)', () => {
+  let scratchDir: string;
+
+  // The manifest built by `npm run build:mcp` (Task 4.2) is this test's ground
+  // truth for what "correct" approvals look like — never a second hand-list
+  // that could drift from the one `mcpConfig/{kiro,cc}.ts` actually reads.
+  const manifestPath = path.join(process.cwd(), 'dist/mcp/tool-manifest.json');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+  const readOnlyNames = (serverKey: string): string[] =>
+    manifest.servers[serverKey].filter((t: { readOnlyHint: boolean }) => t.readOnlyHint).map((t: { name: string }) => t.name).sort();
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('Kiro: .kiro/settings/mcp.json has all THREE DesignerPunk entries (Req 7.2\'s deliberate three-server update)', async () => {
+    await runInitIn(scratchDir);
+
+    const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
+    expect(Object.keys(config.mcpServers).sort()).toEqual([
+      'designerpunk-application',
+      'designerpunk-docs',
+      'designerpunk-product',
+    ]);
+    // Regression guard: the scaffolded COMPONENTS_DIR must point at the NEW
+    // consumer components dir (src/components, Task 2.2's row 4′) — NOT the
+    // removed src/components/core (Req 19A.2). This template value was found
+    // stale during Task 2.3 and fixed alongside it.
+    expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
+    // Req 7.1 — the third entry declares PRODUCT_DIR.
+    expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
+  });
+
+  test('Kiro: each server\'s autoApprove is SET-EQUAL to the manifest\'s readOnlyHint:true set — rebuild_index absent, find_docs present, validate_component absent', async () => {
+    await runInitIn(scratchDir);
+
+    const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
+    for (const serverKey of ['designerpunk-docs', 'designerpunk-application', 'designerpunk-product']) {
+      expect([...config.mcpServers[serverKey].autoApprove].sort()).toEqual(readOnlyNames(serverKey));
+    }
+    expect(config.mcpServers['designerpunk-docs'].autoApprove).toContain('find_docs');
+    expect(config.mcpServers['designerpunk-docs'].autoApprove).not.toContain('rebuild_index');
+    expect(config.mcpServers['designerpunk-application'].autoApprove).not.toContain('rebuild_index');
+    expect(config.mcpServers['designerpunk-application'].autoApprove).not.toContain('validate_component');
+    expect(config.mcpServers['designerpunk-product'].autoApprove).not.toContain('rebuild_product_index');
+  });
+
+  test('Claude Code: .mcp.json has all THREE entries WITHOUT autoApprove/disabled fields', async () => {
+    await runInitIn(scratchDir);
+
+    expect(fs.existsSync(path.join(scratchDir, '.mcp.json'))).toBe(true);
+    const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.mcp.json'), 'utf-8'));
+    expect(Object.keys(config.mcpServers).sort()).toEqual([
+      'designerpunk-application',
+      'designerpunk-docs',
+      'designerpunk-product',
+    ]);
+    expect(config.mcpServers['designerpunk-docs'].autoApprove).toBeUndefined();
+    expect(config.mcpServers['designerpunk-docs'].disabled).toBeUndefined();
+    expect(config.mcpServers['designerpunk-docs'].command).toBe('node');
+    expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
+    expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
+  });
+
+  test('Claude Code: .claude/settings.json permissions.allow is SET-EQUAL (per server, mcp__<server>__<tool> grain) to the manifest\'s readOnlyHint:true set', async () => {
+    await runInitIn(scratchDir);
+
+    expect(fs.existsSync(path.join(scratchDir, '.claude/settings.json'))).toBe(true);
+    const settings = JSON.parse(fs.readFileSync(path.join(scratchDir, '.claude/settings.json'), 'utf-8'));
+    for (const serverKey of ['designerpunk-docs', 'designerpunk-application', 'designerpunk-product']) {
+      const actual = settings.permissions.allow
+        .filter((e: string) => e.startsWith(`mcp__${serverKey}__`))
+        .map((e: string) => e.slice(`mcp__${serverKey}__`.length))
+        .sort();
+      expect(actual).toEqual(readOnlyNames(serverKey));
+    }
+    expect(settings.permissions.allow).toContain('mcp__designerpunk-docs__find_docs');
+    expect(settings.permissions.allow).not.toContain('mcp__designerpunk-docs__rebuild_index');
+    expect(settings.permissions.allow).not.toContain('mcp__designerpunk-application__validate_component');
+    expect(settings.permissions.allow).toContain('mcp__designerpunk-application__find_components');
+  });
+});
+
+describe('CLI init — test config collision string (Task 2.3; C27 A13)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('pre-existing jest.config.js gets the truthful collision string, not a bare "already exists"', async () => {
+    fs.writeFileSync(path.join(scratchDir, 'jest.config.js'), 'module.exports = {};\n');
+
+    const { output } = await runInitIn(scratchDir);
+
+    expect(output).toContain('skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied');
+    expect(output).toContain("require('@3fn/core/jest-preset')");
+  });
+
+  test('scaffolded tsconfig.test.json carries no paths overrides pinning subpaths to raw src', async () => {
+    await runInitIn(scratchDir);
+    const tsconfig = JSON.parse(fs.readFileSync(path.join(scratchDir, 'tsconfig.test.json'), 'utf-8'));
+    expect(tsconfig.compilerOptions.paths).toBeUndefined();
+    expect(JSON.stringify(tsconfig)).not.toContain('@3fn/core/src');
+  });
+});
+
+describe('CLI init — manifest, written last (Task 2.4)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('records origin on one copy entry and one emitted-key entry, and posture/installedVersion', async () => {
+    await runInitIn(scratchDir, ['--name', 'Test', '--abbreviation', 'T']); // agents included this time
+
+    const manifest = JSON.parse(fs.readFileSync(path.join(scratchDir, 'designerpunk.manifest.json'), 'utf-8'));
+    expect(manifest.posture).toBe('born');
+    expect(typeof manifest.installedVersion).toBe('string');
+    expect(manifest.installedVersion).not.toBe('unknown');
+    expect(manifest.attachedTargets.sort()).toEqual(['cc', 'kiro']);
+
+    const entries = manifest.entries as Record<string, { origin: string; grain: string }>;
+    const copyEntry = Object.entries(entries).find(([, v]) => v.origin === 'copy');
+    expect(copyEntry).toBeDefined();
+    expect(copyEntry![0].startsWith('.kiro/steering/') || copyEntry![0].startsWith('.kiro/agents/') || copyEntry![0].startsWith('governance/')).toBe(true);
+
+    const emittedKeyEntry = Object.entries(entries).find(([, v]) => v.origin === 'emitted-key');
+    expect(emittedKeyEntry).toBeDefined();
+    expect(emittedKeyEntry![1].grain).toBe('key');
+  });
+
+  test('zero src/tokens/** entries exist (Req 5.8)', async () => {
+    await runInitIn(scratchDir);
+
+    const manifest = JSON.parse(fs.readFileSync(path.join(scratchDir, 'designerpunk.manifest.json'), 'utf-8'));
+    const tokenEntries = Object.keys(manifest.entries).filter((k) => k.startsWith('src/tokens/'));
+    expect(tokenEntries).toEqual([]);
+  });
+
+  test("ManifestBuilder.recordFile ACTIVELY excludes src/tokens/** — a direct unit check, since no current init.ts call site attempts one (the integration test above would pass vacuously otherwise)", () => {
+    const manifest = new ManifestBuilder();
+    const tmpFile = path.join(scratchDir, 'probe.ts');
+    fs.writeFileSync(tmpFile, '// probe\n', 'utf-8');
+
+    manifest.recordFile('src/tokens/index.ts', tmpFile, 'copy');
+    manifest.recordFile('src/tokens/component/progress.ts', tmpFile, 'copy');
+    manifest.recordFile('designerpunk.config.ts', tmpFile, 'generated');
+
+    const built = manifest.build('1.0.0') as { entries: Record<string, unknown> };
+    expect(Object.keys(built.entries)).toEqual(['designerpunk.config.ts']);
+    // BITE (recorded red in the Task 2.4 completion doc): removing the
+    // `src/tokens/` prefix check in `ManifestBuilder.recordFile` turns this
+    // red (both token-tier calls would then also appear in `entries`).
+  });
+});
+
+describe('CLI init — next steps (Task 2.5; C27 erratum)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('the restart line is the LAST line printed; no "npx jest # Run component tests" step', async () => {
+    const { output } = await runInitIn(scratchDir);
+
+    expect(output).not.toContain('Run component tests');
+
+    const trimmed = output.trimEnd();
+    const restartIdx = trimmed.indexOf('restart your agent session — DesignerPunk\'s MCP servers and your personal note load');
+    expect(restartIdx).toBeGreaterThan(-1);
+    // Nothing meaningful after the restart line (only trailing whitespace).
+    const afterRestart = trimmed.slice(restartIdx);
+    expect(afterRestart.split('\n').filter((l) => l.trim().length > 0).length).toBe(1);
+  });
+
+  test('carries the clone hatch and the personal-note naming, in order, before the restart line', async () => {
+    const { output } = await runInitIn(scratchDir);
+    const cloneIdx = output.indexOf('want to own the engine too?');
+    const noteIdx = output.indexOf('fill in .designerpunk/personal-note.local.md');
+    const restartIdx = output.indexOf('restart your agent session — DesignerPunk\'s MCP servers');
+
+    expect(cloneIdx).toBeGreaterThan(-1);
+    expect(noteIdx).toBeGreaterThan(cloneIdx);
+    expect(restartIdx).toBeGreaterThan(noteIdx);
+  });
+});
+
+describe('CLI init — first run with pre-seeded customization (merge, unchanged from pre-123)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('merges package files alongside consumer customizations (Gap 3 scenario)', async () => {
+    fs.mkdirSync(path.join(scratchDir, '.kiro/steering'), { recursive: true });
+    fs.writeFileSync(
+      path.join(scratchDir, '.kiro/steering/designerpunk.md'),
+      '# Custom product steering\n',
+      'utf-8',
+    );
+
+    const { output } = await runInitIn(scratchDir);
+
+    expect(output).toContain('✓ steering docs: 9 new files');
+    expect(output).toContain(`✓ governance docs: ${GOVERNANCE_DOC_COUNT} new files`);
+
+    expect(
+      fs.readFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), 'utf-8'),
+    ).toBe('# Custom product steering\n');
+
+    const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
+    expect(steeringFiles.length).toBe(10);
+
+    const governanceFiles = fs.readdirSync(path.join(scratchDir, 'governance'));
+    expect(governanceFiles.length).toBe(GOVERNANCE_DOC_COUNT);
+  });
+});
+
+describe('CLI init — mcp.json scaffold — partial merge (Gap 5 Case 3, unchanged)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('skips conflicting designerpunk-docs entry with warning, adds designerpunk-application', async () => {
+    fs.mkdirSync(path.join(scratchDir, '.kiro/settings'), { recursive: true });
+    fs.writeFileSync(
+      path.join(scratchDir, '.kiro/settings/mcp.json'),
+      JSON.stringify(
+        { mcpServers: { 'designerpunk-docs': { command: 'node', args: ['/custom/experimental/docs-mcp.js'] } } },
+        null,
+        2,
+      ),
+      'utf-8',
+    );
+
+    const { output } = await runInitIn(scratchDir);
+
+    expect(output).toContain('✓ .kiro/settings/mcp.json: added designerpunk-application');
+    expect(output).toContain("⚠️  .kiro/settings/mcp.json already has 'designerpunk-docs' entry");
+
+    const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
+    expect(config.mcpServers['designerpunk-docs'].args[0]).toBe('/custom/experimental/docs-mcp.js');
+    expect(config.mcpServers['designerpunk-application']).toBeDefined();
+    expect(config.mcpServers['designerpunk-application'].command).toBe('node');
   });
 });

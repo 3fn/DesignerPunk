@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Fake `curl` for bite (3): the registry GET succeeds (HTTP 200) and returns
+# a real-looking version, but a GitHub Packages tarball URL — proves
+# check_host fires through the PRODUCTION line (not a direct function
+# call). PATH-shim only; never touches the network, never installs.
+echo '{"version":"99.99.99-fake","dist":{"tarball":"https://npm.pkg.github.com/download/@3fn/core/99.99.99-fake/abcd1234.tgz"}}'
+printf '\n200'

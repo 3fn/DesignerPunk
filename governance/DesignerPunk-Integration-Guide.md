@@ -8,7 +8,7 @@ description: Everything a product developer needs to integrate DesignerPunk into
 # DesignerPunk Integration Guide
 
 **Date**: 2026-04-08
-**Last Reviewed**: 2026-05-10
+**Last Reviewed**: 2026-09-26
 **Purpose**: Everything a product developer needs to integrate DesignerPunk into a product repo
 **Organization**: process-standard
 **Scope**: cross-project
@@ -199,7 +199,7 @@ Create `.kiro/settings/mcp.json` at your project root (Kiro reads this file on a
         "./node_modules/@3fn/core/dist/mcp/application-mcp.js"
       ],
       "env": {
-        "COMPONENTS_DIR": "./src/components/core",
+        "COMPONENTS_DIR": "./src/components",
         "PATTERNS_DIR": "./node_modules/@3fn/core/experience-patterns",
         "TEMPLATES_DIR": "./node_modules/@3fn/core/layout-templates",
         "GUIDANCE_DIR": "./node_modules/@3fn/core/family-guidance",
@@ -451,7 +451,7 @@ module.exports = {
 
 ```bash
 npx jest                          # Run all tests
-npx jest src/components/core/     # Run component tests only
+npx jest src/components/          # Run your own component tests, once you've added some
 npx jest --testPathPattern=Button # Run tests matching "Button"
 ```
 
@@ -573,9 +573,9 @@ Starts with empty data if no product directory exists (warning, not error).
 
 **Component gap detection** reads `component-meta.yaml` files to validate component references in screen specs. Configure the component source directory:
 - `COMPONENT_DIR` env var (if set)
-- Default: `src/components/core`
+- Default: `src/components` (your own component directory, once you've added components)
 
-**In a product repo** (where DesignerPunk is installed as a package), set `COMPONENT_DIR` to point into the installed package:
+**In a product repo** (where DesignerPunk is installed as a package), set `COMPONENT_DIR` to point into the installed package's own components instead — useful for validating screen-spec references against DesignerPunk's own component set rather than your own:
 ```bash
 COMPONENT_DIR=./node_modules/@3fn/core/src/components/core npx designerpunk mcp:product
 ```

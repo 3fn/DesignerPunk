@@ -267,8 +267,7 @@ src/components/core/Input-Text-PhoneNumber/
 │   └── validation.test.ts                 # Validation tests
 └── platforms/
     ├── web/
-    │   ├── InputTextPhoneNumber.web.ts    # Web component
-    │   └── InputTextPhoneNumber.browser.ts # Browser build
+    │   └── InputTextPhoneNumber.web.ts    # Web component
     ├── ios/
     │   └── InputTextPhoneNumber.ios.swift # SwiftUI view
     └── android/

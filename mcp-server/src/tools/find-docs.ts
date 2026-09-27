@@ -42,6 +42,7 @@ export { FIND_DOCS_DEFAULT_LIMIT } from '../query/QueryEngine';
 
 export const findDocsTool = {
   name: 'find_docs',
+  annotations: { readOnlyHint: true },
   description:
     'Discover docs by concept/keyword (concept mode, ranked), or enumerate the full ' +
     'catalog (list mode, paginated). Supersedes get_documentation_map.',

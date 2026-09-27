@@ -252,7 +252,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 1 — Distribution substrate & packaging truth
 
-- [ ] 1. Birth detection, root policy, indexer anchoring, and live reindex
+- [x] 1. Birth detection, root policy, indexer anchoring, and live reindex
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet); Lina (Opus) — 1.4
   **Traces**: Reqs 2.1, 2.1a, 2.5, 15A.3, 19A.5a, 3.7a · design C2, C3, DD3, DD23, DD24
@@ -272,14 +272,14 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `src/cli/shared/bornRepo.ts`, `src/cli/shared/mcpDataRoots.ts`, `src/cli/designerpunk.ts`, `application-mcp-server/src/indexer/{ComponentIndexer,TokenIndexer}.ts`, `application-mcp-server/src/**/ModeClassifier.ts`, `application-mcp-server/src/watcher/FileWatcher.ts`, `application-mcp-server/src/index.ts` (StalenessGate), both servers' declaration sites, tests
 
-  - [ ] 1.1 `bornRepo.ts` + `bornRepo.test.ts` (nine cases; boundaries; barrel forms)
-  - [ ] 1.2 The resolvers + the type-level declaration test for both servers
-  - [ ] 1.3 Runner changes (consumer-root defaults removed; user env wins; no `cwd`)
-  - [ ] 1.4 (Lina, Opus) Indexer — **all four written interactions**: (i) multi-root at pass 1 with declared-name precedence and the legacy `core/` level; (ii) **`FileWatcher` + `StalenessGate` + `ComponentIndexer.dataDirs` over the consumer root** (package root exempt); (iii) **pass 3 across roots**; (iv) the reindex path's `lastProjectRoot` replaced by `bornRoot`
-  - [ ] 1.5 `generate`: `token-index/meta.json` `tierDir`; the theme readers use the recorded tier; the write side anchored; the refusals; `figma-*` anchored
-  - [ ] 1.6 The string-conformance test
+  - [x] 1.1 `bornRepo.ts` + `bornRepo.test.ts` (nine cases; boundaries; barrel forms)
+  - [x] 1.2 The resolvers + the type-level declaration test for both servers
+  - [x] 1.3 Runner changes (consumer-root defaults removed; user env wins; no `cwd`)
+  - [x] 1.4 (Lina, Opus) Indexer — **all four written interactions**: (i) multi-root at pass 1 with declared-name precedence and the legacy `core/` level; (ii) **`FileWatcher` + `StalenessGate` + `ComponentIndexer.dataDirs` over the consumer root** (package root exempt); (iii) **pass 3 across roots**; (iv) the reindex path's `lastProjectRoot` replaced by `bornRoot`
+  - [x] 1.5 `generate`: `token-index/meta.json` `tierDir`; the theme readers use the recorded tier; the write side anchored; the refusals; `figma-*` anchored
+  - [x] 1.6 The string-conformance test
 
-- [ ] 2. The birth event: `init`'s copy table and rewrite-by-resolution
+- [x] 2. The birth event: `init`'s copy table and rewrite-by-resolution
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet); Thurgood (Sonnet) — 2.6
   **Traces**: Reqs 19A (.1–.7), 19, 19.4, 15.8, 15A.3, 1.2 · design C1 (rows 0, 2, 3, 3b, 3c, 4, 4′, 9, manifest; **row 5 at Task 22; row 10 at Task 16**), C4, C8 (U1 emission), C27 erratum (the restart line)
@@ -299,14 +299,14 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `src/cli/init.ts`, `src/cli/shared/transforms.ts`, `src/types/index.ts`, `src/cli/__tests__/init.test.ts`, `governance/DesignerPunk-Integration-Guide.md` (the U1 lines)
 
-  - [ ] 2.1 `rewriteByResolution` + the mapping table + the tier boundary; per-row unit tests
-  - [ ] 2.2 Step 0 (birth check, refusals, `--re-scaffold` listing); steps 3/3b/3c/4/4′; `--skip-components` deprecation note
-  - [ ] 2.3 Config generation (1.2 i–iv); the test-config purpose + truthful collision string
-  - [ ] 2.4 Manifest written last, with `origin` per entry, `posture: 'born'`, `installedVersion`
-  - [ ] 2.5 The `tsc` over-rewrite arbiter + its bite; U1 next steps + the restart line
-  - [ ] 2.6 (Thurgood) Integration Guide: the lines U1 falsifies
+  - [x] 2.1 `rewriteByResolution` + the mapping table + the tier boundary; per-row unit tests
+  - [x] 2.2 Step 0 (birth check, refusals, `--re-scaffold` listing); steps 3/3b/3c/4/4′; `--skip-components` deprecation note
+  - [x] 2.3 Config generation (1.2 i–iv); the test-config purpose + truthful collision string
+  - [x] 2.4 Manifest written last, with `origin` per entry, `posture: 'born'`, `installedVersion`
+  - [x] 2.5 The `tsc` over-rewrite arbiter + its bite; U1 next steps + the restart line
+  - [x] 2.6 (Thurgood) Integration Guide: the lines U1 falsifies
 
-- [ ] 3. The packaging floor, `files[]`, and the platform closures
+- [x] 3. The packaging floor, `files[]`, and the platform closures
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Sonnet) — **ESCALATES to Opus / Ada-decide** if: closure 2 shows an unattributed difference; the pack assertion needs a list change not in C5; or a 3.5 verdict is CUT
   **Traces**: Reqs 4.1–4.7, 3.9 · design C5, DD14
@@ -345,14 +345,14 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/floor-closure.ts`, `floor-closure.json`, `scripts/pack-assert.ts`, `package.json`, `tarball-target.json`, `.kiro/issues/<date>-native-component-distribution.md`
 
-  - [ ] 3.1 `floor-closure.ts` (both closures)
-  - [ ] 3.2 Run it; reconcile closure 2 with attribution classes; the closure-1 bite
-  - [ ] 3.3 The U1 `files[]` diff; `pack-assert.ts` reading `floor-closure.json`
-  - [ ] 3.4 The platform-closure rows (iOS + Android) with counts
-  - [ ] 3.5 **Record Kenya's and Data's KEEP-WITH-FOLLOW-UP verdicts quoted; the honest label; commit the shared follow-up issue; route the two defects**
-  - [ ] 3.6 `tarball-target.json` from the post-diet pack
+  - [x] 3.1 `floor-closure.ts` (both closures)
+  - [x] 3.2 Run it; reconcile closure 2 with attribution classes; the closure-1 bite
+  - [x] 3.3 The U1 `files[]` diff; `pack-assert.ts` reading `floor-closure.json`
+  - [x] 3.4 The platform-closure rows (iOS + Android) with counts
+  - [x] 3.5 **Record Kenya's and Data's KEEP-WITH-FOLLOW-UP verdicts quoted; the honest label; commit the shared follow-up issue; route the two defects**
+  - [x] 3.6 `tarball-target.json` from the post-diet pack
 
-- [ ] 4. Per-harness MCP configuration, tool manifest, and product MCP wiring
+- [x] 4. Per-harness MCP configuration, tool manifest, and product MCP wiring
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Sonnet)
   **Traces**: Reqs 5.3, 5.4, 7.1–7.4, 15A.1 · design C8, C10, DD8
@@ -366,12 +366,12 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/build-tool-manifest.ts`, the three servers' registration modules, `src/cli/shared/mcpConfig/{kiro,cc}.ts`, `src/cli/__tests__/init.test.ts`
 
-  - [ ] 4.1 `readOnlyHint` everywhere; `tool-manifest.test.ts`
-  - [ ] 4.2 `build-tool-manifest.ts` wired into the build
-  - [ ] 4.3 The Kiro and CC emitters
-  - [ ] 4.4 Product entry; the `init.test.ts:142` change
+  - [x] 4.1 `readOnlyHint` everywhere; `tool-manifest.test.ts`
+  - [x] 4.2 `build-tool-manifest.ts` wired into the build
+  - [x] 4.3 The Kiro and CC emitters
+  - [x] 4.4 Product entry; the `init.test.ts:142` change
 
-- [ ] 5. `sync` re-scope, key-grain JSON, manifest, and component-copy migration
+- [x] 5. `sync` re-scope, key-grain JSON, manifest, and component-copy migration
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Opus); Ada (Sonnet) — 5.5 token-side strings
   **Traces**: Reqs 5.1, 5.2, 5.5–5.8, 21 · design C7, DD2, DD21
@@ -402,14 +402,14 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `src/cli/sync/{FileScanner,Classifier,Manifest,Applier,Reporter,index,Migration,KeyGrain}.ts`, tests
 
-  - [ ] 5.1 Obtain or record Peter's dp-portfolio check (with its forced negative); fixtures for both branches
-  - [ ] 5.2 Manifest: path, format, fields incl. `posture` and `origin`, keyed entries, pruning incl. the `src/types` string (**¾–1 day**)
-  - [ ] 5.3 Key-grain JSON manager, parsed-value reading, no-write-when-unchanged, three shapes (**~1–1¼ days**)
-  - [ ] 5.4 Managed set; classifications; `removed` scoping; apply behavior; Applier deletion
-  - [ ] 5.5 Component-copy migration (the consumer's rail, cache first; the version range; `transforms.js` from the tarball; per-file; relocation; ordering); **legacy agents/steering retained with the U1 report string**
-  - [ ] 5.6 Repairs (registry pin, tsconfig pin), after the migration fetch
+  - [x] 5.1 Obtain or record Peter's dp-portfolio check (with its forced negative); fixtures for both branches
+  - [x] 5.2 Manifest: path, format, fields incl. `posture` and `origin`, keyed entries, pruning incl. the `src/types` string (**¾–1 day**)
+  - [x] 5.3 Key-grain JSON manager, parsed-value reading, no-write-when-unchanged, three shapes (**~1–1¼ days**)
+  - [x] 5.4 Managed set; classifications; `removed` scoping; apply behavior; Applier deletion
+  - [x] 5.5 Component-copy migration (the consumer's rail, cache first; the version range; `transforms.js` from the tarball; per-file; relocation; ordering); **legacy agents/steering retained with the U1 report string**
+  - [x] 5.6 Repairs (registry pin, tsconfig pin), after the migration fetch
 
-- [ ] 6. The name contract and the type contract
+- [x] 6. The name contract and the type contract
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Ada (Opus)
   **Traces**: Reqs 5A.1–5A.7 · design C7 (name contract), DD10, DD11, DD17, **P1 (YES)**
@@ -436,37 +436,38 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/build-name-contract.ts`, `src/cli/sync/NameContract.ts`, tests
 
-  - [ ] 6.0 **Gate**: verify Lina's Container-Base chore PR has merged (guard test green on `main`)
-  - [ ] 6.1 `build-name-contract.ts` + the mechanical dynamic-site scan + the three dispositions + **the own-index check with its bite**
-  - [ ] 6.2 The check + the P1 tier filter + `cannot check` + the report string
-  - [ ] 6.3 `contractHash`; the type-contract report
-  - [ ] 6.4 Tests and bites
+  - [x] 6.0 **Gate**: verify Lina's Container-Base chore PR has merged (guard test green on `main`)
+  - [x] 6.1 `build-name-contract.ts` + the mechanical dynamic-site scan + the three dispositions + **the own-index check with its bite**
+  - [x] 6.2 The check + the P1 tier filter + `cannot check` + the report string
+  - [x] 6.3 `contractHash`; the type-contract report
+  - [x] 6.4 Tests and bites
 
-- [ ] 7. The publish-rail guard, ballot B-U1, and the CHANGELOG's start
+- [x] 7. The publish-rail guard, ballot B-U1, and the CHANGELOG's start
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
   **Traces**: Reqs 6.1–6.8, 21.2 · design C9, DD12, DD13 (split), DD16 · **SLOT T2** (the queried tag)
 
   **Success Criteria:**
-  - The script matches the drawn form (`set -euo pipefail`; exits 10/11/12/13; `--self-test-host` exits 12 before `PASS`). `shellcheck` is clean, and each exit path's output is committed.
-  - **Three bites committed**:
-    - (1) the 6.3 verbatim command;
-    - (2) `VERSION=99.99.99` → exit 10;
-    - (3) a PATH-shimmed `npm` returning a GitHub Packages tarball URL → exit 11 **through the production line**.
+  - The script matches the drawn form (`set -euo pipefail`; exits 10/11/12/13; `--self-test-host` exits 12 before `PASS`) *(Erratum 2026-09-27 — Stacy R1-1, Peter's ruling: "the drawn form" now means design.md C9's corrected HTTP form — a direct, unauthenticated `curl` GET against `registry.npmjs.org`, with `node -e` parsing and no `npm` CLI anywhere in the line. The original `npm view`-based drawn form is SUPERSEDED; it broke under its own required hermetic isolation env vars and would not have been hermetic even fixed, per C9's own erratum note.)* *(Second erratum, same date, Stacy re-check: the drawn form also gains exit `2` — a named USAGE error for an unset `VERSION`, never bash's own unbound-variable exit 1 — and `curl -q` as its first argument so `~/.curlrc` is never read, with standard proxy env vars deliberately still honoured. "Exits 10/11/12/13" above reads as "exits 2/10/11/12/13.")*. `shellcheck` (the official `/Users/3fn/bin/shellcheck` binary only — never `npx shellcheck`, a third-party wrapper) is clean, and each exit path's output is committed.
+  - **Three bites plus one committed measurement** *(Erratum 2026-09-27: re-measured against the HTTP form; second erratum, same date: a PASS is a measurement, never a "bite" — that word is reserved for a recorded red, per Stacy's re-check — and a fourth bite is added for the new usage exit)*:
+    - the exact step-6 command, run against the real registry for the real published version (`14.1.0`) → **PASS**, the committed measurement — supersedes the original "6.3 verbatim command → red" bite, which quoted the now-superseded `npm view` form;
+    - (1) `VERSION=99.99.99` → exit 10, via a real HTTP 404 from the live registry;
+    - (2) a PATH-shimmed **`curl`** (not `npm`) returning a fixture JSON body whose `dist.tarball` is a GitHub Packages URL → exit 11 **through the production line**;
+    - (3) unset `VERSION` → exit 2, the `USAGE` message (new, second erratum).
   - **T2 ruled (B)**: the guard queries the version as drawn; no tag is involved.
-  - **B-U1** is RATIFIED, with its `Ratified-machine:` line, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 cross-references the standalone T1-(B) ballot** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, RATIFIED Peter 2026-09-26), **whose merge precedes the U1 branch point** (cited by merge commit) (erratum 2026-09-26; it replaces the planned first-commit section).
+  - **B-U1** is RATIFIED *(Erratum 2026-09-27, Task 7.3: the `Ratified-machine:` line is OMITTED, deliberately — following the T1-(B)/`delegated-tier-capture` precedent, not the `2026-09-19-completion-claims-integrity.md` precedent. That mechanism belongs to the one ballot `completion-criteria-parity` parses for its in-force date; reproducing it on B-U1 would create a second parseable record for a checker built to read exactly one. See the ballot's own `Status` block for the reasoning stated in full.)*, before its edits apply. It carries the RELEASE-FLOW step with the paste target, and the register row. The straggler sweep is recorded. **B-U1 cross-references the standalone T1-(B) ballot** (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`, RATIFIED Peter 2026-09-26), **whose merge precedes the U1 branch point** (cited by merge commit) (erratum 2026-09-26; it replaces the planned first-commit section).
   - **`CHANGELOG.md` exists with release 1's consumer-facing entry**, and is in `files[]` (pack check). The entry names what changed for release-1 consumers, including the retained copied agents (Leonardo A5 (ii)), **the removal of the four orphaned Input-Text `.browser.ts` files, and the browser bundles no longer carrying build-machine paths** (both Task 9.0, which runs before Task 7; amendment 2026-09-27).
   - *Scope stated*: npmjs visibility and tarball host only.
 
   **Primary Artifacts:** `scripts/verify-publish-rail.sh`, `scripts/__bites__/`, `.kiro/docs/ballots/<date>-123-b-u1-publish-rail.md`, `.kiro/hooks/RELEASE-FLOW.md`, `governance/classification-map.md`, `CHANGELOG.md`, `package.json`
 
-  - [ ] 7.0 **FIRST on the U1 branch**: verify that the standalone T1-(B) ballot is merged on `main` and reads RATIFIED; record its merge SHA; B-U1 cross-references it (erratum 2026-09-26: it replaces committing the section here)
-  - [ ] 7.1 Script + self-test + empty-URL branch
-  - [ ] 7.2 The three bites
-  - [ ] 7.3 B-U1 record-first; Stacy's review of the register row
-  - [ ] 7.4 `CHANGELOG.md` with release 1's entry (incl. 9.0's two changes, taken from the 9.0 subtask doc) + the `files[]` entry
+  - [x] 7.0 **FIRST on the U1 branch**: verify that the standalone T1-(B) ballot is merged on `main` and reads RATIFIED; record its merge SHA; B-U1 cross-references it (erratum 2026-09-26: it replaces committing the section here)
+  - [x] 7.1 Script + self-test + empty-URL branch
+  - [x] 7.2 The three bites
+  - [x] 7.3 B-U1 record-first; Stacy's review of the register row
+  - [x] 7.4 `CHANGELOG.md` with release 1's entry (incl. 9.0's two changes, taken from the 9.0 subtask doc) + the `files[]` entry
 
-- [ ] 8. The harvest-zero lint
+- [x] 8. The harvest-zero lint
 
   **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Ada (Sonnet)
   **Traces**: Reqs 8.1–8.4 · design C11
@@ -477,10 +478,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `src/cli/loadComponentTokens.ts`, tests
 
-  - [ ] 8.1 Gate: the rename merged; the zero-warning run before the lint lands
-  - [ ] 8.2 Tally + warning + fixture test
+  - [x] 8.1 Gate: the rename merged; the zero-warning run before the lint lands
+  - [x] 8.2 Tally + warning + fixture test
 
-- [ ] 9. Consumer-guard extensions and U1 post-diet re-certification (**U1 gating parent**)
+- [x] 9. Consumer-guard extensions and U1 post-diet re-certification (**U1 gating parent**)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Sonnet); Lina (Sonnet) — 9.0
   **Traces**: Reqs 3.1–3.9, 5A · design C6 · **9.0: Peter's ruling 2026-09-27 (amendment; pre-release-1 hygiene — `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`, `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md`)**
@@ -504,11 +505,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tests/consumer-integration.test.ts`, fixtures, **9.0:** `scripts/esbuild-css-plugin.js`, `scripts/build-browser-bundles.js`, `scripts/build-name-contract.ts`, `scripts/__tests__/build-name-contract.test.ts`, `src/__tests__/browser-bundle-no-absolute-paths.test.ts` (new), `src/components/core/Input-Text-{Base,Email,Password,PhoneNumber}/platforms/web/*.browser.ts` (the four files, deleted), `src/components/core/Input-Text-Base/__tests__/InputTextFamily.token-resolution.test.ts`, `src/components/core/Input-Text-{Email,Password,PhoneNumber}/README.md`, `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`, `.kiro/issues/2026-09-26-input-text-browser-ts-orphans.md` (both closed and moved to `.kiro/issues/archive/`), `.kiro/issues/archive/2026-09-26-input-text-phantom-css-vars.md`, `.kiro/issues/archive/2026-09-26-container-base-phantom-css-vars.md` (dated addenda)
 
-  - [ ] 9.0 (Lina, Sonnet) **Runs before Task 7** (amendment 2026-09-27): (a) the bundle absolute-path fix, with the name-contract parser updated in the same change and its ⊆ bite re-run; (b) #204 — confirm orphaned, delete the four `.browser.ts` files, trim the Input-Text guard, update the READMEs, add the #202 addenda; close both issues; hand the CHANGELOG content to 7.4
-  - [ ] 9.1 Birth/posture cases, **incl. package-mode generate from the packed install + the drop-a-file bite**
-  - [ ] 9.2 Root/union cases
-  - [ ] 9.3 Copy cases; the packed name-contract case
-  - [ ] 9.4 Bites recorded; the post-diet re-certification (ancestry-checked); full validation; open the U1 PR
+  - [x] 9.0 (Lina, Sonnet) **Runs before Task 7** (amendment 2026-09-27): (a) the bundle absolute-path fix, with the name-contract parser updated in the same change and its ⊆ bite re-run; (b) #204 — confirm orphaned, delete the four `.browser.ts` files, trim the Input-Text guard, update the READMEs, add the #202 addenda; close both issues; hand the CHANGELOG content to 7.4
+  - [x] 9.1 Birth/posture cases, **incl. package-mode generate from the packed install + the drop-a-file bite**
+  - [x] 9.2 Root/union cases
+  - [x] 9.3 Copy cases; the packed name-contract case
+  - [x] 9.4 Bites recorded; the post-diet re-certification (ancestry-checked); full validation; open the U1 PR
 
 ### UNIT 2 — Consumer generation profile (the § 7.2 machinery; G1 and G2)
 

@@ -44,12 +44,13 @@
  */
 import * as path from 'path';
 import * as fs from 'fs';
+import type { DesignSystemRoot, PartialCase } from './bornRepo';
 
 // Re-exported so MCP server entry points need exactly ONE shared require.
 export { resolvePackageRoot } from './resolvePackageRoot';
 
 /** Which resolution source won for a data root. */
-export type DataRootSource = 'env' | 'cwd' | 'package';
+export type DataRootSource = 'env' | 'cwd' | 'package' | 'package-consume';
 
 /** A resolved data root: absolute path + which source won. */
 export interface ResolvedDataRoot {
@@ -78,6 +79,17 @@ export function resolvePackageOwnedRoot(opts: {
 }
 
 /**
+ * @deprecated Spec 123 Task 1.2 — superseded by the birth-aware resolvers below
+ * (`resolveComponentRoots`, `resolveTokenIndexRoot`, `resolveProductRoot`), which
+ * consult a `DesignSystemRoot` (from `bornRepo.findDesignSystemRoot`) instead of a
+ * bare cwd-existence check. This function does not know about `born` /
+ * `package-mode` / `partial` — a cwd-relative `token-index/` in an UNRELATED
+ * directory (e.g. a stray leftover) would win over the correct package fallback.
+ * KEPT, UNCHANGED, so the three servers' `require.main` bootstrap blocks keep
+ * compiling and behaving exactly as before until Tasks 1.4–1.6 (indexer multi-root
+ * consumption, `generate`'s tier-aware writes, and the servers' bootstrap rewiring)
+ * land together. Do not add new callers.
+ *
  * Resolve a CONSUMER-OWNED data root: env var → cwd-relative (if exists AND
  * non-empty) → package-relative fallback (only when `packageRoot` is provided).
  * When `packageRoot` is omitted (product server's `product/` root), the
@@ -119,4 +131,167 @@ function existsNonEmpty(p: string): boolean {
   } catch {
     return false;
   }
+}
+
+/** True when `p` does not exist, or exists as an empty directory. */
+function isAbsentOrEmptyDir(p: string): boolean {
+  try {
+    const stat = fs.statSync(p);
+    if (stat.isDirectory()) {
+      return fs.readdirSync(p).length === 0;
+    }
+    return false;
+  } catch {
+    return true;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Birth-aware resolvers (Spec 123 Task 1.2 — design.md § "C3. The root-policy
+// table as code"). These consult a `DesignSystemRoot` (from
+// `bornRepo.findDesignSystemRoot`) rather than a bare cwd-existence check, so
+// resolution is correct across born / package-mode / partial / unborn.
+//
+// NOTE (application-time sequencing — flagged for the orchestrator/Task 1
+// primary, not resolved unilaterally here): these resolvers are NEW, pure,
+// fully unit-tested functions. They are NOT YET wired into the three servers'
+// `require.main` bootstrap blocks — that wiring requires `ComponentIndexer` to
+// accept a component-root ARRAY (the union at pass 1, Task 1.4 — Lina) and
+// `generate`'s tier-aware `token-index/meta.json` write (Task 1.5). Wiring the
+// servers' bootstrap to these resolvers before 1.4/1.5 land would either (a)
+// silently drop union semantics by picking `roots[0]`, or (b) require a shape
+// change to `DataPaths.componentsDir` outside this subtask's scope. Left as an
+// explicit fork for Task 1.4/1.5/1.6 to resolve, not absorbed here.
+// ---------------------------------------------------------------------------
+
+/** The result of resolving the component-root UNION (C3: consumer ∪ package). */
+export interface ComponentRootsResult {
+  /** `[consumerRoot?, packageRoot]` — the union, consumer-first for precedence. */
+  roots: string[];
+  /** Parallel to `roots`: which source produced each entry. */
+  sources: DataRootSource[];
+}
+
+/**
+ * Resolve the component-root UNION (C3 "Resolver" § `resolveComponentRoots`).
+ * `consumerRoot` = the env value if set, else `bornRoot/src/components` when
+ * `dsRoot.state === 'born'`; absent otherwise (package-mode, partial, unborn,
+ * with no explicit env). **The env value names the consumer root, never the
+ * only root** — `packageRoot` is always present in `roots` too, so the union
+ * (and the fork-precedence-on-declared-name rule, Task 1.4) still applies.
+ */
+export function resolveComponentRoots(opts: {
+  /** The env-var value, if set (e.g. process.env.COMPONENTS_DIR / COMPONENT_DIR). */
+  envValue?: string;
+  /** The caller's birth-detection result (`bornRepo.findDesignSystemRoot`). */
+  dsRoot: DesignSystemRoot;
+  /** Absolute package root (from `resolvePackageRoot`). */
+  packageRoot: string;
+}): ComponentRootsResult {
+  const roots: string[] = [];
+  const sources: DataRootSource[] = [];
+
+  if (opts.envValue) {
+    roots.push(path.resolve(opts.envValue));
+    sources.push('env');
+  } else if (opts.dsRoot.state === 'born' && opts.dsRoot.root) {
+    roots.push(path.join(opts.dsRoot.root, 'src', 'components'));
+    sources.push('cwd');
+  }
+
+  roots.push(path.resolve(opts.packageRoot, 'src', 'components', 'core'));
+  sources.push('package');
+
+  return { roots, sources };
+}
+
+/** The result of resolving the token-index root (C3 "Resolver" § `resolveTokenIndexRoot`). */
+export type TokenIndexResolution =
+  | {
+      ok: true;
+      path: string;
+      source: DataRootSource;
+      /** Set for package-mode and unborn — never for `born`. */
+      tokenOrigin?: 'designerpunk-package-mode' | 'designerpunk-reference';
+    }
+  | { ok: false; reason: 'empty-env-value' }
+  | { ok: false; reason: 'run-generate' }
+  | { ok: false; reason: 'partial'; partialCase?: PartialCase };
+
+/**
+ * Resolve the token-index root (C3):
+ * - explicit env value absent-or-empty on disk → error, in ANY posture;
+ * - `born` → `bornRoot/token-index`, erroring ("run generate") if absent/empty;
+ * - `package-mode` → `root/token-index`, labelled `designerpunk-package-mode`,
+ *   erroring ("run generate") if absent/empty — safe here because a config exists;
+ * - `partial` → its own error, naming the sub-case — NEVER "run generate";
+ * - `unborn` → the package index, `source: 'package-consume'`, labelled
+ *   `tokenOrigin: 'designerpunk-reference'`.
+ *
+ * Message-string assembly (the catalog rows) is a Task 1.6 concern — this
+ * resolver returns structured reasons only.
+ */
+export function resolveTokenIndexRoot(opts: {
+  /** The env-var value, if set (e.g. process.env.TOKEN_INDEX_DIR). */
+  envValue?: string;
+  /** The caller's birth-detection result (`bornRepo.findDesignSystemRoot`). */
+  dsRoot: DesignSystemRoot;
+  /** Absolute package root (from `resolvePackageRoot`). */
+  packageRoot: string;
+}): TokenIndexResolution {
+  if (opts.envValue !== undefined) {
+    if (opts.envValue === '') {
+      return { ok: false, reason: 'empty-env-value' };
+    }
+    const resolved = path.resolve(opts.envValue);
+    if (isAbsentOrEmptyDir(resolved)) {
+      return { ok: false, reason: 'empty-env-value' };
+    }
+    return { ok: true, path: resolved, source: 'env' };
+  }
+
+  switch (opts.dsRoot.state) {
+    case 'born': {
+      const indexPath = path.join(opts.dsRoot.root as string, 'token-index');
+      if (isAbsentOrEmptyDir(indexPath)) return { ok: false, reason: 'run-generate' };
+      return { ok: true, path: indexPath, source: 'cwd' };
+    }
+    case 'package-mode': {
+      const indexPath = path.join(opts.dsRoot.root as string, 'token-index');
+      if (isAbsentOrEmptyDir(indexPath)) return { ok: false, reason: 'run-generate' };
+      return { ok: true, path: indexPath, source: 'cwd', tokenOrigin: 'designerpunk-package-mode' };
+    }
+    case 'partial':
+      return { ok: false, reason: 'partial', partialCase: opts.dsRoot.partialCase };
+    case 'unborn':
+    default:
+      return {
+        ok: true,
+        path: path.resolve(opts.packageRoot, 'token-index'),
+        source: 'package-consume',
+        tokenOrigin: 'designerpunk-reference',
+      };
+  }
+}
+
+/**
+ * Resolve the product root (C3): env, else `bornRoot/product` (born,
+ * package-mode OR partial — any state with a resolved `root`), else
+ * `cwd/product` (unborn — unchanged from the pre-123 behavior).
+ */
+export function resolveProductRoot(opts: {
+  /** The env-var value, if set (e.g. process.env.PRODUCT_DIR). */
+  envValue?: string;
+  /** The caller's birth-detection result (`bornRepo.findDesignSystemRoot`). */
+  dsRoot: DesignSystemRoot;
+  /** The invoking process's cwd (the unborn fallback base). */
+  cwd: string;
+}): ResolvedDataRoot {
+  if (opts.envValue) {
+    return { path: path.resolve(opts.envValue), source: 'env' };
+  }
+  if (opts.dsRoot.state !== 'unborn' && opts.dsRoot.root) {
+    return { path: path.join(opts.dsRoot.root, 'product'), source: 'cwd' };
+  }
+  return { path: path.resolve(opts.cwd, 'product'), source: 'cwd' };
 }

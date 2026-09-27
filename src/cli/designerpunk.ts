@@ -26,8 +26,10 @@ import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
 import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
-import { runSync } from './sync';
+import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
+import { findDesignSystemRoot } from './shared/bornRepo';
+import { partialCaseMessage } from './shared/errorCatalog';
 
 async function main() {
   const command = process.argv[2];
@@ -91,9 +93,88 @@ async function runValidateCommand() {
   }
 }
 
+/**
+ * Resolve the component-schema scan root the token-index's consumer map reads
+ * (Class C′, Spec 118 Task 9.5.2; Spec 123 U1 fix-up, 2026-09-26 —
+ * `.kiro/issues/2026-09-26-product-server-component-root.md`'s sibling defect).
+ *
+ * Design intent, confirmed against requirements.md Req 3.5 (the tasks-round text):
+ * "The Class C′ fixture SHALL be re-premised: it builds on the `src/components/core`
+ * copy, which Requirement 19A removes ... It SHALL be re-authored to build the
+ * consumer's component tree FROM NOTHING" — i.e. in a BORN repo, the consumer's own
+ * (Model B) component tree is `<bornRoot>/src/components`, never `.../core` (Req
+ * 19A.2 removes the `core` copy; Req 19A.6 creates `src/components/` directly,
+ * empty). The consumer map SHALL therefore reflect THAT tree, not a path `init`
+ * no longer writes to.
+ *
+ * Every other state (package-mode — including the steward repo's own dev-mode
+ * classification — partial, unborn) is UNCHANGED: `<configDir>/src/components/core`,
+ * exactly as before this fix. `generate` already refuses outright on `partial`
+ * before this function is ever called (see the caller), so only 'born' and
+ * 'package-mode'/'unborn' are live branches here in practice.
+ *
+ * Legacy `core/` level (born only): a pre-123 consumer who has not yet run
+ * `sync --migrate-components` may still have real components nested at
+ * `src/components/core/<Name>/` (the pre-123 copy layout). Mirrors
+ * `ComponentIndexer.collectComponentSources`'s own precedence (Task 1.4): a
+ * `core/` directory that is NOT itself a component dir but CONTAINS component
+ * dirs is a legacy level, used only when the flat (post-123) root holds none.
+ */
+export function resolveComponentSchemaDir(
+  dsRoot: Pick<import('./shared/bornRepo').DesignSystemRoot, 'state' | 'root'>,
+  configDir: string,
+): string {
+  if (dsRoot.state !== 'born' || !dsRoot.root) {
+    return path.resolve(configDir, 'src/components/core');
+  }
+
+  const isComponentDir = (dir: string): boolean => {
+    try {
+      const files = fs.readdirSync(dir);
+      return files.some((f) => f.endsWith('.schema.yaml')) || files.includes('contracts.yaml');
+    } catch {
+      return false;
+    }
+  };
+  const hasComponentDirs = (dir: string): boolean => {
+    try {
+      return fs
+        .readdirSync(dir, { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .some((d) => isComponentDir(path.join(dir, d.name)));
+    } catch {
+      return false;
+    }
+  };
+
+  const flatRoot = path.resolve(dsRoot.root, 'src/components');
+  if (hasComponentDirs(flatRoot)) return flatRoot;
+
+  const legacyRoot = path.join(flatRoot, 'core');
+  if (!isComponentDir(legacyRoot) && hasComponentDirs(legacyRoot)) return legacyRoot;
+
+  // Neither holds components yet (a freshly-born repo, README-only) — the flat
+  // (post-123) convention is the correct root regardless; buildConsumerMap
+  // returns an empty map for it, which is correct (no consumers to report).
+  return flatRoot;
+}
+
 /** @internal Exported for testing */
 export async function runGenerate(force = false) {
-  const config = await loadConfig(process.cwd());
+  // Spec 123 Task 1.5 (C2 consumer #4): BOTH the read side (the config) and the
+  // write side (token-index/ and platform output) anchor to the discovered ROOT —
+  // never a bare process.cwd() — so `generate` behaves correctly from a
+  // subdirectory of a born/package-mode repo, and REFUSES in a partial one rather
+  // than guessing (all four partial sub-cases carry their own catalog string).
+  const dsRoot = findDesignSystemRoot(process.cwd());
+  if (dsRoot.state === 'partial' && dsRoot.partialCase) {
+    console.error(`❌ ${partialCaseMessage(dsRoot.root ?? process.cwd(), dsRoot.partialCase, dsRoot.attemptedTokenSource)}`);
+    process.exit(1);
+    return;
+  }
+  const generateRoot = dsRoot.root ?? process.cwd();
+
+  const config = await loadConfig(generateRoot);
   const tokens = resolveTokens(config);
 
   // Load component tokens from source presence (the convention dir
@@ -131,20 +212,29 @@ export async function runGenerate(force = false) {
     // returns the resolved truth; the index consumes the SAME object — no re-derivation.
     const modeResolved = generateTokenFiles(tokens, config);
 
-    // Class C′ (Spec 118 Task 9.5.2, ratified default-only): resolve the component-schema
-    // scan root from the consumer's config so the token-index's consumer map reflects the
-    // consumer's design system — the same source the application MCP reads. Default to
-    // `<configDir>/src/components/core` (the location `init` writes to and MCP's
-    // COMPONENTS_DIR points at). Resolved HERE (config in scope), passed into the
-    // generator, which stays a pure function of its inputs.
-    const componentSchemaDir = path.resolve(config.configDir, 'src/components/core');
+    // Class C′ (Spec 118 Task 9.5.2, ratified default-only; U1 fix-up 2026-09-26 —
+    // `.kiro/issues/2026-09-26-product-server-component-root.md`): resolve the
+    // component-schema scan root from the consumer's config so the token-index's
+    // consumer map reflects the consumer's design system — the same source the
+    // application MCP reads. In a BORN repo that is `<bornRoot>/src/components`
+    // (Req 19A.2/19A.6 — `init` no longer writes a `core/` copy); every other
+    // state keeps `<configDir>/src/components/core` (the steward repo's own
+    // package-mode classification is UNCHANGED). See `resolveComponentSchemaDir`
+    // above. Resolved HERE (config + dsRoot in scope), passed into the generator,
+    // which stays a pure function of its inputs.
+    const componentSchemaDir = resolveComponentSchemaDir(dsRoot, config.configDir);
 
-    generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
+    // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
+    generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
       modeResolved,
       componentSchemaDir,
+      // DD24: the live tier this index's data came from — written into
+      // token-index/meta.json so the theme readers can follow it later,
+      // wherever this index ends up being served from.
+      tierDir: config.tokenSourceRoot,
     });
     console.log('✅ System tokens generated');
   } catch (err) {
@@ -220,27 +310,31 @@ export async function runProductOnly(force = false) {
 async function runMcpApp() {
   const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/application-mcp.js');
-  const componentsDir = path.join(pkgRoot, 'src/components/core');
+  // CONSUMER-OWNED roots (COMPONENTS_DIR, TOKEN_INDEX_DIR) get NO runner default
+  // (Spec 123 Task 1.3, design.md § "C3. The root-policy table as code" — the
+  // Runner table's "Runner default: none" row). The server's own bootstrap now
+  // resolves these itself via `findDesignSystemRoot` + the birth-aware resolvers
+  // (`resolveComponentRoots` / `resolveTokenIndexRoot`), which know about
+  // born/package-mode/partial/unborn — a hardcoded pkgRoot value here would
+  // silently shadow that resolution (and any user-set env) forever.
   const patternsDir = path.join(pkgRoot, 'experience-patterns');
   const templatesDir = path.join(pkgRoot, 'layout-templates');
   const guidanceDir = path.join(pkgRoot, 'family-guidance');
   const registryPath = path.join(pkgRoot, 'family-registry.yaml');
-  const tokenIndexDir = path.join(pkgRoot, 'token-index');
   const designLanguagePath = path.join(pkgRoot, 'design-philosophy.yaml');
 
   console.error('DesignerPunk Application MCP');
   console.error(`  Protocol: stdio`);
-  console.error(`  Data: ${componentsDir}`);
   console.error(`  Server: ${serverBundle}`);
   console.error('  Starting...\n');
 
+  // PACKAGE-OWNED roots keep their pkgRoot default (Runner table: "Runner
+  // default: pkgRoot"). `spawnServer` still lets a user-set env value win.
   const envVars: Record<string, string> = {
-    COMPONENTS_DIR: componentsDir,
     PATTERNS_DIR: patternsDir,
     TEMPLATES_DIR: templatesDir,
     GUIDANCE_DIR: guidanceDir,
     REGISTRY_PATH: registryPath,
-    TOKEN_INDEX_DIR: tokenIndexDir,
   };
   if (fs.existsSync(designLanguagePath)) {
     envVars.DESIGN_LANGUAGE_PATH = designLanguagePath;
@@ -266,29 +360,37 @@ async function runMcpDocs() {
 async function runMcpProduct() {
   const pkgRoot = resolvePackageRoot(__dirname);
   const serverBundle = path.join(pkgRoot, 'dist/mcp/product-mcp.js');
-  const productDir = process.env.PRODUCT_DIR || path.resolve(process.cwd(), 'product');
-  const componentDir = path.join(pkgRoot, 'src/components/core');
-  const tokenIndexDir = path.join(pkgRoot, 'token-index');
 
   console.error('DesignerPunk Product MCP');
   console.error(`  Protocol: stdio`);
-  console.error(`  Data: ${productDir}`);
   console.error(`  Server: ${serverBundle}`);
   console.error('  Starting...\n');
 
-  spawnServer(serverBundle, {
-    PRODUCT_DIR: productDir,
-    COMPONENT_DIR: componentDir,
-    TOKEN_INDEX_DIR: tokenIndexDir,
-  }, true);
+  // PRODUCT_DIR, COMPONENT_DIR and TOKEN_INDEX_DIR are all CONSUMER-OWNED roots
+  // (Spec 123 Task 1.3): the runner sets NO default for any of them. The
+  // server's own bootstrap resolves them via `findDesignSystemRoot` +
+  // `resolveProductRoot` / `resolveComponentRoots` / `resolveTokenIndexRoot`.
+  spawnServer(serverBundle, {}, true);
 }
 
-/** Spawn a server as a child process. Uses node for bundled JS, tsx for TypeScript. */
-function spawnServer(entryPoint: string, envVars: Record<string, string>, bundled: boolean = false) {
+/**
+ * Spawn a server as a child process. Uses node for bundled JS, tsx for TypeScript.
+ *
+ * Spec 123 Task 1.3 (C2 D-B3 / C3):
+ * - **User-set data-root env wins**: `process.env` is spread AFTER `envVars`, so
+ *   any data-root value the invoking shell/harness already set (e.g. a user's own
+ *   `COMPONENTS_DIR`) is never shadowed by this runner's own defaults.
+ * - **No `cwd` option is passed** — load-bearing: the spawned server's
+ *   `process.cwd()` is whatever the launching harness set, and `findDesignSystemRoot`
+ *   (C2) requires that inherited cwd to walk from the right place.
+ *
+ * @internal Exported for testing.
+ */
+export function spawnServer(entryPoint: string, envVars: Record<string, string>, bundled: boolean = false) {
   const runner = bundled ? 'node' : resolveTsRunner();
 
   const child = spawn(runner, [entryPoint], {
-    env: { ...process.env, ...envVars },
+    env: { ...envVars, ...process.env },
     stdio: 'inherit',
   });
 
@@ -347,12 +449,7 @@ async function runFigmaCommand(script: 'figma-push' | 'figma-extract') {
 }
 
 async function runSyncCommand() {
-  const flags = process.argv.slice(3);
-  await runSync({
-    dryRun: flags.includes('--dry-run'),
-    force: flags.includes('--accept-all') || flags.includes('--force'),
-    projectRoot: process.cwd(),
-  });
+  await runSync({ ...parseSyncArgs(process.argv.slice(3)), projectRoot: process.cwd() });
 }
 
 function printHelp() {
@@ -363,7 +460,7 @@ Usage:
   npx designerpunk init            Bootstrap a new product repo
   npx designerpunk sync            Detect and apply package updates
   npx designerpunk sync --dry-run  Preview what sync would do (no changes)
-  npx designerpunk sync --accept-all    Accept all updates without prompting
+  npx designerpunk sync --apply   Apply updates without the confirmation prompt (off a terminal)
   npx designerpunk generate        Generate token files from designerpunk.config.ts
   npx designerpunk generate --force              Regenerate all (skip staleness check)
   npx designerpunk generate --product-only       Skip system tokens, regenerate product only

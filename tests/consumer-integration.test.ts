@@ -26,6 +26,139 @@ import * as os from 'os';
 const PKG_ROOT = path.resolve(__dirname, '..');
 const TIMEOUT = 120_000; // 2 minutes for the full flow
 
+// ---------------------------------------------------------------------------
+// Spec 123 Task 9 (C6 "Consumer-guard extensions") shared helpers.
+//
+// These back the 19 U1-scheduled named cases in the describe blocks below
+// (§ "Spec 123 Task 9.1/9.2/9.3"). Every case runs against the SAME packed
+// install this file already pays for (outer beforeAll's pack → install),
+// spawning the real installed CLI/MCP bundles from bespoke subdirectories —
+// never an in-repo load (Req 3.1 AC1).
+// ---------------------------------------------------------------------------
+
+/**
+ * The resolved (symlink-free) form of a path. macOS's `os.tmpdir()` returns a
+ * path under `/var/folders/...`, itself a symlink to `/private/var/folders/...`.
+ * A spawned child's own `process.cwd()` reports the REALPATH (`getcwd()`
+ * resolves symlinks), so any exact-string comparison against a catalog message
+ * `findDesignSystemRoot` embeds (which is built from the child's own cwd) must
+ * compare against the realpath, not the host-side `tempDir` string.
+ */
+function realDir(p: string): string {
+  return fs.realpathSync(p);
+}
+
+function mkdirp(p: string): void {
+  fs.mkdirSync(p, { recursive: true });
+}
+
+function writeFileEnsured(filePath: string, content: string): void {
+  mkdirp(path.dirname(filePath));
+  fs.writeFileSync(filePath, content);
+}
+
+/**
+ * Write a `.git` FILE boundary (never a directory) at `dir` — C2's walk tests signals
+ * FIRST, then checks for a stop (`.git`, as either a file [worktrees/submodules] or a
+ * directory). Every "fresh/independent" C6 fixture below lives as a SUBDIRECTORY of the
+ * outer `tempDir` (already born, to share its one pack → install), so WITHOUT this
+ * boundary a fixture with no signal of its own at ITS OWN root would ascend straight
+ * into tempDir's real birth signals and be classified against the WRONG repo. This does
+ * not affect `npx`/Node's OWN module resolution (which walks for `node_modules`,
+ * unrelated to `.git`), so the fixture still finds the shared install.
+ */
+function gitBoundary(dir: string): void {
+  mkdirp(dir);
+  fs.writeFileSync(path.join(dir, '.git'), 'gitdir: ../nonexistent-c6-fixture-boundary\n');
+}
+
+/**
+ * A minimal, TEXTUALLY-valid DesignerPunk tier (C2's textual barrel check —
+ * `isDesignerPunkTier` reads `index.ts`/`semantic/index.ts` as text, never
+ * loads them). Sufficient for CLASSIFICATION-only fixtures, in one of the
+ * three accepted export forms (Ada R2 advisory; C6 "barrel export forms").
+ */
+function writeMinimalTier(tierDir: string, form: 'function' | 'const' | 're-export' = 'function'): void {
+  if (form === 'function') {
+    writeFileEnsured(path.join(tierDir, 'index.ts'), `export function getAllPrimitiveTokens() { return []; }\n`);
+    writeFileEnsured(path.join(tierDir, 'semantic', 'index.ts'), `export function getAllSemanticTokens() { return []; }\n`);
+  } else if (form === 'const') {
+    writeFileEnsured(path.join(tierDir, 'index.ts'), `export const getAllPrimitiveTokens = () => [];\n`);
+    writeFileEnsured(path.join(tierDir, 'semantic', 'index.ts'), `export const getAllSemanticTokens = () => [];\n`);
+  } else {
+    writeFileEnsured(path.join(tierDir, '_impl.ts'), `export function getAllPrimitiveTokens() { return []; }\n`);
+    writeFileEnsured(path.join(tierDir, 'index.ts'), `export { getAllPrimitiveTokens } from './_impl';\n`);
+    writeFileEnsured(path.join(tierDir, 'semantic', '_impl.ts'), `export function getAllSemanticTokens() { return []; }\n`);
+    writeFileEnsured(path.join(tierDir, 'semantic', 'index.ts'), `export { getAllSemanticTokens } from './_impl';\n`);
+  }
+}
+
+/** Spawn the CLI runner (`npx designerpunk <args>`) from an arbitrary cwd with optional extra env. */
+function spawnCli(args: string[], opts: { cwd: string; env?: Record<string, string> }): ChildProcess {
+  return spawn('npx', ['designerpunk', ...args], {
+    cwd: opts.cwd,
+    stdio: ['pipe', 'pipe', 'pipe'],
+    env: { ...process.env, ...opts.env },
+  });
+}
+
+/** Spawn a bundled server file directly (`node <bundlePath>`) — mirrors what a scaffolded
+ *  MCP config (`.mcp.json` / `.kiro/settings/mcp.json`) invokes, as opposed to the CLI
+ *  runner (`npx designerpunk mcp:app`/`mcp:product`) — the "both launch paths" case.
+ */
+function spawnNodeBundle(scriptPath: string, opts: { cwd: string; env?: Record<string, string> }): ChildProcess {
+  return spawn('node', [scriptPath], {
+    cwd: opts.cwd,
+    stdio: ['pipe', 'pipe', 'pipe'],
+    env: { ...process.env, ...opts.env },
+  });
+}
+
+/** Collect stderr until `predicate` matches, or `timeoutMs` elapses; always kills the child. */
+function captureStderrUntil(
+  child: ChildProcess,
+  predicate: (buf: string) => boolean,
+  timeoutMs = 10_000,
+): Promise<string> {
+  return new Promise((resolve) => {
+    let buf = '';
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      child.stderr?.off('data', onData);
+      child.kill();
+      resolve(buf);
+    };
+    const onData = (d: Buffer) => {
+      buf += d.toString();
+      if (predicate(buf)) finish();
+    };
+    child.stderr?.on('data', onData);
+    const timer = setTimeout(finish, timeoutMs);
+  });
+}
+
+/** Run a CLI command to completion, returning `{code, stdout, stderr}` without throwing. */
+function runCliCapture(
+  args: string[],
+  opts: { cwd: string; env?: Record<string, string>; timeoutMs?: number },
+): { code: number; stdout: string; stderr: string } {
+  try {
+    const stdout = execSync(`npx designerpunk ${args.join(' ')}`, {
+      cwd: opts.cwd,
+      encoding: 'utf-8',
+      timeout: opts.timeoutMs ?? 60_000,
+      env: { ...process.env, ...opts.env },
+    });
+    return { code: 0, stdout, stderr: '' };
+  } catch (err: unknown) {
+    const e = err as { status?: number; stdout?: string; stderr?: string };
+    return { code: e.status ?? 1, stdout: e.stdout ?? '', stderr: e.stderr ?? '' };
+  }
+}
+
 describe('Consumer Integration (Spec 106 R8)', () => {
   let tempDir: string;
   let tarballPath: string;
@@ -87,15 +220,29 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     // component `.tokens.ts` brands its result in that copy and the parent harvest must
     // recover it BY VALUE across the boundary. A broken brand (e.g. a plain Symbol()) would
     // silently harvest zero here, so this is the lane where it is falsifiable (same-process
-    // tests pass for both correct and broken). Assert N>0 component tokens specifically
-    // containing `inputradio.box.sm` — the canonical recovered token from Spec 117's
-    // 33-token baseline. Spec 124 certifies on the current register-keep bin; the
-    // registerless re-cert is 118's 9.5.3 (R7 AC3).
+    // tests pass for both correct and broken).
+    //
+    // Spec 123 Requirement 3.2 — RE-KEYED onto a CONSUMER-TREE component token (was
+    // `inputradio.box.sm`, which lived in `src/components/core/Input-Radio-Base`, a copy
+    // Requirement 19A.2 removes — that assertion went stale and stayed silently green only
+    // because nothing re-ran it against a post-diet pack). `progress.node.size.sm` lives in
+    // `src/tokens/component/progress.ts`, which `init` copies as part of the consumer's OWN
+    // token tier under Model B (Req 19A.1) and Source 1 of `loadComponentTokens` harvests
+    // from `{tokenSourceRoot}/component/`. This keeps the dual-instance property on the path
+    // a consumer actually runs (C6 "brand-survival — consumer-tree component token").
+    //
+    // The two mechanical clauses this re-key requires (Req 3.2, GAP-closing) are BITES —
+    // manual verification exercises recorded in the Task 9 completion docs, not shipped
+    // negative test code (the project's established pattern for source-mutation bites):
+    //   (a) swap `defineComponentTokens`'s brand for a plain `Symbol()` → this assertion
+    //       goes RED (the same-process lane would still false-green).
+    //   (b) is the AUTOMATED companion below ("C6: brand-survival — consumer-tree
+    //       provenance") — remove the consumer-tree source file → the token disappears.
     const componentsYaml = path.join(tempDir, 'token-index', 'components.yaml');
     expect(fs.existsSync(componentsYaml)).toBe(true);
     const componentsRaw = fs.readFileSync(componentsYaml, 'utf-8');
     expect(componentsRaw.trim().length).toBeGreaterThan(0); // N>0: not the empty silent-zero
-    expect(componentsRaw).toContain('inputradio.box.sm');
+    expect(componentsRaw).toContain('progress.node.size.sm');
   }, TIMEOUT);
 
   // SKIPPED: `validate` fails its "Mathematical relationships" check — a pre-existing
@@ -587,5 +734,762 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       },
       TIMEOUT,
     );
+  });
+
+  /**
+   * Spec 123 Task 9 — Consumer-guard extensions (C6) and U1 post-diet re-certification.
+   *
+   * Every case below is one of the 19 U1-scheduled rows of design.md § "C6. Consumer-guard
+   * extensions" (the two rows NOT scheduled for U1 — `attach --reference stays CONSUME` and
+   * the lane half of `post-diet re-certification` — move to U2 per tasks.md's sequencing
+   * decision 4). Each case runs against the SAME packed install (never in-repo — Req 3.1
+   * AC1), reusing the outer `beforeAll`'s pack → install and, where noted, `tempDir` itself
+   * (already born + generated by the tests above).
+   *
+   * Scope note (recorded once, applies to every case in this section): these are FUNCTIONAL
+   * arbiters for the property each C6 row names, not an exhaustive enumeration of every
+   * posture × root × launch-path combination design.md's fuller text describes. Where a
+   * simplification was made, it is called out in the case's own comment and in the Task 9
+   * completion docs' "application-time adaptations" section.
+   */
+  describe('Spec 123 Task 9.1 — birth/posture cases (C6)', () => {
+    // `tempDir` is assigned by the OUTER `beforeAll` (pack → install), which has not run
+    // yet when this describe body executes at collection time — so `c6Root` is computed in
+    // its own `beforeAll`, never at describe-body top level.
+    let c6Root: string;
+    beforeAll(() => {
+      c6Root = path.join(tempDir, 'c6-9-1-fixtures');
+    });
+
+    it('C6: token index fails loud when born and absent/empty', async () => {
+      // A fresh born fixture, BEFORE `generate` ever runs there — token-index/ is absent.
+      const dir = path.join(c6Root, 'born-empty-index');
+      gitBoundary(dir);
+      execSync('npx designerpunk init --name BornEmpty --abbreviation BE', {
+        cwd: dir,
+        encoding: 'utf-8',
+        timeout: 30_000,
+      });
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+      const child = spawnNodeBundle(appBundle, { cwd: dir });
+      const stderr = await captureStderrUntil(child, (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'), 15_000);
+      expect(stderr).toContain('Design-system root: born');
+      // design.md catalog row "born, token index absent or empty":
+      // `no token index in this design system (${root}/token-index is absent or empty) — run 'npx designerpunk generate'`
+      expect(stderr).toContain(`no token index in this design system (${realDir(dir)}/token-index is absent or empty)`);
+      expect(stderr).toContain(`run 'npx designerpunk generate'`);
+    }, TIMEOUT);
+
+    it('C6: init refuses in a born repo / partial', () => {
+      // Born: re-running `init` (without --re-scaffold) against the already-born outer
+      // tempDir must refuse with the EXACT catalog string (design.md's `initBornRepoMessage`).
+      let threw = false;
+      try {
+        execSync('npx designerpunk init --name Nope --abbreviation NO', {
+          cwd: tempDir,
+          encoding: 'utf-8',
+          timeout: 15_000,
+        });
+      } catch (err: unknown) {
+        threw = true;
+        const e = err as { status?: number; stderr?: string };
+        expect(e.status).toBe(1);
+        expect(e.stderr).toContain(`this repo already has a design system (${realDir(tempDir)})`);
+        expect(e.stderr).toContain('init is the birth event and runs once');
+      }
+      expect(threw).toBe(true);
+
+      // Partial (tier-no-config sub-case): a DesignerPunk-shaped tier with NO config.
+      const partialDir = path.join(c6Root, 'partial-tier-no-config');
+      writeMinimalTier(path.join(partialDir, 'src', 'tokens'));
+      let partialThrew = false;
+      try {
+        execSync('npx designerpunk init --name Nope --abbreviation NO', {
+          cwd: partialDir,
+          encoding: 'utf-8',
+          timeout: 15_000,
+        });
+      } catch (err: unknown) {
+        partialThrew = true;
+        const e = err as { status?: number; stderr?: string };
+        expect(e.status).toBe(1);
+        expect(e.stderr).toContain(`found a DesignerPunk token tier at ${realDir(partialDir)}/src/tokens but no designerpunk.config.ts`);
+      }
+      expect(partialThrew).toBe(true);
+    }, TIMEOUT);
+
+    it('C6: tier-only partial', async () => {
+      // Reuses the SAME tier-no-config fixture the prior case built (partialDir). `generate`
+      // must refuse with the partial-case string (never "run generate" — D-B2), and the MCP
+      // server must log the SAME partial message, never the born-empty "run generate" line.
+      const partialDir = path.join(c6Root, 'partial-tier-no-config');
+      expect(fs.existsSync(path.join(partialDir, 'src', 'tokens', 'index.ts'))).toBe(true);
+
+      const result = runCliCapture(['generate'], { cwd: partialDir, timeoutMs: 15_000 });
+      expect(result.code).not.toBe(0);
+      expect(result.stderr).toContain(`found a DesignerPunk token tier at ${realDir(partialDir)}/src/tokens but no designerpunk.config.ts`);
+      expect(result.stderr).not.toContain('run generate');
+
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+      const child = spawnNodeBundle(appBundle, { cwd: partialDir });
+      const stderr = await captureStderrUntil(child, (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'), 15_000);
+      expect(stderr).toContain('Design-system root: partial (tier-no-config)');
+      expect(stderr).toContain(`found a DesignerPunk token tier at ${realDir(partialDir)}/src/tokens but no designerpunk.config.ts`);
+      expect(stderr).not.toContain(`run 'npx designerpunk generate'`);
+    }, TIMEOUT);
+
+    it('C6: stranger repo with src/tokens', async () => {
+      // A JWT-utility-shaped `src/tokens/` — NOT DesignerPunk-shaped (no
+      // getAllPrimitiveTokens/getAllSemanticTokens exports) and no config. Must classify
+      // UNBORN, never partial (D-B1 — signals are DesignerPunk-SHAPED, never bare
+      // non-emptiness).
+      const dir = path.join(c6Root, 'stranger-jwt-repo');
+      gitBoundary(dir);
+      writeFileEnsured(
+        path.join(dir, 'src', 'tokens', 'index.ts'),
+        `export function decodeJWT(token: string) { return JSON.parse(atob(token.split('.')[1])); }\n`,
+      );
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+      const child = spawnNodeBundle(appBundle, { cwd: dir });
+      const stderr = await captureStderrUntil(child, (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'), 15_000);
+      expect(stderr).toContain('Design-system root: unborn');
+    }, TIMEOUT);
+
+    it('C6: installed package dir is never born', async () => {
+      // Walking from node_modules/@3fn/core/src (itself born-shaped: it ships a real
+      // DesignerPunk tier at src/tokens/, per files[]) must NEVER classify it as root — the
+      // walk skips any directory with a `node_modules` path segment and keeps ascending to
+      // the CONSUMER's own root (tempDir, already born).
+      const installedSrc = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'src');
+      expect(fs.existsSync(path.join(installedSrc, 'tokens', 'index.ts'))).toBe(true);
+
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+      const child = spawnNodeBundle(appBundle, { cwd: installedSrc });
+      const stderr = await captureStderrUntil(child, (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'), 15_000);
+      expect(stderr).toContain('Design-system root: born');
+      expect(stderr).toContain(`Project root: ${realDir(tempDir)} `);
+      expect(stderr).not.toMatch(/Project root: .*node_modules/);
+    }, TIMEOUT);
+
+    it('C6: package-mode posture', async () => {
+      // A config WITHOUT tokenSource, and NO local barrel — its own posture (D2-B1), no
+      // longer a partial. Absent/empty index → the package-mode "run generate" string
+      // (safe here, per D2-B1's chain: a config exists). Present index → labelled
+      // designerpunk-package-mode.
+      const dir = path.join(c6Root, 'package-mode');
+      gitBoundary(dir);
+      writeFileEnsured(
+        path.join(dir, 'designerpunk.config.ts'),
+        `export default { name: 'PkgModeC6', abbreviation: 'PMC' };\n`,
+      );
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+
+      const before = await captureStderrUntil(
+        spawnNodeBundle(appBundle, { cwd: dir }),
+        (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'),
+        15_000,
+      );
+      expect(before).toContain('Design-system root: package-mode');
+      expect(before).toContain(
+        `this repo runs in package mode (designerpunk.config.ts has no tokenSource), so its token index is DesignerPunk's tokens`,
+      );
+
+      const genResult = runCliCapture(['generate'], { cwd: dir, timeoutMs: 60_000 });
+      expect(genResult.code).toBe(0);
+
+      const after = await captureStderrUntil(
+        spawnNodeBundle(appBundle, { cwd: dir }),
+        (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'),
+        15_000,
+      );
+      expect(after).toContain('tokenOrigin: designerpunk-package-mode');
+    }, TIMEOUT);
+
+    it('C6: unused-local-tier', () => {
+      // A config WITHOUT tokenSource, PLUS a local DesignerPunk barrel — `generate` would
+      // silently serve DesignerPunk's own tokens while the local barrel sits unused, so
+      // `generate` refuses with the partial message (never "born" — that would serve OUR
+      // tokens labelled as hers). This is exactly what design.md's C6 row asserts.
+      //
+      // NOTE (scope, disclosed): this row's "MCP: ..." half is exercised by the "tier-only
+      // partial" case above instead of here — the SAME partial-message property, on a
+      // fixture that does not also require `isSteward` to evaluate correctly inside a
+      // BUNDLED server. Filed as a routed finding for Ada (Task 1, `bornRepo.ts`):
+      // `.kiro/issues/2026-09-27-bundled-resolvepackageroot-isSteward-drift.md` — a bundled
+      // `application-mcp.js`'s inlined `bornRepo.findDesignSystemRoot` computes its OWN
+      // `resolvePackageRoot(path.dirname(__dirname))` from the BUNDLE's `__dirname`
+      // (`dist/mcp/`), one level shallower than bornRepo.ts's real un-bundled position
+      // (`dist/cli/shared/`) — so the self-check lands on `dist/mcp/../.. = node_modules/@3fn/`
+      // (no `package.json`), falls back to `cwd`, and — ONLY when a packed consumer runs the
+      // bundled server from a directory that happens to equal that fallback — corrupts the
+      // `isSteward` check this partial sub-case depends on. It is masked in-repo (the
+      // steward's own cwd usually equals the real package root anyway) and does not affect
+      // `dsRoot.state`/`root` themselves (born/partial/unborn classification is unaffected);
+      // it affects only the package-mode/unused-local-tier disambiguation inside a bundled
+      // server. Not fixed here — `bornRepo.ts` is Task 1's Primary Artifact, not Task 9's.
+      const dir = path.join(c6Root, 'unused-local-tier');
+      gitBoundary(dir);
+      writeFileEnsured(path.join(dir, 'designerpunk.config.ts'), `export default { name: 'Unused', abbreviation: 'UN' };\n`);
+      writeMinimalTier(path.join(dir, 'src', 'tokens'));
+
+      const result = runCliCapture(['generate'], { cwd: dir, timeoutMs: 15_000 });
+      expect(result.code).not.toBe(0);
+      expect(result.stderr).toContain(`found a token tier at ${realDir(dir)}/src/tokens but your config omits tokenSource`);
+    }, TIMEOUT);
+
+    it('C6: package-mode generate from the PACKED install (Ada D-T-B1)', () => {
+      // The de-scoped-no-more package-mode `generate` path, run from a fresh subdir of the
+      // PACKED install (never in-repo). `dist/DesignTokens.web.css` (flat `dist/` — this
+      // fixture's config has no `output` override, so ConfigLoader's DEFAULT applies; only
+      // `init`'d configs set `output: './dist/tokens'`) and `token-index/` must both be
+      // produced. The drop-a-closure-2-file bite ("drop `src/constants/**` from `files[]` →
+      // red") is a PACKAGING mutation (package.json + re-pack + re-install), not something a
+      // running suite can safely automate mid-run — it is a MANUAL verification, executed
+      // once and recorded in the Task 9 completion docs (the project's established pattern
+      // for source/packaging-mutation bites; see also the brand-survival bite (a) above).
+      const dir = path.join(c6Root, 'package-mode-generate-packed');
+      gitBoundary(dir);
+      writeFileEnsured(path.join(dir, 'designerpunk.config.ts'), `export default { name: 'PkgGenPacked', abbreviation: 'PGP' };\n`);
+
+      const result = runCliCapture(['generate'], { cwd: dir, timeoutMs: 60_000 });
+      expect(result.code).toBe(0);
+      expect(fs.existsSync(path.join(dir, 'dist', 'DesignTokens.web.css'))).toBe(true);
+      expect(fs.existsSync(path.join(dir, 'token-index', 'primitives.yaml'))).toBe(true);
+    }, TIMEOUT);
+  });
+
+  describe('Spec 123 Task 9.2 — root/union cases (C6)', () => {
+    // `tempDir` is assigned by the OUTER `beforeAll`, which has not run yet when this
+    // describe body executes at collection time — so `ecoDir` is set inside the `beforeAll`
+    // below (Jest runs ancestor `beforeAll`s before descendant ones), never at describe-body
+    // top level.
+    let ecoDir: string;
+    let shippedCount = -1;
+
+    function countShippedComponents(): number {
+      const shippedRoot = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'src', 'components', 'core');
+      return fs
+        .readdirSync(shippedRoot, { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .filter((d) => fs.readdirSync(path.join(shippedRoot, d.name)).some((f) => f.endsWith('.schema.yaml')))
+        .length;
+    }
+
+    function loadYaml(p: string): any {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return require('js-yaml').load(fs.readFileSync(p, 'utf-8'));
+    }
+    function dumpYaml(obj: unknown): string {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return require('js-yaml').dump(obj);
+    }
+
+    /** Copy a REAL shipped package component's metadata into a new declared name. */
+    function copyRenamedComponent(pkgComponentName: string, destDir: string, newName: string): void {
+      const pkgComponentDir = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'src', 'components', 'core', pkgComponentName);
+      mkdirp(destDir);
+      const schemaFile = fs.readdirSync(pkgComponentDir).find((f) => f.endsWith('.schema.yaml'))!;
+      const schema = loadYaml(path.join(pkgComponentDir, schemaFile));
+      schema.name = newName;
+      fs.writeFileSync(path.join(destDir, `${newName}.schema.yaml`), dumpYaml(schema));
+
+      const contractsPath = path.join(pkgComponentDir, 'contracts.yaml');
+      if (fs.existsSync(contractsPath)) {
+        const contracts = loadYaml(contractsPath);
+        contracts.component = newName;
+        fs.writeFileSync(path.join(destDir, 'contracts.yaml'), dumpYaml(contracts));
+      }
+      const metaPath = path.join(pkgComponentDir, 'component-meta.yaml');
+      if (fs.existsSync(metaPath)) fs.copyFileSync(metaPath, path.join(destDir, 'component-meta.yaml'));
+    }
+
+    /** Copy a REAL shipped package component, keeping its DECLARED NAME, and add a marker
+     *  contract so a query can prove the CONSUMER's fork (not the package original) won
+     *  precedence — while its `inherits:` is left unchanged, so it must resolve against
+     *  the PACKAGE root's parent (the union at pass 1, Task 1.4).
+     */
+    function copyForkWithMarker(pkgComponentName: string, destDir: string, markerKey: string): void {
+      const pkgComponentDir = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'src', 'components', 'core', pkgComponentName);
+      mkdirp(destDir);
+      const schemaFile = fs.readdirSync(pkgComponentDir).find((f) => f.endsWith('.schema.yaml'))!;
+      fs.copyFileSync(path.join(pkgComponentDir, schemaFile), path.join(destDir, schemaFile));
+      const contracts = loadYaml(path.join(pkgComponentDir, 'contracts.yaml'));
+      contracts.contracts = contracts.contracts || {};
+      contracts.contracts[markerKey] = {
+        category: 'content',
+        description: 'Spec 123 Task 9 (C6) fork marker — present only in the consumer-authored fork.',
+        behavior: 'Marker contract present only in the consumer fork; absent from the package original.',
+        platforms: ['web'],
+      };
+      fs.writeFileSync(path.join(destDir, 'contracts.yaml'), dumpYaml(contracts));
+      const metaPath = path.join(pkgComponentDir, 'component-meta.yaml');
+      if (fs.existsSync(metaPath)) fs.copyFileSync(metaPath, path.join(destDir, 'component-meta.yaml'));
+    }
+
+    async function queryCatalogCount(cwd: string): Promise<{ count: number; names: string[] }> {
+      const child = spawn('npx', ['designerpunk', 'mcp:app'], {
+        cwd,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env: { ...process.env, NODE_ENV: 'test' },
+      });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP server did not start')), 15_000);
+          child.stderr!.on('data', (data: Buffer) => {
+            if (data.toString().includes('running on stdio') || data.toString().includes('Server started')) {
+              clearTimeout(timeout);
+              resolve();
+            }
+          });
+          child.on('error', (err) => { clearTimeout(timeout); reject(err); });
+        });
+        const id = Date.now();
+        const request = JSON.stringify({ jsonrpc: '2.0', id, method: 'tools/call', params: { name: 'get_component_catalog', arguments: {} } }) + '\n';
+        const result: any = await new Promise((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP timeout on get_component_catalog')), 10_000);
+          let buffer = '';
+          child.stdout!.on('data', (data: Buffer) => {
+            buffer += data.toString();
+            for (const line of buffer.split('\n')) {
+              if (!line.trim()) continue;
+              try {
+                const parsed = JSON.parse(line);
+                if (parsed.id === id) { clearTimeout(timeout); resolve(parsed.result ?? parsed); }
+              } catch { /* partial line */ }
+            }
+          });
+          child.stdin!.write(request);
+        });
+        const catalog = result?.content?.[0]?.text ? JSON.parse(result.content[0].text) : result;
+        const list: Array<{ name: string }> = Array.isArray(catalog) ? catalog : catalog?.data ?? [];
+        return { count: list.length, names: list.map((c) => c.name) };
+      } finally {
+        child.kill();
+      }
+    }
+
+    /** `get_component_health`'s `warnings[]` — where the legacy-`core/`-level warning
+     *  actually surfaces (an INDEX warning, not a boot-time stderr line; the boot log only
+     *  prints a summary COUNT, "Indexed N components (K warnings)").
+     */
+    async function queryHealthWarnings(cwd: string): Promise<string[]> {
+      const child = spawn('npx', ['designerpunk', 'mcp:app'], {
+        cwd,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env: { ...process.env, NODE_ENV: 'test' },
+      });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP server did not start')), 15_000);
+          child.stderr!.on('data', (data: Buffer) => {
+            if (data.toString().includes('running on stdio') || data.toString().includes('Server started')) {
+              clearTimeout(timeout);
+              resolve();
+            }
+          });
+          child.on('error', (err) => { clearTimeout(timeout); reject(err); });
+        });
+        const id = Date.now();
+        const request = JSON.stringify({ jsonrpc: '2.0', id, method: 'tools/call', params: { name: 'get_component_health', arguments: {} } }) + '\n';
+        const result: any = await new Promise((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP timeout on get_component_health')), 10_000);
+          let buffer = '';
+          child.stdout!.on('data', (data: Buffer) => {
+            buffer += data.toString();
+            for (const line of buffer.split('\n')) {
+              if (!line.trim()) continue;
+              try {
+                const parsed = JSON.parse(line);
+                if (parsed.id === id) { clearTimeout(timeout); resolve(parsed.result ?? parsed); }
+              } catch { /* partial line */ }
+            }
+          });
+          child.stdin!.write(request);
+        });
+        const health = result?.content?.[0]?.text ? JSON.parse(result.content[0].text) : result;
+        return (health?.warnings ?? []) as string[];
+      } finally {
+        child.kill();
+      }
+    }
+
+    beforeAll(() => {
+      ecoDir = path.join(tempDir, 'c6-9-2-ecosystem');
+      gitBoundary(ecoDir); // see the shared `gitBoundary` doc comment — ecoDir is a fresh, independent fixture nested under the (already born) outer tempDir.
+      execSync('npx designerpunk init --name Eco --abbreviation ECO', {
+        cwd: ecoDir,
+        encoding: 'utf-8',
+        timeout: 30_000,
+      });
+      // `generate` writes token-index/ and dist/tokens only — it never touches
+      // src/components — so running it here keeps every later case's MCP query in the
+      // "born, index present" state (needed by "both launch paths") without affecting the
+      // component-catalog counts ("component catalog equals shipped..." / "...alongside
+      // ecosystem" below).
+      execSync('npx designerpunk generate', { cwd: ecoDir, encoding: 'utf-8', timeout: 60_000 });
+      shippedCount = countShippedComponents();
+    }, TIMEOUT);
+
+    it('C6: component catalog equals shipped component-root count', async () => {
+      // A packed install with an EMPTY/absent consumer components directory (a freshly-born
+      // repo — Req 19A.6 creates src/components/ empty) must serve a catalog count EQUAL to
+      // the package's own shipped component-root count, DERIVED on both sides (Req 3.3;
+      // Lina R2 A1 — a catalog of 1 would satisfy a bare non-zero check, so the floor case
+      // needs an EQUALITY, not a truthiness, assertion).
+      expect(shippedCount).toBeGreaterThan(0);
+      const { count } = await queryCatalogCount(ecoDir);
+      expect(count).toBe(shippedCount);
+    }, TIMEOUT);
+
+    it('C6: consumer component appears alongside ecosystem', async () => {
+      // A consumer-added component (copied from a real shipped one, renamed) must appear
+      // WITH the ecosystem components, not instead of them — count = shipped + 1.
+      copyRenamedComponent('Badge-Label-Base', path.join(ecoDir, 'src', 'components', 'EcoWidget'), 'EcoWidget');
+      const { count, names } = await queryCatalogCount(ecoDir);
+      expect(count).toBe(shippedCount + 1);
+      expect(names).toContain('EcoWidget');
+      expect(names).toContain('Badge-Label-Base'); // the package original is still present
+    }, TIMEOUT);
+
+    it('C6: consumer fork inheriting a package parent resolves', async () => {
+      // A consumer fork declaring the SAME name as a package component (shadowing it, per
+      // precedence-on-declared-name), whose `inherits:` points at a parent that exists ONLY
+      // in the package root. The union must apply at pass 1 so cross-root inheritance
+      // resolves — proven by the marker contract (present only in the fork) surfacing via
+      // get_component_full for the SHARED declared name.
+      copyForkWithMarker('Badge-Count-Notification', path.join(ecoDir, 'src', 'components', 'EcoForkOfNotification'), 'content_eco_fork_marker');
+
+      const child = spawn('npx', ['designerpunk', 'mcp:app'], {
+        cwd: ecoDir,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env: { ...process.env, NODE_ENV: 'test' },
+      });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP server did not start')), 15_000);
+          child.stderr!.on('data', (data: Buffer) => {
+            if (data.toString().includes('running on stdio') || data.toString().includes('Server started')) {
+              clearTimeout(timeout);
+              resolve();
+            }
+          });
+        });
+        const id = Date.now();
+        const request = JSON.stringify({ jsonrpc: '2.0', id, method: 'tools/call', params: { name: 'get_component_full', arguments: { name: 'Badge-Count-Notification' } } }) + '\n';
+        const result: any = await new Promise((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP timeout on get_component_full')), 10_000);
+          let buffer = '';
+          child.stdout!.on('data', (data: Buffer) => {
+            buffer += data.toString();
+            for (const line of buffer.split('\n')) {
+              if (!line.trim()) continue;
+              try {
+                const parsed = JSON.parse(line);
+                if (parsed.id === id) { clearTimeout(timeout); resolve(parsed.result ?? parsed); }
+              } catch { /* partial line */ }
+            }
+          });
+          child.stdin!.write(request);
+        });
+        const full = result?.content?.[0]?.text ? JSON.parse(result.content[0].text) : result;
+        const fullText = JSON.stringify(full);
+        // The fork won precedence (its marker is present)...
+        expect(fullText).toContain('content_eco_fork_marker');
+        // ...AND its inherited-from-package-root contracts still resolved (Badge-Count-Base
+        // is never redeclared in the consumer root — this component only inherits it).
+        expect(fullText).toContain('content_displays_count');
+      } finally {
+        child.kill();
+      }
+    }, TIMEOUT);
+
+    it('C6: legacy core/ level recognized', async () => {
+      // A pre-123 nested `core/<Name>` layout under the consumer root must be recognized as
+      // ONE legacy level, with a named warning, and its component indexed (order-independent
+      // with C7's MCP-config rewrite).
+      copyRenamedComponent('Badge-Label-Base', path.join(ecoDir, 'src', 'components', 'core', 'EcoLegacyWidget'), 'EcoLegacyWidget');
+
+      const warnings = await queryHealthWarnings(ecoDir);
+      expect(warnings.some((w) => /Legacy component level: .*core.* holds \d+ component\(s\) in the pre-123 'core\/' layout/.test(w))).toBe(true);
+
+      const { names } = await queryCatalogCount(ecoDir);
+      expect(names).toContain('EcoLegacyWidget');
+    }, TIMEOUT);
+
+    it('C6: both launch paths × every 19A.5a row', async () => {
+      // Table-driven over THREE rows of the root-policy table (component, token-index,
+      // product — the product row run from a SUBDIRECTORY, A11), comparing the scaffolded-
+      // config launch path (a direct bundle invocation, `node <bundle>`) against the CLI
+      // runner (`npx designerpunk mcp:app`/`mcp:product`). Scope note: exercised against the
+      // born state only (not every posture in 19A.5a's fuller table) — see this section's
+      // header comment.
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+      const productBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'product-mcp.js');
+      const subDir = path.join(ecoDir, 'nested', 'deeper');
+      mkdirp(subDir);
+
+      const rows: Array<{ label: string; bundle: string; cliArgs: string[]; cwd: string; extract: RegExp }> = [
+        { label: 'component', bundle: appBundle, cliArgs: ['mcp:app'], cwd: ecoDir, extract: /Data root components\[0\]: (\S+) / },
+        { label: 'token-index', bundle: appBundle, cliArgs: ['mcp:app'], cwd: ecoDir, extract: /Data root token-index: (\S+) / },
+        { label: 'product (from a subdirectory)', bundle: productBundle, cliArgs: ['mcp:product'], cwd: subDir, extract: /Data root product: (\S+) / },
+      ];
+
+      for (const row of rows) {
+        const direct = await captureStderrUntil(
+          spawnNodeBundle(row.bundle, { cwd: row.cwd }),
+          (buf) => buf.includes('running on stdio') || buf.includes('Server started'),
+          15_000,
+        );
+        const viaCli = await captureStderrUntil(
+          spawnCli(row.cliArgs, { cwd: row.cwd }),
+          (buf) => buf.includes('running on stdio') || buf.includes('Server started'),
+          15_000,
+        );
+        const directMatch = direct.match(row.extract);
+        const cliMatch = viaCli.match(row.extract);
+        if (!directMatch) throw new Error(`${row.label}: direct-bundle launch path logged no matching root line:\n${direct}`);
+        if (!cliMatch) throw new Error(`${row.label}: CLI-runner launch path logged no matching root line:\n${viaCli}`);
+        expect(cliMatch![1]).toBe(directMatch![1]);
+        if (row.label === 'product (from a subdirectory)') {
+          // A11: the product root anchors to bornRoot/product, never cwd/product.
+          expect(directMatch![1]).toBe(path.join(realDir(ecoDir), 'product'));
+        }
+      }
+    }, TIMEOUT);
+
+    it('C6: launch from a subdirectory of a born repo', () => {
+      // `generate` run from a NESTED subdirectory of a born repo must anchor to the born
+      // root — never the subdirectory — for both the read side (config) and the write side
+      // (token-index/).
+      const subDir = path.join(ecoDir, 'nested', 'deeper');
+      mkdirp(subDir);
+      const result = runCliCapture(['generate'], { cwd: subDir, timeoutMs: 60_000 });
+      expect(result.code).toBe(0);
+      expect(fs.existsSync(path.join(ecoDir, 'token-index', 'primitives.yaml'))).toBe(true);
+      expect(fs.existsSync(path.join(subDir, 'token-index'))).toBe(false);
+    }, TIMEOUT);
+
+    it('C6: barrel export forms', async () => {
+      // All THREE accepted export forms (Ada R2 advisory) must classify born at the
+      // consumer-guard (packed CLI/MCP) level, not just the pure-function level bornRepo.test.ts
+      // already covers.
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+      for (const form of ['function', 'const', 're-export'] as const) {
+        const dir = path.join(tempDir, 'c6-9-2-barrel-forms', form);
+        gitBoundary(dir);
+        writeFileEnsured(path.join(dir, 'designerpunk.config.ts'), `export default { name: 'Barrel', abbreviation: 'BR', tokenSource: './src/tokens' };\n`);
+        writeMinimalTier(path.join(dir, 'src', 'tokens'), form);
+        const stderr = await captureStderrUntil(
+          spawnNodeBundle(appBundle, { cwd: dir }),
+          (buf) => buf.includes('running on stdio') || buf.includes('Server started'),
+          15_000,
+        );
+        if (!stderr.includes('Design-system root: born')) throw new Error(`barrel form "${form}" did not classify born:\n${stderr}`);
+      }
+    }, TIMEOUT);
+
+    it('C6: theme root follows the index', async () => {
+      // A fixture design system ("fixtureDS") with ONE dark override edited to a
+      // DISTINGUISHABLE value, generated for real (own tierDir metadata). Querying it via an
+      // EXPLICIT TOKEN_INDEX_DIR while `cwd` is a DIFFERENT born repo (ecoDir, default
+      // overrides) must return the FIXTURE's edited dark value — proving the theme root
+      // follows the SERVED INDEX's own tierDir, never a hardcoded `projectRoot/src/tokens`
+      // read (the bite this case guards against).
+      const fixtureDS = path.join(tempDir, 'c6-9-2-theme-fixture');
+      gitBoundary(fixtureDS);
+      execSync('npx designerpunk init --name ThemeFixture --abbreviation TF', { cwd: fixtureDS, encoding: 'utf-8', timeout: 30_000 });
+
+      const darkOverridesPath = path.join(fixtureDS, 'src', 'tokens', 'themes', 'dark', 'SemanticOverrides.ts');
+      const original = fs.readFileSync(darkOverridesPath, 'utf-8');
+      expect(original).toContain(`'color.feedback.success.text': { primitiveReferences: { value: 'green300' } }`);
+      const edited = original.replace(
+        `'color.feedback.success.text': { primitiveReferences: { value: 'green300' } }`,
+        `'color.feedback.success.text': { primitiveReferences: { value: 'green500' } }`,
+      );
+      fs.writeFileSync(darkOverridesPath, edited);
+
+      const genResult = runCliCapture(['generate'], { cwd: fixtureDS, timeoutMs: 60_000 });
+      expect(genResult.code).toBe(0);
+
+      const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
+      const child = spawnNodeBundle(appBundle, {
+        cwd: ecoDir, // a DIFFERENT born repo, default (unedited) dark overrides
+        env: { TOKEN_INDEX_DIR: path.join(fixtureDS, 'token-index') },
+      });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP server did not start')), 15_000);
+          child.stderr!.on('data', (data: Buffer) => {
+            if (data.toString().includes('running on stdio') || data.toString().includes('Server started')) {
+              clearTimeout(timeout);
+              resolve();
+            }
+          });
+        });
+        const id = Date.now();
+        const request = JSON.stringify({ jsonrpc: '2.0', id, method: 'tools/call', params: { name: 'get_token_details', arguments: { name: 'color.feedback.success.text' } } }) + '\n';
+        const result: any = await new Promise((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error('MCP timeout on get_token_details')), 10_000);
+          let buffer = '';
+          child.stdout!.on('data', (data: Buffer) => {
+            buffer += data.toString();
+            for (const line of buffer.split('\n')) {
+              if (!line.trim()) continue;
+              try {
+                const parsed = JSON.parse(line);
+                if (parsed.id === id) { clearTimeout(timeout); resolve(parsed.result ?? parsed); }
+              } catch { /* partial line */ }
+            }
+          });
+          child.stdin!.write(request);
+        });
+        const details = result?.content?.[0]?.text ? JSON.parse(result.content[0].text) : result;
+        // The FIXTURE's edited override (green500), never ecoDir's default (green300).
+        expect(JSON.stringify(details)).toContain('green500');
+        expect(JSON.stringify(details)).not.toContain('green300');
+      } finally {
+        child.kill();
+      }
+    }, TIMEOUT);
+
+    it('C6: C′ token tiers', () => {
+      // A token authored into the consumer's OWN copied tree at each of the three tiers
+      // (primitive, semantic; component is already covered by `progress.*`, real and
+      // consumer-owned since Task 9's brand-survival cases) must appear in the generated
+      // index — proving the served directory answers WITH HER tokens, not merely THAT her
+      // directory answered (Ada's R2 correction: the `source !== 'package'` discriminator
+      // alone does not establish this when the tiers happen to be identical post-copy).
+      const dir = path.join(tempDir, 'c6-9-2-token-tiers');
+      gitBoundary(dir);
+      execSync('npx designerpunk init --name TokenTiers --abbreviation TT', { cwd: dir, encoding: 'utf-8', timeout: 30_000 });
+
+      const spacingPath = path.join(dir, 'src', 'tokens', 'SpacingTokens.ts');
+      const spacingSrc = fs.readFileSync(spacingPath, 'utf-8');
+      const newPrimitive = `
+  spaceC6Test: {
+    name: 'spaceC6Test',
+    category: TokenCategory.SPACING,
+    baseValue: SPACING_BASE_VALUE * 100,
+    familyBaseValue: SPACING_BASE_VALUE,
+    description: 'Spec 123 Task 9 C6 fixture primitive — authored into the consumer copy.',
+    mathematicalRelationship: 'base × 100 = 8 × 100 = 800',
+    baselineGridAlignment: true,
+    isStrategicFlexibility: false,
+    isPrecisionTargeted: false,
+    platforms: generateSpacingPlatformValues(SPACING_BASE_VALUE * 100)
+  },
+`;
+      fs.writeFileSync(
+        spacingPath,
+        spacingSrc.replace('export const spacingTokens: Record<string, PrimitiveToken> = {', `export const spacingTokens: Record<string, PrimitiveToken> = {\n${newPrimitive}`),
+      );
+
+      const gridPath = path.join(dir, 'src', 'tokens', 'semantic', 'GridSpacingTokens.ts');
+      const gridSrc = fs.readFileSync(gridPath, 'utf-8');
+      const newSemantic = `
+  'gridGutterC6Test': {
+    name: 'gridGutterC6Test',
+    primitiveReferences: {
+      spacing: 'spaceC6Test'
+    },
+    category: SemanticCategory.SPACING,
+    context: 'Spec 123 Task 9 C6 fixture semantic — authored into the consumer copy.',
+    description: 'Fixture-only semantic token proving the consumer copy is what generates.'
+  },
+`;
+      fs.writeFileSync(
+        gridPath,
+        gridSrc.replace('export const gridSpacingTokens: Record<string, Omit<SemanticToken, \'primitiveTokens\'>> = {', `export const gridSpacingTokens: Record<string, Omit<SemanticToken, 'primitiveTokens'>> = {\n${newSemantic}`),
+      );
+
+      const genResult = runCliCapture(['generate'], { cwd: dir, timeoutMs: 60_000 });
+      expect(genResult.code).toBe(0);
+
+      const primitivesYaml = fs.readFileSync(path.join(dir, 'token-index', 'primitives.yaml'), 'utf-8');
+      expect(primitivesYaml).toContain('spaceC6Test');
+      const semanticsYaml = fs.readFileSync(path.join(dir, 'token-index', 'semantics.yaml'), 'utf-8');
+      expect(semanticsYaml).toContain('gridGutterC6Test');
+      // Component tier: progress.* (real, consumer-owned since 19A.1 copies src/tokens/component/).
+      const componentsYaml = fs.readFileSync(path.join(dir, 'token-index', 'components.yaml'), 'utf-8');
+      expect(componentsYaml).toContain('progress.node.size.sm');
+    }, TIMEOUT);
+  });
+
+  describe('Spec 123 Task 9.3 — copy cases; the packed name-contract case (C6)', () => {
+    it('C6: local-mode generate over the init-copied tree', () => {
+      // Already-established by the outer `init`/`generate` tests above (tempDir is init'd
+      // and generated). This case asserts the property those tests exercise BY NAME —
+      // local-mode resolution over the packed install's init-copied tree — for the C6
+      // roster's own record.
+      const output = execSync('npx designerpunk generate', { cwd: tempDir, encoding: 'utf-8', timeout: 60_000 });
+      expect(output).toContain('(local)');
+      expect(fs.existsSync(path.join(tempDir, 'dist', 'tokens', 'DesignTokens.web.css'))).toBe(true);
+    }, TIMEOUT);
+
+    it('C6: over-rewrite arbiter (packed-level structural check)', () => {
+      // THE case's full arbiter (a real `tsc --noEmit` over the copied tree) is
+      // `src/cli/__tests__/init.overRewriteArbiter.test.ts` (Task 2.5) — it already carries
+      // its own bite ("restore the string regex → red") and cannot be duplicated here: a
+      // packed consumer install has no `typescript` devDependency to run `tsc` with. This
+      // packed-level companion re-asserts the structural invariant that test protects —
+      // intra-tree specifiers (the three `themes/*/SemanticOverrides.ts` files) still read
+      // the UNREWRITTEN `'../types'` in the init-copied tree.
+      for (const theme of ['dark']) {
+        const overridesPath = path.join(tempDir, 'src', 'tokens', 'themes', theme, 'SemanticOverrides.ts');
+        expect(fs.existsSync(overridesPath)).toBe(true);
+        const content = fs.readFileSync(overridesPath, 'utf-8');
+        expect(content).toMatch(/from\s+['"]\.\.\/types['"]/);
+      }
+    }, TIMEOUT);
+
+    it('C6: brand-survival — consumer-tree provenance (Req 3.2 clause b)', () => {
+      // Clause (b): remove the consumer-tree source file → the token SHALL DISAPPEAR from
+      // components.yaml. A DEDICATED fixture (not tempDir, which every other case in this
+      // file depends on staying intact) so the deletion is safe.
+      const dir = path.join(tempDir, 'c6-9-3-provenance');
+      gitBoundary(dir);
+      execSync('npx designerpunk init --name Provenance --abbreviation PR', { cwd: dir, encoding: 'utf-8', timeout: 30_000 });
+      execSync('npx designerpunk generate', { cwd: dir, encoding: 'utf-8', timeout: 60_000 });
+
+      const componentsYamlPath = path.join(dir, 'token-index', 'components.yaml');
+      expect(fs.readFileSync(componentsYamlPath, 'utf-8')).toContain('progress.node.size.sm');
+
+      fs.rmSync(path.join(dir, 'src', 'tokens', 'component', 'progress.ts'), { force: true });
+      execSync('npx designerpunk generate', { cwd: dir, encoding: 'utf-8', timeout: 60_000 });
+      expect(fs.readFileSync(componentsYamlPath, 'utf-8')).not.toContain('progress.node.size.sm');
+    }, TIMEOUT);
+
+    it('C6: packed name contract reads node_modules/@3fn/core/dist/name-contract.json (Ada D-T-A7)', () => {
+      // Positive: `sync` in the packed consumer (tempDir) reads the REAL packed
+      // `dist/name-contract.json` — never "cannot-check" (which would mean it couldn't find
+      // the contract at all).
+      const contractPath = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'name-contract.json');
+      expect(fs.existsSync(contractPath)).toBe(true);
+      const contract = JSON.parse(fs.readFileSync(contractPath, 'utf-8'));
+      const semanticName = contract.referencedNames.find((r: { tier: string }) => r.tier === 'semantic');
+      expect(semanticName).toBeDefined();
+
+      const cleanOutput = execSync('npx designerpunk sync --dry-run', { cwd: tempDir, encoding: 'utf-8', timeout: 30_000 });
+      expect(cleanOutput).not.toContain('cannot check');
+      expect(cleanOutput).not.toContain(`Add it to your set`);
+
+      // A removed-name fixture: delete the CSS custom property `readPresentNames` scans for
+      // (this does not touch the token tier — only the compiled output `sync` reads).
+      const cssPath = path.join(tempDir, 'dist', 'tokens', 'DesignTokens.web.css');
+      const css = fs.readFileSync(cssPath, 'utf-8');
+      const varName = semanticName.name; // e.g. --accessibility-focus-color
+      const lineRegex = new RegExp(`^\\s*${varName.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}\\s*:.*$`, 'm');
+      expect(css).toMatch(lineRegex);
+      const withoutLine = css.replace(lineRegex, `  /* Spec 123 Task 9 C6 bite: ${varName} removed */`);
+      fs.writeFileSync(cssPath, withoutLine);
+      try {
+        const reportedOutput = execSync('npx designerpunk sync --dry-run', { cwd: tempDir, encoding: 'utf-8', timeout: 30_000 });
+        expect(reportedOutput).toContain('components now expect token');
+        expect(reportedOutput).toContain('Add it to your set');
+      } finally {
+        // Revert — later cases in this file depend on tempDir's generated CSS staying intact.
+        fs.writeFileSync(cssPath, css);
+      }
+    }, TIMEOUT);
   });
 });

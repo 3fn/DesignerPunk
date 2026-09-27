@@ -386,7 +386,19 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
   }
 
   // A7: package.json files[] (ADD governance/, KEEP .kiro/steering/), init template,
-  // FileScanner MANAGED_DIRS (ADD governance, keep .kiro/steering).
+  // Manifest COPY_ROOTS (ADD governance, keep .kiro/steering).
+  //
+  // UPDATED 2026-09-27 (Spec 123 Task 5.4 gatefix, U1 CI change request): the third
+  // leg originally asserted `src/cli/sync/FileScanner.ts`'s fixed `MANAGED_DIRS`
+  // list. Spec 123 Task 5.4 deliberately RETIRED that list — FileScanner.ts no
+  // longer hard-codes managed roots at all; callers now pass roots derived from the
+  // manifest's C7 namespace rule (`managedCopyRoots`, src/cli/sync/Classifier.ts),
+  // itself built from `COPY_ROOTS` in `src/cli/sync/Manifest.ts`. The underlying
+  // invariant this leg exists to prove — governance/ is ADDED and .kiro/steering/
+  // is KEPT among what `sync` manages — still holds; it just lives at the new
+  // location. Re-pointed the assertion there rather than retiring the leg, since
+  // the invariant itself is still live and checkable (see src/cli/__tests__/
+  // FileScanner.test.ts for the companion proof that MANAGED_DIRS is gone).
   {
     const pkg = read(projectRoot, 'package.json');
     const pkgGov = /"governance\/"/.test(pkg);
@@ -394,14 +406,16 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
     const tmpl = read(projectRoot, 'src/cli/templates/mcp-config.json.template');
     const tmplGov = /governance/.test(tmpl) && !/\.kiro\/steering/.test(tmpl);
     const tmplNoDeadTool = !/get_documentation_map/.test(tmpl);
-    const fs2 = read(projectRoot, 'src/cli/sync/FileScanner.ts');
-    const fsGov = /path:\s*'governance'/.test(fs2);
-    const fsSteering = /path:\s*'\.kiro\/steering'/.test(fs2);
-    const ok = pkgGov && pkgSteering && tmplGov && tmplNoDeadTool && fsGov && fsSteering;
+    const manifestSrc = read(projectRoot, 'src/cli/sync/Manifest.ts');
+    const copyRootsMatch = manifestSrc.match(/COPY_ROOTS\s*=\s*\[([^\]]*)\]/);
+    const copyRootsList = copyRootsMatch ? copyRootsMatch[1] : '';
+    const crGov = /'governance'/.test(copyRootsList);
+    const crSteering = /'\.kiro\/steering'/.test(copyRootsList);
+    const ok = pkgGov && pkgSteering && tmplGov && tmplNoDeadTool && crGov && crSteering;
     checks.push({
-      surface: 'package.json files[] + init template + FileScanner MANAGED_DIRS',
+      surface: 'package.json files[] + init template + Manifest COPY_ROOTS',
       remediated: ok,
-      detail: `files[] governance=${pkgGov}/steering=${pkgSteering}; template governance=${tmplGov}/no-dead-tool=${tmplNoDeadTool}; MANAGED_DIRS governance=${fsGov}/steering=${fsSteering}`,
+      detail: `files[] governance=${pkgGov}/steering=${pkgSteering}; template governance=${tmplGov}/no-dead-tool=${tmplNoDeadTool}; COPY_ROOTS governance=${crGov}/steering=${crSteering}`,
     });
   }
 

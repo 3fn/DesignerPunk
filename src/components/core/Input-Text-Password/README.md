@@ -351,8 +351,7 @@ src/components/core/Input-Text-Password/
 ├── Input-Text-Password.refs.ts # Token references
 └── platforms/
     ├── web/
-    │   ├── InputTextPassword.web.ts    # Web component
-    │   └── InputTextPassword.browser.ts # Browser build
+    │   └── InputTextPassword.web.ts    # Web component
     ├── ios/
     │   └── InputTextPassword.ios.swift # SwiftUI view
     └── android/

@@ -414,33 +414,49 @@ function findDesignSystemRoot(startDir: string): DesignSystemRoot;
 
 #### C9. The publish-rail guard (Req 6; Stacy S-D-B5, S-D-A10)
 
+*(Erratum 2026-09-27 — Stacy R1-1/R1-2 review, `.kiro/specs/123-consumer-distribution/completion/task-7-3-stacy-review.md`; Peter's ruling, same date: the `npm view`-based form below is SUPERSEDED. The hermetic isolation env vars (`npm_config_userconfig=/dev/null npm_config_globalconfig=/dev/null`, Leonardo A15, cited in Req 6.8) make npm 10.9.3 exit before it resolves config at all — Stacy reproduced this at head: the guard reported `FAIL[version]` on a version that was actually live. Worse, even with two DISTINCT empty files the isolation would not have been hermetic anyway, because the project's own `.npmrc` (which maps `@3fn` to GitHub Packages) is loaded from the repo root regardless of user/global config isolation. Peter's ruling: drop `npm` entirely. The guard now queries `registry.npmjs.org` directly over plain HTTP — exactly what an anonymous stranger's HTTP client sees, with no npm CLI and no `.npmrc` (project, user, or global) ever consulted. The drawn form below is the corrected, shipped form; see `scripts/verify-publish-rail.sh`.)*
+
 ```sh
 #!/usr/bin/env bash
 set -euo pipefail
-check_version() {   # REQUIRED FORM (6.2), verbatim inside:
-  npm view "@3fn/core@${VERSION}" version --@3fn:registry=https://registry.npmjs.org >/dev/null 2>&1 \
-    || { echo "FAIL[version]: @3fn/core@${VERSION} is not visible on registry.npmjs.org (checked scope-explicitly) — do not announce this release"; exit 10; }
-}
+if [ -z "${VERSION:-}" ]; then
+  echo "USAGE: VERSION=<version> $0 [--self-test-host <tarball-url>] — VERSION is required and was not set" >&2
+  exit 2
+fi
+PKG="@3fn/core"; PKG_PATH="@3fn%2fcore"; REGISTRY="https://registry.npmjs.org"
 check_host() {      # HARDENING (6.8, augments): takes the tarball URL as input so it is independently bitable
-  case "$1" in https://registry.npmjs.org/*) ;; *)
-    echo "FAIL[host]: tarball for @3fn/core@${VERSION} is served from '$1', not registry.npmjs.org — wrong rail"; exit 11;; esac
+  case "$1" in "${REGISTRY}"/*) ;; *)
+    echo "FAIL[host]: tarball for ${PKG}@${VERSION} is served from '$1', not ${REGISTRY} — wrong rail"; exit 11;; esac
 }
 if [ "${1:-}" = "--self-test-host" ]; then check_host "${2:-}"; echo "SELF-TEST ONLY — no release verified"; exit 12; fi
-check_version                                   # fail-fast: host never runs if version fails
-URL="$(npm view "@3fn/core@${VERSION}" dist.tarball --@3fn:registry=https://registry.npmjs.org || true)"
-[ -n "$URL" ] || { echo "FAIL[host-empty]: could not read the tarball URL for @3fn/core@${VERSION} (network or registry error) — host NOT verified"; exit 13; }
-check_host "$URL"
-echo "PASS: @3fn/core@${VERSION} visible on npmjs; tarball host verified"
+# REQUIRED FORM (6.2, erratum 2026-09-27; -q erratum same date): a direct,
+# unauthenticated HTTP GET against the public registry's version endpoint.
+# `-q` MUST be first (curl's own requirement) so ~/.curlrc is never read.
+# No npm CLI, no npmrc, no curl config file — proxy env vars ARE honoured.
+RESPONSE="$(curl -q -sS --max-time 15 -w '\n%{http_code}' "${REGISTRY}/${PKG_PATH}/${VERSION}")" \
+  || { echo "FAIL[version]: could not reach ${REGISTRY} for ${PKG}@${VERSION} (network error) — do not announce this release"; exit 10; }
+HTTP_CODE="${RESPONSE##*$'\n'}"; BODY="${RESPONSE%$'\n'*}"
+[ "$HTTP_CODE" = "200" ] \
+  || { echo "FAIL[version]: ${PKG}@${VERSION} is not visible on ${REGISTRY} (HTTP ${HTTP_CODE}) — do not announce this release. If you published in the last few minutes, the registry may not show it yet — wait a minute and re-run."; exit 10; }
+RETURNED_VERSION="$(printf '%s' "$BODY" | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{try{process.stdout.write(String(JSON.parse(d).version||""))}catch{process.stdout.write("")}})')"
+[ "$RETURNED_VERSION" = "$VERSION" ] \
+  || { echo "FAIL[version]: ${REGISTRY} returned version '${RETURNED_VERSION:-<none>}' for ${PKG}@${VERSION} (mismatch) — do not announce this release"; exit 10; }
+TARBALL="$(printf '%s' "$BODY" | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{try{process.stdout.write(String((JSON.parse(d).dist||{}).tarball||""))}catch{process.stdout.write("")}})')"
+[ -n "$TARBALL" ] || { echo "FAIL[host-empty]: could not read the tarball URL for ${PKG}@${VERSION} from the registry response — host NOT verified"; exit 13; }
+check_host "$TARBALL"
+echo "PASS: ${PKG}@${VERSION} visible on npmjs; tarball host verified"
 ```
 
-- **Per-assertion exit codes and named messages.** The log shows **which** assertion failed.
-- **Three recorded bites**, committed under `scripts/__bites__/`:
-  1. **the 6.3 verbatim command, as written** — `npm view @3fn/core@99.99.99 version --@3fn:registry=https://registry.npmjs.org` → red;
-  2. the script with `VERSION=99.99.99` → **exit 10, `FAIL[version]`** (this proves the red came from the required line);
-  3. **the host check driven through the PRODUCTION path** (Stacy S-D2-A5): a **PATH-shimmed `npm`** returns a version for `version` and a `https://npm.pkg.github.com/…` URL for `dist.tarball`. The full script runs and exits **11, `FAIL[host]`** end to end. *(If the production `check_host` line were deleted, this bite would go green-with-PASS, which is exactly the red the bite exists to show. A direct function call could not.)*
-- **`--self-test-host` constraints** (S-D2-A5): it is **in the drawn script**, it **exits (12) after the self-test and never reaches `PASS`**, and it never runs `check_version`. So it cannot become a bypass in a real release. It is a developer convenience, never a recorded bite.
+- **Exit codes and named messages**: `0` PASS · `2` USAGE (VERSION unset — Stacy re-check, R1-8-adjacent: an earlier version of this script let an unset `VERSION` fall through to bash's own "unbound variable" exit 1 under `set -u`; it now gets a distinct, documented code that never collides with 10–13) · `10` `FAIL[version]` · `11` `FAIL[host]` · `12` self-test · `13` `FAIL[host-empty]`. The log shows **which** assertion failed.
+- **A 404 right after publish gets its own short note, in two places, with NO automatic retry** (Stacy re-check): the `FAIL[version]` message itself (above, "the registry may not show it yet — wait a minute and re-run"), and RELEASE-FLOW.md step 6's own text (§ this ballot's edit — see `.kiro/docs/ballots/2026-09-27-123-b-u1-publish-rail.md` § 3). The registry's per-version endpoint can briefly 404 immediately after `npm publish`; this is a known liveness/usability risk Stacy's re-check named explicitly, not an arming defect — the guard still fails loud and safe, and a human re-runs it.
+- **The committed measurements**, under `scripts/__bites__/` *(Erratum 2026-09-27: re-measured against the HTTP form; corrected again 2026-09-27 after the `-q` + exit-2 rework — "bite" is reserved for a recorded red; the live PASS is a measurement, not a bite, per Stacy's re-check)*:
+  1. **the exact step-6 command, run against the real registry for the real published version (`14.1.0`)** → `PASS` — the committed measurement Stacy's R1-1 review required before ratification, at `scripts/__bites__/pass-real-version.txt`;
+  2. a bite: the script with `VERSION=99.99.99` against the real registry → **exit 10, `FAIL[version]`, HTTP 404** (proves the red came from the required line, using a real, non-shimmed network call);
+  3. a bite: **the host check driven through the PRODUCTION path** (Stacy S-D2-A5): a **PATH-shimmed `curl`** returns HTTP 200 with a fixture JSON body whose `version` matches and whose `dist.tarball` is a `https://npm.pkg.github.com/…` URL. The full script runs and exits **11, `FAIL[host]`** end to end. *(If the production `check_host` line were deleted, this bite would go green-with-PASS, which is exactly the red the bite exists to show. A direct function call could not.)* A sibling PATH-shimmed-`curl` fixture (HTTP 200, matching version, no `dist.tarball` field) drives the empty-tarball branch to **exit 13**.
+  4. a bite: unset `VERSION` → **exit 2, the `USAGE` message** (new, this rework).
+- **`--self-test-host` constraints** (S-D2-A5): it is **in the drawn script**, it **exits (12) after the self-test and never reaches `PASS`**, and it never runs the version check. So it cannot become a bypass in a real release. It is a developer convenience, never a recorded bite. It now also requires `VERSION` (the usage check runs first, unconditionally).
 - **An empty tarball URL gets its own message** (S-D2-A6): `FAIL[host-empty]`, exit 13. *(Under `set -e`, a failing command substitution used as an argument does not abort, so without this a network failure would be misreported as "wrong rail".)*
-- The hermetic invocation environment (Leonardo's A15 from the requirements round) and the paste target `docs/releases/<v>/publish-verification.log` are **unchanged**. The register row is `post-merge — adjudicated; not a PR check`.
+- *(Erratum 2026-09-27: the "hermetic invocation environment" clause is DROPPED, not merely re-stated.* Leonardo A15's `npm_config_*` env vars targeted an `npm` invocation that no longer exists — the guard queries the registry directly over HTTP, so there is no npm CLI and no npm config layer to isolate. **Precise claim, corrected 2026-09-27 (Stacy re-check, low note)**: no npm CLI, no `.npmrc` at any layer, is read; `curl`'s own config file (`~/.curlrc`) is disabled by passing `-q` first; standard **proxy environment variables are deliberately honoured, not overridden**, so a release run from behind a corporate/CI proxy still succeeds. "Hermetic by construction" is NOT the precise claim — the script deliberately still reads the proxy environment. *The paste target changes from `docs/releases/<v>/publish-verification.log` to `docs/releases/<v>/publish-verification.txt`* (the repo's `*.log` gitignore rule would otherwise silently exclude the committed record — the same trap Task 7.1's bites already hit once). *Step 6 also now names the route by which that file reaches protected `main`* — see `.kiro/hooks/RELEASE-FLOW.md`'s release-record PR step, which the guard's paste rides rather than inventing a second route. The register row is `post-merge — adjudicated; not a PR check`.)*
 
 #### C10. Product MCP wiring (Req 7) — the third key per target (C8); `init.test.ts:142` updated deliberately to three servers; product scaffold C27.
 
@@ -448,6 +464,11 @@ echo "PASS: @3fn/core@${VERSION} visible on npmjs; tarball host verified"
 
 - **Unchanged.** It is sequenced after Lina's `*.refs.ts` rename.
 - **The rename's issue record now exists**, filed by the steward: `.kiro/issues/2026-09-26-component-token-refs-rename.md` (Lina A6).
+- *(Erratum 2026-09-27, Task 9 — this section carried no catalog row for the lint's own warning string, unlike most 123 catalog strings elsewhere in the spec; `harvestZeroWarning`'s own docstring flagged the gap.)* **Catalog row — the harvest-zero warning**, verbatim from `src/cli/loadComponentTokens.ts:133`:
+
+  ```
+  ⚠️  ${file}: this scanned file harvested zero component tokens; if you meant to register values, call `defineComponentTokens`.
+  ```
 
 ---
 
@@ -869,7 +890,8 @@ type G2Verdict = 'PASSES' | 'FAILS' | 'NOT-RUNNABLE';   // never NOT-RUNNABLE on
 | type contract — cannot tell *(Erratum 2026-09-27: new row — Task 6.3's fork-1 string, taken verbatim from U1 `src/cli/sync/NameContract.ts` `typeContractCannotTellMessage` at `3d0c7c53`; the code was already string-equal; the two causes are the fetch failing and a baseline mismatch)* | `cannot tell what changed in the token type contract — <the package content for version <v> could not be retrieved\|version <v>'s contract does not match the contractHash your manifest recorded>. It did change: run 'npx tsc --noEmit' — fix each file it names. (This is not a clean report.)` |
 | type contract — no baseline *(Erratum 2026-09-27: new row — Task 6.3's fork-1 string, taken verbatim from U1 `src/cli/sync/NameContract.ts` `typeContractNoBaselineMessage` at `3d0c7c53`; the code was already string-equal; the two causes are no recorded hash and a pre-contract version. Recorded, not reworded: the second sentence opens with the lowercase command name `sync`)* | `no baseline to compare the token type contract against — <your manifest records no contractHash\|version <v> predates DesignerPunk's name contract (it ships no dist/name-contract.json)>. sync records the installed contract as the baseline the next time it writes the manifest.` |
 | migration — modified copies (Le-D1(3)) | `these <N> modified copies now override the package's <names> and will not receive updates. Keep them as your forks, or move them with 'sync --migrate-components' (relocates modified copies to src/components/<Name>/).` |
-| migration — cannot tell | `cannot tell whether <path> was modified — the package content for version <v> could not be retrieved. Review before removing.` |
+| migration — cannot tell | `cannot tell whether <path> was modified — the package content for version <v> could not be retrieved. Review before removing.` *(Erratum 2026-09-26: this reason clause held for only one of three `cannot-tell` causes found at Task 5.5 (Lina) — offline/fetch-failed. The other two: the content for version `<v>` WAS retrieved, but that version's own copy transform cannot be recovered (versions 11.3–11.8, private to `init.ts` — Peter ruled option (A), keep it unrecoverable, 2026-09-26; see `task-5-5-completion.md`); or the installed version itself is unknown. Corrected, three-cause row — `sync`'s code becomes string-equal to it: `cannot tell whether <path> was modified — <the package content for version <v> could not be retrieved\|version <v>'s copy transform cannot be recovered\|the installed version is unknown>. Review before removing.`)* |
+| migration — cannot tell (remedy) *(Erratum 2026-09-26: new row — Task 5.5's actionable remedy line, printed once per report immediately after the `cannot tell` line(s) above; Peter's ruling (A), condition 1: the cannot-tell outcome must be actionable)* | `sync cannot judge <names>, so 'sync --migrate-components' leaves <it\|them> in src/components/core/. Decide each by hand: if you edited it, move it to src/components/<Name>/ (it becomes your fork); if you didn't, delete it and you'll get the package's version. Until then, the old core/ level keeps logging its legacy warning each time the component index loads.` |
 | `deleted-by-you` | `<path> was generated earlier and you deleted it — not re-adding. To restore: npx designerpunk sync --restore <path>` |
 | `untracked-new` | `<path> would be generated but was never recorded — not adding it on first sync. To add it: npx designerpunk attach --target=<t>` |
 | managed region — markers missing | `the DesignerPunk-managed region in <file> is missing its markers — not rewriting the file. Restore the markers (see install doc § "Your agent layer") or re-run attach` |

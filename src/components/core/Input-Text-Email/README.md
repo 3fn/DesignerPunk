@@ -242,8 +242,7 @@ src/components/core/Input-Text-Email/
 ├── Input-Text-Email.refs.ts # Token references
 └── platforms/
     ├── web/
-    │   ├── InputTextEmail.web.ts    # Web component
-    │   └── InputTextEmail.browser.ts # Browser build
+    │   └── InputTextEmail.web.ts    # Web component
     ├── ios/
     │   └── InputTextEmail.ios.swift # SwiftUI view
     └── android/

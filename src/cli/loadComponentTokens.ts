@@ -57,21 +57,33 @@ export function loadComponentTokens(
   const harvested: RegisteredComponentToken[] = [];
   const seenNames = new Set<string>();
 
+  // Harvest-zero lint instrumentation (Spec 123 C11, Req 8). `brandedCountByFile` records
+  // a per-file branded-export count — incremented independent of `seenNames`'s cross-module
+  // dedupe, so a fully branded file whose token names were already harvested from an
+  // earlier-scanned module still counts non-zero (Req 8.1, Lina R2's false-positive fix:
+  // "harvests zero net tokens" is NOT the trigger; "exports no branded value" is).
+  // `scannedTokenFiles` records every file matching the `tokens.ts` / `*.tokens.ts` naming
+  // convention the lint targets, from either discovery source.
+  const brandedCountByFile = new Map<string, number>();
+  const scannedTokenFiles = new Set<string>();
+
   // Source 1: Auto-discover from {tokenSourceRoot}/component/
   const componentSubdir = path.join(config.tokenSourceRoot, 'component');
   if (fs.existsSync(componentSubdir)) {
     const files = fs.readdirSync(componentSubdir)
       .filter(f => f.endsWith('.ts') && !f.endsWith('.test.ts') && !f.endsWith('.d.ts'));
     for (const file of files) {
-      const mod = loadModule(path.join(componentSubdir, file), __filename);
-      harvestModule(mod, harvested, seenNames);
+      const fullPath = path.join(componentSubdir, file);
+      if (isTokenFileName(file)) scannedTokenFiles.add(fullPath);
+      const mod = loadModule(fullPath, __filename);
+      harvestModule(mod, harvested, seenNames, fullPath, brandedCountByFile);
     }
   }
 
   // Source 2: Explicit componentTokens directories (*.tokens.ts / tokens.ts pattern)
   for (const dir of config.componentTokenDirs) {
     if (!fs.existsSync(dir)) continue;
-    scanForTokenFiles(dir, loadModule, harvested, seenNames);
+    scanForTokenFiles(dir, loadModule, harvested, seenNames, scannedTokenFiles, brandedCountByFile);
   }
 
   // Sole writer to the canonical registry (Spec 124, R5 AC2), in traversal order so that
@@ -81,7 +93,44 @@ export function loadComponentTokens(
     ComponentTokenRegistry.register(token);
   }
 
+  // The harvest-zero lint (Spec 123 C11, Req 8): a `tokens.ts` / `*.tokens.ts` file that
+  // exported no `defineComponentTokens`-branded value very likely wears the wrong
+  // filename — a plain semantic-reference map, not a value-registration file (124's
+  // authoring-convention seed, Lina's Q8 call). Reuses the SAME brand signal the harvest
+  // above already computed (Req 8.2 — no second detection mechanism). A warning, never an
+  // error: `generate` still runs (Req 8.1; Task 5's migration report promises this).
+  for (const file of scannedTokenFiles) {
+    if ((brandedCountByFile.get(file) ?? 0) === 0) {
+      console.warn(harvestZeroWarning(file));
+    }
+  }
+
   return ComponentTokenRegistry.getAll();
+}
+
+/**
+ * True for a filename matching the `tokens.ts` / `*.tokens.ts` naming convention the
+ * harvest-zero lint (C11, Req 8) targets — the convention 124's authoring-convention seed
+ * names as worn by two mechanisms (value-registration files and plain semantic-reference
+ * maps).
+ */
+function isTokenFileName(name: string): boolean {
+  return name === 'tokens.ts' || name.endsWith('.tokens.ts');
+}
+
+/**
+ * The harvest-zero lint's warning message (Spec 123 C11, Req 8).
+ *
+ * NOTE: design.md's C11 entry is "Unchanged" and carries no exact-string catalog row for
+ * this warning (unlike most 123 catalog strings elsewhere in the spec). This wording
+ * follows design-outline.md § 4.5's proposed phrasing as closely as an implementation
+ * string can: *"this scanned file harvested zero component tokens; if you meant to
+ * register values, call `defineComponentTokens`"* (Lina, R1). Flagged for a Thurgood
+ * erratum to add the row to design.md's catalog rather than leaving this the sole source
+ * of truth for the string.
+ */
+export function harvestZeroWarning(file: string): string {
+  return `⚠️  ${file}: this scanned file harvested zero component tokens; if you meant to register values, call \`defineComponentTokens\`.`;
 }
 
 /**
@@ -98,6 +147,8 @@ function harvestModule(
   mod: unknown,
   harvested: RegisteredComponentToken[],
   seenNames: Set<string>,
+  file: string,
+  brandedCountByFile: Map<string, number>,
 ): void {
   if (mod == null || typeof mod !== 'object') return;
 
@@ -110,6 +161,11 @@ function harvestModule(
     const tokens = getTokenContract(exported);
     if (!tokens) continue;
     seenObjects.add(exported);
+
+    // Harvest-zero lint instrumentation (Req 8.2): recorded here, per distinct branded
+    // object, BEFORE the cross-module name dedupe below — so this file's branded status
+    // never depends on whether another module already harvested the same token names.
+    brandedCountByFile.set(file, (brandedCountByFile.get(file) ?? 0) + 1);
 
     for (const token of tokens) {
       // First-seen-wins across modules (a genuine duplicate name is caught by the
@@ -130,16 +186,19 @@ function scanForTokenFiles(
   loadModule: TsModuleLoader,
   harvested: RegisteredComponentToken[],
   seenNames: Set<string>,
+  scannedTokenFiles: Set<string>,
+  brandedCountByFile: Map<string, number>,
 ): void {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory() && entry.name !== '__tests__' && entry.name !== 'node_modules') {
-      scanForTokenFiles(fullPath, loadModule, harvested, seenNames);
+      scanForTokenFiles(fullPath, loadModule, harvested, seenNames, scannedTokenFiles, brandedCountByFile);
     } else if (entry.isFile() && (entry.name.endsWith('.tokens.ts') || entry.name === 'tokens.ts') && !entry.name.endsWith('.test.ts')) {
+      scannedTokenFiles.add(fullPath);
       const mod = loadModule(fullPath, __filename);
-      harvestModule(mod, harvested, seenNames);
+      harvestModule(mod, harvested, seenNames, fullPath, brandedCountByFile);
     }
   }
 }

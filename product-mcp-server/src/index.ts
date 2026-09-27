@@ -34,29 +34,37 @@ const filterSchema = {
   usesToken: { type: 'string', description: 'Screens whose UI tree tokens: blocks reference this token' },
 };
 
-const tools = [
+// Tool definitions (Spec 123 Task 4, C8: every registration carries an explicit
+// `readOnlyHint` — the manifest and the servers' own approval computation read
+// this array as the registration module, never a hand-maintained list).
+export const tools = [
   {
     name: 'get_product_overview',
+    annotations: { readOnlyHint: true },
     description: 'Get product context, configuration, and principles.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_brand_context',
+    annotations: { readOnlyHint: true },
     description: 'Get product brand identity: personality, voice, tone, anti-references, register. Returns structured "not configured" response if brand fields are absent.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'find_screens',
+    annotations: { readOnlyHint: true },
     description: 'Find screens by component usage, token usage, domain object usage, status, platform, or context. All filters are conjunctive (AND). No params returns all screens.',
     inputSchema: { type: 'object' as const, properties: filterSchema },
   },
   {
     name: 'list_experience_map',
+    annotations: { readOnlyHint: true },
     description: 'List experience map entries with referenced components, domain objects, and blocked reasons. Supports same filters as find_screens.',
     inputSchema: { type: 'object' as const, properties: filterSchema },
   },
   {
     name: 'get_screen_spec',
+    annotations: { readOnlyHint: true },
     description: 'Get full spec for a screen (UI tree, state model, data sources, accessibility, status). Includes _componentGaps for unmatched components. Optional platform filter.',
     inputSchema: {
       type: 'object' as const,
@@ -69,6 +77,7 @@ const tools = [
   },
   {
     name: 'get_screen_state_model',
+    annotations: { readOnlyHint: true },
     description: 'Get just the state model of a screen (data, states, actions, transitions) without the full spec.',
     inputSchema: {
       type: 'object' as const,
@@ -80,6 +89,7 @@ const tools = [
   },
   {
     name: 'get_product_component',
+    annotations: { readOnlyHint: true },
     description: 'Get a product-specific (one-off) component by name — schema, contracts, and composition details.',
     inputSchema: {
       type: 'object' as const,
@@ -91,6 +101,7 @@ const tools = [
   },
   {
     name: 'get_domain_object',
+    annotations: { readOnlyHint: true },
     description: 'Get domain object definition and list of screens that reference it.',
     inputSchema: {
       type: 'object' as const,
@@ -102,6 +113,7 @@ const tools = [
   },
   {
     name: 'find_principles',
+    annotations: { readOnlyHint: true },
     description: 'Find design principles by keyword.',
     inputSchema: {
       type: 'object' as const,
@@ -113,6 +125,7 @@ const tools = [
   },
   {
     name: 'find_templates',
+    annotations: { readOnlyHint: true },
     description: 'Find product templates by category or by which screen uses them.',
     inputSchema: {
       type: 'object' as const,
@@ -124,16 +137,19 @@ const tools = [
   },
   {
     name: 'list_product_templates',
+    annotations: { readOnlyHint: true },
     description: 'List all product-specific layout and content patterns.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_product_health',
+    annotations: { readOnlyHint: true },
     description: 'Get index status, data counts, reverse index sizes, gap counts, and warnings.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_product_tokens',
+    annotations: { readOnlyHint: true },
     description: 'Get product tokens by category, name, or platform. Returns structured values with resolved system token references. All filters optional and conjunctive.',
     inputSchema: {
       type: 'object' as const,
@@ -147,6 +163,7 @@ const tools = [
   },
   {
     name: 'rebuild_product_index',
+    annotations: { readOnlyHint: false },
     description: 'Re-index all product data. Returns new health status.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
@@ -472,17 +489,105 @@ class ProductMCPServer {
  * the esbuild bundle (dist/mcp/product-mcp.js) inlines the require at build time.
  * Types are declared locally (shape-only, no logic).
  */
-interface ResolvedDataRoot {
-  path: string;
-  source: 'env' | 'cwd' | 'package';
+/** Shape-only mirror of `bornRepo.ts`'s `DesignSystemRoot` (Spec 123 Task 1.2) — no logic, avoids a cross-sub-package import. */
+export interface DesignSystemRootShape {
+  state: 'born' | 'package-mode' | 'partial' | 'unborn';
+  root: string | null;
+  tierDir: string | null;
+  partialCase?: 'config-no-tier' | 'unused-local-tier' | 'tier-no-config' | 'manifest-only';
+  /** `config-no-tier` only; `undefined` for a non-literal `tokenSource` (Peter, 2026-09-26). */
+  attemptedTokenSource?: string;
+  signals: { config: boolean; tier: boolean; manifest: boolean; legacyManifest: boolean };
 }
-interface McpDataRootsModule {
+export interface ResolvedDataRoot {
+  path: string;
+  source: 'env' | 'cwd' | 'package' | 'package-consume';
+}
+export interface ComponentRootsResult {
+  roots: string[];
+  sources: ResolvedDataRoot['source'][];
+}
+export type TokenIndexResolution =
+  | { ok: true; path: string; source: ResolvedDataRoot['source']; tokenOrigin?: 'designerpunk-package-mode' | 'designerpunk-reference' }
+  | { ok: false; reason: 'empty-env-value' }
+  | { ok: false; reason: 'run-generate' }
+  | { ok: false; reason: 'partial'; partialCase?: DesignSystemRootShape['partialCase'] };
+export interface McpDataRootsModule {
   resolvePackageRoot(fromDir: string): string;
+  /** @deprecated Spec 123 Task 1.2 — superseded by the birth-aware resolvers below. Kept so this bootstrap block keeps compiling until Tasks 1.4–1.6 rewire it. */
   resolveConsumerOwnedRoot(opts: {
     envValue?: string;
     relPath: string;
     packageRoot?: string;
   }): ResolvedDataRoot;
+  resolveComponentRoots(opts: {
+    envValue?: string;
+    dsRoot: DesignSystemRootShape;
+    packageRoot: string;
+  }): ComponentRootsResult;
+  resolveTokenIndexRoot(opts: {
+    envValue?: string;
+    dsRoot: DesignSystemRootShape;
+    packageRoot: string;
+  }): TokenIndexResolution;
+  resolveProductRoot(opts: {
+    envValue?: string;
+    dsRoot: DesignSystemRootShape;
+    cwd: string;
+  }): ResolvedDataRoot;
+}
+
+/**
+ * Shape-only declaration of the root-compiled `bornRepo` module (Spec 123 Task 1.5) — the same
+ * CONSUMPTION CONTRACT as `McpDataRootsModule`.
+ */
+export interface BornRepoModule {
+  findDesignSystemRoot(startDir: string): DesignSystemRootShape;
+}
+
+/**
+ * Shape-only declaration of the root-compiled `errorCatalog` module (Spec 123 Task 1.6) —
+ * the same CONSUMPTION CONTRACT as `McpDataRootsModule`/`BornRepoModule`.
+ */
+export interface ErrorCatalogModule {
+  partialCaseMessage(
+    root: string,
+    partialCase: NonNullable<DesignSystemRootShape['partialCase']>,
+    attemptedTokenSource: string | undefined
+  ): string;
+  packageModeIndexAbsentMessage(): string;
+  bornIndexAbsentMessage(root: string): string;
+  explicitTokenIndexMissingMessage(explicitPath: string): string;
+}
+
+/**
+ * Pick the design.md catalog string for a refused token-index resolution (Spec 123
+ * Task 1.6). Extracted as a pure, exported function so it's unit-testable outside
+ * the `require.main` bootstrap guard — identical logic to the application server's
+ * `resolveTokenIndexUnavailableMessage` (kept as two copies, not a shared import,
+ * because each sub-package cannot statically import the other's `index.ts` — the
+ * same `rootDir` boundary the CONSUMPTION CONTRACT works around for the shared
+ * root-level modules).
+ */
+export function resolveTokenIndexUnavailableMessage(
+  reason: 'empty-env-value' | 'run-generate' | 'partial',
+  dsRoot: DesignSystemRootShape,
+  packageRoot: string,
+  errorCatalog: ErrorCatalogModule,
+  explicitTokenIndexDirEnv: string | undefined
+): string {
+  switch (reason) {
+    case 'empty-env-value':
+      return errorCatalog.explicitTokenIndexMissingMessage(explicitTokenIndexDirEnv ?? '');
+    case 'run-generate':
+      return dsRoot.state === 'package-mode'
+        ? errorCatalog.packageModeIndexAbsentMessage()
+        : errorCatalog.bornIndexAbsentMessage(dsRoot.root ?? packageRoot);
+    case 'partial':
+      return dsRoot.partialCase
+        ? errorCatalog.partialCaseMessage(dsRoot.root ?? packageRoot, dsRoot.partialCase, dsRoot.attemptedTokenSource)
+        : `token index unavailable: partial state with no named sub-case`;
+  }
 }
 
 // Start server — resolve data roots (Spec 121 F-C2), then boot.
@@ -494,49 +599,81 @@ if (require.main === module) {
   };
 
   let productDir: string = process.env.PRODUCT_DIR || DEFAULT_PRODUCT_DIR;
-  let componentDir: string = process.env.COMPONENT_DIR || DEFAULT_COMPONENT_DIR;
+  let componentDir: string | string[] = process.env.COMPONENT_DIR || DEFAULT_COMPONENT_DIR;
   let tokenIndexDir: string = process.env.TOKEN_INDEX_DIR || DEFAULT_TOKEN_INDEX_DIR;
   try {
     const shared = require('../../dist/cli/shared/mcpDataRoots') as McpDataRootsModule;
+    const bornRepo = require('../../dist/cli/shared/bornRepo') as BornRepoModule;
+    const errorCatalog = require('../../dist/cli/shared/errorCatalog') as ErrorCatalogModule;
     const packageRoot = shared.resolvePackageRoot(__dirname);
 
-    // CONSUMER-OWNED roots (env → cwd non-empty → package fallback), with one
-    // exception: `product/` gets NO package fallback — it is consumer-owned by
-    // definition, and an empty index there is expected/correct (the server's
-    // "starting with empty data" path).
-    const product = shared.resolveConsumerOwnedRoot({
+    // Spec 123 Task 1.5: birth detection from the INVOKING process's cwd (D-B3 —
+    // the runner spawns this server with no `cwd` option, so it inherits).
+    const dsRoot = bornRepo.findDesignSystemRoot(process.cwd());
+
+    // PRODUCT root (C3): env, else bornRoot/product (any resolved root), else
+    // cwd/product (unborn — unchanged pre-123 behavior). No package fallback —
+    // product/ is consumer-owned by definition; an empty index is expected/correct.
+    const product = shared.resolveProductRoot({
       envValue: process.env.PRODUCT_DIR,
-      relPath: DEFAULT_PRODUCT_DIR,
+      dsRoot,
+      cwd: process.cwd(),
     });
-    const component = shared.resolveConsumerOwnedRoot({
+
+    // COMPONENT root (C3): the consumer ∪ package union, precedence-ordered.
+    // GapDetector builds its catalog as the UNION of the full root set (a born
+    // repo's own components ∪ the package's), the same rule the application
+    // server's ComponentIndexer follows at pass 1 (Task 1.4) — see
+    // `.kiro/issues/2026-09-26-product-server-component-root.md`. So the whole
+    // precedence-ordered root set is passed through, never just roots[0].
+    const componentRoots = shared.resolveComponentRoots({
       envValue: process.env.COMPONENT_DIR,
-      relPath: DEFAULT_COMPONENT_DIR,
+      dsRoot,
       packageRoot,
     });
-    const tokenIndex = shared.resolveConsumerOwnedRoot({
+
+    // TOKEN INDEX (C3): birth-aware. A structural reason is logged when no index
+    // can be served, via the same design.md catalog strings the application
+    // server uses (Task 1.6) — never a paraphrase.
+    const tokenIndex = shared.resolveTokenIndexRoot({
       envValue: process.env.TOKEN_INDEX_DIR,
-      relPath: DEFAULT_TOKEN_INDEX_DIR,
+      dsRoot,
       packageRoot,
     });
 
     // Boot log: one stderr line per data root, BEFORE the startup sentinel.
     // NEVER stdout — stdout is the JSON-RPC channel.
+    console.error(`[${SERVER_NAME}] Design-system root: ${dsRoot.state}${dsRoot.partialCase ? ` (${dsRoot.partialCase})` : ''}`);
     logRoot('product', product);
-    logRoot('components', component);
-    logRoot(
-      'token-index',
-      tokenIndex,
-      tokenIndex.source === 'package'
-        ? " — package token snapshot in use; if this project customizes tokens, run 'npx designerpunk generate' to build a local token-index"
-        : ''
-    );
+    componentRoots.roots.forEach((r, i) => logRoot(`components[${i}]`, { path: r, source: componentRoots.sources[i] }));
+    if (tokenIndex.ok) {
+      logRoot(
+        'token-index',
+        { path: tokenIndex.path, source: tokenIndex.source },
+        tokenIndex.tokenOrigin ? ` (tokenOrigin: ${tokenIndex.tokenOrigin})` : ''
+      );
+    } else {
+      const message = resolveTokenIndexUnavailableMessage(
+        tokenIndex.reason,
+        dsRoot,
+        packageRoot,
+        errorCatalog,
+        process.env.TOKEN_INDEX_DIR
+      );
+      console.error(`[${SERVER_NAME}] ${message}`);
+    }
 
     productDir = product.path;
-    componentDir = component.path;
-    tokenIndexDir = tokenIndex.path;
+    componentDir = componentRoots.roots;
+    tokenIndexDir = tokenIndex.ok ? tokenIndex.path : DEFAULT_TOKEN_INDEX_DIR;
   } catch {
-    // Root dist not built (dev-repo edge; in-repo cwd == package root, so the
-    // legacy env/cwd-relative defaults still land on the right data).
+    // Root dist not built — birth-aware root resolution is unavailable, so this
+    // path is effectively dev-repo only (a consumer's esbuild bundle inlines the
+    // `dist/cli/shared/*` requires at build time, so it can never hit this catch).
+    // DEFAULT_COMPONENT_DIR ('src/components/core') is deliberately left
+    // unchanged: in THIS repo cwd == the package root, and that is exactly where
+    // components live — see `.kiro/issues/2026-09-26-product-server-component-root.md`
+    // item 2 for why changing it would regress this path, not fix anything.
     console.error(
       `[${SERVER_NAME}] WARNING: shared data-root resolution unavailable (root dist not built?) — using legacy env/cwd-relative defaults`
     );

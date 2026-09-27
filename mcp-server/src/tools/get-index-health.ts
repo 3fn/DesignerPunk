@@ -15,6 +15,7 @@ import { IndexHealth } from '../models';
  */
 export const getIndexHealthTool = {
   name: 'get_index_health',
+  annotations: { readOnlyHint: true },
   description: 'Get the health status of the document index. Returns status (healthy/degraded/failed), errors, warnings, and metrics including document count, section count, cross-reference count, and index size.',
   inputSchema: {
     type: 'object' as const,
