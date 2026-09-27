@@ -16,8 +16,8 @@
  * the custom properties the web generator emits (DesignTokens.web.css / ComponentTokens.web.css).
  *
  * Bite (recorded in the PR): reintroduce `var(--color-error)` in any of the family's
- * `.browser.ts` / `.web.ts` files, or the bare `'color-error'` icon-color literal in
- * InputTextBase.web.ts → this suite goes red.
+ * `.web.ts` files, or the bare `'color-error'` icon-color literal in InputTextBase.web.ts
+ * → this suite goes red.
  *
  * `--color-background-hover` (Input-Text-Password's toggle-button hover background):
  * Peter ruled option (a) 2026-09-26 — wire the existing blend pattern (Button-Icon /
@@ -25,14 +25,14 @@
  * into a private, JS-set custom property). Done for `InputTextPassword.web.ts`
  * (`--_itp-hover-bg`, see KNOWN_JS_COMPUTED below — a JS-computed value is not a token
  * reference and can't be checked against the static index; a companion behavioral test,
- * `toggleButtonHoverBlend.test.ts`, verifies the actual computed value instead). It is
- * NOT done for `InputTextPassword.browser.ts`: that file is a standalone, zero-import
- * bundle by design (see its own header comment), and the blend utility depends on ~650
- * lines of real OKLCH/RGB color-space math (`src/blend/ColorSpaceUtils.ts` +
- * `ThemeAwareBlendUtilities.web.ts`) with no precedent anywhere in the repo for inlining
- * into a standalone bundle. That literal remains in KNOWN_DEFERRED, explicitly
- * allow-listed rather than silently exempted, so the guard still fails loudly if a NEW
- * unresolved literal is introduced anywhere in the family. See
+ * `toggleButtonHoverBlend.test.ts`, verifies the actual computed value instead).
+ *
+ * The family's four `*.browser.ts` files (a separate, standalone-bundle build that
+ * carried its own copy of this styling, including the then-unresolved
+ * `InputTextPassword.browser.ts` literal) were confirmed imported by nothing and deleted
+ * (Spec 123 Task 9.0(b) — `.kiro/issues/archive/2026-09-26-input-text-browser-ts-orphans.md`).
+ * The `KNOWN_DEFERRED` allow-list they required is gone with them; this guard now covers
+ * only the live `.web.ts` surface. See
  * `.kiro/issues/archive/2026-09-26-input-text-phantom-css-vars.md`.
  */
 
@@ -65,14 +65,6 @@ const GENERATED_WEB_NAMES: Set<string> = new Set(
 );
 
 /**
- * Deliberately deferred, known-unresolved literals (see file header). Each entry names the
- * exact file:name pair so a fix removes it here too — the guard then re-covers that literal.
- */
-const KNOWN_DEFERRED: ReadonlyArray<{ file: string; name: string }> = [
-  { file: 'src/components/core/Input-Text-Password/platforms/web/InputTextPassword.browser.ts', name: '--color-background-hover' }
-];
-
-/**
  * Custom properties that are intentionally NOT token references — their value is computed
  * in JS at render time (blend math) and written directly into the `<style>` block, so they
  * will never appear in `token-index/`. Each entry is named individually (not a `--_`-prefix
@@ -88,13 +80,9 @@ const KNOWN_JS_COMPUTED: ReadonlyArray<{ file: string; name: string; verifiedBy:
 ];
 
 const FAMILY_WEB_FILES = [
-  'src/components/core/Input-Text-Base/platforms/web/InputTextBase.browser.ts',
   'src/components/core/Input-Text-Base/platforms/web/InputTextBase.web.ts',
-  'src/components/core/Input-Text-Email/platforms/web/InputTextEmail.browser.ts',
   'src/components/core/Input-Text-Email/platforms/web/InputTextEmail.web.ts',
-  'src/components/core/Input-Text-Password/platforms/web/InputTextPassword.browser.ts',
   'src/components/core/Input-Text-Password/platforms/web/InputTextPassword.web.ts',
-  'src/components/core/Input-Text-PhoneNumber/platforms/web/InputTextPhoneNumber.browser.ts',
   'src/components/core/Input-Text-PhoneNumber/platforms/web/InputTextPhoneNumber.web.ts'
 ].filter(relPath => fs.existsSync(path.join(REPO_ROOT, relPath)));
 
@@ -147,33 +135,33 @@ describe('Input-Text family — emitted CSS custom properties resolve (resolve-g
   });
 
   it('scans a non-trivial set of family web files', () => {
-    expect(FAMILY_WEB_FILES.length).toBeGreaterThanOrEqual(6);
+    // Exactly the four live `.web.ts` files since the `.browser.ts` orphans were
+    // deleted (Task 9.0(b)) — a fixed count, not a floor, so a fifth Input-Text
+    // variant or a re-added `.browser.ts` file changes this assertion visibly.
+    expect(FAMILY_WEB_FILES.length).toBe(4);
   });
 
-  it('every literal var(--…) reference in the family resolves (deferred/JS-computed items allow-listed)', () => {
+  it('every literal var(--…) reference in the family resolves (JS-computed items allow-listed)', () => {
     const reads = literalCssVarReads();
-    expect(reads.length).toBeGreaterThan(20);
+    expect(reads.length).toBeGreaterThan(10);
 
-    const isDeferred = (r: { file: string; name: string }) =>
-      KNOWN_DEFERRED.some(d => d.file === r.file && d.name === r.name);
     const isJsComputed = (r: { file: string; name: string }) =>
       KNOWN_JS_COMPUTED.some(d => d.file === r.file && d.name === r.name);
 
     const unresolved = reads
       .filter(r => !GENERATED_WEB_NAMES.has(r.name))
-      .filter(r => !isDeferred(r))
       .filter(r => !isJsComputed(r))
       .map(r => `${r.file}: ${r.name}`);
     expect(unresolved).toEqual([]);
   });
 
-  it('the deferred + JS-computed allow-lists are exactly this known set (no silent growth)', () => {
+  it('the JS-computed allow-list is exactly this known set (no silent growth)', () => {
     const reads = literalCssVarReads();
     const unresolvedIncludingAllowListed = reads
       .filter(r => !GENERATED_WEB_NAMES.has(r.name))
       .map(r => `${r.file}: ${r.name}`)
       .sort();
-    const expected = [...KNOWN_DEFERRED, ...KNOWN_JS_COMPUTED]
+    const expected = KNOWN_JS_COMPUTED
       .map(d => `${d.file}: ${d.name}`)
       .sort();
     expect(unresolvedIncludingAllowListed).toEqual(expected);

@@ -45,20 +45,34 @@ function cssAsStringPlugin(options = {}) {
     setup(build) {
       // Intercept .css file imports
       build.onResolve({ filter: /\.css$/ }, (args) => {
-        // Resolve the CSS file path relative to the importer
-        const resolvedPath = path.resolve(path.dirname(args.importer), args.path);
-        
+        // Resolve the CSS file's absolute path relative to the importer.
+        const absolutePath = path.resolve(path.dirname(args.importer), args.path);
+
+        // esbuild writes a `// <namespace>:<path>` module-boundary comment above
+        // this module's inlined output in non-minified bundles, using exactly the
+        // `path` returned here. Returning the absolute path leaks the build
+        // machine's home directory into every published tarball (`.kiro/issues/
+        // 2026-09-27-bundle-absolute-path-leak.md`). Returning a path relative to
+        // the package root instead keeps that comment build-machine-independent
+        // AND matches `build-name-contract.ts`'s already-accepted `src/…` form
+        // (`bundleModules()`, which prefers a bare `src/` prefix over the legacy
+        // absolute-path fallback). The absolute path still travels via
+        // `pluginData` so `onLoad` can read the real file regardless of cwd.
+        const relativePath = path.relative(process.cwd(), absolutePath).split(path.sep).join('/');
+
         return {
-          path: resolvedPath,
-          namespace: 'css-as-string'
+          path: relativePath,
+          namespace: 'css-as-string',
+          pluginData: { absolutePath }
         };
       });
-      
+
       // Load CSS files and return as JS string export
       build.onLoad({ filter: /.*/, namespace: 'css-as-string' }, async (args) => {
         try {
-          // Read the CSS file content
-          let cssContent = await fs.promises.readFile(args.path, 'utf8');
+          // Read the CSS file content (the real, absolute path — never the
+          // package-root-relative `args.path` used for module identity/comments).
+          let cssContent = await fs.promises.readFile(args.pluginData.absolutePath, 'utf8');
           
           // Optionally minify the CSS
           if (minify) {

@@ -21,3 +21,17 @@ A guard asserting the built ESM/UMD bundles contain no absolute path to the buil
 ## Filed by
 
 Steward (main-loop), 2026-09-27, at Peter's direction.
+
+## Outcome (2026-09-27) — RESOLVED
+
+Fixed in Spec 123 U1 Task 9.0(a). `scripts/esbuild-css-plugin.js`'s `css-as-string` plugin now returns a path relative to the package root (`process.cwd()`) from `onResolve`, carrying the real absolute path separately via `pluginData` for `onLoad`'s file read. esbuild's module-boundary comment now reads `// css-as-string:src/components/…/X.web.css` — no build-machine path.
+
+`scripts/build-name-contract.ts`'s `bundleModules()` needed no logic change: it already preferred a bare `src/…` prefix over the absolute-path fallback (a forward-looking accommodation left in place for exactly this fix). Its doc comment was updated to reflect the relative form as the current reality, and `scripts/__tests__/build-name-contract.test.ts`'s synthetic fixture was updated to use the new relative comment form.
+
+**Guard added**: `src/__tests__/browser-bundle-no-absolute-paths.test.ts` (functional lane, `npm test` → CI's `lane-timing.yml` `lane-functional-root`, never `test:scripts`). Asserts no `/Users/`, `/home/`, or single-letter-drive prefix in any `dist/browser/*.js` bundle.
+
+**Bite recorded red**: reverted `onResolve` to return the absolute path, rebuilt — 27 offending lines in `designerpunk.esm.js` and 27 in `designerpunk.umd.js` (54 total). Restored; rebuilt; green.
+
+**Name-contract check re-verified**: `npm run build:name-contract` passes (143 semantic + 41 primitive referenced, 21 dynamic sites, 0 not-checked). `npm run test:scripts -- build-name-contract.test.ts`: 19/19 pass, including the bundle ⊆ src bite ("a bundle-only name FAILS the build").
+
+Full validation + completion doc: `.kiro/specs/123-consumer-distribution/completion/task-9-0-completion.md`.

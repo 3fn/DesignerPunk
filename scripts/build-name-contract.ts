@@ -162,7 +162,7 @@ export function extractBundleReferences(bundle: string): BundleReferences {
 
 /**
  * The source modules esbuild bundled, read from its own module-boundary comments
- * (`// src/…` for TS, `// css-as-string:<abs>/src/…` for inlined CSS). An empty
+ * (`// src/…` for TS, `// css-as-string:src/…` for inlined CSS). An empty
  * list fails the build (fail-closed: every bundle name would then be bundle-only).
  */
 export function bundleModules(bundle: string): string[] {
@@ -175,8 +175,11 @@ export function bundleModules(bundle: string): string[] {
     }
     m = /^\/\/ css-as-string:(.+)$/.exec(line);
     if (m) {
-      // Absolute today (the plugin records the build machine's path); a relative
-      // `src/…` form is accepted too, so fixing that leak never silently empties this list.
+      // The plugin (`scripts/esbuild-css-plugin.js`) has emitted a package-root-
+      // relative `src/…` form since 2026-09-27 (`.kiro/issues/
+      // 2026-09-27-bundle-absolute-path-leak.md`). The legacy absolute-path form
+      // is still accepted here so an older bundle, or a future plugin regression,
+      // never silently empties this list — it fails loud instead (bundle ⊆ src).
       const i = m[1].startsWith('src/') ? -1 : m[1].lastIndexOf('/src/');
       if (m[1].startsWith('src/') || i >= 0) out.add(m[1].slice(i + 1));
     }

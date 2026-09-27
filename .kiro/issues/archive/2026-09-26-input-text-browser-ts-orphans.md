@@ -34,3 +34,22 @@ The files ship in the npm package's `src/`, so a deep-path consumer could exist 
 ## Filed by
 
 Steward (main-loop), 2026-09-26, at Peter's direction.
+
+## Outcome (2026-09-27) — RESOLVED, confirmed orphaned, deleted
+
+Fixed in Spec 123 U1 Task 9.0(b). Confirmed imported by nothing before deleting:
+- `git grep -n "\.browser'" -- ':!.kiro' ':!docs' ':!*.md'` — 0 hits.
+- `git grep` for the four filenames by name — hits only in the Input-Text resolve-guard test (`InputTextFamily.token-resolution.test.ts`, which scanned and allow-listed them) and three component READMEs (documentation only).
+- `src/browser-entry.ts` — imports only the four `.web.ts` files, never `.browser.ts`.
+- `package.json` `exports` — no subpath exposes them.
+- `npm pack --dry-run` (before deletion) — the `.browser.ts` **source** never shipped (the `files[]` glob for `src/components/**` only allow-lists `.schema.yaml`/`contracts.yaml`/`component-meta.yaml`), but the **compiled** `dist/**/*.browser.{js,d.ts}` output DID ship via the broad `dist/**/*.{js,d.ts,...}` glob — 8 files, ~50KB, dead weight.
+
+No consumer surfaced. Deleted the four `.browser.ts` files. `InputTextFamily.token-resolution.test.ts`: removed `KNOWN_DEFERRED` (moot — its one entry named the now-deleted `InputTextPassword.browser.ts`) and the `.browser.ts` entries in `FAMILY_WEB_FILES`; tightened `FAMILY_WEB_FILES.length` from a `>=6` floor to an exact `toBe(4)`. Updated the Email/Password/PhoneNumber READMEs' file-tree blocks. `git grep -n "\.browser\.ts" -- src/components` now returns 0 lines outside the guard test's own explanatory comments (which name the deleted file historically, not as a live path).
+
+**Bite recorded red**: planted a phantom `var(--phantom-not-a-real-token)` literal in `InputTextBase.web.ts` — both the "resolves" and "exactly this known set" guard assertions failed, naming the phantom. Reverted; `git diff --stat` clean; guard green again.
+
+After rebuild (`tsc`), `dist/components/core/Input-Text-*/platforms/web/*.browser.*` no longer exist, and `npm pack --dry-run` lists zero `.browser.ts`/`.browser.js`/`.browser.d.ts` paths (down from the pre-deletion 1623 to 1615 `npm notice` lines — exactly the 8 removed).
+
+Both `.kiro/issues/archive/2026-09-26-input-text-phantom-css-vars.md` and `.kiro/issues/archive/2026-09-26-container-base-phantom-css-vars.md` (item 1) received dated addenda correcting the user-visibility claim, per this issue's § "Scope" item 4 — originals unchanged.
+
+CHANGELOG content for Task 7.4 and full validation: `.kiro/specs/123-consumer-distribution/completion/task-9-0-completion.md`.

@@ -34,8 +34,11 @@ function world(opts: { css: string; ts?: string; extraBundle?: string; record?: 
   const cssRel = 'src/components/core/Demo-Base/platforms/web/DemoBase.web.css';
   const tsRel = 'src/components/core/Demo-Base/platforms/web/DemoBase.web.ts';
   const tsText = opts.ts ?? "export const x = 1;\n";
+  // The package-root-relative comment form (`scripts/esbuild-css-plugin.js`,
+  // fixed 2026-09-27 — `.kiro/issues/2026-09-27-bundle-absolute-path-leak.md`).
+  // `bundleModules()` accepts this bare `src/…` form directly.
   const bundle =
-    `// css-as-string:/abs/checkout/${cssRel}\nvar DemoBase_default = ${JSON.stringify(opts.css)};\n` +
+    `// css-as-string:${cssRel}\nvar DemoBase_default = ${JSON.stringify(opts.css)};\n` +
     `// ${tsRel}\n${tsText}\n${opts.extraBundle ?? ''}`;
   const files: Record<string, string> = { [cssRel]: opts.css, [tsRel]: tsText };
   return {
