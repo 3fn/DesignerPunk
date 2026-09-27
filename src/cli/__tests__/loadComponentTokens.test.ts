@@ -6,7 +6,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import { loadComponentTokens } from '../loadComponentTokens';
+import { loadComponentTokens, harvestZeroWarning } from '../loadComponentTokens';
 import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
 import { defineComponentTokens, getTokenContract } from '../../build/tokens';
@@ -101,7 +101,12 @@ describe('loadComponentTokens', () => {
       fs.writeFileSync(path.join(compDir, 'Button-Icon', 'index.ts'), 'module.exports = {};');
 
       const config = makeConfig({ componentTokenDirs: [compDir] });
+      // Fixtures above are deliberately unbranded (discovery-only test) — this now
+      // legitimately fires the Spec 123 C11 harvest-zero lint (Task 8) added below;
+      // local spy swallows the expected noise per this suite's own house pattern.
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
       expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
+      warnSpy.mockRestore();
     });
 
     test('skips __tests__ directories', () => {
@@ -117,6 +122,57 @@ describe('loadComponentTokens', () => {
       fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
       const config = makeConfig({ componentTokenDirs: ['/nonexistent/path'] });
       expect(() => loadComponentTokens(config, jestTsModuleLoader)).not.toThrow();
+    });
+  });
+
+  // Spec 123 Task 8 (C11, Req 8): the harvest-zero lint. Reuses the same brand signal the
+  // harvest already computes (getTokenContract) — no second detection mechanism.
+  describe('harvest-zero lint (Spec 123 C11, Req 8)', () => {
+    let warnSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      warnSpy.mockRestore();
+    });
+
+    test('an unbranded tokens.ts fires exactly one warning, exact string', () => {
+      const compDir = path.join(tmpDir, 'components');
+      fs.mkdirSync(path.join(compDir, 'Widget'), { recursive: true });
+      const filePath = path.join(compDir, 'Widget', 'tokens.ts');
+      // A plain semantic-reference map — structurally the confusion Req 8 targets, not a
+      // defineComponentTokens value-registration file.
+      fs.writeFileSync(filePath, 'module.exports = { widgetColor: "#000000" };');
+
+      const config = makeConfig({ componentTokenDirs: [compDir] });
+      loadComponentTokens(config, jestTsModuleLoader);
+
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+      expect(warnSpy).toHaveBeenCalledWith(harvestZeroWarning(filePath));
+    });
+
+    test('a branded *.tokens.ts fires no warning', () => {
+      const compDir = path.join(tmpDir, 'components');
+      fs.mkdirSync(path.join(compDir, 'Widget'), { recursive: true });
+      const defineTokensPath = require.resolve('../../build/tokens').replace(/\\/g, '/');
+      fs.writeFileSync(
+        path.join(compDir, 'Widget', 'widget.tokens.ts'),
+        [
+          `const { defineComponentTokens } = require('${defineTokensPath}');`,
+          "module.exports = { widgetTokens: defineComponentTokens({",
+          "  component: 'Widget',",
+          "  family: 'spacing',",
+          "  tokens: { 'inset.sm': { value: 8, reasoning: 'test' } },",
+          "}) };",
+        ].join('\n'),
+      );
+
+      const config = makeConfig({ componentTokenDirs: [compDir] });
+      loadComponentTokens(config, jestTsModuleLoader);
+
+      expect(warnSpy).not.toHaveBeenCalled();
     });
   });
 

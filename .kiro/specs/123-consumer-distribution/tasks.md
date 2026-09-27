@@ -478,8 +478,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `src/cli/loadComponentTokens.ts`, tests
 
-  - [ ] 8.1 Gate: the rename merged; the zero-warning run before the lint lands
-  - [ ] 8.2 Tally + warning + fixture test
+  - [x] 8.1 Gate: the rename merged; the zero-warning run before the lint lands
+  - [x] 8.2 Tally + warning + fixture test
 
 - [ ] 9. Consumer-guard extensions and U1 post-diet re-certification (**U1 gating parent**)
 
