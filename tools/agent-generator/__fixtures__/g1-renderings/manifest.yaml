@@ -1,0 +1,199 @@
+fixtures:
+  - file: run1.A.audit-checklist.txt
+    exemplar: A
+    record: canonical/operative-sets/stacy.yaml
+    anchor: "#audit-checklist"
+    canonicalHash: sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering A stacy #audit-checklist -->"
+  - file: run1.B.the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands.txt
+    exemplar: B
+    record: canonical/operative-sets/stacy.yaml
+    anchor: "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
+    canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering B stacy #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script -->"
+  - file: run1.C-c2.what-parity-means.txt
+    exemplar: C(c2)
+    record: canonical/operative-sets/stacy.yaml
+    anchor: "#what-parity-means"
+    canonicalHash: sha256:51334f67aede639a78d8b5ae5e15b2672a07f69ca0d7e9977fdfe083f9ea43a2
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering C(c2) stacy #what-parity-means -->"
+  - file: run1.D.the-trigger-set-the-114-superset-table-names-never-numbers.txt
+    exemplar: D
+    record: canonical/operative-sets/stacy.yaml
+    anchor: "#the-trigger-set-the-114-superset-table-names-never-numbers"
+    canonicalHash: sha256:48826ac4369cbc915c1bfa78eef861818d2630a2fdd4ee95279a6a7063603699
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering D stacy #the-trigger-set-the-114-superset-table-names-never-numbers -->"
+  - file: run1.E.the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands.txt
+    exemplar: E
+    record: canonical/operative-sets/stacy.yaml
+    anchor: "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
+    canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering E stacy #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script -->"
+  - file: run1.Lina-1.platform-implementation-true-native-architecture-preamble.txt
+    exemplar: Lina-1
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#platform-implementation-true-native-architecture:preamble"
+    canonicalHash: sha256:dd30b058f9e21d87a8750036089540058126f5b80b37ea846452b38670a7930c
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-1 lina #platform-implementation-true-native-architecture:preamble -->"
+  - file: run1.Lina-1.web.txt
+    exemplar: Lina-1
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#web"
+    canonicalHash: sha256:d01a527086b28471f5093a7bd4a214326e6d03ed5fa82bfa385e82787ab6e3d8
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-1 lina #web -->"
+  - file: run1.Lina-1.ios.txt
+    exemplar: Lina-1
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#ios"
+    canonicalHash: sha256:a085ad582e13dc5be094eda3b3cbae4bf04de131c4cf74760138217a65c75188
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-1 lina #ios -->"
+  - file: run1.Lina-1.android.txt
+    exemplar: Lina-1
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#android"
+    canonicalHash: sha256:6252b9429a25cd6fc5de584da48e194526cc8d36bb924853f99f069e313a1267
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-1 lina #android -->"
+  - file: run1.Lina-2.step-1-verify-component-family-doc.txt
+    exemplar: Lina-2
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#step-1-verify-component-family-doc"
+    canonicalHash: sha256:e15bdecb57e9158a6ff726c1a11f66c5de5ab9c0b40bc9f0aa21b78d18fed0f2
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-2 lina #step-1-verify-component-family-doc -->"
+  - file: run1.Lina-2.step-2-create-typests.txt
+    exemplar: Lina-2
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#step-2-create-typests"
+    canonicalHash: sha256:5ba4402eb58fe9f92d7ccf13d178837884145a7ee91826b231e1dd2b8c2264cd
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-2 lina #step-2-create-typests -->"
+  - file: run1.Lina-2.step-3-author-contractsyaml.txt
+    exemplar: Lina-2
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#step-3-author-contractsyaml"
+    canonicalHash: sha256:4f9f38c9a48f3e78dfb958d759047f157365f119e508bdbdff7ac34e46994f3a
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-2 lina #step-3-author-contractsyaml -->"
+  - file: run1.Lina-2.step-4-create-platform-implementations.txt
+    exemplar: Lina-2
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#step-4-create-platform-implementations"
+    canonicalHash: sha256:6aa7c9768f2d415cf6d5ff36b93f6d00641ab908c53b863bb7dcd3b063393a5c
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-2 lina #step-4-create-platform-implementations -->"
+  - file: run1.Lina-2.step-5-create-tests.txt
+    exemplar: Lina-2
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#step-5-create-tests"
+    canonicalHash: sha256:a4521a22b7c50bf5c3f4963ceeff9c6eeaf3972549907c1792d6dc2401d2363c
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-2 lina #step-5-create-tests -->"
+  - file: run1.Lina-2.step-6-create-or-review-component-metayaml.txt
+    exemplar: Lina-2
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#step-6-create-or-review-component-metayaml"
+    canonicalHash: sha256:8fb443bb30c9bcbe1d3b831ef46bda310090852b930c6cb1ce039b41a447ee79
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-2 lina #step-6-create-or-review-component-metayaml -->"
+  - file: run1.Lina-2.step-7-create-readme.txt
+    exemplar: Lina-2
+    record: canonical/operative-sets/lina.yaml
+    anchor: "#step-7-create-readme"
+    canonicalHash: sha256:14b932eb25c89bf5da4cc571dd4826d7a49dd0da6ab57705398523a68e266e1e
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering Lina-2 lina #step-7-create-readme -->"
+  - file: run1.AX-1.audit-checklist.txt
+    exemplar: AX-1
+    record: canonical/operative-sets/stacy.yaml
+    anchor: "#audit-checklist"
+    canonicalHash: sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
+    sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
+    grammar: run-record
+    marker: "<!-- rendering AX-1 stacy #audit-checklist -->"
+  - file: run2.G-sketch.item-critical-wait-for-user-authorization-before-starting-new-tasks.txt
+    exemplar: G-sketch
+    record: canonical/operative-sets/start-up-tasks.yaml
+    anchor: "#item-critical-wait-for-user-authorization-before-starting-new-tasks"
+    canonicalHash: sha256:5b862be78bc845ce6770093cc0affb912163fe10eafae3ea84f52d46419bbc32
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-2.md
+    sourceBlob: 2cf67060a757db8785ed40c22d24bc8adf67128b
+    grammar: run-record
+    marker: "<!-- rendering G-sketch start-up-tasks #item-critical-wait-for-user-authorization-before-starting-new-tasks -->"
+  - file: run2.G-blanket.item-critical-wait-for-user-authorization-before-starting-new-tasks.txt
+    exemplar: G-blanket
+    record: canonical/operative-sets/start-up-tasks.yaml
+    anchor: "#item-critical-wait-for-user-authorization-before-starting-new-tasks"
+    canonicalHash: sha256:5b862be78bc845ce6770093cc0affb912163fe10eafae3ea84f52d46419bbc32
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-2.md
+    sourceBlob: 2cf67060a757db8785ed40c22d24bc8adf67128b
+    grammar: run-record
+    marker: "<!-- rendering G-blanket start-up-tasks #item-critical-wait-for-user-authorization-before-starting-new-tasks -->"
+  - file: run2.A-blanket.audit-checklist.txt
+    exemplar: A-blanket
+    record: canonical/operative-sets/stacy.yaml
+    anchor: "#audit-checklist"
+    canonicalHash: sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221
+    source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-2.md
+    sourceBlob: 2cf67060a757db8785ed40c22d24bc8adf67128b
+    grammar: run-record
+    marker: "<!-- rendering A-blanket stacy #audit-checklist -->"
+  - file: task11-3.G.item-critical-wait-for-user-authorization-before-starting-new-tasks.txt
+    exemplar: G
+    record: canonical/operative-sets/start-up-tasks.yaml
+    anchor: "#item-critical-wait-for-user-authorization-before-starting-new-tasks"
+    canonicalHash: sha256:5b862be78bc845ce6770093cc0affb912163fe10eafae3ea84f52d46419bbc32
+    source: .kiro/specs/123-consumer-distribution/completion/task-11-3-exemplars-g-gprime.md
+    sourceBlob: f8eea289d5d8dcb6046451c1c064f75cb411d4a9
+    grammar: begin-end
+    marker: <!-- G-rendering:begin -->
+  - file: task11-3.Gprime.item-civitas-governance-health-check.txt
+    exemplar: G′
+    record: canonical/operative-sets/start-up-tasks.yaml
+    anchor: "#item-civitas-governance-health-check"
+    canonicalHash: sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+    source: .kiro/specs/123-consumer-distribution/completion/task-11-3-exemplars-g-gprime.md
+    sourceBlob: f8eea289d5d8dcb6046451c1c064f75cb411d4a9
+    grammar: begin-end
+    marker: <!-- Gprime-rendering:begin -->
