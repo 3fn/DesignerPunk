@@ -1,0 +1,89 @@
+# canonical/operative-sets/start-up-tasks.yaml — operative-set record (design C16; Req 11.6.5d)
+#
+# Spec 123 Task 11.3: the two start-up-tasks units that carry exemplars G and G′ (S-T6).
+# This file covers ONLY those two units. It is not the full operative set for start-up-tasks.
+# The other units (item 1 and items 4–7, and the preamble) are recorded at 15.4, when the full
+# operative sets are authored.
+#
+# Source: an always-set member. Under path (B) (Req 12.1a), the shipped steering doc IS the
+# canonical counterpart. No canonical/ copy exists. Units come from splitFrontmatter → partition
+# over that file (Task 10). Both anchors are enumeration-kind item units.
+#
+# canonicalHash: `sha256:` + hex sha256 over the unit's exact bytes (PartitionUnit.text,
+# including its trailing blank line). The operative-set-freshness sweep (13.x) must use the
+# same convention, or these pins read stale on day one.
+#
+# Item `text`: the COMPLETE operative text, a verbatim substring of the unit (C16's one
+# dependence). Item `label`: a human label only. It is never matched.
+# `kind` is one of obligation | step | member | route | command (the Task 11.1 scheme; 11.6.2's
+# five). List markers and indentation are not part of a single-line item's text. wait-1 is a
+# multi-line item: its trigger line scopes the obligation, so its internal bytes are kept,
+# including the member line's marker and indentation.
+source: .kiro/steering/start-up-tasks.md
+owner: thurgood                            # Civitas governance-layer doc (Civitas-System-Overview § "Relationship to Rosetta and Stemma")
+confirmer: stacy                           # C1: owner (thurgood) == profile author (thurgood) → counterpart seat (stacy)
+units:
+  "#item-critical-wait-for-user-authorization-before-starting-new-tasks":
+    canonicalHash: sha256:5b862be78bc845ce6770093cc0affb912163fe10eafae3ea84f52d46419bbc32
+    items:
+      - id: wait-1
+        kind: obligation
+        label: "STOP and WAIT at task completion"
+        text: |-
+          **WHEN reporting the completion of a task THEN you MUST:**
+             - **STOP and WAIT for user authorization before starting the next task**
+      - id: wait-2
+        kind: obligation
+        label: "no auto-proceed"
+        text: |-
+          Do NOT automatically proceed to the next task in the task list
+      - id: wait-3
+        kind: obligation
+        label: "no assumed continuation"
+        text: |-
+          Do NOT assume the user wants you to continue
+      - id: wait-4
+        kind: obligation
+        label: "authorization is an explicit request"
+        text: |-
+          User must explicitly request the next task
+      - id: wait-5
+        kind: member
+        label: "NEVER: announce-and-start"
+        text: |-
+          ❌ "Task 2.2 complete. Now starting Task 2.3..."
+      - id: wait-6
+        kind: member
+        label: "NEVER: read ahead for the next task"
+        text: |-
+          ❌ Automatically reading files for the next task
+      - id: wait-7
+        kind: member
+        label: "NEVER: implement without an explicit request"
+        text: |-
+          ❌ Beginning implementation without explicit user request
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-critical-wait-for-user-authorization-before-starting-new-tasks
+  "#item-civitas-governance-health-check":
+    canonicalHash: sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+    items:
+      - id: hc-1
+        kind: obligation
+        label: "overdue test on the cadence marker"
+        text: |-
+          IF it's been >30 days since last governance health check **[2026-09-19]**, THEN flag:
+      - id: hc-2
+        kind: route
+        label: "the flag routes to the steward, before proceeding"
+        text: |-
+          "Governance health check overdue — Thurgood (Civitas steward) should run the monthly health check before proceeding."
+      - id: hc-3
+        kind: obligation
+        label: "only the steward runs it"
+        text: |-
+          Only Thurgood runs the health check.
+      - id: hc-4
+        kind: obligation
+        label: "every agent checks and flags"
+        text: |-
+          All agents check the date and flag if overdue.
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-civitas-governance-health-check
