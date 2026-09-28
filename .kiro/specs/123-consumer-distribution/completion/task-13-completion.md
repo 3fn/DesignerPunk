@@ -3,7 +3,7 @@
 **Spec**: 123 — Consumer Distribution · **Unit**: U2b — Consumer generation profile: machinery, rendering & G2 (Tasks 13–18, gated at Task 18) · **Type**: Implementation · **Validation**: Tier 3
 **Agent (plan)**: PRIMARY Thurgood (Opus); Lina (Opus) — 13.0, 13.4–13.6
 **Delegated-tier**: plan held — Thurgood (Opus) executed 13.1–13.3, 13.7 and 13.8; Lina (Opus) executed 13.0 and 13.4–13.6. Stacy's four B-U2 review rounds and her reads are 13.7's named review, not an execution seat.
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ f81d3f199f9cf4a1bb1a6bf075bfc7ac5a33c3cf — https://github.com/3fn/DesignerPunk/actions/runs/36417313991, https://github.com/3fn/DesignerPunk/actions/runs/36417321300, https://github.com/3fn/DesignerPunk/actions/runs/36417328104, https://github.com/3fn/DesignerPunk/actions/runs/36417335292, https://github.com/3fn/DesignerPunk/actions/runs/36417342274, https://github.com/3fn/DesignerPunk/actions/runs/36417349678
 **Traces**: Reqs 11.2, 11.3, 11.5, 11.6 (incl. 11.6.5b/e/f) · design C16–C18, DD19, DD25, DD26, DD13 (B-U2)
 
 **Scope line — every edit outside Task 13's Primary Artifacts, disclosed.** The tasks-row grant is `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`.
