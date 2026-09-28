@@ -126,7 +126,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 - **Stacy's two conditions**:
   - **(1)** U2b's merge is the **first-render release**. Per-signer assent rates **and refusals issued** are recorded as ***"first render — not a baseline"***; the C2 `no-consumer-counterpart` rate is recorded in the same block, marked `baseline (Req 11.5.3)`. *(Erratum 2026-09-28 — ballot 2026-09-28-123-b-u2 F-1 (a), ruled by Peter)* **The first-render marking applies to BOTH U2b-merge records** (MIDPOINT and the release-2 RELEASE record).
   - **(2)** The pass audits that **each G1/G2 branch was executed and evidenced by the executing agent** (Tasks 12 and 18's primary agents — § "Gate seat layout"), **never the verdict content**. **Disclosure (Stacy R2)**: Lina authored the machinery pass four tests (C13–C15), so the pass **checks that Task 18's applied edit is byte-equal to its pre-declared text and confined to the domains the verdict names.**
-- Two records, each with its own scope line, never merged. **Within 123 every C2 / assent / refusal reading is baseline-only**; detection begins at the first post-123 release (Stacy R1 (c)).
+- Two records, each with its own scope line, never merged. **Within 123 no C2 / assent / refusal reading is a detection**; each metric's detection begins at the first population after its own baseline, never inside 123 (Stacy R1 (c); ballot 2026-09-28-123-b-u2 F-1). *(Erratum 2026-09-28 — ballot 2026-09-28-123-b-u2 F-1 (a), ruled by Peter)*
 - Findings route to owning agents as explicit messages.
 
 **CLOSEOUT** fires at U5's merge → **`.kiro/specs/123-consumer-distribution/completion/claims-pass.md`** (Stacy).
