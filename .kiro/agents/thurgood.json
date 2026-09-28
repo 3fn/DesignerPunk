@@ -39,7 +39,8 @@
       "allowedPaths": [
         "src/__tests__/**",
         ".kiro/specs/**",
-        "docs/specs/**"
+        "docs/specs/**",
+        ".github/workflows/lane-timing.yml"
       ]
     }
   },
