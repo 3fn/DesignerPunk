@@ -159,8 +159,3 @@ adjudications:
     ruling: intentional-trim
     owner: stacy
     record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"local-script:test:resolution-matrix\" — a reporting harness, not a release gate; its standing CI gate is the required Consumer Guard (run-matrix.js header; Spec 118 Task 1); local recipe: npm run test:resolution-matrix"
-  - sweep: audit:coverage-map:lanes
-    key: local-config:tools/agent-generator/jest.config.js
-    ruling: assessment-gap
-    owner: thurgood
-    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"local-config:tools/agent-generator/jest.config.js\" — no required step runs the 30 generator suites; fix = npm run test:agent-generator in lane-functional-root with a selection floor >= 1, under the ratified CI-regime scope ballot or, failing that, Peter's human-direct fix PR (never PR-2); expires when the test:agent-generator lane step lands — due before 123 U2b's first commit"
