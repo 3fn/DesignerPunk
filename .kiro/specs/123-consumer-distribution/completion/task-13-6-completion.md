@@ -151,3 +151,47 @@ No suite imported anything from the precursor test (`git grep operative-set-reco
 6. **The note-is-committed check fails closed when git cannot answer** (`cannot establish that … is committed (git ls-files failed)`). The runGuard test over a non-git temp tree shows it.
 7. **The mcp-server/dist symlink** was used for local measurement only. It was never committed and is removed.
 8. **`canonical/generated.lock` is not refreshed** (13.1's precedent): it would need a full generation run, which this worktree cannot do.
+
+## Addendum 2026-09-28 (Stacy's ARMING-read asks)
+
+*Append-only. The original notice above is unchanged; it is quoted and extended here, per the completion guide's errata convention. Asked by Stacy on reading the ARMING notice, relayed by the orchestrator.*
+
+### (a) The instrument that certifies the coverage changed in the change it certifies
+
+The original notice says:
+
+> **What it covers**: `canonical/operative-sets/**` and `canonical/profiles/consumer/**` now list `122-diff-guard` in the coverage map.
+
+**Extended.** That listing is produced by `tools/agent-generator/coverage-map.ts`, and **this same change modified it**:
+- **The files**: the code commit `6cf42d43` edited `tools/agent-generator/coverage-map.ts` (`diffGuardSurfaceGlobs()` now appends the sweep's own `surfaceGlobs()`) and its test, `tools/agent-generator/__tests__/coverage-map.test.ts` (the S-D1 spot-check). Both are Spec 122 files, outside Task 13's Primary Artifacts, and were disclosed as adaptation 3.
+- **Which instrument ran**: `git rev-parse 6cf42d43:tools/agent-generator/coverage-map.ts` → **`53eb157d377f6e0c8887a332b0355febf725f9f9`**. The unit head `9395258b` carries the same blob (`git rev-parse 9395258b:tools/agent-generator/coverage-map.ts` → `53eb157d377f6e0c8887a332b0355febf725f9f9`). The (ii) audit output above was produced by that blob.
+- **What stops the edit from simply asserting coverage**: the change is a derivation, not a declaration. The new globs are imported from `regrounding/freshness.ts`'s `surfaceGlobs()`, the same symbol the sweep reads from (S-D1), so the two cannot drift. **Bite 5** (§ "Bites") shows it is load-bearing: dropping the sweep's globs from `diffGuardSurfaceGlobs()` turns `coverage-map.test.ts › … S-D1 spot-check …` red, and the audit re-blanks the 8 rows.
+- **Classification (Stacy's)**: the out-of-list Spec 122 edit is a **MIDPOINT** item, not an ARMING one. ARMING reads which `coverage-map.ts` ran (the blob above); whether that edit was in scope is for the midpoint read.
+
+### (b) The baseline required-context count, measured at the U2b head
+
+At U2b's merge Stacy compares two **measured** numbers, not a measurement against a claim. This is the pre-merge measurement.
+
+- **Command**: `bash tools/agent-generator/verify-gate-registration.sh`. It reads GitHub's branch-protection API for `main`'s required status checks and count-asserts them against the script's `EXPECTED_CONTEXTS`.
+- **Measured by the orchestrator, main checkout, `9c1bf86a`, 2026-09-28.** The script needs a `GITHUB_TOKEN`, and this worktree holds none. My own run at `9395258b` exited 1 with `FAIL: no GITHUB_TOKEN in the environment or …/.env`, and I did not source a credential file.
+- **Why `9c1bf86a` is valid for `9395258b`**: `9c1bf86a` is Thurgood's R3 ballot commit on top of `9395258b`. `git merge-base --is-ancestor 9395258b 9c1bf86a` exits 0, and `git diff --name-only 9395258b 9c1bf86a` lists only `.kiro/docs/ballots/2026-09-28-123-b-u2.md`. So the script and everything it reads in-tree are byte-identical between the two.
+- **Output** (the tail of the context enumeration; the first four contexts scrolled above the capture):
+  ```
+    122-sweep-3-dupes
+    122-sweep-4-ambient
+    122-sweep-6-declarations
+    122-sweep-7-dispositions
+    122-sweep-8-demotion
+    125B-tool-boot-smoke
+    Check package name drift
+    Consumer Guard
+    Section Citation Guard
+    lane-application-mcp-server-suite
+    lane-build-validate
+    lane-functional-root
+    lane-mcp-server-suite
+    lane-typecheck
+  PASS: all 18 required contexts present, count-asserted (N=18 recorded in this script)
+  ```
+- **Baseline: N = 18** required contexts, all present. The full list can be reproduced by any seat that holds the credential.
+- **For the ARMING record**: 13.6 added **no** required context. The sweep runs inside the existing `122-diff-guard` context (design C16, "no new CI context"), so the count at U2b's merge is expected to equal this baseline.
