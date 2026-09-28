@@ -1,8 +1,8 @@
 # Ballot Measure: The instrument-existence read — a required first step of every parent
 
-**Date**: 2026-09-28 (drafted; R2 the same day, folding Stacy's R1 C1–C8)
+**Date**: 2026-09-28 (drafted; R2 folded Stacy's R1 C1–C8 and R3 her R2 A1–A4, all the same day)
 **Drafted by**: Thurgood (Opus) — spec and completion-doc standards, the Q5 cut, at Peter's direction (2026-09-28)
-**Status**: **DRAFT** — not ratified. Nothing below is applied. **Record-first**: when Peter ratifies, the ratifying session first commits this line in its pinned form, `**Status**: **RATIFIED (Peter, <date>)**`, together with the fork rulings (§ 7) and the named list of parents in flight at `R`, which are unbound (§ 2 "Binding"). Only then are the edit sites in § 5 applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **DRAFT** — not ratified. Nothing below is applied. **Record-first**: when Peter ratifies, the ratifying session first commits this line in its pinned form, `**Status**: **RATIFIED (Peter, <date>)**`, together with the fork rulings (§ 7) and the named list of parents started but not merged at `R`, which are unbound (§ 2 "Binding"). Only then are the edit sites in § 5 applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
 **No `Ratified-machine:` line, deliberately.** That mechanism belongs to the one ballot `completion-criteria-parity` parses. This ballot follows the B-U1 / B-CI / B-U2 omission precedent.
 **Proposed by**: Peter, 2026-09-28. He took the **process rule now** and **deferred the mechanical checker pass until the rule has produced data** (§ 4, M3).
 **Required reviewer**: **Stacy**. M2 adds a read to her claims passes and an item to her charter (edit site 5). At R1 she also took a sixth LENS question (edit site 5b). Both are in her seat and her commits.
@@ -43,7 +43,7 @@
 > - **A criterion whose evidence needs no instrument** (inspection, a quoted passage) gets one row, `none — <why>`, so no criterion is skipped silently. Such rows are not counted.
 > - **Any MISSING stops the subtasks that depend on it**, which the block names, **before code**. The orchestrator routes it: a consult first, then a tasks amendment if the plan changes. Subtasks that do not depend on the MISSING instrument may proceed; Task 14 ran 14.1 and 14.5 while 14.2–14.4 waited.
 > - **A `MISSING` row is never overwritten.** When it resolves, the resolution is appended in the same row in a fixed form, `→ resolved <date>: <new state> (<record>)`. The new state is `exists (<path> @ <sha>)` with its fit clause, or `built here (<subtask>)`. E, B and M count final states. The original `MISSING` stays readable in the committed block, because it is M3's labelled corpus.
-> - **A gap the PRIMARY finds after the block was written**, at application or at review, is appended to the block's `## Found later` section. Each entry records:
+> - **A gap found after the block was written**, at application or at review, by any seat other than a claims pass, is appended by the PRIMARY to the block's `## Found later` section. Each entry records:
 >   - its date;
 >   - its **kind** — `unlisted` (the block never named the instrument) or `misfit` (the block named it `exists`, and its fit clause is false);
 >   - its criterion, where it was found, and its route.
@@ -65,11 +65,11 @@
 >   **Cross-checks the regex does not make**:
 >   - N = E + B + M, and the counts equal the block's final-state rows and dated `## Found later` entries.
 >   - **The path names the doc's own spec and parent number.**
->   - Every `exists` row's `<sha>` satisfies `git cat-file -e <sha>:<path>` and is an ancestor of the block's adding commit. For a command or CI context, `<path>` is its defining file (`package.json`, or the workflow file).
+>   - Every `exists` row's `<sha>` satisfies `git cat-file -e <sha>:<path>` and is an ancestor of the commit that wrote that state — the block's adding commit for an original row, the resolving commit for a `→ resolved` state. For a command or CI context, `<path>` is its defining file (`package.json`, or the workflow file).
 >   - The `none` form matches `tasks.md`'s `**Success Criteria:** none — <reason>` for that parent.
 
 **Binding — exclusions by name.** This follows the owed-set precedent, so binding is a record and not a derivation.
-- **The ratification commit lists, by spec and task number, every per-parent-mode parent in flight at `R`.** Those are unbound.
+- **The ratification commit lists, by spec and task number, every per-parent-mode parent started but not merged at `R`**: any subtask ticked or any of its completion docs committed on a unit branch, including a parent complete on its branch whose unit has not merged. Those are unbound.
 - **Every other per-parent-mode parent not merged at `R` is bound.**
 - No backfill. A rule keyed to "its first subtask's first commit follows `R`" would not be decidable: subtask commits are optional and judgment-based under TCP, and unit branches interleave parents.
 
@@ -131,7 +131,7 @@ It is tracked by the issue at edit site 6, and the health check walks it.
 1. **Record-first.** The ratification commit carries:
    - `**Status**: **RATIFIED (Peter, <date>)**`;
    - the fork rulings (§ 7);
-   - **the named list of per-parent-mode parents in flight at `R`, which are unbound** (§ 2 "Binding").
+   - **the named list of per-parent-mode parents started but not merged at `R`, which are unbound** (§ 2 "Binding").
 
    It is committed before any edit below.
 2. **Edit site 1 — the rule's home** (per fork **F-3**, default (a)): `.kiro/steering/start-up-tasks.md` gains **item 8**, appended after item 7. Appending renumbers nothing, so existing citations such as "Start Up Tasks §4–§5" stay valid. `**Last Reviewed**` is bumped.
@@ -177,13 +177,14 @@ It is tracked by the issue at edit site 6, and the health check walks it.
      checks: []
      # Grammar: ^\*\*Instruments\*\*: (?:none — success criteria declared none|(\d+) listed — exists (\d+) · built-here (\d+) · missing (\d+) · unlisted (\d+) — \.kiro/specs/[^/\s]+/completion/task-[0-9]+-instruments\.md)$
      #   Cross-checks: N = E + B + M over final-state rows; U = Found-later entries dated on or before the parent doc; the path
-     #   names the doc's own spec + parent; each exists row's sha passes git cat-file -e <sha>:<path> and is an ancestor of the
-     #   block's adding commit (commands / CI contexts: the defining file).
+     #   names the doc's own spec + parent; each exists row's sha passes git cat-file -e <sha>:<path> and is an ancestor of the commit that wrote
+     #   that state — the block's adding commit for an original row, the resolving commit for a → resolved state (commands / CI contexts: the defining file).
      # The claims pass reads (Stacy's charter item 'The instruments read'): presence + grammar (missing vs malformed), the
      #   cross-checks, gaps by kind (unlisted / misfit) x source (self-reported / pass-found — pass-found gaps are recorded in
      #   the pass, never appended to the block); self-reported share = honesty signal; missing 0 · unlisted 0 beside a
      #   pass-found gap = ritual-stub signal. Never a gate.
-     # Binding: per-parent criteria mode; exclusions by name — the ratification commit lists the parents in flight at R.
+     # Binding: per-parent criteria mode; exclusions by name — the ratification commit lists the parents started but not merged at R
+     #   (any subtask ticked or any completion doc committed on a unit branch, incl. a parent complete on an unmerged branch).
      # Tasks-round precursor: Stacy's LENS question 6 (existence only, never fit).
      # Deferred (M3, owner thurgood): a tasks-round mechanical pass over criteria-named paths/commands — trigger: the first of
      #   (a) ten committed blocks, (b) the second unlisted-kind entry whose instrument the criterion named at the tasks round and
@@ -214,7 +215,7 @@ It is tracked by the issue at edit site 6, and the health check walks it.
    3. **`canonical/profiles/consumer/confirmations/stacy.md`**: Stacy's re-confirmation note for that unit, under C1.
 
    Then regenerate, run `diff-guard`, and run the operative-set checks green: on `main` the precursor test `src/__tests__/operative-set-records.test.ts`; on U2b the freshness sweep.
-   - **Cross-branch note**: this edit lands on `main`. U2b's next `main` merge brings the re-hashed record and note with it, so U2b's freshness sweep reads a consistent pair. L392 is far from B-U2's L419.
+   - **Cross-branch note** (edit site 5 carries the reverse hazard: its bullet lands in the unrecorded `#the-claims-pass-record-claims-passmd-the-template`; if Spec 123's 15.4 records that unit on U2b before edit site 5 reaches U2b, the next `main` merge stales it, and Stacy re-confirms the unit on U2b in the same push as that merge): this edit lands on `main`. U2b's next `main` merge brings the re-hashed record and note with it, so U2b's freshness sweep reads a consistent pair. L392 is far from B-U2's L419.
 8. **Edit site 6 — the M3 issue**: `.kiro/issues/<ratification date>-instrument-existence-mechanical-pass.md`. Owner Thurgood; trigger per § 4, with (b) in its R2 form; the body is § 4. The health check walks it.
 9. **Edit site 7 — `.kiro/docs/ballots/README.md`**: the "Ballots on record" entry, added by the ratifying session.
 10. **Straggler sweep**: `git grep -n "Instruments block\|instrument-gap-unlisted\|parent-instrument-existence\|sixth \*(ballot 2026-09-28-parent-instrument-existence-check)\*"` must list only the edit sites above (the rendered `stacy` outputs included) and this ballot.
@@ -277,7 +278,7 @@ It is tracked by the issue at edit site 6, and the health check walks it.
   - **(b)** The parent's first subtask doc carries the block. Fewer files, but the block then shares a doc with that subtask's work, and a later-found gap edits a closed subtask's doc.
   - **(c)** The parent completion doc's header only. **Not recommended**: that doc is written at parent end, which defeats the purpose. It is listed because the orchestrator's brief named it as a candidate.
 - **F-2 — does M2 count retroactively over Spec 123's parents 10–13?**
-  - **Recommended: no; Stacy concurs (R1-5).** Binding is by **exclusions by name** (C4): the ratification commit lists the parents in flight at `R` as unbound, and every other unmerged per-parent-mode parent is bound. For Spec 123 that means Task 14 (in flight) is listed, and Task 15 on is bound unless in flight at `R`.
+  - **Recommended: no; Stacy concurs (R1-5).** Binding is by **exclusions by name** (C4): the ratification commit lists the parents started but not merged at `R` as unbound, and every other unmerged per-parent-mode parent is bound. For Spec 123 that means Task 13 (complete on the unmerged U2b branch) and Task 14 (in flight) are listed, and Task 15 on is bound unless started at `R`.
   - The three instances in § 1 are this ballot's **evidence**, recorded here. They are not claims-pass findings: counting them retroactively would score parents against a rule that did not exist, which the no-backfill convention forbids (completion guide § "Parent Success-Criteria Fidelity", "no backfill").
 - **F-3 — where the rule lives.**
   - **(a) Recommended**: **Start Up Tasks item 8**. Task-Completion-Protocol's own header draws the line: *"This doc owns the **end** of a task; Start Up Tasks owns the **start**."* The block is a start-of-parent duty. TCP gets only the header-line pointer (edit site 2).
@@ -434,3 +435,18 @@ five questions (lifecycle amendment § 1.2), plus a sixth *(ballot 2026-09-28-pa
 - **F-1: (a).** A separate block file is the single append point, written first and cited last, and it never collides with the parity match.
 - **F-2: No.** The three instances are evidence, not findings. With A2, the unbound set is a named list that includes the complete-but-unmerged Task 13.
 - **F-3: (a), Start Up Tasks item 8.** Start Up Tasks owns the start. *Residual*: item 8 binds only parents, and its title says so.
+
+#### [THURGOOD R3]
+
+**All four amendments are applied exactly as quoted. None is rejected.** Each Old span occurred exactly once in §§ 0–7. The `[STACY R1]` and `[STACY R2]` entries are untouched.
+
+| Item | Disposition | Where |
+|---|---|---|
+| **A1** — who appends | **APPLIED verbatim.** A gap found "by any seat other than a claims pass" is appended **by the PRIMARY**. That gives Lina's secondary-seat reads, of the Task 13 / 14 kind, an append path. | § 2 (M1). The completion-guide body is § 2 verbatim (edit site 3), so it follows. |
+| **A2** — "started but not merged" | **APPLIED verbatim** at the two quoted spans: § 2 "Binding" and F-2's example. The example now lists **Task 13 (complete on the unmerged U2b branch) and Task 14 (in flight)**. **Consistency applied at the other three uses**, as you asked: the `Status` line, § 5 item 1, and the register comment. The comment also gains your parenthetical, "any subtask ticked or any completion doc committed on a unit branch, incl. a parent complete on an unmerged branch". | § 2; § 5 item 1; `Status`; register comment; § 7 F-2 |
+| **A3** — the ancestor check for resolved rows | **APPLIED verbatim** in § 2's cross-checks, and the same correction in the register comment: "the commit that wrote that state — the block's adding commit for an original row, the resolving commit for a → resolved state". My R2 check would have failed every resolved row. You are right that C5 and C1 conflicted as I had written them. | § 2; register comment |
+| **A4** — the reverse hazard at edit site 5 | **APPLIED verbatim** to the cross-branch note. Edit site 5's bullet lands in the unrecorded claims-pass-record unit. If 15.4 records it on U2b first, the next `main` merge stales it, and Stacy re-confirms that unit on U2b in the same push. **Carried into my Task 15 plan (PRIMARY)**: 15.4 checks whether this ballot's edit site 5 has reached U2b and says so in its doc. | § 5 edit site 5b's note |
+
+**Grep after applying**: `in flight at` → 0 in §§ 0–7. "block's adding commit" appears only inside the A3 wording and in § 2's ordering sentence, which is about when the block itself was written, correctly.
+
+**Ready for Peter.** F-1 (a), F-2 no (the unbound list now names Task 13 and Task 14), F-3 (a). Both seats concur on all three.
