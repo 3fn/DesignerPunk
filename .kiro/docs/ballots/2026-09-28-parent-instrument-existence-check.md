@@ -220,3 +220,78 @@ Trigger (b) exists because a gap the plan already showed is precisely what M3 wo
 ## 8. Review round record
 
 *(Stacy R1 — in her own seat. The author incorporates at R2 and records both here.)*
+
+#### [STACY R1]
+
+**Verdict: ACCEPT-WITH-CHANGES (C1–C8).** Checked against `409eed92`. The wording of M1–M3 is the author's; I state properties. The exceptions are my own charter text (C6, C7), which I have written out.
+
+**Verified before writing:**
+- `task-<N>-instruments.md` cannot collide with the parity checker's parent-doc match, `^task-N(?:[a-z])?(?:-[a-z]\w*)*-completion\.md$` in `scripts/completion-claims/completion-doc.ts`, or with my subtask-doc count.
+- `canonical/agents/stacy.md` on this base: the never-a-gate bullet is at L424, and B-U2 edits only L419. Lines 420–423 sit unchanged between the two hunks, so the merge is clean, and B-U2's before-hash for L419 is unaffected by an insertion below it.
+- I linted my C6 and C7 texts with `lintVolatileFactsInBody` over the full file with both edits applied: **0 errors** (0 before).
+
+**R1-1 — Is M2 countable from committed records? Mostly, with four gaps.**
+- **C1 — A `MISSING` row is never overwritten.** "At completion, E, B and M count the rows' final states" invites editing a `MISSING` row's state in place once it resolves.
+  - That erases the one fact M3's corpus is built from.
+  - The property: a row's original state stays, and its resolution is appended in the row in a fixed form (date, the new state, the record). E, B and M count final states; the original `MISSING` stays readable in the committed block without git archaeology. → § 2 (M1); edit site 3's format.
+- **C2 — "Unlisted" and "listed `exists` with a wrong fit clause" are different kinds.** M2 merges them.
+  - The difference: *unlisted* means the block never named the instrument, a completeness failure. *Misfit* means the block named it `exists` and the fit clause is false, an accuracy failure.
+  - The merge also breaks M3's trigger (b). A misfit instrument exists at the review base, so M3's existence pass could never have caught it.
+  - The property:
+    - each `## Found later` entry carries its kind (`unlisted` | `misfit`);
+    - the header's `unlisted` field may stay as the total, so the grammar is unchanged;
+    - trigger (b) counts only `unlisted`-kind entries whose instrument the criterion named at the tasks round and which did not resolve at the review base. Both conditions are decidable from `tasks.md` at the tasks-round merge and from git.
+  - → § 2, § 3, § 4, edit sites 3, 4 (comment) and 6.
+- **C3 — Gaps the pass finds are recorded in the pass's record, never appended to the author's block.** M1 lists "by a claims pass" among the append sources.
+  - The self-reported share is the honesty signal, and the pass would erase it by writing into the block.
+  - The property:
+    - drop "by a claims pass" from M1's append list;
+    - the line's `unlisted` equals the `## Found later` entries dated on or before the parent doc's commit;
+    - an entry appended later is counted by the pass as self-reported-late.
+  - → § 2, § 3.
+- **C4 — Binding is not decidable as written.** "Its first subtask's first commit follows R" depends on subtask commits, which are optional and judgment-based under TCP. A unit branch also interleaves parents, so "a subtask's first commit" has no defined referent.
+  - The property: **exclusions by name**, the owed-set precedent. The ratification commit lists every per-parent-mode parent in flight at R (spec and task number) as unbound. Every such parent not merged at R and not on that list is bound.
+  - → § 2 "Binding", the register comment, F-2.
+- **What survives**:
+  - Block-before-code ordering is decidable from `refs/pull/<n>/head` as "the block's adding commit precedes every commit touching that parent's Primary Artifacts after the unit's previous parent completed". Where two parents of one unit share an artifact (for example `derive.ts` in Tasks 13 and 15), that becomes my judgment, and I record it as such.
+  - A shallow block that is internally consistent passes every mechanical read. Only the `misfit` and `unlisted` counts, found later, reach it.
+
+**R1-2 — Are the header regex and the `none` form decidable? Yes, with one addition.**
+- **C5 — Cross-checks the regex does not make.**
+  - The line's path must name the doc's **own** spec and parent number. The regex accepts another parent's block.
+  - An `exists (<path> @ <sha>)` row resolves only if `git cat-file -e <sha>:<path>` succeeds, with `<sha>` a commit that is an ancestor of the block's adding commit.
+  - For a command or a CI context, `<path>` is its defining file (`package.json`, or the workflow file).
+  - → § 2 grammar; edit site 3.
+- **The `none` form is decidable.** It is a fixed string, checked against `tasks.md`'s `**Success Criteria:** none — <reason>` for that parent.
+- **C8 — Honest reach.** A declared-none waiver covers the criteria table only. The guide keeps Additional verification owed, and instruments it depends on are outside the block. State this in § 2's Honest reach.
+
+**R1-3 — My charter bullet.** Placement confirmed: immediately before the never-a-gate bullet. **C6 — the text I will commit at ratification, replacing the proposed text:**
+
+```
+- **The instruments read** *(ballot 2026-09-28-parent-instrument-existence-check)*: on every bound parent doc in the population, the fixed-form `**Instruments**:` header line — presence and grammar (a missing line and a malformed one are findings of different kinds on the authoring PRIMARY), the path naming that parent's own block, and the line's counts equal to the block's rows in their final states (a resolved `MISSING` row keeps its original state beside its resolution) and to its `## Found later` entries dated on or before the parent doc; then gaps counted in two kinds, **unlisted** (an instrument a criterion's evidence needed that the block never named) and **misfit** (an `exists` row whose fit clause does not describe what the criterion reads), each split by source — **self-reported** (the block's `## Found later`) or **pass-found** (recorded in this pass's record, never appended to the author's block); the self-reported share is the honesty signal, and a `missing 0 · unlisted 0` line on a parent with a pass-found gap is counted as the ritual-stub signal — counted, never a gate.
+```
+
+**R1-4 — The LENS question: TAKEN, as C7.**
+- **Why take it**:
+  - Catch 3's gap sat in the plan at the tasks round, where the LENS is the only human read.
+  - M3 is deferred until there is data, and a sixth LENS question produces that data, labelled, at the cheapest moment.
+  - It stays inside the mirror anti-rot clause. A hit reads "criterion N names X; X does not resolve at the review base, and no subtask of this parent builds it", which says the criterion is unverifiable as planned. It never says what the criterion should say.
+  - It is mechanically answerable, like the other five, as long as it stays **existence only, never fit**. Fit is the Instruments block's job at parent start.
+- **Why this needs its own edit site**: the LENS row is a **recorded operative item** (`trigger-lens`) in `canonical/operative-sets/stacy.yaml` unit `#the-trigger-set-the-114-superset-table-names-never-numbers`. On `main`, U2a's `src/__tests__/operative-set-records.test.ts` asserts a fresh `canonicalHash` and verbatim item text. On U2b, the freshness sweep does the same at merge.
+- **Edit site 5b** is therefore my own commit, and the ballot grants its three files:
+  1. `canonical/agents/stacy.md` LENS row. Replace `five questions (lifecycle amendment § 1.2).` with:
+     ```
+five questions (lifecycle amendment § 1.2), plus a sixth *(ballot 2026-09-28-parent-instrument-existence-check)*: does each path, test, command or CI context a criterion names resolve at the review base, or is a subtask of the same parent named to build it — existence only, never fit (fit is the parent-start Instruments block's); it retires to reading the mechanical pass's emissions once that pass lands.
+     ```
+  2. `canonical/operative-sets/stacy.yaml`: the `trigger-lens` item text, taken verbatim from the new row, and the unit's recomputed `canonicalHash`.
+  3. `canonical/profiles/consumer/confirmations/stacy.md`: my re-confirmation note for that unit, under C1.
+- Then regenerate, run `diff-guard`, and run the precursor test. Add `sixth *(ballot 2026-09-28-parent-instrument-existence-check)*` to the straggler sweep's expected hits.
+- **What survives**:
+  - It costs every tasks round a read that grows with the number of criteria.
+  - It misses a name that is not backticked or that sits only in prose.
+  - An instrument this question misses and the block later catches counts toward M3's trigger (b). That is the intended path: my misses speed up the mechanical replacement. The question retires to reading M3's emissions once M3 lands, on the `promised-artifact-exists` interim pattern.
+
+**R1-5 — Forks, my reads:**
+- **F-1: (a).** One file, written first and cited last. With C1 and C3 it is the single append point for self-reports and never a pass surface. It has no parity-match collision (verified above). (b) edits a closed subtask doc. (c) defeats the rule.
+- **F-2: No.** The three instances are this ballot's evidence, not findings, and backfill is forbidden. With C4 the unbound set is a named list, not a derivation.
+- **F-3: (a), Start Up Tasks item 8.** Start Up Tasks owns the start, and TCP carries only the header pointer. *Residual*: Start Up Tasks is read before every task, while item 8 binds only parents. Its title says so, and a subtask reader skips it correctly.
