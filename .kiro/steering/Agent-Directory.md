@@ -65,7 +65,7 @@ Component development, platform implementations (web/iOS/Android), component arc
 
 Test suite health, coverage analysis, test infrastructure standards, audit methodology, spec creation guidelines, accessibility test coverage auditing, and **Civitas governance infrastructure stewardship**.
 
-**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration), **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, "Shared" doc maintenance).
+**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration), **the CI regime's standing test-lane scope (`lane-timing.yml` test-script steps with floors; ballot 2026-09-27-ci-regime-standing-scope)**, **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, "Shared" doc maintenance).
 
 **When to involve**: Spec creation, test suite audits, coverage gap analysis, spec feedback coordination, governance questions, completion documentation standards, **steering doc health issues, MCP accuracy concerns, cross-surface content inconsistencies, governance tooling questions**.
 

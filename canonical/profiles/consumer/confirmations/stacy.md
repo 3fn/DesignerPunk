@@ -56,9 +56,14 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:08619eb21d0b3f41e6e5205308394abeb6e0a88c4b26b8700fc10b6e2070c0a7
+canonicalHash: sha256:48826ac4369cbc915c1bfa78eef861818d2630a2fdd4ee95279a6a7063603699
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-09-27
+date: 2026-09-28
+
+**Re-confirmed 2026-09-28 (Req 11.6.5d).**
+- **What changed**: `trigger-arming`'s text, which is the ARMING row, rewritten by edit site 4 of the ratified ballot `.kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md` (RATIFIED, Peter, 2026-09-28). Its Event and Scope gain the P1 standing-scope reads and the `.github/**` issue-row grant reads.
+- **What did not change**: the operative set, still 13 items. The canonicalHash is updated from `sha256:08619eb21d0b3f41e6e5205308394abeb6e0a88c4b26b8700fc10b6e2070c0a7` to the value above.
+- **The Event's `(at its activating merge, and again when its fixing PR merges)`** is an **orchestrator ruling under fork 4's ratified intent**, which was to close the latency of auditing only at RELEASE. It is **flagged for Peter's veto at the PR**.
 
 **Ruling: CONFIRMED at 13 items, as drafted.**
 - **The 11 table rows** match exemplar D's "11-row table", which counted BURST.

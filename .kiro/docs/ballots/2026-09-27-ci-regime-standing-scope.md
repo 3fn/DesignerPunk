@@ -2,7 +2,7 @@
 
 **Date**: 2026-09-28 (commissioned 2026-09-27)
 **Drafted by**: Thurgood (Civitas steward; owner of the CI regime under B-CI § 5)
-**Status**: **DRAFT** — not ratified. Nothing below is applied. **Record-first**: when Peter ratifies, the ratifying session commits `Status: RATIFIED (Peter, <date>)` before any edit is applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **RATIFIED (Peter, 2026-09-28)** — "as recommended on all five forks"; the rulings are recorded verbatim in § 7 § "Rulings (Peter, 2026-09-28)". **Record-first**: this commit is the record, committed before any law edit (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). **Peter's merge of this PR is `R`**, the ratification commit on `main`'s first-parent history. The edits land in the commits after this one, in the same PR: edit sites 1–3 and the register and README entries (Thurgood); edit site 4 (Stacy, `Agent: stacy`); then regeneration.
 **Rulings that commissioned it**:
 - **Peter, 2026-09-27** — the "holistic path" on the PR-2 grant question: (1) PR-2 stays instrument-only; (2) a standing scope for the CI-regime owner; (3) the instrument rule.
 - **Peter, 2026-09-28** — **both (a) the standing scope and (e) issue-row grants**. Thurgood authors, under the five conditions his and Stacy's consults independently named.
@@ -259,6 +259,18 @@ The glob cannot carry the limit, so the charter states it.
 ---
 
 ## 7. Review round record
+
+### Rulings (Peter, 2026-09-28) — ratified "as recommended on all five forks"
+
+1. **M1's width: P1 only.** No path is restored; `agent-generator.yml`, `completion-criteria-parity.yml` and `verify-gate-registration.sh` stay excluded, reachable through M2 per event.
+2. **M2 friction: accepted.** Per-event issue PRs stand; there is **no time-boxed P3 restore** for Q2's preparation.
+3. **Additivity command: `git diff --numstat main...HEAD -- .github/workflows/lane-timing.yml` → deletions `0`.**
+4. **Edit site 4's extension: YES.** ARMING also fires when an issue-row grant over a `.github/**` path merges. Edit site 4 carries it, and Stacy confirms it in her own commit.
+5. **All four author's additions TAKEN**:
+   - the removing-or-weakening exclusion;
+   - the use-based review trigger;
+   - the Agent-Directory line;
+   - M3's row-removal and `generated.lock` clause.
 
 ### ⚑ Forks for Peter — read these first (as of `[THURGOOD R2]`)
 

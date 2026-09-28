@@ -161,7 +161,7 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
-    canonicalHash: sha256:08619eb21d0b3f41e6e5205308394abeb6e0a88c4b26b8700fc10b6e2070c0a7
+    canonicalHash: sha256:48826ac4369cbc915c1bfa78eef861818d2630a2fdd4ee95279a6a7063603699
     items:
       - id: trigger-lens
         kind: member
@@ -186,7 +186,7 @@ units:
       - id: trigger-arming
         kind: member
         label: ARMING
-        text: "| **ARMING** | A new barrier arms / the required-check set changes | `audit:coverage-map` + `verify-gate-registration.sh`; **plus `completion-criteria-parity` dormancy** (C4-1) — you detect dormancy on the row Thurgood owns; he repairs | Stacy |"
+        text: "| **ARMING** | A new barrier arms / the required-check set changes / a CI-regime standing-scope (P1) PR merges or an issue-row grant (ballot 2026-09-27-ci-regime-standing-scope § 3) over a `.github/**` path merges (at its activating merge, and again when its fixing PR merges) | `audit:coverage-map` + `verify-gate-registration.sh`; **plus `completion-criteria-parity` dormancy** (C4-1) — you detect dormancy on the row Thurgood owns; he repairs; plus, for a P1 PR, the extent and additivity checks (ballot 2026-09-27-ci-regime-standing-scope § 2): the diff is exactly `lane-timing.yml`, `git diff --numstat` deletions `0`, the added step runs an existing `package.json` test script inside an existing required job, its floor fails on zero and selects with the step's own script or config, and `audit:coverage-map`'s lanes row for that root has cleared; for a `.github/**` issue-row grant, at activation the list names no governance-law path and names any M1-excluded act it admits, and at the fixing PR's merge its paths are a subset of the list as it stood at the activating merge (`git show <activating-merge>:<issue path>`), with `--numstat` deletions `0` on CI paths unless the grant names the act. RELEASE is the backstop, over the release delta | Stacy |"
       - id: trigger-gate
         kind: member
         label: GATE
