@@ -22,7 +22,7 @@
 4. **Stacy includes the unit** in the domain of the relevant gate.
 5. **13.4's bite tests** (`triviality.ts`, clause (a) as read from the record, and the floor) are written against **all three** F units. *(Wording corrected 2026-09-27, Lina's carried item: `triviality.ts` applies no classifier; it reads clause (a) from the committed record.)*
 
-**Trigger: the U2b branch cut**, before Task 13.4 implements the classifier and floor in `triviality.ts`, as a tasks amendment on `main`.
+**Trigger: the U2b branch cut**, before Task 13.4 implements the floor (clause (a) read from the record) in `triviality.ts`, as a tasks amendment on `main`.
 **Latest acceptable: before G2 (Task 18)**, so that pass four's domain line covers it.
 
 **Why the earlier point was declined.** It would have been a fifth mid-parent amendment on Task 11, and G1 runs on the eleven exemplars as ruled. The G1 record cannot claim a unit added after it.
