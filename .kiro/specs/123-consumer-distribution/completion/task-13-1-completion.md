@@ -2,7 +2,7 @@
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U2b · **Parent**: Task 13 · **Agent**: Thurgood (Opus)
 
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ f2e4430358313abf1d2427a11fa8aa5046731168 — https://github.com/3fn/DesignerPunk/actions/runs/36381132940, https://github.com/3fn/DesignerPunk/actions/runs/36381138135, https://github.com/3fn/DesignerPunk/actions/runs/36381143165, https://github.com/3fn/DesignerPunk/actions/runs/36381148859, https://github.com/3fn/DesignerPunk/actions/runs/36381153967, https://github.com/3fn/DesignerPunk/actions/runs/36381159112
 
 **Write scope**: tasks-row grant (`.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`). Task 13's Primary Artifacts list "schemas + validator" with no path. This subtask reads that entry as the new `tools/agent-generator/regrounding/dispositions.ts` (schema + validator) and `tools/agent-generator/regrounding/check-catalog.ts` (the nine checks' exact strings and count). **Disclosed as out-of-list on a strict reading**: the two test files, `tools/agent-generator/__tests__/dispositions.schema.test.ts` and `tools/agent-generator/__tests__/check-catalog.test.ts`. The row names no tests, but its nine-check criterion requires a named test for each check. The `tasks.md` checkbox and this doc are in Thurgood's charter scope (`.kiro/specs/**`). No other file changed. `canonical/generated.lock` was refreshed by a local diff-guard run and then reverted (adaptation 10).
 
