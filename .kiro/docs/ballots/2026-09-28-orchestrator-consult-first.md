@@ -2,7 +2,7 @@
 
 **Date**: 2026-09-28
 **Drafted by**: Thurgood (Civitas steward), at Peter's direction
-**Status**: **DRAFT** — not ratified. Nothing below is applied. **Record-first**: when Peter ratifies, the ratifying session commits `**Status**: **RATIFIED (Peter, <date>)**` before any edit is applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **RATIFIED (Peter, 2026-09-28)** — population fork = **(iii)**, diff-touched trigger surfaces, "as recommended" by both seats; the ruling is recorded in § 7 § "Rulings (Peter, 2026-09-28)". **Record-first**: this commit is the record, committed before any law edit (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). **Peter's merge of this PR is `R`**, the ratification commit on `main`'s first-parent history. The edits land in the commits after this one, in the same PR: edit sites 1–3 (Thurgood); edit site 4 (Stacy, `Agent: stacy`); then regeneration.
 **Proposed by**: Peter, 2026-09-28 (his words in § 1).
 **Subject**: the Primary Agent (orchestrator). **Consulted, not authoring** — the same conflict logic applied to the steward's own scope ballot that morning (`2026-09-27-ci-regime-standing-scope.md`). The subject's read (R1–R3 and one residual) is folded or rebutted in §§ 2–4 and 6.
 **Required reviewer**: Stacy — M3 creates an artifact her claims passes read.
@@ -199,6 +199,18 @@ The `disposition: audit` value carries the `tasks-row-write-scope-grant` precede
 ---
 
 ## 7. Review round record
+
+### Rulings (Peter, 2026-09-28) — ratified
+
+1. **The PR-population fork: (iii)**, "as recommended" by both seats. **Every PR whose diff touches a trigger surface** carries the `**Consulted**:` line. A trigger surface is:
+   - `governance/**`, `.kiro/steering/**` or `.kiro/docs/ballots/**`;
+   - `canonical/agents/**`;
+   - a spec's `requirements.md` or `design.md`;
+   - a spec's `tasks.md` other than checkbox-only hunks;
+   - `canonical/adjudications.yaml`.
+
+   **(i) and (ii) are not taken.** The residual of (iii) stands as recorded: trigger (a) on code surfaces is checked only in messages and briefs.
+2. **M1, M2 and M3 are ratified as drafted**, with every `[STACY R1]` change incorporated at `[THURGOOD R2]`. There were no other forks.
 
 ### ⚑ Forks for Peter — read these first (as of `[THURGOOD R2]`)
 
