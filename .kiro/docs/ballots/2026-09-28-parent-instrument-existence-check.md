@@ -387,3 +387,50 @@ five questions (lifecycle amendment § 1.2), plus a sixth *(ballot 2026-09-28-pa
 1. **The cross-branch note at edit site 5b.** 5b lands on `main`, and U2b's next `main` merge brings the re-hashed `stacy.yaml` and its note together, so U2b's freshness sweep reads a consistent pair. L392 is far from B-U2's L419.
 2. **§ 4 states M3's reach, existence only.** That is why `misfit` is excluded from trigger (b), and it is the property your C2 relies on.
 3. **The Start Up Tasks item 8 text now carries C1 and C2**: the MISSING row is never overwritten, and a later gap is recorded with its kind. Without that, the rule's home would teach the pre-R2 form.
+
+#### [STACY R2]
+
+**Verdict: CONFIRM-WITH-AMENDMENTS (A1–A4).** Checked against `8d71af45`. In each amendment the old span is quoted byte-exact and occurs once in this file; the new text replaces it.
+
+**Checked by eye, and by `diff` against my own R1 text:**
+- Edit site 5 carries my C6 bullet **verbatim**.
+- Edit site 5b's After carries my C7 row **verbatim**.
+- At `08462b63`, L392 is the LENS row and L424 is the never-a-gate bullet.
+- `origin/main` and `origin/task/123-u2b-profile` differ in `canonical/agents/stacy.md` only (B-U2's L419). `canonical/operative-sets/stacy.yaml` and `canonical/profiles/consumer/confirmations/stacy.md` are identical on both branches, so 5b merges clean.
+
+**Per item:**
+- **C1 CONFIRMED.**
+- **C2 CONFIRMED**, with author addition 2: § 4's existence-only reach is the property C2 rests on.
+- **C3 CONFIRMED in substance, AMENDED as A1.**
+- **C4 CONFIRMED in substance, AMENDED as A2.**
+- **C5 CONFIRMED in substance, AMENDED as A3.**
+- **C6 CONFIRMED.**
+- **C7 CONFIRMED.** Author addition 1 is AMENDED as A4.
+- **C8 CONFIRMED.**
+- Author addition 3 (Start Up Tasks item 8 carries C1 and C2) is **CONFIRMED**.
+
+**A1 — C3: who appends.** "The PRIMARY finds" leaves no append path for a gap that the unit's secondary agent or a reviewer finds, such as Lina's reads at Tasks 13 and 14. Such a gap would fall to the pass or be lost.
+- Old: `**A gap the PRIMARY finds after the block was written**, at application or at review, is appended to the block's `## Found later` section.`
+- New: `**A gap found after the block was written**, at application or at review, by any seat other than a claims pass, is appended by the PRIMARY to the block's `## Found later` section.`
+
+**A2 — C4: "in flight" leaves out a parent that is complete on an unmerged branch.** Under "every other per-parent-mode parent not merged at `R` is bound", Spec 123's **Task 13** is complete on the unmerged U2b branch and is not "in flight". It would be bound, and missing its block by construction, which is backfill by another route.
+- Old: `every per-parent-mode parent in flight at `R`.** Those are unbound.`
+- New: `every per-parent-mode parent started but not merged at `R`**: any subtask ticked or any of its completion docs committed on a unit branch, including a parent complete on its branch whose unit has not merged. Those are unbound.`
+- Old: `For Spec 123 that means Task 14 (in flight) is listed, and Task 15 on is bound unless in flight at `R`.`
+- New: `For Spec 123 that means Task 13 (complete on the unmerged U2b branch) and Task 14 (in flight) are listed, and Task 15 on is bound unless started at `R`.`
+- Consistency: every other use of "in flight at `R`" reads "started but not merged at `R`". That is § 5 item 1 and the register comment's `lists the parents in flight at R`.
+
+**A3 — C5 × C1: the ancestor cross-check fails every resolved row.**
+- A `MISSING` resolved to `exists (<path> @ <sha>)` carries a sha that postdates the block's adding commit. So "is an ancestor of the block's adding commit" fails for it.
+- Old: `is an ancestor of the block's adding commit. For a command`
+- New: `is an ancestor of the commit that wrote that state — the block's adding commit for an original row, the resolving commit for a `→ resolved` state. For a command`
+- The same correction applies in the register comment: `is an ancestor of the` / `block's adding commit` becomes `is an ancestor of the commit that wrote that state`.
+
+**A4 — Author addition 1: the cross-branch note covers 5b but not edit site 5.** Edit site 5's bullet lands inside `#the-claims-pass-record-claims-passmd-the-template`. That unit has no record today, but Spec 123's 15.4 will record it on U2b. If 15.4 records it before this ballot's edit site 5 reaches U2b, the next `main` merge stales the unit, and U2b's sweep goes red.
+- Old: `- **Cross-branch note**: this edit lands on `main`.`
+- New: `- **Cross-branch note** (edit site 5 carries the reverse hazard: its bullet lands in the unrecorded `#the-claims-pass-record-claims-passmd-the-template`; if Spec 123's 15.4 records that unit on U2b before edit site 5 reaches U2b, the next `main` merge stales it, and Stacy re-confirms the unit on U2b in the same push as that merge): this edit lands on `main`.`
+
+**Forks, one line each for Peter:**
+- **F-1: (a).** A separate block file is the single append point, written first and cited last, and it never collides with the parity match.
+- **F-2: No.** The three instances are evidence, not findings. With A2, the unbound set is a named list that includes the complete-but-unmerged Task 13.
+- **F-3: (a), Start Up Tasks item 8.** Start Up Tasks owns the start. *Residual*: item 8 binds only parents, and its title says so.
