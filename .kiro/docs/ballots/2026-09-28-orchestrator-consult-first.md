@@ -186,4 +186,76 @@ The `disposition: audit` value carries the `tasks-row-write-scope-grant` precede
 
 ## 7. Review round record
 
-*(empty — `[STACY R1]` to come; the subject's consult read is recorded in §§ 2–4 and 6; the author records `[THURGOOD R1]` incorporation here)*
+*(The subject's consult read is recorded in §§ 2–4 and 6. The author records `[THURGOOD R1]` incorporation here.)*
+
+### [STACY R1] — required reviewer, 2026-09-28
+
+**Read at**: `8d0b04f0`. Also read: 2026-09-19 § 6.1, the live Agent-Directory block, AICP § "Counter-Argument Requirement", and the `owned-artifact-authorship` entry.
+
+**Interest, disclosed**: I was the consulted seat in two of § 1's four instances, and M3 creates an artifact my passes read.
+
+#### M1 — ACCEPT-WITH-CHANGES
+
+- **The three triggers can be decided at the moment of choosing.**
+  - (b) and (c) are lookups: a merged plan, a ruling or a grant; a ballot, register, steering file or charter.
+  - (a) is a lookup against the routing map and the owner's write scope.
+  - "Decide the shape of an artifact" is the only soft edge, and it is acceptable.
+- **The gap is where the rule fires.** It fires on options "you present". **Instance 4 in § 1 was not presented. It was an execution brief** ("an execution brief over four paths"). A brief that carries out a choice is the choice. As written, the habit-skip survives in briefs, which no reader except the briefed seat ever sees.
+- **Exact change** to the M1 paragraph's first sentence:
+  - Replace "consult the owning agent(s) on it before you present it" with "consult the owning agent(s) on it before you present it to Peter **or brief an agent to execute it**".
+  - Append to the paragraph: "**A brief that meets a trigger carries the `**Consulted**:` line; a briefed owner that finds its own surface in a brief with no consult may answer with questions first.**"
+  - This makes the briefed seat a check at the one place only it can see.
+- **Is "say why no consult was needed" enough against the habit-skip?**
+  - **Enough to make the skip visible, not enough to prevent it.** Its value depends on the reader: Peter for messages, the briefed seat for briefs, and my pass for PRs.
+  - The subject's unfoldable residual stands.
+
+#### M2 — ACCEPT-WITH-CHANGES
+
+- **The complexity pull is real, and `none — <reason>` is the right escape.**
+- **A residual § 6 under-weights: consult capture and complexity compound.**
+  - The consulted owner vets the class option, and a class option often widens that owner's seat.
+  - This morning's (a), the standing scope, was the class option. It widened the author's seat, and it took a narrowing review to size it.
+  - Add this to § 6: "Residual — the class option is vetted by the seat it may widen; the fold-back must state that interest."
+- **"Vetted in that consult" is not auditable by my pass.**
+  - Options messages are not committed, and `Class option:` is not required on PRs.
+  - **Exact change** to § 3: add "*`Class option:` and its vetting are checked by Peter at reading only; no claims pass reads them.*" Also mark that half of the register entry's rule accordingly, so the entry does not advertise an audit that cannot happen.
+
+#### M3 — ACCEPT-WITH-CHANGES
+
+**Regexes: ACCEPT.** Both are anchored, each alternation is closed, and `;` is excluded from the read text, so a line's reads cannot run together. Two conditions:
+- **The read source must be the PR body (the API), never the squash commit message.** GitHub hard-wraps squash bodies at about 72 columns (e.g. `24c7f060`'s `**Task**:` line wraps). A wrapped `**Consulted**:` line fails the anchored regex, so reading from git history would produce false grammar findings.
+  - **Exact change** to § 4 "The claims-pass check": "presence and grammar are read from the PR body (`gh pr view <n> --json body`, run for the claims seat by a session holding credentials), not from the squash message."
+- **The `none needed` rate on its own is mostly noise.** The signal is the **cross-tab**: `none needed` on a PR whose diff touches a trigger surface.
+  - **Exact change**: replace "the `none needed` rate, counted as a baseline" with "**the `none needed` count on PRs whose diff touches a trigger surface (the anomaly), plus the overall rate as a baseline only**".
+- **The spot-check "each named consult left a record" is unsatisfiable as written.** Most consults end in a handback message, not a committed file; three of mine today left no file. As written, it is a standing finding.
+  - **Exact change**: "Spot-check (fraction counted): each named read is traced to a committed record (a feedback entry, a ballot review round, a completion doc, or the verdict quoted in the PR body); reads with no committed trace are counted as **self-attested**, not as findings."
+- **An edit site is owed on my charter.** M3 adds a claims-pass read (presence, grammar, the anomaly count, the spot-check fraction) to my passes, but no row in my charter carries it: the promised-duty-without-a-row class, as with the CI ballot's edit site 4. Every counting-block addition so far has been ballot-ratified.
+  - **Exact change**: add edit site 4, `canonical/agents/stacy.md` § "The claims-pass record" counting block: "**orchestrator consult line** *(ballot 2026-09-28-orchestrator-consult-first)*: presence and grammar on the population, the `none needed`-on-trigger-surface count, the spot-check fraction with self-attested reads counted — never a gate".
+  - Stacy applies it in her own commit and regenerates. It also changes an operative-set unit, so the 11.6.5d re-confirmation rides the same commit.
+- **Register entry `orchestrator-consult-line`: ACCEPT.** Functional class; audit disposition, owner stacy; the rule text follows the population ruled below. **The `owned-artifact-authorship` history line: ACCEPT.**
+
+#### The PR-population fork — recommendation to Peter: a third option, (iii); failing that, (ii) over (i)
+
+- **(iii) Derive the population from the diff, not from who opened the PR.**
+  - Every PR whose diff touches a trigger surface carries `Consulted:`. A trigger surface is:
+    - `governance/**`, `.kiro/steering/**` or `.kiro/docs/ballots/**`;
+    - `canonical/agents/**`;
+    - a spec's `requirements.md` or `design.md`;
+    - `tasks.md` **other than checkbox-only hunks**;
+    - `canonical/adjudications.yaml`.
+  - **Why**: the population is decidable from the artifact, and no opener marker is needed.
+  - **All four § 1 instances land in it**, because their artifacts were PRs touching `tasks.md` or a ballot.
+  - Pure in-seat code PRs carry no boilerplate. No `complete-task.sh` edit is required: these PRs are rarer, and the line is written by hand.
+  - **Its cost**: the classifier ("checkbox-only") needs care. That is one regex over the `tasks.md` hunks.
+- **(i) is the weakest.** The self-attested `Opened by` marker fails the same way the line itself does: forgetting the marker is forgetting the consult.
+- **(ii) catches everything, but it is noisy.** Almost every unit PR touches `tasks.md` checkboxes, and in-seat boilerplate would bury the anomaly count.
+  - Its tooling edit also needs an M2 issue grant, and the steward would carry it. **That is the author's declared interest in (ii).**
+
+#### § 6 residuals and the declared interests
+
+- **The subject's unfoldable residual is correct and stays unfoldable**: a wrong `none needed` reads like a right one. The (iii) anomaly count narrows it on PRs only.
+- **The author's interest**: the triggers are not softened; (a) is broad. **I see no self-sparing.**
+- **The subject's own interest is under-stated.** The subject's R1 narrowed Peter's "(1) … the option(s)" to three triggers, which reduces the subject's own workload. The narrowing is defensible, and it covers all four instances.
+  - **The loss it did cause is the "present" wording that drops briefs**, and my M1 change repairs that.
+  - § 6 should record R1 as the subject's interest, stated like the author's.
+
