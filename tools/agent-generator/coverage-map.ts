@@ -285,7 +285,9 @@ export function auditCoverageMap(
 //
 // Rows are visible, never silently unlisted: each row is ADJUDICATE and fails the audit
 // unless canonical/adjudications.yaml records a ruling under `sweep: audit:coverage-map:lanes`
-// with the row's key. Derivation errors (an expected context no job produces, an unknown npm
+// with the row's key. A lanes-sweep adjudication whose key matches no current row is printed as
+// a `[stale adjudication]` line on every run (non-failing), so a fixed row's ruling cannot
+// linger silently. Derivation errors (an expected context no job produces, an unknown npm
 // script, an unloadable jest config) are ERROR rows — never adjudicable; the derivation must
 // be repaired.
 
@@ -1049,6 +1051,12 @@ export interface LaneAuditResult {
   adjudicated: LaneRow[];
   unadjudicated: LaneRow[];
   errors: LaneRow[];
+  /**
+   * Recorded `audit:coverage-map:lanes` adjudications whose key matches NO current row (Stacy's
+   * output-shape consult, item 4 AMEND). Listed on every run, never failing — so a fixed row's
+   * ruling cannot linger silently, and a row's expiry is checkable.
+   */
+  stale: RecordedAdjudication[];
   pass: boolean;
 }
 
@@ -1058,7 +1066,11 @@ export function auditLanes(analysis: LaneAnalysis, adjudications: readonly Recor
   const adjudicable = analysis.rows.filter((r) => r.kind !== 'error');
   const adjudicated = adjudicable.filter((r) => keys.has(r.key));
   const unadjudicated = adjudicable.filter((r) => !keys.has(r.key));
-  return { analysis, adjudicated, unadjudicated, errors, pass: errors.length === 0 && unadjudicated.length === 0 };
+  const rowKeys = new Set(analysis.rows.map((r) => r.key));
+  const stale = adjudications
+    .filter((adj) => adj.sweep === LANES_SWEEP_CONTEXT && !rowKeys.has(adj.key))
+    .sort((x, y) => (x.key < y.key ? -1 : x.key > y.key ? 1 : 0));
+  return { analysis, adjudicated, unadjudicated, errors, stale, pass: errors.length === 0 && unadjudicated.length === 0 };
 }
 
 export function formatLaneAudit(audit: LaneAuditResult): string[] {
@@ -1092,6 +1104,9 @@ export function formatLaneAudit(audit: LaneAuditResult): string[] {
   out.push(`    inventory (visible, not failing — required steps with no lane comparison):`);
   if (a.inventory.length === 0) out.push('      (none)');
   for (const e of a.inventory) out.push(`      [${e.kind}] ${e.command}  <- ${e.contexts.join(', ')}`);
+  out.push(`    stale adjudications (visible, not failing — an ${LANES_SWEEP_CONTEXT} ruling whose key matches no current row):`);
+  if (audit.stale.length === 0) out.push('      (none)');
+  for (const adj of audit.stale) out.push(`      [stale adjudication] ${adj.key}  (owner: ${adj.owner}; record: ${adj.record})`);
   if (audit.unadjudicated.length > 0 || audit.errors.length > 0) {
     out.push(`    UNADJUDICATED LANE ROWS (${audit.unadjudicated.length})${audit.errors.length > 0 ? ` + DERIVATION ERRORS (${audit.errors.length})` : ''}:`);
     for (const r of [...audit.errors, ...audit.unadjudicated]) out.push(`      ${tag(r)} ${r.key}`);

@@ -512,6 +512,49 @@ describe('coverage-map lanes — auditLanes (adjudication join)', () => {
   });
 });
 
+describe('coverage-map lanes — stale adjudications (Stacy consult item 4)', () => {
+  const adj = (key: string, sweep = LANES_SWEEP_CONTEXT): RecordedAdjudication => ({
+    sweep,
+    key,
+    ruling: 'intentional-trim',
+    owner: 'stacy',
+    record: 'rec',
+  });
+
+  it('BITE: an adjudication whose key matches no current row is listed as [stale adjudication], without failing', () => {
+    const f = fixture();
+    const rows = analyzeLanes(f).rows.map((r) => adj(r.key));
+    const audit = auditLanes(analyzeLanes(f), [...rows, adj('local-config:tools/gone.config.js')]);
+    expect(audit.stale.map((a) => a.key)).toEqual(['local-config:tools/gone.config.js']);
+    expect(audit.pass).toBe(true);
+    const lines = formatLaneAudit(audit).join('\n');
+    expect(lines).toMatch(/\[stale adjudication\] local-config:tools\/gone\.config\.js  \(owner: stacy; record: rec\)/);
+  });
+
+  it('a key that matches a current row is not stale; the block still prints (none)', () => {
+    const f = fixture();
+    const audit = auditLanes(analyzeLanes(f), [adj('required-script:test:smoke')]);
+    expect(audit.stale).toEqual([]);
+    const lines = formatLaneAudit(audit);
+    const i = lines.findIndex((l) => l.includes('stale adjudications'));
+    expect(i).toBeGreaterThan(-1);
+    expect(lines[i + 1].trim()).toBe('(none)');
+  });
+
+  it('a fixed row turns its ruling stale (the expiry is checkable)', () => {
+    const f = fixture();
+    const ruling = adj('local-config:tools/jest.config.js');
+    expect(auditLanes(analyzeLanes(f), [ruling]).stale).toEqual([]);
+    f.workflows['.github/workflows/guard.yml'] += '      - run: npm run test:agent-generator\n';
+    expect(auditLanes(analyzeLanes(f), [ruling]).stale.map((a) => a.key)).toEqual(['local-config:tools/jest.config.js']);
+  });
+
+  it('adjudications under other sweeps are never reported as lanes-stale', () => {
+    const audit = auditLanes(analyzeLanes(fixture()), [adj('canonical/generated.lock', 'audit:coverage-map')]);
+    expect(audit.stale).toEqual([]);
+  });
+});
+
 describe('coverage-map lanes — the real repo (derivation smoke)', () => {
   it('every required context resolves to a job and no derivation error is raised', () => {
     const repoRoot = path.resolve(__dirname, '..', '..', '..');
