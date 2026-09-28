@@ -136,7 +136,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 **U2a carries a third reading (S-T5, binding; U2 before the amendment of 2026-09-27)**:
 - U2a's line adds **`G1 runs: <k>`**, counted from the kept per-run records. G1 runs only inside U2a, so `k` is final at U2a's merge and U2b's line omits it.
 - **k > 1 is a scope signal regardless of the subtask count.** The rework loop adds no subtasks, so the count alone would read as stable.
-- **k > 1 also triggers fork M-1's scoped read** (Stacy, post-acceptance, Task 12's evidence only — never a gate on the U2b cut). See the MIDPOINT block above, "Fork M-1 (Peter's, RULED — (A)+conditional, 2026-09-27)".
+- **k > 1 also triggers fork M-1's scoped read** (Stacy, post-acceptance — scope defined in the MIDPOINT block; never a gate on the U2b cut). See the MIDPOINT block above, "Fork M-1 (Peter's, RULED — (A)+conditional, 2026-09-27)".
 
 **Read at each unit's completion review; Peter owns the read.** The PR-body line reads:
 `Tripwire: declared <n>, now <m>; parents unchanged|added; successor branch: none|<sha>[; G1 runs: <k>]`.
