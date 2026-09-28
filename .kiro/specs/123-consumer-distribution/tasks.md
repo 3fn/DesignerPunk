@@ -693,8 +693,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   - [x] 13.0 (Lina) Exemplar F's third unit: record `#family-overview:preamble` and confirm it under C1; precursor test green. **Runs after #223 merges, on a U2b branch cut from a `main` that contains #223**, and before 13.4 *(added 2026-09-27, U2b-cut amendment; ordering per Lina R1)*
   - [x] 13.1 Dispositions schema (explicit rows; per-member frontmatter; no re-pointed embeds; rejected term)
-  - [ ] 13.2 Overlay + signature formats; stale and bare checks
-  - [ ] 13.3 Confirmer/signer checks; verbatim-substring check
+  - [x] 13.2 Overlay + signature formats; stale and bare checks
+  - [x] 13.3 Confirmer/signer checks; verbatim-substring check
   - [ ] 13.4 (Lina) `triviality.ts`: the occurrence assignment with its witness, the tested properties and the AX-1 bite, over the copied G1 fixtures *(the branch-A configuration is dropped — G1 HOLDS; amendment 2026-09-27, U2b cut)*
   - [ ] 13.5 (Lina) Orphan and missing-row refusals
   - [ ] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice + removal of the expired U2a adjudications (F3; Stacy is told in the same notice) + absorb and delete the Task 11 precursor test `src/__tests__/operative-set-records.test.ts` (amendment 2026-09-27)

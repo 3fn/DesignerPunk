@@ -7,8 +7,8 @@
  * nine checks; its named test is "repo-bound-in-entirety is a named rejected term, not an
  * unknown one" and its bite is recorded in task-13-1-completion.md.
  *
- * Not tested here (other subtasks): missing rows and orphaned keys (13.5), signature format
- * and checks (13.2/13.3), destination derivation (Task 14).
+ * Not tested here (other subtasks): missing rows and orphaned keys (13.5); the signature checks
+ * themselves (signatures.test.ts, 13.2/13.3); destination derivation (Task 14).
  */
 
 import { REJECTED_TERM_MESSAGE } from '../regrounding/check-catalog';
@@ -192,8 +192,12 @@ describe('row fields by term', () => {
     expect(checks(validate(body({ '#a': { disposition: 'retained', dispostion: 'x' } })))).toEqual(['unknown-field']);
   });
 
-  it('accepts a signature on any row without inspecting it (13.2 / 13.3)', () => {
-    expect(validate(body({ '#a': { disposition: 're-pointed', destination: '#a', signature: { anything: true } } }))).toEqual([]);
+  it('format-checks a signature through signatures.ts, surfacing the bare check (13.2)', () => {
+    const H = `sha256:${'0'.repeat(64)}`;
+    const sig = { signer: 'stacy', canonicalHash: H, renderedHash: H, evidence: 'n.md#a' };
+    expect(validate(body({ '#a': { disposition: 're-pointed', destination: '#a', signature: { ...sig, assent: { surviving: [] } } } }))).toEqual([]);
+    expect(checks(validate(body({ '#a': { disposition: 're-pointed', destination: '#a', signature: sig } })))).toEqual(['bare-signature']);
+    expect(checks(validate(body({ '#a': { disposition: 're-pointed', destination: '#a', signature: { anything: true } } })))).toContain('signature-format');
   });
 });
 
@@ -210,7 +214,7 @@ describe('file shape', () => {
     expect(checks(validate({ source: 'canonical/shared/shared-catalog.yaml', body: {} }))).toEqual(['file-shape']);
   });
 
-  it("parses design C17's own example (source: added) without a finding", () => {
+  it("parses design C17's own example (source: added; its elided hashes filled) without a finding", () => {
     const yaml = [
       'source: canonical/agents/stacy.md',
       'body:',
@@ -220,8 +224,8 @@ describe('file shape', () => {
       '    removals: [ { text: "…/.kiro/docs/ballots/2026-09-19-…", cites: subtraction-1 } ]',
       '    signature:',
       '      signer: stacy',
-      '      canonicalHash: sha256:0',
-      '      renderedHash: sha256:0',
+      `      canonicalHash: sha256:${'a'.repeat(64)}`,
+      `      renderedHash: sha256:${'b'.repeat(64)}`,
       '      assent: { surviving: [owed-set-1, owed-set-2, owed-set-4] }',
       '      evidence: canonical/profiles/consumer/signatures/stacy.md#the-owed-set-pipeline',
       'frontmatter:',

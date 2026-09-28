@@ -66,12 +66,14 @@ export const NINE_CHECKS: readonly NineCheck[] = Object.freeze([
     subtask: '13.3',
     owner: 'thurgood',
     template: 'operative set for <file> declares confirmer <x>; the C1 rule requires <y>',
+    test: 'operative-set.checks.test.ts › wrong confirmer (nine-check) refuses a confirmer that is not the C1 seat, with the exact string',
   },
   {
     id: 'wrong-signer',
     subtask: '13.3',
     owner: 'thurgood',
     template: 'signature on <anchor> is by <x>; the C1 rule requires <y> (owner <o>, profile author <p>)',
+    test: 'signatures.test.ts › wrong signer (nine-check) refuses a signer that is not the C1 seat, with the exact string',
   },
   {
     id: 'stale-signature',
@@ -79,12 +81,14 @@ export const NINE_CHECKS: readonly NineCheck[] = Object.freeze([
     owner: 'thurgood',
     template:
       'signature on <anchor> is stale — its canonical or rendered content changed since signing; re-sign or refuse',
+    test: 'signatures.test.ts › stale signature (nine-check) refuses when either hash drifted since signing, with the exact string',
   },
   {
     id: 'bare-signature',
     subtask: '13.2',
     owner: 'thurgood',
     template: 'signature on <anchor> carries no itemized assent — list the surviving item ids or refuse',
+    test: 'signatures.test.ts › bare signature (nine-check) refuses a signature with neither itemized assent nor refuse, with the exact string',
   },
   {
     id: 'stale-overlay',
@@ -92,6 +96,7 @@ export const NINE_CHECKS: readonly NineCheck[] = Object.freeze([
     owner: 'thurgood',
     template:
       'overlay for <anchor|entry> re-grounds canonical text sha256:<pinned>, but the current canonical is sha256:<now> — re-author the overlay; refusing to derive',
+    test: 'overlay.test.ts › stale overlay (nine-check) refuses a pin that differs from the current canonical, with the exact string',
   },
   {
     id: 'item-text-not-verbatim',
@@ -99,6 +104,7 @@ export const NINE_CHECKS: readonly NineCheck[] = Object.freeze([
     owner: 'thurgood',
     template:
       'operative item <id> in <file>: text is not a verbatim substring of canonical unit <anchor> — re-confirm with the complete canonical text',
+    test: 'operative-set.checks.test.ts › item text not verbatim (nine-check) refuses a paraphrased item, with the exact string',
   },
   {
     id: 'repo-bound-in-entirety',

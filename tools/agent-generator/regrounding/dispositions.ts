@@ -46,13 +46,14 @@
  *   superseded-by            required      —          allowed
  *   no-consumer-counterpart  —             —          allowed
  *
- * `signature` is accepted on any row and NOT validated here — its format and its stale / bare /
- * signer checks are Tasks 13.2 and 13.3. `cites` values are `subtraction-1` … `subtraction-5`
+ * `signature` (any row) is format-checked through signatures.ts, which also runs the BARE check
+ * (context-free, so it cannot be skipped). The STALE and SIGNER checks need current hashes and
+ * owners, so they are separate calls (`checkSignatureFreshness`, `checkDispositionSigners`). `cites` values are `subtraction-1` … `subtraction-5`
  * (Req 11.1.2's five SUBTRACT bullets); whether a citation APPLIES is clause (iii), not this.
  *
  * WHAT THIS DOES NOT ESTABLISH: completeness (missing rows) or key currency (orphans) — 13.5;
  * that a destination derives from its source — 11.4's checker (Task 14); that a removal
- * citation applies — clause (iii); anything about signatures — 13.2/13.3.
+ * citation applies — clause (iii); signature freshness or signer (separate calls, above).
  *
  * Traces to: Req 11.2.1–11.2.3, 11.3.3, 11.3.6; design C13, C17, DD19, DD25, DD26.
  */
@@ -61,6 +62,7 @@ import { load as loadYaml } from 'js-yaml';
 import type { EntryTree } from '../partition';
 import type { Disposition as SpanDisposition } from '../spans';
 import { REJECTED_TERM_MESSAGE } from './check-catalog';
+import { validateSignatureFormat } from './signatures';
 
 // ============================================================================
 // Vocabulary
@@ -114,7 +116,7 @@ export interface DispositionRow {
   removals?: Removal[];
   /** The authorizing clause for a whole-unit removal (superseded-by, no-consumer-counterpart). */
   cites?: SubtractionCite;
-  /** Task 13.2's format; opaque here. */
+  /** signatures.ts `Signature` — format-checked on validation. */
   signature?: unknown;
 }
 
@@ -159,7 +161,9 @@ export type SchemaCheckId =
   | 'bad-removal'
   | 'container-key'
   | 're-pointed-embed'
-  | 'file-shape';
+  | 'file-shape'
+  | 'bare-signature' // one of Task 13's nine (signatures.ts)
+  | 'signature-format';
 
 export interface DispositionFinding {
   check: SchemaCheckId;
@@ -181,6 +185,8 @@ export const formatFinding = (f: DispositionFinding): string => `${f.file}${f.ro
 export interface ValidationContext {
   /** The canonical frontmatter's entry tree — enables the per-member (container-key) check. */
   entries?: EntryTree;
+  /** Body anchor → the unit's operative-set item ids — lets a signature's surviving ids be checked. */
+  operativeItems?: Readonly<Record<string, readonly string[]>>;
 }
 
 // ============================================================================
@@ -268,6 +274,13 @@ function validateRow(
   for (const field of Object.keys(row)) {
     if (!ROW_FIELDS.includes(field)) {
       push('unknown-field', `row ${key} in ${file} carries unknown field '${field}' — allowed: ${ROW_FIELDS.join(', ')}`);
+    }
+  }
+
+  if (row.signature !== undefined) {
+    const items = section === 'body' ? context.operativeItems?.[key] : undefined;
+    for (const f of validateSignatureFormat(row.signature, key, items)) {
+      push(f.check === 'bare-signature' ? 'bare-signature' : 'signature-format', f.message);
     }
   }
 

@@ -7,6 +7,8 @@
  * Each check's named test and bite are its subtask's evidence, not this file's.
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
 import { fillTemplate, NINE_CHECKS, nineCheck, REJECTED_TERM_MESSAGE } from '../regrounding/check-catalog';
 
 describe('the nine re-grounding checks (Task 13)', () => {
@@ -66,5 +68,16 @@ describe('the nine re-grounding checks (Task 13)', () => {
     );
     expect(() => fillTemplate(nineCheck('wrong-confirmer').template, { file: 'f', x: 'a' })).toThrow('<y> has no value');
     expect(() => fillTemplate(nineCheck('bare-signature').template, { anchor: '#a', extra: 'z' })).toThrow('unused template vars: extra');
+  });
+
+  it('names an existing test for every landed check; only 13.5\'s two are pending', () => {
+    // When 13.5 lands, its two entries gain `test:` and this pending list becomes [] — the
+    // "every registry entry has its named test" assertion (carried from 13.1).
+    expect(NINE_CHECKS.filter((c) => c.test === undefined).map((c) => c.id)).toEqual(['orphaned-key', 'missing-row']);
+    for (const c of NINE_CHECKS.filter((x) => x.test !== undefined)) {
+      const [file, name] = (c.test as string).split(' › ');
+      const source = fs.readFileSync(path.join(__dirname, file), 'utf8');
+      expect(`${c.id}: ${source.includes(`'${name}'`) || source.includes(`"${name}"`)}`).toBe(`${c.id}: true`);
+    }
   });
 });
