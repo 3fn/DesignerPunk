@@ -231,6 +231,28 @@ jobs:
       - name: Run scripts/** test suite (npm run test:scripts)
         run: npm run test:scripts
 
+      # Standing scope (ballot 2026-09-27-ci-regime-standing-scope § 2, M1 P1 — first
+      # application): tools/agent-generator/** (the 122 generator's own suites — golden bite 1,
+      # the entry tree, the unit twin, the coverage-map/lanes tests) previously ran in NO CI
+      # workflow — `npm run test:agent-generator` had no caller (surfaced by audit:coverage-map's
+      # lanes section as local-config:tools/agent-generator/jest.config.js, PR-2 #227; first
+      # found at Spec 123 U2a Task 10). Placed here because this job already builds
+      # what the suite needs: `npm run build` (dist/mcp/* via build:mcp) and the mcp-server
+      # sub-package dist (workflow-rules-guard.ts imports mcp-server/dist). A NEW
+      # did-it-really-run guard (non-vacuity floor), same shape as the scripts/** one above;
+      # no pre-existing guard is modified. Floor 1, derived from 30 resolved test files on
+      # 2026-09-27.
+      - name: Selection floor — resolved tools/agent-generator/** test files ≥ 1
+        run: |
+          npx jest --config tools/agent-generator/jest.config.js --listTests > resolved-agent-generator-tests.txt
+          COUNT=$(wc -l < resolved-agent-generator-tests.txt | tr -d ' ')
+          echo "jest resolved $COUNT tools/agent-generator/** test files (floor: 1; derived from 30 on 2026-09-27)"
+          echo "--- resolved selection ---"; cat resolved-agent-generator-tests.txt
+          [ "$COUNT" -ge 1 ]
+
+      - name: Run tools/agent-generator/** test suite (npm run test:agent-generator)
+        run: npm run test:agent-generator
+
   # ── Lane 4: mcp-server suite ─────────────────────────────────────────────
   lane-mcp-server-suite:
     # Ballot B-CI a2 (see lane-typecheck above for rationale).
