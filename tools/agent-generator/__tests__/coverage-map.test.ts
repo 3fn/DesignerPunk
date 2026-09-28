@@ -549,6 +549,24 @@ describe('coverage-map lanes — stale adjudications (Stacy consult item 4)', ()
     expect(auditLanes(analyzeLanes(f), [ruling]).stale.map((a) => a.key)).toEqual(['local-config:tools/jest.config.js']);
   });
 
+  it('BITE: an adjudication keyed to an ERROR row is listed as inert (non-failing tag; the error still fails)', () => {
+    const f = fixture();
+    f.expectedContexts = [...f.expectedContexts, 'Ghost Check'];
+    const audit = auditLanes(analyzeLanes(f), [adj('unresolved-context:Ghost Check')]);
+    expect(audit.inert.map((a) => a.key)).toEqual(['unresolved-context:Ghost Check']);
+    expect(audit.stale).toEqual([]);
+    expect(audit.pass).toBe(false); // from the ERROR row itself, never from the inert tag
+    const lines = formatLaneAudit(audit).join('\n');
+    expect(lines).toMatch(/\[inert adjudication — keyed to an ERROR row\] unresolved-context:Ghost Check  \(owner: stacy; record: rec\)/);
+  });
+
+  it('an adjudication keyed to a normal row is not inert', () => {
+    const f = fixture();
+    const audit = auditLanes(analyzeLanes(f), [adj('required-script:test:smoke')]);
+    expect(audit.inert).toEqual([]);
+    expect(formatLaneAudit(audit).join('\n')).not.toMatch(/inert adjudication/);
+  });
+
   it('adjudications under other sweeps are never reported as lanes-stale', () => {
     const audit = auditLanes(analyzeLanes(fixture()), [adj('canonical/generated.lock', 'audit:coverage-map')]);
     expect(audit.stale).toEqual([]);
