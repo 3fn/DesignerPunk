@@ -30,6 +30,24 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Item 4 — Amendment 2026-09-27, ruled by Peter (option (ii)): **C(c1)'s zero-item premise is false.** Stacy's 11.2 confirmation found both named units carry two operative items each under 5c (the ratified cut sentences; the artifact-truth and "binds every reader" sentences). **C(c1) stays a record — its confirmed items stand — and is NOT re-instantiated.** Clause (a) (domain restriction) is exercised by **F**'s `#purpose` only (0 items, pending Lina's confirmation). Task 12's G1 domain line states this and the corpus fact behind it. **Req 11.6.5's C(c1) row is not edited here**: it is superseded-in-execution by this amendment, recorded in § "Carried obligations" for the next requirements touch. Carried in: Task 11's first criterion and Task 12's first criterion.)*
 
+*(**U2b-cut amendment, 2026-09-27** — filed on `main` after U2a merged (#222, `24c7f060`), before `task/123-u2b-profile` is cut. Four items, each tracing to its ruling or finding:
+1. **Exemplar F's third unit**: `governance/Component-Family-Navigation.md` `#family-overview:preamble`, which is label-shaped but descriptive (expected 0 items). It is recorded and confirmed by Lina under C1 at **new subtask 13.0**, and Stacy names it in G2's domain.
+   - **Source**: `.kiro/issues/2026-09-27-task-11-deferred-lina-items.md` Item 1 (Peter's deferral ruling).
+   - **Why it is a subtask, not a ride**: an owner confirmation is its own act with its own completion-doc duty.
+   - **Tripwire**: U2b reads `declared 31, now 32`, within +4.
+   - **Not edited**: the #220 "clause (a) is exercised by F's `#purpose` only" wording in Tasks 11 and 12. Both parents are merged, their docs reproduce those rows verbatim, and the wording was true of G1's eleven exemplars.
+2. **Task 13 gains the floor's tested properties**, which closes **G1 run 2 finding DR-1** (design C18's "Required bite (13.4)" had no criterion row).
+   - The occurrence-assignment row: witness, validity property test, live-record invariants, and the frozen AX-1 bite.
+   - The "floor never condemns, per unit" row.
+   - "Lina-2 scores 0/7" restated per unit (Req 11.6.5f).
+   - The fixture-provenance row, and `tools/agent-generator/__fixtures__/g1-renderings/` in the Primary Artifacts.
+   - **The branch-A configuration test is dropped**: G1 HOLDS at run 2, so branch A was never invoked (`completion/re-grounding-c3-falsification.md`).
+   - **Pick pre-filled for Peter to rule on this PR: the G1 renderings are COPIED into fixtures with their provenance pinned (run-record path + blob SHA), not read from the run records at test time.** This is Lina's and the orchestrator's preference, from the consults on Thurgood's draft rows.
+3. **R2-F1 lands in C3**: Req 11.6.5e gains "Scope — within the unit's own rendering", and 5f names it. Peter ruled **proceed-on-HOLDS** in the #222 body, so this is a requirements touch on `main`, not a third rework.
+   - It is in force before Task 15's first routed signature (the Task 15 note), and Stacy checks it at U2b's MIDPOINT.
+   - DR-2, DR-3, DR-4 and the stale "Against the exemplars" counts are folded as one-line errata in the same touch. R2-A1 stays on the requirements-touch carry list (§ "Carried obligations").
+4. **The lessons item** (§ "Carried obligations") points to the record-first ballot, `.kiro/docs/ballots/2026-09-27-normative-counterexample-routing.md` (DRAFT; Stacy required reviewer). That ballot also carries the completion guide's errata section as its § 2. Neither is applied.)*
+
 > **Law binding execution (Req 26.1 — Spec 127, ratified)**:
 > - Every parent completion doc reproduces **every Success Criteria row VERBATIM**, with Status + Evidence, and carries the **forced-negative line** and the **unconditional delegated-tier line**. The line's referent is the parent's **primary agent** in § "Delegated-tier plan".
 > - Every ticked subtask carries its subtask completion doc.
@@ -168,6 +186,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Amendment 2026-09-27, F3 conditions: **11.5 added** (Stacy's F3 step, B-CI ballot § 11 `[STACY R1]` § 6 condition (c), `.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md`). U2a's line now reads `declared 11, now 13`, within +3. **Totals now: 28 parents, 129 subtasks.**)*
 
+*(Amendment 2026-09-27, the U2b cut: **13.0 added** (the third F unit's C1 confirmation). U2b's line reads `declared 31, now 32`, within +4. **Totals now: 28 parents, 130 subtasks.**)*
+
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
 **Preamble**: write-scope authority for every seat below is **granted by the T1-(B) standing rule** (§ "Slots"). Each PRIMARY and each tiered secondary may write exactly its parent's listed Primary Artifacts, on its unit's branch, until the unit merges. **Activation is this tasks PR's merge; ratification is the standalone ballot `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`** (erratum 2026-09-26; it was planned as B-U1 § "T1-(B)" at Task 7.0).
@@ -193,7 +213,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | 10 | Lina (Opus) | — |
 | 11 | Thurgood (Opus) | Stacy (Opus) — constructs exemplars G and G′ (11.3); the F3 adjudications (11.5, added 2026-09-27); Lina (Opus) — 11.2 owner confirmations for lina.md units and the component-family doc (C1: owner) (added 2026-09-27, ruled by Peter) |
 | 12 | **Thurgood (Opus)** — G1 gate parent · U2a gating parent | — (Stacy's verdict record is outside the line) |
-| 13 | Thurgood (Opus) | Lina (Opus) — generator code (13.4–13.6) |
+| 13 | Thurgood (Opus) | Lina (Opus) — generator code (13.4–13.6); the third F unit's C1 confirmation (13.0, added 2026-09-27, U2b-cut amendment) |
 | 14 | Lina (Opus) | — |
 | 15 | Thurgood (Opus) | Lina (Opus) — `derive.ts` (15.2) |
 | 16 | Lina (Opus) — 16.1, 16.5 | Lina (Sonnet) — 16.2, 16.3, 16.4, 16.6; Ada (Sonnet) consulted on 16.3's pack script |
@@ -275,8 +295,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | C2 counting-block edit | **Task 13.7**, **under ballot B-U2** (S-T2) |
 | Native component distribution (Kenya/Data) | **Task 3.5** (committed issue; joint trigger) |
 | **Lina's Container-Base dangling-reference fix** (T2-L1: 10 map values + 1 constant; tests pinning broken strings) — **hers, NOT 123 work**: a separate chore PR with a resolves-against-generated-CSS guard test | **Gate at Task 6.0**: merged before Task 6 runs, like the rename gate at 8.1 |
-| **Lessons item (amendment 2026-09-27)**: instrument-existence check for any "by the check, not inspection" criterion — three of the four Task 11 corrections were a criterion naming a check or premise that did not exist yet | **Next tasks round** — filed as a lessons item (Stacy/Thurgood); not fixed in 123 |
-| **Req 11.6.5's C(c1) row superseded-in-execution** (amendment 2026-09-27, item 4: premise false, clause (a) exercised by F `#purpose` only) | **Next requirements touch** — the row is edited then; 123 executes under the tasks amendment |
+| **Lessons item (amendment 2026-09-27)**: instrument-existence check for any "by the check, not inspection" criterion — three of the four Task 11 corrections were a criterion naming a check or premise that did not exist yet | **Next tasks round** — filed as a lessons item (Stacy/Thurgood); not fixed in 123. **The process rule it produced** (routing a counterexample to a normative claim to its owner, with Stacy's amended text) **and the completion guide's errata section** go to a record-first ballot: `.kiro/docs/ballots/2026-09-27-normative-counterexample-routing.md` (DRAFT, Stacy required reviewer; U2b-cut amendment 2026-09-27) |
+| **Req 11.6.5's C(c1) row superseded-in-execution** (amendment 2026-09-27, item 4: premise false, clause (a) exercised by F `#purpose` only) | **Next requirements touch** — the row is edited then; 123 executes under the tasks amendment. Also carried to that touch: the 11.6.5 table fold of G1 run 1's per-unit restatements, the F row as instantiated (three units), and G1 run 2 finding **R2-A1**. DR-2, DR-3, DR-4 and the stale "Against the exemplars" counts were folded as errata by the U2b-cut amendment |
 | Routed defects (out of scope; for Lina): `ContainerCardBase.ios.swift:816` unterminated comment; `LocalDPTheme` / `dpTheme` hardcoding; per-component `dist` `.css` requires (A7) | Filed by the steward: `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`. Task 3.5 cites it, and routes the A7 finding and the `:816` parse defect as messages |
 
 ---
@@ -629,13 +649,22 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 - [ ] 13. Triviality floor, dispositions, overlays, signatures, freshness, and ballot B-U2 (step 5)
 
-  **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Opus); Lina (Opus) — 13.4–13.6
-  **Traces**: Reqs 11.2, 11.3, 11.5, 11.6 · design C16–C18, DD19, DD25, DD26, DD13 (B-U2)
+  **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Opus); Lina (Opus) — 13.0, 13.4–13.6 *(13.0 added 2026-09-27, U2b-cut amendment)*
+  **Traces**: Reqs 11.2, 11.3, 11.5, 11.6 (incl. 11.6.5b/e/f) · design C16–C18, DD19, DD25, DD26, DD13 (B-U2)
 
   **Success Criteria:**
   - **No `triviality.ts` precedes the G1 HOLDS (or branch-A) record in ancestry**: `git merge-base --is-ancestor <U2a's squash-merge commit on main> <first triviality.ts commit>` exits 0, **cited against the U2b PR's `refs/pull/<n>/head`**, which survives the branch deletion (S-T-A1; moved from Task 12 by the amendment of 2026-09-27). *Scope: it establishes that file's ordering, not the absence of triviality logic elsewhere.*
   - The entry set is every body unit not byte-identical passthrough (a one-byte change enters; untouched does not).
-  - **The floor matches complete item `text`**: Lina-2 scores 0/7 and ROUTES; a verbatim unit with a subtraction-1 removal ROUTES. **Under branch A, clause 2 is absent and every entry-set unit routes** (configuration test).
+  - **The floor matches complete item `text`, per unit** (Req 11.6.5f): each of Lina-2's seven step units scores 0/k and ROUTES; a verbatim unit with a subtraction-1 removal ROUTES. *(Restated per unit, and the branch-A configuration clause dropped: G1 HOLDS at run 2, so branch A was not invoked — amendment 2026-09-27, U2b cut.)*
+  - **The strict count is a valid occurrence assignment, not per-item `includes`** (design C18 clause 2; closes G1 run 2 finding DR-1 — amendment 2026-09-27, U2b cut):
+    - (i) **witness**: `triviality.ts` returns the assignment it counted — each credited item id paired with the offset of its occurrence — not only the count;
+    - (ii) **validity, as a property test** over generated renderings: every returned assignment is valid — each credited item's complete `text` occurs at its assigned offset, no two credited items share an occurrence, and no two assigned occurrences overlap;
+    - (iii) **live-record invariants**, over every unit of every committed `canonical/operative-sets/*.yaml` record (units derived from the records, count asserted): a rendering byte-identical to the canonical unit scores `|items|`/`|items|`; and the assignment never credits more items than per-item `includes` does on the same rendering;
+    - (iv) **the AX-1 bite**: over the frozen AX-1 fixture, `#audit-checklist` scores 14/30 and ROUTES; with the assignment replaced by per-item `includes` the test turns RED at 15/30 CLEARS (exact strings recorded).
+    - *Scope: any valid assignment is sound (C18); whether it is maximal is 13.4's choice (G1 run 2, R2-A2), and a non-maximal choice only under-counts, which routes.*
+  - **The floor never condemns, per unit** (Req 11.6.5b, 11.6.5f — amendment 2026-09-27, U2b cut): `triviality.ts`'s verdict type has no TRIVIAL value; over the committed G1 renderings Lina-1 `#ios` and `#android` score 0/3 and ROUTE, and F's zero-item units (`#purpose` and `#family-overview:preamble`, read from the record) are INAPPLICABLE. *Scope: the TRIVIAL / NOT TRIVIAL verdicts of routed units are the routed judgment's (Req 11.6.5e), established at G1 (`completion/re-grounding-c3-falsification.md`), never by code.*
+  - **The G1 renderings are copied fixtures with pinned provenance** (pick pre-filled — amendment 2026-09-27, U2b cut; Peter may overturn on the amendment PR): every fixture under `tools/agent-generator/__fixtures__/g1-renderings/` names its source run record (`completion/re-grounding-c3-falsification-run-<n>.md` or `completion/task-11-3-exemplars-g-gprime.md`) and that record's blob SHA, and a test asserts the record's current bytes hash to the pinned blob and the fixture equals the marked rendering block in it. *Scope: it establishes the fixture is the gate's rendering, byte for byte; a changed run record turns it red rather than silently changing the fixture.*
+  - **Exemplar F's third unit is recorded and C1-confirmed before 13.4** (amendment 2026-09-27, U2b cut; `.kiro/issues/2026-09-27-task-11-deferred-lina-items.md` Item 1): `canonical/operative-sets/component-family-navigation.yaml` carries `#family-overview:preamble` with its confirmed item set (expected 0), its note block resolves in `canonical/profiles/consumer/confirmations/component-family-navigation.md`, and `src/__tests__/operative-set-records.test.ts` is green over it, output cited; the confirming commit precedes the first `triviality.ts` commit in ancestry.
   - The hard floor fails when every non-empty-item unit is `no-consumer-counterpart`, including when a zero-item preamble is left retained.
   - **Nine checks, each with a named test, a recorded bite and its exact string**:
     - orphaned key;
@@ -659,12 +688,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - After the counting-block edit, **Stacy re-confirms the changed unit of her charter** before 15.4 runs (the freshness check demands it).
   - *Scope*: mechanics only. Discrimination is G2's question.
 
-  **Primary Artifacts:** `tools/agent-generator/regrounding/triviality.ts`, `tools/agent-generator/derive.ts` (key checks), schemas + validator, `tools/agent-generator/diff-guard.ts`, `__fixtures__/stale-unit/`, `.kiro/docs/ballots/<date>-123-b-u2.md`, `canonical/agents/stacy.md`, `canonical/adjudications.yaml` (13.6 removes the expired U2a rows only — F3), `src/__tests__/operative-set-records.test.ts` (13.6 deletes the Task 11 precursor test only — amendment 2026-09-27)
+  **Primary Artifacts:** `tools/agent-generator/regrounding/triviality.ts`, `tools/agent-generator/derive.ts` (key checks), schemas + validator, `tools/agent-generator/diff-guard.ts`, `__fixtures__/stale-unit/`, `.kiro/docs/ballots/<date>-123-b-u2.md`, `canonical/agents/stacy.md`, `canonical/adjudications.yaml` (13.6 removes the expired U2a rows only — F3), `src/__tests__/operative-set-records.test.ts` (13.6 deletes the Task 11 precursor test only — amendment 2026-09-27), `tools/agent-generator/__fixtures__/g1-renderings/` (copied G1 renderings with pinned provenance — U2b-cut amendment), `canonical/operative-sets/component-family-navigation.yaml` and `canonical/profiles/consumer/confirmations/component-family-navigation.md` (13.0's third F unit only — U2b-cut amendment)
 
+  - [ ] 13.0 (Lina) Exemplar F's third unit: record `#family-overview:preamble` and confirm it under C1; precursor test green *(added 2026-09-27, U2b-cut amendment)*
   - [ ] 13.1 Dispositions schema (explicit rows; per-member frontmatter; no re-pointed embeds; rejected term)
   - [ ] 13.2 Overlay + signature formats; stale and bare checks
   - [ ] 13.3 Confirmer/signer checks; verbatim-substring check
-  - [ ] 13.4 (Lina) `triviality.ts` incl. the branch-A configuration
+  - [ ] 13.4 (Lina) `triviality.ts`: the occurrence assignment with its witness, the tested properties and the AX-1 bite, over the copied G1 fixtures *(the branch-A configuration is dropped — G1 HOLDS; amendment 2026-09-27, U2b cut)*
   - [ ] 13.5 (Lina) Orphan and missing-row refusals
   - [ ] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice + removal of the expired U2a adjudications (F3; Stacy is told in the same notice) + absorb and delete the Task 11 precursor test `src/__tests__/operative-set-records.test.ts` (amendment 2026-09-27)
   - [ ] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
@@ -707,6 +737,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - *Scope*: declared-and-signed-by-the-right-seat only. Discrimination is G2's question; authorship is not establishable.
 
   **Primary Artifacts:** `canonical/consumer-profile.yaml`, `canonical/profiles/consumer/**`, `canonical/operative-sets/**`, `tools/agent-generator/{derive,generate}.ts`, `canonical/_consumer-output/**`
+
+  *Not a criterion — a precondition carried in (U2b-cut amendment, 2026-09-27; G1 run 2 finding R2-F1, Peter ruled proceed-on-HOLDS): Req 11.6.5e's "Scope — within the unit's own rendering" is in force before 15.5's first routed signature. A signer credits an item by entailment only from that unit's own rendering, and a function that survives only elsewhere takes a disposition. Stacy checks it at U2b's MIDPOINT.*
 
   - [ ] 15.1 Profile file; `AdapterContext.profile`; `generateConsumerRendering`; `guardedRoots()`
   - [ ] 15.2 (Lina, Opus) `derive.ts`
