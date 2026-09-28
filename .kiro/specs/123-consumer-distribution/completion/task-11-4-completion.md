@@ -2,6 +2,8 @@
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U2a · **Parent**: Task 11 · **Agent**: Thurgood (Opus)
 
+**CI-provenance**: branch-head dispatch @ a300b73483cc1d741a90b956ae5f104f094fc0f0 — https://github.com/3fn/DesignerPunk/actions/runs/36369546680, https://github.com/3fn/DesignerPunk/actions/runs/36369550922, https://github.com/3fn/DesignerPunk/actions/runs/36369555504, https://github.com/3fn/DesignerPunk/actions/runs/36369562218, https://github.com/3fn/DesignerPunk/actions/runs/36369566091, https://github.com/3fn/DesignerPunk/actions/runs/36369570482
+
 **Authority**: tasks.md amendment 2026-09-27 (item 1), ruled by Peter, merged as #220 (`a4ad7e25`). No instrument existed at 11.4, so the check for Task 11 is a temporary precursor test.
 
 **Write scope**: `src/__tests__/**` is in **Thurgood's charter write scope**. This file is not granted by Task 11's row (T1-(B)); it is not in Task 11's Primary Artifacts.
@@ -65,3 +67,16 @@
 2. **"Committed note" is checked with `git ls-files`**. A note that exists only in a working tree is red. That is the criterion's word, and it means a confirmer runs the test after committing.
 3. **Runtime `require` of `tools/`** (risk 2, above), on the Spec107 precedent.
 4. **11.4 is left unticked** despite the brief's instruction to tick it. A ticked "checks green" line over a red suite would be a false claim. The tick lands at the final green.
+
+---
+
+## Addendum 2026-09-27 — the final green (parent close)
+
+*The body above records the knowingly-red checkpoint at `9054de14`. This addendum records the final state.*
+
+- **Lina's 11.2 half is merged** (`d05f1565`, `ea329e87`, with the notes for `lina.md` and `component-family-navigation.md`), and so is Stacy's 11.5 (`2081c865`). Re-run over all four records and all four notes at `a300b734`:
+  - `npx jest --config jest.functional.config.js src/__tests__/operative-set-records.test.ts` → **Tests: 22 passed, 22 total**.
+  - The exact-anchor matching resolves Lina's two `:preamble` notes, which the slug rule could not.
+- **`npm test`** → `Test Suites: 385 passed, 385 total` · `Tests: 9290 passed, 9290 total`. **`npx tsc --noEmit`** → exit 0. Both are local, on the merged state before the lock commit, which changes no source.
+- **The CI-provenance line above** binds to `a300b734`. That is the lock-refresh checkpoint, and it carries this test file unchanged since `9054de14`. The later commits change only completion docs, the summary and `tasks.md` checkboxes (guide § "CI provenance", rule 5).
+- **11.4 ticked at the parent close.**

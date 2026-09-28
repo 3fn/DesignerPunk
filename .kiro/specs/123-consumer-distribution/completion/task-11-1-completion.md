@@ -111,3 +111,21 @@ These are 5c applications the owner confirms or corrects. They are listed so tha
    - Task 11's row names PRIMARY Thurgood and secondary Stacy only. T1-(B) rule 2 gives an agent not named on the row no grant.
    - Lina's charter `writeScope` does not include `canonical/**`.
    - So Lina's confirmation notes (`canonical/profiles/consumer/confirmations/{lina,component-family-navigation}.md`) have no scope. **Reported as a fork for Peter.** No confirmation is written in her seat by anyone else.
+
+---
+
+## Addendum 2026-09-27 — the confirmers' rulings on this draft
+
+*Appended at the parent close. The text above is unchanged; it records the draft as it was committed at `602ff7c1`. The confirmed records are the source of truth.*
+
+- **Stacy** (`e91e9a3e`; `canonical/profiles/consumer/confirmations/stacy.md`; `task-11-2-stacy-completion.md`):
+  - **Owed-set pipeline: 15 → 14 items.** `owed-set-midnight-pin` was removed as rationale. The `00:00` pin stays operative inside stages 1a and 1b. It is a narrowing, and her note states it, including that B's clearing threshold moves from 8/15 to 7/14.
+  - **C(c1): 0 → 2 items on each unit.** `#the-charter-cut-ratified-verbatim` gains `cut-thurgood` and `cut-stacy`. `#honest-reach-…` gains `reach-artifact-truth` and `reach-green-is-not-honesty`. These are the candidate items this doc flagged. C(c1)'s zero-item premise is false. **Disposition**: the #220 amendment, item 4. The record stands, C(c1) is not re-instantiated, and clause (a) is exercised by F's `#purpose` only.
+  - **What Parity Means**: the trailing lead-in `It means:` was trimmed from `parity-not-identical`. The count is unchanged at 7.
+  - **Confirmed as drafted**: Audit Checklist (30) and the trigger set (13).
+  - **Record total**: 65 → 68 items.
+- **Lina** (`d05f1565`, `ea329e87`; `canonical/profiles/consumer/confirmations/{lina,component-family-navigation}.md`; `task-11-2-lina-completion.md`):
+  - **Step 6: two prefix truncations were restored.** `step6-author-meta` and `step6-review-staleness` now carry their `**For new components**:` / `**For component modifications**:` labels, because each label is its branch's trigger condition. This doc's convention ("headings are labels, never items") did not reach inline labels that condition an obligation; the draft over-trimmed them.
+  - **F was kept on Navigation** (`#purpose` 0 / `#key-characteristics` 5), not re-pointed. Two residuals are surfaced for Peter: a third F unit, and the stale inventory sentence in `#purpose`.
+  - **Counts unchanged**: `lina.yaml` 13 units / 39 items; `component-family-navigation.yaml` 2 units / 5 items.
+- **Lesson for the drafter's seat**: two of the four corrections were prefix truncations or over-trims by the drafter. The checks cannot see truncation (C16; Lina's bite showed that reverting her fix still passes). The confirmer caught both, which is the confirmer's job as designed.

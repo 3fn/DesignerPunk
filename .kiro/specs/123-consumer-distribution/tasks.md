@@ -574,7 +574,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 10.4 `emitSpans`; replace both adapters' inline sites and frontmatter loops
   - [x] 10.5 Unit twin; the 17-file invariant; diff-guard green
 
-- [ ] 11. Exemplar operative sets for G1 (step 3)
+- [x] 11. Exemplar operative sets for G1 (step 3)
 
   **Type**: Setup · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus); Stacy (Opus) — 11.3; Lina (Opus) — 11.2 owner confirmations for lina.md units and the component-family doc (C1: owner) *(amendment 2026-09-27, ruled by Peter — this row is Lina's write grant, see the header amendment)*
   **Traces**: Reqs 11.6.5, 11.6.5d, 11.5.2 · design C16, § "Gates" step 3
@@ -591,10 +591,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `canonical/operative-sets/*.yaml` (exemplar units), `canonical/profiles/consumer/confirmations/*.md`, `canonical/coverage-map.yaml` (regenerated), `canonical/adjudications.yaml` (Stacy's time-boxed `audit:coverage-map` entries only — F3), `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md` (Stacy's ruling note — F3)
 
   - [x] 11.1 Draft the exemplar records
-  - [ ] 11.2 Owner confirmations under C1; carve-out commits — Stacy for `stacy.md` units and the carve-out; **Lina (Opus) for the `lina.md` units and the component-family doc** *(amendment 2026-09-27)*
+  - [x] 11.2 Owner confirmations under C1; carve-out commits — Stacy for `stacy.md` units and the carve-out; **Lina (Opus) for the `lina.md` units and the component-family doc** *(amendment 2026-09-27)*
   - [x] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
-  - [ ] 11.4 Confirmer + verbatim checks green — by building the temporary precursor test `src/__tests__/operative-set-records.test.ts` *(amendment 2026-09-27, ruled by Peter — found at 11.4: no instrument existed; retired by 13.6)*
-  - [ ] 11.5 (Stacy) **F3**: after 11.1–11.4, regenerate the coverage map, commit the ruling note and the time-boxed adjudications, and cite the U2a count N *(added 2026-09-27, B-CI ballot § 11 `[STACY R1]` § 6 condition (c): the step needs a subtask so the subtask-doc duty covers it)*
+  - [x] 11.4 Confirmer + verbatim checks green — by building the temporary precursor test `src/__tests__/operative-set-records.test.ts` *(amendment 2026-09-27, ruled by Peter — found at 11.4: no instrument existed; retired by 13.6)*
+  - [x] 11.5 (Stacy) **F3**: after 11.1–11.4, regenerate the coverage map, commit the ruling note and the time-boxed adjudications, and cite the U2a count N *(added 2026-09-27, B-CI ballot § 11 `[STACY R1]` § 6 condition (c): the step needs a subtask so the subtask-doc duty covers it)*
 
 - [ ] 12. **G1 gate parent — C3's falsification** (step 4; **U2a gating parent**)
 
