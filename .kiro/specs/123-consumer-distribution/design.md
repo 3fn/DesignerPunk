@@ -852,7 +852,7 @@ interface AttributionSpan { lines: [number, number]; op: 'resolve'|'render'|'pas
 // source forms: '<file>#<anchor>' | '<file>#frontmatter:<path>' | 'canonical/shared/shared-catalog.yaml#<id>'
 //             | 'consumer-profile:<agent>:<id>' | 'id:<doc>#<section>'
 
-interface OperativeItem { id: string; kind: 'obligation'|'step'|'enumeration'|'route'|'command';
+interface OperativeItem { id: string; kind: 'obligation'|'step'|'member'|'route'|'command'; /* Erratum 2026-09-28 (Task 13.3): 'enumeration' → 'member', matching the owner-confirmed C16 records and Req 11.6.2's "enumeration member" */
   label?: string /* never matched */; text: string /* complete; the strict comparand */; }
 
 type Disposition = 'retained' | 're-pointed' | 'superseded-by' | 'no-consumer-counterpart';

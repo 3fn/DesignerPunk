@@ -647,7 +647,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 2b — Consumer generation profile: machinery, rendering & G2 (stage U2, steps 5–8)
 
-- [ ] 13. Triviality floor, dispositions, overlays, signatures, freshness, and ballot B-U2 (step 5)
+- [x] 13. Triviality floor, dispositions, overlays, signatures, freshness, and ballot B-U2 (step 5)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Opus); Lina (Opus) — 13.0, 13.4–13.6 *(13.0 added 2026-09-27, U2b-cut amendment)*
   **Traces**: Reqs 11.2, 11.3, 11.5, 11.6 (incl. 11.6.5b/e/f) · design C16–C18, DD19, DD25, DD26, DD13 (B-U2)
