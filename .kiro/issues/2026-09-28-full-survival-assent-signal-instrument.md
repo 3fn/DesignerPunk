@@ -10,7 +10,7 @@
 
 B-U2 put a **gap line** into Stacy's claims-pass counting block (`canonical/agents/stacy.md` § "The claims-pass record", applied at Spec 123 Task 13.8). The line **counts nothing**:
 
-> the **full-survival assent signal** *(routed-row assents whose `surviving` lists every operative item of the unit, per signer)*: **not yet instrumented** — owed to `.kiro/issues/2026-09-28-full-survival-assent-signal-instrument.md`; recorded as `not yet instrumented` in every population until the instrument lands, then counted by erratum to this block
+> the **full-survival assent signal** *(routed-row assents whose `surviving` lists every operative item of the unit, per signer — a signal, not a check, never entering the spot-check fraction)*: **not yet instrumented** — owed to `.kiro/issues/2026-09-28-full-survival-assent-signal-instrument.md`; recorded as `not yet instrumented` in every population until the instrument lands, then counted by erratum to this block
 
 It is the honest-zero pattern: every population records that the signal is not counted, so the absence is visible, never silent. This file is where the instrument that ends it is tracked.
 
