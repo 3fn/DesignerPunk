@@ -103,3 +103,64 @@ adjudications:
     ruling: assessment-gap
     owner: stacy
     record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+
+  # --- B-CI (d) PR-2 — audit:coverage-map LANES section rulings (Stacy, 2026-09-28) ---
+  # One row per surfaced lane row (exact keys). Ruling note (per-row decision records, local run
+  # recipes, the performance residual): .kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md
+  # The one assessment-gap row carries a unique expiry string in its `record`; the fix PR removes the
+  # row and cites that string's grep count -> 0. The string appears ONLY in that record value.
+  - sweep: audit:coverage-map:lanes
+    key: required-script:test:consumer
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"required-script:test:consumer\" — pre-publish consumer guard by design (tests/consumer-integration.test.ts header; Spec 106 R8); local recipe: npm run prebuild && npm run test:consumer"
+  - sweep: audit:coverage-map:lanes
+    key: required-script:test:smoke:browser-boot
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"required-script:test:smoke:browser-boot\" — build-dependent guard over the bundled browser dist (Spec 118 Task 5.1b); local recipe: npm run build:browser && npm run test:smoke:browser-boot"
+  - sweep: audit:coverage-map:lanes
+    key: required-script:test:smoke:mcp-boot
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"required-script:test:smoke:mcp-boot\" — build-dependent guard over the bundled MCP dist (Spec 118 Task 5.1a); local recipe: npm run build:mcp && npm run test:smoke:mcp-boot"
+  - sweep: audit:coverage-map:lanes
+    key: required-script:test:smoke:tool-boot
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"required-script:test:smoke:tool-boot\" — designed as a CI job (Spec 125-B Task 1.6); local recipe: build both MCP sub-packages + npm run build:mcp, then npm run test:smoke:tool-boot"
+  - sweep: audit:coverage-map:lanes
+    key: local-config:jest.config.js@src/__tests__/integration/
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"Performance lanes\" — wall-clock assertions confined to non-blocking lanes (Spec 125 outline, 2026-07-03 addendum, 29bba7de); local recipe: npm run test:performance:isolated"
+  - sweep: audit:coverage-map:lanes
+    key: local-config:jest.config.js@src/__tests__/performance/
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"Performance lanes\" — wall-clock assertions confined to non-blocking lanes (Spec 125 outline, 2026-07-03 addendum, 29bba7de); local recipe: npm run test:performance"
+  - sweep: audit:coverage-map:lanes
+    key: local-config:jest.config.js@src/integration/__tests__/performance/
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"Performance lanes\" — wall-clock assertions confined to non-blocking lanes (Spec 125 outline, 2026-07-03 addendum, 29bba7de); local recipe: npm run test:performance"
+  - sweep: audit:coverage-map:lanes
+    key: local-config:jest.performance.config.js
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"Performance lanes\" — the serialized isolated perf lane, non-blocking by design (Spec 125 outline, 2026-07-03 addendum, 29bba7de); local recipe: npm run test:performance:isolated"
+  - sweep: audit:coverage-map:lanes
+    key: local-config:mcp-server/jest.config.js@mcp-server/tests/performance/
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"Performance lanes\" — the mcp-server perf split, non-blocking by design (Spec 125 outline, 2026-07-03 addendum, 29bba7de); local recipe: (cd mcp-server && npm run test:performance)"
+  - sweep: audit:coverage-map:lanes
+    key: local-script:test:resolution-matrix
+    ruling: intentional-trim
+    owner: stacy
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"local-script:test:resolution-matrix\" — a reporting harness, not a release gate; its standing CI gate is the required Consumer Guard (run-matrix.js header; Spec 118 Task 1); local recipe: npm run test:resolution-matrix"
+  - sweep: audit:coverage-map:lanes
+    key: local-config:tools/agent-generator/jest.config.js
+    ruling: assessment-gap
+    owner: thurgood
+    record: ".kiro/specs/122-agent-generator/completion/coverage-map-lanes-adjudication-ruling.md § \"local-config:tools/agent-generator/jest.config.js\" — no required step runs the 30 generator suites; fix = npm run test:agent-generator in lane-functional-root with a selection floor >= 1, under the ratified CI-regime scope ballot or, failing that, Peter's human-direct fix PR (never PR-2); expires when the test:agent-generator lane step lands — due before 123 U2b's first commit"
