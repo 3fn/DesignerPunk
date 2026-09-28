@@ -188,6 +188,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Amendment 2026-09-27, the U2b cut: **13.0 added** (the third F unit's C1 confirmation). U2b's line reads `declared 31, now 32`, within +4. **Totals now: 28 parents, 130 subtasks.**)*
 
+*(Amendment 2026-09-28, B-U2 F-2: **17.4 added** (the standing parity test). U2b's line reads `declared 31, now 33`, within +4. **Totals now: 28 parents, 131 subtasks.**)*
+
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
 **Preamble**: write-scope authority for every seat below is **granted by the T1-(B) standing rule** (§ "Slots"). Each PRIMARY and each tiered secondary may write exactly its parent's listed Primary Artifacts, on its unit's branch, until the unit merges. **Activation is this tasks PR's merge; ratification is the standalone ballot `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`** (erratum 2026-09-26; it was planned as B-U1 § "T1-(B)" at Task 7.0).
@@ -217,7 +219,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | 14 | Lina (Opus) | — |
 | 15 | Thurgood (Opus) | Lina (Opus) — `derive.ts` (15.2) |
 | 16 | Lina (Opus) — 16.1, 16.5 | Lina (Sonnet) — 16.2, 16.3, 16.4, 16.6; Ada (Sonnet) consulted on 16.3's pack script |
-| 17 | Lina (Sonnet) | Thurgood (Sonnet) — 17.3 (applies L686 under B-U2) |
+| 17 | Lina (Sonnet) *(17.4 Lina (Sonnet) — added 2026-09-28)* | Thurgood (Sonnet) — 17.3 (applies L686 under B-U2) |
 | 18 | **Lina (Opus)** — G2 gate parent · U2b gating parent | — (Stacy's verdict record is outside the line) |
 | 19 | Thurgood (Opus) | — (Leonardo reviews on-branch) |
 | 20 | Lina (Sonnet) | — |
@@ -776,7 +778,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 - [ ] 17. Legacy-path deletion and the L686 edit under B-U2
 
-  **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Lina (Sonnet); Thurgood (Sonnet) — 17.3
+  **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Lina (Sonnet); Thurgood (Sonnet) — 17.3 *(17.4 Lina (Sonnet) — added 2026-09-28)*
   **Traces**: Reqs 14.5–14.7 · design C21, DD13
 
   **Success Criteria:**
@@ -784,12 +786,15 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - `product-template/` is deleted, each sweep entry carries its verb, and the repo grep for `product-template` returns only verified-historical sites (command and output recorded).
   - The L686 edit applies **under B-U2** (ratified at 13.7), in the same PR.
   - The drift step passes after the deletion.
+  - **The register rule and the drift check cannot drift apart** *(ballot B-U2 F-2, ruled Peter 2026-09-28; amendment 2026-09-28)*: a **STANDING test**, `scripts/__tests__/package-name-scope-parity.test.ts`, run under `npm run test:scripts` (a `lane-timing.yml` step with a ≥ 1 floor; no lane edit needed — `scripts/jest.config.js` `testMatch` picks it up), parses the one parenthesized group of path-shaped members (each ending `/`) in the `rule:` string of the yaml block under `### package-name-scope-drift` in `governance/classification-map.md`, and fails loud if that block, the string, or exactly one such group is absent; it asserts that set **set-equal to `SCAN_DIRS`, with equal lengths**, read from `scripts/check-package-name-drift.js` (typed `require`; that script gains a `require.main === module` guard around `main()` and exports `SCAN_DIRS` at 17.1). **Bites recorded, two-sided, exact outputs**: add a directory to `SCAN_DIRS` without the rule edit → red; add a directory to the rule without `SCAN_DIRS` → red. The test lands at **17.4, after 17.3's rule edit** (the sets differ until then — today by `governance/`, after 17.1 in both directions), and 17.4 cites the test green and names the test. *Scope: it establishes that the rule and the script agree, not that either is correct.*
+  - **The workflow comment at `.github/workflows/package-name-drift.yml` L5 is resolved by its own grant record**: 17.2's grep-sweep row lists that site as "resolved by `.kiro/issues/2026-09-28-package-name-drift-workflow-comment-grant.md`" (the comment becomes a pointer to `SCAN_DIRS` under that issue-row grant — ballot `2026-09-27-ci-regime-standing-scope.md` § 3; `.github/**` is never a Task 17 Primary Artifact). *Scope: the edit's evidence lives in the issue, not in this parity table.*
 
-  **Primary Artifacts:** `scripts/check-package-name-drift.js`, `product-template/` (deleted), `governance/DesignerPunk-Integration-Guide.md` (§ 4b), `governance/classification-map.md`
+  **Primary Artifacts:** `scripts/check-package-name-drift.js`, `product-template/` (deleted), `governance/DesignerPunk-Integration-Guide.md` (§ 4b), `governance/classification-map.md`, `scripts/__tests__/package-name-scope-parity.test.ts` (new — the standing parity test, B-U2 F-2; 17.4)
 
   - [ ] 17.1 `SCAN_DIRS` + no-op + test (first commit)
   - [ ] 17.2 Delete; Integration Guide § 4b teaches `attach`; the grep sweep
   - [ ] 17.3 Apply L686 under B-U2
+  - [ ] 17.4 (Lina) The standing register-rule ↔ `SCAN_DIRS` parity test + two-sided bites, green from its first commit *(added 2026-09-28, B-U2 F-2 amendment; after 17.3 — the sets are equal only once the rule edit lands)*
 
 - [ ] 18. **G2 gate parent — pass four** (step 8; **U2b gating parent and U2's acceptance gate**)
 
