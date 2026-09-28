@@ -9,7 +9,7 @@
   - `tools/agent-generator/__tests__/derivation.test.ts` (new test);
   - **`tools/agent-generator/partition.ts`** and **`__tests__/partition.golden.test.ts`**. This is a defect fix in my own Task 10 splitter, found while building this checker (adaptation 1).
 
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 111bba7c2c81407a53f24748d57dce1f06f98887 — https://github.com/3fn/DesignerPunk/actions/runs/36420761221, https://github.com/3fn/DesignerPunk/actions/runs/36420769772, https://github.com/3fn/DesignerPunk/actions/runs/36420777632, https://github.com/3fn/DesignerPunk/actions/runs/36420785860, https://github.com/3fn/DesignerPunk/actions/runs/36420794350, https://github.com/3fn/DesignerPunk/actions/runs/36420802722
 
 **Scope of this checkpoint** (orchestrator's go, 2026-09-28): 14.1 at the checker level only. Spans come from `emitSpans` under the consumer profile directly; no adapter is edited. 14.2–14.4 wait for 15.0 (the slice the Q1 fork routed to Thurgood).
 
@@ -61,3 +61,5 @@
 1. **A defect fix outside Task 14's list** (`partition.ts`, my own Task 10 artifact). Without it the checker can hang on a legal document. The fix is the minimal root-cause one: reserve `#doc`. I did not also add a cycle guard to `isDescendantOrSelf`, because the fix removes the only way to make a cycle. That is a choice, not an oversight.
 2. **Bite 5 survived** (see the table). No bite was manufactured to show a red.
 3. **Checker-level only**: the per-target proof that the adapters route every span through `emitSpans` is 14.3/14.4, blocked on 15.0.
+
+*Provenance follow-up (docs-only, 2026-09-28)*: all six dispatched runs at `111bba7c` concluded `success` (Consumer Guard, 125B Tool-Boot Smoke, Section Citation Guard, Agent Generator (122), Package Name Drift Detection, Lane Timing; `gh run view <id> --json conclusion,headSha`). The run results above remain local; these CI runs are the branch-head feedback, not the gate.
