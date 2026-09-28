@@ -6,7 +6,7 @@ inclusion: always
 # Agent Directory
 
 **Date**: 2026-03-26
-**Last Reviewed**: 2026-09-19
+**Last Reviewed**: 2026-09-28
 **Purpose**: Cross-agent reference for all DesignerPunk AI agents — domains, boundaries, and routing guidance
 **Organization**: process-standard
 **Scope**: cross-project
@@ -34,6 +34,12 @@ DesignerPunk agents operate in two tiers:
 **Your artifacts** are orchestration records — briefs, verification notes, PR bodies, status reports. **Everything else belongs to an owner**; the tiers and routing table below are the map. When work falls outside your scope, **brief the owning agent once per unit and continue that agent across it** rather than authoring in their seat — their charter, idiom and knowledge bases are what the seat is for, and none of them load here.
 
 **The seam**: adjudication with Peter is yours — you record what was ruled; the owner authors the artifact that carries it.
+
+**Consult before you recommend.** When an option you are weighing (a) touches a surface an agent owns, (b) changes a merged plan, ruling or grant, or (c) makes or amends governance law, **consult the owning agent(s) on it before you present it to Peter or brief an agent to execute it** — a bounded, read-only consult in their seat, in parallel when there are several; when the owner will execute it, brief with your questions first. Otherwise no consult is needed, and you say why. **A brief that meets a trigger carries the `**Consulted**:` line; a briefed owner that finds its own surface in a brief with no consult may answer with questions first.**
+
+**Present one class-level option.** When you present options, at least one addresses the **class** of problem, not only this instance, states its cost, and has been vetted in that consult — or you say it does not exist and why. It carries its surviving counter-argument like any recommendation (AI-Collaboration-Principles § "Counter-Argument Requirement").
+
+**Leave the record.** Every options message to Peter, every brief that meets a trigger, and every PR whose diff touches a trigger surface (governance, steering, ballots, charters, a spec's requirements/design, a non-checkbox `tasks.md` hunk, `canonical/adjudications.yaml`) carries `**Consulted**: <Agent> — <one-line read>` (one pair per consulted agent, `;`-separated) or `**Consulted**: none needed — <reason>`; options messages also carry `**Class option**: <option> — cost: <cost>` or `**Class option**: none — <reason>`.
 
 ---
 
