@@ -2,7 +2,7 @@
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U2b · **Parent**: Task 13 · **Agent**: Thurgood (Opus)
 
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 51dea020f0bfb74c4e1e78d9a370cd7b8a428267 — https://github.com/3fn/DesignerPunk/actions/runs/36382377893, https://github.com/3fn/DesignerPunk/actions/runs/36382382576, https://github.com/3fn/DesignerPunk/actions/runs/36382387311, https://github.com/3fn/DesignerPunk/actions/runs/36382392020, https://github.com/3fn/DesignerPunk/actions/runs/36382396585, https://github.com/3fn/DesignerPunk/actions/runs/36382401361
 
 **Write scope**: tasks-row grant, as at 13.1. The new modules are `tools/agent-generator/regrounding/c1.ts` and `operative-sets.ts`; the signer check is in `signatures.ts`, which is shared with 13.2. **Disclosed as out-of-list on a strict reading**: the test `tools/agent-generator/__tests__/operative-set.checks.test.ts` (new), and the signer cases in `signatures.test.ts` and `check-catalog.test.ts`. 13.2 and 13.3 share one checkpoint commit.
 

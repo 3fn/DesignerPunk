@@ -2,7 +2,7 @@
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U2b · **Parent**: Task 13 · **Agent**: Thurgood (Opus)
 
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 51dea020f0bfb74c4e1e78d9a370cd7b8a428267 — https://github.com/3fn/DesignerPunk/actions/runs/36382377893, https://github.com/3fn/DesignerPunk/actions/runs/36382382576, https://github.com/3fn/DesignerPunk/actions/runs/36382387311, https://github.com/3fn/DesignerPunk/actions/runs/36382392020, https://github.com/3fn/DesignerPunk/actions/runs/36382396585, https://github.com/3fn/DesignerPunk/actions/runs/36382401361
 
 **Write scope**: tasks-row grant, as at 13.1. Task 13's "schemas + validator" is read as the `tools/agent-generator/regrounding/` modules. This subtask adds `hash.ts`, `overlay.ts` and `signatures.ts`, and edits `dispositions.ts` and `check-catalog.ts`. **Disclosed as out-of-list on a strict reading**: the tests `tools/agent-generator/__tests__/overlay.test.ts` and `signatures.test.ts` (new), and edits to `dispositions.schema.test.ts` and `check-catalog.test.ts`. 13.2 and 13.3 share one checkpoint commit. `signatures.ts` also carries 13.3's signer check (see `task-13-3-completion.md`).
 
