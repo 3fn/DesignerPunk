@@ -1248,6 +1248,16 @@
   checks: []
 - surface: canonical/operative-sets/stacy.yaml
   checks: []
+- surface: canonical/operative-sets/start-up-tasks.yaml
+  checks: []
+- surface: canonical/profiles/consumer/confirmations/component-family-navigation.md
+  checks: []
+- surface: canonical/profiles/consumer/confirmations/lina.md
+  checks: []
+- surface: canonical/profiles/consumer/confirmations/stacy.md
+  checks: []
+- surface: canonical/profiles/consumer/confirmations/start-up-tasks.md
+  checks: []
 - surface: canonical/registry/tool-registry.json
   checks:
     - 122-diff-guard

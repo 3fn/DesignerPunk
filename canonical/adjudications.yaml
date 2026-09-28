@@ -56,3 +56,50 @@ adjudications:
     ruling: assessment-gap
     owner: data
     record: ".kiro/specs/122-agent-generator/cutover/data-cutover-report.md § 'Token-law adjudication (Ada, 2026-07-11)' — product-token-governance carries Data's real token-first mandate (System-First Value Selection; force-loaded in data.json; the lock siblings Sparky/Kenya use). Ada ruled it IN as Data's governance-as-law token lock, replacing the mis-classified token-quick-reference. Assessment-gap: the spine omitted the doc carrying the mandate it described."
+
+  # --- Spec 123 U2a, Task 11.5 (F3, RULED Peter 2026-09-27) — TIME-BOXED coverage-map adjudications (Stacy) ---
+  # Task 11's new canonical files have no guarding check until 13.6 (U2b) adds the operative-set
+  # freshness sweep to 122-diff-guard. One row per file (exact paths, never globs). The schema has
+  # no expiry field, so the time-box is the expiry string in `record`; 13.6 removes every row carrying
+  # it and cites the string's grep count -> 0. (The string itself appears ONLY in `record` values, so
+  # the grep counts rows, not comments.)
+  - sweep: audit:coverage-map
+    key: canonical/operative-sets/component-family-navigation.yaml
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+  - sweep: audit:coverage-map
+    key: canonical/operative-sets/lina.yaml
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+  - sweep: audit:coverage-map
+    key: canonical/operative-sets/stacy.yaml
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+  - sweep: audit:coverage-map
+    key: canonical/operative-sets/start-up-tasks.yaml
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+  - sweep: audit:coverage-map
+    key: canonical/profiles/consumer/confirmations/component-family-navigation.md
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+  - sweep: audit:coverage-map
+    key: canonical/profiles/consumer/confirmations/lina.md
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+  - sweep: audit:coverage-map
+    key: canonical/profiles/consumer/confirmations/stacy.md
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
+  - sweep: audit:coverage-map
+    key: canonical/profiles/consumer/confirmations/start-up-tasks.md
+    ruling: assessment-gap
+    owner: stacy
+    record: ".kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md — guard pending (operative-set-freshness inside 122-diff-guard, Task 13.6); expires when 123 Task 13.6 lands in U2b"
