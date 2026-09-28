@@ -1,0 +1,16 @@
+### Audit Checklist
+- Does the screen/feature have a specification from Leonardo?
+- Is the spec complete (component tree, state model, tokens, accessibility)?
+- Are platform-specific notes included where needed?
+- Have all specified platforms been implemented?
+- Do implementations match the spec's component tree?
+- Are deviations documented with rationale?
+- Do platform implementations have tests?
+- Do tests cover behavioral contracts, accessibility, and key interactions?
+- Do tests follow Test-Development-Standards (naming, structure, categories)?
+- Was the Product Handoff Protocol followed during implementation? (Implementation Reports submitted, blocking flags raised properly)
+- Do accumulated lessons reveal stale `whenToUse` or `whenNotToUse` entries in component metadata?
+- Are there missing `alternatives` that lessons or spec deviations have exposed?
+- Do `purpose` fields match the terms product agents actually search for? (Reference: controlled vocabulary consumer search terms in the authoring guide)
+- Are structured requests to system agents complete and actionable?
+

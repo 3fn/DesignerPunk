@@ -1,0 +1,4 @@
+### The owed-set pipeline (your command catalog's owed-set entry — documented commands, deliberately not a committed script)
+
+Determine which of your specs owe a closeout claims pass, and run the pass for each.
+

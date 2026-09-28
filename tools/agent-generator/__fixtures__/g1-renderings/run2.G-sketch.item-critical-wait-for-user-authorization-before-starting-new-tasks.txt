@@ -1,0 +1,4 @@
+3. **CRITICAL: Wait for User Authorization Before Starting New Tasks**
+   
+   Wait for the user before continuing.
+
