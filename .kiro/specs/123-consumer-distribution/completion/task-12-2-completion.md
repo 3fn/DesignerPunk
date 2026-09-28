@@ -160,3 +160,18 @@
    - (2) **adopted as a pointer**: the table fold is deferred.
    - (3) **adopted**: the recurrence is noted against #220's lessons item; no new `tasks.md` edit.
 5. **12.2 is not ticked.** The rework loop resolves only at a HOLDS or at branch A.
+
+---
+
+## Addendum 2026-09-27 — loop closed: G1 run 2
+
+*Appended at the loop's close; the text above is unchanged.*
+
+- **Run 2's record** (Stacy, `5a411450`): `.kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-2.md`. The current verdict is at `.kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification.md`. This doc cites them and does not paraphrase the verdict.
+- **The loop resolved on the HOLDS branch**, so branch A was not invoked. Task 12.3 executes the HOLDS branch.
+- **`k = 2`**: `G1 runs: 2` is read from the kept per-run records `…-run-1.md` and `…-run-2.md`, and the U2a PR body's tripwire line carries it.
+- **M-1 fires**: Stacy's scoped post-acceptance read, recorded at `.kiro/specs/123-consumer-distribution/completion/u2a-task-12-scoped-read.md`, runs **after U2a is accepted** and never gates the U2b cut.
+  - Its set is `git diff --name-only <commit adding re-grounding-c3-falsification-run-1.md>..refs/pull/<U2a>/head` ∩ the Tasks 10–11 Primary Artifacts.
+  - The rework (`a5d1d2a5`) touched no Task 10 or Task 11 Primary Artifact: `git show --name-only a5d1d2a5` → `requirements.md`, `design.md`, `task-11-completion.md` and `task-12-2-completion.md`. So the expected set is empty, which means **Task 12 only**.
+- **Run 2's carried items** are listed by finding id in `task-12-completion.md` § "Carried items". They are not fixed on this branch: a C3 edit now would reopen G1.
+- **12.2 ticked.**
