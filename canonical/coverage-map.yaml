@@ -5,6 +5,8 @@
 # with no guarding check — VISIBLE by construction, never silently unlisted. Stacy's audit
 # (`npm run audit:coverage-map`) asserts zero blank rows, or a recorded adjudication per
 # blank in canonical/adjudications.yaml (sweep: audit:coverage-map, key: <surface path>).
+# The same command's LANES section (required-check steps vs local lane roots; sweep:
+# audit:coverage-map:lanes) is computed live at audit time and is not recorded in this file.
 #
 # Regenerate: npx tsx tools/agent-generator/coverage-map.ts (also runs as part of
 # `npx tsx tools/agent-generator/generate.ts`). Guarded by the C6 diff-guard.
