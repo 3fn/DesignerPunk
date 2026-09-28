@@ -55,6 +55,17 @@
 
 **Cost of deferral.** The served doc carries a wrong component count for about one unit's duration.
 
+**Item 2 — EXECUTED 2026-09-27** (Lina, branch `chore/123-post-u2a-lina-nav`, from `main` @ `24c7f060` after U2a merged as #222).
+- **What changed.** `#purpose` now reads *"Five components are implemented: …"* and names the three headers. The `**Readiness**` line in `#family-overview:preamble` changed from `2 components implemented` to `5 components implemented`. That unit has no record, so it needed no re-confirmation.
+- **Re-confirmation.** `#purpose` was re-confirmed at 0 items in the same commit: record hash `6e5be410…` → `d53f8e98…`, and the note carries the re-confirmation.
+- **Verification.** Precursor test 22/22.
+- **Not a ballot.** Per the orchestrator's relay: a factual fix to the owner's own family doc is content correctness, merged by Peter under the governance carve-out. This supersedes the "Ballot" line above for this fix.
+- **Residual, out of this item's scope.** Other units of the same doc are still stale:
+  - `#component-hierarchy` and `#components` list Nav-Header-Base as PLANNED and omit Nav-Header-Page and Nav-Header-App;
+  - `#stemma-system-integration` lists only two implemented primitives and counts Header as a planned variant.
+  - None of these units has an operative-set record. The fix is a Lina docs pass at the next Navigation-family touch.
+- **Item 1 stays open.**
+
 ---
 
 ## Filed by

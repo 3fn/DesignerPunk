@@ -21,11 +21,11 @@ description: Navigation component family — wayfinding and view-switching compo
 
 **Family**: Navigation
 **Shared Need**: Wayfinding and view switching
-**Readiness**: 🟡 Beta (2 components implemented, family hierarchy evolving)
+**Readiness**: 🟡 Beta (5 components implemented, family hierarchy evolving)
 
 ### Purpose
 
-The Navigation family provides components for user wayfinding and switching between views. Implemented components include a segmented control for mutually exclusive content views and a primary bottom tab bar for top-level app destinations.
+The Navigation family provides components for user wayfinding and switching between views. Five components are implemented: a segmented control for mutually exclusive content views, a primary bottom tab bar for top-level app destinations, and three top-of-screen navigation headers (Nav-Header-Base, Nav-Header-Page, Nav-Header-App).
 
 ### Key Characteristics
 

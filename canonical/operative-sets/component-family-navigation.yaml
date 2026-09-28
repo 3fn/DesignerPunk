@@ -25,8 +25,9 @@ owner: lina
 confirmer: lina
 units:
   # exemplar F (expository half — required: inapplicable) — 0 item(s)
+  #   Re-confirmed by Lina 2026-09-27 after the inventory fix (two → five components): still 0 items.
   "#purpose":
-    canonicalHash: sha256:6e5be41076b8f9320f49e2226c16b526a6623508190847b1c4923fe1697fd589
+    canonicalHash: sha256:d53f8e98d51d8941832cb60f1639ceba0af9a91d1f9b1ed3bf5f0be57892523a
     items: []
     confirmation: canonical/profiles/consumer/confirmations/component-family-navigation.md#purpose
   # exemplar F (normative Label: value half — required: operative) — 5 item(s)
