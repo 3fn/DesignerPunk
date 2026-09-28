@@ -22,7 +22,7 @@
 ## `#purpose`
 
 confirmer: lina
-canonicalHash: sha256:6e5be41076b8f9320f49e2226c16b526a6623508190847b1c4923fe1697fd589
+canonicalHash: sha256:d53f8e98d51d8941832cb60f1639ceba0af9a91d1f9b1ed3bf5f0be57892523a
 items: none
 date: 2026-09-27
 
@@ -33,7 +33,11 @@ date: 2026-09-27
   - Read as **usage rules** (*for* mutually exclusive views, *for* top-level destinations), its binding forms live elsewhere: *"Exactly one option active at all times"* in `#key-characteristics`, and *"between 2–5 mutually exclusive content views"* and *"between 3–5 top-level app destinations"* in `#when-to-use`. Here it only summarizes them.
 - **No sentence in this unit is one a consumer implementation could violate.**
 
-**Fragility (flag, not a fix — `governance/` is outside my write scope):** the sentence is **stale**. Five Nav components exist (`Nav-SegmentedChoice-Base`, `Nav-TabBar-Base`, `Nav-Header-Base`, `Nav-Header-Page`, `Nav-Header-App` under `src/components/core/`), and the doc's `**Readiness**` line says *"2 components implemented"*. The natural fix is a canonical edit to this unit. That changes its hash, so the freshness sweep will demand my re-confirmation. **If the fix adds binding content, clause (a) loses its only exemplar.** The fix should go through a ballot that checks this first.
+**Re-confirmation, 2026-09-27 (after U2a merged, #222).** The inventory sentence was corrected from two components to five, executing Item 2 of `.kiro/issues/2026-09-27-task-11-deferred-lina-items.md`. It now reads: *"Five components are implemented: a segmented control for mutually exclusive content views, a primary bottom tab bar for top-level app destinations, and three top-of-screen navigation headers (Nav-Header-Base, Nav-Header-Page, Nav-Header-App)."*
+- **Hash**: `sha256:6e5be410…` → `sha256:d53f8e98…`.
+- **Still 0 items.** The new sentence is an inventory statement with the same two purpose phrases as before, plus three component names. It adds no usage rule. I deliberately left out the header components' binding rule, *"Internal only — use Nav-Header-Page or Nav-Header-App"*, which belongs in the Nav-Header-Base metadata unit. **Clause (a) keeps its exemplar.**
+
+**Fragility, as recorded at 11.2 (resolved by the re-confirmation above):** the sentence is **stale**. Five Nav components exist (`Nav-SegmentedChoice-Base`, `Nav-TabBar-Base`, `Nav-Header-Base`, `Nav-Header-Page`, `Nav-Header-App` under `src/components/core/`), and the doc's `**Readiness**` line says *"2 components implemented"*. The natural fix is a canonical edit to this unit. That changes its hash, so the freshness sweep will demand my re-confirmation. **If the fix adds binding content, clause (a) loses its only exemplar.** The fix should go through a ballot that checks this first.
 
 ## `#key-characteristics`
 
