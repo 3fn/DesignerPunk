@@ -8,9 +8,9 @@
 
 ## The gap
 
-Eight per-file JSON sidecars — `.kiro/agents/{ada,data,kenya,leonardo,lina,sparky,stacy,thurgood}-prompt.md.attribution.json` — are inside `package.json`'s `files[]` via the `.kiro/agents/` entry. Each sidecar maps line ranges of a generated agent prompt to its canonical source section (e.g. `canonical/agents/lina.md#ownership`); Lina's carries 104 spans after Task 10, each file ~17 KB.
+Sixteen per-file JSON sidecars — two per agent, `.kiro/agents/{ada,data,kenya,leonardo,lina,sparky,stacy,thurgood}-prompt.md.attribution.json` AND `.kiro/agents/{ada,data,kenya,leonardo,lina,sparky,stacy,thurgood}.json.attribution.json` — are inside `package.json`'s `files[]` via the `.kiro/agents/` entry. Each sidecar maps line ranges of a generated agent artifact (prompt or config) to its canonical source section (e.g. `canonical/agents/lina.md#ownership`); Lina's `-prompt.md` sidecar carries 104 spans after Task 10, each file ~17 KB.
 
-Verified 2026-09-27: `npm pack --dry-run --json --ignore-scripts` file list ∩ `git diff --name-only 90fb0e71..c6e5c42d` = exactly those 8 paths. Rendered agent text (the `.md` files themselves) changed 0 files in the same diff — Task 10's diff-guard criterion held; only the sidecars moved.
+Verified 2026-09-27: `npm pack --dry-run --json --ignore-scripts` file list ∩ `git diff --name-only 90fb0e71..c6e5c42d` = exactly 8 paths — the eight `-prompt.md.attribution.json` sidecars, which is Task 10's **diff delta**, not the shipped population: Task 10 only touched the `-prompt.md` sidecars, so the eight `.json.attribution.json` sidecars are also shipped but sit outside this diff, unchanged. The two counts (16 shipped, 8 changed) are not in tension — they answer different questions. Rendered agent text (the `.md` files themselves) changed 0 files in the same diff — Task 10's diff-guard criterion held; only the sidecars moved.
 
 **Who reads them**: only our own steward tooling — `tools/agent-generator/attribution.ts`, `generate.ts`, `adapters/index.ts`, `sweeps/sweep-3-dupes.ts`, `sweeps/sweep-7-dispositions.ts`. Nothing in a consumer install reads them.
 
@@ -27,6 +27,7 @@ Peter also ruled: **F1 stands** — U2a still cuts no release. Task 12's "U2a ch
 - Exclude `*.attribution.json` from the shipped `files[]` entry for `.kiro/agents/` (the install-only posture — install-only consumers should never have received these paths in the first place).
 - Confirm Task 16 (U2b, C20 — consumer-side agent generation replacing the init copy step) emits no sidecars into a born consumer repo (the BECOME posture). If Task 16's design already guarantees this, this issue closes with a citation to that guarantee; if not, Task 16 should add it.
 - Note: `canonical/_fixture-output/**` sidecars (test fixtures) are not shipped — this issue is scoped to the `.kiro/agents/` entry only.
+- **Mechanism (Ada)**: `package.json`'s `files[]` already uses in-array negation (e.g. `"!dist/**/__tests__/**"`), so the fix is one additional line after the `.kiro/agents/` entry — `"!.kiro/agents/*.attribution.json"` — since all sixteen sidecars sit flat in that directory. When executed, add a one-line pack assertion in the Task-3 style: `PASS: attribution sidecars ABSENT`. Note the relocation-integrity gate already filters `*.attribution.json` when reading `.kiro/agents/` and would become a harmless no-op once the sidecars stop shipping.
 
 ## Filed by
 
