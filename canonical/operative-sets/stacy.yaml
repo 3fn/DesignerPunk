@@ -19,7 +19,7 @@ source: canonical/agents/stacy.md
 owner: stacy
 confirmer: stacy
 units:
-  # exemplar A — 30 item(s)
+  # exemplar A — 30 item(s). documentation-3 and lessons-learned-capture-2 share one text (see the note).
   "#audit-checklist":
     canonicalHash: sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221
     items:
@@ -144,10 +144,20 @@ units:
         label: Metadata Accuracy 4
         text: Are escape hatches being tracked — have any migration triggers been met?
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#audit-checklist
-  # exemplar C(c1) — 0 item(s)
+  # exemplar C(c1) — 2 item(s). Confirmer ruling 2026-09-27 (5c): the two ratified cut sentences are
+  #   boundary norms a consumer implementation can violate, so C(c1)'s zero-item premise does not hold
+  #   on this unit (carried to G1). Notes: confirmations/stacy.md#the-charter-cut-ratified-verbatim
   "#the-charter-cut-ratified-verbatim":
     canonicalHash: sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
-    items: []
+    items:
+      - id: cut-thurgood
+        kind: obligation
+        label: Thurgood's cut — contains, never adjudicates
+        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true."
+      - id: cut-stacy
+        kind: obligation
+        label: Stacy's cut — verifies, never authors or maintains
+        text: "**Stacy** — Stacy owns execution-claims verification: auditing whether a completed task's claims match what actually shipped, on both product and system specs, and owning those findings and the events that fire them — against standards she does not author and checks she does not maintain."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
@@ -206,7 +216,8 @@ units:
         label: Merge-path status
         text: "**Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*"
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-trigger-set-the-114-superset-table-names-never-numbers
-  # exemplar B, E — 15 item(s)
+  # exemplar B, E — 14 item(s). Confirmer ruling 2026-09-27: the midnight-pin comment is rationale;
+  #   the pin itself (`--since="$RATIFIED 00:00"`) is operative inside stages 1a and 1b.
   "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script":
     canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
     items:
@@ -226,14 +237,6 @@ units:
           RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
           [ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
           echo "ratification date: $RATIFIED"
-      - id: owed-set-midnight-pin
-        kind: obligation
-        label: Boundary pinned to midnight
-        text: |-
-          # Boundary PINNED TO MIDNIGHT: a bare date resolves via git approxidate to the date
-          # at the CURRENT time of day, silently dropping same-day-earlier merges from stage 1a
-          # (CLOSEOUT pilot F-1, 2026-09-19 — the owed-set's first wrong result, repaired in all
-          # three copies in one commit).
       - id: owed-set-stage-1a
         kind: step
         label: Stage 1a
@@ -304,10 +307,20 @@ units:
         label: Git history as provisioning
         text: "**Git history is the other half of your claims-audit provisioning** (the non-glob-able knowledge base): `git log --first-parent` for unit anchors and deltas, `git show <merge>:<path>` for shipped-at-merge state."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script
-  # exemplar C(c1) — 0 item(s)
+  # exemplar C(c1) — 2 item(s). Confirmer ruling 2026-09-27 (5c): the ownership sentence and the
+  #   framing sentence "that binds every reader" are violable; the first two sentences are
+  #   instrument/environment facts. C(c1)'s zero-item premise does not hold here either (carried to G1).
   "#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument":
     canonicalHash: sha256:7b2a7c8edaa9ba38463e8afa521851f7b4350e0892cf5ed9596497f90aaeaa18
-    items: []
+    items:
+      - id: reach-artifact-truth
+        kind: obligation
+        label: Artifact truth is the claims pass's
+        text: "Artifact truth is owned by **the claims pass today**, with `promised-artifact-exists` its registered, unbuilt mechanical successor."
+      - id: reach-green-is-not-honesty
+        kind: obligation
+        label: A green gate is never evidence of claim honesty
+        text: "nothing in this machinery makes claim honesty owned, solved, or guaranteed — any future reading of a green `completion-criteria-parity` gate as evidence of claim honesty will have made the error Spec 127 exists to prevent."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument
   # exemplar C(c2) — 7 item(s)
   "#what-parity-means":
@@ -316,7 +329,7 @@ units:
       - id: parity-not-identical
         kind: obligation
         label: What parity does not mean
-        text: "Parity does NOT mean identical code, identical visual output, or identical token strings. It means:"
+        text: "Parity does NOT mean identical code, identical visual output, or identical token strings."
       - id: parity-information-architecture
         kind: member
         label: Same information architecture

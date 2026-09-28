@@ -6,6 +6,7 @@
 **Confirmer**: **Stacy**. Under C1 (Req 11.6.5d; design C16), the owner is the profile author here, so the counterpart verification seat confirms.
 **Date**: 2026-09-27 · Spec 123 Task 11.3
 **Scope**: the two units that carry exemplars G and G′ only. The rest of the doc's units are confirmed at 15.4.
+**Format**: each unit block opens with `confirmer:`, `canonicalHash:`, `items:` and `date:` lines (Thurgood's 11.1 convention). They were added at 11.2 so the confirmation check can be mechanical. The confirmed content did not change.
 
 **Closed-negative disclosure (S-D-A11)**: *not independently re-verified. Confirmed by the auditing seat.* I confirm these two operative sets, I constructed exemplars G and G′ on them, and I run G1 over them.
 
@@ -22,6 +23,11 @@
 - **Every `text` is a verbatim substring of its unit, and every hash is the unit's exact bytes.** I checked both mechanically (see the construction record).
 
 ## `#item-critical-wait-for-user-authorization-before-starting-new-tasks`
+
+confirmer: stacy
+canonicalHash: sha256:5b862be78bc845ce6770093cc0affb912163fe10eafae3ea84f52d46419bbc32
+items: wait-1, wait-2, wait-3, wait-4, wait-5, wait-6, wait-7
+date: 2026-09-27
 
 - **canonicalHash**: `sha256:5b862be78bc845ce6770093cc0affb912163fe10eafae3ea84f52d46419bbc32` (body lines 20–49)
 - **Operative items: 7.** `wait-1` … `wait-7`.
@@ -42,6 +48,11 @@
 - The item title and the two pure group labels.
 
 ## `#item-civitas-governance-health-check`
+
+confirmer: stacy
+canonicalHash: sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+items: hc-1, hc-2, hc-3, hc-4
+date: 2026-09-27
 
 - **canonicalHash**: `sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b` (body lines 14–19)
 - **Operative items: 4.** `hc-1` … `hc-4`.
