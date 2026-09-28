@@ -807,6 +807,7 @@ education:
   disposition: "ONE HOME, single-homed deliberately: `.kiro/steering/Agent-Directory.md` § 'Primary Agent (Orchestrator)' — second person, always-loaded, stating the loop's own scope and artifacts and routing everything else to an owner. Every other surface POINTS or stays silent; `start-up-tasks.md` #6 carries only the whether-to-delegate trigger and deliberately does NOT restate ownership. THE ROW'S MOST IMPORTANT CONTENT IS ITS OWN LIMITS, and the education must teach them: the only available detector is a CLAIMS-PASS IDIOM OBSERVATION — an auditor noticing that an artifact's idiom does not match its declared author — which is subjective, per-spec, at CLOSEOUT, and AFTER THE FACT. It is weak. A reader who treats this row's existence as coverage has made the error the row exists to prevent. PRUNE nothing and ADD no third surface: the accreted alternatives (a tiering-rule bullet, a path/glob-keyed routing rule, an `Author:` template field, a mechanical hook) were each tested against the imposter standard at the 2026-09-19 reassessment and dropped."
 history:
   - { date: 2026-09-19, change: "entry created by the orchestrator-role reassessment (.kiro/docs/ballots/2026-09-19-orchestrator-role-and-row.md). ORIGIN: one incident — Spec 127's formalization docs were authored by the main session in Thurgood's seat, with the format difference observed by Peter. THE DIAGNOSIS THAT MATTERS, recorded because it disproved the obvious remedy: Agent-Directory ALREADY assigned spec formalization to Thurgood in three places (:56 Owns, :60 the Q5 charter cut ratified 2026-09-17, :126 routing table), all Layer-1 and always-loaded, and it did not bind — so AVAILABILITY WAS NEVER THE FAILURE and adding more always-loaded text treats a disproven cause. What was missing was a statement of the ORCHESTRATOR'S OWN scope; the Agent-Directory claimed to cover 'all DesignerPunk AI agents' and omitted the one agent that directs the other eight. F11 RULED BY PETER: the section ships on the COMPLETENESS ground (a verified defect in a doc on its own stated terms), NOT on the hypothesis that second-person identity binds better than third-person ownership — that claim is recorded AS A HYPOTHESIS and is falsifiable: recurrence of seat-drift after this lands is evidence, routed to the claims-pass idiom dimension. NO ESCALATION IS PRE-COMMITTED, because there is nothing artifact-side to escalate to; proposing one would be the dishonesty this row is about. F15 adjudication: declined at Stacy's seat, 2026-09-19 — record: the standards-package ballot's annex (PR #185), both on main after both PRs merge. UNCOVERED RESIDUAL, recorded rather than absorbed: the sharpest case — owner-named work carrying NO delegated-tier note at all — is silent on every surface either seat owns (a missing note is not a false note), and both sessions hold that an idiom observation there would manufacture appearance-of-coverage, which is worse than the stated gap", by: thurgood }
+  - { date: 2026-09-28, change: "ONE HOME section AMENDED by the orchestrator consult-first ballot (.kiro/docs/ballots/2026-09-28-orchestrator-consult-first.md), RATIFIED by Peter 2026-09-28, population (iii) (record-first). Agent-Directory § 'Primary Agent (Orchestrator)' gains three paragraphs: consult before you recommend or brief (M1: owned surface / plan change / law); present one class-level option (M2); leave the record, the **Consulted**: line (M3). This adds EVALUATION alongside authorship. This rule, its boundary call and its verification are UNCHANGED; the Consulted line has its own entry, orchestrator-consult-line", by: thurgood }
 ```
 
 ### delegated-tier-capture
@@ -917,5 +918,37 @@ education:
   disposition: "LAW HOME, single: .kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 4 (M3). POINTER-GRADE: .kiro/issues/README.md § 'The convention' item 7. CITED, NOT EDITED: 122's C8 adjudication row form (the canonical/adjudications.yaml header)"
 history:
   - { date: 2026-09-28, change: "entry created by the CI-regime standing-scope ballot (.kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 4, M3), RATIFIED by Peter 2026-09-28 'as recommended on all five forks' (record-first). ORIGIN: Peter's 2026-09-27 holistic-path ruling on the PR-2 grant question (PR-2 instrument-only). The exception's shape is #211 (parser fix + text-preserving tasks.md normalization under Peter's ruling (d)). Non-substring sweep at authoring: 31 live ids + issue-row-write-scope-grant + this one, relations 0, dupes 0", by: thurgood }
+```
+
+### orchestrator-consult-line
+
+```yaml
+rule: "Every options message the orchestrator presents to Peter, every brief it sends an agent that meets an M1 trigger (owned surface / plan change / law), and every PR whose diff touches a trigger surface carries **Consulted**: <Agent> — <one-line read>[; <Agent> — <one-line read>]* or **Consulted**: none needed — <reason>; options messages also carry **Class option**: <option> — cost: <cost> or **Class option**: none — <reason> (the Class option half is checked by Peter at reading only — NOT AUDITED)"
+boundary_call:
+  class: functional
+  rationale: "Presence and grammar of the line on a PR body are decidable (regex over `gh pr view <n> --json body`, never the squash message, which GitHub hard-wraps at ~72 columns), and the population is decidable from the diff; the TRUTH of the one-line read is not — a wrong 'none needed' reads like a right one"
+verification:
+  disposition: audit
+  owner: stacy
+  check_state: none
+  checks: []
+  # Population (Peter's ruling (iii), 2026-09-28): every PR whose diff touches a trigger surface —
+  #   governance/**, .kiro/steering/**, .kiro/docs/ballots/**, canonical/agents/**, a spec's
+  #   requirements.md or design.md, a spec's tasks.md other than checkbox-only hunks,
+  #   canonical/adjudications.yaml.
+  # Checkbox-only classifier: every changed tasks.md line matches ^[-+]\s*- \[[ x]\]  with the
+  #   rest of the line unchanged.
+  # Grammar: ^\*\*Consulted\*\*: (?:none needed — .+|(?:Ada|Lina|Thurgood|Stacy|Leonardo|Sparky|Kenya|Data) — [^;]+(?:; (?:Ada|Lina|Thurgood|Stacy|Leonardo|Sparky|Kenya|Data) — [^;]+)*)$
+  # The claims pass reads: presence + grammar on the population; the 'none needed' COUNT on
+  #   trigger-surface PRs (the anomaly), overall rate as baseline only; a spot-check fraction
+  #   tracing each named read to a committed record — untraced reads counted SELF-ATTESTED, not
+  #   findings. Never a gate. Mechanizable as a PR-body lint; not proposed (a new required
+  #   context is Peter's). The M2 (Class option) half: Peter at reading only — not audited.
+  # Residual: trigger (a) on CODE surfaces is outside the path list — checked only in messages
+  #   and briefs; owned-artifact-authorship governs authorship there.
+education:
+  disposition: "ONE HOME: .kiro/steering/Agent-Directory.md § 'Primary Agent (Orchestrator)' (the 'Leave the record' paragraph, shared with owned-artifact-authorship's ONE HOME). LAW RECORD: .kiro/docs/ballots/2026-09-28-orchestrator-consult-first.md §§ 2–4. AUDIT HOME: Stacy's charter counting block, item 'orchestrator consult line' (ballot edit site 4)"
+history:
+  - { date: 2026-09-28, change: "entry created by the orchestrator consult-first ballot (.kiro/docs/ballots/2026-09-28-orchestrator-consult-first.md), RATIFIED by Peter 2026-09-28, population fork (iii) as both seats recommended (record-first). ORIGIN: Peter's proposal (consult the appropriate agents when evaluating options; present at least one holistic, vetted option). Evidence: four skipped consults in one day, each changing the plan (#219 x2, #225, #226/#228). The subject (the orchestrator) was consulted and did not author; Stacy R1 changes incorporated at THURGOOD R2. The disposition audit value follows the tasks-row-write-scope-grant precedent (register schema-currency note). Non-substring sweep at authoring: 33 live ids + this one, relations 0, dupes 0", by: thurgood }
 ```
 

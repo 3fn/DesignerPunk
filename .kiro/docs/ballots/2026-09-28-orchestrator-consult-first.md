@@ -2,7 +2,7 @@
 
 **Date**: 2026-09-28
 **Drafted by**: Thurgood (Civitas steward), at Peter's direction
-**Status**: **DRAFT** — not ratified. Nothing below is applied. **Record-first**: when Peter ratifies, the ratifying session commits `**Status**: **RATIFIED (Peter, <date>)**` before any edit is applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **RATIFIED (Peter, 2026-09-28)** — population fork = **(iii)**, diff-touched trigger surfaces, "as recommended" by both seats; the ruling is recorded in § 7 § "Rulings (Peter, 2026-09-28)". **Record-first**: this commit is the record, committed before any law edit (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). **Peter's merge of this PR is `R`**, the ratification commit on `main`'s first-parent history. The edits land in the commits after this one, in the same PR: edit sites 1–3 (Thurgood); edit site 4 (Stacy, `Agent: stacy`); then regeneration.
 **Proposed by**: Peter, 2026-09-28 (his words in § 1).
 **Subject**: the Primary Agent (orchestrator). **Consulted, not authoring** — the same conflict logic applied to the steward's own scope ballot that morning (`2026-09-27-ci-regime-standing-scope.md`). The subject's read (R1–R3 and one residual) is folded or rebutted in §§ 2–4 and 6.
 **Required reviewer**: Stacy — M3 creates an artifact her claims passes read.
@@ -152,6 +152,8 @@ The `disposition: audit` value carries the `tasks-row-write-scope-grant` precede
 4. **Edit site 3**: `owned-artifact-authorship`'s history line.
 5. **Edit site 4 (Stacy, in her own `Agent: stacy` commit)**: `canonical/agents/stacy.md` § "The claims-pass record", the counting block gains "**orchestrator consult line** *(ballot 2026-09-28-orchestrator-consult-first)*: presence and grammar on the population, the `none needed`-on-trigger-surface count, the spot-check fraction with self-attested reads counted — never a gate". Because it changes an operative-set unit, the **11.6.5d re-confirmation rides the same commit**.
 6. Regenerate with `npx tsx tools/agent-generator/generate.ts` (Stacy's charter changed), then `diff-guard.ts` → green.
+
+*Erratum 2026-09-28 (a note, not a law change; found by Stacy while applying edit site 4, `a76f9089`): step 5's "Because it changes an operative-set unit, the 11.6.5d re-confirmation rides the same commit" should read "**if** it changes a **recorded** operative-set unit". The counting block lives in `#the-claims-pass-record-…`, which has no operative-set record until 123 Task 15.4, so no re-hash or re-confirmation was owed, and none was made. Step 5's text is left as ratified.*
 7. Run `rebuild_index` (for the register; Agent-Directory is not served), then steering-metadata validation.
 
 ---
@@ -199,6 +201,18 @@ The `disposition: audit` value carries the `tasks-row-write-scope-grant` precede
 ---
 
 ## 7. Review round record
+
+### Rulings (Peter, 2026-09-28) — ratified
+
+1. **The PR-population fork: (iii)**, "as recommended" by both seats. **Every PR whose diff touches a trigger surface** carries the `**Consulted**:` line. A trigger surface is:
+   - `governance/**`, `.kiro/steering/**` or `.kiro/docs/ballots/**`;
+   - `canonical/agents/**`;
+   - a spec's `requirements.md` or `design.md`;
+   - a spec's `tasks.md` other than checkbox-only hunks;
+   - `canonical/adjudications.yaml`.
+
+   **(i) and (ii) are not taken.** The residual of (iii) stands as recorded: trigger (a) on code surfaces is checked only in messages and briefs.
+2. **M1, M2 and M3 are ratified as drafted**, with every `[STACY R1]` change incorporated at `[THURGOOD R2]`. There were no other forks.
 
 ### ⚑ Forks for Peter — read these first (as of `[THURGOOD R2]`)
 
