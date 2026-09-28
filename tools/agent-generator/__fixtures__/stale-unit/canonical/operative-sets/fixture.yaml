@@ -1,0 +1,16 @@
+# STANDING stale-unit fixture (Spec 123 Task 13.6, criterion (i)). The record was confirmed
+# against the unit's earlier text; canonical/agents/fixture.md has since been edited WITHOUT
+# re-confirming. `npx tsx tools/agent-generator/diff-guard.ts --root <this fixture>` must exit
+# non-zero naming the stale canonicalHash — and nothing else is wrong here, so the stale hash
+# is the ONLY finding. Do not "fix" this file: its staleness is the fixture.
+source: canonical/agents/fixture.md
+owner: lina
+confirmer: lina
+units:
+  "#alpha":
+    canonicalHash: sha256:13d322a0e44fa36b7bee580b15fe2134c24783138fb2d6087302b8d8a39c6ad4
+    items:
+      - id: fixture-run-suite
+        kind: obligation
+        text: Always run the suite before completion.
+    confirmation: canonical/profiles/consumer/confirmations/fixture.md#alpha

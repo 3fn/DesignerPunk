@@ -22,6 +22,7 @@ import {
   type CoverageManifest,
   type CoverageRow,
 } from '../coverage-map';
+import { surfaceGlobs as operativeSetFreshnessSurfaceGlobs } from '../regrounding/freshness';
 import { guardedRoots } from '../generate';
 
 describe('coverage-map — glob join', () => {
@@ -103,10 +104,12 @@ describe('coverage-map — buildCoverageManifest completeness', () => {
 });
 
 describe('coverage-map — S-D1 spot-check: 122-diff-guard derives from guardedRoots()', () => {
-  it('every diffGuardSurfaceGlobs() entry traces to a CURRENT guardedRoots() entry (not a frozen literal)', () => {
+  it('every diffGuardSurfaceGlobs() entry traces to a CURRENT guardedRoots() entry or the freshness sweep\'s own surfaceGlobs() (not a frozen literal)', () => {
     const roots = guardedRoots();
     const globs = diffGuardSurfaceGlobs();
-    expect(globs).toHaveLength(roots.length);
+    // Spec 123 Task 13.6: the guard also runs operative-set-freshness, whose globs come from that sweep's module.
+    expect(globs).toHaveLength(roots.length + operativeSetFreshnessSurfaceGlobs().length);
+    expect(globs).toEqual(expect.arrayContaining(operativeSetFreshnessSurfaceGlobs()));
     for (const root of roots) {
       const expectedGlob = root.includes('.') && /\.[a-z0-9]+$/i.test(root) ? root : `${root}/**`;
       expect(globs).toContain(expectedGlob);

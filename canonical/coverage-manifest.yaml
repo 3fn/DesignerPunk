@@ -66,6 +66,8 @@
   - canonical/coverage-manifest.yaml
   - canonical/coverage-map.yaml
   - canonical/manifests/**
+  - canonical/operative-sets/**
+  - canonical/profiles/consumer/**
   - canonical/registry/**
 122-sweep-1-refs:
   - canonical/agents/*.md
