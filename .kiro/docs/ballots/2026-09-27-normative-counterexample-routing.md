@@ -25,13 +25,47 @@
 
 ### The rule text
 
-> **[PENDING — Stacy's amended text, to be pasted VERBATIM by Stacy (or the orchestrator from her committed consult record).]**
-> The drafting seat does not hold her text, and does not reconstruct it: a rule she amended is not re-authored from memory in the owner's seat.
-> **Her SEPARABLE clause is marked `[SEPARABLE]` in her text, for Peter's pick**: ratify the rule with it, or without it.
+*Stacy's amended text, pasted verbatim by Stacy from her consult answer to the orchestrator (2026-09-27). She is the required reviewer, and the text is hers:*
 
-**The drafter's original proposal, for reference only.** It is superseded by Stacy's amendment, so the rule text above governs:
+> *"A note that states a counterexample to a normative claim in requirements or design (a soundness, safety, or 'cannot/never' sentence) is a finding. Its writer quotes the sentence and its location, and routes it when noticed to that text's owner as an explicit message — not only as a line in a completion doc. It may also be carried to the implementing task, but never only carried. The owner, on receipt, either repairs the claim or records why it holds; if the finder disputes a 'holds', the dispute goes to the next scheduled gate on that text as a named attack, or to Peter. Carrying it forward unanswered is itself a finding. Where the text is under a scheduled falsification gate, every such finding and every repair made before the gate is listed in the gate's record and re-run there as a named attack. [Separable:] A noticed question about a normative sentence, without a counterexample, is pre-registered as a named attack for that gate rather than carried. Notes about implementation that contradict no normative sentence may still be carried."*
+
+**SEPARABLE — Peter's pick at ratification**: the sentence beginning `[Separable:]` (the pre-registration clause).
+- **Ratify with it**: the `[Separable:]` marker is dropped, and the sentence is applied as written.
+- **Ratify without it**: the sentence is deleted, and the rule covers only noticed counterexamples.
+- **Its cost**: some extra scope at the gate.
+- **Its gain**: a suspicion without a counterexample does not die in a carry list. Spec 123's 11.3 record pre-registered the entailment question for G1 in exactly this way, and it became finding B-2.
+
+**Why each clause is there** (Stacy's consult answer, in short):
+- **Quote the sentence and its location**: this makes the trigger decidable when the note is written, and checkable later by a claims pass.
+- **Explicit message, not only a doc line**: routing, not recognition, was the failure. The 11.2 note already said "it breaks the floor's soundness claim", and it still travelled as a line in a file.
+- **Never only carried**: the implementer still needs the note. 13.4 did.
+- **The dispute path**: without it, "records why it holds" would let the owner close a counterexample to his own claim alone, which is the self-certification C1 exists to prevent.
+- **Listed and re-run at the gate**: repairs made before a gate do not count toward a gate's run count, so they would escape both the adversarial reading and a rework-triggered read (Spec 123's M-1). Listing them keeps the gate's record complete.
+
+**Placement** (Stacy): `governance/completion-documentation-guide.md` is the right home, because carry lists are written in parent completion docs. That agrees with the drafter's before→after below.
+
+**Residual that survives the amendment** (Stacy):
+- Nothing enforces this rule mechanically; it relies on the writer.
+- Its measurable form is a claims-pass count: carried items that quote a normative sentence and have no owner response on record.
+- Adding that count to the claims-pass counting block is its own later ballot, and is **not** proposed here.
+
+**Standards implications** (Stacy):
+1. This ballot (the completion guide; Thurgood authors the application).
+2. Optional later ballot: add the "carried normative counterexamples with no owner response" count to the claims-pass counting block.
+3. No change to either anti-rot clause. The dispute path keeps them symmetric: the finder never drafts the repair, and the owner never has the last word on a counterexample to his own claim.
+
+**History: the drafter's original proposal.** Superseded by the amendment above. It is kept, at Stacy's choice, so the difference between the two versions can be reviewed at ratification:
 
 > *A carried note that states a counterexample to a normative claim in requirements or design (a soundness, safety, or "cannot" sentence) is a finding: it routes to that text's owner when noticed, not into a later task's carry list. The owner, on receipt, either repairs the claim or records why it holds; carrying it forward unanswered is itself a finding. Notes about implementation that contradict no normative sentence may still be carried.*
+
+**What the amendment changed**:
+- The note must quote the sentence and its location.
+- Routing is an explicit message.
+- "Not into a carry list" becomes "never only carried".
+- The dispute path is new.
+- Findings and repairs made before a gate are listed in the gate record and re-run there.
+- The separable pre-registration clause is new.
+- "cannot" becomes "cannot/never".
 
 ### Before → after (`governance/completion-documentation-guide.md`)
 
@@ -88,3 +122,12 @@
   - the Spec 123 `tasks.md` lessons item (it points here);
   - any Spec 123 completion doc (the existing errata stand as written);
   - the instrument-existence half of the lessons item (for the next tasks round).
+
+---
+
+## 4. Review round record
+
+### [STACY R1] — required reviewer, 2026-09-27
+
+- **§ 1**: the rule text is mine, pasted verbatim above; the SEPARABLE clause is marked for Peter's pick.
+- **§ 2 (the errata rule): AMEND.** The rule contradicts itself ("the original text is not edited" against "updates that row in place"). If the replaced row is not kept, a claims pass loses the original claim, which the rule's own last sentence leaves to that seat. Replace *"The original text is not edited. An erratum to a criterion row's Status or Evidence also updates that row in place, and says so in the erratum."* with *"The original text is not edited, with one exception: an erratum to a criterion row's Status or Evidence also updates that row in place, and quotes the replaced Status and Evidence verbatim in the erratum."*
