@@ -53,6 +53,7 @@ import { surfaceGlobs as sweep5SurfaceGlobs } from './sweeps/sweep-5-corrected';
 import { surfaceGlobs as sweep6SurfaceGlobs } from './sweeps/sweep-6-declarations';
 import { surfaceGlobs as sweep7SurfaceGlobs } from './sweeps/sweep-7-dispositions';
 import { surfaceGlobs as sweep8SurfaceGlobs } from './sweeps/sweep-8-demotion';
+import { surfaceGlobs as operativeSetFreshnessSurfaceGlobs } from './regrounding/freshness';
 
 // ============================================================================
 // The check-context name constants (the coverage map's fixed column set)
@@ -88,9 +89,17 @@ export type CoverageManifest = Record<CheckContext, string[]>;
  * enumerating each root, so this stays consistent with what the guard actually compares.
  * Not a co-located constant: `guardedRoots()` already IS the shared symbol, imported here
  * and by diff-guard.ts itself.
+ *
+ * PLUS the `operative-set-freshness` sweep's surfaces (Spec 123 Task 13.6): the guard runs that
+ * sweep on every run (diff-guard.ts `runGuard`), so the files it reads — the operative-set
+ * records and the consumer profile — are guarded by this context. Imported from the sweep's own
+ * `surfaceGlobs()` (S-D1: one symbol, two consumers), never re-declared here.
  */
 export function diffGuardSurfaceGlobs(repoRoot?: string): string[] {
-  return guardedRoots(repoRoot).map((root) => (path.extname(root) ? root : `${root}/**`));
+  return [
+    ...guardedRoots(repoRoot).map((root) => (path.extname(root) ? root : `${root}/**`)),
+    ...operativeSetFreshnessSurfaceGlobs(),
+  ];
 }
 
 /**

@@ -53,6 +53,7 @@ export const NINE_CHECKS: readonly NineCheck[] = Object.freeze([
     owner: 'lina',
     template:
       'disposition/overlay key <k> names nothing in <file> — the unit was renamed or removed; re-key or delete the row',
+    test: 'derive.keys.test.ts › orphaned key (nine-check) refuses a key that names no current unit or entry, with the exact string',
   },
   {
     id: 'missing-row',
@@ -60,6 +61,7 @@ export const NINE_CHECKS: readonly NineCheck[] = Object.freeze([
     owner: 'lina',
     template:
       "<unit|entry> in <file> has no disposition row — every unit carries an explicit row (write 'retained' if it ships as-is)",
+    test: 'derive.keys.test.ts › missing row (nine-check) refuses a unit or entry with no explicit disposition row, with the exact string',
   },
   {
     id: 'wrong-confirmer',

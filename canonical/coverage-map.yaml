@@ -1245,21 +1245,29 @@
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
 - surface: canonical/operative-sets/component-family-navigation.yaml
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/operative-sets/lina.yaml
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/operative-sets/stacy.yaml
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/operative-sets/start-up-tasks.yaml
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/component-family-navigation.md
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/lina.md
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/stacy.md
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/start-up-tasks.md
-  checks: []
+  checks:
+    - 122-diff-guard
 - surface: canonical/registry/tool-registry.json
   checks:
     - 122-diff-guard

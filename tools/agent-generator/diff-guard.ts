@@ -19,14 +19,33 @@
  * changed byte). Both match → early-exit green in seconds (no MCP boots, no generation);
  * either mismatch → full run.
  *
- * Traces to: Req 17 (all ACs), Req 20 AC2 (fast no-op without path-filtering), DD7, S-D3/S-D5.
+ * OPERATIVE-SET FRESHNESS (Spec 123 Task 13.6; design C16): {@link runGuard} runs the
+ * `operative-set-freshness` sweep (regrounding/freshness.ts) FIRST, on every run — including the
+ * fast no-op path, which would otherwise skip it — and FAILs on any finding without refreshing
+ * the lock. The sweep reads only the filesystem (no generation, no MCP), and `generate.ts` is
+ * loaded lazily, so the sweep's verdict does not depend on the generation inputs being present.
+ *
+ * CLI: `npx tsx tools/agent-generator/diff-guard.ts [--root <dir>]`. `--root` (added at 13.6)
+ * points the guard at another tree — the STANDING stale-unit fixture test uses it. Default: the
+ * repo this file lives in.
+ *
+ * Traces to: Req 17 (all ACs), Req 20 AC2 (fast no-op without path-filtering), DD7, S-D3/S-D5;
+ * Spec 123 Req 11.6.5d, design C16.
  */
 
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import { generateAll, writeOutputs, guardedRoots } from './generate';
+import { formatFreshness, runFreshnessSweep, type FreshnessReport } from './regrounding/freshness';
+
+/**
+ * `generate.ts` loaded on first use, not at import: it pulls the generation pipeline (and the
+ * MCP dist it reads), which the freshness sweep never needs. Same lazy-require idiom generate.ts
+ * uses for coverage-map.ts.
+ */
+const generation = (): typeof import('./generate') => require('./generate') as typeof import('./generate');
+const guardedRoots = (repoRoot?: string): string[] => generation().guardedRoots(repoRoot);
 
 // ============================================================================
 // Hashing (pure over injected file lists — unit-testable without the repo)
@@ -168,6 +187,10 @@ export function compareTrees(freshRoot: string, repoRoot: string, roots: readonl
 
 export interface GuardResult {
   verdict: 'no-op-green' | 'full-run-green' | 'FAIL';
+  /** The operative-set-freshness sweep's report (Spec 123 Task 13.6) — present on every run. */
+  freshness?: FreshnessReport;
+  /** Which part failed, when verdict is FAIL. */
+  failedBy?: 'operative-set-freshness' | 'tree-delta';
   /** Why a full run happened (absent for no-op-green). */
   fullRunReason?: 'no-lock' | 'input-closure-changed' | 'outputs-changed';
   delta?: TreeDelta;
@@ -178,12 +201,18 @@ export interface GuardResult {
  * subsequent unrelated runs no-op. NEVER refreshes on FAIL.
  */
 export async function runGuard(repoRoot: string, opts?: { refreshLock?: boolean }): Promise<GuardResult> {
+  // The freshness sweep runs FIRST and ALWAYS (the no-op path below would otherwise skip it).
+  const freshness = runFreshnessSweep(repoRoot);
+  if (freshness.findings.length > 0) {
+    return { verdict: 'FAIL', failedBy: 'operative-set-freshness', freshness };
+  }
+
   const lock = readLock(repoRoot);
   const inputHash = computeInputClosureHash(repoRoot);
   const outputsHash = computeOutputsHash(repoRoot);
 
   if (lock && lock.inputClosure === inputHash && lock.outputs === outputsHash) {
-    return { verdict: 'no-op-green' };
+    return { verdict: 'no-op-green', freshness };
   }
   const fullRunReason: GuardResult['fullRunReason'] = !lock
     ? 'no-lock'
@@ -194,28 +223,51 @@ export async function runGuard(repoRoot: string, opts?: { refreshLock?: boolean 
   // Full run: regenerate into a temp tree and compare bidirectionally.
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'dp-diff-guard-'));
   try {
+    const { generateAll, writeOutputs } = generation();
     const outputs = await generateAll(repoRoot);
     writeOutputs(temp, outputs);
     const delta = compareTrees(temp, repoRoot, guardedRoots(repoRoot));
     const clean = delta.changed.length === 0 && delta.missing.length === 0 && delta.extra.length === 0;
 
     if (!clean) {
-      return { verdict: 'FAIL', fullRunReason, delta };
+      return { verdict: 'FAIL', failedBy: 'tree-delta', fullRunReason, delta, freshness };
     }
     if (opts?.refreshLock !== false) {
       writeLock(repoRoot, { inputClosure: computeInputClosureHash(repoRoot), outputs: outputsHash });
     }
-    return { verdict: 'full-run-green', fullRunReason };
+    return { verdict: 'full-run-green', fullRunReason, freshness };
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
 }
 
 // CLI: exit 0 on green (either form), 1 on FAIL with per-file detail.
+/** `--root <dir>` → that dir (resolved against cwd); default the repo this file lives in. */
+export function cliRepoRoot(argv: readonly string[], cwd = process.cwd()): string {
+  const i = argv.indexOf('--root');
+  if (i === -1) return path.resolve(__dirname, '..', '..');
+  const dir = argv[i + 1];
+  if (!dir || dir.startsWith('--')) throw new Error('--root needs a directory');
+  return path.resolve(cwd, dir);
+}
+
 if (require.main === module) {
-  const repoRoot = path.resolve(__dirname, '..', '..');
+  let repoRoot: string;
+  try {
+    repoRoot = cliRepoRoot(process.argv.slice(2));
+  } catch (error) {
+    console.error(`diff-guard: ERROR — ${(error as Error).message}`);
+    process.exit(2);
+  }
   runGuard(repoRoot)
     .then((result) => {
+      const freshnessLines = result.freshness ? formatFreshness(result.freshness) : [];
+      if (result.failedBy === 'operative-set-freshness') {
+        console.error('diff-guard: FAIL (operative-set-freshness)');
+        for (const line of freshnessLines) console.error(line);
+        process.exit(1);
+      }
+      for (const line of freshnessLines) console.log(line);
       if (result.verdict === 'FAIL') {
         console.error(`diff-guard: FAIL (${result.fullRunReason})`);
         for (const f of result.delta?.changed ?? []) console.error(`  changed: ${f}`);
