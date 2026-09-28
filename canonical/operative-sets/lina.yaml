@@ -15,8 +15,8 @@
 # `confirmer` is the C1 function of (owner, profile author = thurgood). The owner fixes and
 #   confirms each unit's set (11.6.5d); the `confirmation:` note is written in the
 #   confirmer's seat, never the drafter's.
-# Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27) — a DRAFT until each unit's
-#   `confirmation:` resolves to a committed note.
+# Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27). Confirmed by Lina (owner seat, C1),
+#   Task 11.2 (2026-09-27): 13 units, 39 items; two item texts corrected in #step-6-….
 source: canonical/agents/lina.md
 owner: lina
 confirmer: lina
@@ -128,14 +128,16 @@ units:
         label: Write unit and behavioral contract tests
         text: Write unit tests and behavioral contract tests that validate the component's interaction states, accessibility, and visual states.
     confirmation: canonical/profiles/consumer/confirmations/lina.md#step-5-create-tests
-  # exemplar Lina-2 — 9 item(s)
+  # exemplar Lina-2 — 9 item(s). Confirmer ruling 2026-09-27: step6-author-meta and step6-review-staleness
+  #   restored to include their `**For …**:` trigger labels (prefix truncation; the label is the condition).
+  #   Notes: confirmations/lina.md#step-6-create-or-review-component-metayaml
   "#step-6-create-or-review-component-metayaml":
     canonicalHash: sha256:8fb443bb30c9bcbe1d3b831ef46bda310090852b930c6cb1ce039b41a447ee79
     items:
       - id: step6-author-meta
         kind: step
         label: "New: author component-meta.yaml"
-        text: Author the semantic annotations file following the component-meta authoring guide (routed).
+        text: "**For new components**: Author the semantic annotations file following the component-meta authoring guide (routed)."
       - id: step6-meta-content
         kind: obligation
         label: "New: what the file provides"
@@ -147,7 +149,7 @@ units:
       - id: step6-review-staleness
         kind: step
         label: "Modification: review for staleness"
-        text: Review `component-meta.yaml` for staleness.
+        text: "**For component modifications**: Review `component-meta.yaml` for staleness."
       - id: step6-q-purpose
         kind: step
         label: "Modification: purpose search terms"

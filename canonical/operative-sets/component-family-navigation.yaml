@@ -17,8 +17,9 @@
 # `confirmer` is the C1 function of (owner, profile author = thurgood). The owner fixes and
 #   confirms each unit's set (11.6.5d); the `confirmation:` note is written in the
 #   confirmer's seat, never the drafter's.
-# Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27) — a DRAFT until each unit's
-#   `confirmation:` resolves to a committed note.
+# Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27). Confirmed by Lina (owner seat, C1),
+#   Task 11.2 (2026-09-27): instantiation KEPT (#purpose 0 items / #key-characteristics 5 items).
+#   Ruling and the declined #family-overview:preamble alternative: confirmations/component-family-navigation.md
 source: governance/Component-Family-Navigation.md
 owner: lina
 confirmer: lina
