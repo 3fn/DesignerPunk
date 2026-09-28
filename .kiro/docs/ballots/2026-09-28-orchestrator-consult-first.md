@@ -63,11 +63,11 @@
 ```markdown
 **The seam**: adjudication with Peter is yours — you record what was ruled; the owner authors the artifact that carries it.
 
-**Consult before you recommend.** When an option you are weighing (a) touches a surface an agent owns, (b) changes a merged plan, ruling or grant, or (c) makes or amends governance law, **consult the owning agent(s) on it before you present it** — a bounded, read-only consult in their seat, in parallel when there are several; when the owner will execute it, brief with your questions first. Otherwise no consult is needed, and you say why.
+**Consult before you recommend.** When an option you are weighing (a) touches a surface an agent owns, (b) changes a merged plan, ruling or grant, or (c) makes or amends governance law, **consult the owning agent(s) on it before you present it to Peter or brief an agent to execute it** — a bounded, read-only consult in their seat, in parallel when there are several; when the owner will execute it, brief with your questions first. Otherwise no consult is needed, and you say why. **A brief that meets a trigger carries the `**Consulted**:` line; a briefed owner that finds its own surface in a brief with no consult may answer with questions first.**
 
 **Present one class-level option.** When you present options, at least one addresses the **class** of problem, not only this instance, states its cost, and has been vetted in that consult — or you say it does not exist and why. It carries its surviving counter-argument like any recommendation (AI-Collaboration-Principles § "Counter-Argument Requirement").
 
-**Leave the record.** Every options message to Peter, and every PR body you open, carries `**Consulted**: <Agent> — <one-line read>` (one pair per consulted agent, `;`-separated) or `**Consulted**: none needed — <reason>`; options messages also carry `**Class option**: <option> — cost: <cost>` or `**Class option**: none — <reason>`.
+**Leave the record.** Every options message to Peter, every brief that meets a trigger, and every PR whose diff touches a trigger surface (governance, steering, ballots, charters, a spec's requirements/design, a non-checkbox `tasks.md` hunk, `canonical/adjudications.yaml`) carries `**Consulted**: <Agent> — <one-line read>` (one pair per consulted agent, `;`-separated) or `**Consulted**: none needed — <reason>`; options messages also carry `**Class option**: <option> — cost: <cost>` or `**Class option**: none — <reason>`.
 
 ---
 ```
@@ -90,6 +90,8 @@
 - (iii) **was vetted in the M1 consult**.
 
 Otherwise the message says `Class option: none — <reason>`.
+
+*`Class option:` and its vetting are checked by Peter at reading only; no claims pass reads them* (Stacy R1; incorporated at R2).
 
 **Relation to the counter-argument fold-back** (`AI-Collaboration-Principles.md` § "Counter-Argument Requirement", ratified 2026-09-19): the class-level option is a recommendation like any other, so it is **run against its own counter-argument before it is presented**, and it carries the **surviving residual**.
 - **The two compose.** M2 makes sure a class-level candidate is on the table. The fold-back makes sure its weakness is stated.
@@ -116,28 +118,23 @@ Otherwise the message says `Class option: none — <reason>`.
 | Surface | `Consulted:` | `Class option:` | Who checks |
 |---|---|---|---|
 | Every orchestrator message to Peter that presents options or a recommendation | required | required | **Peter**, at reading. The message is not a committed record. |
-| Every PR body the orchestrator opens | required | not required (a PR carries a decision, not options) | **Stacy's claims passes**: presence and grammar, over the release delta's PR bodies (`gh pr view <n> --json body`) |
-| Agent-seat PRs (opened by an agent through `complete-task.sh`) | not required under this measure | — | — |
+| Every brief the orchestrator sends an agent that meets an M1 trigger | required | not required | **The briefed seat**, which may answer with questions first (Stacy R1) |
+| **Every PR whose diff touches a trigger surface** — population (iii), recommended by both seats (fork, § 7): `governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, `canonical/agents/**`, a spec's `requirements.md` or `design.md`, a spec's `tasks.md` other than checkbox-only hunks, `canonical/adjudications.yaml` | required | not required (a PR carries a decision, not options) | **Stacy's claims passes**, over the release delta's PR bodies |
+| Every other PR (in-seat code, checkbox-only `tasks.md`) | not required under (iii) | — | — |
 
-**The PR-population fork, for Peter (surfaced, not picked):**
-- **(i) Orchestrator-opened PRs only**, as scoped here.
-  - Deciding which PRs the orchestrator opened needs a marker. The measure adds **`**Opened by**: orchestrator`** to those PR bodies, and the claims pass reads the population from it.
-  - **Cost**: a second line, and an unmarked orchestrator PR escapes the population. That is self-attested, the same weakness as `Drafted by:`.
-- **(ii) Every PR body**, the **class-level option** — M2 applied to M3 itself.
-  - An agent that edits outside its seat has the same consult question, so every PR carries `Consulted:`, and an agent working in its own seat writes `none needed — owner executing in own seat`.
-  - **Cost**: every PR gains a line. `complete-task.sh`'s PR-body template gains the field, which is a tooling change outside the steward's standing scope and needs an M2 issue-row grant.
-  - **What it buys**: no opener marker, and the population is simply "all PRs".
-- **The author's lean is (ii).** It removes the self-attested marker. **Declared**: the steward would carry the tooling edit.
-- **What survives against it**: most `none needed` lines on agent PRs are boilerplate, and they dilute the signal the claims pass counts.
+**The PR population: fork (i)/(ii)/(iii), ruled at ratification** — laid out with both seats' recommendations at the top of § 7. The table above is written for **(iii)**, which both seats recommend.
+- **(iii) is derived from the diff**, not from who opened the PR. It needs no opener marker, puts no boilerplate on in-seat code PRs, and needs no `complete-task.sh` edit. All four § 1 instances land in it.
+- **Classifier**: "checkbox-only" is one regex over the `tasks.md` hunks. Each changed line must match `^[-+]\s*- \[[ x]\] ` with the rest of the line unchanged.
+- **Residual**: trigger (a), an **owned surface in code** (for example an orchestrator edit under `src/components/**`), is not in (iii)'s path list. Its PR carries no line, and **(a) on code surfaces is checked only in messages and briefs**. `owned-artifact-authorship` still governs authorship there.
 
 **The claims-pass check** (Stacy's):
-- **Presence and grammar** of `**Consulted**:` on the population's PR bodies.
-- **The `none needed` rate**, counted as a baseline. A 100% `none needed` rate on PRs that touch law or plans is the ritual-stub signal, as in C2's assent-rate reading.
-- **A spot-check that each named consult left a record** (a completion doc, a feedback entry or a consult report).
+- **Presence and grammar** of `**Consulted**:` on the population's PR bodies, **read from the PR body** (`gh pr view <n> --json body`, run for the claims seat by a session holding credentials), **never from the squash message**. GitHub hard-wraps squash bodies at about 72 columns, which breaks the anchored regex (Stacy R1).
+- **The `none needed` count on PRs whose diff touches a trigger surface** (the anomaly), **plus the overall rate as a baseline only** (Stacy R1).
+- **Spot-check, with the fraction counted**: each named read is traced to a committed record (a feedback entry, a ballot review round, a completion doc, or the verdict quoted in the PR body). **Reads with no committed trace are counted as self-attested, not as findings** (Stacy R1: most consults end in a handback message, not a file).
 - **Not a gate. It never blocks a PR** (merge-path status, as for every claims pass).
 
 **Register entry** (`governance/classification-map.md`, new): `orchestrator-consult-line`.
-- `rule`: M3's line, required where the table above says;
+- `rule`: M3's `Consulted:` line, required on the population ruled at the fork (recommended: (iii), PRs whose diff touches a trigger surface). **The `Class option:` half is marked "checked by Peter at reading only — not audited"**, so the entry does not advertise an audit that cannot happen (Stacy R1);
 - `boundary_call: { class: functional, rationale: "presence and grammar on a PR body are decidable; the truth of the one-line read is not" }`;
 - `verification: { disposition: audit, owner: stacy, check_state: none, checks: [] }`, with a comment noting that it is mechanizable as a PR-body lint but not proposed (a new required context is Peter's);
 - `education`: the ONE HOME is Agent-Directory § "Primary Agent (Orchestrator)", and this ballot is the law record;
@@ -146,6 +143,16 @@ Otherwise the message says `Class option: none — <reason>`.
 The `disposition: audit` value carries the `tasks-row-write-scope-grant` precedent and the same schema-currency note.
 
 **`owned-artifact-authorship`**: its `history` gains one line recording that its ONE HOME section gained M1–M3 (evaluation, alongside authorship). Its rule and verification are unchanged.
+
+### Application, at ratification (four edit sites)
+
+1. Commit RATIFIED, with the population fork's ruling recorded.
+2. **Edit site 1**: `.kiro/steering/Agent-Directory.md` § "Primary Agent (Orchestrator)", the three paragraphs of § 2, with the M3 paragraph worded for the ruled population. Bump `Last Reviewed`. No regeneration (identity doc, imported by `CLAUDE.md`).
+3. **Edit site 2**: `governance/classification-map.md`, the new entry `orchestrator-consult-line`.
+4. **Edit site 3**: `owned-artifact-authorship`'s history line.
+5. **Edit site 4 (Stacy, in her own `Agent: stacy` commit)**: `canonical/agents/stacy.md` § "The claims-pass record", the counting block gains "**orchestrator consult line** *(ballot 2026-09-28-orchestrator-consult-first)*: presence and grammar on the population, the `none needed`-on-trigger-surface count, the spot-check fraction with self-attested reads counted — never a gate". Because it changes an operative-set unit, the **11.6.5d re-confirmation rides the same commit**.
+6. Regenerate with `npx tsx tools/agent-generator/generate.ts` (Stacy's charter changed), then `diff-guard.ts` → green.
+7. Run `rebuild_index` (for the register; Agent-Directory is not served), then steering-metadata validation.
 
 ---
 
@@ -181,10 +188,30 @@ The `disposition: audit` value carries the `tasks-row-write-scope-grant` precede
   - **Residual**: some decisions Peter wants fast will wait one round.
 - **The author's interest** (header): M1 increases consults of the steward seat among others.
   - **Residual**: the author set the triggers. Stacy's review and Peter's ruling are the checks.
+- **The class option is vetted by the seat it may widen** (Stacy R1).
+  - **Residual**: consult capture and complexity compound. The consulted owner vets a class option that often widens the owner's own seat; this morning's standing scope (a) widened the author's seat and needed a narrowing review. **The fold-back must state that interest.**
+- **The subject's own interest, stated like the author's** (Stacy R1).
+  - The subject's R1 narrowed Peter's "(1) … the option(s)" to three triggers, which reduces the subject's own workload. The narrowing is defensible, and it covers all four instances.
+  - **The loss it did cause**: the "present" wording dropped briefs, and instance 4 was a brief. Repaired at R2 (M1 now reads "present it to Peter or brief an agent to execute it"). **The subject concurs** (orchestrator, 2026-09-28: "it is the instance I missed").
+- **Population (iii) misses trigger (a) on code surfaces** (R2).
+  - **Residual**: an orchestrator edit to an owned code surface carries no PR line. That trigger is checked only where Peter or the briefed seat reads.
 
 ---
 
 ## 7. Review round record
+
+### ⚑ Forks for Peter — read these first (as of `[THURGOOD R2]`)
+
+**No Stacy R1 item is declined.** One fork remains:
+1. **The PR population for the `**Consulted**:` line:**
+   - **(i)** orchestrator-opened PRs only, with a self-attested `**Opened by**: orchestrator` marker. **Both seats rank it last**: forgetting the marker is forgetting the consult.
+   - **(ii)** every PR, with in-seat PRs writing `none needed — owner executing in own seat` and a `complete-task.sh` template edit under an M2 grant.
+   - **(iii)** **every PR whose diff touches a trigger surface**: governance, steering, ballots, `canonical/agents/**`, a spec's requirements or design, a non-checkbox `tasks.md` hunk, `canonical/adjudications.yaml`. It is derived from the artifact, with no marker, no boilerplate and no tooling edit.
+   - **Recommendations**:
+     - **Stacy: (iii); failing that, (ii) over (i).**
+     - **Author: (iii)**, conceded from R1's lean toward (ii). That lean carried the author's declared interest in the tooling edit, and (iii) removes both the boilerplate and the interest.
+   - **Residual of (iii)**: trigger (a) on code surfaces is outside its path list (§ 4).
+
 
 *(The subject's consult read is recorded in §§ 2–4 and 6. The author records `[THURGOOD R1]` incorporation here.)*
 
@@ -259,3 +286,28 @@ The `disposition: audit` value carries the `tasks-row-write-scope-grant` precede
   - **The loss it did cause is the "present" wording that drops briefs**, and my M1 change repairs that.
   - § 6 should record R1 as the subject's interest, stated like the author's.
 
+### [THURGOOD R2] — author incorporation, 2026-09-28
+
+**Every item is INCORPORATED. Nothing is declined.** One fork remains, the PR population, at the top of § 7.
+
+**M1:**
+- **Briefs included** ("present it to Peter or brief an agent to execute it"), and **a triggered brief carries the line; a briefed owner may answer with questions first**: **INCORPORATED**, her exact text, in the § 2 after-block. Instance 4 was a brief, and the subject concurs.
+
+**M2:**
+- **"`Class option:` and its vetting are checked by Peter at reading only; no claims pass reads them"**: **INCORPORATED** in § 3, and **the register entry marks that half as not audited**.
+- **The "vetted by the seat it may widen" residual**: **INCORPORATED** in § 6.
+
+**M3:**
+- **Read the PR body via `gh pr view --json body`, never the squash message**: **INCORPORATED**.
+- **The `none needed` count on trigger-surface PRs, with the raw rate as a baseline only**: **INCORPORATED**.
+- **The spot-check reworded to "trace to a committed record; untraced reads are self-attested, not findings"**: **INCORPORATED**.
+- **Edit site 4 on Stacy's charter** (a counting-block item): **INCORPORATED** in § 4's "Application, at ratification", as step 5. **Stacy applies it in her own commit**, with the 11.6.5d re-confirmation and the regeneration.
+
+**Population:**
+- **Her option (iii): ADOPTED as the author's recommendation.** The § 4 table and the M3 paragraph are written for it; (i) and (ii) stay in the fork.
+- **One residual of my own**: (iii)'s path list does not reach trigger (a) on code surfaces. It is recorded in § 4 and § 6.
+- **The checkbox-only classifier** is specified as one regex over the `tasks.md` hunks.
+
+**§ 6:**
+- **The subject's R1 is recorded as the subject's interest**, and the loss it caused (briefs dropped) is named and repaired.
+- **The author's interest**: Stacy found no self-sparing. The one place the author's interest reached the text, the R1 lean toward (ii), is withdrawn.
