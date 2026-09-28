@@ -592,7 +592,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   - [x] 11.1 Draft the exemplar records
   - [ ] 11.2 Owner confirmations under C1; carve-out commits — Stacy for `stacy.md` units and the carve-out; **Lina (Opus) for the `lina.md` units and the component-family doc** *(amendment 2026-09-27)*
-  - [ ] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
+  - [x] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
   - [ ] 11.4 Confirmer + verbatim checks green — by building the temporary precursor test `src/__tests__/operative-set-records.test.ts` *(amendment 2026-09-27, ruled by Peter — found at 11.4: no instrument existed; retired by 13.6)*
   - [ ] 11.5 (Stacy) **F3**: after 11.1–11.4, regenerate the coverage map, commit the ruling note and the time-boxed adjudications, and cite the U2a count N *(added 2026-09-27, B-CI ballot § 11 `[STACY R1]` § 6 condition (c): the step needs a subtask so the subtask-doc duty covers it)*
 
