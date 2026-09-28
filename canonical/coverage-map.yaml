@@ -1242,6 +1242,12 @@
     - 122-diff-guard
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
+- surface: canonical/operative-sets/component-family-navigation.yaml
+  checks: []
+- surface: canonical/operative-sets/lina.yaml
+  checks: []
+- surface: canonical/operative-sets/stacy.yaml
+  checks: []
 - surface: canonical/registry/tool-registry.json
   checks:
     - 122-diff-guard

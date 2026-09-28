@@ -578,7 +578,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `canonical/operative-sets/*.yaml` (exemplar units), `canonical/profiles/consumer/confirmations/*.md`, `canonical/coverage-map.yaml` (regenerated), `canonical/adjudications.yaml` (Stacy's time-boxed `audit:coverage-map` entries only — F3), `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md` (Stacy's ruling note — F3)
 
-  - [ ] 11.1 Draft the exemplar records
+  - [x] 11.1 Draft the exemplar records
   - [ ] 11.2 Owner confirmations under C1; carve-out commits
   - [ ] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
   - [ ] 11.4 Confirmer + verbatim checks green
