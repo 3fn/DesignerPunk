@@ -20,6 +20,10 @@
 # Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27). Confirmed by Lina (owner seat, C1),
 #   Task 11.2 (2026-09-27): instantiation KEPT (#purpose 0 items / #key-characteristics 5 items).
 #   Ruling and the declined #family-overview:preamble alternative: confirmations/component-family-navigation.md
+# Third F unit added by Lina (owner seat, C1), Spec 123 Task 13.0 (2026-09-28): #family-overview:preamble,
+#   0 items. This SUPERSEDES the 11.2 disposition that declined it (U2b-cut amendment, #225;
+#   .kiro/issues/2026-09-27-task-11-deferred-lina-items.md Item 1). Confirmed against the unit's
+#   text as of #223 (14aa8c23; Readiness 2 -> 5).
 source: governance/Component-Family-Navigation.md
 owner: lina
 confirmer: lina
@@ -55,3 +59,9 @@ units:
         label: Icon + Text Variants
         text: "**Icon + Text Variants**: Segmented control supports text or icon; tab bar is icon-only (v1)"
     confirmation: canonical/profiles/consumer/confirmations/component-family-navigation.md#key-characteristics
+  # exemplar F (label-shaped descriptive half — required: inapplicable) — 0 item(s)
+  #   Holds `**Label**: value` form constant against #key-characteristics; normativity varies. Added at 13.0.
+  "#family-overview:preamble":
+    canonicalHash: sha256:0b09be78566cb1466b5d4ea062b5c3344499cbf60ef4f4e4f4f0bb9e28c81f0c
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/component-family-navigation.md#family-overview:preamble

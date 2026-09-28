@@ -691,7 +691,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tools/agent-generator/regrounding/triviality.ts`, `tools/agent-generator/derive.ts` (key checks), schemas + validator, `tools/agent-generator/diff-guard.ts`, `__fixtures__/stale-unit/`, `.kiro/docs/ballots/<date>-123-b-u2.md`, `canonical/agents/stacy.md`, `canonical/adjudications.yaml` (13.6 removes the expired U2a rows only — F3), `src/__tests__/operative-set-records.test.ts` (13.6 deletes the Task 11 precursor test only — amendment 2026-09-27), `tools/agent-generator/__fixtures__/g1-renderings/` (copied G1 renderings with pinned provenance — U2b-cut amendment), `canonical/operative-sets/component-family-navigation.yaml` and `canonical/profiles/consumer/confirmations/component-family-navigation.md` (13.0's third F unit only — U2b-cut amendment)
 
-  - [ ] 13.0 (Lina) Exemplar F's third unit: record `#family-overview:preamble` and confirm it under C1; precursor test green. **Runs after #223 merges, on a U2b branch cut from a `main` that contains #223**, and before 13.4 *(added 2026-09-27, U2b-cut amendment; ordering per Lina R1)*
+  - [x] 13.0 (Lina) Exemplar F's third unit: record `#family-overview:preamble` and confirm it under C1; precursor test green. **Runs after #223 merges, on a U2b branch cut from a `main` that contains #223**, and before 13.4 *(added 2026-09-27, U2b-cut amendment; ordering per Lina R1)*
   - [x] 13.1 Dispositions schema (explicit rows; per-member frontmatter; no re-pointed embeds; rejected term)
   - [ ] 13.2 Overlay + signature formats; stale and bare checks
   - [ ] 13.3 Confirmer/signer checks; verbatim-substring check

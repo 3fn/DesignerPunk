@@ -1,7 +1,7 @@
 # Issue: Spec 123 Task 11 — two deferred items from Lina's 11.2 confirmations (exemplar F coverage; stale Navigation `#purpose`)
 
 **Date**: 2026-09-27
-**Status**: ACTIVE (two items, each with its own trigger)
+**Status**: ACTIVE — Item 2 EXECUTED 2026-09-27; Item 1 EXECUTED 2026-09-28 (Task 13.0; its steps 4–5 ride G2 and 13.4)
 **Owner**: Lina
 **Trigger**: Item 1 fires at **the U2b branch cut** (before Task 13.4). Item 2 fires **immediately after U2a merges**. Each item below states its latest acceptable point.
 **Source**: Lina's 11.2 subtask doc, `.kiro/specs/123-consumer-distribution/completion/task-11-2-lina-completion.md` (§ "What changed": the F decision, its surviving residual, and the fragility flag), and the confirmation note `canonical/profiles/consumer/confirmations/component-family-navigation.md` (both on `task/123-u2a-g1`). **Ruling**: Peter, 2026-09-27. Both items are DEFERRED, with the triggers below.
@@ -26,6 +26,16 @@
 **Latest acceptable: before G2 (Task 18)**, so that pass four's domain line covers it.
 
 **Why the earlier point was declined.** It would have been a fifth mid-parent amendment on Task 11, and G1 runs on the eleven exemplars as ruled. The G1 record cannot claim a unit added after it.
+
+**Item 1 — EXECUTED 2026-09-28** (Lina, Spec 123 Task 13.0, on branch `task/123-u2b-lina-13-0`, cut from the U2b unit branch `task/123-u2b-profile` @ `ba015900` = `main`).
+- **Precondition met.** Fix step 2's tasks amendment on `main` landed as **#225** (`00078f11`, the U2b-cut amendment). It added 13.0 and the criterion row, and left the Task 11 and Task 12 wording unedited, per the addendum above. #223 (`14aa8c23`) is in the branch's ancestry. No `triviality.ts` exists yet: `git log --all -- tools/agent-generator/regrounding/triviality.ts` is empty.
+- **What changed.**
+  - `canonical/operative-sets/component-family-navigation.yaml` gains `#family-overview:preamble` (0 items).
+  - `canonical/profiles/consumer/confirmations/component-family-navigation.md` gains its C1 note block. The 11.2 decline is marked superseded in part (the `#purpose` / `#key-characteristics` pair stands).
+- **Re-verified, not carried over.** #223 edited this unit (`**Readiness**`: 2 → 5 components). Its hash moved from `sha256:995a525f…` (at `14aa8c23^`) to **`sha256:0b09be78566cb1466b5d4ea062b5c3344499cbf60ef4f4e4f4f0bb9e28c81f0c`** (at `14aa8c23`; the branch's copy of the doc is byte-identical to it). The edited line is still a status and inventory statement, so the unit still has **0 operative items** and the required verdict is **inapplicable**.
+- **Verification.** Precursor test **22/22** (the per-record tests iterate units, so the count does not rise). Three bites on the new unit, each restored: a corrupted note hash, a stale record hash, and `items: none` → one id. Each turned the test red naming `#family-overview:preamble`.
+- **Residual, surfaced not picked.** Form is held constant at `**Label**: value` but not at the list marker (these lines carry no `- `). See the note block.
+- **Remaining fix steps** are not Lina's here: step 4 (Stacy's gate domain) and step 5 (13.4's bite tests over all three F units, which is Lina's at 13.4).
 
 **Cross-reference.** The requirements 11.6.5 F and C(c1) rows are carried to the next requirements touch (`tasks.md` § "Carried obligations", #220). When that touch edits the F row, it should name the pair as instantiated (`#purpose` / `#key-characteristics`, plus the third unit if added). F's R2 wording (`## Overview` / `### Inheritance`) names sections that no family doc has.
 
