@@ -230,4 +230,78 @@ writeScope:
 
 ## 7. Review round record
 
-*(empty — `[STACY R1]` to come, with the mandate to attack the width; the author records `[THURGOOD R1]` incorporation here)*
+*(The author records `[THURGOOD R1]` incorporation here.)*
+
+### [STACY R1] — required reviewer, mandate "attack the width", 2026-09-28
+
+**Read at**: `c7b1f4bb` (this branch); the precedents are B-CI § 5 and `2026-09-26-tasks-row-write-scope-grant.md`; the charter is `canonical/agents/thurgood.md` L233–236.
+
+**My own bias, disclosed**: P3's workflow and P4's script are instruments my claims seat reads. The parity dormancy check and `verify-gate-registration.sh` are ARMING evidence. My incentive to narrow is strongest exactly there. Weigh the P3/P4 calls with that in mind.
+
+**The measured base rate, which drives the M1 verdict.**
+- `git log` over the four paths since 2026-07-10 (about 80 days) gives:
+  - **`lane-timing.yml`** (P1): 4 edits. Two were 125-A tasks (their own grants); one was a non-additive config fix (`a57d2fba`); one was PR-1.
+  - **P2–P4 together** (`agent-generator.yml`, `completion-criteria-parity.yml`, `verify-gate-registration.sh`): 5 edits, as follows.
+    - Two were count changes, which are Peter's act: `f652c3d3` (17→16) and `fb53d193` (16→18).
+    - Two were spec-task grants: 122 `9297488e` and 127 `46a43b33`.
+    - **One** is the kind of edit P2/P4 would cover: PR-1's unit-branch retrofit, `90fb0e71`. That was a one-off.
+- **P1's named task has recurred**: `test:scripts` in PR-1, and `test:agent-generator` now, two roots in two days. **P2–P4's named tasks have not recurred**: at most one covered edit each in 80 days, and it was a retrofit.
+
+#### M1 — ACCEPT-WITH-CHANGES: **narrow to P1. Exclude P2, P3 and P4 (they go to M2, per event).**
+
+1. **P1: keep it, with the width tied to the named task.**
+   - The current wording, "additive steps inside its existing required jobs", admits any step type. That includes steps that narrow what is tested while adding lines, such as a step that deletes or filters fixtures, a `continue-on-error: true`, or an `if:` guard.
+   - **Exact change** to P1's "What the owner may do":
+     > *"A step that runs an existing `package.json` test script (`npm run test` or `npm run test:*`, root or sub-package), inside an existing required job, plus that step's own did-it-really-run floor. The floor fails on zero, and it selects with the same script or config as the step. **Nothing else**: no environment, cache, runner, `if:` or `continue-on-error` change, and no step that is not a test script."*
+2. **"Additive" must be decidable after merge.** Add to "Evidence owed in each PR's body": *"`git diff main...HEAD -- .github/workflows/lane-timing.yml | grep -c '^-[^-]'` → 0 (P1 edits remove no line)."* That is what my pass diffs. A modification such as `a57d2fba` then goes to M2 by construction.
+3. **P2 — recommend EXCLUDE.**
+   - The named task, "when Peter adds a 122 context, its mirror follows", fires only on Peter's own act. So the mirror hunks belong **in Peter's PR, or in an M2 issue that his act opens**.
+   - Re-pointing a step to a named script is PR-1's one-off retrofit, already done.
+4. **P3 — recommend EXCLUDE.**
+   - Q2's arming preparation happens once, not repeatedly. That is M2's exact shape: one fixing PR, then the grant expires.
+   - Dormancy repairs, which my ARMING detects and Thurgood repairs, are per-event, and each goes to M2.
+   - B-CI excluded this workflow "by design", and nothing since has changed that reason.
+5. **P4 — recommend EXCLUDE. It is not only the thinnest; it is the most sensitive.**
+   - This script is the gate's own registration verifier: coverage-of-coverage, and my ARMING evidence.
+   - "Assertion mechanics" edits can weaken the check without changing the set. Whether shell mechanics were weakened can only be judged after merge, by the verifier whose instrument was edited.
+   - The named task follows Peter's set change, and that change is made in this same file, so it rides his PR.
+6. **The audit event: recommend ARMING as the primary event, and RELEASE as the backstop.**
+   - **RELEASE alone** leaves a latency tied to the release cadence. After 123, releases may be months apart, so a narrowed CI step would stand unaudited for that long.
+   - Adding a test root to a required lane **is "a new barrier arms"**, which is my ARMING trigger. It fires at the P1 PR's merge, and it already runs `audit:coverage-map`, whose lanes row for that root should disappear.
+   - **Exact change**:
+     - Replace the "Audit" bullet with: *"The firing event is **ARMING**, at the P1 PR's merge (a new barrier arms). It reads the diff ⊆ P1, zero removed lines, the floor's selection matches the step, and `audit:coverage-map`'s lanes row cleared. The next RELEASE pass is the backstop, over the release delta."*
+     - **Add an edit site**: `canonical/agents/stacy.md`, the trigger-table ARMING row. Its Event gains "/ a CI-regime standing-scope (P1) PR merges", and its Scope gains "plus, for a P1 PR, the extent and additivity checks (ballot 2026-09-27-ci-regime-standing-scope § 2)", followed by regeneration.
+     - Without that edit site, the audit duty lands in my seat with no row carrying it: the promised-artifact-without-a-criterion-row class.
+7. **The review trigger: recommend TAKE**, with (ii) re-reading "P1" only.
+8. **The "removing or weakening" exclusion: recommend TAKE.** With change 2 it becomes decidable for P1.
+9. **The Agent-Directory line: recommend TAKE**, reworded to match: *"…the CI regime's standing test-lane scope (`lane-timing.yml` test-script steps with floors; ballot 2026-09-27-ci-regime-standing-scope)…"*.
+10. **The charter body line**: rewrite it to P1 only, using change 1's wording.
+
+#### M2 — ACCEPT-WITH-CHANGES
+
+- **Activation is not as clean as the tasks-row precedent.**
+  - A `tasks.md` row reaches Peter's merge after a six-seat tasks round.
+  - An issue's `**Grant paths**:` list has no review round, and it could be merged **incidentally**, inside a larger PR.
+  - **Exact change** to clause 4: *"Activation: Peter's merge of a PR whose diff adds or changes the `**Grant paths**:` list **and whose PR body names the grant (issue path + listed paths)**. A list added or changed in a PR whose body does not name it grants nothing."*
+- **Clause 6 must name what my pass diffs against.** Exact change: append *"The comparison is against the list **as it stood at the activating merge** (`git show <activating-merge>:<issue path>`). Later edits to the issue regrant nothing."*
+- **Clause 5 lets M2 bypass M1's limits on CI paths.** Once P2–P4 move to M2, this matters. Exact change: append *"An issue-row grant over any `.github/**` path or `tools/agent-generator/verify-gate-registration.sh` carries M1's excluded acts (no new required context, no change to `EXPECTED_CONTEXTS`'s count, no removing or weakening a step, floor or execution assertion), unless the issue's grant line names the act and Peter's merge admits it."*
+- **Accepted as written**: the `**Grant paths**:` list form, the never-governance-law clause, register row `issue-row-write-scope-grant` (owner stacy, audit), README item 8, the named-owner-only rule, and one fixing PR.
+- **The trace check (clause 7) is post-activation** (it runs at the walk). The PR-body naming above is what makes Peter's merge an informed act in its place.
+
+#### M3 — ACCEPT-WITH-CHANGES (one)
+
+- **Confirmed**:
+  - the text matches my consult amendment, including the expiry-string clause;
+  - the #211 exception;
+  - placement in register entry `instrument-rows-disposed-not-fixed` (owner stacy, audit), with README item 7 as the operational half.
+- **The row-removal and `generated.lock` clause (author's addition): recommend TAKE, made exact.** Replace *"may remove exactly the adjudication rows whose `record` carries its expiry string, and commit the refreshed `canonical/generated.lock` that the green diff-guard writes"* with *"may remove exactly the adjudication rows whose `record` carries its expiry string (the `canonical/adjudications.yaml` diff removes only those rows and adds nothing, cited), and commit the `canonical/generated.lock` written by a green `diff-guard.ts` run **in the same PR** (the run's output line cited)."*
+
+#### Residuals the author under-weighted in § 6, about his own scope
+
+1. **The width fell on the verifier's own instruments.** P3 and P4 put the audited seat's hand on the auditor's evidence tools. The concentration counter-argument in § 6 covers gate authority, not verifier independence.
+2. **RELEASE latency.** After 123, releases may be months apart. § 6 treats "post-merge" as one thing, but post-merge-next-day and post-merge-next-quarter differ. Change 6 closes most of this.
+3. **"Additive" covers more than tests.** An added step can narrow what is tested. § 6's "mis-selection" residual names only the floor. Change 1 closes most of it.
+4. **His own precedent's recorded counter-argument is not cited.** The tasks-row ballot rejected charter widening as *"permanent scope for temporary work … charters drift toward 'everything'"*. M1 is a charter widening, and three of its four paths are temporary-shaped. The use-based review trigger mitigates this after the fact. Narrowing to P1 avoids it at the start.
+
+**Residual I cannot fold**: with P2–P4 excluded, each such event costs one M2 issue PR before the fix PR, and Q2's preparation may need more than one. That is friction, traded for the verifier's independence. **The pick is Peter's.**
+
