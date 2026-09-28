@@ -94,7 +94,7 @@
 
 ### The rule text
 
-> **Errata to a completion doc.** A correction to a committed completion doc is appended as a dated `## Erratum <date>` (or `## Addendum <date>`) section that cites what it corrects and what found it. The original text is not edited. An erratum to a criterion row's Status or Evidence also updates that row in place, and says so in the erratum. **An erratum does not discharge or pre-empt a claims-pass finding on the original claim** — whether the original is a finding is the claims-pass seat's call.
+> **Errata to a completion doc.** A correction to a committed completion doc is appended as a dated `## Erratum <date>` (or `## Addendum <date>`) section that cites what it corrects and what found it. The original text is not edited, with one exception: an erratum to a criterion row's Status or Evidence also updates that row in place, and quotes the replaced Status and Evidence verbatim in the erratum. **An erratum does not discharge or pre-empt a claims-pass finding on the original claim** — whether the original is a finding is the claims-pass seat's call.
 
 ### Before → after (`governance/completion-documentation-guide.md`)
 
@@ -105,7 +105,7 @@
 
 - **The counter-argument**: the rule could invite quiet rewriting of a false claim before a claims pass sees it.
 - **Folded in**: the original is never edited, and "does not pre-empt a finding" is stated.
-- **What survives**: an in-place row update, which the rule requires so that parity stays true, does change the row a claims pass reads. The erratum's citation is what keeps the change visible.
+- **What survives**: an in-place row update, which the rule requires so that parity stays true, does change the row a claims pass reads. The erratum's verbatim quote of the replaced Status and Evidence is what keeps the original claim readable (Stacy R1).
 
 ---
 
@@ -131,3 +131,12 @@
 
 - **§ 1**: the rule text is mine, pasted verbatim above; the SEPARABLE clause is marked for Peter's pick.
 - **§ 2 (the errata rule): AMEND.** The rule contradicts itself ("the original text is not edited" against "updates that row in place"). If the replaced row is not kept, a claims pass loses the original claim, which the rule's own last sentence leaves to that seat. Replace *"The original text is not edited. An erratum to a criterion row's Status or Evidence also updates that row in place, and says so in the erratum."* with *"The original text is not edited, with one exception: an erratum to a criterion row's Status or Evidence also updates that row in place, and quotes the replaced Status and Evidence verbatim in the erratum."*
+
+### [THURGOOD R1] — author incorporation, 2026-09-27
+
+- **§ 1**: Stacy's text stands verbatim. My original proposal is kept only as the history note, and the SEPARABLE clause is left for Peter's pick. No change from my seat.
+- **§ 2, Stacy R1 AMEND — incorporated as written.**
+  - The rule text now reads "…is not edited, with one exception: an erratum to a criterion row's Status or Evidence also updates that row in place, and quotes the replaced Status and Evidence verbatim in the erratum." That is her replacement, byte for byte.
+  - Her finding is right: "not edited" and "updates in place" contradicted each other, and without the verbatim quote a claims pass would lose the original claim that the rule's last sentence reserves to her seat.
+  - The § 2 counter-argument's residual line now names the verbatim quote, not the citation, as what keeps the original readable.
+- **Applied instance**: the Spec 123 Task 12 erratum (`80d45f2b`, #224) already quotes the replaced Evidence as was → is. Under the amended text, F-1's "was" should be the full replaced cell rather than an elided quote. This is noted for the ballot's first application, and #224 is not re-edited.
