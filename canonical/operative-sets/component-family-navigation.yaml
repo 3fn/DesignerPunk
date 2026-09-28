@@ -1,0 +1,56 @@
+# canonical/operative-sets/component-family-navigation.yaml — operative-set records (design C16; Req 11.6.5d)
+#
+# Exemplar F (Lina R2; Req 11.6.5 and 5c): a family doc's expository overview unit against its
+#   `- **Label**: value` bullets. PROPOSED INSTANTIATION, for Lina's confirmation: no family doc
+#   in the corpus has an `## Overview` / `### Inheritance` pair as F's row words it — all 13
+#   carry their `- **Label**: value` bullets under `## Family Overview` (none under
+#   `## Inheritance Structure`). See task-11-1-completion.md § "Exemplar F".
+# File named for its SOURCE document (one file per source); `lina.yaml` is lina.md's.
+#
+# canonicalHash = "sha256:" + hex SHA-256 over the unit's exact UTF-8 bytes, as returned by
+#   partition(splitFrontmatter(<source>).body) (tools/agent-generator/{frontmatter,partition}.ts).
+# Unit keys are Task 10's partition anchors, verbatim. Item `text` is the COMPLETE operative text
+#   and a verbatim substring of the unit (C16); `label` is a human label only, never matched.
+#   Headings are labels, never items (clause (c)). List/bullet markers and indentation are not
+#   part of an item's text; multi-line items (code, tables) keep their internal bytes.
+# `kind` is one of 11.6.2's five: obligation | step | member | route | command.
+# `confirmer` is the C1 function of (owner, profile author = thurgood). The owner fixes and
+#   confirms each unit's set (11.6.5d); the `confirmation:` note is written in the
+#   confirmer's seat, never the drafter's.
+# Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27). Confirmed by Lina (owner seat, C1),
+#   Task 11.2 (2026-09-27): instantiation KEPT (#purpose 0 items / #key-characteristics 5 items).
+#   Ruling and the declined #family-overview:preamble alternative: confirmations/component-family-navigation.md
+source: governance/Component-Family-Navigation.md
+owner: lina
+confirmer: lina
+units:
+  # exemplar F (expository half — required: inapplicable) — 0 item(s)
+  "#purpose":
+    canonicalHash: sha256:6e5be41076b8f9320f49e2226c16b526a6623508190847b1c4923fe1697fd589
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/component-family-navigation.md#purpose
+  # exemplar F (normative Label: value half — required: operative) — 5 item(s)
+  "#key-characteristics":
+    canonicalHash: sha256:5df158450211b650b1b92b9a1f237ec04668fdf201b0f60a350968e1eee60f77
+    items:
+      - id: nav-mutually-exclusive-selection
+        kind: obligation
+        label: Mutually Exclusive Selection
+        text: "**Mutually Exclusive Selection**: Exactly one option active at all times"
+      - id: nav-animated-indicators
+        kind: obligation
+        label: Animated Indicators
+        text: "**Animated Indicators**: Choreographed indicator movement (segmented: four-phase shadow/resize/glide; tab bar: three-phase glow/glide)"
+      - id: nav-equal-width-distribution
+        kind: obligation
+        label: Equal-Width Distribution
+        text: "**Equal-Width Distribution**: Content-independent sizing with minimum touch targets"
+      - id: nav-no-disabled-states
+        kind: obligation
+        label: No Disabled States
+        text: "**No Disabled States**: Unavailable options are removed from the array, not disabled"
+      - id: nav-icon-text-variants
+        kind: obligation
+        label: Icon + Text Variants
+        text: "**Icon + Text Variants**: Segmented control supports text or icon; tab bar is icon-only (v1)"
+    confirmation: canonical/profiles/consumer/confirmations/component-family-navigation.md#key-characteristics

@@ -4,6 +4,222 @@
     {
       "lines": [
         1,
+        1
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        4,
+        10
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        11,
+        11
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[check_composition]"
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[find_components]"
+    },
+    {
+      "lines": [
+        13,
+        13
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[get_component_catalog]"
+    },
+    {
+      "lines": [
+        14,
+        14
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[get_component_full]"
+    },
+    {
+      "lines": [
+        15,
+        15
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[get_component_health]"
+    },
+    {
+      "lines": [
+        16,
+        16
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[get_component_summary]"
+    },
+    {
+      "lines": [
+        17,
+        17
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[get_token_consumers]"
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[get_token_details]"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[get_token_family]"
+    },
+    {
+      "lines": [
+        20,
+        20
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[search_tokens]"
+    },
+    {
+      "lines": [
+        21,
+        21
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-application[validate_assembly]"
+    },
+    {
+      "lines": [
+        22,
+        22
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-docs[find_docs]"
+    },
+    {
+      "lines": [
+        23,
+        23
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-docs[get_document_full]"
+    },
+    {
+      "lines": [
+        24,
+        24
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-docs[get_document_summary]"
+    },
+    {
+      "lines": [
+        25,
+        25
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-docs[get_index_health]"
+    },
+    {
+      "lines": [
+        26,
+        26
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-docs[get_section]"
+    },
+    {
+      "lines": [
+        27,
+        27
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-product[find_screens]"
+    },
+    {
+      "lines": [
+        28,
+        28
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-product[get_product_health]"
+    },
+    {
+      "lines": [
+        29,
+        29
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-product[get_product_overview]"
+    },
+    {
+      "lines": [
+        30,
+        30
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-product[get_product_tokens]"
+    },
+    {
+      "lines": [
+        31,
+        31
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-product[get_screen_spec]"
+    },
+    {
+      "lines": [
+        32,
+        32
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-product[get_screen_state_model]"
+    },
+    {
+      "lines": [
+        33,
+        33
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:toolSubset.designerpunk-product[list_experience_map]"
+    },
+    {
+      "lines": [
+        34,
         34
       ],
       "op": "render",
@@ -20,10 +236,282 @@
     {
       "lines": [
         37,
+        57
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#identity"
+    },
+    {
+      "lines": [
+        58,
+        72
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#in-scope"
+    },
+    {
+      "lines": [
+        73,
+        82
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#out-of-scope"
+    },
+    {
+      "lines": [
+        83,
+        95
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-audit-vs-write-distinction"
+    },
+    {
+      "lines": [
+        96,
+        99
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#operational-mode-process-audit:preamble"
+    },
+    {
+      "lines": [
+        100,
+        146
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#audit-checklist"
+    },
+    {
+      "lines": [
+        147,
+        149
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#incremental-capture-rule"
+    },
+    {
+      "lines": [
+        150,
+        156
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#audit-output"
+    },
+    {
+      "lines": [
+        157,
+        164
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#audit-is-analysis-not-implementation"
+    },
+    {
+      "lines": [
+        165,
+        168
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble"
+    },
+    {
+      "lines": [
+        169,
+        176
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-charter-cut-ratified-verbatim"
+    },
+    {
+      "lines": [
+        177,
+        196
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-trigger-set-the-114-superset-table-names-never-numbers"
+    },
+    {
+      "lines": [
+        197,
+        214
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-claims-pass-record-claims-passmd-the-template"
+    },
+    {
+      "lines": [
+        215,
+        261
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
+    },
+    {
+      "lines": [
+        262,
+        267
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength"
+    },
+    {
+      "lines": [
+        268,
+        275
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference"
+    },
+    {
+      "lines": [
+        276,
+        281
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument"
+    },
+    {
+      "lines": [
+        282,
+        287
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#operational-mode-parity-review:preamble"
+    },
+    {
+      "lines": [
+        288,
+        295
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#review-process"
+    },
+    {
+      "lines": [
+        296,
+        308
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#what-parity-means"
+    },
+    {
+      "lines": [
+        309,
+        314
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#operational-mode-lessons-synthesis-review:preamble"
+    },
+    {
+      "lines": [
+        315,
+        323
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#your-role"
+    },
+    {
+      "lines": [
+        324,
+        330
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#what-you-dont-do"
+    },
+    {
+      "lines": [
+        331,
+        339
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#with-leonardo"
+    },
+    {
+      "lines": [
+        340,
+        346
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#with-platform-agents-kenya-data-sparky"
+    },
+    {
+      "lines": [
+        347,
+        353
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#with-thurgood-system-counterpart"
+    },
+    {
+      "lines": [
+        354,
+        361
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#with-peter"
+    },
+    {
+      "lines": [
+        362,
+        375
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        376,
+        379
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        380,
+        384
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        385,
+        387
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        388,
+        390
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        391,
+        395
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#ask-if-unsure"
+    },
+    {
+      "lines": [
+        396,
+        403
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#what-you-own"
+    },
+    {
+      "lines": [
+        404,
         409
       ],
       "op": "passthrough",
-      "source": "canonical/agents/stacy.md#body"
+      "source": "canonical/agents/stacy.md#what-you-dont-own"
     },
     {
       "lines": [
@@ -40,7 +528,7 @@
       ],
       "mode": "embed",
       "op": "resolve",
-      "source": "id:test-development-standards"
+      "source": "canonical/agents/stacy.md#frontmatter:ambient[test-development-standards]"
     },
     {
       "lines": [
@@ -53,26 +541,394 @@
     {
       "lines": [
         770,
+        771
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes"
+    },
+    {
+      "lines": [
+        772,
+        772
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[spec-requirements-format]"
+    },
+    {
+      "lines": [
+        773,
+        773
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[spec-tasks-format]"
+    },
+    {
+      "lines": [
+        774,
+        774
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[task-type-classification]"
+    },
+    {
+      "lines": [
+        775,
+        775
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[contract-validation-process]"
+    },
+    {
+      "lines": [
+        776,
+        776
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[completion-doc-guidance]"
+    },
+    {
+      "lines": [
+        777,
+        777
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[dev-workflow-detail]"
+    },
+    {
+      "lines": [
+        778,
+        778
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[file-organization]"
+    },
+    {
+      "lines": [
+        779,
+        779
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[spec-planning-beyond]"
+    },
+    {
+      "lines": [
+        780,
+        780
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[task-types-beyond]"
+    },
+    {
+      "lines": [
+        781,
+        781
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[bcv-beyond]"
+    },
+    {
+      "lines": [
+        782,
+        782
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[completion-docs-beyond]"
+    },
+    {
+      "lines": [
+        783,
+        783
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[contract-concept-names]"
+    },
+    {
+      "lines": [
+        784,
+        784
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[product-token-gov-detail]"
+    },
+    {
+      "lines": [
+        785,
+        785
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.docs[test-dev-standards-add]"
+    },
+    {
+      "lines": [
+        786,
+        786
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.agents[leonardo]"
+    },
+    {
+      "lines": [
+        787,
+        787
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.agents[kenya]"
+    },
+    {
+      "lines": [
+        788,
+        788
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.agents[data]"
+    },
+    {
+      "lines": [
+        789,
+        789
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.agents[sparky]"
+    },
+    {
+      "lines": [
+        790,
+        790
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.agents[thurgood]"
+    },
+    {
+      "lines": [
+        791,
+        791
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[0]"
+    },
+    {
+      "lines": [
+        792,
+        792
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[1]"
+    },
+    {
+      "lines": [
+        793,
+        793
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[2]"
+    },
+    {
+      "lines": [
+        794,
+        794
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[3]"
+    },
+    {
+      "lines": [
+        795,
+        795
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[4]"
+    },
+    {
+      "lines": [
+        796,
+        796
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[5]"
+    },
+    {
+      "lines": [
+        797,
+        797
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[6]"
+    },
+    {
+      "lines": [
+        798,
+        798
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[7]"
+    },
+    {
+      "lines": [
+        799,
+        799
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[8]"
+    },
+    {
+      "lines": [
+        800,
+        800
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[9]"
+    },
+    {
+      "lines": [
+        801,
+        801
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:routes.cues[10]"
+    },
+    {
+      "lines": [
+        802,
         802
       ],
       "op": "render",
-      "source": "routes"
+      "source": "canonical/agents/stacy.md#frontmatter:routes"
     },
     {
       "lines": [
         803,
+        804
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:commands"
+    },
+    {
+      "lines": [
+        805,
+        805
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:commands[audit-coverage-map]"
+    },
+    {
+      "lines": [
+        806,
+        806
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:commands[audit-mode-parity]"
+    },
+    {
+      "lines": [
+        807,
+        807
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:commands[audit-theme-drift]"
+    },
+    {
+      "lines": [
+        808,
+        808
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:commands[test-coverage]"
+    },
+    {
+      "lines": [
+        809,
+        809
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:commands[governance-health-check]"
+    },
+    {
+      "lines": [
+        810,
+        810
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:commands[verify-gate-registration]"
+    },
+    {
+      "lines": [
+        811,
+        811
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+    },
+    {
+      "lines": [
+        812,
+        812
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+    },
+    {
+      "lines": [
+        813,
+        813
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        814,
+        815
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
+    },
+    {
+      "lines": [
+        816,
         816
       ],
       "op": "render",
-      "source": "commands+shared-catalog"
+      "source": "canonical/agents/stacy.md#frontmatter:commands"
     },
     {
       "lines": [
         817,
+        818
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        819,
+        819
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[completion-docs]"
+    },
+    {
+      "lines": [
+        820,
+        820
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[spec-summaries]"
+    },
+    {
+      "lines": [
+        821,
+        821
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[source-tree]"
+    },
+    {
+      "lines": [
+        822,
         822
       ],
       "op": "render",
-      "source": "knowledgeBases"
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases"
     },
     {
       "lines": [
@@ -80,15 +936,31 @@
         826
       ],
       "op": "render",
-      "source": "writeScope"
+      "source": "canonical/agents/stacy.md#frontmatter:writeScope"
     },
     {
       "lines": [
         827,
+        830
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:preflight"
+    },
+    {
+      "lines": [
+        831,
+        831
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        832,
         832
       ],
       "op": "render",
-      "source": "kiro.hooks.agentSpawn"
+      "source": "canonical/agents/stacy.md#frontmatter:preflight"
     }
   ]
 }

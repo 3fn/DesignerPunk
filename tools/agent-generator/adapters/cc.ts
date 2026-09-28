@@ -15,7 +15,10 @@
  *
  * ATTRIBUTION: every emitted file (agent body, CLAUDE.md) carries a multi-span sidecar built
  * WITH `AttributionAccumulator` as each block is appended — see `adapters/index.ts`'s header
- * for the full rule. Skill-tree copies use a single passthrough span per file.
+ * for the full rule. The AGENT file's spans are all constructed by `emitSpans` (spans.ts, Spec
+ * 123 C14): one passthrough span per body partition unit, one render span per frontmatter
+ * entry — this adapter supplies only the rendered text. (CLAUDE.md's always-layer spans are
+ * C19's, Task 15.) Skill-tree copies use a single passthrough span per file.
  *
  * Traces to: Req 1, Req 4, Req 8, Req 9, Req 10, Req 11, Req 12, Req 15, Req 16, Req 24;
  * design C4, C11.
@@ -30,7 +33,6 @@ import { isNamedGapCommandEntry } from '../schema';
 import type { SkillsMapRow, SkillsMap } from '../skills';
 import { ccSkillRef } from '../skills';
 import {
-  renderPassThrough,
   renderWorkflowRules,
   renderWriteScopeNote,
   renderRunContextAnnotation,
@@ -41,6 +43,8 @@ import {
   renderGroundTruthTrims,
 } from '../render';
 import { AttributionAccumulator, type AttributionManifest } from '../attribution';
+import { emitSpans, type SpanPiece, type SpanPlan, type SpanSource } from '../spans';
+import type { YamlDoc } from '../frontmatter';
 import {
   MCP_TO_SERVER,
   type TargetAdapter,
@@ -112,15 +116,17 @@ function cueToolRef(subset: ToolSubset, cue: ToolCueRoute): string {
  */
 export const CC_CORE_TOOLS: readonly string[] = ['Read', 'Grep', 'Glob', 'Bash', 'Write', 'Edit'];
 
-/** Every namespaced tool name in a subset, flattened, sorted (P1 determinism). */
-function allNamespacedTools(subset: ToolSubset): string[] {
-  const refs: string[] = [];
+/**
+ * Every namespaced tool name in a subset, flattened, sorted by ref (P1 determinism) — each
+ * carrying its server and its index in that server's subset list — so `emitSpans` keys each rendered grant to its
+ * `toolSubset.<server>[<tool>]` entry (the entry tree, not this adapter, names the key).
+ */
+function namespacedToolEntries(subset: ToolSubset): { server: keyof ToolSubset; index: number; ref: string }[] {
+  const entries: { server: keyof ToolSubset; index: number; ref: string }[] = [];
   for (const server of TOOL_SUBSET_SERVERS) {
-    for (const tool of subset[server] ?? []) {
-      refs.push(`mcp__${server}__${tool}`);
-    }
+    (subset[server] ?? []).forEach((tool, index) => entries.push({ server, index, ref: `mcp__${server}__${tool}` }));
   }
-  return refs.sort();
+  return entries.sort((a, b) => (a.ref < b.ref ? -1 : a.ref > b.ref ? 1 : 0));
 }
 
 /** The flat (non-namespaced) tool names in a subset — what WORKFLOW_RULES.appliesToTools names. */
@@ -210,24 +216,33 @@ export class CcAdapter implements TargetAdapter {
     const acc = new AttributionAccumulator();
     const bodyParts: string[] = [];
 
+    // EVERY span below is constructed by `emitSpans` (C14, Spec 123 Task 10.4): this adapter
+    // supplies only the per-target RENDERING of each piece — never a span, never a source.
+    // (`AdapterContext.profile` lands at Task 15.1; until then this is the steward rendering.)
+    const src: SpanSource = {
+      file: `canonical/agents/${fm.agent}.md`,
+      body: agent.doc.body,
+      frontmatter: fm as unknown as YamlDoc,
+    };
+    const emit = (plan: SpanPlan): string => emitSpans(acc, src, 'steward', undefined, undefined, plan).text;
+
     // -- Frontmatter --------------------------------------------------------
     // Core tools first (the complete-allowlist rule — see CC_CORE_TOOLS), `Skill` iff the
-    // agent declares skills, then the namespaced MCP subset.
-    const namespacedTools = allNamespacedTools(subset);
-    const coreTools = [...CC_CORE_TOOLS, ...((fm.skills ?? []).length > 0 ? ['Skill'] : [])];
-    const frontmatterLines = [
-      '---',
-      `name: ${fm.agent}`,
-      `description: ${fm.description}`,
-      'tools:',
-      ...coreTools.map((t) => `  - ${t}`),
-      ...namespacedTools.map((t) => `  - ${t}`),
-      '---',
-      '',
-    ];
-    const frontmatterText = frontmatterLines.join('\n');
-    acc.add('render', countLines(frontmatterText), 'C1:frontmatter');
-    bodyParts.push(frontmatterText);
+    // agent declares skills, then the namespaced MCP subset — one entry span per granted tool.
+    const coreToolsBlock = ['tools:', ...CC_CORE_TOOLS.map((t) => `  - ${t}`)].join('\n') + '\n';
+    bodyParts.push(
+      emit([
+        { kind: 'glue', glue: 'frontmatter-fence', text: '---\n' },
+        { kind: 'entry', path: 'agent', text: `name: ${fm.agent}\n` },
+        { kind: 'entry', path: 'description', text: `description: ${fm.description}\n` },
+        { kind: 'glue', glue: 'frontmatter-fence', text: coreToolsBlock },
+        ...((fm.skills ?? []).length > 0 ? [{ kind: 'entry' as const, path: 'skills', text: '  - Skill\n' }] : []),
+        ...namespacedToolEntries(subset).map(
+          (t): SpanPiece => ({ kind: 'member', list: `toolSubset.${t.server}`, index: t.index, text: `  - ${t.ref}\n` })
+        ),
+        { kind: 'glue', glue: 'frontmatter-fence', text: '---\n' },
+      ])
+    );
 
     // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
     // One generator-authored body line immediately after the frontmatter, marking the
@@ -237,14 +252,10 @@ export class CcAdapter implements TargetAdapter {
       `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
       'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
       'caught by 122-diff-guard. -->\n\n';
-    acc.add('render', countLines(generatedBanner), 'O-3:generated-banner');
-    bodyParts.push(generatedBanner);
+    bodyParts.push(emit([{ kind: 'glue', glue: 'generated-banner', text: generatedBanner }]));
 
-    // -- (a) Pass-through body verbatim --------------------------------------
-    const passthrough = renderPassThrough(agent.doc.body);
-    const passthroughBlock = ensureTrailingNewline(passthrough);
-    acc.add('passthrough', countLines(passthroughBlock), `canonical/agents/${fm.agent}.md#body`);
-    bodyParts.push(passthroughBlock);
+    // -- (a) Pass-through body — one span per partition unit (C13/C14) --------
+    bodyParts.push(emit('body'));
 
     // -- (b) Ambient (per-agent) — C11 LANE 2, generated inline embeds -------
     const manifest = agent.ambientManifests.cc;
@@ -257,12 +268,10 @@ export class CcAdapter implements TargetAdapter {
     // incorporation, 5.2): an empty header is operating-prompt noise — consistent with the
     // other conditional sections, and with the empty-by-design manifest verdict (Req 10 AC2)
     // where "emit nothing" is the recorded intent.
+    const ambientPieces: SpanPiece[] = [];
     if (perAgentMembers.length > 0) {
-      const ambientHeader = '## Ambient (per-agent)\n\n';
-      acc.add('render', countLines(ambientHeader), 'C11:lane2-header');
-      bodyParts.push(ambientHeader);
+      ambientPieces.push({ kind: 'glue', glue: 'ambient-lane2-header', text: '## Ambient (per-agent)\n\n' });
     }
-
     for (const member of perAgentMembers) {
       const embed = ctx.embeds?.[member.id];
       if (embed === undefined) {
@@ -272,10 +281,9 @@ export class CcAdapter implements TargetAdapter {
             `per-agent-lane member; refusing to emit an empty embed silently.`
         );
       }
-      const block = `### ${member.id}\n\n${ensureTrailingNewline(embed)}\n`;
-      acc.add('resolve', countLines(block), `id:${member.id}`, 'embed');
-      bodyParts.push(block);
+      ambientPieces.push({ kind: 'entry', path: `ambient[${member.id}]`, text: `### ${member.id}\n\n${ensureTrailingNewline(embed)}\n` });
     }
+    bodyParts.push(emit(ambientPieces));
 
     // -- (b2) Ground truth (manifest verdict honored as DATA — Req 10 AC2/AC3) ------
     // Two mutually-exclusive legs (a directive carries faithfulnessVerbs XOR trims):
@@ -289,9 +297,9 @@ export class CcAdapter implements TargetAdapter {
         renderGroundTruthFaithfulness(manifest.groundTruth, toolName) ??
         renderGroundTruthTrims(manifest.groundTruth, toolName);
       if (groundTruthBody !== undefined) {
-        const block = `## Ground truth\n\n${groundTruthBody}\n\n`;
-        acc.add('render', countLines(block), 'ambient.groundTruthManifest');
-        bodyParts.push(block);
+        bodyParts.push(
+          emit([{ kind: 'entry', path: 'ambient.groundTruthManifest', text: `## Ground truth\n\n${groundTruthBody}\n\n` }])
+        );
       }
     }
 
@@ -299,89 +307,83 @@ export class CcAdapter implements TargetAdapter {
     const flatTools = allFlatTools(subset);
     const workflowRulesText = renderWorkflowRules(ctx.workflowRules, flatTools);
     if (workflowRulesText.length > 0) {
-      const block = `## Workflow rules\n\n${workflowRulesText}\n\n`;
-      acc.add('render', countLines(block), 'WORKFLOW_RULES');
-      bodyParts.push(block);
+      bodyParts.push(emit([{ kind: 'glue', glue: 'workflow-rules', text: `## Workflow rules\n\n${workflowRulesText}\n\n` }]));
     }
 
-    // -- (d) Routing ------------------------------------------------------------
+    // -- (d) Routing — one entry span per route ------------------------------------
     const docRoutes = (fm.routes?.docs ?? []) as DocRoute[];
     const cueRoutes = (fm.routes?.cues ?? []) as ToolCueRoute[];
     const agentRoutes = fm.routes?.agents ?? [];
     if (docRoutes.length > 0 || cueRoutes.length > 0 || agentRoutes.length > 0) {
-      const lines: string[] = ['## Routing', ''];
-      for (const route of docRoutes) {
-        lines.push(`- ${renderDocRoute(route)}`);
-      }
-      // Inter-agent routes rendered per LE-D1 (Stacy's U2 row-3 finding: the structured
-      // routes must also be DELIVERED, or body pointers at "your routing section" dangle).
-      for (const route of agentRoutes) {
-        lines.push(`- ${renderAgentRoute(route)}`);
-      }
-      for (const cue of cueRoutes) {
-        const namespaced = cueToolRef(subset, cue); // by the cue's OWN mcp — never subset order
-        lines.push(`- ${renderToolCue({ ...cue, tool: namespaced })}`);
-      }
-      lines.push('');
-      const block = `${lines.join('\n')}\n`;
-      acc.add('render', countLines(block), 'routes');
-      bodyParts.push(block);
+      bodyParts.push(
+        emit([
+          { kind: 'entry', path: 'routes', text: '## Routing\n\n' },
+          ...docRoutes.map((route, i): SpanPiece => ({ kind: 'member', list: 'routes.docs', index: i, text: `- ${renderDocRoute(route)}\n` })),
+          // Inter-agent routes rendered per LE-D1 (Stacy's U2 row-3 finding: the structured
+          // routes must also be DELIVERED, or body pointers at "your routing section" dangle).
+          ...agentRoutes.map((route, i): SpanPiece => ({ kind: 'member', list: 'routes.agents', index: i, text: `- ${renderAgentRoute(route)}\n` })),
+          ...cueRoutes.map((cue, i): SpanPiece => {
+            const namespaced = cueToolRef(subset, cue); // by the cue's OWN mcp — never subset order
+            return { kind: 'member', list: 'routes.cues', index: i, text: `- ${renderToolCue({ ...cue, tool: namespaced })}\n` };
+          }),
+          { kind: 'entry', path: 'routes', text: '\n' },
+        ])
+      );
     }
 
-    // -- (e) Commands -------------------------------------------------------
+    // -- (e) Commands — one entry span per command, one per shared-catalog member ---
     const commandEntries = fm.commands ?? [];
     const sharedMembers = ctx.sharedCatalog
       .slice()
       .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
     if (commandEntries.length > 0 || sharedMembers.length > 0) {
-      const lines: string[] = ['## Commands', ''];
-      for (const entry of commandEntries) {
-        lines.push(renderCommandEntry(entry));
-      }
-      for (const member of sharedMembers) {
-        lines.push(renderSharedCatalogMember(member, subset));
-      }
-      lines.push('');
-      const block = `${lines.join('\n')}\n`;
-      // The whole commands section renders from fields; shared-catalog members are
-      // additionally sourced by id — represent both under one render span (P4: the
-      // block is entirely field-driven template glue, no free prose of its own).
-      acc.add('render', countLines(block), 'commands+shared-catalog');
-      bodyParts.push(block);
+      const glue = (text: string): SpanPiece =>
+        fm.commands !== undefined ? { kind: 'entry', path: 'commands', text } : { kind: 'glue', glue: 'shared-catalog-section', text };
+      bodyParts.push(
+        emit([
+          glue('## Commands\n\n'),
+          ...commandEntries.map((entry, i): SpanPiece => ({ kind: 'member', list: 'commands', index: i, text: `${renderCommandEntry(entry)}\n` })),
+          ...sharedMembers.map((member): SpanPiece => ({ kind: 'shared', id: member.id, text: `${renderSharedCatalogMember(member, subset)}\n` })),
+          glue('\n'),
+        ])
+      );
     }
 
-    // -- (f) Knowledge fallback -----------------------------------------------
+    // -- (f) Knowledge fallback — one entry span per knowledge base ------------------
     const knowledgeBases = fm.knowledgeBases ?? [];
     if (knowledgeBases.length > 0) {
-      const lines: string[] = ['## Knowledge fallback', ''];
-      for (const kb of knowledgeBases) {
-        lines.push(`- ${kb.name}: search these paths with Grep/Glob: ${kb.globs.join(', ')}`);
-      }
-      lines.push('');
-      const block = `${lines.join('\n')}\n`;
-      acc.add('render', countLines(block), 'knowledgeBases');
-      bodyParts.push(block);
+      bodyParts.push(
+        emit([
+          { kind: 'entry', path: 'knowledgeBases', text: '## Knowledge fallback\n\n' },
+          ...knowledgeBases.map((kb, i): SpanPiece => ({
+            kind: 'member',
+            list: 'knowledgeBases',
+            index: i,
+            text: `- ${kb.name}: search these paths with Grep/Glob: ${kb.globs.join(', ')}\n`,
+          })),
+          { kind: 'entry', path: 'knowledgeBases', text: '\n' },
+        ])
+      );
     }
 
-    // -- (g) Write scope --------------------------------------------------------
+    // -- (g) Write scope ----------------------------------------------------------
+    // ONE rendered sentence names every glob, so its span is the `writeScope` container, not
+    // a member (a line cannot carry per-member spans) — recorded for Task 14's E-fm.
     const writeScope = fm.writeScope;
     if (writeScope && writeScope.length > 0) {
-      const block = `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n`;
-      acc.add('render', countLines(block), 'writeScope');
-      bodyParts.push(block);
+      bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
     }
 
     // -- (h) Kiro-only fields per ctx.dispositions -------------------------------
     const agentSpawn = fm.kiro?.agentSpawn;
     if (agentSpawn && agentSpawn.length > 0) {
-      const lines: string[] = ['## Pre-flight', '', 'run at session start:', ''];
-      for (const cmd of agentSpawn) {
-        lines.push(`- \`${cmd.command}\``);
-      }
-      lines.push('');
-      const block = `${lines.join('\n')}\n`;
-      acc.add('render', countLines(block), 'kiro.hooks.agentSpawn');
-      bodyParts.push(block);
+      bodyParts.push(
+        emit([
+          { kind: 'entry', path: 'preflight', text: '## Pre-flight\n\nrun at session start:\n\n' },
+          ...agentSpawn.map((cmd, i): SpanPiece => ({ kind: 'member', list: 'preflight', index: i, text: `- \`${cmd.command}\`\n` })),
+          { kind: 'entry', path: 'preflight', text: '\n' },
+        ])
+      );
     }
     // keyboardShortcut / welcomeMessage / includeMcpJson: drop — render NOTHING.
 

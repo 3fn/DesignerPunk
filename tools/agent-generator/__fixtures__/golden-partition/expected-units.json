@@ -1,0 +1,41 @@
+{
+  "_provenance": "HAND-AUTHORED by Lina, Spec 123 Task 10.2 (2026-09-27), by reading each fixture file's numbered BODY lines — never generated from partition() output. Line numbers are 1-based and count BODY lines (the text after the closing frontmatter fence). DD6: this key DECLARES hand-authorship and cannot prove it; what protects the list is the reviewed diff — a list regenerated under a mutation (e.g. collapse to ##) shows up in review as a visibly different list. Snapshot matchers are banned in the test that reads this file.",
+  "files": {
+    "charter.md": {
+      "degenerate": false,
+      "units": [
+        { "anchor": "#doc:preamble", "kind": "doc-preamble", "lines": [1, 2] },
+        { "anchor": "#alpha", "kind": "heading", "lines": [3, 9] },
+        { "anchor": "#beta:preamble", "kind": "preamble", "lines": [10, 13] },
+        { "anchor": "#beta-one", "kind": "heading", "lines": [14, 22] },
+        { "anchor": "#notes", "kind": "heading", "lines": [23, 26] },
+        { "anchor": "#gamma-one:preamble", "kind": "preamble", "lines": [27, 33] },
+        { "anchor": "#gamma-one-deep", "kind": "heading", "lines": [34, 37] },
+        { "anchor": "#notes-2", "kind": "heading", "lines": [38, 41] },
+        { "anchor": "#delta", "kind": "heading", "lines": [42, 47] }
+      ]
+    },
+    "enumeration-member.md": {
+      "degenerate": false,
+      "units": [
+        { "anchor": "#golden-enumeration:preamble", "kind": "preamble", "lines": [1, 6] },
+        { "anchor": "#item-check-the-current-date", "kind": "item", "lines": [7, 8] },
+        { "anchor": "#item-governance-health-check", "kind": "item", "lines": [9, 16] },
+        { "anchor": "#item-critical-wait-before-starting", "kind": "item", "lines": [17, 20] },
+        { "anchor": "#item-4", "kind": "item", "lines": [21, 29] }
+      ]
+    },
+    "degenerate-member.md": {
+      "degenerate": true,
+      "units": [
+        { "anchor": "#doc", "kind": "degenerate", "lines": [1, 4] }
+      ]
+    },
+    "title-only-prose.md": {
+      "degenerate": true,
+      "units": [
+        { "anchor": "#doc", "kind": "degenerate", "lines": [1, 4] }
+      ]
+    }
+  }
+}

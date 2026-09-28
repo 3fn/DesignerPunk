@@ -1,0 +1,263 @@
+# canonical/operative-sets/lina.yaml — operative-set records (design C16; Req 11.6.5d)
+#
+# Exemplar source units: Lina-1 (`## Platform Implementation: True Native Architecture` — its
+#   preamble and four sub-sections) and Lina-2 (`## Component Scaffolding Workflow` — its preamble
+#   and seven steps), Lina's constructions (Req 11.6.5; feedback/requirements.md [LINA R1]).
+# At finest grain (Task 10) each section is several units; each unit carries its own record.
+#
+# canonicalHash = "sha256:" + hex SHA-256 over the unit's exact UTF-8 bytes, as returned by
+#   partition(splitFrontmatter(<source>).body) (tools/agent-generator/{frontmatter,partition}.ts).
+# Unit keys are Task 10's partition anchors, verbatim. Item `text` is the COMPLETE operative text
+#   and a verbatim substring of the unit (C16); `label` is a human label only, never matched.
+#   Headings are labels, never items (clause (c)). List/bullet markers and indentation are not
+#   part of an item's text; multi-line items (code, tables) keep their internal bytes.
+# `kind` is one of 11.6.2's five: obligation | step | member | route | command.
+# `confirmer` is the C1 function of (owner, profile author = thurgood). The owner fixes and
+#   confirms each unit's set (11.6.5d); the `confirmation:` note is written in the
+#   confirmer's seat, never the drafter's.
+# Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27). Confirmed by Lina (owner seat, C1),
+#   Task 11.2 (2026-09-27): 13 units, 39 items; two item texts corrected in #step-6-….
+source: canonical/agents/lina.md
+owner: lina
+confirmer: lina
+units:
+  # exemplar Lina-2 — 1 item(s)
+  "#component-scaffolding-workflow:preamble":
+    canonicalHash: sha256:16d70c05712d0baa66ad48767d3dcd40c6d65133071721538046084e1308b4be
+    items:
+      - id: scaffold-follow-stemma
+        kind: obligation
+        label: Follow the Stemma structure
+        text: "When scaffolding a new component, follow the Stemma system structure:"
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#component-scaffolding-workflow:preamble
+  # exemplar Lina-2 — 2 item(s)
+  "#step-1-verify-component-family-doc":
+    canonicalHash: sha256:e15bdecb57e9158a6ff726c1a11f66c5de5ab9c0b40bc9f0aa21b78d18fed0f2
+    items:
+      - id: step1-check-family-doc
+        kind: step
+        label: Check a family doc exists
+        text: Before creating any files, check whether a Component-Family doc exists for this component's family (your routing section's family cues reach each one).
+      - id: step1-draft-family-doc
+        kind: step
+        label: Draft one if absent, approval first
+        text: If no family doc exists, draft one from the Component-MCP-Document-Template (docs MCP) and present it to Peter for approval (ballot measure model) before proceeding.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#step-1-verify-component-family-doc
+  # exemplar Lina-2 — 1 item(s)
+  "#step-2-create-typests":
+    canonicalHash: sha256:5ba4402eb58fe9f92d7ccf13d178837884145a7ee91826b231e1dd2b8c2264cd
+    items:
+      - id: step2-define-interfaces
+        kind: step
+        label: Define the TypeScript interfaces
+        text: Define the component's TypeScript interfaces — props, variants, states, and platform-agnostic types.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#step-2-create-typests
+  # exemplar Lina-2 — 5 item(s)
+  "#step-3-author-contractsyaml":
+    canonicalHash: sha256:4f9f38c9a48f3e78dfb958d759047f157365f119e508bdbdff7ac34e46994f3a
+    items:
+      - id: step3-contracts-first
+        kind: obligation
+        label: Define contracts before implementation
+        text: Before platform implementation, define the component's behavioral contracts. This is the specification that platform implementations must satisfy.
+      - id: step3-check-catalog
+        kind: step
+        label: Check the Concept Catalog
+        text: Check the Concept Catalog for existing concepts (routed in your routing section).
+      - id: step3-canonical-naming
+        kind: step
+        label: Author with the canonical naming convention
+        text: Author contracts.yaml using the canonical naming convention — delivered as ambient law; see the Ambient section's `contract-system-reference` embed and apply it as written there.
+      - id: step3-propose-new-concept
+        kind: step
+        label: Propose a new concept (ballot) first
+        text: If a behavior doesn't map to any existing catalog concept, propose a new concept addition (ballot measure) before using it.
+      - id: step3-contracts-before-code
+        kind: obligation
+        label: Contracts precede platform code
+        text: Contracts must be authored before platform implementation begins — platform code implements the contracts, not the other way around.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#step-3-author-contractsyaml
+  # exemplar Lina-2 — 5 item(s)
+  "#step-4-create-platform-implementations":
+    canonicalHash: sha256:6aa7c9768f2d415cf6d5ff36b93f6d00641ab908c53b863bb7dcd3b063393a5c
+    items:
+      - id: step4-platform-separation
+        kind: obligation
+        label: Build-time separation under platforms/
+        text: "Build-time platform separation under `platforms/`:"
+      - id: step4-layout-root
+        kind: member
+        label: Component root files
+        text: |-
+          ComponentName/
+            types.ts
+            ComponentName.schema.yaml
+            ComponentName.tokens.ts
+            contracts.yaml
+            component-meta.yaml
+            index.ts
+            README.md
+      - id: step4-layout-platforms
+        kind: member
+        label: platforms/ subtree
+        text: |-
+          platforms/
+              web/ComponentName.web.ts
+              ios/ComponentName.ios.swift
+              android/ComponentName.android.kt
+      - id: step4-layout-tests
+        kind: member
+        label: __tests__/ subtree
+        text: |-
+          __tests__/
+              ComponentName.test.ts
+      - id: step4-layout-examples
+        kind: member
+        label: examples/ subtree
+        text: |-
+          examples/
+              BasicUsage.tsx
+              BasicUsage.html
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#step-4-create-platform-implementations
+  # exemplar Lina-2 — 1 item(s)
+  "#step-5-create-tests":
+    canonicalHash: sha256:a4521a22b7c50bf5c3f4963ceeff9c6eeaf3972549907c1792d6dc2401d2363c
+    items:
+      - id: step5-write-tests
+        kind: step
+        label: Write unit and behavioral contract tests
+        text: Write unit tests and behavioral contract tests that validate the component's interaction states, accessibility, and visual states.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#step-5-create-tests
+  # exemplar Lina-2 — 9 item(s). Confirmer ruling 2026-09-27: step6-author-meta and step6-review-staleness
+  #   restored to include their `**For …**:` trigger labels (prefix truncation; the label is the condition).
+  #   Notes: confirmations/lina.md#step-6-create-or-review-component-metayaml
+  "#step-6-create-or-review-component-metayaml":
+    canonicalHash: sha256:8fb443bb30c9bcbe1d3b831ef46bda310090852b930c6cb1ce039b41a447ee79
+    items:
+      - id: step6-author-meta
+        kind: step
+        label: "New: author component-meta.yaml"
+        text: "**For new components**: Author the semantic annotations file following the component-meta authoring guide (routed)."
+      - id: step6-meta-content
+        kind: obligation
+        label: "New: what the file provides"
+        text: This provides agent-selection guidance (purpose, usage, contexts, alternatives).
+      - id: step6-data-shapes
+        kind: step
+        label: "New: check data-shapes trigger criteria"
+        text: Check the data-shapes trigger criteria (routed) if the component has complex array/object props.
+      - id: step6-review-staleness
+        kind: step
+        label: "Modification: review for staleness"
+        text: "**For component modifications**: Review `component-meta.yaml` for staleness."
+      - id: step6-q-purpose
+        kind: step
+        label: "Modification: purpose search terms"
+        text: Does `purpose` include terms an architect would search for?
+      - id: step6-q-contexts
+        kind: step
+        label: "Modification: contexts"
+        text: Do `contexts` cover the UI regions where this component now appears?
+      - id: step6-q-alternatives
+        kind: step
+        label: "Modification: alternatives"
+        text: Do `alternatives` reflect the current component landscape?
+      - id: step6-q-when-to-use
+        kind: step
+        label: "Modification: when_to_use / when_not_to_use"
+        text: Do `when_to_use` / `when_not_to_use` cover scenarios revealed by the spec work?
+      - id: step6-update-if-stale
+        kind: step
+        label: "Modification: update if stale"
+        text: Update if stale.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#step-6-create-or-review-component-metayaml
+  # exemplar Lina-2 — 1 item(s)
+  "#step-7-create-readme":
+    canonicalHash: sha256:14b932eb25c89bf5da4cc571dd4826d7a49dd0da6ab57705398523a68e266e1e
+    items:
+      - id: step7-document
+        kind: step
+        label: Document the component
+        text: Document the component's purpose, usage, variants, props, and token dependencies.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#step-7-create-readme
+  # exemplar Lina-1 — 2 item(s)
+  "#platform-implementation-true-native-architecture:preamble":
+    canonicalHash: sha256:dd30b058f9e21d87a8750036089540058126f5b80b37ea846452b38670a7930c
+    items:
+      - id: tn-build-time-separation
+        kind: obligation
+        label: Build-time separation, not runtime detection
+        text: DesignerPunk uses build-time platform separation, not runtime detection.
+      - id: tn-native-per-platform
+        kind: obligation
+        label: A native implementation per platform
+        text: Each platform gets a native implementation.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#platform-implementation-true-native-architecture:preamble
+  # exemplar Lina-1 — 4 item(s)
+  "#web":
+    canonicalHash: sha256:d01a527086b28471f5093a7bd4a214326e6d03ed5fa82bfa385e82787ab6e3d8
+    items:
+      - id: web-component-model
+        kind: obligation
+        label: Component Model
+        text: "**Component Model**: Web Components (Custom Elements with Shadow DOM)"
+      - id: web-styling
+        kind: obligation
+        label: Styling
+        text: "**Styling**: CSS with logical properties — see Web-Authoring-Standards (routed) for all CSS rules"
+      - id: web-file-extension
+        kind: obligation
+        label: File extension
+        text: "**File extension**: `.web.ts`"
+      - id: web-key-rule
+        kind: obligation
+        label: Key rule
+        text: "**Key rule**: Use logical properties for all directional CSS. Physical properties only when design explicitly requires physical positioning regardless of writing mode."
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#web
+  # exemplar Lina-1 — 3 item(s)
+  "#ios":
+    canonicalHash: sha256:a085ad582e13dc5be094eda3b3cbae4bf04de131c4cf74760138217a65c75188
+    items:
+      - id: ios-language
+        kind: obligation
+        label: Language
+        text: "**Language**: Swift (native)"
+      - id: ios-ui-framework
+        kind: obligation
+        label: UI Framework
+        text: "**UI Framework**: SwiftUI"
+      - id: ios-file-extension
+        kind: obligation
+        label: File extension
+        text: "**File extension**: `.ios.swift`"
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#ios
+  # exemplar Lina-1 — 3 item(s)
+  "#android":
+    canonicalHash: sha256:6252b9429a25cd6fc5de584da48e194526cc8d36bb924853f99f069e313a1267
+    items:
+      - id: android-language
+        kind: obligation
+        label: Language
+        text: "**Language**: Kotlin (native)"
+      - id: android-ui-framework
+        kind: obligation
+        label: UI Framework
+        text: "**UI Framework**: Jetpack Compose"
+      - id: android-file-extension
+        kind: obligation
+        label: File extension
+        text: "**File extension**: `.android.kt`"
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#android
+  # exemplar Lina-1 — 2 item(s)
+  "#cross-platform-consistency":
+    canonicalHash: sha256:5bbb0e94fbca2bfde1a737eb1a849b1c22a462eadcfbe7e2bacc40012af32577
+    items:
+      - id: cpc-shared-tokens
+        kind: obligation
+        label: All platforms share the same tokens
+        text: All platforms share the same design tokens (unitless values translated to platform-native units at build time).
+      - id: cpc-types-contract
+        kind: obligation
+        label: types.ts is the platform-agnostic contract
+        text: The `types.ts` file defines the platform-agnostic contract that all implementations must satisfy.
+    confirmation: canonical/profiles/consumer/confirmations/lina.md#cross-platform-consistency

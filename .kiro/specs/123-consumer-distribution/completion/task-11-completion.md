@@ -1,0 +1,111 @@
+# Task 11 Completion — Exemplar operative sets for G1
+
+**Spec**: 123 — Consumer Distribution · **Unit**: U2a — Consumer generation profile: splitter, exemplars & G1 (Tasks 10–12, gated at Task 12) · **Type**: Setup · **Validation**: Tier 2
+**Agent (plan)**: PRIMARY Thurgood (Opus); Stacy (Opus) — 11.3; Lina (Opus) — 11.2 (the row as amended by #220)
+**Delegated-tier**: planned Thurgood (Opus) primary; Stacy (Opus) — 11.3, 11.5 → actual Thurgood (Opus) primary; Stacy (Opus) — 11.2 (stacy.md + carve-out), 11.3, 11.5; Lina (Opus) — 11.2 (lina.md + component-family doc) — the row named no seat for Lina's C1 owner confirmations and her charter scope lacks canonical/**, so #220 (ruled by Peter) added her mid-parent; class: agent-evolution — primary and every model tier held; the divergence is one added secondary seat
+**CI-provenance**: branch-head dispatch @ a300b73483cc1d741a90b956ae5f104f094fc0f0 — https://github.com/3fn/DesignerPunk/actions/runs/36369546680, https://github.com/3fn/DesignerPunk/actions/runs/36369550922, https://github.com/3fn/DesignerPunk/actions/runs/36369555504, https://github.com/3fn/DesignerPunk/actions/runs/36369562218, https://github.com/3fn/DesignerPunk/actions/runs/36369566091, https://github.com/3fn/DesignerPunk/actions/runs/36369570482
+**Traces**: Reqs 11.6.5, 11.6.5d, 11.5.2 · design C16, § "Gates" step 3
+
+**Why the divergence form of the delegated-tier line.** The guide defines `plan held` as "matched the task's planned `**Agent**:` stamp, **and no additional agents were pulled in**". Lina was pulled in mid-parent. #220 amended the row, so today's stamp names her, but the plan the parent started under did not. This is the recalibration data point the line exists to carry: the tasks round routed 11.2's confirmations by the C1 function but gave the owner-seat no write grant. `class: agent-evolution` is the routing/scope estimate being off. The primary seat and every model tier held, as the tail says. **Why not `plan held` with a tail**: `plan held` would assert "no additional agents", which is false here.
+
+**CI-provenance binding.** The line binds to `a300b734` (the `canonical/generated.lock` refresh checkpoint). `git diff --name-only a300b734..<this commit>` lists only `.kiro/specs/123-consumer-distribution/completion/**`, `docs/specs/123-consumer-distribution/**` and `.kiro/specs/123-consumer-distribution/tasks.md`, and the `tasks.md` change is checkbox marks only (guide § "CI provenance", rule 5). All six runs concluded `success` with `headSha` = `a300b734`, checked with `gh run view <id> --json conclusion,headSha`. It is a branch-head dispatch, not the gate. The `--unit-member` close dispatches again at its own commit; those runs are not cited here.
+
+---
+
+## Success Criteria
+
+| Criterion (verbatim) | Status | Evidence |
+|---|---|---|
+| Operative-set records exist for **the ELEVEN exemplars**: A, B, C(c1) *(premise false — both named units carry 2 operative items (Stacy 11.2); clause (a) is exercised by **F** `#purpose` (0 items, pending Lina's confirmation) only; the record and its confirmed items stand, not re-instantiated — amendment 2026-09-27, ruled by Peter)*, C(c2), D, E, F, Lina-1, Lina-2, **G** (required verdict TRIVIAL: `start-up-tasks.md#item-critical-wait-for-user-authorization-before-starting-new-tasks`, gutted) and **G′** (required verdict NOT TRIVIAL: `#item-civitas-governance-health-check`, honestly re-grounded). G and G′ are Stacy's constructions (S-T6), **with required verdicts committed before G1 runs**. | ✅ verified met | Four records, 23 units, 123 items, all confirmed. `canonical/operative-sets/stacy.yaml`: A `#audit-checklist` (30); B and E `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` (14); C(c1) `#the-charter-cut-ratified-verbatim` (2) and `#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument` (2), a record that stands with its premise false, per the annotation (`e91e9a3e`; #220 item 4); C(c2) `#what-parity-means` (7); D `#the-trigger-set-the-114-superset-table-names-never-numbers` (13). `canonical/operative-sets/component-family-navigation.yaml`: F `#purpose` (0; confirmed by Lina at `d05f1565`, which discharges the annotation's "pending") and `#key-characteristics` (5). `canonical/operative-sets/lina.yaml`: Lina-1 is `#platform-implementation-true-native-architecture:preamble`, `#web`, `#ios`, `#android`, `#cross-platform-consistency` (2·4·3·3·2); Lina-2 is `#component-scaffolding-workflow:preamble` plus `#step-1-…` through `#step-7-…` (1·2·1·5·5·1·9·1). `canonical/operative-sets/start-up-tasks.yaml`: G `#item-critical-wait-for-user-authorization-before-starting-new-tasks` (7) and G′ `#item-civitas-governance-health-check` (4). The required verdicts (G → TRIVIAL, G′ → NOT TRIVIAL) are committed at `e4602cc5` in `.kiro/specs/123-consumer-distribution/completion/task-11-3-exemplars-g-gprime.md`. G1 has not run: `ls .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification*.md` → no such file. |
+| Every `confirmer:` equals the C1 function — by the confirmer check, not inspection. *(amendment 2026-09-27, ruled by Peter — found at 11.4: no instrument existed; the confirmer check is the temporary precursor test `src/__tests__/operative-set-records.test.ts`, functional lane, with the semantics of `completion/task-11-2-stacy-completion.md`'s check script; 13.6 absorbs and deletes it)* | ✅ verified met | `src/__tests__/operative-set-records.test.ts › Spec 123 Task 11 operative-set records (temporary precursor — retires at 13.6) › %s › declares the confirmer the C1 function requires` ×4 (stacy→stacy, lina→lina ×2, thurgood→stacy for `start-up-tasks.yaml`), plus `› computes the C1 function (owner / profile-author carve-out / collapse)`. `npx jest --config jest.functional.config.js src/__tests__/operative-set-records.test.ts → Tests: 22 passed, 22 total` locally, and in CI as `PASS src/__tests__/operative-set-records.test.ts` in `lane-functional-root (unit-branch)`, run https://github.com/3fn/DesignerPunk/actions/runs/36369570482 at `a300b734`. Bite: `confirmer: stacy` → `thurgood` gave RED (`Expected: "confirmer stacy"`), recorded in `task-11-4-completion.md`. |
+| Every item `text` passes the verbatim-substring check. *(amendment 2026-09-27 — by the same precursor test, which also asserts each `canonicalHash` is fresh)* | ✅ verified met | `src/__tests__/operative-set-records.test.ts › … › %s › carries unique ids, known kinds, and item text verbatim from its unit` and `› keys every unit by a current partition anchor, with a fresh canonicalHash`, ×4, all green (22/22 locally; run https://github.com/3fn/DesignerPunk/actions/runs/36369570482). Bites: a paraphrased item gave RED `"item text not verbatim: #what-parity-means parity-interaction-model"`; a corrupted hash gave RED `"stale canonicalHash: #what-parity-means"` (`task-11-4-completion.md`). |
+| Each `confirmation:` path resolves to a committed note. *(amendment 2026-09-27 — by the same precursor test, which also asserts the note's `confirmer:` / `canonicalHash:` / `items:` / `date:` lines match the record)* | ✅ verified met | `src/__tests__/operative-set-records.test.ts › … › %s › resolves every confirmation: to a committed note whose key lines match the record` ×4 green over the four notes: `canonical/profiles/consumer/confirmations/{stacy,lina,component-family-navigation,start-up-tasks}.md`, all git-tracked, 23 blocks, each matched exactly by its anchor. 22/22 locally; run https://github.com/3fn/DesignerPunk/actions/runs/36369570482. Bites: an id dropped from a note gave RED `"note items != record items: #the-charter-cut-ratified-verbatim (1 vs 2)"`; a renamed heading gave RED `"confirmation resolves to 0 note blocks (want 1): …"`. At `9054de14`, before Lina's notes existed, the same test was RED on exactly her two missing notes. |
+| C1 carve-out confirmations (Thurgood-maintained sources, incl. G/G′'s `start-up-tasks`) land as `Agent: stacy` commits, listed with SHAs. | ✅ verified met | `git log -1 --format=%B <sha> \| grep '^Agent:'` → `Agent: stacy` on each. **`ae190618`**: the C1 carve-out artifacts for the Thurgood-maintained `start-up-tasks.md`, i.e. `canonical/operative-sets/start-up-tasks.yaml` and `canonical/profiles/consumer/confirmations/start-up-tasks.md`. **`e91e9a3e`**: the carve-out note's key-line retrofit (`confirmations/start-up-tasks.md`, content unchanged), in the same commit as her owner confirmations of `stacy.md`. Other Stacy commits in this parent, not carve-out artifacts: **`e4602cc5`** (the G/G′ constructions and required verdicts) and **`2081c865`** (the 11.5 F3 adjudications). Lina's owner-confirmation commits, `Agent: lina`: **`d05f1565`** (her two notes and her confirmer edits to `lina.yaml` / `component-family-navigation.yaml`) and **`ea329e87`** (her subtask doc). No carve-out artifact was written by Thurgood: `git log --format='%h %(trailers:key=Agent,valueonly)' -- canonical/operative-sets/start-up-tasks.yaml canonical/profiles/consumer/confirmations/start-up-tasks.md` → only `ae190618` and `e91e9a3e`, both stacy. |
+| *Scope*: the checks establish the declared seat and verbatim text. **They do not establish authorship** (one git identity) **or completeness** (the confirmer's responsibility). | ✅ verified met | The scope held in shipped source: the `src/__tests__/operative-set-records.test.ts` header, § "Limits" ("They do NOT establish authorship (one git identity) or completeness (a truncated item `text` still passes — the confirmer's responsibility)"). The completeness limit was shown by a bite: reverting Lina's Step 6 prefix restoration still passes (`task-11-2-lina-completion.md`, Bites: "Truncation is invisible to the checks"). Two drafter truncations were caught by the confirmer, not by the check (`task-11-1-completion.md`, Addendum). |
+| **The coverage-map rows for this parent's new canonical files are cited** from `npm run audit:coverage-map` output, and the regenerated `canonical/coverage-map.yaml` is committed (122 diff-guard green). **Those rows are blank at U2a's merge by construction**: the freshness sweep that lists `122-diff-guard` on `canonical/operative-sets/**` and `canonical/profiles/consumer/**` lands at 13.6, in U2b. **Stacy records a time-boxed adjudication for each blank row at 11.5, committed on the U2a branch so it is on `main` at U2a's merge** (F3 RULED, Peter 2026-09-27; replaces the merged "disclose a known-red window" default). Each row is one `canonical/adjudications.yaml` entry per new file — keys are file paths, not globs — with `sweep: audit:coverage-map`, `ruling: assessment-gap`, `owner: stacy`, and a `record` carrying **both** the path of her ruling note, `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md`, **and** the exact string **"expires when 123 Task 13.6 lands in U2b"** (B-CI ballot § 11 `[STACY R1]` § 6 conditions (b) and (d), `.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md`). **Counts at U2a** (B-CI ballot § 11 `[STACY R1]` § 6 condition (a)): `grep -c "expires when 123 Task 13.6" canonical/adjudications.yaml` → **N**, where N equals the audit's `adjudicated-blank` count **less the pre-existing `audit:coverage-map` adjudicated rows, which are listed by key** *(Erratum 2026-09-27, ruled by Peter; found by Stacy at 11.3)*, and the N paths are listed. `npm run audit:coverage-map` passes, output cited. *Scope: the citation establishes the rows' state at U2a; it establishes no guard over those files. The schema has no expiry field, so the time-box is text until 13.6 removes the rows.* | ✅ verified met | `npm run audit:coverage-map` → `audit:coverage-map: PASS` · total surfaces 306 · guarded 297 · blank 9 · adjudicated-blank 9 (listed: `canonical/generated.lock` plus the eight below), exit 0. `grep -c "expires when 123 Task 13.6" canonical/adjudications.yaml` → **8**. Pre-existing `audit:coverage-map` adjudicated rows, by key: **`canonical/generated.lock`** (`intentional-trim`, owner thurgood, Spec 122 Task 8.2). **N = 9 − 1 = 8** = the grep. The N paths: `canonical/operative-sets/component-family-navigation.yaml`, `canonical/operative-sets/lina.yaml`, `canonical/operative-sets/stacy.yaml`, `canonical/operative-sets/start-up-tasks.yaml`, `canonical/profiles/consumer/confirmations/component-family-navigation.md`, `canonical/profiles/consumer/confirmations/lina.md`, `canonical/profiles/consumer/confirmations/stacy.md`, `canonical/profiles/consumer/confirmations/start-up-tasks.md`. Each row has `sweep: audit:coverage-map`, `ruling: assessment-gap`, `owner: stacy`, and a `record` naming `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md` and the expiry string (`2081c865`). `canonical/coverage-map.yaml` was regenerated and committed: +3 rows at `602ff7c1`, +5 at `2081c865`, each `checks: []`. Diff-guard: `npx tsx tools/agent-generator/diff-guard.ts → diff-guard: full-run-green (input-closure-changed)`, then `diff-guard: no-op-green` locally; `122-diff-guard (unit-branch)` → `diff-guard: full-run-green (input-closure-changed)` in run https://github.com/3fn/DesignerPunk/actions/runs/36369562218 at `a300b734`. |
+
+Unmet or partially met criteria: None
+
+---
+
+## Additional verification
+
+Primary Artifacts: all shipped as declared
+
+- `canonical/operative-sets/*.yaml` (exemplar units): `stacy.yaml`, `lina.yaml`, `component-family-navigation.yaml` (Thurgood, `602ff7c1`; confirmer edits by Stacy at `e91e9a3e` and by Lina at `d05f1565`), and `start-up-tasks.yaml` (Stacy, `ae190618`).
+- `canonical/profiles/consumer/confirmations/*.md`: `stacy.md` (`e91e9a3e`), `start-up-tasks.md` (`ae190618`, retrofit `e91e9a3e`), `lina.md` and `component-family-navigation.md` (`d05f1565`).
+- `canonical/coverage-map.yaml` (regenerated): `602ff7c1`, `2081c865`.
+- `canonical/adjudications.yaml` (the F3 entries only, 8 rows): `2081c865`.
+- `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md`: `2081c865`.
+
+Every `canonical/` file this parent added is in the list above: `git diff --name-only --diff-filter=A 285d8bd4..HEAD -- canonical/` → the four records and the four notes, nothing else.
+
+### Edits outside the Primary Artifacts list (T1-(B) disclosure — each minimal, each with its authority)
+
+| Path | Edit | Authority |
+|---|---|---|
+| `canonical/generated.lock` | Refreshed by the green diff-guard (`602ff7c1`; `a300b734` for the merged 11.2–11.5 state). Pipeline output, never hand-edited. | Row 7 ("122 diff-guard green"); the Task 10.4 precedent |
+| `src/__tests__/operative-set-records.test.ts` (new, TEMPORARY) | The precursor test | **Thurgood's charter write scope** (`src/__tests__/**`), not the row. Tasks amendment #220 item 1 (rows 2–4 name it). Retired by Task 13 freshness criterion (v), which absorbs its assertions and deletes it in U2b |
+| `.kiro/specs/123-consumer-distribution/tasks.md` | Checkbox ticks 11.1–11.5 and 11 only | Task Completion Protocol |
+
+### Validation
+
+- **Local, on the merged state** (`2081c865` plus the lock refresh):
+  - `npx jest --config jest.functional.config.js src/__tests__/operative-set-records.test.ts` → 22/22.
+  - `npm test` → `Test Suites: 385 passed, 385 total` · `Tests: 9290 passed, 9290 total`.
+  - `npx tsc --noEmit` → exit 0.
+  - `npm run test:agent-generator` → 30 suites, 405 tests passed.
+  - Diff-guard → `full-run-green (input-closure-changed)`, then `no-op-green`.
+  - `audit:coverage-map` → PASS (row 7).
+- **CI, branch head `a300b734`**: all six workflows green. `lane-functional-root (unit-branch)` shows `PASS src/__tests__/operative-set-records.test.ts` and `Tests: 9290 passed, 9290 total`; `122-diff-guard (unit-branch)` shows `full-run-green`.
+- **Parity**: `npm run --silent check:completion-criteria-parity` → see the report line (run after the ticks).
+- **Build noise**: none. No `npm run build` ran, and `git status --porcelain` held only intended files at each commit.
+
+---
+
+## G1 domain-line inputs for Task 12
+
+These are inputs to Stacy's verdict record. **They are not the domain line itself**; she writes that, and Task 12 cites it and never paraphrases it.
+
+- **Exercised by the eleven exemplars.**
+  - **Body domain only.**
+  - **Unit kinds**:
+    - heading leaf units on two charters (`stacy.md`, `lina.md`) and one Layer-3, MCP-served family doc (`governance/Component-Family-Navigation.md`);
+    - `#<parent>:preamble` units — two, both Lina's (Lina-1 and Lina-2);
+    - **enumeration-kind `#item-…` units on one always-set member** (`.kiro/steering/start-up-tasks.md`: G and G′, Stacy's 11.3, added so these kinds are no longer "not exercised").
+  - **Item kinds**: obligation, step, member, command.
+  - **Content forms**: bulleted and numbered lists, a table (D), a fenced shell script (B/E), and `- **Label**: value` bullets (Lina-1, F).
+- **Not exercised** (to be written "not exercised", never implied):
+  - frontmatter entries (the entry tree);
+  - shared-catalog members;
+  - `#doc:preamble`;
+  - the degenerate `#doc`;
+  - the `route` item kind;
+  - always-set members other than `start-up-tasks.md`;
+  - any heading or preamble unit on an always-set member.
+- **Clause (a), the domain restriction, has exactly one exemplar**: F `#purpose` (0 items, confirmed by Lina). **C(c1)'s zero-item premise is false**: both named units carry 2 operative items (Stacy 11.2; #220 item 4). **The corpus fact behind it**: on `stacy.md`, every preamble carries a trigger or instruction, so no zero-item unit exists there to re-instantiate C(c1) against.
+  - **Lina's fragility note**: `#purpose`'s inventory sentence is stale. A canonical fix would re-open its confirmation and could cost clause (a) its only exemplar.
+- **Grain — per unit vs per section.** The 11.6.5 verdicts were written per section. The records are per unit: Lina-1 is 5 units and Lina-2 is 8; C(c1) is 2 units; B and E share one unit. **G1 applies each verdict per unit, or states how a section verdict aggregates.** Task 13's "Lina-2 scores 0/7" is section-grain wording; Lina carries its restatement to 13.4.
+- **A seat disclosure the record needs**: Stacy constructed A–E, G and G′, confirmed A–E, G and G′ (and the carve-out), and runs G1. Lina constructed Lina-1 and Lina-2, proposed and confirmed F, and builds `triviality.ts` at 13.4. Thurgood drafted nine records, and he owns the classifier (5c) and the profile.
+
+---
+
+## Carried items
+
+- **To 13.6 (Lina) — exact-anchor note matching.** The freshness sweep inherits the precursor test's rule: the heading text, with one pair of enclosing backticks removed, equals the full anchor, and exactly one block matches. Stacy's scratch scripts used `slugify(heading)`, which cannot resolve `:preamble` anchors (`task-11-4-completion.md` adaptation 1; `task-11-5-completion.md`; `task-11-2-lina-completion.md`). Also carry the hash definition: `sha256:` + hex SHA-256 over the unit's exact UTF-8 bytes from `partition(splitFrontmatter(src).body)`.
+- **To 13.6 — delete the precursor test** (Task 13 freshness criterion (v)).
+- **To 13.4 (Lina) — same-text over-count.** `documentation-3` and `lessons-learned-capture-2` in `#audit-checklist` share one text. A strict matcher using `includes` would credit both when one copy survives — the clearing direction. It should credit at most as many same-text items as there are occurrences in the rendering (Stacy, `task-11-2-stacy-completion.md`).
+- **To 13.4 (Lina) — Lina-2 aggregation.** "Lina-2 scores 0/7" is restated per unit or aggregated (above).
+- **Deferred pending Peter — Lina's two items** (`task-11-2-lina-completion.md`): (1) a third F unit, so that F also catches a classifier that reads label form as operative (needs a tasks amendment); (2) the stale Navigation inventory in `#purpose` (a canonical fix re-opens the unit's confirmation).
+- **To Task 12 — a rework-added `canonical/` file returns to Peter.** Task 12's criterion: any C3 rework commit that adds a file under `canonical/` outside a tasks amendment goes back to Peter before U2a is submitted, because it would be a blank coverage-map row with no F3 adjudication.
+- **To Task 12 — the expected shipped-file intersection** is unchanged by this parent. `npm pack --dry-run --json --ignore-scripts` → 1602 files, ∩ `git diff --name-only c6e5c42d HEAD` (Task 10's close → this parent's pre-close head) → **0 paths**. Task 11 ships nothing. Task 12's own check runs over the whole U2a diff, where the eight Task 10 sidecars remain the expected, ruled intersection.
+- **Lessons item (#220)**: three of the four Task 11 corrections were a criterion naming a check or premise that did not exist yet. This is filed in § "Carried obligations" for the next tasks round.
+
+---
+
+## Erratum 2026-09-27 — § "G1 domain-line inputs for Task 12" (found by G1 run 1, A-3)
+
+*Appended; the text above is unchanged. Criteria rows are unaffected.*
+
+- **"the `route` item kind" under "Not exercised" is WRONG.** G′'s `hc-2` is `kind: route`, and its survival is part of G′'s verdict. So `route` **is** exercised, once, on the always-set member.
+- The G1 run-1 domain line (`.kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md` § "G1 DOMAIN LINE (run 1)") states this correctly. It is the record; this input was not.

@@ -550,7 +550,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 > **Framing, carried**: § 7.2's check is **NOT signed off**. No U2 criterion claims the check discriminates. G1 and G2 test it; **the verdicts are Stacy's, in verdict records outside every parent** (§ "Gate seat layout"). P2 is ruled branch A.
 
-- [ ] 10. Splitter family, span function, and adapter consolidation (steps 1–2)
+- [x] 10. Splitter family, span function, and adapter consolidation (steps 1–2)
 
   **Type**: Architecture · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Opus)
   **Traces**: Reqs 10.G, 10.S, 10.8, 10.8a · design C13, C14
@@ -568,13 +568,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tools/agent-generator/{frontmatter,partition,spans}.ts`, `adapters/{cc,kiro}.ts`, `__fixtures__/golden-partition/`
 
-  - [ ] 10.1 `splitFrontmatter`; `partition` (all behaviors incl. forward attachment and leading-bold slugs)
-  - [ ] 10.2 Hand-authored `expected-units.json` + fixture; snapshot ban + companion
-  - [ ] 10.3 Entry tree
-  - [ ] 10.4 `emitSpans`; replace both adapters' inline sites and frontmatter loops
-  - [ ] 10.5 Unit twin; the 17-file invariant; diff-guard green
+  - [x] 10.1 `splitFrontmatter`; `partition` (all behaviors incl. forward attachment and leading-bold slugs)
+  - [x] 10.2 Hand-authored `expected-units.json` + fixture; snapshot ban + companion
+  - [x] 10.3 Entry tree
+  - [x] 10.4 `emitSpans`; replace both adapters' inline sites and frontmatter loops
+  - [x] 10.5 Unit twin; the 17-file invariant; diff-guard green
 
-- [ ] 11. Exemplar operative sets for G1 (step 3)
+- [x] 11. Exemplar operative sets for G1 (step 3)
 
   **Type**: Setup · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus); Stacy (Opus) — 11.3; Lina (Opus) — 11.2 owner confirmations for lina.md units and the component-family doc (C1: owner) *(amendment 2026-09-27, ruled by Peter — this row is Lina's write grant, see the header amendment)*
   **Traces**: Reqs 11.6.5, 11.6.5d, 11.5.2 · design C16, § "Gates" step 3
@@ -590,13 +590,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `canonical/operative-sets/*.yaml` (exemplar units), `canonical/profiles/consumer/confirmations/*.md`, `canonical/coverage-map.yaml` (regenerated), `canonical/adjudications.yaml` (Stacy's time-boxed `audit:coverage-map` entries only — F3), `.kiro/specs/123-consumer-distribution/completion/f3-coverage-map-adjudication-ruling.md` (Stacy's ruling note — F3)
 
-  - [ ] 11.1 Draft the exemplar records
-  - [ ] 11.2 Owner confirmations under C1; carve-out commits — Stacy for `stacy.md` units and the carve-out; **Lina (Opus) for the `lina.md` units and the component-family doc** *(amendment 2026-09-27)*
-  - [ ] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
-  - [ ] 11.4 Confirmer + verbatim checks green — by building the temporary precursor test `src/__tests__/operative-set-records.test.ts` *(amendment 2026-09-27, ruled by Peter — found at 11.4: no instrument existed; retired by 13.6)*
-  - [ ] 11.5 (Stacy) **F3**: after 11.1–11.4, regenerate the coverage map, commit the ruling note and the time-boxed adjudications, and cite the U2a count N *(added 2026-09-27, B-CI ballot § 11 `[STACY R1]` § 6 condition (c): the step needs a subtask so the subtask-doc duty covers it)*
+  - [x] 11.1 Draft the exemplar records
+  - [x] 11.2 Owner confirmations under C1; carve-out commits — Stacy for `stacy.md` units and the carve-out; **Lina (Opus) for the `lina.md` units and the component-family doc** *(amendment 2026-09-27)*
+  - [x] 11.3 (Stacy) Construct **G and G′** — **the full construction text (the gutted and re-grounded renderings) plus the required verdicts**, committed
+  - [x] 11.4 Confirmer + verbatim checks green — by building the temporary precursor test `src/__tests__/operative-set-records.test.ts` *(amendment 2026-09-27, ruled by Peter — found at 11.4: no instrument existed; retired by 13.6)*
+  - [x] 11.5 (Stacy) **F3**: after 11.1–11.4, regenerate the coverage map, commit the ruling note and the time-boxed adjudications, and cite the U2a count N *(added 2026-09-27, B-CI ballot § 11 `[STACY R1]` § 6 condition (c): the step needs a subtask so the subtask-doc duty covers it)*
 
-- [ ] 12. **G1 gate parent — C3's falsification** (step 4; **U2a gating parent**)
+- [x] 12. **G1 gate parent — C3's falsification** (step 4; **U2a gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Thurgood (Opus)** — executing agent; **Stacy authors the verdict records (outside the line)**
   **Traces**: Reqs 11.6.7, 11.6, 11.8.4 · design § "Gates and sequencing" (G1), P2 (branch A)
@@ -621,9 +621,9 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   *Not a criterion — a post-unit obligation: if `G1 runs: <k>` shows k > 1, fork M-1 (Peter, RULED 2026-09-27) has Stacy perform a scoped, post-acceptance read of Task 12's evidence, plus any Task 10 or Task 11 criterion row whose cited artifact a C3 rework commit modified — the set is `git diff --name-only <commit adding re-grounding-c3-falsification-run-1.md>..refs/pull/<U2a>/head` ∩ Tasks 10–11 Primary Artifacts; if that set is empty, Task 12 only. A hit on an exemplar Stacy constructed or confirmed is read with that disclosure. Recorded at `.kiro/specs/123-consumer-distribution/completion/u2a-task-12-scoped-read.md` — it never gates U2a's merge or the U2b cut.*
   *Expected result, recorded 2026-09-27: the "U2a changes no shipped file" check above is expected to report a non-empty intersection — the eight `.kiro/agents/*.attribution.json` sidecars regenerated by Task 10. Peter's 2026-09-27 ruling (cited at § "Expected release count" and `.kiro/issues/2026-09-27-attribution-sidecars-shipped.md`) is the disposition: F1 stands, no release-decision reopening required. The criterion's own text and pass/fail mechanics are unchanged by this note. The row is marked ⚠️ (never ✅), with Evidence = the command and its output listing exactly the eight `.kiro/agents/*.attribution.json` paths plus the ruling citation, and a link to `.kiro/issues/2026-09-27-attribution-sidecars-shipped.md`. The forced-negative line lists it. The disposition covers exactly those eight paths: any other path in the intersection (including any rendered `.kiro/agents/*.md`) is not disposed, and the release decision returns to Peter before U2a merges.*
 
-  - [ ] 12.1 Request G1 from Stacy against the committed exemplar records
-  - [ ] 12.2 Execute the verdict's branch (rework loop / branch A); record `k`
-  - [ ] 12.3 Full validation; the no-shipped-file and no-`triviality.ts` checks; open the U2a PR (tripwire incl. `G1 runs`) *(added by the amendment of 2026-09-27)*
+  - [x] 12.1 Request G1 from Stacy against the committed exemplar records
+  - [x] 12.2 Execute the verdict's branch (rework loop / branch A); record `k`
+  - [x] 12.3 Full validation; the no-shipped-file and no-`triviality.ts` checks; open the U2a PR (tripwire incl. `G1 runs`) *(added by the amendment of 2026-09-27)*
 
 ### UNIT 2b — Consumer generation profile: machinery, rendering & G2 (stage U2, steps 5–8)
 

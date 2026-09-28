@@ -81,6 +81,13 @@ function frontmatter(overrides: Partial<AgentFrontmatter> = {}): AgentFrontmatte
       keyboardShortcut: 'ctrl+shift+x',
       agentSpawn: [{ command: 'git status --porcelain', timeout_ms: 5000 }],
     },
+    // The frontmatter origin of the per-agent manifest member below (Spec 123 C14: emitSpans
+    // sources each embed to its `ambient[<docid>]` entry, which must exist).
+    ambient: {
+      governanceAsLaw: [
+        { id: 'platform-implementation-guidelines', owner: 'lina', assert: [{ claim: 'overview', section: 'Overview', mustContain: ['x'] }] },
+      ],
+    },
     ...overrides,
   };
 }
@@ -432,6 +439,8 @@ describe('CcAdapter.emitAgent — ground truth faithfulness cue', () => {
   function withGroundTruth(groundTruth: NonNullable<ResolvedAgent['ambientManifests']['cc']['groundTruth']>, subsetOverride?: AgentFrontmatter['toolSubset']): ResolvedAgent {
     const agent = resolvedAgent(subsetOverride ? { toolSubset: subsetOverride } : {});
     agent.ambientManifests.cc = { ...agent.ambientManifests.cc, groundTruth };
+    // …and its frontmatter origin (emitSpans sources the block to `ambient.groundTruthManifest`).
+    agent.doc.frontmatter.ambient = { ...agent.doc.frontmatter.ambient, groundTruthManifest: { verdict: groundTruth.verdict } };
     return agent;
   }
 

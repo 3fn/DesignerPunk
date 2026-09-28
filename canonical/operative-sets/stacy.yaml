@@ -1,0 +1,357 @@
+# canonical/operative-sets/stacy.yaml — operative-set records (design C16; Req 11.6.5d)
+#
+# Exemplar source units: A, B, C(c1), C(c2), D, E (Stacy's constructions, Req 11.6.5).
+# B and E share one source unit (the owed-set pipeline) and so one record.
+#
+# canonicalHash = "sha256:" + hex SHA-256 over the unit's exact UTF-8 bytes, as returned by
+#   partition(splitFrontmatter(<source>).body) (tools/agent-generator/{frontmatter,partition}.ts).
+# Unit keys are Task 10's partition anchors, verbatim. Item `text` is the COMPLETE operative text
+#   and a verbatim substring of the unit (C16); `label` is a human label only, never matched.
+#   Headings are labels, never items (clause (c)). List/bullet markers and indentation are not
+#   part of an item's text; multi-line items (code, tables) keep their internal bytes.
+# `kind` is one of 11.6.2's five: obligation | step | member | route | command.
+# `confirmer` is the C1 function of (owner, profile author = thurgood). The owner fixes and
+#   confirms each unit's set (11.6.5d); the `confirmation:` note is written in the
+#   confirmer's seat, never the drafter's.
+# Drafted by Thurgood, Spec 123 Task 11.1 (2026-09-27) — a DRAFT until each unit's
+#   `confirmation:` resolves to a committed note.
+source: canonical/agents/stacy.md
+owner: stacy
+confirmer: stacy
+units:
+  # exemplar A — 30 item(s). documentation-3 and lessons-learned-capture-2 share one text (see the note).
+  "#audit-checklist":
+    canonicalHash: sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221
+    items:
+      - id: spec-quality-1
+        kind: step
+        label: Spec Quality 1
+        text: Does the screen/feature have a specification from Leonardo?
+      - id: spec-quality-2
+        kind: step
+        label: Spec Quality 2
+        text: Is the spec complete (component tree, state model, tokens, accessibility)?
+      - id: spec-quality-3
+        kind: step
+        label: Spec Quality 3
+        text: Are platform-specific notes included where needed?
+      - id: implementation-coverage-1
+        kind: step
+        label: Implementation Coverage 1
+        text: Have all specified platforms been implemented?
+      - id: implementation-coverage-2
+        kind: step
+        label: Implementation Coverage 2
+        text: Do implementations match the spec's component tree?
+      - id: implementation-coverage-3
+        kind: step
+        label: Implementation Coverage 3
+        text: Are deviations documented with rationale?
+      - id: test-coverage-1
+        kind: step
+        label: Test Coverage 1
+        text: Do platform implementations have tests?
+      - id: test-coverage-2
+        kind: step
+        label: Test Coverage 2
+        text: Do tests cover behavioral contracts, accessibility, and key interactions?
+      - id: test-coverage-3
+        kind: step
+        label: Test Coverage 3
+        text: Do tests follow Test-Development-Standards (naming, structure, categories)?
+      - id: cross-platform-parity-1
+        kind: step
+        label: Cross-Platform Parity 1
+        text: Do all platforms reference the same source semantic tokens for the same purposes? (Tokens are expressed in platform-native format — `var(--color-primary)` vs `Color.primary` vs `ColorPrimary` — but originate from the same source)
+      - id: cross-platform-parity-2
+        kind: step
+        label: Cross-Platform Parity 2
+        text: Do all platforms honor the same behavioral contracts?
+      - id: cross-platform-parity-3
+        kind: step
+        label: Cross-Platform Parity 3
+        text: Are platform-specific deviations intentional and documented?
+      - id: cross-platform-parity-4
+        kind: step
+        label: Cross-Platform Parity 4
+        text: Is intentional platform divergence (designed differences between platforms) distinguished from unintentional drift?
+      - id: cross-platform-parity-5
+        kind: step
+        label: Cross-Platform Parity 5
+        text: Is the visual hierarchy consistent across platforms?
+      - id: documentation-1
+        kind: step
+        label: Documentation 1
+        text: Are completion docs written for finished work?
+      - id: documentation-2
+        kind: step
+        label: Documentation 2
+        text: Are lessons learned captured and routed appropriately?
+      - id: documentation-3
+        kind: step
+        label: Documentation 3
+        text: Are structured requests to system agents complete and actionable?
+      - id: process-adherence-1
+        kind: step
+        label: Process Adherence 1
+        text: Was the feedback protocol followed for spec reviews?
+      - id: process-adherence-2
+        kind: step
+        label: Process Adherence 2
+        text: Was the Product Handoff Protocol followed during implementation? (Implementation Reports submitted, blocking flags raised properly)
+      - id: process-adherence-3
+        kind: step
+        label: Process Adherence 3
+        text: Were architectural decisions documented with rationale and counter-arguments?
+      - id: process-adherence-4
+        kind: step
+        label: Process Adherence 4
+        text: Is the commit history clean and descriptive?
+      - id: lessons-learned-capture-1
+        kind: step
+        label: Lessons-Learned Capture 1
+        text: Are discoveries being documented, or lost in conversation?
+      - id: lessons-learned-capture-2
+        kind: step
+        label: Lessons-Learned Capture 2
+        text: Are structured requests to system agents complete and actionable?
+      - id: lessons-learned-capture-3
+        kind: step
+        label: Lessons-Learned Capture 3
+        text: Are product-specific learnings captured in product context?
+      - id: lessons-learned-capture-4
+        kind: step
+        label: Lessons-Learned Capture 4
+        text: Are systemic learnings routed back to the appropriate system agent?
+      - id: lessons-learned-capture-5
+        kind: step
+        label: Lessons-Learned Capture 5
+        text: Are recurring patterns being identified and flagged for systematization?
+      - id: metadata-accuracy-1
+        kind: step
+        label: Metadata Accuracy 1
+        text: Do accumulated lessons reveal stale `whenToUse` or `whenNotToUse` entries in component metadata?
+      - id: metadata-accuracy-2
+        kind: step
+        label: Metadata Accuracy 2
+        text: Are there missing `alternatives` that lessons or spec deviations have exposed?
+      - id: metadata-accuracy-3
+        kind: step
+        label: Metadata Accuracy 3
+        text: "Do `purpose` fields match the terms product agents actually search for? (Reference: controlled vocabulary consumer search terms in the authoring guide)"
+      - id: metadata-accuracy-4
+        kind: step
+        label: Metadata Accuracy 4
+        text: Are escape hatches being tracked — have any migration triggers been met?
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#audit-checklist
+  # exemplar C(c1) — 2 item(s). Confirmer ruling 2026-09-27 (5c): the two ratified cut sentences are
+  #   boundary norms a consumer implementation can violate, so C(c1)'s zero-item premise does not hold
+  #   on this unit (carried to G1). Notes: confirmations/stacy.md#the-charter-cut-ratified-verbatim
+  "#the-charter-cut-ratified-verbatim":
+    canonicalHash: sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
+    items:
+      - id: cut-thurgood
+        kind: obligation
+        label: Thurgood's cut — contains, never adjudicates
+        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true."
+      - id: cut-stacy
+        kind: obligation
+        label: Stacy's cut — verifies, never authors or maintains
+        text: "**Stacy** — Stacy owns execution-claims verification: auditing whether a completed task's claims match what actually shipped, on both product and system specs, and owning those findings and the events that fire them — against standards she does not author and checks she does not maintain."
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
+  # exemplar D — 13 item(s)
+  "#the-trigger-set-the-114-superset-table-names-never-numbers":
+    canonicalHash: sha256:08619eb21d0b3f41e6e5205308394abeb6e0a88c4b26b8700fc10b6e2070c0a7
+    items:
+      - id: trigger-lens
+        kind: member
+        label: LENS
+        text: "| **LENS** | The **tasks feedback round** of any spec | Verifiability review of every parent's criteria set — five questions (lifecycle amendment § 1.2). **Not a gate; feedback entries only.** Bounded by the mirror anti-rot clause below. **Carries the does-this-span-platforms question** (ruling 5: \"what does each platform's bullet verify against?\") | Stacy |"
+      - id: trigger-release
+        kind: member
+        label: RELEASE
+        text: "| **RELEASE** | Before a version publishes / at the release tag | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line | Stacy |"
+      - id: trigger-symptom
+        kind: member
+        label: SYMPTOM
+        text: "| **SYMPTOM** | A consumer symptom traced to \"it was reported done\" | Retrospective claims audit of the originating spec, **all ticked items**. **Non-negotiable** | Stacy |"
+      - id: trigger-closeout
+        kind: member
+        label: CLOSEOUT
+        text: "| **CLOSEOUT** | The merge of the spec's **final declared merge unit** | All the spec's parents: promised vs claimed vs shipped; the judgment residual the checker cannot reach; **natural home for the spec-level-criteria discharge — rider (a)**. **Owed by every spec closing after ratification regardless of exemption status** (ruling 3's decoupling) | Stacy |"
+      - id: trigger-midpoint
+        kind: member
+        label: MIDPOINT
+        text: "| **MIDPOINT** | The merge of the unit **declared at the tasks round** as midpoint carrier, for specs declaring ≥ 3 merge units | Same as CLOSEOUT, **scoped to parents merged so far**. Fires at most once per long spec | Stacy |"
+      - id: trigger-arming
+        kind: member
+        label: ARMING
+        text: "| **ARMING** | A new barrier arms / the required-check set changes | `audit:coverage-map` + `verify-gate-registration.sh`; **plus `completion-criteria-parity` dormancy** (C4-1) — you detect dormancy on the row Thurgood owns; he repairs | Stacy |"
+      - id: trigger-gate
+        kind: member
+        label: GATE
+        text: "| **GATE** | Every PR carrying a parent completion doc | `completion-criteria-parity` fires mechanically — **exhaustive, no judgment** | **Instrument** (Thurgood maintains) |"
+      - id: trigger-education
+        kind: member
+        label: EDUCATION
+        text: "| **EDUCATION** | **Every claims-pass**, via its mandatory `Standards implications: none / or list` line | The docs may be teaching the wrong thing. Thurgood reads the pass **in full**, records a one-line outcome, **mines for learnings and never grades the audit**; repair is co-drafted, authored by Thurgood | Stacy surfaces → **Thurgood** repairs |"
+      - id: trigger-straggler
+        kind: member
+        label: STRAGGLER
+        text: "| **STRAGGLER** | Ballot ratification of a law that claims bind | **Edit-site straggler sweep — did every enumerated site get applied** | Thurgood (corpus-state) |"
+      - id: trigger-liveness
+        kind: member
+        label: LIVENESS
+        text: "| **LIVENESS** | Monthly Civitas health check (staleness-triggered, not calendar) | **Meta-item only**: **\"Is the closeout-owed set empty?\"** — a query, not a recollection — **plus: did RELEASE / SYMPTOM fire in the window, and did each produce a committed record? Events without records = finding.** Plus the active-charter walk | Thurgood |"
+      - id: trigger-burst
+        kind: member
+        label: BURST
+        text: "| ~~**BURST**~~ | ~~First session after a gap; N ≥ 3 parents merged since last audit~~ | ~~Cheap sampling pass; report M3/M4/M5~~ — **RETIRED**, superseded by CLOSEOUT + MIDPOINT; its counter-argument is preserved: BURST was the only trigger firing on *nothing having happened* | ~~Stacy~~ |"
+      - id: finding-routing
+        kind: obligation
+        label: Finding routing — two routes
+        text: "**Finding routing — TWO routes, additive, never alternatives**: the **remediation route** fires on **a single instance, no threshold** — the finding goes to the **owning domain agent** (the agent whose work it lands on) as an **explicit message to the named agent, never only a file in a spec directory** — and its standards implications *additionally* travel the composed loop (the EDUCATION row)."
+      - id: merge-path-status
+        kind: obligation
+        label: Merge-path status
+        text: "**Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*"
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-trigger-set-the-114-superset-table-names-never-numbers
+  # exemplar B, E — 14 item(s). Confirmer ruling 2026-09-27: the midnight-pin comment is rationale;
+  #   the pin itself (`--since="$RATIFIED 00:00"`) is operative inside stages 1a and 1b.
+  "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script":
+    canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
+    items:
+      - id: owed-set-predicate
+        kind: obligation
+        label: The predicate
+        text: "The predicate, verbatim: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`."
+      - id: owed-set-emits-exclusions
+        kind: obligation
+        label: Emits exclusions by name
+        text: "Four stages; it **emits its exclusions by name** so a wrong answer is a falsifiable count, never a healthy-looking short list:"
+      - id: owed-set-ratification-resolve
+        kind: command
+        label: Resolve the ratification date
+        text: |-
+          BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
+          RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
+          [ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
+          echo "ratification date: $RATIFIED"
+      - id: owed-set-stage-1a
+        kind: step
+        label: Stage 1a
+        text: |-
+          # Stage 1a — every spec with post-ratification merge activity on main's first-parent line
+          SPECS=$(git log --first-parent --since="$RATIFIED 00:00" --name-only --pretty=format: -- '.kiro/specs/' \
+                  | sed -n 's|^\.kiro/specs/\([^/]*\)/.*|\1|p' | sort -u)
+          echo "specs with post-ratification merge activity: $(echo "$SPECS" | grep -c .)"
+      - id: owed-set-stage-1b
+        kind: step
+        label: Stage 1b
+        text: |-
+          A=0; B=0; C=0; CLOSED=0; OWED=""
+          for S in $SPECS; do
+            T=".kiro/specs/$S/tasks.md"
+            # Stage 1b — classify into exactly one class, units-form precedence first
+            if   grep -qE '^## Declared Merge Units' "$T" 2>/dev/null \
+              || grep -qE '^\*\*Merge units \(' "$T" 2>/dev/null \
+              || grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
+            else
+              n=$(git log --first-parent --oneline --since="$RATIFIED 00:00" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
+              if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
+            fi
+      - id: owed-set-stage-2
+        kind: step
+        label: Stage 2
+        text: |-
+          # Stage 2 — the final anchor's merge commit and date
+            ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- ".kiro/specs/$S/")
+      - id: owed-set-stage-3
+        kind: step
+        label: Stage 3
+        text: |-
+          # Stage 3 — does the closeout record exist?
+            if [ -f ".kiro/specs/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
+            else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
+          done
+      - id: owed-set-stage-4
+        kind: step
+        label: Stage 4
+        text: |-
+          # Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name
+          echo "OWED SET:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (empty)"
+          echo "EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \
+          K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
+      - id: owed-set-class-a
+        kind: member
+        label: Exclusion class (a)
+        text: "**(a)** declared units in any recognized form (canonical heading → legacy bold-prose declaration → a \"merge unit\" heading, tried in that precedence order) — CLOSEOUT anchors on the final declared unit;"
+      - id: owed-set-class-b
+        kind: member
+        label: Exclusion class (b)
+        text: "**(b)** no units block, single PR — that PR is the spec's only unit (the corpus's most common shape; a stage that silently drops it produces the healthy-looking short list this enumeration makes impossible);"
+      - id: owed-set-class-c
+        kind: member
+        label: Exclusion class (c)
+        text: "**(c)** no units block, more than one PR — the anchor is the PR carrying the last parent completion doc."
+      - id: owed-set-three-copies
+        kind: obligation
+        label: Three copies, one text
+        text: This pipeline also lives at `.kiro/hooks/RELEASE-FLOW.md` step 5a (the release surface) and in Thurgood's LIVENESS health-check item; the three copies are the same text by design.
+      - id: owed-set-staged-mechanization
+        kind: obligation
+        label: Staged mechanization pre-committed
+        text: "**Staged mechanization is pre-committed**: the second wrong owed-set result noticed in ordinary use (the LIVENESS read or the release step — the named de-facto detectors) earns a committed script + a scoped grant; the publish-hook question is decided at the Q2 re-evaluation sitting."
+      - id: owed-set-git-history
+        kind: command
+        label: Git history as provisioning
+        text: "**Git history is the other half of your claims-audit provisioning** (the non-glob-able knowledge base): `git log --first-parent` for unit anchors and deltas, `git show <merge>:<path>` for shipped-at-merge state."
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script
+  # exemplar C(c1) — 2 item(s). Confirmer ruling 2026-09-27 (5c): the ownership sentence and the
+  #   framing sentence "that binds every reader" are violable; the first two sentences are
+  #   instrument/environment facts. C(c1)'s zero-item premise does not hold here either (carried to G1).
+  "#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument":
+    canonicalHash: sha256:7b2a7c8edaa9ba38463e8afa521851f7b4350e0892cf5ed9596497f90aaeaa18
+    items:
+      - id: reach-artifact-truth
+        kind: obligation
+        label: Artifact truth is the claims pass's
+        text: "Artifact truth is owned by **the claims pass today**, with `promised-artifact-exists` its registered, unbuilt mechanical successor."
+      - id: reach-green-is-not-honesty
+        kind: obligation
+        label: A green gate is never evidence of claim honesty
+        text: "nothing in this machinery makes claim honesty owned, solved, or guaranteed — any future reading of a green `completion-criteria-parity` gate as evidence of claim honesty will have made the error Spec 127 exists to prevent."
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument
+  # exemplar C(c2) — 7 item(s)
+  "#what-parity-means":
+    canonicalHash: sha256:51334f67aede639a78d8b5ae5e15b2672a07f69ca0d7e9977fdfe083f9ea43a2
+    items:
+      - id: parity-not-identical
+        kind: obligation
+        label: What parity does not mean
+        text: "Parity does NOT mean identical code, identical visual output, or identical token strings."
+      - id: parity-information-architecture
+        kind: member
+        label: Same information architecture
+        text: Same information architecture
+      - id: parity-interaction-model
+        kind: member
+        label: Same interaction model
+        text: Same interaction model
+      - id: parity-accessibility-guarantees
+        kind: member
+        label: Same accessibility guarantees
+        text: Same accessibility guarantees
+      - id: parity-source-semantic-tokens
+        kind: member
+        label: Same source semantic tokens
+        text: Same source semantic tokens (expressed in platform-native format)
+      - id: parity-divergence-documented
+        kind: member
+        label: Divergence documented
+        text: Intentional platform divergence documented and distinguished from drift
+      - id: parity-platform-native-expression
+        kind: member
+        label: Platform-native expression
+        text: Platform-native expression of all of the above
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#what-parity-means
