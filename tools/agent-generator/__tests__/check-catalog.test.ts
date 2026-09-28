@@ -70,10 +70,9 @@ describe('the nine re-grounding checks (Task 13)', () => {
     expect(() => fillTemplate(nineCheck('bare-signature').template, { anchor: '#a', extra: 'z' })).toThrow('unused template vars: extra');
   });
 
-  it('names an existing test for every landed check; only 13.5\'s two are pending', () => {
-    // When 13.5 lands, its two entries gain `test:` and this pending list becomes [] — the
-    // "every registry entry has its named test" assertion (carried from 13.1).
-    expect(NINE_CHECKS.filter((c) => c.test === undefined).map((c) => c.id)).toEqual(['orphaned-key', 'missing-row']);
+  it('every registry entry names an existing test — none pending (13.5 landed the last two)', () => {
+    // The "every registry entry has its named test" assertion (carried from 13.1; completed at 13.5).
+    expect(NINE_CHECKS.filter((c) => c.test === undefined).map((c) => c.id)).toEqual([]);
     for (const c of NINE_CHECKS.filter((x) => x.test !== undefined)) {
       const [file, name] = (c.test as string).split(' › ');
       const source = fs.readFileSync(path.join(__dirname, file), 'utf8');
