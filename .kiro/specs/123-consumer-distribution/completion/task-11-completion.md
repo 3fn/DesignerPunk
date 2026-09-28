@@ -100,3 +100,12 @@ These are inputs to Stacy's verdict record. **They are not the domain line itsel
 - **To Task 12 — a rework-added `canonical/` file returns to Peter.** Task 12's criterion: any C3 rework commit that adds a file under `canonical/` outside a tasks amendment goes back to Peter before U2a is submitted, because it would be a blank coverage-map row with no F3 adjudication.
 - **To Task 12 — the expected shipped-file intersection** is unchanged by this parent. `npm pack --dry-run --json --ignore-scripts` → 1602 files, ∩ `git diff --name-only c6e5c42d HEAD` (Task 10's close → this parent's pre-close head) → **0 paths**. Task 11 ships nothing. Task 12's own check runs over the whole U2a diff, where the eight Task 10 sidecars remain the expected, ruled intersection.
 - **Lessons item (#220)**: three of the four Task 11 corrections were a criterion naming a check or premise that did not exist yet. This is filed in § "Carried obligations" for the next tasks round.
+
+---
+
+## Erratum 2026-09-27 — § "G1 domain-line inputs for Task 12" (found by G1 run 1, A-3)
+
+*Appended; the text above is unchanged. Criteria rows are unaffected.*
+
+- **"the `route` item kind" under "Not exercised" is WRONG.** G′'s `hc-2` is `kind: route`, and its survival is part of G′'s verdict. So `route` **is** exercised, once, on the always-set member.
+- The G1 run-1 domain line (`.kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md` § "G1 DOMAIN LINE (run 1)") states this correctly. It is the record; this input was not.

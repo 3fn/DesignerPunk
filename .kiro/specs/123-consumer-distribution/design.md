@@ -623,10 +623,19 @@ frontmatter:                                        # NEW (L-D4)
 - **Entry set, now mechanical** (S-D-A5): **every body unit whose rendering is not a byte-identical `passthrough`** of its canonical unit.
   1. **Domain restriction**: zero C16 items → inapplicable; (iii) covers removal.
   2. **The one-sided floor, strict comparand = the item's COMPLETE `text`** (S-D-B2). It clears mechanically **iff** `strictVerbatimRetained / |items| ≥ 1/2` **AND** no removal cites subtraction 1–4.
-     - **Restated soundness claim**: matching complete item text **cannot count an item whose operative remainder was deleted**, because the remainder is part of the comparand. So the floor over-counts only if the complete item text is retained verbatim, which is **textual retention** — exactly what a mechanical pass claims, no more (S3-A2). *Label retention (clause (c)) is now unreachable inside the mechanical half.* Exemplar Lina-2 (titles kept, bodies cut) scores 0/7 and routes. **Stacy confirmed at R2 that the claim HOLDS, given the dependence stated in C16** (the confirmer writes complete text; the verbatim-substring check guards paraphrase and drift).
+     - **`strictVerbatimRetained` is the size of a valid OCCURRENCE ASSIGNMENT** *(rework after G1 run 1, B-1; Req 11.6.5b)*:
+       - each credited item is assigned an occurrence of its complete `text` in the rendering;
+       - no two credited items share an occurrence, and no two assigned occurrences overlap;
+       - items sharing a `text` are credited at most as many times as that text occurs disjointly;
+       - an item whose text occurs only inside another credited item's occurrence is not credited.
+       - **Any valid assignment is sound**, since a smaller one only under-counts, which routes, so the implementation need not maximize.
+       - **Plain per-item `includes` is NOT a valid implementation**: it credits every item of a shared text from one occurrence.
+       - **Required bite (13.4)**: G1 run 1's AX-1 rendering of `#audit-checklist` → 14/30, **routes**; under `includes` it gives 15/30 and clears.
+     - **Restated soundness claim**: matching complete item text **cannot count an item whose operative remainder was deleted**, because the remainder is part of the comparand, **and the occurrence assignment credits each item only through its own occurrence** *(the second clause was added after G1 run 1: the first alone was false for two items sharing a `text`)*. So the floor over-counts only if the complete item text is retained verbatim, which is **textual retention** — exactly what a mechanical pass claims, no more (S3-A2). *Label retention (clause (c)) is now unreachable inside the mechanical half.* Exemplar Lina-2 (titles kept, bodies cut) scores 0/7 and routes. **Stacy confirmed at R2 that the claim HOLDS, given the dependence stated in C16** (the confirmer writes complete text; the verbatim-substring check guards paraphrase and drift). *G1 run 1 then broke it on shared texts (B-1), and the occurrence assignment repairs that.*
      - **The floor can under-count** (a re-grounded item routes). That is the intended one-sidedness.
-  3. Otherwise → **ROUTED** → a C17 signature row, judged under the semantic correspondence rule.
+  3. Otherwise → **ROUTED** → a C17 signature row, judged under the semantic correspondence rule, **with retention decided by entailment** (Req 11.6.5e, added after G1 run 1): an item is retained iff every implementation that complies with the rendering's statements complies with it. Labels, references and bare goals entail nothing.
   4. **Hard floor, population defined** (S-D-A6): a charter in which **every body unit with a non-empty C16 item set** is `no-consumer-counterpart` → **FAIL**. Preambles with zero items cannot be used to evade it.
+- **Grain**: applied **per unit** of C13's partition; no aggregation (Req 11.6.5f).
 - **Not built until G1 returns HOLDS.**
 
 #### C19. The always-set — per-target member-file emission under path (B) (Req 12; Lina L-D3)
