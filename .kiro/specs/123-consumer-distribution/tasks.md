@@ -698,8 +698,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 13.4 (Lina) `triviality.ts`: the occurrence assignment with its witness, the tested properties and the AX-1 bite, over the copied G1 fixtures *(the branch-A configuration is dropped — G1 HOLDS; amendment 2026-09-27, U2b cut)*
   - [x] 13.5 (Lina) Orphan and missing-row refusals
   - [x] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice + removal of the expired U2a adjudications (F3; Stacy is told in the same notice) + absorb and delete the Task 11 precursor test `src/__tests__/operative-set-records.test.ts` (amendment 2026-09-27)
-  - [ ] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
-  - [ ] 13.8 Apply the counting-block edit (regenerate); Stacy's changed unit is confirmed when first recorded at 15.4 (erratum 2026-09-28)
+  - [x] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
+  - [x] 13.8 Apply the counting-block edit (regenerate); Stacy's changed unit is confirmed when first recorded at 15.4 (erratum 2026-09-28)
 
 - [ ] 14. Derivation checker, grain guard, and per-target bites (step 6)
 
