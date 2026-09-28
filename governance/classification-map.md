@@ -875,3 +875,47 @@ history:
   - { date: 2026-09-27, change: "entry created at the B-U1 ballot (.kiro/docs/ballots/2026-09-27-123-b-u1-publish-rail.md), Spec 123 Task 7.3, REWORKED same day after Stacy's first review (completion/task-7-3-stacy-review.md, ACCEPT-WITH-CHANGES). R1-1 [Critical, Peter ruled]: the npm-view form + its required hermetic npm_config_* env vars made npm 10.9.3 exit before resolving config, false-redding a live release (reproduced by Stacy at head); even fixed, the isolation would not have excluded the project's own .npmrc @3fn scope mapping. Peter's ruling: drop npm entirely for a direct HTTP GET against registry.npmjs.org, parsed with node -e — no npm CLI, no npmrc, ever consulted. R1-2 [Critical]: the .log paste target is gitignored and named no route to protected main — fixed via the .txt rename and a named post-publish release-record PR (RELEASE-FLOW.md step 6). R1-3..R1-7 applied as required/recommended (see this ballot § 0). Cross-references the T1-(B) ballot (.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md, RATIFIED Peter 2026-09-26, merged 314dbaa7, PR #199). Non-substring sweep at authoring: 30 live ids + this one (31 total), relations 0, dupes 0", by: thurgood }
   - { date: 2026-09-27, change: "REWORKED a second time same day, after Stacy's re-check (completion/task-7-3-stacy-review.md, 'Re-check addendum,' commit 2d83f266) returned ACCEPT with five non-blocking fixes, applied here: (1) curl -q added as the script's first argument, so ~/.curlrc is never read either — the phrase 'hermetic-from-config' is corrected wherever it appeared (this history line included) to the precise claim: no npm CLI, no npm config, no curl config file is read, and standard proxy env vars are DELIBERATELY HONOURED, not overridden; (2) an unset VERSION now exits 2 (a named USAGE error) instead of bash's own unbound-variable exit 1, with a fourth bite recorded; (3) the FAIL[version] message and RELEASE-FLOW.md step 6's own text each carry one short, no-auto-retry note that a 404 in the first minutes after publish may be registry indexing lag; (4) checks no longer calls the live PASS a 'bite' — it is a committed measurement, distinct from the three recorded reds. STACY'S ARMED RULING (the fork her first review surfaced): check_state: armed STANDS — both her conditions are met (row + step 6 land in one commit; R1-1 fixed, evidenced by a real PASS) and, unlike completion-criteria-parity, no separate later gate exists here. BINDING CONDITION, hers, carried verbatim: if application is ever split, with the row committed without step 6, the row lands as proposed — only the same-commit case earns armed. Re-ran the real 14.1.0 PASS after the -q change; re-committed pass-real-version.txt", by: thurgood }
 ```
+
+### issue-row-write-scope-grant
+
+```yaml
+rule: "A MERGED chartered issue under .kiro/issues/ whose body carries a **Grant paths**: list grants its named owner write access to exactly those paths, on the fixing PR's branch, expiring when that PR merges — activated only by Peter's merge of a PR whose body names the grant; the fixing PR is diffed against the list as it stood at that merge; never a governance-law path; a .github/** or verify-gate-registration.sh grant carries M1's excluded acts unless the issue names the act and Peter's merge admits it"
+boundary_call:
+  class: functional
+  rationale: "THE AUDITED PROPERTY IS MECHANICALLY DECIDABLE: the fixing PR's git diff --name-only against the list as it stood at the activating merge (git show <activating-merge>:<issue path>) is a set comparison. Held by AUDIT, not by a check — the tasks-row-write-scope-grant shape applied to issues"
+verification:
+  disposition: audit
+  owner: stacy
+  check_state: none
+  checks: []
+  # The audit (ballot § 3 clause 6): the fixing PR's path list against the activating-merge list;
+  # a path outside it is a FINDING on the executing agent — read at ARMING when the grant covers a
+  # .github/** path (ruling 4, 2026-09-28; Stacy's ARMING row, edit site 4), otherwise at the next
+  # RELEASE pass. Clause 7 (trace) rides the monthly health-check walk.
+education:
+  disposition: "LAW HOME, single: .kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 3 (the seven-clause rule). POINTER-GRADE: .kiro/issues/README.md § 'The convention' item 8 (one item, pointing here)"
+history:
+  - { date: 2026-09-28, change: "entry created by the CI-regime standing-scope ballot (.kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 3, M2), RATIFIED by Peter 2026-09-28 'as recommended on all five forks' (record-first). ORIGIN: B-CI named a CI-regime owner with no standing scope, and issues assigned CI work the owner's charter forbade (the test:scripts issue). Stacy R1 changes to clauses 4, 5 and 6 incorporated at THURGOOD R2. Non-substring sweep at authoring: 31 live ids + this one + instrument-rows-disposed-not-fixed, relations 0, dupes 0", by: thurgood }
+```
+
+### instrument-rows-disposed-not-fixed
+
+```yaml
+rule: "An instrument that surfaces rows (the 122 sweeps, audit:coverage-map and its lanes section, the completion-criteria-parity checker) ships in a PR carrying no fix outside its own extent; each surfaced row is, in that PR, adjudicated under the instrument's sweep: key in canonical/adjudications.yaml or routed to its owner as a chartered item (owner + named trigger + a unique expiry string in the adjudication record, which the fix PR removes citing grep -c → 0); fixes ship under the owner's standing scope in their own PR — except where Peter's ruling recorded in that PR admits a named, text-preserving normalization of the instrument's own input that the instrument's change turns red (no criterion text changed; #211's shape)"
+boundary_call:
+  class: functional
+  rationale: "THE AUDITED PROPERTY IS MECHANICALLY DECIDABLE: the instrument PR's diff against the instrument's own extent is a set comparison, and each surfaced row's disposition is a presence check (an adjudication row under the sweep: key, or a root issue file with owner + named trigger + the expiry string). Held by AUDIT"
+verification:
+  disposition: audit
+  owner: stacy
+  check_state: none
+  checks: []
+  # The fix PR's allowance (ruling 5, 2026-09-28): it may remove exactly the adjudication rows whose
+  # record carries its expiry string (the adjudications.yaml diff removes only those and adds nothing,
+  # cited) and commit the canonical/generated.lock written by a green diff-guard.ts run in the same PR.
+education:
+  disposition: "LAW HOME, single: .kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 4 (M3). POINTER-GRADE: .kiro/issues/README.md § 'The convention' item 7. CITED, NOT EDITED: 122's C8 adjudication row form (the canonical/adjudications.yaml header)"
+history:
+  - { date: 2026-09-28, change: "entry created by the CI-regime standing-scope ballot (.kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 4, M3), RATIFIED by Peter 2026-09-28 'as recommended on all five forks' (record-first). ORIGIN: Peter's 2026-09-27 holistic-path ruling on the PR-2 grant question (PR-2 instrument-only). The exception's shape is #211 (parser fix + text-preserving tasks.md normalization under Peter's ruling (d)). Non-substring sweep at authoring: 31 live ids + issue-row-write-scope-grant + this one, relations 0, dupes 0", by: thurgood }
+```
+
