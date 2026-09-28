@@ -17,12 +17,12 @@
 
 **Fix.**
 1. Add a third F unit that is **label-shaped but descriptive**. The candidate is Navigation's `#family-overview:preamble` (`**Family**: Navigation`, `**Shared Need**: …`, `**Readiness**: …`), 0 items, required verdict **inapplicable**. It holds form constant against `#key-characteristics`. Re-check the candidate at execution time: if Item 2's fix has edited this unit or its neighbours, re-verify that it still carries zero operative items.
-2. File a **tasks amendment on `main`**. It changes the "clause (a) is exercised by F's `#purpose` only" wording (#220, Task 11 and Task 12 criteria) and adds the unit to the exemplar set.
+2. File a **tasks amendment on `main`**. It changes the "clause (a) is exercised by F's `#purpose` only" wording (#220, Task 11 and Task 12 criteria) and adds the unit to the exemplar set. *(Addendum 2026-09-27, at the U2b-cut amendment: the Task 11 and Task 12 criteria are **not** edited. Both parents are merged (#222), their completion docs reproduce those rows verbatim, and the wording was true of G1's eleven exemplars. The third unit is added at Task 13.0 and joins G2's domain.)*
 3. **Lina confirms** the new unit: a record entry in `canonical/operative-sets/component-family-navigation.yaml`, a note block, and the precursor test green.
 4. **Stacy includes the unit** in the domain of the relevant gate.
-5. **13.4's bite tests** (`triviality.ts`, the classifier and the floor) are written against **all three** F units.
+5. **13.4's bite tests** (`triviality.ts`, clause (a) as read from the record, and the floor) are written against **all three** F units. *(Wording corrected 2026-09-27, Lina's carried item: `triviality.ts` applies no classifier; it reads clause (a) from the committed record.)*
 
-**Trigger: the U2b branch cut**, before Task 13.4 implements the classifier and floor in `triviality.ts`, as a tasks amendment on `main`.
+**Trigger: the U2b branch cut**, before Task 13.4 implements the floor (clause (a) read from the record) in `triviality.ts`, as a tasks amendment on `main`.
 **Latest acceptable: before G2 (Task 18)**, so that pass four's domain line covers it.
 
 **Why the earlier point was declined.** It would have been a fifth mid-parent amendment on Task 11, and G1 runs on the eleven exemplars as ruled. The G1 record cannot claim a unit added after it.
