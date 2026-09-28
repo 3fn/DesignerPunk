@@ -152,6 +152,8 @@ The `disposition: audit` value carries the `tasks-row-write-scope-grant` precede
 4. **Edit site 3**: `owned-artifact-authorship`'s history line.
 5. **Edit site 4 (Stacy, in her own `Agent: stacy` commit)**: `canonical/agents/stacy.md` § "The claims-pass record", the counting block gains "**orchestrator consult line** *(ballot 2026-09-28-orchestrator-consult-first)*: presence and grammar on the population, the `none needed`-on-trigger-surface count, the spot-check fraction with self-attested reads counted — never a gate". Because it changes an operative-set unit, the **11.6.5d re-confirmation rides the same commit**.
 6. Regenerate with `npx tsx tools/agent-generator/generate.ts` (Stacy's charter changed), then `diff-guard.ts` → green.
+
+*Erratum 2026-09-28 (a note, not a law change; found by Stacy while applying edit site 4, `a76f9089`): step 5's "Because it changes an operative-set unit, the 11.6.5d re-confirmation rides the same commit" should read "**if** it changes a **recorded** operative-set unit". The counting block lives in `#the-claims-pass-record-…`, which has no operative-set record until 123 Task 15.4, so no re-hash or re-confirmation was owed, and none was made. Step 5's text is left as ratified.*
 7. Run `rebuild_index` (for the register; Agent-Directory is not served), then steering-metadata validation.
 
 ---
