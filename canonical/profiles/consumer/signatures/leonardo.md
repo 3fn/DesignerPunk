@@ -87,11 +87,13 @@ assent: surviving [] — no-consumer-counterpart confirmed (subtraction-4)
 signer: leonardo
 canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-assent: surviving [] — no-consumer-counterpart confirmed (subtraction-4)
+assent: surviving [] — to the CHANGED disposition, `superseded-by` → `frontmatter:writeScope[.kiro/specs/**]` (cites subtraction-4)
 
-- `docs/specs/**` is where this repo keeps parent-task summary docs, one half of our two-document completion workflow.
-- My consumer write scope keeps its real counterpart: `.kiro/specs/**` is re-pointed to `specs/**` (DD15, where the starter specs live).
-- A second, summary-doc write root has no consumer meaning.
+**Re-signed 2026-09-29 (re-sign run, unit head `dba93df5`). This replaces my phase-two no-consumer-counterpart assent.**
+- **The row changed**: `no-consumer-counterpart` became `superseded-by` `frontmatter:writeScope[.kiro/specs/**]`. The hashes did not change: the canonical entry is the same, and the entry itself still renders nothing.
+- **Superseded-by is the more accurate disposition, and my phase-two reasoning was wrong on one point.** This write root exists so the seat can write parent-task summary docs. In the consumer, that function has not disappeared. It has moved: the consumer's rendered Task Completion Protocol now puts the summary doc at `specs/[spec]/task-N-summary.md` (`_consumer-output/_canonical/always-set/task-completion-protocol.md`, lines 33, 41 and 106; the same text is in the CC and Kiro identity renderings). That path sits inside the destination row's rendered `specs/**` (`cc/.claude/agents/leonardo.md:474`, `kiro/.kiro/agents/leonardo.json:41`). I said in phase two that a second summary-doc root had "no consumer meaning". The accurate statement is that its meaning is carried by the other write root.
+- **Subtraction-4 applies**: the `docs/specs/**` location itself is this repo's two-document workflow law. Only its function survives.
+- It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
 
 ## `#frontmatter:routes.cues[21]`
 
