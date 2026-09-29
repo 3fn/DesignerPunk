@@ -315,3 +315,14 @@ renderedHash: sha256:62fd761373b55d6c61af941dadd08c48b662f4b5edb1572607b6fee1d26
 verdict: refuse: should-re-point
 
 `authority-precedence` has a consumer counterpart, and the rendering drops it. The rendering names the authority (the team's own recorded decision, on whose date the owed-set query keys) but not its precedence over this text. **Should re-point**: where this text and the recorded decision disagree, the decision governs. This is the same finding as consumer-Thurgood's Q5 preamble.
+
+## `#the-trigger-set-the-114-superset-table-names-never-numbers`
+
+signer: stacy
+date: 2026-09-29
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed; ROUTED)
+canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+renderedHash: sha256:9125e2b3608732006279ff89016052966e29a4b5a28369c25aba788f78e472fe
+verdict: refuse: should-re-point
+
+The LENS row (`trigger-lens`) keeps question 6 but replaces the **five verifiability questions** with one summary ("can each criterion be verified from the repo"). The five questions are: a criteria set exists; evidence of a named kind could exist; some state of the world reads UNMET; "met" is decidable without the author; and the task text promises no artifact the criteria do not cover. They are repo-independent and they are the seat's content. Only the pointer to the lifecycle amendment is repo-bound. **Should re-point**: carry the five questions inline. For the record, the rest of the unit would assent at `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` (5/13). Not surviving would be RELEASE (its Q2 guard), CLOSEOUT (the rider-(a) discharge), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST, all repo-bound.
