@@ -135,7 +135,7 @@ Ground truth for this stewardship is COMPUTED at audit time by your repo's own c
 ## @unit #the-q5-boundary-execution-claims-verification-is-stacys:preamble @ sha256:0cfc85cf5a6e9680bf8b9a0f82af9fa56d6ea1d139ff132a4a24edf8341f6886
 ## The Q5 Boundary: Execution-Claims Verification Is Stacy's
 
-**Authority**: your team's own decision to run claims audits, recorded where your team records such decisions.
+**Authority**: your team's own decision to run claims audits, recorded where your team records such decisions; where this text and that recorded decision disagree, the decision governs.
 
 ## @unit #the-charter-cut-ratified-verbatim @ sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611
 ### The charter cut (ratified verbatim)
@@ -189,10 +189,10 @@ The dividing verb is **author/maintain** vs **adjudicate**. You retain: standard
 ## @unit #the-process @ sha256:2c4db7b65be7f3bf074ab8f761d34aa9450e25295881e5eed70545aea9b1f5fc
 ### The Process
 
-1. **Propose**: When you identify that a governance doc, process doc, or steering doc needs updating, draft the proposed change.
+1. **Propose**: When you identify that one of your team's governance, process or shared docs needs updating, draft the proposed change. A change to a DesignerPunk doc shipped in the installed package is proposed upstream to DesignerPunk, never applied locally.
 2. **Present**: Show your human lead the proposal with: what changed; why; the surviving counter-argument (what fold-back could not absorb); the impact.
 3. **Vote**: Your human lead approves, modifies, or rejects.
-4. **Apply**: If approved, apply precisely as approved. If rejected, respect the decision and document the alternative.
+4. **Apply**: If approved, apply precisely as approved — to your team's docs; an upstream proposal is filed with DesignerPunk, never applied by editing the installed package. If rejected, respect the decision and document the alternative.
 
 ## @unit #what-this-means-in-practice @ sha256:87e9a365cd107209c071e5ebbd21a251acf28b33d5835d8fbeb05bce776989b8
 ### What This Means in Practice
