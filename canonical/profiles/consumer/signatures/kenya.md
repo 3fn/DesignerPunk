@@ -210,12 +210,19 @@ date: 2026-09-29
 ## `#frontmatter:commands[platform-tokens]`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: re-pointed
 canonicalHash: sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:bbb85a598429b242a83176b9478a5cb8ebd91ec05ae17207c38ec62348306af3
 date: 2026-09-29
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `npm run generate:platform-tokens` is a repo-internal script (subtraction-1). The consumer equivalent, `npx designerpunk generate`, is named in the re-pointed `commands[product-screen-commands]`.
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`.** **REFUSED AGAIN: `should-re-point`** (after Thurgood's re-author). The re-pointed value is right: `cmd: npx designerpunk generate`, `runContext: consumer-repo`, and a cue that regenerates theme Swift and product tokens from `designerpunk.config.ts`. **But the row's own rendering is self-contradictory in a consumer.**
+- **What renders**: *"…: `npx designerpunk generate` (run from the consumer product repo, not this repo)"*.
+- **Why it's wrong**: in the consumer rendering, *this repo* IS the consumer product repo, so the clause tells the agent not to run the command where it must run.
+- **Source**: the suffix is `render.ts:97`'s fixed phrase for `runContext: consumer-repo`. It is written from DesignerPunk's point of view, and the consumer profile inherits it unchanged.
+- **Fix**: in the consumer profile, the consumer-repo run context renders no suffix, or a consumer-true one (e.g. *"run from this product repo"*). The overlay value itself needs no change.
+- **Wider scope**: the same suffix is on the re-pointed `commands[ios-build-test]` (not in my signed population, but in the same rendered Commands section), and probably on every consumer agent's consumer-repo commands.
 
 ## `#frontmatter:commands[swift-theme-types-tests]`
 
