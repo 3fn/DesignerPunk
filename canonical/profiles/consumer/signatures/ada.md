@@ -33,11 +33,12 @@ signer: ada
 
 signer: ada
 
-**ASSENT — surviving 13/13.**
-- Eleven bullets are verbatim.
-- `scope-theme-registry`: the `src/themes/ThemeRegistry.ts` path is replaced by "declared in your `designerpunk.config.ts`; the registry itself ships in the installed package". The same scope (registration, validation, theme-varying computation) is re-keyed; entailed.
-- `scope-pipeline-config`: the `src/config/…` paths are replaced by "`designerpunk.config.ts`, read by the installed package's loader". Entailed.
-- **Observation, not a refusal**: `scope-docs` still reads "Token documentation (Token-Family docs, Rosetta architecture)", and in a consumer those docs ship inside the package. Re-keyed, it reads as the team's token documentation, so it is entailed. But it is the same seam as the `#the-process` refusal. **Recommend that the re-author of `#the-process` also consider re-pointing this bullet**, as Lina's consumer in-scope already does ("Your team's component guidance docs … DesignerPunk's own …").
+**RE-SIGNED 2026-09-29 — ASSENT, surviving 13/13** (stale; renderedHash now `sha256:6209aa1c…`).
+- **What changed**: `scope-docs` now reads "Token documentation — your team's token docs; DesignerPunk's Token-Family and Rosetta architecture docs ship in the installed package (read them there; changes to them go upstream to DesignerPunk)". That is the re-pointing my phase-two observation asked for.
+- The item "Token documentation (Token-Family docs, Rosetta architecture)", re-keyed to the consumer, is entailed. Documentation of the team's tokens is in scope, and the shipped docs are placed correctly: read locally, changed upstream.
+- The other twelve bullets are unchanged from the phase-two judgment:
+  - eleven are verbatim;
+  - `scope-theme-registry` and `scope-pipeline-config` are re-keyed and entailed.
 
 ## `#boundary-cases`
 
@@ -67,12 +68,10 @@ signer: ada
 
 signer: ada
 
-**ASSENT — surviving 5/5.**
-- `practice-no-write`: "`.kiro/steering/` or `governance/` files" becomes "DesignerPunk's shipped docs (inside the installed package) or … the generated `designerpunk-*` identity files". In a consumer, those are the shared governance layer.
-  - The team's own shared docs are not named in this bullet. They are covered within this unit by the next bullet's "or any shared knowledge doc", and the unit as a whole entails no direct writes to the shared layer.
-- `practice-no-edit-docs` and `practice-all-changes`: verbatim. For `practice-all-changes`, "This" is the sibling bullets, which are items, so it is not widened.
-- `practice-propose`: Peter re-keyed to "your human lead".
-- `practice-ambient-law`: verbatim, and the ambient embeds are retained.
+**RE-SIGNED 2026-09-29 — ASSENT, surviving 5/5** (stale; renderedHash now `sha256:901f97a1…`).
+- **What changed**: `practice-no-write`'s bullet gains "…and you change your team's shared docs only through this process". That is the scoping clause Lina's and Thurgood's renderings carry.
+  - It strengthens the entailment of `practice-no-write`, re-keyed as "never write the shared governance layer": the shipped docs and identity files are forbidden, and the team's shared docs change only via the ballot.
+- `practice-no-edit-docs`, `practice-propose`, `practice-all-changes` and `practice-ambient-law`: unchanged from the phase-two judgment, and entailed.
 
 ## `#mcp-practice-notes`
 
@@ -177,47 +176,42 @@ signer: ada
 
 signer: ada
 
-**ASSENT — no consumer counterpart (`surviving: []`).**
-- `docs/specs/**` is DesignerPunk's location for summary docs. The consumer's rendered Task Completion Protocol names no such location.
-- Spec work is covered by the re-pointed `specs/**` write scope.
+**RE-SIGNED 2026-09-29 — the disposition flipped from `no-consumer-counterpart` to `superseded-by frontmatter:writeScope[.kiro/specs/**]`; ASSENT (`surviving: []`).**
+- Re-judged:
+  - the destination renders `specs/**` in the consumer frontmatter;
+  - the consumer's rendered Task Completion Protocol now names the summary-doc location, `specs/[spec]/task-N-summary.md` (lines 33, 41, 106), which is inside that scope.
+- The function "write the task summary docs" therefore survives in the re-pointed `specs/**` scope. `superseded-by` is more accurate than my phase-two absence assent, which it replaces.
+- The cite (subtraction-4, DesignerPunk's `docs/specs/` layout) applies.
 
 ## `#the-process`
 
 signer: ada
 
-**REFUSE — `should-re-point`** (refusal 1 of this run). The four steps survive textually, with Peter re-keyed to "your human lead", but the rendering is wrong for a consumer.
-- **The defect**:
-  - Step 1 (`ballot-propose`) still names "a Token-Family doc or steering doc" as the thing to propose changes to, and step 4 (`ballot-apply`) says "If approved, apply precisely as approved."
-  - In a consumer, Token-Family docs ship **inside the installed package**, and the adjacent unit's rendering forbids writing them ("You do NOT write to DesignerPunk's shipped docs (inside the installed package) …").
-  - An approved change therefore has no applicable target. A consumer Ada either contradicts the next unit, or edits `node_modules`, which is lost on the next install.
-  - The charter creates this contradiction, and the human-lead vote is left to catch it.
-- **Evidence that this is an authoring miss, not a design choice**: Lina's and Thurgood's consumer renderings of the sibling unit carry the scoping clause "…and you change your team's shared docs only through this process". Ada's `#what-this-means-in-practice` rendering does not. With that clause, Apply targets the team's docs. Without it, Apply targets shipped docs.
-- **Possible re-authoring** (Thurgood's pick, not mine):
-  - (a) Re-point step 1's referent to the team's own token docs, and send proposed changes to DesignerPunk's shipped docs upstream rather than applying them locally.
-  - (b) Add Lina's and Thurgood's scoping clause to Ada's `#what-this-means-in-practice`. That changes its renderedHash, so I re-sign it too.
-  - (a) and (b) together is the closest match to the siblings.
-  - The `scope-docs` observation under `#in-scope` is the same seam and may ride the same re-author.
+**RE-SIGNED 2026-09-29 — refusal 1 RESOLVED by re-authoring; ASSENT, surviving 4/4.** Re-judged in full against the new rendering (renderedHash `sha256:48794aa7…`; the removals now include "steering doc", cited subtraction-1).
+- `ballot-propose`: "When you identify that one of your team's token docs or shared docs needs updating, draft the proposed change. A change to a DesignerPunk Token-Family doc (shipped in the installed package) is proposed upstream to DesignerPunk, never applied locally." The referent is re-keyed to docs the consumer owns, and the shipped-doc case is routed upstream. Entailed.
+- `ballot-present` and `ballot-vote`: Peter is re-keyed to "your human lead". Entailed.
+- `ballot-apply`: "If approved, apply precisely as approved — to your team's docs; an upstream proposal is filed with DesignerPunk, never applied by editing the installed package. If rejected, respect the decision and document the alternative." Entailed. **The defect is gone**:
+  - Apply now has a writable target;
+  - it agrees with the adjacent unit's ban on writing shipped docs, and with that unit's new clause "you change your team's shared docs only through this process";
+  - the `node_modules` path is closed explicitly.
+- **Residual, not a defect**: "filed with DesignerPunk" names no channel (issue tracker, PR). That is acceptable at charter grain and is not a reason to refuse.
 
 ## `#frontmatter:commands[functional-suite]`
 
 signer: ada
 
-**REFUSE — `should-re-point`** (refusal 2 of this run). The disposition should be `superseded-by #what-you-dont-own`, not `no-consumer-counterpart`.
-- The entry's function (cue: "run the functional lanes to validate token work"; cmd `npm test`) **survives, re-grounded, elsewhere in the consumer rendering**. `#what-you-dont-own` renders "Run token tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything."
-- That sentence is where this row's function went. The `#what-you-dont-own` removal (subtraction-1) deletes exactly the pointer "Your test commands (with their triggering cues) are in the Commands section." together with the Jest line, and replaces it with that sentence.
-- **Req 11.6.5e, scope clause**: "A function that survives only elsewhere takes a disposition for this unit (`superseded-by`, or `re-pointed` with that destination)". An absence assent would attest a no-counterpart that I judge false. It would also inflate the recorded no-consumer-counterpart rate (B-U2 M1).
-- **Resolution I expect**: re-dispose as `superseded-by` with destination `#what-you-dont-own`, then I re-sign under C1.
-- **This is a contested-classification refusal, surfaced as a fork, not a settled defect.** The other reading is that a commands entry is its exact `cmd`, which has no consumer counterpart. The consumer rendering is identical under either label.
-  - The pattern is profile-wide: five agents carry `commands[functional-suite]` as no-consumer-counterpart.
-  - If Peter or Thurgood rule the entry-grain reading, that ruling is the re-authoring, and I re-sign as an absence assent.
+**RE-SIGNED 2026-09-29 — refusal 2 RESOLVED by re-disposition; ASSENT to `superseded-by #what-you-dont-own` (`surviving: []`, since a frontmatter entry carries no operative items).**
+- Re-judged against the new disposition: `superseded-by`, destination `#what-you-dont-own`, cites subtraction-1 (the `npm test` string is DesignerPunk's).
+- The destination's rendering is unchanged and still carries the function: "Run token tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything."
+- This is exactly the disposition my refusal asked for. Thurgood's function-grain rule settles the fork I surfaced.
 
 ## `#frontmatter:commands[token-tests]`
 
 signer: ada
 
-**REFUSE — `should-re-point`** (refusal 3 of this run). Same ground as refusal 2, and more direct: the entry's cue is "run the token-specific suites", and `#what-you-dont-own`'s consumer rendering says "Run token tests with your repo's own test runner and scripts …".
-- The function survives re-grounded elsewhere, so 11.6.5e's scope clause gives this row `superseded-by #what-you-dont-own`, not an absence.
-- It is the same fork as refusal 2 (entry-grain vs function-grain), and it resolves the same way under whichever ruling Peter or Thurgood make.
+**RE-SIGNED 2026-09-29 — refusal 3 RESOLVED by re-disposition; ASSENT to `superseded-by #what-you-dont-own` (`surviving: []`).**
+- The same ground as `commands[functional-suite]`. "Run the token-specific suites" is carried by the destination's "Run token tests with your repo's own test runner and scripts …".
+- The cite (subtraction-1, the repo-specific `npm test -- src/tokens/__tests__/`) applies.
 
 ## Signing run summary (2026-09-29, phase two)
 
