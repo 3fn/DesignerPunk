@@ -728,7 +728,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 14.4 E-fm + frontmatter bites (or the forced negative)
   - [x] 14.5 Bite 2 + `derivation.frontmatter.test.ts`
 
-- [ ] 15. Consumer rendering and first render (step 7)
+- [x] 15. Consumer rendering and first render (step 7)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Opus); Lina (Opus) — 15.2 `derive.ts`
   **Traces**: Reqs 9, 9.5, 11, 12, 13, 14.8–14.9 · design C12, C19, C22, DD18, DD20
