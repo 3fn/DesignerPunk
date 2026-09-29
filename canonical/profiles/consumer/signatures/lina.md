@@ -135,3 +135,9 @@ signer: lina
 signer: lina
 
 **REFUSE — `refuse: should-re-point`.** The disposition is wrong, not the text. `commands[functional-suite]` is a test invocation whose FUNCTION (run the tests that validate component work) has a consumer counterpart, and it survives in the body: `#what-you-dont-own`'s own rendering says "Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything". Under Req 11.6.5e and the drafting README, a function that survives only elsewhere takes a disposition for this row (`superseded-by`, destination `#what-you-dont-own`, or `re-pointed` to a consumer command), never `no-consumer-counterpart`. As written, the row also inflates the `no-consumer-counterpart` rate Stacy baselines (B-U2 M1). **Suggested resolution for the profile author**: re-dispose `superseded-by`, destination `#what-you-dont-own`. I re-sign on that change.
+
+## `#frontmatter:commands[component-tests]`
+
+signer: lina
+
+**REFUSE — `refuse: should-re-point`.** The disposition is wrong, not the text. `commands[component-tests]` is a test invocation whose FUNCTION (run the tests that validate component work) has a consumer counterpart, and it survives in the body: `#what-you-dont-own`'s own rendering says "Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything". Under Req 11.6.5e and the drafting README, a function that survives only elsewhere takes a disposition for this row (`superseded-by`, destination `#what-you-dont-own`, or `re-pointed` to a consumer command), never `no-consumer-counterpart`. As written, the row also inflates the `no-consumer-counterpart` rate Stacy baselines (B-U2 M1). **Suggested resolution for the profile author**: re-dispose `superseded-by`, destination `#what-you-dont-own`. I re-sign on that change.
