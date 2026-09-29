@@ -1,13 +1,13 @@
 # BITE extra-cc (EXTRA EVIDENCE): cc.ts's commands section bypasses emitSpans (one inline #frontmatter:commands container span)
 # mutation: tools/agent-generator/adapters/cc.ts
 # command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/semantics-guard.test.ts --verbose
-# base commit: 32386505 (+ the uncommitted 14.4 guard tests); run 2026-09-29T04:35:38Z
+# base commit: 29a201e1 (Task 14 addendum: Q1 (b) value-form re-run, after 15.3 def8184e); run 2026-09-29T11:42:49Z
 # --- mutation diff ---
 diff --git a/tools/agent-generator/adapters/cc.ts b/tools/agent-generator/adapters/cc.ts
-index a00dbe95..ccd8f7c5 100644
+index fbc729e6..508700f3 100644
 --- a/tools/agent-generator/adapters/cc.ts
 +++ b/tools/agent-generator/adapters/cc.ts
-@@ -353,10 +353,6 @@ export class CcAdapter implements TargetAdapter {
+@@ -370,10 +370,6 @@ export class CcAdapter implements TargetAdapter {
          fm.commands !== undefined ? { kind: 'entry', path: 'commands', text } : { kind: 'glue', glue: 'shared-catalog-section', text };
 -      bodyParts.push(
 -        emit([
@@ -28,31 +28,31 @@ FAIL tools/agent-generator/__tests__/semantics-guard.test.ts
     ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (2 ms)
     ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
     frontmatter
-      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
-      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob) (1 ms)
       ✕ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED (2 ms)
   kiro
-    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
-    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S) (1 ms)
     frontmatter
       ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
-      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob) (1 ms)
       ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
   a fake third target — declared, its adapter injected through the registry, no other edit to the guard
-    ✓ the declared list drives the blocks: one more target → one more block
-    ✓ a declared target with no registered adapter fails loud, naming it (no silent block) (2 ms)
+    ✓ the declared list drives the blocks: one more target → one more block (1 ms)
+    ✓ a declared target with no registered adapter fails loud, naming it (no silent block) (1 ms)
     cc
       ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
       ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
       frontmatter
-        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
         ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
         ✕ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
     kiro
       ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
       ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
       frontmatter
-        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
         ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
         ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
     fake
@@ -117,5 +117,5 @@ FAIL tools/agent-generator/__tests__/semantics-guard.test.ts
 Test Suites: 1 failed, 1 total
 Tests:       3 failed, 24 passed, 27 total
 Snapshots:   0 total
-Time:        0.803 s, estimated 1 s
+Time:        0.879 s, estimated 1 s
 Ran all test suites matching tools/agent-generator/__tests__/semantics-guard.test.ts.
