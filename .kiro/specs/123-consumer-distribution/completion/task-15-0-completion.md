@@ -88,3 +88,39 @@
    - the `skills` line;
    - per-agent ambient embeds (`ambient[<docid>]` is a container; its section leaves carry the rows).
 5. **A consumer fixture's output root** is `canonical/_fixture-output-consumer/`: never guarded, never written by `generateAll`. It is the test-time lane Task 14 reads.
+
+## Addendum 2026-09-29 — adaptation 2 resolved (option (ii)), disclosure, and the erratum owed for adaptation 1
+
+*Append-only. The sections above are unchanged. The orchestrator directed option (ii) on 2026-09-29, after verifying `895997e5` on the unit branch.*
+
+**The fix.**
+- `tools/agent-generator/consumer-profile.ts` exports `surfaceGlobs()` → `['canonical/consumer-profile.yaml']`.
+- `tools/agent-generator/coverage-map.ts` `diffGuardSurfaceGlobs()` appends it. This is S-D1's one symbol with two consumers, the same form as 13.6's freshness globs.
+- The profile is a generation **input**: `generateAll` builds its adapters from `targets`, so a changed profile changes the outputs the guard compares. That is why it is listed under `122-diff-guard` and never added to `guardedRoots()`, where an input would read as an extra output.
+- The regenerated `canonical/coverage-manifest.yaml` gains the glob under `122-diff-guard`. In `canonical/coverage-map.yaml`, the row's `checks: []` becomes `- 122-diff-guard`.
+
+**Result.**
+- `npm run audit:coverage-map` → **`audit:coverage-map: PASS (surfaces PASS · lanes PASS)`**, with `total surfaces : 307` · `guarded : 306` · `blank : 1` · `adjudicated-blank : 1` (`canonical/generated.lock`, a standing ruling). Before the fix it read `FAIL (surfaces FAIL · lanes PASS)`, with `[FAIL] canonical/consumer-profile.yaml`.
+- `npx tsx tools/agent-generator/diff-guard.ts` → freshness PASS, then `diff-guard: full-run-green (input-closure-changed)`, with the lock refreshed.
+- `npm run test:agent-generator` → `Test Suites: 46 passed, 46 total` · `Tests: 733 passed, 733 total`.
+- `tsc -p tools/agent-generator` → 0.
+- Measurement condition: the same read-only `dist` symlinks as above, removed before the commit.
+
+**Bite.** `consumer-profile.ts` `surfaceGlobs()` → `[]`, then `npm run audit:coverage-map` → exit 1:
+
+```
+audit:coverage-map: FAIL (surfaces FAIL · lanes PASS)
+  UNADJUDICATED BLANK ROWS (1):
+    [FAIL] canonical/consumer-profile.yaml
+```
+
+The same mutation turns `coverage-map.test.ts › … S-D1 spot-check … or the consumer profile's (not a frozen literal)` red: `Tests: 1 failed, 47 passed`. Afterwards the file and the generated coverage files were restored, and the audit re-run → PASS.
+
+**Disclosure — out-of-list for Task 15's row.**
+- `tools/agent-generator/coverage-map.ts` and `tools/agent-generator/__tests__/coverage-map.test.ts` are Spec 122 files. The S-D1 spot-check now counts the profile's globs, as 13.6 did for the freshness sweep. This follows the same shape as Lina's 13.6 disclosure.
+- The orchestrator's direction reads `coverage-map.ts` as the steward's own Spec 122 charter surface. **A literal reading of Thurgood's charter write-scope list** (`src/__tests__/**`, `.kiro/specs/**`, `docs/specs/**`, `lane-timing.yml`) **does not name `tools/agent-generator/**`.** That scope question is recorded here so the claims pass reads it as a disclosure, not a silent claim.
+- `consumer-profile.ts` is inside the grant.
+
+**Erratum owed — adaptation 1, which the orchestrator opens separately; `tasks.md` is not edited here.** Task 15's criterion "15.0's slice is steward-invisible" should read *"… byte-identical — except `canonical/coverage-map.yaml`'s row for the new `canonical/consumer-profile.yaml` (and `canonical/coverage-manifest.yaml`'s matching glob) …"*.
+- Every agent, skill, always-layer and `_fixture-output/**` output is byte-identical.
+- The outputs hash moves only by that row, now `checks: - 122-diff-guard`, and by its manifest glob.
