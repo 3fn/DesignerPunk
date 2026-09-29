@@ -56,7 +56,7 @@ signer: lina
 
 signer: lina
 
-**ASSENT — surviving: ballot-propose, ballot-present, ballot-vote, ballot-apply.** Four steps. Present and Vote are re-keyed to the human lead; Propose and Apply are verbatim.
+**ASSENT — surviving: ballot-propose, ballot-present, ballot-vote, ballot-apply** (re-sign run 2026-09-29, against the post-batch rendering and hashes). All four entailed in the NEW rendering. **Propose**: any of your team's component or shared docs gets a drafted change, and a DesignerPunk Component-Family doc gets an upstream proposal. That re-keys "a Component-Family doc or steering doc" to the consumer's two kinds of doc, and every doc needing an update still gets a proposal. **Present** and **Vote** are re-keyed to the human lead. **Apply**: "apply precisely as approved — to your team's docs". An approved change to a shipped doc is filed upstream, since the package is never edited; that is the only place an application can happen, so "apply precisely as approved" survives wherever applying is possible. The rejected branch is verbatim. History: assented at `b9e2a919` against the earlier rendering; that signature went stale when the batch re-authored the unit (the shipped-doc application rule).
 
 ## `#what-this-means-in-practice`
 
@@ -116,7 +116,7 @@ signer: lina
 
 signer: lina
 
-**ASSENT — surviving: [] (nothing survives).** Agree: `docs/specs/**` is this repo's spec-summary tree (subtraction 4).
+**ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Disposition changed by the batch**: `no-consumer-counterpart` → `superseded-by` `frontmatter:writeScope[.kiro/specs/**]`. I assent. The destination renders the glob `specs/**` (both targets' write scope lists `- \`specs/**\``). The row's function is permission to write the spec summaries, which in a consumer's layout live at `specs/[spec]/task-N-summary.md`, so `specs/**` makes that write permitted. **Dependency, stated**: this entailment holds because the consumer's summary location is under `specs/`. If a later re-grounding moves summaries elsewhere, this row must be re-judged. History: signed `no-consumer-counterpart` at `b9e2a919`; the function turned out to have a counterpart, so the new disposition is the more accurate claim.
 
 ## `#frontmatter:writeScope[application-mcp-server/**]`
 
@@ -134,19 +134,19 @@ signer: lina
 
 signer: lina
 
-**REFUSE — `refuse: should-re-point`.** The disposition is wrong, not the text. `commands[functional-suite]` is a test invocation whose FUNCTION (run the tests that validate component work) has a consumer counterpart, and it survives in the body: `#what-you-dont-own`'s own rendering says "Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything". Under Req 11.6.5e and the drafting README, a function that survives only elsewhere takes a disposition for this row (`superseded-by`, destination `#what-you-dont-own`, or `re-pointed` to a consumer command), never `no-consumer-counterpart`. As written, the row also inflates the `no-consumer-counterpart` rate Stacy baselines (B-U2 M1). **Suggested resolution for the profile author**: re-dispose `superseded-by`, destination `#what-you-dont-own`. I re-sign on that change.
+**ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Refusal (`928b7980`) resolved by the changed disposition**, per Thurgood's function-grain ruling. The row is now `superseded-by #what-you-dont-own`, and I assent to it. That unit's own rendering ("Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything") entails this command's function: run the tests that validate component work, with the project's actual runner and never a wrong runner's flags. `surviving: []`: a frontmatter leaf carries no operative-set items (C16), and the function lives at the destination.
 
 ## `#frontmatter:commands[component-tests]`
 
 signer: lina
 
-**REFUSE — `refuse: should-re-point`.** The disposition is wrong, not the text. `commands[component-tests]` is a test invocation whose FUNCTION (run the tests that validate component work) has a consumer counterpart, and it survives in the body: `#what-you-dont-own`'s own rendering says "Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything". Under Req 11.6.5e and the drafting README, a function that survives only elsewhere takes a disposition for this row (`superseded-by`, destination `#what-you-dont-own`, or `re-pointed` to a consumer command), never `no-consumer-counterpart`. As written, the row also inflates the `no-consumer-counterpart` rate Stacy baselines (B-U2 M1). **Suggested resolution for the profile author**: re-dispose `superseded-by`, destination `#what-you-dont-own`. I re-sign on that change.
+**ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Refusal (`3a003c2d`) resolved by the changed disposition**: `superseded-by #what-you-dont-own`, assented. "Run component tests with your repo's own test runner and scripts" entails running the component-specific suites. `surviving: []`, as above.
 
 ## `#frontmatter:commands[full-suite-with-performance]`
 
 signer: lina
 
-**REFUSE — `refuse: should-re-point`.** The disposition is wrong, not the text. `commands[full-suite-with-performance]` is a test invocation whose FUNCTION (run the tests that validate component work) has a consumer counterpart, and it survives in the body: `#what-you-dont-own`'s own rendering says "Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything". Under Req 11.6.5e and the drafting README, a function that survives only elsewhere takes a disposition for this row (`superseded-by`, destination `#what-you-dont-own`, or `re-pointed` to a consumer command), never `no-consumer-counterpart`. As written, the row also inflates the `no-consumer-counterpart` rate Stacy baselines (B-U2 M1). **Suggested resolution for the profile author**: re-dispose `superseded-by`, destination `#what-you-dont-own`. I re-sign on that change.
+**ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Refusal (`6f7b882e`) withdrawn: ASSENT-ON-RULING** (my ruling response below). The disposition is unchanged, `no-consumer-counterpart`, and I now agree with it. Under strict 5e, "run component tests with your repo's own test runner" does not entail "run ALL tests including the performance lanes". No rendering carries the full-suite-with-perf function; its lanes and idle-machine caution are this repo's instruments.
 
 ## Signing run summary (2026-09-29, phase two)
 
@@ -205,3 +205,23 @@ Totals: **53 of 54 routed items survive.**
 ### Ruling response (2026-09-29)
 
 **ASSENT-ON-RULING — `commands[full-suite-with-performance]`: I withdraw the refusal and will re-sign it `no-consumer-counterpart`, `surviving: []`, when the batch lands.** Thurgood's strict 5e read is right. "Run component tests with your repo's own test runner and scripts" entails running *component* tests. It does not entail "run ALL tests including the performance lanes (wall-clock-sensitive — idle machine)": that is a different, broader function, whose lanes and idle-machine caution are this repo's instruments, and I read "compatible with" as "entails". My refusal grouped the three command rows by entry kind. Under his function-grain order only two of them, `functional-suite` and `component-tests`, are entailed by `#what-you-dont-own`'s rendering, and those two refusals stand as upheld.
+
+## Re-sign run summary (2026-09-29)
+
+**Seat**: Lina (C1) · **Branch**: `task/123-u2b-fr3-lina` from `dba93df5` (Thurgood's re-author batch) · **Worklist**: `sheets/lina.md` § 4, five acts, hashes from § 2 · **Commit**: the one that adds this section. It is the only commit on this branch and carries the five re-signatures, their rewritten evidence blocks and this summary. Each fragment still has exactly one `## ` block.
+
+| Row | Act | Result |
+|---|---|---|
+| `#the-process` | stale → re-judged against the NEW rendering | **ASSENT 4/4**: all four ballot steps are still entailed under the shipped-doc rule (local docs applied; DesignerPunk's shipped docs proposed upstream, never edited in the package). New `renderedHash` `sha256:599ae71c…`. |
+| `commands[functional-suite]` | refusal `928b7980` resolved by the changed disposition (`superseded-by #what-you-dont-own`) | **ASSENT**, `surviving: []`. The destination's rendering entails the function. |
+| `commands[component-tests]` | refusal `3a003c2d` resolved likewise | **ASSENT**, `surviving: []`. |
+| `commands[full-suite-with-performance]` | refusal `6f7b882e` **withdrawn** (my ASSENT-ON-RULING) | **ASSENT** to `no-consumer-counterpart`, `surviving: []`. |
+| `writeScope[docs/specs/**]` | disposition flipped `no-consumer-counterpart` → `superseded-by` `writeScope[.kiro/specs/**]` | **ASSENT**, `surviving: []`. The destination renders `specs/**`, which covers the consumer summary location `specs/[spec]/task-N-summary.md`. That dependency is stated in the block. |
+
+**Refusals**: none issued; none standing from me. All three earlier refusals are resolved: two by changed disposition, one withdrawn on the ruling. None of them was resolved by assent alone.
+
+**One act invisible in the dispositions file, recorded here**: `writeScope[docs/specs/**]`'s signature is **byte-identical** before and after. The disposition flip left both hashes unchanged (as the sheet warns), and the assent was already `surviving: []`. The re-sign act is carried by its rewritten evidence block and this commit. **A signature cannot record which disposition it assented to**, so a flip-only re-sign leaves no trace in the row itself. That is a limit of the row format, recorded here, not fixed.
+
+**VALVE-1 trim note** (README): not applicable. None of my five rows is a `groundTruthManifest` trim.
+
+**Verification**: `runFreshnessSweep` over this worktree → **lina findings: 0**. The run as a whole still reports `{"stale-signature":31}`, all in other seats' rows.
