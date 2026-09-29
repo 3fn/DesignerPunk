@@ -28,7 +28,7 @@ body:
   "#platform-currency-expectations": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-expectations", "signature": {"signer": "sparky", "canonicalHash": "sha256:e7488d0b9d56e780dd213378194926725105c159835c0113689ea38b6f3e8346", "renderedHash": "sha256:8f58ae7160b080bf429d381c910eb9f0e675ae42ce23e651aafd1b9a50bc1173", "assent": {"surviving": ["currency-1", "currency-2", "currency-3", "currency-4", "currency-5"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#platform-currency-expectations"}}
   "#platform-reference-pointers": {"disposition": "retained"}
   "#web-specific-guidance": {"disposition": "retained"}
-  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "the three `dist/*.css` build outputs are trimmed from your ambient set on purpose (see the Ground truth section).", "cites": "subtraction-3"}], "destination": "#mcp-practice-notes"}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "the three `dist/*.css` build outputs are trimmed from your ambient set on purpose (see the Ground truth section).", "cites": "subtraction-3"}], "destination": "#mcp-practice-notes", "signature": {"signer": "sparky", "canonicalHash": "sha256:d672fc52acae749a0c20e074c640a050e935ca09ebafeb63ef4ca43729346be6", "renderedHash": "sha256:d5e97e7d2536c7a71f6fac85033c1bde11ac73c8ffdbadec096164bcee45a3db", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/sparky.md#mcp-practice-notes"}}
   "#collaboration-standards:preamble": {"disposition": "retained"}
   "#counter-arguments-are-mandatory": {"disposition": "retained"}
   "#candid-over-comfortable": {"disposition": "retained"}

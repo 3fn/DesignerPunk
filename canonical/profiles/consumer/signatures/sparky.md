@@ -173,3 +173,40 @@ signer: sparky
 signer: sparky
 
 **ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `docs/specs/**` is this repo's summary-doc tree under its spec workflow (`subtraction-4`). The consumer's spec area is covered by the re-pointed `writeScope[.kiro/specs/**]` → `specs/**`. No counterpart.
+
+## `#mcp-practice-notes`
+
+signer: sparky
+
+**REFUSE: should-re-point.** `ground-truth-live-mcp` survives re-pointed: "reach for `get_token_details` / `search_tokens` (application) for token values rather than reading generated CSS by hand" entails the item once the repo-only trim fact is dropped. `rebuild-product` is verbatim and resolves.
+
+**`mcp-fallback` is dead in the consumer's repo, even though its text is kept verbatim.** It says to fall back to "Grep/Glob over `src/components/` for web implementations". In a consumer repo, `src/components/` is the consumer's own app code, not DesignerPunk's web implementations. `@3fn/core`'s `package.json` `files` ships no web platform sources: it ships only iOS/Android sources plus `src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}`, and the web components arrive as the `dist/browser` bundle. So the fallback points at the wrong tree exactly when the application MCP is down, which is the only time it is used. Re-keyed to the consumer's repo, the item is not entailed by this rendering.
+
+This is the same referent the profile already re-points elsewhere: `#in-scope` re-points "(referencing existing platforms/web/ implementations)" under `subtraction-5`, and `knowledgeBases[web-components]` is `no-consumer-counterpart` for the same reason. This unit is the one place it was missed.
+
+**Suggested re-point (the profile author's to author)**: fall back to the installed package's shipped metadata, `node_modules/@3fn/core/src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}`, and its type declarations, `node_modules/@3fn/core/dist/browser-entry.d.ts`, for component APIs; use the consumer repo's own test files for test patterns; and read governance from `node_modules/@3fn/core/.kiro/steering/`. The row would then carry a `subtraction-5` removal for `src/components/`.
+
+## Signing run summary (2026-09-29, phase two)
+
+- **Commits** (branch `task/123-u2b-fr2-sparky`, from `60b0fdb5`):
+  - `bc5955fb`: the 27 assents.
+  - The commit that adds this summary: the one refusal, issued second, in its own commit.
+- **Rows signed**: 28 of 28 (8 routed + 20 `no-consumer-counterpart`).
+- **Routed assents** (surviving/items):
+  - `#identity` 7/7
+  - `#out-of-scope` 7/7
+  - `#blocking-exception-direct-escalation-to-peter` 3/3
+  - `#with-peter` 3/4 (`human-4` not surviving)
+  - `#how-to-use-designerpunk-tokens-on-web` 5/5
+  - `#platform-currency-expectations` 5/5
+  - `#what-you-dont-own` 4/4
+- **No-consumer-counterpart assents**: 20, each `surviving: []`. Each citation was checked for applicability; `knowledgeBases[web-components]` was checked against `package.json` `files`.
+- **Refused**: `#mcp-practice-notes` → `should-re-point`. `mcp-fallback` greps `src/components/`, which does not hold DesignerPunk's web implementations in a consumer install.
+- **Widenings**: none. I read the two referent candidates:
+  - `blocking-exception`'s "This" is resolved by `blocking-direct` in the same unit and the same rendering.
+  - `jest-not-vitest` is the known false positive.
+- **Residuals** (recorded, not refused):
+  - (1) `#with-peter`'s removal of `human-4` cites `subtraction-2` ("authority claims naming people"). The item is a claim about a person's skillset, so the citation fits loosely (Req 11.3 (iii)).
+  - (2) `routes.cues[7]` (the `platform-resource-map` cue) cites `subtraction-1`. `subtraction-5` (a non-resolving route) fits more closely.
+  - (3) The rendered `#identity` still names Peter in the Sarah Parks naming history. That is orientation, not an item, so it is fine.
+
