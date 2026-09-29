@@ -3,7 +3,7 @@
 **Spec**: 123 — Consumer Distribution · **Unit**: U2b — Consumer generation profile: machinery, rendering & G2 (Tasks 13–18, gated at Task 18) · **Type**: Implementation · **Validation**: Tier 3
 **Agent (plan)**: PRIMARY Lina (Opus)
 **Delegated-tier**: plan held — Lina (Opus) executed 14.1–14.5; Thurgood (Opus) authored Task 15.0 (the sequencing correction, #236), a separate parent's subtask, not an execution seat in Task 14
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 686efc7864c452dae4411bde6954c83668bb9ad7 — https://github.com/3fn/DesignerPunk/actions/runs/36522701434, https://github.com/3fn/DesignerPunk/actions/runs/36522706934, https://github.com/3fn/DesignerPunk/actions/runs/36522712096, https://github.com/3fn/DesignerPunk/actions/runs/36522717805, https://github.com/3fn/DesignerPunk/actions/runs/36522722902, https://github.com/3fn/DesignerPunk/actions/runs/36522728273
 **Traces**: Reqs 11.4, 10.G, 10.S, 10.8b/c · design C15, DD7
 
 **Scope line — every edit outside Task 14's Primary Artifacts, disclosed.** Task 14's row lists `regrounding/derivation.ts`, "the guard tests", and `__fixtures__/` (E, E-fm).
@@ -32,7 +32,7 @@ Unmet or partially met criteria: None
 
 Primary Artifacts: all shipped as declared
 
-## Validation (local; `**CI-provenance**: local`)
+## Validation
 
 - `npm run test:agent-generator` → `Test Suites: 48 passed, 48 total` · `Tests: 766 passed, 766 total`.
 - `npm test` → `Test Suites: 384 passed, 384 total` · `Tests: 9268 passed, 9268 total`.
@@ -45,7 +45,7 @@ Primary Artifacts: all shipped as declared
   - `3de7f4c9` (14.5);
   - `2255edc9` (14.2);
   - `32386505` (14.3);
-  - `e89d5a8e` (14.4): five of six had completed `success` at the time of writing, one in flight.
+  - `e89d5a8e` (14.4): all six `success`.
 
 ## Parity
 
@@ -56,7 +56,7 @@ Primary Artifacts: all shipped as declared
 - **→ Task 18 (G2 pass four): the partition root-id hang reaches pass four.** G2's pass four runs this checker (`derivation.ts`), and `isDescendantOrSelf` looped forever on any document with a heading titled "Doc" (it overwrote the `#doc` root and became its own parent). The fix is on the branch (`partition.ts`, root id reserved; regression test in `partition.golden.test.ts`). **Task 18's brief inherits this sentence:** pass four's checker is the fixed one, and a hang on a legal document would read as NOT-RUNNABLE for a schedulable reason.
 - **14.1 provenance follow-up**: done (`8a5c9c25`). 14.1's doc carries the `111bba7c` dispatch line (rule 5 held: `git diff --name-only 111bba7c..8a5c9c25` lists only the completion doc).
 - **14.5 provenance**: **cannot be carried on a CI line.** 15.0's code landed between `3de7f4c9` and any later doc commit, which breaks rule 5. The doc stays `local`, with the six green runs recorded as information (`task-14-5-completion.md`).
-- **This parent's CI line**: the `--unit-member` completion dispatches the six workflows at the parent commit. A docs-only follow-up then cites them (rule 5 holds only if nothing else lands between them).
+- **This parent's CI line**: done. The `--unit-member` completion dispatched the six workflows at `686efc78`, and all six concluded `success`. This docs-only follow-up cites them. Rule 5 holds: the remote unit branch was still at `686efc78` when this commit was made, and this commit changes only this doc.
 - **→ Task 15.3–15.5 (Thurgood)**: container pieces (section headers, glue, the `skills` line, `ambient[<docid>]` embeds) still render under the consumer profile when every member is dropped (15.0 adaptation 4). The guard's fixture re-points only leaves, so it does not exercise this.
 - **→ Thurgood's in-flight follow-up**: the blank coverage row for `canonical/consumer-profile.yaml`.
 - **Stated limits, not carried work**:
@@ -67,3 +67,5 @@ Primary Artifacts: all shipped as declared
 ## Lessons (for the composed learning loop — never applied here)
 
 - **The instrument-existence read paid for itself twice.** At the parent's Q1 it found two missing instruments (the profile file and the adapters' consumer path), which the #236 sequencing correction resolved. At 14.1, building the first real consumer of `isDescendantOrSelf` on arbitrary documents surfaced a latent hang in the substrate. **Lesson**: the first consumer of a tree query on arbitrary input is a test of the tree's invariants, not only of the consumer.
+
+*CI provenance (docs-only follow-up, 2026-09-29)*: the six runs on the CI line above ran at the parent commit `686efc78` (the dispatch line's `<S>`), and every required context concluded `success`. The local results above stay local; the CI line supports only "the required checks were green at branch head `686efc78`". The gate is the unit PR.
