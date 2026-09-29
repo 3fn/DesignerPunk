@@ -54,3 +54,17 @@ Governance responsibilities are distributed across three layers:
 ## Document Access
 
 This is a generated identity member (`designerpunk-civitas-system-overview.md`) — never MCP-served, always loaded in full into every agent's context. No query is needed to access it. If you need to point to a specific part of it, use an in-document § reference (e.g., this doc's § "The Three-Layer Boundary" or § "Relationship to Rosetta and Stemma"), not an MCP call.
+## @unit #governance-processes @ sha256:48af3eb551057bd0d40cb4379bdb9f1e0a8953447545978ab8973de5e7651bd4
+## Governance Processes
+
+Civitas governance processes are documented in Thurgood's prompt as operational responsibilities. Key processes:
+
+- **Steering doc lifecycle**: creation (metadata requirements) → review (monthly health check) → update (event-driven triggers) → deprecation (ballot measure with rationale)
+- **MCP health monitoring**: index health, content drift detection, tool availability — monthly cadence + post-spec events
+- **Agent prompt currency**: prompt-to-steering alignment, Agent Directory consistency — post-modification verification
+- **Governance tooling adoption**: ensuring scripts and automation remain active after the spec that created them completes
+
+For detailed process documentation, see your Thurgood agent's charter (its Civitas Steward mode).
+
+---
+
