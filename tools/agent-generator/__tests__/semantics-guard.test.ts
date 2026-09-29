@@ -27,7 +27,7 @@ import { CcAdapter } from '../adapters/cc';
 import { loadConsumerProfile } from '../consumer-profile';
 import { checkDerivation, type DerivationVerdict } from '../regrounding/derivation';
 import type { AttributionManifest } from '../attribution';
-import { loadSemguard, S, semguardContext, SOURCE } from '../__fixtures__/semantics-guard';
+import { E_FM, EXTRA, loadSemguard, S, semguardContext, SOURCE } from '../__fixtures__/semantics-guard';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
 const FIELD_DISPOSITIONS: FieldDispositionTable = { configFields: [], runtimeToolRefs: [] };
@@ -74,6 +74,30 @@ function defineGuard(blocks: [string, TargetAdapter][]): void {
 
     it('body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)', () => {
       expect(prose(adapter).content).toContain((fixture.overlay.units?.[S] ?? '').split('\n')[0]);
+    });
+
+    /*
+     * FRONTMATTER (Task 14.4; design C15 "E-fm"; DD7). Scope, per target: the frontmatter-derived
+     * sections of the PROSE artifact (CC: the agent file; Kiro: the prompt). The Kiro JSON config
+     * is one steward-shaped glue span under every profile (Task 15.0; C20), so a bypass INSIDE
+     * `write.allowedPaths` is invisible to `› kiro › frontmatter` — this block does not claim it.
+     */
+    describe('frontmatter', () => {
+      it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
+        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}` }).verdict;
+        expect(`${target} frontmatter ${E_FM}: ${v}`).toBe(`${target} frontmatter ${E_FM}: VERIFIED`);
+      });
+
+      it('E-fm’s re-grounded text is what shipped (not the canonical glob)', () => {
+        const out = prose(adapter).content;
+        expect(out).toContain((fixture.overlay.entries?.[E_FM] ?? '').trim());
+        expect(out).not.toContain('`.kiro/specs/**`');
+      });
+
+      it(`EXTRA EVIDENCE (disclosed, not a substitute for E-fm): ${EXTRA} re-grounded in place is VERIFIED`, () => {
+        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}` }).verdict;
+        expect(`${target} frontmatter ${EXTRA}: ${v}`).toBe(`${target} frontmatter ${EXTRA}: VERIFIED`);
+      });
     });
   });
 }

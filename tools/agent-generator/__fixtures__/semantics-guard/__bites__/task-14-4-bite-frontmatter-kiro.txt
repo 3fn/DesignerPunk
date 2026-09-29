@@ -1,0 +1,263 @@
+# BITE fm-kiro: kiro.ts's consumer write-scope section bypasses emitSpans (one inline #frontmatter:writeScope container span)
+# mutation: tools/agent-generator/adapters/kiro.ts
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/semantics-guard.test.ts --verbose
+# base commit: 32386505 (+ the uncommitted 14.4 guard tests); run 2026-09-29T04:35:37Z
+# --- mutation diff ---
+diff --git a/tools/agent-generator/adapters/kiro.ts b/tools/agent-generator/adapters/kiro.ts
+index d8a788a2..d9787532 100644
+--- a/tools/agent-generator/adapters/kiro.ts
++++ b/tools/agent-generator/adapters/kiro.ts
+@@ -432,9 +432,6 @@ export class KiroAdapter implements TargetAdapter {
+         // its own disposition row — retained, re-pointed (its `## @entry` overlay text), or dropped.
+-        bodyParts.push(
+-          emit([
+-            { kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${WRITE_SCOPE_MEMBERS_INTRO}\n\n` },
+-            ...writeScope.map((glob, i): SpanPiece => ({ kind: 'member', list: 'writeScope', index: i, text: `- \`${glob}\`\n` })),
+-            { kind: 'entry', path: 'writeScope', text: WRITE_SCOPE_MEMBERS_OUTRO },
+-          ])
+-        );
++        // BITE: the consumer write-scope section bypasses emitSpans with ONE inline container span.
++        const inline = `## Write scope\n\n${WRITE_SCOPE_MEMBERS_INTRO}\n\n` + writeScope.map((g) => `- \`${g}\`\n`).join('') + WRITE_SCOPE_MEMBERS_OUTRO;
++        acc.add('render', countLines(inline), `canonical/agents/${fm.agent}.md#frontmatter:writeScope`);
++        bodyParts.push(inline);
+       }
+# --- jest output ---
+FAIL tools/agent-generator/__tests__/semantics-guard.test.ts
+  cc
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (2 ms)
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S) (1 ms)
+    frontmatter
+      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob) (1 ms)
+      ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  kiro
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ✕ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (2 ms)
+      ✕ E-fm’s re-grounded text is what shipped (not the canonical glob) (1 ms)
+      ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED (1 ms)
+  a fake third target — declared, its adapter injected through the registry, no other edit to the guard
+    ✓ the declared list drives the blocks: one more target → one more block
+    ✓ a declared target with no registered adapter fails loud, naming it (no silent block) (1 ms)
+    cc
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    kiro
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✕ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✕ E-fm’s re-grounded text is what shipped (not the canonical glob) (1 ms)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    fake
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+
+  ● kiro › frontmatter › E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "kiro frontmatter writeScope[.kiro/specs/**]: VERIFIED"
+    Received: "kiro frontmatter writeScope[.kiro/specs/**]: FAIL_NO_DERIVATION"
+
+      86 |       it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
+      87 |         const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}` }).verdict;
+    > 88 |         expect(`${target} frontmatter ${E_FM}: ${v}`).toBe(`${target} frontmatter ${E_FM}: VERIFIED`);
+         |                                                       ^
+      89 |       });
+      90 |
+      91 |       it('E-fm’s re-grounded text is what shipped (not the canonical glob)', () => {
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:88:55)
+
+  ● kiro › frontmatter › E-fm’s re-grounded text is what shipped (not the canonical glob)
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "- `specs/**` — your repo's own spec folders"
+    Received string:    "<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/semguard.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->·
+    # Semguard·
+    ## Operational Mode: Claims Audit (Execution-Claims Verification — the Q5 Cut)·
+    **Authority**: the 2026-09-17 outline-settle ballot (RATIFIED, Peter — §§ 5, 11, 16), executing Peter's 2026-09-13 F7 full-package ruling; the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree. Applied to this charter by Spec 127 U3.·
+    ### The trigger set (the § 11.4 superset table — names, never numbers)·
+    | Trigger | Event | Scope — the binding text | Owner |
+    |---|---|---|---|
+    | **LENS** | The **tasks feedback round** of any spec | Verifiability review of every parent's criteria set — five questions (lifecycle amendment § 1.2). **Not a gate; feedback entries only.** Bounded by the mirror anti-rot clause below. **Carries the does-this-span-platforms question** (ruling 5: \"what does each platform's bullet verify against?\") | Stacy |
+    | **RELEASE** | Before a version publishes / at the release tag | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line | Stacy |
+    | **SYMPTOM** | A consumer symptom traced to \"it was reported done\" | Retrospective claims audit of the originating spec, **all ticked items**. **Non-negotiable** | Stacy |
+    | **CLOSEOUT** | The merge of the spec's **final declared merge unit** | All the spec's parents: promised vs claimed vs shipped; the judgment residual the checker cannot reach; **natural home for the spec-level-criteria discharge — rider (a)**. **Owed by every spec closing after ratification regardless of exemption status** (ruling 3's decoupling) | Stacy |
+    | **MIDPOINT** | The merge of the unit **declared at the tasks round** as midpoint carrier, for specs declaring ≥ 3 merge units | Same as CLOSEOUT, **scoped to parents merged so far**. Fires at most once per long spec | Stacy |
+    | **ARMING** | A new barrier arms / the required-check set changes / a CI-regime standing-scope (P1) PR merges or an issue-row grant (ballot 2026-09-27-ci-regime-standing-scope § 3) over a `.github/**` path merges (at its activating merge, and again when its fixing PR merges) | `audit:coverage-map` + `verify-gate-registration.sh`; **plus `completion-criteria-parity` dormancy** (C4-1) — you detect dormancy on the row Thurgood owns; he repairs; plus, for a P1 PR, the extent and additivity checks (ballot 2026-09-27-ci-regime-standing-scope § 2): the diff is exactly `lane-timing.yml`, `git diff --numstat` deletions `0`, the added step runs an existing `package.json` test script inside an existing required job, its floor fails on zero and selects with the step's own script or config, and `audit:coverage-map`'s lanes row for that root has cleared; for a `.github/**` issue-row grant, at activation the list names no governance-law path and names any M1-excluded act it admits, and at the fixing PR's merge its paths are a subset of the list as it stood at the activating merge (`git show <activating-merge>:<issue path>`), with `--numstat` deletions `0` on CI paths unless the grant names the act. RELEASE is the backstop, over the release delta | Stacy |
+    | **GATE** | Every PR carrying a parent completion doc | `completion-criteria-parity` fires mechanically — **exhaustive, no judgment** | **Instrument** (Thurgood maintains) |
+    | **EDUCATION** | **Every claims-pass**, via its mandatory `Standards implications: none / or list` line | The docs may be teaching the wrong thing. Thurgood reads the pass **in full**, records a one-line outcome, **mines for learnings and never grades the audit**; repair is co-drafted, authored by Thurgood | Stacy surfaces → **Thurgood** repairs |
+    | **STRAGGLER** | Ballot ratification of a law that claims bind | **Edit-site straggler sweep — did every enumerated site get applied** | Thurgood (corpus-state) |
+    | **LIVENESS** | Monthly Civitas health check (staleness-triggered, not calendar) | **Meta-item only**: **\"Is the closeout-owed set empty?\"** — a query, not a recollection — **plus: did RELEASE / SYMPTOM fire in the window, and did each produce a committed record? Events without records = finding.** Plus the active-charter walk | Thurgood |
+    | ~~**BURST**~~ | ~~First session after a gap; N ≥ 3 parents merged since last audit~~ | ~~Cheap sampling pass; report M3/M4/M5~~ — **RETIRED**, superseded by CLOSEOUT + MIDPOINT; its counter-argument is preserved: BURST was the only trigger firing on *nothing having happened* | ~~Stacy~~ |·
+    **Finding routing — TWO routes, additive, never alternatives**: the **remediation route** fires on **a single instance, no threshold** — the finding goes to the **owning domain agent** (the agent whose work it lands on) as an **explicit message to the named agent, never only a file in a spec directory** — and its standards implications *additionally* travel the composed loop (the EDUCATION row).·
+    **Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*·
+    ### The owed-set pipeline (the closeout-owed query for your repository)·
+    A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes, as written in your adoption record. The query runs in stages and **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy:·
+    ```bash
+    SPECS_DIR=specs                               # your specs directory
+    ADOPTION=docs/claims-pass-adoption.md         # your adoption record, with a line \"Adopted: YYYY-MM-DD\"
+    ADOPTED=$(grep -m1 '^Adopted: ' \"$ADOPTION\" | awk '{print $2}')
+    [ -n \"$ADOPTED\" ] || { echo \"FATAL: no adoption date in $ADOPTION\"; exit 1; }
+    echo \"adopted on: $ADOPTED\"
+    # The boundary is pinned to 00:00: a bare date means \"now, on that day\" to git, which drops that day's earlier merges.·
+    # Stage 1a: the specs your main branch's first-parent history touched since adoption
+    SPECS=$(git log --first-parent --since=\"$ADOPTED 00:00\" --name-only --pretty=format: -- \"$SPECS_DIR/\" \\
+            | sed -n \"s|^$SPECS_DIR/\\([^/]*\\)/.*|\\1|p\" | sort -u)
+    echo \"specs touched since adoption: $(echo \"$SPECS\" | grep -c .)\"·
+    A=0; B=0; C=0; CLOSED=0; OWED=\"\"
+    for S in $SPECS; do
+      T=\"$SPECS_DIR/$S/tasks.md\"
+      # Stage 1b: exactly one class per spec; a merge-units declaration wins
+      if grep -qiE '^#{2,4} .*merge unit' \"$T\" 2>/dev/null; then cls=a; A=$((A+1))
+      else
+        n=$(git log --first-parent --oneline --since=\"$ADOPTED 00:00\" -- \"$SPECS_DIR/$S/\" | wc -l | tr -d ' ')
+        if [ \"$n\" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
+      fi
+      # Stage 2: the anchor, i.e. the last first-parent commit touching the spec, with its date
+      ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- \"$SPECS_DIR/$S/\")
+      # Stage 3: is the closeout record there? If not, the spec is owed
+      if [ -f \"$SPECS_DIR/$S/completion/claims-pass.md\" ]; then CLOSED=$((CLOSED+1))
+      else OWED=\"$OWED  $S ($cls, anchor $ANCHOR)\\n\"; fi
+    done
+    # Stage 4: the owed set, and every exclusion counted by class
+    echo \"OWED:\"; [ -n \"$OWED\" ] && printf \"$OWED\" || echo \"  (none)\"
+    echo \"EXCLUDED: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) by class; plus every spec with no activity since $ADOPTED\"
+    ```·
+    The classes: **(a)** the spec declares its merge units, in whatever form your tasks files use, and the anchor is its final declared unit; **(b)** no declared units and one PR, so that PR is the unit (the commonest shape, and a query that drops it silently gives exactly the healthy-looking short list this count prevents); **(c)** no declared units and several PRs, so the anchor is the PR carrying the last parent completion doc.·
+    If you keep this query in more than one place (say a release checklist and a periodic health check), keep every copy the same text.·
+    If the query gives a wrong result a second time in ordinary use, turn it into a committed script with its own scoped approval, instead of correcting it by hand again.·
+    Git history is half of what a claims audit reads: `git log --first-parent` gives unit anchors and deltas, and `git show <merge>:<path>` gives what shipped at the merge.·
+    ## Commands·
+    - run your repo's claims pass: `npm run claims-pass`
+    - list the specs that owe a closeout claims pass: `npx tsx scripts/owed-set.ts`·
+    ## Write scope·
+    Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:·
+    - `.kiro/specs/**`
+    - `docs/specs/**`·
+    "
+
+      91 |       it('E-fm’s re-grounded text is what shipped (not the canonical glob)', () => {
+      92 |         const out = prose(adapter).content;
+    > 93 |         expect(out).toContain((fixture.overlay.entries?.[E_FM] ?? '').trim());
+         |                     ^
+      94 |         expect(out).not.toContain('`.kiro/specs/**`');
+      95 |       });
+      96 |
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:93:21)
+
+  ● a fake third target — declared, its adapter injected through the registry, no other edit to the guard › kiro › frontmatter › E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "kiro frontmatter writeScope[.kiro/specs/**]: VERIFIED"
+    Received: "kiro frontmatter writeScope[.kiro/specs/**]: FAIL_NO_DERIVATION"
+
+      86 |       it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
+      87 |         const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}` }).verdict;
+    > 88 |         expect(`${target} frontmatter ${E_FM}: ${v}`).toBe(`${target} frontmatter ${E_FM}: VERIFIED`);
+         |                                                       ^
+      89 |       });
+      90 |
+      91 |       it('E-fm’s re-grounded text is what shipped (not the canonical glob)', () => {
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:88:55)
+
+  ● a fake third target — declared, its adapter injected through the registry, no other edit to the guard › kiro › frontmatter › E-fm’s re-grounded text is what shipped (not the canonical glob)
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "- `specs/**` — your repo's own spec folders"
+    Received string:    "<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/semguard.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->·
+    # Semguard·
+    ## Operational Mode: Claims Audit (Execution-Claims Verification — the Q5 Cut)·
+    **Authority**: the 2026-09-17 outline-settle ballot (RATIFIED, Peter — §§ 5, 11, 16), executing Peter's 2026-09-13 F7 full-package ruling; the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree. Applied to this charter by Spec 127 U3.·
+    ### The trigger set (the § 11.4 superset table — names, never numbers)·
+    | Trigger | Event | Scope — the binding text | Owner |
+    |---|---|---|---|
+    | **LENS** | The **tasks feedback round** of any spec | Verifiability review of every parent's criteria set — five questions (lifecycle amendment § 1.2). **Not a gate; feedback entries only.** Bounded by the mirror anti-rot clause below. **Carries the does-this-span-platforms question** (ruling 5: \"what does each platform's bullet verify against?\") | Stacy |
+    | **RELEASE** | Before a version publishes / at the release tag | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line | Stacy |
+    | **SYMPTOM** | A consumer symptom traced to \"it was reported done\" | Retrospective claims audit of the originating spec, **all ticked items**. **Non-negotiable** | Stacy |
+    | **CLOSEOUT** | The merge of the spec's **final declared merge unit** | All the spec's parents: promised vs claimed vs shipped; the judgment residual the checker cannot reach; **natural home for the spec-level-criteria discharge — rider (a)**. **Owed by every spec closing after ratification regardless of exemption status** (ruling 3's decoupling) | Stacy |
+    | **MIDPOINT** | The merge of the unit **declared at the tasks round** as midpoint carrier, for specs declaring ≥ 3 merge units | Same as CLOSEOUT, **scoped to parents merged so far**. Fires at most once per long spec | Stacy |
+    | **ARMING** | A new barrier arms / the required-check set changes / a CI-regime standing-scope (P1) PR merges or an issue-row grant (ballot 2026-09-27-ci-regime-standing-scope § 3) over a `.github/**` path merges (at its activating merge, and again when its fixing PR merges) | `audit:coverage-map` + `verify-gate-registration.sh`; **plus `completion-criteria-parity` dormancy** (C4-1) — you detect dormancy on the row Thurgood owns; he repairs; plus, for a P1 PR, the extent and additivity checks (ballot 2026-09-27-ci-regime-standing-scope § 2): the diff is exactly `lane-timing.yml`, `git diff --numstat` deletions `0`, the added step runs an existing `package.json` test script inside an existing required job, its floor fails on zero and selects with the step's own script or config, and `audit:coverage-map`'s lanes row for that root has cleared; for a `.github/**` issue-row grant, at activation the list names no governance-law path and names any M1-excluded act it admits, and at the fixing PR's merge its paths are a subset of the list as it stood at the activating merge (`git show <activating-merge>:<issue path>`), with `--numstat` deletions `0` on CI paths unless the grant names the act. RELEASE is the backstop, over the release delta | Stacy |
+    | **GATE** | Every PR carrying a parent completion doc | `completion-criteria-parity` fires mechanically — **exhaustive, no judgment** | **Instrument** (Thurgood maintains) |
+    | **EDUCATION** | **Every claims-pass**, via its mandatory `Standards implications: none / or list` line | The docs may be teaching the wrong thing. Thurgood reads the pass **in full**, records a one-line outcome, **mines for learnings and never grades the audit**; repair is co-drafted, authored by Thurgood | Stacy surfaces → **Thurgood** repairs |
+    | **STRAGGLER** | Ballot ratification of a law that claims bind | **Edit-site straggler sweep — did every enumerated site get applied** | Thurgood (corpus-state) |
+    | **LIVENESS** | Monthly Civitas health check (staleness-triggered, not calendar) | **Meta-item only**: **\"Is the closeout-owed set empty?\"** — a query, not a recollection — **plus: did RELEASE / SYMPTOM fire in the window, and did each produce a committed record? Events without records = finding.** Plus the active-charter walk | Thurgood |
+    | ~~**BURST**~~ | ~~First session after a gap; N ≥ 3 parents merged since last audit~~ | ~~Cheap sampling pass; report M3/M4/M5~~ — **RETIRED**, superseded by CLOSEOUT + MIDPOINT; its counter-argument is preserved: BURST was the only trigger firing on *nothing having happened* | ~~Stacy~~ |·
+    **Finding routing — TWO routes, additive, never alternatives**: the **remediation route** fires on **a single instance, no threshold** — the finding goes to the **owning domain agent** (the agent whose work it lands on) as an **explicit message to the named agent, never only a file in a spec directory** — and its standards implications *additionally* travel the composed loop (the EDUCATION row).·
+    **Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*·
+    ### The owed-set pipeline (the closeout-owed query for your repository)·
+    A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes, as written in your adoption record. The query runs in stages and **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy:·
+    ```bash
+    SPECS_DIR=specs                               # your specs directory
+    ADOPTION=docs/claims-pass-adoption.md         # your adoption record, with a line \"Adopted: YYYY-MM-DD\"
+    ADOPTED=$(grep -m1 '^Adopted: ' \"$ADOPTION\" | awk '{print $2}')
+    [ -n \"$ADOPTED\" ] || { echo \"FATAL: no adoption date in $ADOPTION\"; exit 1; }
+    echo \"adopted on: $ADOPTED\"
+    # The boundary is pinned to 00:00: a bare date means \"now, on that day\" to git, which drops that day's earlier merges.·
+    # Stage 1a: the specs your main branch's first-parent history touched since adoption
+    SPECS=$(git log --first-parent --since=\"$ADOPTED 00:00\" --name-only --pretty=format: -- \"$SPECS_DIR/\" \\
+            | sed -n \"s|^$SPECS_DIR/\\([^/]*\\)/.*|\\1|p\" | sort -u)
+    echo \"specs touched since adoption: $(echo \"$SPECS\" | grep -c .)\"·
+    A=0; B=0; C=0; CLOSED=0; OWED=\"\"
+    for S in $SPECS; do
+      T=\"$SPECS_DIR/$S/tasks.md\"
+      # Stage 1b: exactly one class per spec; a merge-units declaration wins
+      if grep -qiE '^#{2,4} .*merge unit' \"$T\" 2>/dev/null; then cls=a; A=$((A+1))
+      else
+        n=$(git log --first-parent --oneline --since=\"$ADOPTED 00:00\" -- \"$SPECS_DIR/$S/\" | wc -l | tr -d ' ')
+        if [ \"$n\" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
+      fi
+      # Stage 2: the anchor, i.e. the last first-parent commit touching the spec, with its date
+      ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- \"$SPECS_DIR/$S/\")
+      # Stage 3: is the closeout record there? If not, the spec is owed
+      if [ -f \"$SPECS_DIR/$S/completion/claims-pass.md\" ]; then CLOSED=$((CLOSED+1))
+      else OWED=\"$OWED  $S ($cls, anchor $ANCHOR)\\n\"; fi
+    done
+    # Stage 4: the owed set, and every exclusion counted by class
+    echo \"OWED:\"; [ -n \"$OWED\" ] && printf \"$OWED\" || echo \"  (none)\"
+    echo \"EXCLUDED: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) by class; plus every spec with no activity since $ADOPTED\"
+    ```·
+    The classes: **(a)** the spec declares its merge units, in whatever form your tasks files use, and the anchor is its final declared unit; **(b)** no declared units and one PR, so that PR is the unit (the commonest shape, and a query that drops it silently gives exactly the healthy-looking short list this count prevents); **(c)** no declared units and several PRs, so the anchor is the PR carrying the last parent completion doc.·
+    If you keep this query in more than one place (say a release checklist and a periodic health check), keep every copy the same text.·
+    If the query gives a wrong result a second time in ordinary use, turn it into a committed script with its own scoped approval, instead of correcting it by hand again.·
+    Git history is half of what a claims audit reads: `git log --first-parent` gives unit anchors and deltas, and `git show <merge>:<path>` gives what shipped at the merge.·
+    ## Commands·
+    - run your repo's claims pass: `npm run claims-pass`
+    - list the specs that owe a closeout claims pass: `npx tsx scripts/owed-set.ts`·
+    ## Write scope·
+    Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:·
+    - `.kiro/specs/**`
+    - `docs/specs/**`·
+    "
+
+      91 |       it('E-fm’s re-grounded text is what shipped (not the canonical glob)', () => {
+      92 |         const out = prose(adapter).content;
+    > 93 |         expect(out).toContain((fixture.overlay.entries?.[E_FM] ?? '').trim());
+         |                     ^
+      94 |         expect(out).not.toContain('`.kiro/specs/**`');
+      95 |       });
+      96 |
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:93:21)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 23 passed, 27 total
+Snapshots:   0 total
+Time:        0.828 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/semantics-guard.test.ts.
