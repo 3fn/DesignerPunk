@@ -705,7 +705,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
   - [x] 13.8 Apply the counting-block edit (regenerate); Stacy's changed unit is confirmed when first recorded at 15.4 (erratum 2026-09-28)
 
-- [ ] 14. Derivation checker, grain guard, and per-target bites (step 6)
+- [x] 14. Derivation checker, grain guard, and per-target bites (step 6)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Opus)
   **Traces**: Reqs 11.4, 10.G, 10.S, 10.8b/c · design C15, DD7
