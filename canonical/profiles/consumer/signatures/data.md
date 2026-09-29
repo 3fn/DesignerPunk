@@ -220,17 +220,15 @@ It should be re-pointed together with that trim (the ComponentTokens trim may st
 
 signer: data
 
-**Refuse: should-re-point** (disposed `no-consumer-counterpart`, subtraction-1). The entry's function is "regenerate the platform token output (Android/iOS/web) from token source", and **a consumer has it**: `npx designerpunk generate` (the shipped `bin/designerpunk.js`; `src/cli/designerpunk.ts` case `generate`) produces the consumer's platform and theme output, product tokens included.
+**Final re-sign (2026-09-29, rendering `8ea88c2f`, sheet `7fc01fa2`): ASSENT to the re-point, `surviving: []`.**
+- The rendered entry is `cmd: npx designerpunk generate`, `runContext: consumer-repo`, source "@3fn/core (the `designerpunk` bin)". Its cue is "regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`".
+- The generated CC/Kiro command line now ends "(run from your product repo)". The self-contradicting "not this repo" suffix I flagged is gone (Thurgood's `7e5af8be`).
+- It is right for a consumer Android app. It names the command that materialises the `{Name}Theme` / `Local{Abbreviation}Theme` Kotlin and the product tokens my retained units rely on.
 
-My consumer rendering needs it:
-- Retained `product-tokens-6` has me author `product/tokens/{category}.yaml`.
-- Retained `theming-1` describes the generated `{Name}Theme` / `Local{Abbreviation}Theme` Kotlin.
-- Both only materialize through `generate`.
-
-**No unit of my consumer rendering names that command anywhere.** The re-pointed `commands[product-screen-commands]` says only "read them from this Android app's own build setup". The sibling renderings do name it: Sparky carries `npx designerpunk generate` as a command, and Kenya's product-screen gap names it ("theming Swift materializes here via `npx designerpunk generate`"). Under 5e the function survives only elsewhere, so this row should be re-pointed to `cmd: npx designerpunk generate`, `runContext: consumer-repo`. It must not be disposed away.
-
-**Re-sign (2026-09-29, `dba93df5`): ASSENT to the re-point. Refusal resolved.** The rendered entry is `cmd: npx designerpunk generate`, `runContext: consumer-repo`, source "@3fn/core (the `designerpunk` bin)", with the cue "regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`". That is exactly what my refusal asked for, and it now also names the theme Kotlin and product tokens it produces.
-- **Residual, not a refusal of this row**: the generated CC/Kiro command line appends "(run from the consumer product repo, not this repo)". Inside a consumer's own repo, "not this repo" reads as a contradiction. The suffix is the adapter's `runContext: consumer-repo` boilerplate, shared with Sparky's rendering, not this row's value.
+**History**:
+- Refused on 2026-09-29 (`a12cc1b9`) as `no-consumer-counterpart` when a consumer counterpart exists.
+- Re-authored to this re-point, and assented at `c8ff8767` with a suffix residual.
+- The suffix is now fixed, and this block replaces those rulings.
 
 ## Signing run summary (2026-09-29, phase two)
 
@@ -286,4 +284,12 @@ My consumer rendering needs it:
   - **Task 16.3 dependency**: the restored warnings' glob `node_modules/@3fn/core/dist/*.android.kt` does not reach `dist/android/DesignTokens.android.kt`. The DesignTokens-trim supersession is true only once 16.3 drops `dist/android/**`. If 16.3 slips or changes, re-open that row and the four body units.
   - **Adapter wording, cross-seat**: the `runContext: consumer-repo` suffix "(run from the consumer product repo, not this repo)" is self-contradictory inside a consumer's repo. Seen in my rendering and Sparky's. For Thurgood or the adapter owner, not a row fix.
   - **Retained product-token path**: `dist/product/ProductTokens.android.kt` is right by default. The orchestrator checked that the default `output` is `dist` (`ConfigLoader.ts:44`), so the residual I raised in phase two is closed.
+
+## Final re-sign (2026-09-29)
+
+- **One act**: `commands[platform-tokens]` re-signed against the new rendering (`8ea88c2f`). Assent to the re-point to `npx designerpunk generate`, `surviving: []`.
+- **Residual closed**: the adapter now renders "run from your product repo".
+- **Final state**: all 24 of my rows are assented, and none is refused.
+- **Open**: only the Task 16.3 dependency (`dist/android/**` must leave the package for the DesignTokens-trim supersession and the four body-unit warnings to fully cover the snapshot).
+- `commands[android-build-test]` wording also changed. It is outside the signed population, so no act is owed.
 
