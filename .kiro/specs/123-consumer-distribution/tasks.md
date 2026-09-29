@@ -723,7 +723,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `tools/agent-generator/regrounding/derivation.ts`, the guard tests, `__fixtures__/` (E, E-fm)
 
   - [x] 14.1 `derivation.ts`
-  - [ ] 14.2 Agent-shaped fixture carrying E (~1–2 h)
+  - [x] 14.2 Agent-shaped fixture carrying E (~1–2 h)
   - [ ] 14.3 Body per-target guard + bites (~30 min each)
   - [ ] 14.4 E-fm + frontmatter bites (or the forced negative)
   - [x] 14.5 Bite 2 + `derivation.frontmatter.test.ts`

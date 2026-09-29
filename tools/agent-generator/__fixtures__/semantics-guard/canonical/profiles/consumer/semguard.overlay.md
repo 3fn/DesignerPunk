@@ -1,0 +1,50 @@
+## @unit #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script @ sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
+### The owed-set pipeline (the closeout-owed query for your repository)
+
+A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes, as written in your adoption record. The query runs in stages and **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy:
+
+```bash
+SPECS_DIR=specs                               # your specs directory
+ADOPTION=docs/claims-pass-adoption.md         # your adoption record, with a line "Adopted: YYYY-MM-DD"
+ADOPTED=$(grep -m1 '^Adopted: ' "$ADOPTION" | awk '{print $2}')
+[ -n "$ADOPTED" ] || { echo "FATAL: no adoption date in $ADOPTION"; exit 1; }
+echo "adopted on: $ADOPTED"
+# The boundary is pinned to 00:00: a bare date means "now, on that day" to git, which drops that day's earlier merges.
+
+# Stage 1a: the specs your main branch's first-parent history touched since adoption
+SPECS=$(git log --first-parent --since="$ADOPTED 00:00" --name-only --pretty=format: -- "$SPECS_DIR/" \
+        | sed -n "s|^$SPECS_DIR/\([^/]*\)/.*|\1|p" | sort -u)
+echo "specs touched since adoption: $(echo "$SPECS" | grep -c .)"
+
+A=0; B=0; C=0; CLOSED=0; OWED=""
+for S in $SPECS; do
+  T="$SPECS_DIR/$S/tasks.md"
+  # Stage 1b: exactly one class per spec; a merge-units declaration wins
+  if grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
+  else
+    n=$(git log --first-parent --oneline --since="$ADOPTED 00:00" -- "$SPECS_DIR/$S/" | wc -l | tr -d ' ')
+    if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
+  fi
+  # Stage 2: the anchor, i.e. the last first-parent commit touching the spec, with its date
+  ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- "$SPECS_DIR/$S/")
+  # Stage 3: is the closeout record there? If not, the spec is owed
+  if [ -f "$SPECS_DIR/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
+  else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
+done
+# Stage 4: the owed set, and every exclusion counted by class
+echo "OWED:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (none)"
+echo "EXCLUDED: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) by class; plus every spec with no activity since $ADOPTED"
+```
+
+The classes: **(a)** the spec declares its merge units, in whatever form your tasks files use, and the anchor is its final declared unit; **(b)** no declared units and one PR, so that PR is the unit (the commonest shape, and a query that drops it silently gives exactly the healthy-looking short list this count prevents); **(c)** no declared units and several PRs, so the anchor is the PR carrying the last parent completion doc.
+
+If you keep this query in more than one place (say a release checklist and a periodic health check), keep every copy the same text.
+
+If the query gives a wrong result a second time in ordinary use, turn it into a committed script with its own scoped approval, instead of correcting it by hand again.
+
+Git history is half of what a claims audit reads: `git log --first-parent` gives unit anchors and deltas, and `git show <merge>:<path>` gives what shipped at the merge.
+
+## @entry writeScope[.kiro/specs/**] @ sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
+- `specs/**` — your repo's own spec folders
+## @entry commands[claims-pass] @ sha256:c4cb844876d46bd143021042dce21bf33f6b40c87ea90bff5a512cd5527addef
+- run your repo's claims pass: `npm run claims-pass`

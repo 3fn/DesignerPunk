@@ -40,3 +40,13 @@
 - **Bite 2 runs over `emitSpans`, not over `generateFixture` and the adapters.** Req 10.G's recipe needs only the checker and the shared span function, and routing through the adapters is the per-target guard's job (14.3/14.4). So this is complete for Bite 2, not a stand-in.
 - **"Emptied" is tested both ways the rendering can empty an entry** (omitted, or kept with no text). The criterion names the outcome and not the mechanism, so both mechanisms are covered.
 - **Carried to the parent doc** (orchestrator note): the partition root-id hang found at 14.1 reaches **G2's pass four**, which runs this checker. The sentence goes in Task 14's carries so Task 18's brief inherits it.
+
+*Provenance follow-up (2026-09-29)*: all six runs dispatched at `3de7f4c9` concluded `success`:
+- Consumer Guard https://github.com/3fn/DesignerPunk/actions/runs/36421413401
+- 125B Tool-Boot Smoke https://github.com/3fn/DesignerPunk/actions/runs/36421422040
+- Section Citation Guard https://github.com/3fn/DesignerPunk/actions/runs/36421430508
+- Agent Generator (122) https://github.com/3fn/DesignerPunk/actions/runs/36421438747
+- Package Name Drift Detection https://github.com/3fn/DesignerPunk/actions/runs/36421446990
+- Lane Timing https://github.com/3fn/DesignerPunk/actions/runs/36421454626
+
+**They are NOT carried on a `**CI-provenance**:` line, and this doc stays `local`.** Rule 5 (Completion Documentation Guide § "CI provenance") requires `git diff --name-only 3de7f4c9..<the commit carrying this line>` to list only completion docs and `tasks.md`. Task 15.0's code (`895997e5`) landed on the unit branch in between, so no later commit can satisfy it. The runs are recorded here as information only.
