@@ -99,7 +99,7 @@ function inputsFor(agents: string[]): ConsumerProfileInputs {
   const inputs: ConsumerProfileInputs = { dispositions: {}, overlays: {}, missing: [] };
   for (const a of agents) {
     inputs.dispositions[a] = rows(a);
-    inputs.overlays[a] = toSpanOverlay(parseOverlay(overlayText(), `canonical/profiles/consumer/${a}.overlay.md`));
+    inputs.overlays[a] = parseOverlay(overlayText(), `canonical/profiles/consumer/${a}.overlay.md`); // parsed, with pins (Task 15.2: derive() checks them)
   }
   return inputs;
 }
@@ -120,6 +120,7 @@ describe('generateConsumerRendering (Task 15.1)', () => {
   it('emits every agent through every adapter, remapped under canonical/_consumer-output/<target>/', () => {
     const outputs = generateConsumerRendering([resolvedFor('twin')], ADAPTERS(), inputsFor(['twin']));
     expect(outputs.map((o) => o.path).sort()).toEqual([
+      'canonical/_consumer-output/_canonical/agents/twin.md', // derive() — once, not per target (Task 15.2)
       'canonical/_consumer-output/cc/.claude/agents/twin.md',
       'canonical/_consumer-output/kiro/.kiro/agents/twin-prompt.md',
       'canonical/_consumer-output/kiro/.kiro/agents/twin.json',
@@ -162,7 +163,7 @@ describe('loadConsumerInputs (Task 15.1)', () => {
     const inputs = loadConsumerInputs(tmp, ['twin', 'pair']);
     expect(inputs.missing).toEqual(['pair']);
     expect(inputs.dispositions.twin.body?.['#regrounded']).toEqual({ disposition: 're-pointed', destination: '#regrounded' });
-    expect(inputs.overlays.twin.units?.['#regrounded']).toBe('## Regrounded\n\nConsumer-grounded operative text.\n');
+    expect(inputs.overlays.twin.units['#regrounded'].text).toBe('## Regrounded\n\nConsumer-grounded operative text.\n'); // parsed, pin kept (Task 15.2)
   });
 
   it('a schema-invalid dispositions file throws (13.1), never loads half a profile', () => {
@@ -194,6 +195,7 @@ describe('the rendered hash, read back from the committed rendering (Task 15.1)'
     const spans = readConsumerSpans(tmp)!;
     const pieces = spans.get('canonical/agents/twin.md#regrounded')!;
     expect(pieces.map((p) => p.artifact)).toEqual([
+      'canonical/_consumer-output/_canonical/agents/twin.md', // the derived canonical's body span (Task 15.2)
       'canonical/_consumer-output/cc/.claude/agents/twin.md',
       'canonical/_consumer-output/kiro/.kiro/agents/twin-prompt.md',
     ]);

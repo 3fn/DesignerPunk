@@ -3,8 +3,8 @@
  *
  * Task 13's Primary Artifacts name this file for its key checks; `derive()` itself (C22 — one
  * function over body and frontmatter, refusing on a stale overlay and an orphaned key, two ruled
- * call sites) lands here at Task 15.2 and calls these. Until then this file carries ONLY the two
- * refusals of Task 13's nine that 13.5 owns (exact strings in `regrounding/check-catalog.ts`):
+ * call sites) landed here at Task 15.2 (§ "derive()" below) and calls these. The two refusals of
+ * Task 13's nine that 13.5 owns (exact strings in `regrounding/check-catalog.ts`):
  *
  *   ORPHANED KEY — a disposition, overlay or operative-set key that names no current unit or
  *     entry of its canonical source. Label-slug anchors and identity keys are CONTENT-DERIVED,
@@ -46,6 +46,11 @@ import { CONSUMER_OUTPUT_ROOT } from './consumer-profile';
 import { fillTemplate, nineCheck } from './regrounding/check-catalog';
 import { SHARED_CATALOG } from './regrounding/dispositions';
 import { hashEntry } from './regrounding/hash';
+import { AttributionAccumulator, type AttributionManifest } from './attribution';
+import type { YamlDoc } from './frontmatter';
+import { checkOverlayPins, toSpanOverlay, type ParsedOverlay } from './regrounding/overlay';
+import { emitSpans, GLUE_SOURCES, type Dispositions as SpanDispositions } from './spans';
+import { dump as dumpYaml } from 'js-yaml';
 
 export type KeyCheckId = 'orphaned-key' | 'missing-row';
 
@@ -78,14 +83,23 @@ export const missingRowMessage = (unitOrEntry: string, file: string): string =>
 
 /** Read a canonical source's key universe from disk. */
 export function keyUniverse(repoRoot: string, source: string): KeyUniverse {
-  const text = fs.readFileSync(path.join(repoRoot, source), 'utf8');
+  return keyUniverseOf(source, fs.readFileSync(path.join(repoRoot, source), 'utf8'));
+}
+
+/** The key universe of a canonical source's TEXT (pure — no disk). */
+export function keyUniverseOf(source: string, text: string): KeyUniverse {
   if (source === SHARED_CATALOG) {
     const doc = loadYaml(text) as { members?: { id?: unknown }[] };
     const members = (doc?.members ?? []).map((m) => m?.id).filter((id): id is string => typeof id === 'string');
     return { source, units: [], entryNodes: new Set(), entryLeaves: [], members };
   }
   const { frontmatter, body } = splitFrontmatter(text, source);
-  const tree = entryTree(frontmatter ?? {});
+  return keyUniverseOfParsed(source, frontmatter ?? {}, body);
+}
+
+/** The key universe of an already-split canonical document (pure). */
+export function keyUniverseOfParsed(source: string, frontmatter: YamlDoc, body: string): KeyUniverse {
+  const tree = entryTree(frontmatter);
   return {
     source,
     units: partition(body).units.map((u) => u.anchor),
@@ -164,6 +178,237 @@ export function checkRecordKeys(record: { units?: Readonly<Record<string, unknow
   return Object.keys(record.units ?? {})
     .filter((k) => !units.has(k))
     .map((k): KeyFinding => ({ check: 'orphaned-key', file, key: `record ${k}`, message: orphanedKeyMessage(k, universe.source) }));
+}
+
+// ============================================================================
+// derive() — the consumer canonical, derived (Task 15.2; design C22, C19; Req 14.8–14.9)
+// ============================================================================
+//
+// `derive(source, overlay, dispositions) → derived`: ONE function over the canonical BODY and
+// FRONTMATTER (L-D4 — without the frontmatter half the shipped consumer canonical would carry
+// our commands and write scope). What ships SHALL be derived (Q5): a second hand-kept tree is
+// drift with no detector.
+//
+// ORDER (refuse first, emit nothing on refusal):
+//   1. split → `partition(body)` + `entryTree(frontmatter)`;
+//   2. the key checks — ORPHANED KEY + MISSING ROW over the dispositions (13.5);
+//   3. ORPHANED KEY over the overlay's keys (13.5);
+//   4. STALE OVERLAY — every pin equals the current hash of its unit or entry (13.2);
+//   5. any finding from 2–4 → throw ONE {@link DeriveError} carrying every finding's exact catalog
+//      string, before anything is emitted;
+//   6. the BODY through `emitSpans(…, 'consumer', dispositions, overlay, 'body')` — the SAME
+//      selection the adapters run, never re-implemented, so the derived body is byte-identical to
+//      every target's body spans;
+//   7. the FRONTMATTER: leaves disposed `no-consumer-counterpart` / `superseded-by` are dropped
+//      (and a list or map they empty is dropped with them); `retained` leaves keep their canonical
+//      value. An always-set file (`counterpart:`) carries NO frontmatter at all (C19: the shipped
+//      identity doc's frontmatter is dropped, never carried).
+//
+// RE-POINTED FRONTMATTER / SHARED-MEMBER ROWS REFUSE, PENDING A RULING: an `## @entry` overlay's
+// text is RENDERED PROSE (Task 15.0 criterion (b)), not a YAML value, so it cannot be substituted
+// into derived frontmatter. How the derived canonical carries a re-pointed entry is the open Q1
+// of Task 15.2 (orchestrator, 2026-09-29). Until it is ruled, derive() refuses such a row loudly
+// (`repointedEntryPendingMessage`) rather than choosing a form silently. The real profile has no
+// such row before 15.4.
+//
+// Leaf positions come from the ENTRY TREE ITSELF (a member's index = its position among its list
+// node's children; a scalar's path = its map-key chain), so pruning cannot drift from
+// `entryTree()`'s identity rules — nothing here re-implements them.
+
+export type DeriveCheckId = 'orphaned-key' | 'missing-row' | 'stale-overlay' | 'repointed-entry-pending';
+
+export interface DeriveFinding {
+  check: DeriveCheckId;
+  file: string;
+  key?: string;
+  message: string;
+}
+
+/** derive() refuses: every finding, with its exact catalog string; nothing was emitted. */
+export class DeriveError extends Error {
+  constructor(readonly findings: readonly DeriveFinding[]) {
+    super(findings.map((f) => f.message).join('\n'));
+    this.name = 'DeriveError';
+  }
+}
+
+export const repointedEntryPendingMessage = (key: string, file: string): string =>
+  `derive: re-pointed ${key} in ${file} cannot be derived yet — an ## @entry overlay is rendered prose, not a value derived frontmatter can carry; the derived form of a re-pointed entry is pending the Task 15.2 Q1 ruling`;
+
+export interface DeriveInput {
+  /** The canonical source path (`canonical/agents/<a>.md`) — span provenance and messages. */
+  source: string;
+  /** The canonical document, split (`splitFrontmatter`). */
+  frontmatter: YamlDoc;
+  body: string;
+  /** The dispositions rows (13.1's shape). `counterpart:` marks an always-set file (C19). */
+  dispositions: RowFile & SpanDispositions;
+  /** The parsed overlay, WITH its pins (13.2). Absent → nothing is re-grounded. */
+  overlay?: ParsedOverlay;
+  /** The dispositions file's path, for messages (defaults to `source`). */
+  dispositionsFile?: string;
+}
+
+export interface Derived {
+  /** The derived canonical document: frontmatter (if any) + body. */
+  text: string;
+  /** Its attribution: the frontmatter block as C1 glue; the body spans exactly as `emitSpans` emits them. */
+  attribution: AttributionManifest;
+  /** The derived frontmatter object (undefined for an always-set document). */
+  frontmatter?: YamlDoc;
+  /** The derived body (the concatenation of the body spans). */
+  body: string;
+}
+
+/** C22's derive() over one canonical document. Throws {@link DeriveError} on any refusal. */
+export function derive(input: DeriveInput): Derived {
+  const { source, frontmatter, body, dispositions, overlay } = input;
+  const file = input.dispositionsFile ?? source;
+  const tree = entryTree(frontmatter);
+  const units = new Map(partition(body).units.map((u) => [u.anchor, u.text]));
+  const universe = keyUniverseOfParsed(source, frontmatter, body);
+  const alwaysSet = dispositions.counterpart !== undefined;
+
+  // 2–4: the refusals.
+  const findings: DeriveFinding[] = [];
+  for (const f of checkDispositionKeys(dispositions, file, universe)) findings.push({ check: f.check, file: f.file, key: f.key, message: f.message });
+  if (overlay) {
+    for (const f of checkOverlayKeys(overlay, overlay.file, universe)) findings.push({ check: f.check, file: f.file, key: f.key, message: f.message });
+    const entries = new Map(tree.units.map((l) => [l.path, l.value]));
+    for (const f of checkOverlayPins(overlay, { units, entries })) findings.push({ check: 'stale-overlay', file: f.file, key: f.key, message: f.message });
+  }
+  if (!alwaysSet) {
+    for (const [key, row] of Object.entries(dispositions.frontmatter ?? {})) {
+      if (row?.disposition === 're-pointed') findings.push({ check: 'repointed-entry-pending', file, key: `frontmatter ${key}`, message: repointedEntryPendingMessage(`frontmatter entry ${key}`, file) });
+    }
+  }
+  // 5: refuse before emitting anything.
+  if (findings.length > 0) throw new DeriveError(findings);
+
+  // 6: the body, through the one span function.
+  const acc = new AttributionAccumulator();
+  let text = '';
+  let derivedFrontmatter: YamlDoc | undefined;
+  if (!alwaysSet) {
+    // 7: the frontmatter, pruned.
+    derivedFrontmatter = pruneFrontmatter(frontmatter, tree, (p) => {
+      const d = dispositions.frontmatter?.[p]?.disposition;
+      return d === 'no-consumer-counterpart' || d === 'superseded-by';
+    });
+    const block = `---\n${dumpYaml(derivedFrontmatter, { lineWidth: -1, noRefs: true })}---\n`;
+    acc.add('render', countBlockLines(block), GLUE_SOURCES['frontmatter-fence']);
+    text += block;
+  }
+  const bodyOut = emitSpans(
+    acc,
+    { file: source, body, frontmatter },
+    'consumer',
+    { body: dispositions.body, frontmatter: dispositions.frontmatter },
+    overlay ? toSpanOverlay(overlay) : undefined,
+    'body'
+  ).text;
+  text += bodyOut;
+  return { text, attribution: acc.build(source), frontmatter: derivedFrontmatter, body: bodyOut };
+}
+
+/** derive() over a canonical file's TEXT (splits it first). */
+export function deriveText(input: Omit<DeriveInput, 'frontmatter' | 'body'> & { text: string }): Derived {
+  const { frontmatter, body } = splitFrontmatter(input.text, input.source);
+  return derive({ ...input, frontmatter: frontmatter ?? {}, body });
+}
+
+/**
+ * derive() over the SHARED CATALOG (`canonical/shared/shared-catalog.yaml`): members disposed
+ * `no-consumer-counterpart` / `superseded-by` are dropped; `retained` members are kept as-is.
+ * Refuses on an orphaned or missing row, and on a re-pointed member (pending Q1, as for
+ * frontmatter). Returns the derived catalog's YAML.
+ */
+export function deriveSharedCatalog(text: string, dispositions: RowFile, file = 'canonical/profiles/consumer/_shared.dispositions.yaml'): string {
+  const universe = keyUniverseOf(SHARED_CATALOG, text);
+  const findings: DeriveFinding[] = checkDispositionKeys(dispositions, file, universe).map((f) => ({ check: f.check, file: f.file, key: f.key, message: f.message }));
+  const rows = (dispositions.members ?? {}) as Record<string, { disposition?: string }>;
+  for (const [id, row] of Object.entries(rows)) {
+    if (row?.disposition === 're-pointed') findings.push({ check: 'repointed-entry-pending', file, key: `members ${id}`, message: repointedEntryPendingMessage(`shared member ${id}`, file) });
+  }
+  if (findings.length > 0) throw new DeriveError(findings);
+  const doc = loadYaml(text) as { members?: { id?: string }[] } & Record<string, unknown>;
+  const members = (doc.members ?? []).filter((m) => {
+    const d = typeof m?.id === 'string' ? rows[m.id]?.disposition : undefined;
+    return !(d === 'no-consumer-counterpart' || d === 'superseded-by');
+  });
+  return dumpYaml({ ...doc, members }, { lineWidth: -1, noRefs: true });
+}
+
+/**
+ * Remove every entry-tree LEAF for which `drop(path)` holds from a deep copy of `frontmatter`,
+ * then remove any list or map left empty by it. Positions are read from the tree:
+ *   - a list MEMBER (parent node kind `list`) is the element at its index among the parent's
+ *     children, in the array at the parent's path;
+ *   - an ambient SECTION leaf (parent `ambient[<docid>]`) is the set of that governance entry's
+ *     claims on that section; the entry goes when no claim remains;
+ *   - any other leaf is the value at its dotted map-key path.
+ * The entry tree renames exactly one path — `kiro.agentSpawn` is the `preflight` list — and that
+ * mapping is the only one applied here.
+ */
+export function pruneFrontmatter(frontmatter: YamlDoc, tree: ReturnType<typeof entryTree>, drop: (path: string) => boolean): YamlDoc {
+  const out = JSON.parse(JSON.stringify(frontmatter)) as YamlDoc;
+  const keysOf = (nodePath: string): string[] => (nodePath === 'preflight' ? ['kiro', 'agentSpawn'] : nodePath.split('.'));
+  const at = (keys: string[]): unknown => keys.reduce<unknown>((v, k) => (v && typeof v === 'object' ? (v as Record<string, unknown>)[k] : undefined), out);
+
+  const listDrops = new Map<string, Set<number>>();
+  const ambientDrops = new Map<string, Set<string>>();
+  const scalarDrops: string[][] = [];
+  for (const leaf of tree.units) {
+    if (!drop(leaf.path)) continue;
+    const node = tree.get(leaf.path);
+    const parent = node?.parent ? tree.get(node.parent) : undefined;
+    if (parent?.kind === 'list') {
+      const set = listDrops.get(parent.id) ?? new Set<number>();
+      set.add(parent.children.indexOf(leaf.path));
+      listDrops.set(parent.id, set);
+    } else if (parent && /^ambient\[[^\]#]+\]$/.test(parent.id)) {
+      const docId = parent.id.slice('ambient['.length, -1);
+      const set = ambientDrops.get(docId) ?? new Set<string>();
+      set.add(node?.label ?? '');
+      ambientDrops.set(docId, set);
+    } else {
+      scalarDrops.push(keysOf(leaf.path));
+    }
+  }
+  for (const [listPath, indices] of listDrops) {
+    const arr = at(keysOf(listPath));
+    if (!Array.isArray(arr)) throw new Error(`pruneFrontmatter: ${listPath} is not a list in the frontmatter`);
+    for (const i of [...indices].sort((a, b) => b - a)) arr.splice(i, 1);
+  }
+  const law = at(['ambient', 'governanceAsLaw']);
+  if (Array.isArray(law)) {
+    for (let i = law.length - 1; i >= 0; i -= 1) {
+      const entry = law[i] as { id?: string; assert?: { section?: string }[] };
+      const sections = entry.id !== undefined ? ambientDrops.get(entry.id) : undefined;
+      if (!sections) continue;
+      entry.assert = (entry.assert ?? []).filter((c) => !sections.has(c.section ?? ''));
+      if (entry.assert.length === 0) law.splice(i, 1);
+    }
+  }
+  for (const keys of scalarDrops) {
+    const parent = at(keys.slice(0, -1)) as Record<string, unknown> | undefined;
+    if (parent && typeof parent === 'object') delete parent[keys[keys.length - 1]];
+  }
+  const prune = (v: unknown): boolean => {
+    if (Array.isArray(v)) return v.length === 0;
+    if (v && typeof v === 'object') {
+      for (const [k, child] of Object.entries(v as Record<string, unknown>)) if (prune(child)) delete (v as Record<string, unknown>)[k];
+      return Object.keys(v as Record<string, unknown>).length === 0;
+    }
+    return false;
+  };
+  for (const [k, v] of Object.entries(out)) if (prune(v)) delete out[k];
+  return out;
+}
+
+function countBlockLines(text: string): number {
+  const t = text.endsWith('\n') ? text.slice(0, -1) : text;
+  return t.length === 0 ? 1 : t.split('\n').length;
 }
 
 // ============================================================================

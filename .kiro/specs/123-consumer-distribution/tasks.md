@@ -752,7 +752,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   - [x] 15.0 (Thurgood, Opus) The consumer profile file + its loader (`consumer-profile.ts`, C12's single declared list) and an adapter registry keyed by declared target name in `adapters/index.ts` read by `generate.ts` and the Task 14 guard; `AdapterContext.profile/dispositions/overlay` threaded into both adapters' `emitSpans` calls (steward default); frontmatter re-pointing via the `## @entry` overlay form (13.2); list fields rendered per member under the consumer profile only; `generateFixture(repoRoot, ctx, adapters, opts?: { profile, dispositions, overlay })` — **runs before 14.2** *(sequencing correction 2026-09-28; found at Task 14's instrument-existence check)*
   - [x] 15.1 Profile file; `AdapterContext.profile`; `generateConsumerRendering`; `guardedRoots()`
-  - [ ] 15.2 (Lina, Opus) `derive.ts`
+  - [x] 15.2 (Lina, Opus) `derive.ts`
   - [ ] 15.3 `emitIdentityMembers` per target
   - [ ] 15.4 Operative sets for all units; dispositions/overlays for all 8 charters, shared substrate and identity docs; knowledge-fallback re-points
   - [ ] 15.5 First-render routing: confirmations and signatures per C1; refusals resolved to zero standing (assent or re-disposition); rates and refusals issued recorded

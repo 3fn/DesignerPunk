@@ -37,7 +37,9 @@ import {
 import { CONSUMER_OUTPUT_ROOT, loadConsumerProfile } from './consumer-profile';
 import type { Dispositions, Overlay, Profile } from './spans';
 import { loadDispositions } from './regrounding/dispositions';
-import { parseOverlay, toSpanOverlay } from './regrounding/overlay';
+import { parseOverlay, toSpanOverlay, type ParsedOverlay } from './regrounding/overlay';
+import { derive, type RowFile } from './derive';
+import type { YamlDoc } from './frontmatter';
 import { PROFILE_DIR } from './regrounding/freshness';
 import { getWorkflowRules } from './workflow-rules-guard';
 import { generateRegistry, serializeRegistry, REGISTRY_OUTPUT_PATH } from './registry';
@@ -262,11 +264,18 @@ export interface ResolvedForEmission {
 export interface ConsumerProfileInputs {
   /** Agent id → its parsed, schema-validated dispositions rows. */
   dispositions: Record<string, Dispositions>;
-  /** Agent id → its parsed overlay text (absent when the agent re-points nothing). */
-  overlays: Record<string, Overlay>;
+  /**
+   * Agent id → its parsed overlay, WITH its pins (13.2's `parseOverlay`; absent when the agent
+   * re-points nothing). One form, two readers: `derive()` checks the pins (C22), and the adapters
+   * read its text through `toSpanOverlay`.
+   */
+  overlays: Record<string, ParsedOverlay>;
   /** Ledger agents with no dispositions file — the population check reads it. */
   missing: string[];
 }
+
+/** Where the derived consumer canonical lands — once, not per target (design C22, C12). */
+export const CONSUMER_CANONICAL_ROOT = `${CONSUMER_OUTPUT_ROOT}/_canonical`;
 
 /** `canonical/profiles/consumer/<agent>.dispositions.yaml`. */
 export const agentDispositionsPath = (agent: string): string => `${PROFILE_DIR}/${agent}.dispositions.yaml`;
@@ -291,7 +300,7 @@ export function loadConsumerInputs(repoRoot: string, agents: readonly string[]):
     inputs.dispositions[agent] = loadDispositions(fs.readFileSync(abs, 'utf8'), dispPath) as unknown as Dispositions;
     const overlayPath = agentOverlayPath(agent);
     if (fs.existsSync(path.join(repoRoot, overlayPath))) {
-      inputs.overlays[agent] = toSpanOverlay(parseOverlay(fs.readFileSync(path.join(repoRoot, overlayPath), 'utf8'), overlayPath));
+      inputs.overlays[agent] = parseOverlay(fs.readFileSync(path.join(repoRoot, overlayPath), 'utf8'), overlayPath);
     }
   }
   return inputs;
@@ -314,10 +323,13 @@ export const partialConsumerPopulationMessage = (missing: readonly string[], pre
  * asserts the committed rendering covers every agent × target once the profile exists). If SOME
  * do and some do not, this throws, naming the missing agents.
  *
- * NOT HERE YET: `_canonical/` — `derive()` (C22, Task 15.2) runs first for each agent, refusing
- * on a stale overlay or an orphaned key, and its derived charter is emitted to
- * `canonical/_consumer-output/_canonical/agents/<agent>.md`; identity member files (C19, Task
- * 15.3) join per target.
+ * `_canonical/` (Task 15.2; design C22): `derive()` runs FIRST, for every agent, before any
+ * adapter emits — a refusal (stale overlay, orphaned key, missing row) stops the whole render,
+ * with every finding. Each derived charter is emitted ONCE, not per target, to
+ * `canonical/_consumer-output/_canonical/agents/<agent>.md`, with its attribution sidecar (its body
+ * spans are the same `emitSpans` spans the adapters emit, sourced to the canonical origin).
+ *
+ * NOT HERE YET: identity member files (C19, Task 15.3) join per target.
  */
 export function generateConsumerRendering(
   agents: readonly ResolvedForEmission[],
@@ -329,7 +341,22 @@ export function generateConsumerRendering(
   const missing = agents.map((a) => a.resolved.agent).filter((a) => inputs.dispositions[a] === undefined);
   if (missing.length > 0) throw new Error(partialConsumerPopulationMessage(missing, present));
 
+  // _canonical/ — derive() first, for every agent: a refusal stops the whole render (C22).
   const outputs: GeneratedOutput[] = [];
+  for (const { resolved } of agents) {
+    const agentId = resolved.agent;
+    const source = `canonical/agents/${agentId}.md`;
+    const derived = derive({
+      source,
+      frontmatter: resolved.doc.frontmatter as unknown as YamlDoc,
+      body: resolved.doc.body,
+      dispositions: inputs.dispositions[agentId] as RowFile & Dispositions,
+      overlay: inputs.overlays[agentId],
+      dispositionsFile: agentDispositionsPath(agentId),
+    });
+    outputs.push({ path: `${CONSUMER_CANONICAL_ROOT}/agents/${agentId}.md`, content: derived.text, attribution: derived.attribution });
+  }
+
   for (const { resolved, emitCtx } of agents) {
     const agentId = resolved.agent;
     const consumerCtx: AdapterContext = {
@@ -337,7 +364,7 @@ export function generateConsumerRendering(
       profile: 'consumer',
       consumer: {
         dispositions: { [agentId]: inputs.dispositions[agentId] },
-        overlays: inputs.overlays[agentId] ? { [agentId]: inputs.overlays[agentId] } : {},
+        overlays: inputs.overlays[agentId] ? { [agentId]: toSpanOverlay(inputs.overlays[agentId]) } : {},
       },
     };
     for (const adapter of adapters) {
