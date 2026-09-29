@@ -1,0 +1,115 @@
+# canonical/profiles/consumer/stacy.dispositions.yaml — Spec 123 Task 15.4 (design C17; DD25, DD26)
+# Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the
+# consumer's repo (R5); their text is stacy.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
+# The owed-set pipeline's re-grounding is G1 run 1's committed exemplar E rendering, verbatim.
+source: canonical/agents/stacy.md
+body:
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "(the Q5 cut, ratified 2026-09-17)", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "the criteria-parity findings the check cannot reach (false ✅ on a reproduced row, prose-only evidence, Goodhart criteria-dilution), and the M3/M4/M5 adoption-and-quality metrics as audit output", "cites": "subtraction-3"}, {"text": "Register rows: `completion-verification-honesty` (ideological), `promised-artifact-shipped` (proposed/deferred), `parent-completion-docs-present` (while unbuilt/ideological)", "cites": "subtraction-3"}], "destination": "#in-scope"}
+  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "**The claims instrument** — checker source, CI wiring, `EXPECTED_CONTEXTS` registration are Thurgood's; you specify the falsification fixtures", "cites": "subtraction-3"}], "destination": "#out-of-scope"}
+  "#the-audit-vs-write-distinction": {"disposition": "retained"}
+  "#operational-mode-process-audit:preamble": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#operational-mode-process-audit:preamble"}
+  "#audit-checklist": {"disposition": "retained"}
+  "#incremental-capture-rule": {"disposition": "retained"}
+  "#audit-output": {"disposition": "retained"}
+  "#audit-is-analysis-not-implementation": {"disposition": "retained"}
+  "#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble": {"disposition": "re-pointed", "removals": [{"text": "**Authority**: the 2026-09-17 outline-settle ballot (RATIFIED, Peter — §§ 5, 11, 16), executing Peter's 2026-09-13 F7 full-package ruling; the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree. Applied to this charter by Spec 127 U3.", "cites": "subtraction-2"}], "destination": "#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble"}
+  "#the-charter-cut-ratified-verbatim": {"disposition": "re-pointed", "removals": [{"text": "you already own claims-vs-reality auditing one level up (`audit:coverage-map`, `verify-gate-registration.sh`) — Q5 extends", "cites": "subtraction-3"}], "destination": "#the-charter-cut-ratified-verbatim"}
+  "#the-trigger-set-the-114-superset-table-names-never-numbers": {"disposition": "re-pointed", "removals": [{"text": "| **ARMING** | A new barrier arms / the required-check set changes / a CI-regime standing-scope (P1) PR merges or an issue-row grant (ballot 2026-09-27-ci-regime-standing-scope § 3) over a `.github/**` path merges (at its activating merge, and again when its fixing PR merges) | `audit:coverage-map` + `verify-gate-registration.sh`; **plus `completion-criteria-parity` dormancy** (C4-1) — you detect dormancy on the row Thurgood owns; he repairs; plus, for a P1 PR, the extent and additivity checks (ballot 2026-09-27-ci-regime-standing-scope § 2): the diff is exactly `lane-timing.yml`, `git diff --numstat` deletions `0`, the added step runs an existing `package.json` test script inside an existing required job, its floor fails on zero and selects with the step's own script or config, and `audit:coverage-map`'s lanes row for that root has cleared; for a `.github/**` issue-row grant, at activation the list names no governance-law path and names any M1-excluded act it admits, and at the fixing PR's merge its paths are a subset of the list as it stood at the activating merge (`git show <activating-merge>:<issue path>`), with `--numstat` deletions `0` on CI paths unless the grant names the act. RELEASE is the backstop, over the release delta | Stacy |", "cites": "subtraction-3"}, {"text": "| **GATE** | Every PR carrying a parent completion doc | `completion-criteria-parity` fires mechanically — **exhaustive, no judgment** | **Instrument** (Thurgood maintains) |", "cites": "subtraction-3"}, {"text": "| **STRAGGLER** | Ballot ratification of a law that claims bind | **Edit-site straggler sweep — did every enumerated site get applied** | Thurgood (corpus-state) |", "cites": "subtraction-2"}, {"text": "| ~~**BURST**~~ | ~~First session after a gap; N ≥ 3 parents merged since last audit~~ | ~~Cheap sampling pass; report M3/M4/M5~~ — **RETIRED**, superseded by CLOSEOUT + MIDPOINT; its counter-argument is preserved: BURST was the only trigger firing on *nothing having happened* | ~~Stacy~~ |", "cites": "subtraction-3"}], "destination": "#the-trigger-set-the-114-superset-table-names-never-numbers"}
+  "#the-claims-pass-record-claims-passmd-the-template": {"disposition": "re-pointed", "removals": [{"text": "the owed-set predicate keys on", "cites": "subtraction-4"}, {"text": "classified per the 112 taxonomy", "cites": "subtraction-4"}, {"text": "the doc-vs-doc audit my own N6 called", "cites": "subtraction-2"}, {"text": "**fixed-string exemption usage**; **`(platforms: …)` fallback invocations**; **delegated-tier capture**; **orchestrator consult line**; **re-grounding dispositions**; **populations**; **M3 / M4 / M5**", "cites": "subtraction-3"}, {"text": "**The emission-reading duty**; **The delegated-tier read**; **The instruments read**", "cites": "subtraction-3"}, {"text": "<!-- volatile-ok: … -->", "cites": "subtraction-1"}], "destination": "#the-claims-pass-record-claims-passmd-the-template"}
+  "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script": {"disposition": "re-pointed", "removals": [{"text": ".kiro/docs/ballots/2026-09-19-completion-claims-integrity.md", "cites": "subtraction-2"}, {"text": ".kiro/hooks/RELEASE-FLOW.md", "cites": "subtraction-1"}, {"text": "Q2 re-evaluation sitting", "cites": "subtraction-2"}], "destination": "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"}
+  "#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength": {"disposition": "retained"}
+  "#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument": {"disposition": "re-pointed", "removals": [{"text": "the toolchain charter: `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`", "cites": "subtraction-3"}, {"text": "`promised-artifact-exists` its registered, unbuilt mechanical successor", "cites": "subtraction-3"}, {"text": "Spec 127", "cites": "subtraction-2"}], "destination": "#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument"}
+  "#operational-mode-parity-review:preamble": {"disposition": "retained"}
+  "#review-process": {"disposition": "retained"}
+  "#what-parity-means": {"disposition": "retained"}
+  "#operational-mode-lessons-synthesis-review:preamble": {"disposition": "retained"}
+  "#your-role": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#your-role"}
+  "#what-you-dont-do": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#what-you-dont-do"}
+  "#with-leonardo": {"disposition": "retained"}
+  "#with-platform-agents-kenya-data-sparky": {"disposition": "retained"}
+  "#with-thurgood-system-counterpart": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "(DesignerPunk infrastructure)", "cites": "subtraction-2"}], "destination": "#with-thurgood-system-counterpart"}
+  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "Recognize Peter's skillset largely lives in design and may require assistance with understanding technical nuances", "cites": "subtraction-2"}], "destination": "#with-peter"}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "your audit commands (coverage-map, mode-parity, theme-drift, coverage, the governance + gate-registration scripts) are the provisioning.", "cites": "subtraction-1"}, {"text": "in a design-system-source repo (not a product repo) it may return an empty index.", "cites": "subtraction-1"}, {"text": "`.kiro/specs/**/completion/` and `docs/specs/`", "cites": "subtraction-4"}], "destination": "#mcp-practice-notes"}
+  "#collaboration-standards:preamble": {"disposition": "retained"}
+  "#counter-arguments-are-mandatory": {"disposition": "retained"}
+  "#candid-over-comfortable": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#ask-if-unsure": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#ask-if-unsure"}
+  "#what-you-own": {"disposition": "retained"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your audit commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own"}
+frontmatter:
+  "agent": {"disposition": "retained"}
+  "agentType": {"disposition": "retained"}
+  "description": {"disposition": "retained"}
+  "ambient[test-development-standards#test-categories]": {"disposition": "retained"}
+  "ambient[test-development-standards#anti-patterns]": {"disposition": "retained"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "retained"}
+  "routes.docs[spec-requirements-format]": {"disposition": "retained"}
+  "routes.docs[spec-tasks-format]": {"disposition": "retained"}
+  "routes.docs[task-type-classification]": {"disposition": "retained"}
+  "routes.docs[contract-validation-process]": {"disposition": "retained"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[spec-planning-beyond]": {"disposition": "retained"}
+  "routes.docs[task-types-beyond]": {"disposition": "retained"}
+  "routes.docs[bcv-beyond]": {"disposition": "retained"}
+  "routes.docs[completion-docs-beyond]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[contract-concept-names]": {"disposition": "retained"}
+  "routes.docs[product-token-gov-detail]": {"disposition": "retained"}
+  "routes.docs[test-dev-standards-add]": {"disposition": "retained"}
+  "routes.agents[leonardo]": {"disposition": "retained"}
+  "routes.agents[kenya]": {"disposition": "retained"}
+  "routes.agents[data]": {"disposition": "retained"}
+  "routes.agents[sparky]": {"disposition": "retained"}
+  "routes.agents[thurgood]": {"disposition": "retained"}
+  "routes.cues[0]": {"disposition": "retained"}
+  "routes.cues[1]": {"disposition": "retained"}
+  "routes.cues[2]": {"disposition": "retained"}
+  "routes.cues[3]": {"disposition": "retained"}
+  "routes.cues[4]": {"disposition": "retained"}
+  "routes.cues[5]": {"disposition": "retained"}
+  "routes.cues[6]": {"disposition": "retained"}
+  "routes.cues[7]": {"disposition": "retained"}
+  "routes.cues[8]": {"disposition": "retained"}
+  "routes.cues[9]": {"disposition": "retained"}
+  "routes.cues[10]": {"disposition": "retained"}
+  "commands[audit-coverage-map]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[audit-mode-parity]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[audit-theme-drift]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[test-coverage]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[governance-health-check]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[verify-gate-registration]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "knowledgeBases[completion-docs]": {"disposition": "re-pointed", "destination": "frontmatter:knowledgeBases[completion-docs]"}
+  "knowledgeBases[spec-summaries]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "knowledgeBases[source-tree]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_section]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_index_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_catalog]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[find_components]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[validate_assembly]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[check_composition]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_details]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_family]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[search_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_consumers]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_overview]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_screens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_spec]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_state_model]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[list_experience_map]": {"disposition": "retained"}
+  "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "kiro.keyboardShortcut": {"disposition": "retained"}
+  "kiro.welcomeMessage": {"disposition": "retained"}
+  "preflight[git status --porcelain]": {"disposition": "retained"}

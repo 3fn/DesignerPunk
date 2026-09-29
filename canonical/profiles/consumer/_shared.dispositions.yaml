@@ -1,0 +1,10 @@
+# canonical/profiles/consumer/_shared.dispositions.yaml — Spec 123 Task 15.4 (design C17: shared-catalog
+# members once, each signed by its member's `owner:` under C1 — every member here is Thurgood's, so Stacy signs).
+# Every member carries an explicit row (DD25). The re-pointed member's value is _shared.overlay.md (a YAML value,
+# the 15.0 (b) erratum; it keeps its id and key set — derive()'s generic refusal).
+source: canonical/shared/shared-catalog.yaml
+members:
+  "complete-task-tooling": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "find-docs-discovery": {"disposition": "retained"}
+  "record-first-ratification": {"disposition": "re-pointed", "destination": "record-first-ratification", "removals": [{"text": "the committed ballot/record says RATIFIED", "cites": "subtraction-2"}, {"text": ".kiro/docs/ballots/README.md § \"The Ratification Protocol (record-first)\"", "cites": "subtraction-2"}]}
+  "certainty-calibration-cue": {"disposition": "retained"}

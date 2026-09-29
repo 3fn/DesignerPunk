@@ -58,7 +58,7 @@ frontmatter:
   "routes.docs[scaffolding-templates]": {"disposition": "retained"}
   "routes.docs[contract-validation-criteria]": {"disposition": "retained"}
   "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
-  "routes.docs[spec-tasks-format]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[spec-tasks-format]": {"disposition": "retained"}
   "routes.docs[family-avatar]": {"disposition": "retained"}
   "routes.docs[family-badge]": {"disposition": "retained"}
   "routes.docs[family-button]": {"disposition": "retained"}

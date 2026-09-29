@@ -87,3 +87,181 @@ units:
         text: |-
           All agents check the date and flag if overdue.
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-civitas-governance-health-check
+  # Task 15.4 (2026-09-29): the remaining units, drafted by Thurgood (profile author); each is
+  #   confirmed in the confirmer's seat (C1) — a DRAFT until its confirmation: note is committed.
+  "#start-up-tasks:preamble":
+    canonicalHash: sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#start-up-tasks:preamble
+  "#item-check-the-current-date":
+    canonicalHash: sha256:9a9fc4aa0317a163d7b39e97d9965444f12795d0f68b72b4b77b84e69f498941
+    items:
+      - id: check-the-current-da-1
+        kind: obligation
+        label: "Check the CURRENT date"
+        text: "Check the **CURRENT** date"
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-check-the-current-date
+  "#item-critical-this-project-uses-jest-not-vitest":
+    canonicalHash: sha256:f75f87b00a0dafa053d0b2da2229ab451e79ced7621723927163505605e171d0
+    items:
+      - id: critical-this-projec-1
+        kind: obligation
+        label: "CRITICAL: This project uses Jest, NOT Vitest"
+        text: "**CRITICAL: This project uses Jest, NOT Vitest**"
+      - id: critical-this-projec-2
+        kind: obligation
+        label: "WHEN running tests THEN you MUST use Jest commands (NOT Vite"
+        text: "**WHEN running tests THEN you MUST use Jest commands (NOT Vitest commands)**"
+      - id: critical-this-projec-3
+        kind: obligation
+        label: "npm test - Run unit/integration tests (functional lanes only"
+        text: "`npm test` - Run unit/integration tests (functional lanes only, timing-assertion-free; ~1 min)"
+      - id: critical-this-projec-4
+        kind: obligation
+        label: "npm run test:all - Run ALL tests including performance (~1 m"
+        text: "`npm run test:all` - Run ALL tests including performance (~1 min — no longer a costlier lane)"
+      - id: critical-this-projec-5
+        kind: obligation
+        label: "npm run test:performance - Run the performance-lane suites ("
+        text: "`npm run test:performance` - Run the performance-lane suites (seconds)"
+      - id: critical-this-projec-6
+        kind: obligation
+        label: "npm run test:performance:isolated - Run the serialized Perfo"
+        text: "`npm run test:performance:isolated` - Run the serialized PerformanceValidation suite (seconds). **NOT included in `test:performance`** — full performance validation requires BOTH commands (or `test:all`)"
+      - id: critical-this-projec-7
+        kind: obligation
+        label: "npm test -- <test-file-path> - Run specific test file"
+        text: "`npm test -- <test-file-path>` - Run specific test file"
+      - id: critical-this-projec-8
+        kind: obligation
+        label: "npm run test:watch - Run tests in watch mode"
+        text: "`npm run test:watch` - Run tests in watch mode"
+      - id: critical-this-projec-9
+        kind: obligation
+        label: "npm run test:coverage - Run tests with coverage"
+        text: "`npm run test:coverage` - Run tests with coverage"
+      - id: critical-this-projec-10
+        kind: obligation
+        label: "npm test -- --run - Jest doesn't have a --run flag"
+        text: "`npm test -- --run` - Jest doesn't have a `--run` flag"
+      - id: critical-this-projec-11
+        kind: obligation
+        label: "vitest - This project doesn't use Vitest"
+        text: "`vitest` - This project doesn't use Vitest"
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-critical-this-project-uses-jest-not-vitest
+  "#item-test-command-selection-guidelines":
+    canonicalHash: sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974
+    items:
+      - id: test-command-selecti-1
+        kind: obligation
+        label: "Test Command Selection Guidelines"
+        text: "**Test Command Selection Guidelines**"
+      - id: test-command-selecti-2
+        kind: obligation
+        label: "Use npm test (default - excludes performance tests)"
+        text: "Use `npm test` (default - excludes performance tests)"
+      - id: test-command-selecti-3
+        kind: obligation
+        label: "Fast, deterministic feedback loop (~1 minute warm)"
+        text: "Fast, deterministic feedback loop (~1 minute warm)"
+      - id: test-command-selecti-4
+        kind: obligation
+        label: "Sufficient for most development validation"
+        text: "Sufficient for most development validation"
+      - id: test-command-selecti-5
+        kind: obligation
+        label: "Default: Use npm test (comprehensive functional validation)"
+        text: "**Default**: Use `npm test` (comprehensive functional validation)"
+      - id: test-command-selecti-6
+        kind: obligation
+        label: "If task is performance-critical: Use npm run test:all (adds "
+        text: "**If task is performance-critical**: Use `npm run test:all` (adds the performance suites; the cost difference is now seconds, so when in doubt, run `test:all`)"
+      - id: test-command-selecti-7
+        kind: obligation
+        label: "Run BOTH npm run test:performance AND npm run test:performan"
+        text: "Run BOTH `npm run test:performance` AND `npm run test:performance:isolated` (perf coverage is split across the two lanes), or simply `npm run test:all`"
+      - id: test-command-selecti-8
+        kind: obligation
+        label: "Performance assertions are wall-clock-sensitive: run them on"
+        text: "Performance assertions are wall-clock-sensitive: run them on an otherwise-idle machine, not concurrently with other suites"
+      - id: test-command-selecti-9
+        kind: obligation
+        label: "npm test validates all functionality (functional lanes only;"
+        text: "`npm test` validates all functionality (functional lanes only; timing-assertion-free)"
+      - id: test-command-selecti-10
+        kind: obligation
+        label: "npm run test:all additionally runs the performance suites (s"
+        text: "`npm run test:all` additionally runs the performance suites (seconds of extra cost, but wall-clock-sensitive — avoid under heavy machine load)"
+      - id: test-command-selecti-11
+        kind: obligation
+        label: "Most parent tasks only need functional validation"
+        text: "Most parent tasks only need functional validation"
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-test-command-selection-guidelines
+  "#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to":
+    canonicalHash: sha256:289ce23ec97eeb4f98c1bfb0a92a60668e2360c4bd0ac6b010f55c200b8baf65
+    items:
+      - id: delegation-and-model-1
+        kind: obligation
+        label: "Delegation and model tier — before delegating, and before de"
+        text: "**Delegation and model tier — before delegating, and before deciding whether to**"
+      - id: delegation-and-model-2
+        kind: obligation
+        label: "Before delegating to a subagent, choose its model tier by th"
+        text: "Before delegating to a subagent, choose its model tier by the task's cognitive demand — do NOT let it silently inherit the session model:"
+      - id: delegation-and-model-3
+        kind: obligation
+        label: "Implementing an already-settled design/spec/contract → the c"
+        text: "**Implementing** an already-settled design/spec/contract → the cheaper capable tier (currently **Sonnet**)."
+      - id: delegation-and-model-4
+        kind: obligation
+        label: "Deciding — architecture, consequential/hard-to-reverse calls"
+        text: "**Deciding** — architecture, consequential/hard-to-reverse calls, cross-cutting tradeoffs, multiple failure modes → the higher tier (currently **Opus**). An escalation on a concrete signal, not a default-when-unsure."
+      - id: delegation-and-model-5
+        kind: obligation
+        label: "Calibrate in BOTH directions relative to the session model: "
+        text: "Calibrate in BOTH directions relative to the session model: **downgrade** for implementation, **upgrade** for a decide task. Omitting the tier inherits the session's — a silent default, so decide it consciously."
+      - id: delegation-and-model-6
+        kind: obligation
+        label: "Always independently verify subagent output before trusting "
+        text: "**Always independently verify subagent output** before trusting it — delegate-then-verify is the guardrail, not the tier."
+      - id: delegation-and-model-7
+        kind: obligation
+        label: "Verify placement, not just content, when you delegate a file"
+        text: "**Verify placement, not just content**, when you delegate a **file edit**: hand the subagent **absolute paths** to the intended tree, and after it reports done **confirm the edit landed there** (a subagent can act on a different working tree and still report success — in Claude Code, nested worktrees let its relative paths resolve into the parent repo)."
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to
+  "#item-ending-a-task-see-task-completion-protocol":
+    canonicalHash: sha256:7c5b774f2a602dcd9239360a7e68f90273cc300c0e12e7f281c45ce2cdf44649
+    items:
+      - id: ending-a-task-see-ta-1
+        kind: obligation
+        label: "Ending a task: see Task Completion Protocol"
+        text: "**Ending a task: see Task Completion Protocol**"
+      - id: ending-a-task-see-ta-2
+        kind: obligation
+        label: "The end-of-task sequence (when to write completion docs, whi"
+        text: "The end-of-task sequence (when to write completion docs, which tier, the parent-vs-subtask distinction, and the stop-and-wait-for-authorization rule) is **operational law in the always-loaded Task Completion Protocol** — it is already in context."
+      - id: ending-a-task-see-ta-3
+        kind: obligation
+        label: "One rule worth restating here at the start: when you report "
+        text: "**One rule worth restating here at the start:** when you report a task complete, **STOP and wait for user authorization** before starting the next one (see #3 above)."
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-ending-a-task-see-task-completion-protocol
+  "#item-starting-a-parent-task-write-its-instruments-block-first":
+    canonicalHash: sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
+    items:
+      - id: starting-a-parent-ta-1
+        kind: obligation
+        label: "Starting a PARENT task: write its Instruments block first"
+        text: "**Starting a PARENT task: write its Instruments block first**"
+      - id: starting-a-parent-ta-2
+        kind: obligation
+        label: "A MISSING row is never overwritten: its resolution is append"
+        text: "A `MISSING` row is never overwritten: its resolution is appended in the row."
+      - id: starting-a-parent-ta-3
+        kind: obligation
+        label: "A gap found later is appended under ## Found later with its "
+        text: "A gap found later is appended under `## Found later` with its kind (`unlisted` or `misfit`), never silently fixed."
+      - id: starting-a-parent-ta-4
+        kind: obligation
+        label: "From the first tasks round after P (the instruments parser P"
+        text: "**From the first tasks round after `P`** (the instruments parser PR's squash SHA — ballot § 4a, M4), a spec also declares its instruments in `tasks.md` at planning time; for such a spec this file is written at branch cut as M4's execution file — the pasted command-output existence delta, one fit line per row keyed by row id, rows found at the cut, `## Found later` — never restating a plan row's state or path."
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-starting-a-parent-task-write-its-instruments-block-first

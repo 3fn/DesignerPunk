@@ -254,7 +254,8 @@ KEEP = ['concept-catalog', 'contracts-yaml-format', 'schema-structure', 'data-sh
        ['stemma-principles', 'component-dev-standards', 'component-doc-map', 'component-readiness', 'inheritance-structures', 'web-css-rules', 'cross-platform-guidance',
         'cross-platform-decision', 'token-governance-beyond', 'token-lookup-patterns', 'schema-format-beyond', 'component-meta-authoring', 'component-token-brand-contract']
 rows([f'routes.docs[{d}]' for d in KEEP], R)
-rows([f'routes.docs[{d}]' for d in ['completion-doc-guidance', 'spec-tasks-format', 'dev-workflow-detail', 'file-organization']], NCC('subtraction-4'))
+rows([f'routes.docs[{d}]' for d in ['completion-doc-guidance', 'dev-workflow-detail', 'file-organization']], NCC('subtraction-4'))
+fm['routes.docs[spec-tasks-format]'] = R
 rows(['routes.agents[ada]', 'routes.agents[thurgood]'], R)
 rows([f'routes.cues[{i}]' for i in [0, 1, 2, 3, 4, 5, 6, 7, 9]], R)
 fm['routes.cues[8]'] = NCC('subtraction-3')

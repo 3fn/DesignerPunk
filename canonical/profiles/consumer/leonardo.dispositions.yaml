@@ -54,14 +54,14 @@ frontmatter:
   "ambient[cross-platform-vs-platform-specific-decision-framework#decision-framework]": {"disposition": "retained"}
   "ambient.groundTruthManifest.verdict": {"disposition": "retained"}
   "routes.docs[decision-criteria]": {"disposition": "retained"}
-  "routes.docs[spec-tasks-format]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[spec-tasks-format]": {"disposition": "retained"}
   "routes.docs[layout-vocabulary]": {"disposition": "retained"}
   "routes.docs[product-token-authoring]": {"disposition": "retained"}
   "routes.docs[component-doc-map]": {"disposition": "retained"}
   "routes.docs[component-readiness]": {"disposition": "retained"}
   "routes.docs[concept-catalog]": {"disposition": "retained"}
   "routes.docs[cross-platform-guidance]": {"disposition": "retained"}
-  "routes.docs[spec-planning-beyond]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[spec-planning-beyond]": {"disposition": "retained"}
   "routes.docs[product-token-gov-beyond]": {"disposition": "retained"}
   "routes.docs[stemma-principles]": {"disposition": "retained"}
   "routes.docs[test-dev-standards]": {"disposition": "retained"}

@@ -1,0 +1,119 @@
+# canonical/profiles/consumer/thurgood.dispositions.yaml — Spec 123 Task 15.4 (design C17; DD25, DD26)
+# Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the
+# consumer's repo — their Civitas, not ours (Req 11.1.1); their text is thurgood.overlay.md. Signed by Stacy (C1).
+source: canonical/agents/thurgood.md
+body:
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "for DesignerPunk", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "\"Shared\" doc maintenance (MCP-Relationship-Model, MCP-Evolution-Roadmap, Platform-Resource-Map, Process-Integration-Methodology, BUILD-SYSTEM-SETUP, DesignerPunk-Systems-Overview)", "cites": "subtraction-3"}, {"text": "- **CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge.", "cites": "subtraction-2"}], "destination": "#in-scope"}
+  "#out-of-scope": {"disposition": "retained"}
+  "#the-audit-vs-write-distinction": {"disposition": "retained"}
+  "#boundary-cases": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#boundary-cases"}
+  "#domain-boundary-response-examples": {"disposition": "retained"}
+  "#operational-mode-spec-formalization:preamble": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#operational-mode-spec-formalization:preamble"}
+  "#step-1-query-current-standards": {"disposition": "retained"}
+  "#step-2-transform-design-outline-requirementsmd": {"disposition": "retained"}
+  "#step-3-transform-design-outline-designmd": {"disposition": "retained"}
+  "#step-4-transform-design-outline-tasksmd": {"disposition": "retained"}
+  "#step-5-recommend-domain-review": {"disposition": "retained"}
+  "#spec-formalization-is-not-autonomous": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#spec-formalization-is-not-autonomous"}
+  "#operational-mode-audit:preamble": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#operational-mode-audit:preamble"}
+  "#step-1-query-audit-methodology": {"disposition": "retained"}
+  "#step-2-gather-evidence": {"disposition": "re-pointed", "removals": [{"text": "`src/__tests__/` — shared/infrastructure tests; `src/tokens/__tests__/` — token-specific tests; `src/components/*/__tests__/` — component-specific tests; `src/validators/__tests__/` — validator tests", "cites": "subtraction-1"}], "destination": "#step-2-gather-evidence"}
+  "#step-3-cross-reference-with-domain-docs": {"disposition": "retained"}
+  "#step-4-report-findings-with-severity": {"disposition": "retained"}
+  "#step-5-flag-domain-specific-issues": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#step-5-flag-domain-specific-issues"}
+  "#audit-is-analysis-not-implementation": {"disposition": "retained"}
+  "#operational-mode-test-governance": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#operational-mode-test-governance"}
+  "#operational-mode-civitas-steward:preamble": {"disposition": "retained"}
+  "#the-three-layer-boundary": {"disposition": "retained"}
+  "#resolution-path-for-flagged-inconsistencies": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#resolution-path-for-flagged-inconsistencies"}
+  "#trigger-types": {"disposition": "re-pointed", "removals": [{"text": "the health-check, metadata-validation, cross-reference-scan, and affected-docs scripts", "cites": "subtraction-1"}, {"text": "Start Up Tasks", "cites": "subtraction-3"}, {"text": "Spec 125-B Req 14; `governance/Product-Handoff-Protocol.md`", "cites": "subtraction-2"}, {"text": "The owed-set pipeline, verbatim (and its ballot ratification date)", "cites": "subtraction-2"}, {"text": "The active-charter walk; the proposed-row register read (`governance/classification-map.md`)", "cites": "subtraction-3"}], "destination": "#trigger-types"}
+  "#steering-doc-lifecycle": {"disposition": "re-pointed", "removals": [{"text": "Validate via the steering-metadata command.", "cites": "subtraction-1"}, {"text": "Requires ballot measure with rationale.", "cites": "subtraction-2"}], "destination": "#steering-doc-lifecycle"}
+  "#the-q5-boundary-execution-claims-verification-is-stacys:preamble": {"disposition": "re-pointed", "removals": [{"text": "**Authority**: the 2026-09-17 outline-settle ballot (RATIFIED, Peter — §§ 5, 11, 16), executing the F7 full-package ruling; the co-signed documents in `.kiro/specs/127-completion-claims-integrity/pre-spec/` govern where this text and they disagree. Applied to this charter by Spec 127 U3.", "cites": "subtraction-2"}], "destination": "#the-q5-boundary-execution-claims-verification-is-stacys:preamble"}
+  "#the-charter-cut-ratified-verbatim": {"disposition": "re-pointed", "removals": [{"text": "**the instrument** (`completion-criteria-parity` checker source, CI wiring, `EXPECTED_CONTEXTS` registration and count-assert — Stacy specifies the falsification fixtures), the `completion-criteria-parity` register row at `owner: thurgood`", "cites": "subtraction-3"}, {"text": "STRAGGLER", "cites": "subtraction-2"}, {"text": "**The steward-verb carve-out** — you own the verification decision ONLY on claims whose evidence *requires* the steward MCP verbs (`validate_metadata`, `list_cross_references`, `rebuild_index` — the enumerated three as of the agreement, never a live config reference). Everything answerable from source, git, a test run, or a completion doc is Stacy's; **ambiguity resolves to Stacy**. Both falsification conditions are live: invoked more than once across the first three claims passes → it narrows further; never encountered across them → **dropped, not carried**.", "cites": "subtraction-3"}], "destination": "#the-charter-cut-ratified-verbatim"}
+  "#the-composed-learning-loop-your-standing-duties-on-every-claims-pass": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#the-composed-learning-loop-your-standing-duties-on-every-claims-pass"}
+  "#the-caller-out-duty-the-mirror-clauses-enforcement-yours-to-fire": {"disposition": "retained"}
+  "#the-three-boundary-bounds-ratified-unsoftened": {"disposition": "re-pointed", "removals": [{"text": "the framing sentence that binds every reader of the instrument you maintain: *any future reading of a green `completion-criteria-parity` gate as evidence of claim honesty will have made the error Spec 127 exists to prevent.*", "cites": "subtraction-3"}], "destination": "#the-three-boundary-bounds-ratified-unsoftened"}
+  "#collaboration-model-domain-respect:preamble": {"disposition": "retained"}
+  "#trust-by-default": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#trust-by-default"}
+  "#obligation-to-flag": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#obligation-to-flag"}
+  "#graceful-correction": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#graceful-correction"}
+  "#fallibility": {"disposition": "retained"}
+  "#documentation-governance-ballot-measure-model:preamble": {"disposition": "retained"}
+  "#the-process": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#the-process"}
+  "#what-this-means-in-practice": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/steering/` or `governance/` files unilaterally", "cites": "subtraction-1"}, {"text": "Process-Spec-Planning, Test-Development-Standards, Test-Failure-Audit-Methodology", "cites": "subtraction-3"}, {"text": "Peter", "cites": "subtraction-2"}], "destination": "#what-this-means-in-practice"}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "**Write-side rebuild protocol** — after modifying content that feeds the docs MCP index (any steering/governance doc), trigger the docs MCP's `rebuild_index` so data is immediately fresh. Agent prompts and configs are not indexed — no MCP impact. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; manual monitoring is reduced to exception handling — intervene only on persistent `failed` state or agent-reported anomalies.", "cites": "subtraction-3"}, {"text": "`src/__tests__/` and `src/components/*/__tests__/`", "cites": "subtraction-1"}], "destination": "#mcp-practice-notes"}
+  "#collaboration-standards:preamble": {"disposition": "retained"}
+  "#counter-arguments-are-mandatory": {"disposition": "retained"}
+  "#candid-over-comfortable": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree"}
+  "#what-you-own": {"disposition": "retained"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own"}
+frontmatter:
+  "agent": {"disposition": "retained"}
+  "agentType": {"disposition": "retained"}
+  "description": {"disposition": "retained"}
+  "ambient[test-development-standards#test-categories]": {"disposition": "retained"}
+  "ambient[test-development-standards#anti-patterns]": {"disposition": "retained"}
+  "ambient[process-development-workflow#task-completion-workflow]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "retained"}
+  "routes.docs[spec-requirements-format]": {"disposition": "retained"}
+  "routes.docs[spec-design-format]": {"disposition": "retained"}
+  "routes.docs[spec-tasks-format]": {"disposition": "retained"}
+  "routes.docs[task-type-classification]": {"disposition": "retained"}
+  "routes.docs[audit-workflow]": {"disposition": "retained"}
+  "routes.docs[contract-validation-process]": {"disposition": "retained"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[spec-planning-beyond]": {"disposition": "retained"}
+  "routes.docs[task-types-beyond]": {"disposition": "retained"}
+  "routes.docs[build-system-setup]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "routes.docs[completion-docs-beyond]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[cross-ref-standards]": {"disposition": "retained"}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[hook-ops-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "routes.docs[audit-methodology-beyond]": {"disposition": "retained"}
+  "routes.docs[bcv-beyond]": {"disposition": "retained"}
+  "routes.docs[ci-enforced-guards]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "routes.docs[dev-workflow-detail-add]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.agents[ada]": {"disposition": "retained"}
+  "routes.agents[lina]": {"disposition": "retained"}
+  "routes.cues[0]": {"disposition": "retained"}
+  "routes.cues[1]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "routes.cues[2]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "routes.cues[3]": {"disposition": "retained"}
+  "routes.cues[4]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "routes.cues[5]": {"disposition": "retained"}
+  "routes.cues[6]": {"disposition": "retained"}
+  "routes.cues[7]": {"disposition": "retained"}
+  "routes.cues[8]": {"disposition": "retained"}
+  "commands[governance-health-check]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[validate-steering-metadata]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[scan-cross-references]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[detect-affected-steering-docs]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[full-suite-with-performance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[performance-lane]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[performance-isolated]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_section]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[list_cross_references]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[validate_metadata]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_index_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[rebuild_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_catalog]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[find_components]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[validate_assembly]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[check_composition]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_health]": {"disposition": "retained"}
+  "writeScope[src/__tests__/**]": {"disposition": "retained"}
+  "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "writeScope[.github/workflows/lane-timing.yml]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-2"}
+  "kiro.keyboardShortcut": {"disposition": "retained"}
+  "kiro.welcomeMessage": {"disposition": "retained"}
+  "preflight[git status --porcelain]": {"disposition": "retained"}

@@ -233,7 +233,8 @@ DOCS = ['token-doc-map', 'token-pipeline-architecture', 'module-resolution-contr
         'token-lookup-patterns', 'naming-and-philosophy', 'token-context-resolution', 'semantic-structure'] + \
        [f'family-{f}' for f in ['accessibility', 'blend', 'border', 'color', 'glow', 'layering', 'motion', 'opacity', 'radius', 'responsive', 'shadow', 'spacing', 'typography']]
 rows([f'routes.docs[{d}]' for d in DOCS], R)
-rows([f'routes.docs[{d}]' for d in ['completion-doc-guidance', 'spec-tasks-format', 'dev-workflow-detail', 'file-organization']], NCC('subtraction-4'))
+rows([f'routes.docs[{d}]' for d in ['completion-doc-guidance', 'dev-workflow-detail', 'file-organization']], NCC('subtraction-4'))
+fm['routes.docs[spec-tasks-format]'] = R  # spec formats are transferable standards; the completion/PR/file workflow is this repo's law
 rows(['routes.agents[lina]', 'routes.agents[thurgood]'], R)
 rows([f'routes.cues[{i}]' for i in range(6)], R)
 fm['routes.cues[6]'] = NCC('subtraction-3')  # the docs corpus is DesignerPunk's, read-only in the consumer's repo

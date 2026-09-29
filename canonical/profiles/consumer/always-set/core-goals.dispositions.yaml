@@ -1,0 +1,9 @@
+# canonical/profiles/consumer/always-set/core-goals.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/core-goals.md
+counterpart: .kiro/steering/core-goals.md
+body:
+  "#core-goals:preamble": {"disposition": "retained"}
+  "#core-project-context": {"disposition": "re-pointed", "removals": [{"text": "DesignerPunk is a True Native cross-platform design system", "cites": "subtraction-2"}, {"text": "**For detailed architectural guidance, see:**\n- True Native Architecture: `preserved-knowledge/true-native-architecture-concepts.md`\n- Token System: `docs/token-system-overview.md`\n- Mathematical Foundation: `preserved-knowledge/token-architecture-2-0-mathematics.md`", "cites": "subtraction-5"}], "destination": "#core-project-context"}
+  "#development-practices": {"disposition": "re-pointed", "removals": [{"text": "`./.kiro/hooks/complete-task.sh \"Task Name\"` opens the task PR; Peter merges on green", "cites": "subtraction-1"}, {"text": "Repository: https://github.com/3fn/DesignerPunk (PR-gated workflow: branch protection on `main`, admins included)", "cites": "subtraction-2"}, {"text": "`Process-Development-Workflow.md` (Layer 2); `Process-File-Organization.md` (Layer 2)", "cites": "subtraction-4"}], "destination": "#development-practices"}

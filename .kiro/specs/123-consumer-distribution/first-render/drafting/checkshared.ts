@@ -1,0 +1,10 @@
+import * as fs from 'fs';
+const R = '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/';
+const { load } = require(R + 'node_modules/js-yaml');
+const { deriveSharedCatalog } = require(R + 'tools/agent-generator/derive');
+const { validateDispositions } = require(R + 'tools/agent-generator/regrounding/dispositions');
+const { parseOverlay } = require(R + 'tools/agent-generator/regrounding/overlay');
+const disp = load(fs.readFileSync(R + 'canonical/profiles/consumer/_shared.dispositions.yaml', 'utf8'));
+console.log('schema', validateDispositions(disp, '_shared'));
+const ov = parseOverlay(fs.readFileSync(R + 'canonical/profiles/consumer/_shared.overlay.md', 'utf8'), 'canonical/profiles/consumer/_shared.overlay.md');
+console.log(deriveSharedCatalog(fs.readFileSync(R + 'canonical/shared/shared-catalog.yaml', 'utf8'), disp, undefined, ov));

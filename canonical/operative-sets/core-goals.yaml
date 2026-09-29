@@ -1,0 +1,131 @@
+# canonical/operative-sets/core-goals.yaml — operative-set record (design C16; Req 11.6.5d)
+#
+# Every body unit of .kiro/steering/core-goals.md, an always-set member (Spec 123 Task 15.4). Under path (B) (Req 12.1a) the
+# shipped steering doc IS the canonical counterpart. Owner thurgood (a Civitas governance-layer doc) ==
+# the profile author, so the C1 confirmer is the counterpart seat, Stacy. Drafted by Thurgood.
+# canonicalHash = "sha256:" + hex SHA-256 over the unit's exact bytes (partition(splitFrontmatter(src).body)).
+# Item text is the COMPLETE operative text, a verbatim substring of its unit; label is never matched.
+source: .kiro/steering/core-goals.md
+owner: thurgood
+confirmer: stacy
+units:
+  "#core-goals:preamble":
+    canonicalHash: sha256:e108b8080b24e6b50ec31cad3e8bf9c19c9cddec7b1cba8f17f164fbc9e2e86a
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/core-goals.md#core-goals:preamble
+  "#core-project-context":
+    canonicalHash: sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491
+    items:
+      - id: principle-1
+        kind: obligation
+        label: "Build-time platform separation (web/iOS/Android) rather than"
+        text: "Build-time platform separation (web/iOS/Android) rather than runtime detection"
+      - id: principle-2
+        kind: obligation
+        label: "Mathematical foundation: REM-style baseline grid with modula"
+        text: "Mathematical foundation: REM-style baseline grid with modular scale"
+      - id: principle-3
+        kind: obligation
+        label: "Accessibility-first: WCAG 2.1 AA compliance"
+        text: "Accessibility-first: WCAG 2.1 AA compliance"
+      - id: principle-4
+        kind: obligation
+        label: "Cross-platform consistency through unitless token architectu"
+        text: "Cross-platform consistency through unitless token architecture"
+      - id: principle-5
+        kind: obligation
+        label: "Human-AI partnership as foundational value"
+        text: "Human-AI partnership as foundational value"
+      - id: principle-6
+        kind: obligation
+        label: "iOS: 17.0+"
+        text: "iOS: 17.0+"
+    confirmation: canonical/profiles/consumer/confirmations/core-goals.md#core-project-context
+  "#development-practices":
+    canonicalHash: sha256:06bfac06966cb2bd1b0344f3e6ee26d2db6577e0ca62b05f88fe3e6106fa548f
+    items:
+      - id: practice-1
+        kind: obligation
+        label: "Follow systematic workflow with automated git integration"
+        text: "Follow systematic workflow with automated git integration"
+      - id: practice-2
+        kind: obligation
+        label: "Complete tasks via the PR flow: ./.kiro/hooks/complete-task."
+        text: "Complete tasks via the PR flow: `./.kiro/hooks/complete-task.sh \"Task Name\"` opens the task PR; Peter merges on green — the merge is the authorization act (see Task-Completion-Protocol)"
+      - id: practice-7
+        kind: obligation
+        label: "Always prioritize design tokens over hard-coded values"
+        text: "**Always** prioritize design tokens over hard-coded values"
+      - id: practice-8
+        kind: obligation
+        label: "MUST use semantic tokens first — only use primitive tokens w"
+        text: "**MUST** use semantic tokens first — only use primitive tokens when no semantic token exists for the use case"
+      - id: practice-9
+        kind: obligation
+        label: "All tokens must follow Rosetta System: mathematical relation"
+        text: "All tokens must follow Rosetta System: mathematical relationships, unitless values, primitive→semantic hierarchy"
+      - id: practice-10
+        kind: obligation
+        label: "Inform user if hard-coded values are necessary"
+        text: "Inform user if hard-coded values are necessary"
+      - id: practice-11
+        kind: obligation
+        label: "Semantic tokens: Use freely (verify semantic correctness)"
+        text: "**Semantic tokens**: Use freely (verify semantic correctness)"
+      - id: practice-12
+        kind: obligation
+        label: "Primitive tokens: Requires prior context (spec docs) or huma"
+        text: "**Primitive tokens**: Requires prior context (spec docs) or human acknowledgment"
+      - id: practice-13
+        kind: obligation
+        label: "Component tokens: Requires explicit human approval before us"
+        text: "**Component tokens**: Requires explicit human approval before use"
+      - id: practice-14
+        kind: obligation
+        label: "Creating ANY token: Always requires human review — no autono"
+        text: "**Creating ANY token**: Always requires human review — no autonomous token creation"
+      - id: practice-15
+        kind: obligation
+        label: "Semantic tokens — purpose-built for specific use cases (e.g."
+        text: "**Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds)"
+      - id: practice-16
+        kind: obligation
+        label: "Primitive tokens — when no semantic token exists, check if a"
+        text: "**Primitive tokens** — when no semantic token exists, check if a primitive token provides the needed value"
+      - id: practice-17
+        kind: obligation
+        label: "Component tokens referencing primitives — when a component n"
+        text: "**Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive, create a component token that references the primitive (e.g., `buttonIcon.inset.medium = space125`)"
+      - id: practice-18
+        kind: obligation
+        label: "Hard-coded values — only as last resort, requires user appro"
+        text: "**Hard-coded values** — only as last resort, requires user approval"
+      - id: practice-19
+        kind: obligation
+        label: "Specs reference tokens, not pixel values: icon.size100 not 2"
+        text: "Specs reference tokens, not pixel values: `icon.size100` not `24px`"
+      - id: practice-20
+        kind: obligation
+        label: "Hard values in source docs (design-outlines) must be transla"
+        text: "Hard values in source docs (design-outlines) **must** be translated to token references when available"
+      - id: practice-21
+        kind: obligation
+        label: "Format: token.name with value as comment only when needed fo"
+        text: "Format: `token.name` with value as comment only when needed for clarity"
+      - id: practice-22
+        kind: obligation
+        label: "Query Token Quick Reference via MCP when uncertain which tok"
+        text: "Query Token Quick Reference via MCP when uncertain which token to use"
+      - id: practice-26
+        kind: obligation
+        label: "Maintain concept-based documentation preventing contaminatio"
+        text: "Maintain concept-based documentation preventing contamination vectors"
+      - id: practice-27
+        kind: obligation
+        label: "Apply process-first tool development: prove manual processes"
+        text: "Apply process-first tool development: prove manual processes before automation"
+      - id: construction-rule
+        kind: obligation
+        label: "Component token construction"
+        text: "Component tokens must either reference an existing primitive token OR conform to how that primitive token family's values are defined. Never introduce arbitrary values at the component level that don't align with the underlying token family's value system."
+    confirmation: canonical/profiles/consumer/confirmations/core-goals.md#development-practices

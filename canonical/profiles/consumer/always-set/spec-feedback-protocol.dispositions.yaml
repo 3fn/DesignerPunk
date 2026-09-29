@@ -1,0 +1,21 @@
+# canonical/profiles/consumer/always-set/spec-feedback-protocol.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/Spec-Feedback-Protocol.md
+counterpart: .kiro/steering/Spec-Feedback-Protocol.md
+body:
+  "#spec-feedback-protocol:preamble": {"disposition": "retained"}
+  "#purpose": {"disposition": "retained"}
+  "#the-feedback-document": {"disposition": "re-pointed", "removals": [{"text": ".kiro/specs/[spec-name]/", "cites": "subtraction-4"}], "destination": "#the-feedback-document"}
+  "#feedback-checkpoints": {"disposition": "retained"}
+  "#stakeholder-identification": {"disposition": "retained"}
+  "#sequential-formalization-gate": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#sequential-formalization-gate"}
+  "#mandatory-mention-scanning": {"disposition": "retained"}
+  "#stamp-format": {"disposition": "retained"}
+  "#standard-feedback": {"disposition": "retained"}
+  "#directed-questions": {"disposition": "retained"}
+  "#incorporation-notes": {"disposition": "retained"}
+  "#context-for-reviewers": {"disposition": "retained"}
+  "#resolution-tracking": {"disposition": "retained"}
+  "#spec-feedback-template": {"disposition": "retained"}
+  "#document-access": {"disposition": "re-pointed", "removals": [{"text": "This is an identity doc (Spec 119) — never MCP-served,", "cites": "subtraction-2"}], "destination": "#document-access"}

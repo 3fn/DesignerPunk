@@ -1,0 +1,15 @@
+# canonical/profiles/consumer/always-set/ai-collaboration-principles.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/AI-Collaboration-Principles.md
+counterpart: .kiro/steering/AI-Collaboration-Principles.md
+body:
+  "#ai-collaboration-principles:preamble": {"disposition": "retained"}
+  "#the-ai-optimism-problem": {"disposition": "retained"}
+  "#candid-vs-brutal-communication": {"disposition": "retained"}
+  "#counter-argument-requirement": {"disposition": "re-pointed", "removals": [{"text": "*(Fold-back discipline ratified 2026-09-19 — `.kiro/docs/ballots/2026-09-19-counter-argument-fold-back.md`.)*", "cites": "subtraction-2"}], "destination": "#counter-argument-requirement"}
+  "#exploratory-vs-directive-questions": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#when-human-and-ai-disagree": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/docs/alternative-paths-log.md`", "cites": "subtraction-1"}], "destination": "#when-human-and-ai-disagree"}
+  "#certainty-calibration-finding-guidance-before-you-guess": {"disposition": "retained"}
+  "#mcp-query-for-full-framework": {"disposition": "retained"}

@@ -93,8 +93,10 @@ fm.update(rows)
 for d in ['decision-criteria', 'layout-vocabulary', 'product-token-authoring', 'component-doc-map', 'component-readiness', 'concept-catalog', 'cross-platform-guidance',
           'product-token-gov-beyond', 'stemma-principles', 'test-dev-standards', 'token-lookup-patterns', 'product-handoff-protocol-route', 'integration-onboarding-guide']:
     fm[f'routes.docs[{d}]'] = R
-for d in ['spec-tasks-format', 'spec-planning-beyond', 'dev-workflow-detail', 'file-organization']:
+for d in ['dev-workflow-detail', 'file-organization']:
     fm[f'routes.docs[{d}]'] = NCC('subtraction-4')
+for d in ['spec-tasks-format', 'spec-planning-beyond']:
+    fm[f'routes.docs[{d}]'] = R
 for c in ['generate-tokens', 'validate-product-tokens', 'init-product', 'sync-product']:
     fm[f'commands[{c}]'] = R  # consumer-repo commands
 fm['writeScope[.kiro/specs/**]'] = {'disposition': 're-pointed'}

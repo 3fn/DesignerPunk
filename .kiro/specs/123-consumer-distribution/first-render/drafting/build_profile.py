@@ -164,3 +164,26 @@ def bullets(text, prefix, kind='member', start=1, only=None):
 
 def leaf_paths(name):
     return [l['path'] for l in json.load(open(f'{SP}/{name}.json'))['leaves']]
+
+_NORM = _re.compile(r'\b(MUST|SHALL|NEVER|never|Never|Do NOT|do NOT|NOT|must|always|Always|required|Required|mandatory|Mandatory|STOP|only|ONLY)\b')
+def normative_items(text, prefix, skip=()):
+    """Draft items for a prose-and-list unit: every list line, and every prose sentence carrying a normative
+    keyword (the drafter's heuristic — the C1 confirmer corrects the set). Code fences, tables and headings skipped."""
+    out, n, fence = [], 1, False
+    for raw in text.split('\n'):
+        line = raw.strip()
+        if line.startswith('```'):
+            fence = not fence
+            continue
+        if fence or not line or line.startswith('#') or line.startswith('|') or line.startswith('>') or line == '---':
+            continue
+        m = _re.match(r'^(?:[-*] |\d+\. )(.*\S)$', line)
+        cands = [m.group(1).strip()] if m else [s.strip() for s in _re.split(r'(?<=[.!?])\s+(?=[A-Z*])', line) if _NORM.search(s)]
+        for c in cands:
+            if len(c) < 12 or c in skip or c not in text:
+                continue
+            if any(c == o[3] for o in out):
+                continue
+            out.append((f'{prefix}-{n}', 'obligation', _re.sub(r'[*`]', '', c)[:60], c))
+            n += 1
+    return out

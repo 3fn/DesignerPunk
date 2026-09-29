@@ -37,7 +37,7 @@ frontmatter:
   "routes.docs[module-resolution-contract]": {"disposition": "retained"}
   "routes.docs[theme-registry-law]": {"disposition": "retained"}
   "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
-  "routes.docs[spec-tasks-format]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[spec-tasks-format]": {"disposition": "retained"}
   "routes.docs[rosetta-arch-beyond]": {"disposition": "retained"}
   "routes.docs[token-lookup-patterns]": {"disposition": "retained"}
   "routes.docs[naming-and-philosophy]": {"disposition": "retained"}
