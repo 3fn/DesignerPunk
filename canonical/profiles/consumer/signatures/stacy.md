@@ -326,3 +326,14 @@ renderedHash: sha256:9125e2b3608732006279ff89016052966e29a4b5a28369c25aba788f78e
 verdict: refuse: should-re-point
 
 The LENS row (`trigger-lens`) keeps question 6 but replaces the **five verifiability questions** with one summary ("can each criterion be verified from the repo"). The five questions are: a criteria set exists; evidence of a named kind could exist; some state of the world reads UNMET; "met" is decidable without the author; and the task text promises no artifact the criteria do not cover. They are repo-independent and they are the seat's content. Only the pointer to the lifecycle amendment is repo-bound. **Should re-point**: carry the five questions inline. For the record, the rest of the unit would assent at `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` (5/13). Not surviving would be RELEASE (its Q2 guard), CLOSEOUT (the rider-(a) discharge), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST, all repo-bound.
+
+## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
+
+signer: stacy
+date: 2026-09-29
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference` (no-consumer-counterpart; no-consumer-counterpart)
+canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: refuse: should-re-point
+
+`no-consumer-counterpart` is not true of the whole unit. The steward-verb enumeration and its two falsification conditions are repo-bound, because a consumer does not steward DesignerPunk's docs corpus. But `carve-out-routing-test` ("was this claim verified?" → Stacy; "what must a completion doc contain?" → Thurgood) and `carve-out-tiebreak` (ambiguity resolves to Stacy, the seam fails toward the verifier) are the seam's arbitration, and a consumer's Stacy/Thurgood pair has the same seam. **Should re-point**: keep the routing test and the tiebreak, and drop the verb enumeration.
