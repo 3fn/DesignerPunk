@@ -80,6 +80,10 @@ units:
   "#android-theming-spec-094":
     canonicalHash: sha256:7818e0ca9a1252c1baacf77ce2e9650bb50377b5c2e07cc07492b48f50ac9122
     items:
+      - id: theming-1
+        kind: obligation
+        label: "Generated Kotlin output includes: {Name}Theme data class, na"
+        text: "Generated Kotlin output includes: `{Name}Theme` data class, named instances in `{Name}Themes` object, `Local{Abbreviation}Theme` CompositionLocal"
       - id: theming-2
         kind: obligation
         label: "Product apps wrap content with CompositionLocalProvider(Loca"
@@ -88,6 +92,10 @@ units:
         kind: obligation
         label: "Dark mode: select theme instance based on isSystemInDarkThem"
         text: "Dark mode: select theme instance based on `isSystemInDarkTheme()`"
+      - id: theming-4
+        kind: obligation
+        label: "{Abbreviation} uses uppercase (e.g., DP not Dp) to avoid col"
+        text: "`{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit"
       - id: theming-5
         kind: obligation
         label: "Static tokens (spacing, sizing, radius, typography, motion) "
@@ -100,10 +108,22 @@ units:
   "#product-tokens-spec-108109":
     canonicalHash: sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e
     items:
+      - id: product-tokens-1
+        kind: obligation
+        label: "Product tokens are generated to dist/product/ProductTokens.a"
+        text: "Product tokens are generated to `dist/product/ProductTokens.android.kt` (package `com.designerpunk.product.tokens`)"
+      - id: product-tokens-2
+        kind: obligation
+        label: "Static tokens: object Product{Category} { val name = value.d"
+        text: "Static tokens: `object Product{Category} { val name = value.dp }`"
       - id: product-tokens-3
         kind: obligation
         label: "Theme-varying tokens: @Composable @ReadOnlyComposable get() "
         text: "Theme-varying tokens: `@Composable @ReadOnlyComposable get()` accessing `Local{Abbreviation}Theme.current.{prop}` — must be read inside composition scope"
+      - id: product-tokens-4
+        kind: obligation
+        label: "Ref tokens reference DesignTokens. constants (full qualified"
+        text: "Ref tokens reference `DesignTokens.*` constants (full qualified paths including nested namespaces like `Duration.Duration350`)"
       - id: product-tokens-5
         kind: obligation
         label: "Query available tokens via the Product MCP's get_product_tok"
