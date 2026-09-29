@@ -129,3 +129,14 @@ The rendering keeps the flow's spine at 13/22, but it drops two generic rules a 
 - Both have a direct consumer counterpart, and neither is repo-bound.
 - **Should re-point**: carry both.
 - For the record, the other drops are acceptable: the checkpoint tooling (`-4`), the hook ergonomics (`-6`), squash-only config (`-10`), branch protection (`-11`), and the inside-parent status and PR timing (`-8`, `-14`).
+
+## `#tier-selection-which-docs-how-much-detail`
+
+signer: stacy
+date: 2026-09-29
+row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#tier-selection-which-docs-how-much-detail` (re-pointed; ROUTED)
+canonicalHash: sha256:d1d5429b6114ae0abd5e62cfd4a88039d25755d3c8ea249057c2dd971fa03c60
+renderedHash: sha256:46c85b74c9d144d87605c126515ac14b9d302e95dcef54fa1be0355d02aabacb
+verdict: refuse: should-re-point
+
+`tier-selection-which-2` names **where** the parent's summary doc goes. The rendering keeps the completion-doc location (`specs/[spec]/completion/`) and drops the summary doc's location with nothing in its place, so a consumer's agent is told to write a summary doc with no path. It cannot comply decidably, and the three parent-section items inherit the gap. **Should re-point**: name the summary-doc location for the consumer's tree. `-3`, the guide pointer, is correctly dropped.
