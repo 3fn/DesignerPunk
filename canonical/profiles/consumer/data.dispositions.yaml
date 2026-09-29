@@ -13,7 +13,7 @@ body:
   "#the-implement-vs-direct-distinction": {"disposition": "retained"}
   "#operational-mode-screen-implementation:preamble": {"disposition": "retained"}
   "#step-1-review-the-specification": {"disposition": "retained"}
-  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "(never read the stale `dist/*.kt` snapshots — see the Ground truth section)", "cites": "subtraction-3"}], "destination": "#step-2-set-up-the-screen"}
+  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "(never read the stale `dist/*.kt` snapshots — see the Ground truth section)", "cites": "subtraction-3"}], "destination": "#step-2-set-up-the-screen", "signature": {"signer": "data", "canonicalHash": "sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe", "renderedHash": "sha256:7d089b3e07133c894e1e5af590d83600bde7f6bf96366c6b96b76c9b8e83e61e", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/data.md#step-2-set-up-the-screen"}}
   "#step-3-implement": {"disposition": "retained"}
   "#step-4-test": {"disposition": "retained"}
   "#step-5-report-back": {"disposition": "retained"}

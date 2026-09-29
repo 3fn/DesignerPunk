@@ -143,3 +143,13 @@ signer: data
 
 The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
 
+## `#step-2-set-up-the-screen`
+
+signer: data
+
+**Refuse: should-re-point.** `setup-2` loses its parenthetical guard "(never read the stale `dist/*.kt` snapshots — see the Ground truth section)" (subtraction-3). The rendering keeps "Bring in DesignerPunk tokens by querying the application MCP for the resolved values", so the positive half survives and the prohibition does not. `setup-1` and `setup-3` are verbatim (`setup-3` holds, because the Android implementations ship in the package).
+
+The guard has a consumer counterpart (header fact). This step is the moment the agent first brings tokens into a screen, which is when a flattened `DesignTokens.android.kt` in `node_modules/@3fn/core/dist/` is most likely to be read.
+
+The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
+
