@@ -352,10 +352,14 @@ export function derive(input: DeriveInput): Derived {
       throw new Error(`derive: ${source} — ${derivedLeaves.length} derived leaves for ${surviving.length} surviving canonical leaves (an internal invariant)`);
     }
     const identity: DeriveFinding[] = [];
+    // A positional list member (`[<n>]`, no key field) is renumbered when an earlier sibling is
+    // pruned — the same renumbering entryOrigin absorbs for retained members, not an identity
+    // change. Identity changes only when a KEYED member's key differs (Task 15.5).
+    const positionless = (p: string): string => p.replace(/\[\d+\]/g, '[#]');
     derivedLeaves.forEach((d, i) => {
       const c = surviving[i];
       if (d !== c) entryOrigin[d] = c;
-      if (d !== c && jsonType(values.get(c)) === 'map') {
+      if (d !== c && jsonType(values.get(c)) === 'map' && positionless(d) !== positionless(c)) {
         identity.push({ check: 'overlay-value', file, key: `frontmatter ${c}`, message: overlayValueMessage(`frontmatter entry ${c}`, file, `changes the member's identity (its entry path becomes ${d})`) });
       }
     });

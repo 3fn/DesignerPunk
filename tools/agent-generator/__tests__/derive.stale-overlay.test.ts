@@ -230,6 +230,39 @@ describe('re-pointed frontmatter entries carry YAML VALUES (Task 15.3; the 15.0 
   });
 });
 
+describe('a positional list: pruning an earlier member renumbers a re-pointed map member, which is not an identity change (Task 15.5)', () => {
+  // routes.cues is keyed by POSITION (no key field): dropping cues[0] makes the canonical cues[1] the
+  // derived cues[0]. That is the same renumbering entryOrigin already absorbs for retained members;
+  // the identity refusal is for a KEYED member whose key the overlay changes (commands[<name>]).
+  const FM2 = (): YamlDoc => ({
+    agent: 'twin',
+    routes: { cues: [
+      { when: 'steward-only lookup', tool: 'get_section', mcp: 'docs', replaces: 'steward-doc' },
+      { when: 'stack reference (frameworks, build tooling)', tool: 'get_section', mcp: 'docs', replaces: 'technology-stack' },
+    ] },
+  });
+  const rows2 = (): Dispositions => {
+    const fm: Record<string, DispositionRow> = {};
+    for (const l of entryTree(FM2()).units) fm[l.path] = { disposition: 'retained' };
+    fm['routes.cues[0]'] = { disposition: 'no-consumer-counterpart' };
+    fm['routes.cues[1]'] = { disposition: 're-pointed', destination: 'frontmatter:routes.cues[1]' };
+    const body: Record<string, DispositionRow> = {};
+    for (const u of partition(BODY).units) body[u.anchor] = { disposition: 'retained' };
+    body['#regrounded'] = { disposition: 're-pointed', destination: '#regrounded' };
+    return { body, frontmatter: fm };
+  };
+  const leaf1 = entryTree(FM2()).units.find((l) => l.path === 'routes.cues[1]')!.value;
+  const value = 'when: stack reference (frameworks)\ntool: get_section\nmcp: docs\nreplaces: technology-stack\n';
+  const overlay = `${OVERLAY_TEXT()}## @entry routes.cues[1] @ sha256:${hex(hashEntry(leaf1))}\n${value}`;
+  const run2 = () => derive({ source: SOURCE, frontmatter: FM2(), body: BODY, dispositions: rows2(), overlay: parseOverlay(overlay, OVERLAY), dispositionsFile: DISP });
+
+  it('derives: the re-pointed value lands at its renumbered position, and entryOrigin maps it back', () => {
+    const d = run2();
+    expect((d.frontmatter as YamlDoc).routes).toEqual({ cues: [{ when: 'stack reference (frameworks)', tool: 'get_section', mcp: 'docs', replaces: 'technology-stack' }] });
+    expect(d.entryOrigin).toEqual({ 'routes.cues[0]': 'routes.cues[1]' });
+  });
+});
+
 describe('pruneFrontmatter — positions come from the entry tree', () => {
   it('ambient section leaves drop their claims; an entry with no claim left goes, and so does an emptied container', () => {
     const fm: YamlDoc = {
