@@ -99,16 +99,17 @@ assent: surviving [] — to the CHANGED disposition, `superseded-by` → `frontm
 
 signer: leonardo
 canonicalHash: sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-refuse: should-re-point
+renderedHash: sha256:24f724d102445528b14344065bee5dacbdc13f778e638accde6a913fce74fe37
+assent: surviving [] — to the RE-AUTHORED row, `re-pointed` (removal "build tooling", cites subtraction-1)
 
-**REFUSED.** The row is the cue *"you need the technology-stack reference (frameworks, build tooling, versions)"* → `get_section` (docs MCP), `replaces: technology-stack`. It is disposed `no-consumer-counterpart`, citing subtraction-1. **I refuse because this cue has a consumer counterpart, and the cite does not apply** (Req 11.4.1; mis-attribution is a finding, not only non-attribution, per clause (iii)).
-- **The cite does not apply.** Subtraction-1 covers repo-internal tooling invocations. This cue invokes the docs MCP's `get_section`, which my consumer seat keeps (`toolSubset.designerpunk-docs[get_section]` is retained). The target `governance/technology-stack.md` ships in the package (`files[]` includes `governance/`), and the shipped docs MCP serves it (`mcp-server/src/index.ts`, `DEFAULT_STEERING_DIR = 'governance/'`). The route resolves in a consumer install.
-- **The doc is mostly the consumer's stack too.** Its § "Platform Technologies" (Swift/SwiftUI, Kotlin/Compose, Web Components with logical-property CSS), § "Web CSS Standards" and § "True Native Architecture" are the stack a consumer's product screens are built on when they are built with DesignerPunk components. My own retained `#what-consistent-means-in-true-native` unit already assumes that stack for the consumer. Dropping the route leaves the charter asserting the stack with no way to look it up.
-- **What is repo-bound**: only § "Build & Runtime Tooling" (`tsx`, the module-resolution ESLint rule), and the cue's *"build tooling"* wording that points at it.
-- **The re-point I would expect** (Thurgood re-authors; the choice is his): keep the cue, narrow its `when` to the platform frameworks and standards, drop *"build tooling"*, and target § "Platform Technologies" (or the three consumer-applicable sections).
-- **Counter-argument I weighed**: a consumer's product might not use DesignerPunk's platform stack. That does not rescue `no-consumer-counterpart`: this charter is for products *built with DesignerPunk*, whose components are exactly that stack.
-- **Not in my seat, recorded only**: `sparky`, `kenya` and `data` carry the same cue under the same class. Their owners judge their own rows.
+**Re-signed 2026-09-29 (re-sign run, unit head `dba93df5`). This resolves my phase-two refusal (`d5539796`) by assent to the changed disposition.** Thurgood re-authored between the refusal and this signature, so it is not an assent-only resolution.
+- **What changed.** The disposition went from `no-consumer-counterpart` (a mis-attributed subtraction-1) to `re-pointed`. The overlay's `## @entry routes.cues[21]` renders: *"WHEN you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions) THEN use get_section (docs MCP)"*. I read it in the entry's own renderings: `cc/.claude/agents/leonardo.md:457`, `kiro/.kiro/agents/leonardo-prompt.md:344`, and `_canonical/agents/leonardo.md:158–161`.
+- **It meets what the refusal asked for.** The cue is kept. *"build tooling"* is removed, and the removal's subtraction-1 cite now applies: the phrase pointed at § "Build & Runtime Tooling" (`tsx`, the repo's ESLint rule), which is repo-internal tooling. The `when` now names the three consumer-applicable sections: Platform Technologies, Web CSS Standards and True Native Architecture.
+- **The route resolves from the rendering alone.** The CC and Kiro renderings no longer carry the literal doc id `technology-stack`. The canonical `when` did, and `replaces:` is not rendered there. So I checked resolution directly: `find_docs` on the rendered `when` text returns `governance/technology-stack.md` at **rank 1, matchConfidence strong** (2026-09-29). A consumer seat gets there in one discovery hop, under the certainty-calibration rule.
+- **Residuals (not grounds for refusal):**
+  - (a) Keeping `technology-stack` in the `when` would remove that discovery hop.
+  - (b) *"versions"* promises content the doc does not have. The platform minimums live in Core Goals. The canonical cue made the same promise, so this is not a regression introduced by the re-point.
+- It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
 
 ## Signing run summary (2026-09-29, phase two)
 
