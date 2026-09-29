@@ -297,6 +297,8 @@ date: 2026-09-29
 - **Valve-1 blind spot**: the `renderedHash` is the empty-piece hash. I signed on the text, reading the rendered Ground truth section directly: this trim no longer renders, and only the ComponentTokens trim remains.
 - **Canonical residual (my seat)**: `canonical/agents/kenya.md`'s `cue.negative` for this trim still says *"ORPHANED and stale (pre-Spec-094 …)"*, which is false. It doesn't render in a consumer (superseded), but it is false in the charter. Fixing it changes this entry's `canonicalHash`, so it is sequenced with the orchestrator, not done here.
 
+**Pending re-sign (2026-09-29, charter residual 3):** I corrected this trim's canonical `cue.negative` in my seat. It no longer says "ORPHANED and stale (pre-Spec-094 …)"; it now says un-themed base output, written by the in-repo generate, due to stop shipping, never read for themed values, and a consumer reads its own generate outputDir. The entry's `canonicalHash` therefore moved, and this signature is stale by construction. I will re-sign it after Thurgood's regen, together with `commands[platform-tokens]`. I am not re-signing it now.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]`
 
 signer: kenya

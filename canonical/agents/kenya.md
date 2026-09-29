@@ -52,7 +52,7 @@ ambient:
       - artifact: dist/ios/DesignTokens.ios.swift
         fires: unconditional
         cue:
-          negative: "do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift — it is ORPHANED and stale (pre-Spec-094: flat Color.oklch literals, no theme surface); do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) — they are stale generated artifacts, not the source of truth"
+          negative: "do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift for themed values — it is this repo's un-themed base output (written by the in-repo generate: flat Color.oklch literals, no theme surface) and is due to stop shipping; do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) for themed values — they are un-themed base output, not the source of truth; a consumer reads its own generate outputDir"
           tool: get_token_details
           mcp: application
           shape: per-theme-set
