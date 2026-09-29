@@ -206,12 +206,23 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-process` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-process` (re-pointed)
 canonicalHash: sha256:2c4db7b65be7f3bf074ab8f761d34aa9450e25295881e5eed70545aea9b1f5fc
-renderedHash: sha256:7992c934c008e1a65fcae7cd3469d8d37bed5462315e034253fd6b1f5be86717
+renderedHash: sha256:8b00b71b34ce4d0244307d6df17b5932da5672a10ab2993d7226f67e45464c2d
 verdict: assent — surviving 4/4
 
-Re-pointing "Peter" → "your human lead" carries the same obligation.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 4). All four survive. `ballot-1` is re-grounded to the team's governance, process and shared docs, with the upstream rule added (a change to a doc shipped in the installed package is proposed to DesignerPunk, never applied locally). `ballot-4` gains the same rule. "Peter" → "your human lead".
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-process` (re-pointed; ROUTED)
+> canonicalHash: sha256:2c4db7b65be7f3bf074ab8f761d34aa9450e25295881e5eed70545aea9b1f5fc
+> renderedHash: sha256:7992c934c008e1a65fcae7cd3469d8d37bed5462315e034253fd6b1f5be86717
+> verdict: assent — surviving 4/4
+>
+> Re-pointing "Peter" → "your human lead" carries the same obligation.
 
 ## `#what-this-means-in-practice`
 
@@ -426,12 +437,23 @@ No consumer counterpart, confirmed: this entry names this repo's own command (`r
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `commands[functional-suite]` (no-consumer-counterpart; no-consumer-counterpart)
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `commands[functional-suite]` (superseded-by)
 canonicalHash: sha256:486cf419abf0a92c57d8a600b0a99892e35f0c7e7d9d7d4c52be6bcefbc354be
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 verdict: assent — surviving 0/0
 
-No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 0). Assent to the changed disposition, `superseded-by #what-you-dont-own`. That unit's rendering carries the function: "run tests with your repo's own test runner and scripts — read them from its `package.json`".
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `commands[functional-suite]` (no-consumer-counterpart; no-consumer-counterpart)
+> canonicalHash: sha256:486cf419abf0a92c57d8a600b0a99892e35f0c7e7d9d7d4c52be6bcefbc354be
+> renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+> verdict: assent — surviving 0/0
+>
+> No consumer counterpart, confirmed: this entry names this repo's own command (`runContext: this-repo`). A consumer's equivalent is unknown at render time, and the body's re-grounding sends the agent to its own `package.json`. I assent that nothing survives.
 
 ## `#frontmatter:commands[full-suite-with-performance]`
 
@@ -470,12 +492,23 @@ No consumer counterpart, confirmed: this entry names this repo's own command (`r
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[docs/specs/**]` (no-consumer-counterpart; no-consumer-counterpart)
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[docs/specs/**]` (superseded-by)
 canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 verdict: assent — surviving 0/0
 
-No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 0). Assent to `superseded-by writeScope[.kiro/specs/**]`, which renders as `specs/**`. It covers the re-pointed summary location, `specs/[spec]/task-N-summary.md`.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[docs/specs/**]` (no-consumer-counterpart; no-consumer-counterpart)
+> canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
+> renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+> verdict: assent — surviving 0/0
+>
+> No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
 
 ## `#frontmatter:writeScope[.github/workflows/lane-timing.yml]`
 
@@ -492,9 +525,20 @@ No consumer counterpart, confirmed: this entry names this repo's own write path.
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-q5-boundary-execution-claims-verification-is-stacys:preamble` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-q5-boundary-execution-claims-verification-is-stacys:preamble` (re-pointed)
 canonicalHash: sha256:0cfc85cf5a6e9680bf8b9a0f82af9fa56d6ea1d139ff132a4a24edf8341f6886
-renderedHash: sha256:e6fe38dba2350bc75397a54d45ac199fa7e40d5095d35ce973966a2afb814185
-verdict: refuse: should-re-point
+renderedHash: sha256:03068d533336a7e647c8ba2778306de9340f03470411ade3fc36d2c33bbbcdaf
+verdict: assent — surviving 1/1
 
-`authority-precedence` (the co-signed documents govern where this text and they disagree) has a consumer counterpart, and the rendering drops it. The rendering names the authority ("your team's own decision to run claims audits, recorded where your team records such decisions") but not its precedence over this text. **Should re-point**: where this text and that recorded decision disagree, the decision governs. The pointer to the co-signed documents is repo-bound; the precedence rule is not.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** `authority-precedence` now survives: "where this text and that recorded decision disagree, the decision governs".
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-q5-boundary-execution-claims-verification-is-stacys:preamble` (re-pointed; ROUTED)
+> canonicalHash: sha256:0cfc85cf5a6e9680bf8b9a0f82af9fa56d6ea1d139ff132a4a24edf8341f6886
+> renderedHash: sha256:e6fe38dba2350bc75397a54d45ac199fa7e40d5095d35ce973966a2afb814185
+> verdict: refuse: should-re-point
+>
+> `authority-precedence` (the co-signed documents govern where this text and they disagree) has a consumer counterpart, and the rendering drops it. The rendering names the authority ("your team's own decision to run claims audits, recorded where your team records such decisions") but not its precedence over this text. **Should re-point**: where this text and that recorded decision disagree, the decision governs. The pointer to the co-signed documents is repo-bound; the precedence rule is not.

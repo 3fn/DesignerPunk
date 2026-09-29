@@ -30,23 +30,45 @@ verdict: assent — surviving 4/5; not surviving: `for-subtasks-4`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#for-parent-tasks-implementation-or-architecture-type` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#for-parent-tasks-implementation-or-architecture-type` (re-pointed)
 canonicalHash: sha256:e2958dd6f1a60a5f2b1054e109efe5e8ebd176f263302b87d096772c9243a1c5
-renderedHash: sha256:a2ba863ce386719c5c45d8bd9259b32ad9606835d1403f89643344cd575d4dbb
-verdict: assent — surviving 5/8; not surviving: `for-parent-tasks-imp-3`, `for-parent-tasks-imp-4`, `for-parent-tasks-imp-7`
+renderedHash: sha256:d62ae8286a803b0a75b1925351534ce2a10bb9c17ef4b92199fca40dfe0dc194
+verdict: assent — surviving 6/8; not surviving: `for-parent-tasks-imp-3`, `for-parent-tasks-imp-7`
 
-**Survive**: `-1`, `-2` (its failing-suite clause is platform behavior), `-5` and `-6` (the tooling replaced by the acts), and `-8`. **Not surviving**: `-3` (the forced-negative line and the **Instruments** header dropped), `-4` (the summary doc's location dropped; see the tier-selection refusal), and `-7` (the unit-branch dispatch and CI provenance dropped).
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 5). `-4` now survives (`specs/[spec]/task-N-summary.md`), so the section goes from 5/8 to 6/8. **`-7` is still not credited**: CI provenance is restored ("completion docs declare where their test results were measured"), but the push and the dispatch against the unit branch are dropped with nothing in their place. `-3` is not credited either: the forced-negative line and the Instruments header are subtractions Thurgood accepted.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#for-parent-tasks-implementation-or-architecture-type` (re-pointed; ROUTED)
+> canonicalHash: sha256:e2958dd6f1a60a5f2b1054e109efe5e8ebd176f263302b87d096772c9243a1c5
+> renderedHash: sha256:a2ba863ce386719c5c45d8bd9259b32ad9606835d1403f89643344cd575d4dbb
+> verdict: assent — surviving 5/8; not surviving: `for-parent-tasks-imp-3`, `for-parent-tasks-imp-4`, `for-parent-tasks-imp-7`
+>
+> **Survive**: `-1`, `-2` (its failing-suite clause is platform behavior), `-5` and `-6` (the tooling replaced by the acts), and `-8`. **Not surviving**: `-3` (the forced-negative line and the **Instruments** header dropped), `-4` (the summary doc's location dropped; see the tier-selection refusal), and `-7` (the unit-branch dispatch and CI provenance dropped).
 
 ## `#for-parent-tasks-setup-or-documentation-type`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#for-parent-tasks-setup-or-documentation-type` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#for-parent-tasks-setup-or-documentation-type` (re-pointed)
 canonicalHash: sha256:d74afc384873f1861a195770544dcb456c4e952028d9ca37e3e5d6e39b19a6e4
-renderedHash: sha256:1be00d6b0c808d4159d73a4464394fbe4fe48ecfebb5f2d308a9c6e25397120d
-verdict: assent — surviving 5/8; not surviving: `for-parent-tasks-set-3`, `for-parent-tasks-set-4`, `for-parent-tasks-set-7`
+renderedHash: sha256:9c275da8b7c69d21d220b1e0931c29826be35f43c3deaf7ee43b5ee15fc6b7df
+verdict: assent — surviving 6/8; not surviving: `for-parent-tasks-set-3`, `for-parent-tasks-set-7`
 
-The same reading as the Implementation section: `-3`, `-4` and `-7` are not credited, for the same drops.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 5). `-4` now survives, so the section goes from 5/8 to 6/8. `-7` is still not credited: CI provenance is restored, but "the PR opens when the unit completes" and the push and dispatch are dropped. `-3`: the accepted subtraction.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#for-parent-tasks-setup-or-documentation-type` (re-pointed; ROUTED)
+> canonicalHash: sha256:d74afc384873f1861a195770544dcb456c4e952028d9ca37e3e5d6e39b19a6e4
+> renderedHash: sha256:1be00d6b0c808d4159d73a4464394fbe4fe48ecfebb5f2d308a9c6e25397120d
+> verdict: assent — surviving 5/8; not surviving: `for-parent-tasks-set-3`, `for-parent-tasks-set-4`, `for-parent-tasks-set-7`
+>
+> The same reading as the Implementation section: `-3`, `-4` and `-7` are not credited, for the same drops.
 
 ## `#coherent-units-the-merge-granularity`
 
@@ -85,12 +107,23 @@ verdict: assent — surviving 5/6; not surviving: `branch-and-pr-conven-6`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#the-merge-rule` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#the-merge-rule` (re-pointed)
 canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
-renderedHash: sha256:8f44333557b6613d8ed35203a8f8234cc491a0748b2488f74013432601ed25ff
-verdict: assent — surviving 2/3; not surviving: `the-merge-rule-3`
+renderedHash: sha256:0bbd3bb417578928e95d3545171190c3de40019bbc5868c6d5a69affeff4d3be
+verdict: assent — surviving 3/3
 
-`-1` (the bake-in scope is history) and `-2` survive. `-3` is not credited: "stay human-merged" survives, but "standing, surviving any delegation" is dropped.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 2). `-3` now survives: "a standing carve-out that survives any delegation of merge-on-green". 3/3.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#the-merge-rule` (re-pointed; ROUTED)
+> canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
+> renderedHash: sha256:8f44333557b6613d8ed35203a8f8234cc491a0748b2488f74013432601ed25ff
+> verdict: assent — surviving 2/3; not surviving: `the-merge-rule-3`
+>
+> `-1` (the bake-in scope is history) and `-2` survive. `-3` is not credited: "stay human-merged" survives, but "standing, surviving any delegation" is dropped.
 
 ## `#emergency-procedure`
 
@@ -118,25 +151,47 @@ verdict: assent — surviving 4/9; not surviving: `key-rules-4`, `key-rules-5`, 
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#completion-state-in-the-pr-flow:preamble` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#completion-state-in-the-pr-flow:preamble` (re-pointed)
 canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
-renderedHash: sha256:0eb434dbd11865776c7604237bbbc9d3d5aedf2a2b910dbce25943eb8d7430bb
-verdict: refuse: should-re-point
+renderedHash: sha256:eb5a8ca0e6712c02392b8f44121f051307a602225fde087379d51c4df53b9dc2
+verdict: assent — surviving 15/22; not surviving: `completion-state-in--3`, `completion-state-in--4`, `completion-state-in--6`, `completion-state-in--8`, `completion-state-in--10`, `completion-state-in--11`, `completion-state-in--14`
 
-The rendering keeps the flow's spine at 13/22, but it drops two generic rules a consumer's agents act on:
-- **`completion-state-in--19`**: "If the PR is green but unmergeable (the branch conflicts with an advanced `main`), update the branch from `main` on the same branch."
-- **`completion-state-in--7`**: the stacked-PR protocol. Stacking is still allowed, but the `Stacked-on: #<PR>` declaration and base-first merge order are gone.
-- Both have a direct consumer counterpart, and neither is repo-bound.
-- **Should re-point**: carry both.
-- For the record, the other drops are acceptable: the checkpoint tooling (`-4`), the hook ergonomics (`-6`), squash-only config (`-10`), branch protection (`-11`), and the inside-parent status and PR timing (`-8`, `-14`).
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** Both refused rules now survive: `-7` (stacking only on the human lead's direction, with the `Stacked-on:` declaration and base-first merge order) and `-19` (update a green-but-unmergeable branch from `main`). That makes 15/22. The remaining drops are the ones I accepted in run 2.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#completion-state-in-the-pr-flow:preamble` (re-pointed; ROUTED)
+> canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+> renderedHash: sha256:0eb434dbd11865776c7604237bbbc9d3d5aedf2a2b910dbce25943eb8d7430bb
+> verdict: refuse: should-re-point
+>
+> The rendering keeps the flow's spine at 13/22, but it drops two generic rules a consumer's agents act on:
+> - **`completion-state-in--19`**: "If the PR is green but unmergeable (the branch conflicts with an advanced `main`), update the branch from `main` on the same branch."
+> - **`completion-state-in--7`**: the stacked-PR protocol. Stacking is still allowed, but the `Stacked-on: #<PR>` declaration and base-first merge order are gone.
+> - Both have a direct consumer counterpart, and neither is repo-bound.
+> - **Should re-point**: carry both.
+> - For the record, the other drops are acceptable: the checkpoint tooling (`-4`), the hook ergonomics (`-6`), squash-only config (`-10`), branch protection (`-11`), and the inside-parent status and PR timing (`-8`, `-14`).
 
 ## `#tier-selection-which-docs-how-much-detail`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#tier-selection-which-docs-how-much-detail` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#tier-selection-which-docs-how-much-detail` (re-pointed)
 canonicalHash: sha256:d1d5429b6114ae0abd5e62cfd4a88039d25755d3c8ea249057c2dd971fa03c60
-renderedHash: sha256:46c85b74c9d144d87605c126515ac14b9d302e95dcef54fa1be0355d02aabacb
-verdict: refuse: should-re-point
+renderedHash: sha256:e32f2399887792d0b541b294b004a80c2fa6948deaa1924d3780cb926bcb5051
+verdict: assent — surviving 2/3; not surviving: `tier-selection-which-3`
 
-`tier-selection-which-2` names **where** the parent's summary doc goes. The rendering keeps the completion-doc location (`specs/[spec]/completion/`) and drops the summary doc's location with nothing in its place, so a consumer's agent is told to write a summary doc with no path. It cannot comply decidably, and the three parent-section items inherit the gap. **Should re-point**: name the summary-doc location for the consumer's tree. `-3`, the guide pointer, is correctly dropped.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** The summary-doc location is named (`specs/[spec]/task-N-summary.md`), so `-2` survives. `-3`, the guide pointer, is correctly dropped.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#tier-selection-which-docs-how-much-detail` (re-pointed; ROUTED)
+> canonicalHash: sha256:d1d5429b6114ae0abd5e62cfd4a88039d25755d3c8ea249057c2dd971fa03c60
+> renderedHash: sha256:46c85b74c9d144d87605c126515ac14b9d302e95dcef54fa1be0355d02aabacb
+> verdict: refuse: should-re-point
+>
+> `tier-selection-which-2` names **where** the parent's summary doc goes. The rendering keeps the completion-doc location (`specs/[spec]/completion/`) and drops the summary doc's location with nothing in its place, so a consumer's agent is told to write a summary doc with no path. It cannot comply decidably, and the three parent-section items inherit the gap. **Should re-point**: name the summary-doc location for the consumer's tree. `-3`, the guide pointer, is correctly dropped.

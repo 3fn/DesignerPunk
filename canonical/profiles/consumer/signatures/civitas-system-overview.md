@@ -36,3 +36,14 @@ renderedHash: sha256:20fdb612e3333d352f26f6567e27db5e80f591e03fbbb21cdedf14d3be9
 verdict: assent — surviving 2/2
 
 `document-access-1` survives as a generated identity member.
+
+## `#governance-processes`
+
+signer: stacy
+date: 2026-09-29
+row: `canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml` · body · `#governance-processes` (re-pointed)
+canonicalHash: sha256:48af3eb551057bd0d40cb4379bdb9f1e0a8953447545978ab8973de5e7651bd4
+renderedHash: sha256:2a2bc004ac29b3d2cac9e1ec035d790cde19b880033ac383a58794c572719353
+verdict: assent — surviving 4/4
+
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: unsigned). Newly routed. All four items survive verbatim, and the pointer is re-authored to "your Thurgood agent's charter (its Civitas Steward mode)". Non-blocking, for Thurgood: the items keep DesignerPunk's own terms ("monthly health check", "ballot measure"). Consumer-Thurgood's rendering re-grounds those as "your team's periodic health check" and "your human lead's decision", so the two surfaces now differ in wording.
