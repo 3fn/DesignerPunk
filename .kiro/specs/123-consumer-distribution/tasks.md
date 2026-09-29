@@ -34,7 +34,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 1. **Exemplar F's third unit**: `governance/Component-Family-Navigation.md` `#family-overview:preamble`, which is label-shaped but descriptive (expected 0 items). It is recorded and confirmed by Lina under C1 at **new subtask 13.0**, and Stacy names it in G2's domain.
    - **Source**: `.kiro/issues/2026-09-27-task-11-deferred-lina-items.md` Item 1 (Peter's deferral ruling).
    - **Why it is a subtask, not a ride**: an owner confirmation is its own act with its own completion-doc duty.
-   - **Tripwire**: U2b reads `declared 31, now 32`, within +4.
+   - **Tripwire**: U2b reads `declared 31, now 34`, within +4.
    - **Not edited**: the #220 "clause (a) is exercised by F's `#purpose` only" wording in Tasks 11 and 12. Both parents are merged, their docs reproduce those rows verbatim, and the wording was true of G1's eleven exemplars.
 2. **Task 13 gains the floor's tested properties**, which closes **G1 run 2 finding DR-1** (design C18's "Required bite (13.4)" had no criterion row).
    - The occurrence-assignment row: witness, validity property test, live-record invariants, and the frozen AX-1 bite.
@@ -190,6 +190,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Amendment 2026-09-28, B-U2 F-2: **17.4 added** (the standing parity test). U2b's line reads `declared 31, now 33`, within +4. **Totals now: 28 parents, 131 subtasks.**)*
 
+*(Amendment 2026-09-28, sequencing correction: **15.0 added** (the consumer-profile/adapter slice Task 14 depends on). U2b's line reads `declared 31, now 34`, within +4. **Totals now: 28 parents, 132 subtasks.**)*
+
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
 **Preamble**: write-scope authority for every seat below is **granted by the T1-(B) standing rule** (§ "Slots"). Each PRIMARY and each tiered secondary may write exactly its parent's listed Primary Artifacts, on its unit's branch, until the unit merges. **Activation is this tasks PR's merge; ratification is the standalone ballot `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md`** (erratum 2026-09-26; it was planned as B-U1 § "T1-(B)" at Task 7.0).
@@ -217,7 +219,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | 12 | **Thurgood (Opus)** — G1 gate parent · U2a gating parent | — (Stacy's verdict record is outside the line) |
 | 13 | Thurgood (Opus) | Lina (Opus) — generator code (13.4–13.6); the third F unit's C1 confirmation (13.0, added 2026-09-27, U2b-cut amendment) |
 | 14 | Lina (Opus) | — |
-| 15 | Thurgood (Opus) | Lina (Opus) — `derive.ts` (15.2) |
+| 15 | Thurgood (Opus) | Lina (Opus) — `derive.ts` (15.2) *(15.0 Thurgood (Opus) — added 2026-09-28)* |
 | 16 | Lina (Opus) — 16.1, 16.5 | Lina (Sonnet) — 16.2, 16.3, 16.4, 16.6; Ada (Sonnet) consulted on 16.3's pack script |
 | 17 | Lina (Sonnet) *(17.4 Lina (Sonnet) — added 2026-09-28)* | Thurgood (Sonnet) — 17.3 (applies L686 under B-U2) |
 | 18 | **Lina (Opus)** — G2 gate parent · U2b gating parent | — (Stacy's verdict record is outside the line) |
@@ -708,6 +710,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Opus)
   **Traces**: Reqs 11.4, 10.G, 10.S, 10.8b/c · design C15, DD7
 
+  *(Sequencing correction 2026-09-28: **14.2–14.4 run after Task 15.0 merges into the unit branch** — they render exemplars E / E-fm through the adapters under the consumer profile, and neither the declared target list nor the adapters' consumer path exists before 15.0; 14.1 and 14.5 are unblocked. Found at Task 14's instrument-existence check (Lina).)*
+
   **Success Criteria:**
   - Containment through both trees only. Unknown anchors are non-matching, never a throw: attack (a) → `FAIL_NO_DERIVATION`; E → `VERIFIED`; `#body` → non-matching.
   - Golden Bite 2 recorded.
@@ -739,11 +743,14 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - `derive()` refuses on a stale overlay and an orphaned key over the real profile.
   - *Scope*: declared-and-signed-by-the-right-seat only. Discrimination is G2's question; authorship is not establishable.
   - **The counting-block unit is recorded and C1-confirmed at 15.4** (erratum 2026-09-28, discharging Task 13's ⚠️ row): `canonical/operative-sets/stacy.yaml` carries `#the-claims-pass-record-claims-passmd-the-template` with its confirmed item set against the post-13.8 text, the doc cites the unit key, its `canonicalHash`, the path of Stacy's `confirmation:` note, and a green freshness sweep (or records check) over it. *Scope: it closes Task 13's forward link; the items' content is Stacy's confirmation, not this row's.*
+  - **15.0's slice is steward-invisible** *(sequencing correction 2026-09-28)*: with `AdapterContext.profile` defaulting to `steward`, Task 10's golden tests and every file under `canonical/_fixture-output/**` and the guarded roots are byte-identical — `npm run test:agent-generator` green and `npm run check:122:diff-guard` → `full-run-green` with the output hash unchanged (lock refresh committed with the slice), output cited. A declared target with no registered adapter fails loud, naming it.
+  - **The consumer path routes through `emitSpans` in both adapters** *(sequencing correction 2026-09-28)*: under `profile: consumer`, per adapter, a unit test shows (a) a re-pointed body unit renders its overlay text with `source` = its canonical `#<anchor>`; (b) a re-pointed frontmatter leaf renders its `## @entry` overlay text with `source` = `…#frontmatter:<path>`; (c) a list-valued field renders **per member**, so `writeScope[<glob>]` is its own span (DD26); (d) a missing row throws. *Scope: fixture shapes; the real 8-agent render is 15.3–15.5; the Kiro JSON config stays steward-shaped (C20).*
 
-  **Primary Artifacts:** `canonical/consumer-profile.yaml`, `canonical/profiles/consumer/**`, `canonical/operative-sets/**`, `tools/agent-generator/{derive,generate}.ts`, `canonical/_consumer-output/**`
+  **Primary Artifacts:** `canonical/consumer-profile.yaml`, `canonical/profiles/consumer/**`, `canonical/operative-sets/**`, `tools/agent-generator/{derive,generate}.ts`, `canonical/_consumer-output/**`, `tools/agent-generator/adapters/{cc,kiro,index}.ts` and `tools/agent-generator/spans.ts` (15.0 only — sequencing correction 2026-09-28), `tools/agent-generator/consumer-profile.ts` (15.0, new — the single declared target list's loader, C12)
 
   *Not a criterion — a precondition carried in (U2b-cut amendment, 2026-09-27; G1 run 2 finding R2-F1, Peter ruled proceed-on-HOLDS): Req 11.6.5e's "Scope — within the unit's own rendering" is in force before 15.5's first routed signature. A signer credits an item by entailment only from that unit's own rendering, and a function that survives only elsewhere takes a disposition. Stacy checks it at U2b's MIDPOINT.*
 
+  - [ ] 15.0 (Thurgood, Opus) The consumer profile file + its loader (`consumer-profile.ts`, C12's single declared list) and an adapter registry keyed by declared target name in `adapters/index.ts` read by `generate.ts` and the Task 14 guard; `AdapterContext.profile/dispositions/overlay` threaded into both adapters' `emitSpans` calls (steward default); frontmatter re-pointing via the `## @entry` overlay form (13.2); list fields rendered per member under the consumer profile only; `generateFixture(repoRoot, ctx, adapters, opts?: { profile, dispositions, overlay })` — **runs before 14.2** *(sequencing correction 2026-09-28; found at Task 14's instrument-existence check)*
   - [ ] 15.1 Profile file; `AdapterContext.profile`; `generateConsumerRendering`; `guardedRoots()`
   - [ ] 15.2 (Lina, Opus) `derive.ts`
   - [ ] 15.3 `emitIdentityMembers` per target
