@@ -107,3 +107,25 @@ refuse: should-re-point
 - **The re-point I would expect** (Thurgood re-authors; the choice is his): keep the cue, narrow its `when` to the platform frameworks and standards, drop *"build tooling"*, and target § "Platform Technologies" (or the three consumer-applicable sections).
 - **Counter-argument I weighed**: a consumer's product might not use DesignerPunk's platform stack. That does not rescue `no-consumer-counterpart`: this charter is for products *built with DesignerPunk*, whose components are exactly that stack.
 - **Not in my seat, recorded only**: `sparky`, `kenya` and `data` carry the same cue under the same class. Their owners judge their own rows.
+
+## Signing run summary (2026-09-29, phase two)
+
+- **Commits** (branch `task/123-u2b-fr2-leonardo`, from `60b0fdb5`, not pushed):
+  - `a7b2aaf2`: 8 assents.
+  - `d5539796`: 1 refusal, in its own commit.
+  - The commit that adds this summary.
+- **Assented rows (8)**:
+  - `#identity`: 6 of 6 surviving.
+  - `#out-of-scope`: 6 of 6.
+  - `#with-peter`: 1 of 1.
+  - `#platform-currency-awareness`: 3 of 3.
+  - `#when-you-and-peter-disagree`: 1 of 1.
+  - Body total: 17 of 17. Six of these are credited by entailment through the subtraction-2 *Peter → your human lead* re-point: `leo-human-decides`, `leo-partner`, `out-6`, `human-1`, `currency-2`, `disagree`.
+  - `no-consumer-counterpart` confirmed with `surviving: []`: `frontmatter:routes.docs[dev-workflow-detail]`, `frontmatter:routes.docs[file-organization]`, `frontmatter:writeScope[docs/specs/**]` (all subtraction-4).
+- **Refused rows (1)**: `frontmatter:routes.cues[21]` (technology-stack cue), `should-re-point`. The route resolves in a consumer install, the platform-stack sections apply to consumers, and subtraction-1 is mis-attributed. Thurgood re-authors, then I re-sign; I do not resolve it myself.
+- **Widenings**: none. The six referent candidates are deliberate trigger/anchor items in retained units.
+- **Sweep**: PASS, 0 findings, after each commit.
+- **Residuals**:
+  1. One standing refusal is owed a re-author and a re-sign before U2b merges (S-T3, zero standing).
+  2. The same technology-stack cue is `no-consumer-counterpart` in `sparky`, `kenya` and `data`; their owners judge those rows.
+  3. The sweep does not flag a routed or NCC row that has no signature (presence is checked over the real profile at 15.5), so presence of all 9 rows was confirmed here by eye.
