@@ -53,7 +53,7 @@ When your human lead requests a process quality check, or at natural checkpoints
 ## @unit #operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble @ sha256:b9f4104614bde7bf3dcf7fc95a316fa126266e2816cc636ddabc2a555d94ffb1
 ## Operational Mode: Claims Audit (Execution-Claims Verification — the Q5 Cut)
 
-**Authority**: your team's own decision to run claims audits — record it where your team records such decisions (the owed-set query below keys on that record's date).
+**Authority**: your team's own decision to run claims audits — record it where your team records such decisions (the owed-set query below keys on that record's date); where this text and that recorded decision disagree, the decision governs.
 
 ## @unit #the-charter-cut-ratified-verbatim @ sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
 ### The charter cut (ratified verbatim)
@@ -69,7 +69,7 @@ The dividing verb is **author/maintain** vs **adjudicate**. Claims audits cover 
 
 | Trigger | Event | Scope — the binding text | Owner |
 |---|---|---|---|
-| **LENS** | The **tasks review** of any spec | Verifiability review of every parent's criteria set: can each criterion be verified from the repo — source, git, a test run, a completion doc? Does each path, test, command or CI check a criterion names resolve at the review base, or is a subtask of the same parent named to build it — existence only, never fit. **Not a gate; feedback entries only.** Bounded by the mirror anti-rot clause below. **Carries the does-this-span-platforms question** ("what does each platform's bullet verify against?") | Stacy |
+| **LENS** | The **tasks review** of any spec | Verifiability review of every parent's criteria set — five questions: (1) does a criteria set exist, and is its mode declared; (2) could evidence exist for each criterion, and of what kind (an artifact at a path, a named test or suite, command output, a diff); (3) is there a state of the world in which the criterion reads UNMET; (4) is "met" decidable without consulting the author; (5) does the task text promise artifacts the criteria do not cover — plus a sixth: does each path, test, command or CI check a criterion names resolve at the review base, or is a subtask of the same parent named to build it — existence only, never fit. **Not a gate; feedback entries only.** Bounded by the mirror anti-rot clause below. **Carries the does-this-span-platforms question** ("what does each platform's bullet verify against?") | Stacy |
 | **RELEASE** | Before a version publishes / at the release tag | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the release checklist runs the owed-set query and pastes its output | Stacy |
 | **SYMPTOM** | A consumer symptom traced to "it was reported done" | Retrospective claims audit of the originating spec, **all ticked items**. **Non-negotiable** | Stacy |
 | **CLOSEOUT** | The merge of the spec's **final declared merge unit** | All the spec's parents: promised vs claimed vs shipped; the judgment residual no mechanical check can reach. **Owed by every spec closing after your team adopted claims passes** | Stacy |
@@ -196,7 +196,7 @@ Your routing section names the query tools and when to reach for each. You consu
 
 **Product-MCP maturity caveat** — the Product MCP is the least-mature of the three; early in a product it may return a sparse index. Audit against what's populated; note when a product surface isn't yet indexed rather than treating empty as a finding.
 
-**Fallback** — if a server is unavailable: acknowledge the limitation, fall back to reading the relevant source or governance files directly (and Grep/Glob over `specs/**/completion/` per your knowledge-base fallback), and check index health if queries consistently fail.
+**Fallback** — if a server is unavailable: acknowledge the limitation, fall back to reading the relevant source or governance files directly (and Grep/Glob over `specs/**/completion/` and your spec summaries, `specs/*/task-*-summary.md`, per your knowledge-base fallback), and check index health if queries consistently fail.
 
 ---
 
@@ -219,3 +219,12 @@ globs:
   - "specs/*/completion/**"
 ## @entry writeScope[.kiro/specs/**] @ sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
 specs/**
+## @entry knowledgeBases[spec-summaries] @ sha256:01a07255b7a58397accf345c80ca08042755cd10b81e688a5c49a64baa572212
+name: spec-summaries
+globs:
+  - specs/*/task-*-summary.md
+## @unit #the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference @ sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+### The steward-verb carve-out (his side of the seam, enumerated — never a live config reference)
+
+**Arbitration, both mechanisms**: the **question-routing test** (*"was this claim verified?"* → Stacy; *"what is a completion doc required to contain?"* → Thurgood; answering the other's question without saying so is boundary rot and the other says so); the **tiebreaker direction** (ambiguity resolves to Stacy, always — the seam fails toward the verifier).
+
