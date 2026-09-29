@@ -4,7 +4,7 @@
 # the 15.0 (b) erratum; it keeps its id and key set — derive()'s generic refusal).
 source: canonical/shared/shared-catalog.yaml
 members:
-  "complete-task-tooling": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "complete-task-tooling": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "stacy", "canonicalHash": "sha256:d9b77a4735ca40f286d5f759f8d35240f6806c482cbc7fde961faecfb7957fcc", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/_shared.md#complete-task-tooling"}}
   "find-docs-discovery": {"disposition": "retained"}
   "record-first-ratification": {"disposition": "re-pointed", "destination": "record-first-ratification", "removals": [{"text": "the committed ballot/record says RATIFIED", "cites": "subtraction-2"}, {"text": ".kiro/docs/ballots/README.md § \"The Ratification Protocol (record-first)\"", "cites": "subtraction-2"}]}
   "certainty-calibration-cue": {"disposition": "retained"}
