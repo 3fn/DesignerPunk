@@ -280,3 +280,17 @@ date: 2026-09-29
 - **The consumer's real Swift is elsewhere.** `npx designerpunk generate` writes the consumer's own Swift to the consumer's `outputDir`, so the shipped copies are pure trap, not a build target.
 - **Should re-point to**: the trim, re-grounded at `node_modules/@3fn/core/dist/…` (and the verdict with it), keeping its MCP replacement cue.
 - **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
+
+## `#frontmatter:ambient.groundTruthManifest.verdict`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-09-29
+
+**REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
+- **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.
+- **The consumer's real Swift is elsewhere.** `npx designerpunk generate` writes the consumer's own Swift to the consumer's `outputDir`, so the shipped copies are pure trap, not a build target.
+- **Should re-point to**: the trim, re-grounded at `node_modules/@3fn/core/dist/…` (and the verdict with it), keeping its MCP replacement cue.
+- **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
