@@ -9,7 +9,7 @@ description: Standards for creating spec documents — requirements format (EARS
 
 **Date**: 2025-01-10
 **Updated**: October 20, 2025
-**Last Reviewed**: 2026-09-19
+**Last Reviewed**: 2026-09-29
 **Purpose**: Standards for creating requirements, design, and task documents for feature specifications
 **Organization**: process-standard
 **Scope**: cross-project
@@ -476,6 +476,27 @@ The frozen form is a label line reading exactly `**Success Criteria:**` — colo
 ```
 
 The reason is mandatory. A block carrying `none` **and** criteria bullets is a loud malformation. Declared-none waives **the criteria table only** — the completion doc's Additional verification duties remain owed where applicable, and claims passes count declared-none rates.
+
+#### The Instruments block (M4) — in force from the first tasks round after `P`
+
+*(Ballot `2026-09-28-parent-instrument-existence-check` § 4a, RATIFIED 2026-09-29.)* **`P` is the squash SHA of the instruments parser PR.** Before `P`, **no spec writes an `**Instruments:**` block**: the parser would read it as a criteria-block malformation, or fold it into Primary Artifacts. The template above gains the block in that PR.
+
+From the first tasks round after `P`, each parent row carries an `**Instruments:**` block **after `**Primary Artifacts:**`**. It has one bullet per instrument a success criterion's evidence depends on (a test, check or CI context, fixture, file or record, command, upstream artifact). Each bullet carries a **stable, append-only row id** and exactly one state:
+
+```markdown
+**Instruments:**
+- I1: exists (`<path>` @ <review-base sha>)
+- I2: built here (<N.M>) — <capability, path optional>
+- I3: built earlier (<task.subtask>) — <capability>
+- I4: none — <criterion ref>: <why>
+```
+
+- **`built earlier`** is valid only if the named subtask precedes this parent in declared plan order.
+- **A MISSING instrument is a plan defect**, fixed before the tasks doc merges. Plan rows carry **no fit clause**; fit is the implementer's line in the execution file at branch cut (Completion Documentation Guide § "The instruments line and block").
+- **The tasks feedback round reviews the block.** Stacy's LENS question 6 reads the declared rows for such specs.
+- **Row ids are never renumbered.** A new instrument takes the next id.
+- **The parser collects the block** as a closed-vocabulary promise block. It owes no Additional-verification rows. The exact row grammar lands with the parser, and any grammar change before `P` is a dated erratum to M4 in that PR.
+- **Specs planned before `P`, Spec 123 included, do not use this block.** Their parents write the full execution-time Instruments file (Start Up Tasks item 8).
 
 #### Spanning claims — the structural limb, as law
 

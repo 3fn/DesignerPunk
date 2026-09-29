@@ -161,12 +161,12 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
-    canonicalHash: sha256:48826ac4369cbc915c1bfa78eef861818d2630a2fdd4ee95279a6a7063603699
+    canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
     items:
       - id: trigger-lens
         kind: member
         label: LENS
-        text: "| **LENS** | The **tasks feedback round** of any spec | Verifiability review of every parent's criteria set — five questions (lifecycle amendment § 1.2). **Not a gate; feedback entries only.** Bounded by the mirror anti-rot clause below. **Carries the does-this-span-platforms question** (ruling 5: \"what does each platform's bullet verify against?\") | Stacy |"
+        text: "| **LENS** | The **tasks feedback round** of any spec | Verifiability review of every parent's criteria set — five questions (lifecycle amendment § 1.2), plus a sixth *(ballot 2026-09-28-parent-instrument-existence-check)*: does each path, test, command or CI context a criterion names resolve at the review base, or is a subtask of the same parent named to build it — existence only, never fit (fit is the parent-start Instruments block's); it retires to reading the mechanical pass's emissions once that pass lands. For a spec planned under the plan-time instruments standard *(ballot 2026-09-28-parent-instrument-existence-check, M4)*, question 6 reads each parent's declared `**Instruments:**` block instead: every instrument the criteria name appears in it, and — until the declared-row resolver's emissions cover them — each `exists` row resolves at the review base and each `built here` / `built earlier` row names a real subtask in plan order; existence and order only, never fit. **Not a gate; feedback entries only.** Bounded by the mirror anti-rot clause below. **Carries the does-this-span-platforms question** (ruling 5: \"what does each platform's bullet verify against?\") | Stacy |"
       - id: trigger-release
         kind: member
         label: RELEASE
