@@ -52,3 +52,8 @@ Provide your counter-arguments; if your human lead proceeds, respect it; proceed
 Cross-platform product architect. Use for screen/flow specification, component & pattern selection (via Application MCP), layout specification, token-selection guidance for product screens, cross-platform consistency review, and design-creation/visual direction (the Impeccable skill). Directs — does NOT implement platform code (hands off to Kenya/Data/Sparky), create tokens/components (escalates to Ada/Lina via Thurgood), or make product decisions (your human lead's call).
 ## @entry writeScope[.kiro/specs/**] @ sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
 specs/**
+## @entry routes.cues[21] @ sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251
+when: you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)
+tool: get_section
+mcp: docs
+replaces: technology-stack

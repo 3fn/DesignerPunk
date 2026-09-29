@@ -96,7 +96,7 @@ frontmatter:
   "routes.cues[18]": {"disposition": "retained"}
   "routes.cues[19]": {"disposition": "retained"}
   "routes.cues[20]": {"disposition": "retained"}
-  "routes.cues[21]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "leonardo", "canonicalHash": "sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.cues[21]"}}
+  "routes.cues[21]": {"disposition": "re-pointed", "removals": [{"text": "build tooling", "cites": "subtraction-1"}], "destination": "frontmatter:routes.cues[21]", "signature": {"signer": "leonardo", "canonicalHash": "sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.cues[21]"}}
   "commands[generate-tokens]": {"disposition": "retained"}
   "commands[validate-product-tokens]": {"disposition": "retained"}
   "commands[init-product]": {"disposition": "retained"}
@@ -140,7 +140,7 @@ frontmatter:
   "toolSubset.designerpunk-product[get_domain_object]": {"disposition": "retained"}
   "toolSubset.designerpunk-product[get_product_component]": {"disposition": "retained"}
   "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
-  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[docs/specs/**]"}}
+  "writeScope[docs/specs/**]": {"disposition": "superseded-by", "destination": "frontmatter:writeScope[.kiro/specs/**]", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[docs/specs/**]"}}
   "kiro.keyboardShortcut": {"disposition": "retained"}
   "kiro.welcomeMessage": {"disposition": "retained"}
   "preflight[git status --porcelain]": {"disposition": "retained"}
