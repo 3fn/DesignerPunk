@@ -104,10 +104,6 @@ units:
   "#item-critical-this-project-uses-jest-not-vitest":
     canonicalHash: sha256:f75f87b00a0dafa053d0b2da2229ab451e79ced7621723927163505605e171d0
     items:
-      - id: critical-this-projec-1
-        kind: obligation
-        label: "CRITICAL: This project uses Jest, NOT Vitest"
-        text: "**CRITICAL: This project uses Jest, NOT Vitest**"
       - id: critical-this-projec-2
         kind: obligation
         label: "WHEN running tests THEN you MUST use Jest commands (NOT Vite"
@@ -140,6 +136,14 @@ units:
         kind: obligation
         label: "npm run test:coverage - Run tests with coverage"
         text: "`npm run test:coverage` - Run tests with coverage"
+      - id: lane-semantics
+        kind: member
+        label: "Default lanes are timing-assertion-free"
+        text: "default lanes are timing-assertion-free and deterministic; wall-clock assertions live only in the performance lanes."
+      - id: pre-july-void
+        kind: obligation
+        label: "Pre-July-2026 lane durations are void"
+        text: "treat any pre-July-2026 lane-duration claim as void."
       - id: critical-this-projec-10
         kind: obligation
         label: "npm test -- --run - Jest doesn't have a --run flag"
@@ -152,26 +156,14 @@ units:
   "#item-test-command-selection-guidelines":
     canonicalHash: sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974
     items:
-      - id: test-command-selecti-1
-        kind: obligation
-        label: "Test Command Selection Guidelines"
-        text: "**Test Command Selection Guidelines**"
       - id: test-command-selecti-2
         kind: obligation
         label: "Use npm test (default - excludes performance tests)"
-        text: "Use `npm test` (default - excludes performance tests)"
-      - id: test-command-selecti-3
-        kind: obligation
-        label: "Fast, deterministic feedback loop (~1 minute warm)"
-        text: "Fast, deterministic feedback loop (~1 minute warm)"
-      - id: test-command-selecti-4
-        kind: obligation
-        label: "Sufficient for most development validation"
-        text: "Sufficient for most development validation"
+        text: "**WHEN validating regular task completion THEN:**\n   - Use `npm test` (default - excludes performance tests)"
       - id: test-command-selecti-5
         kind: obligation
         label: "Default: Use npm test (comprehensive functional validation)"
-        text: "**Default**: Use `npm test` (comprehensive functional validation)"
+        text: "**WHEN validating parent task completion THEN:**\n   - **Default**: Use `npm test` (comprehensive functional validation)"
       - id: test-command-selecti-6
         kind: obligation
         label: "If task is performance-critical: Use npm run test:all (adds "
@@ -179,11 +171,15 @@ units:
       - id: test-command-selecti-7
         kind: obligation
         label: "Run BOTH npm run test:performance AND npm run test:performan"
-        text: "Run BOTH `npm run test:performance` AND `npm run test:performance:isolated` (perf coverage is split across the two lanes), or simply `npm run test:all`"
+        text: "**WHEN task involves performance changes THEN:**\n   - Run BOTH `npm run test:performance` AND `npm run test:performance:isolated` (perf coverage is split across the two lanes), or simply `npm run test:all`"
       - id: test-command-selecti-8
         kind: obligation
         label: "Performance assertions are wall-clock-sensitive: run them on"
         text: "Performance assertions are wall-clock-sensitive: run them on an otherwise-idle machine, not concurrently with other suites"
+      - id: decision-tree
+        kind: step
+        label: "The decision tree"
+        text: "Is this a parent task completion?\n   ├─ YES → Does task modify performance systems?\n   │   ├─ YES → npm run test:all (includes performance regression tests)\n   │   └─ NO → npm test (comprehensive functional validation)\n   └─ NO → Does task involve performance changes?\n       ├─ YES → npm run test:performance + test:performance:isolated (or test:all)\n       └─ NO → npm test (default)"
       - id: test-command-selecti-9
         kind: obligation
         label: "npm test validates all functionality (functional lanes only;"
@@ -196,14 +192,18 @@ units:
         kind: obligation
         label: "Most parent tasks only need functional validation"
         text: "Most parent tasks only need functional validation"
+      - id: default-assumption
+        kind: obligation
+        label: "Default: npm test for parent tasks"
+        text: "**Default assumption**: Use `npm test` for parent tasks unless working on performance systems."
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-test-command-selection-guidelines
   "#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to":
     canonicalHash: sha256:289ce23ec97eeb4f98c1bfb0a92a60668e2360c4bd0ac6b010f55c200b8baf65
     items:
-      - id: delegation-and-model-1
+      - id: first-ask-whether
         kind: obligation
-        label: "Delegation and model tier — before delegating, and before de"
-        text: "**Delegation and model tier — before delegating, and before deciding whether to**"
+        label: "First ask whether the work is yours"
+        text: "**First ask WHETHER this work is yours to do at all** (Agent-Directory § \"Primary Agent (Orchestrator)\"). Then, for anything you do delegate:"
       - id: delegation-and-model-2
         kind: obligation
         label: "Before delegating to a subagent, choose its model tier by th"
@@ -228,18 +228,22 @@ units:
         kind: obligation
         label: "Verify placement, not just content, when you delegate a file"
         text: "**Verify placement, not just content**, when you delegate a **file edit**: hand the subagent **absolute paths** to the intended tree, and after it reports done **confirm the edit landed there** (a subagent can act on a different working tree and still report success — in Claude Code, nested worktrees let its relative paths resolve into the parent repo)."
+      - id: policy-query
+        kind: command
+        label: "The full policy"
+        text: "Full policy + per-harness field mechanics: query `process-orchestration-model-selection` via the docs MCP."
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to
   "#item-ending-a-task-see-task-completion-protocol":
     canonicalHash: sha256:7c5b774f2a602dcd9239360a7e68f90273cc300c0e12e7f281c45ce2cdf44649
     items:
-      - id: ending-a-task-see-ta-1
-        kind: obligation
-        label: "Ending a task: see Task Completion Protocol"
-        text: "**Ending a task: see Task Completion Protocol**"
       - id: ending-a-task-see-ta-2
         kind: obligation
         label: "The end-of-task sequence (when to write completion docs, whi"
         text: "The end-of-task sequence (when to write completion docs, which tier, the parent-vs-subtask distinction, and the stop-and-wait-for-authorization rule) is **operational law in the always-loaded Task Completion Protocol** — it is already in context."
+      - id: follow-tcp
+        kind: obligation
+        label: "Follow TCP at completion"
+        text: "Follow it when completing any task or subtask."
       - id: ending-a-task-see-ta-3
         kind: obligation
         label: "One rule worth restating here at the start: when you report "
@@ -248,10 +252,14 @@ units:
   "#item-starting-a-parent-task-write-its-instruments-block-first":
     canonicalHash: sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
     items:
-      - id: starting-a-parent-ta-1
+      - id: write-block
         kind: obligation
-        label: "Starting a PARENT task: write its Instruments block first"
-        text: "**Starting a PARENT task: write its Instruments block first**"
+        label: "Write and commit the Instruments block first"
+        text: "Before a parent's first subtask starts, the PRIMARY writes `.kiro/specs/<spec>/completion/task-<N>-instruments.md` — one row per instrument each success criterion's evidence depends on (test, check, fixture, file, command, upstream artifact), each `exists (<path> @ <sha>)` with a one-line fit clause, `built here (<subtask>)`, or `MISSING → <owner>: <record>`; a criterion needing no instrument gets a `none — <why>` row — and commits it on the unit branch."
+      - id: missing-stops
+        kind: obligation
+        label: "A MISSING stops its dependents before code"
+        text: "**Any MISSING stops the subtasks that depend on it, before code**; report it for routing (a consult, then an amendment if the plan changes)."
       - id: starting-a-parent-ta-2
         kind: obligation
         label: "A MISSING row is never overwritten: its resolution is append"
@@ -260,6 +268,10 @@ units:
         kind: obligation
         label: "A gap found later is appended under ## Found later with its "
         text: "A gap found later is appended under `## Found later` with its kind (`unlisted` or `misfit`), never silently fixed."
+      - id: format-route
+        kind: route
+        label: "Where the format lives"
+        text: "Format and the completion-doc header line: Completion Documentation Guide § \"The instruments line and block\"."
       - id: starting-a-parent-ta-4
         kind: obligation
         label: "From the first tasks round after P (the instruments parser P"
