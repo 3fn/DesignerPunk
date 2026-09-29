@@ -451,3 +451,97 @@ The identity docs under `always-set/` are run 2.
   - `scope-12` removal accepted: the consumer gets no CI scope, which is stricter.
 - **Each refused row must be re-judged in full at its re-sign.** No itemized set is carried over from the refusal.
 - **No-consumer-counterpart signatures pin the empty-rendering hash**, so any future rendering of those entries stales them by design.
+
+## Signing run summary (2026-09-29, phase two, run 2)
+
+**Scope**: every routed row in the eight identity-doc dispositions files under `canonical/profiles/consumer/always-set/`, **30 rows**, all routed. No identity-doc row is disposed no-consumer-counterpart. The evidence notes are `canonical/profiles/consumer/signatures/<doc>.md`, which is the path each row's `evidence:` names and the one the sweep resolves.
+
+**Commits**, all `Agent: stacy`:
+
+| Commit | Content |
+|---|---|
+| `1eaf1f3b` | core-goals |
+| `3af8e7ea` | ai-collaboration-principles |
+| `a5653308` | spec-feedback-protocol |
+| `4957ea91` | start-up-tasks |
+| `c92bc0a8` | agent-directory |
+| `c46291e2` | civitas-system-overview |
+| `d9aff75e` | task-completion-protocol, 10 assents |
+| `0115e4c3` | REFUSE: TCP completion-state |
+| `cbd8d44a` | REFUSE: TCP tier-selection |
+| the commit carrying this section | this summary |
+
+**Referent widening**: none. I read all eight candidates the sheet lists, and in each, widening to carry the referent would contain a sibling item:
+- AICP `provide` (it would contain the fold steps) and `calibrate-2` (the three responses);
+- SFP `sequential-formalization-1` (the three steps) and `stamp-format-1` (`stamp-pattern`);
+- Start Up Tasks `hc-1` (`hc-2`, in an 11.3 unit), `first-ask-whether` and `delegation-and-model-2` (the tier items).
+
+The `document-access-1` items, in Civitas and SFP, are the known false positive: "This" refers to the document itself.
+
+**The crediting rule, stated once** (it sharpens run 1's wording):
+- An item is credited when each of its operative parts is stated in its unit's own rendering, or replaced there by its consumer counterpart (a path re-rooted, "Peter" → "your human lead", a tool replaced by the act).
+- An operative part dropped **with nothing in its place** means the item is not credited, whether or not the dropped part was repo-bound.
+- Non-operative parts (history, dates, examples, rationale) never block credit.
+
+**Assented rows** (surviving / items):
+
+| Doc | Unit | Surviving |
+|---|---|---|
+| core-goals | `#core-project-context` | 8/8 |
+| core-goals | `#development-practices` | 21/23 |
+| AICP | `#counter-argument-requirement` | 6/6 |
+| AICP | `#when-human-and-ai-disagree` | 4/4 |
+| SFP | `#the-feedback-document` | 7/7 |
+| SFP | `#sequential-formalization-gate` | 6/6 |
+| SFP | `#document-access` | 2/2 |
+| Start Up Tasks | health check (exemplar G/G′) | 4/4 |
+| Start Up Tasks | Jest item | 3/12 |
+| Start Up Tasks | test selection | 6/10 |
+| Start Up Tasks | instruments item | 3/6 |
+| Agent Directory | orchestrator | 9/9 |
+| Agent Directory | Thurgood | 3/4 |
+| Agent Directory | Stacy (describes my seat) | 2/3 |
+| Agent Directory | human lead | 4/4 |
+| Civitas | contains | 7/10 |
+| Civitas | three-layer | 6/6 |
+| Civitas | document-access | 2/2 |
+| TCP | critical | 1/2 |
+| TCP | subtasks | 4/5 |
+| TCP | parent Impl/Arch | 5/8 |
+| TCP | parent Setup/Doc | 5/8 |
+| TCP | coherent units | 3/7 |
+| TCP | branch cleanup | 3/4 |
+| TCP | conventions | 5/6 |
+| TCP | merge rule | 2/3 |
+| TCP | emergency | 1/3 |
+| TCP | key rules | 4/9 |
+
+**136/181 across 28 rows.** The not-surviving ids, and the reason for each, are in each doc's note.
+
+**Refused rows**, each `should-re-point` in its own commit:
+1. **TCP `#completion-state-in-the-pr-flow:preamble`**. The spine survives at 13/22, but two generic rules are dropped:
+   - updating a green-but-unmergeable branch from `main` (`-19`);
+   - the stacked-PR protocol (the `Stacked-on:` declaration and base-first merge order; `-7`).
+2. **TCP `#tier-selection-…`**: the parent summary doc's **location** is dropped with nothing in its place. A consumer's agent cannot comply decidably, and the parent sections inherit the gap.
+
+**The M1 tally, cumulative through run 2.** Signer: stacy. First render, not a baseline.
+
+| Count | Run 2 | Cumulative |
+|---|---|---|
+| Signature events | 30 | **106** |
+| Assent events | 28 | **100** |
+| Refusal events | 2 | **6** (5 on routed rows, 1 on a no-consumer-counterpart row) |
+| Assent rate on routed rows | 28/30 | **66/71** |
+| Surviving / items over routed assents | 136/181 | **330/409** |
+| Full-survival assents, counted by hand | 11/28 | **38/66** |
+
+- The full-survival counts are informational. The instrumented signal remains `not yet instrumented`.
+- No-consumer-counterpart signatures are unchanged at 35 (34 assent, 1 refusal).
+- Self-audit rows are unchanged at 30 (my own charter), plus Agent Directory's Stacy unit, which is a disclosed self-description.
+- **Peter's sample of Stacy-signed rows**: 0 / 30, written here, not omitted.
+
+**Residuals**:
+- **A run-1 over-credit (the dangerous direction), under the rule stated above.** Stacy `#mcp-practice-notes` `mcp-fallback` was credited 5/5, but its knowledge-base glob drops `docs/specs/` with nothing in its place. It should read 4/5. I have not re-signed it here: that row is merged, a re-sign is a new signature event, and Thurgood is re-authoring the batch. It is recorded for his re-author pass and for Peter's sample.
+- **A canonical tension, flagged to Thurgood.** Start Up Tasks #5 says a regular task runs `npm test`, the full functional lane. TCP's "For SUBTASKS" says targeted tests. The rendering follows TCP. I did not credit `test-command-selecti-2`, and I did not refuse the row either, because the tension is in the canonical docs, not in the re-grounding.
+- **Heavy compression in TCP.** Several dropped clauses have consumer counterparts but did not reach the refusal bar: the never-overwrite rule, the forced-negative line, the unit-branch CI provenance, and "surviving any delegation" on the merge carve-out. They are recorded as not credited, and the per-row notes name each one. Another signer could reasonably refuse on those.
+- **The counting-block read (run 1, 18/31)** stays as recorded. Per your note, I am not re-judging it unless Thurgood re-authors.
