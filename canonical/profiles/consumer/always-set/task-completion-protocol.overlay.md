@@ -18,8 +18,8 @@
 1. [ ] Local validation: run your repo's full functional suite before completion — the unit's required checks run it again at the merge
 2. [ ] Mark the parent task complete in `tasks.md` — the status change travels with the work and takes effect at merge
 3. [ ] Create the completion doc: `specs/[spec]/completion/task-N-completion.md` (on the task branch) — reproduce every success-criterion row verbatim with its Status and Evidence
-4. [ ] Create the concise summary doc (on the task branch)
-5. [ ] Complete the parent on its unit branch: if this parent IS its own merge unit, open the PR; if it is one of several in a declared multi-parent unit, commit its docs on the branch — the PR opens when the unit completes
+4. [ ] Create the concise summary doc: `specs/[spec]/task-N-summary.md` (on the task branch)
+5. [ ] Complete the parent on its unit branch: if this parent IS its own merge unit, open the PR; if it is one of several in a declared multi-parent unit, commit its docs on the branch — the PR opens when the unit completes. Completion docs declare where their test results were measured (locally, or which CI run).
 6. [ ] **STOP** — report the PR URL or the on-branch completion. **The task is accepted when your human lead merges the unit's PR.** Never merge your own PR.
 
 ## @unit #for-parent-tasks-setup-or-documentation-type @ sha256:d74afc384873f1861a195770544dcb456c4e952028d9ca37e3e5d6e39b19a6e4
@@ -27,8 +27,8 @@
 1. [ ] Verify the artifacts are created or updated as specified
 2. [ ] Mark the parent task complete in `tasks.md`
 3. [ ] Create the completion doc: `specs/[spec]/completion/task-N-completion.md` (on the task branch) — reproduce every success-criterion row verbatim with its Status and Evidence
-4. [ ] Create the concise summary doc (on the task branch)
-5. [ ] Complete the parent on its unit branch: open the PR if this parent is its own merge unit; otherwise commit its docs on the branch
+4. [ ] Create the concise summary doc: `specs/[spec]/task-N-summary.md` (on the task branch)
+5. [ ] Complete the parent on its unit branch: open the PR if this parent is its own merge unit; otherwise commit its docs on the branch. Completion docs declare where their test results were measured (locally, or which CI run).
 6. [ ] **STOP** — report the PR URL or the on-branch completion. **The task is accepted when your human lead merges the unit's PR.** Never merge your own PR.
 
 ## @unit #completion-state-in-the-pr-flow:preamble @ sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
@@ -40,7 +40,7 @@ Branch → PR → required checks → merge.
 
 1. Work happens on a **task branch**, never on `main`.
 2. Subtask commits are optional and judgment-based; when made, commit AND push the branch (the push is the off-machine backup). No PR opens until unit completion.
-3. **Dependent units branch from `main` after the prior unit's PR merges**, unless your human lead directs stacking.
+3. **Dependent units branch from `main` after the prior unit's PR merges.** Stacking only on your human lead's explicit direction: branch from the prior unit's branch, declare `Stacked-on: #<PR>` in the PR body, and merge stacked PRs in base-first order.
 4. At unit completion, commit, push, **open a PR**, and report the PR URL.
 5. Required checks run on the PR; a failing check blocks the merge.
 6. **Your human lead merges on green.**
@@ -54,7 +54,7 @@ Branch → PR → required checks → merge.
 5. **The merge is the authorization act.** It accepts the whole unit — every task in it and its completion claims.
 6. **Stop-and-wait composes unchanged**: authorization to START the next task remains a separate, explicit grant (Start Up Tasks #3).
 7. **A change request is authorization to resume, not a completion**: fix, push, re-report the PR URL, and STOP again.
-8. If required checks fail, the task is not complete: fix on the same branch. Every push re-runs the checks.
+8. If required checks fail, the task is not complete: fix on the same branch. If the PR is green but unmergeable (the branch conflicts with an advanced `main`), update the branch from `main` on the same branch. Every push re-runs the checks.
 9. **A checks-only merge is NOT ratification** of a governance change: governance changes ratify through your team's own decision record.
 
 ## @unit #coherent-units-the-merge-granularity @ sha256:4bd3b64a6e82bcdcc9065d9eb7c42162e1da6c6fbd00988fa2d3f74137684632
@@ -88,7 +88,7 @@ Branch → PR → required checks → merge.
 
 - **Agents open PRs; your human lead merges on green.** Agents NEVER merge their own PRs.
 - Any delegation of merge-on-green must be a recorded rule (a committed record with its date and scope) — never a verbal grant. Authority is a record.
-- PRs touching your team's governance docs or agent charters stay human-merged.
+- PRs touching your team's governance docs or agent charters stay human-merged — a standing carve-out that survives any delegation of merge-on-green.
 
 ## @unit #emergency-procedure @ sha256:fcb97d3f697a6b4cc3bd45b2478e22e305abdf1626258e220b5ac507f4bcbb4d
 ### Emergency Procedure
@@ -99,7 +99,7 @@ When the gate must be bypassed (a broken gate, an urgent fix the checks themselv
 ## Tier Selection (which docs, how much detail)
 
 - **Subtasks**: a single completion doc (`task-N-M-completion.md`). No summary doc.
-- **Parent tasks**: BOTH a detailed completion doc (`specs/[spec]/completion/`) AND a concise summary doc.
+- **Parent tasks**: BOTH a detailed completion doc (`specs/[spec]/completion/`) AND a concise summary doc (`specs/[spec]/task-N-summary.md`).
 
 ---
 
