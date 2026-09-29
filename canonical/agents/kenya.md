@@ -34,11 +34,13 @@ ambient:
           section: "System-First Value Selection"      # interim form: id + verbatim heading (Req 3 AC2)
           mustContain:
             - "If a system token (semantic or primitive) exists within perceptual tolerance of your intended value, use `ref:` instead."
-  # ground-truth-manifest: none-trim-stale-snapshots (CONSUMER pattern, AXA §5.3). The committed
-  # dist Swift snapshots are STALE (pre-Spec-094: flat Color.oklch literals, no {Name}Theme /
-  # EnvironmentKey) — and `dist/ios/DesignTokens.ios.swift` is ORPHANED (removed in 835e33d1,
-  # written by no current script) so it must NEVER be read, even though a newer-but-still-wrong
-  # `dist/*.ios.swift` may exist (K2). Each trim: `fires: unconditional` (K-D1 — fires whether or
+  # ground-truth-manifest: none-trim-stale-snapshots (CONSUMER pattern, AXA §5.3). The dist Swift
+  # snapshots are this repo's UN-THEMED BASE output (flat Color.oklch literals, no {Name}Theme /
+  # EnvironmentKey). `dist/ios/DesignTokens.ios.swift` IS written by the in-repo `npx designerpunk
+  # generate` (designerpunk.config.ts: output ./dist, no themes) and is slated to stop shipping; the
+  # root `dist/DesignTokens.ios.swift` / `dist/ComponentTokens.ios.swift` are DesignerPunk's base
+  # snapshot. Never read any of them for themed values — query the MCP; a consumer reads its own
+  # generate outputDir (K2). Each trim: `fires: unconditional` (K-D1 — fires whether or
   # not it is a baseline removal or current output) + a hard-negative-plus-positive cue naming the
   # broad `dist/*.swift` pattern + a `replaces:`. The DesignTokens trim carries `shape:
   # per-theme-set` (K2/K3 / Req 12 AC2(b) — a theme-varying token is a per-theme SET the tool
