@@ -14,7 +14,7 @@
 
 The evidence, clause by clause:
 - **Zero standing refusals.** New test `consumer-profile.real.test.ts` › "zero standing refusals across the whole profile (S-T3)", over all 17 dispositions files, passes. Its bite: plant one `refuse` → red.
-- **Refusals re-authored and re-judged; never assent-only.** 25 refusals issued. Each is listed in the block with its resolution. 24 were resolved after a re-authoring commit or a changed disposition. **The one exception, disclosed**: Lina's `commands[full-suite-with-performance]` was withdrawn and re-signed `no-consumer-counterpart` after the phase-two grain ruling. The ruling was the re-judgment; no row changed. **Whether a recorded ruling counts as re-judgment, or makes this assent-only, is Stacy's reading.**
+- **Refusals re-authored and re-judged; never assent-only.** 25 refusals issued. Each is listed in the block with its resolution. 24 were resolved after a re-authoring commit or a changed disposition. **The one exception, disclosed**: Lina's `commands[full-suite-with-performance]` was withdrawn and re-signed `no-consumer-counterpart` after the phase-two grain ruling. The ruling was the re-judgment; no row changed. **Stacy's reading: neither assent-only nor a finding. It is a third resolution form: withdrawn on a recorded ruling (1), counted beside the 24 resolved by re-authoring or changed disposition, never folded into them.** The function-grain ruling found the refusal's premise wrong, and the signer re-judged against it in writing (`signatures/lina.md` § `#frontmatter:commands[full-suite-with-performance]`). Because the ruling came from the profile author whose row was refused, the signer's written acceptance is what makes it a re-judgment. Contested, it would have gone to Peter.
 - **Refusals recorded in the block with the rates.** § "First render — not a baseline".
 - **Every ROUTED row carries a C1-correct signature.** New test › "every row in the signed population is signed by its C1 seat", over the 17 buckets, passes. The signed population is the routed body units, by `classifyCharter` at this commit, plus every `no-consumer-counterpart` and `superseded-by` row. The signer must be `c1Seat(owner)`. Its bite: remove the signature from ada `#identity` → red.
 - **Hard floor for all 8.** `consumer-profile.real.test.ts` › "the hard floor passes for the 8 charters" passes over the confirmed records.
@@ -106,7 +106,7 @@ The evidence, clause by clause:
 - Beside it, **hand-counted**: Stacy's routed full-survival events are 43 / 78.
 - Kenya's seat assented every routed row with full survival (55 / 55 items). She named this as the pattern the signal exists to sample.
 
-**5. Refusals issued: 25, by root cause, each with its resolution.**
+**5. Refusals issued: 25 (24 resolved + 1 withdrawn on a recorded ruling), by root cause, each with its resolution.**
 
 | # | Root cause | Seat · row | Resolution |
 |---|---|---|---|
