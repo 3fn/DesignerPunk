@@ -294,3 +294,49 @@ date: 2026-09-29
 - **The consumer's real Swift is elsewhere.** `npx designerpunk generate` writes the consumer's own Swift to the consumer's `outputDir`, so the shipped copies are pure trap, not a build target.
 - **Should re-point to**: the trim, re-grounded at `node_modules/@3fn/core/dist/…` (and the verdict with it), keeping its MCP replacement cue.
 - **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
+
+## Signing run summary (2026-09-29, phase two)
+
+- **Commits** (branch `task/123-u2b-fr2-kenya` from `60b0fdb5`; not pushed):
+  - `eabf2131`: 23 assents.
+  - `45a57b5a`: refusal, `trims[dist/ios/DesignTokens.ios.swift]`.
+  - `0937a0eb`: refusal, `trims[dist/ComponentTokens.ios.swift]`.
+  - `f9ee7ec7`: refusal, `groundTruthManifest.verdict`.
+  - This summary is in its own commit after those.
+- **Rows signed**: 26 of 26.
+- **Assented, routed body rows (11)**: every row assents with its full confirmed set surviving, 55 of 55 items.
+
+  | Row | Surviving items |
+  |---|---|
+  | `#identity` | 7/7 |
+  | `#ios-theming-spec-094` | 5/5 |
+  | `#out-of-scope` | 7/7 |
+  | `#blocking-exception-direct-escalation-to-peter` | 3/3 |
+  | `#step-2-set-up-the-screen` | 3/3 |
+  | `#with-peter` | 4/4 (`human-4` by in-unit entailment from `human-3`) |
+  | `#how-to-use-designerpunk-tokens-on-ios` | 6/6 |
+  | `#platform-currency-expectations` | 5/5 |
+  | `#ios-specific-guidance` | 7/7 |
+  | `#mcp-practice-notes` | 3/3 |
+  | `#what-you-dont-own` | 4/4 (`jest-not-vitest` re-grounded) |
+
+- **Assented no-consumer-counterpart rows (12)**, all with `surviving: []`:
+  - `standingFacts[0]`
+  - `routes.docs` completion-doc-guidance, dev-workflow-detail and file-organization
+  - `routes.cues[8]` and `routes.cues[9]`
+  - `commands` platform-tokens, swift-theme-types-tests, build and audit-tokens
+  - `knowledgeBases[ios-tests]`, whose premise I verified: `*Tests.swift` is excluded from the package's `files`
+  - `writeScope[docs/specs/**]`
+- **Refused (3), `should-re-point`**:
+  - `ambient.groundTruthManifest.verdict`
+  - `trims[dist/ios/DesignTokens.ios.swift]`
+  - `trims[dist/ComponentTokens.ios.swift]`
+
+  **Reason**: the stale, un-themed Swift snapshots ship in the package (`npm pack --dry-run` lists all three), so the trap exists in every consumer at `node_modules/@3fn/core/dist/`. The trims should re-point there. The resolution is Thurgood's to author; I will re-sign after it.
+- **Widenings**: none. For the referent candidates:
+  - `blocking-exception` carries its referent in the same rendering.
+  - `follow-workflow` and `jest-not-vitest` are known false positives.
+- **Residuals**:
+  1. **Full survival on every routed row.** All 11 routed rows assent with nothing lost. That is the pattern the full-survival assent signal instrument exists to sample, so Stacy's audit should spot-check this set.
+  2. **Body assents on the ground-truth units.** Four of them credit the item from the surviving positive MCP directive, and the explicit "where the trap sits" warning is gone from those units: `#ios-theming-spec-094`, `#step-2-set-up-the-screen`, `#how-to-use-designerpunk-tokens-on-ios` and `#ios-specific-guidance`. If Thurgood's re-author also restores the warning in the body, those renderedHashes change and I re-sign them.
+  3. **Out of my seat (Ada or Thurgood)**: the package shipping a stale, orphaned `dist/ios/DesignTokens.ios.swift` (0 `Theme` references, regenerated 2026-09-29) is itself a distribution defect. The better fix may be not shipping it.
