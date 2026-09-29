@@ -46,7 +46,7 @@ frontmatter:
   "ambient[platform-implementation-guidelines#3-token-usage-consistency]": {"disposition": "retained"}
   "ambient[product-token-governance#system-first-value-selection]": {"disposition": "retained"}
   "ambient.groundTruthManifest.verdict": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
-  "ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "data", "canonicalHash": "sha256:dfb9ec31e155ed6b7b1d66b8e89f90b27f4bf94de8fd17d8031761f28303a51a", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]"}}
   "ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "data", "canonicalHash": "sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]"}}
   "routes.docs[token-doc-map]": {"disposition": "retained"}
   "routes.docs[product-token-naming]": {"disposition": "retained"}

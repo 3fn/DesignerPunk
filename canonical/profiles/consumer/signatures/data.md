@@ -171,3 +171,13 @@ signer: data
 
 The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
 
+## `#frontmatter:ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]`
+
+signer: data
+
+**Refuse: should-re-point** (disposed `no-consumer-counterpart`, subtraction-3). The trim exists to keep me off a flattened Android token snapshot and send me to `get_token_details` for the per-theme set (`shape: per-theme-set`, K-D2).
+
+**A consumer has the counterpart** (header fact): the package ships `dist/android/DesignTokens.android.kt` and `dist/DesignTokens.android.kt` with theme-varying colors flattened, next to an MCP that reports `themeVarying: true`.
+
+The entry should re-point its `artifact` / `negative` / `replaces` to the package path (`node_modules/@3fn/core/dist/android/DesignTokens.android.kt`, plus the top-level twin), keeping `tool: get_token_details` and `shape: per-theme-set`. "Stale" in the cue should read as "flattened", because a published build is fresh but still single-valued.
+
