@@ -41,19 +41,23 @@ date: 2026-09-29
 
 confirmer: kenya
 canonicalHash: sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
-items: theming-2, theming-3, theming-4, theming-5
+items: theming-1, theming-2, theming-3, theming-4, theming-5
 date: 2026-09-29
 
 **Ruling: CORRECTED, 5 → 4 items.** Removed `theming-1` (*"Generated Swift output includes: …"*). It inventories what the generator emits and directs nothing, and an implementation can't violate a description of generator output. The operative consumption rules are `theming-2` to `theming-4`. `theming-4` stays: reading static tokens through the environment violates *"no environment access needed"*.
+
+**Correction 2026-09-29 (5c ruling, Thurgood, Req 11.6.8): `theming-1` REINSTATED, so the unit is back at 5 items.** Under 5c a stated type shape that the implementation builds against is operative (compare 5c's anchor, "**Language**: Swift"). The implementation builds against the `{Name}Theme` protocol and the `{Abbreviation}ThemeKey`, and a mismatch shows up as a compile error. Whether it is repo-specific is decided at signing, by disposition. My removal reasoning above is withdrawn.
 
 ## `#product-tokens-spec-108109`
 
 confirmer: kenya
 canonicalHash: sha256:7529881a62c6b578199af8ac739710989cd227b36857fa501034c29695b00f4e
-items: product-tokens-3, product-tokens-5, product-tokens-6
+items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5, product-tokens-6
 date: 2026-09-29
 
 **Ruling: CORRECTED, 6 → 3 items.** Removed `product-tokens-1` (the output path), `product-tokens-2` (the shape of the static-token enum) and `product-tokens-4` (how the generator writes ref tokens). All three describe generated artifacts or repo layout, and none directs an act. Kept `product-tokens-3`: its *"access via `theme.product{Category}{Name}`"* is a consumption directive. Kept `-5` (query route) and `-6` (authoring + governance).
+
+**Correction 2026-09-29 (5c ruling, Thurgood, Req 11.6.8): `product-tokens-1`, `-2` and `-4` REINSTATED, so the unit is back at 6 items.** Each is a stated path, type shape or qualified-name form that the implementation builds against: the `ProductTokens.ios.swift` location, the `Product{Category}` static enum, and `DesignTokens.*` fully qualified refs. Under 5c these are operative. Whether they are repo-specific is decided at signing, by disposition. My removal reasoning above is withdrawn.
 
 ## `#out-of-scope`
 
@@ -340,3 +344,11 @@ date: 2026-09-29
   2. **`jest-not-vitest` is repo-specific.** It stays as an item because its text is violable, but it will probably need a disposition at signing (phase two).
   3. **Routing may change.** Routing was computed from the drafted sets, and five units' sets changed (`#identity`, `#the-implement-vs-direct-distinction`, the screen-implementation preamble, `#ios-theming-spec-094` and `#product-tokens-spec-108109`). The hash sheet must be re-run before phase two.
   4. **`sweep.ts` hard-codes the main-repo root** (`/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/`). Run from a worktree, it sweeps the main checkout, not the worktree. I verified against the worktree with a temporary copy whose root was re-pointed, and deleted the copy. `kenya.yaml` had 0 `confirmation` findings, and there were no findings of any other kind.
+
+## Correction (2026-09-29, 5c ruling)
+
+- **What changed**: under Thurgood's 5c ruling (he owns the classifier, Req 11.6.8), four removed items are **reinstated** with their drafted ids and text: `#ios-theming-spec-094` / `theming-1`, and `#product-tokens-spec-108109` / `product-tokens-1`, `product-tokens-2` and `product-tokens-4`.
+- **The rule**: an item is operative if and only if some consumer implementation could act against it, and that includes stated facts it builds against. An item is not operative only when nothing could act against it: orientation, rationale, history, illustration, or a description of a tool that the implementation doesn't build against.
+- **Effect**: residual 1 above is resolved; it was the reason for the ruling. The record now holds 128 items: 25 units confirmed as drafted, 8 corrected, +5 items added, 0 removed, 2 texts restored and 1 unit declared zero.
+- **Unchanged**: all other rulings stand.
+

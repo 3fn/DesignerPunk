@@ -80,6 +80,10 @@ units:
   "#ios-theming-spec-094":
     canonicalHash: sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
     items:
+      - id: theming-1
+        kind: obligation
+        label: "Generated Swift output includes: {Name}Theme protocol, concr"
+        text: "Generated Swift output includes: `{Name}Theme` protocol, concrete structs per theme, `{Abbreviation}ThemeKey: EnvironmentKey`"
       - id: theming-2
         kind: obligation
         label: "Product apps wrap content with .environment(\\.{abbreviation}"
@@ -100,10 +104,22 @@ units:
   "#product-tokens-spec-108109":
     canonicalHash: sha256:7529881a62c6b578199af8ac739710989cd227b36857fa501034c29695b00f4e
     items:
+      - id: product-tokens-1
+        kind: obligation
+        label: "Product tokens are generated to dist/product/ProductTokens.i"
+        text: "Product tokens are generated to `dist/product/ProductTokens.ios.swift`"
+      - id: product-tokens-2
+        kind: obligation
+        label: "Static tokens: public enum Product{Category} { public static"
+        text: "Static tokens: `public enum Product{Category} { public static let name: CGFloat = value }`"
       - id: product-tokens-3
         kind: obligation
         label: "Theme-varying tokens: protocol extension on {Name}Theme — ac"
         text: "Theme-varying tokens: protocol extension on `{Name}Theme` — access via `theme.product{Category}{Name}`"
+      - id: product-tokens-4
+        kind: obligation
+        label: "Ref tokens reference DesignTokens. constants (full qualified"
+        text: "Ref tokens reference `DesignTokens.*` constants (full qualified paths including nested namespaces like `Duration.duration350`)"
       - id: product-tokens-5
         kind: obligation
         label: "Query available tokens via the Product MCP's get_product_tok"
