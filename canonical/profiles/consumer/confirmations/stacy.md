@@ -133,3 +133,268 @@ date: 2026-09-27
 - These are the six members, which are operative under 5c, plus the negative clause. A review that flags token-string differences as drift violates *"Parity does NOT mean … identical token strings."* This matches my own S3-A3 correction.
 - **Text corrected**: `parity-not-identical` no longer ends with *"It means:"*, which introduces the list and is not operative.
 - **Not operative**: the closing SwiftUI/Compose/Web Component sentence, which is an illustration.
+
+## `#identity`
+
+confirmer: stacy
+canonicalHash: sha256:43defd686fc5d68ce4f4d13231c8b98631b1292cdf2135f489299b751d856700
+items: stacy-role, stacy-deliver-promises, stacy-claims-both-tiers, stacy-domain, stacy-tone, stacy-build-systems, stacy-hold-the-line, stacy-route-via-thurgood, stacy-human-decides, stacy-partner
+date: 2026-09-29
+
+**Ruling: CORRECTED 7 → 10.** Added `stacy-tone` and `stacy-build-systems`: both are norms of conduct that a consumer implementation can violate (5c). Added `stacy-route-via-thurgood`: the other system agents are reached through Thurgood's triage, which is a route. **Not operative**: the namesake narrative, the inward/outward framing, and the product-side-history sentence.
+
+## `#in-scope`
+
+confirmer: stacy
+canonicalHash: sha256:c5c798aafe80cf38d78e3023987450a2dae382e5f1a46effc4f10fe99df45579
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 10, as drafted.**
+
+## `#out-of-scope`
+
+confirmer: stacy
+canonicalHash: sha256:be1ba8ba9bf4d3c3c2ff657fc3b6aabf428cd21aff585d49d44b0268b058f4ab
+items: out-1, out-2, out-3, out-4, out-5, out-6, out-7
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 7, as drafted.**
+
+## `#the-audit-vs-write-distinction`
+
+confirmer: stacy
+canonicalHash: sha256:03bbb1a5dbfc7e97d04e786d75c5c6094dffd58358ed6f6bebbc1c56e6a0533a
+items: audit-not-write
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.** The Audit / Write / Fix pairs are illustrations. "This mirrors Thurgood's model exactly" is description.
+
+## `#operational-mode-process-audit:preamble`
+
+confirmer: stacy
+canonicalHash: sha256:87470ed51c60c7908225d504f181d60b464fe7468c8fcebc2ac93f18a042ab4d
+items: audit-when
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.**
+
+## `#incremental-capture-rule`
+
+confirmer: stacy
+canonicalHash: sha256:175aa9e1663d5d611bd16ff862881edf0032ca490c8a19557f2f2f73ca1120e6
+items: capture-immediately, capture-running-file, capture-both
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 3, as drafted.** "If the session ends prematurely, the partial capture survives" is rationale.
+
+## `#audit-output`
+
+confirmer: stacy
+canonicalHash: sha256:d2ae19342bd9c4ef627b2ea242693848e83cd66daae905655ed640441cbecb74
+items: output-severity, severity-1, severity-2, severity-3, severity-4
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 5, as drafted.**
+
+## `#audit-is-analysis-not-implementation`
+
+confirmer: stacy
+canonicalHash: sha256:2be345314a2c476ea7473791f278f3086aa4f2bc1f688e1d28236d68aa52a1b7
+items: analysis-not-fix, route-1, route-2, route-3
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 4, as drafted.**
+
+## `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble`
+
+confirmer: stacy
+canonicalHash: sha256:b9f4104614bde7bf3dcf7fc95a316fa126266e2816cc636ddabc2a555d94ffb1
+items: authority-precedence
+date: 2026-09-29
+
+**Ruling: CORRECTED 0 → 1.** Added `authority-precedence`: where this text and the co-signed agreement and amendment disagree, they govern. That is a precedence rule a consumer implementation can violate. The ballot citation and "Applied to this charter by Spec 127 U3" are history. The drafted zero was declared, but it was wrong.
+
+## `#the-claims-pass-record-claims-passmd-the-template`
+
+confirmer: stacy
+canonicalHash: sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
+items: record-committed, closeout-path, midpoint-path, section-scope, section-findings, section-method, method-honesty, closed-negative-string, mandatory-line, counting-1, counting-2, counting-3, counting-4, counting-5, counting-6, counting-7, counting-8, counting-9, counting-10-buckets, counting-10-ncc-rate, counting-10-assent-refusal, counting-10-spot-check, counting-10-full-survival, counting-11, counting-12, report-set-comparison, emission-reading, delegated-tier-read, deferral-walk-back, instruments-read, never-a-gate
+date: 2026-09-29
+
+**Ruling: CORRECTED 27 → 31. Recorded and confirmed against the post-13.8 + post-#239 text.** The canonicalHash above is `sha256:8103d28e…38ac7`, which I verified equal to the hash of the current unit. The text includes B-U2's counting-block edit (13.8) and the instruments-read bullet (#239, merged at `c34ee564`). **No A4 re-confirmation is owed later on #239's account.**
+- **Split**: `counting-10` bundled five separately violable metrics into one item, so a rendering keeping four of the five could not be credited for any. It is replaced by `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal` (they share the from-history clause, so they stay one item), `counting-10-spot-check` and `counting-10-full-survival`.
+- **Widened**: `never-a-gate` now carries its bold lead-in, *"The never-a-gate sentence, restated wherever the practice is documented"*. The restating duty is itself operative, and the draft kept only the quoted sentence.
+- **Not an item**: the `<!-- volatile-ok: … -->` marker is a lint annotation with repo-bound text. The consumer overlay drops it.
+- **Not operative**: the midpoint-collision rationale, the product-tier load-bearing remark and the quoted N6 line.
+
+## `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength`
+
+confirmer: stacy
+canonicalHash: sha256:c460743c0430e9fa04163a6d13a0d880ce59bb401480896fd12d7d70445171f3
+items: mirror-clause, mirror-called-at-exchange, mirror-binds-lens
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 3, as drafted.** "Thurgood should call it out as such" binds his seat, not this one: no implementation of this seat can violate it. The symmetry sentence is description.
+
+## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
+
+confirmer: stacy
+canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+items: carve-out-scope, carve-out-falsification, carve-out-no-silent-rescope, carve-out-routing-test, carve-out-tiebreak
+date: 2026-09-29
+
+**Ruling: CORRECTED 4 → 5.** Added `carve-out-no-silent-rescope`: if the verbs change, the carve-out is re-argued, not silently re-scoped. Silent re-scoping violates it. "The anti-rot pair above" points to the mirror unit and is not a separate item.
+
+## `#operational-mode-parity-review:preamble`
+
+confirmer: stacy
+canonicalHash: sha256:77c3468b344869f176902ff6f5dc12abc97a9500e25527a0752c51a1560e71a1
+items: parity-when, parity-dormant
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 2, as drafted.**
+
+## `#review-process`
+
+confirmer: stacy
+canonicalHash: sha256:015cc9f65020a3524feb8dedcdf4dc2d64ef609ceff801037d82b09a42f195e6
+items: parity-1, parity-2, parity-3, parity-4, parity-5, parity-6
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 6, as drafted.**
+
+## `#operational-mode-lessons-synthesis-review:preamble`
+
+confirmer: stacy
+canonicalHash: sha256:783778832b4eea537c8d5980b8e5e2e40b4f08996b7c735fc8b23472d80c9ffe
+items: synthesis-lead
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.** The Product Handoff Protocol line is a reference, not an item. "The forcing function" sentence is rationale.
+
+## `#your-role`
+
+confirmer: stacy
+canonicalHash: sha256:b48ed925de0d75bad9fb8f62563b35ff500e393402e815e79bea67c85dc5e7c5
+items: role-1, role-2, role-3, role-4, role-5, role-6, role-7
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 7, as drafted.**
+
+## `#what-you-dont-do`
+
+confirmer: stacy
+canonicalHash: sha256:7f0f4de7aab0d9183809ae4a9c6cb875d3651c04461ca28090f87688babccfd6
+items: dont-1, dont-2, dont-3
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 3, as drafted.**
+
+## `#with-leonardo`
+
+confirmer: stacy
+canonicalHash: sha256:028c0b26f4dbfd9a1d842f986d7a0481f7ec5359d5ea1bd073603e0e4eafaab1
+items: leonardo-1, leonardo-2, leonardo-3, leonardo-4, leonardo-5
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 5, as drafted.**
+
+## `#with-platform-agents-kenya-data-sparky`
+
+confirmer: stacy
+canonicalHash: sha256:8ae7cef2485a3fe5254ad84002f6613a3f0e06f96b86f3c954ad0e4dfb2982ea
+items: platforms-1, platforms-2, platforms-3, platforms-4, platforms-5
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 5, as drafted.**
+
+## `#with-thurgood-system-counterpart`
+
+confirmer: stacy
+canonicalHash: sha256:e5aa54f1f1a72f07c1f25d602eac46a08c738839516f23bd779091715e35931c
+items: thurgood-1, thurgood-2, thurgood-3, thurgood-5
+date: 2026-09-29
+
+**Ruling: CORRECTED 5 → 4.** Removed `thurgood-4`. "Peter may consult both together at the boundary" states what Peter may do, and no implementation of this seat can violate it.
+
+## `#with-peter`
+
+confirmer: stacy
+canonicalHash: sha256:0c18fa9f023514cba761392331f1235750a385855b9601e56e3a2787b74b1f15
+items: human-1, human-2, human-3, human-4
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 4, as drafted.**
+
+## `#mcp-practice-notes`
+
+confirmer: stacy
+canonicalHash: sha256:64c55f317e18e344f8b476a9c73a8aff44b2ac4bca321671c415d779b2fa26f3
+items: ground-truth-computed, standards-on-demand, product-mcp-caveat, mcp-fallback
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 4, as drafted.** The three-server roster sentence is description.
+
+## `#collaboration-standards:preamble`
+
+confirmer: stacy
+canonicalHash: sha256:62c2b17e682f621eade4f4a07026fb0103a58e9d04cbc6fa763405e63d2c6ae0
+items: apply-aicp
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.**
+
+## `#counter-arguments-are-mandatory`
+
+confirmer: stacy
+canonicalHash: sha256:cdd13024b15a07644f07774d9cfe25f1f60a1bf9e38ddfd597a5708871378e2c
+items: counter-provide, counter-fold-back
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 2, as drafted.** The quoted parity-review example is an illustration.
+
+## `#candid-over-comfortable`
+
+confirmer: stacy
+canonicalHash: sha256:cc87165148bdfc5a2d1faf5cb85a66e38affbf37efa6689947c37d7a200956fe
+items: candid
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.**
+
+## `#bias-self-monitoring`
+
+confirmer: stacy
+canonicalHash: sha256:c574e9a5866a449edcaa3cfcfc5fd8d2390ce8f30420097d3f29716dcfd6a614
+items: bias-watch
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.**
+
+## `#ask-if-unsure`
+
+confirmer: stacy
+canonicalHash: sha256:88270860692bc1f9fd962527d4132c79951301a4de895af5c3ef0e29bd279ff0
+items: ask
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.**
+
+## `#what-you-own`
+
+confirmer: stacy
+canonicalHash: sha256:206930931d15e1ddac909f181379a4891ac9a9c5680a34cb17ea8397221314f6
+items: own-1, own-2, own-3, own-4
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 4, as drafted.**
+
+## `#what-you-dont-own`
+
+confirmer: stacy
+canonicalHash: sha256:4108acaf8110eaee5e9ea615b318c75057946bf2fec0bf903da6d49b9aa6dcab
+items: not-own-1, not-own-2, not-own-3, jest-not-vitest
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 4, as drafted.** The Commands-section pointer is a reference, not an item.
