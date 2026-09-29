@@ -304,3 +304,14 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
+
+## `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble`
+
+signer: stacy
+date: 2026-09-29
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` (re-pointed; ROUTED)
+canonicalHash: sha256:b9f4104614bde7bf3dcf7fc95a316fa126266e2816cc636ddabc2a555d94ffb1
+renderedHash: sha256:62fd761373b55d6c61af941dadd08c48b662f4b5edb1572607b6fee1d268d579
+verdict: refuse: should-re-point
+
+`authority-precedence` has a consumer counterpart, and the rendering drops it. The rendering names the authority (the team's own recorded decision, on whose date the owed-set query keys) but not its precedence over this text. **Should re-point**: where this text and the recorded decision disagree, the decision governs. This is the same finding as consumer-Thurgood's Q5 preamble.
