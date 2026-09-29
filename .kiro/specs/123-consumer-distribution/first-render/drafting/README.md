@@ -19,6 +19,14 @@ Each sheet has two parts.
 - the committed rendering paths;
 - the overlay path.
 
+**4. Re-sign worklist** (added at the phase-two re-author batch; run `hash-sheets.ts <base-ref>`). It lists the rows that need a signing act now:
+- **unsigned**: the row is newly in the signed population;
+- **refusal standing**;
+- **stale**: the sweep's own finding;
+- **row changed since the base**: a disposition flip (for example no-consumer-counterpart → `superseded-by`) leaves both hashes unchanged, so the sweep cannot see it.
+
+The signed population is every ROUTED unit plus every `no-consumer-counterpart` and `superseded-by` row. Both of those are claims about where a function went, and the owner signs them. Signed rows outside that population (a re-pointed frontmatter entry, a retained verdict) are listed when refused, stale or changed. **Known blind spot**: a `groundTruthManifest` trim renders inside one span attributed to the whole manifest, so a trim row's `renderedHash` is the empty-piece hash whatever its text. Read the rendered Ground truth section directly before signing one.
+
 **3. Referent candidates** (added after phase one; Ada's and Lina's finding). These are items whose text opens on a pronoun or demonstrative, names a referent it does not carry ("this layer", "the above"), or ends as a bare lead-in (":"). **They are candidates, not findings**: the scan is lexical, and many hits carry their referent or are deliberate one-item triggers. Widening an item re-confirms its unit in the confirmer's seat (update the note's `items:` and `date:`), in the same commit as the signatures. The sheets never edit a record.
 
 **How the values are computed.**

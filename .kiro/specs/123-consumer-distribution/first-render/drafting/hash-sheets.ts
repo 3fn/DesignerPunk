@@ -26,20 +26,29 @@ const read = (rel: string) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 const AGENTS = ['ada', 'lina', 'thurgood', 'sparky', 'leonardo', 'data', 'kenya', 'stacy'];
 const IDS = ['core-goals', 'ai-collaboration-principles', 'spec-feedback-protocol', 'start-up-tasks', 'task-completion-protocol', 'agent-directory', 'designerpunk-systems-overview', 'civitas-system-overview'];
 const SEATS = ['ada', 'lina', 'sparky', 'leonardo', 'data', 'kenya', 'stacy'];
+/** Optional batch base (argv[2]): rows whose disposition changed since it join the re-sign worklist. */
+const BASE = process.argv[2];
+const baseCache = new Map<string, any>();
+function baseRows(file: string): any {
+  if (!BASE) return undefined;
+  if (!baseCache.has(file)) { try { baseCache.set(file, load(require('child_process').execFileSync('git', ['show', `${BASE}:${file}`], { cwd: ROOT }).toString())); } catch { baseCache.set(file, undefined); } }
+  return baseCache.get(file);
+}
 const head = execHead();
 function execHead(): string { return require('child_process').execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: ROOT }).toString().trim(); }
 
 type Conf = { record: string; note: string; key: string; hash: string; items: string[] };
-type Sig = { file: string; section: string; key: string; disposition: string; why: string; canonicalHash: string; renderedHash: string; evidence: string; rendering: string[]; overlay: string };
+type Sig = { file: string; section: string; key: string; disposition: string; why: string; canonicalHash: string; renderedHash: string; evidence: string; rendering: string[]; overlay: string; work: string[] };
 const conf: Record<string, Conf[]> = Object.fromEntries(SEATS.map((s) => [s, []]));
 const sig: Record<string, Sig[]> = Object.fromEntries(SEATS.map((s) => [s, []]));
 
 // 1. Confirmations owed — exactly the sweep's `confirmation` findings.
 const sweep = runFreshnessSweep(ROOT);
-const other = sweep.findings.filter((f: any) => f.check !== 'confirmation');
+const other = sweep.findings.filter((f: any) => f.check !== 'confirmation' && f.check !== 'stale-signature');
+const staleKeys = new Set(sweep.findings.filter((f: any) => f.check === 'stale-signature').map((f: any) => `${f.file} ${f.key}`));
 if (other.length) throw new Error(`sweep has non-confirmation findings; fix those first:\n${other.map((f: any) => f.message).join('\n')}`);
 const recs = new Map<string, any>();
-for (const f of sweep.findings as { file: string; key: string }[]) {
+for (const f of (sweep.findings as { file: string; key: string; check: string }[]).filter((x) => x.check === 'confirmation')) {
   if (!recs.has(f.file)) recs.set(f.file, load(read(f.file)));
   const r = recs.get(f.file); const u = r.units[f.key];
   const name = path.basename(f.file, '.yaml');
@@ -69,7 +78,14 @@ for (const [stem, rec] of buckets) {
     const cat: any = load(read(src)); for (const m of cat.members) { members.set(m.id, m); memberOwner.set(m.id, m.owner); }
   }
   for (const section of ['body', 'frontmatter', 'members']) for (const [k, row] of Object.entries<any>(d[section] ?? {}))
-    if (row.disposition === 'no-consumer-counterpart') { const w = want.get(`${section} ${k}`); want.set(`${section} ${k}`, { section, why: w ? 'ROUTED + no-consumer-counterpart' : 'no-consumer-counterpart' }); }
+    if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by') { const w = want.get(`${section} ${k}`); want.set(`${section} ${k}`, { section, why: w ? `ROUTED + ${row.disposition}` : row.disposition }); }
+  // Signed rows OUTSIDE the signed population (e.g. a re-pointed frontmatter entry, a retained
+  // verdict) still carry a signature — a refusal, stale or changed one needs its owner's act.
+  for (const section of ['body', 'frontmatter', 'members']) for (const [k, row] of Object.entries<any>(d[section] ?? {})) {
+    if (want.has(`${section} ${k}`) || !row.signature) continue;
+    const before = baseRows(file)?.[section]?.[k]; const strip = (x: any) => { if (!x) return x; const y = { ...x }; delete y.signature; return JSON.stringify(y); };
+    if (row.signature.refuse || staleKeys.has(`${file} ${k}`) || (BASE && strip(before) !== strip(row))) want.set(`${section} ${k}`, { section, why: `signed ${row.disposition} row` });
+  }
   for (const [sk, { section, why }] of want) {
     const key = sk.slice(section.length + 1); const row = d[section][key];
     const canon = section === 'body' ? hashText(units.get(key)) : section === 'frontmatter' ? hashEntry(entries.get(key)) : hashEntry(members.get(key));
@@ -78,7 +94,15 @@ for (const [stem, rec] of buckets) {
     const seat = c1Seat(section === 'members' ? memberOwner.get(key) : owner);
     const note = `${P}/signatures/${rec || '_shared'}.md`;
     const ovKey = section === 'body' ? ov?.units?.[key] : ov?.entries?.[key];
-    sig[seat].push({ file, section, key, disposition: row.disposition, why, canonicalHash: canon, renderedHash: renderedHashOf(spans, source), evidence: `${note}${evidenceFragment(section, key)}`, rendering: [...new Set<string>(pieces.map((p: any) => p.artifact))], overlay: ovKey ? ovPath : '—' });
+    const work: string[] = [];
+    if (!row.signature) work.push('unsigned');
+    else {
+      if (row.signature.refuse) work.push('refusal standing');
+      if (staleKeys.has(`${file} ${key}`)) work.push('stale');
+      const before = baseRows(file)?.[section]?.[key]; const strip = (x: any) => { if (!x) return x; const y = { ...x }; delete y.signature; return JSON.stringify(y); };
+      if (BASE && strip(before) !== strip(row)) work.push(`row changed since ${BASE}`);
+    }
+    sig[seat].push({ file, section, key, disposition: row.disposition, why, canonicalHash: canon, renderedHash: renderedHashOf(spans, source), evidence: `${note}${evidenceFragment(section, key)}`, rendering: [...new Set<string>(pieces.map((p: any) => p.artifact))], overlay: ovKey ? ovPath : '—', work });
   }
 }
 
@@ -113,11 +137,14 @@ for (const seat of SEATS) {
     for (const s of sig[seat].filter((s) => s.file === file)) L.push(`| ${s.section} · \`${s.key}\` | ${s.disposition} | ${s.why} | \`${s.canonicalHash}\` | \`${s.renderedHash}\` | \`${s.evidence}\` | ${s.rendering.length ? s.rendering.map((r) => `\`${r}\``).join('<br>') : '— (not rendered)'} | ${s.overlay === '—' ? '—' : `\`${s.overlay}\``} |`);
     L.push('');
   }
+  const wl = sig[seat].filter((s) => s.work.length > 0);
+  L.push('## 4. Re-sign worklist' + (BASE ? ` (since ${BASE})` : ''), '', 'Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep\'s own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.', '');
+  if (wl.length === 0) L.push('None.', ''); else { L.push('| Row (section · key) | File | Disposition | Why |', '|---|---|---|---|'); for (const x of wl) L.push(`| ${x.section} · \`${x.key}\` | \`${path.basename(x.file)}\` | ${x.disposition} | ${x.work.join('; ')} |`); L.push(''); }
   L.push('## 3. Referent candidates (read-only)', '', 'A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note\'s `items:`/`date:` in the same commit as your signatures); never edited here.', '');
   if (ref[seat].length === 0) L.push('None.', '');
   else { L.push('| Record | Unit | Item | Why | Text |', '|---|---|---|---|---|'); for (const x of ref[seat]) L.push(`| \`${path.basename(x.record)}\` | \`${x.key}\` | \`${x.id}\` | ${x.why} | ${x.text.replace(/\|/g, '\\|').slice(0, 160)}${x.text.length > 160 ? '…' : ''} |`); L.push(''); }
   fs.writeFileSync(path.join(OUT, `${seat}.md`), L.join('\n'));
-  counts.push(`${seat}: ${conf[seat].length} confirmations, ${sig[seat].length} signatures, ${ref[seat].length} referent candidates`);
+  counts.push(`${seat}: ${conf[seat].length} confirmations, ${sig[seat].length} signatures, ${sig[seat].filter((s) => s.work.length).length} re-sign worklist, ${ref[seat].length} referent candidates`);
 }
 console.log(counts.join('\n'));
 console.log(`total: ${SEATS.reduce((n, s) => n + conf[s].length, 0)} confirmations, ${SEATS.reduce((n, s) => n + sig[s].length, 0)} signatures`);

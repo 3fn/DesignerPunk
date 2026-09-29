@@ -1,6 +1,6 @@
 # Hash sheet — leonardo (C1 seat)
 
-**Generated** from `b319dd3d` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `72657411` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
 **Counts**: 0 confirmations owed · 9 rows to sign.
 
@@ -21,8 +21,17 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | body · `#when-you-and-peter-disagree` | re-pointed | ROUTED | `sha256:fc99b47e67403652f801bf4602ecbf53d6b62c005d06f7b9db5424e8ef3cee01` | `sha256:e9be4bd512776d5b81cbe3fa85bb9226d5423245bfcd649fa17ed6e33384b4d1` | `canonical/profiles/consumer/signatures/leonardo.md#when-you-and-peter-disagree` | `canonical/_consumer-output/_canonical/agents/leonardo.md`<br>`canonical/_consumer-output/cc/.claude/agents/leonardo.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/leonardo-prompt.md` | `canonical/profiles/consumer/leonardo.overlay.md` |
 | frontmatter · `routes.docs[dev-workflow-detail]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.docs[dev-workflow-detail]` | — (not rendered) | — |
 | frontmatter · `routes.docs[file-organization]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.docs[file-organization]` | — (not rendered) | — |
-| frontmatter · `routes.cues[21]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.cues[21]` | — (not rendered) | — |
-| frontmatter · `writeScope[docs/specs/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
+| frontmatter · `writeScope[docs/specs/**]` | superseded-by | superseded-by | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
+| frontmatter · `routes.cues[21]` | re-pointed | signed re-pointed row | `sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251` | `sha256:24f724d102445528b14344065bee5dacbdc13f778e638accde6a913fce74fe37` | `canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.cues[21]` | `canonical/_consumer-output/cc/.claude/agents/leonardo.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/leonardo-prompt.md` | `canonical/profiles/consumer/leonardo.overlay.md` |
+
+## 4. Re-sign worklist (since 67cd861d)
+
+Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep's own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.
+
+| Row (section · key) | File | Disposition | Why |
+|---|---|---|---|
+| frontmatter · `writeScope[docs/specs/**]` | `leonardo.dispositions.yaml` | superseded-by | row changed since 67cd861d |
+| frontmatter · `routes.cues[21]` | `leonardo.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
 
 ## 3. Referent candidates (read-only)
 
