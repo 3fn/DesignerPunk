@@ -614,3 +614,60 @@ The `document-access-1` items, in Civitas and SFP, are the known false positive:
 - **A canonical tension, flagged to Thurgood.** Start Up Tasks #5 says a regular task runs `npm test`, the full functional lane. TCP's "For SUBTASKS" says targeted tests. The rendering follows TCP. I did not credit `test-command-selecti-2`, and I did not refuse the row either, because the tension is in the canonical docs, not in the re-grounding.
 - **Heavy compression in TCP.** Several dropped clauses have consumer counterparts but did not reach the refusal bar: the never-overwrite rule, the forced-negative line, the unit-branch CI provenance, and "surviving any delegation" on the merge carve-out. They are recorded as not credited, and the per-row notes name each one. Another signer could reasonably refuse on those.
 - **The counting-block read (run 1, 18/31)** stays as recorded. Per your note, I am not re-judging it unless Thurgood re-authors.
+
+## Re-sign run summary (2026-09-29)
+
+**Scope**: the 16 acts in my sheet's § 4 after Thurgood's re-author batch (`dba93df5`). Each row is re-judged in full against its new rendering and hashes.
+
+**Commits**, all `Agent: stacy`:
+
+| Commit | Content |
+|---|---|
+| `6d0d7ee7` | Thurgood, 4 |
+| `ea5cab83` | Stacy, 6 |
+| `6e9423a5` | TCP, 5 |
+| `5116d069` | Civitas, 1 |
+| the commit carrying this section | this summary |
+
+Each re-signed row's evidence block is replaced in place, with its prior record kept below it as a quoted "superseded" history.
+
+**Outcome: 16 assents, 0 refusals. All six of my refusals are resolved.**
+
+| Row | Result | How |
+|---|---|---|
+| Thurgood Q5 preamble | 1/1 | itemized assent (precedence carried) |
+| Stacy Q5 preamble | 1/1 | itemized assent |
+| Stacy trigger set | 5/13 | itemized assent: the five LENS questions are carried inline. `trigger-lens` is still not credited under the crediting rule, because its M4 and retire-to-emissions clauses are dropped. Those are parser-keyed with no consumer counterpart, so there is no refusal. |
+| Stacy steward-verb carve-out | 2/5 | changed disposition (no-consumer-counterpart → re-pointed) plus assent; the routing test and tiebreak survive |
+| TCP completion-state | 15/22 | itemized assent (`-7` stacking protocol and `-19` unmergeable update carried) |
+| TCP tier selection | 2/3 | itemized assent (summary location `specs/[spec]/task-N-summary.md`) |
+
+**The other 10 rows**:
+- Thurgood `#the-process`: 4/4.
+- Stacy `#mcp-practice-notes`: 5/5. My run-1 over-credit (5/5 given where 4/5 was earned) is folded in; the re-authored fallback earns 5/5.
+- TCP parent Impl/Arch 6/8 and Setup/Doc 6/8. `-4`, the summary path, now survives. `-7` is still not credited: CI provenance is restored, but the push and dispatch (and in Setup, the PR-at-unit timing) are dropped. `-3` is Thurgood's accepted subtraction.
+- TCP merge rule: 3/3 ("survives any delegation" is restored).
+- Civitas `#governance-processes`: 4/4, newly routed.
+- Four assents to changed dispositions: Thurgood `commands[functional-suite]` → `superseded-by #what-you-dont-own`; Thurgood and Stacy `writeScope[docs/specs/**]` → `superseded-by writeScope[.kiro/specs/**]` (rendered as `specs/**`); Stacy `knowledgeBases[spec-summaries]` re-pointed to `specs/*/task-*-summary.md`.
+
+**Verify**: the sweep shows **0 findings on all four records** (`thurgood`, `stacy`, `always-set/task-completion-protocol`, `always-set/civitas-system-overview`). Its 20 standing `stale-signature` findings are all in other seats' rows: ada 3, data 6, kenya 7, leonardo 1, lina 1, sparky 2. Those belong to their re-sign runs.
+
+**The M1 tally, cumulative through the re-sign run.** Signer: stacy. Every re-sign counts as a signature event. First render, not a baseline.
+
+| Count | Value |
+|---|---|
+| Signature events | **122** (106 + 16) |
+| Assent events | **116** |
+| Refusal events | **6**, now **0 standing** in this seat |
+| Assent rate on routed rows (events) | **78/83** (12 of the 16 re-signs are routed body rows; the steward-verb carve-out is now a routed re-pointed row) |
+| Surviving / items over routed assent events | **383/486**; run 1's 330 is corrected to 329 for the `#mcp-practice-notes` over-credit |
+| **Current state**: latest signature per routed row | **73 routed rows, all assented, 363/458** |
+| Full-survival routed assent events, counted by hand | **43/78**, with the over-credited `#mcp-practice-notes` event removed from run 1's 38. The instrumented signal remains `not yet instrumented`. |
+| Non-routed signature events | 39: 35 no-consumer-counterpart (34 assent, 1 refusal, since resolved) plus 4 disposition-flip assents |
+
+- **Peter's sample, corrected N**: M1 says "Stacy-signed assents are sampled by Peter", and every assent here is Stacy-signed. So N is **116**, not the 30 own-charter rows my earlier summaries used. **`0 / 116 (Stacy-signed)`**. The earlier N under-stated the population Peter's sample is drawn from.
+
+**Residuals (non-blocking, for Thurgood)**:
+- The carve-out unit's heading still says "enumerated" over content that no longer enumerates.
+- Civitas `#governance-processes` keeps DesignerPunk's terms ("monthly", "ballot measure"), while consumer-Thurgood's rendering re-grounds them, so the two surfaces differ in wording.
+- `trigger-lens` stays uncredited only because of its parser-keyed clauses.
