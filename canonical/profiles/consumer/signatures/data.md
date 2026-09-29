@@ -189,3 +189,16 @@ signer: data
 
 It should be re-pointed together with that trim (the ComponentTokens trim may stay `no-consumer-counterpart`, see its assent). If the trim is re-disposed, this row follows it.
 
+## `#frontmatter:commands[platform-tokens]`
+
+signer: data
+
+**Refuse: should-re-point** (disposed `no-consumer-counterpart`, subtraction-1). The entry's function is "regenerate the platform token output (Android/iOS/web) from token source", and **a consumer has it**: `npx designerpunk generate` (the shipped `bin/designerpunk.js`; `src/cli/designerpunk.ts` case `generate`) produces the consumer's platform and theme output, product tokens included.
+
+My consumer rendering needs it:
+- Retained `product-tokens-6` has me author `product/tokens/{category}.yaml`.
+- Retained `theming-1` describes the generated `{Name}Theme` / `Local{Abbreviation}Theme` Kotlin.
+- Both only materialize through `generate`.
+
+**No unit of my consumer rendering names that command anywhere.** The re-pointed `commands[product-screen-commands]` says only "read them from this Android app's own build setup". The sibling renderings do name it: Sparky carries `npx designerpunk generate` as a command, and Kenya's product-screen gap names it ("theming Swift materializes here via `npx designerpunk generate`"). Under 5e the function survives only elsewhere, so this row should be re-pointed to `cmd: npx designerpunk generate`, `runContext: consumer-repo`. It must not be disposed away.
+
