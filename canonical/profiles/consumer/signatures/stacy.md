@@ -337,3 +337,117 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: refuse: should-re-point
 
 `no-consumer-counterpart` is not true of the whole unit. The steward-verb enumeration and its two falsification conditions are repo-bound, because a consumer does not steward DesignerPunk's docs corpus. But `carve-out-routing-test` ("was this claim verified?" → Stacy; "what must a completion doc contain?" → Thurgood) and `carve-out-tiebreak` (ambiguity resolves to Stacy, the seam fails toward the verifier) are the seam's arbitration, and a consumer's Stacy/Thurgood pair has the same seam. **Should re-point**: keep the routing test and the tiebreak, and drop the verb enumeration.
+
+## Signing run summary (2026-09-29, phase two, run 1)
+
+**Scope**: this run covers three dispositions files, 76 rows in all:
+- consumer-Thurgood's rows in `thurgood.dispositions.yaml` (45; C1 carve-out);
+- my own rows in `stacy.dispositions.yaml` (30; owner seat, with Peter sampling per F-3 (ii));
+- the shared member `complete-task-tooling` in `_shared.dispositions.yaml` (1).
+
+The identity docs under `always-set/` are run 2.
+
+**Commits**, all `Agent: stacy`:
+
+| Commit | Content |
+|---|---|
+| `bf07801a` | Thurgood, 44 assents |
+| `c8bf23ee` | Thurgood refusal: Q5 preamble |
+| `f85e9e17` | Stacy, 27 assents |
+| `98bc13bc` | Stacy refusal: claims-audit preamble |
+| `d0cb4203` | Stacy refusal: trigger set |
+| `d4dfe030` | Stacy refusal: steward-verb carve-out |
+| `8ddd4b1b` | `_shared`, 1 assent |
+| the commit carrying this section | this summary |
+
+**Referent widening**: none this run. The candidates the sheet lists for my two records are the ones I already ruled on in phase one, run 1 (in `confirmations/stacy.md`: left as drafted where widening would contain a sibling item, widened where it would not). The identity-doc candidates belong to run 2.
+
+**Assented routed rows** (surviving / items):
+- **Thurgood**:
+
+  | Unit | Surviving |
+  |---|---|
+  | `#identity` | 5/5 |
+  | `#in-scope` | 19/20 |
+  | `#boundary-cases` | 3/3 |
+  | spec-formalization `:preamble` | 1/1 |
+  | `#spec-formalization-is-not-autonomous` | 2/2 |
+  | audit `:preamble` | 1/1 |
+  | `#step-2-gather-evidence` | 6/7 |
+  | `#step-5-…` | 4/4 |
+  | `#operational-mode-test-governance` | 5/5 |
+  | `#resolution-path-…` | 3/3 |
+  | `#trigger-types` | 11/20 |
+  | `#steering-doc-lifecycle` | 4/4 |
+  | `#the-charter-cut-…` | 2/4 |
+  | `#the-composed-learning-loop-…` | 5/5 |
+  | `#the-three-boundary-bounds-…` | 5/5 |
+  | `#trust-by-default` | 3/3 |
+  | `#obligation-to-flag` | 4/4 |
+  | `#graceful-correction` | 3/3 |
+  | `#the-process` | 4/4 |
+  | `#what-this-means-in-practice` | 5/5 |
+  | `#mcp-practice-notes` | 3/5 |
+  | `#when-you-and-peter-disagree` | 1/1 |
+  | `#what-you-dont-own` | 4/5 |
+
+  **103/119 across 23 rows.**
+- **Stacy**:
+
+  | Unit | Surviving |
+  |---|---|
+  | `#identity` | 11/11 |
+  | `#in-scope` | 8/10 |
+  | `#out-of-scope` | 6/7 |
+  | process-audit `:preamble` | 1/1 |
+  | `#the-charter-cut-…` | 2/2 |
+  | **`#the-claims-pass-record-…`** | **18/31** |
+  | `#the-owed-set-pipeline-…` | 14/14 |
+  | `#honest-reach-…` | 4/4 |
+  | `#your-role` | 7/7 |
+  | `#what-you-dont-do` | 3/3 |
+  | `#with-thurgood-…` | 5/5 |
+  | `#with-peter` | 3/4 |
+  | `#mcp-practice-notes` | 5/5 |
+  | `#ask-if-unsure` | 1/1 |
+  | `#what-you-dont-own` | 3/4 |
+
+  **91/109 across 15 rows.**
+- The item ids not surviving, and the reason for each, are in each row's block above.
+
+**Assented no-consumer-counterpart rows**, each `surviving: []`: Thurgood 21, Stacy 12, `_shared` 1.
+
+**Refused rows**, each `refuse: should-re-point` in its own commit:
+1. **Thurgood `#the-q5-boundary-…:preamble`** (routed): `authority-precedence` is dropped. The rendering names the team's recorded decision but not its precedence over this text.
+2. **Stacy `#operational-mode-claims-audit-…:preamble`** (routed): the same finding.
+3. **Stacy `#the-trigger-set-…`** (routed): the LENS row loses the five repo-independent verifiability questions; question 6 is kept. The rest of the unit would assent at 5/13.
+4. **Stacy `#the-steward-verb-carve-out-…`** (no-consumer-counterpart): the routing test and the tiebreak toward the verifier are seam rules with a consumer counterpart. Only the verb enumeration and its falsification conditions are repo-bound.
+
+**The tally, for the first-render block of B-U2 M1.** Signer: stacy. All of this is first render, and none of it is a baseline.
+
+| Count | Value |
+|---|---|
+| Signature events | **76** |
+| Assent events | **72** |
+| Refusal events | **4** (3 on routed rows, 1 on a no-consumer-counterpart row) |
+| **Assent rate on routed rows** (assent events / signature events) | **38/41** |
+| Surviving / items over the 38 routed assents | **194/228** |
+| Full-survival assents (every item surviving), counted by hand | **27/38** (Thurgood 17, Stacy 10) |
+| No-consumer-counterpart signatures | 35 (34 assent, 1 refusal) |
+| Rows signed on my own charter (self-audit, disclosed) | 30: 15 routed assents, 12 no-consumer-counterpart assents, 3 refusals |
+
+- The full-survival count is informational. The instrumented signal remains `not yet instrumented`.
+- Of the 27 full-survival assents, most are single substitutions ("Peter" → "your human lead") on small item sets. Two are item-by-item re-groundings: `#the-owed-set-pipeline-…` and `#honest-reach-…`.
+- **Peter's sample of my own rows**: 0 / 30 at this commit. It is written here, not omitted (F-3 (ii)).
+- Every refusal is a committed signature, so the refusal count is traceable in history (C3).
+
+**Residuals**:
+- **The counting-block unit.** The brief expected its rendering to carry the B-U2 items. I read those items as having no consumer counterpart, because consumer repos hold no consumer-profile dispositions, signatures or render populations. So I assented without them (18/31). If Peter or Thurgood reads it otherwise, that row is the place to re-judge.
+- **Removal accounting (non-blocking, for Thurgood).** In that same row, the removals list names "**fixed-string exemption usage**" as removed. The rendering actually re-grounds it ("exemption usage … counted per waiver"), and I credited `counting-4`.
+- **Judgment calls another signer could make differently**:
+  - `evidence-dir-4` not credited (the rendering's grouping names no validators);
+  - `counting-4` credited as re-grounded;
+  - consumer-Thurgood `#trigger-types`: the owed-set items not credited in that unit, because they live in consumer-Stacy's unit;
+  - `scope-12` removal accepted: the consumer gets no CI scope, which is stricter.
+- **Each refused row must be re-judged in full at its re-sign.** No itemized set is carried over from the refusal.
+- **No-consumer-counterpart signatures pin the empty-rendering hash**, so any future rendering of those entries stales them by design.
