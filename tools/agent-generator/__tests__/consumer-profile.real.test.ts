@@ -66,6 +66,16 @@ describe('the population is complete (no silent zero)', () => {
   });
 });
 
+describe('the committed identity members (C19; criterion 3, over rendered output)', () => {
+  it.each(Object.keys(IDENTITY))('%s: Kiro carries exactly id + inclusion: always; CC carries no frontmatter', (id) => {
+    const kiro = read(`${OUT}/kiro/.kiro/steering/designerpunk-${id}.md`);
+    const fm = /^---\n([\s\S]*?)\n---\n/.exec(kiro);
+    expect(fm).not.toBeNull();
+    expect(loadYaml(fm![1])).toEqual({ id: `designerpunk-${id}`, inclusion: 'always' });
+    expect(read(`${OUT}/cc/.claude/identity/designerpunk-${id}.md`).startsWith('---')).toBe(false);
+  });
+});
+
 describe('every unit and entry has an explicit row (DD25)', () => {
   it.each(DISP_FILES)('%s: no missing row, no orphaned key', (file) => {
     const d = disp(file);
