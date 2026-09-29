@@ -64,6 +64,17 @@ export function parseConsumerProfile(yamlText: string, file = CONSUMER_PROFILE_P
   return Object.freeze({ targets: Object.freeze([...(names as string[])]), defaultTarget: def as string });
 }
 
+/**
+ * The surfaces this file's check reads — imported by `coverage-map.ts` (S-D1: one symbol, two
+ * consumers). The profile is a GENERATION INPUT: `generateAll` builds its adapters from its
+ * `targets`, so a changed profile changes the guarded outputs and `122-diff-guard` catches it.
+ * It is listed under that check, never added to `guardedRoots()` (which are regeneration-compared
+ * OUTPUTS, where an input would read as an extra file).
+ */
+export function surfaceGlobs(): string[] {
+  return [CONSUMER_PROFILE_PATH];
+}
+
 /** Load `canonical/consumer-profile.yaml` from a repo root. */
 export function loadConsumerProfile(repoRoot: string): ConsumerProfile {
   const abs = path.join(repoRoot, CONSUMER_PROFILE_PATH);

@@ -63,6 +63,7 @@
   - CLAUDE.md
   - CLAUDE.md.attribution.json
   - canonical/_fixture-output/**
+  - canonical/consumer-profile.yaml
   - canonical/coverage-manifest.yaml
   - canonical/coverage-map.yaml
   - canonical/manifests/**

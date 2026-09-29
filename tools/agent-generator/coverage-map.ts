@@ -54,6 +54,7 @@ import { surfaceGlobs as sweep6SurfaceGlobs } from './sweeps/sweep-6-declaration
 import { surfaceGlobs as sweep7SurfaceGlobs } from './sweeps/sweep-7-dispositions';
 import { surfaceGlobs as sweep8SurfaceGlobs } from './sweeps/sweep-8-demotion';
 import { surfaceGlobs as operativeSetFreshnessSurfaceGlobs } from './regrounding/freshness';
+import { surfaceGlobs as consumerProfileSurfaceGlobs } from './consumer-profile';
 
 // ============================================================================
 // The check-context name constants (the coverage map's fixed column set)
@@ -94,11 +95,16 @@ export type CoverageManifest = Record<CheckContext, string[]>;
  * sweep on every run (diff-guard.ts `runGuard`), so the files it reads — the operative-set
  * records and the consumer profile — are guarded by this context. Imported from the sweep's own
  * `surfaceGlobs()` (S-D1: one symbol, two consumers), never re-declared here.
+ *
+ * PLUS `canonical/consumer-profile.yaml` (Spec 123 Task 15.0): a generation INPUT — `generateAll`
+ * builds its adapters from the profile's `targets`, so a changed profile changes the outputs the
+ * guard compares. Imported from `consumer-profile.ts`'s own `surfaceGlobs()`.
  */
 export function diffGuardSurfaceGlobs(repoRoot?: string): string[] {
   return [
     ...guardedRoots(repoRoot).map((root) => (path.extname(root) ? root : `${root}/**`)),
     ...operativeSetFreshnessSurfaceGlobs(),
+    ...consumerProfileSurfaceGlobs(),
   ];
 }
 
