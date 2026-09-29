@@ -40,6 +40,14 @@ units:
         kind: obligation
         label: "iOS: 17.0+"
         text: "iOS: 17.0+"
+      - id: platform-android
+        kind: member
+        label: "Android: not yet constrained"
+        text: "Android: Not yet constrained"
+      - id: platform-web
+        kind: member
+        label: "Web: not yet constrained"
+        text: "Web: Not yet constrained"
     confirmation: canonical/profiles/consumer/confirmations/core-goals.md#core-project-context
   "#development-practices":
     canonicalHash: sha256:06bfac06966cb2bd1b0344f3e6ee26d2db6577e0ca62b05f88fe3e6106fa548f
@@ -52,6 +60,10 @@ units:
         kind: obligation
         label: "Complete tasks via the PR flow: ./.kiro/hooks/complete-task."
         text: "Complete tasks via the PR flow: `./.kiro/hooks/complete-task.sh \"Task Name\"` opens the task PR; Peter merges on green — the merge is the authorization act (see Task-Completion-Protocol)"
+      - id: practice-3
+        kind: member
+        label: "The repository is PR-gated"
+        text: "Repository: https://github.com/3fn/DesignerPunk (PR-gated workflow: branch protection on `main`, admins included)"
       - id: practice-7
         kind: obligation
         label: "Always prioritize design tokens over hard-coded values"
@@ -84,10 +96,14 @@ units:
         kind: obligation
         label: "Creating ANY token: Always requires human review — no autono"
         text: "**Creating ANY token**: Always requires human review — no autonomous token creation"
+      - id: token-governance-query
+        kind: command
+        label: "Query Token Governance via MCP"
+        text: "get_section({ path: \"token-governance\", heading: \"Token Selection Matrix\" })\nget_section({ path: \"token-governance\", heading: \"Token Usage Governance\" })"
       - id: practice-15
         kind: obligation
         label: "Semantic tokens — purpose-built for specific use cases (e.g."
-        text: "**Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds)"
+        text: "**Token Selection Priority (MUST follow this order):**\n1. **Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds)"
       - id: practice-16
         kind: obligation
         label: "Primitive tokens — when no semantic token exists, check if a"

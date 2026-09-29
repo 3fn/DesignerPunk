@@ -107,7 +107,7 @@ units:
       - id: disagree-1
         kind: step
         label: "Respect the decision"
-        text: "Respect the decision"
+        text: "After providing counter-arguments, if human proceeds with their decision:\n1. Respect the decision"
       - id: disagree-2
         kind: step
         label: "Document the alternative in .kiro/docs/alternative-paths-log"
@@ -127,17 +127,41 @@ units:
       - id: calibrate-1
         kind: step
         label: "Search before guessing. Run find_docs (concept/keyword) plus"
-        text: "**Search before guessing.** Run `find_docs` (concept/keyword) plus a cheap fallback (e.g. `Grep` over the corpus) before answering from memory. Never act confidently on an empty or weak result."
+        text: "When you are **unsure where guidance lives**, calibrate before acting:\n\n1. **Search before guessing.** Run `find_docs` (concept/keyword) plus a cheap fallback (e.g. `Grep` over the corpus) before answering from memory. Never act confidently on an empty or weak result."
       - id: calibrate-2
         kind: step
         label: "Weight by match strength — the emitted matchConfidence signa"
         text: "**Weight by match strength** — the emitted `matchConfidence` signal: `strong` over `partial` over `none`:"
+      - id: conf-strong
+        kind: member
+        label: "strong: act on it"
+        text: "**strong** — a clearly on-point match: act on it."
+      - id: conf-partial
+        kind: member
+        label: "partial: candidate, confirm first"
+        text: "**partial** — a plausible-but-uncertain match: treat it as a candidate, not an answer. Propose your best guess and confirm before acting on it."
+      - id: conf-none
+        kind: member
+        label: "none: never fabricate; ask go/no-go"
+        text: "**none** — empty or weak results: do NOT fabricate a location or proceed confidently. Say what you searched, propose your best guess, and **ask the human for a go/no-go**."
       - id: calibrate-3
         kind: step
         label: "When still unsure, surface it. Propose your best guess, stat"
         text: "**When still unsure, surface it.** Propose your best guess, state the confidence, and ask the human to confirm rather than asserting."
+      - id: signal-contract
+        kind: member
+        label: "The matchConfidence signal contract"
+        text: "Signal contract: `matchConfidence: strong | partial | none` (`viability` and `rank` are separate signals, never collapsed into it)."
     confirmation: canonical/profiles/consumer/confirmations/ai-collaboration-principles.md#certainty-calibration-finding-guidance-before-you-guess
   "#mcp-query-for-full-framework":
     canonicalHash: sha256:3f2464f2de92c1977976653812dd53301e867c27a11012f6a0e9ca8bc77d596f
-    items: []
+    items:
+      - id: framework-query-full
+        kind: command
+        label: "Full framework query"
+        text: "get_document_full({ path: \"ai-collaboration-framework\" })"
+      - id: framework-query-sections
+        kind: command
+        label: "Section queries"
+        text: "get_section({ path: \"ai-collaboration-framework\", heading: \"Objective Validation Gates\" })\nget_section({ path: \"ai-collaboration-framework\", heading: \"Candid vs Brutal Communication\" })"
     confirmation: canonical/profiles/consumer/confirmations/ai-collaboration-principles.md#mcp-query-for-full-framework

@@ -15,7 +15,15 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#agent-directory:preamble
   "#agent-tiers":
     canonicalHash: sha256:fb919cae76a91b449dd30e085a73ec908c775af8c255e9a6b7cb34a7729fc0f9
-    items: []
+    items:
+      - id: tier-system
+        kind: member
+        label: "System agents build the design system"
+        text: "**System Agents** build and maintain the design system itself — tokens, components, governance, and test infrastructure."
+      - id: tier-product
+        kind: member
+        label: "Product agents consume it"
+        text: "**Product Agents** consume the design system to build products — screen specifications, platform implementations, and product-level quality assurance."
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#agent-tiers
   "#primary-agent-orchestrator":
     canonicalHash: sha256:642bbb51f16d0e994f9678e54a7ad63dd3e5ae1f3ae73c03623bf024bc3c43cf
@@ -24,14 +32,18 @@ units:
         kind: obligation
         label: "Orchestrate; occupy no seat"
         text: "**You orchestrate. You do not occupy seats.**"
+      - id: scope
+        kind: member
+        label: "The orchestrator's scope"
+        text: "Your scope: planning, briefing, independent verification, synthesis, and facing Peter."
       - id: owners
         kind: obligation
         label: "Everything else belongs to an owner"
-        text: "**Everything else belongs to an owner**"
+        text: "**Your artifacts** are orchestration records — briefs, verification notes, PR bodies, status reports. **Everything else belongs to an owner**"
       - id: brief-once
         kind: obligation
         label: "Brief the owning agent once per unit"
-        text: "**brief the owning agent once per unit and continue that agent across it**"
+        text: "When work falls outside your scope, **brief the owning agent once per unit and continue that agent across it** rather than authoring in their seat"
       - id: seam
         kind: obligation
         label: "Record what was ruled; the owner authors"
@@ -40,10 +52,14 @@ units:
         kind: obligation
         label: "Consult before you recommend"
         text: "**Consult before you recommend.** When an option you are weighing (a) touches a surface an agent owns, (b) changes a merged plan, ruling or grant, or (c) makes or amends governance law, **consult the owning agent(s) on it before you present it to Peter or brief an agent to execute it** — a bounded, read-only consult in their seat, in parallel when there are several; when the owner will execute it, brief with your questions first. Otherwise no consult is needed, and you say why."
+      - id: consult-line-on-brief
+        kind: obligation
+        label: "A triggered brief carries the Consulted line"
+        text: "**A brief that meets a trigger carries the `**Consulted**:` line; a briefed owner that finds its own surface in a brief with no consult may answer with questions first.**"
       - id: class-option
         kind: obligation
         label: "Present one class-level option"
-        text: "**Present one class-level option.** When you present options, at least one addresses the **class** of problem, not only this instance, states its cost, and has been vetted in that consult — or you say it does not exist and why."
+        text: "**Present one class-level option.** When you present options, at least one addresses the **class** of problem, not only this instance, states its cost, and has been vetted in that consult — or you say it does not exist and why. It carries its surviving counter-argument like any recommendation (AI-Collaboration-Principles § \"Counter-Argument Requirement\")."
       - id: leave-record
         kind: obligation
         label: "Leave the record"
