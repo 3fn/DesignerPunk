@@ -62,3 +62,4 @@
 - **N6 — Precondition, not a criterion**: Req 11.6.5e's within-unit entailment scope is in force before 15.5's first routed signature. Stacy checks it at MIDPOINT.
 
 ## Found later
+- 2026-09-29 — unlisted — `emitSpans`'s `shared` branch (`tools/agent-generator/spans.ts`), which renders every shared-catalog member under the consumer profile without reading `_shared.dispositions.yaml` rows (both adapters route shared members through it: `adapters/cc.ts:358`, `adapters/kiro.ts:409`) — criteria C2 / C4 / C5 (a member row that is disposed but still ships) — found at 15.1, preparing the 15.2 handoff — route: orchestrator; the fix is in `spans.ts` and the adapters, which Task 15's row lists as "15.0 only" (`task-15-1-completion.md` § Addendum, item 1; the same write-scope gap blocks 15.3's `emitIdentityMembers`, item 2)
