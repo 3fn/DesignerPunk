@@ -1,8 +1,8 @@
 # Hash sheet — stacy (C1 seat)
 
-**Generated** from `72657411` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `8ea88c2f` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 0 confirmations owed · 107 rows to sign.
+**Counts**: 0 confirmations owed · 106 rows to sign.
 
 ## 1. Confirmations owed
 
@@ -93,7 +93,6 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `commands[governance-health-check]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:b2b4620fd8fc7de85d014492886972c2af130419693bcf8b29b9b2f6e0ad6e7c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/stacy.md#frontmatter:commands[governance-health-check]` | — (not rendered) | — |
 | frontmatter · `commands[verify-gate-registration]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:194b68857ae054e223dd422e53d04e7abb2ee5e9f5363f1411f882431b03e7af` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/stacy.md#frontmatter:commands[verify-gate-registration]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | superseded-by | superseded-by | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/stacy.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
-| frontmatter · `knowledgeBases[spec-summaries]` | re-pointed | signed re-pointed row | `sha256:01a07255b7a58397accf345c80ca08042755cd10b81e688a5c49a64baa572212` | `sha256:1e34755afa443056ebaede347a929648371ef00338f0a6d2418eec2311ec19f0` | `canonical/profiles/consumer/signatures/stacy.md#frontmatter:knowledgeBases[spec-summaries]` | `canonical/_consumer-output/cc/.claude/agents/stacy.md` | `canonical/profiles/consumer/stacy.overlay.md` |
 
 ### `canonical/profiles/consumer/_shared.dispositions.yaml`
 
@@ -167,28 +166,11 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | body · `#governance-processes` | re-pointed | ROUTED | `sha256:48af3eb551057bd0d40cb4379bdb9f1e0a8953447545978ab8973de5e7651bd4` | `sha256:2a2bc004ac29b3d2cac9e1ec035d790cde19b880033ac383a58794c572719353` | `canonical/profiles/consumer/signatures/civitas-system-overview.md#governance-processes` | `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md`<br>`canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md`<br>`canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md` | `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md` |
 | body · `#document-access` | re-pointed | ROUTED | `sha256:6bc5c92dbd79c125b497c35a6c88f5257913263b559f610306984985adf0ba9b` | `sha256:20fdb612e3333d352f26f6567e27db5e80f591e03fbbb21cdedf14d3be99b2bc` | `canonical/profiles/consumer/signatures/civitas-system-overview.md#document-access` | `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md`<br>`canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md`<br>`canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md` | `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md` |
 
-## 4. Re-sign worklist (since 67cd861d)
+## 4. Re-sign worklist (since 65563985)
 
 Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep's own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.
 
-| Row (section · key) | File | Disposition | Why |
-|---|---|---|---|
-| body · `#the-q5-boundary-execution-claims-verification-is-stacys:preamble` | `thurgood.dispositions.yaml` | re-pointed | refusal standing; stale |
-| body · `#the-process` | `thurgood.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| frontmatter · `commands[functional-suite]` | `thurgood.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `writeScope[docs/specs/**]` | `thurgood.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| body · `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` | `stacy.dispositions.yaml` | re-pointed | refusal standing; stale |
-| body · `#the-trigger-set-the-114-superset-table-names-never-numbers` | `stacy.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| body · `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference` | `stacy.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| body · `#mcp-practice-notes` | `stacy.dispositions.yaml` | re-pointed | stale |
-| frontmatter · `writeScope[docs/specs/**]` | `stacy.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `knowledgeBases[spec-summaries]` | `stacy.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| body · `#for-parent-tasks-implementation-or-architecture-type` | `task-completion-protocol.dispositions.yaml` | re-pointed | stale |
-| body · `#for-parent-tasks-setup-or-documentation-type` | `task-completion-protocol.dispositions.yaml` | re-pointed | stale |
-| body · `#completion-state-in-the-pr-flow:preamble` | `task-completion-protocol.dispositions.yaml` | re-pointed | refusal standing; stale |
-| body · `#the-merge-rule` | `task-completion-protocol.dispositions.yaml` | re-pointed | stale |
-| body · `#tier-selection-which-docs-how-much-detail` | `task-completion-protocol.dispositions.yaml` | re-pointed | refusal standing; stale |
-| body · `#governance-processes` | `civitas-system-overview.dispositions.yaml` | re-pointed | unsigned |
+None.
 
 ## 3. Referent candidates (read-only)
 

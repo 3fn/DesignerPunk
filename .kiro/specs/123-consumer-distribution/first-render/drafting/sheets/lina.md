@@ -1,6 +1,6 @@
 # Hash sheet — lina (C1 seat)
 
-**Generated** from `72657411` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `8ea88c2f` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
 **Counts**: 0 confirmations owed · 24 rows to sign.
 
@@ -39,17 +39,11 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `writeScope[application-mcp-server/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:4f9f7ddde8e990ff8a914a0c1bf98cf91bc7d1c32570ec00d39af3e9b874f7f9` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[application-mcp-server/**]` | — (not rendered) | — |
 | frontmatter · `writeScope[governance/component-meta-authoring-guide.md]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:a2fae371a7d8d2efa63091d5619817914735836dde1155f3232d9aaa01c49d42` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[governance/component-meta-authoring-guide.md]` | — (not rendered) | — |
 
-## 4. Re-sign worklist (since 67cd861d)
+## 4. Re-sign worklist (since 65563985)
 
 Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep's own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.
 
-| Row (section · key) | File | Disposition | Why |
-|---|---|---|---|
-| body · `#the-process` | `lina.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| frontmatter · `commands[functional-suite]` | `lina.dispositions.yaml` | superseded-by | refusal standing; row changed since 67cd861d |
-| frontmatter · `commands[component-tests]` | `lina.dispositions.yaml` | superseded-by | refusal standing; row changed since 67cd861d |
-| frontmatter · `commands[full-suite-with-performance]` | `lina.dispositions.yaml` | no-consumer-counterpart | refusal standing |
-| frontmatter · `writeScope[docs/specs/**]` | `lina.dispositions.yaml` | superseded-by | row changed since 67cd861d |
+None.
 
 ## 3. Referent candidates (read-only)
 

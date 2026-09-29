@@ -1,6 +1,6 @@
 # Hash sheet — ada (C1 seat)
 
-**Generated** from `72657411` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `8ea88c2f` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
 **Counts**: 0 confirmations owed · 24 rows to sign.
 
@@ -39,18 +39,11 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `writeScope[src/generators/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:dee22899a5c94b8bea8c8f22345ebf83e24a259be7a2af06ef3767a690eb2c4c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[src/generators/**]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | superseded-by | superseded-by | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
 
-## 4. Re-sign worklist (since 67cd861d)
+## 4. Re-sign worklist (since 65563985)
 
 Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep's own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.
 
-| Row (section · key) | File | Disposition | Why |
-|---|---|---|---|
-| body · `#in-scope` | `ada.dispositions.yaml` | re-pointed | stale |
-| body · `#the-process` | `ada.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| body · `#what-this-means-in-practice` | `ada.dispositions.yaml` | re-pointed | stale |
-| frontmatter · `commands[functional-suite]` | `ada.dispositions.yaml` | superseded-by | refusal standing; row changed since 67cd861d |
-| frontmatter · `commands[token-tests]` | `ada.dispositions.yaml` | superseded-by | refusal standing; row changed since 67cd861d |
-| frontmatter · `writeScope[docs/specs/**]` | `ada.dispositions.yaml` | superseded-by | row changed since 67cd861d |
+None.
 
 ## 3. Referent candidates (read-only)
 

@@ -1,8 +1,8 @@
 # Hash sheet — data (C1 seat)
 
-**Generated** from `72657411` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `8ea88c2f` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 0 confirmations owed · 24 rows to sign.
+**Counts**: 0 confirmations owed · 21 rows to sign.
 
 ## 1. Confirmations owed
 
@@ -34,28 +34,15 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `commands[audit-tokens]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:9f9e4c40508ffed400f8e11515773dfb30670cfbc11d54657f6f937ef57e0b5f` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:commands[audit-tokens]` | — (not rendered) | — |
 | frontmatter · `knowledgeBases[android-tests]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:a24c7b658425d78b8945a775e630689b343056547a676e02f26feedc74bcc581` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:knowledgeBases[android-tests]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | superseded-by | superseded-by | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
-| frontmatter · `ambient.groundTruthManifest.verdict` | retained | signed retained row | `sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.verdict` | — (not rendered) | — |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]` | re-pointed | signed re-pointed row | `sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]` | — (not rendered) | `canonical/profiles/consumer/data.overlay.md` |
-| frontmatter · `routes.cues[9]` | re-pointed | signed re-pointed row | `sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4` | `sha256:285e1817768abdc495edaff0352297a51576cbb5856c3430cf0aae9a6866361c` | `canonical/profiles/consumer/signatures/data.md#frontmatter:routes.cues[9]` | `canonical/_consumer-output/cc/.claude/agents/data.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/data-prompt.md` | `canonical/profiles/consumer/data.overlay.md` |
-| frontmatter · `commands[platform-tokens]` | re-pointed | signed re-pointed row | `sha256:d5688f941bb564bfc78a0918d1ac4cc8cdeda8c008329f8c75507e201c58933c` | `sha256:2115431489ad82b10c049e2349a0432adb1f8fed696e688a9126ea6d60f616b7` | `canonical/profiles/consumer/signatures/data.md#frontmatter:commands[platform-tokens]` | `canonical/_consumer-output/cc/.claude/agents/data.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/data-prompt.md` | `canonical/profiles/consumer/data.overlay.md` |
+| frontmatter · `commands[platform-tokens]` | re-pointed | signed re-pointed row | `sha256:d5688f941bb564bfc78a0918d1ac4cc8cdeda8c008329f8c75507e201c58933c` | `sha256:e08e5893ccedf081126b3267248756e733fc7537e0bdff7fc5d48c0f654a8cbf` | `canonical/profiles/consumer/signatures/data.md#frontmatter:commands[platform-tokens]` | `canonical/_consumer-output/cc/.claude/agents/data.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/data-prompt.md` | `canonical/profiles/consumer/data.overlay.md` |
 
-## 4. Re-sign worklist (since 67cd861d)
+## 4. Re-sign worklist (since 65563985)
 
 Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep's own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.
 
 | Row (section · key) | File | Disposition | Why |
 |---|---|---|---|
-| body · `#android-theming-spec-094` | `data.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| body · `#step-2-set-up-the-screen` | `data.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| body · `#how-to-use-designerpunk-tokens-on-android` | `data.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| body · `#android-specific-guidance:preamble` | `data.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]` | `data.dispositions.yaml` | superseded-by | refusal standing; row changed since 67cd861d |
-| frontmatter · `commands[functional-suite]` | `data.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `writeScope[docs/specs/**]` | `data.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `ambient.groundTruthManifest.verdict` | `data.dispositions.yaml` | retained | refusal standing; row changed since 67cd861d |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]` | `data.dispositions.yaml` | re-pointed | row changed since 67cd861d |
-| frontmatter · `routes.cues[9]` | `data.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| frontmatter · `commands[platform-tokens]` | `data.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
+| frontmatter · `commands[platform-tokens]` | `data.dispositions.yaml` | re-pointed | stale |
 
 ## 3. Referent candidates (read-only)
 

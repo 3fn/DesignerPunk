@@ -1,8 +1,8 @@
 # Hash sheet — kenya (C1 seat)
 
-**Generated** from `72657411` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `8ea88c2f` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 0 confirmations owed · 26 rows to sign.
+**Counts**: 0 confirmations owed · 23 rows to sign.
 
 ## 1. Confirmations owed
 
@@ -25,7 +25,7 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | body · `#ios-specific-guidance` | re-pointed | ROUTED | `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65` | `sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145` | `canonical/profiles/consumer/signatures/kenya.md#ios-specific-guidance` | `canonical/_consumer-output/_canonical/agents/kenya.md`<br>`canonical/_consumer-output/cc/.claude/agents/kenya.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md` | `canonical/profiles/consumer/kenya.overlay.md` |
 | body · `#mcp-practice-notes` | re-pointed | ROUTED | `sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82` | `sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d` | `canonical/profiles/consumer/signatures/kenya.md#mcp-practice-notes` | `canonical/_consumer-output/_canonical/agents/kenya.md`<br>`canonical/_consumer-output/cc/.claude/agents/kenya.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md` | `canonical/profiles/consumer/kenya.overlay.md` |
 | body · `#what-you-dont-own` | re-pointed | ROUTED | `sha256:c3c70ca98b609f991f22359a186dd372685df660e45b86f364e29ef26ecd2591` | `sha256:463fe6517b19695411d61187d6aad4f2f97db3f15d20b031f0b057943fbb7368` | `canonical/profiles/consumer/signatures/kenya.md#what-you-dont-own` | `canonical/_consumer-output/_canonical/agents/kenya.md`<br>`canonical/_consumer-output/cc/.claude/agents/kenya.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md` | `canonical/profiles/consumer/kenya.overlay.md` |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]` | superseded-by | superseded-by | `sha256:696b3c1cfff5de9fb82d397eae3546edc83d6120842d4136ecb78b583cdf9476` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]` | — (not rendered) | — |
+| frontmatter · `ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]` | superseded-by | superseded-by | `sha256:764ca8ea89091bad2a0bd73aa460e2a3d31379be3cf60413ac6edeb8b5561ab7` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]` | — (not rendered) | — |
 | frontmatter · `ambient.standingFacts[0]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:5cee5aac01c8ad35bd478ee58d89b4e2bbeaf1156b8f32db98ca2adc56dbd252` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:ambient.standingFacts[0]` | — (not rendered) | — |
 | frontmatter · `routes.docs[completion-doc-guidance]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:routes.docs[completion-doc-guidance]` | — (not rendered) | — |
 | frontmatter · `routes.docs[dev-workflow-detail]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:routes.docs[dev-workflow-detail]` | — (not rendered) | — |
@@ -36,29 +36,16 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `commands[audit-tokens]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:9f9e4c40508ffed400f8e11515773dfb30670cfbc11d54657f6f937ef57e0b5f` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:commands[audit-tokens]` | — (not rendered) | — |
 | frontmatter · `knowledgeBases[ios-tests]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:9e343b0a30ce8c0186fd29b7d4f347d9e951ef4014e0d24a6c3ee64be9b2b11e` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:knowledgeBases[ios-tests]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | superseded-by | superseded-by | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
-| frontmatter · `ambient.groundTruthManifest.verdict` | retained | signed retained row | `sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:ambient.groundTruthManifest.verdict` | — (not rendered) | — |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]` | re-pointed | signed re-pointed row | `sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]` | — (not rendered) | `canonical/profiles/consumer/kenya.overlay.md` |
-| frontmatter · `routes.cues[9]` | re-pointed | signed re-pointed row | `sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4` | `sha256:72ae636acb0808bfd5f5a901b12631a65c7a28fac7dac5c94d817e167ea1db02` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:routes.cues[9]` | `canonical/_consumer-output/cc/.claude/agents/kenya.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md` | `canonical/profiles/consumer/kenya.overlay.md` |
-| frontmatter · `commands[platform-tokens]` | re-pointed | signed re-pointed row | `sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67` | `sha256:bbb85a598429b242a83176b9478a5cb8ebd91ec05ae17207c38ec62348306af3` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:commands[platform-tokens]` | `canonical/_consumer-output/cc/.claude/agents/kenya.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md` | `canonical/profiles/consumer/kenya.overlay.md` |
+| frontmatter · `commands[platform-tokens]` | re-pointed | signed re-pointed row | `sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67` | `sha256:a51ec7c296550cce090a6b0151ad0d45630bda089c84a0199526948e0ec64147` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:commands[platform-tokens]` | `canonical/_consumer-output/cc/.claude/agents/kenya.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md` | `canonical/profiles/consumer/kenya.overlay.md` |
 
-## 4. Re-sign worklist (since 67cd861d)
+## 4. Re-sign worklist (since 65563985)
 
 Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep's own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.
 
 | Row (section · key) | File | Disposition | Why |
 |---|---|---|---|
-| body · `#ios-theming-spec-094` | `kenya.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| body · `#step-2-set-up-the-screen` | `kenya.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| body · `#how-to-use-designerpunk-tokens-on-ios` | `kenya.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| body · `#ios-specific-guidance` | `kenya.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| body · `#mcp-practice-notes` | `kenya.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]` | `kenya.dispositions.yaml` | superseded-by | refusal standing; row changed since 67cd861d |
-| frontmatter · `commands[build]` | `kenya.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `writeScope[docs/specs/**]` | `kenya.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `ambient.groundTruthManifest.verdict` | `kenya.dispositions.yaml` | retained | refusal standing; row changed since 67cd861d |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]` | `kenya.dispositions.yaml` | re-pointed | refusal standing; row changed since 67cd861d |
-| frontmatter · `routes.cues[9]` | `kenya.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
-| frontmatter · `commands[platform-tokens]` | `kenya.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
+| frontmatter · `ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]` | `kenya.dispositions.yaml` | superseded-by | stale |
+| frontmatter · `commands[platform-tokens]` | `kenya.dispositions.yaml` | re-pointed | refusal standing; stale |
 
 ## 3. Referent candidates (read-only)
 

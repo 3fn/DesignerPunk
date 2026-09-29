@@ -1,8 +1,8 @@
 # Hash sheet — sparky (C1 seat)
 
-**Generated** from `72657411` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `8ea88c2f` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 0 confirmations owed · 28 rows to sign.
+**Counts**: 0 confirmations owed · 27 rows to sign.
 
 ## 1. Confirmations owed
 
@@ -41,20 +41,12 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `commands[web-test-lane]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:d448c8dc13a39ccefe6c6f72bdba932e06963a8c678f17bae29056ba60079553` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[web-test-lane]` | — (not rendered) | — |
 | frontmatter · `knowledgeBases[web-components]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:6529bcd1636053e710069195c75dccc4e77f906235d4bdf89efae8e8a9613c0b` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/sparky.md#frontmatter:knowledgeBases[web-components]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | superseded-by | superseded-by | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/sparky.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
-| frontmatter · `routes.cues[8]` | re-pointed | signed re-pointed row | `sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4` | `sha256:5bdd7c09ac3d1855f387e90b023ec2b2e4ea68d15bad2d1882c8b6812ddcc50f` | `canonical/profiles/consumer/signatures/sparky.md#frontmatter:routes.cues[8]` | `canonical/_consumer-output/cc/.claude/agents/sparky.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/sparky-prompt.md` | `canonical/profiles/consumer/sparky.overlay.md` |
 
-## 4. Re-sign worklist (since 67cd861d)
+## 4. Re-sign worklist (since 65563985)
 
 Rows in section 2 that need a signing act now: **unsigned** (newly signed population), **refusal standing**, **stale** (the sweep's own finding), or **row changed** since the batch base (a disposition flip leaves both hashes unchanged, so the sweep cannot see it — re-sign it anyway). Hashes are in section 2.
 
-| Row (section · key) | File | Disposition | Why |
-|---|---|---|---|
-| body · `#mcp-practice-notes` | `sparky.dispositions.yaml` | re-pointed | refusal standing; stale; row changed since 67cd861d |
-| frontmatter · `ambient.groundTruthManifest.trims[dist/web/DesignTokens.web.css]` | `sparky.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `commands[web-tests]` | `sparky.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `commands[functional-suite]` | `sparky.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `writeScope[docs/specs/**]` | `sparky.dispositions.yaml` | superseded-by | row changed since 67cd861d |
-| frontmatter · `routes.cues[8]` | `sparky.dispositions.yaml` | re-pointed | stale; row changed since 67cd861d |
+None.
 
 ## 3. Referent candidates (read-only)
 
