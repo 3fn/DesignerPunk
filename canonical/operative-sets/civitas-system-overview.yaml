@@ -20,10 +20,6 @@ units:
   "#what-civitas-contains":
     canonicalHash: sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137
     items:
-      - id: what-civitas-con-1
-        kind: obligation
-        label: "Steering documentation (92 docs across 4 layers; 83 MCP-serv"
-        text: "**Steering documentation** (92 docs across 4 layers; 83 MCP-served + 9 always-loaded identity docs):"
       - id: what-civitas-con-2
         kind: obligation
         label: "Layer 0: Meta-guide for the steering system itself"
@@ -60,38 +56,10 @@ units:
         kind: obligation
         label: "5 product agents (Leonardo, Sparky, Kenya, Data, Stacy) that"
         text: "5 product agents (Leonardo, Sparky, Kenya, Data, Stacy) that consume the design system to build products"
-      - id: what-civitas-con-11
-        kind: obligation
-        label: "Each agent has a JSON config (MCP access, steering doc refer"
-        text: "Each agent has a JSON config (MCP access, steering doc references, skills) and a prompt file (domain boundaries, operational modes)"
-      - id: what-civitas-con-12
-        kind: obligation
-        label: "Agent hooks for domain-specific compliance checks (token hea"
-        text: "Agent hooks for domain-specific compliance checks (token health, component scaffolding, test coverage)"
-      - id: what-civitas-con-13
-        kind: obligation
-        label: "Shell scripts for task completion, release management, and f"
-        text: "Shell scripts for task completion, release management, and file organization"
-      - id: what-civitas-con-14
-        kind: obligation
-        label: "Per-agent indexed content for domain-scoped semantic search"
-        text: "Per-agent indexed content for domain-scoped semantic search"
-      - id: what-civitas-con-15
-        kind: obligation
-        label: "Covers component source, token source, test infrastructure, "
-        text: "Covers component source, token source, test infrastructure, spec history"
-      - id: what-civitas-con-16
-        kind: obligation
-        label: "125+ specs encoding institutional decisions and implementati"
-        text: "125+ specs encoding institutional decisions and implementation history"
       - id: what-civitas-con-17
         kind: obligation
         label: "Spec workflow: design outline → feedback → requirements → de"
         text: "Spec workflow: design outline → feedback → requirements → design → tasks → execution"
-      - id: what-civitas-con-18
-        kind: obligation
-        label: "Feedback protocol, formalization gates, completion documenta"
-        text: "Feedback protocol, formalization gates, completion documentation system"
     confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#what-civitas-contains
   "#what-civitas-does-not-contain":
     canonicalHash: sha256:103fb411efb491817aa7c4f3b8b4f2f0462674a3d46545efc79ddaf292d6b502
@@ -128,6 +96,18 @@ units:
   "#the-three-layer-boundary":
     canonicalHash: sha256:07a57ddc3770e58fd778f308e53b46af5663158ed9c8332885ab516db02a27fa
     items:
+      - id: layer-correctness
+        kind: member
+        label: "Content correctness: domain agents"
+        text: "**Content correctness** — Domain agents own this. Is the technical content accurate? Ada validates token mathematics. Lina validates component architecture. Domain agents have the expertise to judge their content."
+      - id: layer-consistency
+        kind: member
+        label: "Content consistency: the steward flags"
+        text: "**Content consistency** — Civitas steward (Thurgood) owns this. Does content align across surfaces? When the same concept appears in multiple docs, are the descriptions consistent? The steward flags potential inconsistencies; domain agents adjudicate whether the inconsistency is real drift or intentional abstraction."
+      - id: layer-infrastructure
+        kind: member
+        label: "Infrastructure health: the steward"
+        text: "**Infrastructure health** — Civitas steward (Thurgood) owns this. Valid metadata, current cross-references, recent review dates, MCP health, agent prompt currency, governance tooling adoption. The operational maintenance layer."
       - id: the-three-layer--1
         kind: obligation
         label: "Intra-domain (two docs owned by the same agent disagree): St"
@@ -167,7 +147,7 @@ units:
       - id: external-represe-1
         kind: obligation
         label: "Rosetta: Mathematical foundation — tokens, formulas, cross-p"
-        text: "**Rosetta**: Mathematical foundation — tokens, formulas, cross-platform values"
+        text: "In external-facing materials (portfolio site, ecosystem diagrams, presentations), Civitas should be represented as the governance layer that binds Rosetta and Stemma together:\n\n- **Rosetta**: Mathematical foundation — tokens, formulas, cross-platform values"
       - id: external-represe-2
         kind: obligation
         label: "Stemma: Relational foundation — components, schemas, behavio"
@@ -184,4 +164,8 @@ units:
         kind: obligation
         label: "This is an identity doc (Spec 119) — never MCP-served, alway"
         text: "This is an identity doc (Spec 119) — never MCP-served, always loaded in full into every agent's context."
+      - id: document-access-2
+        kind: obligation
+        label: "Point with an in-document § reference, not an MCP call"
+        text: "If you need to point to a specific part of it, use an in-document § reference (e.g., this doc's § \"The Three-Layer Boundary\" or § \"Relationship to Rosetta and Stemma\"), not an MCP call."
     confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#document-access

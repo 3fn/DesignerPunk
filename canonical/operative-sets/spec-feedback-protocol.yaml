@@ -24,10 +24,26 @@ units:
         kind: obligation
         label: "Every spec MUST have feedback documents created alongside th"
         text: "Every spec MUST have feedback documents created alongside the design outline."
+      - id: single-file-path
+        kind: member
+        label: "Single-file path"
+        text: ".kiro/specs/[spec-name]/feedback.md"
+      - id: split-path
+        kind: member
+        label: "Split-by-phase layout"
+        text: ".kiro/specs/[spec-name]/feedback/\n  design-outline.md\n  requirements.md\n  design.md\n  tasks.md"
       - id: the-feedback-document-2
         kind: obligation
         label: "Each agent only reads the feedback doc for the current phase"
-        text: "Each agent only reads the feedback doc for the current phase, not the entire history."
+        text: "The split structure is preferred for specs with multiple feedback rounds. Each agent only reads the feedback doc for the current phase, not the entire history."
+      - id: single-file-valid
+        kind: member
+        label: "Single file stays valid when feedback is light"
+        text: "The single-file structure remains valid for specs where feedback is lightweight."
+      - id: feedback-location
+        kind: obligation
+        label: "The feedback docs hold all agent feedback"
+        text: "Either way, the feedback document(s) are the location for all agent feedback."
       - id: the-feedback-document-3
         kind: obligation
         label: "See the Spec Feedback Template section below for the require"
@@ -52,6 +68,10 @@ units:
         kind: obligation
         label: "Tasks — assignment correctness, sequencing, and scope review"
         text: "**Tasks** — assignment correctness, sequencing, and scope review"
+      - id: multiple-rounds
+        kind: obligation
+        label: "Multiple rounds are expected"
+        text: "Multiple rounds per artifact are expected when incorporation produces substantial changes."
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#feedback-checkpoints
   "#stakeholder-identification":
     canonicalHash: sha256:30146705abb20ed2bb23e95be2bd7fcc0029037a482439e1c53bd99df2277a89
@@ -63,7 +83,7 @@ units:
       - id: stakeholder-identificati-2
         kind: obligation
         label: "Own the domain being changed (e.g., Lina for components, Ada"
-        text: "Own the domain being changed (e.g., Lina for components, Ada for tokens)"
+        text: "**Selection criteria** — tag agents who:\n- Own the domain being changed (e.g., Lina for components, Ada for tokens)"
       - id: stakeholder-identificati-3
         kind: obligation
         label: "Consume the output (e.g., Leonardo for components he'll spec"
@@ -79,7 +99,7 @@ units:
       - id: stakeholder-identificati-6
         kind: obligation
         label: "But the selection should be a conscious decision, not an ass"
-        text: "But the selection should be a conscious decision, not an assumption that only system agents matter."
+        text: "Not every agent needs to review every spec. But the selection should be a conscious decision, not an assumption that only system agents matter."
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#stakeholder-identification
   "#sequential-formalization-gate":
     canonicalHash: sha256:b7a5853defd008b54f28db5575277efa12f3a247ebed7cf8e587cdec5f3c0b8c
@@ -119,7 +139,7 @@ units:
       - id: mandatory-mention-scanni-2
         kind: obligation
         label: "Read the feedback document"
-        text: "Read the feedback document"
+        text: "When entering a feedback round:\n1. Read the feedback document"
       - id: mandatory-mention-scanni-3
         kind: obligation
         label: "Find and respond to any [@YOUR_NAME] mentions you have not y"
@@ -136,34 +156,58 @@ units:
         kind: obligation
         label: "Every feedback entry MUST be stamped with the agent name and"
         text: "Every feedback entry MUST be stamped with the agent name and round number using this exact format:"
-      - id: stamp-format-2
+      - id: stamp-pattern
+        kind: member
+        label: "The stamp"
+        text: "[AGENT_NAME R#]"
+      - id: round-reset
         kind: obligation
-        label: "[ADA R1] — Ada's first round of feedback on the current arti"
-        text: "`[ADA R1]` — Ada's first round of feedback on the current artifact"
-      - id: stamp-format-3
-        kind: obligation
-        label: "[LINA R2] — Lina's second round of feedback on the current a"
-        text: "`[LINA R2]` — Lina's second round of feedback on the current artifact"
-      - id: stamp-format-4
-        kind: obligation
-        label: "[THURGOOD R1] — Thurgood's first round (typically incorporat"
-        text: "`[THURGOOD R1]` — Thurgood's first round (typically incorporation notes)"
+        label: "Rounds reset per artifact section"
+        text: "Round numbers reset per artifact section."
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#stamp-format
   "#standard-feedback":
     canonicalHash: sha256:9dafe73b3db687ddb007d505c5e2c135e8f173ab3301fed2dba0e92e8598d80e
-    items: []
+    items:
+      - id: entry-format
+        kind: member
+        label: "The standard entry shape"
+        text: "#### [ADA R1]\n- Feedback item → artifact.md § \"Section Name\"\n- Another item → artifact.md § \"Section Name\""
+      - id: section-reference
+        kind: obligation
+        label: "Each item references its section with §"
+        text: "Each item references the specific section of the artifact it addresses using `§` notation."
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#standard-feedback
   "#directed-questions":
     canonicalHash: sha256:952158838c4db54378cb62c6419697678ca756c2da77da98b86e59b852f7f686
-    items: []
+    items:
+      - id: directed-format
+        kind: member
+        label: "The directed-question shape"
+        text: "- [@LINA] Question text? → artifact.md § \"Section Name\" -- [THURGOOD R1]"
+      - id: directed-asker
+        kind: obligation
+        label: "Questions go in the asker's section"
+        text: "Questions go in the asker's section."
+      - id: directed-response
+        kind: obligation
+        label: "The target responds in its next round"
+        text: "The target agent responds in their next round entry."
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#directed-questions
   "#incorporation-notes":
     canonicalHash: sha256:cada68e93324818530dc59bd3eb699554c5467b4f95c01e7a175d427782ce503
-    items: []
+    items:
+      - id: incorporation-format
+        kind: member
+        label: "The incorporation-note shape"
+        text: "#### [THURGOOD R2]\n- Incorporated ADA R1 items 1-3. Req 6 AC 2 softened per item 1.\n- ADA R1 item 4: No change — see context note above.\n- [@ADA] Does resolveAliases handle mode values? → design-outline.md § \"DTCG Format Options\" -- [THURGOOD R2]"
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#incorporation-notes
   "#context-for-reviewers":
     canonicalHash: sha256:55dcaed52b9e861ea41c02d5990a183e6d4315575f71a2b996a089866f07a859
     items:
+      - id: context-block
+        kind: obligation
+        label: "Each section carries a Context for Reviewers block"
+        text: "Each artifact section in the feedback document includes a \"Context for Reviewers\" block. The spec author populates this before requesting review."
       - id: context-for-reviewers-1
         kind: obligation
         label: "Key decisions already made, with section references to where"
@@ -176,14 +220,34 @@ units:
         kind: obligation
         label: "Dependencies on prior artifacts"
         text: "Dependencies on prior artifacts"
+      - id: follow-references
+        kind: obligation
+        label: "Reviewers follow the section references"
+        text: "Reviewers who need deeper context follow the section references."
+      - id: context-format
+        kind: member
+        label: "The Context for Reviewers shape"
+        text: "### Context for Reviewers\n- Decision or scope note → source-artifact.md § \"Section Name\"\n- Another decision → design-outline.md § \"Section Name\""
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#context-for-reviewers
   "#resolution-tracking":
     canonicalHash: sha256:665ad56546624d4518aaff814bc70c96a103c58051caede004e932daa348bf93
-    items: []
+    items:
+      - id: resolutions-in-feedback
+        kind: obligation
+        label: "Resolutions live in the feedback doc"
+        text: "Resolutions live in the feedback document, not in the spec artifacts."
+      - id: clean-artifacts
+        kind: obligation
+        label: "Spec artifacts read as settled"
+        text: "Spec artifacts (requirements.md, design.md, tasks.md) should read as clean, settled documents."
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#resolution-tracking
   "#spec-feedback-template":
     canonicalHash: sha256:66a2bec4ca25951cddbae7fd0b505eca4c2a60f495f3c4fe90ed4d39002792db
-    items: []
+    items:
+      - id: template
+        kind: member
+        label: "The feedback document template"
+        text: "# Spec Feedback: [Spec Name]\n\n**Spec**: [spec-number]-[spec-name]\n**Created**: [date]\n\n---\n\n## Design Outline Feedback\n\n### Context for Reviewers\n- [Populated by spec author before requesting review]\n\n[Agent feedback rounds here]\n\n---\n\n## Requirements Feedback\n\n### Context for Reviewers\n- [Populated by spec author before requesting review]\n\n[Agent feedback rounds here]\n\n---\n\n## Design Feedback\n\n### Context for Reviewers\n- [Populated by spec author before requesting review]\n\n[Agent feedback rounds here]\n\n---\n\n## Tasks Feedback\n\n### Context for Reviewers\n- [Populated by spec author before requesting review]\n\n[Agent feedback rounds here]"
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#spec-feedback-template
   "#document-access":
     canonicalHash: sha256:6ffb28191285a1ff3707dd24043c0e7f2a4a6e5c3d988a6c11398fed9bbccf81

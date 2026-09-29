@@ -31,7 +31,15 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#overview
   "#pointer-1-module-resolution-contract-spec-118":
     canonicalHash: sha256:cffe92ec071aeb070f4fee21c68bae47fcb88b79ed0b84e393e7cc28b227931e
-    items: []
+    items:
+      - id: module-resolution-pull
+        kind: obligation
+        label: "Pull the Module-Resolution Contract before touching those surfaces"
+        text: "Module resolution — runtime-TS loading, package exports, the bin, consumer `.ts`, and component tokens — is governed by the **Module-Resolution Contract**; pull it before touching those surfaces."
+      - id: module-resolution-route
+        kind: route
+        label: "Where the contract lives"
+        text: "See `rosetta-system-architecture` § \"Module-Resolution Contract\"."
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#pointer-1-module-resolution-contract-spec-118
   "#high-level-designerpunk-three-system-architecture":
     canonicalHash: sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0
@@ -59,81 +67,5 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#combined-overview-single-diagram
   "#related-documentation":
     canonicalHash: sha256:cdd4df7d51710aa622848052c914bc58765bb44f7ea9cd1309a089dd9bdf4dac
-    items:
-      - id: related-document-1
-        kind: obligation
-        label: "[Civitas System Overview](./Civitas-System-Overview.md) — Go"
-        text: "[Civitas System Overview](./Civitas-System-Overview.md) — Governance layer definition, three-layer boundary, processes"
-      - id: related-document-2
-        kind: obligation
-        label: "[Rosetta System Principles](rosetta-system-principles) — Mat"
-        text: "[Rosetta System Principles](rosetta-system-principles) — Mathematical foundation and token philosophy"
-      - id: related-document-3
-        kind: obligation
-        label: "[Rosetta System Architecture](rosetta-system-architecture) —"
-        text: "[Rosetta System Architecture](rosetta-system-architecture) — Detailed pipeline, generation subsystem, validation"
-      - id: related-document-4
-        kind: obligation
-        label: "[Stemma System Principles](stemma-system-principles) — Compo"
-        text: "[Stemma System Principles](stemma-system-principles) — Component philosophy and inheritance patterns"
-      - id: related-document-5
-        kind: obligation
-        label: "[Contract System Reference](contract-system-reference) — Beh"
-        text: "[Contract System Reference](contract-system-reference) — Behavioral contracts, Concept Catalog, classification rules"
-      - id: related-document-6
-        kind: obligation
-        label: "[Component Quick Reference](component-quick-reference) — Rou"
-        text: "[Component Quick Reference](component-quick-reference) — Routing table for component family docs"
-      - id: related-document-7
-        kind: obligation
-        label: "[Component-Family-Button.md](component-family-button)"
-        text: "[Component-Family-Button.md](component-family-button)"
-      - id: related-document-8
-        kind: obligation
-        label: "[Component-Family-Form-Inputs.md](component-family-form-inpu"
-        text: "[Component-Family-Form-Inputs.md](component-family-form-inputs)"
-      - id: related-document-9
-        kind: obligation
-        label: "[Component-Family-Icon.md](component-family-icon)"
-        text: "[Component-Family-Icon.md](component-family-icon)"
-      - id: related-document-10
-        kind: obligation
-        label: "[Component-Family-Container.md](component-family-container)"
-        text: "[Component-Family-Container.md](component-family-container)"
-      - id: related-document-11
-        kind: obligation
-        label: "[Component-Family-Avatar.md](component-family-avatar)"
-        text: "[Component-Family-Avatar.md](component-family-avatar)"
-      - id: related-document-12
-        kind: obligation
-        label: "[Component-Family-Badge.md](component-family-badge)"
-        text: "[Component-Family-Badge.md](component-family-badge)"
-      - id: related-document-13
-        kind: obligation
-        label: "[Component-Family-Chip.md](component-family-chip)"
-        text: "[Component-Family-Chip.md](component-family-chip)"
-      - id: related-document-14
-        kind: obligation
-        label: "[Component-Family-Progress.md](progress-indicator-components"
-        text: "[Component-Family-Progress.md](progress-indicator-components)"
-      - id: related-document-15
-        kind: obligation
-        label: "[Component-Family-Divider.md](component-family-divider) (pla"
-        text: "[Component-Family-Divider.md](component-family-divider) (placeholder)"
-      - id: related-document-16
-        kind: obligation
-        label: "[Component-Family-Loading.md](component-family-loading) (pla"
-        text: "[Component-Family-Loading.md](component-family-loading) (placeholder)"
-      - id: related-document-17
-        kind: obligation
-        label: "[Component-Family-Modal.md](component-family-modal) (placeho"
-        text: "[Component-Family-Modal.md](component-family-modal) (placeholder)"
-      - id: related-document-18
-        kind: obligation
-        label: "[Component-Family-Navigation.md](component-family-navigation"
-        text: "[Component-Family-Navigation.md](component-family-navigation)"
-      - id: related-document-19
-        kind: obligation
-        label: "[Component-Family-Data-Display.md](component-family-data-dis"
-        text: "[Component-Family-Data-Display.md](component-family-data-display) (placeholder)"
+    items: []
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#related-documentation
