@@ -212,17 +212,14 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67
-renderedHash: sha256:bbb85a598429b242a83176b9478a5cb8ebd91ec05ae17207c38ec62348306af3
+renderedHash: sha256:a51ec7c296550cce090a6b0151ad0d45630bda089c84a0199526948e0ec64147
 date: 2026-09-29
 
-**Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `npm run generate:platform-tokens` is a repo-internal script (subtraction-1). The consumer equivalent, `npx designerpunk generate`, is named in the re-pointed `commands[product-screen-commands]`.
-
-**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`.** **REFUSED AGAIN: `should-re-point`** (after Thurgood's re-author). The re-pointed value is right: `cmd: npx designerpunk generate`, `runContext: consumer-repo`, and a cue that regenerates theme Swift and product tokens from `designerpunk.config.ts`. **But the row's own rendering is self-contradictory in a consumer.**
-- **What renders**: *"…: `npx designerpunk generate` (run from the consumer product repo, not this repo)"*.
-- **Why it's wrong**: in the consumer rendering, *this repo* IS the consumer product repo, so the clause tells the agent not to run the command where it must run.
-- **Source**: the suffix is `render.ts:97`'s fixed phrase for `runContext: consumer-repo`. It is written from DesignerPunk's point of view, and the consumer profile inherits it unchanged.
-- **Fix**: in the consumer profile, the consumer-repo run context renders no suffix, or a consumer-true one (e.g. *"run from this product repo"*). The overlay value itself needs no change.
-- **Wider scope**: the same suffix is on the re-pointed `commands[ios-build-test]` (not in my signed population, but in the same rendered Commands section), and probably on every consumer agent's consumer-repo commands.
+**Final re-sign 2026-09-29, after Thurgood's suffix fix `7e5af8be` and regen `8ea88c2f`: ASSENT to the re-point, `surviving: []`. My refusal is RESOLVED.**
+- **The rendering now reads** *"regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*.
+- **The suffix is now true in a consumer**: "your product repo" is where the agent runs. I checked both consumer renderings (`cc/.claude/agents/kenya.md` and `kiro/.kiro/agents/kenya-prompt.md`), and neither contains "not this repo".
+- **The re-pointed function is complete**: the in-repo `npm run generate:platform-tokens` becomes the consumer's `npx designerpunk generate`, which regenerates theme Swift and product tokens from the consumer's own config. That is where the theming surface materializes.
+- **History**: no-consumer-counterpart, assented in phase two, then re-pointed by Thurgood's batch. I refused that version over the "(run from the consumer product repo, not this repo)" suffix, which contradicted itself in a consumer (`render.ts:97`). It is now fixed under the consumer profile.
 
 ## `#frontmatter:commands[swift-theme-types-tests]`
 
@@ -282,22 +279,15 @@ date: 2026-09-29
 
 signer: kenya
 disposition: superseded-by
-canonicalHash: sha256:696b3c1cfff5de9fb82d397eae3546edc83d6120842d4136ecb78b583cdf9476
+canonicalHash: sha256:764ca8ea89091bad2a0bd73aa460e2a3d31379be3cf60413ac6edeb8b5561ab7
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 date: 2026-09-29
 
-**REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
-- **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.
-- **The consumer's real Swift is elsewhere.** `npx designerpunk generate` writes the consumer's own Swift to the consumer's `outputDir`, so the shipped copies are pure trap, not a build target.
-- **Should re-point to**: the trim, re-grounded at `node_modules/@3fn/core/dist/…` (and the verdict with it), keeping its MCP replacement cue.
-- **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
-
-**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **My refusal is RESOLVED: I assent to the changed disposition (`superseded-by #how-to-use-designerpunk-tokens-on-ios`).** That unit's rendering now carries the trim's whole function: do not read the base snapshot, query the MCP, and a theme-varying token is a per-theme set. The trim's own artifact leaves the package at Task 16.3 (Ada's split).
-- **Conditional assent**: this is true from 16.3's merge, as the dependency comment above the row states. Until then, `node_modules/@3fn/core/dist/ios/DesignTokens.ios.swift` still ships, and the body glob `dist/*.ios.swift` does not match the `dist/ios/` subdirectory. If 16.3's negation slips, this row is false and I refuse it again.
-- **Valve-1 blind spot**: the `renderedHash` is the empty-piece hash. I signed on the text, reading the rendered Ground truth section directly: this trim no longer renders, and only the ComponentTokens trim remains.
-- **Canonical residual (my seat)**: `canonical/agents/kenya.md`'s `cue.negative` for this trim still says *"ORPHANED and stale (pre-Spec-094 …)"*, which is false. It doesn't render in a consumer (superseded), but it is false in the charter. Fixing it changes this entry's `canonicalHash`, so it is sequenced with the orchestrator, not done here.
-
-**Pending re-sign (2026-09-29, charter residual 3):** I corrected this trim's canonical `cue.negative` in my seat. It no longer says "ORPHANED and stale (pre-Spec-094 …)"; it now says un-themed base output, written by the in-repo generate, due to stop shipping, never read for themed values, and a consumer reads its own generate outputDir. The entry's `canonicalHash` therefore moved, and this signature is stale by construction. I will re-sign it after Thurgood's regen, together with `commands[platform-tokens]`. I am not re-signing it now.
+**Final re-sign 2026-09-29: ASSENT to `superseded-by #how-to-use-designerpunk-tokens-on-ios`, `surviving: []`.**
+- **Why it went stale**: the `canonicalHash` moved because of my own charter fix (`65563985`). The trim's `cue.negative` now reads *"… it is this repo's un-themed base output (written by the in-repo generate …) and is due to stop shipping; … for themed values … a consumer reads its own generate outputDir"*, no longer "ORPHANED and stale".
+- **The disposition still holds**: the trim does not render in a consumer. Its function (do not read the base snapshot, query the MCP, a theme-varying token is a per-theme set) is carried by the destination unit's rendering: *"never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`); query the application MCP … Theme-varying tokens are a per-theme SET"*.
+- **Valve-1 blind spot**: the `renderedHash` is the empty-piece hash, so I signed on the text after reading the rendered Ground truth section directly. Only the ComponentTokens trim renders there.
+- **Still conditional on Task 16.3**: this is true from the `dist/ios/**` negation's merge, as stated by the dependency comment above the row. Until then `node_modules/@3fn/core/dist/ios/DesignTokens.ios.swift` ships, and the body glob `dist/*.ios.swift` does not match that subdirectory.
 
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]`
 
@@ -410,3 +400,13 @@ date: 2026-09-29
   1. **Trim signatures are signed on the text.** The two trim rows' `renderedHash` is the empty-piece hash (the known blind spot), so I read the rendered Ground truth section directly.
   2. **Until Task 16.3 merges**, `node_modules/@3fn/core/dist/ios/DesignTokens.ios.swift` still ships, and the body glob `dist/*.ios.swift` does not match that subdirectory. The DesignTokens-trim assent is conditional on 16.3.
   3. **My charter's trim `cue.negative` still says "ORPHANED and stale (pre-Spec-094 …)"**, which is false. It doesn't render in a consumer (superseded), but the fix is my seat's and would change the entry's `canonicalHash`, so the orchestrator should sequence it.
+
+## Final re-sign (2026-09-29)
+
+- **Commit**: the commit that adds this section, on `task/123-u2b-fr4-kenya` from `7fc01fa2` (not pushed).
+- **Acts**: 2 of 2 from sheet § 4, both assent with `surviving: []`:
+  - `commands[platform-tokens]`: assent to the re-point, which RESOLVES my second refusal now that Thurgood's suffix fix renders "(run from your product repo)".
+  - `ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]`: assent to `superseded-by`, re-signed at the new `canonicalHash` after my own `cue.negative` fix. It is signed on the text (Valve-1 empty-hash blind spot).
+- **Standing refusals in `kenya.*`**: none.
+- **Residual**: the DesignTokens-trim assent remains conditional on Task 16.3's `dist/ios/**` negation.
+
