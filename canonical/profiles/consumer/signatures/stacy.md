@@ -144,12 +144,23 @@ verdict: assent — surviving 3/4; not surviving: `human-4`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#mcp-practice-notes` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#mcp-practice-notes` (re-pointed)
 canonicalHash: sha256:64c55f317e18e344f8b476a9c73a8aff44b2ac4bca321671c415d779b2fa26f3
-renderedHash: sha256:a23f87e92eeb1a90a00e1225e67402ae35d28d2f3ed426f7648453390ac20ce6
+renderedHash: sha256:a13bda807e0d318bb79b32f1fafb0041f5dd33637216be8701e7bb225c2a73ca
 verdict: assent — surviving 5/5
 
-All five survive: `ground-truth-computed` ("your repo's own audit and test commands"), `product-mcp-caveat` ("early in a product it may return a sparse index") and `mcp-fallback` (`specs/**/completion/`) re-grounded; the other two verbatim.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 5). All five survive. `mcp-fallback` now carries the summaries (`specs/*/task-*-summary.md`) in place of `docs/specs/`. **Over-credit correction folded in**: my run-1 signature on this row credited 5/5 when that rendering earned 4/5, because it dropped `docs/specs/` with nothing in its place. The re-authored rendering earns 5/5.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#mcp-practice-notes` (re-pointed; ROUTED)
+> canonicalHash: sha256:64c55f317e18e344f8b476a9c73a8aff44b2ac4bca321671c415d779b2fa26f3
+> renderedHash: sha256:a23f87e92eeb1a90a00e1225e67402ae35d28d2f3ed426f7648453390ac20ce6
+> verdict: assent — surviving 5/5
+>
+> All five survive: `ground-truth-computed` ("your repo's own audit and test commands"), `product-mcp-caveat` ("early in a product it may return a sparse index") and `mcp-fallback` (`specs/**/completion/`) re-grounded; the other two verbatim.
 
 ## `#ask-if-unsure`
 
@@ -287,56 +298,114 @@ No consumer counterpart, confirmed: this entry names this repo's own command (`r
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `knowledgeBases[spec-summaries]` (no-consumer-counterpart; no-consumer-counterpart)
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `knowledgeBases[spec-summaries]` (re-pointed)
 canonicalHash: sha256:01a07255b7a58397accf345c80ca08042755cd10b81e688a5c49a64baa572212
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:1e34755afa443056ebaede347a929648371ef00338f0a6d2418eec2311ec19f0
 verdict: assent — surviving 0/0
 
-No consumer counterpart, confirmed: this entry names this repo's own knowledge-base glob. I assent that nothing survives.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 0). Assent to the re-pointed entry: `docs/specs/**` → `specs/*/task-*-summary.md`. That is the summary location TCP's tier selection now names.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `knowledgeBases[spec-summaries]` (no-consumer-counterpart; no-consumer-counterpart)
+> canonicalHash: sha256:01a07255b7a58397accf345c80ca08042755cd10b81e688a5c49a64baa572212
+> renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+> verdict: assent — surviving 0/0
+>
+> No consumer counterpart, confirmed: this entry names this repo's own knowledge-base glob. I assent that nothing survives.
 
 ## `#frontmatter:writeScope[docs/specs/**]`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `writeScope[docs/specs/**]` (no-consumer-counterpart; no-consumer-counterpart)
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `writeScope[docs/specs/**]` (superseded-by)
 canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 verdict: assent — surviving 0/0
 
-No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 0). Assent to `superseded-by writeScope[.kiro/specs/**]`, which renders as `specs/**` and covers the summary location.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `writeScope[docs/specs/**]` (no-consumer-counterpart; no-consumer-counterpart)
+> canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
+> renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+> verdict: assent — surviving 0/0
+>
+> No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
 
 ## `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` (re-pointed)
 canonicalHash: sha256:b9f4104614bde7bf3dcf7fc95a316fa126266e2816cc636ddabc2a555d94ffb1
-renderedHash: sha256:62fd761373b55d6c61af941dadd08c48b662f4b5edb1572607b6fee1d268d579
-verdict: refuse: should-re-point
+renderedHash: sha256:dbacc688d209f5bf91e8911730fc5d9714173d4613f0ee7e704e977fcf5cb760
+verdict: assent — surviving 1/1
 
-`authority-precedence` has a consumer counterpart, and the rendering drops it. The rendering names the authority (the team's own recorded decision, on whose date the owed-set query keys) but not its precedence over this text. **Should re-point**: where this text and the recorded decision disagree, the decision governs. This is the same finding as consumer-Thurgood's Q5 preamble.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** `authority-precedence` now survives, re-grounded to the team's recorded decision.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` (re-pointed; ROUTED)
+> canonicalHash: sha256:b9f4104614bde7bf3dcf7fc95a316fa126266e2816cc636ddabc2a555d94ffb1
+> renderedHash: sha256:62fd761373b55d6c61af941dadd08c48b662f4b5edb1572607b6fee1d268d579
+> verdict: refuse: should-re-point
+>
+> `authority-precedence` has a consumer counterpart, and the rendering drops it. The rendering names the authority (the team's own recorded decision, on whose date the owed-set query keys) but not its precedence over this text. **Should re-point**: where this text and the recorded decision disagree, the decision governs. This is the same finding as consumer-Thurgood's Q5 preamble.
 
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed; ROUTED)
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
 canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
-renderedHash: sha256:9125e2b3608732006279ff89016052966e29a4b5a28369c25aba788f78e472fe
-verdict: refuse: should-re-point
+renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
+verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
 
-The LENS row (`trigger-lens`) keeps question 6 but replaces the **five verifiability questions** with one summary ("can each criterion be verified from the repo"). The five questions are: a criteria set exists; evidence of a named kind could exist; some state of the world reads UNMET; "met" is decidable without the author; and the task text promises no artifact the criteria do not cover. They are repo-independent and they are the seat's content. Only the pointer to the lifecycle amendment is repo-bound. **Should re-point**: carry the five questions inline. For the record, the rest of the unit would assent at `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` (5/13). Not surviving would be RELEASE (its Q2 guard), CLOSEOUT (the rider-(a) discharge), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST, all repo-bound.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** The LENS row now carries the five verifiability questions inline, plus question 6.
+- **`trigger-lens` is still not credited** under the crediting rule (run-2 summary): its M4 plan-time clause and its retire-to-emissions clause are dropped with nothing in their place. Both are keyed to this repo's instruments parser, so there is no consumer counterpart to re-point to, and no refusal follows.
+- The other drops are unchanged from run 1: RELEASE (its Q2 guard), CLOSEOUT (rider (a)), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST.
+- Surviving: `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing`, `merge-path-status`.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed; ROUTED)
+> canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+> renderedHash: sha256:9125e2b3608732006279ff89016052966e29a4b5a28369c25aba788f78e472fe
+> verdict: refuse: should-re-point
+>
+> The LENS row (`trigger-lens`) keeps question 6 but replaces the **five verifiability questions** with one summary ("can each criterion be verified from the repo"). The five questions are: a criteria set exists; evidence of a named kind could exist; some state of the world reads UNMET; "met" is decidable without the author; and the task text promises no artifact the criteria do not cover. They are repo-independent and they are the seat's content. Only the pointer to the lifecycle amendment is repo-bound. **Should re-point**: carry the five questions inline. For the record, the rest of the unit would assent at `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` (5/13). Not surviving would be RELEASE (its Q2 guard), CLOSEOUT (the rider-(a) discharge), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST, all repo-bound.
 
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 
 signer: stacy
 date: 2026-09-29
-row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference` (no-consumer-counterpart; no-consumer-counterpart)
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference` (re-pointed)
 canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-verdict: refuse: should-re-point
+renderedHash: sha256:f960597172711b89e2548d4dbf51a86ebb87d2dabad202c4ca9b49e0418ca42d
+verdict: assent — surviving 2/5; not surviving: `carve-out-scope`, `carve-out-falsification`, `carve-out-no-silent-rescope`
 
-`no-consumer-counterpart` is not true of the whole unit. The steward-verb enumeration and its two falsification conditions are repo-bound, because a consumer does not steward DesignerPunk's docs corpus. But `carve-out-routing-test` ("was this claim verified?" → Stacy; "what must a completion doc contain?" → Thurgood) and `carve-out-tiebreak` (ambiguity resolves to Stacy, the seam fails toward the verifier) are the seam's arbitration, and a consumer's Stacy/Thurgood pair has the same seam. **Should re-point**: keep the routing test and the tiebreak, and drop the verb enumeration.
+**Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved, by a changed disposition** (no-consumer-counterpart → re-pointed). The routing test and the tiebreak now survive verbatim. The verb enumeration, its falsification conditions and the re-scope clause are repo-bound, and they are dropped. Non-blocking, for Thurgood: the unit's heading still reads "The steward-verb carve-out (… enumerated …)" over content that no longer enumerates anything.
+
+**Prior signature record (superseded)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference` (no-consumer-counterpart; no-consumer-counterpart)
+> canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+> renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+> verdict: refuse: should-re-point
+>
+> `no-consumer-counterpart` is not true of the whole unit. The steward-verb enumeration and its two falsification conditions are repo-bound, because a consumer does not steward DesignerPunk's docs corpus. But `carve-out-routing-test` ("was this claim verified?" → Stacy; "what must a completion doc contain?" → Thurgood) and `carve-out-tiebreak` (ambiguity resolves to Stacy, the seam fails toward the verifier) are the seam's arbitration, and a consumer's Stacy/Thurgood pair has the same seam. **Should re-point**: keep the routing test and the tiebreak, and drop the verb enumeration.
 
 ## Signing run summary (2026-09-29, phase two, run 1)
 
