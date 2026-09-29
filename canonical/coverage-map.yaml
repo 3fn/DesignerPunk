@@ -1772,6 +1772,54 @@
 - surface: canonical/profiles/consumer/lina.overlay.md
   checks:
     - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/_shared.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/ada.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/agent-directory.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/ai-collaboration-principles.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/civitas-system-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/core-goals.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/data.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/kenya.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/leonardo.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/lina.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/sparky.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/spec-feedback-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/stacy.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/start-up-tasks.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/task-completion-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/signatures/thurgood.md
+  checks:
+    - 122-diff-guard
 - surface: canonical/profiles/consumer/sparky.dispositions.yaml
   checks:
     - 122-diff-guard

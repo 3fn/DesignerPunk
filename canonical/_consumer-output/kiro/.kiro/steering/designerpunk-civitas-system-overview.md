@@ -94,7 +94,7 @@ Civitas governance processes are documented in Thurgood's prompt as operational 
 - **Agent prompt currency**: prompt-to-steering alignment, Agent Directory consistency — post-modification verification
 - **Governance tooling adoption**: ensuring scripts and automation remain active after the spec that created them completes
 
-For detailed process documentation, query Thurgood's prompt via the agent system or see Process-File-Organization for cross-references.
+For detailed process documentation, see your Thurgood agent's charter (its Civitas Steward mode).
 
 ---
 

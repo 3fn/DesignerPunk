@@ -433,10 +433,10 @@ Steering docs and MCP-served documentation are the shared knowledge layer for al
 
 ### The Process
 
-1. **Propose**: When you identify that a Component-Family doc or steering doc needs updating, draft the proposed change.
+1. **Propose**: When you identify that one of your team's component docs or shared docs needs updating, draft the proposed change. A change to a DesignerPunk Component-Family doc (shipped in the installed package) is proposed upstream to DesignerPunk, never applied locally.
 2. **Present**: Show your human lead the proposal with: what changed; why; the surviving counter-argument (what fold-back could not absorb); the impact.
 3. **Vote**: Your human lead approves, modifies, or rejects.
-4. **Apply**: If approved, apply precisely as approved. If rejected, respect the decision and document the alternative.
+4. **Apply**: If approved, apply precisely as approved — to your team's docs; an upstream proposal is filed with DesignerPunk, never applied by editing the installed package. If rejected, respect the decision and document the alternative.
 
 ### What This Means in Practice
 

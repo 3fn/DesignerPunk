@@ -62,7 +62,7 @@
         88,
         100
       ],
-      "op": "passthrough",
+      "op": "render",
       "source": ".kiro/steering/Civitas-System-Overview.md#governance-processes"
     },
     {

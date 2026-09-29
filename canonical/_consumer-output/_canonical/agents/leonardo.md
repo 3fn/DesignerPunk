@@ -155,6 +155,10 @@ routes:
     - when: you changed component schemas, contracts, or component-meta
       tool: rebuild_index
       mcp: application
+    - when: you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)
+      tool: get_section
+      mcp: docs
+      replaces: technology-stack
 commands:
   - class: generate-tokens
     runContext: consumer-repo

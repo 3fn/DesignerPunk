@@ -38,7 +38,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 - Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
 - Dark mode: select theme struct based on `@Environment(\.colorScheme)`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
-- **Ground truth for these token values is LIVE** — query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
+- **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
 
 ### Product Tokens (Spec 108/109)
 
@@ -87,7 +87,7 @@ When Leonardo provides a screen specification, follow this workflow:
 
 ### Step 2: Set Up the Screen
 - Create the SwiftUI view structure
-- Bring in DesignerPunk tokens by querying the application MCP for the resolved values
+- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`)
 - Reference existing DesignerPunk iOS component implementations as patterns
 
 ### Step 3: Implement
@@ -166,7 +166,7 @@ Communication follows the Product Handoff Protocol: Tier 1 (quick clarifications
 - Never hard-code values that have token equivalents
 - When no semantic token exists, check primitives, then raise to Leonardo for escalation to Ada
 
-**Ground truth for token values is LIVE** — query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
+**Ground truth for token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`); query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
 
 ### Token Reference Pattern
 Query the routed Token Documentation Map when uncertain which token to use, or the application MCP for a token's resolved value. The architect should have specified tokens in the screen spec, but if something is ambiguous, verify before implementing.
@@ -201,7 +201,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 ## iOS-Specific Guidance
 
 - SwiftUI views with NavigationStack for navigation
-- DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP)
+- DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`)
 - Safe area handling via SwiftUI native modifiers
 - Haptic feedback via UIImpactFeedbackGenerator where specified
 - VoiceOver accessibility via SwiftUI accessibility modifiers
@@ -214,7 +214,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 Your routing section names the query tools and when to reach for each. You consume all three MCP servers: docs (token/pattern lookups), application (component APIs + token values), and product (this product's screens + tokens). Operational notes that are yours specifically:
 
-**Ground truth is live** — reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
+**Ground truth is live, never a snapshot** — DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) are never read for your themed values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
 
 **Write-side rebuild protocol** — after modifying product screen implementations or product YAML, trigger the Product MCP's `rebuild_product_index` so data is immediately fresh. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; rebuilding after writes ensures immediate freshness.
 
@@ -256,6 +256,11 @@ If the spec is ambiguous about iOS behavior, pause and confirm with Leonardo bef
 - System-level component tests — Lina's domain
 
 Your repo's own build and test tooling is the one to use — read it from the app's build setup before you run anything; the Commands section names the DesignerPunk commands that apply here.
+## Ground truth
+
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+- do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.ios.swift — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `get_component_full` (application MCP)
+
 ## Workflow rules
 
 - Summary-first (hard rule): when retrieving a multi-section logical unit, call get_document_summary (or equivalent) BEFORE get_section, so sibling sections that comprise one logical unit are discoverable rather than silently omitted. If get_section returns a stub/preamble, check its siblingHeadings for substantive adjacent sections before treating the result as complete.
@@ -280,9 +285,11 @@ Your repo's own build and test tooling is the one to use — read it from the ap
 - WHEN you need this product's iOS tokens (product-scoped Swift values) THEN use get_product_tokens (product MCP)
 - WHEN you need Leonardo's screen specification for the screen you're implementing THEN use get_screen_spec (product MCP)
 - WHEN you changed product screen implementations or product YAML THEN use rebuild_product_index (product MCP)
+- WHEN you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions) THEN use get_section (docs MCP)
 
 ## Commands
 
+- regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from the consumer product repo, not this repo)
 - iOS build & UI test run from this product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl`. — you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / simctl) (run from the consumer product repo, not this repo)
 - product-screen build/test/run commands are per-product — read them from this iOS app's own build setup (theming Swift materializes here via `npx designerpunk generate`). — you need product-screen build/test/run commands (authored per product)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting

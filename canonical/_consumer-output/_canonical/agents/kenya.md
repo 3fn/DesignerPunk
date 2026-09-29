@@ -11,6 +11,16 @@ ambient:
           section: System-First Value Selection
           mustContain:
             - If a system token (semantic or primitive) exists within perceptual tolerance of your intended value, use `ref:` instead.
+  groundTruthManifest:
+    verdict: none-trim-stale-snapshots
+    trims:
+      - artifact: dist/ComponentTokens.ios.swift
+        fires: unconditional
+        cue:
+          negative: do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.ios.swift — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory
+          tool: get_component_full
+          mcp: application
+          replaces: node_modules/@3fn/core/dist/ComponentTokens.ios.swift
 routes:
   docs:
     - id: token-doc-map
@@ -78,7 +88,16 @@ routes:
     - when: you changed product screen implementations or product YAML
       tool: rebuild_product_index
       mcp: product
+    - when: you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)
+      tool: get_section
+      mcp: docs
+      replaces: technology-stack
 commands:
+  - name: platform-tokens
+    cmd: npx designerpunk generate
+    runContext: consumer-repo
+    source: '@3fn/core (the `designerpunk` bin)'
+    cue: regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`
   - class: ios-build-test
     runContext: consumer-repo
     gap: 'iOS build & UI test run from this product app''s ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl`.'
@@ -161,7 +180,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 - Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
 - Dark mode: select theme struct based on `@Environment(\.colorScheme)`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
-- **Ground truth for these token values is LIVE** — query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
+- **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens
 
 ### Product Tokens (Spec 108/109)
 
@@ -210,7 +229,7 @@ When Leonardo provides a screen specification, follow this workflow:
 
 ### Step 2: Set Up the Screen
 - Create the SwiftUI view structure
-- Bring in DesignerPunk tokens by querying the application MCP for the resolved values
+- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`)
 - Reference existing DesignerPunk iOS component implementations as patterns
 
 ### Step 3: Implement
@@ -289,7 +308,7 @@ Communication follows the Product Handoff Protocol: Tier 1 (quick clarifications
 - Never hard-code values that have token equivalents
 - When no semantic token exists, check primitives, then raise to Leonardo for escalation to Ada
 
-**Ground truth for token values is LIVE** — query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
+**Ground truth for token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`); query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
 
 ### Token Reference Pattern
 Query the routed Token Documentation Map when uncertain which token to use, or the application MCP for a token's resolved value. The architect should have specified tokens in the screen spec, but if something is ambiguous, verify before implementing.
@@ -324,7 +343,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 ## iOS-Specific Guidance
 
 - SwiftUI views with NavigationStack for navigation
-- DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP)
+- DesignerPunk tokens consumed as Swift constants from `DesignTokens` (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`)
 - Safe area handling via SwiftUI native modifiers
 - Haptic feedback via UIImpactFeedbackGenerator where specified
 - VoiceOver accessibility via SwiftUI accessibility modifiers
@@ -337,7 +356,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 Your routing section names the query tools and when to reach for each. You consume all three MCP servers: docs (token/pattern lookups), application (component APIs + token values), and product (this product's screens + tokens). Operational notes that are yours specifically:
 
-**Ground truth is live** — reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
+**Ground truth is live, never a snapshot** — DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) are never read for your themed values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
 
 **Write-side rebuild protocol** — after modifying product screen implementations or product YAML, trigger the Product MCP's `rebuild_product_index` so data is immediately fresh. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; rebuilding after writes ensures immediate freshness.
 

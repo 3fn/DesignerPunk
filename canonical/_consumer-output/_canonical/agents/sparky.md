@@ -92,6 +92,10 @@ routes:
     - when: you changed product screen implementations or product YAML
       tool: rebuild_product_index
       mcp: product
+    - when: you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)
+      tool: get_section
+      mcp: docs
+      replaces: technology-stack
 commands:
   - name: consumer-generate
     cmd: npx designerpunk generate
@@ -351,7 +355,7 @@ Your routing section names the query tools and when to reach for each. You consu
 
 **Write-side rebuild protocol** — after modifying product screen implementations or product YAML, trigger the Product MCP's `rebuild_product_index` so data is immediately fresh. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; rebuilding after writes ensures immediate freshness.
 
-**Fallback** — if a server is unavailable: acknowledge the limitation, fall back to reading the relevant source or governance files directly (and Grep/Glob over `src/components/` for web implementations and `.test.ts` files for test patterns), and check index health if queries consistently fail.
+**Fallback** — if a server is unavailable: acknowledge the limitation, fall back to reading the relevant source or governance files directly (the installed package's component metadata, `node_modules/@3fn/core/src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}`, and its type declarations, `node_modules/@3fn/core/dist/browser-entry.d.ts`, for component APIs; its governance docs under `node_modules/@3fn/core/.kiro/steering/`; and Grep/Glob over your own `.test.ts` files for test patterns), and check index health if queries consistently fail.
 
 ---
 

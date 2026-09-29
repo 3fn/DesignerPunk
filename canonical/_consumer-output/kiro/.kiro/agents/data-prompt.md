@@ -39,7 +39,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 - Dark mode: select theme instance based on `isSystemInDarkTheme()`
 - `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
 - Static tokens (spacing, sizing, radius, typography, motion) remain on the `DesignTokens` object — no CompositionLocal needed
-- **Ground truth for these token values is LIVE** — query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
+- **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
 
 ### Product Tokens (Spec 108/109)
 
@@ -88,7 +88,7 @@ When Leonardo provides a screen specification, follow this workflow:
 
 ### Step 2: Set Up the Screen
 - Create the Jetpack Compose composable structure
-- Bring in DesignerPunk tokens by querying the application MCP for the resolved values
+- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
 - Reference existing DesignerPunk Android component implementations as patterns
 
 ### Step 3: Implement
@@ -167,7 +167,7 @@ Communication follows the Product Handoff Protocol: Tier 1 (quick clarifications
 - Never hard-code values that have token equivalents
 - When no semantic token exists, check primitives, then raise to Leonardo for escalation to Ada
 
-**Ground truth for token values is LIVE** — query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
+**Ground truth for token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`); query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
 
 ### Token Reference Pattern
 Query the routed Token Documentation Map when uncertain which token to use, or the application MCP for a token's resolved value. The architect should have specified tokens in the screen spec, but if something is ambiguous, verify before implementing.
@@ -202,7 +202,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 ## Android-Specific Guidance
 
 - Jetpack Compose composables with Material 3 as base
-- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP)
+- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
 - System bar handling via Compose insets
 - Haptic feedback via HapticFeedbackType where specified
 - TalkBack accessibility via Compose Semantics
@@ -273,6 +273,11 @@ If the spec is ambiguous about Android behavior, pause and confirm with Leonardo
 - System-level component tests — Lina's domain
 
 Your repo's own build and test tooling is the one to use — read it from the app's build setup before you run anything; the Commands section names the DesignerPunk commands that apply here.
+## Ground truth
+
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+- do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.android.kt — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `get_component_full` (application MCP)
+
 ## Workflow rules
 
 - Summary-first (hard rule): when retrieving a multi-section logical unit, call get_document_summary (or equivalent) BEFORE get_section, so sibling sections that comprise one logical unit are discoverable rather than silently omitted. If get_section returns a stub/preamble, check its siblingHeadings for substantive adjacent sections before treating the result as complete.
@@ -296,9 +301,11 @@ Your repo's own build and test tooling is the one to use — read it from the ap
 - WHEN you need this product's Android tokens (product-scoped Kotlin values) THEN use get_product_tokens (product MCP)
 - WHEN you need Leonardo's screen specification for the screen you're implementing THEN use get_screen_spec (product MCP)
 - WHEN you changed product screen implementations or product YAML THEN use rebuild_product_index (product MCP)
+- WHEN you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions) THEN use get_section (docs MCP)
 
 ## Commands
 
+- regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from the consumer product repo, not this repo)
 - Android build & instrumentation run from this product app's android/ dir: `./gradlew assembleDebug` | `./gradlew test` | `./gradlew connectedAndroidTest` | `./gradlew connectedDebugAndroidTest` — you reach for an Android build, unit-test, or instrumentation (connected) run (run from the consumer product repo, not this repo)
 - product-screen build/test/run commands are per-product — read them from this Android app's own build setup. — you need product-screen build/test/run commands (authored per product)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting

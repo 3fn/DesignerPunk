@@ -215,7 +215,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 Your routing section names the query tools and when to reach for each. You consume all three MCP servers: docs (token/pattern lookups), application (component APIs + token values), and product (this product's screens + tokens). Operational notes that are yours specifically:
 
-**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is orphaned and stale. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
+**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is this repo's un-themed base output (written by the in-repo generate, due to stop shipping), never read for themed values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
 
 **Write-side rebuild protocol** — after modifying product screen implementations or product YAML, trigger the Product MCP's `rebuild_product_index` so data is immediately fresh. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; rebuilding after writes ensures immediate freshness.
 

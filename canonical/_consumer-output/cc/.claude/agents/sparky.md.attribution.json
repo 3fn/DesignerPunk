@@ -709,23 +709,23 @@
         537
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[8]"
     },
     {
       "lines": [
         538,
-        539
+        538
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands"
+      "source": "canonical/agents/sparky.md#frontmatter:routes"
     },
     {
       "lines": [
-        540,
+        539,
         540
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[consumer-generate]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -733,7 +733,7 @@
         541
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[product-screen-commands]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[consumer-generate]"
     },
     {
       "lines": [
@@ -741,7 +741,7 @@
         542
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[product-screen-commands]"
     },
     {
       "lines": [
@@ -749,68 +749,76 @@
         543
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
         544,
-        545
+        544
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        545,
+        546
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        546,
-        546
+        547,
+        547
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:commands"
     },
     {
       "lines": [
-        547,
-        550
+        548,
+        551
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        551,
-        551
+        552,
+        552
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:writeScope[.kiro/specs/**]"
     },
     {
       "lines": [
-        552,
-        554
+        553,
+        555
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        555,
-        558
+        556,
+        559
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:preflight"
     },
     {
       "lines": [
-        559,
-        559
+        560,
+        560
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        560,
-        560
+        561,
+        561
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:preflight"

@@ -1081,23 +1081,23 @@
         457
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[21]"
     },
     {
       "lines": [
         458,
-        459
+        458
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes"
     },
     {
       "lines": [
-        460,
+        459,
         460
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[generate-tokens]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -1105,7 +1105,7 @@
         461
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[validate-product-tokens]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[generate-tokens]"
     },
     {
       "lines": [
@@ -1113,7 +1113,7 @@
         462
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[init-product]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[validate-product-tokens]"
     },
     {
       "lines": [
@@ -1121,7 +1121,7 @@
         463
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[sync-product]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[init-product]"
     },
     {
       "lines": [
@@ -1129,7 +1129,7 @@
         464
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[sync-product]"
     },
     {
       "lines": [
@@ -1137,68 +1137,76 @@
         465
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
         466,
-        467
+        466
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        467,
+        468
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        468,
-        468
+        469,
+        469
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:commands"
     },
     {
       "lines": [
-        469,
-        472
+        470,
+        473
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        473,
-        473
+        474,
+        474
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:writeScope[.kiro/specs/**]"
     },
     {
       "lines": [
-        474,
-        476
+        475,
+        477
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        477,
-        480
+        478,
+        481
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight"
     },
     {
       "lines": [
-        481,
-        481
+        482,
+        482
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        482,
-        482
+        483,
+        483
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight"

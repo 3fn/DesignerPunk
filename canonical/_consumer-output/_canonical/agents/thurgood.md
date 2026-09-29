@@ -333,7 +333,7 @@ Ground truth for this stewardship is COMPUTED at audit time by your repo's own c
 
 ## The Q5 Boundary: Execution-Claims Verification Is Stacy's
 
-**Authority**: your team's own decision to run claims audits, recorded where your team records such decisions.
+**Authority**: your team's own decision to run claims audits, recorded where your team records such decisions; where this text and that recorded decision disagree, the decision governs.
 
 ### The charter cut (ratified verbatim)
 
@@ -397,10 +397,10 @@ Steering docs and MCP-served documentation are the shared knowledge layer for al
 
 ### The Process
 
-1. **Propose**: When you identify that a governance doc, process doc, or steering doc needs updating, draft the proposed change.
+1. **Propose**: When you identify that one of your team's governance, process or shared docs needs updating, draft the proposed change. A change to a DesignerPunk doc shipped in the installed package is proposed upstream to DesignerPunk, never applied locally.
 2. **Present**: Show your human lead the proposal with: what changed; why; the surviving counter-argument (what fold-back could not absorb); the impact.
 3. **Vote**: Your human lead approves, modifies, or rejects.
-4. **Apply**: If approved, apply precisely as approved. If rejected, respect the decision and document the alternative.
+4. **Apply**: If approved, apply precisely as approved — to your team's docs; an upstream proposal is filed with DesignerPunk, never applied by editing the installed package. If rejected, respect the decision and document the alternative.
 
 ### What This Means in Practice
 

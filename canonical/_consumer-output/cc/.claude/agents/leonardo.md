@@ -454,6 +454,7 @@ If there are questions, be proactive and ask — don't assume.
 - WHEN specifying a screen's state model — resolving what a domain object is and which screens reference it THEN use mcp__designerpunk-product__get_domain_object (product MCP)
 - WHEN selecting or composing a product one-off component — retrieving its schema and contracts to spec against THEN use mcp__designerpunk-product__get_product_component (product MCP)
 - WHEN you changed component schemas, contracts, or component-meta THEN use mcp__designerpunk-application__rebuild_index (application MCP)
+- WHEN you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions) THEN use mcp__designerpunk-docs__get_section (docs MCP)
 
 ## Commands
 

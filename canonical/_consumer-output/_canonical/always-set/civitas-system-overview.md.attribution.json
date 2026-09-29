@@ -54,7 +54,7 @@
         83,
         95
       ],
-      "op": "passthrough",
+      "op": "render",
       "source": ".kiro/steering/Civitas-System-Overview.md#governance-processes"
     },
     {
