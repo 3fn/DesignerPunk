@@ -12,7 +12,7 @@
     - `__fixtures__/g1-renderings/manifest.yaml`: the D fixture's record pin moves to `sha256:5055f134…`, the re-confirmed record. D's expected score, **1/13 ROUTES, is unchanged under the new record**: its score test passed before the re-pin, and only the pin test had tripped.
     - `__fixtures__/semantics-guard/canonical/agents/semguard.md` + its `README.md`: the copied `#the-trigger-set-…` unit is re-copied from `stacy.md` (blob `60dbe42a…`). S, the overlay pins and the rows are unaffected.
 
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 7b6009d04b23b7fca3e72b060710c12d810b6546 — https://github.com/3fn/DesignerPunk/actions/runs/36558445010, https://github.com/3fn/DesignerPunk/actions/runs/36558452224, https://github.com/3fn/DesignerPunk/actions/runs/36558459358, https://github.com/3fn/DesignerPunk/actions/runs/36558466705, https://github.com/3fn/DesignerPunk/actions/runs/36558474180, https://github.com/3fn/DesignerPunk/actions/runs/36558481410
 
 ## What changed
 
@@ -66,3 +66,49 @@
 3. **Frontmatter YAML comments are not carried into `_canonical/`.** The derived frontmatter is re-serialized from the pruned object. Steward comments can carry repo specifics, so dropping them is the safe direction. Surfaced for Task 16, which consumes `_canonical/`.
 4. **`_canonical/` writes an attribution sidecar**, so `renderedHashOf` now includes the derived canonical's body piece for body rows. His test's piece list was updated to match.
 5. **The two #239 re-derivations** (above): the tripwires fired as designed, and each was re-derived explicitly rather than loosened.
+
+*CI provenance (docs-only addendum, 2026-09-29)*: all six runs dispatched at `7b6009d0` concluded `success` (Consumer Guard, 125B Tool-Boot Smoke, Section Citation Guard, Agent Generator (122), Package Name Drift Detection, Lane Timing). The run results above stay local; the CI line supports only "the required checks were green at branch head `7b6009d0`". Rule 5 holds: this addendum commit follows `7b6009d0` directly and changes only this doc.
+
+## Reads for the orchestrator (2026-09-29)
+
+### Q1 — what `_canonical/` holds for a re-pointed frontmatter entry. **Verdict: (b), YAML-valued entry overlays.**
+
+**Why (b).**
+- `_canonical/agents/<a>.md` is the **derived canonical charter**. What ships is derived (Q5, C22), and Task 16's consumer lane (`emitConsumer`, mine) renders its per-target files from it.
+- So its frontmatter must be a real frontmatter: typed values that the adapters render per target. An `## @entry` overlay today is **rendered prose** (15.0 criterion (b)), and prose cannot be turned back into a YAML value.
+- **The machine-read surfaces decide it.** Kiro's JSON config (`write.allowedPaths`, `tools`, `resources`) is built from frontmatter *values*, and so is CC's `tools:` list. A consumer re-grounding of `writeScope[.kiro/specs/**]` reaches `allowedPaths` only as a value.
+- Under (b), Task 16's lane is simply the adapters rendering the derived charter. With no second splice step, and the invariant that target renderings = rendering(derive(x)) becomes testable.
+
+**Why not (a), a companion `_canonical/agents/<a>.overlay.md`.**
+- The derived frontmatter would **lose** the re-pointed entry. The consumer's Kiro config would then either keep our steward value (if the lane falls back to canonical) or drop the permission entirely (if it does not).
+- Every consumer-side renderer would also have to splice prose that is already rendered back into its own section format. That is a second rendering path, which is the drift C22 exists to prevent.
+
+**Why not (c), frontmatter derivation left to Task 16.**
+- It is non-compliant with C22 / L-D4: the shipped canonical would carry our commands and write scope.
+- It only moves the same decision into my own parent, later.
+
+**Residual (surviving, not absorbed).**
+- (b) reopens 15.0's settled `## @entry` semantics. The body becomes a YAML value (pin unchanged, `hashEntry` of the canonical value), so Task 15's 15.0 criterion (b) needs an erratum.
+- It also reopens `spans.ts`'s re-pointed-leaf rendering. Under the consumer profile, the adapter's normal per-kind renderer should render the substituted **value**, not insert overlay text verbatim.
+- My Task 14 E-fm fixture and bites must move to values and be re-run. The overlay texts in `__fixtures__/semantics-guard/` are prose bullets today.
+- **Authoring cost rises**: a re-grounded command is a full command object, while a glob is a string, so each field type needs its own value shape and schema check.
+- **(a) is cheaper today, and that is the real counter.** I still pick (b), because (a)'s saving is paid back in Task 16 as a second rendering path plus a Kiro config that cannot carry re-grounded permissions.
+- **The pick is yours.** In `derive()` the change is small either way. Under (b), the entry's value is substituted where it is currently refused (`repointedEntryPendingMessage`); under (a), the entry is dropped and a companion file emitted.
+
+### Q2 — scoping on the adapters + `spans.ts` grant for 15.3–15.5. **ACCEPT, AMENDED.**
+
+**Thurgood's draft**: "under the consumer profile, nothing renders that no surviving member sourced", plus the Kiro JSON consumer form at 15.3. I accept both, amended with three clauses for the row text:
+1. *"…under the consumer profile, nothing renders that no surviving member sourced; **under the steward profile every output is byte-identical** (Task 10's goldens pass unchanged, and the diff-guard output hash moves only by the consumer root's own files)."*
+2. *"**`semantics-guard.test.ts` (Task 14, the per-target routing arbiter) stays green** after every adapter or `spans.ts` edit, and a new per-target emission path (e.g. `emitIdentityMembers`) routes through `emitSpans`."* A new adapter method is exactly the surface the guard exists for.
+3. *"**Shared-catalog members read their `_shared.dispositions.yaml` rows under the consumer profile** (dropped / retained; re-pointed per the Q1 ruling)."* The Instruments block's "Found later" names it; the row should too.
+
+**On the Kiro JSON consumer form at 15.3**: under Q1 (b) it builds from the derived frontmatter's values, so a re-grounded `writeScope` glob lands in `allowedPaths`. Under (a) it cannot, which is the Q1 point above. The form should be decided after Q1 is ruled, or the 15.3 row should say it follows the Q1 ruling.
+
+### `init.ts:94` `attachedTargets`. **ACCEPT as a Task 16 row, AMENDED.**
+
+**Thurgood's draft**: "`attachedTargets` names only the targets emitted; bare init = `[<defaultTarget>]`". Accepted, amended to:
+
+> *"`attachedTargets` names only the targets emitted; bare `init` = `[defaultTarget]`, **read through `loadConsumerProfile` (no literal target list — C12)**; `init.test.ts:365`'s two-target expectation moves to the `--target=kiro` / two-target case."*
+
+**Consequence for Task 15, stated so it is not discovered at the claims pass**: Task 15's C1 criterion, *"the sweep for other declared target lists returns only imports"*, cannot read ✅ while `init.ts:94` holds a literal. Its row should read **⚠️, linking this Task 16 row**, unless the sweep's scope is amended to name `src/cli/**` as Task 16's. That is Thurgood's call as the criterion's author, and I raise it only so the parent doc does not reach it by surprise.
+
