@@ -197,3 +197,16 @@ signer: ada
   - (b) Add Lina's and Thurgood's scoping clause to Ada's `#what-this-means-in-practice`. That changes its renderedHash, so I re-sign it too.
   - (a) and (b) together is the closest match to the siblings.
   - The `scope-docs` observation under `#in-scope` is the same seam and may ride the same re-author.
+
+## `#frontmatter:commands[functional-suite]`
+
+signer: ada
+
+**REFUSE — `should-re-point`** (refusal 2 of this run). The disposition should be `superseded-by #what-you-dont-own`, not `no-consumer-counterpart`.
+- The entry's function (cue: "run the functional lanes to validate token work"; cmd `npm test`) **survives, re-grounded, elsewhere in the consumer rendering**. `#what-you-dont-own` renders "Run token tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything."
+- That sentence is where this row's function went. The `#what-you-dont-own` removal (subtraction-1) deletes exactly the pointer "Your test commands (with their triggering cues) are in the Commands section." together with the Jest line, and replaces it with that sentence.
+- **Req 11.6.5e, scope clause**: "A function that survives only elsewhere takes a disposition for this unit (`superseded-by`, or `re-pointed` with that destination)". An absence assent would attest a no-counterpart that I judge false. It would also inflate the recorded no-consumer-counterpart rate (B-U2 M1).
+- **Resolution I expect**: re-dispose as `superseded-by` with destination `#what-you-dont-own`, then I re-sign under C1.
+- **This is a contested-classification refusal, surfaced as a fork, not a settled defect.** The other reading is that a commands entry is its exact `cmd`, which has no consumer counterpart. The consumer rendering is identical under either label.
+  - The pattern is profile-wide: five agents carry `commands[functional-suite]` as no-consumer-counterpart.
+  - If Peter or Thurgood rule the entry-grain reading, that ruling is the re-authoring, and I re-sign as an absence assent.
