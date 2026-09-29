@@ -92,3 +92,18 @@ assent: surviving [] — no-consumer-counterpart confirmed (subtraction-4)
 - `docs/specs/**` is where this repo keeps parent-task summary docs, one half of our two-document completion workflow.
 - My consumer write scope keeps its real counterpart: `.kiro/specs/**` is re-pointed to `specs/**` (DD15, where the starter specs live).
 - A second, summary-doc write root has no consumer meaning.
+
+## `#frontmatter:routes.cues[21]`
+
+signer: leonardo
+canonicalHash: sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+refuse: should-re-point
+
+**REFUSED.** The row is the cue *"you need the technology-stack reference (frameworks, build tooling, versions)"* → `get_section` (docs MCP), `replaces: technology-stack`. It is disposed `no-consumer-counterpart`, citing subtraction-1. **I refuse because this cue has a consumer counterpart, and the cite does not apply** (Req 11.4.1; mis-attribution is a finding, not only non-attribution, per clause (iii)).
+- **The cite does not apply.** Subtraction-1 covers repo-internal tooling invocations. This cue invokes the docs MCP's `get_section`, which my consumer seat keeps (`toolSubset.designerpunk-docs[get_section]` is retained). The target `governance/technology-stack.md` ships in the package (`files[]` includes `governance/`), and the shipped docs MCP serves it (`mcp-server/src/index.ts`, `DEFAULT_STEERING_DIR = 'governance/'`). The route resolves in a consumer install.
+- **The doc is mostly the consumer's stack too.** Its § "Platform Technologies" (Swift/SwiftUI, Kotlin/Compose, Web Components with logical-property CSS), § "Web CSS Standards" and § "True Native Architecture" are the stack a consumer's product screens are built on when they are built with DesignerPunk components. My own retained `#what-consistent-means-in-true-native` unit already assumes that stack for the consumer. Dropping the route leaves the charter asserting the stack with no way to look it up.
+- **What is repo-bound**: only § "Build & Runtime Tooling" (`tsx`, the module-resolution ESLint rule), and the cue's *"build tooling"* wording that points at it.
+- **The re-point I would expect** (Thurgood re-authors; the choice is his): keep the cue, narrow its `when` to the platform frameworks and standards, drop *"build tooling"*, and target § "Platform Technologies" (or the three consumer-applicable sections).
+- **Counter-argument I weighed**: a consumer's product might not use DesignerPunk's platform stack. That does not rescue `no-consumer-counterpart`: this charter is for products *built with DesignerPunk*, whose components are exactly that stack.
+- **Not in my seat, recorded only**: `sparky`, `kenya` and `data` carry the same cue under the same class. Their owners judge their own rows.

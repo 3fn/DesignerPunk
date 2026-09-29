@@ -96,7 +96,7 @@ frontmatter:
   "routes.cues[18]": {"disposition": "retained"}
   "routes.cues[19]": {"disposition": "retained"}
   "routes.cues[20]": {"disposition": "retained"}
-  "routes.cues[21]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "routes.cues[21]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "leonardo", "canonicalHash": "sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.cues[21]"}}
   "commands[generate-tokens]": {"disposition": "retained"}
   "commands[validate-product-tokens]": {"disposition": "retained"}
   "commands[init-product]": {"disposition": "retained"}
