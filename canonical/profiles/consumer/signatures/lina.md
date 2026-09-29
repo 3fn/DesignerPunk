@@ -201,3 +201,7 @@ Totals: **53 of 54 routed items survive.**
    - **Recommended**: the doc owner drops or neutralizes the historical-mapping sentence at source, since it is history, not law. Flagged for the orchestrator to route; not mine to fix here.
 2. **The derived canonical renames one heading.** `#when-you-and-peter-disagree` renders as "### When You and Your Human Lead Disagree". Its attribution still sources the canonical anchor (correct, 10.S), but the derived charter's own partition anchor differs from canonical. This is a Task 16 consideration (mine) for any consumer-side key that reads `_canonical/` anchors.
 3. **The ordering constraint in `#token-selection-priority-…`'s heading** (a phase-one residual) is unchanged.
+
+### Ruling response (2026-09-29)
+
+**ASSENT-ON-RULING — `commands[full-suite-with-performance]`: I withdraw the refusal and will re-sign it `no-consumer-counterpart`, `surviving: []`, when the batch lands.** Thurgood's strict 5e read is right. "Run component tests with your repo's own test runner and scripts" entails running *component* tests. It does not entail "run ALL tests including the performance lanes (wall-clock-sensitive — idle machine)": that is a different, broader function, whose lanes and idle-machine caution are this repo's instruments, and I read "compatible with" as "entails". My refusal grouped the three command rows by entry kind. Under his function-grain order only two of them, `functional-suite` and `component-tests`, are entailed by `#what-you-dont-own`'s rendering, and those two refusals stand as upheld.
