@@ -3,12 +3,12 @@
 # consumer's repo (R5); their text is sparky.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
 source: canonical/agents/sparky.md
 body:
-  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity", "signature": {"signer": "sparky", "canonicalHash": "sha256:afa6f1619e917b7abc6da158a86c7eabd88e1d7e82b6d703a6f6b9f8d6789c3b", "renderedHash": "sha256:d645cd6f093d4bd36d00701a463969d662fc134a06e755876068b93b6c6cdb6f", "assent": {"surviving": ["sparky-implement-with-care", "sparky-understand-intent", "sparky-domain", "sparky-leonardo-primary", "sparky-system-through-leonardo", "sparky-human-decides", "sparky-partner"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#identity"}}
   "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "(referencing existing platforms/web/ implementations)", "cites": "subtraction-5"}], "destination": "#in-scope"}
   "#web-theming": {"disposition": "retained"}
   "#product-tokens": {"disposition": "retained"}
-  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope"}
-  "#blocking-exception-direct-escalation-to-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#blocking-exception-direct-escalation-to-peter"}
+  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope", "signature": {"signer": "sparky", "canonicalHash": "sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2", "renderedHash": "sha256:2e8e4e874cb61acbbde442b5b63db650d7eeeb7b2240aab4e478219761b47dfd", "assent": {"surviving": ["out-1", "out-2", "out-3", "out-4", "out-5", "out-6", "out-7"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#out-of-scope"}}
+  "#blocking-exception-direct-escalation-to-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#blocking-exception-direct-escalation-to-peter", "signature": {"signer": "sparky", "canonicalHash": "sha256:c5cf701217d1de46ef107456928e2f87ca8cd4e4fa7a77bad68d25c84ab52875", "renderedHash": "sha256:d82d31e075140185a373197bfa684a360e8cf971615821d10bd1c41a14ca27bb", "assent": {"surviving": ["blocking-direct", "blocking-exception", "blocking-when-in-doubt"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#blocking-exception-direct-escalation-to-peter"}}
   "#the-implement-vs-direct-distinction": {"disposition": "retained"}
   "#operational-mode-screen-implementation:preamble": {"disposition": "retained"}
   "#step-1-review-the-specification": {"disposition": "retained"}
@@ -22,10 +22,10 @@ body:
   "#with-leonardo-primary": {"disposition": "retained"}
   "#with-sibling-platform-agents": {"disposition": "retained"}
   "#with-stacy-product-governance": {"disposition": "retained"}
-  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "Recognize Peter's skillset largely lives in design and may require assistance with understanding technical nuances", "cites": "subtraction-2"}], "destination": "#with-peter"}
-  "#how-to-use-designerpunk-tokens-on-web": {"disposition": "re-pointed", "removals": [{"text": "never read the built `dist/*.css` snapshots (see the Ground truth section);", "cites": "subtraction-3"}], "destination": "#how-to-use-designerpunk-tokens-on-web"}
+  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "Recognize Peter's skillset largely lives in design and may require assistance with understanding technical nuances", "cites": "subtraction-2"}], "destination": "#with-peter", "signature": {"signer": "sparky", "canonicalHash": "sha256:479fce94f62b6d9537e579a510b7673d5db26540034f10e90a59cd64875cb5be", "renderedHash": "sha256:37f5d2a395b44b7d93195d04018a5497b4d11b145e59be934ad0d236a74b955f", "assent": {"surviving": ["human-1", "human-2", "human-3"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#with-peter"}}
+  "#how-to-use-designerpunk-tokens-on-web": {"disposition": "re-pointed", "removals": [{"text": "never read the built `dist/*.css` snapshots (see the Ground truth section);", "cites": "subtraction-3"}], "destination": "#how-to-use-designerpunk-tokens-on-web", "signature": {"signer": "sparky", "canonicalHash": "sha256:57693a86db637fed5285d7b2b816cbff71ac94193e45111dc3f60ae458a343cf", "renderedHash": "sha256:487e184ed0cf901b995c2ad45ee081ef74bf64d5cb4a8536d1030f8a4bfa7687", "assent": {"surviving": ["tokens-1", "tokens-2", "tokens-3", "tokens-4", "ground-truth-live"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#how-to-use-designerpunk-tokens-on-web"}}
   "#token-reference-pattern": {"disposition": "retained"}
-  "#platform-currency-expectations": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-expectations"}
+  "#platform-currency-expectations": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-expectations", "signature": {"signer": "sparky", "canonicalHash": "sha256:e7488d0b9d56e780dd213378194926725105c159835c0113689ea38b6f3e8346", "renderedHash": "sha256:8f58ae7160b080bf429d381c910eb9f0e675ae42ce23e651aafd1b9a50bc1173", "assent": {"surviving": ["currency-1", "currency-2", "currency-3", "currency-4", "currency-5"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#platform-currency-expectations"}}
   "#platform-reference-pointers": {"disposition": "retained"}
   "#web-specific-guidance": {"disposition": "retained"}
   "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "the three `dist/*.css` build outputs are trimmed from your ambient set on purpose (see the Ground truth section).", "cites": "subtraction-3"}], "destination": "#mcp-practice-notes"}
@@ -35,7 +35,7 @@ body:
   "#bias-self-monitoring": {"disposition": "retained"}
   "#ask-if-unsure": {"disposition": "retained"}
   "#what-you-own": {"disposition": "retained"}
-  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) and named gaps are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) and named gaps are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own", "signature": {"signer": "sparky", "canonicalHash": "sha256:ee7dd121bbf0cb283d8dbb38f87c8f4b67b7dc492f8ab2236170a0909ec0c288", "renderedHash": "sha256:07fd9f8ea0a16da3afa867cb77d4aa8e32a49b5a49d2326b3071856dbbdadc08", "assent": {"surviving": ["not-own-1", "not-own-2", "not-own-3", "jest-not-vitest"]}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#what-you-dont-own"}}
 frontmatter:
   "agent": {"disposition": "retained"}
   "agentType": {"disposition": "retained"}
@@ -43,22 +43,22 @@ frontmatter:
   "ambient[product-token-governance#system-first-value-selection]": {"disposition": "retained"}
   "ambient[web-authoring-standards#hard-rules]": {"disposition": "retained"}
   "ambient[contract-system-reference#naming-convention]": {"disposition": "retained"}
-  "ambient.groundTruthManifest.verdict": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
-  "ambient.groundTruthManifest.trims[dist/web/DesignTokens.web.css]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
-  "ambient.groundTruthManifest.trims[dist/ComponentTokens.web.css]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
-  "ambient.groundTruthManifest.trims[dist/browser/demo-styles.css]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "sparky", "canonicalHash": "sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:ambient.groundTruthManifest.verdict"}}
+  "ambient.groundTruthManifest.trims[dist/web/DesignTokens.web.css]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "sparky", "canonicalHash": "sha256:3c1fafc6420be35eb2011c28d7381ae947083c770afcdf72da457a07e7c2f0b5", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:ambient.groundTruthManifest.trims[dist/web/DesignTokens.web.css]"}}
+  "ambient.groundTruthManifest.trims[dist/ComponentTokens.web.css]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "sparky", "canonicalHash": "sha256:6c60ed8e8efec1c46c5860fc1eff76f8428eeed032a1f077d768cb161456df70", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.web.css]"}}
+  "ambient.groundTruthManifest.trims[dist/browser/demo-styles.css]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "sparky", "canonicalHash": "sha256:66235ec1c3ec679eb77a922ef4f1740827cc408328851e6499218cac4706c561", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:ambient.groundTruthManifest.trims[dist/browser/demo-styles.css]"}}
   "routes.docs[web-quality-patterns]": {"disposition": "retained"}
   "routes.docs[product-token-authoring]": {"disposition": "retained"}
   "routes.docs[product-token-naming]": {"disposition": "retained"}
   "routes.docs[token-doc-map]": {"disposition": "retained"}
-  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "sparky", "canonicalHash": "sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:routes.docs[completion-doc-guidance]"}}
   "routes.docs[cross-platform-guidance]": {"disposition": "retained"}
   "routes.docs[stemma-principles]": {"disposition": "retained"}
   "routes.docs[test-dev-standards]": {"disposition": "retained"}
   "routes.docs[bcv-guidance]": {"disposition": "retained"}
   "routes.docs[token-lookup-beyond]": {"disposition": "retained"}
-  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
-  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "sparky", "canonicalHash": "sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:routes.docs[dev-workflow-detail]"}}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "sparky", "canonicalHash": "sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:routes.docs[file-organization]"}}
   "routes.docs[contract-concept-names-add]": {"disposition": "retained"}
   "routes.agents[leonardo]": {"disposition": "retained"}
   "routes.cues[0]": {"disposition": "retained"}
@@ -68,20 +68,20 @@ frontmatter:
   "routes.cues[4]": {"disposition": "retained"}
   "routes.cues[5]": {"disposition": "retained"}
   "routes.cues[6]": {"disposition": "retained"}
-  "routes.cues[7]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "routes.cues[8]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[build]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[build-browser]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[web-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[lint]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[serve]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[test-consumer]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "routes.cues[7]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:81797f185efbf2c90b57996a49a096936552de787d44eea9ebecfb9bdd947925", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:routes.cues[7]"}}
+  "routes.cues[8]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:routes.cues[8]"}}
+  "commands[build]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:8651a3419c9f976db50b06dd9c5a07f9795a6e1e5e402a56b3cee42d79883527", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[build]"}}
+  "commands[build-browser]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:362f9d3385ad21377258eb0175d60c89b51f48a0f79c841d28d72df5d5181019", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[build-browser]"}}
+  "commands[web-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:f045cceaf30dc54b1354cf134e6b25ecda736460d4c73d2b9179940dce154b52", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[web-tests]"}}
+  "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:31a5cfa8ff9045cdf313da4aada3e53775ea24ee44d9982a9c3a3e4400c6a642", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[functional-suite]"}}
+  "commands[lint]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:0b1d04fb69d021a0a007bb4db61852dd407319796ff80d43fabba242c5e5b2ed", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[lint]"}}
+  "commands[serve]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:02fd3561a1d3a39fdc01da71ab860bcfe46dd0cd80d017c6612837fc0892ef8a", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[serve]"}}
+  "commands[test-consumer]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:7d1979d82d95ca39efb61089a5411755e7de09f8f0411236ac822d975fa5bb7a", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[test-consumer]"}}
   "commands[consumer-generate]": {"disposition": "retained"}
-  "commands[web-dev-server]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[web-test-lane]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[web-dev-server]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:cc3bab487df7a11e99e0e556c7067da9ae996b919ac6114f2ef52d6cdcf27a63", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[web-dev-server]"}}
+  "commands[web-test-lane]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "sparky", "canonicalHash": "sha256:d448c8dc13a39ccefe6c6f72bdba932e06963a8c678f17bae29056ba60079553", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[web-test-lane]"}}
   "commands[product-screen-commands]": {"disposition": "re-pointed", "destination": "frontmatter:commands[product-screen-commands]"}
-  "knowledgeBases[web-components]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5"}
+  "knowledgeBases[web-components]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5", "signature": {"signer": "sparky", "canonicalHash": "sha256:6529bcd1636053e710069195c75dccc4e77f906235d4bdf89efae8e8a9613c0b", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:knowledgeBases[web-components]"}}
   "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
   "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
   "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
@@ -104,7 +104,7 @@ frontmatter:
   "toolSubset.designerpunk-product[get_product_health]": {"disposition": "retained"}
   "toolSubset.designerpunk-product[rebuild_product_index]": {"disposition": "retained"}
   "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
-  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "sparky", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/sparky.md#frontmatter:writeScope[docs/specs/**]"}}
   "kiro.keyboardShortcut": {"disposition": "retained"}
   "kiro.welcomeMessage": {"disposition": "retained"}
   "preflight[git status --porcelain]": {"disposition": "retained"}
