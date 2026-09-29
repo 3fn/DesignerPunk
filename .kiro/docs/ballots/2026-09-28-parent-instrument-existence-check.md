@@ -1,8 +1,8 @@
 # Ballot Measure: The instrument-existence read — a required first step of every parent
 
-**Date**: 2026-09-28 (drafted; R2 folded Stacy's R1 C1–C8 and R3 her R2 A1–A4, all the same day)
+**Date**: 2026-09-28 (drafted; R2 folded Stacy's R1 C1–C8 and R3 her R2 A1–A4, all the same day); ratified 2026-09-29, with M4 added (§ 4a)
 **Drafted by**: Thurgood (Opus) — spec and completion-doc standards, the Q5 cut, at Peter's direction (2026-09-28)
-**Status**: **DRAFT** — not ratified. Nothing below is applied. **Record-first**: when Peter ratifies, the ratifying session first commits this line in its pinned form, `**Status**: **RATIFIED (Peter, <date>)**`, together with the fork rulings (§ 7) and the named list of parents started but not merged at `R`, which are unbound (§ 2 "Binding"). Only then are the edit sites in § 5 applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **RATIFIED (Peter, 2026-09-29)** — F-1 **(a) + M4** (the plan-time form, § 4a; adopted by Peter at merge on the seats' unanimous read — Thurgood, Stacy, orchestrator; consult record 2026-09-29); F-2 **no**; F-3 **(a)**; A-6 **(ii)**. The rulings are recorded in § 7 § "Rulings (Peter, 2026-09-29) — ratified", with the **named unbound list**. **Record-first**: this commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). The edit sites in § 5 and § 4a apply in the commits after it, in the same PR; edit sites 5 and 5b are Stacy's own commit. **Peter's merge of this PR is `R`**, the ratification commit on `main`'s first-parent history.
 **No `Ratified-machine:` line, deliberately.** That mechanism belongs to the one ballot `completion-criteria-parity` parses. This ballot follows the B-U1 / B-CI / B-U2 omission precedent.
 **Proposed by**: Peter, 2026-09-28. He took the **process rule now** and **deferred the mechanical checker pass until the rule has produced data** (§ 4, M3).
 **Required reviewer**: **Stacy**. M2 adds a read to her claims passes and an item to her charter (edit site 5). At R1 she also took a sixth LENS question (edit site 5b). Both are in her seat and her commits.
@@ -126,7 +126,50 @@ It is tracked by the issue at edit site 6, and the health check walks it.
 
 ---
 
-## 5. Application, at ratification (eight edit sites)
+## 4a. M4 — plan-time instruments (adopted at ratification)
+
+*Adopted by Peter at merge on the seats' unanimous read (Thurgood, Stacy, orchestrator; consult record 2026-09-29). This is F-1's fourth option, reconciled across three consult rounds: Stacy's A-2′ shape, P1 packaging with her three riders and the author's erratum clause, and A-6 (ii).*
+
+> **M4 — Instruments are declared at planning time, for specs whose tasks round opens after `P`.**
+>
+> - **`P`** is the squash SHA of the parser PR (issue `.kiro/issues/2026-09-29-instruments-parser-and-resolver.md`).
+>   - **No spec writes `**Instruments:**` before `P`.**
+>   - At `P`, **`P` and the named specs still on M1's execution-time form** are recorded in the `parent-instrument-existence` register row's history.
+>   - M4 is effective from **the first tasks round that opens after `P`**.
+> - **Plan rows.** In a bound spec's `tasks.md`, each parent row carries an `**Instruments:**` block after `**Primary Artifacts:**`: one bullet per instrument a success criterion's evidence depends on. Each bullet carries a **stable, append-only row id** and is in exactly one state:
+>   - `exists (<path> @ <review-base sha>)`
+>   - `built here (<subtask>) — <capability>`: the capability is named; the path is optional;
+>   - `built earlier (<task.subtask>) — <capability>`: valid only if the named subtask precedes this parent in declared plan order;
+>   - `none — <criterion ref>: <why>`
+>
+>   **A MISSING instrument at plan time is a plan defect**, fixed before the tasks doc merges. **Plan rows carry no fit clause.** The tasks feedback round reviews the block.
+> - **The execution file**, `task-<N>-instruments.md`, is written at branch cut before the first subtask. It carries:
+>   1. the existence delta as **pasted command output**: `git cat-file -e <sha>:<path>` over the plan's `exists` rows at the cut, plus the review-base→cut diff over those paths. **A delta line without its command output is malformed.**
+>   2. **one fit line per row, keyed by row id**, written by the implementer;
+>   3. rows first found at the cut, in M1's states;
+>   4. `## Found later`, in M1's kinds.
+>
+>   **It never restates a plan row's state or path. A restated state or path is malformed.**
+> - **The header line** (M1's grammar, unchanged) counts from the plan rows as modified by the delta. `built earlier` counts under `built-here`.
+> - **The parity parser** collects `**Instruments:**` as a closed-vocabulary promise block. It is never a criteria paragraph and never Primary Artifacts, and **it owes no Additional-verification rows**.
+> - **The parser PR** carries:
+>   - `INSTRUMENTS_RE` and an `instruments` collector;
+>   - the row grammar, with loud malformations;
+>   - a D1(d) fixture;
+>   - **the primaryArtifacts-exclusion bite**: an `**Instruments:**` block after `**Primary Artifacts:**` never lands in `primaryArtifacts`;
+>   - **the A-6 declared-row resolver**: existence at the review base and plan order, **never fit**; an advisory emission at the tasks round, gated so that it binds nothing before `P` and never fires on Spec 123.
+>
+>   **If the parser PR grows past a day, the resolver is the first thing cut back out** (Peter's condition).
+> - **Grammar changes** that the parser needs before `P` land as dated errata to M4 **inside the parser PR**, so that the law text at `P` matches the parser.
+> - **Grant**: Thurgood, write scope over `scripts/completion-claims/**`, on the parser PR's branch, until that PR merges (B-CI M3 precedent).
+> - **Specs planned before `P`, Spec 123 included, stay on M1's full execution-time block** (F-1 (a)), with no per-parent amendments.
+> - **M3's prose-parsing pass stays deferred** for pre-M4 specs (§ 4).
+
+**M4's edit sites** are in § 5, as sites 9–12.
+
+---
+
+## 5. Application, at ratification (eight edit sites, plus M4's four)
 
 1. **Record-first.** The ratification commit carries:
    - `**Status**: **RATIFIED (Peter, <date>)**`;
@@ -214,11 +257,25 @@ It is tracked by the issue at edit site 6, and the health check walks it.
    2. **`canonical/operative-sets/stacy.yaml`**: the `trigger-lens` item's `text`, taken verbatim from the new row, and the unit's recomputed `canonicalHash`. The LENS row is a **recorded operative item**, so the edit stales the unit.
    3. **`canonical/profiles/consumer/confirmations/stacy.md`**: Stacy's re-confirmation note for that unit, under C1.
 
+   4. *(At ratification, per M4 (§ 4a))*: **for M4-bound specs, LENS question 6 reads the declared `**Instruments:**` rows** instead of hunting backticked names. The wording is Stacy's plan-time text from the F-1 consult, committed by her in the same commit.
+
    Then regenerate, run `diff-guard`, and run the operative-set checks green: on `main` the precursor test `src/__tests__/operative-set-records.test.ts`; on U2b the freshness sweep.
    - **Cross-branch note** (edit site 5 carries the reverse hazard: its bullet lands in the unrecorded `#the-claims-pass-record-claims-passmd-the-template`; if Spec 123's 15.4 records that unit on U2b before edit site 5 reaches U2b, the next `main` merge stales it, and Stacy re-confirms the unit on U2b in the same push as that merge): this edit lands on `main`. U2b's next `main` merge brings the re-hashed record and note with it, so U2b's freshness sweep reads a consistent pair. L392 is far from B-U2's L419.
-8. **Edit site 6 — the M3 issue**: `.kiro/issues/<ratification date>-instrument-existence-mechanical-pass.md`. Owner Thurgood; trigger per § 4, with (b) in its R2 form; the body is § 4. The health check walks it.
+8. **Edit site 6 — the parser-and-resolver issue** *(re-scoped at ratification per A-6 (ii))*: `.kiro/issues/2026-09-29-instruments-parser-and-resolver.md`.
+   - Owner Thurgood.
+   - **Trigger: before the next spec's tasks round opens.**
+   - **Scope** (§ 4a): `INSTRUMENTS_RE`, the `instruments` collector, the row grammar, the D1(d) fixture, the primaryArtifacts-exclusion bite, the declared-row resolver (Peter's first-cut condition), and the grant path.
+   - **It also carries M3's prose-parsing pass as deferred** for pre-M4 specs, with § 4's trigger, (b) in its R2 form.
+   - The health check walks it.
 9. **Edit site 7 — `.kiro/docs/ballots/README.md`**: the "Ballots on record" entry, added by the ratifying session.
-10. **Straggler sweep**: `git grep -n "Instruments block\|instrument-gap-unlisted\|parent-instrument-existence\|sixth \*(ballot 2026-09-28-parent-instrument-existence-check)\*"` must list only the edit sites above (the rendered `stacy` outputs included) and this ballot.
+10. **M4's edit sites** (§ 4a; each one's text states that it binds from the first tasks round after `P`):
+    - **Site 9 — `governance/Process-Spec-Planning.md`**: § "Tasks Document Format" (the per-parent template gains an `**Instruments:**` block after `**Primary Artifacts:**`) and § "`tasks.md` Structural Conventions" (the block's grammar, the four states, row ids, and "MISSING at plan = defect"). MCP-served → `rebuild_index`.
+    - **Site 10 — `governance/completion-documentation-guide.md`**:
+      - § "The instruments line and block" gains M4's plan-time / delta paragraph;
+      - § "Additional verification"'s closed-vocabulary sentence gains *"`**Instruments:**` (M4) is collected by the parser but owes no Additional-verification rows"*.
+    - **Site 11 — Start Up Tasks item 8** gains one M4 sentence.
+    - **Site 12 — the `parent-instrument-existence` register row** gains M4's comment lines and a history line.
+11. **Straggler sweep**: `git grep -n "Instruments block\|instrument-gap-unlisted\|parent-instrument-existence\|sixth \*(ballot 2026-09-28-parent-instrument-existence-check)\*"` must list only the edit sites above (the rendered `stacy` outputs included) and this ballot.
 
 ---
 
@@ -268,7 +325,32 @@ It is tracked by the issue at edit site 6, and the health check walks it.
 **Counter-argument 6: spec-level criteria mode is outside the rule.** Its parents carry no per-parent table.
 - **Survives**: such specs get no block. There are none in flight today, and Spec 123 is per-parent. If one arrives, the block at spec level is a later amendment.
 
-### ⚑ Forks for Peter (surfaced, not picked)
+### Rulings (Peter, 2026-09-29) — ratified
+
+*Relayed to the ratifying session (Thurgood, which holds the four review rounds) by the orchestrator on 2026-09-29. Consulted: Stacy, whose texts are those of edit sites 5 and 5b and the plan-time LENS wording; Lina, on A-2′'s implementer-holds-fit rationale.*
+
+- **F-1 = (a) + M4.**
+  - (a) is the execution-time `task-<N>-instruments.md`.
+  - **M4** is the plan-time form (§ 4a), per the unanimous reconciled text: the A-2′ shape, P1 packaging with Stacy's three riders and the author's erratum clause, `built earlier`, capability not path, and no Additional-verification rows.
+  - **M4 was adopted by Peter at merge on the seats' unanimous read (Thurgood, Stacy, orchestrator; consult record 2026-09-29).**
+- **F-2 = no.** No retroactive counting.
+- **F-3 = (a)**: Start Up Tasks item 8.
+- **A-6 = (ii)**: the declared-row resolver rides the parser PR. It checks existence and order only, never fit. It emits advisory output at the tasks round, behind the same "binds nothing before `P`" gate, so it never fires on Spec 123. The prose-parsing M3 stays deferred for pre-M4 specs. **Peter's condition**: if the parser PR grows past a day, the resolver is the first thing cut back out.
+
+**The named unbound list — M1's exclusions by name (§ 2 "Binding"; Stacy R2 A2).**
+
+Every per-parent-mode parent started but not merged at `R` is unbound: any subtask ticked, or any of its completion docs committed on a unit branch, including a parent complete on its branch whose unit has not merged. Verified against every ref on 2026-09-29, with the U2b head at `d7e66501`:
+- **Spec 123 Task 13**: complete on the unmerged U2b branch.
+- **Spec 123 Task 14**: complete on the unmerged U2b branch. F-2's example called it "in flight"; it has completed since.
+- **Spec 123 Task 15**: **started**, because 15.0 is ticked and `completion/task-15-0-completion.md` is committed on U2b.
+  - The orchestrator's relay named Tasks 13 and 14 only. Task 15 meets the started test as ratified, so it is listed; omitting it would be the backfill-by-another-route that A2 closed.
+  - A fresh Task 15 seat **may** write a block voluntarily. It is not bound.
+- **Spec 127**: no parent open. **No other per-parent-mode spec exists** (`grep -l '^\*\*Criteria mode\*\*: per-parent' .kiro/specs/*/tasks.md` → 123, 127).
+- **The merging session re-verifies this list before merge.** Any parent started between this commit and `R` is added in a pre-merge commit, never discovered afterwards.
+
+Every other unmerged per-parent-mode parent, which is Spec 123 Tasks 16–28, **is bound**.
+
+### ⚑ Forks for Peter (surfaced, not picked — ruled above)
 
 - **F-1 — where the block lives.**
   - **(a) Recommended; Stacy concurs (R1-5)**: a separate `completion/task-<N>-instruments.md`, written before the first subtask, with the parent doc's header line naming it.

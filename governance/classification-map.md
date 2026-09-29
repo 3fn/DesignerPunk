@@ -9,7 +9,7 @@ aliases: classification map register, rule classification, boundary call, verifi
 # Classification Map
 
 **Date**: 2026-07-14
-**Last Reviewed**: 2026-09-26
+**Last Reviewed**: 2026-09-29
 **Purpose**: The living register of per-rule classification decisions — boundary call, verification disposition + owner, and education disposition — so enforcement ownership is decided once and cited thereafter instead of re-litigated per agent, per prompt, per session
 **Organization**: process-standard
 **Scope**: cross-project
@@ -952,3 +952,40 @@ history:
   - { date: 2026-09-28, change: "entry created by the orchestrator consult-first ballot (.kiro/docs/ballots/2026-09-28-orchestrator-consult-first.md), RATIFIED by Peter 2026-09-28, population fork (iii) as both seats recommended (record-first). ORIGIN: Peter's proposal (consult the appropriate agents when evaluating options; present at least one holistic, vetted option). Evidence: four skipped consults in one day, each changing the plan (#219 x2, #225, #226/#228). The subject (the orchestrator) was consulted and did not author; Stacy R1 changes incorporated at THURGOOD R2. The disposition audit value follows the tasks-row-write-scope-grant precedent (register schema-currency note). Non-substring sweep at authoring: 33 live ids + this one, relations 0, dupes 0", by: thurgood }
 ```
 
+### parent-instrument-existence
+
+```yaml
+rule: "Before a parent's first subtask starts, its PRIMARY commits the parent's Instruments block (one row per instrument each success criterion's evidence depends on: exists with a fit clause / built here / MISSING and routed, a MISSING row never overwritten); any MISSING stops the dependent subtasks before code; later-found gaps are appended by kind (unlisted / misfit), never silently fixed; the parent completion doc carries the fixed-form **Instruments**: line naming the block"
+boundary_call:
+  class: functional
+  rationale: "Presence, grammar, arithmetic, own-path, exists-row sha resolution and line-vs-block count agreement are decidable; whether an 'exists' row's fit clause is TRUE, and whether the block is complete, are not — a shallow block reads like a thorough one until a gap surfaces, which the unlisted and misfit counts record"
+verification:
+  disposition: audit
+  owner: stacy
+  check_state: none
+  checks: []
+  # Grammar: ^\*\*Instruments\*\*: (?:none — success criteria declared none|(\d+) listed — exists (\d+) · built-here (\d+) · missing (\d+) · unlisted (\d+) — \.kiro/specs/[^/\s]+/completion/task-[0-9]+-instruments\.md)$
+  #   Cross-checks: N = E + B + M over final-state rows; U = Found-later entries dated on or before the parent doc; the path
+  #   names the doc's own spec + parent; each exists row's sha passes git cat-file -e <sha>:<path> and is an ancestor of the commit that wrote
+  #   that state — the block's adding commit for an original row, the resolving commit for a → resolved state (commands / CI contexts: the defining file).
+  # The claims pass reads (Stacy's charter item 'The instruments read'): presence + grammar (missing vs malformed), the
+  #   cross-checks, gaps by kind (unlisted / misfit) x source (self-reported / pass-found — pass-found gaps are recorded in
+  #   the pass, never appended to the block); self-reported share = honesty signal; missing 0 · unlisted 0 beside a
+  #   pass-found gap = ritual-stub signal. Never a gate.
+  # Binding: per-parent criteria mode; exclusions by name — the ratification commit lists the parents started but not merged at R
+  #   (any subtask ticked or any completion doc committed on a unit branch, incl. a parent complete on an unmerged branch).
+  # Tasks-round precursor: Stacy's LENS question 6 (existence only, never fit).
+  # M4 (ballot § 4a; ruled 2026-09-29): plan-time **Instruments:** rows in tasks.md (exists @ review-base / built here — capability /
+  #   built earlier — capability / none), no fit at plan; the execution file carries the pasted command-output existence delta, one
+  #   fit line per stable row id, rows found at the cut, and Found later; a restated state/path, or a delta line without its command
+  #   output, is malformed. Effective from the first tasks round after P (the parser PR's squash SHA); P and the specs still on M1's
+  #   form are recorded in this history at P. The parser PR carries the primaryArtifacts-exclusion bite and the A-6 declared-row
+  #   resolver (existence + order, never fit; advisory at the tasks round; binds nothing before P; first cut if the PR passes a day).
+  # Deferred (M3, owner thurgood): a tasks-round mechanical pass over criteria-named paths/commands — trigger: the first of
+  #   (a) ten committed blocks, (b) the second unlisted-kind entry whose instrument the criterion named at the tasks round and
+  #   which did not resolve at the review base. Retires LENS question 6 to reading its emissions.
+education:
+  disposition: "ONE HOME: .kiro/steering/start-up-tasks.md item 8 (per fork F-3). FORMAT HOME: governance/completion-documentation-guide.md § 'The instruments line and block'. LAW RECORD: .kiro/docs/ballots/2026-09-28-parent-instrument-existence-check.md §§ 2-4. AUDIT HOME: Stacy's charter, § 'The claims-pass record', item 'The instruments read' (edit site 5). TASKS-ROUND HOME: Stacy's charter, the LENS trigger row, question 6 (edit site 5b)"
+history:
+  - { date: 2026-09-29, change: "entry created by ballot 2026-09-28-parent-instrument-existence-check, RATIFIED by Peter 2026-09-29 (record-first). ORIGIN: Peter's direction after three instances in Spec 123 in four days (11.4 #220; Task 13 read-ahead; Task 14 → 15.0 amendment). Stacy required reviewer (R1 C1-C8 at THURGOOD R2; R2 A1-A4 at THURGOOD R3). Rulings: F-1 (a) + M4 (adopted on the seats' unanimous read), F-2 no, F-3 (a), A-6 (ii). Unbound by name: Spec 123 Tasks 13, 14, 15.", by: thurgood }
+```
