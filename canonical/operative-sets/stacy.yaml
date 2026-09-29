@@ -355,3 +355,118 @@ units:
         label: Platform-native expression
         text: Platform-native expression of all of the above
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#what-parity-means
+  # Task 15.4 (2026-09-29): the counting-block unit, first recorded against its post-13.8 text (the
+  #   `volatile-ok` marker is in canonicalHash; the marker is not an item). Drafted by Thurgood;
+  #   confirmed by Stacy (C1) in her seat — Task 13's ⚠️ row discharges here (erratum 2026-09-28).
+  "#the-claims-pass-record-claims-passmd-the-template":
+    canonicalHash: sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
+    items:
+      - id: record-committed
+        kind: obligation
+        label: "Every pass is a committed record"
+        text: "Every pass produces a committed record in the spec's completion directory."
+      - id: closeout-path
+        kind: obligation
+        label: "CLOSEOUT record path"
+        text: "CLOSEOUT's record is `.kiro/specs/<spec>/completion/claims-pass.md` — the exact filename the owed-set predicate keys on."
+      - id: midpoint-path
+        kind: obligation
+        label: "MIDPOINT record path"
+        text: "**A MIDPOINT record is `completion/claims-pass-midpoint.md`, NEVER `claims-pass.md`**"
+      - id: section-scope
+        kind: member
+        label: "Scope section"
+        text: "**Scope** — the spec, the population (which parents / which delta), the firing trigger."
+      - id: section-findings
+        kind: member
+        label: "Findings section"
+        text: "**Findings** — per discrepancy: **promised / claimed / shipped**, classified per the 112 taxonomy, routed per the two-route rule above."
+      - id: section-method
+        kind: member
+        label: "Method section"
+        text: "**Method — the sample, named, and how many of the total** (the fraction is rot-mode-1's detector)."
+      - id: method-honesty
+        kind: obligation
+        label: "Method honesty per row and platform"
+        text: "Method honesty is **per criterion row and per platform**: a platform-unverifiable row is recorded as `not re-verified — toolchain unavailable`, never silently omitted, and an unverifiable row NEVER rolls into a ✅."
+      - id: closed-negative-string
+        kind: obligation
+        label: "One closed negative string"
+        text: "The vocabulary is deliberately **closed to that one negative string**"
+      - id: mandatory-line
+        kind: obligation
+        label: "The Standards-implications line"
+        text: "**The mandatory line**: `Standards implications: none / or list` — the composed learning loop's input; Thurgood reads every pass in full against it."
+      - id: counting-1
+        kind: member
+        label: "Counting block: Omissions"
+        text: "criteria-block **omissions**"
+      - id: counting-2
+        kind: member
+        label: "Counting block: Vagueness"
+        text: "criteria **vagueness**"
+      - id: counting-3
+        kind: member
+        label: "Counting block: Declared-none rates"
+        text: "**declared-none rates**"
+      - id: counting-4
+        kind: member
+        label: "Counting block: Fixed-string exemption usage"
+        text: "**fixed-string exemption usage** (the ruled abuse detector behind the declined sunset)"
+      - id: counting-5
+        kind: member
+        label: "Counting block: Bundled-claim / incomplete-decomposition"
+        text: "**bundled-claim and incomplete-decomposition instances**"
+      - id: counting-6
+        kind: member
+        label: "Counting block: Platforms fallback invocations"
+        text: "**`(platforms: …)` fallback invocations**"
+      - id: counting-7
+        kind: member
+        label: "Counting block: Subtask-doc presence"
+        text: "**subtask-doc presence** *(S-4, ratified 2026-09-19 — a ticked subtask without its doc is a FINDING routed to the authoring agent, not a counted observation; watch the reflexive `adaptations: none` rate as the ritual-stub signal)*"
+      - id: counting-8
+        kind: member
+        label: "Counting block: Delegated-tier capture"
+        text: "**delegated-tier capture** *(presence rate; non-compliance split missing-vs-free-prose; divergence rate; class split agent- vs model-evolution; the spot-check fraction itself + outcomes)*"
+      - id: counting-9
+        kind: member
+        label: "Counting block: Orchestrator consult line"
+        text: "**orchestrator consult line** *(ballot 2026-09-28-orchestrator-consult-first)*: presence and grammar on the population — every PR whose diff touches a trigger surface (population (iii), ballot § 4: `governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, `canonical/agents/**`, a spec's `requirements.md` or `design.md`, a spec's `tasks.md` other than checkbox-only hunks, `canonical/adjudications.yaml`) — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message; the `none needed`-on-trigger-surface count (the signal; the overall `none needed` rate is a baseline only); the spot-check fraction with self-attested reads counted (a named read with no committed trace is self-attested, not a finding) — never a gate"
+      - id: counting-10
+        kind: member
+        label: "Counting block: Re-grounding dispositions"
+        text: "**re-grounding dispositions** *(ballot 2026-09-28-123-b-u2; Spec 123 Req 11.5.3, 11.5.7, 11.5.8)*: counted per **bucket** — each agent's charter, `_shared` (the shared-catalog members) and each `always-set/<id>`, never folded into an agent's rate — with **body rows and frontmatter rows reported separately**, and per **render population** (a release: the first render judges every routed row once; each later render re-judges only its delta, Req 11.5.6 valve 1): the **`no-consumer-counterpart` rate** (rows disposed `no-consumer-counterpart` / total disposition rows, over the **whole profile at the release commit** — the reading compared across releases — with the **delta's** rows reported alongside); the **assent rate per signer on routed rows** (assent events / signature events, per signer — a 100% rate at volume is the ritual-stub signal) and the **refusal count** (`refuse: should-re-point`, per signer, each with its resolution — itemized assent, or a changed disposition under its own C1 signature), both counted **from history, never from merge state**: one count per **signature event** committed in the population's delta and reachable from the `refs/pull/<n>/head` of a PR merged in that delta (at zero standing refusals the merge-state assent rate is 100% by construction; carried-forward signatures are never in the population; a refusal with no committed signature is **self-attested**); the **spot-check fraction** of itemized assents checked against the rendering, split by signer, counting only checks the record **names** (row, signer, surviving ids, the read), the fraction itself counted (checked / total), no floor — **Stacy-signed assents are sampled by Peter** (C1's collapse seat: the auditor would otherwise audit her own signatures), his sample reported as its own line with each sampled row named, a zero sample written `0 / N (Stacy-signed)`, never omitted; the **full-survival assent signal** *(routed-row assents whose `surviving` lists every operative item of the unit, per signer — a signal, not a check, never entering the spot-check fraction)*: **not yet instrumented** — owed to `.kiro/issues/2026-09-28-full-survival-assent-signal-instrument.md`; recorded as `not yet instrumented` in every population until the instrument lands, then counted by erratum to this block"
+      - id: counting-11
+        kind: member
+        label: "Counting block: Populations and baselines"
+        text: "**populations**: an event metric's baseline is its first population whose readings are not the first render's judgments; a state metric carries those judgments forward under valve 1, so no later population escapes them and its baseline is the first render — the assent rate and refusal count (event metrics) take their baseline at the first population after the first render, and the `no-consumer-counterpart` rate (the state metric) takes it at the first render, its level probably inflated by first-render authoring load, so only its change is meaningful; every record whose population contains Spec 123's first render (U2b's MIDPOINT record and the release-2 RELEASE record) carries a block headed `first render — not a baseline`, within which the `no-consumer-counterpart` rate is marked `baseline (Req 11.5.3)` and the assent rate and refusal count are not baselines (Req 11.5.8); no reading inside Spec 123 is a detection — each metric's detection begins at the first population after its own baseline — **observation, not a guard** (Req 11.5.3 rider), never a gate"
+      - id: counting-12
+        kind: member
+        label: "Counting block: M3 / M4 / M5"
+        text: "**M3 / M4 / M5** as standing audit output — the metrics a green gate cannot produce."
+      - id: report-set-comparison
+        kind: obligation
+        label: "Report-set comparison at CLOSEOUT"
+        text: "**The report-set comparison** (at CLOSEOUT): decomposed per-platform rows compared against the committed Implementation-Report set — the incomplete-decomposition guard (two bullets where three platforms apply is compliant, exact-set green, and short one platform)."
+      - id: emission-reading
+        kind: obligation
+        label: "Emission-reading duty"
+        text: "**The emission-reading duty, with its interim-owner clause verbatim**: *once `promised-artifact-exists` is built, read its emission lines; until then the pass owns promised-artifact gaps as judgment.* Read the `completion-criteria-parity` run's emission lines for the closing spec either way (declared-none waivers, exemptions honored, deferrals declared, docs not found)."
+      - id: delegated-tier-read
+        kind: obligation
+        label: "Delegated-tier read"
+        text: "**The delegated-tier read** *(the falsifiable surface you named at F15, written at your review's terms — 2026-09-19 delegated-tier-capture ballot)*: every parent doc in the population carries the unconditional `**Delegated-tier**:` line in one of its two fixed forms (tails after ` — ` are free and preserved; grammar in the guide § \"The delegated-tier line — unconditional\"). **Presence + form**: a missing or free-prose line is a **finding** on the authoring agent, split by kind (missing vs free-prose — different remedies); **this limb is INTERIM at your seat and mechanical by nature** — its named successor is a `completion-criteria-parity` missing/malformed-line emission (unproposed; once built, read its emission lines instead of performing the check — the `promised-artifact-exists` interim pattern). **Divergence forms**: checked for contradiction against the spec's declared execution routes, the planned `**Agent**:` stamp, and the doc's own routing statements — **internal-consistency verification across self-attested surfaces, never promised/claimed/shipped** (no independent shipped-side referent for agent identity exists; a contradiction is a real catch, agreement is consistency, never proof). **`plan held` lines**: spot-checked at your stated sample fraction — no floor, effort by signal — with the fraction itself counted (checked / total) and the reflexive-`plan held` rate watched as the ritual-stub signal. A false `plan held` that survives a spot-check is `owned-artifact-authorship`'s surface, not a duty failure of this read."
+      - id: deferral-walk-back
+        kind: obligation
+        label: "Deferral walk-back"
+        text: "**The deferral walk-back** (a WRITTEN CLOSEOUT duty): verify every `Artifact deferred: <path> → <unit>` declaration in the closing spec's completion docs against reality — the path resolves and the named unit's merge delivered it. **An undelivered deferral is a finding** (the promised-annotated-never-shipped shape that reached consumers), never a silent green. A free-prose deferral earned no exclusion and is audited as an ordinary artifact claim."
+      - id: instruments-read
+        kind: obligation
+        label: "Instruments read"
+        text: "**The instruments read** *(ballot 2026-09-28-parent-instrument-existence-check)*: on every bound parent doc in the population, the fixed-form `**Instruments**:` header line — presence and grammar (a missing line and a malformed one are findings of different kinds on the authoring PRIMARY), the path naming that parent's own block, and the line's counts equal to the block's rows in their final states (a resolved `MISSING` row keeps its original state beside its resolution) and to its `## Found later` entries dated on or before the parent doc; then gaps counted in two kinds, **unlisted** (an instrument a criterion's evidence needed that the block never named) and **misfit** (an `exists` row whose fit clause does not describe what the criterion reads), each split by source — **self-reported** (the block's `## Found later`) or **pass-found** (recorded in this pass's record, never appended to the author's block); the self-reported share is the honesty signal, and a `missing 0 · unlisted 0` line on a parent with a pass-found gap is counted as the ritual-stub signal — counted, never a gate."
+      - id: never-a-gate
+        kind: obligation
+        label: "Never a gate"
+        text: "*no pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*"
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-claims-pass-record-claims-passmd-the-template

@@ -1,0 +1,146 @@
+# canonical/profiles/consumer/leonardo.dispositions.yaml — Spec 123 Task 15.4 (design C17; DD25, DD26)
+# Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the
+# consumer's repo (R5); their text is leonardo.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
+source: canonical/agents/leonardo.md
+body:
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#in-scope": {"disposition": "retained"}
+  "#product-configuration-context": {"disposition": "retained"}
+  "#product-tokens": {"disposition": "retained"}
+  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope"}
+  "#the-direct-vs-delegate-distinction": {"disposition": "retained"}
+  "#operational-mode-screen-specification:preamble": {"disposition": "retained"}
+  "#step-1-understand-the-intent": {"disposition": "retained"}
+  "#step-2-select-components-via-application-mcp": {"disposition": "retained"}
+  "#step-3-specify-the-screen:preamble": {"disposition": "retained"}
+  "#layout-specification": {"disposition": "retained"}
+  "#step-4-validate-assembly": {"disposition": "retained"}
+  "#step-5-hand-off-to-platform-agents": {"disposition": "retained"}
+  "#operational-mode-lessons-learned:preamble": {"disposition": "retained"}
+  "#what-qualifies-as-a-lesson": {"disposition": "retained"}
+  "#capture-process": {"disposition": "retained"}
+  "#structured-request-format": {"disposition": "retained"}
+  "#operational-mode-cross-platform-review:preamble": {"disposition": "retained"}
+  "#review-checklist": {"disposition": "retained"}
+  "#what-consistent-means-in-true-native": {"disposition": "retained"}
+  "#operational-mode-design-creation-impeccable-skill:preamble": {"disposition": "retained"}
+  "#skill-loading-sequence": {"disposition": "retained"}
+  "#gate-system": {"disposition": "retained"}
+  "#color-strategy-declaration": {"disposition": "retained"}
+  "#conflict-resolution-hierarchy": {"disposition": "retained"}
+  "#anti-slop-awareness": {"disposition": "retained"}
+  "#lessons-learned-capture": {"disposition": "retained"}
+  "#available-commands": {"disposition": "retained"}
+  "#with-platform-agents": {"disposition": "retained"}
+  "#platform-scope-adaptation": {"disposition": "retained"}
+  "#with-stacy-product-governance": {"disposition": "retained"}
+  "#with-system-agents-via-thurgood": {"disposition": "retained"}
+  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#with-peter"}
+  "#mcp-practice-notes": {"disposition": "retained"}
+  "#onboarding-awareness": {"disposition": "retained"}
+  "#what-you-own": {"disposition": "retained"}
+  "#what-you-dont-own": {"disposition": "retained"}
+  "#platform-currency-awareness": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-awareness"}
+  "#collaboration-standards:preamble": {"disposition": "retained"}
+  "#counter-arguments-are-mandatory": {"disposition": "retained"}
+  "#candid-over-comfortable": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree"}
+  "#ask-if-unsure": {"disposition": "retained"}
+frontmatter:
+  "agent": {"disposition": "retained"}
+  "agentType": {"disposition": "retained"}
+  "description": {"disposition": "retained"}
+  "ambient[cross-platform-vs-platform-specific-decision-framework#decision-framework]": {"disposition": "retained"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "retained"}
+  "routes.docs[decision-criteria]": {"disposition": "retained"}
+  "routes.docs[spec-tasks-format]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[layout-vocabulary]": {"disposition": "retained"}
+  "routes.docs[product-token-authoring]": {"disposition": "retained"}
+  "routes.docs[component-doc-map]": {"disposition": "retained"}
+  "routes.docs[component-readiness]": {"disposition": "retained"}
+  "routes.docs[concept-catalog]": {"disposition": "retained"}
+  "routes.docs[cross-platform-guidance]": {"disposition": "retained"}
+  "routes.docs[spec-planning-beyond]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[product-token-gov-beyond]": {"disposition": "retained"}
+  "routes.docs[stemma-principles]": {"disposition": "retained"}
+  "routes.docs[test-dev-standards]": {"disposition": "retained"}
+  "routes.docs[token-lookup-patterns]": {"disposition": "retained"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[product-handoff-protocol-route]": {"disposition": "retained"}
+  "routes.docs[integration-onboarding-guide]": {"disposition": "retained"}
+  "routes.agents[sparky]": {"disposition": "retained"}
+  "routes.agents[kenya]": {"disposition": "retained"}
+  "routes.agents[data]": {"disposition": "retained"}
+  "routes.agents[stacy]": {"disposition": "retained"}
+  "routes.agents[thurgood]": {"disposition": "retained"}
+  "routes.cues[0]": {"disposition": "retained"}
+  "routes.cues[1]": {"disposition": "retained"}
+  "routes.cues[2]": {"disposition": "retained"}
+  "routes.cues[3]": {"disposition": "retained"}
+  "routes.cues[4]": {"disposition": "retained"}
+  "routes.cues[5]": {"disposition": "retained"}
+  "routes.cues[6]": {"disposition": "retained"}
+  "routes.cues[7]": {"disposition": "retained"}
+  "routes.cues[8]": {"disposition": "retained"}
+  "routes.cues[9]": {"disposition": "retained"}
+  "routes.cues[10]": {"disposition": "retained"}
+  "routes.cues[11]": {"disposition": "retained"}
+  "routes.cues[12]": {"disposition": "retained"}
+  "routes.cues[13]": {"disposition": "retained"}
+  "routes.cues[14]": {"disposition": "retained"}
+  "routes.cues[15]": {"disposition": "retained"}
+  "routes.cues[16]": {"disposition": "retained"}
+  "routes.cues[17]": {"disposition": "retained"}
+  "routes.cues[18]": {"disposition": "retained"}
+  "routes.cues[19]": {"disposition": "retained"}
+  "routes.cues[20]": {"disposition": "retained"}
+  "routes.cues[21]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[generate-tokens]": {"disposition": "retained"}
+  "commands[validate-product-tokens]": {"disposition": "retained"}
+  "commands[init-product]": {"disposition": "retained"}
+  "commands[sync-product]": {"disposition": "retained"}
+  "skills[impeccable]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_section]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_index_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[rebuild_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[find_components]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_experience_pattern]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[list_experience_patterns]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[list_layout_templates]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_layout_template]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[validate_assembly]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[check_composition]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_prop_guidance]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_catalog]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_design_philosophy]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_design_rules]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_design_guidance]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_color_strategy]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_details]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[search_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[rebuild_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_overview]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_brand_context]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_screens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_spec]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_state_model]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[list_experience_map]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[rebuild_product_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_principles]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[list_product_templates]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_templates]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_domain_object]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_component]": {"disposition": "retained"}
+  "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "kiro.keyboardShortcut": {"disposition": "retained"}
+  "kiro.welcomeMessage": {"disposition": "retained"}
+  "preflight[git status --porcelain]": {"disposition": "retained"}

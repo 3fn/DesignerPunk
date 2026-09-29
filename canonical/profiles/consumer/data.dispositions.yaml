@@ -1,0 +1,106 @@
+# canonical/profiles/consumer/data.dispositions.yaml — Spec 123 Task 15.4 (design C17; DD25, DD26)
+# Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the
+# consumer's repo (R5); their text is data.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
+# The knowledge-fallback re-point (Kenya/Data R1): the Android sources ship at node_modules/@3fn/core/src/components/core/*/platforms/android/; test sources do not ship.
+source: canonical/agents/data.md
+body:
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "(referencing existing platforms/android/ implementations)", "cites": "subtraction-5"}], "destination": "#in-scope"}
+  "#android-theming-spec-094": {"disposition": "re-pointed", "removals": [{"text": "**Ground truth for these token values is LIVE, not a file** — never read the built `dist/*.kt` snapshots (see the Ground truth section); query", "cites": "subtraction-3"}], "destination": "#android-theming-spec-094"}
+  "#product-tokens-spec-108109": {"disposition": "retained"}
+  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope"}
+  "#blocking-exception-direct-escalation-to-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#blocking-exception-direct-escalation-to-peter"}
+  "#the-implement-vs-direct-distinction": {"disposition": "retained"}
+  "#operational-mode-screen-implementation:preamble": {"disposition": "retained"}
+  "#step-1-review-the-specification": {"disposition": "retained"}
+  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "(never read the stale `dist/*.kt` snapshots — see the Ground truth section)", "cites": "subtraction-3"}], "destination": "#step-2-set-up-the-screen"}
+  "#step-3-implement": {"disposition": "retained"}
+  "#step-4-test": {"disposition": "retained"}
+  "#step-5-report-back": {"disposition": "retained"}
+  "#operational-mode-platform-expertise:preamble": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#operational-mode-platform-expertise:preamble"}
+  "#what-you-provide": {"disposition": "retained"}
+  "#how-you-provide-it": {"disposition": "retained"}
+  "#with-leonardo-primary": {"disposition": "retained"}
+  "#with-sibling-platform-agents": {"disposition": "retained"}
+  "#with-stacy-product-governance": {"disposition": "retained"}
+  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "Recognize Peter's skillset largely lives in design and may require assistance with understanding technical nuances", "cites": "subtraction-2"}], "destination": "#with-peter"}
+  "#how-to-use-designerpunk-tokens-on-android": {"disposition": "re-pointed", "removals": [{"text": "**Ground truth for token values is LIVE, not a file** — never read the built `dist/*.kt` snapshots (see the Ground truth section); query", "cites": "subtraction-3"}], "destination": "#how-to-use-designerpunk-tokens-on-android"}
+  "#token-reference-pattern": {"disposition": "retained"}
+  "#platform-currency-expectations": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-expectations"}
+  "#platform-reference-pointers": {"disposition": "retained"}
+  "#android-specific-guidance:preamble": {"disposition": "re-pointed", "removals": [{"text": "never the stale `dist/*.kt` snapshots", "cites": "subtraction-3"}], "destination": "#android-specific-guidance:preamble"}
+  "#android-skills-official-google-patterns": {"disposition": "retained"}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "**Ground truth is live, never a snapshot** — the two `dist/*.kt` build outputs are trimmed from your ambient set on purpose (see the Ground truth section). Reach for", "cites": "subtraction-3"}, {"text": "and `*Test.kt` files", "cites": "subtraction-5"}], "destination": "#mcp-practice-notes"}
+  "#collaboration-standards:preamble": {"disposition": "retained"}
+  "#counter-arguments-are-mandatory": {"disposition": "retained"}
+  "#candid-over-comfortable": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#ask-if-unsure": {"disposition": "retained"}
+  "#what-you-own": {"disposition": "retained"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) and named gaps are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own"}
+frontmatter:
+  "agent": {"disposition": "retained"}
+  "agentType": {"disposition": "retained"}
+  "description": {"disposition": "retained"}
+  "ambient[platform-implementation-guidelines#android-implementation-patterns]": {"disposition": "retained"}
+  "ambient[platform-implementation-guidelines#3-token-usage-consistency]": {"disposition": "retained"}
+  "ambient[product-token-governance#system-first-value-selection]": {"disposition": "retained"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "routes.docs[token-doc-map]": {"disposition": "retained"}
+  "routes.docs[product-token-naming]": {"disposition": "retained"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[contract-concept-names]": {"disposition": "retained"}
+  "routes.docs[stemma-principles]": {"disposition": "retained"}
+  "routes.docs[test-dev-standards]": {"disposition": "retained"}
+  "routes.docs[bcv-guidance]": {"disposition": "retained"}
+  "routes.docs[token-lookup-beyond]": {"disposition": "retained"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[android-implementation-patterns]": {"disposition": "retained"}
+  "routes.agents[leonardo]": {"disposition": "retained"}
+  "routes.cues[0]": {"disposition": "retained"}
+  "routes.cues[1]": {"disposition": "retained"}
+  "routes.cues[2]": {"disposition": "retained"}
+  "routes.cues[3]": {"disposition": "retained"}
+  "routes.cues[4]": {"disposition": "retained"}
+  "routes.cues[5]": {"disposition": "retained"}
+  "routes.cues[6]": {"disposition": "retained"}
+  "routes.cues[7]": {"disposition": "retained"}
+  "routes.cues[8]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "routes.cues[9]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[platform-tokens]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[audit-tokens]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[android-build-test]": {"disposition": "re-pointed", "destination": "frontmatter:commands[android-build-test]"}
+  "commands[product-screen-commands]": {"disposition": "re-pointed", "destination": "frontmatter:commands[product-screen-commands]"}
+  "skills[theming-styles]": {"disposition": "retained"}
+  "skills[edge-to-edge]": {"disposition": "retained"}
+  "skills[adaptive]": {"disposition": "retained"}
+  "skills[navigation-3]": {"disposition": "retained"}
+  "knowledgeBases[android-components]": {"disposition": "re-pointed", "destination": "frontmatter:knowledgeBases[android-components]"}
+  "knowledgeBases[android-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5"}
+  "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_section]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_index_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_catalog]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[find_components]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_details]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_family]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[search_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_spec]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_screens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_overview]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[rebuild_product_index]": {"disposition": "retained"}
+  "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "kiro.keyboardShortcut": {"disposition": "retained"}
+  "kiro.welcomeMessage": {"disposition": "retained"}
+  "preflight[git status --porcelain]": {"disposition": "retained"}

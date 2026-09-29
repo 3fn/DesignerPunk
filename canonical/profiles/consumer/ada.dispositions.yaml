@@ -1,0 +1,98 @@
+# canonical/profiles/consumer/ada.dispositions.yaml — Spec 123 Task 15.4 (design C17; DD25, DD26)
+# Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the
+# consumer's repo (R5); their text is ada.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
+source: canonical/agents/ada.md
+body:
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "for DesignerPunk", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#ownership": {"disposition": "retained"}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "`src/themes/ThemeRegistry.ts`", "cites": "subtraction-1"}, {"text": "`src/config/defineConfig.ts`, `src/config/ConfigLoader.ts`", "cites": "subtraction-1"}], "destination": "#in-scope"}
+  "#out-of-scope": {"disposition": "retained"}
+  "#boundary-cases": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#boundary-cases"}
+  "#domain-boundary-response-examples": {"disposition": "retained"}
+  "#collaboration-model-domain-respect:preamble": {"disposition": "retained"}
+  "#trust-by-default": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#trust-by-default"}
+  "#obligation-to-flag": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#obligation-to-flag"}
+  "#graceful-correction": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#graceful-correction"}
+  "#fallibility": {"disposition": "retained"}
+  "#documentation-governance-ballot-measure-model:preamble": {"disposition": "retained"}
+  "#the-process": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#the-process"}
+  "#what-this-means-in-practice": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/steering/` or `governance/` files", "cites": "subtraction-1"}, {"text": "Peter", "cites": "subtraction-2"}], "destination": "#what-this-means-in-practice"}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "; governance/token-family doc changes → the docs MCP's `rebuild_index`", "cites": "subtraction-3"}], "destination": "#mcp-practice-notes"}
+  "#collaboration-standards:preamble": {"disposition": "retained"}
+  "#counter-arguments-are-mandatory": {"disposition": "retained"}
+  "#candid-over-comfortable": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree"}
+  "#what-you-own": {"disposition": "retained"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own"}
+frontmatter:
+  "agent": {"disposition": "retained"}
+  "agentType": {"disposition": "retained"}
+  "description": {"disposition": "re-pointed", "removals": [{"text": "Token creation always requires Peter's review.", "cites": "subtraction-2"}], "destination": "frontmatter:description"}
+  "ambient[token-governance#token-usage-governance]": {"disposition": "retained"}
+  "ambient[token-governance#token-creation-governance]": {"disposition": "retained"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "retained"}
+  "routes.docs[token-doc-map]": {"disposition": "retained"}
+  "routes.docs[token-pipeline-architecture]": {"disposition": "retained"}
+  "routes.docs[module-resolution-contract]": {"disposition": "retained"}
+  "routes.docs[theme-registry-law]": {"disposition": "retained"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[spec-tasks-format]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[rosetta-arch-beyond]": {"disposition": "retained"}
+  "routes.docs[token-lookup-patterns]": {"disposition": "retained"}
+  "routes.docs[naming-and-philosophy]": {"disposition": "retained"}
+  "routes.docs[token-context-resolution]": {"disposition": "retained"}
+  "routes.docs[semantic-structure]": {"disposition": "retained"}
+  "routes.docs[family-accessibility]": {"disposition": "retained"}
+  "routes.docs[family-blend]": {"disposition": "retained"}
+  "routes.docs[family-border]": {"disposition": "retained"}
+  "routes.docs[family-color]": {"disposition": "retained"}
+  "routes.docs[family-glow]": {"disposition": "retained"}
+  "routes.docs[family-layering]": {"disposition": "retained"}
+  "routes.docs[family-motion]": {"disposition": "retained"}
+  "routes.docs[family-opacity]": {"disposition": "retained"}
+  "routes.docs[family-radius]": {"disposition": "retained"}
+  "routes.docs[family-responsive]": {"disposition": "retained"}
+  "routes.docs[family-shadow]": {"disposition": "retained"}
+  "routes.docs[family-spacing]": {"disposition": "retained"}
+  "routes.docs[family-typography]": {"disposition": "retained"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.agents[lina]": {"disposition": "retained"}
+  "routes.agents[thurgood]": {"disposition": "retained"}
+  "routes.cues[0]": {"disposition": "retained"}
+  "routes.cues[1]": {"disposition": "retained"}
+  "routes.cues[2]": {"disposition": "retained"}
+  "routes.cues[3]": {"disposition": "retained"}
+  "routes.cues[4]": {"disposition": "retained"}
+  "routes.cues[5]": {"disposition": "retained"}
+  "routes.cues[6]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[token-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[validator-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[full-suite-with-performance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "knowledgeBases[RosettaTokenSource]": {"disposition": "retained"}
+  "knowledgeBases[TokenValidators]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5"}
+  "knowledgeBases[TokenGenerators]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5"}
+  "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_section]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_index_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[rebuild_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[search_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_details]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_family]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_consumers]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_catalog]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[rebuild_index]": {"disposition": "retained"}
+  "writeScope[src/tokens/**]": {"disposition": "retained"}
+  "writeScope[src/validators/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[src/generators/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "kiro.keyboardShortcut": {"disposition": "retained"}
+  "kiro.welcomeMessage": {"disposition": "retained"}
+  "preflight[git status --porcelain]": {"disposition": "retained"}

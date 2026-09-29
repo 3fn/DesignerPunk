@@ -1,0 +1,10 @@
+import * as fs from 'fs';
+import { splitFrontmatter } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/frontmatter';
+import { entryTree, partition } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/partition';
+import { hashText, hashEntry } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/regrounding/hash';
+const root = '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/';
+const f = process.argv[2];
+const { frontmatter, body } = splitFrontmatter(fs.readFileSync(root+f,'utf8'), f);
+const units = partition(body).units.map(u => ({ anchor: u.anchor, text: u.text, hash: hashText(u.text) }));
+const leaves = entryTree(frontmatter ?? {}).units.map(l => ({ path: l.path, value: l.value, hash: hashEntry(l.value) }));
+fs.writeFileSync(process.argv[3], JSON.stringify({ source: f, units, leaves }, null, 1));
