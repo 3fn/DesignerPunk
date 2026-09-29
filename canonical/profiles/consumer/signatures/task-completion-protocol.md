@@ -113,3 +113,19 @@ renderedHash: sha256:f25591f51f38a1b45a76f52dee732682d663e787ff5c42fce9feaddeab3
 verdict: assent — surviving 4/9; not surviving: `key-rules-4`, `key-rules-5`, `key-rules-6`, `key-rules-7`, `key-rules-9`
 
 `-1` to `-3` and `-8` (ratification through the team's own decision record) survive. **Not surviving**: `-4` (the checkpoint triggers dropped), `-5` (the unit definition dropped), `-6` (the branch-protection clause dropped), `-7` (the cleanup details dropped), and `-9` (this repo's delegated-tier line).
+
+## `#completion-state-in-the-pr-flow:preamble`
+
+signer: stacy
+date: 2026-09-29
+row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#completion-state-in-the-pr-flow:preamble` (re-pointed; ROUTED)
+canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+renderedHash: sha256:0eb434dbd11865776c7604237bbbc9d3d5aedf2a2b910dbce25943eb8d7430bb
+verdict: refuse: should-re-point
+
+The rendering keeps the flow's spine at 13/22, but it drops two generic rules a consumer's agents act on:
+- **`completion-state-in--19`**: "If the PR is green but unmergeable (the branch conflicts with an advanced `main`), update the branch from `main` on the same branch."
+- **`completion-state-in--7`**: the stacked-PR protocol. Stacking is still allowed, but the `Stacked-on: #<PR>` declaration and base-first merge order are gone.
+- Both have a direct consumer counterpart, and neither is repo-bound.
+- **Should re-point**: carry both.
+- For the record, the other drops are acceptable: the checkpoint tooling (`-4`), the hook ergonomics (`-6`), squash-only config (`-10`), branch protection (`-11`), and the inside-parent status and PR timing (`-8`, `-14`).
