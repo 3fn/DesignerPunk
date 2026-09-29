@@ -104,10 +104,12 @@ date: 2026-09-27
 
 confirmer: stacy
 canonicalHash: sha256:7b2a7c8edaa9ba38463e8afa521851f7b4350e0892cf5ed9596497f90aaeaa18
-items: reach-artifact-truth, reach-green-is-not-honesty
-date: 2026-09-27
+items: reach-checker-greens-plausible, reach-platform-trust, reach-artifact-truth, reach-green-is-not-honesty
+date: 2026-09-29
 
-**Ruling: 2 items, not 0.**
+**Re-confirmed 2026-09-29 under the narrowed 5c reading (the classifier owner's "can contradict" ruling): 2 → 4.** The two sentences I ruled non-operative below are stated facts that this seat's verifier builds against. A verifier that treats a plausible Evidence path as verified contradicts the first. One that reports iOS or Android evidence as re-verified in this environment contradicts the second. Added: `reach-checker-greens-plausible` and `reach-platform-trust`. The canonicalHash is unchanged, because the text did not change. This departs from the owner's expectation of no change, and I state it as such. The 2026-09-27 ruling below stands as history.
+
+**Ruling (2026-09-27): 2 items, not 0.**
 - **`reach-artifact-truth`** is an ownership assignment. A consumer verifier that leaves artifact truth to the parity gate, rather than to its claims pass, violates it.
 - **`reach-green-is-not-honesty`** is, in the charter's own words, *"the framing sentence that binds every reader."* Reading a green gate as claim honesty is exactly the violation it names.
 - **Not operative**:
@@ -138,10 +140,14 @@ date: 2026-09-27
 
 confirmer: stacy
 canonicalHash: sha256:43defd686fc5d68ce4f4d13231c8b98631b1292cdf2135f489299b751d856700
-items: stacy-role, stacy-deliver-promises, stacy-claims-both-tiers, stacy-domain, stacy-tone, stacy-build-systems, stacy-hold-the-line, stacy-route-via-thurgood, stacy-human-decides, stacy-partner
+items: stacy-role, stacy-deliver-promises, stacy-claims-both-tiers, stacy-domain, stacy-tone, stacy-build-systems, stacy-hold-the-line, stacy-collaborators, stacy-route-via-thurgood, stacy-human-decides, stacy-partner
 date: 2026-09-29
 
-**Ruling: CORRECTED 7 → 10.** Added `stacy-tone` and `stacy-build-systems`: both are norms of conduct that a consumer implementation can violate (5c). Added `stacy-route-via-thurgood`: the other system agents are reached through Thurgood's triage, which is a route. **Not operative**: the namesake narrative, the inward/outward framing, and the product-side-history sentence.
+**Ruling: CORRECTED 7 → 11.**
+- Added `stacy-tone` and `stacy-build-systems`: norms of conduct that a consumer implementation can act against (5c).
+- Added `stacy-collaborators`, the named agents she works with and her system-side counterpart. These are names the implementation routes against (the "can contradict" reading).
+- Added `stacy-route-via-thurgood`: the other system agents are reached through Thurgood's triage.
+- **Not operative**: the namesake narrative (orientation), the inward/outward framing (its operative form is `thurgood-3` in `#with-thurgood-system-counterpart`), and the product-side-history sentence.
 
 ## `#in-scope`
 
@@ -186,7 +192,7 @@ canonicalHash: sha256:175aa9e1663d5d611bd16ff862881edf0032ca490c8a19557f2f2f73ca
 items: capture-immediately, capture-running-file, capture-both
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 3, as drafted.** "If the session ends prematurely, the partial capture survives" is rationale.
+**Ruling: CONFIRMED at 3, as drafted.** "If the session ends prematurely, the partial capture survives" is rationale. **Referent scan**: `capture-both` ("This applies …") is left as drafted. Widening it to carry its referent would contain `capture-immediately` and `capture-running-file`, and the occurrence assignment cannot credit overlapping items. Its referent is this unit's own rule, and 5e reads within the unit's rendering.
 
 ## `#audit-output`
 
@@ -235,7 +241,7 @@ canonicalHash: sha256:c460743c0430e9fa04163a6d13a0d880ce59bb401480896fd12d7d7044
 items: mirror-clause, mirror-called-at-exchange, mirror-binds-lens
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 3, as drafted.** "Thurgood should call it out as such" binds his seat, not this one: no implementation of this seat can violate it. The symmetry sentence is description.
+**Ruling: CONFIRMED at 3, as drafted.** "Thurgood should call it out as such" binds his seat: no implementation of this seat can act against it. The symmetry sentence describes his clause. **Referent scan**: `mirror-binds-lens` ("It binds …") is left as drafted, for the same containment reason as `capture-both`: widening it would contain `mirror-called-at-exchange`. Its referent is the unit's own clause.
 
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 
@@ -268,10 +274,10 @@ date: 2026-09-29
 
 confirmer: stacy
 canonicalHash: sha256:783778832b4eea537c8d5980b8e5e2e40b4f08996b7c735fc8b23472d80c9ffe
-items: synthesis-lead
+items: synthesis-lead, synthesis-handoff-protocol
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 1, as drafted.** The Product Handoff Protocol line is a reference, not an item. "The forcing function" sentence is rationale.
+**Ruling: CORRECTED 1 → 2.** Added `synthesis-handoff-protocol`: the review's structure, triggers and template come from the Product Handoff Protocol. That is a route the implementation builds against, so it is operative under the narrowed 5c reading. "The forcing function" sentence is rationale.
 
 ## `#your-role`
 
@@ -313,10 +319,10 @@ date: 2026-09-29
 
 confirmer: stacy
 canonicalHash: sha256:e5aa54f1f1a72f07c1f25d602eac46a08c738839516f23bd779091715e35931c
-items: thurgood-1, thurgood-2, thurgood-3, thurgood-5
+items: thurgood-1, thurgood-2, thurgood-3, thurgood-4, thurgood-5
 date: 2026-09-29
 
-**Ruling: CORRECTED 5 → 4.** Removed `thurgood-4`. "Peter may consult both together at the boundary" states what Peter may do, and no implementation of this seat can violate it.
+**Ruling: CONFIRMED at 5, as drafted.** Earlier in this run I removed `thurgood-4` as a statement of what Peter may do. I restored it under Thurgood's narrowed 5c reading: an implementation that refuses a joint consultation at the boundary acts against it.
 
 ## `#with-peter`
 
@@ -331,10 +337,10 @@ date: 2026-09-29
 
 confirmer: stacy
 canonicalHash: sha256:64c55f317e18e344f8b476a9c73a8aff44b2ac4bca321671c415d779b2fa26f3
-items: ground-truth-computed, standards-on-demand, product-mcp-caveat, mcp-fallback
+items: mcp-roster, ground-truth-computed, standards-on-demand, product-mcp-caveat, mcp-fallback
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 4, as drafted.** The three-server roster sentence is description.
+**Ruling: CORRECTED 4 → 5.** Added `mcp-roster`: the three servers and what each serves are names the implementation queries against, which makes them operative under the narrowed reading. "Your routing section names the query tools" is orientation.
 
 ## `#collaboration-standards:preamble`
 
@@ -401,49 +407,69 @@ date: 2026-09-29
 
 ## Confirmation run summary (2026-09-29, run 1)
 
-**Scope**: Task 15.5 phase one, run 1: `stacy.yaml`, the 29 units without a note (owner seat), and `thurgood.yaml`, all 47 units (C1 counterpart seat, because the owner is the profile author). **Commits**: `bfa80eba` (stacy) and the commit that adds this section (thurgood). The identity docs are run 2.
+**Scope**: Task 15.5 phase one, run 1: `stacy.yaml`, the 29 units without a note (owner seat), and `thurgood.yaml`, all 47 units (C1 counterpart seat, because the owner is the profile author). The identity docs are run 2.
+
+**Commits** (three):
+- `bfa80eba`: stacy, first pass.
+- `5815a167`: thurgood, first pass.
+- the commit that carries this section: both records re-read under the classifier owner's narrowed 5c ruling and his referent scan (both received mid-run). It also re-checks my six 11.2 units.
+
+**Criterion**: 5c as narrowed on 2026-09-29, the "can contradict" reading. Stated facts about a name, path, type shape or spelling the implementation builds against are operative. Repo-specificity is a signing question, never an exclusion. This narrows my 11.2 wording ("statements about another instrument's behavior are not operative") to "… that the implementation does not build against".
 
 **Units confirmed**:
-- **`stacy.yaml`**: 29 units, now 35 of 35 with notes.
+- **`stacy.yaml`**: 29 new units (35 of 35 now have notes), plus one of the six 11.2 units amended.
   - The counting-block unit was confirmed first, against the post-13.8 + post-#239 text (`sha256:8103d28e…38ac7`, verified fresh). No A4 re-confirmation is owed on #239's account.
 - **`thurgood.yaml`**: 47 of 47.
 
-**Items added and removed, by key**:
-- `stacy.yaml`:
-  - `#identity` +`stacy-tone`, +`stacy-build-systems`, +`stacy-route-via-thurgood` (7 → 10);
+**Items added and removed, by key** (net):
+- `stacy.yaml`, record total 210:
+  - `#identity` +`stacy-tone`, +`stacy-build-systems`, +`stacy-collaborators`, +`stacy-route-via-thurgood` (7 → 11);
   - claims-audit `:preamble` +`authority-precedence` (0 → 1);
-  - `#the-claims-pass-record-…` −`counting-10`, then +`counting-10-buckets`, +`counting-10-ncc-rate`, +`counting-10-assent-refusal`, +`counting-10-spot-check`, +`counting-10-full-survival`; `never-a-gate` text widened (27 → 31);
+  - `#the-claims-pass-record-…` −`counting-10`, then +`counting-10-buckets`, +`counting-10-ncc-rate`, +`counting-10-assent-refusal`, +`counting-10-spot-check`, +`counting-10-full-survival`; `never-a-gate` widened (27 → 31);
   - steward-verb carve-out +`carve-out-no-silent-rescope` (4 → 5);
-  - `#with-thurgood-system-counterpart` −`thurgood-4` (5 → 4).
-  - Record total: 204 items.
-- `thurgood.yaml`:
+  - lessons-synthesis `:preamble` +`synthesis-handoff-protocol` (1 → 2);
+  - `#mcp-practice-notes` +`mcp-roster` (4 → 5);
+  - `#honest-reach-…` +`reach-checker-greens-plausible`, +`reach-platform-trust` (2 → 4; an 11.2 unit, amended);
+  - `#with-thurgood-system-counterpart` unchanged at 5. `thurgood-4` was removed in `bfa80eba` and restored here.
+- `thurgood.yaml`, record total 171:
   - `#in-scope` −`scope-11`, then +`civitas-1` to `civitas-9` (12 → 20);
-  - `#trigger-types` +`liveness-records-not-verdicts`, +`owed-set-predicate`, +`owed-set-pipeline`, +`owed-set-exclusion-classes`, +`owed-set-promotion` (13 → 18);
+  - `#step-1-query-audit-methodology` +`audit-methodology-route` (0 → 1);
+  - `#step-2-gather-evidence` +`evidence-dir-1` to `evidence-dir-4` (3 → 7);
+  - `#trigger-types` +`instruments-named`, +`liveness-records-not-verdicts`, +`owed-set-three-copies`, +`owed-set-predicate`, +`owed-set-pipeline`, +`owed-set-exclusion-classes`, +`owed-set-promotion` (13 → 20);
   - `#the-three-boundary-bounds-…` +`framing-sentence` (4 → 5);
-  - Q5 `:preamble` +`authority-precedence` (0 → 1).
-  - Record total: 163 items.
+  - Q5 `:preamble` +`authority-precedence` (0 → 1);
+  - `#mcp-practice-notes` +`prompts-not-indexed` (4 → 5).
+  - Widened to carry a referent or a named fact: `thurgood-handoff`, `query-standards`, `cross-reference`, `register-read`, `caller-out`, `shared-layer-not-unilateral`, `monitor-exceptions`.
 
-**Units ruled zero (declared)**: `thurgood.yaml` has three: `#domain-boundary-response-examples` (illustrations), `#step-1-query-audit-methodology` (a pointer) and `#fallibility` (ethos; its operative content is `correction-2`). `stacy.yaml` has none this run: its one drafted zero was wrong.
+**Referent scan** (the classifier owner's candidates):
+- **Widened**: `thurgood-handoff` and `shared-layer-not-unilateral`.
+- **Left as drafted**: `capture-both`, `mirror-binds-lens`, `parity-platform-native-expression` (an 11.2 unit) and `practice-4`. In each case, widening to carry the referent would contain sibling items, and the occurrence assignment cannot credit overlapping items. Each one's referent is its own unit's rule or list, and 5e reads within the unit's rendering. **Residual**: a signer could credit one of these while its referent's siblings are gone. The floor still counts the siblings missing, so the unit routes.
+
+**Units ruled zero (declared)**: `thurgood.yaml` `#domain-boundary-response-examples` (illustrations) and `#fallibility` (orientation; its operative content is `correction-2`). `stacy.yaml` has none. Both of its drafted zeros that this run touched were wrong.
 
 **Drafts that were materially wrong, and why**:
-1. **`thurgood.yaml` `scope-11` credited a group label**, "**Civitas infrastructure stewardship:**". Under clause (c) a label retains nothing. As drafted, a rendering could keep the heading, drop all nine stewardship duties, and still be credited.
-2. **`thurgood.yaml` `#trigger-types` left out what LIVENESS runs, and its bound.** It carried the three LIVENESS reads but not the read-for-records-never-verdicts bound, and not the owed-set predicate, pipeline, exclusion classes or promotion ladder. My own charter's copy of the same pipeline is itemized. His copy is the one his read runs.
-3. **`stacy.yaml` `counting-10` bundled five separately violable metrics into one item.** A rendering that kept four of the five could not be credited for any of them, which over-routes. Worse, it made the assent read all-or-nothing.
-4. **Both Q5 preambles were declared zero**, but each carries a precedence rule: the co-signed documents govern on disagreement. A consumer implementation can violate that.
+1. **`thurgood.yaml` `scope-11` credited a group label**, "**Civitas infrastructure stewardship:**". Under clause (c) a label retains nothing. As drafted, a rendering could drop all nine stewardship duties and still be credited.
+2. **`thurgood.yaml` `#trigger-types` left out what LIVENESS runs, and its bound.** It carried the three reads but not the read-for-records bound, and not the owed-set predicate, pipeline, classes or ladder that the reads run.
+3. **`stacy.yaml` `counting-10` bundled five separately violable metrics into one item**, which made the assent read all-or-nothing.
+4. **Both Q5 preambles were declared zero**, but each carries a precedence rule: the co-signed documents govern on disagreement.
+5. **Under the narrowed ruling, `thurgood.yaml` `#step-2-gather-evidence` and `#step-1-query-audit-methodology`** left out paths and a methodology name the implementation builds against. I made the same error myself in `bfa80eba`/`5815a167` for `evidence-dir-*`, before the ruling reached me.
 
-**The smaller corrections** are recorded in the per-unit rulings: the three `#identity` additions, the widened `never-a-gate`, the carve-out re-scope clause, `framing-sentence` added, and `thurgood-4` removed.
+**The 11.2 re-check (six units)**:
+- Five are unchanged: `#audit-checklist`, `#the-charter-cut-ratified-verbatim`, `#the-trigger-set-…`, `#the-owed-set-pipeline-…` and `#what-parity-means`.
+- **`#honest-reach-…` is amended 2 → 4**, against the owner's expectation of no change. Its two "facts about the checker / environment" are facts this seat's verifier builds against. The 2026-09-27 ruling itself called the second "the closest call".
 
 **Checks**:
-- `triviality.records.test.ts` over the edited live records: `Tests: 664 passed, 664 total`.
-- The freshness sweep: after the `stacy` commit, 0 `confirmation` findings for `stacy.yaml`. After the thurgood commit, 0 for `thurgood.yaml` (the report cites the run). The other records still have findings, as expected.
-- **Instrument note**: the committed `first-render/drafting/sweep.ts` hardcodes the main checkout's root, not the worktree's. I ran a copy pointed at this worktree. Run as committed, it reads the main checkout.
+- `triviality.records.test.ts` over the edited live records: `Tests: 666 passed, 666 total`.
+- The freshness sweep, run from this worktree: 0 `confirmation` findings for `stacy.yaml` and `thurgood.yaml` (the report cites the run). The other records still have findings, as expected.
+- The full `tools/agent-generator` jest config: 25 suites passed; 27 suites failed to run, because the TypeScript compile cannot find `../../mcp-server/dist/index`, which this worktree does not have. No test assertion failed (`Tests: 1057 passed`).
 
 **Residuals**:
-- **Self-confirmation, disclosed.** Under C1 I confirm my own charter as its owner, and I confirm Thurgood's as the counterpart seat. His charter includes units that describe my seat: the charter cut, the caller-out duty and the three bounds. On those I am a party to what I confirmed. *Not independently re-verified. Confirmed by the auditing seat.*
+- **Self-confirmation, disclosed.** Under C1 I confirm my own charter as its owner, and I confirm Thurgood's as the counterpart seat. His charter includes units that describe my seat (the charter cut, the caller-out duty, the three bounds), so on those I am a party to what I confirmed. *Not independently re-verified. Confirmed by the auditing seat.*
 - **Judgment calls another confirmer could rule differently**:
-  - the two conduct items added to `stacy.yaml` `#identity`, which raise that unit's floor denominator;
-  - leaving the four scan directories out of `thurgood.yaml` `evidence-3` (repo location data);
+  - the two conduct items in `stacy.yaml` `#identity`;
+  - `thurgood-4` restored;
   - `#fallibility` ruled zero;
-  - "three copies, one text" left out of `#trigger-types`.
-- **`owed-set-pipeline` is one large command item.** Any byte change to the pipeline in a rendering fails to credit it, so the unit routes. That is conservative by design, and it adds volume at signing.
-- **Routing volume**: raising the item counts raises the floor's denominators for the corrected units. Some re-grounded renderings that cleared against the draft may now route at phase two.
+  - the four referent items left unwidened.
+- **`owed-set-pipeline` is one large command item.** Any byte change to the pipeline in a rendering routes the unit. That is conservative, and it adds volume at signing.
+- **Routing volume**: the corrected units' item counts rose, so their floor denominators rose too. Some renderings that cleared against the draft may now route at phase two.
+- **The hash sheet** `first-render/drafting/sheets/stacy.md` still lists the drafted ids (for example `counting-10` and `scope-11`). It is a read-only snapshot, so I did not edit it. The records are the truth.

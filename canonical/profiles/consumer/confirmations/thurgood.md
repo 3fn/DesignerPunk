@@ -6,7 +6,7 @@
 **Date**: 2026-09-29 · Spec 123 Task 15.5, phase one, run 1
 **Scope**: all 47 body units of the charter.
 
-**The criterion applied throughout (5c)**: an item is operative if and only if a consumer implementation could violate it. Rationale, history, illustration, pointers, and statements about another seat's behavior are not operative. Headings and group labels are labels (clause (c)). **5d**: every zero is declared here, never implied.
+**The criterion applied throughout (5c)**: an item is operative if and only if a consumer implementation could violate it. Under the classifier owner's ruling of 2026-09-29 (the "can contradict" reading), that includes stated facts about a name, path, type shape or spelling the implementation builds against. Orientation, rationale, history, illustration, and descriptions of what a tool does that the implementation does not build against are not operative. Repo-specificity is a signing question, never an exclusion. Headings and group labels are labels (clause (c)). **5d**: every zero is declared here, never implied.
 
 **Format**: the convention in `confirmations/stacy.md`. Record edits are made in the same commit as this note, and each is a reviewed diff.
 
@@ -17,7 +17,7 @@ canonicalHash: sha256:e396aa201b6a31a256a242b1b52f267804e02bca71865fd8721df8f47a
 items: thurgood-role, thurgood-domain, thurgood-handoff, thurgood-human-decides, thurgood-partner
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 5, as drafted.** The namesake narrative and the "less operational power" framing are description.
+**Ruling: CONFIRMED at 5. One text widened.** `thurgood-handoff` now carries its referent ("them" = Ada and Lina): *"You work alongside two other specialists — Ada (Rosetta tokens) and Lina (Stemma components). Hand-off triggers …"*. The namesake narrative and the "less operational power" framing are orientation.
 
 ## `#in-scope`
 
@@ -80,7 +80,7 @@ canonicalHash: sha256:47150be7b90e624ac8d1d135a8cb62e1903d30ee62ed7a3714d25249ee
 items: query-standards
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 1, as drafted.** The trailing clause about where the standards are routed is a pointer.
+**Ruling: CONFIRMED at 1. The text is widened** to the full sentence. The trailing clause names which standards are pulled (the format sections and the task-type overview), and those are names the implementation builds against.
 
 ## `#step-2-transform-design-outline-requirementsmd`
 
@@ -140,19 +140,19 @@ date: 2026-09-29
 
 confirmer: stacy
 canonicalHash: sha256:52116f00369aa993dd92890a122d3118adaa82626bb28e442f72fde05be93147
-items: none
+items: audit-methodology-route
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 0, declared.** The unit's only sentence points to the routing section, and it adds no constraint of its own.
+**Ruling: CORRECTED 0 → 1.** Added `audit-methodology-route`: the audit workflow is `test-failure-audit-methodology`. That names what the implementation follows, so it is operative under the narrowed reading. The drafted zero was declared, but it was wrong.
 
 ## `#step-2-gather-evidence`
 
 confirmer: stacy
 canonicalHash: sha256:d89dcc2c0b9d368ebe7b85a858952248ed7a034281899b8f48baea748fc50f00
-items: evidence-1, evidence-2, evidence-3
+items: evidence-1, evidence-2, evidence-3, evidence-dir-1, evidence-dir-2, evidence-dir-3, evidence-dir-4
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 3, as drafted.** The scan step (`evidence-3`) is the item. Its four directory paths are repo location data, left to the dispositions.
+**Ruling: CORRECTED 3 → 7.** Added `evidence-dir-1` to `evidence-dir-4`, the four scan directories. They are paths the implementation builds against. Under Thurgood's ruling, repo-specificity is a signing question, never an exclusion, so the "repo location data" exclusion I first applied here is withdrawn.
 
 ## `#step-3-cross-reference-with-domain-docs`
 
@@ -161,7 +161,7 @@ canonicalHash: sha256:7ffb888434bffe536490a22f11116752743266b948c6369605cbfd8acf
 items: cross-reference
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 1, as drafted.**
+**Ruling: CONFIRMED at 1. The text is widened** to the full sentence, whose parenthetical names the docs that define what should be tested.
 
 ## `#step-4-report-findings-with-severity`
 
@@ -230,13 +230,14 @@ date: 2026-09-29
 
 confirmer: stacy
 canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
-items: instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-charter-walk, owed-set-predicate, owed-set-pipeline, owed-set-exclusion-classes, owed-set-promotion, register-read, discovery-spec, discovery-feedback, discovery-audit
+items: instruments-named, instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-charter-walk, owed-set-three-copies, owed-set-predicate, owed-set-pipeline, owed-set-exclusion-classes, owed-set-promotion, register-read, discovery-spec, discovery-feedback, discovery-audit
 date: 2026-09-29
 
-**Ruling: CORRECTED 13 → 18.**
-- Added `liveness-records-not-verdicts`, the bound on LIVENESS (read for records, never for verdicts). The draft carried the three reads but not the bound on them.
-- Added the owed-set block that the LIVENESS read runs: `owed-set-predicate`, `owed-set-pipeline` (one command item, with its internal bytes kept), `owed-set-exclusion-classes` and `owed-set-promotion`. My own charter's copy of this pipeline is recorded as operative (`stacy.yaml`, owed-set unit). This copy is the one his read runs, so it is operative here too.
-- **Not items**: the Commands-section pointer, the return edge's naming of the product-side half, the "three copies, one text" remark, and the register read's rationale sentence.
+**Ruling: CORRECTED 13 → 20.**
+- Added `liveness-records-not-verdicts`, the bound on LIVENESS. The draft carried the three reads but not the bound on them.
+- Added the owed-set block the LIVENESS read runs: `owed-set-predicate`, `owed-set-pipeline` (one command item, with its internal bytes kept), `owed-set-exclusion-classes` and `owed-set-promotion`. My own charter's copy of this pipeline is itemized. His copy is the one his read runs.
+- Under the narrowed reading, also added `instruments-named` (the four scripts, which are names he builds against) and `owed-set-three-copies` (editing one copy without the others acts against "one text, by design"). `register-read` is widened to its whole bullet, so that *"Read-for-records-never-verdicts applies here too"* keeps its referent.
+- **Not items**: the return edge's naming of the product-side half. It describes my seat's instrument, which his implementation does not build against.
 
 ## `#steering-doc-lifecycle`
 
@@ -281,7 +282,7 @@ canonicalHash: sha256:26f4da1744327488e126670aa28c3b2dbb71552ef5faca0112202709cb
 items: caller-out
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 1, as drafted.** My clause is quoted context. "A clause with no caller is decoration" is rationale.
+**Ruling: CONFIRMED at 1. The text is widened** to carry its referent. My clause, quoted, is what his duty fires on, and "she" had no referent inside the drafted item. "A clause with no caller is decoration" is rationale.
 
 ## `#the-three-boundary-bounds-ratified-unsoftened`
 
@@ -335,7 +336,7 @@ canonicalHash: sha256:e0d3de4b303e471c0f30df1af9d2b0832c3d6581a58fb0efef9265c8c8
 items: none
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 0, declared.** "You will sometimes be wrong … honest analysis, not perfect answers" is an ethos statement. Its operative content, acknowledging uncertainty, is `correction-2` in the preceding unit.
+**Ruling: CONFIRMED at 0, declared.** Checked again under the narrowed reading. "You will sometimes be wrong … honest analysis, not perfect answers" is orientation. Its operative content, acknowledging uncertainty, is `correction-2` in the preceding unit.
 
 ## `#documentation-governance-ballot-measure-model:preamble`
 
@@ -344,7 +345,7 @@ canonicalHash: sha256:6100fb78ae5ff4e4f332c95cef229006cb8022ea6624a3ad8a552dff2a
 items: shared-layer-not-unilateral
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 1, as drafted.**
+**Ruling: CONFIRMED at 1. The text is widened** to carry its referent: "this layer" is *"Steering docs and MCP-served documentation … the shared knowledge layer for all agents"*.
 
 ## `#the-process`
 
@@ -362,16 +363,18 @@ canonicalHash: sha256:87e9a365cd107209c071e5ebbd21a251acf28b33d5835d8fbeb05bce77
 items: practice-1, practice-2, practice-3, practice-4, practice-5
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 5, as drafted.**
+**Ruling: CONFIRMED at 5, as drafted.** **Referent scan**: `practice-4` ("This applies …") is left as drafted. Widening it would contain its sibling items. Its referent is the unit's own rule.
 
 ## `#mcp-practice-notes`
 
 confirmer: stacy
 canonicalHash: sha256:61b6534dc4861bf69477f5db596cf4018372215da9b47591e9931a5b699be07a
-items: rebuild-docs, monitor-exceptions, mcp-fallback, kb-fallback
+items: rebuild-docs, prompts-not-indexed, monitor-exceptions, mcp-fallback, kb-fallback
 date: 2026-09-29
 
-**Ruling: CONFIRMED at 4, as drafted.** The health-state vocabulary and the auto-detection sentence are description.
+**Ruling: CORRECTED 4 → 5.**
+- Added `prompts-not-indexed`: whether an edit needs a rebuild is built against this fact.
+- Widened `monitor-exceptions` to carry the health-state names and the auto-detection sentence it depends on.
 
 ## `#collaboration-standards:preamble`
 
