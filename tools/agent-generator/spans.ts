@@ -28,9 +28,11 @@
  * PROFILES: the steward profile renders canonical text and takes no dispositions or overlay.
  * The consumer profile REQUIRES dispositions and reads them per unit / per leaf entry — an
  * explicit row every time (a missing row is never read as `retained`). Task 10 lands the body
- * half (retained / re-pointed / omitted) and frontmatter retained / omitted; frontmatter
- * RE-POINTING throws until C17/C22 define its overlay form (Tasks 13/15). `AdapterContext`
- * gains `profile` at Task 15.1; until then both adapters call with `'steward'`.
+ * half (retained / re-pointed / omitted) and frontmatter retained / omitted. Task 15.0 lands
+ * frontmatter RE-POINTING: a re-pointed leaf renders its `## @entry <path> @ sha256:…` overlay
+ * text (13.2, `regrounding/overlay.ts`) with `source` = the canonical `#frontmatter:<path>`; an
+ * ambient embed can never be re-pointed (DD19) and throws. `AdapterContext.profile` (15.0,
+ * default `'steward'`) selects the profile in both adapters.
  *
  * WHAT THIS DOES NOT ESTABLISH: that every adapter span routes through here. The arbiter for
  * that is Task 14's two-sided per-target bites (S-T-A7). The unit twin
@@ -228,7 +230,7 @@ function pieceBlock(
   piece: SpanPiece,
   profile: Profile,
   dispositions: Dispositions | undefined,
-  _overlay: Overlay | undefined
+  overlay: Overlay | undefined
 ): { op: AttributionOp; source: string; text: string; mode?: 'embed' } | undefined {
   switch (piece.kind) {
     case 'glue':
@@ -251,9 +253,17 @@ function pieceBlock(
         }
         if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by') return undefined;
         if (row.disposition === 're-pointed') {
-          throw new SpanEmissionError(
-            `emitSpans: re-pointing frontmatter entry ${path} is not implemented yet — its overlay form lands with C17/C22.`
-          );
+          if (path.startsWith('ambient[')) {
+            throw new SpanEmissionError(
+              `emitSpans: ambient embed ${path} in ${source.file} cannot be re-pointed (DD19) — dispose it retained, superseded-by or no-consumer-counterpart.`
+            );
+          }
+          const regrounded = overlay?.entries?.[path];
+          if (regrounded === undefined) {
+            throw new SpanEmissionError(`emitSpans: re-pointed frontmatter entry ${path} in ${source.file} has no overlay text.`);
+          }
+          // 10.S: source is the CANONICAL ORIGIN; op names the transformation.
+          return { op: 'render', source: `${source.file}#frontmatter:${path}`, text: ensureTrailingNewline(regrounded) };
         }
       }
       const embed = path.startsWith('ambient[');

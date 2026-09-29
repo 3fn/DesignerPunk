@@ -65,6 +65,7 @@ import type {
   FieldDispositionTable,
   SharedCatalogMember,
 } from './index';
+import { spanInputsFor } from './index';
 
 // ============================================================================
 // toolRef — NATIVE (non-namespaced) Kiro tool-reference syntax
@@ -135,6 +136,15 @@ function allFlatTools(subset: ToolSubset): string[] {
  * carried through in `emitAgent`'s config) — unlike CC (facet 7), there is no enforcement-
  * options sentence to layer on. The base field-driven note (render.ts) is the whole story.
  */
+/**
+ * The consumer profile's per-member write-scope rendering (Task 15.0): an intro line, one bullet
+ * per glob (each its own `writeScope[<glob>]` span), then the closing text. The steward profile
+ * keeps the one-sentence container rendering above, byte-identical.
+ */
+const WRITE_SCOPE_MEMBERS_INTRO =
+  'Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:';
+const WRITE_SCOPE_MEMBERS_OUTRO = '\n';
+
 function renderWriteScopeImpl(paths: readonly string[]): string {
   return renderWriteScopeNote(paths);
 }
@@ -292,6 +302,7 @@ export class KiroAdapter implements TargetAdapter {
 
     // Machine JSON: one `render` span over the whole file, still constructed by `emitSpans`
     // (C14) — a per-entry attribution INSIDE the JSON is not attempted (carried to Task 14/15).
+    // It stays steward-shaped under EVERY profile (Task 15.0 scope; consumer JSON semantics are C20's).
     const acc = new AttributionAccumulator();
     const content = emitSpans(acc, spanSource(agent), 'steward', undefined, undefined, [
       { kind: 'glue', glue: 'kiro-config', text: canonicalStringify(config as JsonValue) },
@@ -313,9 +324,11 @@ export class KiroAdapter implements TargetAdapter {
 
     // EVERY span below is constructed by `emitSpans` (C14, Spec 123 Task 10.4): this adapter
     // supplies only the per-target RENDERING of each piece — never a span, never a source.
-    // (`AdapterContext.profile` lands at Task 15.1; until then this is the steward rendering.)
+    // The profile and this agent's consumer inputs come from `AdapterContext` (Task 15.0);
+    // absent, the profile is `'steward'` and the rendering is byte-identical to pre-15.0.
     const src = spanSource(agent);
-    const emit = (plan: SpanPlan): string => emitSpans(acc, src, 'steward', undefined, undefined, plan).text;
+    const span = spanInputsFor(ctx, fm.agent);
+    const emit = (plan: SpanPlan): string => emitSpans(acc, src, span.profile, span.dispositions, span.overlay, plan).text;
 
     // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
     // Kiro prompts carry no frontmatter, so "immediately after the frontmatter"
@@ -412,7 +425,19 @@ export class KiroAdapter implements TargetAdapter {
     // a member (a line cannot carry per-member spans) — recorded for Task 14's E-fm.
     const writeScope = fm.writeScope;
     if (writeScope && writeScope.length > 0) {
-      bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
+      if (span.profile === 'steward') {
+        bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
+      } else {
+        // Consumer profile (Task 15.0; DD26): ONE SPAN PER GLOB, so each `writeScope[<glob>]` takes
+        // its own disposition row — retained, re-pointed (its `## @entry` overlay text), or dropped.
+        bodyParts.push(
+          emit([
+            { kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${WRITE_SCOPE_MEMBERS_INTRO}\n\n` },
+            ...writeScope.map((glob, i): SpanPiece => ({ kind: 'member', list: 'writeScope', index: i, text: `- \`${glob}\`\n` })),
+            { kind: 'entry', path: 'writeScope', text: WRITE_SCOPE_MEMBERS_OUTRO },
+          ])
+        );
+      }
     }
 
     const content = bodyParts.join('');

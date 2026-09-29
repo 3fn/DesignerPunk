@@ -1148,6 +1148,8 @@
 - surface: canonical/baselines/thurgood.ambient-baseline.json
   checks:
     - 122-sweep-8-demotion
+- surface: canonical/consumer-profile.yaml
+  checks: []
 - surface: canonical/coverage-manifest.yaml
   checks:
     - 122-diff-guard

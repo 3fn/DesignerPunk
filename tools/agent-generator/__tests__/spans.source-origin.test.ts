@@ -147,13 +147,20 @@ describe('emitSpans — frontmatter entries, shared members and glue', () => {
     ).toThrow(/does not end with a newline/);
   });
 
-  it('consumer: an omitted leaf entry emits nothing; frontmatter re-pointing is not implemented yet (C17/C22)', () => {
+  it('consumer: an omitted leaf entry emits nothing; a re-pointed leaf renders its overlay entry text, sourced to its canonical origin (Task 15.0)', () => {
     const rows = { body: {}, frontmatter: { 'writeScope[a/**]': { disposition: 'no-consumer-counterpart' as const }, 'writeScope[b/**]': { disposition: 're-pointed' as const } } };
     const acc = new AttributionAccumulator();
     const out = emitSpans(acc, SOURCE, 'consumer', rows, undefined, [{ kind: 'member', list: 'writeScope', index: 0, text: 'a\n' }]);
     expect(out.text).toBe('');
+    // Re-pointed with no overlay text refuses (the updated form of Task 10's "not implemented yet" throw).
     expect(() =>
       emitSpans(new AttributionAccumulator(), SOURCE, 'consumer', rows, undefined, [{ kind: 'member', list: 'writeScope', index: 1, text: 'b\n' }])
-    ).toThrow(/not implemented yet/);
+    ).toThrow('emitSpans: re-pointed frontmatter entry writeScope[b/**] in canonical/agents/twin.md has no overlay text.');
+    const acc2 = new AttributionAccumulator();
+    const out2 = emitSpans(acc2, SOURCE, 'consumer', rows, { entries: { 'writeScope[b/**]': 'consumer/b/**' } }, [
+      { kind: 'member', list: 'writeScope', index: 1, text: 'b\n' },
+    ]);
+    expect(out2.text).toBe('consumer/b/**\n');
+    expect(acc2.build('x').spans).toEqual([{ lines: [1, 1], op: 'render', source: 'canonical/agents/twin.md#frontmatter:writeScope[b/**]' }]);
   });
 });

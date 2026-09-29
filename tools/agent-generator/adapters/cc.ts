@@ -46,6 +46,7 @@ import { AttributionAccumulator, type AttributionManifest } from '../attribution
 import { emitSpans, type SpanPiece, type SpanPlan, type SpanSource } from '../spans';
 import type { YamlDoc } from '../frontmatter';
 import {
+  spanInputsFor,
   MCP_TO_SERVER,
   type TargetAdapter,
   type AdapterContext,
@@ -150,6 +151,15 @@ const FACET_7_ENFORCEMENT_SENTENCE =
   '`PreToolUse` hook rejecting out-of-scope `Edit`/`Write` paths, or `isolation: worktree` — ' +
   'named here as the enforcement mechanism, not emitted as a declarative scope.';
 
+/**
+ * The consumer profile's per-member write-scope rendering (Task 15.0): an intro line, one bullet
+ * per glob (each its own `writeScope[<glob>]` span), then the closing text. The steward profile
+ * keeps the one-sentence container rendering above, byte-identical.
+ */
+const WRITE_SCOPE_MEMBERS_INTRO =
+  'Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:';
+const WRITE_SCOPE_MEMBERS_OUTRO = `\n${FACET_7_ENFORCEMENT_SENTENCE}\n\n`;
+
 function renderWriteScopeImpl(paths: readonly string[]): string {
   return `${renderWriteScopeNote(paths)} ${FACET_7_ENFORCEMENT_SENTENCE}`;
 }
@@ -218,13 +228,15 @@ export class CcAdapter implements TargetAdapter {
 
     // EVERY span below is constructed by `emitSpans` (C14, Spec 123 Task 10.4): this adapter
     // supplies only the per-target RENDERING of each piece — never a span, never a source.
-    // (`AdapterContext.profile` lands at Task 15.1; until then this is the steward rendering.)
+    // The profile and this agent's consumer inputs come from `AdapterContext` (Task 15.0);
+    // absent, the profile is `'steward'` and the rendering is byte-identical to pre-15.0.
     const src: SpanSource = {
       file: `canonical/agents/${fm.agent}.md`,
       body: agent.doc.body,
       frontmatter: fm as unknown as YamlDoc,
     };
-    const emit = (plan: SpanPlan): string => emitSpans(acc, src, 'steward', undefined, undefined, plan).text;
+    const span = spanInputsFor(ctx, fm.agent);
+    const emit = (plan: SpanPlan): string => emitSpans(acc, src, span.profile, span.dispositions, span.overlay, plan).text;
 
     // -- Frontmatter --------------------------------------------------------
     // Core tools first (the complete-allowlist rule — see CC_CORE_TOOLS), `Skill` iff the
@@ -371,7 +383,19 @@ export class CcAdapter implements TargetAdapter {
     // a member (a line cannot carry per-member spans) — recorded for Task 14's E-fm.
     const writeScope = fm.writeScope;
     if (writeScope && writeScope.length > 0) {
-      bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
+      if (span.profile === 'steward') {
+        bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
+      } else {
+        // Consumer profile (Task 15.0; DD26): ONE SPAN PER GLOB, so each `writeScope[<glob>]` takes
+        // its own disposition row — retained, re-pointed (its `## @entry` overlay text), or dropped.
+        bodyParts.push(
+          emit([
+            { kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${WRITE_SCOPE_MEMBERS_INTRO}\n\n` },
+            ...writeScope.map((glob, i): SpanPiece => ({ kind: 'member', list: 'writeScope', index: i, text: `- \`${glob}\`\n` })),
+            { kind: 'entry', path: 'writeScope', text: WRITE_SCOPE_MEMBERS_OUTRO },
+          ])
+        );
+      }
     }
 
     // -- (h) Kiro-only fields per ctx.dispositions -------------------------------

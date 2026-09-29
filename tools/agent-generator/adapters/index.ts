@@ -31,6 +31,7 @@ import type { AlwaysSetMember } from '../compose';
 import type { ToolSubset } from '../schema';
 import type { WorkflowRule } from '../workflow-rules-guard';
 import type { AttributionManifest } from '../attribution';
+import type { Dispositions, Overlay, Profile } from '../spans';
 
 // ============================================================================
 // Emitted files — every emission carries its attribution (P2, rule above)
@@ -184,6 +185,35 @@ export interface AdapterContext {
    * generation entry point; the Kiro adapter never guesses a path from an id.
    */
   docIdToPath?: Readonly<Record<string, string>>;
+  /**
+   * The generation profile (design C12; Spec 123 Task 15.0). Absent means `'steward'` — the
+   * canonical rendering, byte-identical to the pre-15.0 output. `'consumer'` makes every
+   * adapter span route through `emitSpans` with this agent's dispositions and overlay.
+   */
+  profile?: Profile;
+  /**
+   * Consumer-profile inputs, keyed by agent id (`frontmatter.agent`). Read only when
+   * `profile === 'consumer'`; a consumer emit for an agent with no dispositions throws (emitSpans:
+   * "the consumer profile requires dispositions"). Not named `dispositions` — that field is
+   * Spec 122's config-field disposition table.
+   */
+  consumer?: ConsumerInputs;
+}
+
+/** Per-agent consumer inputs (Task 15.0): the parsed dispositions rows and overlay text. */
+export interface ConsumerInputs {
+  dispositions: Readonly<Record<string, Dispositions>>;
+  overlays?: Readonly<Record<string, Overlay>>;
+}
+
+/** Resolve the profile and this agent's consumer inputs for `emitSpans` (both adapters call it). */
+export function spanInputsFor(
+  ctx: AdapterContext,
+  agentId: string
+): { profile: Profile; dispositions: Dispositions | undefined; overlay: Overlay | undefined } {
+  const profile: Profile = ctx.profile ?? 'steward';
+  if (profile === 'steward') return { profile, dispositions: undefined, overlay: undefined };
+  return { profile, dispositions: ctx.consumer?.dispositions[agentId], overlay: ctx.consumer?.overlays?.[agentId] };
 }
 
 // ============================================================================
@@ -214,4 +244,54 @@ export interface TargetAdapter {
 
   /** This target's slice of the disposition table (sweep 7's checkable object). */
   readonly dispositions: FieldDispositionTable;
+}
+
+// ============================================================================
+// The adapter registry (Spec 123 Task 15.0) — declared target name → adapter
+// ============================================================================
+
+/** Builds a target's adapter from the shared field-disposition table. */
+export type AdapterFactory = (dispositions: FieldDispositionTable) => TargetAdapter;
+
+/**
+ * The registered adapters, keyed by the target names `canonical/consumer-profile.yaml`
+ * declares (C12). Lazily required: `cc.ts` and `kiro.ts` import this module at load time, so a
+ * top-level import here would be a cycle.
+ */
+export function registeredAdapterFactories(): Readonly<Record<string, AdapterFactory>> {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { CcAdapter } = require('./cc') as typeof import('./cc');
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { KiroAdapter } = require('./kiro') as typeof import('./kiro');
+  return Object.freeze({
+    cc: (d: FieldDispositionTable) => new CcAdapter(d),
+    kiro: (d: FieldDispositionTable) => new KiroAdapter(d),
+  });
+}
+
+/** The loud failure for a declared target with no registered adapter. */
+export const unregisteredTargetMessage = (target: string, registered: readonly string[]): string =>
+  `no adapter is registered for declared target "${target}" (canonical/consumer-profile.yaml) — ` +
+  `register one in tools/agent-generator/adapters/index.ts (registered: ${registered.join(', ')}; Req 24 AC3)`;
+
+/**
+ * One adapter per declared target, in declared order. `extra` injects further factories (Task
+ * 14's fake third target is registered this way, in its test); it may not shadow a registered
+ * name. A declared target with no factory throws, naming it.
+ */
+export function adaptersFor(
+  targets: readonly string[],
+  dispositions: FieldDispositionTable,
+  extra: Readonly<Record<string, AdapterFactory>> = {}
+): TargetAdapter[] {
+  const registered = registeredAdapterFactories();
+  for (const name of Object.keys(extra)) {
+    if (name in registered) throw new Error(`adaptersFor: an injected factory may not shadow the registered adapter "${name}"`);
+  }
+  const factories: Record<string, AdapterFactory> = { ...registered, ...extra };
+  return targets.map((target) => {
+    const factory = factories[target];
+    if (!factory) throw new Error(unregisteredTargetMessage(target, Object.keys(factories)));
+    return factory(dispositions);
+  });
 }

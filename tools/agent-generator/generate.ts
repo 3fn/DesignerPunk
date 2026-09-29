@@ -27,14 +27,15 @@ import { resolveAgent, validate as validateAgentDoc } from './pipeline';
 import { CorpusResolver, createStdioDocsClient, type CorpusClient } from './resolve';
 import type { CanonicalAgentDoc } from './schema';
 import {
+  adaptersFor,
   parseFieldDispositions,
   parseSharedCatalog,
   type AdapterContext,
   type EmittedFile,
   type TargetAdapter,
 } from './adapters/index';
-import { CcAdapter } from './adapters/cc';
-import { KiroAdapter } from './adapters/kiro';
+import { loadConsumerProfile } from './consumer-profile';
+import type { Dispositions, Overlay, Profile } from './spans';
 import { getWorkflowRules } from './workflow-rules-guard';
 import { generateRegistry, serializeRegistry, REGISTRY_OUTPUT_PATH } from './registry';
 import { serializeAttribution, type AttributionManifest } from './attribution';
@@ -76,7 +77,9 @@ export function assembleContext(repoRoot: string): AdapterContext {
  */
 export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> {
   const ctx = assembleContext(repoRoot);
-  const adapters: TargetAdapter[] = [new CcAdapter(ctx.dispositions), new KiroAdapter(ctx.dispositions)];
+  // The target set comes from the single declared list (C12, Task 15.0) through the adapter
+  // registry — no adapter is constructed by name here.
+  const adapters: TargetAdapter[] = adaptersFor(loadConsumerProfile(repoRoot).targets, ctx.dispositions);
   const outputs: GeneratedOutput[] = [];
 
   // 1. The registry (C5) — live introspection, loud on boot failure (never cached).
@@ -216,6 +219,22 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
 export const FIXTURE_SOURCE = 'canonical/agents/_fixture.md';
 /** The fixture's output root — physically outside every runtime agent dir (C10.3). */
 export const FIXTURE_OUTPUT_ROOT = 'canonical/_fixture-output';
+/**
+ * Where a CONSUMER-profile fixture emission is remapped (Task 15.0). Deliberately NOT a guarded
+ * root and never written by `generateAll`: consumer fixtures are test-time outputs (Task 14's
+ * per-target guard), so they can never overwrite the steward fixture's guarded output.
+ */
+export const CONSUMER_FIXTURE_OUTPUT_ROOT = 'canonical/_fixture-output-consumer';
+
+/** Consumer-profile inputs for a single fixture emission (Task 15.0; Task 14's guard). */
+export interface FixtureEmitOptions {
+  /** Default `'steward'` — the guarded, byte-identical fixture lane. */
+  profile?: Profile;
+  /** The fixture agent's disposition rows (required when `profile` is `'consumer'`). */
+  dispositions?: Dispositions;
+  /** The fixture agent's overlay text (`toSpanOverlay(parseOverlay(...))`), for re-pointed rows. */
+  overlay?: Overlay;
+}
 
 /**
  * Build the doc-id → repo-relative-path map covering BOTH resolve-by-id roots
@@ -305,7 +324,8 @@ export async function buildEmbeds(
 export async function generateFixture(
   repoRoot: string,
   ctx: AdapterContext,
-  adapters: TargetAdapter[]
+  adapters: TargetAdapter[],
+  opts: FixtureEmitOptions = {}
 ): Promise<GeneratedOutput[]> {
   const sourceAbs = path.join(repoRoot, FIXTURE_SOURCE);
   if (!fs.existsSync(sourceAbs)) return [];
@@ -313,18 +333,32 @@ export async function generateFixture(
   const doc = parseCanonicalAgentSource(fs.readFileSync(sourceAbs, 'utf8'), sourceAbs);
   const corpus = createStdioDocsClient();
   try {
-    const { resolved, emitCtx } = await resolveForEmission(repoRoot, ctx, doc, corpus);
+    const { resolved, emitCtx: baseCtx } = await resolveForEmission(repoRoot, ctx, doc, corpus);
+    const profile: Profile = opts.profile ?? 'steward';
+    const agentId = doc.frontmatter.agent;
+    const emitCtx: AdapterContext =
+      profile === 'steward'
+        ? baseCtx
+        : {
+            ...baseCtx,
+            profile,
+            consumer: {
+              dispositions: opts.dispositions ? { [agentId]: opts.dispositions } : {},
+              overlays: opts.overlay ? { [agentId]: opts.overlay } : {},
+            },
+          };
+    const root = profile === 'steward' ? FIXTURE_OUTPUT_ROOT : CONSUMER_FIXTURE_OUTPUT_ROOT;
     const outputs: GeneratedOutput[] = [];
     for (const adapter of adapters) {
       for (const file of adapter.emitAgent(resolved, emitCtx)) {
         outputs.push({
-          path: `${FIXTURE_OUTPUT_ROOT}/${adapter.target}/${file.path}`,
+          path: `${root}/${adapter.target}/${file.path}`,
           content: file.content,
           attribution: file.attribution,
         });
       }
       outputs.push({
-        path: `${FIXTURE_OUTPUT_ROOT}/${adapter.target}/ambient-manifest.json`,
+        path: `${root}/${adapter.target}/ambient-manifest.json`,
         content: serializeAmbientManifest(resolved.ambientManifests[adapter.target]),
       });
     }
