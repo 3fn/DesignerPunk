@@ -1,48 +1,10 @@
 # Hash sheet — kenya (C1 seat)
 
-**Generated** from `acaa40d1` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `b319dd3d` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 33 confirmations owed · 26 rows to sign.
+**Counts**: 0 confirmations owed · 26 rows to sign.
 
 ## 1. Confirmations owed
-
-### `canonical/operative-sets/kenya.yaml` → note `canonical/profiles/consumer/confirmations/kenya.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#identity` | `sha256:952e5f3cae47ecb580297b6d736e737481dfdb57b74bed68a9a0321fc8b66222` | `role`, `domain`, `leonardo-primary`, `system-through-leonardo`, `human-decides`, `partner` |
-| `#in-scope` | `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e` | `scope-1`, `scope-2`, `scope-3`, `scope-4`, `scope-5`, `scope-6`, `scope-7`, `scope-8` |
-| `#ios-theming-spec-094` | `sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31` | `theming-1`, `theming-2`, `theming-3`, `theming-4`, `theming-5` |
-| `#product-tokens-spec-108109` | `sha256:7529881a62c6b578199af8ac739710989cd227b36857fa501034c29695b00f4e` | `product-tokens-1`, `product-tokens-2`, `product-tokens-3`, `product-tokens-4`, `product-tokens-5`, `product-tokens-6` |
-| `#out-of-scope` | `sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9` | `out-1`, `out-2`, `out-3`, `out-4`, `out-5`, `out-6`, `out-7` |
-| `#blocking-exception-direct-escalation-to-peter` | `sha256:c5cf701217d1de46ef107456928e2f87ca8cd4e4fa7a77bad68d25c84ab52875` | `blocking-direct`, `blocking-exception`, `blocking-when-in-doubt` |
-| `#the-implement-vs-direct-distinction` | `sha256:57b5349876736700b7908f3a32db7058994a227c5801e7aefb65d2842a2d5724` | `implement-not-direct` |
-| `#operational-mode-screen-implementation:preamble` | `sha256:1f5a573fb7084bb223714515f458671f62fdd3c789d696aa3491cd58e85453ef` | `none` |
-| `#step-1-review-the-specification` | `sha256:4719d306ee2f14c617cc79ded22c72edf957537f50546ce655fd80e05f22f825` | `review-1`, `review-2`, `review-3` |
-| `#step-2-set-up-the-screen` | `sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f` | `setup-1`, `setup-2`, `setup-3` |
-| `#step-3-implement` | `sha256:420c78588aaaf97319fe6c8025e8572abc6d979529f798410e6971da01619fdc` | `implement-1`, `implement-2`, `implement-3`, `implement-4`, `implement-5` |
-| `#step-4-test` | `sha256:f79d3683d1b66e151eab51a062ea680949101693684169806aa6e115c22e7386` | `test-1`, `test-2`, `test-3`, `test-4` |
-| `#step-5-report-back` | `sha256:3fd4f918e451b2c7be28055b86c94e11f6c25a4f6d53e17518b07fe85850e1c1` | `report-1`, `report-2`, `report-3` |
-| `#operational-mode-platform-expertise:preamble` | `sha256:e706d2b140020958d39f2035c71f6fff7bc15e29e7ee66ec552c455159745cf4` | `none` |
-| `#what-you-provide` | `sha256:2548dd913749d7aca32002726b990a2bbdbf6a0abad3aa1716ae7b4a8df3b0f9` | `provide-1`, `provide-2`, `provide-3`, `provide-4`, `provide-5` |
-| `#how-you-provide-it` | `sha256:40e8d3135998af80a576b2da6bbb2c91b59fe1b6b2a335cbdbcfd9eb033fcc8f` | `how-1`, `how-2`, `how-3`, `how-4` |
-| `#with-leonardo-primary` | `sha256:b7cdad54afb42ac8d94948dce64bd7e0943b1b9647aa4095247b4f5a593b98e6` | `leonardo-1`, `leonardo-2`, `leonardo-3`, `leonardo-4`, `leonardo-5`, `leonardo-6`, `handoff-tiers`, `capture-decisions` |
-| `#with-sibling-platform-agents` | `sha256:5a16c1280955dd525111840ecfc8e4968d2eef118741848be5497b56c1c5d853` | `siblings-1`, `siblings-2`, `siblings-3` |
-| `#with-stacy-product-governance` | `sha256:fff1cac152955adc9e5402bfb23639047e058764beaa4cb6d642498bcf78f4b6` | `stacy-1`, `stacy-2`, `stacy-3` |
-| `#with-peter` | `sha256:90bc1ebfef01c8a04aec07cb27f3bbe0f5d2d7e3394f5741c310b5746e6ce655` | `human-1`, `human-2`, `human-3`, `human-4` |
-| `#how-to-use-designerpunk-tokens-on-ios` | `sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712` | `tokens-1`, `tokens-2`, `tokens-3`, `tokens-4`, `ground-truth-live` |
-| `#token-reference-pattern` | `sha256:a924c99e8ea1db803c75f145df8e6ea87003cf506421145331b11369285b2f09` | `token-doc-map`, `verify-ambiguous` |
-| `#platform-currency-expectations` | `sha256:450650ee602970a03ac8342a8feae9c3f1928d962c608aacf85c3b7414c9e813` | `currency-1`, `currency-2`, `currency-3`, `currency-4`, `currency-5` |
-| `#platform-reference-pointers` | `sha256:32c60584b24d089828dcc04676d6933400c59ceb1a2b7cccbb6300d01bb323c1` | `refs-1`, `refs-2`, `refs-3`, `refs-4`, `refs-own-platform` |
-| `#ios-specific-guidance` | `sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65` | `native-1`, `native-2`, `native-3`, `native-4`, `native-5`, `native-6`, `native-7` |
-| `#mcp-practice-notes` | `sha256:752619afed54f31fc54cde7129c2a268be95e23e3fc5752c4f619298706cf49f` | `ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback` |
-| `#collaboration-standards:preamble` | `sha256:3affabec49417d9644d83ab0c5c3552a80a5173d5d5305aa9b6828fcb2631f34` | `apply-aicp` |
-| `#counter-arguments-are-mandatory` | `sha256:f9576a4f0c7800b8c1de88279dc20c0a0d8451e15c0e6449f252b3958f321e29` | `counter-provide`, `counter-fold-back` |
-| `#candid-over-comfortable` | `sha256:c13aa5057b5affaeb2e92db188c92a890f1ec32de6cc6e3bc809789ff1764ddd` | `candid` |
-| `#bias-self-monitoring` | `sha256:e3ea7439957b2975e67d9869be80d428a623ae6beb85e04efc536218b665abb4` | `bias-watch`, `bias-name` |
-| `#ask-if-unsure` | `sha256:af6a0f7467a107435b3118632d530746de45415d9cc95604009428306c3b669c` | `ask-if-unsure` |
-| `#what-you-own` | `sha256:b9722961addd95338798a827f21af6c949ff5bc285f0da6a992444995c23ad4b` | `own-1`, `own-2`, `own-3`, `own-4` |
-| `#what-you-dont-own` | `sha256:c3c70ca98b609f991f22359a186dd372685df660e45b86f364e29ef26ecd2591` | `not-own-1`, `not-own-2`, `not-own-3`, `jest-not-vitest` |
 
 ## 2. Rows to sign
 
@@ -78,3 +40,13 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `commands[audit-tokens]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:9f9e4c40508ffed400f8e11515773dfb30670cfbc11d54657f6f937ef57e0b5f` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:commands[audit-tokens]` | — (not rendered) | — |
 | frontmatter · `knowledgeBases[ios-tests]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:9e343b0a30ce8c0186fd29b7d4f347d9e951ef4014e0d24a6c3ee64be9b2b11e` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:knowledgeBases[ios-tests]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/kenya.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
+
+## 3. Referent candidates (read-only)
+
+A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note's `items:`/`date:` in the same commit as your signatures); never edited here.
+
+| Record | Unit | Item | Why | Text |
+|---|---|---|---|---|
+| `kenya.yaml` | `#blocking-exception-direct-escalation-to-peter` | `blocking-exception` | opens on a pronoun/demonstrative | This is the exception, not the rule. |
+| `kenya.yaml` | `#operational-mode-screen-implementation:preamble` | `follow-workflow` | ends as a bare lead-in | When Leonardo provides a screen specification, follow this workflow: |
+| `kenya.yaml` | `#what-you-dont-own` | `jest-not-vitest` | opens on a pronoun/demonstrative | This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`. |

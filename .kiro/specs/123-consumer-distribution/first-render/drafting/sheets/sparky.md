@@ -1,48 +1,10 @@
 # Hash sheet — sparky (C1 seat)
 
-**Generated** from `acaa40d1` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `b319dd3d` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 33 confirmations owed · 28 rows to sign.
+**Counts**: 0 confirmations owed · 28 rows to sign.
 
 ## 1. Confirmations owed
-
-### `canonical/operative-sets/sparky.yaml` → note `canonical/profiles/consumer/confirmations/sparky.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#identity` | `sha256:afa6f1619e917b7abc6da158a86c7eabd88e1d7e82b6d703a6f6b9f8d6789c3b` | `sparky-implement-with-care`, `sparky-domain`, `sparky-leonardo-primary`, `sparky-system-through-leonardo`, `sparky-human-decides`, `sparky-partner` |
-| `#in-scope` | `sha256:22419845e4ce89eec0166976e1b0447e3956ebccd3548cc410c9129473b2a0d3` | `scope-1`, `scope-2`, `scope-3`, `scope-4`, `scope-5`, `scope-6`, `scope-7`, `scope-8` |
-| `#web-theming` | `sha256:3fe725da5bdda0d13d0c940e7d474b831ec35db2454b7f616e3092b014830c39` | `theming-1`, `theming-2`, `theming-3`, `theming-4` |
-| `#product-tokens` | `sha256:fbaea5ecb2b1acc271141fc708fd4e121f1a6dcae81ba14a2047b4762c5f0825` | `product-tokens-1`, `product-tokens-2`, `product-tokens-3`, `product-tokens-4`, `product-tokens-5` |
-| `#out-of-scope` | `sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2` | `out-1`, `out-2`, `out-3`, `out-4`, `out-5`, `out-6`, `out-7` |
-| `#blocking-exception-direct-escalation-to-peter` | `sha256:c5cf701217d1de46ef107456928e2f87ca8cd4e4fa7a77bad68d25c84ab52875` | `blocking-direct`, `blocking-exception`, `blocking-when-in-doubt` |
-| `#the-implement-vs-direct-distinction` | `sha256:eb1534e1ff62e5d1bd6fc1ee21136f8f664ccd275de61ab1e705fa52c591e8cc` | `implement-not-direct` |
-| `#operational-mode-screen-implementation:preamble` | `sha256:1f5a573fb7084bb223714515f458671f62fdd3c789d696aa3491cd58e85453ef` | `none` |
-| `#step-1-review-the-specification` | `sha256:621b0fe4dd0149014a6ce826ade29c822a5605a545eb0186a1057b2c57e819b9` | `review-1`, `review-2`, `review-3` |
-| `#step-2-set-up-the-screen` | `sha256:c1e038bcaaee4f3341e0b5a1b005032b41ec3837abb928b5a093481908fb732f` | `setup-1`, `setup-2`, `setup-3` |
-| `#step-3-implement` | `sha256:56fbac93560a8db59c22c200f00bd3042e85825d9929264c6eef27d5b41756cb` | `implement-1`, `implement-2`, `implement-3`, `implement-4` |
-| `#step-4-test` | `sha256:8c6df8954386c8562a85d183aa202297c737fff199832f60a6253912ecdf8206` | `test-1`, `test-2`, `test-3`, `test-4` |
-| `#step-5-report-back` | `sha256:3fd4f918e451b2c7be28055b86c94e11f6c25a4f6d53e17518b07fe85850e1c1` | `report-1`, `report-2`, `report-3` |
-| `#operational-mode-platform-expertise:preamble` | `sha256:183708e268448fd7a42b0851c9772e035eb3f5bf7140d48e6bed101c919b5cbb` | `none` |
-| `#what-you-provide` | `sha256:df3f4c19089b782eb627c009ed669ded403d67711e34046d03f69529779caecd` | `provide-1`, `provide-2`, `provide-3`, `provide-4`, `provide-5` |
-| `#how-you-provide-it` | `sha256:2eebbca5233ce33b4459ae9ac290982a237a9606618c1a43a47d38946554d8a8` | `how-1`, `how-2`, `how-3`, `how-4` |
-| `#with-leonardo-primary` | `sha256:ae386ec2823a3d0d5675f94bd7b7718f4da719a92a4d55fdd663ade4b205831d` | `leonardo-1`, `leonardo-2`, `leonardo-3`, `leonardo-4`, `leonardo-5`, `leonardo-6`, `handoff-tiers`, `capture-decisions` |
-| `#with-sibling-platform-agents` | `sha256:5a16c1280955dd525111840ecfc8e4968d2eef118741848be5497b56c1c5d853` | `siblings-1`, `siblings-2`, `siblings-3` |
-| `#with-stacy-product-governance` | `sha256:fff1cac152955adc9e5402bfb23639047e058764beaa4cb6d642498bcf78f4b6` | `stacy-1`, `stacy-2`, `stacy-3` |
-| `#with-peter` | `sha256:479fce94f62b6d9537e579a510b7673d5db26540034f10e90a59cd64875cb5be` | `human-1`, `human-2`, `human-3`, `human-4` |
-| `#how-to-use-designerpunk-tokens-on-web` | `sha256:57693a86db637fed5285d7b2b816cbff71ac94193e45111dc3f60ae458a343cf` | `tokens-1`, `tokens-2`, `tokens-3`, `tokens-4`, `ground-truth-live` |
-| `#token-reference-pattern` | `sha256:5d30c69736fa7b7fc82b8bff5cc021bc305d6576bc0dfdc20746f2339f4a4345` | `token-doc-map`, `verify-ambiguous` |
-| `#platform-currency-expectations` | `sha256:e7488d0b9d56e780dd213378194926725105c159835c0113689ea38b6f3e8346` | `currency-1`, `currency-2`, `currency-3`, `currency-4`, `currency-5` |
-| `#platform-reference-pointers` | `sha256:18e990c523a3aba3a41ac809ec3c3d6813a75ff82ca8c4d5dd12b0603cd76136` | `refs-1`, `refs-2`, `refs-3`, `refs-4`, `refs-own-platform` |
-| `#web-specific-guidance` | `sha256:45271aca517c5399f1ce3b5c2213e94f6851793460ace471a9fc33f458ddce4a` | `web-1`, `web-2`, `web-3`, `web-4`, `web-5`, `web-6`, `web-7` |
-| `#mcp-practice-notes` | `sha256:d672fc52acae749a0c20e074c640a050e935ca09ebafeb63ef4ca43729346be6` | `ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback` |
-| `#collaboration-standards:preamble` | `sha256:3affabec49417d9644d83ab0c5c3552a80a5173d5d5305aa9b6828fcb2631f34` | `apply-aicp` |
-| `#counter-arguments-are-mandatory` | `sha256:d66876db9398acef943945add814cc1076d0b591702ae29cbfc4b44b81a816c1` | `counter-provide`, `counter-fold-back` |
-| `#candid-over-comfortable` | `sha256:2b2de6b13ae6d20864e50842879a91e49a8ec9da5dc888ba73d661f3e9d2b812` | `candid` |
-| `#bias-self-monitoring` | `sha256:78896f8343c68005263435a2ec70d7125e6ee0d066e1bbc96a407fd2e0a599de` | `bias-watch`, `bias-name` |
-| `#ask-if-unsure` | `sha256:3f7e849b0f60c902e6aca5dd656cbed7cccd5fc9550f9edc365d23b3a3b89e7b` | `ask-if-unsure` |
-| `#what-you-own` | `sha256:7be462335f2a9ffad4e1e59c590d894766803e8b9e4e5f982c9eed8c237d75f8` | `own-1`, `own-2`, `own-3`, `own-4` |
-| `#what-you-dont-own` | `sha256:ee7dd121bbf0cb283d8dbb38f87c8f4b67b7dc492f8ab2236170a0909ec0c288` | `not-own-1`, `not-own-2`, `not-own-3`, `jest-not-vitest` |
 
 ## 2. Rows to sign
 
@@ -80,3 +42,12 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `commands[web-test-lane]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:d448c8dc13a39ccefe6c6f72bdba932e06963a8c678f17bae29056ba60079553` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/sparky.md#frontmatter:commands[web-test-lane]` | — (not rendered) | — |
 | frontmatter · `knowledgeBases[web-components]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:6529bcd1636053e710069195c75dccc4e77f906235d4bdf89efae8e8a9613c0b` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/sparky.md#frontmatter:knowledgeBases[web-components]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/sparky.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
+
+## 3. Referent candidates (read-only)
+
+A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note's `items:`/`date:` in the same commit as your signatures); never edited here.
+
+| Record | Unit | Item | Why | Text |
+|---|---|---|---|---|
+| `sparky.yaml` | `#blocking-exception-direct-escalation-to-peter` | `blocking-exception` | opens on a pronoun/demonstrative | This is the exception, not the rule. |
+| `sparky.yaml` | `#what-you-dont-own` | `jest-not-vitest` | opens on a pronoun/demonstrative | This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`. |

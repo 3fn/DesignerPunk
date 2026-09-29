@@ -1697,16 +1697,55 @@
 - surface: canonical/profiles/consumer/always-set/task-completion-protocol.overlay.md
   checks:
     - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/ada.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/agent-directory.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/ai-collaboration-principles.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/civitas-system-overview.md
+  checks:
+    - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/component-family-navigation.md
   checks:
     - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/core-goals.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/data.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/kenya.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/leonardo.md
+  checks:
+    - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/lina.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/sparky.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md
   checks:
     - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/stacy.md
   checks:
     - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/start-up-tasks.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/task-completion-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/confirmations/thurgood.md
   checks:
     - 122-diff-guard
 - surface: canonical/profiles/consumer/data.dispositions.yaml

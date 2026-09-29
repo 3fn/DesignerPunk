@@ -1,41 +1,10 @@
 # Hash sheet — lina (C1 seat)
 
-**Generated** from `acaa40d1` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `b319dd3d` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 26 confirmations owed · 24 rows to sign.
+**Counts**: 0 confirmations owed · 24 rows to sign.
 
 ## 1. Confirmations owed
-
-### `canonical/operative-sets/lina.yaml` → note `canonical/profiles/consumer/confirmations/lina.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#identity` | `sha256:0a72d2583229f651f5ffbaca6e3b8ea5fe19abc44577d92d9c7e6d311bf5c072` | `lina-role`, `lina-domain`, `lina-handoff`, `lina-human-decides`, `lina-partner` |
-| `#ownership` | `sha256:3d20e2232e7f147b3b4a10692d1e592f32da1d1ec9babf3aa8e6665bd57e5ae4` | `own-all-components`, `own-gradient`, `own-consult` |
-| `#in-scope` | `sha256:b98c5264e74f32de3ea21adf7d2c43147c48e087866a903701d29fa595cb8d38` | `scope-scaffolding`, `scope-platforms`, `scope-docs`, `scope-contract-tests`, `scope-token-integration`, `scope-schema`, `scope-token-mapping`, `scope-inheritance`, `scope-parity`, `scope-theme-consumption`, `scope-data-theme`, `scope-one-off`, `scope-promotion`, `scope-maintained-docs` |
-| `#out-of-scope` | `sha256:60728a67e9739c913a7bc14247e50b8512019224f96ec065b75a65c61bd01e41` | `out-token-creation`, `out-token-math`, `out-test-governance`, `out-spec` |
-| `#boundary-cases` | `sha256:58a6991c16f4e9cdd9012c5fad523948d2c7e8343efe9342c1c9916f04457d4f` | `boundary-flag`, `boundary-component-side`, `boundary-coordinate` |
-| `#domain-boundary-response-examples` | `sha256:2a0af980c09687b10d4a9836e72ee11a62614b3b08c45abf4ba9afdc5524cd74` | `none` |
-| `#token-usage-in-components:preamble` | `sha256:730cf0551b7b76f2f33831444187e581470a0d26cee97ef19d3816dc3e100692` | `consume-not-create` |
-| `#token-selection-priority-must-follow-this-order` | `sha256:2688d120f8996dd0b654091329b6dfa698b03cf183ef5dc00d8fcf9f203d0af0` | `priority-semantic`, `priority-primitive`, `priority-component`, `priority-hardcoded` |
-| `#component-token-construction-rule` | `sha256:93296840c6833f7d3747c491c4fe0dbf780ebd13575ca289148af98f5e97227f` | `construction-reference-or-conform`, `construction-no-arbitrary` |
-| `#when-a-token-is-missing` | `sha256:379a4e4cf7083da2f9beda15a7e768e983f51851889c7b46fdc55c66b97ed0ec` | `missing-flag`, `missing-coordinate`, `missing-readme`, `missing-no-create` |
-| `#collaboration-model-domain-respect:preamble` | `sha256:f1037c902db3927079385e883cce8aadec5669d26c7b1d5496b5788700b625fd` | `respect-not-adversarial` |
-| `#trust-by-default` | `sha256:6fb35b82038d7efdf5604b7691385b856082d30cecdaf2e1d33aa7dec6affdc0` | `trust-ada`, `trust-thurgood`, `trust-human` |
-| `#obligation-to-flag` | `sha256:1bda445e8c5b3104fa5ea6ec7b58a81d5df1bd534ee842ccc6817c0aa6adb299` | `flag-semantic`, `flag-test-pattern`, `flag-impact` |
-| `#graceful-correction` | `sha256:cb24028b10a677344b45393388bfa066c482192ac17627b924b6ede638019ed7` | `correction-engage`, `correction-uncertain`, `correction-gap-feedback` |
-| `#fallibility` | `sha256:e0d3de4b303e471c0f30df1af9d2b0832c3d6581a58fb0efef9265c8c8a0d743` | `none` |
-| `#documentation-governance-ballot-measure-model:preamble` | `sha256:6100fb78ae5ff4e4f332c95cef229006cb8022ea6624a3ad8a552dff2a1b0ee5` | `shared-layer-not-unilateral` |
-| `#the-process` | `sha256:7405eed001bcf70f166f07adb40e2782e8a7d16e807a54044f8f63d65c271297` | `ballot-propose`, `ballot-present`, `ballot-vote`, `ballot-apply` |
-| `#what-this-means-in-practice` | `sha256:8fb455b5399e8eebaaff5deee87ddc00be1600efb53cc9071bcca6a96d464034` | `practice-no-write`, `practice-no-edit-docs`, `practice-propose`, `practice-all-changes` |
-| `#mcp-practice-notes` | `sha256:5c767d6f46b533fa6747a6b40b284bc301dd8108cab485dc31789e12b1de472d` | `mcp-query-parent`, `schema-own-tokens`, `schema-no-inherited`, `schema-verify-own-code`, `rebuild-after-write`, `rebuild-application`, `rebuild-docs`, `mcp-fallback` |
-| `#collaboration-standards:preamble` | `sha256:3affabec49417d9644d83ab0c5c3552a80a5173d5d5305aa9b6828fcb2631f34` | `apply-aicp` |
-| `#counter-arguments-are-mandatory` | `sha256:c5a7e08942b56d10ffd605d49891973c6b2e82e178e800f7a92298949dd9eb2b` | `counter-provide`, `counter-never`, `counter-fold-back` |
-| `#candid-over-comfortable` | `sha256:3e908f39d63c06fe56b3abea2a39dfd08c515e8ba2fd4df351d2cb6e7c81e759` | `candid` |
-| `#bias-self-monitoring` | `sha256:4b1a07d0c663fef36de87199952669912c0f1e94ffca97de2402209a43247925` | `bias-watch`, `bias-name` |
-| `#when-you-and-peter-disagree` | `sha256:c82414480e057b4ae6d51c4d8d99d73b456dcdb5b64a01f116d5e4cbeef4ce20` | `disagree` |
-| `#what-you-own` | `sha256:387531edd342dee300be2578ee31ab040b14dd7c7246dac6f07e0d985bdc4e2d` | `own-unit-tests`, `own-contract-tests`, `own-token-compliance-tests`, `own-platform-tests` |
-| `#what-you-dont-own` | `sha256:f359d9135bb1bfba8540baeada04fcade5ca0e5b288ad7d1c02cbe6881ec0db8` | `not-own-audits`, `not-own-governance`, `not-own-formula-tests`, `jest-not-vitest` |
 
 ## 2. Rows to sign
 
@@ -69,3 +38,17 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `writeScope[docs/specs/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
 | frontmatter · `writeScope[application-mcp-server/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:4f9f7ddde8e990ff8a914a0c1bf98cf91bc7d1c32570ec00d39af3e9b874f7f9` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[application-mcp-server/**]` | — (not rendered) | — |
 | frontmatter · `writeScope[governance/component-meta-authoring-guide.md]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:a2fae371a7d8d2efa63091d5619817914735836dde1155f3232d9aaa01c49d42` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[governance/component-meta-authoring-guide.md]` | — (not rendered) | — |
+
+## 3. Referent candidates (read-only)
+
+A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note's `items:`/`date:` in the same commit as your signatures); never edited here.
+
+| Record | Unit | Item | Why | Text |
+|---|---|---|---|---|
+| `lina.yaml` | `#component-scaffolding-workflow:preamble` | `scaffold-follow-stemma` | ends as a bare lead-in | When scaffolding a new component, follow the Stemma system structure: |
+| `lina.yaml` | `#step-4-create-platform-implementations` | `step4-platform-separation` | ends as a bare lead-in | Build-time platform separation under `platforms/`: |
+| `lina.yaml` | `#step-6-create-or-review-component-metayaml` | `step6-meta-content` | opens on a pronoun/demonstrative | This provides agent-selection guidance (purpose, usage, contexts, alternatives). |
+| `lina.yaml` | `#documentation-governance-ballot-measure-model:preamble` | `shared-layer-not-unilateral` | names a referent it does not carry | Steering docs and MCP-served documentation are the shared knowledge layer for all agents. You do NOT modify this layer unilaterally. |
+| `lina.yaml` | `#what-this-means-in-practice` | `practice-all-changes` | opens on a pronoun/demonstrative | This applies to ALL documentation changes, no matter how small — including the two steering docs whose content you maintain |
+| `lina.yaml` | `#counter-arguments-are-mandatory` | `counter-provide` | ends as a bare lead-in | For every significant component recommendation, provide at least one strong counter-argument: |
+| `lina.yaml` | `#what-you-dont-own` | `jest-not-vitest` | opens on a pronoun/demonstrative | This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`. |

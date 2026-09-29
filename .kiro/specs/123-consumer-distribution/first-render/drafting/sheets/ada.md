@@ -1,37 +1,10 @@
 # Hash sheet — ada (C1 seat)
 
-**Generated** from `acaa40d1` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `b319dd3d` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 22 confirmations owed · 24 rows to sign.
+**Counts**: 0 confirmations owed · 24 rows to sign.
 
 ## 1. Confirmations owed
-
-### `canonical/operative-sets/ada.yaml` → note `canonical/profiles/consumer/confirmations/ada.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#identity` | `sha256:44083518dc3f6088b38053f8e44c411b215949d68d33df0f866dd31ab951cacd` | `ada-role`, `ada-domain`, `ada-handoff`, `ada-human-decides`, `ada-partner` |
-| `#ownership` | `sha256:3ded028ab1ffb2357d84c28b4e21cb0195380dea82bd822c44e8a85a2fa5de11` | `own-all-tokens`, `own-gradient`, `own-consult` |
-| `#in-scope` | `sha256:3a09069dc398675a590bae57b1b3ad676e377c54e2dd018190b6f24ff4aa1570` | `scope-create`, `scope-math`, `scope-compliance`, `scope-docs`, `scope-testing`, `scope-naming`, `scope-output`, `scope-hierarchy`, `scope-coverage`, `scope-theme-registry`, `scope-pipeline-config`, `scope-theme-output`, `scope-config-authoring` |
-| `#out-of-scope` | `sha256:ff02d3db0cfbbc8f5f6e559f9b24e3bb5e7e8c25b31e6d257b495d9ad225edeb` | `out-components`, `out-contract-tests`, `out-test-governance`, `out-spec` |
-| `#boundary-cases` | `sha256:da14e1d586acbe086f063d5cb40dae171c00b0c920dd30f2c3bef5aba428dc20` | `boundary-flag`, `boundary-token-side`, `boundary-coordinate` |
-| `#domain-boundary-response-examples` | `sha256:49db60be3377b0e507684708aff0f9fc0d188815d5539e0a244a39e0a159d8f3` | `none` |
-| `#collaboration-model-domain-respect:preamble` | `sha256:f1037c902db3927079385e883cce8aadec5669d26c7b1d5496b5788700b625fd` | `respect-not-adversarial` |
-| `#trust-by-default` | `sha256:26aa05bc71d50eef8942126ba3e1a5d4f48ee0cd49201b95ea1e639edf1617ed` | `trust-lina`, `trust-thurgood`, `trust-human` |
-| `#obligation-to-flag` | `sha256:11e93daeb6a596bd53ea8f35d74afe24f98c19a459636be88f4696015ecc07dd` | `flag-hardcoded`, `flag-compliance`, `flag-impact` |
-| `#graceful-correction` | `sha256:64d58f35fbdb106bf9de4d10327f90c45176906f322caf233748f25d899d4ecc` | `correction-engage`, `correction-uncertain`, `correction-gap-feedback` |
-| `#fallibility` | `sha256:e0d3de4b303e471c0f30df1af9d2b0832c3d6581a58fb0efef9265c8c8a0d743` | `none` |
-| `#documentation-governance-ballot-measure-model:preamble` | `sha256:6100fb78ae5ff4e4f332c95cef229006cb8022ea6624a3ad8a552dff2a1b0ee5` | `shared-layer-not-unilateral` |
-| `#the-process` | `sha256:b3789a681fdb211007318ae59931d647c6f8c95c3fc3d464810dfc4f2aa4f301` | `ballot-propose`, `ballot-present`, `ballot-vote`, `ballot-apply` |
-| `#what-this-means-in-practice` | `sha256:14c402faa7c9fd123a507e98320af8663679c5aefcabb2275acb66c73674eae9` | `practice-no-write`, `practice-no-edit-docs`, `practice-propose`, `practice-all-changes`, `practice-ambient-law` |
-| `#mcp-practice-notes` | `sha256:aadf5a9d342686f5f03853534212c2a39a3b5c1e00d39befd5eb1805822903a7` | `rebuild-after-write`, `rebuild-application`, `rebuild-docs`, `mcp-fallback` |
-| `#collaboration-standards:preamble` | `sha256:3affabec49417d9644d83ab0c5c3552a80a5173d5d5305aa9b6828fcb2631f34` | `apply-aicp` |
-| `#counter-arguments-are-mandatory` | `sha256:266124ce3cf14ef76d20832ff1c27007e74a276b5a6b23af437992390d8b0636` | `counter-provide`, `counter-never`, `counter-fold-back` |
-| `#candid-over-comfortable` | `sha256:683759458252dec25f5e5295126310b24c638f884e369b821fd94cd2c1c97155` | `candid` |
-| `#bias-self-monitoring` | `sha256:4b1a07d0c663fef36de87199952669912c0f1e94ffca97de2402209a43247925` | `bias-watch`, `bias-name` |
-| `#when-you-and-peter-disagree` | `sha256:c82414480e057b4ae6d51c4d8d99d73b456dcdb5b64a01f116d5e4cbeef4ce20` | `disagree` |
-| `#what-you-own` | `sha256:55b36a89e5613f680a5b2820afda0eb1ee44c1d11c7c0c93211545a1bdeff119` | `own-formula-tests`, `own-compliance-tests`, `own-relationship-tests` |
-| `#what-you-dont-own` | `sha256:10acce8a1e7e308fd45c7052dd01f9434b8aa25cf444b60afe807cc77ceb84de` | `not-own-contract-tests`, `not-own-audits`, `jest-not-vitest` |
 
 ## 2. Rows to sign
 
@@ -65,3 +38,14 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `writeScope[src/validators/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:62bf3a565ca923fcd44bfe0be1200ac6ea6a7ef2b3c25c0ab69a4f2d3acd3ab9` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[src/validators/**]` | — (not rendered) | — |
 | frontmatter · `writeScope[src/generators/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:dee22899a5c94b8bea8c8f22345ebf83e24a259be7a2af06ef3767a690eb2c4c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[src/generators/**]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
+
+## 3. Referent candidates (read-only)
+
+A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note's `items:`/`date:` in the same commit as your signatures); never edited here.
+
+| Record | Unit | Item | Why | Text |
+|---|---|---|---|---|
+| `ada.yaml` | `#documentation-governance-ballot-measure-model:preamble` | `shared-layer-not-unilateral` | names a referent it does not carry | Steering docs and MCP-served documentation are the shared knowledge layer for all agents. You do NOT modify this layer unilaterally. |
+| `ada.yaml` | `#what-this-means-in-practice` | `practice-all-changes` | opens on a pronoun/demonstrative | This applies to ALL documentation changes, no matter how small |
+| `ada.yaml` | `#counter-arguments-are-mandatory` | `counter-provide` | ends as a bare lead-in | For every significant token recommendation, provide at least one strong counter-argument: |
+| `ada.yaml` | `#what-you-dont-own` | `jest-not-vitest` | opens on a pronoun/demonstrative | This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`. |

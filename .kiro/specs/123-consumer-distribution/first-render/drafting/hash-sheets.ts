@@ -82,6 +82,22 @@ for (const [stem, rec] of buckets) {
   }
 }
 
+// 3. Referent candidates (Ada/Lina's finding, phase one): an item whose text opens on a pronoun or demonstrative,
+//    names a referent it does not carry ("this layer", "them", "the above"), or ends as a bare lead-in (":").
+//    A CANDIDATE list for the confirmer, never an edit: widening is a re-confirmation in the confirmer's seat.
+type Ref = { record: string; key: string; id: string; text: string; why: string };
+const ref: Record<string, Ref[]> = Object.fromEntries(SEATS.map((s) => [s, []]));
+const OPEN = /^(\*\*)?(this|these|those|that|it|they|them|its|their|such|here|above)\b/i;
+const INNER = /\b(this layer|this section|these steps|the above|all of the above|as above)\b/i;
+for (const f of fs.readdirSync(path.join(ROOT, 'canonical/operative-sets')).filter((x) => x.endsWith('.yaml')).sort()) {
+  const r: any = load(read(`canonical/operative-sets/${f}`));
+  for (const [key, u] of Object.entries<any>(r.units)) for (const it of u.items ?? []) {
+    const t = String(it.text).trim();
+    const why = OPEN.test(t) ? 'opens on a pronoun/demonstrative' : INNER.test(t) ? 'names a referent it does not carry' : /:\s*(\*\*)?$/.test(t) ? 'ends as a bare lead-in' : '';
+    if (why) (ref[r.confirmer] ??= []).push({ record: `canonical/operative-sets/${f}`, key, id: it.id, text: t, why });
+  }
+}
+
 fs.mkdirSync(OUT, { recursive: true });
 const counts: string[] = [];
 for (const seat of SEATS) {
@@ -97,8 +113,11 @@ for (const seat of SEATS) {
     for (const s of sig[seat].filter((s) => s.file === file)) L.push(`| ${s.section} · \`${s.key}\` | ${s.disposition} | ${s.why} | \`${s.canonicalHash}\` | \`${s.renderedHash}\` | \`${s.evidence}\` | ${s.rendering.length ? s.rendering.map((r) => `\`${r}\``).join('<br>') : '— (not rendered)'} | ${s.overlay === '—' ? '—' : `\`${s.overlay}\``} |`);
     L.push('');
   }
+  L.push('## 3. Referent candidates (read-only)', '', 'A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note\'s `items:`/`date:` in the same commit as your signatures); never edited here.', '');
+  if (ref[seat].length === 0) L.push('None.', '');
+  else { L.push('| Record | Unit | Item | Why | Text |', '|---|---|---|---|---|'); for (const x of ref[seat]) L.push(`| \`${path.basename(x.record)}\` | \`${x.key}\` | \`${x.id}\` | ${x.why} | ${x.text.replace(/\|/g, '\\|').slice(0, 160)}${x.text.length > 160 ? '…' : ''} |`); L.push(''); }
   fs.writeFileSync(path.join(OUT, `${seat}.md`), L.join('\n'));
-  counts.push(`${seat}: ${conf[seat].length} confirmations, ${sig[seat].length} signatures`);
+  counts.push(`${seat}: ${conf[seat].length} confirmations, ${sig[seat].length} signatures, ${ref[seat].length} referent candidates`);
 }
 console.log(counts.join('\n'));
 console.log(`total: ${SEATS.reduce((n, s) => n + conf[s].length, 0)} confirmations, ${SEATS.reduce((n, s) => n + sig[s].length, 0)} signatures`);

@@ -19,6 +19,8 @@ Each sheet has two parts.
 - the committed rendering paths;
 - the overlay path.
 
+**3. Referent candidates** (added after phase one; Ada's and Lina's finding). These are items whose text opens on a pronoun or demonstrative, names a referent it does not carry ("this layer", "the above"), or ends as a bare lead-in (":"). **They are candidates, not findings**: the scan is lexical, and many hits carry their referent or are deliberate one-item triggers. Widening an item re-confirms its unit in the confirmer's seat (update the note's `items:` and `date:`), in the same commit as the signatures. The sheets never edit a record.
+
 **How the values are computed.**
 - Every value comes from the sweep's own helpers: `hashText` / `hashEntry`, and `renderedHashOf(readConsumerSpans(…), rowSpanSource(…))`.
 - ROUTED comes from `classifyCharter` over the **drafted** item sets.

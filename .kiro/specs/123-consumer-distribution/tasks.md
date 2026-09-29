@@ -761,7 +761,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 15.1 Profile file; `AdapterContext.profile`; `generateConsumerRendering`; `guardedRoots()`
   - [x] 15.2 (Lina, Opus) `derive.ts`
   - [x] 15.3 `emitIdentityMembers` per target
-  - [ ] 15.4 Operative sets for all units; dispositions/overlays for all 8 charters, shared substrate and identity docs; knowledge-fallback re-points
+  - [x] 15.4 Operative sets for all units; dispositions/overlays for all 8 charters, shared substrate and identity docs; knowledge-fallback re-points
   - [ ] 15.5 First-render routing: confirmations and signatures per C1; refusals resolved to zero standing (assent or re-disposition); rates and refusals issued recorded
 
 - [ ] 16. Consumer emission lane, `attach`, the `init` agent layer, legacy migration, and generated-surface `sync`

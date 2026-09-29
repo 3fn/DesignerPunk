@@ -1,49 +1,10 @@
 # Hash sheet — data (C1 seat)
 
-**Generated** from `acaa40d1` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `b319dd3d` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 34 confirmations owed · 24 rows to sign.
+**Counts**: 0 confirmations owed · 24 rows to sign.
 
 ## 1. Confirmations owed
-
-### `canonical/operative-sets/data.yaml` → note `canonical/profiles/consumer/confirmations/data.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#identity` | `sha256:3e79e0b228e2534acc10dede5f8c1a2276520d1b331d6d3077810b8bc8b392ac` | `role`, `domain`, `leonardo-primary`, `system-through-leonardo`, `human-decides`, `partner` |
-| `#in-scope` | `sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3` | `scope-1`, `scope-2`, `scope-3`, `scope-4`, `scope-5`, `scope-6`, `scope-7`, `scope-8` |
-| `#android-theming-spec-094` | `sha256:7818e0ca9a1252c1baacf77ce2e9650bb50377b5c2e07cc07492b48f50ac9122` | `theming-1`, `theming-2`, `theming-3`, `theming-4`, `theming-5`, `theming-6` |
-| `#product-tokens-spec-108109` | `sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e` | `product-tokens-1`, `product-tokens-2`, `product-tokens-3`, `product-tokens-4`, `product-tokens-5`, `product-tokens-6` |
-| `#out-of-scope` | `sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c` | `out-1`, `out-2`, `out-3`, `out-4`, `out-5`, `out-6`, `out-7` |
-| `#blocking-exception-direct-escalation-to-peter` | `sha256:c5cf701217d1de46ef107456928e2f87ca8cd4e4fa7a77bad68d25c84ab52875` | `blocking-direct`, `blocking-exception`, `blocking-when-in-doubt` |
-| `#the-implement-vs-direct-distinction` | `sha256:a756a96bcc26c0d57b65600164ccf831fad599c93f5871e690b6c02071f13931` | `implement-not-direct` |
-| `#operational-mode-screen-implementation:preamble` | `sha256:1f5a573fb7084bb223714515f458671f62fdd3c789d696aa3491cd58e85453ef` | `none` |
-| `#step-1-review-the-specification` | `sha256:144d59eff325216ef62e5f9896175907ef37e99b17d39daad5d5359bc6fb968b` | `review-1`, `review-2`, `review-3` |
-| `#step-2-set-up-the-screen` | `sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe` | `setup-1`, `setup-2`, `setup-3` |
-| `#step-3-implement` | `sha256:9d0052ab5c5eeb94cc37d81827252ae799a4428b70570b548b5a78e17ef66b3e` | `implement-1`, `implement-2`, `implement-3`, `implement-4`, `implement-5` |
-| `#step-4-test` | `sha256:b9460aaf57c13b49e0142d6e8d4b133937081f0c5a63768563994b667c1f7c40` | `test-1`, `test-2`, `test-3`, `test-4` |
-| `#step-5-report-back` | `sha256:3fd4f918e451b2c7be28055b86c94e11f6c25a4f6d53e17518b07fe85850e1c1` | `report-1`, `report-2`, `report-3` |
-| `#operational-mode-platform-expertise:preamble` | `sha256:719aaec0b53328142eba30ead5e0158af67542d821fdc8242047227a0992b8f6` | `none` |
-| `#what-you-provide` | `sha256:e7555f67cc936958c6316a5a3526e2c184c814890dd3963f2278d9317a14b8b5` | `provide-1`, `provide-2`, `provide-3`, `provide-4`, `provide-5` |
-| `#how-you-provide-it` | `sha256:d84ec28766936dc3daa22a537ce3f74f1a5a8537c52b8ab7502ef7328b30e198` | `how-1`, `how-2`, `how-3`, `how-4` |
-| `#with-leonardo-primary` | `sha256:713d0f8133fad1dc430da9ec9151926a6903f2ce1449f81a4eca9591d5bd0df0` | `leonardo-1`, `leonardo-2`, `leonardo-3`, `leonardo-4`, `leonardo-5`, `leonardo-6`, `handoff-tiers`, `capture-decisions` |
-| `#with-sibling-platform-agents` | `sha256:5a16c1280955dd525111840ecfc8e4968d2eef118741848be5497b56c1c5d853` | `siblings-1`, `siblings-2`, `siblings-3` |
-| `#with-stacy-product-governance` | `sha256:fff1cac152955adc9e5402bfb23639047e058764beaa4cb6d642498bcf78f4b6` | `stacy-1`, `stacy-2`, `stacy-3` |
-| `#with-peter` | `sha256:af2055100e2c2f76d1222b5ac6b240afa08096dc1b7d193363f7d73477ed6921` | `human-1`, `human-2`, `human-3`, `human-4` |
-| `#how-to-use-designerpunk-tokens-on-android` | `sha256:14fa4d5367f385a948746af6f26587002fc2b27522af0fb2588b09a1c901e22e` | `tokens-1`, `tokens-2`, `tokens-3`, `tokens-4`, `ground-truth-live` |
-| `#token-reference-pattern` | `sha256:a924c99e8ea1db803c75f145df8e6ea87003cf506421145331b11369285b2f09` | `token-doc-map`, `verify-ambiguous` |
-| `#platform-currency-expectations` | `sha256:325c789e1205fbac6f672a1a90b6823cbbf970638578aaa328b39800dc8c3db6` | `currency-1`, `currency-2`, `currency-3`, `currency-4`, `currency-5` |
-| `#platform-reference-pointers` | `sha256:7e02acf5b5fd8127915885f1c337662185c1356d144d1ad0af72aacdf67d2ac5` | `refs-1`, `refs-2`, `refs-3`, `refs-4`, `refs-own-platform` |
-| `#android-specific-guidance:preamble` | `sha256:afaa161290815fb26ca8098c8f1a6ca2bb55dfafb4189e5d7fa76818f65054aa` | `native-1`, `native-2`, `native-3`, `native-4`, `native-5`, `native-6`, `native-7` |
-| `#android-skills-official-google-patterns` | `sha256:fc2f269aa9ccf842e7ed3da61969c7d554fa4780ff895361f05752b7d2e0a7ed` | `skills-1`, `skills-2`, `skills-3`, `skills-4`, `skills-5`, `skills-6`, `skills-7`, `skills-8`, `skills-use-for`, `skills-use-dp-for` |
-| `#mcp-practice-notes` | `sha256:4e297f3aa7500dbce86a97abb77a54f907cbe25dfb3ec77492eeea5c4a29d27c` | `ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback` |
-| `#collaboration-standards:preamble` | `sha256:3affabec49417d9644d83ab0c5c3552a80a5173d5d5305aa9b6828fcb2631f34` | `apply-aicp` |
-| `#counter-arguments-are-mandatory` | `sha256:fd97868cd07b8de691ee775399a481b913097657369aa1289c3ffdf0e31a8c34` | `counter-provide`, `counter-fold-back` |
-| `#candid-over-comfortable` | `sha256:5e64ee7650fb85aa8a8e56188bd531a98b52f1b5261dd8c0a511543419194ee9` | `candid` |
-| `#bias-self-monitoring` | `sha256:953d6577a2d696bbe08753027ca89664b1c56eecc4de8106e83c96f8bea8395c` | `bias-watch`, `bias-name` |
-| `#ask-if-unsure` | `sha256:917cd47321c70da1aba278a0d88330a03ada9de290c6cee2d44a0a465e7c7d00` | `ask-if-unsure` |
-| `#what-you-own` | `sha256:34231657385f21495c3545ab60c3cb4769f6f2bffb2a7bbf0c98e496050b0cd5` | `own-1`, `own-2`, `own-3`, `own-4` |
-| `#what-you-dont-own` | `sha256:ee7dd121bbf0cb283d8dbb38f87c8f4b67b7dc492f8ab2236170a0909ec0c288` | `not-own-1`, `not-own-2`, `not-own-3`, `jest-not-vitest` |
 
 ## 2. Rows to sign
 
@@ -77,3 +38,13 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | frontmatter · `commands[audit-tokens]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:9f9e4c40508ffed400f8e11515773dfb30670cfbc11d54657f6f937ef57e0b5f` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:commands[audit-tokens]` | — (not rendered) | — |
 | frontmatter · `knowledgeBases[android-tests]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:a24c7b658425d78b8945a775e630689b343056547a676e02f26feedc74bcc581` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:knowledgeBases[android-tests]` | — (not rendered) | — |
 | frontmatter · `writeScope[docs/specs/**]` | no-consumer-counterpart | no-consumer-counterpart | `sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c` | `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` | `canonical/profiles/consumer/signatures/data.md#frontmatter:writeScope[docs/specs/**]` | — (not rendered) | — |
+
+## 3. Referent candidates (read-only)
+
+A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note's `items:`/`date:` in the same commit as your signatures); never edited here.
+
+| Record | Unit | Item | Why | Text |
+|---|---|---|---|---|
+| `data.yaml` | `#blocking-exception-direct-escalation-to-peter` | `blocking-exception` | opens on a pronoun/demonstrative | This is the exception, not the rule. |
+| `data.yaml` | `#operational-mode-screen-implementation:preamble` | `workflow-trigger` | ends as a bare lead-in | When Leonardo provides a screen specification, follow this workflow: |
+| `data.yaml` | `#what-you-dont-own` | `jest-not-vitest` | opens on a pronoun/demonstrative | This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`. |

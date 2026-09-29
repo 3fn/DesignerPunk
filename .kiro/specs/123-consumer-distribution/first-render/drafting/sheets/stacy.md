@@ -1,217 +1,10 @@
 # Hash sheet — stacy (C1 seat)
 
-**Generated** from `acaa40d1` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
+**Generated** from `b319dd3d` by `hash-sheets.ts` — READ-ONLY, mechanical, no judgment. The sweep is the authority; re-run this after any record, overlay or canonical edit. Recipes: `README.md`.
 
-**Counts**: 157 confirmations owed · 104 rows to sign.
+**Counts**: 0 confirmations owed · 106 rows to sign.
 
 ## 1. Confirmations owed
-
-### `canonical/operative-sets/agent-directory.yaml` → note `canonical/profiles/consumer/confirmations/agent-directory.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#agent-directory:preamble` | `sha256:c3bff3f30d5ad063ef351074a7c76bae1cb51034bd6a6b1b596c261cbef9879e` | `none` |
-| `#agent-tiers` | `sha256:fb919cae76a91b449dd30e085a73ec908c775af8c255e9a6b7cb34a7729fc0f9` | `none` |
-| `#primary-agent-orchestrator` | `sha256:642bbb51f16d0e994f9678e54a7ad63dd3e5ae1f3ae73c03623bf024bc3c43cf` | `orchestrate`, `owners`, `brief-once`, `seam`, `consult`, `class-option`, `leave-record` |
-| `#system-agents:preamble` | `sha256:648a1c96134632b892833d930b965454a3c34790825b864fb967a2a4ba49909a` | `none` |
-| `#ada-rosetta-token-specialist` | `sha256:7619293b2c05b98df0fc4ff00e0fae662a2a0a2097eefbd3fff01e47ea41a991` | `ada-rosetta-to-role-1`, `ada-rosetta-to-role-2` |
-| `#lina-stemma-component-specialist` | `sha256:f01e309717c236195ec9a49a968c754e8ee95c569cb10ce914edd23435552948` | `lina-stemma-co-role-1`, `lina-stemma-co-role-2` |
-| `#thurgood-test-governance-spec-standards-civitas-steward` | `sha256:3f53109f6af5f444299a6f76e65007a510b10470fc034e1554980b530c69fafb` | `thurgood-test-govern-1`, `thurgood-test--role-1`, `thurgood-test--role-2`, `thurgood-test--role-3` |
-| `#product-agents:preamble` | `sha256:b4a1410a8f3358ef95ac299fc72eafcbf5566e21455a8ee6ff801b875166ed5b` | `none` |
-| `#leonardo-product-architect` | `sha256:70c46eb6e83462595ee5cc85e4ddfb5f9d6929c387b1be2758530c1186138a39` | `leonardo-produ-role-1`, `leonardo-produ-role-2` |
-| `#sparky-web-platform-engineer` | `sha256:8dec07f7d4fde7771ea7326e2024a031f8e93bc04c9c7ca7667d6a779878abe4` | `sparky-web-pla-role-1`, `sparky-web-pla-role-2` |
-| `#kenya-ios-platform-engineer` | `sha256:64c5dad4c16ebeae41d71d0c472921ba233d4760c70c2f5c4ca93014091aa76c` | `kenya-ios-plat-role-1`, `kenya-ios-plat-role-2` |
-| `#data-android-platform-engineer` | `sha256:4416b3968374670d37a75ae6a15886bcb0c113148f2d76b7f6f4864bdb9fb8af` | `data-android-p-role-1`, `data-android-p-role-2` |
-| `#stacy-product-governance-quality-assurance-execution-claims-verification` | `sha256:99500e6e909a023dbcffd8b50438bcbbb45583cadd6f599357d31273628030b2` | `stacy-product-govern-1`, `stacy-product--role-1`, `stacy-product--role-2` |
-| `#cross-domain-routing` | `sha256:84e2126932da0e20c5b611eb2272b6fe1ec70c8e9c8bc3663d9d58cd708ef402` | `route-1`, `route-2`, `route-3`, `route-4`, `route-5`, `route-6`, `route-7`, `route-8`, `route-9`, `route-10`, `route-11`, `route-12`, `route-13`, `route-14`, `route-15`, `route-16`, `route-17`, `route-18` |
-| `#human-lead` | `sha256:b5cf76cd151486e6e3bf7c8c7a7815b10f9729ea9fbd631a3d3c4df086bea0a6` | `final-decisions`, `partners`, `authority`, `disagree` |
-
-### `canonical/operative-sets/ai-collaboration-principles.yaml` → note `canonical/profiles/consumer/confirmations/ai-collaboration-principles.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#ai-collaboration-principles:preamble` | `sha256:d31ab6271da795484db292e4adb89b0f7b6e332fa355414760cc1953de1bf0c3` | `none` |
-| `#the-ai-optimism-problem` | `sha256:c3a3aaac8f054402759f667666c92a6a18f48840c1c4415d6e8d596469118600` | `antidote` |
-| `#candid-vs-brutal-communication` | `sha256:c4347b71cac9cb2ec86aa42708c95e9ba1e8565516470373afdede4bc5feccc5` | `mode-1`, `mode-2`, `default-candid` |
-| `#counter-argument-requirement` | `sha256:286834df7af21da197261639de28759cbcb34d485b8c9a9554c11629da2d6eb9` | `provide`, `fold-1`, `fold-2`, `fold-3`, `never-pitch`, `never-manufacture` |
-| `#exploratory-vs-directive-questions` | `sha256:85b5a0150ab0afa2818be54da970bb9cef587efba528655ad70599f98407d078` | `distinction`, `ask` |
-| `#bias-self-monitoring` | `sha256:9fec7f8e6991d0b71e0a96136af0ee0a29bb7ce21f81c30a3cdab8f984f7ec0c` | `watch-1`, `watch-2`, `watch-3`, `watch-4`, `name-it` |
-| `#when-human-and-ai-disagree` | `sha256:bb60ef44c4dc0e5409860788d7a2b97ae06fb6d5647c79bdc0bf1ddc34c9dfbf` | `disagree-1`, `disagree-2`, `disagree-3`, `disagree-4` |
-| `#certainty-calibration-finding-guidance-before-you-guess` | `sha256:8314266276276ddf25145fa01cfaaf34961aa2f2ca0e1cd07e442e225502938f` | `calibrate-1`, `calibrate-2`, `calibrate-3` |
-| `#mcp-query-for-full-framework` | `sha256:3f2464f2de92c1977976653812dd53301e867c27a11012f6a0e9ca8bc77d596f` | `none` |
-
-### `canonical/operative-sets/civitas-system-overview.yaml` → note `canonical/profiles/consumer/confirmations/civitas-system-overview.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#civitas-system-overview:preamble` | `sha256:261e7f3fe63802d69ea320635254b04b9a5f8b49be25e3bdf1e540aab4bf8844` | `none` |
-| `#overview` | `sha256:e27d3c131615f18f5b656491e1cd7c2beff89d5a86acadfea0132830701efdc8` | `none` |
-| `#what-civitas-contains` | `sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137` | `what-civitas-con-1`, `what-civitas-con-2`, `what-civitas-con-3`, `what-civitas-con-4`, `what-civitas-con-5`, `what-civitas-con-6`, `what-civitas-con-7`, `what-civitas-con-8`, `what-civitas-con-9`, `what-civitas-con-10`, `what-civitas-con-11`, `what-civitas-con-12`, `what-civitas-con-13`, `what-civitas-con-14`, `what-civitas-con-15`, `what-civitas-con-16`, `what-civitas-con-17`, `what-civitas-con-18` |
-| `#what-civitas-does-not-contain` | `sha256:103fb411efb491817aa7c4f3b8b4f2f0462674a3d46545efc79ddaf292d6b502` | `what-civitas-doe-1`, `what-civitas-doe-2`, `what-civitas-doe-3` |
-| `#relationship-to-rosetta-and-stemma` | `sha256:ea95bc9f062954f30ffc47d8755ecb21248fc5b7c06be917a1cf7e119c53bdb6` | `relationship-to--1`, `relationship-to--2`, `relationship-to--3` |
-| `#the-three-layer-boundary` | `sha256:07a57ddc3770e58fd778f308e53b46af5663158ed9c8332885ab516db02a27fa` | `the-three-layer--1`, `the-three-layer--2`, `the-three-layer--3` |
-| `#governance-processes` | `sha256:48af3eb551057bd0d40cb4379bdb9f1e0a8953447545978ab8973de5e7651bd4` | `governance-proce-1`, `governance-proce-2`, `governance-proce-3`, `governance-proce-4` |
-| `#external-representation` | `sha256:8af46c59fb00c2d1b0f8ce157cd6f3d4ab3550156853c51d366914b5bd505c9a` | `external-represe-1`, `external-represe-2`, `external-represe-3` |
-| `#document-access` | `sha256:6bc5c92dbd79c125b497c35a6c88f5257913263b559f610306984985adf0ba9b` | `document-access-1` |
-
-### `canonical/operative-sets/core-goals.yaml` → note `canonical/profiles/consumer/confirmations/core-goals.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#core-goals:preamble` | `sha256:e108b8080b24e6b50ec31cad3e8bf9c19c9cddec7b1cba8f17f164fbc9e2e86a` | `none` |
-| `#core-project-context` | `sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491` | `principle-1`, `principle-2`, `principle-3`, `principle-4`, `principle-5`, `principle-6` |
-| `#development-practices` | `sha256:06bfac06966cb2bd1b0344f3e6ee26d2db6577e0ca62b05f88fe3e6106fa548f` | `practice-1`, `practice-2`, `practice-7`, `practice-8`, `practice-9`, `practice-10`, `practice-11`, `practice-12`, `practice-13`, `practice-14`, `practice-15`, `practice-16`, `practice-17`, `practice-18`, `practice-19`, `practice-20`, `practice-21`, `practice-22`, `practice-26`, `practice-27`, `construction-rule` |
-
-### `canonical/operative-sets/designerpunk-systems-overview.yaml` → note `canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#designerpunk-systems-overview:preamble` | `sha256:a81ba036a8683b7f30a77c88663f6998b785552410e420d0d33b162868a445a1` | `none` |
-| `#overview` | `sha256:4f50e69ed22fe9e8024e017d05ad08a6cf807613016abb64a5c12af3d8b741d2` | `overview-1`, `overview-2`, `overview-3` |
-| `#pointer-1-module-resolution-contract-spec-118` | `sha256:cffe92ec071aeb070f4fee21c68bae47fcb88b79ed0b84e393e7cc28b227931e` | `none` |
-| `#high-level-designerpunk-three-system-architecture` | `sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0` | `none` |
-| `#rosetta-system-token-pipeline-and-layers` | `sha256:9a42eba814e35b74f06ccbbb72df81e5cfdce8ee227cedd345078cb6c086c676` | `none` |
-| `#stemma-system-families-and-inheritance` | `sha256:b898e08b85ef79769ab48747424402d9df08985b80987a1d93fbdd78ce52c454` | `none` |
-| `#civitas-system-governance-infrastructure` | `sha256:05dfb306f63dc5eacf86ccaa02dd41897f8fef417b887f5c051dee41ee10ad06` | `none` |
-| `#integration-tokens-components-platforms` | `sha256:6299782dc541681b506a0273ccbf89ebec37e67a02510da583540fab61e8d6b4` | `none` |
-| `#combined-overview-single-diagram` | `sha256:52cbf96c06f39c3c4ae1b07b0a529528797072b11cd5c11cec2e03d3efeb5077` | `none` |
-| `#related-documentation` | `sha256:cdd4df7d51710aa622848052c914bc58765bb44f7ea9cd1309a089dd9bdf4dac` | `related-document-1`, `related-document-2`, `related-document-3`, `related-document-4`, `related-document-5`, `related-document-6`, `related-document-7`, `related-document-8`, `related-document-9`, `related-document-10`, `related-document-11`, `related-document-12`, `related-document-13`, `related-document-14`, `related-document-15`, `related-document-16`, `related-document-17`, `related-document-18`, `related-document-19` |
-
-### `canonical/operative-sets/spec-feedback-protocol.yaml` → note `canonical/profiles/consumer/confirmations/spec-feedback-protocol.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#spec-feedback-protocol:preamble` | `sha256:971f7ffb246e7ee5a545823f7c05c117abd8c0831fdaecebe30ef1bed23e26ad` | `none` |
-| `#purpose` | `sha256:56696d5886fef9d062b449d53934d4a3134d1f4c1a8bf76a48a64941d35aceaa` | `none` |
-| `#the-feedback-document` | `sha256:d00728b168aff102e37150a194326db06961716079b11fc526ab1304d15f021d` | `the-feedback-document-1`, `the-feedback-document-2`, `the-feedback-document-3` |
-| `#feedback-checkpoints` | `sha256:29749a21da5a77241eb6d845aaf10c7f93007216c29ace8083fe25bcd86a3cfb` | `feedback-checkpoints-1`, `feedback-checkpoints-2`, `feedback-checkpoints-3`, `feedback-checkpoints-4` |
-| `#stakeholder-identification` | `sha256:30146705abb20ed2bb23e95be2bd7fcc0029037a482439e1c53bd99df2277a89` | `stakeholder-identificati-1`, `stakeholder-identificati-2`, `stakeholder-identificati-3`, `stakeholder-identificati-4`, `stakeholder-identificati-5`, `stakeholder-identificati-6` |
-| `#sequential-formalization-gate` | `sha256:b7a5853defd008b54f28db5575277efa12f3a247ebed7cf8e587cdec5f3c0b8c` | `sequential-formalization-1`, `sequential-formalization-2`, `sequential-formalization-3`, `sequential-formalization-4`, `sequential-formalization-5`, `waiver` |
-| `#mandatory-mention-scanning` | `sha256:4ffc9761a0246dbdb5bdaf4eaf0d9158a741315c070cb38047cee006494b6d61` | `mandatory-mention-scanni-1`, `mandatory-mention-scanni-2`, `mandatory-mention-scanni-3`, `mandatory-mention-scanni-4` |
-| `#stamp-format` | `sha256:e49c9c84d0adca4d162c160752976eb2000fd97e254ed9b842b614feac6f4ad8` | `stamp-format-1`, `stamp-format-2`, `stamp-format-3`, `stamp-format-4` |
-| `#standard-feedback` | `sha256:9dafe73b3db687ddb007d505c5e2c135e8f173ab3301fed2dba0e92e8598d80e` | `none` |
-| `#directed-questions` | `sha256:952158838c4db54378cb62c6419697678ca756c2da77da98b86e59b852f7f686` | `none` |
-| `#incorporation-notes` | `sha256:cada68e93324818530dc59bd3eb699554c5467b4f95c01e7a175d427782ce503` | `none` |
-| `#context-for-reviewers` | `sha256:55dcaed52b9e861ea41c02d5990a183e6d4315575f71a2b996a089866f07a859` | `context-for-reviewers-1`, `context-for-reviewers-2`, `context-for-reviewers-3` |
-| `#resolution-tracking` | `sha256:665ad56546624d4518aaff814bc70c96a103c58051caede004e932daa348bf93` | `none` |
-| `#spec-feedback-template` | `sha256:66a2bec4ca25951cddbae7fd0b505eca4c2a60f495f3c4fe90ed4d39002792db` | `none` |
-| `#document-access` | `sha256:6ffb28191285a1ff3707dd24043c0e7f2a4a6e5c3d988a6c11398fed9bbccf81` | `document-access-1`, `document-access-2` |
-
-### `canonical/operative-sets/stacy.yaml` → note `canonical/profiles/consumer/confirmations/stacy.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#identity` | `sha256:43defd686fc5d68ce4f4d13231c8b98631b1292cdf2135f489299b751d856700` | `stacy-role`, `stacy-deliver-promises`, `stacy-claims-both-tiers`, `stacy-domain`, `stacy-hold-the-line`, `stacy-human-decides`, `stacy-partner` |
-| `#in-scope` | `sha256:c5c798aafe80cf38d78e3023987450a2dae382e5f1a46effc4f10fe99df45579` | `scope-1`, `scope-2`, `scope-3`, `scope-4`, `scope-5`, `scope-6`, `scope-7`, `scope-8`, `scope-9`, `scope-10` |
-| `#out-of-scope` | `sha256:be1ba8ba9bf4d3c3c2ff657fc3b6aabf428cd21aff585d49d44b0268b058f4ab` | `out-1`, `out-2`, `out-3`, `out-4`, `out-5`, `out-6`, `out-7` |
-| `#the-audit-vs-write-distinction` | `sha256:03bbb1a5dbfc7e97d04e786d75c5c6094dffd58358ed6f6bebbc1c56e6a0533a` | `audit-not-write` |
-| `#operational-mode-process-audit:preamble` | `sha256:87470ed51c60c7908225d504f181d60b464fe7468c8fcebc2ac93f18a042ab4d` | `audit-when` |
-| `#incremental-capture-rule` | `sha256:175aa9e1663d5d611bd16ff862881edf0032ca490c8a19557f2f2f73ca1120e6` | `capture-immediately`, `capture-running-file`, `capture-both` |
-| `#audit-output` | `sha256:d2ae19342bd9c4ef627b2ea242693848e83cd66daae905655ed640441cbecb74` | `output-severity`, `severity-1`, `severity-2`, `severity-3`, `severity-4` |
-| `#audit-is-analysis-not-implementation` | `sha256:2be345314a2c476ea7473791f278f3086aa4f2bc1f688e1d28236d68aa52a1b7` | `analysis-not-fix`, `route-1`, `route-2`, `route-3` |
-| `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` | `sha256:b9f4104614bde7bf3dcf7fc95a316fa126266e2816cc636ddabc2a555d94ffb1` | `none` |
-| `#the-claims-pass-record-claims-passmd-the-template` | `sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7` | `record-committed`, `closeout-path`, `midpoint-path`, `section-scope`, `section-findings`, `section-method`, `method-honesty`, `closed-negative-string`, `mandatory-line`, `counting-1`, `counting-2`, `counting-3`, `counting-4`, `counting-5`, `counting-6`, `counting-7`, `counting-8`, `counting-9`, `counting-10`, `counting-11`, `counting-12`, `report-set-comparison`, `emission-reading`, `delegated-tier-read`, `deferral-walk-back`, `instruments-read`, `never-a-gate` |
-| `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength` | `sha256:c460743c0430e9fa04163a6d13a0d880ce59bb401480896fd12d7d70445171f3` | `mirror-clause`, `mirror-called-at-exchange`, `mirror-binds-lens` |
-| `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference` | `sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a` | `carve-out-scope`, `carve-out-falsification`, `carve-out-routing-test`, `carve-out-tiebreak` |
-| `#operational-mode-parity-review:preamble` | `sha256:77c3468b344869f176902ff6f5dc12abc97a9500e25527a0752c51a1560e71a1` | `parity-when`, `parity-dormant` |
-| `#review-process` | `sha256:015cc9f65020a3524feb8dedcdf4dc2d64ef609ceff801037d82b09a42f195e6` | `parity-1`, `parity-2`, `parity-3`, `parity-4`, `parity-5`, `parity-6` |
-| `#operational-mode-lessons-synthesis-review:preamble` | `sha256:783778832b4eea537c8d5980b8e5e2e40b4f08996b7c735fc8b23472d80c9ffe` | `synthesis-lead` |
-| `#your-role` | `sha256:b48ed925de0d75bad9fb8f62563b35ff500e393402e815e79bea67c85dc5e7c5` | `role-1`, `role-2`, `role-3`, `role-4`, `role-5`, `role-6`, `role-7` |
-| `#what-you-dont-do` | `sha256:7f0f4de7aab0d9183809ae4a9c6cb875d3651c04461ca28090f87688babccfd6` | `dont-1`, `dont-2`, `dont-3` |
-| `#with-leonardo` | `sha256:028c0b26f4dbfd9a1d842f986d7a0481f7ec5359d5ea1bd073603e0e4eafaab1` | `leonardo-1`, `leonardo-2`, `leonardo-3`, `leonardo-4`, `leonardo-5` |
-| `#with-platform-agents-kenya-data-sparky` | `sha256:8ae7cef2485a3fe5254ad84002f6613a3f0e06f96b86f3c954ad0e4dfb2982ea` | `platforms-1`, `platforms-2`, `platforms-3`, `platforms-4`, `platforms-5` |
-| `#with-thurgood-system-counterpart` | `sha256:e5aa54f1f1a72f07c1f25d602eac46a08c738839516f23bd779091715e35931c` | `thurgood-1`, `thurgood-2`, `thurgood-3`, `thurgood-4`, `thurgood-5` |
-| `#with-peter` | `sha256:0c18fa9f023514cba761392331f1235750a385855b9601e56e3a2787b74b1f15` | `human-1`, `human-2`, `human-3`, `human-4` |
-| `#mcp-practice-notes` | `sha256:64c55f317e18e344f8b476a9c73a8aff44b2ac4bca321671c415d779b2fa26f3` | `ground-truth-computed`, `standards-on-demand`, `product-mcp-caveat`, `mcp-fallback` |
-| `#collaboration-standards:preamble` | `sha256:62c2b17e682f621eade4f4a07026fb0103a58e9d04cbc6fa763405e63d2c6ae0` | `apply-aicp` |
-| `#counter-arguments-are-mandatory` | `sha256:cdd13024b15a07644f07774d9cfe25f1f60a1bf9e38ddfd597a5708871378e2c` | `counter-provide`, `counter-fold-back` |
-| `#candid-over-comfortable` | `sha256:cc87165148bdfc5a2d1faf5cb85a66e38affbf37efa6689947c37d7a200956fe` | `candid` |
-| `#bias-self-monitoring` | `sha256:c574e9a5866a449edcaa3cfcfc5fd8d2390ce8f30420097d3f29716dcfd6a614` | `bias-watch` |
-| `#ask-if-unsure` | `sha256:88270860692bc1f9fd962527d4132c79951301a4de895af5c3ef0e29bd279ff0` | `ask` |
-| `#what-you-own` | `sha256:206930931d15e1ddac909f181379a4891ac9a9c5680a34cb17ea8397221314f6` | `own-1`, `own-2`, `own-3`, `own-4` |
-| `#what-you-dont-own` | `sha256:4108acaf8110eaee5e9ea615b318c75057946bf2fec0bf903da6d49b9aa6dcab` | `not-own-1`, `not-own-2`, `not-own-3`, `jest-not-vitest` |
-
-### `canonical/operative-sets/start-up-tasks.yaml` → note `canonical/profiles/consumer/confirmations/start-up-tasks.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#start-up-tasks:preamble` | `sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4` | `none` |
-| `#item-check-the-current-date` | `sha256:9a9fc4aa0317a163d7b39e97d9965444f12795d0f68b72b4b77b84e69f498941` | `check-the-current-da-1` |
-| `#item-critical-this-project-uses-jest-not-vitest` | `sha256:f75f87b00a0dafa053d0b2da2229ab451e79ced7621723927163505605e171d0` | `critical-this-projec-1`, `critical-this-projec-2`, `critical-this-projec-3`, `critical-this-projec-4`, `critical-this-projec-5`, `critical-this-projec-6`, `critical-this-projec-7`, `critical-this-projec-8`, `critical-this-projec-9`, `critical-this-projec-10`, `critical-this-projec-11` |
-| `#item-test-command-selection-guidelines` | `sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974` | `test-command-selecti-1`, `test-command-selecti-2`, `test-command-selecti-3`, `test-command-selecti-4`, `test-command-selecti-5`, `test-command-selecti-6`, `test-command-selecti-7`, `test-command-selecti-8`, `test-command-selecti-9`, `test-command-selecti-10`, `test-command-selecti-11` |
-| `#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to` | `sha256:289ce23ec97eeb4f98c1bfb0a92a60668e2360c4bd0ac6b010f55c200b8baf65` | `delegation-and-model-1`, `delegation-and-model-2`, `delegation-and-model-3`, `delegation-and-model-4`, `delegation-and-model-5`, `delegation-and-model-6`, `delegation-and-model-7` |
-| `#item-ending-a-task-see-task-completion-protocol` | `sha256:7c5b774f2a602dcd9239360a7e68f90273cc300c0e12e7f281c45ce2cdf44649` | `ending-a-task-see-ta-1`, `ending-a-task-see-ta-2`, `ending-a-task-see-ta-3` |
-| `#item-starting-a-parent-task-write-its-instruments-block-first` | `sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2` | `starting-a-parent-ta-1`, `starting-a-parent-ta-2`, `starting-a-parent-ta-3`, `starting-a-parent-ta-4` |
-
-### `canonical/operative-sets/task-completion-protocol.yaml` → note `canonical/profiles/consumer/confirmations/task-completion-protocol.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#task-completion-protocol:preamble` | `sha256:470b82059538dd17eeebcea849187caecfa75fc0afc0479ad294c921350e4baf` | `task-completion-prot-1` |
-| `#critical-do-not-mark-a-task-complete-before-its-required-steps` | `sha256:ebe9ae3c776f236e195e92ffc5c5fd5f80cd00fd41083417e4fa6c49cc46500d` | `critical-do-not-mark-1` |
-| `#for-subtasks` | `sha256:d3441b73b9ced68042b67726692b8f87d3ce9e086d7e68336292da8b69895d75` | `for-subtasks-1`, `for-subtasks-2`, `for-subtasks-3`, `for-subtasks-4`, `for-subtasks-5` |
-| `#for-parent-tasks-implementation-or-architecture-type` | `sha256:e2958dd6f1a60a5f2b1054e109efe5e8ebd176f263302b87d096772c9243a1c5` | `for-parent-tasks-imp-1`, `for-parent-tasks-imp-2`, `for-parent-tasks-imp-3`, `for-parent-tasks-imp-4`, `for-parent-tasks-imp-5`, `for-parent-tasks-imp-6`, `for-parent-tasks-imp-7`, `for-parent-tasks-imp-8` |
-| `#for-parent-tasks-setup-or-documentation-type` | `sha256:d74afc384873f1861a195770544dcb456c4e952028d9ca37e3e5d6e39b19a6e4` | `for-parent-tasks-set-1`, `for-parent-tasks-set-2`, `for-parent-tasks-set-3`, `for-parent-tasks-set-4`, `for-parent-tasks-set-5`, `for-parent-tasks-set-6`, `for-parent-tasks-set-7`, `for-parent-tasks-set-8` |
-| `#completion-state-in-the-pr-flow:preamble` | `sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955` | `completion-state-in--1`, `completion-state-in--2`, `completion-state-in--3`, `completion-state-in--4`, `completion-state-in--5`, `completion-state-in--6`, `completion-state-in--7`, `completion-state-in--8`, `completion-state-in--9`, `completion-state-in--10`, `completion-state-in--11`, `completion-state-in--12`, `completion-state-in--13`, `completion-state-in--14`, `completion-state-in--15`, `completion-state-in--16`, `completion-state-in--17`, `completion-state-in--18`, `completion-state-in--19`, `completion-state-in--20` |
-| `#coherent-units-the-merge-granularity` | `sha256:4bd3b64a6e82bcdcc9065d9eb7c42162e1da6c6fbd00988fa2d3f74137684632` | `coherent-units-the-m-1`, `coherent-units-the-m-2`, `coherent-units-the-m-3`, `coherent-units-the-m-4`, `coherent-units-the-m-5`, `coherent-units-the-m-6`, `coherent-units-the-m-7` |
-| `#branch-cleanup` | `sha256:f6e97dd4c99e8e9e2143a984ccf2fb4b85e62a04da4965d0a6f01fc341c4ff8e` | `branch-cleanup-1`, `branch-cleanup-2`, `branch-cleanup-3`, `branch-cleanup-4` |
-| `#branch-and-pr-conventions` | `sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf` | `branch-and-pr-conven-1`, `branch-and-pr-conven-2`, `branch-and-pr-conven-3`, `branch-and-pr-conven-4`, `branch-and-pr-conven-5`, `branch-and-pr-conven-6` |
-| `#the-merge-rule` | `sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e` | `the-merge-rule-1`, `the-merge-rule-2`, `the-merge-rule-3` |
-| `#emergency-procedure` | `sha256:fcb97d3f697a6b4cc3bd45b2478e22e305abdf1626258e220b5ac507f4bcbb4d` | `emergency-procedure-1` |
-| `#tier-selection-which-docs-how-much-detail` | `sha256:d1d5429b6114ae0abd5e62cfd4a88039d25755d3c8ea249057c2dd971fa03c60` | `tier-selection-which-1`, `tier-selection-which-2`, `tier-selection-which-3` |
-| `#key-rules` | `sha256:80c2462bf7a9e6c1e7a3bd7edc6e36abb523168f644fe3c777eec59993d53977` | `key-rules-1`, `key-rules-2`, `key-rules-3`, `key-rules-4`, `key-rules-5`, `key-rules-6`, `key-rules-7`, `key-rules-8`, `key-rules-9` |
-
-### `canonical/operative-sets/thurgood.yaml` → note `canonical/profiles/consumer/confirmations/thurgood.md`
-
-| Unit key | canonicalHash | Drafted item ids (record order) |
-|---|---|---|
-| `#identity` | `sha256:e396aa201b6a31a256a242b1b52f267804e02bca71865fd8721df8f47afd2255` | `thurgood-role`, `thurgood-domain`, `thurgood-handoff`, `thurgood-human-decides`, `thurgood-partner` |
-| `#in-scope` | `sha256:e4224dc56540bf7e0bbc958f5110efdb43990ccca3e4e0262ebd335f0d4822f4` | `scope-1`, `scope-2`, `scope-3`, `scope-4`, `scope-5`, `scope-6`, `scope-7`, `scope-8`, `scope-9`, `scope-10`, `scope-11`, `scope-12` |
-| `#out-of-scope` | `sha256:f443e3ebcf11ad1c2d778ad8a39887d3e38e38da196ef25bc0e3e4943ad7583b` | `out-1`, `out-2`, `out-3`, `out-4`, `out-5`, `out-6` |
-| `#the-audit-vs-write-distinction` | `sha256:afc414742bc655800818408d889f3894f34adf567622cb0bf8e5e30020dae7b9` | `audit-not-write`, `flag-not-fill` |
-| `#boundary-cases` | `sha256:4d88ea810df219fc662c033fc3718d69cee169d8eac3784cf1256e95aca2e3d4` | `boundary-flag`, `boundary-audit-side`, `boundary-coordinate` |
-| `#domain-boundary-response-examples` | `sha256:75cd0b4b79e06c10bcafe92ccfa9dda83c7b6bd4c66dccc687f1997032660202` | `none` |
-| `#operational-mode-spec-formalization:preamble` | `sha256:a6d50d930cd412e1ad58cd585ffd2f77b308ca1b771fa372d39447e922eaa666` | `formalize-when` |
-| `#step-1-query-current-standards` | `sha256:47150be7b90e624ac8d1d135a8cb62e1903d30ee62ed7a3714d25249eece7969` | `query-standards` |
-| `#step-2-transform-design-outline-requirementsmd` | `sha256:6da626299b38ebdb5f27f5510a68cb5b85023117de3550ed05daba7bc626582f` | `requirements-1`, `requirements-2`, `requirements-3`, `requirements-4` |
-| `#step-3-transform-design-outline-designmd` | `sha256:e201ec5d5dd85e139e607712ea9c7ef062e37ea44c18ebc32d5854eeccabc6b2` | `design-1`, `design-2`, `design-3` |
-| `#step-4-transform-design-outline-tasksmd` | `sha256:1459830b25debf227ad5cc2d5130886f20d953c694f7474983003efefb385ab1` | `tasks-1`, `tasks-2`, `tasks-3`, `tasks-4`, `tasks-5` |
-| `#step-5-recommend-domain-review` | `sha256:abbfb4c692a25678f14e2b6c7df9583d8e42050fa376aefc96fafece59f4a869` | `review-recommend`, `review-1`, `review-2` |
-| `#spec-formalization-is-not-autonomous` | `sha256:6910a07a551539e061d95f125e78fb596d39574dc6204e633fad7de7e128daec` | `not-autonomous`, `iterate` |
-| `#operational-mode-audit:preamble` | `sha256:2e57eb4ac8d7e695f422198ee9ee33b1a7136723a134742fc31fa9f0a0a77d5f` | `audit-when` |
-| `#step-1-query-audit-methodology` | `sha256:52116f00369aa993dd92890a122d3118adaa82626bb28e442f72fde05be93147` | `none` |
-| `#step-2-gather-evidence` | `sha256:d89dcc2c0b9d368ebe7b85a858952248ed7a034281899b8f48baea748fc50f00` | `evidence-1`, `evidence-2`, `evidence-3` |
-| `#step-3-cross-reference-with-domain-docs` | `sha256:7ffb888434bffe536490a22f11116752743266b948c6369605cbfd8acfed8179` | `cross-reference` |
-| `#step-4-report-findings-with-severity` | `sha256:ee0b74cf25bdcd06e0c004fd2ed80405195811150606cb0263d39718d0b5d76b` | `severity`, `severity-1`, `severity-2`, `severity-3`, `severity-4` |
-| `#step-5-flag-domain-specific-issues` | `sha256:a58ebb7928eabb0d614829559d7e9e42540105cf7e4dcfa4fd1a5aa07b864cb8` | `flag-1`, `flag-2`, `flag-3`, `flag-4` |
-| `#audit-is-analysis-not-implementation` | `sha256:6af6a68a63d8c012cb92581e3bd7062ae73f52a9d04efd9ff6baf48a283c0603` | `analysis-not-fix`, `coordinate-fixes` |
-| `#operational-mode-test-governance` | `sha256:a2f9b49ea33e0c12fb4b93056b91e00d30b7007a17b6fa5f43e4ab96c71e9a28` | `governance-when`, `governance-1`, `governance-2`, `governance-3`, `sets-standards` |
-| `#operational-mode-civitas-steward:preamble` | `sha256:56472edb81585fab7167474a1cf686483c63f4b8f6a1b579dce55eb38bdd9c4f` | `steward-maintains` |
-| `#the-three-layer-boundary` | `sha256:f033ead131bfe1b8077965c1fbff9d525d918274f65f557d3e634cce83e8800d` | `correctness`, `consistency`, `infrastructure` |
-| `#resolution-path-for-flagged-inconsistencies` | `sha256:e694a69734be01ee779a87b0fcf7d4d4d62ee088b34db6334ece5ea64cfd85be` | `resolution-1`, `resolution-2`, `resolution-3` |
-| `#trigger-types` | `sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d` | `instruments-computed`, `event-post-spec`, `event-post-doc`, `event-post-prompt`, `cadence-health-check`, `return-edge`, `liveness-owed-set`, `liveness-records`, `liveness-charter-walk`, `register-read`, `discovery-spec`, `discovery-feedback`, `discovery-audit` |
-| `#steering-doc-lifecycle` | `sha256:8ea268cb6f24e9f84d5760dc6134f38de20257fc19c87b2ecbd082daaecf819a` | `lifecycle-1`, `lifecycle-2`, `lifecycle-3`, `lifecycle-4` |
-| `#the-q5-boundary-execution-claims-verification-is-stacys:preamble` | `sha256:0cfc85cf5a6e9680bf8b9a0f82af9fa56d6ea1d139ff132a4a24edf8341f6886` | `none` |
-| `#the-charter-cut-ratified-verbatim` | `sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611` | `cut-thurgood`, `cut-stacy`, `you-retain`, `steward-verb-carve-out` |
-| `#the-composed-learning-loop-your-standing-duties-on-every-claims-pass` | `sha256:6575df29c6e7994654ba2670352bb5b2f935d1d979f128b7b887b7c7d900ae1e` | `loop-1`, `loop-2`, `loop-3`, `loop-4`, `finding-routing` |
-| `#the-caller-out-duty-the-mirror-clauses-enforcement-yours-to-fire` | `sha256:26f4da1744327488e126670aa28c3b2dbb71552ef5faca0112202709cbe03884` | `caller-out` |
-| `#the-three-boundary-bounds-ratified-unsoftened` | `sha256:a8cdcf53203a837c37ed918cdab99d8c28a667c02fad088c11d8c7715cb5bdd8` | `bound-1`, `bound-2`, `bound-3`, `merge-path` |
-| `#collaboration-model-domain-respect:preamble` | `sha256:f1037c902db3927079385e883cce8aadec5669d26c7b1d5496b5788700b625fd` | `respect-not-adversarial` |
-| `#trust-by-default` | `sha256:bb15abae7190ec88718ce51fad8a5330f94c0c13a50489e0019990fa9c3d7094` | `trust-1`, `trust-2`, `trust-3` |
-| `#obligation-to-flag` | `sha256:7ff4447458c792fc53a512af33b0886a2ae5ab637ca513143c52593c049a6efe` | `flag-1`, `flag-2`, `flag-3`, `flag-4` |
-| `#graceful-correction` | `sha256:c6fe9573c12cbe0bd99195eae036c3a3db6d245652d52a9c08773a44bc15c9df` | `correction-1`, `correction-2`, `correction-3` |
-| `#fallibility` | `sha256:e0d3de4b303e471c0f30df1af9d2b0832c3d6581a58fb0efef9265c8c8a0d743` | `none` |
-| `#documentation-governance-ballot-measure-model:preamble` | `sha256:6100fb78ae5ff4e4f332c95cef229006cb8022ea6624a3ad8a552dff2a1b0ee5` | `shared-layer-not-unilateral` |
-| `#the-process` | `sha256:2c4db7b65be7f3bf074ab8f761d34aa9450e25295881e5eed70545aea9b1f5fc` | `ballot-1`, `ballot-2`, `ballot-3`, `ballot-4` |
-| `#what-this-means-in-practice` | `sha256:87e9a365cd107209c071e5ebbd21a251acf28b33d5835d8fbeb05bce776989b8` | `practice-1`, `practice-2`, `practice-3`, `practice-4`, `practice-5` |
-| `#mcp-practice-notes` | `sha256:61b6534dc4861bf69477f5db596cf4018372215da9b47591e9931a5b699be07a` | `rebuild-docs`, `monitor-exceptions`, `mcp-fallback`, `kb-fallback` |
-| `#collaboration-standards:preamble` | `sha256:3affabec49417d9644d83ab0c5c3552a80a5173d5d5305aa9b6828fcb2631f34` | `apply-aicp` |
-| `#counter-arguments-are-mandatory` | `sha256:35d0d6abc2af0d673d40b370a41ea0c72eec04073c78a7e7fe7320d4abf9bb47` | `counter-provide`, `counter-never`, `counter-fold-back` |
-| `#candid-over-comfortable` | `sha256:3e908f39d63c06fe56b3abea2a39dfd08c515e8ba2fd4df351d2cb6e7c81e759` | `candid-1` |
-| `#bias-self-monitoring` | `sha256:ce530e9a54ad50f13c06533422b0de024eade8a978bbcd9d6fa58420d8fff3ca` | `bias-watch`, `bias-name` |
-| `#when-you-and-peter-disagree` | `sha256:c82414480e057b4ae6d51c4d8d99d73b456dcdb5b64a01f116d5e4cbeef4ce20` | `disagree` |
-| `#what-you-own` | `sha256:f19c09887a717740352ed836602711d8e2b4611675a7073ed205a1418c9927ce` | `own-1`, `own-2`, `own-3`, `own-4` |
-| `#what-you-dont-own` | `sha256:70487f45dd219578781ab15f503fe5648890766d3c31d25a76c211419f7b0eaa` | `not-own-1`, `not-own-2`, `not-own-3`, `not-own-4`, `jest-not-vitest` |
 
 ## 2. Rows to sign
 
@@ -233,6 +26,7 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | body · `#resolution-path-for-flagged-inconsistencies` | re-pointed | ROUTED | `sha256:e694a69734be01ee779a87b0fcf7d4d4d62ee088b34db6334ece5ea64cfd85be` | `sha256:bf375f4207dc46c1160c087ff425aae4884d5464bcdb42fc859273d3d21f7193` | `canonical/profiles/consumer/signatures/thurgood.md#resolution-path-for-flagged-inconsistencies` | `canonical/_consumer-output/_canonical/agents/thurgood.md`<br>`canonical/_consumer-output/cc/.claude/agents/thurgood.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` | `canonical/profiles/consumer/thurgood.overlay.md` |
 | body · `#trigger-types` | re-pointed | ROUTED | `sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d` | `sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1` | `canonical/profiles/consumer/signatures/thurgood.md#trigger-types` | `canonical/_consumer-output/_canonical/agents/thurgood.md`<br>`canonical/_consumer-output/cc/.claude/agents/thurgood.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` | `canonical/profiles/consumer/thurgood.overlay.md` |
 | body · `#steering-doc-lifecycle` | re-pointed | ROUTED | `sha256:8ea268cb6f24e9f84d5760dc6134f38de20257fc19c87b2ecbd082daaecf819a` | `sha256:cddfbaaf4ddbe7df7f8d325405dd1c1cf29ba7b83763fb654c70ffd8dde810cc` | `canonical/profiles/consumer/signatures/thurgood.md#steering-doc-lifecycle` | `canonical/_consumer-output/_canonical/agents/thurgood.md`<br>`canonical/_consumer-output/cc/.claude/agents/thurgood.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` | `canonical/profiles/consumer/thurgood.overlay.md` |
+| body · `#the-q5-boundary-execution-claims-verification-is-stacys:preamble` | re-pointed | ROUTED | `sha256:0cfc85cf5a6e9680bf8b9a0f82af9fa56d6ea1d139ff132a4a24edf8341f6886` | `sha256:e6fe38dba2350bc75397a54d45ac199fa7e40d5095d35ce973966a2afb814185` | `canonical/profiles/consumer/signatures/thurgood.md#the-q5-boundary-execution-claims-verification-is-stacys:preamble` | `canonical/_consumer-output/_canonical/agents/thurgood.md`<br>`canonical/_consumer-output/cc/.claude/agents/thurgood.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` | `canonical/profiles/consumer/thurgood.overlay.md` |
 | body · `#the-charter-cut-ratified-verbatim` | re-pointed | ROUTED | `sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611` | `sha256:9bd202da8b460899bad8f6dfdd3dfb92a5bace7809a792debcd6edff5fce52e1` | `canonical/profiles/consumer/signatures/thurgood.md#the-charter-cut-ratified-verbatim` | `canonical/_consumer-output/_canonical/agents/thurgood.md`<br>`canonical/_consumer-output/cc/.claude/agents/thurgood.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` | `canonical/profiles/consumer/thurgood.overlay.md` |
 | body · `#the-composed-learning-loop-your-standing-duties-on-every-claims-pass` | re-pointed | ROUTED | `sha256:6575df29c6e7994654ba2670352bb5b2f935d1d979f128b7b887b7c7d900ae1e` | `sha256:7a5fc024f6b95ad0a4b1cb3da68c43e1f059717e140a5ad6f44e264c300196b6` | `canonical/profiles/consumer/signatures/thurgood.md#the-composed-learning-loop-your-standing-duties-on-every-claims-pass` | `canonical/_consumer-output/_canonical/agents/thurgood.md`<br>`canonical/_consumer-output/cc/.claude/agents/thurgood.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` | `canonical/profiles/consumer/thurgood.overlay.md` |
 | body · `#the-three-boundary-bounds-ratified-unsoftened` | re-pointed | ROUTED | `sha256:a8cdcf53203a837c37ed918cdab99d8c28a667c02fad088c11d8c7715cb5bdd8` | `sha256:b5ce5aad899e580ccd4d5ab7ca72ddc925bad6c16a396fb1ee830a91e3783c4d` | `canonical/profiles/consumer/signatures/thurgood.md#the-three-boundary-bounds-ratified-unsoftened` | `canonical/_consumer-output/_canonical/agents/thurgood.md`<br>`canonical/_consumer-output/cc/.claude/agents/thurgood.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` | `canonical/profiles/consumer/thurgood.overlay.md` |
@@ -274,6 +68,7 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | body · `#in-scope` | re-pointed | ROUTED | `sha256:c5c798aafe80cf38d78e3023987450a2dae382e5f1a46effc4f10fe99df45579` | `sha256:0a31d551a2bb64728a193c7895f502c1fc3a1956edb4d7663fb99eaca0640145` | `canonical/profiles/consumer/signatures/stacy.md#in-scope` | `canonical/_consumer-output/_canonical/agents/stacy.md`<br>`canonical/_consumer-output/cc/.claude/agents/stacy.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` | `canonical/profiles/consumer/stacy.overlay.md` |
 | body · `#out-of-scope` | re-pointed | ROUTED | `sha256:be1ba8ba9bf4d3c3c2ff657fc3b6aabf428cd21aff585d49d44b0268b058f4ab` | `sha256:938c670d4259a89225df8ee869262e701de2f969b1dddca4fd0890d39700e820` | `canonical/profiles/consumer/signatures/stacy.md#out-of-scope` | `canonical/_consumer-output/_canonical/agents/stacy.md`<br>`canonical/_consumer-output/cc/.claude/agents/stacy.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` | `canonical/profiles/consumer/stacy.overlay.md` |
 | body · `#operational-mode-process-audit:preamble` | re-pointed | ROUTED | `sha256:87470ed51c60c7908225d504f181d60b464fe7468c8fcebc2ac93f18a042ab4d` | `sha256:ebc19b7eeec091aef048bc68f88ce85dfd92f01ab92a853b0bef5a4a40962c6f` | `canonical/profiles/consumer/signatures/stacy.md#operational-mode-process-audit:preamble` | `canonical/_consumer-output/_canonical/agents/stacy.md`<br>`canonical/_consumer-output/cc/.claude/agents/stacy.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` | `canonical/profiles/consumer/stacy.overlay.md` |
+| body · `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` | re-pointed | ROUTED | `sha256:b9f4104614bde7bf3dcf7fc95a316fa126266e2816cc636ddabc2a555d94ffb1` | `sha256:62fd761373b55d6c61af941dadd08c48b662f4b5edb1572607b6fee1d268d579` | `canonical/profiles/consumer/signatures/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble` | `canonical/_consumer-output/_canonical/agents/stacy.md`<br>`canonical/_consumer-output/cc/.claude/agents/stacy.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` | `canonical/profiles/consumer/stacy.overlay.md` |
 | body · `#the-charter-cut-ratified-verbatim` | re-pointed | ROUTED | `sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191` | `sha256:12116dca8e4e4fd69ffa64f9276c97aa497813f4461a0bcd3afa1ab4203e9355` | `canonical/profiles/consumer/signatures/stacy.md#the-charter-cut-ratified-verbatim` | `canonical/_consumer-output/_canonical/agents/stacy.md`<br>`canonical/_consumer-output/cc/.claude/agents/stacy.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` | `canonical/profiles/consumer/stacy.overlay.md` |
 | body · `#the-trigger-set-the-114-superset-table-names-never-numbers` | re-pointed | ROUTED | `sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a` | `sha256:9125e2b3608732006279ff89016052966e29a4b5a28369c25aba788f78e472fe` | `canonical/profiles/consumer/signatures/stacy.md#the-trigger-set-the-114-superset-table-names-never-numbers` | `canonical/_consumer-output/_canonical/agents/stacy.md`<br>`canonical/_consumer-output/cc/.claude/agents/stacy.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` | `canonical/profiles/consumer/stacy.overlay.md` |
 | body · `#the-claims-pass-record-claims-passmd-the-template` | re-pointed | ROUTED | `sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7` | `sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75` | `canonical/profiles/consumer/signatures/stacy.md#the-claims-pass-record-claims-passmd-the-template` | `canonical/_consumer-output/_canonical/agents/stacy.md`<br>`canonical/_consumer-output/cc/.claude/agents/stacy.md`<br>`canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` | `canonical/profiles/consumer/stacy.overlay.md` |
@@ -370,3 +165,38 @@ Routing is computed from the **drafted** item sets; a confirmation that changes 
 | body · `#what-civitas-contains` | re-pointed | ROUTED | `sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137` | `sha256:3a0e750c68d74e1ea89c9a4be34382b395c5699b1f6306c1837c610bc67d2309` | `canonical/profiles/consumer/signatures/civitas-system-overview.md#what-civitas-contains` | `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md`<br>`canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md`<br>`canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md` | `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md` |
 | body · `#the-three-layer-boundary` | re-pointed | ROUTED | `sha256:07a57ddc3770e58fd778f308e53b46af5663158ed9c8332885ab516db02a27fa` | `sha256:e1c6c4394d5be00118b7b70f042cc18968d20a553a07e40959e393cd50720fdd` | `canonical/profiles/consumer/signatures/civitas-system-overview.md#the-three-layer-boundary` | `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md`<br>`canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md`<br>`canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md` | `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md` |
 | body · `#document-access` | re-pointed | ROUTED | `sha256:6bc5c92dbd79c125b497c35a6c88f5257913263b559f610306984985adf0ba9b` | `sha256:20fdb612e3333d352f26f6567e27db5e80f591e03fbbb21cdedf14d3be99b2bc` | `canonical/profiles/consumer/signatures/civitas-system-overview.md#document-access` | `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md`<br>`canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md`<br>`canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md` | `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md` |
+
+## 3. Referent candidates (read-only)
+
+A mechanical scan (see `hash-sheets.ts`): each item below opens on a pronoun or demonstrative, names a referent it does not carry, or ends as a bare lead-in. **Candidates, not findings** — many carry their referent in the same sentence. Widening an item is a re-confirmation of its unit in your seat (update the note's `items:`/`date:` in the same commit as your signatures); never edited here.
+
+| Record | Unit | Item | Why | Text |
+|---|---|---|---|---|
+| `ai-collaboration-principles.yaml` | `#counter-argument-requirement` | `provide` | ends as a bare lead-in | For every significant recommendation, provide at least one strong counter-argument — and **use it before you present it**: |
+| `ai-collaboration-principles.yaml` | `#certainty-calibration-finding-guidance-before-you-guess` | `calibrate-2` | ends as a bare lead-in | **Weight by match strength** — the emitted `matchConfidence` signal: `strong` over `partial` over `none`: |
+| `civitas-system-overview.yaml` | `#document-access` | `document-access-1` | opens on a pronoun/demonstrative | This is an identity doc (Spec 119) — never MCP-served, always loaded in full into every agent's context. |
+| `spec-feedback-protocol.yaml` | `#sequential-formalization-gate` | `sequential-formalization-1` | ends as a bare lead-in | Spec formalization MUST pause for agent feedback between each document phase: |
+| `spec-feedback-protocol.yaml` | `#stamp-format` | `stamp-format-1` | ends as a bare lead-in | Every feedback entry MUST be stamped with the agent name and round number using this exact format: |
+| `spec-feedback-protocol.yaml` | `#document-access` | `document-access-1` | opens on a pronoun/demonstrative | This is an identity doc (Spec 119) — never MCP-served, always loaded in full into every agent's context. |
+| `stacy.yaml` | `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` | `owed-set-emits-exclusions` | ends as a bare lead-in | Four stages; it **emits its exclusions by name** so a wrong answer is a falsifiable count, never a healthy-looking short list: |
+| `stacy.yaml` | `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` | `owed-set-three-copies` | opens on a pronoun/demonstrative | This pipeline also lives at `.kiro/hooks/RELEASE-FLOW.md` step 5a (the release surface) and in Thurgood's LIVENESS health-check item; the three copies are the s… |
+| `stacy.yaml` | `#what-parity-means` | `parity-platform-native-expression` | names a referent it does not carry | Platform-native expression of all of the above |
+| `stacy.yaml` | `#operational-mode-process-audit:preamble` | `audit-when` | ends as a bare lead-in | When Peter requests a process quality check, or at natural checkpoints (screen completion, feature completion, release): |
+| `stacy.yaml` | `#incremental-capture-rule` | `capture-both` | opens on a pronoun/demonstrative | This applies to your own discoveries as well as gaps you find in other agents' capture. |
+| `stacy.yaml` | `#audit-output` | `output-severity` | ends as a bare lead-in | Organize findings by severity (same model as Thurgood): |
+| `stacy.yaml` | `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength` | `mirror-binds-lens` | opens on a pronoun/demonstrative | It binds the LENS seat specifically. |
+| `stacy.yaml` | `#what-you-dont-own` | `jest-not-vitest` | opens on a pronoun/demonstrative | This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`. |
+| `start-up-tasks.yaml` | `#item-civitas-governance-health-check` | `hc-1` | ends as a bare lead-in | IF it's been >30 days since last governance health check **[2026-09-19]**, THEN flag: |
+| `start-up-tasks.yaml` | `#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to` | `first-ask-whether` | ends as a bare lead-in | **First ask WHETHER this work is yours to do at all** (Agent-Directory § "Primary Agent (Orchestrator)"). Then, for anything you do delegate: |
+| `start-up-tasks.yaml` | `#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to` | `delegation-and-model-2` | ends as a bare lead-in | Before delegating to a subagent, choose its model tier by the task's cognitive demand — do NOT let it silently inherit the session model: |
+| `thurgood.yaml` | `#operational-mode-spec-formalization:preamble` | `formalize-when` | ends as a bare lead-in | When Peter requests spec formalization (transforming an approved design outline into formal spec documents), follow this workflow: |
+| `thurgood.yaml` | `#step-5-recommend-domain-review` | `review-recommend` | ends as a bare lead-in | After completing the formal spec, recommend that Ada and Lina review for technical accuracy in their respective domains: |
+| `thurgood.yaml` | `#operational-mode-audit:preamble` | `audit-when` | ends as a bare lead-in | When Peter requests an audit (test suite health, coverage analysis, test failure investigation), follow this workflow: |
+| `thurgood.yaml` | `#step-2-gather-evidence` | `evidence-3` | ends as a bare lead-in | Scan test directories to identify coverage gaps: |
+| `thurgood.yaml` | `#step-4-report-findings-with-severity` | `severity` | ends as a bare lead-in | Organize findings by severity: |
+| `thurgood.yaml` | `#operational-mode-test-governance` | `governance-when` | ends as a bare lead-in | When Peter requests governance guidance (test standards, coverage strategy, quality standards), follow this workflow: |
+| `thurgood.yaml` | `#operational-mode-test-governance` | `governance-3` | ends as a bare lead-in | **Distinguish governance from implementation**: |
+| `thurgood.yaml` | `#documentation-governance-ballot-measure-model:preamble` | `shared-layer-not-unilateral` | names a referent it does not carry | Steering docs and MCP-served documentation are the shared knowledge layer for all agents. You do NOT modify this layer unilaterally. |
+| `thurgood.yaml` | `#what-this-means-in-practice` | `practice-4` | opens on a pronoun/demonstrative | This applies to ALL documentation changes, no matter how small |
+| `thurgood.yaml` | `#counter-arguments-are-mandatory` | `counter-provide` | ends as a bare lead-in | For every significant governance recommendation, provide at least one strong counter-argument: |
+| `thurgood.yaml` | `#what-you-dont-own` | `jest-not-vitest` | opens on a pronoun/demonstrative | This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`. |
