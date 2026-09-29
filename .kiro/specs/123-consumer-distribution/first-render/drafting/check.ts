@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-const { load: loadYaml } = require('/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/node_modules/js-yaml');
-const R = '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/';
+const { load: loadYaml } = require(process.cwd() + '/node_modules/js-yaml');
+const R = process.cwd() + '/';
 const AG = R + 'tools/agent-generator/';
 const { splitFrontmatter } = require(AG + 'frontmatter');
 const { partition, entryTree } = require(AG + 'partition');

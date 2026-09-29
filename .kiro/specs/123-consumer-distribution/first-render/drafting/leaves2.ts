@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import { splitFrontmatter } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/frontmatter';
-import { entryTree } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/partition';
-const root = '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/';
+const { splitFrontmatter } = require(process.cwd() + '/tools/agent-generator/frontmatter');
+const { entryTree } = require(process.cwd() + '/tools/agent-generator/partition');
+const root = process.cwd() + '/';
 const filter = process.argv[3] ?? '';
 for (const a of process.argv[2].split(',')) {
   const f = `canonical/agents/${a}.md`;

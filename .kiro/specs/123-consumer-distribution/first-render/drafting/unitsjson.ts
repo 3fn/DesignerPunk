@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import { splitFrontmatter } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/frontmatter';
-import { entryTree, partition } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/partition';
-import { hashText, hashEntry } from '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/tools/agent-generator/regrounding/hash';
-const root = '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/';
+const { splitFrontmatter } = require(process.cwd() + '/tools/agent-generator/frontmatter');
+const { entryTree, partition } = require(process.cwd() + '/tools/agent-generator/partition');
+const { hashText, hashEntry } = require(process.cwd() + '/tools/agent-generator/regrounding/hash');
+const root = process.cwd() + '/';
 const f = process.argv[2];
 const { frontmatter, body } = splitFrontmatter(fs.readFileSync(root+f,'utf8'), f);
 const units = partition(body).units.map(u => ({ anchor: u.anchor, text: u.text, hash: hashText(u.text) }));

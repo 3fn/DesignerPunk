@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-const R = '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/';
+const R = process.cwd() + '/';
 const { load } = require(R + 'node_modules/js-yaml');
 const { deriveSharedCatalog } = require(R + 'tools/agent-generator/derive');
 const { validateDispositions } = require(R + 'tools/agent-generator/regrounding/dispositions');

@@ -1,4 +1,4 @@
-const R = '/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2/';
+const R = process.cwd() + '/';
 const { runFreshnessSweep, formatFreshness } = require(R + 'tools/agent-generator/regrounding/freshness');
 const rep = runFreshnessSweep(R);
 const by: Record<string, number> = {};
