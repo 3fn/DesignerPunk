@@ -251,11 +251,13 @@ date: 2026-09-29
 ## `#mcp-practice-notes`
 
 confirmer: kenya
-canonicalHash: sha256:752619afed54f31fc54cde7129c2a268be95e23e3fc5752c4f619298706cf49f
+canonicalHash: sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82
 items: ground-truth-live-mcp, rebuild-product, mcp-fallback
 date: 2026-09-29
 
 **Ruling: CONFIRMED at 3 items, as drafted.** The server roster and *"Health states: …"* are inventory.
+
+**Re-confirmation 2026-09-29 (charter correction, Kenya seat): CONFIRMED at 3 items; the set is unchanged.** The unit's bytes changed because I corrected a false charter sentence. `dist/ios/DesignTokens.ios.swift` is not "orphaned"; it is this repo's un-themed base output, written by the in-repo generate and due to stop shipping. That was Ada's packaging read, and I checked it against `designerpunk.config.ts`. The item `ground-truth-live-mcp` has its `text` updated verbatim to the corrected sentence, keeping its id and kind. The operative function is unchanged: never read the snapshot for themed values, and reach for the MCP. `canonicalHash` is re-stated to the new unit bytes.
 
 ## `#collaboration-standards:preamble`
 

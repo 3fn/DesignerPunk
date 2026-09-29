@@ -550,12 +550,12 @@ units:
         text: "iOS 17.0+ minimum (per Core Goals)"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#ios-specific-guidance
   "#mcp-practice-notes":
-    canonicalHash: sha256:752619afed54f31fc54cde7129c2a268be95e23e3fc5752c4f619298706cf49f
+    canonicalHash: sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82
     items:
       - id: ground-truth-live-mcp
         kind: obligation
         label: "Ground truth is live, never a snapshot"
-        text: "**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is orphaned and stale. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value."
+        text: "**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is this repo's un-themed base output (written by the in-repo generate, due to stop shipping), never read for themed values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value."
       - id: rebuild-product
         kind: obligation
         label: "Rebuild the product index after writes"

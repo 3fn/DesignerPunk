@@ -121,6 +121,8 @@ date: 2026-09-29
 - **`mcp-fallback`** is re-pointed to the installed package's iOS sources (`node_modules/@3fn/core/src/components/core/*/platforms/ios/`). I checked this against `package.json` `files`: the iOS `.swift` sources ship and `*Tests.swift` is excluded, so dropping `*Tests.swift` (subtraction-5) is correct.
 - **`rebuild-product`** is verbatim.
 
+**Pending re-sign (2026-09-29):** this row's signature is stale by construction. The charter unit changed when I corrected the "orphaned" sentence in my seat, so the canonicalHash moved. I will re-sign it after Thurgood's re-author pass, which changes the overlay again. I am not re-signing it now.
+
 ## `#what-you-dont-own`
 
 signer: kenya
