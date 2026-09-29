@@ -3,14 +3,14 @@
 # consumer's repo (R5); their text is lina.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
 source: canonical/agents/lina.md
 body:
-  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "for DesignerPunk", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "for DesignerPunk", "cites": "subtraction-2"}], "destination": "#identity", "signature": {"signer": "lina", "canonicalHash": "sha256:0a72d2583229f651f5ffbaca6e3b8ea5fe19abc44577d92d9c7e6d311bf5c072", "renderedHash": "sha256:47d62783124d7223a4190e82eb33f032ee1c3f4193a02b3e22a28871ecb17429", "assent": {"surviving": ["lina-role", "lina-domain", "lina-handoff", "lina-human-decides", "lina-partner"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#identity"}}
   "#ownership": {"disposition": "retained"}
-  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "- **Maintained steering docs** (content correctness and updates when component architecture or platform implementation patterns change): `platform-implementation-guidelines.md`; `Cross-Platform vs Platform-Specific Decision Framework.md`", "cites": "subtraction-3"}], "destination": "#in-scope"}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "- **Maintained steering docs** (content correctness and updates when component architecture or platform implementation patterns change): `platform-implementation-guidelines.md`; `Cross-Platform vs Platform-Specific Decision Framework.md`", "cites": "subtraction-3"}], "destination": "#in-scope", "signature": {"signer": "lina", "canonicalHash": "sha256:b98c5264e74f32de3ea21adf7d2c43147c48e087866a903701d29fa595cb8d38", "renderedHash": "sha256:25e69652685da607769bb96dc8d392144e1f3bb8cf9f6fbe737987fcfca94e8c", "assent": {"surviving": ["scope-scaffolding", "scope-platforms", "scope-docs", "scope-contract-tests", "scope-token-integration", "scope-schema", "scope-token-mapping", "scope-inheritance", "scope-parity", "scope-theme-consumption", "scope-data-theme", "scope-one-off", "scope-promotion", "scope-maintained-docs"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#in-scope"}}
   "#out-of-scope": {"disposition": "retained"}
-  "#boundary-cases": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#boundary-cases"}
+  "#boundary-cases": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#boundary-cases", "signature": {"signer": "lina", "canonicalHash": "sha256:58a6991c16f4e9cdd9012c5fad523948d2c7e8343efe9342c1c9916f04457d4f", "renderedHash": "sha256:2bdcfa275b2ab3dfb8aa62f15b625e8511487caec7501750385019686e9e7c5a", "assent": {"surviving": ["boundary-flag", "boundary-component-side", "boundary-coordinate"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#boundary-cases"}}
   "#domain-boundary-response-examples": {"disposition": "retained"}
   "#component-scaffolding-workflow:preamble": {"disposition": "retained"}
-  "#step-1-verify-component-family-doc": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#step-1-verify-component-family-doc"}
+  "#step-1-verify-component-family-doc": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#step-1-verify-component-family-doc", "signature": {"signer": "lina", "canonicalHash": "sha256:e15bdecb57e9158a6ff726c1a11f66c5de5ab9c0b40bc9f0aa21b78d18fed0f2", "renderedHash": "sha256:228b083d3e739acf8b9ca7c1b61411b4a72a7e5e38f58f4ef7911a79d5b5b5ce", "assent": {"surviving": ["step1-check-family-doc", "step1-draft-family-doc"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#step-1-verify-component-family-doc"}}
   "#step-2-create-typests": {"disposition": "retained"}
   "#step-3-author-contractsyaml": {"disposition": "retained"}
   "#step-4-create-platform-implementations": {"disposition": "retained"}
@@ -23,25 +23,25 @@ body:
   "#android": {"disposition": "retained"}
   "#cross-platform-consistency": {"disposition": "retained"}
   "#token-usage-in-components:preamble": {"disposition": "retained"}
-  "#token-selection-priority-must-follow-this-order": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#token-selection-priority-must-follow-this-order"}
+  "#token-selection-priority-must-follow-this-order": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#token-selection-priority-must-follow-this-order", "signature": {"signer": "lina", "canonicalHash": "sha256:2688d120f8996dd0b654091329b6dfa698b03cf183ef5dc00d8fcf9f203d0af0", "renderedHash": "sha256:5f10343563245343c1d50c7c096e487b107719e32b82eefd694c779e88482b43", "assent": {"surviving": ["priority-semantic", "priority-primitive", "priority-component", "priority-hardcoded"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#token-selection-priority-must-follow-this-order"}}
   "#component-token-construction-rule": {"disposition": "retained"}
   "#when-a-token-is-missing": {"disposition": "retained"}
   "#collaboration-model-domain-respect:preamble": {"disposition": "retained"}
-  "#trust-by-default": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#trust-by-default"}
-  "#obligation-to-flag": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#obligation-to-flag"}
-  "#graceful-correction": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#graceful-correction"}
+  "#trust-by-default": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#trust-by-default", "signature": {"signer": "lina", "canonicalHash": "sha256:6fb35b82038d7efdf5604b7691385b856082d30cecdaf2e1d33aa7dec6affdc0", "renderedHash": "sha256:b901edfcdc31b422945a76a3f0f5a41e69bd53025e07f5c13edce7fa6b9dc424", "assent": {"surviving": ["trust-ada", "trust-thurgood", "trust-human"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#trust-by-default"}}
+  "#obligation-to-flag": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#obligation-to-flag", "signature": {"signer": "lina", "canonicalHash": "sha256:1bda445e8c5b3104fa5ea6ec7b58a81d5df1bd534ee842ccc6817c0aa6adb299", "renderedHash": "sha256:43b585ed0e10f5eae5338dc6534f3249b0e174dc03f901e7715b7e43574d077e", "assent": {"surviving": ["flag-semantic", "flag-test-pattern", "flag-impact"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#obligation-to-flag"}}
+  "#graceful-correction": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#graceful-correction", "signature": {"signer": "lina", "canonicalHash": "sha256:cb24028b10a677344b45393388bfa066c482192ac17627b924b6ede638019ed7", "renderedHash": "sha256:b1e096fe60967e09e3d3568aba52c767029983991a4483e82d9601bc81403873", "assent": {"surviving": ["correction-engage", "correction-uncertain", "correction-gap-feedback"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#graceful-correction"}}
   "#fallibility": {"disposition": "retained"}
   "#documentation-governance-ballot-measure-model:preamble": {"disposition": "retained"}
-  "#the-process": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#the-process"}
-  "#what-this-means-in-practice": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/steering/` or `governance/` files unilaterally", "cites": "subtraction-1"}, {"text": "The one exception in your write scope, the component-meta authoring guide, still goes through this process for content changes.", "cites": "subtraction-1"}, {"text": "Peter", "cites": "subtraction-2"}, {"text": "— including the two steering docs whose content you maintain", "cites": "subtraction-3"}], "destination": "#what-this-means-in-practice"}
-  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "; governance/component doc changes → the docs MCP's `rebuild_index`", "cites": "subtraction-3"}, {"text": "or `application-mcp-server/`", "cites": "subtraction-5"}], "destination": "#mcp-practice-notes"}
+  "#the-process": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#the-process", "signature": {"signer": "lina", "canonicalHash": "sha256:7405eed001bcf70f166f07adb40e2782e8a7d16e807a54044f8f63d65c271297", "renderedHash": "sha256:b5f56cd778b61acc3dc41e5bc2b27a63c01423696c0cd82775c1d65105f987a6", "assent": {"surviving": ["ballot-propose", "ballot-present", "ballot-vote", "ballot-apply"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#the-process"}}
+  "#what-this-means-in-practice": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/steering/` or `governance/` files unilaterally", "cites": "subtraction-1"}, {"text": "The one exception in your write scope, the component-meta authoring guide, still goes through this process for content changes.", "cites": "subtraction-1"}, {"text": "Peter", "cites": "subtraction-2"}, {"text": "— including the two steering docs whose content you maintain", "cites": "subtraction-3"}], "destination": "#what-this-means-in-practice", "signature": {"signer": "lina", "canonicalHash": "sha256:8fb455b5399e8eebaaff5deee87ddc00be1600efb53cc9071bcca6a96d464034", "renderedHash": "sha256:6ab227b6516792700d6e5188fa46c4aae0fc954052811470e04bb92de42507d4", "assent": {"surviving": ["practice-no-write", "practice-no-edit-docs", "practice-propose", "practice-all-changes"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#what-this-means-in-practice"}}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "; governance/component doc changes → the docs MCP's `rebuild_index`", "cites": "subtraction-3"}, {"text": "or `application-mcp-server/`", "cites": "subtraction-5"}], "destination": "#mcp-practice-notes", "signature": {"signer": "lina", "canonicalHash": "sha256:5c767d6f46b533fa6747a6b40b284bc301dd8108cab485dc31789e12b1de472d", "renderedHash": "sha256:35208ffb8aeff20da836daf89edcbab48905b9a7dfb7753f944fe067b19bf4a9", "assent": {"surviving": ["mcp-query-parent", "schema-own-tokens", "schema-no-inherited", "schema-verify-own-code", "rebuild-after-write", "rebuild-application", "mcp-fallback"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#mcp-practice-notes"}}
   "#collaboration-standards:preamble": {"disposition": "retained"}
   "#counter-arguments-are-mandatory": {"disposition": "retained"}
   "#candid-over-comfortable": {"disposition": "retained"}
   "#bias-self-monitoring": {"disposition": "retained"}
-  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree"}
+  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree", "signature": {"signer": "lina", "canonicalHash": "sha256:c82414480e057b4ae6d51c4d8d99d73b456dcdb5b64a01f116d5e4cbeef4ce20", "renderedHash": "sha256:79fccef83e1808c6210d7892208a33e6aa967bf1265a0a05d15c2555122df435", "assent": {"surviving": ["disagree"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#when-you-and-peter-disagree"}}
   "#what-you-own": {"disposition": "retained"}
-  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own", "signature": {"signer": "lina", "canonicalHash": "sha256:f359d9135bb1bfba8540baeada04fcade5ca0e5b288ad7d1c02cbe6881ec0db8", "renderedHash": "sha256:6bc033aa716a8c6d929e0ce1867363a2efa1a4419a0555ba2a0e8e775e7970d8", "assent": {"surviving": ["not-own-audits", "not-own-governance", "not-own-formula-tests", "jest-not-vitest"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#what-you-dont-own"}}
 frontmatter:
   "agent": {"disposition": "retained"}
   "agentType": {"disposition": "retained"}
@@ -57,7 +57,7 @@ frontmatter:
   "routes.docs[token-selection-framework]": {"disposition": "retained"}
   "routes.docs[scaffolding-templates]": {"disposition": "retained"}
   "routes.docs[contract-validation-criteria]": {"disposition": "retained"}
-  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "lina", "canonicalHash": "sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:routes.docs[completion-doc-guidance]"}}
   "routes.docs[spec-tasks-format]": {"disposition": "retained"}
   "routes.docs[family-avatar]": {"disposition": "retained"}
   "routes.docs[family-badge]": {"disposition": "retained"}
@@ -84,8 +84,8 @@ frontmatter:
   "routes.docs[token-lookup-patterns]": {"disposition": "retained"}
   "routes.docs[schema-format-beyond]": {"disposition": "retained"}
   "routes.docs[component-meta-authoring]": {"disposition": "retained"}
-  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
-  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "lina", "canonicalHash": "sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:routes.docs[dev-workflow-detail]"}}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "lina", "canonicalHash": "sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:routes.docs[file-organization]"}}
   "routes.docs[component-token-brand-contract]": {"disposition": "retained"}
   "routes.agents[ada]": {"disposition": "retained"}
   "routes.agents[thurgood]": {"disposition": "retained"}
@@ -97,13 +97,13 @@ frontmatter:
   "routes.cues[5]": {"disposition": "retained"}
   "routes.cues[6]": {"disposition": "retained"}
   "routes.cues[7]": {"disposition": "retained"}
-  "routes.cues[8]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "routes.cues[8]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "lina", "canonicalHash": "sha256:6ea65d811e836f7c6e2fc6e8992b9f33be745569b47e63b9ef979b934211158d", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:routes.cues[8]"}}
   "routes.cues[9]": {"disposition": "retained"}
-  "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[component-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[full-suite-with-performance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "lina", "canonicalHash": "sha256:cb872ed7c2f880a9ec6a2f53cb5fddc0de823b5eac5b4124948c0de38105dcda", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:commands[functional-suite]"}}
+  "commands[component-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "lina", "canonicalHash": "sha256:a981733ef199224eb7d042b54b1ea04b398da483c44d37b1dd0799a18d864e51", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:commands[component-tests]"}}
+  "commands[full-suite-with-performance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "lina", "canonicalHash": "sha256:0533118bfe4bc1613fa4ad70be352ea134e49b898e0826b3c39d410f9aeec8d2", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "refuse": "should-re-point", "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:commands[full-suite-with-performance]"}}
   "knowledgeBases[StemmaComponentSource]": {"disposition": "retained"}
-  "knowledgeBases[ApplicationMCPServerSource]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5"}
+  "knowledgeBases[ApplicationMCPServerSource]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5", "signature": {"signer": "lina", "canonicalHash": "sha256:f5cc2bbd97e48de9d74442db61b8991a01f5328d8e8a8f34e0e735f4c6339996", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:knowledgeBases[ApplicationMCPServerSource]"}}
   "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
   "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
   "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
@@ -120,9 +120,9 @@ frontmatter:
   "toolSubset.designerpunk-application[rebuild_index]": {"disposition": "retained"}
   "writeScope[src/components/**]": {"disposition": "retained"}
   "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
-  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
-  "writeScope[application-mcp-server/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "writeScope[governance/component-meta-authoring-guide.md]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "lina", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[docs/specs/**]"}}
+  "writeScope[application-mcp-server/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "lina", "canonicalHash": "sha256:4f9f7ddde8e990ff8a914a0c1bf98cf91bc7d1c32570ec00d39af3e9b874f7f9", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[application-mcp-server/**]"}}
+  "writeScope[governance/component-meta-authoring-guide.md]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "lina", "canonicalHash": "sha256:a2fae371a7d8d2efa63091d5619817914735836dde1155f3232d9aaa01c49d42", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/lina.md#frontmatter:writeScope[governance/component-meta-authoring-guide.md]"}}
   "kiro.keyboardShortcut": {"disposition": "retained"}
   "kiro.welcomeMessage": {"disposition": "retained"}
   "preflight[git status --porcelain]": {"disposition": "retained"}
