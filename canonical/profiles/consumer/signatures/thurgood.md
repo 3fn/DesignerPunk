@@ -487,3 +487,14 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
+
+## `#the-q5-boundary-execution-claims-verification-is-stacys:preamble`
+
+signer: stacy
+date: 2026-09-29
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-q5-boundary-execution-claims-verification-is-stacys:preamble` (re-pointed; ROUTED)
+canonicalHash: sha256:0cfc85cf5a6e9680bf8b9a0f82af9fa56d6ea1d139ff132a4a24edf8341f6886
+renderedHash: sha256:e6fe38dba2350bc75397a54d45ac199fa7e40d5095d35ce973966a2afb814185
+verdict: refuse: should-re-point
+
+`authority-precedence` (the co-signed documents govern where this text and they disagree) has a consumer counterpart, and the rendering drops it. The rendering names the authority ("your team's own decision to run claims audits, recorded where your team records such decisions") but not its precedence over this text. **Should re-point**: where this text and that recorded decision disagree, the decision governs. The pointer to the co-signed documents is repo-bound; the precedence rule is not.
