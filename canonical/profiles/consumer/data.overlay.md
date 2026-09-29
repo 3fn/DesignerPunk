@@ -40,7 +40,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 - Dark mode: select theme instance based on `isSystemInDarkTheme()`
 - `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
 - Static tokens (spacing, sizing, radius, typography, motion) remain on the `DesignTokens` object — no CompositionLocal needed
-- **Ground truth for these token values is LIVE** — query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
+- **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
 
 ## @unit #out-of-scope @ sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c
 ### Out of Scope
@@ -63,7 +63,7 @@ This is the exception, not the rule. Most issues benefit from Leonardo's context
 ## @unit #step-2-set-up-the-screen @ sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe
 ### Step 2: Set Up the Screen
 - Create the Jetpack Compose composable structure
-- Bring in DesignerPunk tokens by querying the application MCP for the resolved values
+- Bring in DesignerPunk tokens by querying the application MCP for the resolved values (never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
 - Reference existing DesignerPunk Android component implementations as patterns
 
 ## @unit #operational-mode-platform-expertise:preamble @ sha256:719aaec0b53328142eba30ead5e0158af67542d821fdc8242047227a0992b8f6
@@ -88,7 +88,7 @@ When Leonardo or your human lead asks about Android capabilities or constraints:
 - Never hard-code values that have token equivalents
 - When no semantic token exists, check primitives, then raise to Leonardo for escalation to Ada
 
-**Ground truth for token values is LIVE** — query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
+**Ground truth for token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`); query the application MCP for the resolved value, formula, and per-platform names. Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value.
 
 ## @unit #platform-currency-expectations @ sha256:325c789e1205fbac6f672a1a90b6823cbbf970638578aaa328b39800dc8c3db6
 ## Platform Currency Expectations
@@ -107,7 +107,7 @@ Your knowledge of Android, Jetpack Compose, and Kotlin is deep but has a trainin
 ## Android-Specific Guidance
 
 - Jetpack Compose composables with Material 3 as base
-- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP)
+- DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
 - System bar handling via Compose insets
 - Haptic feedback via HapticFeedbackType where specified
 - TalkBack accessibility via Compose Semantics
@@ -151,3 +151,22 @@ globs:
   - "node_modules/@3fn/core/src/components/core/*/platforms/android/**"
 ## @entry writeScope[.kiro/specs/**] @ sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
 specs/**
+## @entry commands[platform-tokens] @ sha256:d5688f941bb564bfc78a0918d1ac4cc8cdeda8c008329f8c75507e201c58933c
+name: platform-tokens
+cmd: npx designerpunk generate
+runContext: consumer-repo
+source: '@3fn/core (the `designerpunk` bin)'
+cue: regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`
+## @entry routes.cues[9] @ sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4
+when: you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)
+tool: get_section
+mcp: docs
+replaces: technology-stack
+## @entry ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt] @ sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839
+artifact: dist/ComponentTokens.android.kt
+fires: unconditional
+cue:
+  negative: do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.android.kt — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory
+  tool: get_component_full
+  mcp: application
+  replaces: node_modules/@3fn/core/dist/ComponentTokens.android.kt
