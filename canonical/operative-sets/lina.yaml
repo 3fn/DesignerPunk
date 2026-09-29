@@ -529,7 +529,7 @@ units:
       - id: shared-layer-not-unilateral
         kind: obligation
         label: "Never modify the shared layer unilaterally"
-        text: "You do NOT modify this layer unilaterally."
+        text: "Steering docs and MCP-served documentation are the shared knowledge layer for all agents. You do NOT modify this layer unilaterally."
     confirmation: canonical/profiles/consumer/confirmations/lina.md#documentation-governance-ballot-measure-model:preamble
   "#the-process":
     canonicalHash: sha256:7405eed001bcf70f166f07adb40e2782e8a7d16e807a54044f8f63d65c271297
