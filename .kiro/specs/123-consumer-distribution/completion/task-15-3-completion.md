@@ -24,7 +24,7 @@
     - **Her bite re-runs and logs** (`__bites__/task-14-4-*`, recorded against the prose form) are **not** redone here. They are her Task 14 addendum.
   - `canonical/generated.lock` is not committed; it is refreshed at the parent.
 
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ def8184e28faeace9c04fc5c486460f4d0656c10 — https://github.com/3fn/DesignerPunk/actions/runs/36562648975, https://github.com/3fn/DesignerPunk/actions/runs/36562658024, https://github.com/3fn/DesignerPunk/actions/runs/36562671835, https://github.com/3fn/DesignerPunk/actions/runs/36562680113, https://github.com/3fn/DesignerPunk/actions/runs/36562687822, https://github.com/3fn/DesignerPunk/actions/runs/36562695714
 
 **Instruments served** (block rows): 3.1, 3.4 (fixture level), 2.5 (the `<target>/` identity layout), the survivor-sourced row's fixture half, and the Kiro JSON consumer form (block note N3, now decided); `## Found later` 2026-09-29 (shared members) resolved in code.
 
@@ -113,3 +113,5 @@
    - **An `## @entry` body is a YAML value** of the same JSON type as the canonical value: a glob is a bare string (`specs/**`); a command is the full command object with the canonical key set and the same `name`.
    - The pin is unchanged: `hashEntry` of the canonical value.
    - `semguard.overlay.md` already carries this form at this commit. Her addendum re-runs the 14.4 bites against it and re-records the logs.
+
+*CI provenance (docs-only follow-up, 2026-09-29)*: all six runs dispatched at `def8184e` concluded `success`. The line above was `local` in the code commit. This commit changes only this doc.
