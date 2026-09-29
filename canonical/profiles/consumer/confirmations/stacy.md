@@ -398,3 +398,52 @@ items: not-own-1, not-own-2, not-own-3, jest-not-vitest
 date: 2026-09-29
 
 **Ruling: CONFIRMED at 4, as drafted.** The Commands-section pointer is a reference, not an item.
+
+## Confirmation run summary (2026-09-29, run 1)
+
+**Scope**: Task 15.5 phase one, run 1: `stacy.yaml`, the 29 units without a note (owner seat), and `thurgood.yaml`, all 47 units (C1 counterpart seat, because the owner is the profile author). **Commits**: `bfa80eba` (stacy) and the commit that adds this section (thurgood). The identity docs are run 2.
+
+**Units confirmed**:
+- **`stacy.yaml`**: 29 units, now 35 of 35 with notes.
+  - The counting-block unit was confirmed first, against the post-13.8 + post-#239 text (`sha256:8103d28e…38ac7`, verified fresh). No A4 re-confirmation is owed on #239's account.
+- **`thurgood.yaml`**: 47 of 47.
+
+**Items added and removed, by key**:
+- `stacy.yaml`:
+  - `#identity` +`stacy-tone`, +`stacy-build-systems`, +`stacy-route-via-thurgood` (7 → 10);
+  - claims-audit `:preamble` +`authority-precedence` (0 → 1);
+  - `#the-claims-pass-record-…` −`counting-10`, then +`counting-10-buckets`, +`counting-10-ncc-rate`, +`counting-10-assent-refusal`, +`counting-10-spot-check`, +`counting-10-full-survival`; `never-a-gate` text widened (27 → 31);
+  - steward-verb carve-out +`carve-out-no-silent-rescope` (4 → 5);
+  - `#with-thurgood-system-counterpart` −`thurgood-4` (5 → 4).
+  - Record total: 204 items.
+- `thurgood.yaml`:
+  - `#in-scope` −`scope-11`, then +`civitas-1` to `civitas-9` (12 → 20);
+  - `#trigger-types` +`liveness-records-not-verdicts`, +`owed-set-predicate`, +`owed-set-pipeline`, +`owed-set-exclusion-classes`, +`owed-set-promotion` (13 → 18);
+  - `#the-three-boundary-bounds-…` +`framing-sentence` (4 → 5);
+  - Q5 `:preamble` +`authority-precedence` (0 → 1).
+  - Record total: 163 items.
+
+**Units ruled zero (declared)**: `thurgood.yaml` has three: `#domain-boundary-response-examples` (illustrations), `#step-1-query-audit-methodology` (a pointer) and `#fallibility` (ethos; its operative content is `correction-2`). `stacy.yaml` has none this run: its one drafted zero was wrong.
+
+**Drafts that were materially wrong, and why**:
+1. **`thurgood.yaml` `scope-11` credited a group label**, "**Civitas infrastructure stewardship:**". Under clause (c) a label retains nothing. As drafted, a rendering could keep the heading, drop all nine stewardship duties, and still be credited.
+2. **`thurgood.yaml` `#trigger-types` left out what LIVENESS runs, and its bound.** It carried the three LIVENESS reads but not the read-for-records-never-verdicts bound, and not the owed-set predicate, pipeline, exclusion classes or promotion ladder. My own charter's copy of the same pipeline is itemized. His copy is the one his read runs.
+3. **`stacy.yaml` `counting-10` bundled five separately violable metrics into one item.** A rendering that kept four of the five could not be credited for any of them, which over-routes. Worse, it made the assent read all-or-nothing.
+4. **Both Q5 preambles were declared zero**, but each carries a precedence rule: the co-signed documents govern on disagreement. A consumer implementation can violate that.
+
+**The smaller corrections** are recorded in the per-unit rulings: the three `#identity` additions, the widened `never-a-gate`, the carve-out re-scope clause, `framing-sentence` added, and `thurgood-4` removed.
+
+**Checks**:
+- `triviality.records.test.ts` over the edited live records: `Tests: 664 passed, 664 total`.
+- The freshness sweep: after the `stacy` commit, 0 `confirmation` findings for `stacy.yaml`. After the thurgood commit, 0 for `thurgood.yaml` (the report cites the run). The other records still have findings, as expected.
+- **Instrument note**: the committed `first-render/drafting/sweep.ts` hardcodes the main checkout's root, not the worktree's. I ran a copy pointed at this worktree. Run as committed, it reads the main checkout.
+
+**Residuals**:
+- **Self-confirmation, disclosed.** Under C1 I confirm my own charter as its owner, and I confirm Thurgood's as the counterpart seat. His charter includes units that describe my seat: the charter cut, the caller-out duty and the three bounds. On those I am a party to what I confirmed. *Not independently re-verified. Confirmed by the auditing seat.*
+- **Judgment calls another confirmer could rule differently**:
+  - the two conduct items added to `stacy.yaml` `#identity`, which raise that unit's floor denominator;
+  - leaving the four scan directories out of `thurgood.yaml` `evidence-3` (repo location data);
+  - `#fallibility` ruled zero;
+  - "three copies, one text" left out of `#trigger-types`.
+- **`owed-set-pipeline` is one large command item.** Any byte change to the pipeline in a rendering fails to credit it, so the unit routes. That is conservative by design, and it adds volume at signing.
+- **Routing volume**: raising the item counts raises the floor's denominators for the corrected units. Some re-grounded renderings that cleared against the draft may now route at phase two.

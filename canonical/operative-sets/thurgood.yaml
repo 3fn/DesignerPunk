@@ -78,10 +78,42 @@ units:
         kind: member
         label: "Task type classification and validation tier guidance"
         text: "Task type classification and validation tier guidance"
-      - id: scope-11
+      - id: civitas-1
         kind: member
-        label: "Civitas infrastructure stewardship:"
-        text: "**Civitas infrastructure stewardship:**"
+        label: "Civitas stewardship: Steering doc metadata enforcement (creat"
+        text: "Steering doc metadata enforcement (creation and update)"
+      - id: civitas-2
+        kind: member
+        label: "Civitas stewardship: Steering doc lifecycle management (revie"
+        text: "Steering doc lifecycle management (review cycles, deprecation)"
+      - id: civitas-3
+        kind: member
+        label: "Civitas stewardship: MCP server health monitoring (self-manag"
+        text: "MCP server health monitoring (self-managing via threshold gate — intervention only on persistent `failed` state or agent-reported issues)"
+      - id: civitas-4
+        kind: member
+        label: "Civitas stewardship: Cross-reference maintenance and validati"
+        text: "Cross-reference maintenance and validation"
+      - id: civitas-5
+        kind: member
+        label: "Civitas stewardship: Content consistency monitoring (cross-su"
+        text: "Content consistency monitoring (cross-surface alignment across steering docs)"
+      - id: civitas-6
+        kind: member
+        label: "Civitas stewardship: Agent prompt currency monitoring (prompt"
+        text: "Agent prompt currency monitoring (prompt-to-steering-doc alignment)"
+      - id: civitas-7
+        kind: member
+        label: "Civitas stewardship: Governance tooling adoption and integrat"
+        text: "Governance tooling adoption and integration"
+      - id: civitas-8
+        kind: member
+        label: "Civitas stewardship: \"Shared\" doc maintenance (MCP-Relationsh"
+        text: "\"Shared\" doc maintenance (MCP-Relationship-Model, MCP-Evolution-Roadmap, Platform-Resource-Map, Process-Integration-Methodology, BUILD-SYSTEM-SETUP, DesignerPunk-Systems-Overview)"
+      - id: civitas-9
+        kind: member
+        label: "Civitas stewardship: Knowledge base currency monitoring"
+        text: "Knowledge base currency monitoring"
       - id: scope-12
         kind: member
         label: "CI regime — standing test-lane scope (ballot 2026-09-27-ci-r"
@@ -434,6 +466,10 @@ units:
         kind: step
         label: "Return-edge review"
         text: "**Return-edge review** (the strategy→tactics→validation loop's closing edge, Spec 125-B Req 14): examine recurring required-check failure patterns for education-implicating signals — does a failure cluster indicate the docs teach the wrong thing? Flag findings to the owning domain agent."
+      - id: liveness-records-not-verdicts
+        kind: obligation
+        label: "Read for records, never for verdicts"
+        text: "**read for records, never for verdicts** — you check whether passes happened and left records; you never re-decide what a pass concluded."
       - id: liveness-owed-set
         kind: step
         label: "Is the closeout-owed set empty?"
@@ -446,6 +482,22 @@ units:
         kind: step
         label: "The active-charter walk"
         text: "**The active-charter walk**: each live charter's named triggers — fired? / evidence? — against its pre-written criteria (minutes, not sessions; the issues-dir archive convention bounds it)."
+      - id: owed-set-predicate
+        kind: member
+        label: "The closeout-owed predicate"
+        text: "Predicate: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. (A MIDPOINT record lives at `completion/claims-pass-midpoint.md` and does NOT discharge closeout-owed — the filename split is load-bearing.)"
+      - id: owed-set-pipeline
+        kind: command
+        label: "The owed-set pipeline"
+        text: "BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md\n  RATIFIED=$(grep -m1 '^Ratified-machine: ' \"$BALLOT\" | awk '{print $2}')\n  [ -n \"$RATIFIED\" ] || { echo \"FATAL: cannot resolve ratification record at $BALLOT\"; exit 1; }\n  echo \"ratification date: $RATIFIED\"\n  # Boundary PINNED TO MIDNIGHT: a bare date resolves via git approxidate to the date\n  # at the CURRENT time of day, silently dropping same-day-earlier merges from stage 1a\n  # (CLOSEOUT pilot F-1, 2026-09-19 — the owed-set's first wrong result, repaired in all\n  # three copies in one commit).\n\n  # Stage 1a — every spec with post-ratification merge activity on main's first-parent line\n  SPECS=$(git log --first-parent --since=\"$RATIFIED 00:00\" --name-only --pretty=format: -- '.kiro/specs/' \\\n          | sed -n 's|^\\.kiro/specs/\\([^/]*\\)/.*|\\1|p' | sort -u)\n  echo \"specs with post-ratification merge activity: $(echo \"$SPECS\" | grep -c .)\"\n\n  A=0; B=0; C=0; CLOSED=0; OWED=\"\"\n  for S in $SPECS; do\n    T=\".kiro/specs/$S/tasks.md\"\n    # Stage 1b — classify into exactly one class, units-form precedence first\n    if   grep -qE '^## Declared Merge Units' \"$T\" 2>/dev/null \\\n      || grep -qE '^\\*\\*Merge units \\(' \"$T\" 2>/dev/null \\\n      || grep -qiE '^#{2,4} .*merge unit' \"$T\" 2>/dev/null; then cls=a; A=$((A+1))\n    else\n      n=$(git log --first-parent --oneline --since=\"$RATIFIED 00:00\" -- \".kiro/specs/$S/\" | wc -l | tr -d ' ')\n      if [ \"$n\" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi\n    fi\n    # Stage 2 — the final anchor's merge commit and date\n    ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- \".kiro/specs/$S/\")\n    # Stage 3 — does the closeout record exist?\n    if [ -f \".kiro/specs/$S/completion/claims-pass.md\" ]; then CLOSED=$((CLOSED+1))\n    else OWED=\"$OWED  $S ($cls, anchor $ANCHOR)\\n\"; fi\n  done\n\n  # Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name\n  echo \"OWED SET:\"; [ -n \"$OWED\" ] && printf \"$OWED\" || echo \"  (empty)\"\n  echo \"EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \\\n  K excluded as pre-ratification (no first-parent activity since $RATIFIED)\""
+      - id: owed-set-exclusion-classes
+        kind: member
+        label: "The exclusion classes"
+        text: "**The exclusion classes**: **(a)** declared units in any recognized form (canonical `## Declared Merge Units` heading → legacy bold-prose `**Merge units (…** declaration → a \"merge unit\" heading, in that precedence order), anchoring on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit; **(c)** no units block, >1 PR — the PR carrying the last parent completion doc."
+      - id: owed-set-promotion
+        kind: obligation
+        label: "Second wrong result promotes to a script"
+        text: "**The second wrong owed-set result noticed in ordinary use** (this read, or the release step) **promotes the pipeline to a committed script with a scoped grant** — the pre-committed ladder's first rung."
       - id: register-read
         kind: step
         label: "The proposed-row register read"
@@ -485,7 +537,11 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#steering-doc-lifecycle
   "#the-q5-boundary-execution-claims-verification-is-stacys:preamble":
     canonicalHash: sha256:0cfc85cf5a6e9680bf8b9a0f82af9fa56d6ea1d139ff132a4a24edf8341f6886
-    items: []
+    items:
+      - id: authority-precedence
+        kind: obligation
+        label: "The co-signed documents govern on disagreement"
+        text: "the co-signed documents in `.kiro/specs/127-completion-claims-integrity/pre-spec/` govern where this text and they disagree."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#the-q5-boundary-execution-claims-verification-is-stacys:preamble
   "#the-charter-cut-ratified-verbatim":
     canonicalHash: sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611
@@ -558,6 +614,10 @@ units:
         kind: obligation
         label: "Never a merge gate"
         text: "no claims pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR"
+      - id: framing-sentence
+        kind: obligation
+        label: "A green gate is never evidence of claim honesty"
+        text: "*any future reading of a green `completion-criteria-parity` gate as evidence of claim honesty will have made the error Spec 127 exists to prevent.*"
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#the-three-boundary-bounds-ratified-unsoftened
   "#collaboration-model-domain-respect:preamble":
     canonicalHash: sha256:f1037c902db3927079385e883cce8aadec5669d26c7b1d5496b5788700b625fd
