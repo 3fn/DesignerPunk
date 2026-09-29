@@ -132,3 +132,16 @@ assent: surviving [] — to the RE-AUTHORED row, `re-pointed` (removal "build to
   1. One standing refusal is owed a re-author and a re-sign before U2b merges (S-T3, zero standing).
   2. The same technology-stack cue is `no-consumer-counterpart` in `sparky`, `kenya` and `data`; their owners judge those rows.
   3. The sweep does not flag a routed or NCC row that has no signature (presence is checked over the real profile at 15.5), so presence of all 9 rows was confirmed here by eye.
+
+## Re-sign run summary (2026-09-29)
+
+- **Commits** (branch `task/123-u2b-fr3-leonardo`, from `dba93df5`, not pushed):
+  - `d128f77b`: `writeScope[docs/specs/**]` re-signed.
+  - The `routes.cues[21]` re-sign commit, which directly precedes this summary.
+  - The commit that adds this summary.
+- **`frontmatter:writeScope[docs/specs/**]`: assent, `surviving: []`, to the changed disposition** (`no-consumer-counterpart` became `superseded-by` `writeScope[.kiro/specs/**]`). The summary-doc function survives inside `specs/**`: the consumer Task Completion Protocol places summaries at `specs/[spec]/task-N-summary.md`. My phase-two no-consumer-counterpart reasoning is superseded.
+- **`frontmatter:routes.cues[21]`: assent, `surviving: []`, to the re-authored `re-pointed` row.** This resolves my `d5539796` refusal; the re-author came between the refusal and this signature. The narrowed `when` drops *"build tooling"*, and subtraction-1 now applies to the removed phrase. `find_docs` on the rendered `when` resolves `technology-stack` at rank 1 with a strong match.
+- **Standing refusals: 0.** Sweep: 0 findings for `leonardo.*`.
+- **Residuals** (not grounds for refusal):
+  1. The rendered cue no longer names `technology-stack` literally, so a consumer needs one `find_docs` hop to reach it.
+  2. *"versions"* promises content the doc does not have; this was already true of the canonical cue.
