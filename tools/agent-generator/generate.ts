@@ -34,8 +34,11 @@ import {
   type EmittedFile,
   type TargetAdapter,
 } from './adapters/index';
-import { loadConsumerProfile } from './consumer-profile';
+import { CONSUMER_OUTPUT_ROOT, loadConsumerProfile } from './consumer-profile';
 import type { Dispositions, Overlay, Profile } from './spans';
+import { loadDispositions } from './regrounding/dispositions';
+import { parseOverlay, toSpanOverlay } from './regrounding/overlay';
+import { PROFILE_DIR } from './regrounding/freshness';
 import { getWorkflowRules } from './workflow-rules-guard';
 import { generateRegistry, serializeRegistry, REGISTRY_OUTPUT_PATH } from './registry';
 import { serializeAttribution, type AttributionManifest } from './attribution';
@@ -145,6 +148,8 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
   );
   if (ledger.length > 0) {
     const corpus = createStdioDocsClient();
+    // Each ledger agent is resolved ONCE; the consumer lane (step 5) re-emits the same resolution.
+    const resolvedAgents: ResolvedForEmission[] = [];
     try {
       for (const agentName of ledger) {
         const srcAbs = path.join(repoRoot, 'canonical', 'agents', `${agentName}.md`);
@@ -156,6 +161,7 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
         }
         const doc = parseCanonicalAgentSource(fs.readFileSync(srcAbs, 'utf8'), srcAbs);
         const { resolved, emitCtx } = await resolveForEmission(repoRoot, ctx, doc, corpus);
+        resolvedAgents.push({ resolved, emitCtx });
         for (const adapter of adapters) {
           for (const file of adapter.emitAgent(resolved, emitCtx)) {
             outputs.push(emittedToOutput(file));
@@ -205,6 +211,12 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
         removals: b.members.filter((mem) => !(freshIdsByAgent.get(b.agent)?.has(mem) ?? false)).sort(),
       }));
     outputs.push({ path: 'canonical/manifests/demotion-delta.json', content: serializeDemotionDeltas(deltas) });
+
+    // 5. The CONSUMER rendering (Spec 123 Task 15.1; design C12, Req 9.5): the same resolved
+    // ledger agents, emitted through the same adapters under `profile: 'consumer'`, remapped
+    // under `canonical/_consumer-output/<target>/`. A guarded root, so the diff-guard
+    // regenerates and compares it on every full run.
+    outputs.push(...generateConsumerRendering(resolvedAgents, adapters, loadConsumerInputs(repoRoot, ledger)));
   }
 
   // Deterministic output ordering (P1).
@@ -234,6 +246,111 @@ export interface FixtureEmitOptions {
   dispositions?: Dispositions;
   /** The fixture agent's overlay text (`toSpanOverlay(parseOverlay(...))`), for re-pointed rows. */
   overlay?: Overlay;
+}
+
+// ============================================================================
+// The consumer rendering (Spec 123 Task 15.1; design C12, C17, C22; Req 9.5)
+// ============================================================================
+
+/** One ledger agent, validated and resolved, with its emit context — what both lanes emit from. */
+export interface ResolvedForEmission {
+  resolved: Awaited<ReturnType<typeof resolveAgent>>;
+  emitCtx: AdapterContext;
+}
+
+/** The consumer profile's per-agent inputs as committed under `canonical/profiles/consumer/`. */
+export interface ConsumerProfileInputs {
+  /** Agent id → its parsed, schema-validated dispositions rows. */
+  dispositions: Record<string, Dispositions>;
+  /** Agent id → its parsed overlay text (absent when the agent re-points nothing). */
+  overlays: Record<string, Overlay>;
+  /** Ledger agents with no dispositions file — the population check reads it. */
+  missing: string[];
+}
+
+/** `canonical/profiles/consumer/<agent>.dispositions.yaml`. */
+export const agentDispositionsPath = (agent: string): string => `${PROFILE_DIR}/${agent}.dispositions.yaml`;
+/** `canonical/profiles/consumer/<agent>.overlay.md` (the same stem — freshness pairs them by it). */
+export const agentOverlayPath = (agent: string): string => `${PROFILE_DIR}/${agent}.overlay.md`;
+
+/**
+ * Load each agent's committed dispositions (schema-validated — 13.1; throws `DispositionsError`
+ * on any finding) and overlay (format-checked — 13.2). Key currency (orphan / missing row) and
+ * pin freshness are `derive()`'s refusals (C22, Task 15.2) and the freshness sweep's, not this
+ * loader's.
+ */
+export function loadConsumerInputs(repoRoot: string, agents: readonly string[]): ConsumerProfileInputs {
+  const inputs: ConsumerProfileInputs = { dispositions: {}, overlays: {}, missing: [] };
+  for (const agent of agents) {
+    const dispPath = agentDispositionsPath(agent);
+    const abs = path.join(repoRoot, dispPath);
+    if (!fs.existsSync(abs)) {
+      inputs.missing.push(agent);
+      continue;
+    }
+    inputs.dispositions[agent] = loadDispositions(fs.readFileSync(abs, 'utf8'), dispPath) as unknown as Dispositions;
+    const overlayPath = agentOverlayPath(agent);
+    if (fs.existsSync(path.join(repoRoot, overlayPath))) {
+      inputs.overlays[agent] = toSpanOverlay(parseOverlay(fs.readFileSync(path.join(repoRoot, overlayPath), 'utf8'), overlayPath));
+    }
+  }
+  return inputs;
+}
+
+/** The population refusal: the consumer profile covers every ledger agent, or none yet. */
+export const partialConsumerPopulationMessage = (missing: readonly string[], present: readonly string[]): string =>
+  `generateConsumerRendering: the consumer profile covers ${present.length} ledger agent(s) (${present.join(', ')}) ` +
+  `but not ${missing.join(', ')} — every ledger agent carries ${PROFILE_DIR}/<agent>.dispositions.yaml, or none does yet; ` +
+  `refusing to render a partial population (design C12; Req 9.5)`;
+
+/**
+ * Emit the consumer rendering of the resolved ledger agents: each agent through EVERY adapter,
+ * `profile: 'consumer'`, with its dispositions and overlay, every path remapped to
+ * `canonical/_consumer-output/<target>/<emitted path>` (the `generateFixture` remap precedent,
+ * Req 9.5), attribution sidecars kept.
+ *
+ * POPULATION (no silent partial): if NO ledger agent has a dispositions file the profile is not
+ * yet authored and nothing is emitted (the declared pre-15.4 state; Task 15.4's population test
+ * asserts the committed rendering covers every agent × target once the profile exists). If SOME
+ * do and some do not, this throws, naming the missing agents.
+ *
+ * NOT HERE YET: `_canonical/` — `derive()` (C22, Task 15.2) runs first for each agent, refusing
+ * on a stale overlay or an orphaned key, and its derived charter is emitted to
+ * `canonical/_consumer-output/_canonical/agents/<agent>.md`; identity member files (C19, Task
+ * 15.3) join per target.
+ */
+export function generateConsumerRendering(
+  agents: readonly ResolvedForEmission[],
+  adapters: readonly TargetAdapter[],
+  inputs: ConsumerProfileInputs
+): GeneratedOutput[] {
+  const present = agents.map((a) => a.resolved.agent).filter((a) => inputs.dispositions[a] !== undefined);
+  if (present.length === 0) return [];
+  const missing = agents.map((a) => a.resolved.agent).filter((a) => inputs.dispositions[a] === undefined);
+  if (missing.length > 0) throw new Error(partialConsumerPopulationMessage(missing, present));
+
+  const outputs: GeneratedOutput[] = [];
+  for (const { resolved, emitCtx } of agents) {
+    const agentId = resolved.agent;
+    const consumerCtx: AdapterContext = {
+      ...emitCtx,
+      profile: 'consumer',
+      consumer: {
+        dispositions: { [agentId]: inputs.dispositions[agentId] },
+        overlays: inputs.overlays[agentId] ? { [agentId]: inputs.overlays[agentId] } : {},
+      },
+    };
+    for (const adapter of adapters) {
+      for (const file of adapter.emitAgent(resolved, consumerCtx)) {
+        outputs.push({
+          path: `${CONSUMER_OUTPUT_ROOT}/${adapter.target}/${file.path}`,
+          content: file.content,
+          attribution: file.attribution, // artifact = the consumer-root-relative path (the fixture precedent)
+        });
+      }
+    }
+  }
+  return outputs;
 }
 
 /**
@@ -481,6 +598,10 @@ export function guardedRoots(repoRoot?: string): string[] {
     // sidecar rides with it (prose artifact, multi-span manifest).
     'CLAUDE.md',
     'CLAUDE.md.attribution.json',
+    // C12 (Spec 123 Task 15.1): the consumer rendering — `_canonical/` (derive(), 15.2) and
+    // `<target>/` per declared target (agents; identity members at 15.3), sidecars included.
+    // One directory root covers all three of C12's guarded surfaces.
+    CONSUMER_OUTPUT_ROOT,
   ];
   if (repoRoot === undefined) return staticRoots;
   let ledger: string[] = [];

@@ -19,6 +19,16 @@ import { load as loadYaml } from 'js-yaml';
 
 export const CONSUMER_PROFILE_PATH = 'canonical/consumer-profile.yaml';
 
+/**
+ * The consumer rendering's guarded root (C12; Task 15.1). Everything the steward CI renders for
+ * the consumer profile lives under it: `_canonical/` (the derived charters and shared substrate,
+ * rendered once, `derive()` — 15.2) and `<target>/<emitted path>` per declared target (the agents,
+ * and at 15.3 the identity member files), each prose artifact with its attribution sidecar.
+ * `guardedRoots()` lists it; the freshness sweep reads its sidecars for a signature's
+ * `renderedHash`. Declared here, beside the target list, so both read one symbol.
+ */
+export const CONSUMER_OUTPUT_ROOT = 'canonical/_consumer-output';
+
 export interface ConsumerProfile {
   /** Declared targets, in declared order (the order adapters emit in). */
   readonly targets: readonly string[];

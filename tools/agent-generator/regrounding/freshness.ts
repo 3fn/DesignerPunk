@@ -33,10 +33,22 @@
  *     - parseOverlay (overlay.ts, 13.2 — format); checkOverlayKeys (13.5): ORPHANED KEY;
  *     - checkOverlayPins (overlay.ts, 13.2): STALE overlay.
  *
- * THE RENDERED-HASH LIMIT, fail-closed: a signature's VALVE 1 pins BOTH the canonical and the
- * RENDERED hash. The consumer rendering does not exist in this repo until Task 15, so the CLI
- * supplies no rendered hashes; a signature met without one is REFUSED ("cannot verify"), never
- * half-checked. Task 15 passes `renderedHash` (the renderer's per-unit hash) in.
+ * THE RENDERED HASH (Task 15.1): a signature's VALVE 1 pins BOTH the canonical and the RENDERED
+ * hash. By default the sweep reads the rendered hash from the COMMITTED consumer rendering,
+ * through its attribution sidecars (`readConsumerSpans` / `renderedHashOf`, derive.ts): the
+ * lines every target's artifacts attribute to the row's source. The guard's tree compare, which
+ * runs after this sweep, is what makes the committed rendering equal a fresh one. With NO
+ * consumer rendering under `canonical/_consumer-output/` a signature is REFUSED as
+ * `signature-unverifiable`, never half-checked (13.6's fail-closed rule, now its own check id).
+ *
+ * EVIDENCE AND THE PROFILE GLOB (Task 15.1; Task 13's carry "the profile-dir glob claims more
+ * than the sweep reads"): every signature's `evidence:` note is resolved — under the profile
+ * dir, committed, exactly one `## ` block whose heading (one pair of backticks removed) equals
+ * the row's span-source fragment (`#<anchor>`, `#frontmatter:<path>` or `#<member id>`), with
+ * a `signer:` line equal to the signature's. And every file under the profile dir must be
+ * reached by something the sweep checks — a record's confirmation note, a dispositions file, an
+ * overlay, or a signature's evidence note. Anything else is `profile-unreferenced`, so the
+ * `canonical/profiles/consumer/**` row under `122-diff-guard` claims no more than is read.
  *
  * ABSORBS the Task 11 precursor test (`src/__tests__/operative-set-records.test.ts`, deleted in
  * the same change): every assertion it made has a home here or in the module named above; the
@@ -53,7 +65,17 @@ import { execFileSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
-import { checkDispositionKeys, checkOverlayKeys, checkRecordKeys, keyUniverse, type KeyUniverse } from '../derive';
+import {
+  checkDispositionKeys,
+  checkOverlayKeys,
+  checkRecordKeys,
+  keyUniverse,
+  readConsumerSpans,
+  renderedHashOf,
+  rowSpanSource,
+  type KeyUniverse,
+  type RenderedSpans,
+} from '../derive';
 import { splitFrontmatter } from '../frontmatter';
 import { entryTree, partition } from '../partition';
 import { SHARED_CATALOG, validateDispositions } from './dispositions';
@@ -87,9 +109,24 @@ export interface FreshnessReport {
 export interface FreshnessOptions {
   /** Repo-relative paths git tracks (the note-is-committed check). Default: `git ls-files`. */
   tracked?: ReadonlySet<string>;
-  /** The CURRENT rendered hash of a signed row (Task 15's renderer). Absent → signatures refuse. */
+  /**
+   * The CURRENT rendered hash of a signed row. Default (Task 15.1): read from the committed
+   * consumer rendering's attribution sidecars; `undefined` (no rendering) → `signature-unverifiable`.
+   */
   renderedHash?: (dispositionsFile: string, section: string, key: string) => string | undefined;
 }
+
+/** The fail-closed refusal: a signed row whose rendered hash cannot be read (Task 15.1 id). */
+export const unverifiableSignatureMessage = (key: string, file: string): string =>
+  `signature on ${key} in ${file}: its renderedHash cannot be verified — no consumer rendering exists under canonical/_consumer-output/ to read it from; refusing rather than half-checking`;
+
+/** A profile file nothing the sweep checks reaches (Task 15.1). */
+export const unreferencedProfileFileMessage = (file: string): string =>
+  `profile file ${file} is reached by no operative-set record, dispositions file, overlay or signature evidence — the sweep cannot check it; reference it or remove it`;
+
+/** The fragment a row's `evidence:` must name — its span source's fragment (10.S forms). */
+export const evidenceFragment = (section: string, key: string): string =>
+  section === 'frontmatter' ? `#frontmatter:${key}` : section === 'members' ? `#${key}` : key;
 
 export const staleRecordMessage = (file: string, anchor: string, pinned: string, now: string): string =>
   `operative set ${file} ${anchor}: canonicalHash ${pinned} is stale — the canonical unit is now ${now}; the C1 confirmer re-confirms the unit's set (C16)`;
@@ -143,6 +180,13 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
     findings.push({ check, file, key, message });
   };
   const tracked = opts.tracked ?? gitTracked(repoRoot);
+  /** Profile files something below reaches (the unreferenced-file check at the end). */
+  const referenced = new Set<string>();
+  let spans: RenderedSpans | undefined | null = null; // null = not read yet
+  const consumerSpans = (): RenderedSpans | undefined => {
+    if (spans === null) spans = readConsumerSpans(repoRoot);
+    return spans;
+  };
 
   const views = new Map<string, SourceView | undefined>();
   const view = (source: string): SourceView | undefined => {
@@ -180,6 +224,13 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
       continue;
     }
     const units = Object.entries(record?.units ?? {});
+    // Every note a record names is REACHED, even when the record fails below — so a broken record
+    // reports its own defect, not a cascade of "unreferenced" notes.
+    for (const [, u] of units) {
+      const c = typeof u?.confirmation === 'string' ? u.confirmation : '';
+      const n = c.includes('#') ? c.slice(0, c.indexOf('#')) : c;
+      if (n) referenced.add(n);
+    }
     if (units.length === 0) push('operative-set-format', file, `operative set ${file} declares no units`);
     const v = typeof record?.source === 'string' ? view(record.source) : undefined;
     if (!v) {
@@ -201,6 +252,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
       const at = conf.indexOf('#');
       const notePath = at < 0 ? conf : conf.slice(0, at);
       const fragment = at < 0 ? '' : conf.slice(at);
+      if (notePath) referenced.add(notePath);
       const bad = (msg: string): void => push('confirmation', file, `operative set ${file} ${anchor}: ${msg}`, anchor);
       if (fragment !== anchor) {
         bad(`confirmation fragment "${fragment}" does not name the unit`);
@@ -250,8 +302,32 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
     if (typeof owner === 'string') sharedOwners[id] = owner;
   }
 
+  /** A signature's `evidence:` note (Task 15.1): under the profile dir, committed, one block, same signer. */
+  const evidenceNotes = new Map<string, string>();
+  const checkEvidence = (file: string, section: string, key: string, sig: { signer?: unknown; evidence?: unknown }): void => {
+    if (typeof sig.evidence !== 'string' || sig.evidence.length === 0) return; // format's finding (signatures.ts)
+    const bad = (msg: string): void => push('signature-evidence', file, `signature on ${key} in ${file}: ${msg}`, key);
+    const at = sig.evidence.indexOf('#');
+    const notePath = at < 0 ? sig.evidence : sig.evidence.slice(0, at);
+    const fragment = at < 0 ? '' : sig.evidence.slice(at);
+    const want = evidenceFragment(section, key);
+    if (notePath) referenced.add(notePath);
+    if (fragment !== want) return bad(`evidence fragment "${fragment}" does not name the row (want "${want}")`);
+    if (!notePath.startsWith(`${PROFILE_DIR}/`)) return bad(`evidence note ${notePath} is not under ${PROFILE_DIR}/ — the sweep guards only that dir`);
+    if (!evidenceNotes.has(notePath)) {
+      if (!fs.existsSync(path.join(repoRoot, notePath))) return bad(`evidence note ${notePath} does not exist`);
+      evidenceNotes.set(notePath, fs.readFileSync(path.join(repoRoot, notePath), 'utf8'));
+      if (tracked === undefined) bad(`cannot establish that ${notePath} is committed (git ls-files failed)`);
+      else if (!tracked.has(notePath)) bad(`evidence note ${notePath} is not committed`);
+    }
+    const blocks = noteBlocksFor(evidenceNotes.get(notePath) as string, fragment);
+    if (blocks.length !== 1) return bad(`evidence resolves to ${blocks.length} note blocks in ${notePath} (want 1)`);
+    if (field(blocks[0], 'signer') !== sig.signer) bad(`evidence note signer ${String(field(blocks[0], 'signer'))} ≠ signature signer ${String(sig.signer)}`);
+  };
+
   for (const file of profileFiles.filter((f) => f.endsWith('.dispositions.yaml'))) {
     counts.dispositions += 1;
+    referenced.add(file);
     let doc: Record<string, unknown>;
     try {
       doc = loadYaml(fs.readFileSync(path.join(repoRoot, file), 'utf8')) as Record<string, unknown>;
@@ -276,12 +352,18 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
       ['members', v.members, hashEntry],
     ];
     for (const [section, current, hash] of sections) {
-      for (const [key, row] of Object.entries((doc[section] ?? {}) as Record<string, { signature?: { canonicalHash?: string; renderedHash?: string } }>)) {
+      for (const [key, row] of Object.entries((doc[section] ?? {}) as Record<string, { signature?: { canonicalHash?: string; renderedHash?: string; signer?: unknown; evidence?: unknown } }>)) {
         const sig = row?.signature;
         if (!sig || typeof sig !== 'object' || !current.has(key)) continue; // absent / orphan: reported elsewhere
-        const rendered = opts.renderedHash?.(file, section, key);
+        checkEvidence(file, section, key, sig);
+        const rendered = opts.renderedHash
+          ? opts.renderedHash(file, section, key)
+          : (() => {
+              const s = consumerSpans();
+              return s === undefined ? undefined : renderedHashOf(s, rowSpanSource(source as string, section, key));
+            })();
         if (rendered === undefined) {
-          push('stale-signature', file, `signature on ${key} in ${file}: its renderedHash cannot be verified — no consumer rendering is available to the sweep; refusing rather than half-checking (Task 15 supplies the renderer)`, key);
+          push('signature-unverifiable', file, unverifiableSignatureMessage(key, file), key);
           continue;
         }
         const f = checkSignatureFreshness(sig as { canonicalHash: string; renderedHash: string }, key, { canonicalHash: hash(current.get(key)), renderedHash: rendered });
@@ -292,6 +374,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
 
   for (const file of profileFiles.filter((f) => f.endsWith('.overlay.md'))) {
     counts.overlays += 1;
+    referenced.add(file);
     const sibling = file.replace(/\.overlay\.md$/, '.dispositions.yaml');
     if (!profileFiles.includes(sibling)) {
       push('overlay-format', file, `overlay ${file} has no dispositions file ${sibling} — its source is unknown`);
@@ -316,6 +399,11 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
     }
     for (const f of checkOverlayKeys(parsed, file, v.universe)) push(f.check, file, f.message, f.key);
     for (const f of checkOverlayPins(parsed, { units: v.units, entries: v.entries })) push(f.check, file, f.message, f.key);
+  }
+
+  // --- the profile glob claims only what the sweep reads (Task 15.1) -----------------------
+  for (const file of profileFiles) {
+    if (!referenced.has(file)) push('profile-unreferenced', file, unreferencedProfileFileMessage(file));
   }
 
   return { findings, counts };

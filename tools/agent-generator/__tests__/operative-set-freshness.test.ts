@@ -167,7 +167,12 @@ describe('(v) the precursor test, absorbed — each assertion bites through the 
 
   it('absorbs: "each record declares at least one unit"', () => {
     write(RECORD, `source: ${CHARTER}\nowner: lina\nconfirmer: lina\nunits: {}\n`);
-    expect(sweep().findings.map((f) => f.message)).toEqual([`operative set ${RECORD} declares no units`]);
+    // Task 15.1: the note that record named is now reached by nothing, and says so (the profile
+    // glob claims only what the sweep reads).
+    expect(sweep().findings.map((f) => f.message)).toEqual([
+      `operative set ${RECORD} declares no units`,
+      `profile file ${NOTE} is reached by no operative-set record, dispositions file, overlay or signature evidence — the sweep cannot check it; reference it or remove it`,
+    ]);
   });
 });
 
@@ -191,17 +196,25 @@ describe('the other call sets the sweep runs', () => {
   const signed = (signer: string) =>
     rows(`\n    disposition: re-pointed\n    destination: "#alpha"\n    signature:\n      signer: ${signer}\n      canonicalHash: ${FRESH}\n      renderedHash: ${FRESH}\n      assent: { surviving: [fixture-run-suite] }\n      evidence: canonical/profiles/consumer/signatures/fixture.md#alpha`);
 
-  it('a signature with no rendered hash available is REFUSED, never half-checked (fail-closed until Task 15)', () => {
+  const EVIDENCE = 'canonical/profiles/consumer/signatures/fixture.md';
+  const evidence = (signer: string) => write(EVIDENCE, `# Signatures — fixture\n\n## \`#alpha\`\n\nsigner: ${signer}\n`);
+
+  it('a signature with no consumer rendering to read is REFUSED as signature-unverifiable, never half-checked (Task 15.1 id)', () => {
     write(DISP, signed('fixture'));
-    expect(sweep().findings.map((f) => f.check)).toEqual(['stale-signature']);
-    expect(sweep().findings[0].message).toContain('its renderedHash cannot be verified');
+    evidence('fixture');
+    expect(sweep().findings.map((f) => f.check)).toEqual(['signature-unverifiable']);
+    expect(sweep().findings[0].message).toBe(
+      'signature on #alpha in canonical/profiles/consumer/fixture.dispositions.yaml: its renderedHash cannot be verified — no consumer rendering exists under canonical/_consumer-output/ to read it from; refusing rather than half-checking'
+    );
   });
 
   it('with the renderer’s hash supplied: fresh passes, drifted is stale (13.2), wrong signer refuses (13.3)', () => {
     write(DISP, signed('fixture'));
+    evidence('fixture');
     expect(checks({ renderedHash: () => FRESH })).toEqual([]);
     expect(checks({ renderedHash: () => STALE })).toEqual(['stale-signature']);
     write(DISP, signed('stacy'));
+    evidence('stacy');
     expect(checks({ renderedHash: () => FRESH })).toEqual(['wrong-signer']);
   });
 

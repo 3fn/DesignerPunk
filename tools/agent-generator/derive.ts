@@ -42,8 +42,10 @@ import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
 import { splitFrontmatter } from './frontmatter';
 import { entryTree, partition } from './partition';
+import { CONSUMER_OUTPUT_ROOT } from './consumer-profile';
 import { fillTemplate, nineCheck } from './regrounding/check-catalog';
 import { SHARED_CATALOG } from './regrounding/dispositions';
+import { hashEntry } from './regrounding/hash';
 
 export type KeyCheckId = 'orphaned-key' | 'missing-row';
 
@@ -162,4 +164,88 @@ export function checkRecordKeys(record: { units?: Readonly<Record<string, unknow
   return Object.keys(record.units ?? {})
     .filter((k) => !units.has(k))
     .map((k): KeyFinding => ({ check: 'orphaned-key', file, key: `record ${k}`, message: orphanedKeyMessage(k, universe.source) }));
+}
+
+// ============================================================================
+// The committed consumer rendering, read back through its attribution (Task 15.1)
+// ============================================================================
+//
+// A ROUTED row's signature pins VALVE 1's two hashes: the canonical unit or entry, and its
+// RENDERING as of signing (C17; Req 11.5.6). The rendering of a row is exactly what the
+// attribution sidecars say derives from it: every span, in every committed consumer artifact,
+// whose `source` names the row (10.S — `source` is the canonical origin whatever the `op`).
+// Reading it back through the sidecars, rather than re-rendering, keeps the sweep a pure
+// filesystem read (it runs before generation inside `122-diff-guard`); the guard's own
+// bidirectional compare is what makes the committed rendering equal a fresh one.
+//
+// SCOPE: `renderedHashOf` hashes the pieces of EVERY declared target's rendering together, each
+// with its artifact path, so a change to any target's rendering of the row (or a move of the
+// artifact) stales the signature. A row that renders nothing (`no-consumer-counterpart`) hashes
+// the empty piece list — defined, and stale the moment it starts rendering. Undefined is
+// reserved for "no consumer rendering exists at all", which the sweep refuses as
+// `signature-unverifiable` rather than half-checking.
+
+/** The lines one attribution span assigns to its source, in one committed consumer artifact. */
+export interface RenderedPiece {
+  /** Repo-relative path of the rendered artifact (its sidecar minus `.attribution.json`). */
+  artifact: string;
+  /** The span's lines, each with its newline. */
+  text: string;
+}
+
+/** Span source → its rendered pieces, in artifact-path order then line order. */
+export type RenderedSpans = ReadonlyMap<string, readonly RenderedPiece[]>;
+
+const SIDECAR = '.attribution.json';
+
+/**
+ * Read every attribution sidecar under `canonical/_consumer-output/` and index the rendered
+ * lines by span source. `undefined` when no sidecar exists — no consumer rendering to read.
+ */
+export function readConsumerSpans(repoRoot: string, root: string = CONSUMER_OUTPUT_ROOT): RenderedSpans | undefined {
+  const base = path.join(repoRoot, root);
+  if (!fs.existsSync(base)) return undefined;
+  const sidecars: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.isFile() && e.name.endsWith(SIDECAR)) sidecars.push(path.relative(repoRoot, p).split(path.sep).join('/'));
+    }
+  };
+  walk(base);
+  if (sidecars.length === 0) return undefined;
+
+  const out = new Map<string, RenderedPiece[]>();
+  for (const sidecar of sidecars) {
+    const artifact = sidecar.slice(0, -SIDECAR.length);
+    const manifest = JSON.parse(fs.readFileSync(path.join(repoRoot, sidecar), 'utf8')) as { spans?: { lines: [number, number]; source: string }[] };
+    const abs = path.join(repoRoot, artifact);
+    if (!fs.existsSync(abs)) throw new Error(`readConsumerSpans: sidecar ${sidecar} has no artifact ${artifact}`);
+    const lines = fs.readFileSync(abs, 'utf8').split('\n');
+    for (const span of manifest.spans ?? []) {
+      const [a, b] = span.lines;
+      const text = `${lines.slice(a - 1, b).join('\n')}\n`;
+      const pieces = out.get(span.source) ?? [];
+      pieces.push({ artifact, text });
+      out.set(span.source, pieces);
+    }
+  }
+  return out;
+}
+
+/**
+ * The span source that names a dispositions row (10.S's forms): a body unit
+ * `<source>#<anchor>`; a frontmatter entry `<source>#frontmatter:<path>`; a shared member
+ * `canonical/shared/shared-catalog.yaml#<id>`.
+ */
+export function rowSpanSource(docSource: string, section: 'body' | 'frontmatter' | 'members' | string, key: string): string {
+  if (section === 'frontmatter') return `${docSource}#frontmatter:${key}`;
+  if (section === 'members') return `${SHARED_CATALOG}#${key}`;
+  return `${docSource}${key}`;
+}
+
+/** VALVE 1's rendered hash for one span source: every target's pieces, with their artifact paths. */
+export function renderedHashOf(spans: RenderedSpans, source: string): string {
+  return hashEntry((spans.get(source) ?? []).map((p) => [p.artifact, p.text]));
 }
