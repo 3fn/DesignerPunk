@@ -724,7 +724,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   - [x] 14.1 `derivation.ts`
   - [x] 14.2 Agent-shaped fixture carrying E (~1–2 h)
-  - [ ] 14.3 Body per-target guard + bites (~30 min each)
+  - [x] 14.3 Body per-target guard + bites (~30 min each)
   - [ ] 14.4 E-fm + frontmatter bites (or the forced negative)
   - [x] 14.5 Bite 2 + `derivation.frontmatter.test.ts`
 
