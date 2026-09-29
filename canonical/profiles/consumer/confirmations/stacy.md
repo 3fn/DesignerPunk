@@ -56,9 +56,15 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:48826ac4369cbc915c1bfa78eef861818d2630a2fdd4ee95279a6a7063603699
+canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-09-28
+date: 2026-09-29
+
+**Re-confirmed 2026-09-29 (Req 11.6.5d).**
+- **What changed**: `trigger-lens`'s text, which is the LENS row. Edit site 5b of the ratified ballot `.kiro/docs/ballots/2026-09-28-parent-instrument-existence-check.md` (RATIFIED, Peter, 2026-09-29) adds question 6 (existence at the review base, never fit) and its plan-time form for M4-bound specs, which reads each parent's declared `**Instruments:**` block.
+- **What did not change**: the operative set, still 13 items. The row stays one `member` item, as the ARMING row did at the 2026-09-28 re-confirmation below; question 6 is part of the LENS row's cell and is not split out. The canonicalHash is updated from `sha256:48826ac4369cbc915c1bfa78eef861818d2630a2fdd4ee95279a6a7063603699` to the value above.
+
+**Ruling: CONFIRMED at 13 items.**
 
 **Re-confirmed 2026-09-28 (Req 11.6.5d).**
 - **What changed**: `trigger-arming`'s text, which is the ARMING row, rewritten by edit site 4 of the ratified ballot `.kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md` (RATIFIED, Peter, 2026-09-28). Its Event and Scope gain the P1 standing-scope reads and the `.github/**` issue-row grant reads.
