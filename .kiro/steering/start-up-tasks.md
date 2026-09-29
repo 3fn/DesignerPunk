@@ -8,7 +8,7 @@ description: Essential pre-task checklist — date verification, governance heal
 # Start Up Tasks
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-07-09
+**Last Reviewed**: 2026-09-29
 **Purpose**: Essential pre-task checklist for every task (date check, governance health, Jest commands, test selection, authorization-to-start). End-of-task sequence: see Task Completion Protocol.
 **Organization**: process-standard
 **Scope**: cross-project
@@ -125,3 +125,9 @@ description: Essential pre-task checklist — date verification, governance heal
    The end-of-task sequence (when to write completion docs, which tier, the parent-vs-subtask distinction, and the stop-and-wait-for-authorization rule) is **operational law in the always-loaded Task Completion Protocol** — it is already in context. Follow it when completing any task or subtask.
    
    **One rule worth restating here at the start:** when you report a task complete, **STOP and wait for user authorization** before starting the next one (see #3 above). Task Completion Protocol owns the rest of the end-of-task sequence.
+
+8. **Starting a PARENT task: write its Instruments block first**
+
+   Before a parent's first subtask starts, the PRIMARY writes `.kiro/specs/<spec>/completion/task-<N>-instruments.md` — one row per instrument each success criterion's evidence depends on (test, check, fixture, file, command, upstream artifact), each `exists (<path> @ <sha>)` with a one-line fit clause, `built here (<subtask>)`, or `MISSING → <owner>: <record>`; a criterion needing no instrument gets a `none — <why>` row — and commits it on the unit branch. **Any MISSING stops the subtasks that depend on it, before code**; report it for routing (a consult, then an amendment if the plan changes). A `MISSING` row is never overwritten: its resolution is appended in the row. A gap found later is appended under `## Found later` with its kind (`unlisted` or `misfit`), never silently fixed. Format and the completion-doc header line: Completion Documentation Guide § "The instruments line and block". *(Ballot 2026-09-28-parent-instrument-existence-check.)*
+
+   **From the first tasks round after `P`** (the instruments parser PR's squash SHA — ballot § 4a, M4), a spec also declares its instruments in `tasks.md` at planning time; for such a spec this file is written at branch cut as M4's execution file — the pasted command-output existence delta, one fit line per row keyed by row id, rows found at the cut, `## Found later` — never restating a plan row's state or path.

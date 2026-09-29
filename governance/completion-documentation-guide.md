@@ -8,7 +8,7 @@ description: Comprehensive completion and summary documentation guide — two-do
 # Completion Documentation Guide
 
 **Date**: 2026-01-03
-**Last Reviewed**: 2026-09-27
+**Last Reviewed**: 2026-09-29
 **Purpose**: Comprehensive guide for creating completion and summary documentation
 **Organization**: process-standard
 **Scope**: cross-project
@@ -211,6 +211,86 @@ A doc is bound **if and only if** both of these exit 0:
 
 **Honest reach.** The line makes provenance checkable from the doc alone: the grammar and the rules above are decidable. It does not verify itself. A doc can declare a dispatch line at `<S>` that the runs do not bear out, which a claims pass finds by opening them. **A doc that declares `local` throughout is fully compliant: nothing here requires CI evidence.** The rule makes a narrower-surface green *visible*; it does not make it wrong. It detects after merge and prevents nothing. Prevention stays where it always was: the unit PR's required checks.
 
+### The instruments line and block — parents (ballot 2026-09-28-parent-instrument-existence-check)
+
+**Before a parent's first subtask starts, its PRIMARY writes the parent's Instruments block, `.kiro/specs/<spec>/completion/task-<N>-instruments.md`, and commits it on the unit branch** (a docs-only checkpoint). The block covers **every success criterion** of the parent.
+
+- **For each instrument a criterion's evidence depends on** (a test, a check or CI context, a fixture, a file or record, a command, an upstream artifact), one row, in exactly one of three states:
+  - `exists (<path> @ <sha>)`, **with a one-line fit clause**: what in it the criterion reads;
+  - `built here (<subtask>)`: one of this parent's own subtasks produces it;
+  - `MISSING → <owner>: <record>`: routed.
+- **A criterion whose evidence needs no instrument** (inspection, a quoted passage) gets one row, `none — <why>`, so no criterion is skipped silently. Such rows are not counted.
+- **Any MISSING stops the subtasks that depend on it**, which the block names, **before code**. The orchestrator routes it: a consult first, then a tasks amendment if the plan changes. Subtasks that do not depend on the MISSING instrument may proceed (Spec 123 Task 14 ran 14.1 and 14.5 while 14.2–14.4 waited).
+- **A `MISSING` row is never overwritten.** When it resolves, the resolution is appended in the same row in a fixed form, `→ resolved <date>: <new state> (<record>)`. The new state is `exists (<path> @ <sha>)` with its fit clause, or `built here (<subtask>)`. E, B and M count final states. The original `MISSING` stays readable in the committed block, because it is the deferred mechanical pass's labelled corpus (ballot § 4, M3).
+- **A gap found after the block was written**, at application or at review, by any seat other than a claims pass, is appended by the PRIMARY to the block's `## Found later` section. Each entry records:
+  - its date;
+  - its **kind** — `unlisted` (the block never named the instrument) or `misfit` (the block named it `exists`, and its fit clause is false);
+  - its criterion, where it was found, and its route.
+
+  **Gaps a claims pass finds go in the pass's own record, never into the author's block.** The share of gaps the author self-reports is the honesty signal; Stacy's claims-pass read (ballot § 3, M2) measures it.
+- **The parent completion doc carries one fixed-form header line**, a sibling of `**Delegated-tier**:` and `**CI-provenance**:`, which names the block:
+
+  `**Instruments**: <N> listed — exists <E> · built-here <B> · missing <M> · unlisted <U> — .kiro/specs/<spec>/completion/task-<N>-instruments.md`
+
+  - **N = E + B + M**, counting the rows' final states.
+  - **U = the `## Found later` entries of both kinds dated on or before the parent completion doc's commit.** An entry appended later is counted by the pass as self-reported-late.
+  - A **nonzero `missing` at completion** is legal only if each such row's criterion is ⚠️ with its follow-up link.
+
+  For a parent whose tasks.md declares `**Success Criteria:** none — <reason>`, the line is instead `**Instruments**: none — success criteria declared none`.
+- **Grammar**, decidable by rule:
+
+  `^\*\*Instruments\*\*: (?:none — success criteria declared none|(\d+) listed — exists (\d+) · built-here (\d+) · missing (\d+) · unlisted (\d+) — \.kiro/specs/[^/\s]+/completion/task-[0-9]+-instruments\.md)$`
+
+  **Cross-checks the regex does not make**:
+  - N = E + B + M, and the counts equal the block's final-state rows and dated `## Found later` entries.
+  - **The path names the doc's own spec and parent number.**
+  - Every `exists` row's `<sha>` satisfies `git cat-file -e <sha>:<path>` and is an ancestor of the commit that wrote that state — the block's adding commit for an original row, the resolving commit for a `→ resolved` state. For a command or CI context, `<path>` is its defining file (`package.json`, or the workflow file).
+  - The `none` form matches `tasks.md`'s `**Success Criteria:** none — <reason>` for that parent.
+
+**Binding — exclusions by name.** This follows the owed-set precedent, so binding is a record and not a derivation.
+- **The ratification commit lists, by spec and task number, every per-parent-mode parent started but not merged at `R`**: any subtask ticked or any of its completion docs committed on a unit branch, including a parent complete on its branch whose unit has not merged. Those are unbound.
+- **Every other per-parent-mode parent not merged at `R` is bound.**
+- No backfill. A rule keyed to "its first subtask's first commit follows `R`" would not be decidable: subtask commits are optional and judgment-based under TCP, and unit branches interleave parents.
+
+**Scope**: parents in specs whose `tasks.md` declares `**Criteria mode**: per-parent`. Spec-level specs are outside the rule, which is a residual (ballot § 7).
+
+**Honest reach**:
+- The block turns an unread gap into either a written `MISSING` or a counted `unlisted` / `misfit`.
+- It does **not** establish that an `exists` row's fit clause is true. A wrong fit clause surfaces later, as a `misfit`.
+- A shallow block that is internally consistent passes every mechanical read. Only the later-found counts reach it.
+- **Ordering**: that the block precedes code is decidable from `refs/pull/<n>/head` as *"the block's adding commit precedes every commit touching that parent's Primary Artifacts after the unit's previous parent completed"*. Where two parents of one unit share an artifact (e.g. `derive.ts` in Spec 123's Tasks 13 and 15), ordering is the claims pass's judgment, recorded as such.
+- **The block covers success criteria only.** A declared-none parent's `none` form waives the block together with the criteria table, and nothing else. The completion guide keeps § "Additional verification" owed, and the instruments that section depends on (gate conditions, Primary Artifacts) are **outside the block and outside this rule**.
+- It does not reach a gap in a later parent's criteria. That parent's own block does, and Stacy's tasks-round LENS question 6 reads the plan.
+
+**The block file's format**:
+
+```
+# Task <N> — Instruments block
+**Written**: <date>, before subtask <N>.<first> (commit <sha>) · **PRIMARY**: <agent>
+| # | Criterion (short ref) | Instrument | State | Fit (one line, `exists` rows) | Dependent subtasks |
+(a MISSING row's State reads `MISSING → <owner>: <record>` and, once resolved, gains `→ resolved <date>: <new state> (<record>)` — never overwritten)
+## Found later
+- <date> — <unlisted|misfit> — <instrument> — criterion <ref> — found at <subtask / event> — route <record>
+```
+
+**Plan-time instruments (M4, ballot § 4a) — in force from the first tasks round after `P`**, the instruments parser PR's squash SHA. No spec writes `**Instruments:**` before `P`.
+- In such a spec, each parent row in `tasks.md` declares an `**Instruments:**` block after `**Primary Artifacts:**`. Rows carry a stable, append-only row id and exactly one state:
+  - `exists (<path> @ <review-base sha>)`;
+  - `built here (<subtask>) — <capability>`;
+  - `built earlier (<task.subtask>) — <capability>`, valid only if that subtask precedes this parent in declared plan order;
+  - `none — <criterion ref>: <why>`.
+
+  Plan rows carry no fit clause, and a MISSING instrument at plan time is a plan defect, fixed before the tasks doc merges.
+- The file above is then written at branch cut as the **execution file**. It carries:
+  1. the existence delta as **pasted command output** (`git cat-file -e <sha>:<path>` over the plan's `exists` rows at the cut, plus the review-base→cut diff); a delta line without its command output is malformed;
+  2. **one fit line per row, keyed by row id**;
+  3. rows first found at the cut;
+  4. `## Found later`.
+
+  It never restates a plan row's state or path; a restated state or path is malformed.
+- The header line counts from the plan rows as modified by the delta, with `built earlier` counted under `built-here`.
+- Specs planned before `P`, Spec 123 included, keep the full block above.
+
 ### Additional verification — required if applicable, never optional
 
 WHEN the parent's `tasks.md` block defines promise blocks beyond Success Criteria — the closed vocabulary being `**Primary Artifacts:**` and gate clauses under the frozen label `**Merge gate:**` — THEN the completion doc SHALL carry an **"Additional verification"** section containing:
@@ -224,6 +304,8 @@ WHEN the parent's `tasks.md` block defines promise blocks beyond Success Criteri
   ```
 
   Path and delivering unit are extractable by rule. **A free-prose deferral is non-compliant** and earns no exclusion anywhere. (`->` is accepted at parse; `→` is the taught spelling.)
+
+`**Instruments:**` (M4, ballot 2026-09-28-parent-instrument-existence-check § 4a) is collected by the parser as a closed-vocabulary block but **owes no Additional-verification rows**: the `**Instruments**:` header line and the parent's Instruments file carry it.
 
 **The criteria table admits ONLY criteria.** Gate conditions and artifacts live in this section — never as extra rows in the criteria table.
 
