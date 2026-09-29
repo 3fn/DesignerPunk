@@ -1,0 +1,37 @@
+{
+  "artifact": ".kiro/steering/designerpunk-core-goals.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        5
+      ],
+      "op": "render",
+      "source": "C19:identity-frontmatter"
+    },
+    {
+      "lines": [
+        6,
+        16
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/core-goals.md#core-goals:preamble"
+    },
+    {
+      "lines": [
+        17,
+        37
+      ],
+      "op": "render",
+      "source": ".kiro/steering/core-goals.md#core-project-context"
+    },
+    {
+      "lines": [
+        38,
+        88
+      ],
+      "op": "render",
+      "source": ".kiro/steering/core-goals.md#development-practices"
+    }
+  ]
+}

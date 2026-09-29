@@ -1,0 +1,285 @@
+{
+  "artifact": "canonical/agents/stacy.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        154
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        155,
+        175
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#identity"
+    },
+    {
+      "lines": [
+        176,
+        189
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#in-scope"
+    },
+    {
+      "lines": [
+        190,
+        198
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#out-of-scope"
+    },
+    {
+      "lines": [
+        199,
+        211
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-audit-vs-write-distinction"
+    },
+    {
+      "lines": [
+        212,
+        215
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#operational-mode-process-audit:preamble"
+    },
+    {
+      "lines": [
+        216,
+        262
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#audit-checklist"
+    },
+    {
+      "lines": [
+        263,
+        265
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#incremental-capture-rule"
+    },
+    {
+      "lines": [
+        266,
+        272
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#audit-output"
+    },
+    {
+      "lines": [
+        273,
+        280
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#audit-is-analysis-not-implementation"
+    },
+    {
+      "lines": [
+        281,
+        284
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble"
+    },
+    {
+      "lines": [
+        285,
+        292
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#the-charter-cut-ratified-verbatim"
+    },
+    {
+      "lines": [
+        293,
+        308
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#the-trigger-set-the-114-superset-table-names-never-numbers"
+    },
+    {
+      "lines": [
+        309,
+        324
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#the-claims-pass-record-claims-passmd-the-template"
+    },
+    {
+      "lines": [
+        325,
+        369
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
+    },
+    {
+      "lines": [
+        370,
+        375
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength"
+    },
+    {
+      "lines": [
+        376,
+        381
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument"
+    },
+    {
+      "lines": [
+        382,
+        387
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#operational-mode-parity-review:preamble"
+    },
+    {
+      "lines": [
+        388,
+        395
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#review-process"
+    },
+    {
+      "lines": [
+        396,
+        408
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#what-parity-means"
+    },
+    {
+      "lines": [
+        409,
+        414
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#operational-mode-lessons-synthesis-review:preamble"
+    },
+    {
+      "lines": [
+        415,
+        423
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#your-role"
+    },
+    {
+      "lines": [
+        424,
+        430
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#what-you-dont-do"
+    },
+    {
+      "lines": [
+        431,
+        439
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#with-leonardo"
+    },
+    {
+      "lines": [
+        440,
+        446
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#with-platform-agents-kenya-data-sparky"
+    },
+    {
+      "lines": [
+        447,
+        453
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#with-thurgood-system-counterpart"
+    },
+    {
+      "lines": [
+        454,
+        460
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#with-peter"
+    },
+    {
+      "lines": [
+        461,
+        474
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        475,
+        478
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        479,
+        483
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        484,
+        486
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        487,
+        489
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        490,
+        494
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#ask-if-unsure"
+    },
+    {
+      "lines": [
+        495,
+        502
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/stacy.md#what-you-own"
+    },
+    {
+      "lines": [
+        503,
+        508
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#what-you-dont-own"
+    }
+  ]
+}

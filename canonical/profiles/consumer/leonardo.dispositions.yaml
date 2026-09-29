@@ -50,7 +50,7 @@ body:
 frontmatter:
   "agent": {"disposition": "retained"}
   "agentType": {"disposition": "retained"}
-  "description": {"disposition": "retained"}
+  "description": {"disposition": "re-pointed", "removals": [{"text": "(Peter's call)", "cites": "subtraction-2"}], "destination": "frontmatter:description"}
   "ambient[cross-platform-vs-platform-specific-decision-framework#decision-framework]": {"disposition": "retained"}
   "ambient.groundTruthManifest.verdict": {"disposition": "retained"}
   "routes.docs[decision-criteria]": {"disposition": "retained"}

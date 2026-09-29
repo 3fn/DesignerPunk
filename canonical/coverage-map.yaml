@@ -1024,6 +1024,345 @@
 - surface: CLAUDE.md.attribution.json
   checks:
     - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/ada.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/ada.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/data.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/data.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/kenya.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/kenya.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/leonardo.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/leonardo.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/lina.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/lina.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/sparky.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/sparky.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/stacy.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/stacy.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/thurgood.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/agents/thurgood.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/agent-directory.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/agent-directory.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/ai-collaboration-principles.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/ai-collaboration-principles.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/core-goals.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/core-goals.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/designerpunk-systems-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/designerpunk-systems-overview.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/spec-feedback-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/spec-feedback-protocol.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/start-up-tasks.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/start-up-tasks.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/task-completion-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/always-set/task-completion-protocol.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/_canonical/shared/shared-catalog.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/ada.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/ada.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/data.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/data.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/kenya.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/kenya.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/leonardo.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/leonardo.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/lina.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/lina.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/sparky.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/sparky.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/stacy.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/stacy.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/thurgood.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/agents/thurgood.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-agent-directory.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-agent-directory.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-ai-collaboration-principles.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-ai-collaboration-principles.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-core-goals.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-core-goals.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-designerpunk-systems-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-designerpunk-systems-overview.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-spec-feedback-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-spec-feedback-protocol.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-start-up-tasks.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-start-up-tasks.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-task-completion-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/cc/.claude/identity/designerpunk-task-completion-protocol.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/ada-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/ada-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/ada.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/ada.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/data-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/data-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/data.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/data.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/kenya.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/kenya.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/leonardo-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/leonardo-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/leonardo.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/leonardo.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/lina-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/lina-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/lina.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/lina.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/sparky-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/sparky-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/sparky.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/sparky.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/stacy.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/stacy.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/thurgood.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/agents/thurgood.json.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-agent-directory.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-agent-directory.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-ai-collaboration-principles.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-ai-collaboration-principles.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-core-goals.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-core-goals.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-designerpunk-systems-overview.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-designerpunk-systems-overview.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-spec-feedback-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-spec-feedback-protocol.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-start-up-tasks.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-start-up-tasks.md.attribution.json
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-task-completion-protocol.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/_consumer-output/kiro/.kiro/steering/designerpunk-task-completion-protocol.md.attribution.json
+  checks:
+    - 122-diff-guard
 - surface: canonical/_fixture-output/cc/.claude/agents/_fixture.md
   checks:
     - 122-diff-guard
@@ -1247,16 +1586,115 @@
     - 122-diff-guard
     - 122-sweep-4-ambient
     - 122-sweep-8-demotion
+- surface: canonical/operative-sets/ada.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/agent-directory.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/ai-collaboration-principles.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/civitas-system-overview.yaml
+  checks:
+    - 122-diff-guard
 - surface: canonical/operative-sets/component-family-navigation.yaml
   checks:
     - 122-diff-guard
+- surface: canonical/operative-sets/core-goals.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/data.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/designerpunk-systems-overview.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/kenya.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/leonardo.yaml
+  checks:
+    - 122-diff-guard
 - surface: canonical/operative-sets/lina.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/sparky.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/spec-feedback-protocol.yaml
   checks:
     - 122-diff-guard
 - surface: canonical/operative-sets/stacy.yaml
   checks:
     - 122-diff-guard
 - surface: canonical/operative-sets/start-up-tasks.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/task-completion-protocol.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/operative-sets/thurgood.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/_shared.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/_shared.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/ada.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/ada.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/agent-directory.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/agent-directory.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/ai-collaboration-principles.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/ai-collaboration-principles.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/core-goals.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/core-goals.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/designerpunk-systems-overview.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/designerpunk-systems-overview.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/spec-feedback-protocol.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/spec-feedback-protocol.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/start-up-tasks.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/always-set/task-completion-protocol.overlay.md
   checks:
     - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/component-family-navigation.md
@@ -1269,6 +1707,48 @@
   checks:
     - 122-diff-guard
 - surface: canonical/profiles/consumer/confirmations/start-up-tasks.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/data.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/data.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/kenya.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/kenya.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/leonardo.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/leonardo.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/lina.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/lina.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/sparky.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/sparky.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/stacy.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/stacy.overlay.md
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/thurgood.dispositions.yaml
+  checks:
+    - 122-diff-guard
+- surface: canonical/profiles/consumer/thurgood.overlay.md
   checks:
     - 122-diff-guard
 - surface: canonical/registry/tool-registry.json

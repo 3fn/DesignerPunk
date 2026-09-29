@@ -1,0 +1,15 @@
+# canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/Civitas-System-Overview.md
+counterpart: .kiro/steering/Civitas-System-Overview.md
+body:
+  "#civitas-system-overview:preamble": {"disposition": "retained"}
+  "#overview": {"disposition": "re-pointed", "removals": [{"text": "Civitas is the governance layer of DesignerPunk", "cites": "subtraction-2"}], "destination": "#overview"}
+  "#what-civitas-contains": {"disposition": "re-pointed", "removals": [{"text": "the counts and inventory of DesignerPunk's own steering docs, MCP index, hooks, scripts, knowledge bases and specs", "cites": "subtraction-3"}], "destination": "#what-civitas-contains"}
+  "#what-civitas-does-not-contain": {"disposition": "retained"}
+  "#relationship-to-rosetta-and-stemma": {"disposition": "retained"}
+  "#the-three-layer-boundary": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#the-three-layer-boundary"}
+  "#governance-processes": {"disposition": "retained"}
+  "#external-representation": {"disposition": "retained"}
+  "#document-access": {"disposition": "re-pointed", "removals": [{"text": "This is an identity doc (Spec 119) — never MCP-served,", "cites": "subtraction-2"}], "destination": "#document-access"}

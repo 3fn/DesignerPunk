@@ -1,0 +1,19 @@
+# canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/Task-Completion-Protocol.md
+counterpart: .kiro/steering/Task-Completion-Protocol.md
+body:
+  "#task-completion-protocol:preamble": {"disposition": "retained"}
+  "#critical-do-not-mark-a-task-complete-before-its-required-steps": {"disposition": "re-pointed", "removals": [{"text": "the Completion Documentation Guide MCP query", "cites": "subtraction-4"}], "destination": "#critical-do-not-mark-a-task-complete-before-its-required-steps"}
+  "#for-subtasks": {"disposition": "re-pointed", "removals": [{"text": "`complete-task.sh --subtask`, the S-4 ruling and the unit-branch CI dispatch", "cites": "subtraction-1"}], "destination": "#for-subtasks"}
+  "#for-parent-tasks-implementation-or-architecture-type": {"disposition": "re-pointed", "removals": [{"text": "`./.kiro/hooks/complete-task.sh \"...\"`, the `taskStatus` tool and the Completion Documentation Guide pointers", "cites": "subtraction-1"}, {"text": "Peter merges the UNIT's PR", "cites": "subtraction-2"}], "destination": "#for-parent-tasks-implementation-or-architecture-type"}
+  "#for-parent-tasks-setup-or-documentation-type": {"disposition": "re-pointed", "removals": [{"text": "`./.kiro/hooks/complete-task.sh \"...\"`, the `taskStatus` tool and the Completion Documentation Guide pointers", "cites": "subtraction-1"}, {"text": "Peter merges the UNIT's PR", "cites": "subtraction-2"}], "destination": "#for-parent-tasks-setup-or-documentation-type"}
+  "#completion-state-in-the-pr-flow:preamble": {"disposition": "re-pointed", "removals": [{"text": "the 125-A workflow-law ballot, the hook ergonomics and the B-CI annotations", "cites": "subtraction-2"}, {"text": "Peter merges on green; branch protection, admins included", "cites": "subtraction-2"}], "destination": "#completion-state-in-the-pr-flow:preamble"}
+  "#coherent-units-the-merge-granularity": {"disposition": "re-pointed", "removals": [{"text": "the tasks-row write-scope grant (ballot 2026-09-26)", "cites": "subtraction-2"}], "destination": "#coherent-units-the-merge-granularity"}
+  "#branch-cleanup": {"disposition": "re-pointed", "removals": [{"text": "a repo Settings toggle Peter enables; the monthly Civitas health check (Thurgood's cadence)", "cites": "subtraction-2"}], "destination": "#branch-cleanup"}
+  "#branch-and-pr-conventions": {"disposition": "re-pointed", "removals": [{"text": "the `125-A` / `052` examples and `Peter` as the human-direct agent", "cites": "subtraction-2"}], "destination": "#branch-and-pr-conventions"}
+  "#the-merge-rule": {"disposition": "re-pointed", "removals": [{"text": "Peter merges on green during bake-in (Spec 125-A Task 5's gate); the 125-B CODEOWNERS carve-out", "cites": "subtraction-2"}], "destination": "#the-merge-rule"}
+  "#emergency-procedure": {"disposition": "re-pointed", "removals": [{"text": "Peter lifts branch protection in Settings; 125-A's findings ledger; the in-repo rollback note", "cites": "subtraction-2"}], "destination": "#emergency-procedure"}
+  "#tier-selection-which-docs-how-much-detail": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/specs/[spec]/completion/`, `docs/specs/[spec]/` and the Completion Documentation Guide pointer", "cites": "subtraction-4"}], "destination": "#tier-selection-which-docs-how-much-detail"}
+  "#key-rules": {"disposition": "re-pointed", "removals": [{"text": "Peter merges on green; branch protection; the record-first ballot protocol; the delegated-tier capture rule", "cites": "subtraction-2"}], "destination": "#key-rules"}

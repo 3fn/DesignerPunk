@@ -1,0 +1,21 @@
+# canonical/profiles/consumer/always-set/agent-directory.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/Agent-Directory.md
+counterpart: .kiro/steering/Agent-Directory.md
+body:
+  "#agent-directory:preamble": {"disposition": "retained"}
+  "#agent-tiers": {"disposition": "retained"}
+  "#primary-agent-orchestrator": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "(governance, steering, ballots, charters, a spec's requirements/design, a non-checkbox `tasks.md` hunk, `canonical/adjudications.yaml`)", "cites": "subtraction-2"}], "destination": "#primary-agent-orchestrator"}
+  "#system-agents:preamble": {"disposition": "retained"}
+  "#ada-rosetta-token-specialist": {"disposition": "retained"}
+  "#lina-stemma-component-specialist": {"disposition": "retained"}
+  "#thurgood-test-governance-spec-standards-civitas-steward": {"disposition": "re-pointed", "removals": [{"text": "the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration)", "cites": "subtraction-3"}, {"text": "the CI regime's standing test-lane scope (`lane-timing.yml` test-script steps with floors; ballot 2026-09-27-ci-regime-standing-scope)", "cites": "subtraction-2"}, {"text": "(Q5, ratified 2026-09-17)", "cites": "subtraction-2"}], "destination": "#thurgood-test-governance-spec-standards-civitas-steward"}
+  "#product-agents:preamble": {"disposition": "retained"}
+  "#leonardo-product-architect": {"disposition": "retained"}
+  "#sparky-web-platform-engineer": {"disposition": "retained"}
+  "#kenya-ios-platform-engineer": {"disposition": "retained"}
+  "#data-android-platform-engineer": {"disposition": "retained"}
+  "#stacy-product-governance-quality-assurance-execution-claims-verification": {"disposition": "re-pointed", "removals": [{"text": "/ ARMING", "cites": "subtraction-3"}, {"text": "(Q5, ratified 2026-09-17)", "cites": "subtraction-2"}], "destination": "#stacy-product-governance-quality-assurance-execution-claims-verification"}
+  "#cross-domain-routing": {"disposition": "retained"}
+  "#human-lead": {"disposition": "re-pointed", "removals": [{"text": "**Peter Michaels Allen**", "cites": "subtraction-2"}, {"text": "Peter", "cites": "subtraction-2"}], "destination": "#human-lead"}

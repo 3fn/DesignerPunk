@@ -1,0 +1,187 @@
+# canonical/operative-sets/civitas-system-overview.yaml — operative-set record (design C16; Req 11.6.5d)
+#
+# Every body unit of .kiro/steering/Civitas-System-Overview.md, an always-set member (Spec 123 Task 15.4). Under path (B) (Req 12.1a) the
+# shipped steering doc IS the canonical counterpart. Owner thurgood (a Civitas governance-layer doc) ==
+# the profile author, so the C1 confirmer is the counterpart seat, Stacy. Drafted by Thurgood.
+# canonicalHash = "sha256:" + hex SHA-256 over the unit's exact bytes (partition(splitFrontmatter(src).body)).
+# Item text is the COMPLETE operative text, a verbatim substring of its unit; label is never matched.
+source: .kiro/steering/Civitas-System-Overview.md
+owner: thurgood
+confirmer: stacy
+units:
+  "#civitas-system-overview:preamble":
+    canonicalHash: sha256:261e7f3fe63802d69ea320635254b04b9a5f8b49be25e3bdf1e540aab4bf8844
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#civitas-system-overview:preamble
+  "#overview":
+    canonicalHash: sha256:e27d3c131615f18f5b656491e1cd7c2beff89d5a86acadfea0132830701efdc8
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#overview
+  "#what-civitas-contains":
+    canonicalHash: sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137
+    items:
+      - id: what-civitas-con-1
+        kind: obligation
+        label: "Steering documentation (92 docs across 4 layers; 83 MCP-serv"
+        text: "**Steering documentation** (92 docs across 4 layers; 83 MCP-served + 9 always-loaded identity docs):"
+      - id: what-civitas-con-2
+        kind: obligation
+        label: "Layer 0: Meta-guide for the steering system itself"
+        text: "Layer 0: Meta-guide for the steering system itself"
+      - id: what-civitas-con-3
+        kind: obligation
+        label: "Layer 1: Foundation docs loaded by all agents (Core Goals, A"
+        text: "Layer 1: Foundation docs loaded by all agents (Core Goals, Agent Directory, this document)"
+      - id: what-civitas-con-4
+        kind: obligation
+        label: "Layer 2: Frameworks and patterns queryable via MCP (governan"
+        text: "Layer 2: Frameworks and patterns queryable via MCP (governance, architecture, process standards)"
+      - id: what-civitas-con-5
+        kind: obligation
+        label: "Layer 3: Specific implementations (token family docs, compon"
+        text: "Layer 3: Specific implementations (token family docs, component family docs, platform guides)"
+      - id: what-civitas-con-6
+        kind: obligation
+        label: "Docs MCP: serves steering documentation with progressive dis"
+        text: "Docs MCP: serves steering documentation with progressive disclosure (83 docs, 2,833 sections, 333 cross-references)"
+      - id: what-civitas-con-7
+        kind: obligation
+        label: "Application MCP: serves component metadata and token metadat"
+        text: "Application MCP: serves component metadata and token metadata (34 components, 443 tokens, 9 experience patterns)"
+      - id: what-civitas-con-8
+        kind: obligation
+        label: "Product MCP: serves product-specific context (conceptual — s"
+        text: "Product MCP: serves product-specific context (conceptual — specs 081, 096, 097)"
+      - id: what-civitas-con-9
+        kind: obligation
+        label: "3 system agents (Ada/Rosetta, Lina/Stemma, Thurgood/Civitas)"
+        text: "3 system agents (Ada/Rosetta, Lina/Stemma, Thurgood/Civitas) that build and maintain the design system"
+      - id: what-civitas-con-10
+        kind: obligation
+        label: "5 product agents (Leonardo, Sparky, Kenya, Data, Stacy) that"
+        text: "5 product agents (Leonardo, Sparky, Kenya, Data, Stacy) that consume the design system to build products"
+      - id: what-civitas-con-11
+        kind: obligation
+        label: "Each agent has a JSON config (MCP access, steering doc refer"
+        text: "Each agent has a JSON config (MCP access, steering doc references, skills) and a prompt file (domain boundaries, operational modes)"
+      - id: what-civitas-con-12
+        kind: obligation
+        label: "Agent hooks for domain-specific compliance checks (token hea"
+        text: "Agent hooks for domain-specific compliance checks (token health, component scaffolding, test coverage)"
+      - id: what-civitas-con-13
+        kind: obligation
+        label: "Shell scripts for task completion, release management, and f"
+        text: "Shell scripts for task completion, release management, and file organization"
+      - id: what-civitas-con-14
+        kind: obligation
+        label: "Per-agent indexed content for domain-scoped semantic search"
+        text: "Per-agent indexed content for domain-scoped semantic search"
+      - id: what-civitas-con-15
+        kind: obligation
+        label: "Covers component source, token source, test infrastructure, "
+        text: "Covers component source, token source, test infrastructure, spec history"
+      - id: what-civitas-con-16
+        kind: obligation
+        label: "125+ specs encoding institutional decisions and implementati"
+        text: "125+ specs encoding institutional decisions and implementation history"
+      - id: what-civitas-con-17
+        kind: obligation
+        label: "Spec workflow: design outline → feedback → requirements → de"
+        text: "Spec workflow: design outline → feedback → requirements → design → tasks → execution"
+      - id: what-civitas-con-18
+        kind: obligation
+        label: "Feedback protocol, formalization gates, completion documenta"
+        text: "Feedback protocol, formalization gates, completion documentation system"
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#what-civitas-contains
+  "#what-civitas-does-not-contain":
+    canonicalHash: sha256:103fb411efb491817aa7c4f3b8b4f2f0462674a3d46545efc79ddaf292d6b502
+    items:
+      - id: what-civitas-doe-1
+        kind: obligation
+        label: "Token definitions and pipeline: Primitive/semantic token sou"
+        text: "**Token definitions and pipeline**: Primitive/semantic token source files, mathematical validators, generation pipeline, platform output — these are Rosetta. Civitas serves the *documentation about* tokens, not the tokens themselves."
+      - id: what-civitas-doe-2
+        kind: obligation
+        label: "Component implementations: Platform-specific code (web/iOS/A"
+        text: "**Component implementations**: Platform-specific code (web/iOS/Android), behavioral contract tests, component schemas — these are Stemma. Civitas serves the *documentation about* components, not the components themselves."
+      - id: what-civitas-doe-3
+        kind: obligation
+        label: "Product screens and specifications: Screen implementations, "
+        text: "**Product screens and specifications**: Screen implementations, product-level quality audits — these are product agent work."
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#what-civitas-does-not-contain
+  "#relationship-to-rosetta-and-stemma":
+    canonicalHash: sha256:ea95bc9f062954f30ffc47d8755ecb21248fc5b7c06be917a1cf7e119c53bdb6
+    items:
+      - id: relationship-to--1
+        kind: obligation
+        label: "Rosetta content, Civitas infrastructure: Ada owns whether To"
+        text: "**Rosetta content, Civitas infrastructure**: Ada owns whether Token-Family-Color.md is technically correct (content correctness). Civitas owns whether it has valid metadata, current cross-references, and a recent review date (infrastructure health). Civitas also monitors whether Token-Governance.md's description of semantic token usage aligns with Core Goals' description (content consistency)."
+      - id: relationship-to--2
+        kind: obligation
+        label: "Stemma content, Civitas infrastructure: Lina owns whether Co"
+        text: "**Stemma content, Civitas infrastructure**: Lina owns whether Component-Family-Button.md correctly describes the inheritance structure (content correctness). Civitas owns the infrastructure health and cross-surface consistency for Stemma docs, same as for Rosetta."
+      - id: relationship-to--3
+        kind: obligation
+        label: "Civitas content and infrastructure: Thurgood owns both for g"
+        text: "**Civitas content and infrastructure**: Thurgood owns both for governance-layer docs (Process-Spec-Planning, Agent-Directory, MCP-Relationship-Model, etc.). These are Civitas's own artifacts."
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#relationship-to-rosetta-and-stemma
+  "#the-three-layer-boundary":
+    canonicalHash: sha256:07a57ddc3770e58fd778f308e53b46af5663158ed9c8332885ab516db02a27fa
+    items:
+      - id: the-three-layer--1
+        kind: obligation
+        label: "Intra-domain (two docs owned by the same agent disagree): St"
+        text: "Intra-domain (two docs owned by the same agent disagree): Steward flags → domain agent resolves"
+      - id: the-three-layer--2
+        kind: obligation
+        label: "Cross-domain (docs owned by different agents disagree): Stew"
+        text: "Cross-domain (docs owned by different agents disagree): Steward flags → both agents review → Peter arbitrates if they disagree"
+      - id: the-three-layer--3
+        kind: obligation
+        label: "Unowned (infrastructure-level): Steward resolves directly"
+        text: "Unowned (infrastructure-level): Steward resolves directly"
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#the-three-layer-boundary
+  "#governance-processes":
+    canonicalHash: sha256:48af3eb551057bd0d40cb4379bdb9f1e0a8953447545978ab8973de5e7651bd4
+    items:
+      - id: governance-proce-1
+        kind: obligation
+        label: "Steering doc lifecycle: creation (metadata requirements) → r"
+        text: "**Steering doc lifecycle**: creation (metadata requirements) → review (monthly health check) → update (event-driven triggers) → deprecation (ballot measure with rationale)"
+      - id: governance-proce-2
+        kind: obligation
+        label: "MCP health monitoring: index health, content drift detection"
+        text: "**MCP health monitoring**: index health, content drift detection, tool availability — monthly cadence + post-spec events"
+      - id: governance-proce-3
+        kind: obligation
+        label: "Agent prompt currency: prompt-to-steering alignment, Agent D"
+        text: "**Agent prompt currency**: prompt-to-steering alignment, Agent Directory consistency — post-modification verification"
+      - id: governance-proce-4
+        kind: obligation
+        label: "Governance tooling adoption: ensuring scripts and automation"
+        text: "**Governance tooling adoption**: ensuring scripts and automation remain active after the spec that created them completes"
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#governance-processes
+  "#external-representation":
+    canonicalHash: sha256:8af46c59fb00c2d1b0f8ce157cd6f3d4ab3550156853c51d366914b5bd505c9a
+    items:
+      - id: external-represe-1
+        kind: obligation
+        label: "Rosetta: Mathematical foundation — tokens, formulas, cross-p"
+        text: "**Rosetta**: Mathematical foundation — tokens, formulas, cross-platform values"
+      - id: external-represe-2
+        kind: obligation
+        label: "Stemma: Relational foundation — components, schemas, behavio"
+        text: "**Stemma**: Relational foundation — components, schemas, behavioral contracts"
+      - id: external-represe-3
+        kind: obligation
+        label: "Civitas: Governance foundation — standards, processes, agent"
+        text: "**Civitas**: Governance foundation — standards, processes, agent coordination, institutional knowledge"
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#external-representation
+  "#document-access":
+    canonicalHash: sha256:6bc5c92dbd79c125b497c35a6c88f5257913263b559f610306984985adf0ba9b
+    items:
+      - id: document-access-1
+        kind: obligation
+        label: "This is an identity doc (Spec 119) — never MCP-served, alway"
+        text: "This is an identity doc (Spec 119) — never MCP-served, always loaded in full into every agent's context."
+    confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#document-access

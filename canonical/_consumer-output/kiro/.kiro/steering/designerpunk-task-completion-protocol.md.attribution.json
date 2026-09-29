@@ -1,0 +1,117 @@
+{
+  "artifact": ".kiro/steering/designerpunk-task-completion-protocol.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        5
+      ],
+      "op": "render",
+      "source": "C19:identity-frontmatter"
+    },
+    {
+      "lines": [
+        6,
+        20
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#task-completion-protocol:preamble"
+    },
+    {
+      "lines": [
+        21,
+        26
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#critical-do-not-mark-a-task-complete-before-its-required-steps"
+    },
+    {
+      "lines": [
+        27,
+        33
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#for-subtasks"
+    },
+    {
+      "lines": [
+        34,
+        41
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#for-parent-tasks-implementation-or-architecture-type"
+    },
+    {
+      "lines": [
+        42,
+        49
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#for-parent-tasks-setup-or-documentation-type"
+    },
+    {
+      "lines": [
+        50,
+        74
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#completion-state-in-the-pr-flow:preamble"
+    },
+    {
+      "lines": [
+        75,
+        83
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#coherent-units-the-merge-granularity"
+    },
+    {
+      "lines": [
+        84,
+        89
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#branch-cleanup"
+    },
+    {
+      "lines": [
+        90,
+        97
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#branch-and-pr-conventions"
+    },
+    {
+      "lines": [
+        98,
+        103
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#the-merge-rule"
+    },
+    {
+      "lines": [
+        104,
+        107
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#emergency-procedure"
+    },
+    {
+      "lines": [
+        108,
+        114
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#tier-selection-which-docs-how-much-detail"
+    },
+    {
+      "lines": [
+        115,
+        124
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Task-Completion-Protocol.md#key-rules"
+    }
+  ]
+}

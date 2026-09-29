@@ -1,0 +1,325 @@
+{
+  "artifact": "canonical/agents/lina.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        231
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        232,
+        250
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#identity"
+    },
+    {
+      "lines": [
+        251,
+        258
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#ownership"
+    },
+    {
+      "lines": [
+        259,
+        275
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#in-scope"
+    },
+    {
+      "lines": [
+        276,
+        282
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#out-of-scope"
+    },
+    {
+      "lines": [
+        283,
+        286
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#boundary-cases"
+    },
+    {
+      "lines": [
+        287,
+        302
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#domain-boundary-response-examples"
+    },
+    {
+      "lines": [
+        303,
+        306
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#component-scaffolding-workflow:preamble"
+    },
+    {
+      "lines": [
+        307,
+        309
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#step-1-verify-component-family-doc"
+    },
+    {
+      "lines": [
+        310,
+        312
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#step-2-create-typests"
+    },
+    {
+      "lines": [
+        313,
+        320
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#step-3-author-contractsyaml"
+    },
+    {
+      "lines": [
+        321,
+        342
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#step-4-create-platform-implementations"
+    },
+    {
+      "lines": [
+        343,
+        345
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#step-5-create-tests"
+    },
+    {
+      "lines": [
+        346,
+        350
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#step-6-create-or-review-component-metayaml"
+    },
+    {
+      "lines": [
+        351,
+        355
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#step-7-create-readme"
+    },
+    {
+      "lines": [
+        356,
+        359
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#platform-implementation-true-native-architecture:preamble"
+    },
+    {
+      "lines": [
+        360,
+        365
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#web"
+    },
+    {
+      "lines": [
+        366,
+        370
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#ios"
+    },
+    {
+      "lines": [
+        371,
+        375
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#android"
+    },
+    {
+      "lines": [
+        376,
+        380
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#cross-platform-consistency"
+    },
+    {
+      "lines": [
+        381,
+        384
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#token-usage-in-components:preamble"
+    },
+    {
+      "lines": [
+        385,
+        391
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#token-selection-priority-must-follow-this-order"
+    },
+    {
+      "lines": [
+        392,
+        394
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#component-token-construction-rule"
+    },
+    {
+      "lines": [
+        395,
+        405
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#when-a-token-is-missing"
+    },
+    {
+      "lines": [
+        406,
+        409
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#collaboration-model-domain-respect:preamble"
+    },
+    {
+      "lines": [
+        410,
+        414
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#trust-by-default"
+    },
+    {
+      "lines": [
+        415,
+        419
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#obligation-to-flag"
+    },
+    {
+      "lines": [
+        420,
+        424
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#graceful-correction"
+    },
+    {
+      "lines": [
+        425,
+        429
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#fallibility"
+    },
+    {
+      "lines": [
+        430,
+        433
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#documentation-governance-ballot-measure-model:preamble"
+    },
+    {
+      "lines": [
+        434,
+        440
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#the-process"
+    },
+    {
+      "lines": [
+        441,
+        449
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#what-this-means-in-practice"
+    },
+    {
+      "lines": [
+        450,
+        463
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        464,
+        467
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        468,
+        476
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        477,
+        479
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        480,
+        482
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        483,
+        487
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#when-you-and-peter-disagree"
+    },
+    {
+      "lines": [
+        488,
+        495
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/lina.md#what-you-own"
+    },
+    {
+      "lines": [
+        496,
+        501
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#what-you-dont-own"
+    }
+  ]
+}

@@ -103,7 +103,12 @@ describe('live: every committed operative-set record', () => {
     .sort();
 
   it('finds the records (non-vacuity)', () => {
-    expect(files).toEqual(['component-family-navigation.yaml', 'lina.yaml', 'stacy.yaml', 'start-up-tasks.yaml']);
+    // Task 15.4: every body unit of the 8 charters and the 8 identity docs is recorded (plus exemplar F's family doc).
+    expect(files).toEqual([
+      'ada.yaml', 'agent-directory.yaml', 'ai-collaboration-principles.yaml', 'civitas-system-overview.yaml', 'component-family-navigation.yaml',
+      'core-goals.yaml', 'data.yaml', 'designerpunk-systems-overview.yaml', 'kenya.yaml', 'leonardo.yaml', 'lina.yaml', 'sparky.yaml',
+      'spec-feedback-protocol.yaml', 'stacy.yaml', 'start-up-tasks.yaml', 'task-completion-protocol.yaml', 'thurgood.yaml',
+    ]);
   });
 
   it.each(files)('%s: confirmer is the C1 seat and every item text is verbatim', (f) => {

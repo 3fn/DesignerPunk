@@ -87,9 +87,10 @@ for p in leaf_paths('leonardo'):
         fm[p] = R
     elif re.match(r'routes\.cues\[(\d+)\]', p):
         fm[p] = NCC('subtraction-1') if p == 'routes.cues[21]' else R  # 21: DesignerPunk's own technology stack
-rows = {**{k: R for k in ['agent', 'agentType', 'description', 'kiro.keyboardShortcut', 'kiro.welcomeMessage', 'preflight[git status --porcelain]',
+rows = {**{k: R for k in ['agent', 'agentType', 'kiro.keyboardShortcut', 'kiro.welcomeMessage', 'preflight[git status --porcelain]',
                           'ambient[cross-platform-vs-platform-specific-decision-framework#decision-framework]', 'ambient.groundTruthManifest.verdict']}}
 fm.update(rows)
+fm['description'] = {'disposition': 're-pointed', 'removals': [{'text': "(Peter's call)", 'cites': 'subtraction-2'}]}
 for d in ['decision-criteria', 'layout-vocabulary', 'product-token-authoring', 'component-doc-map', 'component-readiness', 'concept-catalog', 'cross-platform-guidance',
           'product-token-gov-beyond', 'stemma-principles', 'test-dev-standards', 'token-lookup-patterns', 'product-handoff-protocol-route', 'integration-onboarding-guide']:
     fm[f'routes.docs[{d}]'] = R
@@ -117,5 +118,6 @@ build({
         'Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the',
         "consumer's repo (R5); their text is leonardo.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).",
     ],
-    'units': units, 'frontmatter': fm, 'entry_values': {'writeScope[.kiro/specs/**]': 'specs/**\n'},
+    'units': units, 'frontmatter': fm, 'entry_values': {'writeScope[.kiro/specs/**]': 'specs/**\n',
+        'description': "Cross-platform product architect. Use for screen/flow specification, component & pattern selection (via Application MCP), layout specification, token-selection guidance for product screens, cross-platform consistency review, and design-creation/visual direction (the Impeccable skill). Directs — does NOT implement platform code (hands off to Kenya/Data/Sparky), create tokens/components (escalates to Ada/Lina via Thurgood), or make product decisions (your human lead's call).\n"},
 })

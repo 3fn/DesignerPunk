@@ -1,0 +1,277 @@
+{
+  "artifact": "canonical/agents/sparky.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        138
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        139,
+        157
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#identity"
+    },
+    {
+      "lines": [
+        158,
+        170
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#in-scope"
+    },
+    {
+      "lines": [
+        171,
+        177
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#web-theming"
+    },
+    {
+      "lines": [
+        178,
+        185
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#product-tokens"
+    },
+    {
+      "lines": [
+        186,
+        195
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#out-of-scope"
+    },
+    {
+      "lines": [
+        196,
+        201
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#blocking-exception-direct-escalation-to-peter"
+    },
+    {
+      "lines": [
+        202,
+        212
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#the-implement-vs-direct-distinction"
+    },
+    {
+      "lines": [
+        213,
+        216
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#operational-mode-screen-implementation:preamble"
+    },
+    {
+      "lines": [
+        217,
+        221
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#step-1-review-the-specification"
+    },
+    {
+      "lines": [
+        222,
+        226
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#step-2-set-up-the-screen"
+    },
+    {
+      "lines": [
+        227,
+        232
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#step-3-implement"
+    },
+    {
+      "lines": [
+        233,
+        238
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#step-4-test"
+    },
+    {
+      "lines": [
+        239,
+        245
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#step-5-report-back"
+    },
+    {
+      "lines": [
+        246,
+        249
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#operational-mode-platform-expertise:preamble"
+    },
+    {
+      "lines": [
+        250,
+        256
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#what-you-provide"
+    },
+    {
+      "lines": [
+        257,
+        264
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#how-you-provide-it"
+    },
+    {
+      "lines": [
+        265,
+        276
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#with-leonardo-primary"
+    },
+    {
+      "lines": [
+        277,
+        281
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#with-sibling-platform-agents"
+    },
+    {
+      "lines": [
+        282,
+        286
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#with-stacy-product-governance"
+    },
+    {
+      "lines": [
+        287,
+        293
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#with-peter"
+    },
+    {
+      "lines": [
+        294,
+        303
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#how-to-use-designerpunk-tokens-on-web"
+    },
+    {
+      "lines": [
+        304,
+        308
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#token-reference-pattern"
+    },
+    {
+      "lines": [
+        309,
+        320
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#platform-currency-expectations"
+    },
+    {
+      "lines": [
+        321,
+        333
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#platform-reference-pointers"
+    },
+    {
+      "lines": [
+        334,
+        345
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#web-specific-guidance"
+    },
+    {
+      "lines": [
+        346,
+        357
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        358,
+        361
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        362,
+        366
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        367,
+        369
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        370,
+        372
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        373,
+        377
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#ask-if-unsure"
+    },
+    {
+      "lines": [
+        378,
+        385
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/sparky.md#what-you-own"
+    },
+    {
+      "lines": [
+        386,
+        391
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#what-you-dont-own"
+    }
+  ]
+}

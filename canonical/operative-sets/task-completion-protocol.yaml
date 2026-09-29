@@ -1,0 +1,367 @@
+# canonical/operative-sets/task-completion-protocol.yaml — operative-set record (design C16; Req 11.6.5d)
+#
+# Every body unit of .kiro/steering/Task-Completion-Protocol.md, an always-set member (Spec 123 Task 15.4). Under path (B) (Req 12.1a) the
+# shipped steering doc IS the canonical counterpart. Owner thurgood (a Civitas governance-layer doc) ==
+# the profile author, so the C1 confirmer is the counterpart seat, Stacy. Drafted by Thurgood.
+# canonicalHash = "sha256:" + hex SHA-256 over the unit's exact bytes (partition(splitFrontmatter(src).body)).
+# Item text is the COMPLETE operative text, a verbatim substring of its unit; label is never matched.
+source: .kiro/steering/Task-Completion-Protocol.md
+owner: thurgood
+confirmer: stacy
+units:
+  "#task-completion-protocol:preamble":
+    canonicalHash: sha256:470b82059538dd17eeebcea849187caecfa75fc0afc0479ad294c921350e4baf
+    items:
+      - id: task-completion-prot-1
+        kind: obligation
+        label: "Purpose: The end-of-task operational sequence (completion do"
+        text: "**Purpose**: The end-of-task operational sequence (completion docs, tiers, parent vs. subtask, stop-and-wait, PR flow) — operational law, always loaded"
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#task-completion-protocol:preamble
+  "#critical-do-not-mark-a-task-complete-before-its-required-steps":
+    canonicalHash: sha256:ebe9ae3c776f236e195e92ffc5c5fd5f80cd00fd41083417e4fa6c49cc46500d
+    items:
+      - id: critical-do-not-mark-1
+        kind: obligation
+        label: "DO NOT mark a task complete before completing the required s"
+        text: "**DO NOT mark a task complete before completing the required steps for that task type.** Task types are defined in `tasks.md` — check the `**Type**:` field (Setup / Implementation / Architecture / Documentation)."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#critical-do-not-mark-a-task-complete-before-its-required-steps
+  "#for-subtasks":
+    canonicalHash: sha256:d3441b73b9ced68042b67726692b8f87d3ce9e086d7e68336292da8b69895d75
+    items:
+      - id: for-subtasks-1
+        kind: obligation
+        label: "[ ] Run targeted tests relevant to the change (not the full "
+        text: "[ ] Run targeted tests relevant to the change (not the full suite)"
+      - id: for-subtasks-2
+        kind: obligation
+        label: "[ ] Create completion doc: .kiro/specs/[spec]/completion/tas"
+        text: "[ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-M-completion.md` — **enforced (S-4, ratified 2026-09-19)**: the claims passes count subtask-doc presence, and a ticked subtask without its doc is a **finding** on the authoring agent. The floor is three light elements (what changed · targeted tests + result · application-time adaptations, `none` written, never implied) — Completion Documentation Guide § \"The subtask completion doc\""
+      - id: for-subtasks-3
+        kind: obligation
+        label: "[ ] Mark subtask complete (use the taskStatus tool)"
+        text: "[ ] Mark subtask complete (use the `taskStatus` tool)"
+      - id: for-subtasks-4
+        kind: obligation
+        label: "[ ] Commit is optional and judgment-based — not mechanical p"
+        text: "[ ] **Commit is optional and judgment-based — not mechanical per subtask.** When you commit, **commit AND push the unit branch** (`task/<spec>-<unit-slug>` or `task/<spec>-<N>-<slug>`, created at the first subtask — `git switch -c` or the completion tooling's equivalent); the two stay coupled because the push is the off-machine backup guarantee (a local-only commit is not backed up). Commit-and-push at a **checkpoint** (delicate or potentially-breaking work — a restore point worth having), when **backup-worthy work has accumulated** (a unit branch is longer-lived than a single task, so more unpushed work sits at risk between merges — push before the pile grows), or at a **session/handoff boundary**. Do NOT commit mechanically after every trivial subtask — the unit squash-merges anyway, so subtask granularity is cosmetic to `main`'s history. No PR opens until unit completion, and subtasks do NOT open PRs. Make the checkpoint with the completion tooling (`complete-task.sh --subtask`): it commits, pushes, **dispatches the required workflows against the unit branch**, and prints the run URLs (`--no-ci` skips the dispatch for a checkpoint you know is red). Those runs are **feedback, not the gate**: they report under non-required context names and test the branch head, not the merge ref. The gate runs on the unit PR."
+      - id: for-subtasks-5
+        kind: obligation
+        label: "[ ] STOP and wait for user authorization"
+        text: "[ ] **STOP** and wait for user authorization"
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#for-subtasks
+  "#for-parent-tasks-implementation-or-architecture-type":
+    canonicalHash: sha256:e2958dd6f1a60a5f2b1054e109efe5e8ebd176f263302b87d096772c9243a1c5
+    items:
+      - id: for-parent-tasks-imp-1
+        kind: obligation
+        label: "[ ] Local validation: the unit PR's required checks run the "
+        text: "[ ] Local validation: the unit PR's required checks run the full suite at the gate — validating locally first catches failures before they block the merge (test-command selection: Start Up Tasks)"
+      - id: for-parent-tasks-imp-2
+        kind: obligation
+        label: "[ ] Mark parent task complete (use the taskStatus tool) — th"
+        text: "[ ] Mark parent task complete (use the `taskStatus` tool) — the status change commits with the work and takes effect at merge; a failing suite blocks that merge at the gate"
+      - id: for-parent-tasks-imp-3
+        kind: obligation
+        label: "[ ] Create completion doc: .kiro/specs/[spec]/completion/tas"
+        text: "[ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md` (on the task branch) — reproduce every tasks.md success-criterion row verbatim with Status + Evidence, and carry the forced-negative line (Completion Documentation Guide § 'Parent Success-Criteria Fidelity'), and the `**Instruments**:` header line naming the parent's Instruments block (§ 'The instruments line and block')."
+      - id: for-parent-tasks-imp-4
+        kind: obligation
+        label: "[ ] Create summary doc: docs/specs/[spec]/task-N-summary.md "
+        text: "[ ] Create summary doc: `docs/specs/[spec]/task-N-summary.md` (on the task branch)"
+      - id: for-parent-tasks-imp-5
+        kind: obligation
+        label: "[ ] Complete the parent on its unit branch: ./.kiro/hooks/co"
+        text: "[ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh \"...\"`."
+      - id: for-parent-tasks-imp-6
+        kind: obligation
+        label: "If this parent IS its own merge unit (a standalone task, or "
+        text: "**If this parent IS its own merge unit** (a standalone task, or a small single-unit spec): the tooling opens the PR and reports the URL."
+      - id: for-parent-tasks-imp-7
+        kind: obligation
+        label: "If this parent is one of several in a declared multi-parent "
+        text: "**If this parent is one of several in a declared multi-parent unit** (see the spec's tasks.md unit grouping): the tooling commits the completion+summary docs on the branch, pushes, and **dispatches the required workflows against the unit branch**, printing the run URLs — **no PR yet**. The PR opens when the UNIT completes (its final/gating parent). Completion docs declare where their run results were measured (Completion Documentation Guide § \"CI provenance — where a green was measured\")."
+      - id: for-parent-tasks-imp-8
+        kind: obligation
+        label: "[ ] STOP — if a PR opened, report the PR URL; otherwise repo"
+        text: "[ ] **STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#for-parent-tasks-implementation-or-architecture-type
+  "#for-parent-tasks-setup-or-documentation-type":
+    canonicalHash: sha256:d74afc384873f1861a195770544dcb456c4e952028d9ca37e3e5d6e39b19a6e4
+    items:
+      - id: for-parent-tasks-set-1
+        kind: obligation
+        label: "[ ] Verify artifacts created/updated as specified"
+        text: "[ ] Verify artifacts created/updated as specified"
+      - id: for-parent-tasks-set-2
+        kind: obligation
+        label: "[ ] Mark parent task complete (use the taskStatus tool)"
+        text: "[ ] Mark parent task complete (use the `taskStatus` tool)"
+      - id: for-parent-tasks-set-3
+        kind: obligation
+        label: "[ ] Create completion doc: .kiro/specs/[spec]/completion/tas"
+        text: "[ ] Create completion doc: `.kiro/specs/[spec]/completion/task-N-completion.md` (on the task branch) — reproduce every tasks.md success-criterion row verbatim with Status + Evidence, and carry the forced-negative line (Completion Documentation Guide § 'Parent Success-Criteria Fidelity'), and the `**Instruments**:` header line naming the parent's Instruments block (§ 'The instruments line and block')."
+      - id: for-parent-tasks-set-4
+        kind: obligation
+        label: "[ ] Create summary doc: docs/specs/[spec]/task-N-summary.md "
+        text: "[ ] Create summary doc: `docs/specs/[spec]/task-N-summary.md` (on the task branch)"
+      - id: for-parent-tasks-set-5
+        kind: obligation
+        label: "[ ] Complete the parent on its unit branch: ./.kiro/hooks/co"
+        text: "[ ] Complete the parent on its unit branch: `./.kiro/hooks/complete-task.sh \"...\"`."
+      - id: for-parent-tasks-set-6
+        kind: obligation
+        label: "If this parent IS its own merge unit: the tooling opens the "
+        text: "**If this parent IS its own merge unit**: the tooling opens the PR and reports the URL."
+      - id: for-parent-tasks-set-7
+        kind: obligation
+        label: "If this parent is one of several in a declared multi-parent "
+        text: "**If this parent is one of several in a declared multi-parent unit** (spec's tasks.md unit grouping): the tooling commits the completion+summary docs on the branch, pushes, and **dispatches the required workflows against the unit branch**, printing the run URLs — **no PR yet**; the PR opens at UNIT completion. Completion docs declare where their run results were measured (Completion Documentation Guide § \"CI provenance — where a green was measured\")."
+      - id: for-parent-tasks-set-8
+        kind: obligation
+        label: "[ ] STOP — if a PR opened, report the PR URL; otherwise repo"
+        text: "[ ] **STOP** — if a PR opened, report the PR URL; otherwise report the on-branch parent completion. **The task is accepted when Peter merges the UNIT's PR** (merge on green = the authorization act). Never merge your own PR."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#for-parent-tasks-setup-or-documentation-type
+  "#completion-state-in-the-pr-flow:preamble":
+    canonicalHash: sha256:b59a35369cc72af0278db7c994f6fcdd75e5dc9202494bcc80a59ec96bb9c955
+    items:
+      - id: completion-state-in--1
+        kind: obligation
+        label: "Branch → PR → required checks → merge."
+        text: "Branch → PR → required checks → merge."
+      - id: completion-state-in--2
+        kind: obligation
+        label: "For a large spec the units are declared in that spec's own t"
+        text: "For a large spec the units are **declared in that spec's own tasks.md** as a task grouping (e.g., a substrate group / each per-agent cutover / a closeout) — named up front, never judged at merge time."
+      - id: completion-state-in--3
+        kind: obligation
+        label: "Work happens on a task branch, never on main. The branch is "
+        text: "Work happens on a **task branch**, never on `main`. The branch is created at the task's first subtask (or at task start): plain `git switch -c task/<spec>-<N>-<slug>`, or the completion tooling's equivalent."
+      - id: completion-state-in--4
+        kind: obligation
+        label: "Subtask mechanics (one rule — commit method, push semantics,"
+        text: "**Subtask mechanics** (one rule — commit method, push semantics, branch creation, PR timing): subtask commits are **optional and judgment-based, not mechanical per subtask** — and when made, they **commit AND push the branch through the completion tooling** (`complete-task.sh --subtask`, which also dispatches the required workflows — see Hook ergonomics; the two stay coupled; the push is the off-machine backup). A plain-git push is not a checkpoint: it dispatches nothing. Commit-and-push at a **checkpoint** (delicate or potentially-breaking work), when **backup-worthy work has accumulated** (a unit branch is longer-lived than a single task — push before the unpushed pile grows), or at a **session/handoff boundary** — not after every trivial subtask, since the unit squash-merges anyway and subtask granularity is cosmetic to `main`. No PR opens until unit completion; subtasks do NOT open PRs. **Required workflows are dispatched against the unit branch** at each subtask checkpoint and each non-final parent completion that the completion tooling fires (a subtask checkpoint may pass `--no-ci`). Those runs are **feedback, not the gate**: they report under non-required context names and test the branch head, not the merge ref. The gate runs on the unit PR."
+      - id: completion-state-in--5
+        kind: obligation
+        label: "AMENDED FROM THE OLD FLOW — a deliberate process change (Pet"
+        text: "**AMENDED FROM THE OLD FLOW — a deliberate process change (Peter, 2026-07-05), not a carry-over.** Under the outgoing law, subtasks had NO commit/push step at all: the commit+push hook fired at PARENT completion only, so subtask work stayed local until the parent finished."
+      - id: completion-state-in--6
+        kind: obligation
+        label: "Hook ergonomics: one completion command, context-aware (./.k"
+        text: "**Hook ergonomics**: one completion command, context-aware (`./.kiro/hooks/complete-task.sh`) — invoked for a subtask (at a judgment-based checkpoint, not mechanically) it commits and pushes the branch and dispatches the required workflows against it, printing the run URLs (no PR; `--no-ci` skips the dispatch); invoked for a parent that is NOT the unit's final parent it commits the completion docs on the branch, pushes, and dispatches the required workflows (no PR); invoked at **unit completion** (a single-parent unit, or the final/gating parent of a multi-parent unit) it commits, pushes, and opens the PR, then **fails loudly — non-zero exit, with the remedy printed — if CI started zero runs on it** (the #148/#194 dropped-event class)."
+      - id: completion-state-in--7
+        kind: obligation
+        label: "Dependent tasks branch from main after the prior task's PR m"
+        text: "**Dependent tasks branch from `main` after the prior task's PR merges.** Starting a dependent task before the prior merge is not sanctioned by default — this composes with stop-and-wait (Peter's go for the next task typically follows his merge of the prior one), so the wait costs nothing in practice. Exception, only on Peter's explicit direction: branch from the prior task branch and declare `Stacked-on: #<PR>` in the PR body; stacked PRs merge in base-first order."
+      - id: completion-state-in--8
+        kind: obligation
+        label: "At unit completion (a standalone task, a small single-unit s"
+        text: "At **unit** completion (a standalone task, a small single-unit spec, or the final/gating parent of a declared multi-parent unit), the tooling commits, pushes the branch, **opens a PR**, and reports the PR URL. A parent completing *inside* a multi-parent unit commits its completion+summary docs on the branch and does NOT open a PR — its acceptance is the unit's merge."
+      - id: completion-state-in--9
+        kind: obligation
+        label: "Required checks run on the PR. A failing check blocks merge "
+        text: "Required checks run on the PR. A failing check blocks merge at the platform."
+      - id: completion-state-in--10
+        kind: obligation
+        label: "Peter merges on green (see The Merge Rule below). The reposi"
+        text: "**Peter merges on green** (see The Merge Rule below). The repository is configured **squash-merge-only** (method drift closed by configuration, not convention). The PR collapses to one commit on `main`, preserving the atomic-commit-per-unit history that serves as the release changelog spine; the PR title becomes the commit subject."
+      - id: completion-state-in--11
+        kind: obligation
+        label: "Direct pushes to main are rejected by branch protection, adm"
+        text: "Direct pushes to `main` are rejected by branch protection, **admins included**."
+      - id: completion-state-in--12
+        kind: obligation
+        label: "The agent finishes the work and runs tier-appropriate valida"
+        text: "The agent finishes the work and runs tier-appropriate validation locally."
+      - id: completion-state-in--13
+        kind: obligation
+        label: "Completion documentation (and the summary doc, for parent ta"
+        text: "Completion documentation (and the summary doc, for parent tasks) is written **on the task branch** — it traverses the gate with the work it documents."
+      - id: completion-state-in--14
+        kind: obligation
+        label: "The agent marks the task complete (taskStatus tool / tasks.m"
+        text: "The agent marks the task complete (`taskStatus` tool / tasks.md checkbox) **on the branch** — the status change is part of the work product and lands with it. For a parent *inside* a multi-parent unit this happens at parent completion (docs + status on the branch, no PR); for the unit's final parent it happens before the PR opens. Until the UNIT merges, every such status is an assertion awaiting acceptance, not a fact about `main`."
+      - id: completion-state-in--15
+        kind: obligation
+        label: "The agent opens the PR, reports the PR URL, and STOPS. Openi"
+        text: "The agent opens the PR, **reports the PR URL, and STOPS.** Opening a PR is submission for authorization, not completion."
+      - id: completion-state-in--16
+        kind: obligation
+        label: "Peter's merge is the authorization act. It accepts the whole"
+        text: "**Peter's merge is the authorization act.** It accepts the whole UNIT — every task in it AND their completion claims — into `main` in one platform-verified action. A parent task inside a multi-parent unit is **done-on-branch** at its own completion and **accepted at the unit's merge**; the unit merge is the single acceptance event."
+      - id: completion-state-in--17
+        kind: obligation
+        label: "Stop-and-wait composes unchanged: authorization to START the"
+        text: "**Stop-and-wait composes unchanged**: authorization to START the next task remains a separate, explicit grant (Start Up Tasks #3). A merge accepts the finished task; it does not, by itself, instruct the agent to begin the next one. Direction for what follows typically arrives with or after the merge; absent it, the agent remains stopped."
+      - id: completion-state-in--18
+        kind: obligation
+        label: "A change request is authorization to resume, not a completio"
+        text: "**A change request is authorization to resume, not a completion.** If Peter reviews the PR and requests changes instead of merging, the change request authorizes the agent to resume on that branch: fix, push, re-report the PR URL, and STOP again."
+      - id: completion-state-in--19
+        kind: obligation
+        label: "If required checks fail, the task is not complete and not me"
+        text: "If required checks fail, the task is not complete and not mergeable: fix on the same branch. If the PR is green but unmergeable (the branch conflicts with an advanced `main`), update the branch from `main` on the same branch. Every push re-runs the checks."
+      - id: completion-state-in--20
+        kind: obligation
+        label: "A checks-only merge is NOT ratification. For governance-law "
+        text: "**A checks-only merge is NOT ratification.** For governance-law changes, the record-first ballot protocol (`.kiro/docs/ballots/README.md`) remains the ratification mechanism throughout 125-A — the gate verifies mechanics, not authority. PR-approval-as-ratification arrives with 125-B's CODEOWNERS layer."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#completion-state-in-the-pr-flow:preamble
+  "#coherent-units-the-merge-granularity":
+    canonicalHash: sha256:4bd3b64a6e82bcdcc9065d9eb7c42162e1da6c6fbd00988fa2d3f74137684632
+    items:
+      - id: coherent-units-the-m-1
+        kind: obligation
+        label: "What a unit is: the smallest chunk of a spec that is coheren"
+        text: "**What a unit is**: the smallest chunk of a spec that is coherent on its own AND reviewable as a single diff. The merge of a unit's PR is the completion event for every task the unit contains."
+      - id: coherent-units-the-m-2
+        kind: obligation
+        label: "Small spec → one unit → one PR (the default and common case;"
+        text: "**Small spec → one unit → one PR** (the default and common case; equals the 125-A single-parent behavior)."
+      - id: coherent-units-the-m-3
+        kind: obligation
+        label: "Large spec → units DECLARED in tasks.md: the spec's tasks.md"
+        text: "**Large spec → units DECLARED in tasks.md**: the spec's tasks.md names its units as a task grouping (substrate / each cutover / closeout, etc.). Units are named up front and reviewed in the tasks feedback round — never judged at merge time."
+      - id: coherent-units-the-m-4
+        kind: obligation
+        label: "One branch per unit: subtasks commit+push the branch at judg"
+        text: "**One branch per unit**: subtasks commit+push the branch at judgment-based checkpoints (not mechanically per subtask); parent completions commit their docs on the branch; the unit's completion opens the PR; Peter merges (squash)."
+      - id: coherent-units-the-m-5
+        kind: obligation
+        label: "Dependent units branch from main after the prior unit's PR m"
+        text: "**Dependent units branch from `main` after the prior unit's PR merges** — the unit is the dependency grain (stacking only on Peter's explicit direction, `Stacked-on: #<PR>`)."
+      - id: coherent-units-the-m-6
+        kind: obligation
+        label: "Write scope inside a unit: a parent's assignment row in a me"
+        text: "**Write scope inside a unit**: a parent's assignment row in a **merged** `tasks.md` grants its PRIMARY and tiered secondary agents write access to **exactly that parent's listed Primary Artifacts**, on the unit's branch, until the unit merges. It supplements the charter's write scope, grants no ratification authority, and an out-of-list edit is a claims-pass finding. Rule and limits: `.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md` (register row `tasks-row-write-scope-grant`)."
+      - id: coherent-units-the-m-7
+        kind: obligation
+        label: "On merge, the unit's branch is deleted (remote auto-deleted "
+        text: "**On merge, the unit's branch is deleted** (remote auto-deleted by repo setting; local deleted on return to `main`); stale/unmerged branches are swept in the monthly Civitas health check — see § \"Branch Cleanup\"."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#coherent-units-the-merge-granularity
+  "#branch-cleanup":
+    canonicalHash: sha256:f6e97dd4c99e8e9e2143a984ccf2fb4b85e62a04da4965d0a6f01fc341c4ff8e
+    items:
+      - id: branch-cleanup-1
+        kind: obligation
+        label: "On merge — remote branch auto-deleted. GitHub's \"Automatical"
+        text: "**On merge — remote branch auto-deleted.** GitHub's **\"Automatically delete head branches\"** repo setting is enabled, so every squash-merge removes the merged unit's remote branch. This is a **repo Settings toggle Peter enables** (Settings → General), a config action like branch protection and squash-only — not something an agent commits."
+      - id: branch-cleanup-2
+        kind: obligation
+        label: "On merge — local branch deleted. On returning to main after "
+        text: "**On merge — local branch deleted.** On returning to `main` after a merge, the completion tooling / agent deletes the merged local unit branch (`git branch -d <branch>`)."
+      - id: branch-cleanup-3
+        kind: obligation
+        label: "Stale/unmerged branches (abandoned or superseded units) are "
+        text: "**Stale/unmerged branches** (abandoned or superseded units) are pruned as part of the **monthly Civitas health check** (Thurgood's cadence). This prevents the failure mode where one long-lived branch quietly accumulates unrelated later work into a tangled divergence from `main`."
+      - id: branch-cleanup-4
+        kind: obligation
+        label: "Tooling follow-up (optional): complete-task.sh may auto-prun"
+        text: "**Tooling follow-up (optional)**: `complete-task.sh` may auto-prune the local unit branch once it detects the merge — a convenience, not a hard requirement; the manual `git branch -d` step is not blocked on it."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-cleanup
+  "#branch-and-pr-conventions":
+    canonicalHash: sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf
+    items:
+      - id: branch-and-pr-conven-1
+        kind: obligation
+        label: "The <spec> token, defined once: everywhere in this law, <spe"
+        text: "**The `<spec>` token, defined once**: everywhere in this law, `<spec>` is the **spec ID** — the leading identifier segment of the spec directory name (`125-A` from `125-A-pr-gate-mechanical-arming`; `052` from `052-badge-count-base`). Branch names and PR titles use the spec ID; the PR body's `Spec:` field carries the full directory name."
+      - id: branch-and-pr-conven-2
+        kind: obligation
+        label: "Branch names: task/<spec>-<task-number>-<short-slug> for spe"
+        text: "**Branch names**: `task/<spec>-<task-number>-<short-slug>` for spec tasks (e.g., `task/125-A-2-commit-task-rework`, `task/052-4-web-implementation`); `fix/<slug>` or `chore/<slug>` for non-spec work."
+      - id: branch-and-pr-conven-3
+        kind: obligation
+        label: "PR title = the commit-message standard, spec-suffixed: Task "
+        text: "**PR title** = the commit-message standard, spec-suffixed: `Task <N> Complete: <Description> (<spec>)` (e.g., `Task 2 Complete: Rework task tooling for PR flow (125-A)`). Because squash-merge makes the title the commit subject, title discipline IS commit-message discipline."
+      - id: branch-and-pr-conven-4
+        kind: obligation
+        label: "PR body MUST carry: Spec: (spec directory name), Task: (task"
+        text: "**PR body** MUST carry: `Spec:` (spec directory name), `Task:` (task number + name), `Agent:` (authoring agent, or `Peter` for human-direct work), path(s) to the completion doc(s) on the branch, and a one-line validation note (which tier/commands ran locally)."
+      - id: branch-and-pr-conven-5
+        kind: obligation
+        label: "Unit-grain naming (multi-parent units): a unit spanning mult"
+        text: "**Unit-grain naming (multi-parent units)**: a unit spanning multiple parents uses a unit slug — branch `task/<spec>-<unit-slug>` (e.g., `task/122-substrate`, `task/122-cutover-ada`); PR title `<Unit description> (<spec>)`. A single-parent unit keeps the unchanged `task/<spec>-<N>-<slug>` branch and `Task <N> Complete: <Description> (<spec>)` title."
+      - id: branch-and-pr-conven-6
+        kind: obligation
+        label: "PR body additionally carries a Unit: field (the declared mer"
+        text: "**PR body** additionally carries a `Unit:` field (the declared merge unit, or the task for single-parent units) alongside the existing `Spec:` / `Task:` / `Agent:` / completion-doc-path / validation-note fields."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-and-pr-conventions
+  "#the-merge-rule":
+    canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
+    items:
+      - id: the-merge-rule-1
+        kind: obligation
+        label: "Agents open PRs; Peter merges on green during bake-in (Spec "
+        text: "**Agents open PRs; Peter merges on green** during bake-in (Spec 125-A Task 5's gate). Agents NEVER merge their own PRs."
+      - id: the-merge-rule-2
+        kind: obligation
+        label: "Any later delegation of merge-on-green must be a recorded ru"
+        text: "Any later **delegation of merge-on-green must be a recorded rule** (ballot or committed record with date and scope) — never a verbal grant. The relayed-authority lesson: authority is a record."
+      - id: the-merge-rule-3
+        kind: obligation
+        label: "Standing carve-out, surviving any delegation: PRs touching g"
+        text: "**Standing carve-out, surviving any delegation**: PRs touching governance law (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent prompts/configs) stay Peter-merged — the closest ratification proxy until 125-B's CODEOWNERS layer."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#the-merge-rule
+  "#emergency-procedure":
+    canonicalHash: sha256:fcb97d3f697a6b4cc3bd45b2478e22e305abdf1626258e220b5ac507f4bcbb4d
+    items:
+      - id: emergency-procedure-1
+        kind: obligation
+        label: "When the gate must be bypassed (broken gate, urgent fix the "
+        text: "When the gate must be bypassed (broken gate, urgent fix the checks themselves block): **Peter temporarily lifts branch protection in Settings → Branches, performs the change, re-enables protection immediately, and logs the use in 125-A's findings ledger** with entry type `EMERGENCY-BYPASS`: date, reason, what was pushed, protection-off duration, and the follow-up PR if the change needs regularizing."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#emergency-procedure
+  "#tier-selection-which-docs-how-much-detail":
+    canonicalHash: sha256:d1d5429b6114ae0abd5e62cfd4a88039d25755d3c8ea249057c2dd971fa03c60
+    items:
+      - id: tier-selection-which-1
+        kind: obligation
+        label: "Subtasks: a single completion doc (task-N-M-completion.md). "
+        text: "**Subtasks**: a single completion doc (`task-N-M-completion.md`). No summary doc."
+      - id: tier-selection-which-2
+        kind: obligation
+        label: "Parent tasks: BOTH a detailed completion doc (.kiro/specs/[s"
+        text: "**Parent tasks**: BOTH a detailed completion doc (`.kiro/specs/[spec]/completion/`) AND a concise summary doc (`docs/specs/[spec]/`)."
+      - id: tier-selection-which-3
+        kind: obligation
+        label: "The Completion Documentation Guide (queried by id above) is "
+        text: "The Completion Documentation Guide (queried by `id` above) is the canonical source for the two-document workflow and documentation tiers — pull it when you need depth."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#tier-selection-which-docs-how-much-detail
+  "#key-rules":
+    canonicalHash: sha256:80c2462bf7a9e6c1e7a3bd7edc6e36abb523168f644fe3c777eec59993d53977
+    items:
+      - id: key-rules-1
+        kind: obligation
+        label: "Implementation / Architecture tasks: the unit's required che"
+        text: "**Implementation / Architecture tasks**: the unit's required checks enforce a green suite at merge — local validation before completion catches failures early."
+      - id: key-rules-2
+        kind: obligation
+        label: "All parent tasks: create BOTH the completion doc AND the sum"
+        text: "**All parent tasks**: create BOTH the completion doc AND the summary doc, on the task branch."
+      - id: key-rules-3
+        kind: obligation
+        label: "All tasks: STOP after completion — never auto-proceed to the"
+        text: "**All tasks**: STOP after completion — never auto-proceed to the next task. Authorization to START the next task is governed by Start Up Tasks; the merge that completes this task is not that authorization."
+      - id: key-rules-4
+        kind: obligation
+        label: "Parent vs. subtask is the load-bearing distinction: subtasks"
+        text: "**Parent vs. subtask** is the load-bearing distinction: subtasks get targeted tests + a completion doc + an **optional, judgment-based** branch commit-and-push (at a checkpoint, on backup-worthy accumulation, or at a session/handoff boundary — not mechanically per subtask); parents get full validation + completion doc + summary doc, committed on the branch."
+      - id: key-rules-5
+        kind: obligation
+        label: "The merge unit is the coherent unit — the smallest chunk tha"
+        text: "**The merge unit is the coherent unit** — the smallest chunk that is coherent-on-its-own AND reviewable as a single diff, DECLARED in the spec's tasks.md (a small spec = one unit = one PR; a large spec declares internal units). The unit's completion opens the PR; a parent inside a multi-parent unit is done-on-branch, accepted at the unit's merge."
+      - id: key-rules-6
+        kind: obligation
+        label: "A task is accepted at the MERGE of its unit. Agents open PRs"
+        text: "**A task is accepted at the MERGE of its unit.** Agents open PRs at unit completion; Peter merges on green. Never merge your own PR. Pushes to `main` are rejected by branch protection (admins included)."
+      - id: key-rules-7
+        kind: obligation
+        label: "On merge, the unit's branch is cleaned up — remote auto-dele"
+        text: "**On merge, the unit's branch is cleaned up** — remote auto-deleted by repo setting; local deleted on return to `main`; stale/unmerged branches swept in the monthly Civitas health check."
+      - id: key-rules-8
+        kind: obligation
+        label: "A checks-only merge is NOT ratification: governance-law chan"
+        text: "**A checks-only merge is NOT ratification**: governance-law changes still ratify via the record-first ballot protocol (`.kiro/docs/ballots/README.md`)."
+      - id: key-rules-9
+        kind: obligation
+        label: "Delegated-tier capture (UNCONDITIONAL — amended by the 2026-"
+        text: "**Delegated-tier capture (UNCONDITIONAL — amended by the 2026-09-19 delegated-tier-capture ballot; previously exception-based)**: every parent completion doc carries, in its header block, exactly one fixed-form line — `**Delegated-tier**: plan held`, or the divergence form `**Delegated-tier**: planned <agent> (<tier>) → actual <agent> (<tier>) — <one-line reason>; class: agent-evolution` (or `model-evolution`, or `both`). **Silence is no longer a recordable state**: exception-based capture made a missing note ambiguous between plan-held and unrecorded divergence. A recorded divergence is a cheap data-point, **not** a justification to defend (overriding a stale or rote stamp is the *correct* move) — it feeds model-tier recalibration and the claims passes, which verify presence and audit accuracy. Agent-evolution (routing/scope estimate was off) and model-evolution (cognitive-demand estimate was off) are distinct signals. Forms + grammar: Completion Documentation Guide § \"The delegated-tier line — unconditional\". See `process-orchestration-model-selection`."
+    confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#key-rules
