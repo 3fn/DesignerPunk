@@ -173,8 +173,8 @@ function renderWriteScopeImpl(paths: readonly string[]): string {
 // Command rendering (C4 table row: commands + shared catalog)
 // ============================================================================
 
-function renderCommandEntry(entry: CommandEntry): string {
-  const annotation = renderRunContextAnnotation(entry.runContext);
+function renderCommandEntry(entry: CommandEntry, profile: 'steward' | 'consumer' = 'steward'): string {
+  const annotation = renderRunContextAnnotation(entry.runContext, profile);
   const suffix = annotation ? ` (${annotation})` : '';
   if (isNamedGapCommandEntry(entry)) {
     const cue = entry.cue ? ` — ${entry.cue}` : '';
@@ -371,7 +371,7 @@ export class CcAdapter implements TargetAdapter {
       bodyParts.push(
         emit([
           glue('## Commands\n\n'),
-          ...commandEntries.map((entry, i): SpanPiece => ({ kind: 'member', list: 'commands', index: i, text: `${renderCommandEntry(entry)}\n` })),
+          ...commandEntries.map((entry, i): SpanPiece => ({ kind: 'member', list: 'commands', index: i, text: `${renderCommandEntry(entry, span.profile)}\n` })),
           ...sharedMembers.map((member): SpanPiece => ({ kind: 'shared', id: member.id, text: `${renderSharedCatalogMember(member, subset)}\n` })),
           glue('\n'),
         ])

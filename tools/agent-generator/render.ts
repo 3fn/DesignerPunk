@@ -89,12 +89,14 @@ export function renderWriteScopeNote(allowedPaths: readonly string[]): string {
  * NEVER hand-copied prose. Command-specific detail (e.g. "the android/ dir") lives in the
  * command's authored `cue`/`gap`, rendered alongside this tag by the command renderer.
  */
-export function renderRunContextAnnotation(runContext: RunContext): string {
+export function renderRunContextAnnotation(runContext: RunContext, profile: 'steward' | 'consumer' = 'steward'): string {
   switch (runContext) {
     case 'this-repo':
       return '';
     case 'consumer-repo':
-      return 'run from the consumer product repo, not this repo';
+      // Under the consumer profile the charter runs INSIDE the product repo, where "this repo"
+      // is the consumer repo: the steward tag would contradict itself (Task 15.5; Kenya/Data).
+      return profile === 'consumer' ? 'run from your product repo' : 'run from the consumer product repo, not this repo';
     case 'per-product':
       return 'authored per product';
   }

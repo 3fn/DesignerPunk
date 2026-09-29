@@ -16,6 +16,7 @@
 import * as path from 'path';
 import { adaptersFor, registeredAdapterFactories, type AdapterContext, type FieldDispositionTable, type TargetAdapter } from '../adapters/index';
 import { CcAdapter } from '../adapters/cc';
+import { renderRunContextAnnotation } from '../render';
 import { KiroAdapter } from '../adapters/kiro';
 import { loadConsumerProfile, parseConsumerProfile, ConsumerProfileError } from '../consumer-profile';
 import { entryTree, partition } from '../partition';
@@ -178,7 +179,12 @@ describe.each(ADAPTERS)('%s adapter — the consumer path routes through emitSpa
     const asCanonical = { ...agent, doc: { ...agent.doc, frontmatter: { ...agent.doc.frontmatter, commands: [REGROUNDED_CMD] } } } as unknown as ResolvedAgent;
     const steward = make().emitAgent(asCanonical, baseCtx()).find((f) => f.path.endsWith('.md'))!;
     const stewardSpan = spanOf(steward.attribution, `${FILE}#frontmatter:commands[unit-tests]`)[0];
-    expect(linesOf(out.content, spans[0].lines)).toBe(linesOf(steward.content, stewardSpan.lines));
+    // The one profile-dependent piece is the run-context annotation (Task 15.5): consumer-true
+    // under the consumer profile. Everything else is the same per-kind renderer.
+    const stewardText = linesOf(steward.content, stewardSpan.lines).replace(renderRunContextAnnotation('consumer-repo'), renderRunContextAnnotation('consumer-repo', 'consumer'));
+    expect(linesOf(out.content, spans[0].lines)).toBe(stewardText);
+    expect(linesOf(out.content, spans[0].lines)).toContain('(run from your product repo)');
+    expect(out.content).not.toContain('not this repo');
     expect(linesOf(out.content, spans[0].lines)).toContain("run your repo's unit suite");
     expect(out.content).not.toContain('run the unit suite');
   });

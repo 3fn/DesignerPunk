@@ -102,6 +102,15 @@ describe('renderRunContextAnnotation (Req 12 AC3) — enum-driven', () => {
     expect(renderRunContextAnnotation('consumer-repo')).toContain('not this repo');
     expect(renderRunContextAnnotation('per-product')).toContain('per product');
   });
+
+  it('under the consumer profile a consumer-repo command is annotated consumer-true (Task 15.5): inside a consumer, "this repo" IS the product repo', () => {
+    expect(renderRunContextAnnotation('consumer-repo', 'consumer')).toBe('run from your product repo');
+    expect(renderRunContextAnnotation('consumer-repo', 'consumer')).not.toContain('this repo');
+    expect(renderRunContextAnnotation('this-repo', 'consumer')).toBe('');
+    expect(renderRunContextAnnotation('per-product', 'consumer')).toBe(renderRunContextAnnotation('per-product'));
+    // the steward rendering is unchanged (the default profile)
+    expect(renderRunContextAnnotation('consumer-repo', 'steward')).toBe('run from the consumer product repo, not this repo');
+  });
 });
 
 describe('cue / route sentences — assembled from fields (P4)', () => {
