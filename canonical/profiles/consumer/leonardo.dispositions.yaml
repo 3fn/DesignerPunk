@@ -3,11 +3,11 @@
 # consumer's repo (R5); their text is leonardo.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
 source: canonical/agents/leonardo.md
 body:
-  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity", "signature": {"signer": "leonardo", "canonicalHash": "sha256:bf53cb67509dba2252d5fdcdaecfd027b6af0dfa337b2128d1111258bfb1cd9a", "renderedHash": "sha256:45154d43422c0c69fba19ef67c0ef8036a1a3b10e48f616400d869c85aa506f2", "assent": {"surviving": ["leo-role", "leo-translate", "leo-domain", "leo-coordinate-system", "leo-human-decides", "leo-partner"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#identity"}}
   "#in-scope": {"disposition": "retained"}
   "#product-configuration-context": {"disposition": "retained"}
   "#product-tokens": {"disposition": "retained"}
-  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope"}
+  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope", "signature": {"signer": "leonardo", "canonicalHash": "sha256:abdff9e39c869c5423faf28f9fd4e313fdf541537c7e5751df7664cb29f12286", "renderedHash": "sha256:312c5d3e17b94f1df4733b56b3b9759a6e47a17f89b1ca5d475ec0cd6d32ce0f", "assent": {"surviving": ["out-1", "out-2", "out-3", "out-4", "out-5", "out-6"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#out-of-scope"}}
   "#the-direct-vs-delegate-distinction": {"disposition": "retained"}
   "#operational-mode-screen-specification:preamble": {"disposition": "retained"}
   "#step-1-understand-the-intent": {"disposition": "retained"}
@@ -35,17 +35,17 @@ body:
   "#platform-scope-adaptation": {"disposition": "retained"}
   "#with-stacy-product-governance": {"disposition": "retained"}
   "#with-system-agents-via-thurgood": {"disposition": "retained"}
-  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#with-peter"}
+  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#with-peter", "signature": {"signer": "leonardo", "canonicalHash": "sha256:4644e5cc88b3e90c001f9beecb33d825cdcc7d441d0f9d01b6e336e43cc857ff", "renderedHash": "sha256:5e4c9ff03ce0144633708c28479a2f92086efb07458d425852a4a81c6701efb0", "assent": {"surviving": ["human-1"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#with-peter"}}
   "#mcp-practice-notes": {"disposition": "retained"}
   "#onboarding-awareness": {"disposition": "retained"}
   "#what-you-own": {"disposition": "retained"}
   "#what-you-dont-own": {"disposition": "retained"}
-  "#platform-currency-awareness": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-awareness"}
+  "#platform-currency-awareness": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-awareness", "signature": {"signer": "leonardo", "canonicalHash": "sha256:d22b6e7f861f59374271b2c3f3a75e257e18f0f6cafebdd3c7707070688bba0c", "renderedHash": "sha256:272862541cfa3bc952a10a9f570f921ca2b66bd3792a69cf8824874dec90c440", "assent": {"surviving": ["currency-1", "currency-2", "currency-3"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#platform-currency-awareness"}}
   "#collaboration-standards:preamble": {"disposition": "retained"}
   "#counter-arguments-are-mandatory": {"disposition": "retained"}
   "#candid-over-comfortable": {"disposition": "retained"}
   "#bias-self-monitoring": {"disposition": "retained"}
-  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree"}
+  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree", "signature": {"signer": "leonardo", "canonicalHash": "sha256:fc99b47e67403652f801bf4602ecbf53d6b62c005d06f7b9db5424e8ef3cee01", "renderedHash": "sha256:e9be4bd512776d5b81cbe3fa85bb9226d5423245bfcd649fa17ed6e33384b4d1", "assent": {"surviving": ["disagree"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#when-you-and-peter-disagree"}}
   "#ask-if-unsure": {"disposition": "retained"}
 frontmatter:
   "agent": {"disposition": "retained"}
@@ -66,8 +66,8 @@ frontmatter:
   "routes.docs[stemma-principles]": {"disposition": "retained"}
   "routes.docs[test-dev-standards]": {"disposition": "retained"}
   "routes.docs[token-lookup-patterns]": {"disposition": "retained"}
-  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
-  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.docs[dev-workflow-detail]"}}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.docs[file-organization]"}}
   "routes.docs[product-handoff-protocol-route]": {"disposition": "retained"}
   "routes.docs[integration-onboarding-guide]": {"disposition": "retained"}
   "routes.agents[sparky]": {"disposition": "retained"}
@@ -140,7 +140,7 @@ frontmatter:
   "toolSubset.designerpunk-product[get_domain_object]": {"disposition": "retained"}
   "toolSubset.designerpunk-product[get_product_component]": {"disposition": "retained"}
   "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
-  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[docs/specs/**]"}}
   "kiro.keyboardShortcut": {"disposition": "retained"}
   "kiro.welcomeMessage": {"disposition": "retained"}
   "preflight[git status --porcelain]": {"disposition": "retained"}
