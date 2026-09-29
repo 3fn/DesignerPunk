@@ -247,3 +247,19 @@ signer: ada
   2. **`#in-scope`'s `scope-docs`** ("Token documentation (Token-Family docs, Rosetta architecture)") is the same seam as refusal 1. It is assented, but it is worth re-pointing in the same re-author. If that happens, its renderedHash changes and I re-sign.
   3. **Outside my seat**: the consumer's rendered `always-set/civitas-system-overview.md` line 92 still points to "Process-File-Organization", which has no consumer counterpart in the agents' routes. Flagged for the profile author.
   4. **Process hazard**: the shared scratchpad under the orchestrator session is written by parallel seats. My first helper script there was overwritten mid-run by a different script. No bad write resulted, because the chain failed closed. Seats should use per-seat subdirectories.
+
+## Re-sign run summary (2026-09-29)
+
+- **Base**: Thurgood's re-author batch `dba93df5`; worklist from § 4 of the sheet (6 acts).
+- **Commit**: `0f527787` holds all six re-signs, each an assent. This summary is in a follow-up docs-only commit.
+- **Rows**, each re-judged in full against the new rendering:
+  - `#the-process`: **4/4**. Refusal 1 is resolved by re-authoring. Apply now targets the team's docs, and changes to shipped Token-Family docs go upstream.
+  - `#what-this-means-in-practice`: **5/5** (was stale). It gained the "change your team's shared docs only through this process" clause.
+  - `#in-scope`: **13/13** (was stale). `scope-docs` is re-pointed to the team's token docs, with shipped docs read in place and changed upstream.
+  - `commands[functional-suite]` and `commands[token-tests]`: refusals 2 and 3 are resolved by re-disposition. I assent to `superseded-by #what-you-dont-own` (`surviving: []`).
+  - `writeScope[docs/specs/**]`: the disposition flipped from `no-consumer-counterpart` to `superseded-by frontmatter:writeScope[.kiro/specs/**]`. The consumer's Task Completion Protocol now names `specs/[spec]/task-N-summary.md`. I assent (`surviving: []`).
+- **Second refusals**: none. **Standing refusals in `ada.dispositions.yaml`**: 0.
+- **Sweep**: 0 findings for `ada.*`. The sweep as a whole FAILS on 29 `stale-signature` findings in other seats' files, which are in progress.
+- **Residuals**:
+  1. `writeScope[docs/specs/**]`'s signature is byte-identical to the phase-two one, because a flip leaves both hashes unchanged. Only this note records the re-judgment. That is the sheet's documented flip blind spot, and the "row changed" column is what caught it.
+  2. `#the-process`'s "filed with DesignerPunk" names no channel. That is acceptable at charter grain.
