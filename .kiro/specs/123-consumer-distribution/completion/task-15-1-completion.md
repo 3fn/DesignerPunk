@@ -12,7 +12,7 @@
   - **`canonical/coverage-manifest.yaml`** (generated): gains `canonical/_consumer-output/**` under `122-diff-guard`.
   - `canonical/generated.lock` is **not** committed here. It is refreshed once at the parent.
 
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 1a99c3899e9f86299d2b69afa3340650dc803a88 — https://github.com/3fn/DesignerPunk/actions/runs/36556690520, https://github.com/3fn/DesignerPunk/actions/runs/36556698068, https://github.com/3fn/DesignerPunk/actions/runs/36556704840, https://github.com/3fn/DesignerPunk/actions/runs/36556712293, https://github.com/3fn/DesignerPunk/actions/runs/36556719915, https://github.com/3fn/DesignerPunk/actions/runs/36556726777
 
 **Instruments served** (block rows): 1.3, 2.2, 2.3, 2.5 (layout), 2.6 (the refusal half), 5.3, 5.5; and note N4.
 
@@ -118,3 +118,15 @@ Output: `src/cli/sync/Manifest.ts:32` (`HarnessTarget`), `tools/agent-generator/
 
    Either way, the row is ⚠️ at the parent unless the plan changes.
 8. **The Kiro JSON config** renders steward-shaped under the consumer profile, into `_consumer-output/kiro/.kiro/agents/<a>.json`, unchanged from 15.0 (C20). 15.3 decides its consumer semantics or carries them to Task 16 by name (block note N3).
+
+## Addendum 2026-09-29 — provenance, and two write-scope gaps found preparing the 15.2 handoff
+
+*Append-only; the sections above are unchanged except the `**CI-provenance**` line. The line was `local` at `1a99c389`; all six dispatched runs concluded `success` at `1a99c389`. `git diff --name-only 1a99c389..<this commit>` lists only this doc.*
+
+1. **Shared-catalog members ignore their rows under the consumer profile.** `emitSpans`'s `shared` branch (`spans.ts`) renders every shared member whatever `_shared.dispositions.yaml` says, and both adapters route shared members through it (`adapters/cc.ts:358`, `adapters/kiro.ts:409`). A `no-consumer-counterpart` member (for example `complete-task-tooling`, `runContext: this-repo`) would still ship in every consumer agent.
+   - It is the same class as 15.0 adaptation 4 (container pieces, block note N1).
+   - The fix is in `spans.ts` and the adapters, which Task 15's row lists as **"15.0 only"**.
+   - Recorded in the Instruments block's `## Found later` as `unlisted`.
+2. **15.3's `emitIdentityMembers` is a new adapter method** (C19), so it needs `adapters/{cc,kiro,index}.ts`, which are also "15.0 only" on the row. That leaves subtask 15.3's own text outside its row's Primary Artifacts.
+   - Container pieces (N1) and item 1 need the same files.
+   - Routed to the orchestrator: a tasks amendment widening the adapters, `spans.ts` and `index.ts` to 15.3–15.5, or a recorded grant.
