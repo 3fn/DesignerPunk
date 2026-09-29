@@ -23,7 +23,8 @@ import { splitFrontmatter, type YamlDoc } from '../frontmatter';
 import { parseCutoverLedger } from '../generate';
 import { entryTree, partition } from '../partition';
 import { parseOverlay } from '../regrounding/overlay';
-import { hardFloor } from '../regrounding/triviality';
+import { classifyCharter, hardFloor } from '../regrounding/triviality';
+import { c1Seat } from '../regrounding/c1';
 import type { Dispositions, DispositionRow } from '../spans';
 import type { AttributionManifest } from '../attribution';
 import { survivorViolations, type SurvivorProfile } from './survivor-sourced';
@@ -136,6 +137,47 @@ describe('derive() refuses over the real profile (C22)', () => {
     const d = disp(`${PROFILE}/ada.dispositions.yaml`);
     const renamed = { ...d, body: { ...d.body, '#identity-renamed': { disposition: 'retained' as const } } };
     expect(messages(() => run(renamed))).toEqual(['orphaned-key']);
+  });
+});
+
+describe('first-render routing (Task 15.5): every ROUTED, no-consumer-counterpart and superseded-by row carries a C1-correct signature; zero standing refusals', () => {
+  // The signed population: routed body units (C18, at this commit) and every "function went nowhere /
+  // elsewhere" claim (Req 11.5.1; the phase-two function-grain ruling). Signer = C1 seat of the owner
+  // (the record's owner; a shared member's own owner). A refusal standing at U2b's merge is S-T3's failure.
+  const signedPopulation = (bucket: string, recName: string | undefined) => {
+    const d = disp(`${PROFILE}/${bucket}.dispositions.yaml`) as any;
+    const want: { key: string; row: any; owner: string }[] = [];
+    let owner = 'thurgood';
+    if (recName) {
+      const r = loadYaml(read(`canonical/operative-sets/${recName}.yaml`)) as any; owner = r.owner;
+      const { body } = splitFrontmatter(read(d.source), d.source);
+      const units = new Map(partition(body).units.map((u) => [u.anchor, u.text] as [string, string]));
+      const ov = fs.existsSync(path.join(ROOT, `${PROFILE}/${bucket}.overlay.md`)) ? parseOverlay(read(`${PROFILE}/${bucket}.overlay.md`), bucket) : undefined;
+      const rendered = new Map<string, string>();
+      for (const [a, t] of units) { const row = d.body[a]; if (row.disposition === 'retained') rendered.set(a, t); if (row.disposition === 're-pointed') rendered.set(a, ov!.units[a].text); }
+      for (const x of classifyCharter({ canonicalUnits: units, renderedUnits: rendered, items: new Map(Object.entries(r.units).map(([a, u]: any) => [a, u.items])), rows: new Map(Object.entries(d.body)) }) as any[])
+        if (x.entered && x.verdict === 'ROUTES') want.push({ key: `body ${x.anchor}`, row: d.body[x.anchor], owner });
+    }
+    const memberOwner = new Map<string, string>();
+    if (!recName) for (const m of (loadYaml(read(d.source)) as any).members) memberOwner.set(m.id, m.owner);
+    for (const sec of ['body', 'frontmatter', 'members']) for (const [k, row] of Object.entries<any>(d[sec] ?? {}))
+      if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by') want.push({ key: `${sec} ${k}`, row, owner: sec === 'members' ? memberOwner.get(k)! : owner });
+    return { d, want };
+  };
+  const BUCKETS: [string, string | undefined][] = [...LEDGER.map((a) => [a, a] as [string, string]), ['_shared', undefined], ...Object.keys(IDENTITY).map((id) => [`always-set/${id}`, id] as [string, string])];
+
+  it.each(BUCKETS)('%s: every row in the signed population is signed by its C1 seat', (bucket, recName) => {
+    const { want } = signedPopulation(bucket, recName);
+    const bad = want.filter((w) => !w.row.signature || w.row.signature.signer !== c1Seat(w.owner)).map((w) => `${w.key}: ${w.row.signature ? `signer ${w.row.signature.signer} ≠ ${c1Seat(w.owner)}` : 'unsigned'}`);
+    expect(bad).toEqual([]);
+  });
+
+  it('zero standing refusals across the whole profile (S-T3)', () => {
+    const standing = DISP_FILES.flatMap((f) => {
+      const d = disp(f) as any;
+      return ['body', 'frontmatter', 'members'].flatMap((sec) => Object.entries<any>(d[sec] ?? {}).filter(([, r]) => r?.signature?.refuse).map(([k]) => `${f} ${sec} ${k}`));
+    });
+    expect(standing).toEqual([]);
   });
 });
 
