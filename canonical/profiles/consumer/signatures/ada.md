@@ -218,3 +218,38 @@ signer: ada
 **REFUSE — `should-re-point`** (refusal 3 of this run). Same ground as refusal 2, and more direct: the entry's cue is "run the token-specific suites", and `#what-you-dont-own`'s consumer rendering says "Run token tests with your repo's own test runner and scripts …".
 - The function survives re-grounded elsewhere, so 11.6.5e's scope clause gives this row `superseded-by #what-you-dont-own`, not an absence.
 - It is the same fork as refusal 2 (entry-grain vs function-grain), and it resolves the same way under whichever ruling Peter or Thurgood make.
+
+## Signing run summary (2026-09-29, phase two)
+
+- **Commits** on `task/123-u2b-fr2-ada`, from `60b0fdb5`, not pushed:
+  - `5bb9efbc`: 21 assents, batched.
+  - `4d233857`: refusal 1, `#the-process`.
+  - `6c2027c5`: refusal 2, `commands[functional-suite]`.
+  - `aa4f6876`: refusal 3, `commands[token-tests]`.
+  - This summary is in a final docs-only commit.
+- **Rows signed**: 24 of 24. The sweep passes with 0 findings (no stale, bare, wrong-signer or evidence findings).
+- **Routed rows assented** (10), surviving vs items:
+  - `#identity` 5/5
+  - `#in-scope` 13/13
+  - `#boundary-cases` 3/3
+  - `#trust-by-default` 3/3
+  - `#obligation-to-flag` 3/3
+  - `#graceful-correction` 3/3
+  - `#what-this-means-in-practice` 5/5
+  - `#mcp-practice-notes` 3/4: `rebuild-docs` is dropped, which is correct because the docs corpus is package-owned.
+  - `#when-you-and-peter-disagree` 1/1
+  - `#what-you-dont-own` 2/3: `jest-not-vitest`'s flag clause is not entailed.
+  - Total: 42 of 44 items credited.
+- **No-consumer-counterpart rows assented** (11): `routes.docs[completion-doc-guidance]`, `routes.docs[dev-workflow-detail]`, `routes.docs[file-organization]`, `routes.cues[6]`, `commands[validator-tests]`, `commands[full-suite-with-performance]`, `knowledgeBases[TokenValidators]`, `knowledgeBases[TokenGenerators]`, `writeScope[src/validators/**]`, `writeScope[src/generators/**]`, `writeScope[docs/specs/**]`.
+- **Rows refused** (3, each `should-re-point`):
+  1. `#the-process`: the Apply step targets shipped Token-Family docs, which the adjacent unit forbids writing. Ada's rendering lacks the "change your team's shared docs only through this process" clause that Lina's and Thurgood's renderings carry.
+  2. `commands[functional-suite]`: its function survives in `#what-you-dont-own`, so the row should be `superseded-by`, not `no-consumer-counterpart` (11.6.5e scope clause). This is a contested classification.
+  3. `commands[token-tests]`: the same ground and the same fork as refusal 2.
+- **Widenings**: none. All four § 3 candidates are ruled in the note's header.
+- **Residuals**:
+  1. **Refusals 2 and 3 are a profile-wide fork, not only Ada's.** The fork is the entry grain (the exact `cmd` has no counterpart → no-consumer-counterpart) against the function grain (the function survives in body prose → `superseded-by`).
+     - Five agents carry `commands[functional-suite]` as no-consumer-counterpart.
+     - Peter or Thurgood should rule once. Either ruling resolves both refusals, via a re-disposition or a recorded ruling followed by my re-sign.
+  2. **`#in-scope`'s `scope-docs`** ("Token documentation (Token-Family docs, Rosetta architecture)") is the same seam as refusal 1. It is assented, but it is worth re-pointing in the same re-author. If that happens, its renderedHash changes and I re-sign.
+  3. **Outside my seat**: the consumer's rendered `always-set/civitas-system-overview.md` line 92 still points to "Process-File-Organization", which has no consumer counterpart in the agents' routes. Flagged for the profile author.
+  4. **Process hazard**: the shared scratchpad under the orchestrator session is written by parallel seats. My first helper script there was overwritten mid-run by a different script. No bad write resulted, because the chain failed closed. Seats should use per-seat subdirectories.
