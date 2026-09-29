@@ -64,7 +64,9 @@ signer: sparky
 
 signer: sparky
 
-**ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). The trim targets this repo's build path (the package exports its tokens as `dist/DesignTokens.web.css` via `@3fn/core/tokens.css`). In a consumer, that file is not stale and is not in any ambient set to trim. No counterpart (`subtraction-3`).
+**RE-SIGN 2026-09-29 — ASSENT to the changed disposition** (`superseded-by #mcp-practice-notes`, cites `subtraction-5`; `surviving: []`, since frontmatter entries carry no items). Per the VALVE-1 note, a trim row's `renderedHash` is the empty-piece hash, so I signed on the text. I read the rendered `#mcp-practice-notes`: "**Ground truth is live** — reach for `get_token_details` / `search_tokens` (application) for token values rather than reading generated CSS by hand." The trim's function is "don't read that CSS file for token values; query `get_token_details`", and that line carries it for every generated token CSS, whether or not `dist/web/**` still ships. So the supersession holds before and after Task 16.3. The 16.3 dependency named above the row matters only to the `subtraction-5` citation (the path stops resolving once `dist/web/**` leaves the package), and the ruling does not rest on it. The root `dist/DesignTokens.web.css` (`@3fn/core/tokens.css`) stays importable, which is consistent with `tokens-1`.
+
+*Prior ruling (phase two)*: assented `no-consumer-counterpart` (`subtraction-3`).
 
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.web.css]`
 
@@ -106,7 +108,9 @@ signer: sparky
 
 signer: sparky
 
-**ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). The `technology-stack` cue returns this repo's build tooling, frameworks and versions. A consumer's stack is their own, and the `product-screen-commands` gap already points them at it. No counterpart (`subtraction-1`).
+**RE-SIGN 2026-09-29 — ASSENT to the re-pointed row** (`surviving: []`). The rendered cue reads: "you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)" → `get_section` (docs) on `technology-stack`. That doc ships (`governance/` is in `package.json` `files`), and its sections match the narrowed `when`: Platform Technologies, Web CSS Standards and True Native Architecture. The dropped "build tooling" is the doc's Build & Runtime Tooling section, which covers this repo's `tsx` and ESLint (`subtraction-1`, applies). I accept the re-point over my phase-two `no-consumer-counterpart` assent. The doc's Web section (Web Components with CSS logical properties) is consumer-relevant, and the earlier disposition dropped it with the tooling. *Residual, not refused*: "versions" in the `when` has no counterpart in the doc today (it lists no versions). The route still resolves.
+
+*Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
 ## `#frontmatter:commands[build]`
 
@@ -124,13 +128,17 @@ signer: sparky
 
 signer: sparky
 
-**ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `npm test -- src/components/` scopes this repo's Jest suite (`subtraction-1`). The "never vitest" cue it carried survives, re-pointed, in `#what-you-dont-own`. No counterpart.
+**RE-SIGN 2026-09-29 — ASSENT to the changed disposition** (`superseded-by #what-you-dont-own`, function grain; `surviving: []`). The command's function is running the web component tests, with the right runner and never Vitest's `--run`. The rendered `#what-you-dont-own` carries that function in the consumer's repo: "Your repo's own test runner and scripts are the ones to use — read them from its `package.json` before you run anything". What doesn't carry over is the path scope `src/components/`. That path is this repo's layout (`subtraction-1`), and the citation applies.
+
+*Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
 ## `#frontmatter:commands[functional-suite]`
 
 signer: sparky
 
-**ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `npm test` is this repo's functional suite (`subtraction-1`). No counterpart.
+**RE-SIGN 2026-09-29 — ASSENT to the changed disposition** (`superseded-by #what-you-dont-own`, function grain; `surviving: []`). "Run the full functional suite" becomes, in the consumer's repo, "run your repo's own test scripts, read from its `package.json`", which is the sentence the rendered `#what-you-dont-own` states. `npm test` itself is this repo's script (`subtraction-1`).
+
+*Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
 ## `#frontmatter:commands[lint]`
 
@@ -172,19 +180,21 @@ signer: sparky
 
 signer: sparky
 
-**ASSENT — surviving 0** (`surviving: []`, no consumer counterpart). `docs/specs/**` is this repo's summary-doc tree under its spec workflow (`subtraction-4`). The consumer's spec area is covered by the re-pointed `writeScope[.kiro/specs/**]` → `specs/**`. No counterpart.
+**RE-SIGN 2026-09-29 — ASSENT to the changed disposition** (`superseded-by writeScope[.kiro/specs/**]`, cites `subtraction-4`; `surviving: []`). The function (write to this agent's spec and summary docs) goes to the re-pointed `specs/**` scope in the rendered frontmatter; summaries now live under `specs/*/`. The `docs/specs/**` tree is this repo's summary layout under its spec workflow (`subtraction-4`).
+
+*Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
 ## `#mcp-practice-notes`
 
 signer: sparky
 
-**REFUSE: should-re-point.** `ground-truth-live-mcp` survives re-pointed: "reach for `get_token_details` / `search_tokens` (application) for token values rather than reading generated CSS by hand" entails the item once the repo-only trim fact is dropped. `rebuild-product` is verbatim and resolves.
+**RE-SIGN 2026-09-29 — ASSENT, surviving 3/3**: `ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback`. This resolves my phase-two refusal: Thurgood re-authored the row at `5a6e35d3`, so this is not assent-only. I re-judged the unit in full against the new rendering.
+- `ground-truth-live-mcp` survives, unchanged from phase two.
+- `rebuild-product` is verbatim.
+- `mcp-fallback` now falls back to paths that exist in a consumer install. It reads the installed package's component metadata (`node_modules/@3fn/core/src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}`) and its types (`node_modules/@3fn/core/dist/browser-entry.d.ts`) for component APIs, and its governance docs under `node_modules/@3fn/core/.kiro/steering/`. It globs the consumer's own `.test.ts` files for test patterns and still says to check index health. I checked all three package paths against `package.json` `files` (`src/components/**/{…}`, `dist/browser-entry.d.ts`, `.kiro/steering/`). With the repo-bound referent re-keyed (DesignerPunk's web implementation sources, which aren't shipped, become the shipped component API surface), every compliant implementation complies with the item.
+- The new removal cites `subtraction-5`, a route that doesn't resolve. That applies: `src/components/` holds no DesignerPunk web sources in a consumer repo.
 
-**`mcp-fallback` is dead in the consumer's repo, even though its text is kept verbatim.** It says to fall back to "Grep/Glob over `src/components/` for web implementations". In a consumer repo, `src/components/` is the consumer's own app code, not DesignerPunk's web implementations. `@3fn/core`'s `package.json` `files` ships no web platform sources: it ships only iOS/Android sources plus `src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}`, and the web components arrive as the `dist/browser` bundle. So the fallback points at the wrong tree exactly when the application MCP is down, which is the only time it is used. Re-keyed to the consumer's repo, the item is not entailed by this rendering.
-
-This is the same referent the profile already re-points elsewhere: `#in-scope` re-points "(referencing existing platforms/web/ implementations)" under `subtraction-5`, and `knowledgeBases[web-components]` is `no-consumer-counterpart` for the same reason. This unit is the one place it was missed.
-
-**Suggested re-point (the profile author's to author)**: fall back to the installed package's shipped metadata, `node_modules/@3fn/core/src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}`, and its type declarations, `node_modules/@3fn/core/dist/browser-entry.d.ts`, for component APIs; use the consumer repo's own test files for test patterns; and read governance from `node_modules/@3fn/core/.kiro/steering/`. The row would then carry a `subtraction-5` removal for `src/components/`.
+*Prior ruling (phase two, `62c4aa73`), superseded by the above*: REFUSE `should-re-point`. `mcp-fallback` grepped `src/components/` for web implementations, which is dead in a consumer install.
 
 ## Signing run summary (2026-09-29, phase two)
 
@@ -209,4 +219,16 @@ This is the same referent the profile already re-points elsewhere: `#in-scope` r
   - (1) `#with-peter`'s removal of `human-4` cites `subtraction-2` ("authority claims naming people"). The item is a claim about a person's skillset, so the citation fits loosely (Req 11.3 (iii)).
   - (2) `routes.cues[7]` (the `platform-resource-map` cue) cites `subtraction-1`. `subtraction-5` (a non-resolving route) fits more closely.
   - (3) The rendered `#identity` still names Peter in the Sarah Parks naming history. That is orientation, not an item, so it is fine.
+
+## Re-sign run summary (2026-09-29)
+
+- **Base**: `dba93df5` (Thurgood's re-author batch; Sparky rows at `5a6e35d3`), branch `task/123-u2b-fr3-sparky`. Worklist: sheet § 4, 6 acts. One assent commit; no refusals.
+- **`#mcp-practice-notes`**: my refusal is resolved by itemized assent, 3/3 (`ground-truth-live-mcp`, `rebuild-product`, `mcp-fallback`). The fallback now names paths that ship.
+- **`trims[dist/web/DesignTokens.web.css]`**: assented to `superseded-by #mcp-practice-notes`. Signed on the text per VALVE-1. The supersession holds with or without Task 16.3.
+- **`commands[web-tests]`** and **`commands[functional-suite]`**: assented to `superseded-by #what-you-dont-own` (function grain).
+- **`writeScope[docs/specs/**]`**: assented to `superseded-by writeScope[.kiro/specs/**]`.
+- **`routes.cues[8]`**: assented to the re-pointed technology-stack cue. This replaces my earlier `no-consumer-counterpart` assent, because the doc ships and its Web and True Native sections apply.
+- **Residuals** (not refused):
+  - (1) The re-pointed `routes.cues[8]` `when` names "versions", but `technology-stack` lists none.
+  - (2) Phase-two residuals 1–2 (the `human-4` citation; the `routes.cues[7]` citation) are not in this batch's worklist. They are carried as-is.
 
