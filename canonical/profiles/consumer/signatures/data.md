@@ -79,6 +79,12 @@ signer: data
 - The positive route (`get_component_full`) is retained in `routes.cues[0]`.
 - Caveat: if a later release ships a component-token file that lags the index or carries theme-varying values, this row should be revisited.
 
+**Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `re-pointed`** (Ada's keep branch). It replaces my `no-consumer-counterpart` assent.
+- The rendered Ground truth line (read directly, blind-spot note) names `node_modules/@3fn/core/dist/ComponentTokens.android.kt` and says my own output lives in my configured output directory. So it cannot misfire on the consumer's own `generate` output.
+- It is more conservative than my ncc reading. My caveat (a lagging future release) is now covered.
+- **Nit, no refusal**: "never the source for your themed values" fits component tokens loosely, since the file carries no color values. It is harmless.
+- The row's signature is byte-identical to my earlier one: both hashes are unchanged, and the disposition flip is not in the hash. This block is the record of the re-sign act.
+
 ## `#frontmatter:routes.docs[completion-doc-guidance]`
 
 signer: data
@@ -109,11 +115,15 @@ signer: data
 
 **Assent.** `technology-stack` is our repo's build stack (subtraction-1). A consumer app's stack is read from its own build setup, which the re-pointed commands entries say.
 
+**Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `re-pointed`.** It replaces my `no-consumer-counterpart` assent. The narrowed `when` ("the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)") drops our build tooling (subtraction-1) and keeps what a consumer's Android agent can use from the shipped doc: Compose/platform versions and the True Native model. My earlier reading, "our repo's build stack", missed that part.
+
 ## `#frontmatter:commands[functional-suite]`
 
 signer: data
 
 **Assent.** `npm test` is this repo's Jest suite over the design system (subtraction-1). A consumer app's test run is `./gradlew test`, carried by the re-pointed `commands[android-build-test]`. That is a different function (testing the app, not the design system), so this is not a supersession.
+
+**Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `superseded-by #what-you-dont-own`.** It replaces my `no-consumer-counterpart` assent. The destination's rendering ("Your repo's own build and test tooling is the one to use — read it from the app's build setup before you run anything") is where a consumer's run-the-suite function lands. That is a routed claim rather than my "different function" reading, and it is the stronger, correct one. The signature is byte-identical (hashes unchanged); this block records the act.
 
 ## `#frontmatter:commands[audit-tokens]`
 
@@ -133,6 +143,8 @@ signer: data
 
 **Assent.** `docs/specs/**` is our summary-doc tree (subtraction-4). The consumer's spec scope is the re-pointed `specs/**`.
 
+**Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `superseded-by writeScope[.kiro/specs/**]`.** The consumer's spec write scope is the re-pointed `specs/**`, which absorbs the summary-doc tree's function. The signature is byte-identical (hashes unchanged); this block records the act.
+
 ## `#android-theming-spec-094`
 
 signer: data
@@ -142,6 +154,8 @@ signer: data
 **The removal has a consumer counterpart** (see the header fact): the package ships flattened `DesignTokens.android.kt` snapshots into `node_modules/@3fn/core/dist/`. This unit is where the theme-varying (`Local{Abbreviation}Theme`) access is taught, so losing the guard against the flattened file here is the exact K-D2 hazard.
 
 The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
+
+**Re-sign (2026-09-29, re-author batch `dba93df5`): ASSENT — 6 of 6. My refusal is resolved by re-authoring.** The snapshot negative is **restored**, re-keyed to the package root: "never read DesignerPunk's un-themed base snapshots … (`node_modules/@3fn/core/dist/*.android.kt`)". That is the re-point my refusal asked for. It names the package's flattened files, not the consumer's own `generate` output, and the MCP positive is kept. Dropping "(see the Ground truth section)" is correct, because the consumer's Ground truth section no longer lists the DesignTokens trim. **Dependency accepted**: the glob `dist/*.android.kt` covers the top-level `DesignTokens.android.kt` but not `dist/android/DesignTokens.android.kt`. That file leaves the package at Task 16.3 (Ada's split). Until 16.3 merges, the subdirectory copy still ships and is not named. `theming-6` is entailed under re-keying. "for your themed values" narrows the prohibition to the hazard itself, which is the subject of this unit. `theming-1` to `theming-5` are verbatim.
 
 ## `#step-2-set-up-the-screen`
 
@@ -153,6 +167,8 @@ The guard has a consumer counterpart (header fact). This step is the moment the 
 
 The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
 
+**Re-sign (2026-09-29, `dba93df5`): ASSENT — 3 of 3. Refusal resolved.** The snapshot negative is **restored**, re-keyed to the package root: "never read DesignerPunk's un-themed base snapshots … (`node_modules/@3fn/core/dist/*.android.kt`)". That is the re-point my refusal asked for. It names the package's flattened files, not the consumer's own `generate` output, and the MCP positive is kept. Dropping "(see the Ground truth section)" is correct, because the consumer's Ground truth section no longer lists the DesignTokens trim. **Dependency accepted**: the glob `dist/*.android.kt` covers the top-level `DesignTokens.android.kt` but not `dist/android/DesignTokens.android.kt`. That file leaves the package at Task 16.3 (Ada's split). Until 16.3 merges, the subdirectory copy still ships and is not named. `setup-2` is entailed under re-keying: the parenthetical guard is back, and it names the package snapshots.
+
 ## `#how-to-use-designerpunk-tokens-on-android`
 
 signer: data
@@ -163,6 +179,8 @@ The prohibition has a consumer counterpart (header fact). It is the named negati
 
 The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
 
+**Re-sign (2026-09-29, `dba93df5`): ASSENT — 6 of 6. Refusal resolved.** The snapshot negative is **restored**, re-keyed to the package root: "never read DesignerPunk's un-themed base snapshots … (`node_modules/@3fn/core/dist/*.android.kt`)". That is the re-point my refusal asked for. It names the package's flattened files, not the consumer's own `generate` output, and the MCP positive is kept. Dropping "(see the Ground truth section)" is correct, because the consumer's Ground truth section no longer lists the DesignTokens trim. **Dependency accepted**: the glob `dist/*.android.kt` covers the top-level `DesignTokens.android.kt` but not `dist/android/DesignTokens.android.kt`. That file leaves the package at Task 16.3 (Ada's split). Until 16.3 merges, the subdirectory copy still ships and is not named. `ground-truth-live` is entailed under re-keying, and it again sits as the named negative beside `per-theme-set` (verbatim).
+
 ## `#android-specific-guidance:preamble`
 
 signer: data
@@ -170,6 +188,8 @@ signer: data
 **Refuse: should-re-point.** `native-2` loses ", never the stale `dist/*.kt` snapshots" (subtraction-3). The rendering keeps "DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP)". Without the negative, this sentence now points a consumer agent at a `DesignTokens` Kotlin object, and `node_modules/@3fn/core/dist/` ships one whose theme-varying colors are flattened. **`native-2` is not entailed.** The other six items are verbatim.
 
 The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
+
+**Re-sign (2026-09-29, `dba93df5`): ASSENT — 7 of 7. Refusal resolved.** The snapshot negative is **restored**, re-keyed to the package root: "never read DesignerPunk's un-themed base snapshots … (`node_modules/@3fn/core/dist/*.android.kt`)". That is the re-point my refusal asked for. It names the package's flattened files, not the consumer's own `generate` output, and the MCP positive is kept. Dropping "(see the Ground truth section)" is correct, because the consumer's Ground truth section no longer lists the DesignTokens trim. **Dependency accepted**: the glob `dist/*.android.kt` covers the top-level `DesignTokens.android.kt` but not `dist/android/DesignTokens.android.kt`. That file leaves the package at Task 16.3 (Ada's split). Until 16.3 merges, the subdirectory copy still ships and is not named. `native-2` no longer points a consumer at the flattened `DesignTokens` object: the "never" clause names it.
 
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]`
 
@@ -181,6 +201,11 @@ signer: data
 
 The entry should re-point its `artifact` / `negative` / `replaces` to the package path (`node_modules/@3fn/core/dist/android/DesignTokens.android.kt`, plus the top-level twin), keeping `tool: get_token_details` and `shape: per-theme-set`. "Stale" in the cue should read as "flattened", because a published build is fresh but still single-valued.
 
+**Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `superseded-by #how-to-use-designerpunk-tokens-on-android`. Refusal resolved.**
+- I read the rendered Ground truth section directly, per the README's blind-spot note (a trim row's `renderedHash` is the empty-piece hash). It no longer lists this trim.
+- The trim's function survives in the destination unit I just assented: it keeps me off the package's flattened DesignTokens snapshot and sends me to the MCP for the per-theme set.
+- **Conditional on Task 16.3**, as the comment above the row states: this artifact leaves the package there. Until then, `dist/android/DesignTokens.android.kt` still ships, and the destination's `dist/*.android.kt` glob does not name it. If 16.3 does not drop `dist/android/**`, this row must be re-opened.
+
 ## `#frontmatter:ambient.groundTruthManifest.verdict`
 
 signer: data
@@ -188,6 +213,8 @@ signer: data
 **Refuse: should-re-point** (disposed `no-consumer-counterpart`, subtraction-3). The verdict `none-trim-stale-snapshots` is the manifest's declaration that my ground truth is live and the Kotlin snapshots are trimmed. Because the DesignTokens trim has a consumer counterpart (refused above), the verdict has one too: a consumer seat still needs "ground truth: none — trim the (package's) flattened snapshot".
 
 It should be re-pointed together with that trim (the ComponentTokens trim may stay `no-consumer-counterpart`, see its assent). If the trim is re-disposed, this row follows it.
+
+**Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `retained`. Refusal resolved.** `none-trim-stale-snapshots` is still true in a consumer. Ground truth is the live MCP, and the manifest still carries one trim (the re-pointed ComponentTokens snapshot), which the rendered Ground truth section shows.
 
 ## `#frontmatter:commands[platform-tokens]`
 
@@ -201,6 +228,9 @@ My consumer rendering needs it:
 - Both only materialize through `generate`.
 
 **No unit of my consumer rendering names that command anywhere.** The re-pointed `commands[product-screen-commands]` says only "read them from this Android app's own build setup". The sibling renderings do name it: Sparky carries `npx designerpunk generate` as a command, and Kenya's product-screen gap names it ("theming Swift materializes here via `npx designerpunk generate`"). Under 5e the function survives only elsewhere, so this row should be re-pointed to `cmd: npx designerpunk generate`, `runContext: consumer-repo`. It must not be disposed away.
+
+**Re-sign (2026-09-29, `dba93df5`): ASSENT to the re-point. Refusal resolved.** The rendered entry is `cmd: npx designerpunk generate`, `runContext: consumer-repo`, source "@3fn/core (the `designerpunk` bin)", with the cue "regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`". That is exactly what my refusal asked for, and it now also names the theme Kotlin and product tokens it produces.
+- **Residual, not a refusal of this row**: the generated CC/Kiro command line appends "(run from the consumer product repo, not this repo)". Inside a consumer's own repo, "not this repo" reads as a contradiction. The suffix is the adapter's `runContext: consumer-repo` boilerplate, shared with Sparky's rendering, not this row's value.
 
 ## Signing run summary (2026-09-29, phase two)
 
@@ -232,3 +262,28 @@ My consumer rendering needs it:
   - **Refusal volume**: most of the 7 refusals share one fix. Re-pointing the snapshot negative in one overlay pass should let 6 of them resolve together.
   - **Not signed by me**: `#product-tokens-spec-108109` is `retained` and carries `dist/product/ProductTokens.android.kt` verbatim. A consumer's `generate` writes to `{config.outputDir}/product/`. I did not verify that the default is `dist`. If it isn't, that retained text is wrong in a consumer, and the unit should be re-examined.
   - **Scratchpad collision, a process issue for the orchestrator**: my helper script in the shared session scratchpad was overwritten mid-run by another seat's script of the same name. No wrong edit landed: the failure stopped the chain before any write, and I re-verified the assent commit field by field. Parallel seats should use per-seat scratch subdirectories.
+
+## Re-sign run summary (2026-09-29)
+
+- **Base**: Thurgood's re-author batch at `dba93df5`. Branch `task/123-u2b-fr3-data`; one commit (SHA in the handback). Not pushed.
+- **§ 4 worklist: 11 acts, 11 assents, 0 refusals.** All seven standing refusals are resolved by re-authoring. None is resolved by assent alone.
+- **Refusals resolved, with itemized counts**:
+  - `#android-theming-spec-094` 6/6
+  - `#step-2-set-up-the-screen` 3/3
+  - `#how-to-use-designerpunk-tokens-on-android` 6/6
+  - `#android-specific-guidance:preamble` 7/7
+  - `commands[platform-tokens]`: assent to the re-point to `npx designerpunk generate`.
+  - The DesignTokens trim: assent to `superseded-by #how-to-use-designerpunk-tokens-on-android`, conditional on 16.3.
+  - The verdict: assent to `retained`.
+- **Changed dispositions assented** (these replace my earlier `no-consumer-counterpart` assents):
+  - the ComponentTokens trim → re-pointed
+  - `routes.cues[9]` → re-pointed
+  - `commands[functional-suite]` → `superseded-by #what-you-dont-own`
+  - `writeScope[docs/specs/**]` → `superseded-by writeScope[.kiro/specs/**]`
+  - Three of these signatures are byte-identical to before (hashes unchanged); their blocks record the act.
+- **Totals now**: all 24 of my rows are assented and none is refused. Routed body items: all 4 re-signed units at full count, and 32 of 33 across the other seven (the assented `human-4` removal).
+- **Residuals**:
+  - **Task 16.3 dependency**: the restored warnings' glob `node_modules/@3fn/core/dist/*.android.kt` does not reach `dist/android/DesignTokens.android.kt`. The DesignTokens-trim supersession is true only once 16.3 drops `dist/android/**`. If 16.3 slips or changes, re-open that row and the four body units.
+  - **Adapter wording, cross-seat**: the `runContext: consumer-repo` suffix "(run from the consumer product repo, not this repo)" is self-contradictory inside a consumer's repo. Seen in my rendering and Sparky's. For Thurgood or the adapter owner, not a row fix.
+  - **Retained product-token path**: `dist/product/ProductTokens.android.kt` is right by default. The orchestrator checked that the default `output` is `dist` (`ConfigLoader.ts:44`), so the residual I raised in phase two is closed.
+
