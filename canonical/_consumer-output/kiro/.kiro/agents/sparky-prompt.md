@@ -281,7 +281,7 @@ Your repo's own test runner and scripts are the ones to use — read them from i
 
 ## Commands
 
-- regenerate themed token CSS in a product repo after installing @3fn/core: `npx designerpunk generate` (run from the consumer product repo, not this repo)
+- regenerate themed token CSS in a product repo after installing @3fn/core: `npx designerpunk generate` (run from your product repo)
 - product-screen build/test/serve commands are per-product — read them from this product app's own build setup. — you need product-screen build/test/serve commands (authored per product)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)

@@ -289,8 +289,8 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 
 ## Commands
 
-- regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from the consumer product repo, not this repo)
-- iOS build & UI test run from this product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl`. — you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / simctl) (run from the consumer product repo, not this repo)
+- regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)
+- iOS build & UI test run from this product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl`. — you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / simctl) (run from your product repo)
 - product-screen build/test/run commands are per-product — read them from this iOS app's own build setup (theming Swift materializes here via `npx designerpunk generate`). — you need product-screen build/test/run commands (authored per product)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)

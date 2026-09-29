@@ -139,6 +139,16 @@ describe('derive() refuses over the real profile (C22)', () => {
   });
 });
 
+describe('the run-context annotation is consumer-true in every committed consumer artifact (Task 15.5)', () => {
+  it('no consumer rendering carries the steward tag "not this repo" (inside a consumer, "this repo" IS the product repo)', () => {
+    const walk = (dir: string): string[] =>
+      fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(`${dir}/${e.name}`) : e.name.endsWith('.attribution.json') ? [] : [`${dir}/${e.name}`]));
+    const hits = walk(OUT).filter((f) => read(f).includes('not this repo'));
+    expect(hits).toEqual([]);
+    expect(walk(OUT).some((f) => read(f).includes('(run from your product repo)'))).toBe(true);
+  });
+});
+
 describe("Kenya's and Data's knowledge-fallback paths are re-grounded to the installed package (Kenya/Data R1)", () => {
   it.each([['kenya', 'ios'], ['data', 'android']])('%s', (agent, dir) => {
     const rendered = [`${OUT}/cc/.claude/agents/${agent}.md`, `${OUT}/kiro/.kiro/agents/${agent}-prompt.md`, `${OUT}/kiro/.kiro/agents/${agent}.json`, `${OUT}/_canonical/agents/${agent}.md`].map(read).join('\n');

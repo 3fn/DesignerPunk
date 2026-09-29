@@ -344,7 +344,7 @@ A `value:` product token requires demonstrating that the nearest system token do
 ## Ground truth
 
 Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
-- do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift — it is ORPHANED and stale (pre-Spec-094: flat Color.oklch literals, no theme surface); do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) — they are stale generated artifacts, not the source of truth — use `mcp__designerpunk-application__get_token_details` (application MCP)
+- do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift for themed values — it is this repo's un-themed base output (written by the in-repo generate: flat Color.oklch literals, no theme surface) and is due to stop shipping; do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) for themed values — they are un-themed base output, not the source of truth; a consumer reads its own generate outputDir — use `mcp__designerpunk-application__get_token_details` (application MCP)
 - do NOT read the built iOS component-token snapshot dist/ComponentTokens.ios.swift — it is a stale generated artifact, not the source of truth — use `mcp__designerpunk-application__get_component_full` (application MCP)
 
 ## Workflow rules
