@@ -3,28 +3,28 @@
 # consumer's repo (R5); their text is ada.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
 source: canonical/agents/ada.md
 body:
-  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "for DesignerPunk", "cites": "subtraction-2"}], "destination": "#identity"}
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "for DesignerPunk", "cites": "subtraction-2"}], "destination": "#identity", "signature": {"signer": "ada", "canonicalHash": "sha256:44083518dc3f6088b38053f8e44c411b215949d68d33df0f866dd31ab951cacd", "renderedHash": "sha256:9de73bd20921886ad97e0c3d4b223567b78857f0053c9b624f865d375d054f51", "assent": {"surviving": ["ada-role", "ada-domain", "ada-handoff", "ada-human-decides", "ada-partner"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#identity"}}
   "#ownership": {"disposition": "retained"}
-  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "`src/themes/ThemeRegistry.ts`", "cites": "subtraction-1"}, {"text": "`src/config/defineConfig.ts`, `src/config/ConfigLoader.ts`", "cites": "subtraction-1"}], "destination": "#in-scope"}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "`src/themes/ThemeRegistry.ts`", "cites": "subtraction-1"}, {"text": "`src/config/defineConfig.ts`, `src/config/ConfigLoader.ts`", "cites": "subtraction-1"}], "destination": "#in-scope", "signature": {"signer": "ada", "canonicalHash": "sha256:3a09069dc398675a590bae57b1b3ad676e377c54e2dd018190b6f24ff4aa1570", "renderedHash": "sha256:e483350f80a78d25aa292ee8a30628d1be9f031a50f0203e690bc7abb5147649", "assent": {"surviving": ["scope-create", "scope-math", "scope-compliance", "scope-docs", "scope-testing", "scope-naming", "scope-output", "scope-hierarchy", "scope-coverage", "scope-theme-registry", "scope-pipeline-config", "scope-theme-output", "scope-config-authoring"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#in-scope"}}
   "#out-of-scope": {"disposition": "retained"}
-  "#boundary-cases": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#boundary-cases"}
+  "#boundary-cases": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#boundary-cases", "signature": {"signer": "ada", "canonicalHash": "sha256:da14e1d586acbe086f063d5cb40dae171c00b0c920dd30f2c3bef5aba428dc20", "renderedHash": "sha256:af1c1abe3edd2ec543858051ae9622a6b6eebe53109818a0a31dd82d95de42fb", "assent": {"surviving": ["boundary-flag", "boundary-token-side", "boundary-coordinate"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#boundary-cases"}}
   "#domain-boundary-response-examples": {"disposition": "retained"}
   "#collaboration-model-domain-respect:preamble": {"disposition": "retained"}
-  "#trust-by-default": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#trust-by-default"}
-  "#obligation-to-flag": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#obligation-to-flag"}
-  "#graceful-correction": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#graceful-correction"}
+  "#trust-by-default": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#trust-by-default", "signature": {"signer": "ada", "canonicalHash": "sha256:26aa05bc71d50eef8942126ba3e1a5d4f48ee0cd49201b95ea1e639edf1617ed", "renderedHash": "sha256:37fc17d40d9d1fecabc140c6923e33a6c30a646728dca7388b692bd1d8cce001", "assent": {"surviving": ["trust-lina", "trust-thurgood", "trust-human"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#trust-by-default"}}
+  "#obligation-to-flag": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#obligation-to-flag", "signature": {"signer": "ada", "canonicalHash": "sha256:11e93daeb6a596bd53ea8f35d74afe24f98c19a459636be88f4696015ecc07dd", "renderedHash": "sha256:ffc651f9bfa4a3ff8cf50f6b398aef31c99af956c6edb325d95e19ea2c08145e", "assent": {"surviving": ["flag-hardcoded", "flag-compliance", "flag-impact"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#obligation-to-flag"}}
+  "#graceful-correction": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#graceful-correction", "signature": {"signer": "ada", "canonicalHash": "sha256:64d58f35fbdb106bf9de4d10327f90c45176906f322caf233748f25d899d4ecc", "renderedHash": "sha256:25cba005cb12863368f6b87da75dc6866b2f338792a7ebc97d27e3bcedb0ebbc", "assent": {"surviving": ["correction-engage", "correction-uncertain", "correction-gap-feedback"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#graceful-correction"}}
   "#fallibility": {"disposition": "retained"}
   "#documentation-governance-ballot-measure-model:preamble": {"disposition": "retained"}
   "#the-process": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#the-process"}
-  "#what-this-means-in-practice": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/steering/` or `governance/` files", "cites": "subtraction-1"}, {"text": "Peter", "cites": "subtraction-2"}], "destination": "#what-this-means-in-practice"}
-  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "; governance/token-family doc changes → the docs MCP's `rebuild_index`", "cites": "subtraction-3"}], "destination": "#mcp-practice-notes"}
+  "#what-this-means-in-practice": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/steering/` or `governance/` files", "cites": "subtraction-1"}, {"text": "Peter", "cites": "subtraction-2"}], "destination": "#what-this-means-in-practice", "signature": {"signer": "ada", "canonicalHash": "sha256:14c402faa7c9fd123a507e98320af8663679c5aefcabb2275acb66c73674eae9", "renderedHash": "sha256:9ee72068f56fc015fb3771dbd005ad503e0ca53c2ad89f91c98674d16d4a6d78", "assent": {"surviving": ["practice-no-write", "practice-no-edit-docs", "practice-propose", "practice-all-changes", "practice-ambient-law"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#what-this-means-in-practice"}}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "; governance/token-family doc changes → the docs MCP's `rebuild_index`", "cites": "subtraction-3"}], "destination": "#mcp-practice-notes", "signature": {"signer": "ada", "canonicalHash": "sha256:aadf5a9d342686f5f03853534212c2a39a3b5c1e00d39befd5eb1805822903a7", "renderedHash": "sha256:b7cf53af3eca117e34c0bb0ec15283c252e0359f796cea832b66f9eb6fd03a40", "assent": {"surviving": ["rebuild-after-write", "rebuild-application", "mcp-fallback"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#mcp-practice-notes"}}
   "#collaboration-standards:preamble": {"disposition": "retained"}
   "#counter-arguments-are-mandatory": {"disposition": "retained"}
   "#candid-over-comfortable": {"disposition": "retained"}
   "#bias-self-monitoring": {"disposition": "retained"}
-  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree"}
+  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree", "signature": {"signer": "ada", "canonicalHash": "sha256:c82414480e057b4ae6d51c4d8d99d73b456dcdb5b64a01f116d5e4cbeef4ce20", "renderedHash": "sha256:73f72b1ce8ed1c536c34607b9bb96a5c9a2c6ec4171552120da7dbe36aa1fd10", "assent": {"surviving": ["disagree"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#when-you-and-peter-disagree"}}
   "#what-you-own": {"disposition": "retained"}
-  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own", "signature": {"signer": "ada", "canonicalHash": "sha256:10acce8a1e7e308fd45c7052dd01f9434b8aa25cf444b60afe807cc77ceb84de", "renderedHash": "sha256:5e6d6cbb3475485d84a0ef2d71b8b1da310244107703cb71dd78588f353edf55", "assent": {"surviving": ["not-own-contract-tests", "not-own-audits"]}, "evidence": "canonical/profiles/consumer/signatures/ada.md#what-you-dont-own"}}
 frontmatter:
   "agent": {"disposition": "retained"}
   "agentType": {"disposition": "retained"}
@@ -36,7 +36,7 @@ frontmatter:
   "routes.docs[token-pipeline-architecture]": {"disposition": "retained"}
   "routes.docs[module-resolution-contract]": {"disposition": "retained"}
   "routes.docs[theme-registry-law]": {"disposition": "retained"}
-  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "ada", "canonicalHash": "sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:routes.docs[completion-doc-guidance]"}}
   "routes.docs[spec-tasks-format]": {"disposition": "retained"}
   "routes.docs[rosetta-arch-beyond]": {"disposition": "retained"}
   "routes.docs[token-lookup-patterns]": {"disposition": "retained"}
@@ -56,8 +56,8 @@ frontmatter:
   "routes.docs[family-shadow]": {"disposition": "retained"}
   "routes.docs[family-spacing]": {"disposition": "retained"}
   "routes.docs[family-typography]": {"disposition": "retained"}
-  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
-  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "ada", "canonicalHash": "sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:routes.docs[dev-workflow-detail]"}}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "ada", "canonicalHash": "sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:routes.docs[file-organization]"}}
   "routes.agents[lina]": {"disposition": "retained"}
   "routes.agents[thurgood]": {"disposition": "retained"}
   "routes.cues[0]": {"disposition": "retained"}
@@ -66,14 +66,14 @@ frontmatter:
   "routes.cues[3]": {"disposition": "retained"}
   "routes.cues[4]": {"disposition": "retained"}
   "routes.cues[5]": {"disposition": "retained"}
-  "routes.cues[6]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "routes.cues[6]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "ada", "canonicalHash": "sha256:4bd3877554486da9a5bf0ec70f4a2cfc5481aa6aa495cbafd0dcd927cba9982c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:routes.cues[6]"}}
   "commands[functional-suite]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
   "commands[token-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[validator-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "commands[full-suite-with-performance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "commands[validator-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "ada", "canonicalHash": "sha256:7c3dfdd6bebca4516d7b0e1b702c73a204176c9a64fc89ca9db61041054ca216", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:commands[validator-tests]"}}
+  "commands[full-suite-with-performance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "ada", "canonicalHash": "sha256:0533118bfe4bc1613fa4ad70be352ea134e49b898e0826b3c39d410f9aeec8d2", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:commands[full-suite-with-performance]"}}
   "knowledgeBases[RosettaTokenSource]": {"disposition": "retained"}
-  "knowledgeBases[TokenValidators]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5"}
-  "knowledgeBases[TokenGenerators]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5"}
+  "knowledgeBases[TokenValidators]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5", "signature": {"signer": "ada", "canonicalHash": "sha256:07c1401c9eb9c299ffb63fe05cf97d8737d5ee8d0e27cd15df5140a3764cc1db", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:knowledgeBases[TokenValidators]"}}
+  "knowledgeBases[TokenGenerators]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5", "signature": {"signer": "ada", "canonicalHash": "sha256:a8d608618403c0cce1a7e87dc4f856aef61e06a23447332ce452d57167c7cf15", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:knowledgeBases[TokenGenerators]"}}
   "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
   "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
   "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
@@ -89,10 +89,10 @@ frontmatter:
   "toolSubset.designerpunk-application[get_component_health]": {"disposition": "retained"}
   "toolSubset.designerpunk-application[rebuild_index]": {"disposition": "retained"}
   "writeScope[src/tokens/**]": {"disposition": "retained"}
-  "writeScope[src/validators/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
-  "writeScope[src/generators/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[src/validators/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "ada", "canonicalHash": "sha256:62bf3a565ca923fcd44bfe0be1200ac6ea6a7ef2b3c25c0ab69a4f2d3acd3ab9", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[src/validators/**]"}}
+  "writeScope[src/generators/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "ada", "canonicalHash": "sha256:dee22899a5c94b8bea8c8f22345ebf83e24a259be7a2af06ef3767a690eb2c4c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[src/generators/**]"}}
   "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
-  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4"}
+  "writeScope[docs/specs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "ada", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/ada.md#frontmatter:writeScope[docs/specs/**]"}}
   "kiro.keyboardShortcut": {"disposition": "retained"}
   "kiro.welcomeMessage": {"disposition": "retained"}
   "preflight[git status --porcelain]": {"disposition": "retained"}
