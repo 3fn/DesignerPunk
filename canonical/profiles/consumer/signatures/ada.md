@@ -210,3 +210,11 @@ signer: ada
 - **This is a contested-classification refusal, surfaced as a fork, not a settled defect.** The other reading is that a commands entry is its exact `cmd`, which has no consumer counterpart. The consumer rendering is identical under either label.
   - The pattern is profile-wide: five agents carry `commands[functional-suite]` as no-consumer-counterpart.
   - If Peter or Thurgood rule the entry-grain reading, that ruling is the re-authoring, and I re-sign as an absence assent.
+
+## `#frontmatter:commands[token-tests]`
+
+signer: ada
+
+**REFUSE — `should-re-point`** (refusal 3 of this run). Same ground as refusal 2, and more direct: the entry's cue is "run the token-specific suites", and `#what-you-dont-own`'s consumer rendering says "Run token tests with your repo's own test runner and scripts …".
+- The function survives re-grounded elsewhere, so 11.6.5e's scope clause gives this row `superseded-by #what-you-dont-own`, not an absence.
+- It is the same fork as refusal 2 (entry-grain vs function-grain), and it resolves the same way under whichever ruling Peter or Thurgood make.
