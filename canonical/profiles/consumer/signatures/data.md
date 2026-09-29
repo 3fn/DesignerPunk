@@ -153,3 +153,13 @@ The guard has a consumer counterpart (header fact). This step is the moment the 
 
 The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
 
+## `#how-to-use-designerpunk-tokens-on-android`
+
+signer: data
+
+**Refuse: should-re-point.** `ground-truth-live` loses "not a file — never read the built `dist/*.kt` snapshots (see the Ground truth section);" (subtraction-3). The rendering keeps "Ground truth … is LIVE — query the application MCP …", so **`ground-truth-live` is not entailed**. `tokens-1` to `tokens-4` and `per-theme-set` are verbatim.
+
+The prohibition has a consumer counterpart (header fact). It is the named negative of this unit's own `per-theme-set` item: the shipped snapshot is exactly "a single flattened value".
+
+The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consumer, wrongly hit the app's own `npx designerpunk generate` output. It should name the package snapshots, `node_modules/@3fn/core/dist/**/DesignTokens.android.kt`, and keep the "read the per-theme set from the MCP" positive.
+
