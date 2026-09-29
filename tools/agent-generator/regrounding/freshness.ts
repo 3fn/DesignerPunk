@@ -397,8 +397,12 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
       else throw e;
       continue;
     }
-    for (const f of checkOverlayKeys(parsed, file, v.universe)) push(f.check, file, f.message, f.key);
-    for (const f of checkOverlayPins(parsed, { units: v.units, entries: v.entries })) push(f.check, file, f.message, f.key);
+    // The shared catalog's overlay keys its `## @entry` blocks by MEMBER id (Task 15.3): its
+    // universe is the members, and its pins are `hashEntry` of each member.
+    const universe = source === SHARED_CATALOG ? { ...v.universe, entryNodes: new Set(v.universe.members) } : v.universe;
+    const entries = source === SHARED_CATALOG ? v.members : v.entries;
+    for (const f of checkOverlayKeys(parsed, file, universe)) push(f.check, file, f.message, f.key);
+    for (const f of checkOverlayPins(parsed, { units: v.units, entries })) push(f.check, file, f.message, f.key);
   }
 
   // --- the profile glob claims only what the sweep reads (Task 15.1) -----------------------

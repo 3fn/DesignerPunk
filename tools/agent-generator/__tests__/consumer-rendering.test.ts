@@ -95,13 +95,49 @@ function rows(agent: string): Dispositions {
 const unitHash = (anchor: string) => hashText(partition(BODY).units.find((u) => u.anchor === anchor)!.text);
 const overlayText = () => `## @unit #regrounded @ sha256:${hex(unitHash('#regrounded'))}\n## Regrounded\n\nConsumer-grounded operative text.\n`;
 
-function inputsFor(agents: string[]): ConsumerProfileInputs {
-  const inputs: ConsumerProfileInputs = { dispositions: {}, overlays: {}, missing: [] };
+/** A two-member shared catalog: one retained, one `this-repo` member disposed away (Task 15.3). */
+const SHARED_TEXT = [
+  'members:',
+  '  - id: keep-me',
+  '    kind: governance-rule',
+  '    statement: Keep this rule.',
+  '    owner: thurgood',
+  '  - id: drop-me',
+  '    kind: command',
+  '    cmd: ./.kiro/hooks/steward-only.sh',
+  '    cue: run the steward-only hook',
+  '    runContext: this-repo',
+  '    owner: thurgood',
+  '',
+].join('\n');
+const SHARED_ROWS = { source: 'canonical/shared/shared-catalog.yaml', members: { 'keep-me': { disposition: 'retained' }, 'drop-me': { disposition: 'no-consumer-counterpart', cites: 'subtraction-1' } } };
+
+function inputsFor(agents: string[], opts: { shared?: boolean } = {}): ConsumerProfileInputs {
+  const inputs: ConsumerProfileInputs = { dispositions: {}, overlays: {}, identity: {}, missing: [], authored: agents.length > 0 };
   for (const a of agents) {
-    inputs.dispositions[a] = rows(a);
+    inputs.dispositions[a] = rows(a) as ConsumerProfileInputs['dispositions'][string];
     inputs.overlays[a] = parseOverlay(overlayText(), `canonical/profiles/consumer/${a}.overlay.md`); // parsed, with pins (Task 15.2: derive() checks them)
   }
+  if (agents.length > 0 && opts.shared !== false) inputs.shared = { dispositions: SHARED_ROWS as never };
   return inputs;
+}
+
+/** The consumer render over twin agents — `resolve` stubbed (no docs MCP): the derived doc, emitted as-is. */
+function render(agents: string[], inputs: ConsumerProfileInputs, extra: Partial<Parameters<typeof generateConsumerRendering>[0]> = {}) {
+  return generateConsumerRendering({
+    agents: agents.map((a) => resolvedFor(a).resolved.doc),
+    identity: [],
+    sharedCatalogText: SHARED_TEXT,
+    inputs,
+    adapters: ADAPTERS(),
+    resolve: async (doc) => {
+      const base = resolvedFor(doc.frontmatter.agent);
+      return { resolved: { ...base.resolved, doc } as ResolvedAgent, emitCtx: base.emitCtx };
+    },
+    docIdToPath: {},
+    alwaysSetIds: [],
+    ...extra,
+  });
 }
 
 const ADAPTERS = (): TargetAdapter[] => [new CcAdapter(FIELD_DISPOSITIONS), new KiroAdapter(FIELD_DISPOSITIONS)];
@@ -117,10 +153,11 @@ const write = (rel: string, text: string) => {
 };
 
 describe('generateConsumerRendering (Task 15.1)', () => {
-  it('emits every agent through every adapter, remapped under canonical/_consumer-output/<target>/', () => {
-    const outputs = generateConsumerRendering([resolvedFor('twin')], ADAPTERS(), inputsFor(['twin']));
+  it('emits every agent through every adapter, remapped under canonical/_consumer-output/<target>/', async () => {
+    const outputs = await render(['twin'], inputsFor(['twin']));
     expect(outputs.map((o) => o.path).sort()).toEqual([
       'canonical/_consumer-output/_canonical/agents/twin.md', // derive() — once, not per target (Task 15.2)
+      'canonical/_consumer-output/_canonical/shared/shared-catalog.yaml', // the derived shared catalog (Task 15.3)
       'canonical/_consumer-output/cc/.claude/agents/twin.md',
       'canonical/_consumer-output/kiro/.kiro/agents/twin-prompt.md',
       'canonical/_consumer-output/kiro/.kiro/agents/twin.json',
@@ -134,16 +171,15 @@ describe('generateConsumerRendering (Task 15.1)', () => {
     }
   });
 
-  it('an unauthored profile (no agent has dispositions) emits nothing — the declared pre-15.4 state', () => {
-    expect(generateConsumerRendering([resolvedFor('twin'), resolvedFor('pair')], ADAPTERS(), inputsFor([]))).toEqual([]);
+  it('an unauthored profile (no profile file at all) emits nothing — the declared pre-15.4 state', async () => {
+    expect(await render(['twin', 'pair'], inputsFor([]))).toEqual([]);
   });
 
-  it('a partial population refuses, naming the agents with no dispositions file', () => {
-    expect(() => generateConsumerRendering([resolvedFor('twin'), resolvedFor('pair')], ADAPTERS(), inputsFor(['twin']))).toThrow(
-      partialConsumerPopulationMessage(['pair'], ['twin'])
-    );
-    expect(partialConsumerPopulationMessage(['pair'], ['twin'])).toBe(
-      'generateConsumerRendering: the consumer profile covers 1 ledger agent(s) (twin) but not pair — every ledger agent carries canonical/profiles/consumer/<agent>.dispositions.yaml, or none does yet; refusing to render a partial population (design C12; Req 9.5)'
+  it('a partial population refuses, naming every missing profile file (Task 15.3: agents, shared catalog and identity docs)', async () => {
+    const inputs = { ...inputsFor(['twin']), missing: ['canonical/profiles/consumer/pair.dispositions.yaml'] };
+    await expect(render(['twin', 'pair'], inputs)).rejects.toThrow(partialConsumerPopulationMessage(['canonical/profiles/consumer/pair.dispositions.yaml']));
+    expect(partialConsumerPopulationMessage(['canonical/profiles/consumer/pair.dispositions.yaml'])).toBe(
+      'generateConsumerRendering: the consumer profile is partly authored — missing canonical/profiles/consumer/pair.dispositions.yaml; every ledger agent, the shared catalog and every identity doc carries its dispositions file, or none does yet; refusing to render a partial population (design C12; Req 9.5)'
     );
   });
 });
@@ -160,8 +196,14 @@ describe('loadConsumerInputs (Task 15.1)', () => {
   it('reads each agent’s committed dispositions and overlay; an agent without a file is listed missing', () => {
     write('canonical/profiles/consumer/twin.dispositions.yaml', dispYaml('twin'));
     write('canonical/profiles/consumer/twin.overlay.md', overlayText());
-    const inputs = loadConsumerInputs(tmp, ['twin', 'pair']);
-    expect(inputs.missing).toEqual(['pair']);
+    const inputs = loadConsumerInputs(tmp, ['twin', 'pair'], ['core-goals']);
+    // Every required profile file that is absent is listed, by path (Task 15.3: agents, shared, identity).
+    expect(inputs.missing).toEqual([
+      'canonical/profiles/consumer/pair.dispositions.yaml',
+      'canonical/profiles/consumer/_shared.dispositions.yaml',
+      'canonical/profiles/consumer/always-set/core-goals.dispositions.yaml',
+    ]);
+    expect(inputs.authored).toBe(true);
     expect(inputs.dispositions.twin.body?.['#regrounded']).toEqual({ disposition: 're-pointed', destination: '#regrounded' });
     expect(inputs.overlays.twin.units['#regrounded'].text).toBe('## Regrounded\n\nConsumer-grounded operative text.\n'); // parsed, pin kept (Task 15.2)
   });
@@ -189,9 +231,9 @@ describe('the rendered hash, read back from the committed rendering (Task 15.1)'
     );
   });
 
-  it('reads every target’s pieces of a row; the hash moves with any target’s rendering and not with an unrelated row', () => {
+  it('reads every target’s pieces of a row; the hash moves with any target’s rendering and not with an unrelated row', async () => {
     expect(readConsumerSpans(tmp)).toBeUndefined(); // no rendering at all
-    writeOutputs(tmp, generateConsumerRendering([resolvedFor('twin')], ADAPTERS(), inputsFor(['twin'])));
+    writeOutputs(tmp, await render(['twin'], inputsFor(['twin'])));
     const spans = readConsumerSpans(tmp)!;
     const pieces = spans.get('canonical/agents/twin.md#regrounded')!;
     expect(pieces.map((p) => p.artifact)).toEqual([

@@ -14,6 +14,7 @@
   - **extra**: `commands[claims-pass]`. This is disclosed extra frontmatter evidence, not a substitute for E-fm.
 - **`canonical/profiles/consumer/semguard.overlay.md`**: the re-grounded texts, in 13.2's `## @unit` / `## @entry` form, each **pinned** to the canonical hash it re-grounds.
   - E's text is **G1 run 1's committed E rendering** (`__fixtures__/g1-renderings/run1.E.*`). It is **zero-verbatim** against S's operative items (10.S Constraint 3), and the fixture test asserts 0 credited.
+  - **The `## @entry` bodies are YAML VALUES** *(Task 15.3; the Task 15 criterion 15.0 (b) erratum, 2026-09-29)*: E-fm's is the glob `specs/**`; the extra's is a whole command object with the canonical key set and the same `name`. `derive()` substitutes them into the derived frontmatter, and each adapter renders them with its own per-kind renderer; `entryOrigin` maps the derived `writeScope[specs/**]` back to the canonical `writeScope[.kiro/specs/**]`. The pins are unchanged (`hashEntry` of the canonical values). Until 15.3 the bodies were rendered prose bullets; the `__bites__/task-14-4-*` logs record runs against that form, and their re-run under values is Task 14's addendum (Lina).
 
 The fixture test also holds it to Task 13's checks: the 13.1 schema, the 13.5 orphan and missing-row refusals, and the 13.2 pin freshness.
 

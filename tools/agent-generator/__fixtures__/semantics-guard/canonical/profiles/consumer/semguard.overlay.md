@@ -45,6 +45,9 @@ If the query gives a wrong result a second time in ordinary use, turn it into a 
 Git history is half of what a claims audit reads: `git log --first-parent` gives unit anchors and deltas, and `git show <merge>:<path>` gives what shipped at the merge.
 
 ## @entry writeScope[.kiro/specs/**] @ sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
-- `specs/**` — your repo's own spec folders
+specs/**
 ## @entry commands[claims-pass] @ sha256:c4cb844876d46bd143021042dce21bf33f6b40c87ea90bff5a512cd5527addef
-- run your repo's claims pass: `npm run claims-pass`
+name: claims-pass
+cmd: npm run claims-pass
+runContext: this-repo
+cue: run your repo's claims pass over the specs that owe one

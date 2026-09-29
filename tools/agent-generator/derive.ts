@@ -204,18 +204,29 @@ export function checkRecordKeys(record: { units?: Readonly<Record<string, unknow
 //      value. An always-set file (`counterpart:`) carries NO frontmatter at all (C19: the shipped
 //      identity doc's frontmatter is dropped, never carried).
 //
-// RE-POINTED FRONTMATTER / SHARED-MEMBER ROWS REFUSE, PENDING A RULING: an `## @entry` overlay's
-// text is RENDERED PROSE (Task 15.0 criterion (b)), not a YAML value, so it cannot be substituted
-// into derived frontmatter. How the derived canonical carries a re-pointed entry is the open Q1
-// of Task 15.2 (orchestrator, 2026-09-29). Until it is ruled, derive() refuses such a row loudly
-// (`repointedEntryPendingMessage`) rather than choosing a form silently. The real profile has no
-// such row before 15.4.
+// RE-POINTED FRONTMATTER ENTRIES AND SHARED MEMBERS CARRY YAML VALUES (Task 15.3; the 15.0
+// criterion (b) erratum of 2026-09-29 — Q1 of the 15.2 reads, (b)). An `## @entry <path>` overlay
+// body is a YAML VALUE, pinned by `hashEntry` of the canonical value; derive() SUBSTITUTES it at
+// the leaf's position in the derived frontmatter, so every target renders it with its own per-kind
+// renderer and the derived charter is a real charter (Task 16 renders it; Kiro `allowedPaths`,
+// `tools` and `resources` and CC `tools:` are built from values). Validation is CLASS-LEVEL,
+// never per-field value shapes: the derived charter passes the steward `validate()` (the caller,
+// `generate.ts`), and — because that table is rules, not types — derive() adds ONE generic
+// congruence refusal (`overlayValueMessage`):
+//   - the value parses as YAML;
+//   - it has the canonical value's JSON type (string, number, boolean, null, list, map);
+//   - a map carries exactly the canonical map's key set;
+//   - a MAP-valued member keeps its entry path (its identity field — `name` / `id` / … — equals
+//     its key); a string member's identity IS its value, so its path may change, and
+//     `entryOrigin` maps the derived path back to the canonical one.
+// A re-pointed row with no `## @entry` body refuses too. Ambient embeds are never re-pointed
+// (DD19 — the 13.1 schema refuses it; emitSpans throws).
 //
 // Leaf positions come from the ENTRY TREE ITSELF (a member's index = its position among its list
 // node's children; a scalar's path = its map-key chain), so pruning cannot drift from
 // `entryTree()`'s identity rules — nothing here re-implements them.
 
-export type DeriveCheckId = 'orphaned-key' | 'missing-row' | 'stale-overlay' | 'repointed-entry-pending';
+export type DeriveCheckId = 'orphaned-key' | 'missing-row' | 'stale-overlay' | 'overlay-value';
 
 export interface DeriveFinding {
   check: DeriveCheckId;
@@ -232,8 +243,32 @@ export class DeriveError extends Error {
   }
 }
 
-export const repointedEntryPendingMessage = (key: string, file: string): string =>
-  `derive: re-pointed ${key} in ${file} cannot be derived yet — an ## @entry overlay is rendered prose, not a value derived frontmatter can carry; the derived form of a re-pointed entry is pending the Task 15.2 Q1 ruling`;
+/** The one generic refusal for a re-pointed entry's overlay value (Task 15.3). */
+export const overlayValueMessage = (key: string, file: string, why: string): string =>
+  `derive: re-pointed ${key} in ${file} — its overlay value ${why}; a re-pointed entry's value keeps the canonical value's JSON type, key set and identity (the ## @entry body is a YAML value)`;
+
+const jsonType = (v: unknown): string => (v === null ? 'null' : Array.isArray(v) ? 'list' : typeof v === 'object' ? 'map' : typeof v);
+
+/**
+ * Parse one `## @entry` body as a YAML value and check it against the canonical value it replaces.
+ * Returns the value, or a reason (the identity half needs the derived tree — {@link derive}).
+ */
+export function overlayValue(text: string | undefined, canonical: unknown): { value?: unknown; why?: string } {
+  if (text === undefined) return { why: 'is missing — no ## @entry body for this re-pointed row' };
+  let value: unknown;
+  try {
+    value = loadYaml(text);
+  } catch (e) {
+    return { why: `is not YAML (${(e as Error).message.split('\n')[0]})` };
+  }
+  if (jsonType(value) !== jsonType(canonical)) return { why: `is a ${jsonType(value)}, the canonical value a ${jsonType(canonical)}` };
+  if (jsonType(value) === 'map') {
+    const a = Object.keys(value as object).sort();
+    const b = Object.keys(canonical as object).sort();
+    if (JSON.stringify(a) !== JSON.stringify(b)) return { why: `carries keys [${a.join(', ')}], the canonical value [${b.join(', ')}]` };
+  }
+  return { value };
+}
 
 export interface DeriveInput {
   /** The canonical source path (`canonical/agents/<a>.md`) — span provenance and messages. */
@@ -252,6 +287,12 @@ export interface DeriveInput {
 export interface Derived {
   /** The derived canonical document: frontmatter (if any) + body. */
   text: string;
+  /**
+   * Derived entry path → canonical entry path, for every leaf of the derived frontmatter whose path
+   * differs (a re-pointed string member's key is its new value). Consumed by `emitSpans` under the
+   * consumer profile (`SpanSource.entryOrigin`) so provenance and rows stay canonical.
+   */
+  entryOrigin: Record<string, string>;
   /** Its attribution: the frontmatter block as C1 glue; the body spans exactly as `emitSpans` emits them. */
   attribution: AttributionManifest;
   /** The derived frontmatter object (undefined for an always-set document). */
@@ -277,9 +318,15 @@ export function derive(input: DeriveInput): Derived {
     const entries = new Map(tree.units.map((l) => [l.path, l.value]));
     for (const f of checkOverlayPins(overlay, { units, entries })) findings.push({ check: 'stale-overlay', file: f.file, key: f.key, message: f.message });
   }
+  // The re-pointed entries' VALUES (the generic congruence refusal; identity below).
+  const values = new Map<string, unknown>();
   if (!alwaysSet) {
+    const current = new Map(tree.units.map((l) => [l.path, l.value]));
     for (const [key, row] of Object.entries(dispositions.frontmatter ?? {})) {
-      if (row?.disposition === 're-pointed') findings.push({ check: 'repointed-entry-pending', file, key: `frontmatter ${key}`, message: repointedEntryPendingMessage(`frontmatter entry ${key}`, file) });
+      if (row?.disposition !== 're-pointed' || !current.has(key)) continue; // orphan: reported above
+      const v = overlayValue(overlay?.entries[key]?.text, current.get(key));
+      if (v.why !== undefined) findings.push({ check: 'overlay-value', file, key: `frontmatter ${key}`, message: overlayValueMessage(`frontmatter entry ${key}`, file, v.why) });
+      else values.set(key, v.value);
     }
   }
   // 5: refuse before emitting anything.
@@ -289,12 +336,30 @@ export function derive(input: DeriveInput): Derived {
   const acc = new AttributionAccumulator();
   let text = '';
   let derivedFrontmatter: YamlDoc | undefined;
+  const entryOrigin: Record<string, string> = {};
   if (!alwaysSet) {
-    // 7: the frontmatter, pruned.
-    derivedFrontmatter = pruneFrontmatter(frontmatter, tree, (p) => {
+    // 7: the frontmatter — re-pointed values substituted at their positions, then pruned.
+    const drop = (p: string): boolean => {
       const d = dispositions.frontmatter?.[p]?.disposition;
       return d === 'no-consumer-counterpart' || d === 'superseded-by';
+    };
+    derivedFrontmatter = pruneFrontmatter(substituteFrontmatter(frontmatter, tree, values), tree, drop);
+    // The derived leaves are the surviving canonical leaves, in document order (substitution and
+    // pruning never reorder): zip them to map each derived path to its canonical origin.
+    const surviving = tree.units.filter((l) => !drop(l.path)).map((l) => l.path);
+    const derivedLeaves = entryTree(derivedFrontmatter).units.map((l) => l.path);
+    if (derivedLeaves.length !== surviving.length) {
+      throw new Error(`derive: ${source} — ${derivedLeaves.length} derived leaves for ${surviving.length} surviving canonical leaves (an internal invariant)`);
+    }
+    const identity: DeriveFinding[] = [];
+    derivedLeaves.forEach((d, i) => {
+      const c = surviving[i];
+      if (d !== c) entryOrigin[d] = c;
+      if (d !== c && jsonType(values.get(c)) === 'map') {
+        identity.push({ check: 'overlay-value', file, key: `frontmatter ${c}`, message: overlayValueMessage(`frontmatter entry ${c}`, file, `changes the member's identity (its entry path becomes ${d})`) });
+      }
     });
+    if (identity.length > 0) throw new DeriveError(identity);
     const block = `---\n${dumpYaml(derivedFrontmatter, { lineWidth: -1, noRefs: true })}---\n`;
     acc.add('render', countBlockLines(block), GLUE_SOURCES['frontmatter-fence']);
     text += block;
@@ -308,7 +373,7 @@ export function derive(input: DeriveInput): Derived {
     'body'
   ).text;
   text += bodyOut;
-  return { text, attribution: acc.build(source), frontmatter: derivedFrontmatter, body: bodyOut };
+  return { text, attribution: acc.build(source), frontmatter: derivedFrontmatter, body: bodyOut, entryOrigin };
 }
 
 /** derive() over a canonical file's TEXT (splits it first). */
@@ -319,24 +384,76 @@ export function deriveText(input: Omit<DeriveInput, 'frontmatter' | 'body'> & { 
 
 /**
  * derive() over the SHARED CATALOG (`canonical/shared/shared-catalog.yaml`): members disposed
- * `no-consumer-counterpart` / `superseded-by` are dropped; `retained` members are kept as-is.
- * Refuses on an orphaned or missing row, and on a re-pointed member (pending Q1, as for
- * frontmatter). Returns the derived catalog's YAML.
+ * `no-consumer-counterpart` / `superseded-by` are dropped; `retained` members are kept as-is; a
+ * `re-pointed` member is replaced by its `## @entry <id>` overlay VALUE (the same generic
+ * congruence refusal as frontmatter, and a member keeps its `id`). Refuses on an orphaned or
+ * missing row, an orphaned or stale overlay pin (pinned by `hashEntry` of the member). Returns
+ * the derived catalog's YAML.
  */
-export function deriveSharedCatalog(text: string, dispositions: RowFile, file = 'canonical/profiles/consumer/_shared.dispositions.yaml'): string {
+export function deriveSharedCatalog(
+  text: string,
+  dispositions: RowFile,
+  file = 'canonical/profiles/consumer/_shared.dispositions.yaml',
+  overlay?: ParsedOverlay
+): string {
   const universe = keyUniverseOf(SHARED_CATALOG, text);
   const findings: DeriveFinding[] = checkDispositionKeys(dispositions, file, universe).map((f) => ({ check: f.check, file: f.file, key: f.key, message: f.message }));
+  const doc = loadYaml(text) as { members?: { id?: string }[] } & Record<string, unknown>;
+  const byId = new Map((doc.members ?? []).filter((m) => typeof m?.id === 'string').map((m) => [m.id as string, m as unknown]));
+  if (overlay) {
+    for (const k of Object.keys(overlay.units)) findings.push({ check: 'orphaned-key', file: overlay.file, key: `overlay-unit ${k}`, message: orphanedKeyMessage(k, SHARED_CATALOG) });
+    for (const k of Object.keys(overlay.entries)) {
+      if (!byId.has(k)) findings.push({ check: 'orphaned-key', file: overlay.file, key: `overlay-entry ${k}`, message: orphanedKeyMessage(k, SHARED_CATALOG) });
+    }
+    for (const f of checkOverlayPins({ ...overlay, units: {} }, { entries: byId })) findings.push({ check: 'stale-overlay', file: f.file, key: f.key, message: f.message });
+  }
   const rows = (dispositions.members ?? {}) as Record<string, { disposition?: string }>;
+  const values = new Map<string, unknown>();
   for (const [id, row] of Object.entries(rows)) {
-    if (row?.disposition === 're-pointed') findings.push({ check: 'repointed-entry-pending', file, key: `members ${id}`, message: repointedEntryPendingMessage(`shared member ${id}`, file) });
+    if (row?.disposition !== 're-pointed' || !byId.has(id)) continue;
+    const v = overlayValue(overlay?.entries[id]?.text, byId.get(id));
+    const keeps = v.why === undefined && (v.value as { id?: unknown }).id === id;
+    if (v.why !== undefined || !keeps) {
+      findings.push({ check: 'overlay-value', file, key: `members ${id}`, message: overlayValueMessage(`shared member ${id}`, file, v.why ?? `changes the member's identity (id ${String((v.value as { id?: unknown }).id)})`) });
+    } else values.set(id, v.value);
   }
   if (findings.length > 0) throw new DeriveError(findings);
-  const doc = loadYaml(text) as { members?: { id?: string }[] } & Record<string, unknown>;
-  const members = (doc.members ?? []).filter((m) => {
-    const d = typeof m?.id === 'string' ? rows[m.id]?.disposition : undefined;
-    return !(d === 'no-consumer-counterpart' || d === 'superseded-by');
-  });
+  const members = (doc.members ?? [])
+    .filter((m) => {
+      const d = typeof m?.id === 'string' ? rows[m.id]?.disposition : undefined;
+      return !(d === 'no-consumer-counterpart' || d === 'superseded-by');
+    })
+    .map((m) => (typeof m?.id === 'string' && values.has(m.id) ? values.get(m.id) : m));
   return dumpYaml({ ...doc, members }, { lineWidth: -1, noRefs: true });
+}
+
+/**
+ * A deep copy of `frontmatter` with each re-pointed leaf's VALUE substituted at its position
+ * (read from the tree, like {@link pruneFrontmatter}): a list member at its index among its list
+ * node's children; any other leaf at its dotted map-key path (`preflight` = `kiro.agentSpawn`).
+ * Ambient leaves are never substituted (DD19; refused upstream).
+ */
+export function substituteFrontmatter(frontmatter: YamlDoc, tree: ReturnType<typeof entryTree>, values: ReadonlyMap<string, unknown>): YamlDoc {
+  const out = JSON.parse(JSON.stringify(frontmatter)) as YamlDoc;
+  const keysOf = (nodePath: string): string[] => (nodePath === 'preflight' ? ['kiro', 'agentSpawn'] : nodePath.split('.'));
+  const at = (keys: string[]): unknown => keys.reduce<unknown>((v, k) => (v && typeof v === 'object' ? (v as Record<string, unknown>)[k] : undefined), out);
+  for (const [leafPath, value] of values) {
+    if (leafPath.startsWith('ambient[')) throw new Error(`substituteFrontmatter: ${leafPath} is an ambient embed — never re-pointed (DD19)`);
+    const node = tree.get(leafPath);
+    const parent = node?.parent ? tree.get(node.parent) : undefined;
+    const copy = JSON.parse(JSON.stringify(value)) as unknown;
+    if (parent?.kind === 'list') {
+      const arr = at(keysOf(parent.id));
+      if (!Array.isArray(arr)) throw new Error(`substituteFrontmatter: ${parent.id} is not a list in the frontmatter`);
+      arr[parent.children.indexOf(leafPath)] = copy;
+    } else {
+      const keys = keysOf(leafPath);
+      const holder = at(keys.slice(0, -1)) as Record<string, unknown> | undefined;
+      if (!holder || typeof holder !== 'object') throw new Error(`substituteFrontmatter: no map holds ${leafPath}`);
+      holder[keys[keys.length - 1]] = copy;
+    }
+  }
+  return out;
 }
 
 /**

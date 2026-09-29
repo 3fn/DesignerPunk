@@ -14,6 +14,7 @@ import { AttributionAccumulator } from '../attribution';
 import { splitFrontmatter } from '../frontmatter';
 import { entryTree, partition } from '../partition';
 import { emitSpans, type SpanPiece } from '../spans';
+import { pruneFrontmatter } from '../derive';
 import { checkDerivation } from '../regrounding/derivation';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
@@ -30,9 +31,13 @@ function renderCommands(rows: Record<string, Disposition>, texts: Record<string,
   const frontmatterRows: Record<string, { disposition: Disposition }> = {};
   for (const leaf of tree.units) frontmatterRows[leaf.path] = { disposition: 'retained' };
   for (const [p, d] of Object.entries(rows)) frontmatterRows[p] = { disposition: d };
-  const pieces: SpanPiece[] = commands.map((p, index) => ({ kind: 'member', list: 'commands', index, text: texts[p] ?? `- ${p}\n` }));
+  // Task 15.3: under the consumer profile the adapters render derive()'s frontmatter — an omitted
+  // member is pruned before rendering, so its piece is never emitted (never a silent skip).
+  const derived = pruneFrontmatter(frontmatter, tree, (p) => frontmatterRows[p]?.disposition === 'no-consumer-counterpart');
+  const derivedCommands = entryTree(derived).get('commands')?.children ?? [];
+  const pieces: SpanPiece[] = derivedCommands.map((p, index) => ({ kind: 'member', list: 'commands', index, text: texts[p] ?? `- ${p}\n` }));
   const acc = new AttributionAccumulator();
-  emitSpans(acc, { file: FILE, body, frontmatter }, 'consumer', { frontmatter: frontmatterRows }, undefined, pieces);
+  emitSpans(acc, { file: FILE, body, frontmatter: derived }, 'consumer', { frontmatter: frontmatterRows }, undefined, pieces);
   return acc.build('lina.md').spans;
 }
 const check = (spans: { source: string }[], s: string, destination: string) =>

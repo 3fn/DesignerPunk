@@ -44,6 +44,7 @@ import {
 } from '../render';
 import { AttributionAccumulator, type AttributionManifest } from '../attribution';
 import { emitSpans, type SpanPiece, type SpanPlan, type SpanSource } from '../spans';
+import { slugify } from '../partition';
 import type { YamlDoc } from '../frontmatter';
 import {
   spanInputsFor,
@@ -53,6 +54,10 @@ import {
   type EmittedFile,
   type FieldDispositionTable,
   type SharedCatalogMember,
+  type IdentityMemberInput,
+  identityMemberName,
+  identityMembersStewardMessage,
+  renderIdentityMember,
 } from './index';
 
 // ============================================================================
@@ -230,12 +235,13 @@ export class CcAdapter implements TargetAdapter {
     // supplies only the per-target RENDERING of each piece — never a span, never a source.
     // The profile and this agent's consumer inputs come from `AdapterContext` (Task 15.0);
     // absent, the profile is `'steward'` and the rendering is byte-identical to pre-15.0.
+    const span = spanInputsFor(ctx, fm.agent);
     const src: SpanSource = {
       file: `canonical/agents/${fm.agent}.md`,
       body: agent.doc.body,
       frontmatter: fm as unknown as YamlDoc,
+      entryOrigin: span.entryOrigin,
     };
-    const span = spanInputsFor(ctx, fm.agent);
     const emit = (plan: SpanPlan): string => emitSpans(acc, src, span.profile, span.dispositions, span.overlay, plan).text;
 
     // -- Frontmatter --------------------------------------------------------
@@ -293,7 +299,18 @@ export class CcAdapter implements TargetAdapter {
             `per-agent-lane member; refusing to emit an empty embed silently.`
         );
       }
-      ambientPieces.push({ kind: 'entry', path: `ambient[${member.id}]`, text: `### ${member.id}\n\n${ensureTrailingNewline(embed)}\n` });
+      const sections = ctx.embedSections?.[member.id];
+      if (span.profile === 'consumer' && sections) {
+        // Consumer (Task 15.3): the `### <docid>` header is the container, and each asserted section
+        // is its own span (`ambient[<docid>#<section-slug>]` — the entry tree's leaf), so nothing
+        // renders that no surviving member sourced. The bytes equal the steward's joined form.
+        ambientPieces.push({ kind: 'entry', path: `ambient[${member.id}]`, text: `### ${member.id}\n\n` });
+        for (const part of sections) {
+          ambientPieces.push({ kind: 'entry', path: `ambient[${member.id}#${slugify(part.section)}]`, text: `${part.text}\n\n` });
+        }
+      } else {
+        ambientPieces.push({ kind: 'entry', path: `ambient[${member.id}]`, text: `### ${member.id}\n\n${ensureTrailingNewline(embed)}\n` });
+      }
     }
     bodyParts.push(emit(ambientPieces));
 
@@ -448,6 +465,17 @@ export class CcAdapter implements TargetAdapter {
     }
 
     return files;
+  }
+
+  /**
+   * C19 (Task 15.3): each derived identity member as `.claude/identity/designerpunk-<id>.md` —
+   * the derived body only, spans per unit (the shipped doc's frontmatter is dropped). The CC
+   * always-mechanism (a `CLAUDE.md` marker region of `@`-imports of these files) is the consumer
+   * lane's (C20, Task 16), not this method's.
+   */
+  emitIdentityMembers(members: readonly IdentityMemberInput[], ctx: AdapterContext): EmittedFile[] {
+    if ((ctx.profile ?? 'steward') !== 'consumer') throw new Error(identityMembersStewardMessage('CcAdapter'));
+    return members.map((m) => renderIdentityMember(m, `.claude/identity/${identityMemberName(m.id)}.md`, undefined));
   }
 
   emitAlwaysLayer(set: readonly AlwaysSetMember[], ctx: AdapterContext): EmittedFile[] {

@@ -64,8 +64,9 @@ import type {
   EmittedFile,
   FieldDispositionTable,
   SharedCatalogMember,
+  IdentityMemberInput,
 } from './index';
-import { spanInputsFor } from './index';
+import { identityMemberName, identityMembersStewardMessage, renderIdentityMember, spanInputsFor } from './index';
 
 // ============================================================================
 // toolRef — NATIVE (non-namespaced) Kiro tool-reference syntax
@@ -326,8 +327,8 @@ export class KiroAdapter implements TargetAdapter {
     // supplies only the per-target RENDERING of each piece — never a span, never a source.
     // The profile and this agent's consumer inputs come from `AdapterContext` (Task 15.0);
     // absent, the profile is `'steward'` and the rendering is byte-identical to pre-15.0.
-    const src = spanSource(agent);
     const span = spanInputsFor(ctx, fm.agent);
+    const src: SpanSource = { ...spanSource(agent), entryOrigin: span.entryOrigin };
     const emit = (plan: SpanPlan): string => emitSpans(acc, src, span.profile, span.dispositions, span.overlay, plan).text;
 
     // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
@@ -448,6 +449,22 @@ export class KiroAdapter implements TargetAdapter {
 
   emitSkills(map: SkillsMap, ctx: AdapterContext): EmittedFile[] {
     return emitSkillTreeFiles(map, ctx, 'kiro');
+  }
+
+  /**
+   * C19 (Task 15.3): each derived identity member as `.kiro/steering/designerpunk-<id>.md`, with a
+   * FRESH minimal frontmatter written here — exactly `id` + `inclusion: always` — never the shipped
+   * doc's own (dropped). Each agent config's `resources` points at these files (the consumer
+   * `docIdToPath` the generator supplies).
+   */
+  emitIdentityMembers(members: readonly IdentityMemberInput[], ctx: AdapterContext): EmittedFile[] {
+    if ((ctx.profile ?? 'steward') !== 'consumer') throw new Error(identityMembersStewardMessage('KiroAdapter'));
+    return members.map((m) =>
+      renderIdentityMember(m, `.kiro/steering/${identityMemberName(m.id)}.md`, {
+        glue: 'identity-frontmatter',
+        text: `---\nid: ${identityMemberName(m.id)}\ninclusion: always\n---\n\n`,
+      })
+    );
   }
 
   emitAlwaysLayer(_set: readonly AlwaysSetMember[], _ctx: AdapterContext): EmittedFile[] {

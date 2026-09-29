@@ -19,8 +19,9 @@ import { CcAdapter } from '../adapters/cc';
 import { KiroAdapter } from '../adapters/kiro';
 import { loadConsumerProfile, parseConsumerProfile, ConsumerProfileError } from '../consumer-profile';
 import { entryTree, partition } from '../partition';
-import { hashText } from '../regrounding/hash';
-import { parseOverlay, toSpanOverlay } from '../regrounding/overlay';
+import { derive, type RowFile } from '../derive';
+import { hashEntry, hashText } from '../regrounding/hash';
+import { parseOverlay, toSpanOverlay, type ParsedOverlay } from '../regrounding/overlay';
 import type { Dispositions, DispositionRow, Overlay } from '../spans';
 import type { ResolvedAgent } from '../pipeline';
 import type { AgentFrontmatter, CanonicalAgentDoc } from '../schema';
@@ -92,8 +93,11 @@ function rows(overrides: { body?: Record<string, DispositionRow>; frontmatter?: 
 
 const unitText = (anchor: string): string => partition(BODY).units.find((u) => u.anchor === anchor)!.text;
 
-/** The overlay in its committed `## @unit` / `## @entry` form, parsed as 13.2 parses it. */
-function overlay(): Overlay {
+/** The re-grounded command — the `## @entry` body is a YAML VALUE (Task 15.3; the 15.0 (b) erratum). */
+const REGROUNDED_CMD = { name: 'unit-tests', cmd: 'npm test', runContext: 'consumer-repo', cue: "run your repo's unit suite" };
+
+/** The overlay in its committed `## @unit` / `## @entry` form, parsed as 13.2 parses it (pins included). */
+function parsedOverlay(): ParsedOverlay {
   const fm = frontmatter() as unknown as YamlDoc;
   const cmd = (fm.commands as unknown[])[0];
   const hex = (h: string) => h.replace(/^sha256:/, '');
@@ -103,15 +107,33 @@ function overlay(): Overlay {
     '',
     'Consumer-grounded operative text.',
     '',
-    `## @entry commands[unit-tests] @ sha256:${hex(hashText(JSON.stringify(cmd)))}`,
-    '- run your repo\'s unit suite: `npm test`',
+    `## @entry commands[unit-tests] @ sha256:${hex(hashEntry(cmd))}`,
+    ...Object.entries(REGROUNDED_CMD).map(([k, v]) => `${k}: ${JSON.stringify(v)}`),
     '',
   ].join('\n');
-  return toSpanOverlay(parseOverlay(text, 'canonical/profiles/consumer/twin.overlay.md'));
+  return parseOverlay(text, 'canonical/profiles/consumer/twin.overlay.md');
+}
+function overlay(): Overlay {
+  return toSpanOverlay(parsedOverlay());
 }
 
+/** A consumer ctx over the CANONICAL frontmatter — only for the refusals that precede derivation. */
 function consumerCtx(disp: Dispositions, ov: Overlay | undefined = overlay()): AdapterContext {
   return baseCtx({ profile: 'consumer', consumer: { dispositions: { twin: disp }, overlays: ov ? { twin: ov } : {} } });
+}
+
+/**
+ * The consumer rendering as the generator produces it (Task 15.3): the adapter renders derive()'s
+ * frontmatter (values substituted, disposed entries pruned), attributed through `entryOrigin`.
+ */
+function consumerPrompt(adapter: TargetAdapter, disp: Dispositions): { content: string; attribution: AttributionManifest } {
+  const agent = resolvedAgent();
+  const derived = derive({ source: FILE, frontmatter: agent.doc.frontmatter as unknown as YamlDoc, body: BODY, dispositions: disp as Dispositions & RowFile, overlay: parsedOverlay() });
+  const derivedAgent = { ...agent, doc: { ...agent.doc, frontmatter: derived.frontmatter as unknown as AgentFrontmatter } } as ResolvedAgent;
+  const ctx = baseCtx({ profile: 'consumer', consumer: { dispositions: { twin: disp }, overlays: { twin: overlay() }, entryOrigins: { twin: derived.entryOrigin } } });
+  const file = adapter.emitAgent(derivedAgent, ctx).find((f) => f.path.endsWith('.md'));
+  if (!file) throw new Error('no prose artifact');
+  return { content: file.content, attribution: file.attribution };
 }
 
 /** The prose artifact each adapter emits for an agent (CC: the agent file; Kiro: the prompt). */
@@ -136,7 +158,7 @@ const ADAPTERS: [string, () => TargetAdapter][] = [
 
 describe.each(ADAPTERS)('%s adapter — the consumer path routes through emitSpans (Task 15.0)', (_name, make) => {
   it('(a) a re-pointed body unit renders its overlay text, sourced to its canonical #<anchor>', () => {
-    const out = prompt(make(), consumerCtx(rows({ body: { '#regrounded': { disposition: 're-pointed', destination: '#regrounded' } } })));
+    const out = consumerPrompt(make(), rows({ body: { '#regrounded': { disposition: 're-pointed', destination: '#regrounded' } } }));
     expect(out.content).toContain('Consumer-grounded operative text.');
     expect(out.content).not.toContain('Steward-only operative text.');
     const spans = spanOf(out.attribution, `${FILE}#regrounded`);
@@ -145,17 +167,24 @@ describe.each(ADAPTERS)('%s adapter — the consumer path routes through emitSpa
     expect(linesOf(out.content, spans[0].lines)).toContain('Consumer-grounded operative text.');
   });
 
-  it('(b) a re-pointed frontmatter leaf renders its ## @entry overlay text, sourced to …#frontmatter:<path>', () => {
-    const out = prompt(make(), consumerCtx(rows({ frontmatter: { 'commands[unit-tests]': { disposition: 're-pointed', destination: 'frontmatter:commands[unit-tests]' } } })));
-    expect(out.content).toContain("- run your repo's unit suite: `npm test`");
+  it('(b) a re-pointed frontmatter leaf renders its ## @entry overlay VALUE via the field’s per-kind renderer, sourced to …#frontmatter:<path> (15.0 (b) erratum, 2026-09-29)', () => {
+    const out = consumerPrompt(make(), rows({ frontmatter: { 'commands[unit-tests]': { disposition: 're-pointed', destination: 'frontmatter:commands[unit-tests]' } } }));
     const spans = spanOf(out.attribution, `${FILE}#frontmatter:commands[unit-tests]`);
     expect(spans).toHaveLength(1);
     expect(spans[0].op).toBe('render');
-    expect(linesOf(out.content, spans[0].lines)).toBe("- run your repo's unit suite: `npm test`");
+    // "target renderings = rendering(derive(x))": the span is exactly what the SAME adapter renders
+    // for a charter whose canonical command already IS the re-grounded value.
+    const agent = resolvedAgent();
+    const asCanonical = { ...agent, doc: { ...agent.doc, frontmatter: { ...agent.doc.frontmatter, commands: [REGROUNDED_CMD] } } } as unknown as ResolvedAgent;
+    const steward = make().emitAgent(asCanonical, baseCtx()).find((f) => f.path.endsWith('.md'))!;
+    const stewardSpan = spanOf(steward.attribution, `${FILE}#frontmatter:commands[unit-tests]`)[0];
+    expect(linesOf(out.content, spans[0].lines)).toBe(linesOf(steward.content, stewardSpan.lines));
+    expect(linesOf(out.content, spans[0].lines)).toContain("run your repo's unit suite");
+    expect(out.content).not.toContain('run the unit suite');
   });
 
   it('(c) a list-valued field renders per member, so writeScope[<glob>] is its own span (DD26)', () => {
-    const out = prompt(make(), consumerCtx(rows({ frontmatter: { 'writeScope[b/**]': { disposition: 'no-consumer-counterpart' } } })));
+    const out = consumerPrompt(make(), rows({ frontmatter: { 'writeScope[b/**]': { disposition: 'no-consumer-counterpart' } } }));
     const a = spanOf(out.attribution, `${FILE}#frontmatter:writeScope[a/**]`);
     expect(a).toHaveLength(1);
     expect(linesOf(out.content, a[0].lines)).toBe('- `a/**`');
@@ -174,6 +203,12 @@ describe.each(ADAPTERS)('%s adapter — the consumer path routes through emitSpa
     );
     expect(() => prompt(make(), consumerCtx(rows({}, ['writeScope[a/**]'])))).toThrow(
       'emitSpans: frontmatter entry writeScope[a/**] in canonical/agents/twin.md has no disposition row — never implied as retained.'
+    );
+  });
+
+  it('rendering the CANONICAL frontmatter under the consumer profile refuses a disposed entry (Task 15.3) — the adapters render derive()’s', () => {
+    expect(() => prompt(make(), consumerCtx(rows({ frontmatter: { 'writeScope[b/**]': { disposition: 'no-consumer-counterpart' } } })))).toThrow(
+      "emitSpans: frontmatter entry writeScope[b/**] in canonical/agents/twin.md is disposed no-consumer-counterpart but was rendered — the consumer profile renders derive()'s frontmatter and catalog, never the canonical ones."
     );
   });
 

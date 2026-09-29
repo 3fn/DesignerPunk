@@ -11,14 +11,14 @@ import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
 import { adaptersFor } from '../adapters/index';
 import { loadConsumerProfile } from '../consumer-profile';
-import { checkDispositionKeys, keyUniverse } from '../derive';
+import { checkDispositionKeys, keyUniverse, type RowFile } from '../derive';
 import { splitFrontmatter } from '../frontmatter';
 import { assembleContext, CONSUMER_FIXTURE_OUTPUT_ROOT, FIXTURE_SOURCE, generateFixture } from '../generate';
 import { entryTree, partition } from '../partition';
 import { checkDerivation } from '../regrounding/derivation';
 import { validateDispositions } from '../regrounding/dispositions';
 import { hashEntry, hashText } from '../regrounding/hash';
-import { checkOverlayPins, parseOverlay, toSpanOverlay } from '../regrounding/overlay';
+import { checkOverlayPins, parseOverlay } from '../regrounding/overlay';
 import { assignOccurrences } from '../regrounding/triviality';
 import type { Dispositions } from '../spans';
 import { DISPOSITIONS_FILE, E_FM, EXTRA, loadSemguard, OVERLAY_FILE, S, SEMGUARD_ROOT, SOURCE } from '../__fixtures__/semantics-guard';
@@ -74,16 +74,15 @@ describe('generateFixture’s consumer lane (Task 15.0) routes a re-pointing thr
     const bodyTree = partition(body);
     const tree = entryTree(frontmatter);
     const glob = tree.units.map((l) => l.path).find((p) => p.startsWith('writeScope[')) as string;
-    const dispositions: Dispositions = {
+    const dispositions = {
       body: Object.fromEntries(bodyTree.units.map((u) => [u.anchor, u.anchor === '#doc' ? { disposition: 're-pointed', destination: '#doc' } : { disposition: 'retained' }])),
       frontmatter: Object.fromEntries(tree.units.map((l) => [l.path, l.path === glob ? { disposition: 're-pointed', destination: `frontmatter:${glob}` } : { disposition: 'retained' }])),
-    } as Dispositions;
+    } as Dispositions & RowFile;
     const hex = (h: string) => h.replace(/^sha256:/, '');
     const docText = bodyTree.units.find((u) => u.anchor === '#doc')?.text as string;
     const glbValue = tree.units.find((l) => l.path === glob)?.value;
-    const overlay = toSpanOverlay(
-      parseOverlay(`## @unit #doc @ sha256:${hex(hashText(docText))}\nThe fixture body, re-grounded for a consumer.\n## @entry ${glob} @ sha256:${hex(hashEntry(glbValue))}\n- \`out/**\` — your fixture output\n`, 'fixture.overlay.md')
-    );
+    // Task 15.3 (the 15.0 (b) erratum): the `## @entry` body is a YAML VALUE — the re-grounded glob.
+    const overlay = parseOverlay(`## @unit #doc @ sha256:${hex(hashText(docText))}\nThe fixture body, re-grounded for a consumer.\n## @entry ${glob} @ sha256:${hex(hashEntry(glbValue))}\nout/**\n`, 'fixture.overlay.md');
     const ctx = assembleContext(REPO_ROOT);
     const targets = loadConsumerProfile(REPO_ROOT).targets;
     const outputs = await generateFixture(REPO_ROOT, ctx, adaptersFor(targets, ctx.dispositions), { profile: 'consumer', dispositions, overlay });

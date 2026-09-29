@@ -31,7 +31,8 @@ import type { AlwaysSetMember } from '../compose';
 import type { ToolSubset } from '../schema';
 import type { WorkflowRule } from '../workflow-rules-guard';
 import type { AttributionManifest } from '../attribution';
-import type { Dispositions, Overlay, Profile } from '../spans';
+import { AttributionAccumulator } from '../attribution';
+import { emitSpans, type Dispositions, type Overlay, type Profile } from '../spans';
 
 // ============================================================================
 // Emitted files — every emission carries its attribution (P2, rule above)
@@ -167,6 +168,12 @@ export interface AdapterContext {
    */
   embeds?: Readonly<Record<string, string>>;
   /**
+   * The same embeds kept per asserted section (Task 15.3; `buildEmbedSections`). The CC adapter's
+   * CONSUMER path emits one span per section (`ambient[<docid>#<section-slug>]`), so the embed
+   * container is sourced by surviving member spans; the steward path keeps the joined `embeds`.
+   */
+  embedSections?: Readonly<Record<string, readonly { section: string; text: string }[]>>;
+  /**
    * Doc id → repo-relative file path, for adapters that emit `@`-import lines (C11 lane 1 —
    * the CC adapter's generated `CLAUDE.md`). Supplied by the generation entry point (it knows
    * the steering corpus's on-disk layout); adapters never guess a path from an id.
@@ -200,21 +207,79 @@ export interface AdapterContext {
   consumer?: ConsumerInputs;
 }
 
-/** Per-agent consumer inputs (Task 15.0): the parsed dispositions rows and overlay text. */
+/**
+ * Per-agent consumer inputs (Task 15.0; 15.3): the parsed dispositions rows (with the shared
+ * catalog's `members` rows), the overlay's body-unit text, and — because under the consumer
+ * profile the adapter renders `derive()`'s frontmatter — each agent's `entryOrigin` (derived
+ * entry path → canonical entry path).
+ */
 export interface ConsumerInputs {
   dispositions: Readonly<Record<string, Dispositions>>;
   overlays?: Readonly<Record<string, Overlay>>;
+  entryOrigins?: Readonly<Record<string, Readonly<Record<string, string>>>>;
 }
 
 /** Resolve the profile and this agent's consumer inputs for `emitSpans` (both adapters call it). */
 export function spanInputsFor(
   ctx: AdapterContext,
   agentId: string
-): { profile: Profile; dispositions: Dispositions | undefined; overlay: Overlay | undefined } {
+): { profile: Profile; dispositions: Dispositions | undefined; overlay: Overlay | undefined; entryOrigin: Readonly<Record<string, string>> | undefined } {
   const profile: Profile = ctx.profile ?? 'steward';
-  if (profile === 'steward') return { profile, dispositions: undefined, overlay: undefined };
-  return { profile, dispositions: ctx.consumer?.dispositions[agentId], overlay: ctx.consumer?.overlays?.[agentId] };
+  if (profile === 'steward') return { profile, dispositions: undefined, overlay: undefined, entryOrigin: undefined };
+  return {
+    profile,
+    dispositions: ctx.consumer?.dispositions[agentId],
+    overlay: ctx.consumer?.overlays?.[agentId],
+    entryOrigin: ctx.consumer?.entryOrigins?.[agentId],
+  };
 }
+
+// ============================================================================
+// Identity members (C19; Spec 123 Task 15.3) — the ONLY target-varying part of the lane
+// ============================================================================
+
+/**
+ * One always-set member, as `derive()` sees it (a shipped identity doc, `counterpart:` rows):
+ * its canonical path, its canonical body, its body rows and its re-grounded unit text. The
+ * shipped doc's own frontmatter is DROPPED, never carried (C19) — so none is passed.
+ */
+export interface IdentityMemberInput {
+  /** The doc id (`core-goals`) — the member file is `designerpunk-<id>.md` (Leonardo A-R1(ii)). */
+  id: string;
+  /** Repo-relative canonical path (`.kiro/steering/core-goals.md`) — the span provenance. */
+  source: string;
+  /** The canonical body (frontmatter already split off and dropped). */
+  body: string;
+  /** Body rows (every unit explicit — DD25). */
+  dispositions: Dispositions;
+  /** Re-grounded text of the re-pointed units. */
+  overlay?: Overlay;
+}
+
+/** The prefixed member name every target uses (C19: files are prefixed). */
+export const identityMemberName = (id: string): string => `designerpunk-${id}`;
+
+/**
+ * Render one member's BODY through `emitSpans` under the consumer profile (the one span function
+ * — Task 14's routing arbiter reaches this path too), after an optional adapter-written glue
+ * header. Both adapters call this; they differ only in the path and the header.
+ */
+export function renderIdentityMember(
+  member: IdentityMemberInput,
+  path: string,
+  header: { glue: 'identity-frontmatter'; text: string } | undefined
+): EmittedFile {
+  const acc = new AttributionAccumulator();
+  const src = { file: member.source, body: member.body, frontmatter: {} };
+  let content = '';
+  if (header) content += emitSpans(acc, src, 'consumer', member.dispositions, member.overlay, [{ kind: 'glue', glue: header.glue, text: header.text }]).text;
+  content += emitSpans(acc, src, 'consumer', member.dispositions, member.overlay, 'body').text;
+  return { path, content, attribution: acc.build(path) };
+}
+
+/** The loud refusal when identity members are asked for under the steward profile (C19). */
+export const identityMembersStewardMessage = (target: string): string =>
+  `${target}: emitIdentityMembers is the CONSUMER profile's delivery (C19) — the steward profile keeps today's always-layer (CC imports repo paths; Kiro []).`;
 
 // ============================================================================
 // The TargetAdapter interface (design C4 — verbatim seam)
@@ -232,6 +297,13 @@ export interface TargetAdapter {
 
   /** Emit THIS target's always-layer delivery (Kiro: inclusion-always refs; CC: C11 lanes). */
   emitAlwaysLayer(set: readonly AlwaysSetMember[], ctx: AdapterContext): EmittedFile[];
+
+  /**
+   * CONSUMER profile only (C19; Task 15.3): the derived identity MEMBER FILES this target delivers
+   * (CC `.claude/identity/designerpunk-<id>.md`; Kiro `.kiro/steering/designerpunk-<id>.md` with a
+   * fresh `id` + `inclusion: always` frontmatter). Throws under the steward profile.
+   */
+  emitIdentityMembers(members: readonly IdentityMemberInput[], ctx: AdapterContext): EmittedFile[];
 
   /** The target's tool-reference syntax (CC: `mcp__<server>__<tool>`; Kiro: native name). */
   toolRef(subset: ToolSubset, tool: string): string;

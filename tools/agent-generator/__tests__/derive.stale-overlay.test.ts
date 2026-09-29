@@ -10,7 +10,9 @@
  *   - the derived BODY is the one `emitSpans` selection, byte-identical to every target's body;
  *   - the derived FRONTMATTER drops disposed leaves (and the containers they empty), keeps retained
  *     values; an always-set document (`counterpart:`) carries none (C19);
- *   - a re-pointed frontmatter entry or shared member REFUSES, pending Task 15.2's Q1 ruling.
+ *   - a re-pointed frontmatter entry or shared member carries its overlay VALUE, substituted in
+ *     place, under ONE generic congruence refusal (Task 15.3; the 15.0 (b) erratum — this block
+ *     replaced 15.2's "refuses, pending Q1" cases).
  */
 import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
@@ -18,11 +20,11 @@ import { type AdapterContext, type FieldDispositionTable, type TargetAdapter } f
 import { CcAdapter } from '../adapters/cc';
 import { KiroAdapter } from '../adapters/kiro';
 import { checkAttributionTotality } from '../attribution';
-import { derive, DeriveError, deriveSharedCatalog, deriveText, pruneFrontmatter, repointedEntryPendingMessage } from '../derive';
+import { derive, DeriveError, deriveSharedCatalog, deriveText, overlayValueMessage, pruneFrontmatter, type RowFile } from '../derive';
 import type { YamlDoc } from '../frontmatter';
 import { generateConsumerRendering, type ConsumerProfileInputs, type ResolvedForEmission } from '../generate';
 import { entryTree, partition } from '../partition';
-import { hashText } from '../regrounding/hash';
+import { hashEntry, hashText } from '../regrounding/hash';
 import { parseOverlay, toSpanOverlay } from '../regrounding/overlay';
 import type { ResolvedAgent } from '../pipeline';
 import type { Dispositions, DispositionRow } from '../spans';
@@ -119,9 +121,27 @@ describe('derive() refuses first — every finding, one error, nothing emitted',
     const adapters: TargetAdapter[] = [new CcAdapter(FIELD_DISPOSITIONS), new KiroAdapter(FIELD_DISPOSITIONS)];
     const spies = adapters.map((a) => jest.spyOn(a, 'emitAgent'));
     const stale = parseOverlay(OVERLAY_TEXT(hashText('an earlier canonical\n')), OVERLAY);
-    const inputs: ConsumerProfileInputs = { dispositions: { twin: rows() }, overlays: { twin: stale }, missing: [] };
-    expect(() => generateConsumerRendering([resolvedFor()], adapters, inputs)).toThrow(DeriveError);
-    for (const s of spies) expect(s).not.toHaveBeenCalled();
+    const inputs: ConsumerProfileInputs = {
+      dispositions: { twin: rows() as Dispositions & RowFile },
+      overlays: { twin: stale },
+      shared: { dispositions: { members: {} } },
+      identity: {},
+      missing: [],
+      authored: true,
+    };
+    const render = generateConsumerRendering({
+      agents: [resolvedFor().resolved.doc],
+      identity: [],
+      sharedCatalogText: 'members: []\n',
+      inputs,
+      adapters,
+      resolve: async () => resolvedFor(),
+      docIdToPath: {},
+      alwaysSetIds: [],
+    });
+    return expect(render).rejects.toThrow(DeriveError).then(() => {
+      for (const s of spies) expect(s).not.toHaveBeenCalled();
+    });
   });
 });
 
@@ -136,8 +156,11 @@ describe('derive() emits the consumer canonical', () => {
 
   it('the derived body is byte-identical to every target’s body (never a second selection)', () => {
     const d = run();
+    // Task 15.3: the adapters render derive()'s frontmatter, attributed through its entryOrigin.
+    const derivedAgent = { ...resolvedFor().resolved, doc: { frontmatter: d.frontmatter, body: BODY, sourcePath: SOURCE } } as unknown as ResolvedAgent;
+    const ctx = { ...consumerCtx(), consumer: { ...consumerCtx().consumer!, entryOrigins: { twin: d.entryOrigin } } };
     for (const adapter of [new CcAdapter(FIELD_DISPOSITIONS), new KiroAdapter(FIELD_DISPOSITIONS)]) {
-      const prose = adapter.emitAgent(resolvedFor().resolved, consumerCtx()).find((f) => f.path.endsWith('.md'))!;
+      const prose = adapter.emitAgent(derivedAgent, ctx).find((f) => f.path.endsWith('.md'))!;
       expect(`${adapter.target}: ${prose.content.includes(d.body)}`).toBe(`${adapter.target}: true`);
     }
   });
@@ -174,10 +197,35 @@ describe('derive() emits the consumer canonical', () => {
   });
 });
 
-describe('re-pointed frontmatter and shared members — refused, pending Q1', () => {
-  it('a re-pointed frontmatter entry refuses loudly rather than choosing a derived form', () => {
-    expect(findings(() => run(rows({ frontmatter: { 'writeScope[a/**]': { disposition: 're-pointed', destination: 'frontmatter:writeScope[a/**]' } } })))).toEqual([
-      repointedEntryPendingMessage('frontmatter entry writeScope[a/**]', DISP),
+describe('re-pointed frontmatter entries carry YAML VALUES (Task 15.3; the 15.0 (b) erratum)', () => {
+  const repoint = (key: string) => rows({ frontmatter: { [key]: { disposition: 're-pointed', destination: `frontmatter:${key}` } } });
+  const leaf = (key: string) => entryTree(FM()).units.find((l) => l.path === key)!.value;
+  const entry = (key: string, body: string) => `## @entry ${key} @ sha256:${hex(hashEntry(leaf(key)))}\n${body}`;
+  const withEntries = (...entries: string[]) => `${OVERLAY_TEXT()}${entries.join('')}`;
+
+  it('a string member: the value is substituted in place and entryOrigin maps its new path to the canonical one', () => {
+    const d = run(repoint('writeScope[a/**]'), withEntries(entry('writeScope[a/**]', 'src/**\n')));
+    expect((d.frontmatter as YamlDoc).writeScope).toEqual(['src/**']);
+    expect(d.entryOrigin).toEqual({ 'writeScope[src/**]': 'writeScope[a/**]' });
+  });
+
+  it('a map member: the whole object is substituted, its identity (entry path) kept', () => {
+    const value = 'name: unit-tests\ncmd: npm run test:unit\nrunContext: consumer-repo\ncue: run your unit suite\n';
+    const d = run(repoint('commands[unit-tests]'), withEntries(entry('commands[unit-tests]', value)));
+    expect((d.frontmatter as YamlDoc).commands).toEqual([{ name: 'unit-tests', cmd: 'npm run test:unit', runContext: 'consumer-repo', cue: 'run your unit suite' }]);
+    expect(d.entryOrigin).toEqual({});
+  });
+
+  it('the ONE generic refusal: missing body, not YAML, wrong JSON type, wrong key set, a map member changing identity', () => {
+    const why = (key: string, reason: string) => overlayValueMessage(`frontmatter entry ${key}`, DISP, reason);
+    expect(findings(() => run(repoint('writeScope[a/**]')))).toEqual([why('writeScope[a/**]', 'is missing — no ## @entry body for this re-pointed row')]);
+    expect(findings(() => run(repoint('writeScope[a/**]'), withEntries(entry('writeScope[a/**]', '[1, 2]\n'))))).toEqual([why('writeScope[a/**]', 'is a list, the canonical value a string')]);
+    expect(findings(() => run(repoint('writeScope[a/**]'), withEntries(entry('writeScope[a/**]', 'a: [\n'))))[0]).toContain('its overlay value is not YAML');
+    expect(findings(() => run(repoint('commands[unit-tests]'), withEntries(entry('commands[unit-tests]', 'name: unit-tests\ncmd: npm test\n'))))).toEqual([
+      why('commands[unit-tests]', 'carries keys [cmd, name], the canonical value [cmd, cue, name, runContext]'),
+    ]);
+    expect(findings(() => run(repoint('commands[unit-tests]'), withEntries(entry('commands[unit-tests]', 'name: tests\ncmd: npm test\nrunContext: this-repo\ncue: c\n'))))).toEqual([
+      why('commands[unit-tests]', "changes the member's identity (its entry path becomes commands[tests])"),
     ]);
   });
 });
@@ -216,10 +264,20 @@ describe('deriveSharedCatalog', () => {
     const out = loadYaml(deriveSharedCatalog(CATALOG, { members: { 'keep-me': { disposition: 'retained' }, 'drop-me': { disposition: 'no-consumer-counterpart' } } }));
     expect(out).toEqual({ members: [{ id: 'keep-me', kind: 'command', owner: 'thurgood' }] });
   });
-  it('refuses a missing row and a re-pointed member (pending Q1)', () => {
+  it('refuses a missing row; a re-pointed member with no overlay value refuses (Task 15.3)', () => {
     expect(findings(() => deriveSharedCatalog(CATALOG, { members: { 'keep-me': { disposition: 're-pointed', destination: 'x' } } }))).toEqual([
       "drop-me in canonical/shared/shared-catalog.yaml has no disposition row — every unit carries an explicit row (write 'retained' if it ships as-is)",
-      repointedEntryPendingMessage('shared member keep-me', 'canonical/profiles/consumer/_shared.dispositions.yaml'),
+      overlayValueMessage('shared member keep-me', 'canonical/profiles/consumer/_shared.dispositions.yaml', 'is missing — no ## @entry body for this re-pointed row'),
+    ]);
+  });
+  it('a re-pointed member is replaced by its overlay VALUE, keeping its id (Task 15.3)', () => {
+    const member = { id: 'keep-me', kind: 'command', owner: 'thurgood' };
+    const ov = parseOverlay(`## @entry keep-me @ sha256:${hex(hashEntry(member))}\nid: keep-me\nkind: command\nowner: lina\n`, 'canonical/profiles/consumer/_shared.overlay.md');
+    const rowsShared = { members: { 'keep-me': { disposition: 're-pointed', destination: 'keep-me' }, 'drop-me': { disposition: 'no-consumer-counterpart' } } };
+    expect(loadYaml(deriveSharedCatalog(CATALOG, rowsShared, undefined, ov))).toEqual({ members: [{ id: 'keep-me', kind: 'command', owner: 'lina' }] });
+    const moved = parseOverlay(`## @entry keep-me @ sha256:${hex(hashEntry(member))}\nid: other\nkind: command\nowner: lina\n`, 'canonical/profiles/consumer/_shared.overlay.md');
+    expect(findings(() => deriveSharedCatalog(CATALOG, rowsShared, undefined, moved))).toEqual([
+      overlayValueMessage('shared member keep-me', 'canonical/profiles/consumer/_shared.dispositions.yaml', "changes the member's identity (id other)"),
     ]);
   });
 });

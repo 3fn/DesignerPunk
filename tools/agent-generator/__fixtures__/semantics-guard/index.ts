@@ -4,7 +4,8 @@
  * An agent-shaped charter (`semguard`) whose body is three units copied byte-for-byte from
  * `canonical/agents/stacy.md` (the claims-audit parent preamble, the trigger set, and S — the
  * owed-set pipeline), with a committed consumer profile: every unit and leaf an explicit row,
- * and three in-place re-pointings carried by a `## @unit` / `## @entry` overlay:
+ * and three in-place re-pointings carried by a `## @unit` / `## @entry` overlay (the `## @entry`
+ * bodies are YAML VALUES since Task 15.3 — the 15.0 criterion (b) erratum of 2026-09-29):
  *   E     — S, re-grounded by G1's committed E rendering (zero-verbatim, 10.S Constraint 3);
  *   E-fm  — `writeScope[.kiro/specs/**]`;
  *   extra — `commands[claims-pass]` (disclosed extra evidence).
@@ -15,6 +16,7 @@ import type { AdapterContext } from '../../adapters/index';
 import { splitFrontmatter, type YamlDoc } from '../../frontmatter';
 import { entryTree, partition } from '../../partition';
 import type { ResolvedAgent } from '../../pipeline';
+import { derive, type RowFile } from '../../derive';
 import { loadDispositions, type DispositionsFile } from '../../regrounding/dispositions';
 import { parseOverlay, toSpanOverlay, type ParsedOverlay } from '../../regrounding/overlay';
 import type { AgentFrontmatter, CanonicalAgentDoc } from '../../schema';
@@ -39,7 +41,10 @@ export function loadSemguard() {
   const parsedOverlay: ParsedOverlay = parseOverlay(read(OVERLAY_FILE), OVERLAY_FILE);
   const dispositions: Dispositions = { body: dispositionsFile.body, frontmatter: dispositionsFile.frontmatter } as Dispositions;
   const overlay: Overlay = toSpanOverlay(parsedOverlay);
-  const fm = frontmatter as unknown as AgentFrontmatter;
+  // Under the consumer profile the adapters render derive()'s frontmatter (Task 15.3): the
+  // re-pointed entries carry their overlay VALUES; `entryOrigin` maps derived paths to canonical.
+  const derived = derive({ source: SOURCE, frontmatter, body, dispositions: dispositionsFile as unknown as RowFile & Dispositions, overlay: parsedOverlay, dispositionsFile: DISPOSITIONS_FILE });
+  const fm = derived.frontmatter as unknown as AgentFrontmatter;
   const doc: CanonicalAgentDoc = { frontmatter: fm, body, sourcePath: SOURCE };
   const resolved = {
     agent: fm.agent,
@@ -59,7 +64,9 @@ export function loadSemguard() {
     parsedOverlay,
     dispositions,
     overlay,
+    /** The consumer rendering's input: the DERIVED frontmatter with the canonical body. */
     resolved,
+    entryOrigin: derived.entryOrigin,
   };
 }
 
@@ -68,6 +75,6 @@ export function semguardContext(base: AdapterContext, fixture = loadSemguard()):
   return {
     ...base,
     profile: 'consumer',
-    consumer: { dispositions: { semguard: fixture.dispositions }, overlays: { semguard: fixture.overlay } },
+    consumer: { dispositions: { semguard: fixture.dispositions }, overlays: { semguard: fixture.overlay }, entryOrigins: { semguard: fixture.entryOrigin } },
   };
 }

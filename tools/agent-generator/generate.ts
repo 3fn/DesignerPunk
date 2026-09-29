@@ -32,13 +32,15 @@ import {
   parseSharedCatalog,
   type AdapterContext,
   type EmittedFile,
+  type IdentityMemberInput,
   type TargetAdapter,
 } from './adapters/index';
 import { CONSUMER_OUTPUT_ROOT, loadConsumerProfile } from './consumer-profile';
 import type { Dispositions, Overlay, Profile } from './spans';
 import { loadDispositions } from './regrounding/dispositions';
 import { parseOverlay, toSpanOverlay, type ParsedOverlay } from './regrounding/overlay';
-import { derive, type RowFile } from './derive';
+import { derive, deriveSharedCatalog, type RowFile } from './derive';
+import { splitFrontmatter } from './frontmatter';
 import type { YamlDoc } from './frontmatter';
 import { PROFILE_DIR } from './regrounding/freshness';
 import { getWorkflowRules } from './workflow-rules-guard';
@@ -150,8 +152,9 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
   );
   if (ledger.length > 0) {
     const corpus = createStdioDocsClient();
-    // Each ledger agent is resolved ONCE; the consumer lane (step 5) re-emits the same resolution.
-    const resolvedAgents: ResolvedForEmission[] = [];
+    // The canonical ledger docs, for the consumer lane (step 5), which derives and resolves its own.
+    const ledgerDocs: CanonicalAgentDoc[] = [];
+    const consumerOutputs: GeneratedOutput[] = [];
     try {
       for (const agentName of ledger) {
         const srcAbs = path.join(repoRoot, 'canonical', 'agents', `${agentName}.md`);
@@ -163,7 +166,7 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
         }
         const doc = parseCanonicalAgentSource(fs.readFileSync(srcAbs, 'utf8'), srcAbs);
         const { resolved, emitCtx } = await resolveForEmission(repoRoot, ctx, doc, corpus);
-        resolvedAgents.push({ resolved, emitCtx });
+        ledgerDocs.push(doc);
         for (const adapter of adapters) {
           for (const file of adapter.emitAgent(resolved, emitCtx)) {
             outputs.push(emittedToOutput(file));
@@ -174,6 +177,24 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
           });
         }
       }
+
+      // 5. The CONSUMER rendering (Spec 123 Tasks 15.1–15.3; design C12, C19, C22; Req 9.5):
+      // derive() over every ledger agent, the shared catalog and the identity docs, then the SAME
+      // adapters over the derived charters, remapped under `canonical/_consumer-output/<target>/`.
+      // Inside the corpus session: the derived charters resolve like any other. A guarded root.
+      const alwaysSetIds = ctx.alwaysSet.map((m) => m.id);
+      consumerOutputs.push(
+        ...(await generateConsumerRendering({
+          agents: ledgerDocs,
+          identity: loadIdentityDocs(repoRoot, alwaysSetIds),
+          sharedCatalogText: fs.readFileSync(path.join(repoRoot, 'canonical', 'shared', 'shared-catalog.yaml'), 'utf8'),
+          inputs: loadConsumerInputs(repoRoot, ledger, alwaysSetIds.filter((id) => !TEMPLATE_MEMBERS.includes(id))),
+          adapters,
+          resolve: (d) => resolveForEmission(repoRoot, ctx, d, corpus),
+          docIdToPath: consumerDocIdToPath(repoRoot, alwaysSetIds),
+          alwaysSetIds,
+        }))
+      );
     } finally {
       await corpus.close();
     }
@@ -214,11 +235,7 @@ export async function generateAll(repoRoot: string): Promise<GeneratedOutput[]> 
       }));
     outputs.push({ path: 'canonical/manifests/demotion-delta.json', content: serializeDemotionDeltas(deltas) });
 
-    // 5. The CONSUMER rendering (Spec 123 Task 15.1; design C12, Req 9.5): the same resolved
-    // ledger agents, emitted through the same adapters under `profile: 'consumer'`, remapped
-    // under `canonical/_consumer-output/<target>/`. A guarded root, so the diff-guard
-    // regenerates and compares it on every full run.
-    outputs.push(...generateConsumerRendering(resolvedAgents, adapters, loadConsumerInputs(repoRoot, ledger)));
+    outputs.push(...consumerOutputs);
   }
 
   // Deterministic output ordering (P1).
@@ -245,9 +262,12 @@ export interface FixtureEmitOptions {
   /** Default `'steward'` — the guarded, byte-identical fixture lane. */
   profile?: Profile;
   /** The fixture agent's disposition rows (required when `profile` is `'consumer'`). */
-  dispositions?: Dispositions;
-  /** The fixture agent's overlay text (`toSpanOverlay(parseOverlay(...))`), for re-pointed rows. */
-  overlay?: Overlay;
+  dispositions?: Dispositions & RowFile;
+  /**
+   * The fixture agent's parsed overlay, WITH its pins (`parseOverlay(...)`) — `derive()` checks the
+   * pins and substitutes each `## @entry` VALUE (Task 15.3; the 15.0 (b) erratum).
+   */
+  overlay?: ParsedOverlay;
 }
 
 // ============================================================================
@@ -260,18 +280,41 @@ export interface ResolvedForEmission {
   emitCtx: AdapterContext;
 }
 
-/** The consumer profile's per-agent inputs as committed under `canonical/profiles/consumer/`. */
+/** An injected resolver: validate + resolve a (derived) doc for emission (the docs MCP in `generateAll`). */
+export type ResolveDoc = (doc: CanonicalAgentDoc) => Promise<ResolvedForEmission>;
+
+/** One always-set identity doc as shipped: its canonical path and body (its own frontmatter is dropped — C19). */
+export interface IdentityDoc {
+  id: string;
+  source: string;
+  body: string;
+}
+
+/**
+ * The always-set members that ship as TEMPLATES, not as identity member files (C19; Req 12.3:
+ * `personal-note.md` is the only instance). Its counterpart, `templates/personal-note.template.md`,
+ * is Task 22's; the consumer's copy lives at `.designerpunk/personal-note.local.md`.
+ */
+export const TEMPLATE_MEMBERS: readonly string[] = Object.freeze(['personal-note']);
+/** Where a template member lives in the consumer's repo (C19; Req 18). */
+export const TEMPLATE_MEMBER_PATH = '.designerpunk/personal-note.local.md';
+/** Where the package's own files resolve from in the consumer's repo (C20: `packageRoot`-relative). */
+export const CONSUMER_PACKAGE_ROOT = 'node_modules/@3fn/core';
+
+/** The consumer profile's inputs as committed under `canonical/profiles/consumer/`. */
 export interface ConsumerProfileInputs {
   /** Agent id → its parsed, schema-validated dispositions rows. */
-  dispositions: Record<string, Dispositions>;
-  /**
-   * Agent id → its parsed overlay, WITH its pins (13.2's `parseOverlay`; absent when the agent
-   * re-points nothing). One form, two readers: `derive()` checks the pins (C22), and the adapters
-   * read its text through `toSpanOverlay`.
-   */
+  dispositions: Record<string, Dispositions & RowFile>;
+  /** Agent id → its parsed overlay, WITH its pins (absent when the agent re-points nothing). */
   overlays: Record<string, ParsedOverlay>;
-  /** Ledger agents with no dispositions file — the population check reads it. */
+  /** The shared catalog's rows (`_shared.dispositions.yaml`) and overlay. */
+  shared?: { dispositions: RowFile; overlay?: ParsedOverlay };
+  /** Identity doc id → its rows (`counterpart:`) and overlay (`always-set/<id>.*`). */
+  identity: Record<string, { dispositions: Dispositions & RowFile; overlay?: ParsedOverlay }>;
+  /** Every profile file the population requires that is absent. */
   missing: string[];
+  /** Whether ANY profile file exists — the profile is authored. */
+  authored: boolean;
 }
 
 /** Where the derived consumer canonical lands — once, not per target (design C22, C12). */
@@ -281,92 +324,172 @@ export const CONSUMER_CANONICAL_ROOT = `${CONSUMER_OUTPUT_ROOT}/_canonical`;
 export const agentDispositionsPath = (agent: string): string => `${PROFILE_DIR}/${agent}.dispositions.yaml`;
 /** `canonical/profiles/consumer/<agent>.overlay.md` (the same stem — freshness pairs them by it). */
 export const agentOverlayPath = (agent: string): string => `${PROFILE_DIR}/${agent}.overlay.md`;
+/** The shared catalog's profile files (C17: members once, signed by each member's owner). */
+export const SHARED_DISPOSITIONS_PATH = `${PROFILE_DIR}/_shared.dispositions.yaml`;
+export const SHARED_OVERLAY_PATH = `${PROFILE_DIR}/_shared.overlay.md`;
+/** An always-set member's profile files (C19). */
+export const identityDispositionsPath = (id: string): string => `${PROFILE_DIR}/always-set/${id}.dispositions.yaml`;
+export const identityOverlayPath = (id: string): string => `${PROFILE_DIR}/always-set/${id}.overlay.md`;
 
 /**
- * Load each agent's committed dispositions (schema-validated — 13.1; throws `DispositionsError`
- * on any finding) and overlay (format-checked — 13.2). Key currency (orphan / missing row) and
- * pin freshness are `derive()`'s refusals (C22, Task 15.2) and the freshness sweep's, not this
- * loader's.
+ * Load the committed consumer profile: each agent's dispositions (schema-validated — 13.1) and
+ * overlay (13.2), the shared catalog's, and each identity doc's. Key currency and pin freshness
+ * are `derive()`'s refusals (C22) and the freshness sweep's, not this loader's.
  */
-export function loadConsumerInputs(repoRoot: string, agents: readonly string[]): ConsumerProfileInputs {
-  const inputs: ConsumerProfileInputs = { dispositions: {}, overlays: {}, missing: [] };
+export function loadConsumerInputs(repoRoot: string, agents: readonly string[], identityIds: readonly string[] = []): ConsumerProfileInputs {
+  const inputs: ConsumerProfileInputs = { dispositions: {}, overlays: {}, identity: {}, missing: [], authored: false };
+  const readIf = (rel: string): string | undefined => (fs.existsSync(path.join(repoRoot, rel)) ? fs.readFileSync(path.join(repoRoot, rel), 'utf8') : undefined);
+  const load = (disp: string, over: string): { dispositions: Dispositions & RowFile; overlay?: ParsedOverlay } | undefined => {
+    const text = readIf(disp);
+    if (text === undefined) {
+      inputs.missing.push(disp);
+      return undefined;
+    }
+    inputs.authored = true;
+    const overlayText = readIf(over);
+    return {
+      dispositions: loadDispositions(text, disp) as unknown as Dispositions & RowFile,
+      ...(overlayText !== undefined ? { overlay: parseOverlay(overlayText, over) } : {}),
+    };
+  };
   for (const agent of agents) {
-    const dispPath = agentDispositionsPath(agent);
-    const abs = path.join(repoRoot, dispPath);
-    if (!fs.existsSync(abs)) {
-      inputs.missing.push(agent);
-      continue;
-    }
-    inputs.dispositions[agent] = loadDispositions(fs.readFileSync(abs, 'utf8'), dispPath) as unknown as Dispositions;
-    const overlayPath = agentOverlayPath(agent);
-    if (fs.existsSync(path.join(repoRoot, overlayPath))) {
-      inputs.overlays[agent] = parseOverlay(fs.readFileSync(path.join(repoRoot, overlayPath), 'utf8'), overlayPath);
-    }
+    const got = load(agentDispositionsPath(agent), agentOverlayPath(agent));
+    if (!got) continue;
+    inputs.dispositions[agent] = got.dispositions;
+    if (got.overlay) inputs.overlays[agent] = got.overlay;
+  }
+  const shared = load(SHARED_DISPOSITIONS_PATH, SHARED_OVERLAY_PATH);
+  if (shared) inputs.shared = shared;
+  for (const id of identityIds) {
+    const got = load(identityDispositionsPath(id), identityOverlayPath(id));
+    if (got) inputs.identity[id] = got;
   }
   return inputs;
 }
 
-/** The population refusal: the consumer profile covers every ledger agent, or none yet. */
-export const partialConsumerPopulationMessage = (missing: readonly string[], present: readonly string[]): string =>
-  `generateConsumerRendering: the consumer profile covers ${present.length} ledger agent(s) (${present.join(', ')}) ` +
-  `but not ${missing.join(', ')} — every ledger agent carries ${PROFILE_DIR}/<agent>.dispositions.yaml, or none does yet; ` +
+/** The population refusal: the consumer profile is authored in full, or not at all. */
+export const partialConsumerPopulationMessage = (missing: readonly string[]): string =>
+  `generateConsumerRendering: the consumer profile is partly authored — missing ${missing.join(', ')}; ` +
+  `every ledger agent, the shared catalog and every identity doc carries its dispositions file, or none does yet; ` +
   `refusing to render a partial population (design C12; Req 9.5)`;
 
 /**
- * Emit the consumer rendering of the resolved ledger agents: each agent through EVERY adapter,
- * `profile: 'consumer'`, with its dispositions and overlay, every path remapped to
- * `canonical/_consumer-output/<target>/<emitted path>` (the `generateFixture` remap precedent,
- * Req 9.5), attribution sidecars kept.
- *
- * POPULATION (no silent partial): if NO ledger agent has a dispositions file the profile is not
- * yet authored and nothing is emitted (the declared pre-15.4 state; Task 15.4's population test
- * asserts the committed rendering covers every agent × target once the profile exists). If SOME
- * do and some do not, this throws, naming the missing agents.
- *
- * `_canonical/` (Task 15.2; design C22): `derive()` runs FIRST, for every agent, before any
- * adapter emits — a refusal (stale overlay, orphaned key, missing row) stops the whole render,
- * with every finding. Each derived charter is emitted ONCE, not per target, to
- * `canonical/_consumer-output/_canonical/agents/<agent>.md`, with its attribution sidecar (its body
- * spans are the same `emitSpans` spans the adapters emit, sourced to the canonical origin).
- *
- * NOT HERE YET: identity member files (C19, Task 15.3) join per target.
+ * The CONSUMER `docIdToPath` (Task 15.3; C19, C20): where each doc a Kiro config's `resources`
+ * names lives in the CONSUMER's repo — an identity doc at its member file
+ * (`.kiro/steering/designerpunk-<id>.md`), a template member at `.designerpunk/…`, and every other
+ * doc (governance, non-identity steering) inside the installed package, `packageRoot`-relative.
  */
-export function generateConsumerRendering(
-  agents: readonly ResolvedForEmission[],
-  adapters: readonly TargetAdapter[],
-  inputs: ConsumerProfileInputs
-): GeneratedOutput[] {
-  const present = agents.map((a) => a.resolved.agent).filter((a) => inputs.dispositions[a] !== undefined);
-  if (present.length === 0) return [];
-  const missing = agents.map((a) => a.resolved.agent).filter((a) => inputs.dispositions[a] === undefined);
-  if (missing.length > 0) throw new Error(partialConsumerPopulationMessage(missing, present));
+export function consumerDocIdToPath(repoRoot: string, alwaysSetIds: readonly string[]): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [id, rel] of Object.entries(buildDocIdToPath(repoRoot))) {
+    if (TEMPLATE_MEMBERS.includes(id)) out[id] = TEMPLATE_MEMBER_PATH;
+    else if (alwaysSetIds.includes(id)) out[id] = `.kiro/steering/designerpunk-${id}.md`;
+    else out[id] = `${CONSUMER_PACKAGE_ROOT}/${rel}`;
+  }
+  return out;
+}
 
-  // _canonical/ — derive() first, for every agent: a refusal stops the whole render (C22).
+/** Everything one consumer render reads — pure given `resolve` (tests inject a stub). */
+export interface ConsumerRenderInput {
+  /** The canonical ledger agents, in ledger order. */
+  agents: readonly CanonicalAgentDoc[];
+  /** The shipped identity docs (template members excluded). */
+  identity: readonly IdentityDoc[];
+  /** `canonical/shared/shared-catalog.yaml`'s text. */
+  sharedCatalogText: string;
+  inputs: ConsumerProfileInputs;
+  adapters: readonly TargetAdapter[];
+  resolve: ResolveDoc;
+  /** The consumer `docIdToPath` ({@link consumerDocIdToPath}). */
+  docIdToPath: Readonly<Record<string, string>>;
+  alwaysSetIds: readonly string[];
+}
+
+/**
+ * THE CONSUMER RENDERING (Tasks 15.1–15.3; design C12, C19, C22; Req 9.5): "target renderings =
+ * rendering(derive(x))".
+ *
+ *   0. POPULATION — nothing authored → nothing emitted (the declared pre-15.4 state); partly
+ *      authored → refuse, naming every missing file.
+ *   1. DERIVE EVERYTHING FIRST (a refusal stops the whole render, nothing emitted — C22): the
+ *      shared catalog; every identity doc (frontmatter dropped — C19); every agent charter
+ *      (re-pointed entry VALUES substituted, disposed entries pruned). Each derived charter must
+ *      pass the steward `validate()` — class-level validation, no per-field value shapes.
+ *      `_canonical/` gets each derived artifact ONCE, not per target.
+ *   2. EMIT, per declared target: each agent from its DERIVED frontmatter (resolved like any
+ *      charter — so its ambient manifest, embeds, Kiro `resources` / `allowedPaths` and CC
+ *      `tools:` are built from surviving values), attributed to the canonical origin through
+ *      `entryOrigin`; the derived shared catalog; the consumer `docIdToPath`; then the identity
+ *      member files (`emitIdentityMembers`). Paths remap to `canonical/_consumer-output/<target>/`.
+ */
+export async function generateConsumerRendering(input: ConsumerRenderInput): Promise<GeneratedOutput[]> {
+  const { agents, identity, inputs, adapters } = input;
+  if (!inputs.authored) return [];
+  if (inputs.missing.length > 0) throw new Error(partialConsumerPopulationMessage(inputs.missing));
   const outputs: GeneratedOutput[] = [];
-  for (const { resolved } of agents) {
-    const agentId = resolved.agent;
+
+  // 1. Derive everything first.
+  const shared = inputs.shared as { dispositions: RowFile; overlay?: ParsedOverlay };
+  const derivedCatalog = deriveSharedCatalog(input.sharedCatalogText, shared.dispositions, SHARED_DISPOSITIONS_PATH, shared.overlay);
+  outputs.push({ path: `${CONSUMER_CANONICAL_ROOT}/shared/shared-catalog.yaml`, content: derivedCatalog });
+  const sharedRows = (shared.dispositions.members ?? {}) as Dispositions['members'];
+
+  const members: IdentityMemberInput[] = [];
+  for (const doc of identity) {
+    const profile = inputs.identity[doc.id];
+    const derived = derive({ source: doc.source, frontmatter: {}, body: doc.body, dispositions: profile.dispositions, overlay: profile.overlay, dispositionsFile: identityDispositionsPath(doc.id) });
+    outputs.push({ path: `${CONSUMER_CANONICAL_ROOT}/always-set/${doc.id}.md`, content: derived.text, attribution: derived.attribution });
+    members.push({
+      id: doc.id,
+      source: doc.source,
+      body: doc.body,
+      dispositions: { body: profile.dispositions.body },
+      ...(profile.overlay ? { overlay: toSpanOverlay(profile.overlay) } : {}),
+    });
+  }
+
+  const derivedAgents: { doc: CanonicalAgentDoc; entryOrigin: Record<string, string> }[] = [];
+  for (const doc of agents) {
+    const agentId = doc.frontmatter.agent;
     const source = `canonical/agents/${agentId}.md`;
     const derived = derive({
       source,
-      frontmatter: resolved.doc.frontmatter as unknown as YamlDoc,
-      body: resolved.doc.body,
-      dispositions: inputs.dispositions[agentId] as RowFile & Dispositions,
+      frontmatter: doc.frontmatter as unknown as YamlDoc,
+      body: doc.body,
+      dispositions: inputs.dispositions[agentId],
       overlay: inputs.overlays[agentId],
       dispositionsFile: agentDispositionsPath(agentId),
     });
+    const derivedFm = derived.frontmatter as unknown as CanonicalAgentDoc['frontmatter'];
+    const check = validateAgentDoc({ frontmatter: derivedFm, body: derived.body, sourcePath: `${CONSUMER_CANONICAL_ROOT}/agents/${agentId}.md` }, input.alwaysSetIds);
+    if (!check.valid) {
+      const lines = [...check.schemaErrors.map((e) => `  - [rule ${e.rule}] ${e.message}`), ...check.duplicationErrors.map((e) => `  - [workflow-rules duplication] line ${e.line}: "${e.matchedPhrase}"`)];
+      throw new Error(`generateConsumerRendering: the derived charter for "${agentId}" fails the steward validate():\n${lines.join('\n')}`);
+    }
     outputs.push({ path: `${CONSUMER_CANONICAL_ROOT}/agents/${agentId}.md`, content: derived.text, attribution: derived.attribution });
+    // Rendering reads the DERIVED frontmatter with the CANONICAL body (the body rows key canonical anchors).
+    derivedAgents.push({ doc: { frontmatter: derivedFm, body: doc.body, sourcePath: doc.sourcePath }, entryOrigin: derived.entryOrigin });
   }
 
-  for (const { resolved, emitCtx } of agents) {
-    const agentId = resolved.agent;
+  // 2. Emit.
+  const sharedCatalog = parseSharedCatalog(derivedCatalog);
+  let identityCtx: AdapterContext | undefined;
+  for (const { doc, entryOrigin } of derivedAgents) {
+    const agentId = doc.frontmatter.agent;
+    const { resolved, emitCtx } = await input.resolve(doc);
+    const overlay = inputs.overlays[agentId];
     const consumerCtx: AdapterContext = {
       ...emitCtx,
       profile: 'consumer',
+      sharedCatalog,
+      docIdToPath: input.docIdToPath,
       consumer: {
-        dispositions: { [agentId]: inputs.dispositions[agentId] },
-        overlays: inputs.overlays[agentId] ? { [agentId]: toSpanOverlay(inputs.overlays[agentId]) } : {},
+        dispositions: { [agentId]: { ...inputs.dispositions[agentId], members: sharedRows } },
+        overlays: overlay ? { [agentId]: toSpanOverlay(overlay) } : {},
+        entryOrigins: { [agentId]: entryOrigin },
       },
     };
+    identityCtx = identityCtx ?? consumerCtx;
     for (const adapter of adapters) {
       for (const file of adapter.emitAgent(resolved, consumerCtx)) {
         outputs.push({
@@ -377,7 +500,28 @@ export function generateConsumerRendering(
       }
     }
   }
+  if (members.length > 0) {
+    const ctx = identityCtx ?? ({ profile: 'consumer' } as AdapterContext);
+    for (const adapter of adapters) {
+      for (const file of adapter.emitIdentityMembers(members, ctx)) {
+        outputs.push({ path: `${CONSUMER_OUTPUT_ROOT}/${adapter.target}/${file.path}`, content: file.content, attribution: file.attribution });
+      }
+    }
+  }
   return outputs;
+}
+
+/** The shipped identity docs of the always-set (template members excluded), read from the repo. */
+export function loadIdentityDocs(repoRoot: string, alwaysSetIds: readonly string[]): IdentityDoc[] {
+  const idToPath = buildDocIdToPath(repoRoot);
+  return alwaysSetIds
+    .filter((id) => !TEMPLATE_MEMBERS.includes(id))
+    .map((id) => {
+      const source = idToPath[id];
+      if (source === undefined) throw new Error(`loadIdentityDocs: always-set member "${id}" has no doc under .kiro/steering or governance`);
+      const { body } = splitFrontmatter(fs.readFileSync(path.join(repoRoot, source), 'utf8'), source);
+      return { id, source, body };
+    });
 }
 
 /**
@@ -438,9 +582,23 @@ export async function buildEmbeds(
   doc: CanonicalAgentDoc,
   corpus: CorpusClient
 ): Promise<Record<string, string>> {
-  const embeds: Record<string, string> = {};
+  const parts = await buildEmbedSections(doc, corpus);
+  return Object.fromEntries(Object.entries(parts).map(([id, sections]) => [id, sections.map((p) => p.text).join('\n\n')]));
+}
+
+/**
+ * The same embeds, kept per asserted SECTION (Task 15.3): `{ section, text }` in claim order, one
+ * per distinct section. `buildEmbeds` joins them; the CC adapter's consumer path emits one span
+ * per section (`ambient[<docid>#<section-slug>]` — the entry tree's leaf), so an embed container
+ * is sourced by surviving member spans, never rendered as one block.
+ */
+export async function buildEmbedSections(
+  doc: CanonicalAgentDoc,
+  corpus: CorpusClient
+): Promise<Record<string, { section: string; text: string }[]>> {
+  const embeds: Record<string, { section: string; text: string }[]> = {};
   for (const entry of doc.frontmatter.ambient?.governanceAsLaw ?? []) {
-    const parts: string[] = [];
+    const parts: { section: string; text: string }[] = [];
     const seenSections = new Set<string>();
     for (const claim of entry.assert) {
       if (seenSections.has(claim.section)) continue; // two claims on one section: embed once
@@ -452,9 +610,9 @@ export async function buildEmbeds(
             `refusing to emit a partial embed (agent "${doc.frontmatter.agent}").`
         );
       }
-      parts.push(extractSectionContent(section.text).trim());
+      parts.push({ section: claim.section, text: extractSectionContent(section.text).trim() });
     }
-    embeds[entry.id] = parts.join('\n\n');
+    embeds[entry.id] = parts;
   }
   return embeds;
 }
@@ -474,21 +632,40 @@ export async function generateFixture(
   const sourceAbs = path.join(repoRoot, FIXTURE_SOURCE);
   if (!fs.existsSync(sourceAbs)) return [];
 
-  const doc = parseCanonicalAgentSource(fs.readFileSync(sourceAbs, 'utf8'), sourceAbs);
+  const canonicalDoc = parseCanonicalAgentSource(fs.readFileSync(sourceAbs, 'utf8'), sourceAbs);
+  const profile: Profile = opts.profile ?? 'steward';
+  const agentId = canonicalDoc.frontmatter.agent;
+  // Consumer: the adapters render derive()'s frontmatter (Task 15.3 — "target renderings =
+  // rendering(derive(x))"); the fixture lane renders no shared-catalog members (their rows are the
+  // real profile's `_shared.dispositions.yaml`, never implied here).
+  let doc = canonicalDoc;
+  let entryOrigin: Record<string, string> = {};
+  if (profile === 'consumer') {
+    if (!opts.dispositions) throw new Error('generateFixture: the consumer profile requires dispositions');
+    const derived = derive({
+      source: FIXTURE_SOURCE,
+      frontmatter: canonicalDoc.frontmatter as unknown as YamlDoc,
+      body: canonicalDoc.body,
+      dispositions: opts.dispositions,
+      overlay: opts.overlay,
+    });
+    doc = { ...canonicalDoc, frontmatter: derived.frontmatter as unknown as CanonicalAgentDoc['frontmatter'] };
+    entryOrigin = derived.entryOrigin;
+  }
   const corpus = createStdioDocsClient();
   try {
     const { resolved, emitCtx: baseCtx } = await resolveForEmission(repoRoot, ctx, doc, corpus);
-    const profile: Profile = opts.profile ?? 'steward';
-    const agentId = doc.frontmatter.agent;
     const emitCtx: AdapterContext =
       profile === 'steward'
         ? baseCtx
         : {
             ...baseCtx,
             profile,
+            sharedCatalog: [],
             consumer: {
-              dispositions: opts.dispositions ? { [agentId]: opts.dispositions } : {},
-              overlays: opts.overlay ? { [agentId]: opts.overlay } : {},
+              dispositions: { [agentId]: opts.dispositions as Dispositions },
+              overlays: opts.overlay ? { [agentId]: toSpanOverlay(opts.overlay) } : {},
+              entryOrigins: { [agentId]: entryOrigin },
             },
           };
     const root = profile === 'steward' ? FIXTURE_OUTPUT_ROOT : CONSUMER_FIXTURE_OUTPUT_ROOT;
@@ -551,7 +728,11 @@ export async function resolveForEmission(
   const docIdToPath = buildDocIdToPath(repoRoot);
   const emitCtx: AdapterContext = {
     ...ctx,
-    embeds: await buildEmbeds(doc, corpus),
+    ...(await (async () => {
+      const embedSections = await buildEmbedSections(doc, corpus);
+      const embeds = Object.fromEntries(Object.entries(embedSections).map(([id, parts]) => [id, parts.map((p) => p.text).join('\n\n')]));
+      return { embeds, embedSections };
+    })()),
     docIdToPath,
     steeringIdToPath: docIdToPath,
   };
