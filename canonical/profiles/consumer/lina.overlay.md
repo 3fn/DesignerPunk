@@ -74,10 +74,10 @@ Before creating any files, check whether a Component-Family doc exists for this 
 ## @unit #the-process @ sha256:7405eed001bcf70f166f07adb40e2782e8a7d16e807a54044f8f63d65c271297
 ### The Process
 
-1. **Propose**: When you identify that a Component-Family doc or steering doc needs updating, draft the proposed change.
+1. **Propose**: When you identify that one of your team's component docs or shared docs needs updating, draft the proposed change. A change to a DesignerPunk Component-Family doc (shipped in the installed package) is proposed upstream to DesignerPunk, never applied locally.
 2. **Present**: Show your human lead the proposal with: what changed; why; the surviving counter-argument (what fold-back could not absorb); the impact.
 3. **Vote**: Your human lead approves, modifies, or rejects.
-4. **Apply**: If approved, apply precisely as approved. If rejected, respect the decision and document the alternative.
+4. **Apply**: If approved, apply precisely as approved — to your team's docs; an upstream proposal is filed with DesignerPunk, never applied by editing the installed package. If rejected, respect the decision and document the alternative.
 
 ## @unit #what-this-means-in-practice @ sha256:8fb455b5399e8eebaaff5deee87ddc00be1600efb53cc9071bcca6a96d464034
 ### What This Means in Practice
