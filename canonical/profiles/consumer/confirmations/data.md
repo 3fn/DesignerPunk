@@ -8,14 +8,14 @@
 
 **Format**: the convention Stacy and Lina use. Each unit gets a `` ## `#anchor` `` heading, then `confirmer:`, `canonicalHash:`, `items:` (the record's ids, in record order, or `none`) and `date:`, then the ruling.
 
-**The criterion applied throughout (5c)**: an item is operative if and only if a consumer implementation could violate it. Headings are labels. A `**Label**:` prefix that states the item's trigger stays inside the item's text. **The line I drew for this charter**:
+**The criterion applied throughout (5c)**: an item is operative if and only if a consumer implementation could violate it. Headings are labels. A `**Label**:` prefix that states the item's trigger stays inside the item's text. **The line I drew for this charter** *(its second bullet is superseded by the 2026-09-29 5c ruling; see § "Correction" at the end)*:
 - A statement that tells the implementation what to do, where to read a value, or what scope to read it in is operative.
 - A statement that only describes what the token generator emits (file paths, object shapes, naming choices) is inventory, and not an item. The screen code I write can be *wrong* about such facts but cannot *breach* them. Being wrong about them shows up as a compile error, not a violated norm.
 
 **Record edits I made as confirmer** (same commit as this note; each is a reviewed diff):
 - **Truncations restored** (prefix truncations, which the verbatim check cannot catch; C16, S-D2-A1): `#identity` `domain`; `#with-leonardo-primary` `handoff-tiers`; `#android-skills-official-google-patterns` `skills-use-for` and `skills-use-dp-for`. `domain` kind `member` → `obligation`.
 - **Added**: `#identity` `precision-and-care`; `#the-implement-vs-direct-distinction` `direct-raise` and `advise-raise`; `#operational-mode-screen-implementation:preamble` `workflow-trigger` (0 → 1); `#how-to-use-designerpunk-tokens-on-android` `per-theme-set`.
-- **Removed**: `#android-theming-spec-094` `theming-1` and `theming-4`; `#product-tokens-spec-108109` `product-tokens-1`, `product-tokens-2` and `product-tokens-4`.
+- **Removed** *(superseded: reinstated 2026-09-29 under the 5c ruling; see § "Correction" at the end)*: `#android-theming-spec-094` `theming-1` and `theming-4`; `#product-tokens-spec-108109` `product-tokens-1`, `product-tokens-2` and `product-tokens-4`.
 - **Totals**: 134 drafted → 134 confirmed (+5 added, −5 removed; 4 texts restored). One unit is ruled zero: `#operational-mode-platform-expertise:preamble`.
 - **Verified**: all 34 `canonicalHash` values match the unit bytes (`partition(splitFrontmatter(src).body)`), and every item `text` is a verbatim substring of its unit.
 
@@ -41,19 +41,23 @@ date: 2026-09-29
 
 confirmer: data
 canonicalHash: sha256:7818e0ca9a1252c1baacf77ce2e9650bb50377b5c2e07cc07492b48f50ac9122
-items: theming-2, theming-3, theming-5, theming-6
+items: theming-1, theming-2, theming-3, theming-4, theming-5, theming-6
 date: 2026-09-29
 
 **Ruling: 6 → 4 items.** Removed `theming-1` ("Generated Kotlin output includes: …"), an inventory statement of what the generator emits; nothing in it directs the implementation. Removed `theming-4` (`{Abbreviation}` uppercase), a description of the generator's naming choice and its rationale; code that writes `Dp` is a compile error, not a breached norm. Kept `theming-2`, `theming-3` (directives), `theming-5` ("no CompositionLocal needed" directs where static tokens are read) and `theming-6` (ground truth live).
+
+**Correction (2026-09-29, 5c ruling): reinstated `theming-1` and `theming-4`; 6 items, as drafted.** Thurgood, the classifier owner (Req 11.6.8), ruled the "can contradict" reading of 5c. A stated name, type shape or spelling that the implementation builds against is operative, and a compile error is only how the violation surfaces. The removal reasoning above is superseded.
 
 ## `#product-tokens-spec-108109`
 
 confirmer: data
 canonicalHash: sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e
-items: product-tokens-3, product-tokens-5, product-tokens-6
+items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5, product-tokens-6
 date: 2026-09-29
 
 **Ruling: 6 → 3 items.** Removed `product-tokens-1` (the generated file path and package, a repo-specific location fact), `product-tokens-2` (the generated shape of static tokens) and `product-tokens-4` (how generated ref tokens are written). All three describe generator output that I never author and cannot violate. Kept `product-tokens-3` ("must be read inside composition scope"), `product-tokens-5` (query route) and `product-tokens-6` (authoring location and governance).
+
+**Correction (2026-09-29, 5c ruling): reinstated `product-tokens-1`, `product-tokens-2` and `product-tokens-4`; 6 items, as drafted.** Under the same ruling, the path, package, static-token shape and ref-path form are facts the implementation builds against, so they are operative. Whether they are repo-specific is decided at signing, by disposition, never by leaving the item out. The removal reasoning above is superseded.
 
 ## `#out-of-scope`
 
@@ -345,3 +349,9 @@ date: 2026-09-29
   - The per-theme-SET sentence, the anti-flattening guard, was left out of `ground-truth-live`.
 - **Residual**:
   - The five generator-description items I removed are knowledge I use to write correct Compose code: the package to import from, the `{Name}Themes` instances, the `DP` spelling. If the consumer rendering drops them, no floor finding fires. That is the direct cost of the 5c line I drew. A reviewer who reads 5c as "code can contradict it" would keep them. This is a fork on the criterion's reading; I made the call for this record, and the other reading remains defensible.
+
+## Correction (2026-09-29, 5c ruling)
+
+- **Reinstated 5 items**, same ids, texts verbatim as drafted: `#android-theming-spec-094` `theming-1` and `theming-4`; `#product-tokens-spec-108109` `product-tokens-1`, `product-tokens-2` and `product-tokens-4`.
+- **Why**: Thurgood (classifier owner, Req 11.6.8) ruled the "can contradict" reading. His own discount applies: he drafted these items, and Peter may overrule.
+- **Totals**: 134 drafted → 139 confirmed (+5 added, 0 removed). My residual above is resolved by the ruling. Every other ruling in this note stands.
