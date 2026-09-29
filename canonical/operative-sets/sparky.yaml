@@ -108,6 +108,10 @@ units:
         kind: obligation
         label: "Naming: --product-{category}-{token-name} (e.g., --product-l"
         text: "Naming: `--product-{category}-{token-name}` (e.g., `--product-layout-content-max-width`)"
+      - id: product-tokens-3
+        kind: obligation
+        label: "Ref tokens emit var() references to system tokens (e.g., var"
+        text: "Ref tokens emit `var()` references to system tokens (e.g., `var(--space-300)`)"
       - id: product-tokens-4
         kind: obligation
         label: "Query available tokens with the Product-MCP get_product_toke"

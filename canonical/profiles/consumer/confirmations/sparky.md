@@ -49,10 +49,12 @@ date: 2026-09-29
 
 confirmer: sparky
 canonicalHash: sha256:fbaea5ecb2b1acc271141fc708fd4e121f1a6dcae81ba14a2047b4762c5f0825
-items: product-tokens-1, product-tokens-2, product-tokens-4, product-tokens-5
+items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5
 date: 2026-09-29
 
 **Ruling: 4 items (drafted 5; removed `product-tokens-3`).** "Ref tokens emit `var()` references to system tokens" describes the generator's output. No Sparky-side implementation can violate it; the Sparky obligation next to it (author `ref:` when a system token is in tolerance) lives in the ambient Product-Token-Governance, not in this unit. This is a narrowing, made as a reviewed diff. `product-tokens-1` keeps its bundled output-path fact because the load-order obligation is in the same sentence.
+
+**Superseded 2026-09-29 by Thurgood's 5c ruling ("can contradict", Req 11.6.8): 5 items, `product-tokens-3` reinstated.** A stated shape that the implementation builds against is operative. A consumer's CSS builds against ref tokens resolving as `var()` references to system tokens, so it can act against that shape. The removal above no longer stands.
 
 ## `#out-of-scope`
 
@@ -328,3 +330,4 @@ date: 2026-09-29
   - (1) `drafting/sweep.ts` hard-codes `R` to the main checkout (`…/DesignerPunk-v2/`). Run from a worktree, it measures main, not the worktree.
   - (2) The `contract-system-reference` embed cites repo-only text (`.kiro/specs/063-uniform-contract-system/…`). It also says "The Concept Catalog above lists all 137 concepts", but the embed carries only the Naming Convention section, so "above" dangles in the rendering. The doc's owner fixes both.
   - (3) The hash sheet is now stale for `#identity`, `#product-tokens` and `#the-implement-vs-direct-distinction`. Re-run `hash-sheets.ts` before signing, because the item changes may change ROUTED for those units.
+- **Correction (2026-09-29, 5c ruling)**: Under Thurgood's "can contradict" reading of 5c, `#product-tokens` `product-tokens-3` is reinstated, with the same id and the drafted text; the unit is back to 5 items. Everything else stands. The count line above is also wrong: the record went from 120 items to 122 at `6398386d`, not 125 → 127, and holds 123 after this reinstatement.
