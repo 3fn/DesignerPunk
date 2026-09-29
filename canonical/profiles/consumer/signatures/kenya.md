@@ -375,3 +375,36 @@ date: 2026-09-29
   1. **Full survival on every routed row.** All 11 routed rows assent with nothing lost. That is the pattern the full-survival assent signal instrument exists to sample, so Stacy's audit should spot-check this set.
   2. **Body assents on the ground-truth units.** Four of them credit the item from the surviving positive MCP directive, and the explicit "where the trap sits" warning is gone from those units: `#ios-theming-spec-094`, `#step-2-set-up-the-screen`, `#how-to-use-designerpunk-tokens-on-ios` and `#ios-specific-guidance`. If Thurgood's re-author also restores the warning in the body, those renderedHashes change and I re-sign them.
   3. **Out of my seat (Ada or Thurgood)**: the package shipping a stale, orphaned `dist/ios/DesignTokens.ios.swift` (0 `Theme` references, regenerated 2026-09-29) is itself a distribution defect. The better fix may be not shipping it.
+
+## Re-sign run summary (2026-09-29)
+
+- **Commits** (branch `task/123-u2b-fr3-kenya` from `dba93df5`; not pushed):
+  - `62464b8d`: 11 assents.
+  - `cbee28de`: 1 refusal.
+  - This summary is in its own commit after those.
+- **Acts**: 12 of 12 from sheet § 4.
+- **Assented, body (5)**, all at full sets:
+
+  | Row | Surviving items |
+  |---|---|
+  | `#ios-theming-spec-094` | 5/5 |
+  | `#step-2-set-up-the-screen` | 3/3 |
+  | `#how-to-use-designerpunk-tokens-on-ios` | 6/6 |
+  | `#ios-specific-guidance` | 7/7 |
+  | `#mcp-practice-notes` | 3/3 |
+
+  The four snapshot-warning gaps I disclosed in phase two are closed: the warning is restored and re-pointed to `node_modules/@3fn/core/dist/*.ios.swift`.
+- **Assented, frontmatter (6)**, all with `surviving: []`:
+  - `trims[dist/ios/DesignTokens.ios.swift]`: `superseded-by`, which resolves my refusal. The assent is conditional on Task 16.3's `dist/ios/**` negation.
+  - `trims[dist/ComponentTokens.ios.swift]`: re-pointed, which resolves my refusal.
+  - `groundTruthManifest.verdict`: `retained`, which resolves my refusal.
+  - `commands[build]`: `superseded-by #what-you-dont-own`.
+  - `writeScope[docs/specs/**]`: `superseded-by writeScope[.kiro/specs/**]`.
+  - `routes.cues[9]`: re-pointed, narrowed to the doc's consumer-applicable sections.
+  - The last three are better rulings than my phase-two no-consumer-counterpart.
+- **Refused (1)**: `commands[platform-tokens]`, `should-re-point`. The value is right, but the rendered suffix *"(run from the consumer product repo, not this repo)"* (`render.ts:97`) contradicts itself in a consumer. The same suffix is on `commands[ios-build-test]`, and probably on every agent's consumer-repo commands.
+- **Sweep**: after the refusal commit, `kenya.*` has 0 findings.
+- **Residuals**:
+  1. **Trim signatures are signed on the text.** The two trim rows' `renderedHash` is the empty-piece hash (the known blind spot), so I read the rendered Ground truth section directly.
+  2. **Until Task 16.3 merges**, `node_modules/@3fn/core/dist/ios/DesignTokens.ios.swift` still ships, and the body glob `dist/*.ios.swift` does not match that subdirectory. The DesignTokens-trim assent is conditional on 16.3.
+  3. **My charter's trim `cue.negative` still says "ORPHANED and stale (pre-Spec-094 …)"**, which is false. It doesn't render in a consumer (superseded), but the fix is my seat's and would change the entry's `canonicalHash`, so the orchestrator should sequence it.
