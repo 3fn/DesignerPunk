@@ -76,6 +76,10 @@ units:
   "#product-configuration-context":
     canonicalHash: sha256:5bfdc5247ea1104097bc8419e5ba3be179a635c28fce0b24e8e495828cff188f
     items:
+      - id: config-surface
+        kind: obligation
+        label: "Products configure via designerpunk.config.ts"
+        text: "Products configure DesignerPunk via `designerpunk.config.ts`:"
       - id: config-1
         kind: member
         label: "Defines product name, abbreviation, themes, component token "
@@ -155,7 +159,11 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#the-direct-vs-delegate-distinction
   "#operational-mode-screen-specification:preamble":
     canonicalHash: sha256:b0d0686d5a60bd779304cf689ff63909edc5e1e5a1b1bf134e600d26d44897cc
-    items: []
+    items:
+      - id: spec-follow-workflow
+        kind: obligation
+        label: "Follow the workflow when specifying a screen"
+        text: "When specifying a screen, follow this workflow:"
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#operational-mode-screen-specification:preamble
   "#step-1-understand-the-intent":
     canonicalHash: sha256:28ae7146d14844823d27f32cc1715881ca49c59af078e5048508f512d696c412
@@ -240,6 +248,10 @@ units:
         kind: step
         label: "State the target breakpoint: which breakpoint gets the most "
         text: "**State the target breakpoint**: which breakpoint gets the most design refinement."
+      - id: layout-consult-vocabulary
+        kind: route
+        label: "Writing layout sections → the routed vocabulary section"
+        text: "For detailed vocabulary, specification format, and worked examples, consult the routed Layout Specification Vocabulary section when actively writing layout sections."
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#layout-specification
   "#step-4-validate-assembly":
     canonicalHash: sha256:0ff10ff00d2a67e948fefb2fc8462829c90e42f31799f3d9b20eee71bf5ffaa3
@@ -416,6 +428,10 @@ units:
   "#skill-loading-sequence":
     canonicalHash: sha256:a0501862fd00c0427a43ac9ea00889f390f35b55ce7e04d453714d652487a92f
     items:
+      - id: load-trigger
+        kind: obligation
+        label: "Load before making visual decisions on a new surface"
+        text: "Before making visual decisions on a new surface:"
       - id: load-1
         kind: step
         label: "get_design_philosophy() → creative north star + characterist"
@@ -496,6 +512,10 @@ units:
   "#anti-slop-awareness":
     canonicalHash: sha256:bd75b09262211aecd99cf64e9b828543cd65715c73834a07f9d6fc4dee253253
     items:
+      - id: slop-run
+        kind: obligation
+        label: "Run the category-reflex checks on visual output"
+        text: "Run category-reflex checks on visual output:"
       - id: slop-first
         kind: step
         label: "First-order check"
@@ -596,6 +616,10 @@ units:
   "#onboarding-awareness":
     canonicalHash: sha256:d3b9616971787a388f041ce34e006d4f78cad6d162f0a34d4a9d0d757ba3a5e4
     items:
+      - id: onboarding-trigger
+        kind: obligation
+        label: "When onboarding questions arrive"
+        text: "When users ask about setup, configuration, MCP connections, token generation, or \"how do I get started\" with DesignerPunk in a product repo:"
       - id: onboarding-1
         kind: step
         label: "Consult the DesignerPunk Integration Guide via the docs MCP "
