@@ -180,3 +180,20 @@ signer: ada
 **ASSENT — no consumer counterpart (`surviving: []`).**
 - `docs/specs/**` is DesignerPunk's location for summary docs. The consumer's rendered Task Completion Protocol names no such location.
 - Spec work is covered by the re-pointed `specs/**` write scope.
+
+## `#the-process`
+
+signer: ada
+
+**REFUSE — `should-re-point`** (refusal 1 of this run). The four steps survive textually, with Peter re-keyed to "your human lead", but the rendering is wrong for a consumer.
+- **The defect**:
+  - Step 1 (`ballot-propose`) still names "a Token-Family doc or steering doc" as the thing to propose changes to, and step 4 (`ballot-apply`) says "If approved, apply precisely as approved."
+  - In a consumer, Token-Family docs ship **inside the installed package**, and the adjacent unit's rendering forbids writing them ("You do NOT write to DesignerPunk's shipped docs (inside the installed package) …").
+  - An approved change therefore has no applicable target. A consumer Ada either contradicts the next unit, or edits `node_modules`, which is lost on the next install.
+  - The charter creates this contradiction, and the human-lead vote is left to catch it.
+- **Evidence that this is an authoring miss, not a design choice**: Lina's and Thurgood's consumer renderings of the sibling unit carry the scoping clause "…and you change your team's shared docs only through this process". Ada's `#what-this-means-in-practice` rendering does not. With that clause, Apply targets the team's docs. Without it, Apply targets shipped docs.
+- **Possible re-authoring** (Thurgood's pick, not mine):
+  - (a) Re-point step 1's referent to the team's own token docs, and send proposed changes to DesignerPunk's shipped docs upstream rather than applying them locally.
+  - (b) Add Lina's and Thurgood's scoping clause to Ada's `#what-this-means-in-practice`. That changes its renderedHash, so I re-sign it too.
+  - (a) and (b) together is the closest match to the siblings.
+  - The `scope-docs` observation under `#in-scope` is the same seam and may ride the same re-author.
