@@ -23,12 +23,14 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
-renderedHash: sha256:5a4182715e22fcdc01f4bc2861851365d2de7de1bcc3ebff38ba78e73e6b95d3
+renderedHash: sha256:d4203c84f2e984e60da165582dbdec12e7797c22e6dc815e8e2a3f7b64c8b327
 date: 2026-09-29
 
 **Ruling: ASSENT — 5/5 surviving.** All 5 survive. `theming-1` to `theming-4` are verbatim. In a consumer, `theming-1` is *more* true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`.
 - **`theming-5`** survives on the rendered directive *"query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set"*. Sourcing a value or name from a Swift file violates that directive, so the item's violation is still a violation of this unit's rendering (5e, in-unit entailment).
 - **Lost**: the explicit warning about *where* the stale snapshots sit. It is a live trap in consumers, because the package ships them (see the three refused ground-truth rows). No credit is taken for it here.
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, 5/5 surviving.** All 5 survive, and `theming-5` is now **verbatim-strong**. The rendering restores the snapshot warning, re-pointed: *"never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values; query the application MCP …"*. The gap I disclosed in phase two is closed.
 
 ## `#out-of-scope`
 
@@ -55,12 +57,14 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:0520953313feb889806ab2ebbf0bb02244b7b2f65f42af286c96841aab6b3b3f
-renderedHash: sha256:6e79e5caa76fd6e4e5137e775cdcbbff378068f6c5d2455902dcd0c280784aa1
+renderedHash: sha256:05bc63644558796261e49b06959105d43a49115ecbd98c7113a55619793a4ab8
 date: 2026-09-29
 
 **Ruling: ASSENT — 3/3 surviving.** All 3 survive.
 - **`setup-2`** keeps *"Bring in DesignerPunk tokens by querying the application MCP for the resolved values"*. Reading values from a snapshot instead violates it.
 - **Removed**: the parenthetical *"(never read the stale `dist/*.ios.swift` snapshots …)"*. The item's function is entailed in-unit; the trap's location is the refused ground-truth rows' matter, and no credit is taken for it here.
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, 3/3 surviving.** All 3 survive. `setup-2` now carries the re-pointed warning: *"(never read DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`)"*. The phase-two gap is closed.
 
 ## `#with-peter`
 
@@ -79,12 +83,14 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:d65e9de031942f65d0caa8d367eb551948403a02467df795efb5a43b2fc02712
-renderedHash: sha256:4bc02b80e210ed0ec15e29779c38ce4dd1d5eb6a036046f95d18f0d1fa80de56
+renderedHash: sha256:cc738734a32d6c1f65afed33448eab079152deb4d5047c5d6eac7956f5b47603
 date: 2026-09-29
 
 **Ruling: ASSENT — 6/6 surviving.** All 6 survive. `tokens-1` to `tokens-4` and `theme-set` are verbatim.
 - **`ground-truth-live`** is reduced to *"Ground truth for token values is LIVE — query the application MCP for the resolved value, formula, and per-platform names."* Sourcing values or names from a file violates it, so the item is entailed in-unit.
 - **Removed**: the snapshot-location warning, as in `#step-2-set-up-the-screen`. No credit is taken for it.
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, 6/6 surviving.** All 6 survive. `ground-truth-live` restores *"LIVE, not a file — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`)"*, and `theme-set` is verbatim. This unit is also the `superseded-by` destination of the DesignTokens trim, and it carries that trim's function: the negative, the MCP directive and the per-theme set.
 
 ## `#platform-currency-expectations`
 
@@ -101,19 +107,21 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:6c3f5b31c29786494310e22398e7b57165a3caabc13c4e9c68770c1bc60bbe65
-renderedHash: sha256:fad6db1ade17faed74513e497e982504f88bb8bd5d174b2c041ae92e2a26aeeb
+renderedHash: sha256:a12f90d43ecd811945c66a5ea63227042dca03f25584faae809e5d6bfeac3145
 date: 2026-09-29
 
 **Ruling: ASSENT — 7/7 surviving.** All 7 survive.
 - **`native-2`** keeps *"(values queried live via the application MCP)"*. Taking values from a Swift snapshot violates it.
 - **Removed**: *"never the stale `dist/*.ios.swift` snapshots"*, the same trap-location warning. No credit is taken for it.
 
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, 7/7 surviving.** All 7 survive. `native-2` now reads *"values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.ios.swift`"*. The phase-two gap is closed.
+
 ## `#mcp-practice-notes`
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:752619afed54f31fc54cde7129c2a268be95e23e3fc5752c4f619298706cf49f
-renderedHash: sha256:82e60799735dc8dcc10a5aea1c3b5a89448adc46d80054d1740b63921fece989
+canonicalHash: sha256:3d20b37cd8c640f0c0954ab95124a5c75636fbacf175aed9d32d590d7c013e82
+renderedHash: sha256:51a4942c0d04caaefada32cacbd6b22e488e8c4dd5696fcf47b68d28ec692d2d
 date: 2026-09-29
 
 **Ruling: ASSENT — 3/3 surviving.** All 3 survive.
@@ -122,6 +130,8 @@ date: 2026-09-29
 - **`rebuild-product`** is verbatim.
 
 **Pending re-sign (2026-09-29):** this row's signature is stale by construction. The charter unit changed when I corrected the "orphaned" sentence in my seat, so the canonicalHash moved. I will re-sign it after Thurgood's re-author pass, which changes the overlay again. I am not re-signing it now.
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, 3/3 surviving.** All 3 survive. `ground-truth-live-mcp`, as I corrected it in `67cd861d`, is re-pointed: *"DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) are never read for your themed values. Reach for the application MCP's token verbs …"*. The "trimmed from your ambient set" clause is correctly removed (subtraction-1): it describes our generator's manifest, not a consumer obligation. `rebuild-product` and `mcp-fallback` are unchanged.
 
 ## `#what-you-dont-own`
 
@@ -188,22 +198,31 @@ date: 2026-09-29
 ## `#frontmatter:routes.cues[9]`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: re-pointed
 canonicalHash: sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:72ae636acb0808bfd5f5a901b12631a65c7a28fac7dac5c94d817e167ea1db02
 date: 2026-09-29
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** This route leads to the technology-stack reference, which describes DesignerPunk's own build tooling (subtraction-1). A consumer's stack is the app's own, and the rendered `#what-you-dont-own` points there.
 
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **Assent to the re-point.** The rendered cue is *"WHEN you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions) THEN use get_section (docs MCP)"*. I checked it against the doc's outline (`technology-stack`: Platform Technologies, Web CSS Standards, True Native Architecture, Build & Runtime Tooling). The narrowed `when` covers the three consumer-applicable sections and removes "build tooling" (subtraction-1), which is DesignerPunk's own. My phase-two no-consumer-counterpart missed that the platform sections apply to a consumer; this re-point is the better ruling.
+
 ## `#frontmatter:commands[platform-tokens]`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: re-pointed
 canonicalHash: sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+renderedHash: sha256:bbb85a598429b242a83176b9478a5cb8ebd91ec05ae17207c38ec62348306af3
 date: 2026-09-29
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `npm run generate:platform-tokens` is a repo-internal script (subtraction-1). The consumer equivalent, `npx designerpunk generate`, is named in the re-pointed `commands[product-screen-commands]`.
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`.** **REFUSED AGAIN: `should-re-point`** (after Thurgood's re-author). The re-pointed value is right: `cmd: npx designerpunk generate`, `runContext: consumer-repo`, and a cue that regenerates theme Swift and product tokens from `designerpunk.config.ts`. **But the row's own rendering is self-contradictory in a consumer.**
+- **What renders**: *"…: `npx designerpunk generate` (run from the consumer product repo, not this repo)"*.
+- **Why it's wrong**: in the consumer rendering, *this repo* IS the consumer product repo, so the clause tells the agent not to run the command where it must run.
+- **Source**: the suffix is `render.ts:97`'s fixed phrase for `runContext: consumer-repo`. It is written from DesignerPunk's point of view, and the consumer profile inherits it unchanged.
+- **Fix**: in the consumer profile, the consumer-repo run context renders no suffix, or a consumer-true one (e.g. *"run from this product repo"*). The overlay value itself needs no change.
+- **Wider scope**: the same suffix is on the re-pointed `commands[ios-build-test]` (not in my signed population, but in the same rendered Commands section), and probably on every consumer agent's consumer-repo commands.
 
 ## `#frontmatter:commands[swift-theme-types-tests]`
 
@@ -218,12 +237,14 @@ date: 2026-09-29
 ## `#frontmatter:commands[build]`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: superseded-by
 canonicalHash: sha256:99336e5fd14ab59d5a329a219a4356a521e2192a6091c4f3509e00175767eca5
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 date: 2026-09-29
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `npm run build` is repo-internal (subtraction-1).
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **Assent to `superseded-by #what-you-dont-own`.** `npm run build` served one function, *build with this repo's tooling*. The destination's rendering carries it re-grounded: *"Your repo's own build and test tooling is the one to use — read it from the app's build setup before you run anything"*. This is a better ruling than my phase-two no-consumer-counterpart.
 
 ## `#frontmatter:commands[audit-tokens]`
 
@@ -248,17 +269,19 @@ date: 2026-09-29
 ## `#frontmatter:writeScope[docs/specs/**]`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: superseded-by
 canonicalHash: sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 date: 2026-09-29
 
 **Ruling: ASSENT — `surviving: []` (no-consumer-counterpart confirmed).** `docs/specs/**` is our summary-doc tier (subtraction-4). The consumer's spec area is covered by the re-pointed `writeScope[.kiro/specs/**]` → `specs/**`.
 
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **Assent to `superseded-by writeScope[.kiro/specs/**]`.** The consumer's spec-writing area is the re-pointed `specs/**`. Our separate summary-doc tier folds into it; a consumer has no two-tier split.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: superseded-by
 canonicalHash: sha256:696b3c1cfff5de9fb82d397eae3546edc83d6120842d4136ecb78b583cdf9476
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 date: 2026-09-29
@@ -269,10 +292,15 @@ date: 2026-09-29
 - **Should re-point to**: the trim, re-grounded at `node_modules/@3fn/core/dist/…` (and the verdict with it), keeping its MCP replacement cue.
 - **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
 
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **My refusal is RESOLVED: I assent to the changed disposition (`superseded-by #how-to-use-designerpunk-tokens-on-ios`).** That unit's rendering now carries the trim's whole function: do not read the base snapshot, query the MCP, and a theme-varying token is a per-theme set. The trim's own artifact leaves the package at Task 16.3 (Ada's split).
+- **Conditional assent**: this is true from 16.3's merge, as the dependency comment above the row states. Until then, `node_modules/@3fn/core/dist/ios/DesignTokens.ios.swift` still ships, and the body glob `dist/*.ios.swift` does not match the `dist/ios/` subdirectory. If 16.3's negation slips, this row is false and I refuse it again.
+- **Valve-1 blind spot**: the `renderedHash` is the empty-piece hash. I signed on the text, reading the rendered Ground truth section directly: this trim no longer renders, and only the ComponentTokens trim remains.
+- **Canonical residual (my seat)**: `canonical/agents/kenya.md`'s `cue.negative` for this trim still says *"ORPHANED and stale (pre-Spec-094 …)"*, which is false. It doesn't render in a consumer (superseded), but it is false in the charter. Fixing it changes this entry's `canonicalHash`, so it is sequenced with the orchestrator, not done here.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: re-pointed
 canonicalHash: sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 date: 2026-09-29
@@ -283,10 +311,13 @@ date: 2026-09-29
 - **Should re-point to**: the trim, re-grounded at `node_modules/@3fn/core/dist/…` (and the verdict with it), keeping its MCP replacement cue.
 - **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
 
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **My refusal is RESOLVED: I assent to the re-point.** The rendered Ground truth section reads *"do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.ios.swift — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `get_component_full`"*. That is exactly the re-point I asked for, and the file stays in the package under Ada's keep branch. The removal of *"a stale generated artifact, not the source of truth"* (subtraction-3) is replaced by the truer *"un-themed base, never the source for your themed values"*.
+- **Valve-1 blind spot**: the `renderedHash` is the empty-piece hash, so I signed on the text read directly.
+
 ## `#frontmatter:ambient.groundTruthManifest.verdict`
 
 signer: kenya
-disposition: no-consumer-counterpart
+disposition: retained
 canonicalHash: sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c
 renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
 date: 2026-09-29
@@ -296,6 +327,8 @@ date: 2026-09-29
 - **The consumer's real Swift is elsewhere.** `npx designerpunk generate` writes the consumer's own Swift to the consumer's `outputDir`, so the shipped copies are pure trap, not a build target.
 - **Should re-point to**: the trim, re-grounded at `node_modules/@3fn/core/dist/…` (and the verdict with it), keeping its MCP replacement cue.
 - **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
+
+**Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **My refusal is RESOLVED: I assent to `retained`.** The verdict value `none-trim-stale-snapshots` is still true in a consumer: the manifest still trims a shipped stale snapshot (ComponentTokens, re-pointed). My refusal was against the no-consumer-counterpart premise, which is gone.
 
 ## Signing run summary (2026-09-29, phase two)
 
@@ -342,3 +375,36 @@ date: 2026-09-29
   1. **Full survival on every routed row.** All 11 routed rows assent with nothing lost. That is the pattern the full-survival assent signal instrument exists to sample, so Stacy's audit should spot-check this set.
   2. **Body assents on the ground-truth units.** Four of them credit the item from the surviving positive MCP directive, and the explicit "where the trap sits" warning is gone from those units: `#ios-theming-spec-094`, `#step-2-set-up-the-screen`, `#how-to-use-designerpunk-tokens-on-ios` and `#ios-specific-guidance`. If Thurgood's re-author also restores the warning in the body, those renderedHashes change and I re-sign them.
   3. **Out of my seat (Ada or Thurgood)**: the package shipping a stale, orphaned `dist/ios/DesignTokens.ios.swift` (0 `Theme` references, regenerated 2026-09-29) is itself a distribution defect. The better fix may be not shipping it.
+
+## Re-sign run summary (2026-09-29)
+
+- **Commits** (branch `task/123-u2b-fr3-kenya` from `dba93df5`; not pushed):
+  - `62464b8d`: 11 assents.
+  - `cbee28de`: 1 refusal.
+  - This summary is in its own commit after those.
+- **Acts**: 12 of 12 from sheet § 4.
+- **Assented, body (5)**, all at full sets:
+
+  | Row | Surviving items |
+  |---|---|
+  | `#ios-theming-spec-094` | 5/5 |
+  | `#step-2-set-up-the-screen` | 3/3 |
+  | `#how-to-use-designerpunk-tokens-on-ios` | 6/6 |
+  | `#ios-specific-guidance` | 7/7 |
+  | `#mcp-practice-notes` | 3/3 |
+
+  The four snapshot-warning gaps I disclosed in phase two are closed: the warning is restored and re-pointed to `node_modules/@3fn/core/dist/*.ios.swift`.
+- **Assented, frontmatter (6)**, all with `surviving: []`:
+  - `trims[dist/ios/DesignTokens.ios.swift]`: `superseded-by`, which resolves my refusal. The assent is conditional on Task 16.3's `dist/ios/**` negation.
+  - `trims[dist/ComponentTokens.ios.swift]`: re-pointed, which resolves my refusal.
+  - `groundTruthManifest.verdict`: `retained`, which resolves my refusal.
+  - `commands[build]`: `superseded-by #what-you-dont-own`.
+  - `writeScope[docs/specs/**]`: `superseded-by writeScope[.kiro/specs/**]`.
+  - `routes.cues[9]`: re-pointed, narrowed to the doc's consumer-applicable sections.
+  - The last three are better rulings than my phase-two no-consumer-counterpart.
+- **Refused (1)**: `commands[platform-tokens]`, `should-re-point`. The value is right, but the rendered suffix *"(run from the consumer product repo, not this repo)"* (`render.ts:97`) contradicts itself in a consumer. The same suffix is on `commands[ios-build-test]`, and probably on every agent's consumer-repo commands.
+- **Sweep**: after the refusal commit, `kenya.*` has 0 findings.
+- **Residuals**:
+  1. **Trim signatures are signed on the text.** The two trim rows' `renderedHash` is the empty-piece hash (the known blind spot), so I read the rendered Ground truth section directly.
+  2. **Until Task 16.3 merges**, `node_modules/@3fn/core/dist/ios/DesignTokens.ios.swift` still ships, and the body glob `dist/*.ios.swift` does not match that subdirectory. The DesignTokens-trim assent is conditional on 16.3.
+  3. **My charter's trim `cue.negative` still says "ORPHANED and stale (pre-Spec-094 …)"**, which is false. It doesn't render in a consumer (superseded), but the fix is my seat's and would change the entry's `canonicalHash`, so the orchestrator should sequence it.
