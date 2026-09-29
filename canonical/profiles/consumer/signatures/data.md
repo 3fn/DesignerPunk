@@ -202,3 +202,33 @@ My consumer rendering needs it:
 
 **No unit of my consumer rendering names that command anywhere.** The re-pointed `commands[product-screen-commands]` says only "read them from this Android app's own build setup". The sibling renderings do name it: Sparky carries `npx designerpunk generate` as a command, and Kenya's product-screen gap names it ("theming Swift materializes here via `npx designerpunk generate`"). Under 5e the function survives only elsewhere, so this row should be re-pointed to `cmd: npx designerpunk generate`, `runContext: consumer-repo`. It must not be disposed away.
 
+## Signing run summary (2026-09-29, phase two)
+
+- **Commits** (branch `task/123-u2b-fr2-data`, not pushed):
+  - `abb97a5d`: 17 assents, in one batch.
+  - One commit per refusal: `3e1faf88` (`#android-theming-spec-094`), `84c6f6f2` (`#step-2-set-up-the-screen`), `61f3ffba` (`#how-to-use-designerpunk-tokens-on-android`), `00c8c894` (`#android-specific-guidance:preamble`), `b7fa823f` (DesignTokens trim), `c93bcb4d` (manifest verdict), `a12cc1b9` (`commands[platform-tokens]`).
+  - This summary lands in its own docs-only commit.
+- **Rows signed**: 24 of 24. 17 assents, 7 refusals.
+- **Assented routed body units (7)**; 32 of their 33 items survive:
+  - `#identity` 7/7
+  - `#out-of-scope` 7/7
+  - `#blocking-exception-direct-escalation-to-peter` 3/3
+  - `#with-peter` 3/4. The `human-4` removal is assented: it is a fact about our human.
+  - `#platform-currency-expectations` 5/5
+  - `#mcp-practice-notes` 3/3
+  - `#what-you-dont-own` 4/4. `jest-not-vitest` is credited under re-keying.
+- **Assented `no-consumer-counterpart` rows (10)**, each `surviving: []`:
+  - the ComponentTokens trim (with a caveat)
+  - `routes.docs[completion-doc-guidance]`, `[dev-workflow-detail]` and `[file-organization]`
+  - `routes.cues[8]` and `[9]`
+  - `commands[functional-suite]` and `[audit-tokens]`
+  - `knowledgeBases[android-tests]`
+  - `writeScope[docs/specs/**]`
+- **Refused rows (7)**, all `should-re-point`. Two root causes:
+  - **Root cause 1 — the stale-snapshot negative was removed, but it has a consumer counterpart.** The package ships flattened `DesignTokens.android.kt` files into `node_modules/@3fn/core/dist/` (verified with `npm pack --dry-run`; no Theme or CompositionLocal inside). The negative should be re-pointed to the package path, not removed. Six rows: `#android-theming-spec-094` (`theming-6`), `#step-2-set-up-the-screen` (`setup-2`), `#how-to-use-designerpunk-tokens-on-android` (`ground-truth-live`), `#android-specific-guidance:preamble` (`native-2`), `frontmatter:ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]` and `frontmatter:ambient.groundTruthManifest.verdict`.
+  - **Root cause 2 — `commands[platform-tokens]` has a consumer counterpart**, `npx designerpunk generate`. My consumer rendering names that command in no unit, yet it still has me author product tokens and relies on generated theme Kotlin.
+- **Widenings**: none. Of the three referent candidates, `blocking-exception` carries its referent in the same rendered paragraph. `workflow-trigger` and `jest-not-vitest` are known false positives.
+- **Residuals**:
+  - **Refusal volume**: most of the 7 refusals share one fix. Re-pointing the snapshot negative in one overlay pass should let 6 of them resolve together.
+  - **Not signed by me**: `#product-tokens-spec-108109` is `retained` and carries `dist/product/ProductTokens.android.kt` verbatim. A consumer's `generate` writes to `{config.outputDir}/product/`. I did not verify that the default is `dist`. If it isn't, that retained text is wrong in a consumer, and the unit should be re-examined.
+  - **Scratchpad collision, a process issue for the orchestrator**: my helper script in the shared session scratchpad was overwritten mid-run by another seat's script of the same name. No wrong edit landed: the failure stopped the chain before any write, and I re-verified the assent commit field by field. Parallel seats should use per-seat scratch subdirectories.
