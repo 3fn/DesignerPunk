@@ -22,27 +22,18 @@
  *     `targets.cc`, per design C2.2), not the frontmatter, since the map — not SKILL.md
  *     prose — is the resolvable source of truth; flagged here for Lina/Data to reconcile.
  *
- * {@link emitSkillTrees} regenerates BOTH `.claude/skills/**` and `.kiro/skills/**` from the
- * canonical `skills/**` trees (Req 8 AC3, Req 14): a byte-identical recursive copy per row,
- * SKILL.md content (including the activation `description`) preserved verbatim — the
- * "sweep-2 CC discovery contract" needs the frontmatter description untouched for Claude
- * Code's auto-discovery to key on it. `.claude/skills/**` was already hand-maintained
- * byte-identical to `skills/**` before this task, so a correct emit produces ZERO diff
- * there — `git status --porcelain .claude/skills` staying empty is a correctness SIGNAL for
- * this function, not a coincidence to explain away.
- *
- * Scope note: this emit is copy-over-existing, NOT a delete-then-copy sweep. Stale files at
- * a target that are no longer present in canonical (a skill file removed upstream) are left
- * behind by this function on purpose — the design's C6 regenerate-and-diff guard is what
- * catches that drift (it regenerates into a disposable temp tree and diffs, so a stale
- * leftover at the real target shows up there, not here). Building a deleter into the emit
- * path is out of scope for this task.
+ * Per-target skill-tree emission (regenerating BOTH `.claude/skills/**` and `.kiro/skills/**`
+ * from the canonical `skills/**` trees, Req 8 AC3, Req 14) is handled by each adapter's own
+ * `emitSkills` (see `adapters/cc.ts`, `adapters/kiro.ts`) — this module supplies the shared
+ * SkillsMap parsing and per-target reference-syntax renderers those adapters go through. A
+ * prior standalone `emitSkillTrees` helper duplicating that emit path was retired as dead
+ * code (chore, 2026-09-30): both targets were already produced via `emitSkills`, so the
+ * second copy-over-existing sweep here was never called in the live pipeline.
  *
  * Traces to: Req 8 AC1/AC2/AC3, Req 9, Req 11 AC2/AC5, Req 12 AC4, Req 13 AC2, Req 14;
  * design.md C2.2, C4.
  */
 
-import * as fs from 'fs';
 import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
 
@@ -118,53 +109,4 @@ export function kiroSkillRef(row: SkillsMapRow): string {
  */
 export function ccSkillRef(row: SkillsMapRow): string {
   return path.basename(row.targets.cc);
-}
-
-// ============================================================================
-// Per-target skill-tree emit (Req 8 AC3, Req 14)
-// ============================================================================
-
-export interface EmitSkillTreesResult {
-  /** Every file written, in emit order (repoRoot-relative paths), for logging/diffing. */
-  written: string[];
-  /** The targets emitted into — always both, for every row. */
-  targets: Array<'cc' | 'kiro'>;
-}
-
-/** Recursively copy `srcDir` into `destDir`, byte-identical, creating parent dirs as needed. */
-function copyTreeSync(srcDir: string, destDir: string, written: string[], repoRoot: string): void {
-  fs.mkdirSync(destDir, { recursive: true });
-  for (const entry of fs.readdirSync(srcDir, { withFileTypes: true })) {
-    const srcPath = path.join(srcDir, entry.name);
-    const destPath = path.join(destDir, entry.name);
-    if (entry.isDirectory()) {
-      copyTreeSync(srcPath, destPath, written, repoRoot);
-    } else if (entry.isFile()) {
-      fs.mkdirSync(path.dirname(destPath), { recursive: true });
-      fs.copyFileSync(srcPath, destPath);
-      written.push(path.relative(repoRoot, destPath));
-    }
-    // symlinks are not expected under skills/**; intentionally unhandled.
-  }
-}
-
-/**
- * Emit every row's canonical skill tree into BOTH its `targets.cc` and `targets.kiro` paths,
- * byte-identical, recursively (bundled scripts/reference subdirs travel as-is; nothing is
- * transformed). Rows are processed SORTED by `canonical` path for deterministic `written`
- * ordering (P1). Copy-over-existing — see the file header's scope note on stale files.
- */
-export function emitSkillTrees(map: SkillsMap, repoRoot: string): EmitSkillTreesResult {
-  const written: string[] = [];
-  const rows = [...map.rows].sort((a, b) => (a.canonical < b.canonical ? -1 : a.canonical > b.canonical ? 1 : 0));
-
-  for (const row of rows) {
-    const srcDir = path.resolve(repoRoot, row.canonical);
-    for (const targetKey of ['cc', 'kiro'] as const) {
-      const destDir = path.resolve(repoRoot, row.targets[targetKey]);
-      copyTreeSync(srcDir, destDir, written, repoRoot);
-    }
-  }
-
-  return { written, targets: ['cc', 'kiro'] };
 }

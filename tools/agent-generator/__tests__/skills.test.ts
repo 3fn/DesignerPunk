@@ -2,19 +2,16 @@
  * @category evergreen
  * @purpose Verify SkillsMap resolution (C2.2): parsing the real committed
  *          canonical/shared/skills-map.yaml, the canonical-keyed row lookup
- *          (resolveSkillRow), the per-target reference-syntax renderers
+ *          (resolveSkillRow), and the per-target reference-syntax renderers
  *          (kiroSkillRef / ccSkillRef) — including the nested-kiro-path
  *          `theming/styles` transform named explicitly per design § Testing
- *          Strategy — and the byte-identical, deterministic per-target
- *          skill-tree emit (emitSkillTrees) against a temp fixture.
+ *          Strategy.
  */
 
 import * as fs from 'fs';
-import * as os from 'os';
 import * as path from 'path';
 import {
   ccSkillRef,
-  emitSkillTrees,
   kiroSkillRef,
   parseSkillsMap,
   resolveSkillRow,
@@ -91,63 +88,5 @@ describe('kiroSkillRef / ccSkillRef — per-target reference syntax', () => {
   it('renders the CC flat-name form as the basename of targets.cc', () => {
     const row = { canonical: 'skills/edge-to-edge', targets: { cc: '.claude/skills/edge-to-edge', kiro: '.kiro/skills/android/edge-to-edge' }, owners: ['data'] };
     expect(ccSkillRef(row)).toBe('edge-to-edge');
-  });
-});
-
-describe('emitSkillTrees — byte-identical, deterministic per-target emit (temp fixture)', () => {
-  let tmpRoot: string;
-
-  beforeEach(() => {
-    tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'skills-emit-test-'));
-    // A tiny fake canonical skill tree: SKILL.md + a nested subdir file.
-    const canonicalDir = path.join(tmpRoot, 'skills', 'fake-skill');
-    fs.mkdirSync(path.join(canonicalDir, 'references'), { recursive: true });
-    fs.writeFileSync(path.join(canonicalDir, 'SKILL.md'), '---\nname: fake-skill\ndescription: A fake skill for testing.\n---\nBody content.\n');
-    fs.writeFileSync(path.join(canonicalDir, 'references', 'notes.md'), 'nested reference content\n');
-  });
-
-  afterEach(() => {
-    fs.rmSync(tmpRoot, { recursive: true, force: true });
-  });
-
-  function fakeMap(): SkillsMap {
-    return {
-      rows: [
-        {
-          canonical: 'skills/fake-skill',
-          targets: { cc: '.claude/skills/fake-skill', kiro: '.kiro/skills/nested/fake-skill' },
-          owners: ['data'],
-        },
-      ],
-    };
-  }
-
-  it('copies both targets byte-identical to canonical, including the nested subdir file', () => {
-    emitSkillTrees(fakeMap(), tmpRoot);
-
-    const canonicalSkillMd = fs.readFileSync(path.join(tmpRoot, 'skills', 'fake-skill', 'SKILL.md'));
-    const ccSkillMd = fs.readFileSync(path.join(tmpRoot, '.claude', 'skills', 'fake-skill', 'SKILL.md'));
-    const kiroSkillMd = fs.readFileSync(path.join(tmpRoot, '.kiro', 'skills', 'nested', 'fake-skill', 'SKILL.md'));
-    expect(ccSkillMd.equals(canonicalSkillMd)).toBe(true);
-    expect(kiroSkillMd.equals(canonicalSkillMd)).toBe(true);
-
-    const canonicalNotes = fs.readFileSync(path.join(tmpRoot, 'skills', 'fake-skill', 'references', 'notes.md'));
-    const ccNotes = fs.readFileSync(path.join(tmpRoot, '.claude', 'skills', 'fake-skill', 'references', 'notes.md'));
-    const kiroNotes = fs.readFileSync(path.join(tmpRoot, '.kiro', 'skills', 'nested', 'fake-skill', 'references', 'notes.md'));
-    expect(ccNotes.equals(canonicalNotes)).toBe(true);
-    expect(kiroNotes.equals(canonicalNotes)).toBe(true);
-  });
-
-  it('reports both targets written, sorted by canonical row order', () => {
-    const result = emitSkillTrees(fakeMap(), tmpRoot);
-    expect(result.targets).toEqual(['cc', 'kiro']);
-    expect(result.written.some((f) => f.includes(path.join('.claude', 'skills', 'fake-skill', 'SKILL.md')))).toBe(true);
-    expect(result.written.some((f) => f.includes(path.join('.kiro', 'skills', 'nested', 'fake-skill', 'SKILL.md')))).toBe(true);
-  });
-
-  it('two emits produce identical file sets (determinism)', () => {
-    const result1 = emitSkillTrees(fakeMap(), tmpRoot);
-    const result2 = emitSkillTrees(fakeMap(), tmpRoot);
-    expect(result2.written).toEqual(result1.written);
   });
 });
