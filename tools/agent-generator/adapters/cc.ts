@@ -400,9 +400,9 @@ export class CcAdapter implements TargetAdapter {
   }
 
   emitSkills(map: SkillsMap, ctx: AdapterContext): EmittedFile[] {
-    // Deterministic ordering: rows sorted by canonical, files by path (skills.ts already
-    // sorts rows by canonical for emitSkillTrees; recompute the per-row/per-file listing
-    // here so each file's own attribution sidecar can be built).
+    // Deterministic ordering: rows sorted by canonical, files by path (mirrors skillKey's
+    // canonical-sort convention in skills.ts; recompute the per-row/per-file listing here
+    // so each file's own attribution sidecar can be built).
     const files: EmittedFile[] = [];
     const rows = [...map.rows].sort((a, b) => (a.canonical < b.canonical ? -1 : a.canonical > b.canonical ? 1 : 0));
 
