@@ -320,7 +320,7 @@ date: 2026-09-29
 ## Confirmation run summary
 
 - **Commit**: the commit that adds this note (branch `task/123-u2b-fr1-sparky`, parent `3d781922`). The SHA is in the handback.
-- **Units confirmed**: 33 of 33. The record went from 125 items to 127.
+- **Units confirmed**: 33 of 33. The record went from 120 items to 122 (later 123, after `cf278169` reinstated `product-tokens-3` under Thurgood's 5c ruling).
 - **Items added**: `#identity` `sparky-understand-intent`; `#the-implement-vs-direct-distinction` `direct-raise-not-decide` and `advise-with-rationale`.
 - **Items removed**: `#product-tokens` `product-tokens-3` (it describes the generator's output, and no Sparky implementation can violate it).
 - **Units ruled zero (INAPPLICABLE, declared)**: `#operational-mode-screen-implementation:preamble` and `#operational-mode-platform-expertise:preamble`. Both are lead-ins, as drafted.
