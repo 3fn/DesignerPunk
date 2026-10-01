@@ -85,9 +85,15 @@ export function surfaceGlobs(): string[] {
   return [CONSUMER_PROFILE_PATH];
 }
 
-/** Load `canonical/consumer-profile.yaml` from a repo root. */
-export function loadConsumerProfile(repoRoot: string): ConsumerProfile {
-  const abs = path.join(repoRoot, CONSUMER_PROFILE_PATH);
-  if (!fs.existsSync(abs)) throw new ConsumerProfileError(`${CONSUMER_PROFILE_PATH}: not found under ${repoRoot}`);
-  return parseConsumerProfile(fs.readFileSync(abs, 'utf8'));
+/**
+ * Load the profile from a root. The steward repo reads `canonical/consumer-profile.yaml` (the
+ * default `relPath`); an installed package reads the byte copy prepack ships beside the derived
+ * canonical (`dist/consumer-canonical/consumer-profile.yaml` — Spec 123 Task 16.1), because
+ * `canonical/` does not ship. One loader, one list: the copy is written from this file, never
+ * authored (C12).
+ */
+export function loadConsumerProfile(root: string, relPath: string = CONSUMER_PROFILE_PATH): ConsumerProfile {
+  const abs = path.join(root, relPath);
+  if (!fs.existsSync(abs)) throw new ConsumerProfileError(`${relPath}: not found under ${root}`);
+  return parseConsumerProfile(fs.readFileSync(abs, 'utf8'), relPath);
 }

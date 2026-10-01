@@ -1,4 +1,4 @@
-<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/sparky.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+<!-- GENERATED FILE — do not hand-edit. Emitted by DesignerPunk (@3fn/core) from the agent definitions the package ships; `npx designerpunk sync` regenerates it and reports hand-edits instead of overwriting them. -->
 
 
 # Sparky — Web Platform Engineer

@@ -27,7 +27,7 @@ tools:
   - mcp__designerpunk-product__get_screen_spec
   - mcp__designerpunk-product__rebuild_product_index
 ---
-<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/kenya.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+<!-- GENERATED FILE — do not hand-edit. Emitted by DesignerPunk (@3fn/core) from the agent definitions the package ships; `npx designerpunk sync` regenerates it and reports hand-edits instead of overwriting them. -->
 
 
 # Kenya — iOS Platform Engineer

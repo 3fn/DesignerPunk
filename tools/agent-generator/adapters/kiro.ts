@@ -67,6 +67,7 @@ import type {
   IdentityMemberInput,
 } from './index';
 import { identityMemberName, identityMembersStewardMessage, renderIdentityMember, spanInputsFor } from './index';
+import { CONSUMER_GENERATED_BANNER } from './cc';
 
 // ============================================================================
 // toolRef — NATIVE (non-namespaced) Kiro tool-reference syntax
@@ -334,10 +335,14 @@ export class KiroAdapter implements TargetAdapter {
     // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
     // Kiro prompts carry no frontmatter, so "immediately after the frontmatter"
     // degenerates to the first bytes of the file.
+    // Under the consumer profile, the banner that is true in a consumer's repo (Spec 123 Task
+    // 16.1) — the same line the CC adapter renders. Same glue, same single line.
     const generatedBanner =
-      `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
-      'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
-      'caught by 122-diff-guard. -->\n\n';
+      span.profile === 'consumer'
+        ? CONSUMER_GENERATED_BANNER
+        : `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
+          'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
+          'caught by 122-diff-guard. -->\n\n';
     bodyParts.push(emit([{ kind: 'glue', glue: 'generated-banner', text: generatedBanner }]));
 
     // -- (a) Pass-through body — one span per partition unit (C13/C14) --------
@@ -521,15 +526,17 @@ function emitSkillTreeFiles(map: SkillsMap, ctx: AdapterContext, targetKey: 'cc'
   const files: EmittedFile[] = [];
   const rows = [...map.rows].sort((a, b) => (a.canonical < b.canonical ? -1 : a.canonical > b.canonical ? 1 : 0));
 
+  // THE ROOT SPLIT (Spec 123 Task 16.1; design C20) — as in CcAdapter.emitSkills: the source
+  // resolves against `ctx.repoRoot` (the steward repo, or the package's derived canonical); the
+  // destination is the row's target joined with the file's relative path, never resolved against
+  // a root, so it is relative to wherever the caller writes.
   for (const row of rows) {
     const srcDir = path.resolve(ctx.repoRoot, row.canonical);
-    const destDir = path.resolve(ctx.repoRoot, row.targets[targetKey]);
     const relFiles = listFilesRecursive(srcDir).sort();
     for (const rel of relFiles) {
       const srcPath = path.join(srcDir, rel);
-      const destPath = path.join(destDir, rel);
       const content = fs.readFileSync(srcPath, 'utf8');
-      const destRelPath = path.relative(ctx.repoRoot, destPath);
+      const destRelPath = path.posix.join(row.targets[targetKey].split(path.sep).join('/'), rel.split(path.sep).join('/'));
       const attribution = {
         artifact: destRelPath,
         spans: [

@@ -47,7 +47,7 @@ tools:
   - mcp__designerpunk-product__list_product_templates
   - mcp__designerpunk-product__rebuild_product_index
 ---
-<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/leonardo.md; edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and caught by 122-diff-guard. -->
+<!-- GENERATED FILE — do not hand-edit. Emitted by DesignerPunk (@3fn/core) from the agent definitions the package ships; `npx designerpunk sync` regenerates it and reports hand-edits instead of overwriting them. -->
 
 
 # Leonardo — Cross-Platform Product Architect

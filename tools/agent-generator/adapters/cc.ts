@@ -147,6 +147,23 @@ function allFlatTools(subset: ToolSubset): string[] {
 }
 
 // ============================================================================
+// The consumer banner (Spec 123 Task 16.1)
+// ============================================================================
+
+/**
+ * The generated-file banner under the CONSUMER profile. The steward banner points at
+ * `canonical/agents/<a>.md` and `122-diff-guard`, neither of which exists in a consumer's repo;
+ * this one names what is true there: the file is emitted from the package's shipped agent
+ * definitions, and `sync` (C7) regenerates it, reporting a hand-edit as a conflict rather than
+ * overwriting it. One line plus a blank line, like the steward banner. The Kiro adapter renders
+ * the same line (its prompt file).
+ */
+export const CONSUMER_GENERATED_BANNER =
+  '<!-- GENERATED FILE — do not hand-edit. Emitted by DesignerPunk (@3fn/core) from the agent ' +
+  'definitions the package ships; `npx designerpunk sync` regenerates it and reports hand-edits ' +
+  'instead of overwriting them. -->\n\n';
+
+// ============================================================================
 // renderWriteScope — facet-7 enforcement sentence layered onto the base note
 // ============================================================================
 
@@ -266,10 +283,15 @@ export class CcAdapter implements TargetAdapter {
     // One generator-authored body line immediately after the frontmatter, marking the
     // file as generator output. CC agent files must OPEN with frontmatter, so the
     // banner cannot be the first bytes (unlike CLAUDE.md's emitAlwaysLayer banner).
+    // The steward banner names this repo's canonical source and guard, which do not exist in a
+    // consumer's repo; the consumer profile carries a banner that is true there (Spec 123 Task
+    // 16.1). Same glue, same single line — so no span below it moves.
     const generatedBanner =
-      `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
-      'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
-      'caught by 122-diff-guard. -->\n\n';
+      span.profile === 'consumer'
+        ? CONSUMER_GENERATED_BANNER
+        : `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
+          'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
+          'caught by 122-diff-guard. -->\n\n';
     bodyParts.push(emit([{ kind: 'glue', glue: 'generated-banner', text: generatedBanner }]));
 
     // -- (a) Pass-through body — one span per partition unit (C13/C14) --------
@@ -447,15 +469,19 @@ export class CcAdapter implements TargetAdapter {
     const files: EmittedFile[] = [];
     const rows = [...map.rows].sort((a, b) => (a.canonical < b.canonical ? -1 : a.canonical > b.canonical ? 1 : 0));
 
+    // THE ROOT SPLIT (Spec 123 Task 16.1; design C20): the SOURCE resolves against `ctx.repoRoot`
+    // — the steward repo, or the package's derived canonical in a consumer's install — and the
+    // DESTINATION is never resolved against any root: it is the row's target path joined with the
+    // file's relative path, so it is relative to wherever the caller writes (the consumer's repo).
+    // Byte-identical to the pre-16.1 `path.relative(repoRoot, path.resolve(repoRoot, …))` for the
+    // normalized relative targets the skills map carries.
     for (const row of rows) {
       const srcDir = path.resolve(ctx.repoRoot, row.canonical);
-      const destDir = path.resolve(ctx.repoRoot, row.targets.cc);
       const relFiles = listFilesRecursive(srcDir).sort();
       for (const rel of relFiles) {
         const srcPath = path.join(srcDir, rel);
-        const destPath = path.join(destDir, rel);
         const content = fs.readFileSync(srcPath, 'utf8');
-        const destRelPath = path.relative(ctx.repoRoot, destPath);
+        const destRelPath = path.posix.join(toPosix(row.targets.cc), toPosix(rel));
         const attribution: AttributionManifest = {
           artifact: destRelPath,
           spans: [{ lines: [1, Math.max(countLines(content), 1)], op: 'passthrough', source: path.relative(ctx.repoRoot, srcPath) }],
@@ -479,6 +505,7 @@ export class CcAdapter implements TargetAdapter {
   }
 
   emitAlwaysLayer(set: readonly AlwaysSetMember[], ctx: AdapterContext): EmittedFile[] {
+    if ((ctx.profile ?? 'steward') === 'consumer') return [this.consumerAlwaysRegion(set, ctx)];
     const acc = new AttributionAccumulator();
     const parts: string[] = [];
 
@@ -512,6 +539,32 @@ export class CcAdapter implements TargetAdapter {
 
     return [{ path: 'CLAUDE.md', content, attribution }];
   }
+
+  /**
+   * The CONSUMER always-layer (C19; Spec 123 Task 16.1): the CONTENTS of `CLAUDE.md`'s
+   * DesignerPunk-managed marker region — one `@`-import line per member, in always-set order, and
+   * nothing else. No banner and no markers: the region splicer (`src/cli/sync/RegionGrain.ts`,
+   * 16.4) owns the markers, and the bytes outside them are the consumer's. Each member's path
+   * comes from `ctx.steeringIdToPath`, which the consumer lane fills with the member files it
+   * emits (`.claude/identity/designerpunk-<id>.md`) and the template member's local path.
+   */
+  private consumerAlwaysRegion(set: readonly AlwaysSetMember[], ctx: AdapterContext): EmittedFile {
+    const acc = new AttributionAccumulator();
+    let content = '';
+    for (const member of set) {
+      const target = ctx.steeringIdToPath?.[member.id];
+      if (target === undefined) {
+        throw new Error(
+          `CcAdapter.emitAlwaysLayer: no steeringIdToPath entry for always-set member "${member.id}" ` +
+            `— the consumer lane maps every member it delivers to its member-file path.`
+        );
+      }
+      const line = `@${target}\n`;
+      acc.add('resolve', countLines(line), `id:${member.id}`);
+      content += line;
+    }
+    return { path: 'CLAUDE.md', content, attribution: acc.build('CLAUDE.md') };
+  }
 }
 
 // ============================================================================
@@ -523,6 +576,10 @@ function countLines(text: string): number {
   const withoutTrailingNewline = text.endsWith('\n') ? text.slice(0, -1) : text;
   if (withoutTrailingNewline.length === 0) return 1;
   return withoutTrailingNewline.split('\n').length;
+}
+
+function toPosix(p: string): string {
+  return p.split(path.sep).join('/');
 }
 
 function ensureTrailingNewline(text: string): string {
