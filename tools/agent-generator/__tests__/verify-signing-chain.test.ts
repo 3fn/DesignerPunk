@@ -1,8 +1,9 @@
 /**
  * `verify-signing-chain --ci` — links 1–3 (ballot 2026-10-01-signing-act-chain § 4.1) against
  * the fixtures Stacy specified in § 4.5: F1–F14, F12′ and the two controls — plus F13c and F15,
- * which she added at her pre-merge read of PR #245 (rulings 5 and 6). Every test name starts with
- * the fixture id; the Must column is the assertion.
+ * which she added at her pre-merge read of PR #245 (rulings 5 and 6), and the orphan-section
+ * must-fail / removal-pass pair from her R2 ruling 3. Every test name starts with the fixture id;
+ * the Must column is the assertion.
  *
  * The C1 function: the real `regrounding/c1.ts` + `signatures.ts` when on the tree (Spec 123
  * U2b), else a mirror of C1 (owner signs unless owner = profile author thurgood → stacy) — the
@@ -354,6 +355,80 @@ describe(`verify-signing-chain --ci (links 1–3) — C1 from ${RG_IS_REAL ? 're
     expect(text(r)).not.toMatch(/FAIL \(floor\)/);
   });
 
+  // ------------------------------------------------------------------ ruling 3: orphan sheet sections
+  // A sheet `## ` section keyed to no row or unit is no one's object, so adding or editing one
+  // leaves the signer's objects (link 2) — with or without an act in the commit. Removing one is
+  // cleanup and stays exempt (Stacy R2 on PR #245, ruling 3).
+  const CONF = 'canonical/profiles/consumer/confirmations/kenya.md';
+  const ORPHAN = (who: string): string => `## \`#nowhere\`\n\n${who}: kenya\ndate: 2026-10-01\n`;
+  const addOrphan = (repo: string, sheet: string): void => write(repo, sheet, `${read(repo, sheet).replace(/\n*$/, '')}\n\n${ORPHAN(sheet === CONF ? 'confirmer' : 'signer')}`);
+  /** A clean act of the sheet's kind: a re-sign (signature sheet) or a re-confirm (confirmation sheet). */
+  const cleanAct = (repo: string, sheet: string, seed: string): void => {
+    if (sheet !== CONF) {
+      resign(repo, { seed });
+      return;
+    }
+    const h = hash(seed);
+    write(repo, 'canonical/operative-sets/kenya.yaml', read(repo, 'canonical/operative-sets/kenya.yaml').replace(/canonicalHash: .*/, `canonicalHash: ${h}`));
+    write(repo, CONF, read(repo, CONF).replace(/canonicalHash: .*/, `canonicalHash: ${h}`));
+  };
+  /** A fixture repo whose base already carries an orphan section in `sheet`; returns [repo, base]. */
+  function prWithOrphan(sheet: string): [string, string] {
+    const repo = makeRepo();
+    addOrphan(repo, sheet);
+    const base = commit(repo, 'base: a sheet carrying an orphan section', []);
+    g(repo, ['switch', '-q', '-c', 'pr']);
+    return [repo, base];
+  }
+
+  test.each([
+    ['signature sheet', 'adds', 'no act'],
+    ['signature sheet', 'adds', 'a clean act'],
+    ['signature sheet', 'edits', 'no act'],
+    ['signature sheet', 'edits', 'a clean act'],
+    ['confirmation sheet', 'adds', 'no act'],
+    ['confirmation sheet', 'edits', 'a clean act'],
+  ])('ruling 3 (must-fail): %s — a commit that %s an orphan `## ` section, with %s → link-2 finding', (kind, op, withAct) => {
+    const sheet = kind === 'confirmation sheet' ? CONF : SHEET('kenya');
+    const [repo, base] = op === 'adds' ? pr() : prWithOrphan(sheet);
+    if (op === 'adds') addOrphan(repo, sheet);
+    else write(repo, sheet, read(repo, sheet).replace(/(## `#nowhere`[\s\S]*)$/, '$1\nAn edit to the orphan.\n'));
+    if (withAct === 'a clean act') cleanAct(repo, sheet, `r3-${kind}-${op}`);
+    const sha = commit(repo, `Orphan section (${op})`, ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(r.ok).toBe(false);
+    const orphan = r.findings.filter((f) => f.link === 2 && f.sha === sha && /section that is no signing object: .*§ "#nowhere"/.test(f.message));
+    expect(orphan).toHaveLength(1);
+    expect(orphan[0].message).toMatch(kind === 'confirmation sheet' ? /names no operative-set unit/ : /names no dispositions row/);
+    // The orphan is the only defect: the act (if any) is clean.
+    expect(r.findings).toEqual(orphan);
+    expect(r.rowsChecked).toBe(withAct === 'a clean act' ? 1 : 0);
+  });
+
+  test('ruling 3 (must-pass): removing an orphan section, in a commit that also carries a clean act → pass', () => {
+    const [repo, base] = prWithOrphan(SHEET('kenya'));
+    write(repo, SHEET('kenya'), read(repo, SHEET('kenya')).replace(/\n*## `#nowhere`[\s\S]*$/, '\n'));
+    resign(repo, { seed: 'r3-remove' });
+    commit(repo, 'Re-sign #identity; remove the orphan section', ['Agent: kenya']);
+    expect(read(repo, SHEET('kenya'))).not.toContain('#nowhere');
+    const r = ci(repo, base);
+    expect(r.findings).toEqual([]);
+    expect(r.ok).toBe(true);
+    expect(r.rowsChecked).toBe(1);
+  });
+
+  test('ruling 3 (removal alone): no link-2 finding — but the § 4.1 floor still fails a profile-touching range with zero rows', () => {
+    // Recorded, not ruled: the removal exemption holds at link 2; the floor (read literally) is a
+    // separate check and fires on a removal-only range. Routed to Stacy as an interpretation question.
+    const [repo, base] = prWithOrphan(SHEET('kenya'));
+    write(repo, SHEET('kenya'), read(repo, SHEET('kenya')).replace(/\n*## `#nowhere`[\s\S]*$/, '\n'));
+    commit(repo, 'Remove the orphan section', ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(r.findings).toEqual([]);
+    expect(r.rowsChecked).toBe(0);
+    expect(text(r)).toMatch(/FAIL \(floor\)/);
+  });
+
   test('F14: a row staled only by merging `main`, then re-signed → pass', () => {
     const repo = makeRepo();
     g(repo, ['switch', '-q', '-c', 'pr']);
@@ -372,7 +447,7 @@ describe(`verify-signing-chain --ci (links 1–3) — C1 from ${RG_IS_REAL ? 're
 });
 
 // ---------------------------------------------------------------------------- beyond § 4.5
-describe('verify-signing-chain --ci — behaviors beyond the § 4.5 table (not among the 25)', () => {
+describe('verify-signing-chain --ci — behaviors beyond the § 4.5 table (not among the 33)', () => {
   test('a clean confirmation re-confirm (record unit canonicalHash + its sheet section) → pass', () => {
     const [repo, base] = pr();
     const h = hash('reconfirm');
