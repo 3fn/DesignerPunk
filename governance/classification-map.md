@@ -855,6 +855,7 @@ education:
   disposition: "LAW HOME, single: .kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md § 2 (the seven-clause rule). POINTER-GRADE: Task-Completion-Protocol § 'Coherent Units' (one bullet, pointing here — S-6 copy set: none; a pointer, not a copy). NOT EDITED, DELIBERATELY: the charters' `## Write scope` blocks (clause 5 — charter scopes unchanged; a charter line would read as a permanent grant for temporary work, the NOT-TAKEN fork (A)'s own defect). APPLICATION HOME: each spec's tasks.md § 'Delegated-tier plan' preamble names the grant; its Primary Artifacts lists are the grant's exact extent"
 history:
   - { date: 2026-09-26, change: "entry created by the tasks-row write-scope ballot (.kiro/docs/ballots/2026-09-26-tasks-row-write-scope-grant.md), RATIFIED by Peter at the Spec 123 tasks-round sitting (record-first; PR-atomic). ORIGIN: Lina R1 T-L3 — most Spec 123 seats sat outside their agent's declared charter write scope, so the seated agents would have had to decline their own work. FORK: (A) charter-widening ballot NOT TAKEN — counter recorded: permanent scope for temporary work; (B) SELECTED. PETER'S CLARIFICATION RECORDED: the rule grants authorization records, not scope self-expansion — activation is Peter's merge of the tasks.md. KNOWINGLY ACCEPTED: the tasks author as scope-granter outside the per-case ballot path, mitigated by activation-at-merge and the tasks feedback round. FIRST APPLICATION: Spec 123's five units. Non-substring sweep at authoring: 29 live ids + this one, relations 0, dupes 0", by: thurgood }
+  - { date: 2026-10-01, change: "POPULATION NARROWED BY POINTER, not by edit (ballot .kiro/docs/ballots/2026-10-01-signing-act-chain.md § 2; DRAFT at authoring, in force at its ratification merge R, record-first): a C1 signing or confirming act — confined to the row's signature/confirmation sub-object (refuse included) and its sheet section, by c1Seat(row), for a row on the branch's freshness stale list — is authorized by the C1 function and is NOT a write-scope act under this grant. It is neither granted by a row nor an out-of-list edit; it is audited under signing-act-consistency. Every other field (disposition, destination, removals, cites, overlay text, operative-set items, canonical sources, a seat's own charter) stays authoring under this grant or charter scope. ORIGIN: Spec 123 Task 15's signing fan-out ran under a row that named only Thurgood and Lina — one Medium finding against the plan (Stacy), no retroactive grant (Peter, 2026-09-30). The 2026-09-26 ballot itself is a record and is not edited", by: thurgood }
 ```
 
 ### publish-rail-guard
@@ -897,6 +898,7 @@ education:
   disposition: "LAW HOME, single: .kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 3 (the seven-clause rule). POINTER-GRADE: .kiro/issues/README.md § 'The convention' item 8 (one item, pointing here)"
 history:
   - { date: 2026-09-28, change: "entry created by the CI-regime standing-scope ballot (.kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md § 3, M2), RATIFIED by Peter 2026-09-28 'as recommended on all five forks' (record-first). ORIGIN: B-CI named a CI-regime owner with no standing scope, and issues assigned CI work the owner's charter forbade (the test:scripts issue). Stacy R1 changes to clauses 4, 5 and 6 incorporated at THURGOOD R2. Non-substring sweep at authoring: 31 live ids + this one + instrument-rows-disposed-not-fixed, relations 0, dupes 0", by: thurgood }
+  - { date: 2026-10-01, change: "POPULATION NARROWED BY POINTER (ballot .kiro/docs/ballots/2026-10-01-signing-act-chain.md § 2; DRAFT at authoring, in force at its ratification merge R, record-first): a C1 signing or confirming act needs no **Grant paths**: entry — an issue whose fix moves signed hashes grants its owner the change, and each affected row's C1 seat re-signs under the C1 function, not under the issue. Pointer-grade education: .kiro/issues/README.md rule 8 gains one trailing clause. ORIGIN: the VALVE-1 issue (.kiro/issues/2026-09-30-valve-1-per-trim-spans.md) as drafted granted the seats' profile paths to its owner, who signs none of them — the grant could not cover the acts the issue described (Stacy, consult 2). The 2026-09-27 ballot itself is a record and is not edited", by: thurgood }
 ```
 
 ### instrument-rows-disposed-not-fixed
@@ -988,4 +990,64 @@ education:
   disposition: "ONE HOME: .kiro/steering/start-up-tasks.md item 8 (per fork F-3). FORMAT HOME: governance/completion-documentation-guide.md § 'The instruments line and block'. LAW RECORD: .kiro/docs/ballots/2026-09-28-parent-instrument-existence-check.md §§ 2-4. AUDIT HOME: Stacy's charter, § 'The claims-pass record', item 'The instruments read' (edit site 5). TASKS-ROUND HOME: Stacy's charter, the LENS trigger row, question 6 (edit site 5b)"
 history:
   - { date: 2026-09-29, change: "entry created by ballot 2026-09-28-parent-instrument-existence-check, RATIFIED by Peter 2026-09-29 (record-first). ORIGIN: Peter's direction after three instances in Spec 123 in four days (11.4 #220; Task 13 read-ahead; Task 14 → 15.0 amendment). Stacy required reviewer (R1 C1-C8 at THURGOOD R2; R2 A1-A4 at THURGOOD R3). Rulings: F-1 (a) + M4 (adopted on the seats' unanimous read), F-2 no, F-3 (a), A-6 (ii). Unbound by name: Spec 123 Tasks 13, 14, 15.", by: thurgood }
+```
+
+### signing-act-consistency
+
+```yaml
+rule: "A C1 signing or confirming act — a write by c1Seat(row) confined to the row's signature or confirmation sub-object (refuse included) and its sheet section, for a row on the branch's freshness stale list (taken before signing, re-taken per round, pasted into the PR) — needs no write grant; every other field is authoring; it is valid only if its whole chain holds (stale list; hunk and commit inside the signer's objects; signer = c1Seat = Agent:; exactly one subagent transcript created the commit; its meta and parent tool_use name the signer; its prompt_snapshot equals the spawn-time charter; each signed row's rendered line appears in a tool result; sampled judgment), and a missing link is never green; verify-signing-chain checks the git links in CI and the harness links on audit — consistency, not identity"
+boundary_call:
+  class: functional
+  rationale: "Per-surface realities are stated in scope[]. The git links (1-3) are decidable over git and the freshness sweep. The harness links (4-7) are decidable over the harness store, but the store is user-writable and its formats (prompt_snapshot, commit output) are unowned, so a complete chain is evidence of CONSISTENCY among records, never of identity. Link 8 (did the brief direct the outcome; does a blind fresh seat agree) is judgment and is only sampled"
+verification:
+  disposition: scoped
+  owner: thurgood
+  # owner = who keeps the instrument true (the completion-criteria-parity precedent: for a barrier the decision IS the
+  # check). The walk's VERDICTS are Stacy's to read and record (Q5); Peter walks Stacy-signed acts (the collapse-seat rule).
+  scope:
+    - surface: "git links 1-3: the stale-list bound, commit-grain containment (incl. a merge result on a signature path equal to one parent's blob), signer = c1Seat = Agent: — verify-signing-chain --ci, one step of the existing required context 122-diff-guard"
+      disposition: barrier
+      check_state: proposed
+      checks: []
+      # Planned check identity, NOT populated (checks[] records identity, and counting it would over-count — the
+      # completion-criteria-parity first-instance note): the step 'verify-signing-chain --ci' inside 122-diff-guard
+      # (.github/workflows/agent-generator.yml); no new context, EXPECTED_CONTEXTS unchanged. Built under the grant issue
+      # .kiro/issues/2026-10-01-verify-signing-chain-ci-step.md. NOT gated by the no-op probe (the C6 carve-out: the lock
+      # may skip generation checks, never signing checks); runs the full freshness sweep; reads base.sha..head.sha at full
+      # depth and fails loud on shallow history; prints rows checked and fails on zero when canonical/profiles/** is touched.
+      # Arming: proposed -> armed in the fixing PR itself, only with F1-F13 passing and the CI-path bites (F9, F10, F11)
+      # recorded red on that PR's own runs (the publish-rail-guard same-commit precedent; if split, the row stays proposed).
+      # ARMING fires at that merge (Stacy).
+      rationale: "Set comparisons and string equality over git and the sweep's output — no judgment in the predicate. The fixtures (Stacy specifies, Thurgood builds): F1 trailer != signer, F2 no trailer, F3 two trailers, F4 hunk edits disposition or another seat's object, F5 row not on the stale list, F6 a seat commit through a merged side branch (PASS), F7 a merge's conflict resolution edits a signature, F8 a later commit with a different trailer rewrites the hunk, F9 F1 under a refreshed lock (noop=true), F10 depth-1 checkout (fail loud), F11 a stale unit under a hand-computed matching lock, F12 the 65563985 shape (a seat-trailered signing commit that also edits a path outside the seat's objects), F12' F12 split across two commits with the same trailer, F13 a conflicted merge whose signature-path result equals neither parent's blob; controls: a clean assent and a clean refuse (PASS)"
+    - surface: "harness links 4-7: the creating transcript (the lookup rule), meta agentType + parent tool_use, prompt_snapshot = charter at the spawn-time branch head, each signed row's rendered line in a tool result — verify-signing-chain --audit --pr N (or --branch <unit-branch>), local, every act"
+      disposition: audit
+      check_state: none
+      checks: []
+      # Post-acceptance, never blocking. Reads refs/pull/N/head (survives the squash) and the harness store by agent-<id>.
+      # LOOKUP RULE (Stacy's): a candidate is the first git log line after a SUCCESSFUL git commit in the same tool call (one
+      # per pass in a loop), or the commit's own [<branch> <sha>] line, showing a prefix of the full SHA and the exact subject;
+      # success is decided from evidence in the result — where it cannot be shown, the act reads anomaly. One candidate in a
+      # subagent transcript -> walk 5-7; candidates only in the main session -> FAIL; several -> anomaly; none -> record absent
+      # (unanchored for a Kiro-run seat). REPORTING: one verdict per act from {anchored, unanchored, record absent, FAIL,
+      # anomaly}, link-numbered, verbatim in the claims-pass record, never rolled up. Fixtures: H1 a rebased seat commit ->
+      # record absent; H2a creator + a quoting transcript -> one candidate; H2b a quiet primary commit followed by the seat's
+      # failed commit + '; git log -1' -> never anchored; H3 a main-session commit -> FAIL.
+      # CADENCE: Stacy walks every PR merged since her last walk at MIDPOINT, CLOSEOUT and RELEASE, every act in it; Peter
+      # walks Stacy-signed acts. MERGE-ONLY RULE (Lina's): seat commits enter a unit branch by --no-ff or fast-forward merge
+      # only — never rebased, amended, cherry-picked, merge --squash-ed or re-committed.
+      rationale: "Decidable over the harness store, but the store is writable by any local session and its formats are owned by no one here; a complete chain shows the records agree, not who typed. A format change reads loudly as record absent on every act"
+    - surface: "link 8, judgment: check 4 (the brief did not direct the outcome) and the blind fresh seat — the J sample"
+      disposition: audit
+      check_state: none
+      checks: []
+      # J rate: every refuse; every flip (assent<->refuse or a changed surviving); >= 1 act per distinct non-Stacy signer seat
+      # per PR; one blind assent per seat per render population, preferring full-survival assents. Check 4 is judged once per
+      # brief or continuation, not per act. A blind-seat disagreement is 'divergent': never green, never a finding against the
+      # first seat, counted. Peter samples Stacy-signed acts; written 'Peter sample (Stacy-signed): k / N', '0 / N' when empty,
+      # never omitted. WIDENING: a FAIL, an anomaly, spawnDepth != 1 or an off-plan model sends that seat's acts in the PR to J.
+      rationale: "Judgment is not decidable; it is sampled, and a hollow assent is sampled, not prevented"
+education:
+  disposition: "LAW HOME, single: .kiro/docs/ballots/2026-10-01-signing-act-chain.md §§ 2-6 (the rule, the chain, the instrument with its lookup and reporting rules and fixtures, the merge-only rule, the cadence and J, the one-time acts incl. the C6 carve-out). POINTER-GRADE: .kiro/issues/README.md rule 8 (one trailing clause). CARRIED RIDERS, NOT EDITED NOW (ballot § 11, F-2): the Task-Completion-Protocol 'Coherent Units' grant-bullet pointer rides the next TCP edit that already stales #coherent-units-the-merge-granularity (simulated on U2b: one TCP clause stales the operative set, Stacy's signature and the overlay — three acts by two seats); Stacy places the walk in her own charter at her discretion, in her own commit. AUDIT HOME until then: the claims-pass record of each MIDPOINT / CLOSEOUT / RELEASE. BOUNDARY: identity is owed by no one today; trigger (a)-(d) in the ballot § 8 charters it"
+history:
+  - { date: 2026-10-01, change: "entry created by ballot 2026-10-01-signing-act-chain (DRAFT at authoring; in force at its ratification merge R, record-first — the Status flip commit precedes the merge). ORIGIN: Peter's 2026-09-30 rulings — the merged authorization rule APPROVED in direction (consult 2: Stacy, Thurgood, Lina, Kenya; converged at round 2 on the function-derived form with Lina's stale-list bound and Stacy's audit); the condition that the rule carry identity assurance or an honest account of why it is out of reach; the direction to scale the six layers back. The holistic design (Thurgood R2 synthesis) APPROVED with Stacy's R2 residual (lookup rule, H2b, F12', A4 before U2b merges; check 4 per brief; pre-ratification observation) and Lina's (F13; merge-only) folded. Retires the A-round's A1 (-> --ci), A2 (gone), A3 scripted checks + 1c (-> --audit, every act), A3 judgment (-> J) and the step-up (-> the widening rule); A4 stays one-time. Owner thurgood (instrument); verdicts Stacy's. Non-substring sweep at authoring: 35 live ids + this one, relations 0, dupes 0", by: thurgood }
 ```
