@@ -141,3 +141,16 @@ export function jestConfigCollisionMessage(): string {
     `own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`
   );
 }
+
+/**
+ * design.md catalog row: **managed region — markers missing** (Task 16.4, C7 region
+ * grain). `RegionGrain.spliceRegion` returns this string — never throws, never
+ * writes — when a managed region's begin/end marker pair is absent or unmatched
+ * in `<file>` (e.g. `CLAUDE.md`, `.gitignore`).
+ */
+export function managedRegionMarkersMissingMessage(file: string): string {
+  return (
+    `the DesignerPunk-managed region in ${file} is missing its markers — not rewriting the file. ` +
+    `Restore the markers (see install doc § "Your agent layer") or re-run attach`
+  );
+}
