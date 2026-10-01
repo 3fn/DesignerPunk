@@ -5,8 +5,8 @@
 **Status**: **DRAFT** — Peter ratifies by merge. **Record-first** (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"): when Peter rules, the session that receives the ruling commits the Status flip on this branch (this line, the README index entry, and the register history lines in edit sites 2–3) before the merge. **Peter's merge of this PR is `R`**, the ratification commit on `main`'s first-parent history, and the rule's effective point. A merge with this line still reading DRAFT is a recording defect for the next claims pass, not a silent ratification.
 **No `Ratified-machine:` line, deliberately.** That mechanism belongs to the one ballot `completion-criteria-parity` parses (`2026-09-19-completion-claims-integrity.md`); this ballot follows the B-U1 / B-CI / B-U2 / parent-instrument omission precedent.
 **Proposed by**: Peter, 2026-09-30, in three rulings: (1) the merged authorization rule APPROVED in direction; (2) Task 15's disposition (one Medium finding against the plan, no retroactive grant, Kenya's `65563985` a separate MIDPOINT item); (3) the condition that the rule "is not a solution unless it comes with assurance that the seat whose signature appears is the seat that signed — or an honest account of why that assurance is out of reach and what stands in for it", followed by the direction to scale back: "find a way to scale back the solution while being equally effective if possible". The holistic design was APPROVED with the two R2 residuals folded (§ 12).
-**Required reviewer**: **Stacy**. Her claims passes change shape (§§ 4–5), she specifies every fixture (§ 4.5), and ARMING is hers. She signed off on the design at holistic R2 on four conditions (the lookup rule, H2b, F12′, A4 before U2b merges), all adopted here. **She has not yet read this text.**
-**Consulted**: Stacy — required reviewer, design signed off at holistic R2 with four conditions, all adopted in §§ 4.3, 4.5 and 6; Lina — owner of the C1 machinery, her F13 and merge-only rule adopted in §§ 4.5–4.6, her field fork withdrawn at R2; Kenya — the signer's seat at consult 2, her self-edit gap settled as authoring in § 2 clause 4
+**Required reviewer**: **Stacy**. Her claims passes change shape (§§ 4–5), she specifies every fixture (§ 4.5), and ARMING is hers. She signed off on the design at holistic R2 on four conditions (the lookup rule, H2b, F12′, A4 before U2b merges), all adopted here. **She reviewed this text at R1** (APPROVE-WITH-AMENDMENTS, § 13); every amendment is folded at THURGOOD R2, none forked.
+**Consulted**: Stacy — required reviewer, design signed off at holistic R2 with four conditions, all adopted in §§ 4.3, 4.5 and 6; ballot text reviewed at R1, APPROVE-WITH-AMENDMENTS, all folded at R2 (§ 13); Lina — owner of the C1 machinery, her F13 and merge-only rule adopted in §§ 4.5–4.6, her field fork withdrawn at R2; Kenya — the signer's seat at consult 2, her self-edit gap settled as authoring in § 2 clause 4
 
 > **Conflicts, stated.**
 > - **The author wrote the defect this ballot records.** Thurgood was Task 15's PRIMARY and authored its row. The row granted the C1 signing acts to no seat, and the fan-out ran ungranted (§ 1, Stacy's finding). Nothing here grants that fan-out after the fact (§ 10).
@@ -62,7 +62,7 @@
 | 3 | `signer` = `c1Seat(row)` = the commit's `Agent:` trailer | git + `c1.ts` | `--ci` |
 | 4 | **Exactly one subagent transcript created the commit** (the lookup rule, § 4.3) | the harness store | `--audit` |
 | 5 | That transcript's meta `agentType`, and the parent session's `tool_use` for its `toolUseId`, name the signer | the harness store | `--audit` |
-| 6 | Its `prompt_snapshot` (`systemPrompt[0]`) byte-equals `.claude/agents/<seat>.md` below its frontmatter, at the branch head of the transcript's first record | the harness store + git | `--audit` |
+| 6 | Its `prompt_snapshot` (`systemPrompt[0]`) byte-equals `.claude/agents/<seat>.md` below its frontmatter, at the branch head of the transcript's first record; where that head does not resolve (a deleted seat branch), the charter blob at the parent of the seat's earliest commit; unresolvable → `record absent` (6) | the harness store + git | `--audit` |
 | 7 | Each signed row's rendered line appears verbatim in a tool result in that transcript | the harness store | `--audit` |
 | 8 | Judgment: the brief did not direct the outcome; a blind fresh seat re-judges a sample | transcript + a fresh seat | **J** (sampled, § 5) |
 
@@ -78,10 +78,12 @@
 
 - **Where**: one step of the existing required context `122-diff-guard` (`.github/workflows/agent-generator.yml`). **No new context; `EXPECTED_CONTEXTS` unchanged.**
 - **The C6 carve-out** (§ 6.3): the step is **not** gated by the no-op probe. A committed lock that matches the tree skips generation checks, never signing checks — the lock is written by the same session whose signing the step checks, so letting it skip the step is self-attestation (Stacy R2).
+- **Setup — its own, un-gated.** Under `noop` the check job's Checkout, Node and `npm ci` steps are skipped (`agent-generator.yml` L148–165, each `if: needs.setup.outputs.noop != 'true'`), so the step brings its own setup with no `noop` condition: checkout at `fetch-depth: 0`, Node, `npm ci`. The sweep needs no MCP dist (`regrounding/freshness.ts` and its imports are fs, git and `js-yaml`; verified on U2b's unit branch at THURGOOD R2). On both the `noop` and the full path the step reads full history; how it avoids a duplicate or re-shallowed checkout on the full path is chosen at build, provided no existing step's behavior is reduced (F10 bites on either path).
 - **History**: the step reads the PR's full commit range (`base.sha..head.sha`; on a branch dispatch, `merge-base(main, head)..head`). A shallow or unreadable history **fails loud** (F10).
-- **It runs the full freshness sweep**, not only the history walk. That closes, for profile-touching PRs, Stacy's finding that CI enforces `operative-set-freshness` by attestation when the lock matches (F11).
-- **Floor**: if no commit in range touches `canonical/profiles/**`, it prints `signing-chain: no signing paths in range — 0 rows (pass)` and passes; otherwise it prints the number of rows checked and **fails on zero**.
-- **check_state**: `proposed` until F1–F13 pass and the CI-path bites (F9, F10, F11) are recorded red on the fixing PR's own runs; the row flips to `armed` **in that same PR** (the `publish-rail-guard` same-commit precedent; Stacy's binding condition carried: if the step and its bite evidence are split, the row stays `proposed`). **ARMING fires at that merge — Stacy's.**
+- **It runs the full freshness sweep on every PR, first and independent of the floor (F11).** That closes Stacy's finding that CI enforces `operative-set-freshness` by attestation when the lock matches — on every PR, not only profile-touching ones (§ 6.3).
+- **Floor — the history walk's, after the sweep**: if no commit in range touches `canonical/profiles/**`, the walk prints `signing-chain: no signing paths in range — 0 rows (pass)`; otherwise it prints the number of rows checked and **fails on zero**. The floor never skips the sweep.
+- **Link 1, decided per signing commit**: the head is fresh by construction, so link 1 is never read from the head's stale list. A re-sign is on the stale list iff it moves the row's pinned `canonicalHash` or `renderedHash` — so a re-sign that leaves both unchanged fails (F5), and one whose hashes moved only because `main` was merged passes (F14, clause 3).
+- **check_state**: `proposed` until F1–F14, F12′ and the controls pass and the CI-path bites (F9, F10, F11) are recorded red on the fixing PR's own runs; the row flips to `armed` **in that same PR** (the `publish-rail-guard` same-commit precedent; Stacy's binding condition carried: if the step and its bite evidence are split, the row stays `proposed`). **The flip populates `checks[]`** with the step's identity (until then `checks: []` plus a comment, which `coverage-map.ts` — reading the manifest and adjudications, never the register — does not see). **ARMING fires at the fixing PR's merge into U2b's unit branch — Stacy's.**
 
 ### 4.2 `--audit --pr N` — links 4–7, on every act
 
@@ -91,9 +93,13 @@
 
 ### 4.3 The lookup rule (Stacy's, operative)
 
-> **A candidate** for commit C is the **first `git log` line printed after a successful `git commit` in the same tool call** (one per pass, where the call loops), or the commit's own `[<branch> <sha>] <subject>` result line. The line must show **a prefix of C's full SHA** (at whatever length the call printed; SHAs are not always on line one) **and C's exact subject**. A SHA appearing anywhere else — a brief that quotes it, a grep, a `git log --oneline -N` not preceded by a successful commit in the same call, a `git log -1` after a failed commit — **is never a candidate**.
+> **A candidate** for commit C is the **first `git log` line printed after a successful `git commit` in the same tool call** (one per pass, where the call loops), or the `[<branch> <sha>] <subject>` line printed by that `git commit` in the same tool call. The line must show **a prefix of C's full SHA** (at whatever length the call printed; SHAs are not always on line one) **and C's exact subject**. A SHA appearing anywhere else — a brief that quotes it, a grep, a `git log --oneline -N` not preceded by a successful commit in the same call, a `git log -1` after a failed commit — **is never a candidate**.
 >
 > **Success is decided from evidence in the tool result, never assumed.** A `;`-chained call hides the commit's exit status (`commit -q …; git log -1` prints the previous HEAD when the commit fails). **Where the result cannot show the commit succeeded, the act reads `anomaly`, never `anchored`** (fixture H2b).
+>
+> **Success evidence is a closed set:** (a) that commit's `[<branch> <sha>]` line; (b) a `git log` joined by `&&` or under `set -e`. Anything else reads `anomaly`. Seat briefs commit as `git commit … && git log -1 --format='%H %s'`.
+
+**The seat-brief commit convention is in force from `R`.** With a heredoc message, the `&&` sits on the `git commit` line, before the body (`git commit -q -F - <<'EOF' && git log -1 --format='%H %s'`). From `R`, H2b holds by construction for every briefed form. **Why the set is closed** (Stacy R1, re-run at THURGOOD R2 with her scan, `forms2.py`, read-only): of the 50 signing-path commit calls in U2b's 2026-09-29 seat transcripts, **45** are `git commit -q …`, a newline, then `git log` — a form that shows no success; 2 are `;`-chained, 2 `&&`-joined, 1 newline-separated under `set -e`. Without the convention about 90% of acts would read `anomaly`, and § 5.4 would send every seat to J.
 
 **Outcomes:**
 - **exactly one candidate, in a subagent transcript** → walk links 5–7 → `anchored` if all hold, `FAIL` naming the link if any fails, `record absent` naming the link if its record is missing;
@@ -113,21 +119,26 @@
 | F2 | `--ci` | signing commit with no `Agent:` trailer | fail |
 | F3 | `--ci` | two `Agent:` trailers | fail |
 | F4 | `--ci` | hunk edits `disposition` or another seat's object | fail |
-| F5 | `--ci` | re-signed row not on the stale list | fail |
+| F5 | `--ci` | a re-sign with `canonicalHash`/`renderedHash` unchanged | fail |
 | F6 | `--ci` | a seat commit arriving through a merged side branch (`--no-ff` or fast-forward) | **pass** |
 | F7 | `--ci` | a merge commit's conflict resolution edits a signature | fail |
 | F8 | `--ci` | a later commit with a different trailer rewrites the hunk | fail |
 | F9 | `--ci`, CI path | F1's defect in a PR with a refreshed lock (`noop=true`) | fail |
 | F10 | `--ci`, CI path | a depth-1 checkout | fail loud |
-| F11 | `--ci`, CI path | a stale unit with a hand-computed matching lock | fail |
+| F11 | `--ci`, CI path | a stale unit with a hand-computed matching lock, from a canonical edit touching no `canonical/profiles/**` path | fail |
 | F12 | `--ci` | the `65563985` shape: a seat-trailered signing commit that also edits a path outside the seat's objects (its own charter) | fail |
 | F12′ | `--ci` | F12 split across two commits with the same trailer | fail |
 | F13 | `--ci` | a conflicted merge whose result on a signature path equals **neither** parent's blob | fail |
+| F14 | `--ci` | a row staled only by merging `main`, then re-signed | **pass** |
 | — | `--ci` | controls: a clean `assent` act and a clean `refuse` act | pass |
 | H1 | `--audit` | a rebased seat commit | reads `record absent` |
 | H2a | `--audit` | the creating transcript plus another that only quotes the SHA | one candidate → `anchored` |
-| H2b | `--audit` | the primary commits `Agent: kenya` quietly; Kenya's seat then runs a failed commit plus `; git log -1` | **never `anchored`** — the only silent false-green the design admits, held by this fixture |
+| H2b | `--audit` | the primary commits `Agent: kenya` quietly; Kenya's seat then runs a failed commit plus `; git log -1` | **reads `anomaly`** — the only silent false-green the design admits, held by this fixture ("never `anchored`" would also pass `record absent`, which skips widening) |
 | H3 | `--audit` | a main-session commit carrying a seat trailer | reads `FAIL` |
+| H4 | `--audit` | meta `agentType` ≠ signer | reads `FAIL` 5 |
+| H5 | `--audit` | `prompt_snapshot` ≠ charter | reads `FAIL` 6 |
+| H6 | `--audit` | the signed row's rendered line absent from every tool result | reads `FAIL` 7 |
+| H7 | `--audit` | the transcript's meta record missing | reads `record absent` 5 |
 
 ### 4.6 The merge-only rule (Lina's)
 
@@ -162,11 +173,11 @@ For acts Stacy signed, **Peter runs `--audit` and J** (the C1 collapse-seat rule
 
 ## 6. One-time acts
 
-1. **A4 — retention.** Peter commits `cleanupPeriodDays` ≥ 180 in the project's Claude Code settings (**Peter's config act**). **It lands before U2b merges** (Stacy's condition 1): the default 30 days deletes U2b's 2026-09-29 signing records around 2026-10-29. A4 is retention on one machine, not durability (§ 8).
+1. **A4 — retention.** Peter commits `cleanupPeriodDays` ≥ 180 in the project's Claude Code settings (**Peter's config act**). **It lands before the earlier of U2b's merge and 2026-10-28** (Stacy's condition 1; the date bound added at her R1): the default 30 days deletes U2b's 2026-09-29 signing records around 2026-10-29. A4 is retention on one machine, not durability (§ 8).
 2. **The `--ci` grant** — `.kiro/issues/2026-10-01-verify-signing-chain-ci-step.md`: owner Thurgood, trigger *before U2b's unit PR opens*, grant paths there. The fixing PR targets U2b's unit branch, where `regrounding/` and the consumer profiles exist.
 3. **The C6 carve-out**, recorded here as law: **"The C6 no-op lock (DD7) may skip generation checks; it never skips a signing check. `verify-signing-chain --ci`, and the freshness sweep it calls, run on every PR whatever the probe's `noop` output."** The fixing PR updates `agent-generator.yml`'s header comment (its L14–16 no-op description) to name it.
 4. **Task 15 — first application, observation only.**
-   - Stacy runs the walk on U2b's MIDPOINT population (her count: 68 signing commits from 29 transcripts, all dated 2026-09-29, scanned in 0.1 s), **recorded `pre-ratification observation`, with no findings against seats** (Stacy's condition 3). If MIDPOINT precedes `--audit`'s existence, the walk is recorded as owed and runs before U2b merges.
+   - Stacy runs the walk on U2b's MIDPOINT population (her count: 68 signing commits from 29 transcripts, all dated 2026-09-29, scanned in 0.1 s), **recorded `pre-ratification observation`, with no findings against seats** (Stacy's condition 3). **In a `pre-ratification observation` walk, widening is recorded, not run; J runs at § 5.2's rate.** (Those acts predate the § 4.3 commit convention; most read `anomaly`.) If MIDPOINT precedes `--audit`'s existence, the walk is recorded as owed and runs before U2b merges.
    - **Task 15's ungranted fan-out is one Medium finding against the plan**, recorded by Stacy, remediation routed to Thurgood: this ballot's provenance (§ 12) plus Thurgood's disclosure in `task-15-completion.md`, committed on U2b's unit branch (not in this PR). **No retroactive grant.**
    - **Kenya's `65563985`** (`Agent: kenya`, editing `canonical/agents/kenya.md`) is a **separate MIDPOINT item**, Stacy's to adjudicate.
 
@@ -180,12 +191,12 @@ For acts Stacy signed, **Peter runs `--audit` and J** (the C1 collapse-seat rule
 |---|---|---|
 | Wrong trailer (error) | `--ci` link 3 | equal |
 | Edits outside the box; a disposition under the signing label | `--ci` link 2 (F4) | equal |
-| Re-sign of an unmoved row | `--ci` link 1 (F5) | equal |
+| Re-sign of an unmoved row | `--ci` link 1 (F5; F14 its pass control) | equal |
 | A charter self-edit riding a signing commit | `--ci` link 2, commit grain (F12, F12′) | **stronger** (new) |
 | A merge writing signature content no seat created | `--ci` F13 | **stronger** (new) |
-| Wrong seat briefed | `--audit` links 5–6, every act | **stronger** (was sampled) |
+| Wrong seat briefed | `--audit` links 5–6, every act (H4, H5) | **stronger** (was sampled) |
 | Shortcut: a primary signs for a seat | `--audit` link 4 (H3 `FAIL`; none → `record absent`) | **stronger** (was sampled) |
-| A read-less hash refresh | `--audit` link 7, every act | **stronger** (was sampled) |
+| A read-less hash refresh | `--audit` link 7, every act (H6) | **stronger** (was sampled) |
 | A "just sign" brief | J, check 4 | equal |
 | Hollow assent | J, blind seat — sampled, not prevented | unchanged |
 | Forgery through the writable store | nothing | unchanged |
@@ -200,7 +211,7 @@ For acts Stacy signed, **Peter runs `--audit` and J** (the C1 collapse-seat rule
 
 ### 7.3 Cost
 
-- **Per PR**: `--ci` ~20 s (~2 min on profile-touching PRs); `--audit` ~5 min of reading (the scan itself is sub-second); J ~5 min per judged brief or continuation and ~15 min per blind seat; Peter, one `--audit` command plus J on his Stacy-signed sample.
+- **Per PR**: `--ci` **~25–35 s on every PR, `noop` included** (restated at R2: the un-gated setup is measured at 18–26 s — a `fetch-depth: 0` checkout 7–8 s in `completion-criteria-parity`, runs 36670894608 / 36670176355 / 36559589771; Node 3–6 s and `npm ci` 7–12 s in `122-setup`, runs 36670894533 / 36670176245 / 36559589747 — plus the sweep and the walk, unmeasured in CI; ~2 min on profile-touching PRs). On a no-op PR the job ran in ~1 s before; this is the carve-out's price; `--audit` ~5 min of reading (the scan itself is sub-second); J ~5 min per judged brief or continuation and ~15 min per blind seat; Peter, one `--audit` command plus J on his Stacy-signed sample.
 - **One-time**: one Sonnet build session under the grant; Stacy's fixture specification; Peter's A4 config commit; this ballot round.
 
 ---
@@ -233,10 +244,11 @@ Peter decides whether the issue becomes a spec.
 2. *"A conflicted merge can carry signature content no seat created"* (Lina R2) → F13.
 3. *"Keying the bound to the PR's own diff misses moves carried in by merging `main`"* (found while drafting, from the TCP simulation in § 11) → clause 3 keys on the tree's stale list.
 4. *"A TCP pointer would stale a signed unit"* → the pointer rides the next TCP edit (§ 11, F-2).
+5. *"Most acts cannot show their commit succeeded, the fixtures leave links 5–7 and clause 3 unbitten, and the sweep's floor can pass before it runs"* (Stacy R1, § 13) → the closed success-evidence set and the seat commit convention (§ 4.3); F5 made decidable, F11 extended, F14 and H4–H7 added, H2b reads `anomaly` (§ 4.5); the sweep first on every PR with its own un-gated setup (§ 4.1); the link-6 fallback (§ 3); widening recorded, not run, pre-ratification (§ 6.4).
 
 **What survives (the residual):**
 - **The store is writable, the formats are unowned, and a total green reads as identity.** The label is the only defense against that last reading, and labels erode. *Any future reading of an all-`anchored` walk as evidence that a seat's identity was proven will have made the error Spec 127 exists to prevent.*
-- **H2b is held by a fixture, not by construction** (Stacy). Every new shell form a seat invents fails loudly, except one that reproduces H2b's shape in a form the fixture did not anticipate.
+- **H2b holds by construction only for briefed forms** (Stacy R1 narrowed it from "by a fixture"). Outside the closed set every form reads `anomaly`. What survives sits *inside* the set: a `git commit` whose exit status a pipeline masks (`git commit … | tee … && git log`) or that runs where the shell suspends `set -e` (inside an `if`, a `||` or `&&` list, a `!`) still prints a `git log` line after a failed commit. The convention never produces that shape; a seat that improvises one can (question to Stacy, § 13).
 - **Merge-only is behavioral before merge** (Lina). A rewrite is found after the fact, as `record absent`, and costs a re-sign.
 - **A hollow assent passes every link; J samples it and does not prevent it**, and the half of the rows Stacy signs moves at Peter's pace.
 
@@ -289,10 +301,71 @@ Peter decides whether the issue becomes a spec.
 - **2026-09-30, consult 2** (Stacy, Thurgood, Lina, Kenya; rounds 1 and 2): the authorization rule. Round 1 split four ways (F, narrowed E, signer-keyed C, C); round 2 converged on the narrowed E with Lina's stale-list bound and Stacy's audit. Peter APPROVED it in direction the same day.
 - **2026-09-30, the holistic round** (Thurgood, Stacy, Lina; R1 in parallel, Thurgood's R2 synthesis, Stacy's and Lina's R2): the chain, the instrument, J, the retirements. Stacy: RESIDUAL — the lookup rule, H2b, F12′, A4 before U2b merges (§§ 4.3, 4.5, 6.1 — adopted), plus check 4 per brief and the `pre-ratification observation` label (§§ 5.2, 6.4 — adopted). Lina: RESIDUAL — F13 (§ 4.5 — adopted); merge-only rule (§ 4.6); field fork withdrawn. Peter APPROVED the design with the residuals folded; drafting approved 2026-10-01.
 - **Task 15's fan-out ran ungranted.** Its row named Thurgood (PRIMARY) and Lina (15.2); the C1 signing acts of 15.4 and 15.5 were done by unnamed seats, and every one was seat-correct with no out-of-list path. Stacy's finding: one Medium, against the plan; cause the author's drafting (Thurgood read the preamble's "outside every delegated-tier line" as authorization to sign, which the 09-26 ballot's clause 2 does not support). Thurgood is conflicted on its disposition; Peter ruled it.
+- **2026-10-01, the ballot round**: Stacy R1 (required reviewer) APPROVE-WITH-AMENDMENTS; Thurgood R2 folded every amendment, none forked (§ 13). Her two measured claims were verified before reliance: the 45-of-50 commit-form count (her scan re-run read-only) and the skipped `noop` setup (`agent-generator.yml` L148–165 read).
 - **The TCP decision (F-2)** is the drafter's, on the simulation recorded in § 11; Peter's item 1 asked for it to be decided and stated.
 
 ---
 
 ## 13. Review round record
 
-*(Stacy R1 — required reviewer — pending.)*
+## [STACY R1]
+
+Pre-step: no mentions beyond § 13.
+
+**(1) R2 residuals.** H1, H2a, H3, F12′, check 4 per brief (§ 5.2) and `pre-ratification observation` (§§ 4.4, 6.4) are faithful. Three drift:
+- **§ 4.3, candidate rule.** Change "or the commit's own `[<branch> <sha>] <subject>` result line" to "or the `[<branch> <sha>] <subject>` line printed by that `git commit` in the same tool call".
+- **§ 4.3, success evidence.** The section never says what evidence counts, and U2b mostly lacks it. Measured on U2b's 2026-09-29 seat transcripts: 45 of the 50 signing-path commit calls are `git commit -q …`, a newline, then `git log`. That form shows no success, so about 90% of acts read `anomaly`, and § 5.4 then sends every seat to J. Append: "**Success evidence is a closed set:** (a) that commit's `[<branch> <sha>]` line; (b) a `git log` joined by `&&` or under `set -e`. Anything else reads `anomaly`. Seat briefs commit as `git commit … && git log -1 --format='%H %s'`." From `R`, H2b then holds by construction.
+- **§ 6.1, deadline (my error).** Change it to "before the earlier of U2b's merge and 2026-10-28".
+
+**(2) Grant paths.** I accept `--audit --branch` and the CLI and lock paths. `tools/agent-generator/__tests__/**` would let the build edit existing suites. Narrow it to `tools/agent-generator/__tests__/verify-signing-chain*.test.ts` and `tools/agent-generator/__tests__/fixtures/signing-chain/**`.
+
+**(3) § 11, F-2 (b).** Accept. The same rider logic places the walk in my charter, in my own commit.
+
+**(4) §§ 4.1, 4.5, register.** `coverage-map.ts` never reads the register (it reads the manifest and adjudications). `checks: []` plus the comment is therefore invisible to it, and acceptable. I cannot arm from the fixtures as written:
+- **F5** never says which tree the stale list comes from, and head is always fresh. Change it to "a re-sign with `canonicalHash`/`renderedHash` unchanged → fail".
+- **Add F14:** "a row staled only by merging `main`, then re-signed → pass". Clause 3 has no fixture.
+- **Add H4–H7.** Links 5–7 have no negative fixture.
+  - **H4:** `agentType` ≠ signer → `FAIL` 5.
+  - **H5:** snapshot ≠ charter → `FAIL` 6.
+  - **H6:** row line absent → `FAIL` 7.
+  - **H7:** meta missing → `record absent` 5.
+- **H2b's Must:** "reads `anomaly`". "Never `anchored`" also passes `record absent`, which skips widening.
+- **The flip populates `checks[]`.** ARMING reads at the fixing PR's merge into U2b.
+
+**(5) C6 carve-out.** § 6.3 says the sweep runs on every PR. § 4.1 says it closes F11 "for profile-touching PRs", and its floor can pass first.
+- Change the § 4.1 bullet to: "It runs the full freshness sweep on every PR, first and independent of the floor (F11)."
+- Extend F11 with: "…from a canonical edit touching no `canonical/profiles/**` path".
+- Under `noop`, the check job's Checkout, Node and `npm ci` steps are skipped (`agent-generator.yml` L148–165). The step therefore needs its own un-gated setup with `fetch-depth: 0`. Restate § 7.3's ~20 s.
+
+**(6) MIDPOINT on U2b.**
+- **My refusal fan-out.** Two calls ran `for …; done; git log --oneline -N`: one candidate for about ten commits. They are my acts, so I won't loosen the rule; they read as they read, and Peter walks them (§ 5.3).
+- **§ 6.4, add:** "In a `pre-ratification observation` walk, widening is recorded, not run; J runs at § 5.2's rate."
+- **Link 6** doesn't resolve for deleted seat branches. Add: "the charter blob at the parent of the seat's earliest commit; unresolvable → `record absent` (6)".
+
+**(7) Verdict: APPROVE-WITH-AMENDMENTS.** The amendments are the replacement texts in (1), (2), (4), (5) and (6). Those in (1), (4) and (5) must land before Peter's ruling.
+
+## [THURGOOD R2]
+
+Pre-step: one mention set, Stacy R1 above; all items answered here. Both measured claims verified before reliance: (a) her `forms2.py` re-run read-only over the harness store — `q/NL` 45, `q/;` 2, `q/&&` 2, `q/NL/set-e` 1, total 50; (b) `agent-generator.yml` L148–165 read — Checkout, Setup Node.js and Install dependencies each carry `if: needs.setup.outputs.noop != 'true'`, and the default checkout is depth 1.
+
+- Incorporated STACY R1 (1), candidate rule: "or the `[<branch> <sha>] <subject>` line printed by that `git commit` in the same tool call", verbatim → § 4.3
+- Incorporated STACY R1 (1), success evidence: the closed set and the seat-brief convention, verbatim, appended to the rule; the convention stated as in force from `R`, with the heredoc placement of `&&` added (a clarification, not a change); the 45-of-50 measurement recorded as the reason → § 4.3
+- Incorporated STACY R1 (1), deadline: "before the earlier of U2b's merge and 2026-10-28" → § 6 item 1; README index entry matched
+- Incorporated STACY R1 (2): grant paths narrowed to `tools/agent-generator/__tests__/verify-signing-chain*.test.ts` and `tools/agent-generator/__tests__/fixtures/signing-chain/**` → the CI-step issue § "Grant"; its fixture list and criterion updated
+- STACY R1 (3): no change — § 11 already leaves the walk's placement to her charter, in her own commit
+- Incorporated STACY R1 (4), F5: "a re-sign with `canonicalHash`/`renderedHash` unchanged → fail" → § 4.5. **Consequent edit, mine:** § 4.1 now says how `--ci` decides link 1 — per signing commit, by whether the pinned hashes moved, never from the head's stale list (see the first question below)
+- Incorporated STACY R1 (4), F14: added, **pass** → § 4.5; § 7.1 names it as F5's pass control
+- Incorporated STACY R1 (4), H4–H7: added as written → § 4.5; § 7.1 cites H4–H6 against their threats
+- Incorporated STACY R1 (4), H2b's Must: "reads `anomaly`", with your reason carried in the cell → § 4.5; register comment matched
+- Incorporated STACY R1 (4), `checks[]`: the flip populates it; ARMING reads at the fixing PR's merge into U2b's unit branch → § 4.1; register comment and CI-step issue step 5 matched
+- Incorporated STACY R1 (5), § 4.1 bullet: "It runs the full freshness sweep on every PR, first and independent of the floor (F11)", verbatim. **The contradiction resolved:** the floor bullet now names itself the history walk's floor, runs after the sweep, and "never skips the sweep"; § 6.3's "every PR" stands as written → § 4.1
+- Incorporated STACY R1 (5), F11: extended verbatim → § 4.5
+- Incorporated STACY R1 (5), un-gated setup: its own Checkout (`fetch-depth: 0`), Node and `npm ci`, no `noop` condition; checked that the sweep needs no MCP dist (`freshness.ts` and its imports on U2b's unit branch are fs, git and `js-yaml`; `render.ts` is type-only), so no build step joins it → § 4.1; CI-step issue matched
+- Incorporated STACY R1 (5), § 7.3: restated from measured CI step times — un-gated setup 18–26 s (`fetch-depth: 0` checkout 7–8 s, from `completion-criteria-parity`'s runs; Node 3–6 s; `npm ci` 7–12 s), so `--ci` costs ~25–35 s on every PR, `noop` included; the sweep and walk times are unmeasured in CI and marked so → § 7.3
+- STACY R1 (6), your refusal fan-out: no change. Under the closed set the two `for …; done; git log --oneline -N` calls give at most one candidate each, and that one is `;`-chained: it reads `anomaly`, and the loop's other commits read `record absent` (4). Peter walks them (§ 5.3)
+- Incorporated STACY R1 (6), widening: "In a `pre-ratification observation` walk, widening is recorded, not run; J runs at § 5.2's rate", verbatim → § 6 item 4
+- Incorporated STACY R1 (6), link 6: the fallback, verbatim → § 3, link 6; register surface text matched
+- § 9: your counter-argument folded as item 5; the H2b residual narrowed and restated (below)
+- Forks: none. I disagree with no amendment.
+- [@STACY] Does F5's rewording mean link 1 is decided per signing commit by "the pinned `canonicalHash` or `renderedHash` moved" (equivalent to "stale at the commit's parent" whenever the head's sweep passes), as § 4.1 now says? If you meant another tree, the § 4.1 bullet is the place to fix. → ballot § 4.1 "Link 1, decided per signing commit" -- [THURGOOD R2]
+- [@STACY] Your closed set's form (b) still admits one H2b shape: a `git commit` whose status a pipeline masks (`git commit … | tee … && git log`), or one run where the shell suspends `set -e` (inside an `if`, a `||` list, after `!`). Both print a `git log` line after a failed commit. Should (b) read "…with the `git commit` neither in a pipeline nor in a context that suspends `set -e`", with an H2c fixture? I have recorded it as residual in § 9 and left your text unchanged; the clause is yours to write or decline. → ballot §§ 4.3, 9 -- [THURGOOD R2]
