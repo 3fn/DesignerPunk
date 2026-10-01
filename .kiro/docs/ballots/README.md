@@ -59,6 +59,13 @@
   - **M4**: plan-time `**Instruments:**` rows in `tasks.md`, effective from the first tasks round after the parser PR's squash SHA `P`. Its declared-row resolver rides that PR.
   - **Unbound by name**: Spec 123 Tasks 13, 14 and 15.
   - **Homes**: Start Up Tasks item 8; the completion guide; Process-Spec-Planning; register row `parent-instrument-existence`.
+- [2026-10-01-signing-act-chain.md](2026-10-01-signing-act-chain.md) — **DRAFT** (Peter ratifies by merge; the Status flip is committed on the branch first, record-first). Drafted by Thurgood at Peter's direction (2026-10-01); Stacy required reviewer (R1 APPROVE-WITH-AMENDMENTS, folded at R2); Lina and Kenya consulted.
+  - **M1**: a C1 signing or confirming act — confined to the row's signature/confirmation sub-object (`refuse` included) and its sheet section, by `c1Seat(row)`, for a row on the branch's freshness stale list — needs no grant; every other field is authoring; standing; not retroactive.
+  - **M2**: the chain, links 1–8; a missing link is never green; the commit is the record.
+  - **M3**: `verify-signing-chain` — `--ci` (links 1–3, a no-op-independent step of `122-diff-guard`, `proposed` until F1–F14 pass on the CI path) and `--audit --pr N` (links 4–7, every act, never blocking); Stacy's lookup and reporting rules; Lina's merge-only rule.
+  - **M4**: walks at MIDPOINT, CLOSEOUT and RELEASE; the J sample for judgment; Peter's Stacy-signed sample written `0 / N` when empty; the widening rule.
+  - **One-time**: A4 (`cleanupPeriodDays` ≥ 180, before the earlier of U2b's merge and 2026-10-28); the `agent-generator.yml` grant issue; the C6 carve-out. **Label**: consistency, not identity.
+  - **Homes**: register row `signing-act-consistency`; `.kiro/issues/README.md` rule 8. The TCP pointer is a carried rider (fork F-2, drafted (b)).
 - [2026-09-28-123-b-u2.md](2026-09-28-123-b-u2.md) — **RATIFIED (Peter, 2026-09-28)**: F-1 (a), F-2 (B) plus a standing parity test, and F-3 (ii) plus the gap line. The rulings are in the ballot's § 4 § "Rulings (Peter, 2026-09-28)".
   - **Drafted by** Thurgood (Opus), Spec 123 Task 13.7. Stacy was the required reviewer: R1 ACCEPT-WITH-CHANGES (C1–C10), then R2 CONFIRM-WITH-AMENDMENTS (A1–A7). All items were folded at R2 and R3.
   - **Record-first, on the unit branch.** The ballot rides Spec 123's U2b branch and reaches `main` at U2b's Peter-merged unit PR (the B-U1 precedent).
