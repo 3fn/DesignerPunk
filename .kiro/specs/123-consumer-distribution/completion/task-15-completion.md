@@ -132,3 +132,27 @@ Primary Artifacts: all shipped as declared
   - flips leave byte-identical signatures, so the evidence notes are the record (Ada, Lina and Data disclosed this);
   - the ComponentTokens trims keep `artifact: dist/ComponentTokens.*` as their entry key in the derived frontmatter;
   - Data's `dist/*.android.kt` glob doesn't reach `dist/android/…` until the drop.
+
+## Disclosure — 2026-10-01: 15.4/15.5 signing acts ran outside the row grant
+
+As Task 15's PRIMARY and this row's author, disclosing: Task 15's signing and
+confirmation acts at 15.4 and 15.5 (Kenya, Data, Sparky, Leonardo, Stacy, Ada)
+were **not** covered by the tasks-row write-scope grant as written
+(`2026-09-26-tasks-row-write-scope-grant.md` clause 2 — the row named only
+Thurgood and Lina as PRIMARY/secondary).
+
+This is **Stacy's Medium finding against the plan**, routed to Thurgood: the
+row's drafting, not any seat's conduct, is the cause — every signing seat
+acted correctly within its own objects, with no out-of-list path.
+
+**Peter ruled, 2026-09-30: no retroactive grant.** The acts are authorized
+**prospectively** by the signing-act-chain ballot ratified at `R`
+(`.kiro/docs/ballots/2026-10-01-signing-act-chain.md` § 2 — a C1 signing or
+confirming act needs no tasks-row or issue-row grant; it is authorized by the
+C1 function itself), and will be walked at MIDPOINT as a
+**`pre-ratification observation`** (ballot § 6.4): recorded with no findings
+against seats, widening recorded but not run.
+
+**Kenya's `65563985`** (a charter edit — `canonical/agents/kenya.md` —
+mid-signing) is a **separate MIDPOINT item**, Stacy's to adjudicate, and is
+not resolved by this disclosure.
