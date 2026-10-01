@@ -336,7 +336,14 @@ async function main(): Promise<void> {
 // `require.main === module` pattern (see mcp-server/src/index.ts). Importing this
 // module as a library (e.g. from a test, or from another generator stage) must NOT
 // introspect anything as a side effect.
-if (require.main === module) {
+//
+// The `STEWARD_CLI` label (Spec 123 Task 16.1) is for the consumer bundle: `build:generator`
+// passes esbuild `--drop-labels=STEWARD_CLI`, which removes this block, so `main` and the live
+// introspection path below it are tree-shaken out of `dist/generator/consumer-entry.js` (the
+// lane reads `fromManifest` only). In a bundle, `require.main === module` would compare against
+// the BUNDLE's module and run this block (instruments note N5). Under tsx or node, a label
+// changes nothing.
+STEWARD_CLI: if (require.main === module) {
   main().catch((error) => {
     console.error('[registry] Fatal error:', error);
     process.exit(1);
