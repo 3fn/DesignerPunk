@@ -158,7 +158,7 @@ jobs:
         if: matrix.context == '122-diff-guard'
         uses: actions/checkout@v5
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Signing chain — setup Node.js
         if: matrix.context == '122-diff-guard'
