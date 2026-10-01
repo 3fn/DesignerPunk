@@ -1,6 +1,7 @@
 /**
  * `verify-signing-chain --audit` — links 4–7 (ballot 2026-10-01-signing-act-chain §§ 4.2–4.4)
- * against the harness fixtures H1, H2a, H2b, H3–H7 of § 4.5. Each builds a fixture repo with one
+ * against the harness fixtures H1, H2a, H2b, H3–H7 of § 4.5, and H2c (added at Stacy's
+ * pre-merge read of PR #245, ruling 11). Each builds a fixture repo with one
  * seat commit (`Agent: kenya`, re-signing `#identity`) and a synthetic harness store whose record
  * shapes are `fixtures/signing-chain/harness/shapes.json` (copied from a real store).
  */
@@ -40,10 +41,11 @@ interface Seat {
 }
 
 /** A repo whose branch `seat-kenya` carries one seat commit re-signing `#identity`. */
-function seatRepo(): Seat {
+function seatRepo(before?: (repo: string) => void): Seat {
   const repo = makeRepo();
   const base = g(repo, ['rev-parse', 'HEAD']).trim();
   g(repo, ['switch', '-q', '-c', 'seat-kenya']);
+  before?.(repo);
   resign(repo, { seed: 'audit' });
   const sha = commit(repo, SUBJECT, ['Agent: kenya']);
   const snapshot = (splitFrontmatterText(read(repo, '.claude/agents/kenya.md'))?.body ?? '').replace(/\n+$/, '');
@@ -169,6 +171,24 @@ describe('verify-signing-chain --audit (links 4–7)', () => {
     expect(v.widen).toBe(true);
   });
 
+  test.each([
+    ['piped, then `&&`', "git commit -q -m 'Re-sign #identity (kenya)' | tee commit.out && git log -1 --format='%H %s'"],
+    ['`&&` then `;`', "git commit -q -m 'Re-sign #identity (kenya)' && git push; git log -1 --format='%H %s'"],
+  ])('H2c: the seat commits with a form outside the closed set (%s) → reads `anomaly`', (_name, command) => {
+    const s = seatRepo();
+    const spec: StoreSpec = {
+      session: SESSION,
+      main: mainSpawn(),
+      subagents: {
+        k1: { meta: metaFor('kenya', SPAWN), lines: seatTranscript({ snapshot: s.snapshot, commitCommand: command, commitOutput: `${s.sha} ${SUBJECT}` }) },
+      },
+    };
+    const v = only(audit(s, buildStore(spec)));
+    expect(v.verdict).toBe('anomaly');
+    expect(v.link).toBe(4);
+    expect(v.widen).toBe(true);
+  });
+
   test('H3: a main-session commit carrying a seat trailer → reads `FAIL`', () => {
     const s = seatRepo();
     const spec: StoreSpec = {
@@ -226,6 +246,19 @@ describe('verify-signing-chain --audit — reporting (§ 4.4; not among the 25)'
     expect(lines[2]).toMatch(/anchored 0/);
   });
 
+  test('ruling 9: a row that renders nothing reads `record absent` 7, never `anchored`', () => {
+    const sidecar = 'canonical/_consumer-output/_canonical/agents/kenya.md.attribution.json';
+    const s = seatRepo((repo) => {
+      const m = JSON.parse(read(repo, sidecar)) as { spans: { source: string }[] };
+      m.spans = m.spans.filter((x) => !x.source.endsWith('#identity'));
+      write(repo, sidecar, `${JSON.stringify(m, null, 2)}\n`);
+    });
+    const v = only(audit(s, buildStore(standard(s))));
+    expect(v.verdict).toBe('record absent');
+    expect(v.link).toBe(7);
+    expect(v.detail).toMatch(/renders nothing/);
+  });
+
   test('a Kiro-declared commit with no harness record reads `unanchored`', () => {
     const s = seatRepo();
     const store = buildStore({ session: SESSION, main: mainSpawn(), subagents: {} });
@@ -248,6 +281,18 @@ describe('verify-signing-chain --audit — the lookup rule, unit level (§ 4.3; 
     expect(logFormProven('set -euo pipefail\ngit commit -q -m s\ngit log -1 --oneline')).toBe(true);
     expect(logFormProven(COMMIT_FORMS.semicolon)).toBe(false);
     expect(logFormProven('git commit -q -m s\ngit log -1 --oneline')).toBe(false);
+    // Ruling 11: `&&` only — every operator from the commit to the log is `&&`.
+    expect(logFormProven("git add -A && git commit -q -m 's; t | u' && git push && git log -1")).toBe(true);
+    expect(logFormProven('git commit -q -m s 2>&1 && git log -1')).toBe(true);
+    expect(logFormProven('git commit -q -m s | tee f && git log -1')).toBe(false);
+    expect(logFormProven('git commit -q -m s && git push; git log -1')).toBe(false);
+    expect(logFormProven('git commit -q -m s || true && git log -1')).toBe(false);
+    // `set -e` counts only for a standalone commit.
+    expect(logFormProven('set -e\ngit commit -q -m s | tee f\ngit log -1')).toBe(false);
+    expect(logFormProven('set -e\ngit commit -q -m s || echo failed\ngit log -1')).toBe(false);
+    expect(logFormProven('set -e\necho x | git commit -q -F -\ngit log -1')).toBe(false);
+    expect(logFormProven('set -e\nmake && git commit -q -m s\ngit log -1')).toBe(true);
+    expect(logFormProven('git commit -q -m s\nset -e\ngit log -1')).toBe(false);
   });
 
   test('one candidate per pass: a loop or a repeatedly-called shell function with `git log -1` yields every pass line; otherwise only the first log line', () => {

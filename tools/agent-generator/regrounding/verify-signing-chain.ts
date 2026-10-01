@@ -14,13 +14,20 @@
  *                                `canonicalHash`/`renderedHash` (F5 fails, F14 passes);
  *                       link 2 — every hunk, and every commit carrying one, stays inside the
  *                                signer's objects (F4, F12); a seat that signs in range does not
- *                                edit its own charter in another commit of the range (F12′); a
- *                                merge result on a signing path equals one parent's blob (F7, F13);
+ *                                edit its own charter in another commit of the range (F12′); for a
+ *                                merge, a SIGNING OBJECT — a row's `signature`, a sheet `## `
+ *                                section or preamble, a record unit's `canonicalHash` — fails when
+ *                                its result equals no parent's version of it (F7, F13 fail; F13c
+ *                                passes — ruling 5, Stacy R1 on PR #245);
  *                       link 3 — `signer` = `c1Seat(row)` = the commit's single `Agent:` trailer
  *                                (F1, F2, F3, F8);
  *                 (4) the floor, AFTER the sweep: no in-scope commit touches
  *                     `canonical/profiles/**` → `signing-chain: no signing paths in range — 0 rows
- *                     (pass)`; otherwise the rows checked are printed and zero FAILS.
+ *                     (pass)`; otherwise the rows checked are printed and zero FAILS. A merge
+ *                     touches `canonical/profiles/**` only where its result equals no parent's
+ *                     version (per signing object on signing paths, per blob elsewhere) — so a PR
+ *                     that merges its base after the base changed profiles does not (F15; ruling
+ *                     6, Stacy R1 on PR #245). A non-merge commit touches by path, as before.
  *               The C6 no-op lock is never read (the C6 carve-out, ballot § 6.3).
  *
  *   --audit     links 4–7, local, post-acceptance, never blocking (§§ 4.2–4.4). `--pr N` reads
@@ -253,6 +260,13 @@ const commentLines = (text: string | undefined): string =>
     .sort()
     .join('\n');
 
+/**
+ * Trailing blank lines are not content: a sheet section (or preamble) that differs only in them is
+ * the same object (Stacy R1 on PR #245 — a blank line moved by a summary appended below the last
+ * section otherwise reads as an act on that section).
+ */
+const trimTrailingBlank = (t: string): string => t.replace(/\s+$/, '');
+
 /** A sheet split into its preamble and its `## ` sections (heading: one pair of backticks removed). */
 export function splitSheet(text: string | undefined): { preamble: string; sections: Map<string, string> } {
   const sections = new Map<string, string>();
@@ -267,9 +281,9 @@ export function splitSheet(text: string | undefined): { preamble: string; sectio
     const heading = chunk.split('\n')[0].replace(/^## /, '').trim().replace(/^`(.*)`$/, '$1');
     let k = heading;
     for (let n = 2; sections.has(k); n += 1) k = `${heading} (${n})`;
-    sections.set(k, chunk);
+    sections.set(k, trimTrailingBlank(chunk));
   }
-  return { preamble, sections };
+  return { preamble: trimTrailingBlank(preamble), sections };
 }
 
 export const sheetField = (block: string | undefined, key: string): string | undefined =>
@@ -327,9 +341,14 @@ export interface CommitAnalysis extends CommitInfo {
   acts: Map<string, SigningAct>;
   /** Changes outside every signing object (authoring, other paths, parse failures). */
   outside: string[];
+  /**
+   * Sheet `## ` sections that key to no row or unit. Reported whether or not the commit carries an
+   * act: a summary filed under its own `## ` in a sheet fails `--ci` (Stacy R1 on PR #245, (d)).
+   */
+  orphans: string[];
   /** Sheet preambles changed: [sheet, the seats its new sections name]. */
   preambles: { sheet: string; seats: string[] }[];
-  /** For merges: signing paths whose result equals no parent's blob. */
+  /** For merges: `<signing path> <object>` for each signing object whose result equals no parent's version. */
   mergeDiffs: string[];
 }
 
@@ -447,6 +466,51 @@ function changedPaths(repo: string, from: string, to: string): string[] {
   return git(repo, ['diff-tree', '-r', '-z', '--no-renames', '--name-only', from, to]).split('\0').filter(Boolean);
 }
 
+/** The signing objects of a signing path at a commit, each serialized; `undefined` when it does not parse. */
+export function signingObjects(repo: string, commit: string, f: string): Map<string, string> | undefined {
+  const m = new Map<string, string>();
+  const text = blobText(repo, commit, f);
+  if (text === undefined) return m;
+  if (isSignatureSheetPath(f) || isConfirmationSheetPath(f)) {
+    const s = splitSheet(text);
+    m.set('preamble', s.preamble);
+    for (const [h, b] of s.sections) m.set(`§ "${h}"`, b);
+    return m;
+  }
+  const p = parseYamlMap(text);
+  if (p.error) return undefined;
+  if (isDispositionsPath(f)) {
+    for (const section of SECTIONS) {
+      for (const [key, row] of Object.entries(isMap(p.doc[section]) ? (p.doc[section] as Record<string, unknown>) : {})) {
+        if (isMap(row) && row.signature !== undefined) m.set(`row ${section}:${key} signature`, stable(row.signature));
+      }
+    }
+  } else if (isRecordPath(f)) {
+    for (const [unit, u] of Object.entries(isMap(p.doc.units) ? p.doc.units : {})) {
+      if (isMap(u) && u.canonicalHash !== undefined) m.set(`unit ${unit} canonicalHash`, stable(u.canonicalHash));
+    }
+  }
+  return m;
+}
+
+/** A merge's result on `f` equals no parent's blob. */
+function mergeNovelBlob(repo: string, info: CommitInfo, f: string): boolean {
+  const result = blobId(repo, info.sha, f);
+  return !info.parents.some((p) => blobId(repo, p, f) === result);
+}
+
+/** The signing objects of `f` whose merge result equals no parent's version (ruling 5). */
+export function mergeNovelObjects(repo: string, info: CommitInfo, f: string): string[] {
+  const result = signingObjects(repo, info.sha, f);
+  const parents = info.parents.map((p) => signingObjects(repo, p, f));
+  if (result === undefined || parents.some((x) => x === undefined)) {
+    return mergeNovelBlob(repo, info, f) ? ['(does not parse — compared by blob)'] : [];
+  }
+  const ps = parents as Map<string, string>[];
+  const keys = new Set([...result.keys(), ...ps.flatMap((x) => [...x.keys()])]);
+  return [...keys].filter((k) => !ps.some((x) => x.get(k) === result.get(k))).sort();
+}
+
 /**
  * Classify one commit's changes into signing acts, out-of-object changes and (for merges)
  * merge results. Pure over git objects.
@@ -460,6 +524,7 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
     touchesProfiles: false,
     acts: new Map(),
     outside: [],
+    orphans: [],
     preambles: [],
     mergeDiffs: [],
   };
@@ -468,13 +533,20 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
     const all = new Set<string>();
     for (const p of info.parents) for (const f of changedPaths(repo, p, info.sha)) all.add(f);
     an.paths = [...all].sort();
-    // What the merge brings to the branch is its diff against the FIRST parent; the union also
-    // holds everything the merged-in side already carried (merging `main` into a unit branch
-    // "differs" from main on every profile file the branch owns).
-    an.touchesProfiles = changedPaths(repo, info.parents[0], info.sha).some((p) => p.startsWith(`${PROFILES_DIR}/`));
-    for (const f of an.paths.filter(isSigningPath)) {
-      const result = blobId(repo, info.sha, f);
-      if (!info.parents.some((p) => blobId(repo, p, f) === result)) an.mergeDiffs.push(f);
+    // Rulings 5 and 6 (Stacy R1 on PR #245): a merge is read per SIGNING OBJECT on signing paths
+    // and per blob elsewhere. An object whose result equals some parent's version was carried by
+    // that parent — the merge wrote nothing there. Only an object whose result equals NO parent's
+    // version is the merge's own: on a signing path that fails link 2 (F7, F13; F13c — two seats'
+    // clean re-signs of different rows of one file — passes), and on `canonical/profiles/**` it is
+    // what "the merge touches profiles" means for the floor (F15 — a PR merging its base after the
+    // base changed profiles — passes).
+    for (const f of an.paths) {
+      const inProfiles = f.startsWith(`${PROFILES_DIR}/`);
+      if (!isSigningPath(f) && !inProfiles) continue;
+      const novel = isSigningPath(f) ? mergeNovelObjects(repo, info, f) : mergeNovelBlob(repo, info, f) ? ['(blob)'] : [];
+      if (novel.length === 0) continue;
+      if (inProfiles) an.touchesProfiles = true;
+      if (isSigningPath(f)) for (const o of novel) an.mergeDiffs.push(`${f} ${o}`);
     }
     return an;
   }
@@ -571,7 +643,9 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
         // `#frontmatter:x` / `#identity` / `#member-id` — the pointer is `<sheet>#<fragment>`.
         const target = lookup(now) ?? lookup(before);
         if (!target) {
-          an.outside.push(`${f} § "${heading}": the section names no ${conf ? 'operative-set unit (no record confirmation: points here)' : 'dispositions row (no signature evidence: points here)'}`);
+          // Removing a section that keys to nothing is cleanup, not an act and not a finding.
+          if (b1 === undefined) continue;
+          an.orphans.push(`${f} § "${heading}": the section names no ${conf ? 'operative-set unit (no record confirmation: points here)' : 'dispositions row (no signature evidence: points here)'}`);
           continue;
         }
         const a = conf
@@ -680,10 +754,11 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
   for (const an of analyses) {
     if (an.merge) {
       for (const f of an.mergeDiffs) {
-        findings.push({ link: 2, sha: an.sha, message: `merge result on ${f} equals neither parent's blob — a merge writes signature content no seat's commit carried (F7/F13)` });
+        findings.push({ link: 2, sha: an.sha, message: `merge result on ${f} equals no parent's version — a merge writes signature content no seat's commit carried (F7/F13)` });
       }
       continue;
     }
+    for (const o of an.orphans) findings.push({ link: 2, sha: an.sha, message: `a sheet carries a section that is no signing object: ${o}` });
     if (an.acts.size === 0) continue;
     signingCommits += 1;
     const push = (link: LinkFinding['link'], message: string, row?: string): void => {
@@ -885,22 +960,84 @@ const GIT_LOG_RE = gitInvocation('log');
 const BRACKET_RE = /^\[(.+) ([0-9a-f]{7,40})\] (.*)$/;
 const HEX_LINE_RE = /^([0-9a-f]{7,40}) (.*)$/;
 
+const GIT_COMMIT_G = new RegExp(GIT_COMMIT_RE.source, 'gm');
+const AT_GIT_LOG = /^\s*(?:[A-Za-z_][A-Za-z0-9_]*=\S*\s+)*git(?:\s+-[Cc]\s+(?:"[^"]*"|'[^']*'|\S+))*\s+log\b/;
+
 /**
- * Success evidence form (b): a `git log` joined to the `git commit` by `&&` on the commit's line,
- * or the call runs under `set -e`. (Form (a), the commit's own `[<branch> <sha>]` line, needs no
- * command reading.)
+ * The shell control operators after `from`, read outside quotes (`\`-newline is whitespace; a bare
+ * newline reads `;`), each with the text that follows it. Stops at the first operator `stop`
+ * rejects — so a heredoc body after a newline is never read.
+ */
+function operatorsFrom(command: string, from: number, stop: (op: string, rest: string) => boolean): void {
+  let q: '"' | "'" | undefined;
+  for (let i = from; i < command.length; i += 1) {
+    const c = command[i];
+    if (q) {
+      if (c === q) q = undefined;
+      else if (c === '\\' && q === '"') i += 1;
+      continue;
+    }
+    if (c === "'" || c === '"') {
+      q = c;
+      continue;
+    }
+    if (c === '\\') {
+      i += 1;
+      continue;
+    }
+    // `2>&1`, `>&2`, `&>f` are redirections, not the `&` operator.
+    if (c === '&' && command[i + 1] !== '&' && (command[i - 1] === '>' || command[i - 1] === '<' || command[i + 1] === '>')) continue;
+    const two = command.slice(i, i + 2);
+    const op = two === '&&' || two === '||' ? two : c === '|' || c === ';' || c === '&' ? c : c === '\n' ? ';' : undefined;
+    if (op === undefined) continue;
+    if (stop(op, command.slice(i + op.length))) return;
+    i += op.length - 1;
+  }
+}
+
+/**
+ * Success evidence form (b) for ONE `git commit` invocation ending at `end` (ruling 11, Stacy R1
+ * on PR #245):
+ *   - `&&`: a `git log` is reached from the commit ONLY through `&&` — every operator between them
+ *     is `&&`. A pipe (`git commit … | tee f && git log`) or a `;` anywhere on the way
+ *     (`git commit … && git push; git log`) is outside the set → `anomaly` (H2c).
+ *   - `set -e` (or `-o errexit`) set before it counts only for a STANDALONE commit: not piped (no
+ *     `|` before or after it), not a condition or negated (the command-position match already
+ *     excludes `if`/`while`/`until`/`!`), not a non-final element of an `&&`/`||` list.
+ */
+function invocationProven(command: string, start: number, end: number, setEAt: number | undefined): boolean {
+  let viaAnd = false;
+  operatorsFrom(command, end, (op, rest) => {
+    if (op !== '&&') return true;
+    if (AT_GIT_LOG.test(rest)) {
+      viaAnd = true;
+      return true;
+    }
+    return false;
+  });
+  if (viaAnd) return true;
+  if (setEAt === undefined || setEAt > start) return false;
+  // The command-position match starts AT its separator: `| git commit` is piped in, `|| git commit` is not.
+  const pipedIn = /^\|(?!\|)/.test(command.slice(start, end));
+  let next: string | undefined;
+  operatorsFrom(command, end, (op) => {
+    next = op;
+    return true;
+  });
+  return !pipedIn && next !== '|' && next !== '&&' && next !== '||';
+}
+
+/**
+ * Success evidence form (b) for a tool call: EVERY `git commit` invocation in it reaches a
+ * `git log` only through `&&`, or stands alone under `set -e` (form (a), the commit's own
+ * `[<branch> <sha>]` line, needs no command reading).
  */
 export function logFormProven(command: string): boolean {
-  const andJoined = command.split('\n').some((l) => {
-    const c = l.search(GIT_COMMIT_RE);
-    if (c < 0) return false;
-    const rest = l.slice(c);
-    const amp = rest.indexOf('&&');
-    return amp >= 0 && GIT_LOG_RE.test(rest.slice(amp));
-  });
-  const commitAt = command.search(GIT_COMMIT_RE);
   const setE = /(^|[\n;&|]\s*)set\s+(-[a-zA-Z]*e[a-zA-Z]*|-o\s+errexit)\b/m.exec(command);
-  return andJoined || (setE !== null && setE.index < commitAt);
+  const setEAt = setE ? setE.index : undefined;
+  const hits = [...command.matchAll(GIT_COMMIT_G)];
+  if (hits.length === 0) return false;
+  return hits.every((m) => invocationProven(command, m.index as number, (m.index as number) + m[0].length, setEAt));
 }
 
 export const resultText = (content: unknown): string =>
@@ -1071,7 +1208,7 @@ export const snapshotMatches = (snapshot: string, body: string): boolean => snap
 /**
  * The line a seat must have read (link 7): the first non-blank, non-heading line of at least 12
  * characters in the text (trimmed); else the first non-blank line; `undefined` for empty text
- * (a row that renders nothing — link 7 is vacuous and reported so).
+ * (a row that renders nothing — `record absent` 7, never `anchored`: ruling 9).
  */
 export function evidenceLine(text: string): string | undefined {
   const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
@@ -1195,7 +1332,8 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
           const ts = t.first?.timestamp;
           if (br && ts) {
             for (const ref of [`refs/heads/${br}`, `refs/remotes/origin/${br}`]) {
-              at = gitTry(repo, ['rev-list', '-1', `--before=${ts}`, ref])?.trim() || undefined;
+              // --first-parent (ruling 8): a commit merged in from elsewhere never picks the charter.
+              at = gitTry(repo, ['rev-list', '-1', '--first-parent', `--before=${ts}`, ref])?.trim() || undefined;
               if (at) break;
             }
           }
@@ -1221,7 +1359,8 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
             if (absent) done('record absent', 7, absent);
             else {
               const line = evidenceLine(text ?? '');
-              if (line === undefined) done('anchored', undefined, 'link 7 vacuous: the row renders nothing');
+              // Ruling 9: a row that renders nothing has no line a seat could have read — never `anchored`.
+              if (line === undefined) done('record absent', 7, 'the row renders nothing — there is no rendered line to find');
               else if (!t.results.some((r) => r.includes(line))) done('FAIL', 7, `no tool result contains the row's rendered line "${line.slice(0, 80)}"`);
               else done('anchored', undefined, `transcript ${v.transcript}`);
             }

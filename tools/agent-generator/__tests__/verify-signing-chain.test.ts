@@ -1,7 +1,8 @@
 /**
  * `verify-signing-chain --ci` — links 1–3 (ballot 2026-10-01-signing-act-chain § 4.1) against
- * the fixtures Stacy specified in § 4.5: F1–F14, F12′ and the two controls. Every test name
- * starts with the fixture id; the Must column of § 4.5 is the assertion.
+ * the fixtures Stacy specified in § 4.5: F1–F14, F12′ and the two controls — plus F13c and F15,
+ * which she added at her pre-merge read of PR #245 (rulings 5 and 6). Every test name starts with
+ * the fixture id; the Must column is the assertion.
  *
  * The C1 function: the real `regrounding/c1.ts` + `signatures.ts` when on the tree (Spec 123
  * U2b), else a mirror of C1 (owner signs unless owner = profile author thurgood → stacy) — the
@@ -174,7 +175,7 @@ describe(`verify-signing-chain --ci (links 1–3) — C1 from ${RG_IS_REAL ? 're
     g(repo, ['commit', '-q', '--no-edit']);
     const r = ci(repo, base);
     expect(r.ok).toBe(false);
-    expect(r.findings.some((f) => f.link === 2 && /merge result on canonical\/profiles\/consumer\/kenya\.dispositions\.yaml equals neither parent/.test(f.message))).toBe(true);
+    expect(r.findings.some((f) => f.link === 2 && /merge result on canonical\/profiles\/consumer\/kenya\.dispositions\.yaml row body:#identity signature equals no parent's version/.test(f.message))).toBe(true);
   });
 
   test('F8: a later commit with a different trailer rewrites the hunk → fail', () => {
@@ -285,8 +286,72 @@ describe(`verify-signing-chain --ci (links 1–3) — C1 from ${RG_IS_REAL ? 're
     g(repo, ['commit', '-q', '--no-edit']);
     const r = ci(repo, base);
     expect(r.ok).toBe(false);
-    expect(r.findings.some((f) => f.link === 2 && /merge result on canonical\/profiles\/consumer\/signatures\/kenya\.md equals neither parent/.test(f.message))).toBe(true);
-    expect(r.findings.some((f) => /kenya\.dispositions\.yaml equals neither/.test(f.message))).toBe(false);
+    expect(r.findings.some((f) => f.link === 2 && /merge result on canonical\/profiles\/consumer\/signatures\/kenya\.md § "#identity" equals no parent's version/.test(f.message))).toBe(true);
+    expect(r.findings.some((f) => /kenya\.dispositions\.yaml .*equals no parent/.test(f.message))).toBe(false);
+  });
+
+  test('F13c: two seats cleanly re-sign different rows of one dispositions file, then merge → pass (ruling 5: link 2 is per signing object)', () => {
+    const repo = makeRepo();
+    // One shared dispositions file whose two member rows have different owners (C1: kenya, data).
+    const SHARED = 'canonical/profiles/consumer/_shared.dispositions.yaml';
+    write(repo, 'canonical/shared/shared-catalog.yaml', 'members:\n  - {id: m-kenya, owner: kenya}\n  - {id: m-data, owner: data}\n');
+    const sig = (seat: string, seed: string) => ({ signer: seat, canonicalHash: hash(`${seed}:c`), renderedHash: hash(`${seed}:r`), assent: { surviving: ['role'] }, evidence: `canonical/profiles/consumer/signatures/${seat}.md#m-${seat}` });
+    write(
+      repo,
+      SHARED,
+      `# Fixture shared dispositions file (two owners).\nsource: canonical/shared/shared-catalog.yaml\nmembers:\n` +
+        `  ${JSON.stringify('m-kenya')}: ${JSON.stringify({ disposition: 'retained', signature: sig('kenya', 'k0') })}\n` +
+        `  ${JSON.stringify('m-between')}: ${JSON.stringify({ disposition: 'retained' })}\n` + // keeps the two hunks apart for git
+        `  ${JSON.stringify('m-data')}: ${JSON.stringify({ disposition: 'retained', signature: sig('data', 'd0') })}\n`
+    );
+    const sheet = (seat: string, seed: string) => `# Signatures — \`${seat}\` (fixture)\n\n## \`m-${seat}\`\n\nsigner: ${seat}\ncanonicalHash: ${hash(`${seed}:c`)}\nrenderedHash: ${hash(`${seed}:r`)}\ndate: 2026-10-01\n\n**Ruling: ASSENT.**\n`;
+    write(repo, SHEET('data'), sheet('data', 'd0'));
+    // The kenya sheet gains the m-kenya section beside #identity.
+    write(repo, SHEET('kenya'), `${read(repo, SHEET('kenya')).replace(/\n*$/, '')}\n\n${sheet('kenya', 'k0').split('\n').slice(2).join('\n')}`);
+    commit(repo, 'base: shared dispositions (drafted)', []);
+    const base = head(repo);
+    g(repo, ['switch', '-q', '-c', 'pr']);
+    const resignShared = (seat: string, seed: string): void => {
+      editRow(repo, SHARED, `m-${seat}`, (row) => ({ ...row, signature: sig(seat, seed) }));
+      editSheet(repo, SHEET(seat), `m-${seat}`, { canonicalHash: hash(`${seed}:c`), renderedHash: hash(`${seed}:r`), append: `**Re-sign (${seed}).**` });
+    };
+    g(repo, ['switch', '-q', '-c', 'seat-kenya']);
+    resignShared('kenya', 'k1');
+    commit(repo, 'Re-sign m-kenya (kenya)', ['Agent: kenya']);
+    g(repo, ['switch', '-q', 'pr']);
+    g(repo, ['switch', '-q', '-c', 'seat-data']);
+    resignShared('data', 'd1');
+    commit(repo, 'Re-sign m-data (data)', ['Agent: data']);
+    g(repo, ['switch', '-q', 'pr']);
+    g(repo, ['merge', '-q', '--no-ff', 'seat-kenya', '-m', 'Merge seat-kenya']);
+    g(repo, ['merge', '-q', '--no-ff', 'seat-data', '-m', 'Merge seat-data']); // clean: different rows
+    // The second merge's result on the shared file equals NEITHER parent's blob — and every
+    // signing object in it equals one parent's version.
+    const m = head(repo);
+    const blob = (c: string) => g(repo, ['rev-parse', `${c}:${SHARED}`]).trim();
+    expect([blob(`${m}^1`), blob(`${m}^2`)]).not.toContain(blob(m));
+    const r = ci(repo, base);
+    expect(r.findings).toEqual([]);
+    expect(r.ok).toBe(true);
+    expect(r.rowsChecked).toBe(2);
+  });
+
+  test('F15: a PR touching no profile path merges its base after the base changed `canonical/profiles/**` → pass (ruling 6)', () => {
+    const repo = makeRepo();
+    g(repo, ['switch', '-q', '-c', 'pr']);
+    write(repo, 'README.md', 'a PR that touches no profile path\n');
+    commit(repo, 'Unrelated change', []);
+    g(repo, ['switch', '-q', 'main']);
+    resign(repo, { seed: 'f15-main' });
+    const mainTip = commit(repo, 'Re-sign #identity (kenya) on the base', ['Agent: kenya']);
+    g(repo, ['switch', '-q', 'pr']);
+    g(repo, ['merge', '-q', '--no-ff', 'main', '-m', "Merge branch 'main' into pr (Update branch)"]);
+    // The PR's range after "Update branch": base.sha is the base's new tip.
+    const r = ci(repo, mainTip);
+    expect(r.findings).toEqual([]);
+    expect(r.ok).toBe(true);
+    expect(r.lines).toContain(NO_SIGNING_PATHS_LINE);
+    expect(text(r)).not.toMatch(/FAIL \(floor\)/);
   });
 
   test('F14: a row staled only by merging `main`, then re-signed → pass', () => {
@@ -380,6 +445,34 @@ describe('verify-signing-chain --ci — behaviors beyond the § 4.5 table (not a
     const r = ci(repo, base);
     expect(r.ok).toBe(false);
     expect(r.findings.some((f) => f.link === 2 && /names no dispositions row/.test(f.message))).toBe(true);
+  });
+
+  test('a sheet section that differs only in trailing blank lines is not an act (Stacy R1 on PR #245)', () => {
+    const [repo, base] = pr();
+    write(repo, SHEET('kenya'), `${read(repo, SHEET('kenya'))}\n\n\n`);
+    commit(repo, 'Trailing blank lines', ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(r.findings).toEqual([]);
+    expect(r.rowsChecked).toBe(0);
+  });
+
+  test('a merge that resolves a conflict per object to one side each (no novel object) passes link 2', () => {
+    const [repo, base] = pr();
+    g(repo, ['switch', '-q', '-c', 'a']);
+    resign(repo, { seed: 'obj-a' });
+    commit(repo, 'Re-sign #identity (a)', ['Agent: kenya']);
+    g(repo, ['switch', '-q', 'pr']);
+    g(repo, ['switch', '-q', '-c', 'b']);
+    resign(repo, { seed: 'obj-b' });
+    commit(repo, 'Re-sign #identity (b)', ['Agent: kenya']);
+    g(repo, ['switch', '-q', 'pr']);
+    g(repo, ['merge', '-q', '--no-ff', 'a', '-m', 'Merge a']);
+    expect(() => g(repo, ['merge', '-q', '--no-ff', 'b', '-m', 'Merge b'])).toThrow();
+    g(repo, ['checkout', '--theirs', '--', DISP('kenya'), SHEET('kenya')]);
+    g(repo, ['add', '-A']);
+    g(repo, ['commit', '-q', '--no-edit']);
+    const r = ci(repo, base);
+    expect(r.findings).toEqual([]);
   });
 
   test('the fixture dispositions files parse (shape guard for editRow)', () => {
