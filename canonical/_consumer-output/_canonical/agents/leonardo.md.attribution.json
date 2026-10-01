@@ -1,0 +1,365 @@
+{
+  "artifact": "canonical/agents/leonardo.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        230
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        231,
+        249
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#identity"
+    },
+    {
+      "lines": [
+        250,
+        262
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#in-scope"
+    },
+    {
+      "lines": [
+        263,
+        269
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#product-configuration-context"
+    },
+    {
+      "lines": [
+        270,
+        278
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#product-tokens"
+    },
+    {
+      "lines": [
+        279,
+        287
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#out-of-scope"
+    },
+    {
+      "lines": [
+        288,
+        298
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#the-direct-vs-delegate-distinction"
+    },
+    {
+      "lines": [
+        299,
+        302
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-screen-specification:preamble"
+    },
+    {
+      "lines": [
+        303,
+        306
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-1-understand-the-intent"
+    },
+    {
+      "lines": [
+        307,
+        310
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-2-select-components-via-application-mcp"
+    },
+    {
+      "lines": [
+        311,
+        319
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-3-specify-the-screen:preamble"
+    },
+    {
+      "lines": [
+        320,
+        331
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#layout-specification"
+    },
+    {
+      "lines": [
+        332,
+        334
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-4-validate-assembly"
+    },
+    {
+      "lines": [
+        335,
+        344
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-5-hand-off-to-platform-agents"
+    },
+    {
+      "lines": [
+        345,
+        348
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-lessons-learned:preamble"
+    },
+    {
+      "lines": [
+        349,
+        357
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-qualifies-as-a-lesson"
+    },
+    {
+      "lines": [
+        358,
+        366
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#capture-process"
+    },
+    {
+      "lines": [
+        367,
+        371
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#structured-request-format"
+    },
+    {
+      "lines": [
+        372,
+        375
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-cross-platform-review:preamble"
+    },
+    {
+      "lines": [
+        376,
+        382
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#review-checklist"
+    },
+    {
+      "lines": [
+        383,
+        392
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-consistent-means-in-true-native"
+    },
+    {
+      "lines": [
+        393,
+        396
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-design-creation-impeccable-skill:preamble"
+    },
+    {
+      "lines": [
+        397,
+        408
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#skill-loading-sequence"
+    },
+    {
+      "lines": [
+        409,
+        416
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#gate-system"
+    },
+    {
+      "lines": [
+        417,
+        419
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#color-strategy-declaration"
+    },
+    {
+      "lines": [
+        420,
+        422
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#conflict-resolution-hierarchy"
+    },
+    {
+      "lines": [
+        423,
+        425
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#anti-slop-awareness"
+    },
+    {
+      "lines": [
+        426,
+        428
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#lessons-learned-capture"
+    },
+    {
+      "lines": [
+        429,
+        433
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#available-commands"
+    },
+    {
+      "lines": [
+        434,
+        441
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#with-platform-agents"
+    },
+    {
+      "lines": [
+        442,
+        444
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#platform-scope-adaptation"
+    },
+    {
+      "lines": [
+        445,
+        447
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#with-stacy-product-governance"
+    },
+    {
+      "lines": [
+        448,
+        450
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#with-system-agents-via-thurgood"
+    },
+    {
+      "lines": [
+        451,
+        455
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#with-peter"
+    },
+    {
+      "lines": [
+        456,
+        467
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        468,
+        481
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#onboarding-awareness"
+    },
+    {
+      "lines": [
+        482,
+        488
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-you-own"
+    },
+    {
+      "lines": [
+        489,
+        495
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-you-dont-own"
+    },
+    {
+      "lines": [
+        496,
+        504
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#platform-currency-awareness"
+    },
+    {
+      "lines": [
+        505,
+        508
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        509,
+        513
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        514,
+        516
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        517,
+        519
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        520,
+        522
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#when-you-and-peter-disagree"
+    },
+    {
+      "lines": [
+        523,
+        524
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#ask-if-unsure"
+    }
+  ]
+}

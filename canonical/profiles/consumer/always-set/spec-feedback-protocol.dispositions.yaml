@@ -1,0 +1,21 @@
+# canonical/profiles/consumer/always-set/spec-feedback-protocol.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/Spec-Feedback-Protocol.md
+counterpart: .kiro/steering/Spec-Feedback-Protocol.md
+body:
+  "#spec-feedback-protocol:preamble": {"disposition": "retained"}
+  "#purpose": {"disposition": "retained"}
+  "#the-feedback-document": {"disposition": "re-pointed", "removals": [{"text": ".kiro/specs/[spec-name]/", "cites": "subtraction-4"}], "destination": "#the-feedback-document", "signature": {"signer": "stacy", "canonicalHash": "sha256:d00728b168aff102e37150a194326db06961716079b11fc526ab1304d15f021d", "renderedHash": "sha256:06296fd8eadb805f7c04e1e95017593b9d05fa1151ab791ffd977dab95ba570f", "assent": {"surviving": ["the-feedback-document-1", "single-file-path", "split-path", "the-feedback-document-2", "single-file-valid", "feedback-location", "the-feedback-document-3"]}, "evidence": "canonical/profiles/consumer/signatures/spec-feedback-protocol.md#the-feedback-document"}}
+  "#feedback-checkpoints": {"disposition": "retained"}
+  "#stakeholder-identification": {"disposition": "retained"}
+  "#sequential-formalization-gate": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#sequential-formalization-gate", "signature": {"signer": "stacy", "canonicalHash": "sha256:b7a5853defd008b54f28db5575277efa12f3a247ebed7cf8e587cdec5f3c0b8c", "renderedHash": "sha256:5a4d8113e8b28abb218e0e5db1c93a5d6af4f713d5da227ede4493a8a46a7b6a", "assent": {"surviving": ["sequential-formalization-1", "sequential-formalization-2", "sequential-formalization-3", "sequential-formalization-4", "sequential-formalization-5", "waiver"]}, "evidence": "canonical/profiles/consumer/signatures/spec-feedback-protocol.md#sequential-formalization-gate"}}
+  "#mandatory-mention-scanning": {"disposition": "retained"}
+  "#stamp-format": {"disposition": "retained"}
+  "#standard-feedback": {"disposition": "retained"}
+  "#directed-questions": {"disposition": "retained"}
+  "#incorporation-notes": {"disposition": "retained"}
+  "#context-for-reviewers": {"disposition": "retained"}
+  "#resolution-tracking": {"disposition": "retained"}
+  "#spec-feedback-template": {"disposition": "retained"}
+  "#document-access": {"disposition": "re-pointed", "removals": [{"text": "This is an identity doc (Spec 119) — never MCP-served,", "cites": "subtraction-2"}], "destination": "#document-access", "signature": {"signer": "stacy", "canonicalHash": "sha256:6ffb28191285a1ff3707dd24043c0e7f2a4a6e5c3d988a6c11398fed9bbccf81", "renderedHash": "sha256:994385d110832b792173e7e3be6163c5622648555bcbc4b3b0e07f8770d67994", "assent": {"surviving": ["document-access-1", "document-access-2"]}, "evidence": "canonical/profiles/consumer/signatures/spec-feedback-protocol.md#document-access"}}

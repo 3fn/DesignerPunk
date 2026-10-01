@@ -62,10 +62,14 @@
   - .kiro/skills/**
   - CLAUDE.md
   - CLAUDE.md.attribution.json
+  - canonical/_consumer-output/**
   - canonical/_fixture-output/**
+  - canonical/consumer-profile.yaml
   - canonical/coverage-manifest.yaml
   - canonical/coverage-map.yaml
   - canonical/manifests/**
+  - canonical/operative-sets/**
+  - canonical/profiles/consumer/**
   - canonical/registry/**
 122-sweep-1-refs:
   - canonical/agents/*.md

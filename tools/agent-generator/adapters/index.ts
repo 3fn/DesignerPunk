@@ -31,6 +31,8 @@ import type { AlwaysSetMember } from '../compose';
 import type { ToolSubset } from '../schema';
 import type { WorkflowRule } from '../workflow-rules-guard';
 import type { AttributionManifest } from '../attribution';
+import { AttributionAccumulator } from '../attribution';
+import { emitSpans, type Dispositions, type Overlay, type Profile } from '../spans';
 
 // ============================================================================
 // Emitted files — every emission carries its attribution (P2, rule above)
@@ -166,6 +168,12 @@ export interface AdapterContext {
    */
   embeds?: Readonly<Record<string, string>>;
   /**
+   * The same embeds kept per asserted section (Task 15.3; `buildEmbedSections`). The CC adapter's
+   * CONSUMER path emits one span per section (`ambient[<docid>#<section-slug>]`), so the embed
+   * container is sourced by surviving member spans; the steward path keeps the joined `embeds`.
+   */
+  embedSections?: Readonly<Record<string, readonly { section: string; text: string }[]>>;
+  /**
    * Doc id → repo-relative file path, for adapters that emit `@`-import lines (C11 lane 1 —
    * the CC adapter's generated `CLAUDE.md`). Supplied by the generation entry point (it knows
    * the steering corpus's on-disk layout); adapters never guess a path from an id.
@@ -184,7 +192,94 @@ export interface AdapterContext {
    * generation entry point; the Kiro adapter never guesses a path from an id.
    */
   docIdToPath?: Readonly<Record<string, string>>;
+  /**
+   * The generation profile (design C12; Spec 123 Task 15.0). Absent means `'steward'` — the
+   * canonical rendering, byte-identical to the pre-15.0 output. `'consumer'` makes every
+   * adapter span route through `emitSpans` with this agent's dispositions and overlay.
+   */
+  profile?: Profile;
+  /**
+   * Consumer-profile inputs, keyed by agent id (`frontmatter.agent`). Read only when
+   * `profile === 'consumer'`; a consumer emit for an agent with no dispositions throws (emitSpans:
+   * "the consumer profile requires dispositions"). Not named `dispositions` — that field is
+   * Spec 122's config-field disposition table.
+   */
+  consumer?: ConsumerInputs;
 }
+
+/**
+ * Per-agent consumer inputs (Task 15.0; 15.3): the parsed dispositions rows (with the shared
+ * catalog's `members` rows), the overlay's body-unit text, and — because under the consumer
+ * profile the adapter renders `derive()`'s frontmatter — each agent's `entryOrigin` (derived
+ * entry path → canonical entry path).
+ */
+export interface ConsumerInputs {
+  dispositions: Readonly<Record<string, Dispositions>>;
+  overlays?: Readonly<Record<string, Overlay>>;
+  entryOrigins?: Readonly<Record<string, Readonly<Record<string, string>>>>;
+}
+
+/** Resolve the profile and this agent's consumer inputs for `emitSpans` (both adapters call it). */
+export function spanInputsFor(
+  ctx: AdapterContext,
+  agentId: string
+): { profile: Profile; dispositions: Dispositions | undefined; overlay: Overlay | undefined; entryOrigin: Readonly<Record<string, string>> | undefined } {
+  const profile: Profile = ctx.profile ?? 'steward';
+  if (profile === 'steward') return { profile, dispositions: undefined, overlay: undefined, entryOrigin: undefined };
+  return {
+    profile,
+    dispositions: ctx.consumer?.dispositions[agentId],
+    overlay: ctx.consumer?.overlays?.[agentId],
+    entryOrigin: ctx.consumer?.entryOrigins?.[agentId],
+  };
+}
+
+// ============================================================================
+// Identity members (C19; Spec 123 Task 15.3) — the ONLY target-varying part of the lane
+// ============================================================================
+
+/**
+ * One always-set member, as `derive()` sees it (a shipped identity doc, `counterpart:` rows):
+ * its canonical path, its canonical body, its body rows and its re-grounded unit text. The
+ * shipped doc's own frontmatter is DROPPED, never carried (C19) — so none is passed.
+ */
+export interface IdentityMemberInput {
+  /** The doc id (`core-goals`) — the member file is `designerpunk-<id>.md` (Leonardo A-R1(ii)). */
+  id: string;
+  /** Repo-relative canonical path (`.kiro/steering/core-goals.md`) — the span provenance. */
+  source: string;
+  /** The canonical body (frontmatter already split off and dropped). */
+  body: string;
+  /** Body rows (every unit explicit — DD25). */
+  dispositions: Dispositions;
+  /** Re-grounded text of the re-pointed units. */
+  overlay?: Overlay;
+}
+
+/** The prefixed member name every target uses (C19: files are prefixed). */
+export const identityMemberName = (id: string): string => `designerpunk-${id}`;
+
+/**
+ * Render one member's BODY through `emitSpans` under the consumer profile (the one span function
+ * — Task 14's routing arbiter reaches this path too), after an optional adapter-written glue
+ * header. Both adapters call this; they differ only in the path and the header.
+ */
+export function renderIdentityMember(
+  member: IdentityMemberInput,
+  path: string,
+  header: { glue: 'identity-frontmatter'; text: string } | undefined
+): EmittedFile {
+  const acc = new AttributionAccumulator();
+  const src = { file: member.source, body: member.body, frontmatter: {} };
+  let content = '';
+  if (header) content += emitSpans(acc, src, 'consumer', member.dispositions, member.overlay, [{ kind: 'glue', glue: header.glue, text: header.text }]).text;
+  content += emitSpans(acc, src, 'consumer', member.dispositions, member.overlay, 'body').text;
+  return { path, content, attribution: acc.build(path) };
+}
+
+/** The loud refusal when identity members are asked for under the steward profile (C19). */
+export const identityMembersStewardMessage = (target: string): string =>
+  `${target}: emitIdentityMembers is the CONSUMER profile's delivery (C19) — the steward profile keeps today's always-layer (CC imports repo paths; Kiro []).`;
 
 // ============================================================================
 // The TargetAdapter interface (design C4 — verbatim seam)
@@ -203,6 +298,13 @@ export interface TargetAdapter {
   /** Emit THIS target's always-layer delivery (Kiro: inclusion-always refs; CC: C11 lanes). */
   emitAlwaysLayer(set: readonly AlwaysSetMember[], ctx: AdapterContext): EmittedFile[];
 
+  /**
+   * CONSUMER profile only (C19; Task 15.3): the derived identity MEMBER FILES this target delivers
+   * (CC `.claude/identity/designerpunk-<id>.md`; Kiro `.kiro/steering/designerpunk-<id>.md` with a
+   * fresh `id` + `inclusion: always` frontmatter). Throws under the steward profile.
+   */
+  emitIdentityMembers(members: readonly IdentityMemberInput[], ctx: AdapterContext): EmittedFile[];
+
   /** The target's tool-reference syntax (CC: `mcp__<server>__<tool>`; Kiro: native name). */
   toolRef(subset: ToolSubset, tool: string): string;
 
@@ -214,4 +316,54 @@ export interface TargetAdapter {
 
   /** This target's slice of the disposition table (sweep 7's checkable object). */
   readonly dispositions: FieldDispositionTable;
+}
+
+// ============================================================================
+// The adapter registry (Spec 123 Task 15.0) — declared target name → adapter
+// ============================================================================
+
+/** Builds a target's adapter from the shared field-disposition table. */
+export type AdapterFactory = (dispositions: FieldDispositionTable) => TargetAdapter;
+
+/**
+ * The registered adapters, keyed by the target names `canonical/consumer-profile.yaml`
+ * declares (C12). Lazily required: `cc.ts` and `kiro.ts` import this module at load time, so a
+ * top-level import here would be a cycle.
+ */
+export function registeredAdapterFactories(): Readonly<Record<string, AdapterFactory>> {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { CcAdapter } = require('./cc') as typeof import('./cc');
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { KiroAdapter } = require('./kiro') as typeof import('./kiro');
+  return Object.freeze({
+    cc: (d: FieldDispositionTable) => new CcAdapter(d),
+    kiro: (d: FieldDispositionTable) => new KiroAdapter(d),
+  });
+}
+
+/** The loud failure for a declared target with no registered adapter. */
+export const unregisteredTargetMessage = (target: string, registered: readonly string[]): string =>
+  `no adapter is registered for declared target "${target}" (canonical/consumer-profile.yaml) — ` +
+  `register one in tools/agent-generator/adapters/index.ts (registered: ${registered.join(', ')}; Req 24 AC3)`;
+
+/**
+ * One adapter per declared target, in declared order. `extra` injects further factories (Task
+ * 14's fake third target is registered this way, in its test); it may not shadow a registered
+ * name. A declared target with no factory throws, naming it.
+ */
+export function adaptersFor(
+  targets: readonly string[],
+  dispositions: FieldDispositionTable,
+  extra: Readonly<Record<string, AdapterFactory>> = {}
+): TargetAdapter[] {
+  const registered = registeredAdapterFactories();
+  for (const name of Object.keys(extra)) {
+    if (name in registered) throw new Error(`adaptersFor: an injected factory may not shadow the registered adapter "${name}"`);
+  }
+  const factories: Record<string, AdapterFactory> = { ...registered, ...extra };
+  return targets.map((target) => {
+    const factory = factories[target];
+    if (!factory) throw new Error(unregisteredTargetMessage(target, Object.keys(factories)));
+    return factory(dispositions);
+  });
 }

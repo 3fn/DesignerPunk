@@ -66,3 +66,10 @@
   - **M4**: walks at MIDPOINT, CLOSEOUT and RELEASE; the J sample for judgment; Peter's Stacy-signed sample written `0 / N` when empty; the widening rule.
   - **One-time**: A4 (`cleanupPeriodDays` ≥ 180, before the earlier of U2b's merge and 2026-10-28); the `agent-generator.yml` grant issue; the C6 carve-out. **Label**: consistency, not identity.
   - **Homes**: register row `signing-act-consistency`; `.kiro/issues/README.md` rule 8. The TCP pointer is a carried rider (fork F-2, drafted (b)).
+- [2026-09-28-123-b-u2.md](2026-09-28-123-b-u2.md) — **RATIFIED (Peter, 2026-09-28)**: F-1 (a), F-2 (B) plus a standing parity test, and F-3 (ii) plus the gap line. The rulings are in the ballot's § 4 § "Rulings (Peter, 2026-09-28)".
+  - **Drafted by** Thurgood (Opus), Spec 123 Task 13.7. Stacy was the required reviewer: R1 ACCEPT-WITH-CHANGES (C1–C10), then R2 CONFIRM-WITH-AMENDMENTS (A1–A7). All items were folded at R2 and R3.
+  - **Record-first, on the unit branch.** The ballot rides Spec 123's U2b branch and reaches `main` at U2b's Peter-merged unit PR (the B-U1 precedent).
+  - **B-U2 carries two measures:**
+    - **M1**: the claims-pass counting block gains **re-grounding dispositions**. That is the `no-consumer-counterpart` rate (a state metric, baselined at the first render), the per-signer assent rate and the refusal count (event metrics, which skip the first render), all counted from history per signature event, plus a spot-check fraction in which Peter samples Stacy-signed assents. It also gains a gap line that counts nothing, for the not-yet-instrumented full-survival assent signal. M1 is applied at 13.8, after Stacy's owed read of the two ratification-time sentences.
+    - **M2**: the `package-name-scope-drift` rule drops `product-template/` and adds `governance/`, applied at 17.3. Its rule↔`SCAN_DIRS` cross-check becomes a standing test in Task 17.
+  - **F-1's five errata (E-a1–E-a5)** amend `tasks.md` L127/L129, `design.md` L832 and Req 11.5.3/11.5.7, one commit each.

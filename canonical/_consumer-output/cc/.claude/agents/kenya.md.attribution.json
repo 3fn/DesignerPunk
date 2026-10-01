@@ -1,0 +1,807 @@
+{
+  "artifact": ".claude/agents/kenya.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        4,
+        10
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        11,
+        11
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[find_components]"
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[get_component_catalog]"
+    },
+    {
+      "lines": [
+        13,
+        13
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[get_component_full]"
+    },
+    {
+      "lines": [
+        14,
+        14
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[get_component_health]"
+    },
+    {
+      "lines": [
+        15,
+        15
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[get_component_summary]"
+    },
+    {
+      "lines": [
+        16,
+        16
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[get_token_details]"
+    },
+    {
+      "lines": [
+        17,
+        17
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[get_token_family]"
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-application[search_tokens]"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-docs[find_docs]"
+    },
+    {
+      "lines": [
+        20,
+        20
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-docs[get_document_summary]"
+    },
+    {
+      "lines": [
+        21,
+        21
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-docs[get_index_health]"
+    },
+    {
+      "lines": [
+        22,
+        22
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-docs[get_section]"
+    },
+    {
+      "lines": [
+        23,
+        23
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-product[find_screens]"
+    },
+    {
+      "lines": [
+        24,
+        24
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-product[get_product_health]"
+    },
+    {
+      "lines": [
+        25,
+        25
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-product[get_product_overview]"
+    },
+    {
+      "lines": [
+        26,
+        26
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-product[get_product_tokens]"
+    },
+    {
+      "lines": [
+        27,
+        27
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-product[get_screen_spec]"
+    },
+    {
+      "lines": [
+        28,
+        28
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:toolSubset.designerpunk-product[rebuild_product_index]"
+    },
+    {
+      "lines": [
+        29,
+        29
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        30,
+        31
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        32,
+        50
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#identity"
+    },
+    {
+      "lines": [
+        51,
+        63
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#in-scope"
+    },
+    {
+      "lines": [
+        64,
+        71
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#ios-theming-spec-094"
+    },
+    {
+      "lines": [
+        72,
+        80
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#product-tokens-spec-108109"
+    },
+    {
+      "lines": [
+        81,
+        90
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#out-of-scope"
+    },
+    {
+      "lines": [
+        91,
+        96
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#blocking-exception-direct-escalation-to-peter"
+    },
+    {
+      "lines": [
+        97,
+        107
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#the-implement-vs-direct-distinction"
+    },
+    {
+      "lines": [
+        108,
+        111
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#operational-mode-screen-implementation:preamble"
+    },
+    {
+      "lines": [
+        112,
+        116
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#step-1-review-the-specification"
+    },
+    {
+      "lines": [
+        117,
+        121
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#step-2-set-up-the-screen"
+    },
+    {
+      "lines": [
+        122,
+        128
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#step-3-implement"
+    },
+    {
+      "lines": [
+        129,
+        134
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#step-4-test"
+    },
+    {
+      "lines": [
+        135,
+        141
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#step-5-report-back"
+    },
+    {
+      "lines": [
+        142,
+        145
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#operational-mode-platform-expertise:preamble"
+    },
+    {
+      "lines": [
+        146,
+        152
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#what-you-provide"
+    },
+    {
+      "lines": [
+        153,
+        160
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#how-you-provide-it"
+    },
+    {
+      "lines": [
+        161,
+        172
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#with-leonardo-primary"
+    },
+    {
+      "lines": [
+        173,
+        177
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#with-sibling-platform-agents"
+    },
+    {
+      "lines": [
+        178,
+        182
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#with-stacy-product-governance"
+    },
+    {
+      "lines": [
+        183,
+        189
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#with-peter"
+    },
+    {
+      "lines": [
+        190,
+        199
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#how-to-use-designerpunk-tokens-on-ios"
+    },
+    {
+      "lines": [
+        200,
+        204
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#token-reference-pattern"
+    },
+    {
+      "lines": [
+        205,
+        216
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#platform-currency-expectations"
+    },
+    {
+      "lines": [
+        217,
+        229
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#platform-reference-pointers"
+    },
+    {
+      "lines": [
+        230,
+        241
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#ios-specific-guidance"
+    },
+    {
+      "lines": [
+        242,
+        253
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        254,
+        257
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        258,
+        262
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        263,
+        265
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        266,
+        268
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        269,
+        273
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#ask-if-unsure"
+    },
+    {
+      "lines": [
+        274,
+        281
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/kenya.md#what-you-own"
+    },
+    {
+      "lines": [
+        282,
+        287
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#what-you-dont-own"
+    },
+    {
+      "lines": [
+        288,
+        289
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        290,
+        291
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "canonical/agents/kenya.md#frontmatter:ambient[product-token-governance]"
+    },
+    {
+      "lines": [
+        292,
+        342
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "canonical/agents/kenya.md#frontmatter:ambient[product-token-governance#system-first-value-selection]"
+    },
+    {
+      "lines": [
+        343,
+        347
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        348,
+        351
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        352,
+        353
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes"
+    },
+    {
+      "lines": [
+        354,
+        354
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[token-doc-map]"
+    },
+    {
+      "lines": [
+        355,
+        355
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[ios-impl-patterns]"
+    },
+    {
+      "lines": [
+        356,
+        356
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[product-token-naming]"
+    },
+    {
+      "lines": [
+        357,
+        357
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[contract-concept-names]"
+    },
+    {
+      "lines": [
+        358,
+        358
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[stemma-principles]"
+    },
+    {
+      "lines": [
+        359,
+        359
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[test-dev-standards]"
+    },
+    {
+      "lines": [
+        360,
+        360
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[bcv-guidance]"
+    },
+    {
+      "lines": [
+        361,
+        361
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[token-lookup-beyond]"
+    },
+    {
+      "lines": [
+        362,
+        362
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.docs[ios-patterns-beyond]"
+    },
+    {
+      "lines": [
+        363,
+        363
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.agents[leonardo]"
+    },
+    {
+      "lines": [
+        364,
+        364
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[0]"
+    },
+    {
+      "lines": [
+        365,
+        365
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[1]"
+    },
+    {
+      "lines": [
+        366,
+        366
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[2]"
+    },
+    {
+      "lines": [
+        367,
+        367
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[3]"
+    },
+    {
+      "lines": [
+        368,
+        368
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[4]"
+    },
+    {
+      "lines": [
+        369,
+        369
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[5]"
+    },
+    {
+      "lines": [
+        370,
+        370
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[6]"
+    },
+    {
+      "lines": [
+        371,
+        371
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[7]"
+    },
+    {
+      "lines": [
+        372,
+        372
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes.cues[9]"
+    },
+    {
+      "lines": [
+        373,
+        373
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:routes"
+    },
+    {
+      "lines": [
+        374,
+        375
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:commands"
+    },
+    {
+      "lines": [
+        376,
+        376
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:commands[platform-tokens]"
+    },
+    {
+      "lines": [
+        377,
+        377
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:commands[ios-build-test]"
+    },
+    {
+      "lines": [
+        378,
+        378
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:commands[product-screen-commands]"
+    },
+    {
+      "lines": [
+        379,
+        379
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+    },
+    {
+      "lines": [
+        380,
+        380
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        381,
+        382
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
+    },
+    {
+      "lines": [
+        383,
+        383
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:commands"
+    },
+    {
+      "lines": [
+        384,
+        385
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        386,
+        386
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases[ios-components]"
+    },
+    {
+      "lines": [
+        387,
+        387
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        388,
+        391
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope"
+    },
+    {
+      "lines": [
+        392,
+        392
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        393,
+        395
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope"
+    },
+    {
+      "lines": [
+        396,
+        399
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:preflight"
+    },
+    {
+      "lines": [
+        400,
+        400
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        401,
+        401
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:preflight"
+    }
+  ]
+}

@@ -67,3 +67,72 @@ date: 2026-09-27
 **Decomposition note**: hc-1 and hc-2 come from one sentence. I split them at `THEN flag:` because the message carries a separate function: the route to the steward and the before-proceeding order. Each piece is a verbatim substring. Taken together they are the complete sentence, so no remainder is truncated. Splitting makes the denominator larger. That makes clearing harder, never easier, so the split is safe for the denominator attack in 5d.
 
 **Excluded as non-operative**: the item title `2. **Civitas Governance Health Check**`.
+
+## `#start-up-tasks:preamble`
+
+confirmer: stacy
+canonicalHash: sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4
+items: none
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 0, declared.** Doc metadata. Its end-of-task pointer is orientation.
+
+## `#item-check-the-current-date`
+
+confirmer: stacy
+canonicalHash: sha256:9a9fc4aa0317a163d7b39e97d9965444f12795d0f68b72b4b77b84e69f498941
+items: check-the-current-da-1
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 1, as drafted.** The title line is the whole instruction.
+
+## `#item-critical-this-project-uses-jest-not-vitest`
+
+confirmer: stacy
+canonicalHash: sha256:f75f87b00a0dafa053d0b2da2229ab451e79ced7621723927163505605e171d0
+items: critical-this-projec-2, critical-this-projec-3, critical-this-projec-4, critical-this-projec-5, critical-this-projec-6, critical-this-projec-7, critical-this-projec-8, critical-this-projec-9, lane-semantics, pre-july-void, critical-this-projec-10, critical-this-projec-11
+date: 2026-09-29
+
+**Ruling: CORRECTED 11 → 12.**
+- Removed `critical-this-projec-1`: the item's own title line, a label under the 11.3 convention. Its content is restated by `-2`.
+- Added `lane-semantics` and `pre-july-void`.
+- **Not operative**: the ✅/❌ group labels, the "Key difference" explanation (it restates `-10`/`-11`), and the historical note.
+
+## `#item-test-command-selection-guidelines`
+
+confirmer: stacy
+canonicalHash: sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974
+items: test-command-selecti-2, test-command-selecti-5, test-command-selecti-6, test-command-selecti-7, test-command-selecti-8, decision-tree, test-command-selecti-9, test-command-selecti-10, test-command-selecti-11, default-assumption
+date: 2026-09-29
+
+**Ruling: CORRECTED 11 → 10.**
+- Removed `-1` (the title line), and `-3` and `-4` (rationale about `npm test`).
+- Widened `-2`, `-5` and `-7` to carry their `WHEN … THEN` conditions (the 11.3 convention).
+- Added `decision-tree` and `default-assumption`.
+
+## `#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to`
+
+confirmer: stacy
+canonicalHash: sha256:289ce23ec97eeb4f98c1bfb0a92a60668e2360c4bd0ac6b010f55c200b8baf65
+items: first-ask-whether, delegation-and-model-2, delegation-and-model-3, delegation-and-model-4, delegation-and-model-5, delegation-and-model-6, delegation-and-model-7, policy-query
+date: 2026-09-29
+
+**Ruling: CORRECTED 7 → 8.** Removed `-1` (the title line). Added `first-ask-whether` and `policy-query`.
+
+## `#item-ending-a-task-see-task-completion-protocol`
+
+confirmer: stacy
+canonicalHash: sha256:7c5b774f2a602dcd9239360a7e68f90273cc300c0e12e7f281c45ce2cdf44649
+items: ending-a-task-see-ta-2, follow-tcp, ending-a-task-see-ta-3
+date: 2026-09-29
+
+**Ruling: CONFIRMED at 3, recomposed.** Removed `-1` (the title line) and added `follow-tcp`.
+
+## `#item-starting-a-parent-task-write-its-instruments-block-first`
+
+confirmer: stacy
+canonicalHash: sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
+items: write-block, missing-stops, starting-a-parent-ta-2, starting-a-parent-ta-3, format-route, starting-a-parent-ta-4
+date: 2026-09-29
+
+**Ruling: CORRECTED 4 → 6.** Removed `-1` (the title line). Added `write-block` (the rule's main obligation, missing from the draft), `missing-stops` and `format-route`.

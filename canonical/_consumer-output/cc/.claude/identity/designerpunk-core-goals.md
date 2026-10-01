@@ -1,0 +1,83 @@
+
+# Core Goals
+
+**Date**: 2025-10-20
+**Last Reviewed**: 2026-07-05
+**Purpose**: Core project context and development practices for DesignerPunk design system
+**Organization**: process-standard
+**Scope**: cross-project
+**Layer**: 1
+**Relevant Tasks**: all-tasks
+
+## Core Project Context
+
+This design system is built on DesignerPunk — a True Native cross-platform design system with mathematical foundations, built for Human-AI collaboration — and carries its principles.
+
+**Key Principles:**
+- Build-time platform separation (web/iOS/Android) rather than runtime detection
+- Mathematical foundation: REM-style baseline grid with modular scale
+- Accessibility-first: WCAG 2.1 AA compliance
+- Cross-platform consistency through unitless token architecture
+- Human-AI partnership as foundational value
+
+**Platform Minimum Versions:**
+- iOS: 17.0+
+- Android: Not yet constrained
+- Web: Not yet constrained
+
+**For detailed architectural guidance, see (docs MCP):**
+- True Native Architecture: `platform-implementation-guidelines`
+- Token System: `rosetta-system-architecture`
+- Mathematical Foundation: `rosetta-system-principles`
+
+## Development Practices
+
+**Task Completion:**
+- Follow your repo's own task-completion workflow — branch, review, and merge as your team does; the human lead's acceptance is the authorization act (see the Task Completion Protocol member)
+
+**For detailed workflow guidance, see:**
+- Spec planning: `process-spec-planning` (docs MCP, conditional)
+
+**Token Usage:**
+- **Always** prioritize design tokens over hard-coded values
+- **MUST** use semantic tokens first — only use primitive tokens when no semantic token exists for the use case
+- All tokens must follow Rosetta System: mathematical relationships, unitless values, primitive→semantic hierarchy
+- Inform user if hard-coded values are necessary
+
+**Token Governance (Autonomy Levels):**
+- **Semantic tokens**: Use freely (verify semantic correctness)
+- **Primitive tokens**: Requires prior context (spec docs) or human acknowledgment
+- **Component tokens**: Requires explicit human approval before use
+- **Creating ANY token**: Always requires human review — no autonomous token creation
+
+**For detailed governance**, query Token Governance via MCP:
+```
+get_section({ path: "token-governance", heading: "Token Selection Matrix" })
+get_section({ path: "token-governance", heading: "Token Usage Governance" })
+```
+
+**Token Selection Priority (MUST follow this order):**
+1. **Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds)
+2. **Primitive tokens** — when no semantic token exists, check if a primitive token provides the needed value
+3. **Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive, create a component token that references the primitive (e.g., `buttonIcon.inset.medium = space125`)
+4. **Hard-coded values** — only as last resort, requires user approval
+
+**Component Token Construction Rule:**
+Component tokens must either reference an existing primitive token OR conform to how that primitive token family's values are defined. Never introduce arbitrary values at the component level that don't align with the underlying token family's value system.
+
+**Why semantic first?** Semantic tokens are self-documenting, theme-aware, and encode design intent. Using `tapAreaRecommended` instead of `space600` makes code readable and maintainable.
+
+**Token-First in Specs:**
+- Specs reference tokens, not pixel values: `icon.size100` not `24px`
+- Hard values in source docs (design-outlines) **must** be translated to token references when available
+- Format: `token.name` with value as comment only when needed for clarity
+- Query Token Quick Reference via MCP when uncertain which token to use
+
+**For detailed token guidance, see:**
+- Token governance: `Token-Governance.md` (Layer 2, MCP-accessible) — Selection, usage, and creation governance
+- Component development: `Component-Development-Guide.md` (Layer 3, conditional)
+- Token selection: Component Development Guide's "Token Selection Decision Framework"
+
+**Documentation Approach:**
+- Maintain concept-based documentation preventing contamination vectors
+- Apply process-first tool development: prove manual processes before automation

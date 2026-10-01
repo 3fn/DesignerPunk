@@ -1,0 +1,146 @@
+# canonical/profiles/consumer/leonardo.dispositions.yaml — Spec 123 Task 15.4 (design C17; DD25, DD26)
+# Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the
+# consumer's repo (R5); their text is leonardo.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
+source: canonical/agents/leonardo.md
+body:
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity", "signature": {"signer": "leonardo", "canonicalHash": "sha256:bf53cb67509dba2252d5fdcdaecfd027b6af0dfa337b2128d1111258bfb1cd9a", "renderedHash": "sha256:45154d43422c0c69fba19ef67c0ef8036a1a3b10e48f616400d869c85aa506f2", "assent": {"surviving": ["leo-role", "leo-translate", "leo-domain", "leo-coordinate-system", "leo-human-decides", "leo-partner"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#identity"}}
+  "#in-scope": {"disposition": "retained"}
+  "#product-configuration-context": {"disposition": "retained"}
+  "#product-tokens": {"disposition": "retained"}
+  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope", "signature": {"signer": "leonardo", "canonicalHash": "sha256:abdff9e39c869c5423faf28f9fd4e313fdf541537c7e5751df7664cb29f12286", "renderedHash": "sha256:312c5d3e17b94f1df4733b56b3b9759a6e47a17f89b1ca5d475ec0cd6d32ce0f", "assent": {"surviving": ["out-1", "out-2", "out-3", "out-4", "out-5", "out-6"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#out-of-scope"}}
+  "#the-direct-vs-delegate-distinction": {"disposition": "retained"}
+  "#operational-mode-screen-specification:preamble": {"disposition": "retained"}
+  "#step-1-understand-the-intent": {"disposition": "retained"}
+  "#step-2-select-components-via-application-mcp": {"disposition": "retained"}
+  "#step-3-specify-the-screen:preamble": {"disposition": "retained"}
+  "#layout-specification": {"disposition": "retained"}
+  "#step-4-validate-assembly": {"disposition": "retained"}
+  "#step-5-hand-off-to-platform-agents": {"disposition": "retained"}
+  "#operational-mode-lessons-learned:preamble": {"disposition": "retained"}
+  "#what-qualifies-as-a-lesson": {"disposition": "retained"}
+  "#capture-process": {"disposition": "retained"}
+  "#structured-request-format": {"disposition": "retained"}
+  "#operational-mode-cross-platform-review:preamble": {"disposition": "retained"}
+  "#review-checklist": {"disposition": "retained"}
+  "#what-consistent-means-in-true-native": {"disposition": "retained"}
+  "#operational-mode-design-creation-impeccable-skill:preamble": {"disposition": "retained"}
+  "#skill-loading-sequence": {"disposition": "retained"}
+  "#gate-system": {"disposition": "retained"}
+  "#color-strategy-declaration": {"disposition": "retained"}
+  "#conflict-resolution-hierarchy": {"disposition": "retained"}
+  "#anti-slop-awareness": {"disposition": "retained"}
+  "#lessons-learned-capture": {"disposition": "retained"}
+  "#available-commands": {"disposition": "retained"}
+  "#with-platform-agents": {"disposition": "retained"}
+  "#platform-scope-adaptation": {"disposition": "retained"}
+  "#with-stacy-product-governance": {"disposition": "retained"}
+  "#with-system-agents-via-thurgood": {"disposition": "retained"}
+  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#with-peter", "signature": {"signer": "leonardo", "canonicalHash": "sha256:4644e5cc88b3e90c001f9beecb33d825cdcc7d441d0f9d01b6e336e43cc857ff", "renderedHash": "sha256:5e4c9ff03ce0144633708c28479a2f92086efb07458d425852a4a81c6701efb0", "assent": {"surviving": ["human-1"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#with-peter"}}
+  "#mcp-practice-notes": {"disposition": "retained"}
+  "#onboarding-awareness": {"disposition": "retained"}
+  "#what-you-own": {"disposition": "retained"}
+  "#what-you-dont-own": {"disposition": "retained"}
+  "#platform-currency-awareness": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-awareness", "signature": {"signer": "leonardo", "canonicalHash": "sha256:d22b6e7f861f59374271b2c3f3a75e257e18f0f6cafebdd3c7707070688bba0c", "renderedHash": "sha256:272862541cfa3bc952a10a9f570f921ca2b66bd3792a69cf8824874dec90c440", "assent": {"surviving": ["currency-1", "currency-2", "currency-3"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#platform-currency-awareness"}}
+  "#collaboration-standards:preamble": {"disposition": "retained"}
+  "#counter-arguments-are-mandatory": {"disposition": "retained"}
+  "#candid-over-comfortable": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#when-you-and-peter-disagree": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#when-you-and-peter-disagree", "signature": {"signer": "leonardo", "canonicalHash": "sha256:fc99b47e67403652f801bf4602ecbf53d6b62c005d06f7b9db5424e8ef3cee01", "renderedHash": "sha256:e9be4bd512776d5b81cbe3fa85bb9226d5423245bfcd649fa17ed6e33384b4d1", "assent": {"surviving": ["disagree"]}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#when-you-and-peter-disagree"}}
+  "#ask-if-unsure": {"disposition": "retained"}
+frontmatter:
+  "agent": {"disposition": "retained"}
+  "agentType": {"disposition": "retained"}
+  "description": {"disposition": "re-pointed", "removals": [{"text": "(Peter's call)", "cites": "subtraction-2"}], "destination": "frontmatter:description"}
+  "ambient[cross-platform-vs-platform-specific-decision-framework#decision-framework]": {"disposition": "retained"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "retained"}
+  "routes.docs[decision-criteria]": {"disposition": "retained"}
+  "routes.docs[spec-tasks-format]": {"disposition": "retained"}
+  "routes.docs[layout-vocabulary]": {"disposition": "retained"}
+  "routes.docs[product-token-authoring]": {"disposition": "retained"}
+  "routes.docs[component-doc-map]": {"disposition": "retained"}
+  "routes.docs[component-readiness]": {"disposition": "retained"}
+  "routes.docs[concept-catalog]": {"disposition": "retained"}
+  "routes.docs[cross-platform-guidance]": {"disposition": "retained"}
+  "routes.docs[spec-planning-beyond]": {"disposition": "retained"}
+  "routes.docs[product-token-gov-beyond]": {"disposition": "retained"}
+  "routes.docs[stemma-principles]": {"disposition": "retained"}
+  "routes.docs[test-dev-standards]": {"disposition": "retained"}
+  "routes.docs[token-lookup-patterns]": {"disposition": "retained"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.docs[dev-workflow-detail]"}}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.docs[file-organization]"}}
+  "routes.docs[product-handoff-protocol-route]": {"disposition": "retained"}
+  "routes.docs[integration-onboarding-guide]": {"disposition": "retained"}
+  "routes.agents[sparky]": {"disposition": "retained"}
+  "routes.agents[kenya]": {"disposition": "retained"}
+  "routes.agents[data]": {"disposition": "retained"}
+  "routes.agents[stacy]": {"disposition": "retained"}
+  "routes.agents[thurgood]": {"disposition": "retained"}
+  "routes.cues[0]": {"disposition": "retained"}
+  "routes.cues[1]": {"disposition": "retained"}
+  "routes.cues[2]": {"disposition": "retained"}
+  "routes.cues[3]": {"disposition": "retained"}
+  "routes.cues[4]": {"disposition": "retained"}
+  "routes.cues[5]": {"disposition": "retained"}
+  "routes.cues[6]": {"disposition": "retained"}
+  "routes.cues[7]": {"disposition": "retained"}
+  "routes.cues[8]": {"disposition": "retained"}
+  "routes.cues[9]": {"disposition": "retained"}
+  "routes.cues[10]": {"disposition": "retained"}
+  "routes.cues[11]": {"disposition": "retained"}
+  "routes.cues[12]": {"disposition": "retained"}
+  "routes.cues[13]": {"disposition": "retained"}
+  "routes.cues[14]": {"disposition": "retained"}
+  "routes.cues[15]": {"disposition": "retained"}
+  "routes.cues[16]": {"disposition": "retained"}
+  "routes.cues[17]": {"disposition": "retained"}
+  "routes.cues[18]": {"disposition": "retained"}
+  "routes.cues[19]": {"disposition": "retained"}
+  "routes.cues[20]": {"disposition": "retained"}
+  "routes.cues[21]": {"disposition": "re-pointed", "removals": [{"text": "build tooling", "cites": "subtraction-1"}], "destination": "frontmatter:routes.cues[21]", "signature": {"signer": "leonardo", "canonicalHash": "sha256:9c97b17533725a447b8c36969b61e9edec718cd9bfd443dbaccbb9f399532251", "renderedHash": "sha256:24f724d102445528b14344065bee5dacbdc13f778e638accde6a913fce74fe37", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:routes.cues[21]"}}
+  "commands[generate-tokens]": {"disposition": "retained"}
+  "commands[validate-product-tokens]": {"disposition": "retained"}
+  "commands[init-product]": {"disposition": "retained"}
+  "commands[sync-product]": {"disposition": "retained"}
+  "skills[impeccable]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_section]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_index_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[rebuild_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[find_components]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_experience_pattern]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[list_experience_patterns]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[list_layout_templates]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_layout_template]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[validate_assembly]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[check_composition]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_prop_guidance]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_catalog]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_design_philosophy]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_design_rules]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_design_guidance]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_color_strategy]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_details]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[search_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[rebuild_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_overview]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_brand_context]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_screens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_spec]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_state_model]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[list_experience_map]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[rebuild_product_index]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_principles]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[list_product_templates]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_templates]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_domain_object]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_component]": {"disposition": "retained"}
+  "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
+  "writeScope[docs/specs/**]": {"disposition": "superseded-by", "destination": "frontmatter:writeScope[.kiro/specs/**]", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[docs/specs/**]"}}
+  "kiro.keyboardShortcut": {"disposition": "retained"}
+  "kiro.welcomeMessage": {"disposition": "retained"}
+  "preflight[git status --porcelain]": {"disposition": "retained"}

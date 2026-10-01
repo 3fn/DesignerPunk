@@ -1,0 +1,53 @@
+{
+  "allowedTools": [
+    "read",
+    "knowledge",
+    "@designerpunk-docs",
+    "@designerpunk-application"
+  ],
+  "description": "Stemma component specialist — component scaffolding & development, platform implementations (web/iOS/Android), behavioral contract testing, component schemas & token integration, inheritance/family architecture, component docs, and platform-implementation guidelines. Owns ALL components (ecosystem + product). Does NOT create tokens (Ada), do test governance/spec formalization (Thurgood).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+l",
+  "name": "lina",
+  "prompt": "file://./lina-prompt.md",
+  "resources": [
+    "file://.kiro/steering/designerpunk-agent-directory.md",
+    "file://.kiro/steering/designerpunk-ai-collaboration-principles.md",
+    "file://.kiro/steering/designerpunk-civitas-system-overview.md",
+    "file://node_modules/@3fn/core/governance/Contract-System-Reference.md",
+    "file://.kiro/steering/designerpunk-core-goals.md",
+    "file://.kiro/steering/designerpunk-designerpunk-systems-overview.md",
+    "file://.designerpunk/personal-note.local.md",
+    "file://.kiro/steering/designerpunk-spec-feedback-protocol.md",
+    "file://.kiro/steering/designerpunk-start-up-tasks.md",
+    "file://.kiro/steering/designerpunk-task-completion-protocol.md",
+    {
+      "autoUpdate": false,
+      "description": "Stemma component system source code — component implementations, platform-specific code (web/iOS/Android), types, and behavioral contract tests",
+      "indexType": "best",
+      "name": "StemmaComponentSource",
+      "source": "file://./src/components",
+      "type": "knowledgeBase"
+    }
+  ],
+  "tools": [
+    "*"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "src/components/**",
+        "specs/**"
+      ]
+    }
+  },
+  "welcomeMessage": "Hey! I'm Lina, your Stemma component specialist. I can help with component scaffolding, platform implementations, behavioral contracts, and component documentation. What are we building?"
+}

@@ -1,0 +1,47 @@
+{
+  "allowedTools": [
+    "read",
+    "knowledge",
+    "@designerpunk-docs",
+    "@designerpunk-application",
+    "@designerpunk-product"
+  ],
+  "description": "Web platform engineer — Web Components implementation, DesignerPunk token and component consumption, Web accessibility, and native screen development. Implements Leonardo's product-screen specs in Web Components (Shadow DOM) + TypeScript; does NOT make cross-platform architecture decisions, create tokens/components, or own test governance (escalates those through Leonardo).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+w",
+  "name": "sparky",
+  "prompt": "file://./sparky-prompt.md",
+  "resources": [
+    "file://.kiro/steering/designerpunk-agent-directory.md",
+    "file://.kiro/steering/designerpunk-ai-collaboration-principles.md",
+    "file://.kiro/steering/designerpunk-civitas-system-overview.md",
+    "file://node_modules/@3fn/core/governance/Contract-System-Reference.md",
+    "file://.kiro/steering/designerpunk-core-goals.md",
+    "file://.kiro/steering/designerpunk-designerpunk-systems-overview.md",
+    "file://.designerpunk/personal-note.local.md",
+    "file://node_modules/@3fn/core/governance/Product-Token-Governance.md",
+    "file://.kiro/steering/designerpunk-spec-feedback-protocol.md",
+    "file://.kiro/steering/designerpunk-start-up-tasks.md",
+    "file://.kiro/steering/designerpunk-task-completion-protocol.md",
+    "file://node_modules/@3fn/core/governance/Web-Authoring-Standards.md"
+  ],
+  "tools": [
+    "*"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "specs/**"
+      ]
+    }
+  },
+  "welcomeMessage": "Hey! I'm Sparky, your Web platform engineer. I implement product screens in Web Components using DesignerPunk tokens and components. What are we building?"
+}

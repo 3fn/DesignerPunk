@@ -141,3 +141,38 @@ export function jestConfigCollisionMessage(): string {
     `own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`
   );
 }
+
+/**
+ * Req 13 — the consumer profile's DECLARED DEGRADATION (Spec 123 Task 16.1; design C20:
+ * "Degradation in the consumer profile = warn and exit 0"). Printed once per unresolvable
+ * member when the consumer emission lane (`dist/generator/consumer-entry.js`) finds a member
+ * missing from the installed package — a diet defect or a partial install. The charter is
+ * emitted without that member and the command exits 0.
+ *
+ * AUTHORED AT 16.1, not copied: design § Error Handling carries this row as
+ * `consumer degradation | (unchanged; warning, exit 0)` with no text, so there is no catalog
+ * string to be equal to. `consumer-entry.degradation.test.ts` asserts THIS function's output.
+ *
+ * - `member`: what is missing, e.g. `governance doc 'contract-system-reference'`.
+ * - `where`: where the lane looked, relative to the package root.
+ * - `consequence`: what was emitted without it.
+ */
+export function consumerDegradationMessage(member: string, where: string, consequence: string): string {
+  return (
+    `warning: ${member} is missing from the installed @3fn/core (${where}) — ${consequence}. ` +
+    `Generation continued without it; reinstall the package (npm install) to restore it.`
+  );
+}
+
+/**
+ * design.md catalog row: **managed region — markers missing** (Task 16.4, C7 region
+ * grain). `RegionGrain.spliceRegion` returns this string — never throws, never
+ * writes — when a managed region's begin/end marker pair is absent or unmatched
+ * in `<file>` (e.g. `CLAUDE.md`, `.gitignore`).
+ */
+export function managedRegionMarkersMissingMessage(file: string): string {
+  return (
+    `the DesignerPunk-managed region in ${file} is missing its markers — not rewriting the file. ` +
+    `Restore the markers (see install doc § "Your agent layer") or re-run attach`
+  );
+}

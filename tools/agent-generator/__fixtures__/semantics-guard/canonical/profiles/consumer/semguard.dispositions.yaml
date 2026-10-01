@@ -1,0 +1,19 @@
+# Semantics-guard fixture profile (Spec 123 Task 14.2) — EVERY unit and leaf carries an explicit row (DD25).
+# Three re-pointings, each in place (destination = itself), each with a ## @unit / ## @entry overlay:
+#   E     — the body unit S (the owed-set pipeline), re-grounded by G1's committed E rendering;
+#   E-fm  — writeScope[.kiro/specs/**], re-grounded per member (Task 15.0 renders writeScope per glob under consumer);
+#   extra — commands[claims-pass] (disclosed extra frontmatter evidence, not a substitute for E-fm).
+source: canonical/agents/semguard.md
+body:
+  "#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble": { disposition: retained }
+  "#the-trigger-set-the-114-superset-table-names-never-numbers": { disposition: retained }
+  "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script": { disposition: re-pointed, destination: "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script" }
+frontmatter:
+  "agent": { disposition: retained }
+  "agentType": { disposition: retained }
+  "description": { disposition: retained }
+  "toolSubset.designerpunk-docs[find_docs]": { disposition: retained }
+  "commands[claims-pass]": { disposition: re-pointed, destination: "frontmatter:commands[claims-pass]" }
+  "commands[owed-set]": { disposition: retained }
+  "writeScope[.kiro/specs/**]": { disposition: re-pointed, destination: "frontmatter:writeScope[.kiro/specs/**]" }
+  "writeScope[docs/specs/**]": { disposition: retained }

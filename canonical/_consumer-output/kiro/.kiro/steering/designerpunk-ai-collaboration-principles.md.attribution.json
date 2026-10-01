@@ -1,0 +1,85 @@
+{
+  "artifact": ".kiro/steering/designerpunk-ai-collaboration-principles.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        5
+      ],
+      "op": "render",
+      "source": "C19:identity-frontmatter"
+    },
+    {
+      "lines": [
+        6,
+        18
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#ai-collaboration-principles:preamble"
+    },
+    {
+      "lines": [
+        19,
+        30
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#the-ai-optimism-problem"
+    },
+    {
+      "lines": [
+        31,
+        39
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#candid-vs-brutal-communication"
+    },
+    {
+      "lines": [
+        40,
+        53
+      ],
+      "op": "render",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#counter-argument-requirement"
+    },
+    {
+      "lines": [
+        54,
+        61
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#exploratory-vs-directive-questions"
+    },
+    {
+      "lines": [
+        62,
+        73
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        74,
+        83
+      ],
+      "op": "render",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#when-human-and-ai-disagree"
+    },
+    {
+      "lines": [
+        84,
+        98
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#certainty-calibration-finding-guidance-before-you-guess"
+    },
+    {
+      "lines": [
+        99,
+        110
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/AI-Collaboration-Principles.md#mcp-query-for-full-framework"
+    }
+  ]
+}

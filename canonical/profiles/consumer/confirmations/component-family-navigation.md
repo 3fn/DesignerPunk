@@ -4,13 +4,15 @@
 **Source**: `governance/Component-Family-Navigation.md`
 **Owner**: Lina (component-family docs are Stemma content) · **Profile author**: Thurgood · **Confirmer**: **Lina**, under C1's general rule (Req 11.6.5d; design C16).
 **Date**: 2026-09-27 · Spec 123 Task 11.2 (Lina's half; write grant: Task 11's row as amended by PR #220)
-**Scope**: exemplar F's two units only.
+**Scope**: exemplar F's two units only. *Extended 2026-09-28 (Spec 123 Task 13.0, U2b-cut amendment #225): F's third unit, `#family-overview:preamble` — see its block below.*
 
 **Disclosure**: *confirmed by the proposing seat.* I proposed F at R2. Thurgood instantiated it (a conflicted-seat construction, disclosed at 11.1); I rule on that instantiation here.
 
 **Format and criterion**: as in `confirmations/lina.md`. An item is operative if and only if a consumer implementation could violate it (5c).
 
 ## The F instantiation — KEPT
+
+> **Superseded in part, 2026-09-28 (Task 13.0).** The "not re-pointed" ruling below still stands: `#purpose` and `#key-characteristics` remain F's pair. The *decline of `#family-overview:preamble` as a third unit* is superseded. Peter ruled the residual below in (Item 1 of `.kiro/issues/2026-09-27-task-11-deferred-lina-items.md`), and the U2b-cut tasks amendment (#225) added the unit at Task 13.0. Per that amendment's addendum, the Task 11 and Task 12 *"`#purpose` only"* wording was **not** edited: it stays true of G1's eleven exemplars. The third unit joins G2's domain. The reasoning below is kept as the 11.2 record.
 
 **Ruling: keep `#purpose` (inapplicable) against `#key-characteristics` (operative). Not re-pointed.**
 
@@ -54,3 +56,26 @@ date: 2026-09-27
 - A text-labelled tab bar violates *Icon + Text Variants* (v1).
 
 The unit holds no expository residue to exclude. The set is complete at five.
+
+## `#family-overview:preamble`
+
+confirmer: lina
+canonicalHash: sha256:0b09be78566cb1466b5d4ea062b5c3344499cbf60ef4f4e4f4f0bb9e28c81f0c
+items: none
+date: 2026-09-28
+
+**Ruling: CONFIRMED at 0 items → clause (a), inapplicable.** This is F's third unit, added at Task 13.0. It is **label-shaped but descriptive**: it holds the `**Label**: value` form constant against `#key-characteristics` while normativity varies. It therefore catches a classifier that reads label **shape** as operative, the direction F's pair could not discriminate (the residual above).
+
+**The text confirmed** is the unit as of #223's merge (`14aa8c23` on `main`). #223 edited it: the `**Readiness**` line went from `2 components implemented` to `5 components implemented`. `git diff 14aa8c23 -- governance/Component-Family-Navigation.md` is empty on the confirming branch. The unit is 170 bytes:
+
+- `## Family Overview`: a heading, so a label and never an item (clause (c)).
+- *`**Family**: Navigation`*: a classification label. The binding naming rule (the `Nav-` prefix) lives in the Stemma naming convention, not here. Nothing a consumer implementation does can violate it.
+- *`**Shared Need**: Wayfinding and view switching`*: an orienting purpose, the same content as `#purpose`'s first sentence. This is 5c's named example of non-operative content.
+- *`**Readiness**: 🟡 Beta (5 components implemented, family hierarchy evolving)`*: the only line #223 changed, so it is re-verified here and not carried over from the 11.2 reading. It is a maturity status and an inventory count about this repo. A consumer install with a different component set makes it false in their repo; that is repo-specifics territory, clauses (i) and (iv), not a constraint an implementation violates. The edit changed only the number. It added no usage rule and named no components.
+- **No sentence in this unit is one a consumer implementation could violate.**
+
+**Residual (not absorbed), surfaced for Peter, not picked.** Form is held constant at the `**Label**: value` shape but **not at the list marker**. These three lines carry no `- `, so they render as one paragraph with soft breaks, while `#key-characteristics` is a `- **Label**: value` list. A classifier keyed on *list-item* label bullets would still pass all three F units. The one unit here that also holds the marker constant is `#stemma-system-integration` (`- **Implemented Primitives**: …`). It is not a clean substitute:
+- it is stale (Item 2's residual: it lists two primitives and counts Header as a planned variant);
+- its `**Cross-Platform**` bullet (*"All three platforms implemented with shared behavioral contracts"*) is a borderline obligation, not a clean zero.
+
+Covering that variant would need a docs fix first, then a fourth unit and a tasks amendment.

@@ -1,0 +1,15 @@
+3. **CRITICAL: Wait for User Authorization Before Starting New Tasks**
+   
+   **WHEN reporting the completion of a task THEN you MUST:**
+   - Report that the task is complete
+   
+   **User Authorization Required:**
+   - Follow your team's conventions for authorization
+   
+   **Example Completion Pattern:**
+   ```
+   ✅ Task 2.2 Complete: Implemented Icon iOS confirmed actions
+   ```
+   
+   **NEVER do this:**
+   - ❌ Leave a completed task unreported

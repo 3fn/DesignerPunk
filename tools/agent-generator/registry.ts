@@ -222,6 +222,74 @@ export function serializeRegistry(registry: ToolRegistry): string {
 }
 
 // ============================================================================
+// fromManifest — the consumer lane's registry (Spec 123 Task 16.1; design C8, C20)
+// ============================================================================
+
+/** One tool as the shipped tool manifest declares it: its name and its read-only annotation. */
+export interface DeclaredTool {
+  name: string;
+  readOnlyHint: boolean;
+}
+
+/** A server's declared tools, from the shipped manifest (never from `tools/list`). */
+export interface DeclaredServer {
+  name: string;
+  tools: DeclaredTool[];
+}
+
+/**
+ * The consumer lane's registry: DECLARATION-keyed like {@link ToolRegistry}, but built from the
+ * shipped `dist/mcp/tool-manifest.json`, which carries names and `readOnlyHint` only. It has no
+ * `entry`, description or schema hash, and none is invented here: a consumer's install cannot
+ * boot the servers to learn them (C8, C20 — "never live introspection").
+ */
+export interface ManifestRegistry {
+  servers: DeclaredServer[];
+}
+
+/** The shape of `dist/mcp/tool-manifest.json` that {@link fromManifest} reads (`scripts/build-tool-manifest.ts`). */
+export interface ToolManifestLike {
+  servers: Record<string, ReadonlyArray<{ name: string; readOnlyHint: boolean }>>;
+}
+
+/**
+ * Build the registry from the shipped tool manifest — PURE, no I/O, no server (design C20's
+ * "tool registry | `dist/mcp/tool-manifest.json` (`registry.fromManifest`)"). Servers and tools
+ * are sorted by name, as {@link assembleRegistry} sorts them. Throws on a malformed manifest,
+ * naming the defect: a consumer emission never guesses which tools exist.
+ */
+export function fromManifest(manifest: ToolManifestLike, file = 'dist/mcp/tool-manifest.json'): ManifestRegistry {
+  const servers = manifest?.servers;
+  if (typeof servers !== 'object' || servers === null || Array.isArray(servers)) {
+    throw new Error(`fromManifest: ${file} has no "servers" map — rebuild it (npm run build:tool-manifest)`);
+  }
+  const byName = (a: { name: string }, b: { name: string }): number => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+  return {
+    servers: Object.entries(servers)
+      .map(([name, tools]) => {
+        if (!Array.isArray(tools)) throw new Error(`fromManifest: ${file} server "${name}" has no tool list`);
+        return {
+          name,
+          tools: tools
+            .map((t) => {
+              if (typeof t?.name !== 'string' || typeof t?.readOnlyHint !== 'boolean') {
+                throw new Error(`fromManifest: ${file} server "${name}" has a tool without { name, readOnlyHint }`);
+              }
+              return { name: t.name, readOnlyHint: t.readOnlyHint };
+            })
+            .sort(byName),
+        };
+      })
+      .sort(byName),
+  };
+}
+
+/** The tool names a manifest registry declares for `server` (empty when the server is absent). */
+export function declaredToolNames(registry: ManifestRegistry, server: string): Set<string> {
+  return new Set(registry.servers.find((s) => s.name === server)?.tools.map((t) => t.name) ?? []);
+}
+
+// ============================================================================
 // Top-level generate / write
 // ============================================================================
 
@@ -268,7 +336,14 @@ async function main(): Promise<void> {
 // `require.main === module` pattern (see mcp-server/src/index.ts). Importing this
 // module as a library (e.g. from a test, or from another generator stage) must NOT
 // introspect anything as a side effect.
-if (require.main === module) {
+//
+// The `STEWARD_CLI` label (Spec 123 Task 16.1) is for the consumer bundle: `build:generator`
+// passes esbuild `--drop-labels=STEWARD_CLI`, which removes this block, so `main` and the live
+// introspection path below it are tree-shaken out of `dist/generator/consumer-entry.js` (the
+// lane reads `fromManifest` only). In a bundle, `require.main === module` would compare against
+// the BUNDLE's module and run this block (instruments note N5). Under tsx or node, a label
+// changes nothing.
+STEWARD_CLI: if (require.main === module) {
   main().catch((error) => {
     console.error('[registry] Fatal error:', error);
     process.exit(1);

@@ -829,7 +829,7 @@ U2 step 8  ══ G2 — PASS FOUR (Stacy; author recused) ══
 - **Why the "not NOT-RUNNABLE" clause matters**: without it, a G1 BREAKS could drain through G2's NOT-RUNNABLE → FAILS → Fork A into an accepted U2 **with C18 never built**, and a green acceptance table.
 - **Frontmatter is INSIDE G2 — CONFIRMED by Stacy at R2**, not its own pass. The analogue of attack (a) empties `commands[<id>]` (or a `writeScope[<glob>]` member) and points its destination at a sibling entry. It is rejected by the same `isDescendantOrSelf` over the same `nodes` map, and `derivation.frontmatter.test.ts` bites it. **The domain line is what matters**: it keeps a body-only PASS from being read as charter coverage.
 - **MIDPOINT (confirmed U2)**:
-  - **Condition 1**: U2's merge is the first-render release. Its C2 and assent rates are recorded as ***first render — not a baseline***.
+  - **Condition 1**: U2's merge is the first-render release. Its assent rate is recorded as ***first render — not a baseline***; its C2 rate is recorded in the same block, marked `baseline (Req 11.5.3)`. *(Erratum 2026-09-28 — ballot 2026-09-28-123-b-u2 F-1 (a), ruled by Peter)*
   - **Condition 2**: the MIDPOINT pass audits that each G1/G2 branch was **executed and evidenced**, never the verdict content.
   - **Two records**: MIDPOINT + RELEASE, never merged.
 - **Every bite runs isolated from C6**, under `tools/agent-generator/__fixtures__/`.
@@ -852,7 +852,7 @@ interface AttributionSpan { lines: [number, number]; op: 'resolve'|'render'|'pas
 // source forms: '<file>#<anchor>' | '<file>#frontmatter:<path>' | 'canonical/shared/shared-catalog.yaml#<id>'
 //             | 'consumer-profile:<agent>:<id>' | 'id:<doc>#<section>'
 
-interface OperativeItem { id: string; kind: 'obligation'|'step'|'enumeration'|'route'|'command';
+interface OperativeItem { id: string; kind: 'obligation'|'step'|'member'|'route'|'command'; /* Erratum 2026-09-28 (Task 13.3): 'enumeration' → 'member', matching the owner-confirmed C16 records and Req 11.6.2's "enumeration member" */
   label?: string /* never matched */; text: string /* complete; the strict comparand */; }
 
 type Disposition = 'retained' | 're-pointed' | 'superseded-by' | 'no-consumer-counterpart';

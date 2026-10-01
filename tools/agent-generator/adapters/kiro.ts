@@ -64,7 +64,10 @@ import type {
   EmittedFile,
   FieldDispositionTable,
   SharedCatalogMember,
+  IdentityMemberInput,
 } from './index';
+import { identityMemberName, identityMembersStewardMessage, renderIdentityMember, spanInputsFor } from './index';
+import { CONSUMER_GENERATED_BANNER } from './cc';
 
 // ============================================================================
 // toolRef — NATIVE (non-namespaced) Kiro tool-reference syntax
@@ -135,6 +138,15 @@ function allFlatTools(subset: ToolSubset): string[] {
  * carried through in `emitAgent`'s config) — unlike CC (facet 7), there is no enforcement-
  * options sentence to layer on. The base field-driven note (render.ts) is the whole story.
  */
+/**
+ * The consumer profile's per-member write-scope rendering (Task 15.0): an intro line, one bullet
+ * per glob (each its own `writeScope[<glob>]` span), then the closing text. The steward profile
+ * keeps the one-sentence container rendering above, byte-identical.
+ */
+const WRITE_SCOPE_MEMBERS_INTRO =
+  'Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:';
+const WRITE_SCOPE_MEMBERS_OUTRO = '\n';
+
 function renderWriteScopeImpl(paths: readonly string[]): string {
   return renderWriteScopeNote(paths);
 }
@@ -143,8 +155,8 @@ function renderWriteScopeImpl(paths: readonly string[]): string {
 // Command rendering (mirrors cc.ts — same fields, native tool names)
 // ============================================================================
 
-function renderCommandEntry(entry: CommandEntry): string {
-  const annotation = renderRunContextAnnotation(entry.runContext);
+function renderCommandEntry(entry: CommandEntry, profile: 'steward' | 'consumer' = 'steward'): string {
+  const annotation = renderRunContextAnnotation(entry.runContext, profile);
   const suffix = annotation ? ` (${annotation})` : '';
   if (isNamedGapCommandEntry(entry)) {
     const cue = entry.cue ? ` — ${entry.cue}` : '';
@@ -292,6 +304,7 @@ export class KiroAdapter implements TargetAdapter {
 
     // Machine JSON: one `render` span over the whole file, still constructed by `emitSpans`
     // (C14) — a per-entry attribution INSIDE the JSON is not attempted (carried to Task 14/15).
+    // It stays steward-shaped under EVERY profile (Task 15.0 scope; consumer JSON semantics are C20's).
     const acc = new AttributionAccumulator();
     const content = emitSpans(acc, spanSource(agent), 'steward', undefined, undefined, [
       { kind: 'glue', glue: 'kiro-config', text: canonicalStringify(config as JsonValue) },
@@ -313,17 +326,23 @@ export class KiroAdapter implements TargetAdapter {
 
     // EVERY span below is constructed by `emitSpans` (C14, Spec 123 Task 10.4): this adapter
     // supplies only the per-target RENDERING of each piece — never a span, never a source.
-    // (`AdapterContext.profile` lands at Task 15.1; until then this is the steward rendering.)
-    const src = spanSource(agent);
-    const emit = (plan: SpanPlan): string => emitSpans(acc, src, 'steward', undefined, undefined, plan).text;
+    // The profile and this agent's consumer inputs come from `AdapterContext` (Task 15.0);
+    // absent, the profile is `'steward'` and the rendering is byte-identical to pre-15.0.
+    const span = spanInputsFor(ctx, fm.agent);
+    const src: SpanSource = { ...spanSource(agent), entryOrigin: span.entryOrigin };
+    const emit = (plan: SpanPlan): string => emitSpans(acc, src, span.profile, span.dispositions, span.overlay, plan).text;
 
     // -- O-3 banner (settle ballot 2026-09-17 §9, option (a)) ----------------
     // Kiro prompts carry no frontmatter, so "immediately after the frontmatter"
     // degenerates to the first bytes of the file.
+    // Under the consumer profile, the banner that is true in a consumer's repo (Spec 123 Task
+    // 16.1) — the same line the CC adapter renders. Same glue, same single line.
     const generatedBanner =
-      `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
-      'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
-      'caught by 122-diff-guard. -->\n\n';
+      span.profile === 'consumer'
+        ? CONSUMER_GENERATED_BANNER
+        : `<!-- GENERATED FILE — do not hand-edit. Source: canonical/agents/${fm.agent}.md; ` +
+          'edit there and regenerate (Spec 122 pipeline). Hand-edits are overwritten and ' +
+          'caught by 122-diff-guard. -->\n\n';
     bodyParts.push(emit([{ kind: 'glue', glue: 'generated-banner', text: generatedBanner }]));
 
     // -- (a) Pass-through body — one span per partition unit (C13/C14) --------
@@ -392,7 +411,7 @@ export class KiroAdapter implements TargetAdapter {
       bodyParts.push(
         emit([
           glue('## Commands\n\n'),
-          ...commandEntries.map((entry, i): SpanPiece => ({ kind: 'member', list: 'commands', index: i, text: `${renderCommandEntry(entry)}\n` })),
+          ...commandEntries.map((entry, i): SpanPiece => ({ kind: 'member', list: 'commands', index: i, text: `${renderCommandEntry(entry, span.profile)}\n` })),
           ...sharedMembers.map((member): SpanPiece => ({ kind: 'shared', id: member.id, text: `${renderSharedCatalogMember(member, subset)}\n` })),
           glue('\n'),
         ])
@@ -412,7 +431,19 @@ export class KiroAdapter implements TargetAdapter {
     // a member (a line cannot carry per-member spans) — recorded for Task 14's E-fm.
     const writeScope = fm.writeScope;
     if (writeScope && writeScope.length > 0) {
-      bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
+      if (span.profile === 'steward') {
+        bodyParts.push(emit([{ kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${renderWriteScopeImpl(writeScope)}\n\n` }]));
+      } else {
+        // Consumer profile (Task 15.0; DD26): ONE SPAN PER GLOB, so each `writeScope[<glob>]` takes
+        // its own disposition row — retained, re-pointed (its `## @entry` overlay text), or dropped.
+        bodyParts.push(
+          emit([
+            { kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${WRITE_SCOPE_MEMBERS_INTRO}\n\n` },
+            ...writeScope.map((glob, i): SpanPiece => ({ kind: 'member', list: 'writeScope', index: i, text: `- \`${glob}\`\n` })),
+            { kind: 'entry', path: 'writeScope', text: WRITE_SCOPE_MEMBERS_OUTRO },
+          ])
+        );
+      }
     }
 
     const content = bodyParts.join('');
@@ -423,6 +454,22 @@ export class KiroAdapter implements TargetAdapter {
 
   emitSkills(map: SkillsMap, ctx: AdapterContext): EmittedFile[] {
     return emitSkillTreeFiles(map, ctx, 'kiro');
+  }
+
+  /**
+   * C19 (Task 15.3): each derived identity member as `.kiro/steering/designerpunk-<id>.md`, with a
+   * FRESH minimal frontmatter written here — exactly `id` + `inclusion: always` — never the shipped
+   * doc's own (dropped). Each agent config's `resources` points at these files (the consumer
+   * `docIdToPath` the generator supplies).
+   */
+  emitIdentityMembers(members: readonly IdentityMemberInput[], ctx: AdapterContext): EmittedFile[] {
+    if ((ctx.profile ?? 'steward') !== 'consumer') throw new Error(identityMembersStewardMessage('KiroAdapter'));
+    return members.map((m) =>
+      renderIdentityMember(m, `.kiro/steering/${identityMemberName(m.id)}.md`, {
+        glue: 'identity-frontmatter',
+        text: `---\nid: ${identityMemberName(m.id)}\ninclusion: always\n---\n\n`,
+      })
+    );
   }
 
   emitAlwaysLayer(_set: readonly AlwaysSetMember[], _ctx: AdapterContext): EmittedFile[] {
@@ -479,15 +526,17 @@ function emitSkillTreeFiles(map: SkillsMap, ctx: AdapterContext, targetKey: 'cc'
   const files: EmittedFile[] = [];
   const rows = [...map.rows].sort((a, b) => (a.canonical < b.canonical ? -1 : a.canonical > b.canonical ? 1 : 0));
 
+  // THE ROOT SPLIT (Spec 123 Task 16.1; design C20) — as in CcAdapter.emitSkills: the source
+  // resolves against `ctx.repoRoot` (the steward repo, or the package's derived canonical); the
+  // destination is the row's target joined with the file's relative path, never resolved against
+  // a root, so it is relative to wherever the caller writes.
   for (const row of rows) {
     const srcDir = path.resolve(ctx.repoRoot, row.canonical);
-    const destDir = path.resolve(ctx.repoRoot, row.targets[targetKey]);
     const relFiles = listFilesRecursive(srcDir).sort();
     for (const rel of relFiles) {
       const srcPath = path.join(srcDir, rel);
-      const destPath = path.join(destDir, rel);
       const content = fs.readFileSync(srcPath, 'utf8');
-      const destRelPath = path.relative(ctx.repoRoot, destPath);
+      const destRelPath = path.posix.join(row.targets[targetKey].split(path.sep).join('/'), rel.split(path.sep).join('/'));
       const attribution = {
         artifact: destRelPath,
         spans: [

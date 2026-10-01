@@ -215,7 +215,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 Your routing section names the query tools and when to reach for each. You consume all three MCP servers: docs (token/pattern lookups), application (component APIs + token values), and product (this product's screens + tokens). Operational notes that are yours specifically:
 
-**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is orphaned and stale. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
+**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is this repo's un-themed base output (written by the in-repo generate, due to stop shipping), never read for themed values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
 
 **Write-side rebuild protocol** — after modifying product screen implementations or product YAML, trigger the Product MCP's `rebuild_product_index` so data is immediately fresh. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; rebuilding after writes ensures immediate freshness.
 
@@ -260,7 +260,7 @@ Your in-repo commands (with their triggering cues) and named gaps are in the Com
 ## Ground truth
 
 Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
-- do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift — it is ORPHANED and stale (pre-Spec-094: flat Color.oklch literals, no theme surface); do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) — they are stale generated artifacts, not the source of truth — use `get_token_details` (application MCP)
+- do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift for themed values — it is this repo's un-themed base output (written by the in-repo generate: flat Color.oklch literals, no theme surface) and is due to stop shipping; do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) for themed values — they are un-themed base output, not the source of truth; a consumer reads its own generate outputDir — use `get_token_details` (application MCP)
 - do NOT read the built iOS component-token snapshot dist/ComponentTokens.ios.swift — it is a stale generated artifact, not the source of truth — use `get_component_full` (application MCP)
 
 ## Workflow rules

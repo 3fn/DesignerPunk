@@ -1,0 +1,103 @@
+# BITE fm-kiro: kiro.ts's consumer write-scope section bypasses emitSpans (one inline #frontmatter:writeScope container span)
+# mutation: tools/agent-generator/adapters/kiro.ts
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/semantics-guard.test.ts --verbose
+# base commit: 29a201e1 (Task 14 addendum: Q1 (b) value-form re-run, after 15.3 def8184e); run 2026-09-29T11:42:48Z
+# --- mutation diff ---
+diff --git a/tools/agent-generator/adapters/kiro.ts b/tools/agent-generator/adapters/kiro.ts
+index 619ba1d0..81977611 100644
+--- a/tools/agent-generator/adapters/kiro.ts
++++ b/tools/agent-generator/adapters/kiro.ts
+@@ -433,9 +433,6 @@ export class KiroAdapter implements TargetAdapter {
+         // its own disposition row — retained, re-pointed (its `## @entry` overlay text), or dropped.
+-        bodyParts.push(
+-          emit([
+-            { kind: 'entry', path: 'writeScope', text: `## Write scope\n\n${WRITE_SCOPE_MEMBERS_INTRO}\n\n` },
+-            ...writeScope.map((glob, i): SpanPiece => ({ kind: 'member', list: 'writeScope', index: i, text: `- \`${glob}\`\n` })),
+-            { kind: 'entry', path: 'writeScope', text: WRITE_SCOPE_MEMBERS_OUTRO },
+-          ])
+-        );
++        // BITE: the consumer write-scope section bypasses emitSpans with ONE inline container span.
++        const inline = `## Write scope\n\n${WRITE_SCOPE_MEMBERS_INTRO}\n\n` + writeScope.map((g) => `- \`${g}\`\n`).join('') + WRITE_SCOPE_MEMBERS_OUTRO;
++        acc.add('render', countLines(inline), `canonical/agents/${fm.agent}.md#frontmatter:writeScope`);
++        bodyParts.push(inline);
+       }
+# --- jest output ---
+FAIL tools/agent-generator/__tests__/semantics-guard.test.ts
+  cc
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (2 ms)
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S) (1 ms)
+    frontmatter
+      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED (1 ms)
+  kiro
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S) (1 ms)
+    frontmatter
+      ✕ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (2 ms)
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED (1 ms)
+  a fake third target — declared, its adapter injected through the registry, no other edit to the guard
+    ✓ the declared list drives the blocks: one more target → one more block
+    ✓ a declared target with no registered adapter fails loud, naming it (no silent block) (2 ms)
+    cc
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    kiro
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✕ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    fake
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+
+  ● kiro › frontmatter › E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "kiro frontmatter writeScope[.kiro/specs/**]: VERIFIED"
+    Received: "kiro frontmatter writeScope[.kiro/specs/**]: FAIL_NO_DERIVATION"
+
+      86 |       it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
+      87 |         const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}` }).verdict;
+    > 88 |         expect(`${target} frontmatter ${E_FM}: ${v}`).toBe(`${target} frontmatter ${E_FM}: VERIFIED`);
+         |                                                       ^
+      89 |       });
+      90 |
+      91 |       it('E-fm’s re-grounded text is what shipped (not the canonical glob)', () => {
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:88:55)
+
+  ● a fake third target — declared, its adapter injected through the registry, no other edit to the guard › kiro › frontmatter › E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "kiro frontmatter writeScope[.kiro/specs/**]: VERIFIED"
+    Received: "kiro frontmatter writeScope[.kiro/specs/**]: FAIL_NO_DERIVATION"
+
+      86 |       it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
+      87 |         const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}` }).verdict;
+    > 88 |         expect(`${target} frontmatter ${E_FM}: ${v}`).toBe(`${target} frontmatter ${E_FM}: VERIFIED`);
+         |                                                       ^
+      89 |       });
+      90 |
+      91 |       it('E-fm’s re-grounded text is what shipped (not the canonical glob)', () => {
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:88:55)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 25 passed, 27 total
+Snapshots:   0 total
+Time:        0.879 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/semantics-guard.test.ts.

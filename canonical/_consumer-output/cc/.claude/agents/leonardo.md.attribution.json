@@ -1,0 +1,1215 @@
+{
+  "artifact": ".claude/agents/leonardo.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        4,
+        10
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        11,
+        11
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:skills"
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[check_composition]"
+    },
+    {
+      "lines": [
+        13,
+        13
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[find_components]"
+    },
+    {
+      "lines": [
+        14,
+        14
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_color_strategy]"
+    },
+    {
+      "lines": [
+        15,
+        15
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_component_catalog]"
+    },
+    {
+      "lines": [
+        16,
+        16
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_component_full]"
+    },
+    {
+      "lines": [
+        17,
+        17
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_component_summary]"
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_design_guidance]"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_design_philosophy]"
+    },
+    {
+      "lines": [
+        20,
+        20
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_design_rules]"
+    },
+    {
+      "lines": [
+        21,
+        21
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_experience_pattern]"
+    },
+    {
+      "lines": [
+        22,
+        22
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_layout_template]"
+    },
+    {
+      "lines": [
+        23,
+        23
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_prop_guidance]"
+    },
+    {
+      "lines": [
+        24,
+        24
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[get_token_details]"
+    },
+    {
+      "lines": [
+        25,
+        25
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[list_experience_patterns]"
+    },
+    {
+      "lines": [
+        26,
+        26
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[list_layout_templates]"
+    },
+    {
+      "lines": [
+        27,
+        27
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[rebuild_index]"
+    },
+    {
+      "lines": [
+        28,
+        28
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[search_tokens]"
+    },
+    {
+      "lines": [
+        29,
+        29
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-application[validate_assembly]"
+    },
+    {
+      "lines": [
+        30,
+        30
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-docs[find_docs]"
+    },
+    {
+      "lines": [
+        31,
+        31
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-docs[get_document_full]"
+    },
+    {
+      "lines": [
+        32,
+        32
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-docs[get_document_summary]"
+    },
+    {
+      "lines": [
+        33,
+        33
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-docs[get_index_health]"
+    },
+    {
+      "lines": [
+        34,
+        34
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-docs[get_section]"
+    },
+    {
+      "lines": [
+        35,
+        35
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-docs[rebuild_index]"
+    },
+    {
+      "lines": [
+        36,
+        36
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[find_principles]"
+    },
+    {
+      "lines": [
+        37,
+        37
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[find_screens]"
+    },
+    {
+      "lines": [
+        38,
+        38
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[find_templates]"
+    },
+    {
+      "lines": [
+        39,
+        39
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[get_brand_context]"
+    },
+    {
+      "lines": [
+        40,
+        40
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[get_domain_object]"
+    },
+    {
+      "lines": [
+        41,
+        41
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[get_product_component]"
+    },
+    {
+      "lines": [
+        42,
+        42
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[get_product_overview]"
+    },
+    {
+      "lines": [
+        43,
+        43
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[get_product_tokens]"
+    },
+    {
+      "lines": [
+        44,
+        44
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[get_screen_spec]"
+    },
+    {
+      "lines": [
+        45,
+        45
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[get_screen_state_model]"
+    },
+    {
+      "lines": [
+        46,
+        46
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[list_experience_map]"
+    },
+    {
+      "lines": [
+        47,
+        47
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[list_product_templates]"
+    },
+    {
+      "lines": [
+        48,
+        48
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:toolSubset.designerpunk-product[rebuild_product_index]"
+    },
+    {
+      "lines": [
+        49,
+        49
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        50,
+        51
+      ],
+      "op": "render",
+      "source": "O-3:generated-banner"
+    },
+    {
+      "lines": [
+        52,
+        70
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#identity"
+    },
+    {
+      "lines": [
+        71,
+        83
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#in-scope"
+    },
+    {
+      "lines": [
+        84,
+        90
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#product-configuration-context"
+    },
+    {
+      "lines": [
+        91,
+        99
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#product-tokens"
+    },
+    {
+      "lines": [
+        100,
+        108
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#out-of-scope"
+    },
+    {
+      "lines": [
+        109,
+        119
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#the-direct-vs-delegate-distinction"
+    },
+    {
+      "lines": [
+        120,
+        123
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-screen-specification:preamble"
+    },
+    {
+      "lines": [
+        124,
+        127
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-1-understand-the-intent"
+    },
+    {
+      "lines": [
+        128,
+        131
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-2-select-components-via-application-mcp"
+    },
+    {
+      "lines": [
+        132,
+        140
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-3-specify-the-screen:preamble"
+    },
+    {
+      "lines": [
+        141,
+        152
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#layout-specification"
+    },
+    {
+      "lines": [
+        153,
+        155
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-4-validate-assembly"
+    },
+    {
+      "lines": [
+        156,
+        165
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#step-5-hand-off-to-platform-agents"
+    },
+    {
+      "lines": [
+        166,
+        169
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-lessons-learned:preamble"
+    },
+    {
+      "lines": [
+        170,
+        178
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-qualifies-as-a-lesson"
+    },
+    {
+      "lines": [
+        179,
+        187
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#capture-process"
+    },
+    {
+      "lines": [
+        188,
+        192
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#structured-request-format"
+    },
+    {
+      "lines": [
+        193,
+        196
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-cross-platform-review:preamble"
+    },
+    {
+      "lines": [
+        197,
+        203
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#review-checklist"
+    },
+    {
+      "lines": [
+        204,
+        213
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-consistent-means-in-true-native"
+    },
+    {
+      "lines": [
+        214,
+        217
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#operational-mode-design-creation-impeccable-skill:preamble"
+    },
+    {
+      "lines": [
+        218,
+        229
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#skill-loading-sequence"
+    },
+    {
+      "lines": [
+        230,
+        237
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#gate-system"
+    },
+    {
+      "lines": [
+        238,
+        240
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#color-strategy-declaration"
+    },
+    {
+      "lines": [
+        241,
+        243
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#conflict-resolution-hierarchy"
+    },
+    {
+      "lines": [
+        244,
+        246
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#anti-slop-awareness"
+    },
+    {
+      "lines": [
+        247,
+        249
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#lessons-learned-capture"
+    },
+    {
+      "lines": [
+        250,
+        254
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#available-commands"
+    },
+    {
+      "lines": [
+        255,
+        262
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#with-platform-agents"
+    },
+    {
+      "lines": [
+        263,
+        265
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#platform-scope-adaptation"
+    },
+    {
+      "lines": [
+        266,
+        268
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#with-stacy-product-governance"
+    },
+    {
+      "lines": [
+        269,
+        271
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#with-system-agents-via-thurgood"
+    },
+    {
+      "lines": [
+        272,
+        276
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#with-peter"
+    },
+    {
+      "lines": [
+        277,
+        288
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        289,
+        302
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#onboarding-awareness"
+    },
+    {
+      "lines": [
+        303,
+        309
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-you-own"
+    },
+    {
+      "lines": [
+        310,
+        316
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#what-you-dont-own"
+    },
+    {
+      "lines": [
+        317,
+        325
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#platform-currency-awareness"
+    },
+    {
+      "lines": [
+        326,
+        329
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        330,
+        334
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        335,
+        337
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        338,
+        340
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        341,
+        343
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#when-you-and-peter-disagree"
+    },
+    {
+      "lines": [
+        344,
+        345
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/leonardo.md#ask-if-unsure"
+    },
+    {
+      "lines": [
+        346,
+        347
+      ],
+      "op": "render",
+      "source": "C11:lane2-header"
+    },
+    {
+      "lines": [
+        348,
+        349
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "canonical/agents/leonardo.md#frontmatter:ambient[cross-platform-vs-platform-specific-decision-framework]"
+    },
+    {
+      "lines": [
+        350,
+        409
+      ],
+      "mode": "embed",
+      "op": "resolve",
+      "source": "canonical/agents/leonardo.md#frontmatter:ambient[cross-platform-vs-platform-specific-decision-framework#decision-framework]"
+    },
+    {
+      "lines": [
+        410,
+        413
+      ],
+      "op": "render",
+      "source": "WORKFLOW_RULES"
+    },
+    {
+      "lines": [
+        414,
+        415
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes"
+    },
+    {
+      "lines": [
+        416,
+        416
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[decision-criteria]"
+    },
+    {
+      "lines": [
+        417,
+        417
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[spec-tasks-format]"
+    },
+    {
+      "lines": [
+        418,
+        418
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[layout-vocabulary]"
+    },
+    {
+      "lines": [
+        419,
+        419
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-token-authoring]"
+    },
+    {
+      "lines": [
+        420,
+        420
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[component-doc-map]"
+    },
+    {
+      "lines": [
+        421,
+        421
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[component-readiness]"
+    },
+    {
+      "lines": [
+        422,
+        422
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[concept-catalog]"
+    },
+    {
+      "lines": [
+        423,
+        423
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[cross-platform-guidance]"
+    },
+    {
+      "lines": [
+        424,
+        424
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[spec-planning-beyond]"
+    },
+    {
+      "lines": [
+        425,
+        425
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-token-gov-beyond]"
+    },
+    {
+      "lines": [
+        426,
+        426
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[stemma-principles]"
+    },
+    {
+      "lines": [
+        427,
+        427
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[test-dev-standards]"
+    },
+    {
+      "lines": [
+        428,
+        428
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[token-lookup-patterns]"
+    },
+    {
+      "lines": [
+        429,
+        429
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-handoff-protocol-route]"
+    },
+    {
+      "lines": [
+        430,
+        430
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[integration-onboarding-guide]"
+    },
+    {
+      "lines": [
+        431,
+        431
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[sparky]"
+    },
+    {
+      "lines": [
+        432,
+        432
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[kenya]"
+    },
+    {
+      "lines": [
+        433,
+        433
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[data]"
+    },
+    {
+      "lines": [
+        434,
+        434
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[stacy]"
+    },
+    {
+      "lines": [
+        435,
+        435
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[thurgood]"
+    },
+    {
+      "lines": [
+        436,
+        436
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[0]"
+    },
+    {
+      "lines": [
+        437,
+        437
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[1]"
+    },
+    {
+      "lines": [
+        438,
+        438
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[2]"
+    },
+    {
+      "lines": [
+        439,
+        439
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[3]"
+    },
+    {
+      "lines": [
+        440,
+        440
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[4]"
+    },
+    {
+      "lines": [
+        441,
+        441
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[5]"
+    },
+    {
+      "lines": [
+        442,
+        442
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[6]"
+    },
+    {
+      "lines": [
+        443,
+        443
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[7]"
+    },
+    {
+      "lines": [
+        444,
+        444
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[8]"
+    },
+    {
+      "lines": [
+        445,
+        445
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[9]"
+    },
+    {
+      "lines": [
+        446,
+        446
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[10]"
+    },
+    {
+      "lines": [
+        447,
+        447
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[11]"
+    },
+    {
+      "lines": [
+        448,
+        448
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[12]"
+    },
+    {
+      "lines": [
+        449,
+        449
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[13]"
+    },
+    {
+      "lines": [
+        450,
+        450
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[14]"
+    },
+    {
+      "lines": [
+        451,
+        451
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[15]"
+    },
+    {
+      "lines": [
+        452,
+        452
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[16]"
+    },
+    {
+      "lines": [
+        453,
+        453
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[17]"
+    },
+    {
+      "lines": [
+        454,
+        454
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[18]"
+    },
+    {
+      "lines": [
+        455,
+        455
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[19]"
+    },
+    {
+      "lines": [
+        456,
+        456
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[20]"
+    },
+    {
+      "lines": [
+        457,
+        457
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[21]"
+    },
+    {
+      "lines": [
+        458,
+        458
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:routes"
+    },
+    {
+      "lines": [
+        459,
+        460
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:commands"
+    },
+    {
+      "lines": [
+        461,
+        461
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[generate-tokens]"
+    },
+    {
+      "lines": [
+        462,
+        462
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[validate-product-tokens]"
+    },
+    {
+      "lines": [
+        463,
+        463
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[init-product]"
+    },
+    {
+      "lines": [
+        464,
+        464
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[sync-product]"
+    },
+    {
+      "lines": [
+        465,
+        465
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+    },
+    {
+      "lines": [
+        466,
+        466
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        467,
+        468
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
+    },
+    {
+      "lines": [
+        469,
+        469
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:commands"
+    },
+    {
+      "lines": [
+        470,
+        473
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:writeScope"
+    },
+    {
+      "lines": [
+        474,
+        474
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        475,
+        477
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:writeScope"
+    },
+    {
+      "lines": [
+        478,
+        481
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:preflight"
+    },
+    {
+      "lines": [
+        482,
+        482
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        483,
+        483
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:preflight"
+    }
+  ]
+}

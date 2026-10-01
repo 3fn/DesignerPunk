@@ -1,0 +1,6 @@
+### The trigger set (the § 11.4 superset table — names, never numbers)
+
+| Trigger | Event | Scope — the binding text | Owner |
+|---|---|---|---|
+| **CLOSEOUT** | The merge of the spec's **final declared merge unit** | All the spec's parents: promised vs claimed vs shipped; the judgment residual the checker cannot reach; **natural home for the spec-level-criteria discharge — rider (a)**. **Owed by every spec closing after ratification regardless of exemption status** (ruling 3's decoupling) | Stacy |
+

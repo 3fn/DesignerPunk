@@ -1,0 +1,29 @@
+{
+  "artifact": ".kiro/steering/core-goals.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        11
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/core-goals.md#core-goals:preamble"
+    },
+    {
+      "lines": [
+        12,
+        32
+      ],
+      "op": "render",
+      "source": ".kiro/steering/core-goals.md#core-project-context"
+    },
+    {
+      "lines": [
+        33,
+        83
+      ],
+      "op": "render",
+      "source": ".kiro/steering/core-goals.md#development-practices"
+    }
+  ]
+}

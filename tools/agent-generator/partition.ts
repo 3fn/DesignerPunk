@@ -224,9 +224,14 @@ function isBlank(lines: readonly Line[], from: number, to: number): boolean {
   return true;
 }
 
-/** Unique-anchor allocator: the first use of a base keeps it, repeats get `-2`, `-3`, … */
-function makeAllocator(): (base: string) => string {
-  const seen = new Map<string, number>();
+/**
+ * Unique-anchor allocator: the first use of a base keeps it, repeats get `-2`, `-3`, …
+ * `reserved` ids count as already used. The body tree reserves its ROOT id `#doc`: without it, a
+ * heading titled "Doc" slugs to `#doc`, overwrites the root node and becomes its own parent — a
+ * cycle on which `isDescendantOrSelf` never terminates (found at Spec 123 Task 14.1).
+ */
+function makeAllocator(reserved: readonly string[] = []): (base: string) => string {
+  const seen = new Map<string, number>(reserved.map((id) => [id, 1]));
   return (base: string) => {
     const n = (seen.get(base) ?? 0) + 1;
     seen.set(base, n);
@@ -290,7 +295,7 @@ export function partition(body: string): BodyPartition {
       return finish(body, new PartitionTree('#doc', nodes, lines.length === 0 ? [] : [unit], true));
     }
     // 3. The numbered top-level enumeration fallback.
-    const allocate = makeAllocator();
+    const allocate = makeAllocator(['#doc']);
     let itemParent = '#doc';
     const firstItemLine = items[0].line;
     if (title) {
@@ -327,7 +332,7 @@ export function partition(body: string): BodyPartition {
     });
   } else {
     // 2. The heading tree.
-    const allocate = makeAllocator();
+    const allocate = makeAllocator(['#doc']);
     if (headings[0].line > 0) segments.push(docPreamble(lines, 0, headings[0].line));
     const stack: { id: string; level: number }[] = [];
     headings.forEach((h, idx) => {

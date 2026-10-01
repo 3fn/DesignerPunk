@@ -1,0 +1,16 @@
+# canonical/profiles/consumer/always-set/designerpunk-systems-overview.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/DesignerPunk-Systems-Overview.md
+counterpart: .kiro/steering/DesignerPunk-Systems-Overview.md
+body:
+  "#designerpunk-systems-overview:preamble": {"disposition": "retained"}
+  "#overview": {"disposition": "re-pointed", "removals": [{"text": "(./Civitas-System-Overview.md)", "cites": "subtraction-5"}], "destination": "#overview"}
+  "#pointer-1-module-resolution-contract-spec-118": {"disposition": "retained"}
+  "#high-level-designerpunk-three-system-architecture": {"disposition": "retained"}
+  "#rosetta-system-token-pipeline-and-layers": {"disposition": "retained"}
+  "#stemma-system-families-and-inheritance": {"disposition": "retained"}
+  "#civitas-system-governance-infrastructure": {"disposition": "retained"}
+  "#integration-tokens-components-platforms": {"disposition": "retained"}
+  "#combined-overview-single-diagram": {"disposition": "retained"}
+  "#related-documentation": {"disposition": "re-pointed", "removals": [{"text": "(./Civitas-System-Overview.md)", "cites": "subtraction-5"}], "destination": "#related-documentation"}

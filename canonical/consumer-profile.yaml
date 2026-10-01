@@ -1,0 +1,9 @@
+# canonical/consumer-profile.yaml — the consumer generation profile's declared targets (Spec 123
+# design C12, Task 15.0).
+#
+# THE SINGLE DECLARED TARGET LIST: everything that needs the set of targets imports it through
+# tools/agent-generator/consumer-profile.ts (`loadConsumerProfile`) — the generator (generate.ts,
+# via the adapter registry in adapters/index.ts) and Task 14's per-target guard. No second list.
+# `defaultTarget` is the target bare `init` emits (design DD9).
+targets: [cc, kiro]
+defaultTarget: cc

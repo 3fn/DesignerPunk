@@ -124,9 +124,9 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 - **Fork M-1 (Peter's, RULED — (A)+conditional, 2026-09-27)**: whether a scoped read of Task 12's evidence happens at U2a's merge, before this MIDPOINT pass reaches it at U2b's merge. **(A)** No U2a-merge read — the residual above stands as the plan's cost (Stacy's lean). **(B)** A scoped, post-acceptance read of Task 12's evidence only, recorded at a path that is neither `claims-pass.md` nor `claims-pass-midpoint.md`, and never a gate on the U2b cut. *Counter to (A): U2b is 31 subtasks built on U2a. Counter to (B): it adds an event the ratified trigger set does not have, and duplicates evidence Peter already reads at the U2a merge.* **(fork M-1 — RULED (A)+conditional, Peter 2026-09-27)**: **(A) by default, with a signal-based conditional.** No claims read fires at U2a's merge when G1 HOLDS on its first run (`G1 runs: 1`). **If G1 required more than one run** (`G1 runs: k`, k > 1 — a BREAKS followed by C3 rework, or branch A), Stacy performs a **scoped read of Task 12's evidence, plus any Task 10 or Task 11 criterion row whose cited artifact a C3 rework commit modified — the set is `git diff --name-only <commit adding re-grounding-c3-falsification-run-1.md>..refs/pull/<U2a>/head` ∩ Tasks 10–11 Primary Artifacts; if that set is empty, Task 12 only. A hit on an exemplar Stacy constructed or confirmed is read with that disclosure.**, after U2a's acceptance: it never gates the U2b cut, and it is recorded at `.kiro/specs/123-consumer-distribution/completion/u2a-task-12-scoped-read.md` (neither `claims-pass.md` nor `claims-pass-midpoint.md`). **Why the trigger is rework**: a rework loop under gate pressure is where completion claims drift; a clean first-run HOLDS leaves the residual small (Stacy issues the G1 verdict herself, is a participant in Task 11, and the orchestrator independently verified Task 10 at acceptance — parity 9/9, tests, CI runs, byte-identical rendered text, shipped-file intersection). **Not a new standing event**: a one-shot, spec-local post-unit obligation ruled under fork M-1. It mitigates the MIDPOINT residual; it is not a MIDPOINT pass and not a trigger-table row. `k` is counted from the kept per-run records (the PR-body `G1 runs: <k>` carries it). The record carries the claims-pass template's Scope / Findings (two-route routing) / Method (sample and fraction) sections and the mandatory `Standards implications:` line. The MIDPOINT scope line cites it and is never narrowed by it. Not a precedent: a second spec adopting a between-events conditional read goes to ballot as a trigger-table amendment.
 - **Record path pinned: `.kiro/specs/123-consumer-distribution/completion/claims-pass-midpoint.md`, NEVER `.kiro/specs/123-consumer-distribution/completion/claims-pass.md`.**
 - **Stacy's two conditions**:
-  - **(1)** U2b's merge is the **first-render release**. C2 rates, per-signer assent rates **and refusals issued** are recorded as ***"first render — not a baseline"***. **The first-render marking applies to BOTH U2b-merge records** (MIDPOINT and the release-2 RELEASE record).
+  - **(1)** U2b's merge is the **first-render release**. Per-signer assent rates **and refusals issued** are recorded as ***"first render — not a baseline"***; the C2 `no-consumer-counterpart` rate is recorded in the same block, marked `baseline (Req 11.5.3)`. *(Erratum 2026-09-28 — ballot 2026-09-28-123-b-u2 F-1 (a), ruled by Peter)* **The first-render marking applies to BOTH U2b-merge records** (MIDPOINT and the release-2 RELEASE record).
   - **(2)** The pass audits that **each G1/G2 branch was executed and evidenced by the executing agent** (Tasks 12 and 18's primary agents — § "Gate seat layout"), **never the verdict content**. **Disclosure (Stacy R2)**: Lina authored the machinery pass four tests (C13–C15), so the pass **checks that Task 18's applied edit is byte-equal to its pre-declared text and confined to the domains the verdict names.**
-- Two records, each with its own scope line, never merged. **Within 123 every C2 / assent / refusal reading is baseline-only**; detection begins at the first post-123 release (Stacy R1 (c)).
+- Two records, each with its own scope line, never merged. **Within 123 no C2 / assent / refusal reading is a detection**; each metric's detection begins at the first population after its own baseline, never inside 123 (Stacy R1 (c); ballot 2026-09-28-123-b-u2 F-1). *(Erratum 2026-09-28 — ballot 2026-09-28-123-b-u2 F-1 (a), ruled by Peter)*
 - Findings route to owning agents as explicit messages.
 
 **CLOSEOUT** fires at U5's merge → **`.kiro/specs/123-consumer-distribution/completion/claims-pass.md`** (Stacy).
@@ -651,7 +651,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 2b — Consumer generation profile: machinery, rendering & G2 (stage U2, steps 5–8)
 
-- [ ] 13. Triviality floor, dispositions, overlays, signatures, freshness, and ballot B-U2 (step 5)
+- [x] 13. Triviality floor, dispositions, overlays, signatures, freshness, and ballot B-U2 (step 5)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Opus); Lina (Opus) — 13.0, 13.4–13.6 *(13.0 added 2026-09-27, U2b-cut amendment)*
   **Traces**: Reqs 11.2, 11.3, 11.5, 11.6 (incl. 11.6.5b/e/f) · design C16–C18, DD19, DD25, DD26, DD13 (B-U2)
@@ -695,17 +695,17 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tools/agent-generator/regrounding/triviality.ts`, `tools/agent-generator/derive.ts` (key checks), schemas + validator, `tools/agent-generator/diff-guard.ts`, `__fixtures__/stale-unit/`, `.kiro/docs/ballots/<date>-123-b-u2.md`, `canonical/agents/stacy.md`, `canonical/adjudications.yaml` (13.6 removes the expired U2a rows only — F3), `src/__tests__/operative-set-records.test.ts` (13.6 deletes the Task 11 precursor test only — amendment 2026-09-27), `tools/agent-generator/__fixtures__/g1-renderings/` (copied G1 renderings with pinned provenance — U2b-cut amendment), `canonical/operative-sets/component-family-navigation.yaml` and `canonical/profiles/consumer/confirmations/component-family-navigation.md` (13.0's third F unit only — U2b-cut amendment)
 
-  - [ ] 13.0 (Lina) Exemplar F's third unit: record `#family-overview:preamble` and confirm it under C1; precursor test green. **Runs after #223 merges, on a U2b branch cut from a `main` that contains #223**, and before 13.4 *(added 2026-09-27, U2b-cut amendment; ordering per Lina R1)*
-  - [ ] 13.1 Dispositions schema (explicit rows; per-member frontmatter; no re-pointed embeds; rejected term)
-  - [ ] 13.2 Overlay + signature formats; stale and bare checks
-  - [ ] 13.3 Confirmer/signer checks; verbatim-substring check
-  - [ ] 13.4 (Lina) `triviality.ts`: the occurrence assignment with its witness, the tested properties and the AX-1 bite, over the copied G1 fixtures *(the branch-A configuration is dropped — G1 HOLDS; amendment 2026-09-27, U2b cut)*
-  - [ ] 13.5 (Lina) Orphan and missing-row refusals
-  - [ ] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice + removal of the expired U2a adjudications (F3; Stacy is told in the same notice) + absorb and delete the Task 11 precursor test `src/__tests__/operative-set-records.test.ts` (amendment 2026-09-27)
-  - [ ] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
-  - [ ] 13.8 Apply the counting-block edit (regenerate); Stacy's changed unit is confirmed when first recorded at 15.4 (erratum 2026-09-28)
+  - [x] 13.0 (Lina) Exemplar F's third unit: record `#family-overview:preamble` and confirm it under C1; precursor test green. **Runs after #223 merges, on a U2b branch cut from a `main` that contains #223**, and before 13.4 *(added 2026-09-27, U2b-cut amendment; ordering per Lina R1)*
+  - [x] 13.1 Dispositions schema (explicit rows; per-member frontmatter; no re-pointed embeds; rejected term)
+  - [x] 13.2 Overlay + signature formats; stale and bare checks
+  - [x] 13.3 Confirmer/signer checks; verbatim-substring check
+  - [x] 13.4 (Lina) `triviality.ts`: the occurrence assignment with its witness, the tested properties and the AX-1 bite, over the copied G1 fixtures *(the branch-A configuration is dropped — G1 HOLDS; amendment 2026-09-27, U2b cut)*
+  - [x] 13.5 (Lina) Orphan and missing-row refusals
+  - [x] 13.6 (Lina) The freshness sweep in diff-guard + the STANDING stale-fixture test + the `audit:coverage-map` rows-list-the-guard run + the ARMING notice + removal of the expired U2a adjudications (F3; Stacy is told in the same notice) + absorb and delete the Task 11 precursor test `src/__tests__/operative-set-records.test.ts` (amendment 2026-09-27)
+  - [x] 13.7 **Author ballot B-U2** (counting block + L686); Stacy's review; record-first
+  - [x] 13.8 Apply the counting-block edit (regenerate); Stacy's changed unit is confirmed when first recorded at 15.4 (erratum 2026-09-28)
 
-- [ ] 14. Derivation checker, grain guard, and per-target bites (step 6)
+- [x] 14. Derivation checker, grain guard, and per-target bites (step 6)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Opus)
   **Traces**: Reqs 11.4, 10.G, 10.S, 10.8b/c · design C15, DD7
@@ -722,13 +722,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tools/agent-generator/regrounding/derivation.ts`, the guard tests, `__fixtures__/` (E, E-fm)
 
-  - [ ] 14.1 `derivation.ts`
-  - [ ] 14.2 Agent-shaped fixture carrying E (~1–2 h)
-  - [ ] 14.3 Body per-target guard + bites (~30 min each)
-  - [ ] 14.4 E-fm + frontmatter bites (or the forced negative)
-  - [ ] 14.5 Bite 2 + `derivation.frontmatter.test.ts`
+  - [x] 14.1 `derivation.ts`
+  - [x] 14.2 Agent-shaped fixture carrying E (~1–2 h)
+  - [x] 14.3 Body per-target guard + bites (~30 min each)
+  - [x] 14.4 E-fm + frontmatter bites (or the forced negative)
+  - [x] 14.5 Bite 2 + `derivation.frontmatter.test.ts`
 
-- [ ] 15. Consumer rendering and first render (step 7)
+- [x] 15. Consumer rendering and first render (step 7)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Thurgood (Opus); Lina (Opus) — 15.2 `derive.ts`
   **Traces**: Reqs 9, 9.5, 11, 12, 13, 14.8–14.9 · design C12, C19, C22, DD18, DD20
@@ -757,12 +757,12 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   *Not a criterion — a precondition carried in (U2b-cut amendment, 2026-09-27; G1 run 2 finding R2-F1, Peter ruled proceed-on-HOLDS): Req 11.6.5e's "Scope — within the unit's own rendering" is in force before 15.5's first routed signature. A signer credits an item by entailment only from that unit's own rendering, and a function that survives only elsewhere takes a disposition. Stacy checks it at U2b's MIDPOINT.*
 
-  - [ ] 15.0 (Thurgood, Opus) The consumer profile file + its loader (`consumer-profile.ts`, C12's single declared list) and an adapter registry keyed by declared target name in `adapters/index.ts` read by `generate.ts` and the Task 14 guard; `AdapterContext.profile/dispositions/overlay` threaded into both adapters' `emitSpans` calls (steward default); frontmatter re-pointing via the `## @entry` overlay form (13.2); list fields rendered per member under the consumer profile only; `generateFixture(repoRoot, ctx, adapters, opts?: { profile, dispositions, overlay })` — **runs before 14.2** *(sequencing correction 2026-09-28; found at Task 14's instrument-existence check)*
-  - [ ] 15.1 Profile file; `AdapterContext.profile`; `generateConsumerRendering`; `guardedRoots()`
-  - [ ] 15.2 (Lina, Opus) `derive.ts`
-  - [ ] 15.3 `emitIdentityMembers` per target
-  - [ ] 15.4 Operative sets for all units; dispositions/overlays for all 8 charters, shared substrate and identity docs; knowledge-fallback re-points
-  - [ ] 15.5 First-render routing: confirmations and signatures per C1; refusals resolved to zero standing (assent or re-disposition); rates and refusals issued recorded
+  - [x] 15.0 (Thurgood, Opus) The consumer profile file + its loader (`consumer-profile.ts`, C12's single declared list) and an adapter registry keyed by declared target name in `adapters/index.ts` read by `generate.ts` and the Task 14 guard; `AdapterContext.profile/dispositions/overlay` threaded into both adapters' `emitSpans` calls (steward default); frontmatter re-pointing via the `## @entry` overlay form (13.2); list fields rendered per member under the consumer profile only; `generateFixture(repoRoot, ctx, adapters, opts?: { profile, dispositions, overlay })` — **runs before 14.2** *(sequencing correction 2026-09-28; found at Task 14's instrument-existence check)*
+  - [x] 15.1 Profile file; `AdapterContext.profile`; `generateConsumerRendering`; `guardedRoots()`
+  - [x] 15.2 (Lina, Opus) `derive.ts`
+  - [x] 15.3 `emitIdentityMembers` per target
+  - [x] 15.4 Operative sets for all units; dispositions/overlays for all 8 charters, shared substrate and identity docs; knowledge-fallback re-points
+  - [x] 15.5 First-render routing: confirmations and signatures per C1; refusals resolved to zero standing (assent or re-disposition); rates and refusals issued recorded
 
 - [ ] 16. Consumer emission lane, `attach`, the `init` agent layer, legacy migration, and generated-surface `sync`
 
@@ -784,7 +784,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tools/agent-generator/consumer-entry.ts`, `build:generator`, `src/cli/attach.ts`, `src/cli/init.ts`, `src/cli/sync/{RegionGrain,Migration}.ts`, `package.json`, tests; *(amendment 2026-09-30 — widened to the paths the criteria require; Lina's consult, top finding:)* `tools/agent-generator/registry.ts` (16.1 — `registry.fromManifest`), `tools/agent-generator/adapters/{cc,kiro}.ts` (16.1 — the `emitSkills` `packageRoot`/`consumerRoot` split, `emitAlwaysLayer`'s region-only contents, the consumer banner fix), `tools/agent-generator/consumer-profile.ts` (16.1 — the root-relative load), `canonical/_consumer-output/**` and `canonical/generated.lock` (16.1 — the committed rendering and the guard lock move with the banner fix), `scripts/pack-assert.ts` (16.3 — the deferred rows and the negations), `src/cli/shared/errorCatalog.ts` (16.1 — Req 13's warning; 16.2 — the attach refusals; 16.4 — the missing-markers string), `src/cli/shared/vocabulary.ts` (16.2, new — C20's fifth lifecycle verb; Task 19 extends it), `src/cli/designerpunk.ts` (16.2 — the `attach` dispatch), `src/cli/sync/{index,Classifier,Manifest}.ts` (16.5 — generated-surface `sync`), `tests/consumer-integration.test.ts` (16.6 — the packed-install block)
 
-  - [ ] 16.1 (Opus) `consumer-entry.ts` + `build:generator` (the first esbuild of the generator: lazy requires, runtime fs-reads, no live-introspection path) *(amendment 2026-09-30 — the unnamed work named; Lina's consult, top finding, Q-d, Q-i: **the prepack `derive()` step** writing `dist/consumer-canonical/` (C22's first call site), which ships `shared/{always-set,field-dispositions,skills-map}.yaml` beside the derived shared catalog, and the filtered `skills/**`; `registry.fromManifest`; in both adapters, the `emitSkills` `packageRoot`/`consumerRoot` split and `emitAlwaysLayer`'s region-only contents; **the consumer banner fix**: the "Source: canonical/agents/… (Spec 122 pipeline) … 122-diff-guard" glue is false in a consumer repo, so its consumer form changes, steward bytes are unchanged, and the lock refresh is committed with it; **the parity test**: `emitConsumer` over the built `dist/consumer-canonical` equals `canonical/_consumer-output/<target>/`, with sidecars and roots stripped)*
+  - [x] 16.1 (Opus) `consumer-entry.ts` + `build:generator` (the first esbuild of the generator: lazy requires, runtime fs-reads, no live-introspection path) *(amendment 2026-09-30 — the unnamed work named; Lina's consult, top finding, Q-d, Q-i: **the prepack `derive()` step** writing `dist/consumer-canonical/` (C22's first call site), which ships `shared/{always-set,field-dispositions,skills-map}.yaml` beside the derived shared catalog, and the filtered `skills/**`; `registry.fromManifest`; in both adapters, the `emitSkills` `packageRoot`/`consumerRoot` split and `emitAlwaysLayer`'s region-only contents; **the consumer banner fix**: the "Source: canonical/agents/… (Spec 122 pipeline) … 122-diff-guard" glue is false in a consumer repo, so its consumer form changes, steward bytes are unchanged, and the lock refresh is committed with it; **the parity test**: `emitConsumer` over the built `dist/consumer-canonical` equals `canonical/_consumer-output/<target>/`, with sidecars and roots stripped)*
   - [ ] 16.2 `attach` (modes; refusals; restart line; vocabulary object; safe re-run)
   - [ ] 16.3 `init` agent-layer rows + row 10; the deferred `files[]` rows (Ada consulted); manifest `origin: 'generated'`
   - [ ] 16.4 Region extractor + splicer (**~1 day**, mechanical)
