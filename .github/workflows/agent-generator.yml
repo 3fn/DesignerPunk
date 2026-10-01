@@ -13,10 +13,17 @@
 # sits "Expected" forever and blocks every merge. Every job instead early-exits green in
 # seconds via the shared C6 no-op lock (DD7): the setup job runs the noop probe
 # (tools/agent-generator/sweeps/noop-probe.ts — prints both hash pairs as evidence), and
-# each check job SKIPS its expensive steps when noop=true while STILL REPORTING a genuine
+# each check job SKIPS its expensive steps when noop=true (generation checks only — see THE
+# C6 CARVE-OUT below) while STILL REPORTING a genuine
 # success context (step-level `if:`, never job-level skip — a skipped job's context
 # semantics are murkier than a reported success; the printed hashes are the
 # did-it-really-run evidence for the early-exit path).
+#
+# THE C6 CARVE-OUT (ballot 2026-10-01-signing-act-chain § 6.3, law): "The C6 no-op lock (DD7)
+# may skip generation checks; it never skips a signing check. `verify-signing-chain --ci`, and
+# the freshness sweep it calls, run on every PR whatever the probe's `noop` output." The
+# `Signing chain —` steps of the 122-diff-guard entry carry NO noop condition and bring their own
+# setup (full-history checkout, Node, npm ci), because the setup steps below skip under noop.
 #
 # SHARED SETUP: checkout + node 22 + npm cache + `npm ci`; jobs that boot MCPs
 # (diff-guard, canonical-vs-truth, sweep-1, sweep-6) download the built MCP dist artifact
@@ -141,6 +148,41 @@ jobs:
             cmd: npm run check:122:sweep-8-demotion
             mcp: false
     steps:
+      # ── Signing chain — links 1–3 + the freshness sweep (ballot 2026-10-01-signing-act-chain
+      # § 4.1; register row signing-act-consistency). A step of the EXISTING required context
+      # 122-diff-guard — no new context, EXPECTED_CONTEXTS unchanged. These four steps select the
+      # 122-diff-guard entry and carry NO noop condition (the C6 carve-out, header). On the full
+      # path the pre-existing Checkout / Node / npm ci steps below still run, unchanged and after
+      # this step, so their depth-1 checkout shallows nothing the walk reads.
+      - name: Signing chain — checkout (full history)
+        if: matrix.context == '122-diff-guard'
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Signing chain — setup Node.js
+        if: matrix.context == '122-diff-guard'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            mcp-server/package-lock.json
+            application-mcp-server/package-lock.json
+
+      - name: Signing chain — install dependencies
+        if: matrix.context == '122-diff-guard'
+        run: npm ci
+
+      - name: Signing chain — verify-signing-chain --ci (sweep first; links 1–3; never skips on noop)
+        if: matrix.context == '122-diff-guard'
+        env:
+          # Empty on workflow_dispatch: the CLI then walks merge-base(origin/main, HEAD)..HEAD.
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --ci
+
       - name: Early-exit green (C6 no-op lock matched — hashes printed by 122-setup)
         if: needs.setup.outputs.noop == 'true'
         run: echo "no-op — generated surface untouched by this PR (input-closure + output hashes match canonical/generated.lock; see the 122-setup job log for both hash pairs)"

@@ -1,0 +1,13 @@
+{
+  "canonical/agents/kenya.md": "charter-kenya.md",
+  "canonical/agents/thurgood.md": "charter-thurgood.md",
+  ".claude/agents/kenya.md": "generated-kenya.md",
+  "canonical/_consumer-output/_canonical/agents/kenya.md": "rendering-kenya.md",
+  "canonical/_consumer-output/_canonical/agents/kenya.md.attribution.json": "rendering-kenya.attribution.json",
+  "canonical/profiles/consumer/kenya.dispositions.yaml": "kenya.dispositions.yaml",
+  "canonical/profiles/consumer/thurgood.dispositions.yaml": "thurgood.dispositions.yaml",
+  "canonical/profiles/consumer/signatures/kenya.md": "signatures-kenya.md",
+  "canonical/profiles/consumer/signatures/thurgood.md": "signatures-thurgood.md",
+  "canonical/operative-sets/kenya.yaml": "operative-set-kenya.yaml",
+  "canonical/profiles/consumer/confirmations/kenya.md": "confirmations-kenya.md"
+}

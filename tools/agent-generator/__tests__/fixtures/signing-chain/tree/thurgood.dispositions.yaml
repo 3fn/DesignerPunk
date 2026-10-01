@@ -1,0 +1,4 @@
+# Fixture dispositions file — Thurgood's charter (signer stacy under C1: owner = profile author).
+source: canonical/agents/thurgood.md
+body:
+  "#identity": {"disposition": "re-pointed", "destination": "#identity", "signature": {"signer": "stacy", "canonicalHash": "sha256:3333333333333333333333333333333333333333333333333333333333333333", "renderedHash": "sha256:4444444444444444444444444444444444444444444444444444444444444444", "assent": {"surviving": ["steward"]}, "evidence": "canonical/profiles/consumer/signatures/thurgood.md#identity"}}

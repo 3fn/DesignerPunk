@@ -1,0 +1,5 @@
+# Fixture dispositions file — Kenya's charter (signer kenya under C1: owner ≠ profile author).
+source: canonical/agents/kenya.md
+body:
+  "#identity": {"disposition": "re-pointed", "destination": "#identity", "signature": {"signer": "kenya", "canonicalHash": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "renderedHash": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "assent": {"surviving": ["role"]}, "evidence": "canonical/profiles/consumer/signatures/kenya.md#identity"}}
+  "#out-of-scope": {"disposition": "retained"}
