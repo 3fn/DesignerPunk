@@ -18,6 +18,8 @@ date: 2026-09-29
 
 **Ruling: ASSENT — 7/7 surviving.** All 7 confirmed items survive. `role`, `restraint`, `domain`, `leonardo-primary` and `system-through-leonardo` are verbatim. `human-decides` and `partner` are re-grounded: *"Your human lead makes final decisions. You are their partner, not their tool."* The removed text is the name "Peter" (subtraction-2, an authority claim naming a person), and its destination is the generic human lead in the same sentence.
 
+**Re-sign 2026-10-01: ASSENT, 7/7 surviving.** All 7 survive unchanged.
+
 ## `#ios-theming-spec-094`
 
 signer: kenya
