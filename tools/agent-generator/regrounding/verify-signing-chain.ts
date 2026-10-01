@@ -468,7 +468,10 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
     const all = new Set<string>();
     for (const p of info.parents) for (const f of changedPaths(repo, p, info.sha)) all.add(f);
     an.paths = [...all].sort();
-    an.touchesProfiles = an.paths.some((p) => p.startsWith(`${PROFILES_DIR}/`));
+    // What the merge brings to the branch is its diff against the FIRST parent; the union also
+    // holds everything the merged-in side already carried (merging `main` into a unit branch
+    // "differs" from main on every profile file the branch owns).
+    an.touchesProfiles = changedPaths(repo, info.parents[0], info.sha).some((p) => p.startsWith(`${PROFILES_DIR}/`));
     for (const f of an.paths.filter(isSigningPath)) {
       const result = blobId(repo, info.sha, f);
       if (!info.parents.some((p) => blobId(repo, p, f) === result)) an.mergeDiffs.push(f);
@@ -611,7 +614,9 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
           const fields = [...new Set([...Object.keys(r0), ...Object.keys(r1)])].filter((x) => !same(r0[x], r1[x]));
           an.outside.push(`${rowIdOf(f, 'unit', unit)}: ${fields.join(', ') || 'unit added/removed'} changed (authoring — only the unit's canonicalHash is the confirmer's object)`);
         }
-        if (h0 === h1) continue;
+        // A unit ADDED (or removed) with its record is the drafter's authoring (the profile author
+        // drafts records, C16); the confirmer's act is moving an existing unit's canonicalHash.
+        if (h0 === h1 || u0 === undefined || u1 === undefined) continue;
         const a = act('confirmation', f, 'unit', unit, source, owner);
         a.via.push('record');
         a.pinnedTouched = true;
@@ -915,7 +920,10 @@ export function candidateLines(command: string, output: string): { prefix: strin
   }
   if (GIT_LOG_RE.test(command)) {
     const proven = logFormProven(command);
-    const loop = /(^|[\s;])(for|while)\s/.test(command) && /\blog\b[^\n]*(-1\b|-n\s*1\b|--max-count=1\b)/.test(command);
+    // A call that loops — `for`/`while`/`until`, or a shell function it calls repeatedly — prints
+    // one `git log -1` line per pass; each is that pass's candidate ("one per pass").
+    const repeats = /(^|[\s;])(for|while|until)\s/.test(command) || /\b[A-Za-z_][\w-]*\s*\(\)\s*\{/.test(command) || /\bfunction\s+[A-Za-z_]/.test(command);
+    const loop = repeats && /\blog\b[^\n]*(-1\b|-n\s*1\b|--max-count=1\b)/.test(command);
     const hex = lines.filter((l) => HEX_LINE_RE.test(l));
     for (const l of loop ? hex : hex.slice(0, 1)) {
       const m = HEX_LINE_RE.exec(l) as RegExpExecArray;

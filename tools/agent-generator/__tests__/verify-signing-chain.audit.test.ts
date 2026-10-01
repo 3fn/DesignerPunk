@@ -8,7 +8,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { splitFrontmatterText } from '../frontmatter';
-import { formatAudit, runAudit, type ActVerdict } from '../regrounding/verify-signing-chain';
+import { candidateLines, formatAudit, logFormProven, runAudit, type ActVerdict } from '../regrounding/verify-signing-chain';
 import {
   buildStore,
   cleanupTmp,
@@ -239,5 +239,21 @@ describe('verify-signing-chain --audit — reporting (§ 4.4; not among the 25)'
     expect(fs.existsSync(path.join(store, `${SESSION}.jsonl`))).toBe(true);
     expect(fs.existsSync(path.join(store, SESSION, 'subagents', 'agent-k1.meta.json'))).toBe(true);
     expect(RENDERED_LINE).toBe(read(s.repo, 'canonical/_consumer-output/_canonical/agents/kenya.md').split('\n')[4]);
+  });
+});
+
+describe('verify-signing-chain --audit — the lookup rule, unit level (§ 4.3; not among the 25)', () => {
+  test('success evidence is a closed set: `&&` on the commit line or `set -e`; `;` and a bare newline are outside it', () => {
+    expect(logFormProven(COMMIT_FORMS.convention)).toBe(true);
+    expect(logFormProven('set -euo pipefail\ngit commit -q -m s\ngit log -1 --oneline')).toBe(true);
+    expect(logFormProven(COMMIT_FORMS.semicolon)).toBe(false);
+    expect(logFormProven('git commit -q -m s\ngit log -1 --oneline')).toBe(false);
+  });
+
+  test('one candidate per pass: a loop or a repeatedly-called shell function with `git log -1` yields every pass line; otherwise only the first log line', () => {
+    const out = 'aaaaaaa1 one\nbbbbbbb2 two';
+    const fn = "s() { git commit -q -m \"$1\" && git log -1 --format='%h %s'; }\ns one\ns two";
+    expect(candidateLines(fn, out).map((c) => c.prefix)).toEqual(['aaaaaaa1', 'bbbbbbb2']);
+    expect(candidateLines('git commit -q -m one && git log --oneline -2', out).map((c) => c.prefix)).toEqual(['aaaaaaa1']);
   });
 });

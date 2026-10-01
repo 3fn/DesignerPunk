@@ -350,6 +350,29 @@ describe('verify-signing-chain --ci — behaviors beyond the § 4.5 table (not a
     expect(text(r)).toMatch(/1 committed before R .* excluded/);
   });
 
+  test('merging `main` into a branch whose profile differs from main is not a profile touch (floor reads the first-parent diff)', () => {
+    const [repo] = pr();
+    resign(repo, { seed: 'pre-r-ok' });
+    commit(repo, 'Pre-R re-sign', ['Agent: kenya'], { GIT_COMMITTER_DATE: '2026-01-01T00:00:00Z' });
+    g(repo, ['switch', '-q', 'main']);
+    write(repo, 'README.md', 'main moves\n');
+    const r0 = commit(repo, 'R marker on main', [], { GIT_COMMITTER_DATE: '2026-06-01T00:00:00Z' });
+    g(repo, ['switch', '-q', 'pr']);
+    g(repo, ['merge', '-q', '--no-ff', 'main', '-m', 'Merge main'], undefined, { GIT_COMMITTER_DATE: '2026-07-01T00:00:00Z' });
+    const r = ci(repo, r0, 'HEAD', r0);
+    expect(r.ok).toBe(true);
+    expect(r.lines).toContain(NO_SIGNING_PATHS_LINE);
+  });
+
+  test('a record unit added with its record is the drafter\'s authoring, not a confirmation act', () => {
+    const [repo, base] = pr();
+    write(repo, 'canonical/operative-sets/kenya.yaml', `${read(repo, 'canonical/operative-sets/kenya.yaml')}  "#out-of-scope":\n    canonicalHash: ${hash('new-unit')}\n    items: []\n`);
+    commit(repo, 'Draft #out-of-scope unit (profile author)', ['Agent: thurgood']);
+    const r = ci(repo, base);
+    expect(r.rowsChecked).toBe(0);
+    expect(r.findings).toEqual([]);
+  });
+
   test('a sheet section that names no signed row → fail (link 2)', () => {
     const [repo, base] = pr();
     write(repo, SHEET('kenya'), `${read(repo, SHEET('kenya'))}\n## \`#nowhere\`\n\nsigner: kenya\n`);
