@@ -177,12 +177,36 @@ describe('the BUILT bundle (build:generator)', () => {
     const OUTFILE = '--outfile=dist/generator/consumer-entry.js';
     if (!esbuild || !esbuild.includes(OUTFILE)) throw new Error(`build:generator no longer carries "${OUTFILE}" — update this test with it`);
     bundlePath = path.join(tmp, 'bundle', 'consumer-entry.js');
-    childProcess.execSync(esbuild.replace(OUTFILE, `--outfile=${JSON.stringify(bundlePath)}`), { cwd: REPO_ROOT, stdio: 'pipe' });
+    const esbuildCmd = esbuild.replace(OUTFILE, `--outfile=${JSON.stringify(bundlePath)}`);
+
+    // CI fidelity (16.1 follow-up, run 36817484731): `lane-functional-root` runs `npm run build`
+    // without ever building `mcp-server/dist` — this package's `build:generator` must bundle
+    // cleanly with it ABSENT, not merely when a prior local build happens to have left it behind.
+    // `workflow-rules-guard.ts`'s `getWorkflowRules()` is the only reference to that path, and it
+    // is unreachable from `emitConsumer` (only `generate.ts`, which this bundle may not import,
+    // calls it) — so the literal `require(...)` must never survive tree-shaking into the bundle.
+    const distPath = path.join(REPO_ROOT, 'mcp-server', 'dist');
+    const asidePath = path.join(tmp, 'mcp-server-dist-aside');
+    const hadDist = fsReal.existsSync(distPath);
+    if (hadDist) fsReal.renameSync(distPath, asidePath);
+    try {
+      childProcess.execSync(esbuildCmd, { cwd: REPO_ROOT, stdio: 'pipe' });
+    } finally {
+      if (hadDist) fsReal.renameSync(asidePath, distPath);
+    }
   }, 60_000);
 
   test('carries no live-introspection or stdio-transport code', () => {
     const text = fs.readFileSync(bundlePath, 'utf8');
     expect(text.match(/introspectServer|generateRegistry|StdioCorpusClient|createStdioDocsClient|StdioClientTransport|generateAll/g) ?? []).toEqual([]);
+  });
+
+  test('resolves or carries no `mcp-server/dist` require — only steward-only code reaches it', () => {
+    const text = fs.readFileSync(bundlePath, 'utf8');
+    // The literal require target from workflow-rules-guard.ts's getWorkflowRules() — unreachable
+    // from emitConsumer, so it must be tree-shaken out entirely, not merely left `--external` and
+    // unresolved (which would still surface this string as a live require in a consumer install).
+    expect(text.match(/require\(["']\.\.\/\.\.\/mcp-server\/dist\/index["']\)/g) ?? []).toEqual([]);
   });
 
   test('emits what the TS source emits, starting no process', async () => {
