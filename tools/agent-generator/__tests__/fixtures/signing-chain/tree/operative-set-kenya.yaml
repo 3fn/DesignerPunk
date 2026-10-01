@@ -1,0 +1,13 @@
+# Fixture operative-set record (C16) — Kenya confirms.
+source: canonical/agents/kenya.md
+owner: kenya
+confirmer: kenya
+units:
+  "#identity":
+    canonicalHash: sha256:5555555555555555555555555555555555555555555555555555555555555555
+    items:
+      - id: role
+        kind: obligation
+        label: "The platform engineer"
+        text: "You are the iOS platform engineer for products built with DesignerPunk."
+    confirmation: canonical/profiles/consumer/confirmations/kenya.md#identity
