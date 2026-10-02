@@ -683,7 +683,7 @@ history:
 ### package-name-scope-drift
 
 ```yaml
-rule: "Every package-scope reference (.kiro/steering/, src/, product-template/, .kiro/agents/, dist/) SHALL match package.json's name scope — no stale-scope references survive a scope change (Spec 101 publish-readiness)"
+rule: "Every package-scope reference (governance/, .kiro/steering/, src/, .kiro/agents/, dist/) SHALL match package.json's name scope — no stale-scope references survive a scope change (Spec 101 publish-readiness)"
 boundary_call:
   class: functional
   rationale: "String-match of scope references against package.json's name field — machine-checkable by construction (scripts/check-package-name-drift.js)"
@@ -696,6 +696,7 @@ education:
   disposition: "RECORD-ONLY entry (same class and same audit as consumer-guard-lane). Education layer NOT swept this pass; territory sweeps with any future wave. The npm-publish playbook knowledge (scope-mapping pitfall) is adjacent teaching, out of the served corpus."
 history:
   - { date: 2026-09-18, change: "entry created (U1b 5.6 closeout, §5.6 armed-but-unregistered audit) — see consumer-guard-lane's entry; the two gaps were found and rowed together. Evidence: completion/u1b/campaign-closeout.md §6", by: thurgood }
+  - { date: 2026-10-02, change: "rule enumeration updated under ballot 2026-09-28-123-b-u2 (Spec 123 Req 14.5.5): product-template/ removed — Task 17 deleted the tree and 17.1 removed it from SCAN_DIRS; governance/ added — the check has scanned it since the Spec 119-A relocation, and the rule had not said so", by: thurgood }
 ```
 
 ### completion-criteria-parity
