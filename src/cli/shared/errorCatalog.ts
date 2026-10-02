@@ -252,25 +252,49 @@ export function existingMcpEntryMessage(configFile: string, key: string, target:
  * `generate` stopped because a component-token file in the consumer's tree failed
  * `defineComponentTokens`'s family-mismatch guard (#127) while it loaded. Names the FILE
  * (the guard names only the component), carries the guard's own message verbatim, and
- * gives both fixes — pre-123 `init` copied two such files in the pre-fix single-family
- * form (`src/tokens/component/progress.ts`, `src/components/core/Button-Icon/buttonIcon.tokens.ts`).
+ * names ONLY remedies that work for that file (the 15.0.0 upgrade rehearsal, run 2):
+ *
+ * - **always**: split the file's `defineComponentTokens()` into one call per family;
+ * - **a copied `src/tokens/**` file**: the package ships that file's source, but with the
+ *   package-internal import `'../../build/tokens'` that `init` rewrites on copy — so the
+ *   re-copy must take the same rewrite to `'@3fn/core/build'` (a verbatim copy fails to
+ *   load: `Cannot find module '../../build/tokens'`);
+ * - **an unedited `src/components/core/**` copy**: delete it. The package ships no source
+ *   for those token files (only `dist/`), so there is nothing to re-copy; deleting also
+ *   removes that component's tokens from the consumer's generated `ComponentTokens.*`.
+ *
+ * `file` is repo-relative with `/` separators. Pre-123 `init` copied two such files in the
+ * pre-fix single-family form (`src/tokens/component/progress.ts`,
+ * `src/components/core/Button-Icon/buttonIcon.tokens.ts`).
  * Source: `.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md`.
  */
 export function componentTokenFamilyMismatchMessage(file: string, guardMessage: string): string {
+  let alternative = '';
+  if (file.startsWith('src/tokens/')) {
+    alternative =
+      ` Or, if an earlier DesignerPunk init copied this file, replace it with the package's version at ` +
+      `node_modules/@3fn/core/${file} and change its '../../build/tokens' import to '@3fn/core/build'.`;
+  } else if (file.startsWith('src/components/core/')) {
+    alternative =
+      ` Or, if this is an unedited copy an earlier DesignerPunk init made, delete it — its component tokens ` +
+      `then leave your generated ComponentTokens.* files.`;
+  }
   return (
     `generate stopped — ${file} declares a component token in the wrong family's defineComponentTokens() call. ` +
     `${guardMessage} ` +
-    `To fix it, split that file's defineComponentTokens() into one call per token family; or, if an earlier ` +
-    `DesignerPunk init copied the file into your repo, replace it with the package's current version under ` +
-    `node_modules/@3fn/core/src/, which is already split. Nothing was written.`
+    `To fix it, split that file's defineComponentTokens() into one call per token family.` +
+    `${alternative} Nothing was written.`
   );
 }
 
 /**
  * `generate` stopped because a component-token file in the consumer's tree threw while it
- * loaded, for any reason other than the family guard. Names the file and the reason.
+ * loaded, for any reason other than the family guard. Names the file and the FIRST line of
+ * the reason — Node's module-not-found message carries a multi-line `Require stack:` list of
+ * absolute paths that is noise here.
  * Source: as {@link componentTokenFamilyMismatchMessage}.
  */
 export function componentTokenFileLoadFailedMessage(file: string, reason: string): string {
-  return `generate stopped — ${file} could not be loaded: ${reason} Fix the file and run generate again. Nothing was written.`;
+  const firstLine = reason.split(/\r?\n/, 1)[0].trim();
+  return `generate stopped — ${file} could not be loaded: ${firstLine} Fix the file and run generate again. Nothing was written.`;
 }

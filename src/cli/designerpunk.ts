@@ -179,7 +179,8 @@ export function resolveComponentSchemaDir(
 function componentTokenLoadFailureMessage(err: unknown, root: string): string {
   const e = err as { name?: unknown; file?: unknown; reason?: unknown; message?: unknown } | null;
   if (e && e.name === 'ComponentTokenFileLoadError' && typeof e.file === 'string' && typeof e.reason === 'string') {
-    const rel = path.relative(root, e.file) || e.file;
+    // Repo-relative with `/` separators — the catalog row keys its remedies on the path prefix.
+    const rel = (path.relative(root, e.file) || e.file).split(path.sep).join('/');
     return /^Token family mismatch/.test(e.reason)
       ? componentTokenFamilyMismatchMessage(rel, e.reason)
       : componentTokenFileLoadFailedMessage(rel, e.reason);
