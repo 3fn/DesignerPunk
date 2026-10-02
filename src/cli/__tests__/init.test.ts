@@ -274,6 +274,10 @@ describe('CLI init — THREE servers\' MCP config, approvals GENERATED from read
     expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
     // Req 7.1 — the third entry declares PRODUCT_DIR.
     expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
+    // The docs server is pointed at the package's governance/ corpus — never the package's
+    // .kiro/steering (which ships only the eight identity docs). Moved here from the retired
+    // 119-A relocation-gate leg A7 (.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md, residual R3).
+    expect(config.mcpServers['designerpunk-docs'].env.MCP_STEERING_DIR).toBe('./node_modules/@3fn/core/governance');
   });
 
   test('Kiro: each server\'s autoApprove is SET-EQUAL to the manifest\'s readOnlyHint:true set — rebuild_index absent, find_docs present, validate_component absent', async () => {
@@ -305,6 +309,8 @@ describe('CLI init — THREE servers\' MCP config, approvals GENERATED from read
     expect(config.mcpServers['designerpunk-docs'].command).toBe('node');
     expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
     expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
+    // Same docs-server data root as the Kiro config (R3 — see the Kiro case above).
+    expect(config.mcpServers['designerpunk-docs'].env.MCP_STEERING_DIR).toBe('./node_modules/@3fn/core/governance');
   });
 
   test('Claude Code: .claude/settings.json permissions.allow is SET-EQUAL (per server, mcp__<server>__<tool> grain) to the manifest\'s readOnlyHint:true set', async () => {

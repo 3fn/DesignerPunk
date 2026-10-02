@@ -94,3 +94,14 @@ Primary Artifacts: all shipped as declared
 - **Task 20 (U3)**: the `.gitignore` managed region (16.4 built the splicer, wiring deferred).
 - **Task 28 (U5)**: `tarball-target.json` stays Task 3's baseline; today's pack is about 1,700 entries against its 1,597.
 - **For routing (orchestrator)**: the `generated.lock` `inputClosure` checkout dependence (Thurgood); the dead `Applier.ts` copy functions (Lina, under a later grant); the Kiro missing-resource measurement (in the C19 issue).
+
+## Addendum — 2026-10-02 (post-completion; append-only, no criterion row above is altered)
+
+**What changed.** Three standing checks were moved into Task 16's own test files, ahead of Thurgood's retirement of the 119-A relocation-integrity gate's legs A4 and A7 (Peter, 2026-10-02: "Move all three, and remove the legs."; coverage map and residuals R1–R3 in `.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md`, § "Peter's ruling — RETIRE"). Branch `task/123-u2b-gate-residual-moves`, cut from the unit head `b5f4cd07`.
+
+- **R1** (`tests/consumer-integration.test.ts`, "Docs MCP returns documentation data"): now goes through the CLI launch path (`npx designerpunk mcp:docs`, with `MCP_STEERING_DIR` dropped from the child env) and asserts the CLI's `Data:` line and the server's own `Data root steering:` line both equal the installed `node_modules/@3fn/core/governance`, `(source: env)`, and that `documentsIndexed` exceeds the installed steering folder's doc count.
+- **R2** (`tests/consumer-integration.test.ts`, describe "Spec 123 R2"): the installed `node_modules/@3fn/core/.kiro/steering/` holds exactly the eight identity docs (derived from the installed `dist/consumer-canonical/shared/always-set.yaml` less `personal-note`, count pinned at 8), `personal-note.md` is absent by name, and nothing ships under `.kiro/agents/`.
+- **R3** (`src/cli/__tests__/init.test.ts`, the Kiro and Claude Code MCP-config cases): the docs server's `MCP_STEERING_DIR` equals `./node_modules/@3fn/core/governance`.
+- `src/cli/__tests__/sync.cohort.test.ts`: the `COPY_ROOTS` case's name no longer says the 119-A gate pins the literal (this test is the pin). Name only; no assertion changed.
+
+**Authority.** The substantive authorization is Peter's ruling above. For write scope: `tests/consumer-integration.test.ts` is enumerated in Task 16's Primary Artifacts, and `init.test.ts` and `sync.cohort.test.ts` fall under its "tests" entries for `src/cli/init.ts` and `src/cli/sync/*`. Residual, stated plainly: the row qualifies the consumer file as "16.6 — the packed-install block", and R1 edits the older Docs-MCP smoke case outside that block, so this is in-list by path and not by that qualifier. No criterion, instrument row or count in this doc moved. Bites and lane counts: the unit-branch commit message and the report that accompanied it.
