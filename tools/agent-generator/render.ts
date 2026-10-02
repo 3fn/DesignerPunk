@@ -165,7 +165,23 @@ export function renderGroundTruthFaithfulness(
 export function renderGroundTruthTrims(
   directive: GroundTruthDirective,
   toolName: (tool: string) => string
-): string | undefined {
+): string | undefined;
+/**
+ * The `'parts'` form (VALVE-1, `.kiro/issues/2026-09-30-valve-1-per-trim-spans.md`): the same
+ * render split into the intro line and one line per trim, in `directive.trims` order, so the
+ * consumer profile can source each trim (and the verdict's intro) as its own span. Joining
+ * `intro` and `lines` with `'\n'` is byte-identical to the string form.
+ */
+export function renderGroundTruthTrims(
+  directive: GroundTruthDirective,
+  toolName: (tool: string) => string,
+  form: 'parts'
+): { intro: string; lines: string[] } | undefined;
+export function renderGroundTruthTrims(
+  directive: GroundTruthDirective,
+  toolName: (tool: string) => string,
+  form?: 'parts'
+): string | { intro: string; lines: string[] } | undefined {
   if (!directive.trims || directive.trims.length === 0) {
     return undefined;
   }
@@ -173,11 +189,11 @@ export function renderGroundTruthTrims(
     // trim.cue.negative is emitted verbatim (sweep-8 K-D1 substring check).
     return `- ${trim.cue.negative} — use \`${toolName(trim.cue.tool)}\` (${trim.cue.mcp} MCP)`;
   });
-  return (
+  const intro =
     'Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read ' +
-    'these stale/generated artifacts; query the live tool instead:\n' +
-    lines.join('\n')
-  );
+    'these stale/generated artifacts; query the live tool instead:';
+  if (form === 'parts') return { intro, lines };
+  return `${intro}\n${lines.join('\n')}`;
 }
 
 /**

@@ -39,7 +39,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type { ResolvedAgent } from '../pipeline';
-import type { AlwaysSetMember } from '../compose';
+import type { AlwaysSetMember, GroundTruthDirective } from '../compose';
 import type { ToolSubset, CommandEntry, DocRoute, ToolCueRoute } from '../schema';
 import { isNamedGapCommandEntry } from '../schema';
 import type { SkillsMapRow, SkillsMap } from '../skills';
@@ -362,13 +362,20 @@ export class KiroAdapter implements TargetAdapter {
     const kiroManifest = agent.ambientManifests.kiro;
     if (kiroManifest.groundTruth) {
       const toolName = (t: string): string => toolRefImpl(subset, t);
-      const groundTruthBody =
-        renderGroundTruthFaithfulness(kiroManifest.groundTruth, toolName) ??
-        renderGroundTruthTrims(kiroManifest.groundTruth, toolName);
-      if (groundTruthBody !== undefined) {
-        bodyParts.push(
-          emit([{ kind: 'entry', path: 'ambient.groundTruthManifest', text: `## Ground truth\n\n${groundTruthBody}\n\n` }])
-        );
+      if (span.profile === 'consumer') {
+        // VALVE-1: one span per signed row under the consumer profile (see groundTruthPieces);
+        // the bytes equal the steward's joined form below, which keeps one span.
+        const pieces = groundTruthPieces(kiroManifest.groundTruth, toolName);
+        if (pieces.length > 0) bodyParts.push(emit(pieces));
+      } else {
+        const groundTruthBody =
+          renderGroundTruthFaithfulness(kiroManifest.groundTruth, toolName) ??
+          renderGroundTruthTrims(kiroManifest.groundTruth, toolName);
+        if (groundTruthBody !== undefined) {
+          bodyParts.push(
+            emit([{ kind: 'entry', path: 'ambient.groundTruthManifest', text: `## Ground truth\n\n${groundTruthBody}\n\n` }])
+          );
+        }
       }
     }
 
@@ -565,4 +572,33 @@ function listFilesRecursive(dir: string, base = ''): string[] {
     }
   }
   return out;
+}
+
+/**
+ * VALVE-1 — the consumer profile's ground-truth pieces, one span per signed row
+ * (`.kiro/issues/2026-09-30-valve-1-per-trim-spans.md`):
+ *   - `ambient.groundTruthManifest` — the `## Ground truth` heading, a container that renders only
+ *     while a member under it survives (emitSpans refuses it otherwise);
+ *   - `ambient.groundTruthManifest.verdict` — the verdict's own line: the faithfulness cue
+ *     (catalog-is-manifest) or the trim leg's intro (none-trim-stale-snapshots);
+ *   - `ambient.groundTruthManifest.trims[<artifact>]` — each trim's line, by member index.
+ * Concatenated, the pieces equal the steward's single-span text byte for byte. Empty when the
+ * directive renders nothing (the same verdicts the steward form skips).
+ */
+function groundTruthPieces(directive: GroundTruthDirective, toolName: (tool: string) => string): SpanPiece[] {
+  const container: SpanPiece = { kind: 'entry', path: 'ambient.groundTruthManifest', text: '## Ground truth\n\n' };
+  const faithfulness = renderGroundTruthFaithfulness(directive, toolName);
+  if (faithfulness !== undefined) {
+    return [container, { kind: 'entry', path: 'ambient.groundTruthManifest.verdict', text: `${faithfulness}\n\n` }];
+  }
+  const trims = renderGroundTruthTrims(directive, toolName, 'parts');
+  if (trims === undefined) return [];
+  const last = trims.lines.length - 1;
+  return [
+    container,
+    { kind: 'entry', path: 'ambient.groundTruthManifest.verdict', text: `${trims.intro}\n` },
+    ...trims.lines.map(
+      (line, i): SpanPiece => ({ kind: 'member', list: 'ambient.groundTruthManifest.trims', index: i, text: i === last ? `${line}\n\n` : `${line}\n` })
+    ),
+  ];
 }

@@ -85,6 +85,14 @@ signer: data
 - **Nit, no refusal**: "never the source for your themed values" fits component tokens loosely, since the file carries no color values. It is harmless.
 - The row's signature is byte-identical to my earlier one: both hashes are unchanged, and the disposition flip is not in the hash. This block is the record of the re-sign act.
 
+**Re-sign (2026-10-02, after Lina's per-row span change `1a2ff94f`, VALVE-1): ASSENT to `re-pointed`, `surviving: []`.** The stale entry is a hash event, not a text event. The `renderedHash` moved from the empty-piece hash (`sha256:37517e5f…85b570`) to a hash over the row's own lines. `canonicalHash` and the overlay pin (`@ sha256:5d43bad7…a45839`) are unchanged, and `canonical/agents/data.md` has not changed since `94cb60d1` (#177).
+- **The span**: cc `data.md` L486–487 and kiro `data-prompt.md` L279–280, per both attribution sidecars. That is the trim line plus the section's trailing blank line. I read both targets. The text matches what I assented to on 2026-09-29. The only difference is the tool name: cc qualifies it (`mcp__designerpunk-application__get_component_full`) and kiro leaves it bare (`get_component_full`). Each is the right form for its target.
+- **Verified hash**: `sha256:e644f5b5…41171b0`. I recomputed it read-only with `renderedHashOf(readConsumerSpans(...), rowSpanSource(...))` from `tools/agent-generator/derive.ts`, and the pieces it printed are exactly those two spans.
+- **The disposition still holds in a consumer.** `npm pack --dry-run --ignore-scripts` on this tree still lists `dist/ComponentTokens.android.kt` at the package root, because `!dist/android/**` does not reach the root. So `node_modules/@3fn/core/dist/ComponentTokens.android.kt` is a real file in every consumer, and the rendered negative names it at that path. The rendered line also keeps my own `generate` output, in my configured output directory, outside the prohibition. The positive route, `get_component_full`, is the right place to get assembled component tokens.
+- **Nit carried, no refusal**: "never the source for your themed values" still fits loosely. A structural grep (counts only, no values read) finds 0 `Color(` and 0 `theme` references in the file. A consumer agent that obeys the line still does the right thing.
+- **Surviving**: `[]`. This frontmatter row owes no operative-set items, so the assent covers the re-point itself.
+- **Valve-1 blind spot**: closed for this row. The hash now covers the rendered line, so any future text change makes this signature stale.
+
 ## `#frontmatter:routes.docs[completion-doc-guidance]`
 
 signer: data
@@ -215,6 +223,15 @@ signer: data
 It should be re-pointed together with that trim (the ComponentTokens trim may stay `no-consumer-counterpart`, see its assent). If the trim is re-disposed, this row follows it.
 
 **Re-sign (2026-09-29, `dba93df5`): ASSENT to the changed disposition, `retained`. Refusal resolved.** `none-trim-stale-snapshots` is still true in a consumer. Ground truth is the live MCP, and the manifest still carries one trim (the re-pointed ComponentTokens snapshot), which the rendered Ground truth section shows.
+
+**Re-sign (2026-10-02, after Lina's per-row span change `1a2ff94f`, VALVE-1): ASSENT to `retained`, `surviving: []`.** The stale entry is a hash event, not a text event. The `renderedHash` moved from the empty-piece hash to a hash over the row's own line, and `canonicalHash` is unchanged.
+- **The span**: cc `data.md` L485 and kiro `data-prompt.md` L278, per both attribution sidecars. The `## Ground truth` heading and its blank line (cc L483–484, kiro L276–277) form the container span, and this row does not hash them. I read the line in both targets, and it is identical in both: *"Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:"*.
+- **Verified hash**: `sha256:53f5c8db…c6c53e`. I recomputed it read-only with `renderedHashOf(readConsumerSpans(...), rowSpanSource(...))` from `tools/agent-generator/derive.ts`, and the only pieces it printed are those two lines.
+- **`retained` still holds in a consumer.** Ground truth is the live MCP. The manifest still trims one shipped snapshot: the ComponentTokens trim, re-pointed to `node_modules/@3fn/core/dist/`. The line produces the behavior I want in a consumer's Android app: query the MCP, and treat the list that follows as what not to read.
+- **The Task 16.3 dependency has landed** on this tree. `package.json` `files` now carries `!dist/android/**`, and `npm pack --dry-run` no longer lists `dist/android/DesignTokens.android.kt`. The DesignTokens-trim supersession that this verdict's 2026-09-29 assent leaned on is now fully true. `dist/DesignTokens.android.kt` at the root still ships, and the body units' `dist/*.android.kt` glob names it.
+- **Surviving**: `[]`. This frontmatter row owes no operative-set items, so the assent covers the retention itself.
+- **Residual (not a refusal)**: the line says "stale/generated", but the one artifact it lists is generated and un-themed, not stale. This is the same residual Kenya recorded, because the line is a shared template. Rewording it is authoring for the profile author or the owner of `render.ts`, not a signing act.
+- **Valve-1 blind spot**: closed for this row.
 
 ## `#frontmatter:commands[platform-tokens]`
 

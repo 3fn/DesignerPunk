@@ -294,8 +294,8 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:ffffe14a86f02d87c41c32570db8966ca594fbe0785ae8174657f164f8977ace
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b
+date: 2026-10-02
 
 **REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
 - **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.
@@ -306,13 +306,20 @@ date: 2026-09-29
 **Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **My refusal is RESOLVED: I assent to the re-point.** The rendered Ground truth section reads *"do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.ios.swift — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `get_component_full`"*. That is exactly the re-point I asked for, and the file stays in the package under Ada's keep branch. The removal of *"a stale generated artifact, not the source of truth"* (subtraction-3) is replaced by the truer *"un-themed base, never the source for your themed values"*.
 - **Valve-1 blind spot**: the `renderedHash` is the empty-piece hash, so I signed on the text read directly.
 
+**Re-sign 2026-10-02, after Lina's per-row span change `1a2ff94f` (VALVE-1): ASSENT to the re-point, `surviving: []`.** The stale entry is a hash event, not a text event: the row's `renderedHash` moved from the empty-piece hash to a hash over its own lines, and `canonicalHash` and the overlay pin (`@ sha256:ffffe14a…`) are unchanged. I judged the row fresh at the lines it now owns.
+- **The span**: cc `kenya.md` L346–347 and kiro `kenya-prompt.md` L262–263 (the trim line plus the section's trailing blank line), per both attribution sidecars. I read the lines in both targets. They are byte-identical to the text I assented to on 2026-09-29, apart from the tool name, which is target-qualified in cc (`mcp__designerpunk-application__get_component_full`) and bare in kiro (`get_component_full`).
+- **Verified hash**: `sha256:78187ecb…c8be5b`, recomputed read-only with `renderedHashOf(readConsumerSpans(...), rowSpanSource(...))` from `tools/agent-generator/derive.ts`. It matches the brief.
+- **The disposition still holds in a consumer.** `package.json` `files` still ships the root snapshot (`dist/**/*.{…,swift,kt}`; the `!dist/ios/**` negation does not reach the root), and `dist/ComponentTokens.ios.swift` has 0 `Theme` references. So `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is a real, un-themed trap in every consumer, and the rendered negative names it at the path the consumer actually has. The positive (`get_component_full`, application MCP) is the right replacement for component-token values.
+- **Surviving**: `[]`. No operative-set items are owed on this frontmatter row; the assent is to the re-point itself.
+- **Valve-1 blind spot**: closed for this row. The hash now covers the rendered line, so a future text change makes this signature stale on its own.
+
 ## `#frontmatter:ambient.groundTruthManifest.verdict`
 
 signer: kenya
 disposition: retained
 canonicalHash: sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c
-renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
-date: 2026-09-29
+renderedHash: sha256:b7f514bac8ff290bc25b3caf9fcce92724b6d3e83f7aa044ed89468eb4314252
+date: 2026-10-02
 
 **REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
 - **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.
@@ -321,6 +328,14 @@ date: 2026-09-29
 - **Why it's mine to refuse**: this is the frontmatter home the body units point to (*"see the Ground truth section"*). The body rows' in-unit assents keep the positive MCP directive but no longer say where the trap is.
 
 **Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **My refusal is RESOLVED: I assent to `retained`.** The verdict value `none-trim-stale-snapshots` is still true in a consumer: the manifest still trims a shipped stale snapshot (ComponentTokens, re-pointed). My refusal was against the no-consumer-counterpart premise, which is gone.
+
+**Re-sign 2026-10-02, after Lina's per-row span change `1a2ff94f` (VALVE-1): ASSENT to `retained`, `surviving: []`.** The stale entry is a hash event, not a text event: the row's `renderedHash` moved from the empty-piece hash to a hash over its own line, and `canonicalHash` is unchanged. I judged the row fresh at the line it now owns.
+- **The span**: cc `kenya.md` L345 and kiro `kenya-prompt.md` L261, per both attribution sidecars. The `## Ground truth` heading and its blank line (cc L343–344, kiro L259–260) are the container span, and this row does not hash them. I read the line in both targets, and it is identical in both: *"Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:"*.
+- **Verified hash**: `sha256:b7f514ba…314252`, recomputed read-only with `renderedHashOf(readConsumerSpans(...), rowSpanSource(...))` from `tools/agent-generator/derive.ts`. It matches the brief.
+- **`retained` still holds in a consumer.** The verdict `none-trim-stale-snapshots` is true there: the manifest still trims a shipped, un-themed snapshot (the ComponentTokens trim, re-pointed to `node_modules/@3fn/core/dist/`). The rendered line drives exactly the consumer behavior I want: ground truth is the live MCP, never a build snapshot, and the list that follows says what not to read.
+- **Surviving**: `[]`. No operative-set items are owed on this frontmatter row; the assent is to the retention itself.
+- **Residual (not a refusal)**: the line says *"stale/generated"*, but the one listed artifact is generated and un-themed rather than stale. The trim's own removal of "stale" (subtraction-3) does not reach this introductory line. A consumer agent that obeys the line still does the right thing, so I don't refuse over it. The line is also a shared template (Data's rendering is identical), so rewording it is the profile author's or `render.ts` owner's authoring, not a signing act.
+- **Valve-1 blind spot**: closed for this row.
 
 ## Signing run summary (2026-09-29, phase two)
 

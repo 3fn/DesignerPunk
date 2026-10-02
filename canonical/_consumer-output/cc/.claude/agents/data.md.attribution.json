@@ -529,10 +529,26 @@
     {
       "lines": [
         483,
-        487
+        484
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        485,
+        485
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:ambient.groundTruthManifest.verdict"
+    },
+    {
+      "lines": [
+        486,
+        487
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]"
     },
     {
       "lines": [

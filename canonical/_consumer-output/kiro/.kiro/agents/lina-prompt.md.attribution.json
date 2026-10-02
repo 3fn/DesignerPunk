@@ -324,10 +324,18 @@
     {
       "lines": [
         273,
-        276
+        274
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        275,
+        276
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:ambient.groundTruthManifest.verdict"
     },
     {
       "lines": [
