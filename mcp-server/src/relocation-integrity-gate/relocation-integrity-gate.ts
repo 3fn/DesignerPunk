@@ -16,7 +16,12 @@
  *      an MCP round-trip — identity docs are not in the governance-only index
  *      (Req 8 AC5 / Req 2 AC4).
  *   3. every MUST-FIX coupling surface (coupling-sweep Bucket A) is repointed to
- *      `governance/` and functional (Req 8 AC7).
+ *      `governance/` and functional (Req 8 AC7). Legs A4/A7 assert the Spec 123
+ *      install shape since 2026-10-01 (they asserted 119-A's copy-the-corpus
+ *      MECHANISM before): `init` copies no package corpus and delivers identity through
+ *      the generated agent layer; `files[]` ships `governance/` plus the identity docs
+ *      by explicit path. Source is matched on comment-stripped text (a root name that
+ *      survives only in a comment proved nothing — the vacuity the rewrite closed).
  *   4. relocation introduced ZERO new family-guidance companion-path warnings
  *      (Req 8 AC6) — asserted over the 9 top-level companions the FamilyGuidanceIndexer
  *      parses (the 13 nested are gate-blind: green ≠ all 22 verified).
@@ -241,6 +246,98 @@ function exists(projectRoot: string, rel: string): boolean {
 }
 
 /**
+ * Strip `//` line comments and `/* *\/` block comments from TS/JS source, leaving
+ * string, template and regex literals intact (a `//` inside `'http://x'` is not a
+ * comment). Newlines are preserved so positions stay roughly stable. Exported for
+ * the unit tests; deliberately small — it is a matcher's pre-filter, not a parser.
+ */
+export function stripComments(src: string): string {
+  let out = '';
+  let i = 0;
+  let lastSignificant = ''; // last non-space char emitted outside a literal/comment
+  const n = src.length;
+  while (i < n) {
+    const c = src[i];
+    const d = src[i + 1];
+    if (c === '/' && d === '/') {
+      while (i < n && src[i] !== '\n') i++;
+      continue;
+    }
+    if (c === '/' && d === '*') {
+      i += 2;
+      while (i < n && !(src[i] === '*' && src[i + 1] === '/')) {
+        if (src[i] === '\n') out += '\n';
+        i++;
+      }
+      i += 2;
+      out += ' ';
+      continue;
+    }
+    if (c === "'" || c === '"' || c === '`') {
+      const q = c;
+      out += c;
+      i++;
+      while (i < n && src[i] !== q) {
+        if (src[i] === '\\') {
+          out += src[i] + (src[i + 1] ?? '');
+          i += 2;
+          continue;
+        }
+        out += src[i];
+        i++;
+      }
+      out += q;
+      i++;
+      lastSignificant = q;
+      continue;
+    }
+    if (c === '/' && (lastSignificant === '' || '(,=:[!&|?{};'.includes(lastSignificant))) {
+      // regex literal: copy through the closing unescaped '/' (honouring [...] classes)
+      out += c;
+      i++;
+      let inClass = false;
+      while (i < n && src[i] !== '\n' && (inClass || src[i] !== '/')) {
+        if (src[i] === '\\') {
+          out += src[i] + (src[i + 1] ?? '');
+          i += 2;
+          continue;
+        }
+        if (src[i] === '[') inClass = true;
+        else if (src[i] === ']') inClass = false;
+        out += src[i];
+        i++;
+      }
+      out += src[i] ?? '';
+      i++;
+      lastSignificant = '/';
+      continue;
+    }
+    out += c;
+    if (!/\s/.test(c)) lastSignificant = c;
+    i++;
+  }
+  return out;
+}
+
+/**
+ * id → on-disk filename in `.kiro/steering/`, resolved by the frontmatter `id:` line.
+ * The single source for the identity axis AND leg A7's explicit-path check (no second
+ * hardcoded list of identity filenames).
+ */
+function identityIdToFile(projectRoot: string): Map<string, string> {
+  const steeringDir = path.join(projectRoot, '.kiro/steering');
+  const files = fs.existsSync(steeringDir) ? fs.readdirSync(steeringDir) : [];
+  const idToFile = new Map<string, string>();
+  for (const f of files) {
+    if (!f.endsWith('.md')) continue;
+    const content = fs.readFileSync(path.join(steeringDir, f), 'utf-8');
+    const m = content.match(/^id:\s*(.+)$/m);
+    if (m) idToFile.set(m[1].trim(), f);
+  }
+  return idToFile;
+}
+
+/**
  * Assert every coupling-sweep Bucket A surface is repointed to `governance/` and
  * functional. Each check is intentionally specific (Req 8 AC4: no generic health
  * check) and names the surface on failure (Req 8 AC7).
@@ -340,19 +437,30 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
     });
   }
 
-  // A4: src/cli/init.ts (ADD governance copyDir, KEEP .kiro/steering) + designerpunk.ts (repoint)
+  // A4: src/cli/init.ts + src/cli/designerpunk.ts — the Spec 123 install shape.
+  //
+  // REWRITTEN 2026-10-01 (issue 2026-10-01-relocation-integrity-gate-vs-123-install-shape,
+  // U2b gatefix): the leg used to assert 119-A's MECHANISM (ADD governance copyDir, KEEP
+  // .kiro/steering copy). Spec 123 C1 removed those copies (gate 4b: `init` copies no
+  // package corpus) and delivers identity through the generated agent layer
+  // (`emitAgentLayer`, C1/C19). The invariant — a consumer scaffold's agents still receive
+  // both corpora — is unchanged; only the mechanism moved. The designerpunk.ts half (docs
+  // MCP spawned over the relocated governance/ root, never over identity-only
+  // .kiro/steering) is unchanged. Source is matched on COMMENT-STRIPPED text: the old
+  // `initKeepsSteering` sub-check was already vacuous, passing on comments alone.
   {
-    const init = read(projectRoot, 'src/cli/init.ts');
-    const initGov = /copyDir\(\s*[^)]*['"`][^'"`]*governance['"`]/.test(init);
-    const initKeepsSteering = /\.kiro\/steering/.test(init);
-    const dp = read(projectRoot, 'src/cli/designerpunk.ts');
+    const init = stripComments(read(projectRoot, 'src/cli/init.ts'));
+    const corpusLiteral = /['"`](?:governance|\.kiro\/steering|\.kiro\/agents)\/?['"`]/.test(init);
+    const initNoCorpusCopy = !corpusLiteral;
+    const initEmitsLayer = /\bemitAgentLayer\s*\(/.test(init);
+    const dp = stripComments(read(projectRoot, 'src/cli/designerpunk.ts'));
     const dpGov = /path\.join\(\s*pkgRoot\s*,\s*['"`]governance['"`]\s*\)/.test(dp);
     const dpNoSteering = !/path\.join\(\s*pkgRoot\s*,\s*['"`]\.kiro\/steering['"`]\s*\)/.test(dp);
-    const ok = initGov && initKeepsSteering && dpGov && dpNoSteering;
+    const ok = initNoCorpusCopy && initEmitsLayer && dpGov && dpNoSteering;
     checks.push({
       surface: 'src/cli/init.ts + src/cli/designerpunk.ts',
       remediated: ok,
-      detail: `init governance copyDir=${initGov} & keeps .kiro/steering=${initKeepsSteering}; designerpunk governance=${dpGov} & no steering-spawn=${dpNoSteering}`,
+      detail: `init copies no package corpus (governance/.kiro/steering/.kiro/agents)=${initNoCorpusCopy}; init emits agent layer=${initEmitsLayer}; designerpunk governance=${dpGov} & no steering-spawn=${dpNoSteering}`,
     });
   }
 
@@ -385,37 +493,79 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
     });
   }
 
-  // A7: package.json files[] (ADD governance/, KEEP .kiro/steering/), init template,
-  // Manifest COPY_ROOTS (ADD governance, keep .kiro/steering).
+  // A7: package.json files[] (governance/ + the identity docs BY EXPLICIT PATH), MCP config
+  // template, Manifest COPY_ROOTS (the release-1 copy roots `sync` recognizes).
   //
   // UPDATED 2026-09-27 (Spec 123 Task 5.4 gatefix, U1 CI change request): the third
   // leg originally asserted `src/cli/sync/FileScanner.ts`'s fixed `MANAGED_DIRS`
-  // list. Spec 123 Task 5.4 deliberately RETIRED that list — FileScanner.ts no
-  // longer hard-codes managed roots at all; callers now pass roots derived from the
-  // manifest's C7 namespace rule (`managedCopyRoots`, src/cli/sync/Classifier.ts),
-  // itself built from `COPY_ROOTS` in `src/cli/sync/Manifest.ts`. The underlying
-  // invariant this leg exists to prove — governance/ is ADDED and .kiro/steering/
-  // is KEPT among what `sync` manages — still holds; it just lives at the new
-  // location. Re-pointed the assertion there rather than retiring the leg, since
-  // the invariant itself is still live and checkable (see src/cli/__tests__/
-  // FileScanner.test.ts for the companion proof that MANAGED_DIRS is gone).
+  // list. Spec 123 Task 5.4 deliberately RETIRED that list — callers now pass roots derived
+  // from the manifest's C7 namespace rule (`managedCopyRoots`, src/cli/sync/Classifier.ts),
+  // itself built from `COPY_ROOTS` in `src/cli/sync/Manifest.ts`. Re-pointed there.
+  //
+  // REWRITTEN 2026-10-01 (issue 2026-10-01-relocation-integrity-gate-vs-123-install-shape,
+  // U2b gatefix): Spec 123 C5 removed the `.kiro/steering/` directory glob from `files[]`
+  // and ships the eight identity docs by explicit path; `personal-note` never ships
+  // (Req 12.1a). `files[]` is read by parsing package.json as JSON, never by regex. The
+  // identity set is LOCKED_IDENTITY_IDS minus `personal-note`, resolved id → file through
+  // the identity axis's own frontmatter map (no second hardcoded list). The template
+  // sub-check is unchanged. `COPY_ROOTS` keeps the same regex with a new label: from 16.5
+  // those roots are the release-1 copy roots `sync` RECOGNIZES (the migration surface), not
+  // roots it reconciles; that `sync` no longer applies package content into them is
+  // 16.5's own test, not this gate's.
   {
-    const pkg = read(projectRoot, 'package.json');
-    const pkgGov = /"governance\/"/.test(pkg);
-    const pkgSteering = /"\.kiro\/steering\/"/.test(pkg);
+    let files: string[] = [];
+    try {
+      const parsed = JSON.parse(read(projectRoot, 'package.json'));
+      files = Array.isArray(parsed.files) ? parsed.files.filter((f: unknown): f is string => typeof f === 'string') : [];
+    } catch {
+      files = [];
+    }
+    const pkgGov = files.includes('governance/');
+
+    const idToFile = identityIdToFile(projectRoot);
+    const expectedIds = [...LOCKED_IDENTITY_IDS].filter((id) => id !== 'personal-note').sort();
+    const expectedPaths = new Set<string>();
+    let identityByPath = 0;
+    for (const id of expectedIds) {
+      const file = idToFile.get(id);
+      if (!file) continue; // not on disk — counted as missing below
+      const rel = `.kiro/steering/${file}`;
+      expectedPaths.add(rel);
+      if (files.includes(rel) && exists(projectRoot, rel)) identityByPath++;
+    }
+    const steeringEntries = files.filter((f) => f.startsWith('.kiro/steering'));
+    const exactSet =
+      expectedPaths.size === expectedIds.length &&
+      steeringEntries.length === expectedPaths.size &&
+      steeringEntries.every((f) => expectedPaths.has(f));
+    const noSteeringGlob = !files.some((f) => /^\.kiro\/steering\/?(\*{1,2})?$/.test(f));
+    const personalFile = idToFile.get('personal-note');
+    const noPersonalNote = !files.some(
+      (f) => f === '.kiro/steering/personal-note.md' || (personalFile !== undefined && f === `.kiro/steering/${personalFile}`),
+    );
+
     const tmpl = read(projectRoot, 'src/cli/templates/mcp-config.json.template');
     const tmplGov = /governance/.test(tmpl) && !/\.kiro\/steering/.test(tmpl);
     const tmplNoDeadTool = !/get_documentation_map/.test(tmpl);
-    const manifestSrc = read(projectRoot, 'src/cli/sync/Manifest.ts');
+    const manifestSrc = stripComments(read(projectRoot, 'src/cli/sync/Manifest.ts'));
     const copyRootsMatch = manifestSrc.match(/COPY_ROOTS\s*=\s*\[([^\]]*)\]/);
     const copyRootsList = copyRootsMatch ? copyRootsMatch[1] : '';
     const crGov = /'governance'/.test(copyRootsList);
     const crSteering = /'\.kiro\/steering'/.test(copyRootsList);
-    const ok = pkgGov && pkgSteering && tmplGov && tmplNoDeadTool && crGov && crSteering;
+    const ok =
+      pkgGov &&
+      identityByPath === expectedIds.length &&
+      exactSet &&
+      noSteeringGlob &&
+      noPersonalNote &&
+      tmplGov &&
+      tmplNoDeadTool &&
+      crGov &&
+      crSteering;
     checks.push({
       surface: 'package.json files[] + init template + Manifest COPY_ROOTS',
       remediated: ok,
-      detail: `files[] governance=${pkgGov}/steering=${pkgSteering}; template governance=${tmplGov}/no-dead-tool=${tmplNoDeadTool}; COPY_ROOTS governance=${crGov}/steering=${crSteering}`,
+      detail: `files[] governance=${pkgGov}/identity-by-path=${identityByPath}/${expectedIds.length} exact=${exactSet}/no-steering-glob=${noSteeringGlob}/no-personal-note=${noPersonalNote}; template governance=${tmplGov}/no-dead-tool=${tmplNoDeadTool}; COPY_ROOTS (release-1 copy roots) governance=${crGov}/steering=${crSteering}`,
     });
   }
 
@@ -446,15 +596,7 @@ export function assertIdentityPresence(
   referencedIdentityIds: Set<string>,
 ): IdentityPresenceCheck[] {
   // Map id → on-disk filename in .kiro/steering/ (resolved by scanning).
-  const steeringDir = path.join(projectRoot, '.kiro/steering');
-  const files = fs.existsSync(steeringDir) ? fs.readdirSync(steeringDir) : [];
-  const idToFile = new Map<string, string>();
-  for (const f of files) {
-    if (!f.endsWith('.md')) continue;
-    const content = fs.readFileSync(path.join(steeringDir, f), 'utf-8');
-    const m = content.match(/^id:\s*(.+)$/m);
-    if (m) idToFile.set(m[1].trim(), f);
-  }
+  const idToFile = identityIdToFile(projectRoot);
 
   const allIds = new Set<string>([...LOCKED_IDENTITY_IDS, ...referencedIdentityIds]);
 

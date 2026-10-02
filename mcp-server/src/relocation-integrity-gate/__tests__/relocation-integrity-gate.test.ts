@@ -18,6 +18,7 @@ import {
   assertFamilyGuidance,
   assertMustFixCouplings,
   assertScope,
+  stripComments,
   runRelocationIntegrityGate,
   scanPromptReferences,
   LOCKED_IDENTITY_IDS,
@@ -178,6 +179,173 @@ describe('assertMustFixCouplings — shape + naming (Req 8 AC7)', () => {
       expect(typeof c.remediated).toBe('boolean');
       expect(typeof c.detail).toBe('string');
     }
+  });
+});
+
+describe('assertMustFixCouplings — legs A4/A7 assert the Spec 123 install shape (fixture-tree bites)', () => {
+  // Issue 2026-10-01-relocation-integrity-gate-vs-123-install-shape. Every bite mutates a
+  // FIXTURE tree (never the live repo files) from a known-green 123-shaped baseline, so a
+  // red can only come from the mutation. The baseline test pins that the fixture itself is green.
+  const A4 = 'src/cli/init.ts + src/cli/designerpunk.ts';
+  const A7 = 'package.json files[] + init template + Manifest COPY_ROOTS';
+  const EIGHT = [...LOCKED_IDENTITY_IDS].filter((id) => id !== 'personal-note').sort();
+  const fileFor = (id: string) => `${id}.md`;
+
+  const INIT_GREEN = [
+    "import { emitAgentLayer } from './attach';",
+    '// historical: the release-1 copies of governance and .kiro/steering were REMOVED',
+    'export async function init() {',
+    "  const layer = await emitAgentLayer({ target: 'cc' });",
+    '  return layer;',
+    '}',
+    '',
+  ].join('\n');
+  const DP_GREEN = "const docs = path.join(pkgRoot, 'governance');\n";
+  const MANIFEST_GREEN =
+    "export const COPY_ROOTS = ['.kiro/agents', '.kiro/steering', 'governance', '.kiro/skills'] as const;\n";
+  const TEMPLATE_GREEN = '{"MCP_STEERING_DIR":"./node_modules/@3fn/core/governance"}\n';
+
+  let root: string;
+  const put = (rel: string, content: string) => {
+    fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
+    fs.writeFileSync(path.join(root, rel), content);
+  };
+  const greenFiles = (): string[] => [
+    'governance/',
+    ...EIGHT.map((id) => `.kiro/steering/${fileFor(id)}`),
+    'src/cli/templates/',
+  ];
+  const writePkg = (files: string[]) => put('package.json', JSON.stringify({ name: 'fixture', files }, null, 2));
+  const coupling = (surface: string) => assertMustFixCouplings(root).find((c) => c.surface === surface)!;
+
+  beforeEach(() => {
+    root = fs.mkdtempSync(path.join(os.tmpdir(), 'rig-123-'));
+    // identity docs on disk (all 9, id by frontmatter)
+    for (const id of LOCKED_IDENTITY_IDS) put(`.kiro/steering/${fileFor(id)}`, `---\nid: ${id}\n---\n# ${id}\n`);
+    writePkg(greenFiles());
+    put('src/cli/init.ts', INIT_GREEN);
+    put('src/cli/designerpunk.ts', DP_GREEN);
+    put('src/cli/sync/Manifest.ts', MANIFEST_GREEN);
+    put('src/cli/templates/mcp-config.json.template', TEMPLATE_GREEN);
+    // legs A1/A2/A3/A5/A6 read these; copy the live files (read-only) so the call completes
+    for (const rel of [
+      '.kiro/sync-manifest.json',
+      '.cursor/mcp.json',
+      'mcp-server/src/index.ts',
+      'src/figma/VariantAnalyzer.ts',
+      'src/figma/DesignExtractor.ts',
+      'scripts/extract-component-meta.ts',
+    ]) {
+      put(rel, fs.readFileSync(path.join(DEFAULT_PROJECT_ROOT, rel), 'utf-8'));
+    }
+    fs.mkdirSync(path.join(root, '.kiro/agents'), { recursive: true });
+  });
+  afterEach(() => fs.rmSync(root, { recursive: true, force: true }));
+
+  it('baseline: the 123-shaped fixture is green on A4 and A7 (so every bite below is the mutation)', () => {
+    expect(coupling(A4).remediated).toBe(true);
+    expect(coupling(A7).remediated).toBe(true);
+    expect(assertMustFixCouplings(root)).toHaveLength(7);
+  });
+
+  it('A7 bites: restoring the .kiro/steering/ directory glob goes red', () => {
+    writePkg([...greenFiles(), '.kiro/steering/']);
+    const c = coupling(A7);
+    expect(c.remediated).toBe(false);
+    expect(c.detail).toMatch(/no-steering-glob=false/);
+    // and the glob alone, with the eight dropped, is also red
+    writePkg(['governance/', '.kiro/steering/**']);
+    expect(coupling(A7).remediated).toBe(false);
+  });
+
+  it('A7 bites: adding .kiro/steering/personal-note.md to files[] goes red', () => {
+    writePkg([...greenFiles(), '.kiro/steering/personal-note.md']);
+    const c = coupling(A7);
+    expect(c.remediated).toBe(false);
+    expect(c.detail).toMatch(/no-personal-note=false/);
+  });
+
+  it('A7 bites: dropping any one of the eight identity docs from files[] goes red', () => {
+    for (const id of EIGHT) {
+      writePkg(greenFiles().filter((f) => f !== `.kiro/steering/${fileFor(id)}`));
+      const c = coupling(A7);
+      expect(c.remediated).toBe(false);
+      expect(c.detail).toMatch(/identity-by-path=7\/8/);
+    }
+  });
+
+  it('A7 bites: an identity entry whose file is absent on disk goes red (path must exist)', () => {
+    fs.rmSync(path.join(root, '.kiro/steering', fileFor('core-goals')));
+    expect(coupling(A7).remediated).toBe(false);
+  });
+
+  it('A4 bites: a copyDir of the governance corpus in init.ts goes red', () => {
+    put('src/cli/init.ts', INIT_GREEN + "copyDir(path.join(pkgRoot, 'governance'), path.join(dest, 'governance'));\n");
+    const c = coupling(A4);
+    expect(c.remediated).toBe(false);
+    expect(c.detail).toMatch(/init copies no package corpus \(governance\/\.kiro\/steering\/\.kiro\/agents\)=false/);
+    // the other two corpus roots trip it the same way
+    put('src/cli/init.ts', INIT_GREEN + "copyDir(path.join(pkgRoot, '.kiro/steering'), x);\n");
+    expect(coupling(A4).remediated).toBe(false);
+    put('src/cli/init.ts', INIT_GREEN + 'copyDir(path.join(pkgRoot, `.kiro/agents/`), x);\n');
+    expect(coupling(A4).remediated).toBe(false);
+  });
+
+  it('A4 bites: removing the emitAgentLayer( call from init.ts goes red', () => {
+    put('src/cli/init.ts', INIT_GREEN.replace('await emitAgentLayer({ target: \'cc\' })', 'null'));
+    const c = coupling(A4);
+    expect(c.remediated).toBe(false);
+    expect(c.detail).toMatch(/init emits agent layer=false/);
+  });
+
+  it('A4 vacuity regression: a corpus-root name that appears ONLY in a comment stays green', () => {
+    put(
+      'src/cli/init.ts',
+      INIT_GREEN +
+        "// copyDir(path.join(pkgRoot, 'governance'), x);  (retired release-1 row)\n" +
+        "/* the '.kiro/steering' and '.kiro/agents' copies are REMOVED */\n",
+    );
+    expect(coupling(A4).remediated).toBe(true);
+  });
+
+  it('A4: comment-stripping respects strings (a // inside a literal is not a comment)', () => {
+    put('src/cli/init.ts', INIT_GREEN + "const u = 'http://x'; copyDir(path.join(pkgRoot, 'governance'), u);\n");
+    expect(coupling(A4).remediated).toBe(false);
+  });
+
+  it('A4 designerpunk.ts half unchanged: a steering spawn, or a missing governance spawn, goes red', () => {
+    put('src/cli/designerpunk.ts', DP_GREEN + "const s = path.join(pkgRoot, '.kiro/steering');\n");
+    expect(coupling(A4).remediated).toBe(false);
+    put('src/cli/designerpunk.ts', 'const nothing = 1;\n');
+    expect(coupling(A4).remediated).toBe(false);
+  });
+
+  it('A7 COPY_ROOTS (release-1 copy roots): dropping governance or .kiro/steering goes red', () => {
+    put('src/cli/sync/Manifest.ts', "export const COPY_ROOTS = ['.kiro/agents', '.kiro/steering'] as const;\n");
+    expect(coupling(A7).remediated).toBe(false);
+    put('src/cli/sync/Manifest.ts', "export const COPY_ROOTS = ['.kiro/agents', 'governance'] as const;\n");
+    expect(coupling(A7).remediated).toBe(false);
+    // a COPY_ROOTS that only appears in a comment does not count
+    put('src/cli/sync/Manifest.ts', "// COPY_ROOTS = ['.kiro/steering', 'governance']\nexport const COPY_ROOTS = ['.kiro/agents'] as const;\n");
+    expect(coupling(A7).remediated).toBe(false);
+  });
+
+  it('A7 template sub-check unchanged: steering dir or dead tool in the template goes red', () => {
+    put('src/cli/templates/mcp-config.json.template', '{"MCP_STEERING_DIR":".kiro/steering","governance":1}\n');
+    expect(coupling(A7).remediated).toBe(false);
+    put('src/cli/templates/mcp-config.json.template', '{"MCP_STEERING_DIR":"governance","t":"get_documentation_map"}\n');
+    expect(coupling(A7).remediated).toBe(false);
+  });
+
+  it('stripComments: removes line and block comments, keeps literals and regexes', () => {
+    const out = stripComments(
+      "const a = 'x'; // gone\n/* gone\n too */ const b = \"//kept\"; const r = /a\\/\\/b[/]/g; const t = `//kept`;\n",
+    );
+    expect(out).not.toMatch(/gone/);
+    expect(out).toContain("'x'");
+    expect(out).toContain('"//kept"');
+    expect(out).toContain('`//kept`');
+    expect(out).toContain('/a\\/\\/b[/]/g');
   });
 });
 
