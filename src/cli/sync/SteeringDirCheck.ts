@@ -18,6 +18,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as readline from 'readline';
+import { resolvePackageRoot } from '../shared/resolvePackageRoot';
 
 /** The post-119-A served corpus directory the docs MCP should index. */
 export const EXPECTED_STEERING_DIR_SEGMENT = 'governance';
@@ -83,13 +84,53 @@ export function detectStaleSteeringDir(projectRoot: string): StaleSteeringDirFin
   return findings;
 }
 
+/** The package's MCP-config template, relative to the package root — the value a fresh `init`/`attach` writes. */
+export const MCP_TEMPLATE_REL = 'src/cli/templates/mcp-config.json.template';
+
 /**
- * Compute the recommended value for a stale entry by swapping the
- * `.kiro/steering` segment for `governance` while preserving any prefix
- * (e.g. `./node_modules/@3fn/core/.kiro/steering` → `./node_modules/@3fn/core/governance`).
+ * The `MCP_STEERING_DIR` value the package's MCP template carries for the docs
+ * server — read from the template itself, never a second hard-coded copy. `null`
+ * when the template cannot be read (a damaged install): the caller then makes no
+ * recommendation rather than guessing one.
+ *
+ * This module sits at `src/cli/sync/` (`dist/cli/sync/` packed) — THREE levels below
+ * the package root — so it hands `resolvePackageRoot` its parent directory, which
+ * satisfies that util's two-levels-down contract.
  */
-export function recommendedSteeringDir(currentValue: string): string {
-  return currentValue.replace(/\.kiro\/steering\/?$/, EXPECTED_STEERING_DIR_SEGMENT);
+export function templateSteeringDir(
+  pkgRoot: string = resolvePackageRoot(path.join(__dirname, '..')),
+): string | null {
+  try {
+    const template = JSON.parse(fs.readFileSync(path.join(pkgRoot, MCP_TEMPLATE_REL), 'utf-8')) as {
+      mcpServers?: Record<string, { env?: Record<string, unknown> }>;
+    };
+    const value = template.mcpServers?.['designerpunk-docs']?.env?.MCP_STEERING_DIR;
+    return typeof value === 'string' && value.length > 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Compute the recommended value for a stale entry.
+ *
+ * - **Package-prefixed** (the value reaches into `node_modules/`, e.g.
+ *   `./node_modules/@3fn/core/.kiro/steering`): swap the `.kiro/steering` segment for
+ *   `governance`, keeping the prefix → `./node_modules/@3fn/core/governance`.
+ * - **No package prefix** (the pre-123 `init` wrote the bare `./.kiro/steering`,
+ *   pointing at the consumer's OWN copies): the swap would give `./governance`, a
+ *   directory no consumer repo has — the docs MCP then indexes nothing. Recommend the
+ *   template's value instead (`.kiro/issues/2026-10-02-sync-steering-dir-suggestion-writes-broken-path.md`).
+ *   `null` when the template cannot be read.
+ */
+export function recommendedSteeringDir(
+  currentValue: string,
+  templateValue: string | null = templateSteeringDir(),
+): string | null {
+  if (currentValue.includes('node_modules/')) {
+    return currentValue.replace(/\.kiro\/steering\/?$/, EXPECTED_STEERING_DIR_SEGMENT);
+  }
+  return templateValue;
 }
 
 /**
@@ -109,15 +150,21 @@ export async function reportAndMaybeFixStaleSteeringDir(
       `${findings.length} config${findings.length === 1 ? '' : 's'}. ` +
       `The docs MCP now serves the relocated corpus from 'governance/'.`,
   );
+  const templateValue = templateSteeringDir();
+  let recommendable = 0;
   for (const f of findings) {
+    const recommended = recommendedSteeringDir(f.currentValue, templateValue);
+    if (recommended !== null) recommendable++;
     console.log(
       `    ${f.configPath} → ${f.serverKey}: "${f.currentValue}" ` +
-        `(recommended: "${recommendedSteeringDir(f.currentValue)}")`,
+        (recommended !== null
+          ? `(recommended: "${recommended}")`
+          : `(no recommendation: the installed @3fn/core's ${MCP_TEMPLATE_REL} could not be read)`),
     );
   }
 
-  // Dry-run / non-interactive: advisory only.
-  if (options.dryRun || !process.stdin.isTTY) {
+  // Dry-run / non-interactive: advisory only. Nothing to offer when no entry has a recommendation.
+  if (options.dryRun || !process.stdin.isTTY || recommendable === 0) {
     console.log(
       '    Update MCP_STEERING_DIR to the recommended value so the docs MCP indexes the relocated docs.',
     );
@@ -131,12 +178,12 @@ export async function reportAndMaybeFixStaleSteeringDir(
 
   let updated = 0;
   const answer = await new Promise<string>(resolve =>
-    rl!.question(`\n  Update MCP_STEERING_DIR to 'governance/' in the above config(s)? [Y/n]: `, resolve),
+    rl!.question(`\n  Update MCP_STEERING_DIR to the recommended value in the above config(s)? [Y/n]: `, resolve),
   );
 
   if (answer.toLowerCase().trim() !== 'n') {
     for (const f of findings) {
-      if (applySteeringDirFix(projectRoot, f)) updated++;
+      if (applySteeringDirFix(projectRoot, f, templateValue)) updated++;
     }
     console.log(`  ✓ Updated MCP_STEERING_DIR in ${updated} config${updated === 1 ? '' : 's'}.`);
   } else {
@@ -149,15 +196,24 @@ export async function reportAndMaybeFixStaleSteeringDir(
 
 /**
  * Rewrite a single stale entry in place, preserving formatting as best we can
- * by parsing and re-serializing with 2-space indent.
+ * by parsing and re-serializing with 2-space indent. Writes nothing (returns
+ * `false`) when there is no recommendation for the entry.
+ *
+ * @internal Exported for testing.
  */
-function applySteeringDirFix(projectRoot: string, finding: StaleSteeringDirFinding): boolean {
+export function applySteeringDirFix(
+  projectRoot: string,
+  finding: StaleSteeringDirFinding,
+  templateValue: string | null = templateSteeringDir(),
+): boolean {
   const abs = path.join(projectRoot, finding.configPath);
   try {
     const parsed = JSON.parse(fs.readFileSync(abs, 'utf-8'));
     const env = parsed?.mcpServers?.[finding.serverKey]?.env;
     if (!env || typeof env.MCP_STEERING_DIR !== 'string') return false;
-    env.MCP_STEERING_DIR = recommendedSteeringDir(env.MCP_STEERING_DIR);
+    const recommended = recommendedSteeringDir(env.MCP_STEERING_DIR, templateValue);
+    if (recommended === null) return false;
+    env.MCP_STEERING_DIR = recommended;
     fs.writeFileSync(abs, JSON.stringify(parsed, null, 2) + '\n', 'utf-8');
     return true;
   } catch {

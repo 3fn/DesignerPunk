@@ -23,6 +23,7 @@ import {
   attachUnbornRepoMessage,
   restartLineNowMessage,
   managedRegionEditedInsideMessage,
+  existingMcpEntryMessage,
 } from '../shared/errorCatalog';
 
 // Verbatim transcriptions from design.md's catalog table — the comparands.
@@ -169,6 +170,19 @@ describe('errorCatalog — string conformance (Task 16.5 addition)', () => {
   test('managed region — edited inside', () => {
     expect(managedRegionEditedInsideMessage('CLAUDE.md')).toBe(
       'you edited inside the DesignerPunk-managed region of CLAUDE.md — those edits will be replaced. Move them outside the region; not applying without --apply',
+    );
+  });
+});
+
+// The 15.0.0 upgrade rehearsal — an issue-row string (source:
+// .kiro/issues/2026-10-02-sync-steering-dir-suggestion-writes-broken-path.md; no design.md row yet).
+describe('errorCatalog — string conformance (15.0.0 rehearsal issue rows)', () => {
+  test('existing MCP entry — the advice names attach, never init', () => {
+    expect(existingMcpEntryMessage('.kiro/settings/mcp.json', 'designerpunk-docs', 'kiro')).toBe(
+      ".kiro/settings/mcp.json already has 'designerpunk-docs' entry; left unchanged. If it is outdated, delete the entry and re-run: npx designerpunk attach --target=kiro — or update it by hand.",
+    );
+    expect(existingMcpEntryMessage('.mcp.json', 'designerpunk-application', 'cc')).toBe(
+      ".mcp.json already has 'designerpunk-application' entry; left unchanged. If it is outdated, delete the entry and re-run: npx designerpunk attach --target=cc — or update it by hand.",
     );
   });
 });

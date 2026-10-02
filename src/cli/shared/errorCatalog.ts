@@ -227,3 +227,23 @@ export function restartLineNowMessage(): string {
     `this session cannot see them yet (approve them if your tool asks)`
   );
 }
+
+// ---------------------------------------------------------------------------
+// Issue-row catalog strings (the 15.0.0 upgrade rehearsal, 2026-10-02). Their
+// source is the grant issue named on each, not a design.md row: design.md is
+// outside those grants. A design catalog row for each is owed at 123's next
+// design touch.
+// ---------------------------------------------------------------------------
+
+/**
+ * An MCP config already carries one of DesignerPunk's server keys, so `init`/`attach`
+ * leaves it unchanged. The remedy names `attach` — the verb that rewrites MCP wiring
+ * in a born or migrated repo; `init` is the once-ever birth event.
+ * Source: `.kiro/issues/2026-10-02-sync-steering-dir-suggestion-writes-broken-path.md`.
+ */
+export function existingMcpEntryMessage(configFile: string, key: string, target: 'cc' | 'kiro'): string {
+  return (
+    `${configFile} already has '${key}' entry; left unchanged. If it is outdated, delete the entry ` +
+    `and re-run: npx designerpunk attach --target=${target} — or update it by hand.`
+  );
+}

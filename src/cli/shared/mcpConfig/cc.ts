@@ -17,6 +17,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { existingMcpEntryMessage } from '../errorCatalog';
 import type { McpConfigManifestRecorder, McpConfigTemplate, McpServerTemplateEntry } from './kiro';
 import { readApprovedToolNames } from './kiro';
 
@@ -72,7 +73,7 @@ export function scaffoldClaudeCodeMcpConfig(
       console.log(`  skipped: .mcp.json (all DesignerPunk entries already present)`);
     }
     for (const key of skipped) {
-      console.log(`  ⚠️  .mcp.json already has '${key}' entry; left unchanged. If outdated, delete the entry and re-run init, or update manually.`);
+      console.log(`  ⚠️  ${existingMcpEntryMessage('.mcp.json', key, 'cc')}`);
     }
   }
 
