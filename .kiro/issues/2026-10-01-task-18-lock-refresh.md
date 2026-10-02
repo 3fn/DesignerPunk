@@ -1,0 +1,110 @@
+# Issue + grant: Thurgood refreshes `canonical/generated.lock` on U2b's unit branch from Task 17's close to U2b's merge
+
+**Date**: 2026-10-01
+**Status**: ACTIVE
+**Owner**: Thurgood.
+- Peter's ruling names him.
+- He also owns the instrument. The register row `never-hand-edit-122-generated` (`governance/classification-map.md`) carries `verification.owner: thurgood`, with `122-diff-guard` as its check, and the lock is that guard's own write.
+**Trigger**: each event under § "When it applies", from **Task 17's parent close** on `task/123-u2b-profile` until **U2b's unit PR opens** (Task 18.3). **Expiry**: when U2b's unit PR merges (README rule 8).
+**Source**: Peter's ruling of 2026-10-01, relayed by the orchestrator, and Thurgood's Task 17 branch-cut sweep. The sweep found that, after 17.3's one refresh, merges into the unit branch still move the lock and no parent's grant covers refreshing it.
+
+---
+
+## The ruling, verbatim
+
+Peter, 2026-10-01: **"Retire the relocation-gate checks; Thurgood refreshes the lock in Task 18."** This file records the second half. The first half is recorded in `.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md`, § "2026-10-01 — Peter's ruling — RETIRE".
+
+## Why a grant is needed
+
+The table below was read on `task/123-u2b-profile` at `24a00821`.
+
+| Parent | Does its row grant the lock? |
+|---|---|
+| Task 16 | It listed `canonical/generated.lock` (16.1), and Task 16 is closed |
+| Task 17 | It lists the lock for **one** refresh, at 17.3, and requires that a re-run at parent close produce no lock diff |
+| Task 18 | Its Primary Artifacts are Stacy's verdict record (cited), the U2 completion doc's 24.3 table, and `CHANGELOG.md` (release 2). **The lock is not among them** |
+
+Between Task 17's close and U2b's PR, at least these move the lock's `inputClosure` (outputs unchanged):
+
+- Merging `main` into the unit branch after the out-of-grant residuals PR (`.kiro/issues/2026-10-01-agent-generator-out-of-grant-residuals.md` item 2, which edits `tools/agent-generator/generate.ts`, a closure root, and which lands before 18.1). The lock on `main` is computed over `main`'s tree, so after the merge the unit branch's lock is stale or in conflict.
+- The relocation-gate retirement PR (`chore/relocation-gate-retire-a4-a7`), if it merges after Task 17 closes. `mcp-server/src` is a closure root.
+- Any other merge of `main` that touches `governance/**`, `.kiro/steering/**`, `canonical/**`, `skills/**`, `tools/agent-generator/**`, the three MCP servers' `src/`, `package.json` or `.kiro/hooks/complete-task.sh`.
+
+## Grant
+
+**Grant paths**: `canonical/generated.lock`
+
+- **Rule 8.** The grant is activated by Peter's merge of the PR whose body names this file and this path list.
+  - **The fixing PR is U2b's unit PR.** The refresh commits land on its branch, `task/123-u2b-profile`, and the grant expires when that PR merges.
+  - U2b's PR body names this file and its path list. Lina opens that PR at 18.3, and the orchestrator carries this line into her 18.3 brief. It names a grant, not a seat.
+  - The grant confers no ratification authority and touches no governance-law path. An edit by Thurgood outside the list, on that branch, is a claims-pass finding.
+- **Guard-written only.**
+  - The only write is `npm run check:122:diff-guard`'s own full-run write. The lock is **never hand-edited**.
+  - The run is made from a checkout of the unit branch at its current pushed head whose `git status --porcelain` is empty. The closure counts untracked files that are not ignored; since #251 it lists from git and excludes ignored files.
+  - After the run, `git status --porcelain` shows **only** `canonical/generated.lock`, or nothing.
+- **Stop and report; this is not a refresh** if:
+  - the guard's `outputs` value moves;
+  - the guard asks for a re-sign, or any freshness or signing check fails;
+  - the run leaves any file other than the lock changed;
+  - resolving the lock would take a hand edit.
+
+  Report to the orchestrator, naming Lina (generator machinery) and Stacy (G2's witness, below). A moved `outputs` means the generated surface changed. That is its owner's work, not this grant's.
+- **One commit per refresh**, touching exactly `canonical/generated.lock`:
+  - **Subject**: `generated.lock refresh after merging <what> (123)`, the form already on the branch (e.g. `56c5cd7e`).
+  - **Body**: carries `Grant: .kiro/issues/2026-10-01-task-18-lock-refresh.md` and ends `Agent: thurgood`.
+  - **Push**: fast-forward only, never force, never amend. A rejected push means fetch, re-run the guard from a clean tree at the new head, and commit again.
+- **When the triggering merge conflicts in the lock**, the agent making the merge takes either side; the refresh commit then carries the guard's value. The merge itself is not this grant's act.
+
+## When it applies
+
+1. **After each merge of `main`, or of a fixing PR, into `task/123-u2b-profile`**, from Task 17's parent-close commit until U2b's unit PR opens.
+   - Run the guard. If it writes no lock diff, there is no commit; record the run in the trigger log below.
+   - Merges **before Task 17's close** belong to Task 17: they are absorbed by 17.3's one refresh, or they wait, so that Task 17's close-time re-run produces no diff. They are not this grant's.
+2. **Once before 18.1's G2 request**: a confirming run on the head that pass four will be requested on. Its result (no diff, or the refresh commit SHA) is recorded in the trigger log, dated, so that pass four reads a lock that agrees with its tree.
+3. **After 18.1's request, no refresh under this grant without Stacy's dated go, recorded in this file.**
+   - The lock is part of the tree her verdict reads.
+   - A merge that moves it in that window is reported to Stacy and the orchestrator, not refreshed.
+   - While `outputs` is unmoved, a stale lock keeps the guard's full path green (Task 17's 17.3 note), so waiting costs a full-path run in CI, not a red.
+
+## The recusal, stated plainly
+
+Thurgood is recused from G2 because he authored the consumer profile's dispositions that the pass-four verdict judges (tasks.md § "Gate seat layout", the G2 row; Task 18's third criterion, "Thurgood authors no line of it").
+
+**This grant does not seat Thurgood in Task 18, and it does not touch the recusal.**
+
+- He authors no line of Task 18's completion doc, the 24.3 table, `CHANGELOG.md`, `g2-consequence-texts.md` or the verdict record.
+- He requests nothing of Stacy, reads no verdict, and makes no claim about the G2 tree.
+- His name is not added to Task 18's row.
+
+A lock refresh is the guard's mechanical write. Its value is whatever the guard computes from a clean tree, and no disposition, criterion or verdict enters it. Every case in which a refresh would need a judgment (moved `outputs`, a re-sign, a hand-resolved conflict) is a stop, above.
+
+**Why an issue-row grant and not a tasks.md amendment to Task 18's row**:
+
+1. An amendment would put the recused agent's name on the gate's own row. The seat layout chose Lina for Task 18 "so the acceptance claim never sits with the recused seat — no reader can take the recusal as partial". A name on that row can be read as partial even when the act is mechanical.
+2. Under the row-grant rule (ballot `2026-09-26-tasks-row-write-scope-grant`), a row grants its PRIMARY and its tiered secondaries. Listing Thurgood there makes him a secondary of the gate parent, and that is a seat.
+3. A non-checkbox `tasks.md` hunk is a consult-trigger surface: Lina as the row's PRIMARY, Stacy as the verdict seat. This grant sits outside the line, as Stacy's verdict record does.
+
+**The surviving counter-argument**: a reader of Task 18's row alone will not see that refresh commits land on the branch during her parent. The mitigations are the U2b PR body's citation, the orchestrator's 18.x briefs, and this file's trigger log. Each is weaker than a line on the row.
+
+## Stacy's interest
+
+- **The lock is a witness for G2's pass four.** Pass four reads this tree, and a lock that disagrees with its tree is a weak witness (`.kiro/issues/2026-10-01-generated-lock-input-closure-differs-by-checkout.md` § "Cost today"). That is why there is a confirming run before 18.1, and why nothing is refreshed after 18.1 without her go.
+- **Her MIDPOINT read of out-of-list edits** (U2b's merge is U2's MIDPOINT):
+  - The lock is outside Task 18's Primary Artifacts, and outside Task 17's after 17.3. This file is the record that puts Thurgood's refresh commits in-list.
+  - The mechanical read is `git log --format='%h %s' <Task-17-close>..<U2b-head> -- canonical/generated.lock`. Each commit listed either sits inside another live grant that lists the lock, or carries this grant in its body, has `git show --name-only` equal to exactly `canonical/generated.lock`, and leaves no lock diff when the guard is re-run on it.
+  - **Disclosure**: the refresh author is the recused profile author. The read above checks presence and mechanics, never a verdict.
+
+## Consulted
+
+Neither Stacy nor Lina was consulted before this record was filed.
+
+- **Stacy should be told before the first refresh under this grant**, on one question: does § "When it applies" item 3 (no refresh after 18.1 without her go) leave her witness as she needs it?
+- **Lina should be told before 18.x begins** that refresh commits may land on her branch, fast-forward, between her merges.
+
+## Trigger log
+
+*(Append-only, dated: each triggering merge, the guard's result, and the refresh commit SHA or "no diff".)*
+
+## Closing
+
+When U2b's unit PR merges to `main`, the grant expires. The outcome (the trigger log's last entry, and the count of refresh commits) is recorded here, dated, and the file moves to `archive/` (README rule 5).
