@@ -34,7 +34,7 @@ The gate's outcome now costs an artifact edit that was declared before anyone kn
 
 ## Impact
 
-- **Criteria**: 9 of 11 are met. Criteria 3 and 7 are partially met: each owes one line in the U2b PR body (the recusal statement and the tripwire line), and the PR opens at 18.3 part B.
+- **Criteria**: all 11 are met, with no unmet row. Criteria 3 and 7's PR-body lines (the recusal statement and the tripwire line) are in the U2b unit PR, #262. The branch-head dispatch at `34d4560e` is six of six green; the gate runs on #262.
 - **Instruments**: 23 rows — exists 14, built-here 9, missing 0 — with one `misfit` self-reported (W1: who made the confirming run, and where it is recorded).
 - **Carries**: G2-F1, G2-F2 and G2-F3 are routed to Lina by the record and are filed as issues after U2b merges. Any fix is a new falsification cycle (Lina condition 2).
 - **Owed after U2b merges**: the docs `rebuild_index`, seven issue archive moves, the new issues, and Stacy's MIDPOINT and ARMING.

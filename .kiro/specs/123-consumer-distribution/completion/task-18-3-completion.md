@@ -5,7 +5,7 @@
 ## What changed
 
 - **This doc** is written, and **18.3 and parent 18 are ticked** in `tasks.md` (checkbox-only hunks).
-- **The U2b unit PR is opened** by `./.kiro/hooks/complete-task.sh` in parent mode, against `main`, titled `U2b consumer generation profile: machinery, rendering & G2 (123)`. Its number is added by the follow-up commit.
+- **The U2b unit PR is opened** by `./.kiro/hooks/complete-task.sh` in parent mode, against `main`, titled `U2b consumer generation profile: machinery, rendering & G2 (123)`. It is **PR #262**, https://github.com/3fn/DesignerPunk/pull/262. The command reported `✅ CI started: 11 check run(s) registered on PR #262 at 180dc9e28007d713070e8f8ab68f1b392163574e`. Lina set the PR body (`gh pr edit 262 --body-file …`) with the tripwire line, the recusal statement, gate pointers, grants, signing acts and review material; the orchestrator adds its own section.
 - **The parent docs were committed earlier**, at `0dc239e4` (part A): `task-18-completion.md`, the summary, and the instruments' final counts.
 - **The `## 24.3 acceptance table` section is untouched.**
 
