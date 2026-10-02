@@ -833,8 +833,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** Stacy's verdict record (cited); the U2 completion doc's 24.3 table; `CHANGELOG.md` (release 2)
 
   - [x] 18.0 Commit the two pre-declared consequence texts
-  - [ ] 18.1 Request pass four from Stacy
-  - [ ] 18.2 Apply the verdict's artifact edit; the release-2 CHANGELOG entry
+  - [x] 18.1 Request pass four from Stacy
+  - [x] 18.2 Apply the verdict's artifact edit; the release-2 CHANGELOG entry
   - [ ] 18.3 Full validation; open the U2b PR (tripwire line)
 
 ### UNIT 3 — Onboarding

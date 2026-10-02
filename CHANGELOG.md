@@ -4,6 +4,28 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
+## [Unreleased] — planned Release 2 (generated agent layer)
+
+The version number is assigned at release-prep, along with whether this ships as its own release or together with Release 1. Nothing below depends on that order. If the two ship together, both entries describe that one release.
+
+### Added
+
+- **A generated agent layer.** `init` now generates DesignerPunk's agents for your agent tool instead of copying prompt files into your repo. It generates the agent definitions, the always-loaded identity files, and the MCP configuration and approvals, for one target: Claude Code (`--target=cc`, the default) or Kiro (`--target=kiro`).
+- **`npx designerpunk attach --target=<cc|kiro>`** adds a target to a repo: a second agent tool, or a repo that `init` did not create. **`attach --reference`** sets up only the MCP configuration and approvals. Use it to read DesignerPunk's docs and components without setting up a design system.
+- **`sync --migrate-legacy`**, offered only together with `attach`. It removes the agent, steering and governance files that an earlier `init` copied into your repo, then attaches the generated layer, in the same run. Nothing changes unless you pass the flag.
+- **Generation warns instead of failing when the installed package is missing a member.** If a document, identity file or tool that an agent expects is missing from the installed package, that agent is generated without it. A warning names what is missing and ends: "If a clean reinstall (remove node_modules, then npm install) does not restore it, the package you installed does not contain it." The command still exits 0.
+
+### Changed
+
+- **`init` no longer copies `.kiro/agents/`, `.kiro/steering/` or `governance/` into your repo.** The MCP servers serve DesignerPunk's docs from the installed package, and the generated layer delivers its identity files to your agents.
+- **`sync` keeps the generated agent files up to date** for the targets you have attached.
+- **The Integration Guide's "Set up agent prompts" step** now teaches `attach` instead of copying prompt files by hand.
+
+### Removed from the package
+
+- **The full `.kiro/steering/` folder and the steward agent prompts (`.kiro/agents/`) no longer ship.** In their place the package ships, by name, the eight identity documents the generated layer reads.
+- **The generator now ships compiled** (`dist/generator/`), so generating agents needs no TypeScript runtime.
+
 ## [Unreleased] — planned Release 1 (substrate & packaging truth)
 
 **This is a breaking (major) release for anyone already running an earlier `@3fn/core`.** The exact version number is assigned at release-prep, following this project's internal release process; the changes below are what will ship in it.
