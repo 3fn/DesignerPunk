@@ -63,3 +63,45 @@ The old posture was deliberate: `workflow-rules-guard.ts`'s header and `__tests_
 ## Not in scope here
 
 Any edit to the files above. This issue is the tracked flag, the measured facts, and the fix shape.
+
+---
+
+## Amendment 2026-10-02 — grant widened for the registry split (item 2c); target corrected; measured facts
+
+*Appended 2026-10-02 by Lina. Nothing above is rewritten or struck; where this section differs from the text above, this section governs.*
+
+### 1. Grant paths widened
+
+**Grant paths** (the original eleven, verbatim, plus three): `tools/agent-generator/tsconfig.json`, `tools/agent-generator/resolve.ts`, `tools/agent-generator/resolve-stdio.ts`, `tools/agent-generator/workflow-rules-guard.ts`, `tools/agent-generator/workflow-rules-accessor.ts`, `tools/agent-generator/generate.ts`, `tools/agent-generator/canonical-vs-truth.ts`, `tools/agent-generator/sweeps/sweep-1-refs.ts`, `tools/agent-generator/__tests__/consumer-entry.paths.test.ts`, `package.json`, `canonical/generated.lock`, `tools/agent-generator/registry.ts`, `tools/agent-generator/registry-manifest.ts`, `tools/agent-generator/consumer-entry.ts`
+
+Scope notes on the three added paths:
+- `consumer-entry.ts` — its `./registry` import line ONLY (re-pointed to `./registry-manifest`). No other edit.
+- `registry.ts` — moving the manifest half out and re-exporting it, nothing else.
+- `registry-manifest.ts` — new; receives the moved manifest half.
+- All earlier scope notes stand (`package.json`: the `--external` flag only; `generate.ts`: import re-points only; `canonical/generated.lock`: the `inputClosure` refresh only, and per the Task 18 lock-refresh grant the lock move rides the VALVE-1 refresh, not the fixing PR).
+
+The widened list is activated by Peter's merge of the PR that carries this amendment, and the fixing PR (#259) is diffed against the list as it stands at that merge. The rest of the grant's terms (expiry on the fixing PR's merge; no ratification authority; no governance-law path) are unchanged.
+
+### 2. Target correction
+
+The fixing PR targets the U2b unit branch, `task/123-u2b-profile`, not `main`. #247's body L31 already named that target ("a `chore/` PR into the unit branch before pass four, or after U2b merges and before release 2"; #247 merge SHA `ad17a22a`). The two "to `main`" phrases above (the Trigger paragraph and the last Grant bullet) are superseded. The fixing PR is #259.
+
+### 3. Measured facts, 2026-10-02
+
+- Item 2a's split alone moved `dist/generator/consumer-entry.js` from 917,515 to 917,372 bytes (143 bytes). The "about 890 kB as reported at 16.1" figure above was a different measurement base; 917,515 bytes is the figure at `8ebdae96` before the split.
+- The SDK remains in the bundle (three `@modelcontextprotocol` modules): `registry.ts` L34–35 import `Client` and `StdioClientTransport` at top level, and `consumer-entry.ts` L80 imports `declaredToolNames` and `fromManifest` from `./registry`. An esbuild metafile shows `consumer-entry.ts` as the only consumer-closure file that reaches `registry.ts`.
+- **Item 2a is NOT fixed** until the bundle-content test asserts no `@modelcontextprotocol` string and that assertion passes. No record may call it fixed before then.
+
+### 4. Item 2c — the registry split
+
+Read against `origin/task/123-u2b-profile` on 2026-10-02 (the manifest half is absent from `main`'s `registry.ts`; the fix is diffed against the unit branch). Line numbers to be re-verified at execution.
+- **Move**: the manifest half — `DeclaredTool`, `DeclaredServer`, `ManifestRegistry`, `ToolManifestLike`, `fromManifest`, `declaredToolNames`, L225–291 (section header L225, through `declaredToolNames` at L288) — to new `registry-manifest.ts`. Verified pure: no SDK use, no `fs`/`crypto`/`child-process-guard`, and no helper from the rest of `registry.ts` (`byName` is local to `fromManifest`), so nothing drags the SDK along.
+- **Keep**: `registry.ts` keeps the SDK half and re-exports the manifest half from `./registry-manifest`.
+- **Re-point**: `consumer-entry.ts` imports from `./registry-manifest` (L80).
+- **Test**: the paths test's `fromManifest` spy (L25 `import * as registryModule from '../registry'`, L114 `jest.spyOn(registryModule, 'fromManifest')`) re-points to `../registry-manifest`. It must re-point rather than rely on the re-export: spying on a re-exported binding would not intercept `consumer-entry.ts`'s call, and a compiled re-export is a non-configurable getter. The bundle-content test gains the assertion that the bundle contains no `@modelcontextprotocol` string.
+- **Found while verifying (differs from the brief's wording)**: no steward caller imports the manifest half. `git grep` over `tools/`, `src/`, `scripts/` at the unit branch finds those six names only in `registry.ts`, `consumer-entry.ts` and the paths test. `generate.ts`, `canonical-vs-truth.ts` and `sweeps/sweep-6-declarations.ts` import other names from `./registry` (e.g. `serverTable`, `introspectServer`, `assembleRegistry`, `generateRegistry`) and need no change; the re-export in `registry.ts` is a compatibility seam, not something a steward caller needs.
+- **Unchanged**: rendered output. `outputs` stays unmoved (`npm run check:122:diff-guard` and `consumer-entry.parity.test.ts` verify); only `inputClosure` moves, and that is deferred to the VALVE-1 refresh.
+
+### 5. Rulings and trigger
+
+Peter, 2026-10-02: "Go with your recommendations on all four" (the fix lands before the Task 18 gate request) and, after the measurement, "Go with A" (finish it before the gate under a widened grant). **Trigger unchanged**: before Task 18.1.
