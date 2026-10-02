@@ -32,7 +32,13 @@ import {
   dirHash,
   sha,
   BASE_TOOLS,
+  stubAgentLayer,
 } from './syncTestKit';
+
+// Task 16.5: the file-grain vehicle is a GENERATED agent file (the release-1 copy roots are no longer
+// managed — C7, gate 4b). The package side comes through sync's agent-layer seam.
+const DOC = '.claude/agents/doc.md';
+const MINE = '.claude/agents/mine.md';
 
 const OLD_COLOR = 'export const color = "old";\n';
 const NEW_COLOR = 'export const color = "new";\n';
@@ -114,32 +120,33 @@ describe('sync — end to end (Task 5)', () => {
   });
 
   test('NO CLASS APPLIES WITHOUT THE REPORT FIRST — off a terminal without --apply, zero files change', async () => {
-    const pkgDir = setupPackage(scratch, { files: { '.kiro/steering/Doc.md': 'v2\n' } });
-    birthKeys(scratch, pkgDir, {}, { '.kiro/steering/Doc.md': { hash: sha('v1\n'), grain: 'file', origin: 'copy' } });
-    writeFile(scratch, '.kiro/steering/Doc.md', 'v1\n'); // updated-safe pending
+    const pkgDir = setupPackage(scratch);
+    birthKeys(scratch, pkgDir, {}, { [DOC]: { hash: sha('v1\n'), grain: 'file', origin: 'generated' } });
+    writeFile(scratch, DOC, 'v1\n'); // updated-safe pending
     setTools(pkgDir, { ...BASE_TOOLS, 'designerpunk-product': [{ name: 'get_screen', readOnlyHint: true }, { name: 'list_screens', readOnlyHint: true }] });
     writeFile(scratch, LEGACY_MANIFEST_PATH, JSON.stringify({ version: '12.0.3', files: {} })); // a stray legacy file too
     const before = dirHash(scratch);
     expect(before.files).toBeGreaterThanOrEqual(6);
 
-    const out = await runSync({ projectRoot: scratch, isTTY: false });
+    const out = await runSync({ projectRoot: scratch, isTTY: false, agentLayer: stubAgentLayer({ cc: [{ path: DOC, content: 'v2\n' }] }) });
 
     expect(out.stopped).toBe('off-tty');
     expect(con.output()).toContain(OFF_TTY_REPORT_ONLY_MESSAGE);
-    expect(con.output()).toMatch(/Updated in the package, unchanged by you/);
+    expect(con.output()).toMatch(/Updated in the package, unchanged by you[\s\S]*\.claude\/agents\/doc\.md/);
     expect(dirHash(scratch)).toEqual(before);
     expect(out.applied).toHaveLength(0);
   });
 
   describe('apply behavior', () => {
+    const agentLayer = stubAgentLayer({ cc: [{ path: DOC, content: 'v2\n' }, { path: MINE, content: 'pkg\n' }] });
     function pending() {
-      const pkgDir = setupPackage(scratch, { files: { '.kiro/steering/Doc.md': 'v2\n', '.kiro/steering/Mine.md': 'pkg\n' } });
+      const pkgDir = setupPackage(scratch);
       birthKeys(scratch, pkgDir, {}, {
-        '.kiro/steering/Doc.md': { hash: sha('v1\n'), grain: 'file', origin: 'copy' },
-        '.kiro/steering/Mine.md': { hash: sha('orig\n'), grain: 'file', origin: 'copy' },
+        [DOC]: { hash: sha('v1\n'), grain: 'file', origin: 'generated' },
+        [MINE]: { hash: sha('orig\n'), grain: 'file', origin: 'generated' },
       });
-      writeFile(scratch, '.kiro/steering/Doc.md', 'v1\n'); // updated-safe
-      writeFile(scratch, '.kiro/steering/Mine.md', 'hers\n'); // conflict
+      writeFile(scratch, DOC, 'v1\n'); // updated-safe
+      writeFile(scratch, MINE, 'hers\n'); // conflict
     }
 
     test('terminal: the report prints BEFORE the confirmation; declining applies nothing', async () => {
@@ -149,31 +156,41 @@ describe('sync — end to end (Task 5)', () => {
       const out = await runSync({
         projectRoot: scratch,
         isTTY: true,
+        agentLayer,
         confirm: async () => {
           reportAtConfirm = con.output();
           return false;
         },
       });
-      expect(reportAtConfirm).toMatch(/Updated in the package, unchanged by you[\s\S]*\.kiro\/steering\/Doc\.md/);
+      expect(reportAtConfirm).toMatch(/Updated in the package, unchanged by you[\s\S]*\.claude\/agents\/doc\.md/);
       expect(out.stopped).toBe('declined');
       expect(dirHash(scratch)).toEqual(before);
     });
 
     test('terminal: confirming applies updated-safe, never the conflict', async () => {
       pending();
-      const out = await runSync({ projectRoot: scratch, isTTY: true, confirm: async () => true });
-      expect(out.applied).toEqual(['.kiro/steering/Doc.md']);
-      expect(readText(scratch, '.kiro/steering/Doc.md')).toBe('v2\n');
-      expect(readText(scratch, '.kiro/steering/Mine.md')).toBe('hers\n');
+      const out = await runSync({ projectRoot: scratch, isTTY: true, agentLayer, confirm: async () => true });
+      expect(out.applied).toEqual([DOC]);
+      expect(readText(scratch, DOC)).toBe('v2\n');
+      expect(readText(scratch, MINE)).toBe('hers\n');
     });
 
     test('a conflict applies only with --overwrite <path>; the manifest records the bytes written', async () => {
       pending();
-      const out = await runSync({ projectRoot: scratch, apply: true, isTTY: false, overwrite: ['.kiro/steering/Mine.md'] });
-      expect(out.applied.sort()).toEqual(['.kiro/steering/Doc.md', '.kiro/steering/Mine.md']);
-      expect(readText(scratch, '.kiro/steering/Mine.md')).toBe('pkg\n');
+      const out = await runSync({ projectRoot: scratch, apply: true, isTTY: false, agentLayer, overwrite: [MINE] });
+      expect(out.applied.sort()).toEqual([DOC, MINE]);
+      expect(readText(scratch, MINE)).toBe('pkg\n');
       const m = parseManifest(readText(scratch, MANIFEST_FILE));
-      expect(m.entries['.kiro/steering/Mine.md'].hash).toBe(sha('pkg\n'));
+      expect(m.entries[MINE]).toEqual({ hash: sha('pkg\n'), grain: 'file', origin: 'generated' });
+    });
+
+    test('flag parsing: --migrate-legacy and --target (both forms) (Task 16.5)', () => {
+      expect(parseSyncArgs(['--migrate-legacy', '--target=kiro', '--target', 'cc'])).toEqual({
+        restore: [],
+        overwrite: [],
+        migrateLegacy: true,
+        targets: ['kiro', 'cc'],
+      });
     });
 
     test('flag parsing: --apply, --dry-run, --restore/--overwrite (both forms), retired --force', () => {
@@ -189,7 +206,7 @@ describe('sync — end to end (Task 5)', () => {
     test('the retired --force applies nothing on its own', async () => {
       pending();
       const before = dirHash(scratch);
-      const out = await runSync({ projectRoot: scratch, isTTY: false, ...parseSyncArgs(['--force']) });
+      const out = await runSync({ projectRoot: scratch, isTTY: false, agentLayer, ...parseSyncArgs(['--force']) });
       expect(out.stopped).toBe('off-tty');
       expect(dirHash(scratch)).toEqual(before);
     });
@@ -235,7 +252,10 @@ describe('sync — end to end (Task 5)', () => {
       const m = parseManifest(readText(scratch, MANIFEST_FILE));
       const keyEntries = Object.keys(m.entries).filter((k) => k.includes('#'));
       expect(keyEntries.some((k) => k.startsWith('.claude/settings.json#mcp__designerpunk-'))).toBe(true);
-      expect(Object.values(m.entries).filter((e) => e.origin === 'copy').length).toBeGreaterThan(0);
+      // Task 16.3: `init` no longer COPIES agents/steering/governance (C1 rows 6/7/7b REMOVED) — its agent layer is
+      // generated (`origin: 'generated'`). The no-op property below is unchanged; only the copy premise is retired.
+      expect(Object.values(m.entries).filter((e) => e.origin === 'copy')).toEqual([]);
+      expect(Object.values(m.entries).filter((e) => e.origin === 'generated').length).toBeGreaterThan(0);
       const before = dirHash(scratch);
 
       const out = await runSync({ projectRoot: scratch, apply: true, isTTY: false });

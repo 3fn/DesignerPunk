@@ -27,10 +27,26 @@
  *
  * PROFILES: the steward profile renders canonical text and takes no dispositions or overlay.
  * The consumer profile REQUIRES dispositions and reads them per unit / per leaf entry — an
- * explicit row every time (a missing row is never read as `retained`). Task 10 lands the body
- * half (retained / re-pointed / omitted) and frontmatter retained / omitted; frontmatter
- * RE-POINTING throws until C17/C22 define its overlay form (Tasks 13/15). `AdapterContext`
- * gains `profile` at Task 15.1; until then both adapters call with `'steward'`.
+ * explicit row every time (a missing row is never read as `retained`). `AdapterContext.profile`
+ * (15.0, default `'steward'`) selects the profile in both adapters.
+ *
+ * THE CONSUMER FRONTMATTER IS THE DERIVED FRONTMATTER (Task 15.3; the 15.0 criterion (b) erratum
+ * of 2026-09-29 — entry overlays are YAML VALUES). Under the consumer profile the adapters render
+ * `derive()`'s frontmatter (C22): disposed leaves are already pruned, and a re-pointed leaf
+ * already carries its substituted overlay VALUE, so each adapter's own per-kind renderer renders
+ * it exactly as it renders any value — "target renderings = rendering(derive(x))". This function
+ * then only attributes: `source.entryOrigin` maps each derived entry path back to its CANONICAL
+ * path (a re-pointed string member's key is its new value), so provenance and the row lookup stay
+ * canonical (10.S). It REFUSES, never tolerates:
+ *   - a leaf with no row (never implied as retained);
+ *   - a leaf whose row is `no-consumer-counterpart` / `superseded-by` (the canonical frontmatter
+ *     was rendered, not the derived one);
+ *   - a re-pointed ambient embed (DD19);
+ *   - a CONTAINER piece (a list / map entry: section headers and glue) whose node has no leaf
+ *     under it — nothing renders that no surviving member sourced;
+ *   - a shared-catalog member with no row, or a disposed one (the catalog is derived too).
+ * Body units are unchanged: retained → passthrough; re-pointed → the `## @unit` overlay text
+ * (13.2), sourced to the canonical anchor; omitted → nothing.
  *
  * WHAT THIS DOES NOT ESTABLISH: that every adapter span routes through here. The arbiter for
  * that is Task 14's two-sided per-target bites (S-T-A7). The unit twin
@@ -51,8 +67,13 @@ export interface SpanSource {
   file: string;
   /** The canonical body (from the ONE splitter, frontmatter.ts). */
   body: string;
-  /** The parsed canonical frontmatter. */
+  /** The parsed frontmatter the adapter renders: canonical (steward) or DERIVED (consumer). */
   frontmatter: YamlDoc;
+  /**
+   * Consumer only: derived entry path → canonical entry path (`derive()`'s `entryOrigin`). A path
+   * absent here is its own canonical path. Provenance and row lookups use the canonical path.
+   */
+  entryOrigin?: Readonly<Record<string, string>>;
 }
 
 /**
@@ -70,11 +91,17 @@ export interface DispositionRow {
 export interface Dispositions {
   /** Keyed by body anchor (`#the-owed-set-pipeline`). */
   body?: Record<string, DispositionRow>;
-  /** Keyed by entry path (`writeScope[src/**]`). */
+  /** Keyed by CANONICAL entry path (`writeScope[src/**]`). */
   frontmatter?: Record<string, DispositionRow>;
+  /** Shared-catalog member rows, keyed by member id (`_shared.dispositions.yaml`; Task 15.3). */
+  members?: Record<string, DispositionRow>;
 }
 
-/** Re-grounded text per re-pointed unit/entry (C17's overlay, parsed — the file format is Task 13.2's). */
+/**
+ * Re-grounded text per re-pointed BODY unit (C17's overlay, parsed — the file format is Task
+ * 13.2's). `entries` (the `## @entry` bodies) are YAML VALUES that `derive()` substitutes into the
+ * derived frontmatter (15.0 (b) erratum); `emitSpans` never reads them.
+ */
 export interface Overlay {
   units?: Record<string, string>;
   entries?: Record<string, string>;
@@ -90,6 +117,9 @@ export const GLUE_SOURCES = Object.freeze({
   // The Commands section's header/trailer when the agent declares no `commands` entry and the
   // section exists only for shared-catalog members.
   'shared-catalog-section': 'canonical/shared/shared-catalog.yaml',
+  // A Kiro identity member file's fresh minimal frontmatter (C19: `id` + `inclusion: always`,
+  // written by the adapter, never carried from the shipped doc) — Task 15.3.
+  'identity-frontmatter': 'C19:identity-frontmatter',
 } as const);
 export type GlueId = keyof typeof GLUE_SOURCES;
 
@@ -168,7 +198,7 @@ export function emitSpans(
   } else {
     const tree = treeFor(source.frontmatter);
     for (const piece of plan) {
-      const block = pieceBlock(source, tree, piece, profile, dispositions, overlay);
+      const block = pieceBlock(source, tree, piece, profile, dispositions);
       if (block) blocks.push(block);
     }
   }
@@ -227,14 +257,23 @@ function pieceBlock(
   tree: EntryTree,
   piece: SpanPiece,
   profile: Profile,
-  dispositions: Dispositions | undefined,
-  _overlay: Overlay | undefined
+  dispositions: Dispositions | undefined
 ): { op: AttributionOp; source: string; text: string; mode?: 'embed' } | undefined {
   switch (piece.kind) {
     case 'glue':
       return { op: 'render', source: GLUE_SOURCES[piece.glue], text: piece.text };
-    case 'shared':
+    case 'shared': {
+      if (profile === 'consumer') {
+        const row = dispositions?.members?.[piece.id];
+        if (row === undefined) {
+          throw new SpanEmissionError(`emitSpans: shared-catalog member ${piece.id} has no disposition row — never implied as retained.`);
+        }
+        if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by') {
+          throw new SpanEmissionError(disposedStillRenderedMessage(`shared-catalog member ${piece.id}`, SHARED_CATALOG_SOURCE, row.disposition));
+        }
+      }
       return { op: 'render', source: `${SHARED_CATALOG_SOURCE}#${piece.id}`, text: piece.text };
+    }
     case 'entry':
     case 'member': {
       const path = piece.kind === 'entry' ? piece.path : memberPath(tree, piece.list, piece.index, source.file);
@@ -242,29 +281,52 @@ function pieceBlock(
       if (!node) {
         throw new SpanEmissionError(`emitSpans: no frontmatter entry "${path}" in ${source.file} — an adapter cited a path that does not exist.`);
       }
+      const origin = profile === 'consumer' ? source.entryOrigin?.[path] ?? path : path;
+      let op: AttributionOp = 'render';
       if (profile === 'consumer' && node.kind === 'leaf') {
-        const row = dispositions?.frontmatter?.[path];
+        const row = dispositions?.frontmatter?.[origin];
         if (row === undefined) {
           throw new SpanEmissionError(
-            `emitSpans: frontmatter entry ${path} in ${source.file} has no disposition row — never implied as retained.`
+            `emitSpans: frontmatter entry ${origin} in ${source.file} has no disposition row — never implied as retained.`
           );
         }
-        if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by') return undefined;
-        if (row.disposition === 're-pointed') {
+        if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by') {
+          throw new SpanEmissionError(disposedStillRenderedMessage(`frontmatter entry ${origin}`, source.file, row.disposition));
+        }
+        if (row.disposition === 're-pointed' && origin.startsWith('ambient[')) {
           throw new SpanEmissionError(
-            `emitSpans: re-pointing frontmatter entry ${path} is not implemented yet — its overlay form lands with C17/C22.`
+            `emitSpans: ambient embed ${origin} in ${source.file} cannot be re-pointed (DD19) — dispose it retained, superseded-by or no-consumer-counterpart.`
           );
         }
+      } else if (profile === 'consumer' && !hasLeafUnder(tree, path)) {
+        throw new SpanEmissionError(
+          `emitSpans: ${path} in ${source.file} renders with no surviving member under it — under the consumer profile nothing renders that no surviving member sourced.`
+        );
       }
-      const embed = path.startsWith('ambient[');
+      const embed = origin.startsWith('ambient[');
+      if (embed) op = 'resolve';
+      // 10.S: source is the CANONICAL ORIGIN, whatever the transformation; the text is the
+      // adapter's own rendering of the (derived) value.
       return {
-        op: embed ? 'resolve' : 'render',
-        source: `${source.file}#frontmatter:${path}`,
+        op,
+        source: `${source.file}#frontmatter:${origin}`,
         text: piece.text,
         ...(embed ? { mode: 'embed' as const } : {}),
       };
     }
   }
+}
+
+/** A consumer frontmatter row disposed away, yet the adapter rendered its entry. */
+export const disposedStillRenderedMessage = (what: string, file: string, disposition: string): string =>
+  `emitSpans: ${what} in ${file} is disposed ${disposition} but was rendered — the consumer profile renders derive()'s frontmatter and catalog, never the canonical ones.`;
+
+/** True iff some LEAF lies under `path` (inclusive) in the entry tree. */
+function hasLeafUnder(tree: EntryTree, path: string): boolean {
+  const node = tree.get(path);
+  if (!node) return false;
+  if (node.kind === 'leaf') return true;
+  return node.children.some((c) => hasLeafUnder(tree, c));
 }
 
 function memberPath(tree: EntryTree, list: string, index: number, file: string): string {

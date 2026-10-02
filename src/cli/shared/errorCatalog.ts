@@ -141,3 +141,89 @@ export function jestConfigCollisionMessage(): string {
     `own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`
   );
 }
+
+/**
+ * Req 13 — the consumer profile's DECLARED DEGRADATION (Spec 123 Task 16.1; design C20:
+ * "Degradation in the consumer profile = warn and exit 0"). Printed once per unresolvable
+ * member when the consumer emission lane (`dist/generator/consumer-entry.js`) finds a member
+ * missing from the installed package — a diet defect or a partial install. The charter is
+ * emitted without that member and the command exits 0.
+ *
+ * AUTHORED AT 16.1, not copied: design § Error Handling carries this row as
+ * `consumer degradation | (unchanged; warning, exit 0)` with no text, so there is no catalog
+ * string to be equal to. `consumer-entry.degradation.test.ts` asserts THIS function's output.
+ *
+ * - `member`: what is missing, e.g. `governance doc 'contract-system-reference'`.
+ * - `where`: where the lane looked, relative to the package root.
+ * - `consequence`: what was emitted without it.
+ *
+ * THE REMEDY CLAUSE (corrected 2026-10-02): a correctly built package emits no warning (the
+ * parity test asserts `warnings` is empty over the built `dist/consumer-canonical`), so every
+ * warning is either a damaged install or a package that shipped without the member (a diet
+ * defect, a tool the shipped manifest does not declare, a missing prepack dispositions file).
+ * A reinstall repairs only the first, so the text says what a failed reinstall means instead of
+ * promising a repair. It asks for a CLEAN reinstall because `npm install` over an existing
+ * `node_modules` does not re-extract a package already present, so a damaged copy survives it;
+ * and it names no cause, because a linked or `file:` install fails the same way. The design
+ * catalog row for this text is owed under
+ * `.kiro/issues/2026-10-01-design-erratum-req-13-degradation-warning-text.md`.
+ */
+export function consumerDegradationMessage(member: string, where: string, consequence: string): string {
+  return (
+    `warning: ${member} is missing from the installed @3fn/core (${where}) — ${consequence}. ` +
+    `Generation continued without it. If a clean reinstall (remove node_modules, then npm install) ` +
+    `does not restore it, the package you installed does not contain it.`
+  );
+}
+
+/**
+ * design.md catalog row: **managed region — markers missing** (Task 16.4, C7 region
+ * grain). `RegionGrain.spliceRegion` returns this string — never throws, never
+ * writes — when a managed region's begin/end marker pair is absent or unmatched
+ * in `<file>` (e.g. `CLAUDE.md`, `.gitignore`).
+ */
+export function managedRegionMarkersMissingMessage(file: string): string {
+  return (
+    `the DesignerPunk-managed region in ${file} is missing its markers — not rewriting the file. ` +
+    `Restore the markers (see install doc § "Your agent layer") or re-run attach`
+  );
+}
+
+/**
+ * design.md catalog row: **managed region — edited inside** (Task 16.5, C7 region
+ * grain). `sync` reports it for a recorded region whose contents differ from both
+ * the package's and the recorded baseline; the region is replaced only with
+ * `--apply` (or `--overwrite <file>#managed`), never on the terminal's batch
+ * confirmation alone.
+ */
+export function managedRegionEditedInsideMessage(file: string): string {
+  return (
+    `you edited inside the DesignerPunk-managed region of ${file} — those edits will be replaced. ` +
+    `Move them outside the region; not applying without --apply`
+  );
+}
+
+// ---------------------------------------------------------------------------
+// `attach`-specific catalog strings (Spec 123 Task 16.2 — design.md § "C20.
+// The consumer emission lane" / § "Error Handling", the `attach` and restart
+// rows). Extends the catalog established at Tasks 1.6/2/16.1/16.4.
+// ---------------------------------------------------------------------------
+
+/** design.md catalog row: `attach` in an unborn repo (A8). */
+export function attachUnbornRepoMessage(): string {
+  return (
+    `no design system here. To create one: npx designerpunk init. Only reading DesignerPunk's docs ` +
+    `and components? No init needed: npx designerpunk attach --target=<cc|kiro> --reference`
+  );
+}
+
+/**
+ * design.md catalog row: **restart line — now** (erratum, Le-T5).
+ * `attach --reference` output only, where the restart IS the next step.
+ */
+export function restartLineNowMessage(): string {
+  return (
+    `restart your agent session now — DesignerPunk's MCP servers load when a session starts, so ` +
+    `this session cannot see them yet (approve them if your tool asks)`
+  );
+}

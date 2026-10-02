@@ -1,0 +1,7 @@
+{
+  "spans": [
+    { "lines": [1, 2], "source": "canonical/agents/kenya.md#doc:preamble" },
+    { "lines": [3, 6], "source": "canonical/agents/kenya.md#identity" },
+    { "lines": [7, 9], "source": "canonical/agents/kenya.md#out-of-scope" }
+  ]
+}

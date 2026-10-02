@@ -1,0 +1,121 @@
+# BITE extra-cc (EXTRA EVIDENCE): cc.ts's commands section bypasses emitSpans (one inline #frontmatter:commands container span)
+# mutation: tools/agent-generator/adapters/cc.ts
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/semantics-guard.test.ts --verbose
+# base commit: 29a201e1 (Task 14 addendum: Q1 (b) value-form re-run, after 15.3 def8184e); run 2026-09-29T11:42:49Z
+# --- mutation diff ---
+diff --git a/tools/agent-generator/adapters/cc.ts b/tools/agent-generator/adapters/cc.ts
+index fbc729e6..508700f3 100644
+--- a/tools/agent-generator/adapters/cc.ts
++++ b/tools/agent-generator/adapters/cc.ts
+@@ -370,10 +370,6 @@ export class CcAdapter implements TargetAdapter {
+         fm.commands !== undefined ? { kind: 'entry', path: 'commands', text } : { kind: 'glue', glue: 'shared-catalog-section', text };
+-      bodyParts.push(
+-        emit([
+-          glue('## Commands\n\n'),
+-          ...commandEntries.map((entry, i): SpanPiece => ({ kind: 'member', list: 'commands', index: i, text: `${renderCommandEntry(entry)}\n` })),
+-          ...sharedMembers.map((member): SpanPiece => ({ kind: 'shared', id: member.id, text: `${renderSharedCatalogMember(member, subset)}\n` })),
+-          glue('\n'),
+-        ])
+-      );
++      // BITE: the commands section bypasses emitSpans with ONE inline container span.
++      const inline = '## Commands\n\n' + commandEntries.map((entry) => `${renderCommandEntry(entry)}\n`).join('') + '\n';
++      acc.add('render', countLines(inline), `canonical/agents/${fm.agent}.md#frontmatter:commands`);
++      bodyParts.push(inline);
+     }
+# --- jest output ---
+FAIL tools/agent-generator/__tests__/semantics-guard.test.ts
+  cc
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans (2 ms)
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob) (1 ms)
+      ✕ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED (2 ms)
+  kiro
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S) (1 ms)
+    frontmatter
+      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob) (1 ms)
+      ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  a fake third target — declared, its adapter injected through the registry, no other edit to the guard
+    ✓ the declared list drives the blocks: one more target → one more block (1 ms)
+    ✓ a declared target with no registered adapter fails loud, naming it (no silent block) (1 ms)
+    cc
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✕ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    kiro
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    fake
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans (1 ms)
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✕ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+
+  ● cc › frontmatter › EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "cc frontmatter commands[claims-pass]: VERIFIED"
+    Received: "cc frontmatter commands[claims-pass]: FAIL_NO_DERIVATION"
+
+       97 |       it(`EXTRA EVIDENCE (disclosed, not a substitute for E-fm): ${EXTRA} re-grounded in place is VERIFIED`, () => {
+       98 |         const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}` }).verdict;
+    >  99 |         expect(`${target} frontmatter ${EXTRA}: ${v}`).toBe(`${target} frontmatter ${EXTRA}: VERIFIED`);
+          |                                                        ^
+      100 |       });
+      101 |     });
+      102 |   });
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:99:56)
+
+  ● a fake third target — declared, its adapter injected through the registry, no other edit to the guard › cc › frontmatter › EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "cc frontmatter commands[claims-pass]: VERIFIED"
+    Received: "cc frontmatter commands[claims-pass]: FAIL_NO_DERIVATION"
+
+       97 |       it(`EXTRA EVIDENCE (disclosed, not a substitute for E-fm): ${EXTRA} re-grounded in place is VERIFIED`, () => {
+       98 |         const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}` }).verdict;
+    >  99 |         expect(`${target} frontmatter ${EXTRA}: ${v}`).toBe(`${target} frontmatter ${EXTRA}: VERIFIED`);
+          |                                                        ^
+      100 |       });
+      101 |     });
+      102 |   });
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:99:56)
+
+  ● a fake third target — declared, its adapter injected through the registry, no other edit to the guard › fake › frontmatter › EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "fake frontmatter commands[claims-pass]: VERIFIED"
+    Received: "fake frontmatter commands[claims-pass]: FAIL_NO_DERIVATION"
+
+       97 |       it(`EXTRA EVIDENCE (disclosed, not a substitute for E-fm): ${EXTRA} re-grounded in place is VERIFIED`, () => {
+       98 |         const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}` }).verdict;
+    >  99 |         expect(`${target} frontmatter ${EXTRA}: ${v}`).toBe(`${target} frontmatter ${EXTRA}: VERIFIED`);
+          |                                                        ^
+      100 |       });
+      101 |     });
+      102 |   });
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:99:56)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 24 passed, 27 total
+Snapshots:   0 total
+Time:        0.879 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/semantics-guard.test.ts.

@@ -147,13 +147,19 @@ describe('emitSpans — frontmatter entries, shared members and glue', () => {
     ).toThrow(/does not end with a newline/);
   });
 
-  it('consumer: an omitted leaf entry emits nothing; frontmatter re-pointing is not implemented yet (C17/C22)', () => {
+  it('consumer (Task 15.3): the adapter renders derive()’s frontmatter — a disposed leaf still present refuses; a re-pointed leaf is the adapter’s rendering of its substituted value, sourced through entryOrigin to its canonical origin', () => {
     const rows = { body: {}, frontmatter: { 'writeScope[a/**]': { disposition: 'no-consumer-counterpart' as const }, 'writeScope[b/**]': { disposition: 're-pointed' as const } } };
-    const acc = new AttributionAccumulator();
-    const out = emitSpans(acc, SOURCE, 'consumer', rows, undefined, [{ kind: 'member', list: 'writeScope', index: 0, text: 'a\n' }]);
-    expect(out.text).toBe('');
     expect(() =>
-      emitSpans(new AttributionAccumulator(), SOURCE, 'consumer', rows, undefined, [{ kind: 'member', list: 'writeScope', index: 1, text: 'b\n' }])
-    ).toThrow(/not implemented yet/);
+      emitSpans(new AttributionAccumulator(), SOURCE, 'consumer', rows, undefined, [{ kind: 'member', list: 'writeScope', index: 0, text: 'a\n' }])
+    ).toThrow(
+      "emitSpans: frontmatter entry writeScope[a/**] in canonical/agents/twin.md is disposed no-consumer-counterpart but was rendered — the consumer profile renders derive()'s frontmatter and catalog, never the canonical ones."
+    );
+    // The derived frontmatter carries b/**'s substituted value at its position; entryOrigin maps it back.
+    const derived = { ...SOURCE, frontmatter: { ...SOURCE.frontmatter, writeScope: ['consumer/b/**'] }, entryOrigin: { 'writeScope[consumer/b/**]': 'writeScope[b/**]' } };
+    const acc2 = new AttributionAccumulator();
+    const out2 = emitSpans(acc2, derived, 'consumer', rows, undefined, [{ kind: 'member', list: 'writeScope', index: 0, text: '- `consumer/b/**`\n' }]);
+    expect(out2.text).toBe('- `consumer/b/**`\n');
+    expect(acc2.build('x').spans).toEqual([{ lines: [1, 1], op: 'render', source: 'canonical/agents/twin.md#frontmatter:writeScope[b/**]' }]);
   });
+
 });

@@ -172,7 +172,7 @@ describe('assertFamilyGuidance — top-level companion resolution (Req 8 AC6)', 
 describe('assertMustFixCouplings — shape + naming (Req 8 AC7)', () => {
   it('produces one check per Bucket A surface, each with surface+remediated+detail', () => {
     const checks = assertMustFixCouplings(DEFAULT_PROJECT_ROOT);
-    expect(checks.length).toBe(7);
+    expect(checks.length).toBe(5);
     for (const c of checks) {
       expect(typeof c.surface).toBe('string');
       expect(typeof c.remediated).toBe('boolean');
@@ -290,10 +290,10 @@ describe('runRelocationIntegrityGate — full gate (the 119-A exit check, Req 8 
     expect(result.summary.identityVerified).toBe(9);
   });
 
-  it('remediates all 7 must-fix coupling surfaces (Req 8 AC7)', async () => {
+  it('remediates all 5 standing must-fix coupling surfaces (A4/A7 retired 2026-10-01) (Req 8 AC7)', async () => {
     const result = await runRelocationIntegrityGate();
     expect(result.summary.couplingsRemediated).toBe(result.summary.couplingsTotal);
-    expect(result.summary.couplingsTotal).toBe(7);
+    expect(result.summary.couplingsTotal).toBe(5);
   });
 
   it('reports zero new family-guidance companion warnings (Req 8 AC6)', async () => {

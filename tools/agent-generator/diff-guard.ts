@@ -19,14 +19,40 @@
  * changed byte). Both match → early-exit green in seconds (no MCP boots, no generation);
  * either mismatch → full run.
  *
- * Traces to: Req 17 (all ACs), Req 20 AC2 (fast no-op without path-filtering), DD7, S-D3/S-D5.
+ * CHECKOUT-INDEPENDENCE (the 2026-10-01 generated-lock issue, F1): the input closure is LISTED
+ * FROM GIT (tracked + untracked-not-ignored, regular files on disk), so a gitignored stray under a
+ * root (a log, a cache) cannot move the lock; a non-git `repoRoot` falls back to the filesystem
+ * walk. On a clean tree the two lists are identical (asserted in the tests), so locks written
+ * before F1 stay valid. Corollary: an input that is gitignored is NOT in the closure.
+ *
+ * OPERATIVE-SET FRESHNESS (Spec 123 Task 13.6; design C16): {@link runGuard} runs the
+ * `operative-set-freshness` sweep (regrounding/freshness.ts) FIRST, on every run — including the
+ * fast no-op path, which would otherwise skip it — and FAILs on any finding without refreshing
+ * the lock. The sweep reads only the filesystem (no generation, no MCP), and `generate.ts` is
+ * loaded lazily, so the sweep's verdict does not depend on the generation inputs being present.
+ *
+ * CLI: `npx tsx tools/agent-generator/diff-guard.ts [--root <dir>]`. `--root` (added at 13.6)
+ * points the guard at another tree — the STANDING stale-unit fixture test uses it. Default: the
+ * repo this file lives in.
+ *
+ * Traces to: Req 17 (all ACs), Req 20 AC2 (fast no-op without path-filtering), DD7, S-D3/S-D5;
+ * Spec 123 Req 11.6.5d, design C16.
  */
 
+import { spawnSync } from 'child_process';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import { generateAll, writeOutputs, guardedRoots } from './generate';
+import { formatFreshness, runFreshnessSweep, type FreshnessReport } from './regrounding/freshness';
+
+/**
+ * `generate.ts` loaded on first use, not at import: it pulls the generation pipeline (and the
+ * MCP dist it reads), which the freshness sweep never needs. Same lazy-require idiom generate.ts
+ * uses for coverage-map.ts.
+ */
+const generation = (): typeof import('./generate') => require('./generate') as typeof import('./generate');
+const guardedRoots = (repoRoot?: string): string[] => generation().guardedRoots(repoRoot);
 
 // ============================================================================
 // Hashing (pure over injected file lists — unit-testable without the repo)
@@ -75,15 +101,70 @@ export function hashFileSet(repoRoot: string, relPaths: readonly string[]): stri
   return sha256(pairs.join('\n'));
 }
 
-/** The lock's input leg: hash of every file under the closure roots + the named files. */
-export function computeInputClosureHash(repoRoot: string): string {
-  // The lock itself lives under canonical/ — exclude it, or every refresh would
-  // invalidate the closure it just recorded.
-  const files = [
+/**
+ * Is `repoRoot` ITSELF a git work-tree root? (Not merely somewhere inside one: the `--root`
+ * stale-unit fixture is a subdirectory of this repo, and must stay on the filesystem walk.)
+ */
+export function isGitWorkTreeRoot(repoRoot: string): boolean {
+  const r = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: repoRoot, encoding: 'utf8' });
+  if (r.status !== 0) return false;
+  try {
+    return fs.realpathSync(r.stdout.trim()) === fs.realpathSync(repoRoot);
+  } catch {
+    return false;
+  }
+}
+
+/** Regular file on disk (NOT a symlink: the walk skips them, `readFileSync` would follow). */
+function isRegularFile(repoRoot: string, rel: string): boolean {
+  try {
+    return fs.lstatSync(path.join(repoRoot, rel)).isFile();
+  } catch {
+    return false;
+  }
+}
+
+/** The input closure by FILESYSTEM WALK (the pre-F1 behavior; now the non-git fallback). Lock excluded. */
+export function listInputClosureByWalk(repoRoot: string): string[] {
+  return [
     ...INPUT_CLOSURE_ROOTS.flatMap((root) => listFilesUnder(repoRoot, root)),
     ...INPUT_CLOSURE_FILES.filter((f) => fs.existsSync(path.join(repoRoot, f))),
-  ].filter((rel) => rel !== LOCK_PATH);
-  return hashFileSet(repoRoot, files);
+  ]
+    .filter((rel) => rel !== LOCK_PATH)
+    .sort();
+}
+
+/**
+ * The input closure LISTED FROM GIT: tracked + untracked-not-ignored files under the roots and the
+ * named files, restricted to regular files present on disk (a tracked-then-deleted path and a
+ * tracked symlink/submodule drop out, as they do from the walk). Gitignored files (a stray log,
+ * a cache) are NOT inputs and cannot move the lock — the checkout-dependence the walk had.
+ */
+export function listInputClosureFromGit(repoRoot: string): string[] {
+  const r = spawnSync(
+    'git',
+    ['ls-files', '-z', '--cached', '--others', '--exclude-standard', '--', ...INPUT_CLOSURE_ROOTS, ...INPUT_CLOSURE_FILES],
+    { cwd: repoRoot, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 },
+  );
+  if (r.status !== 0) throw new Error(`git ls-files failed in ${repoRoot}: ${r.stderr}`);
+  const listed = new Set(r.stdout.split('\0').filter((rel) => rel !== ''));
+  return [...listed].filter((rel) => rel !== LOCK_PATH && isRegularFile(repoRoot, rel)).sort();
+}
+
+/**
+ * The closure list the lock hashes: from git when `repoRoot` is a git work tree (checkout-
+ * independent), else the explicit filesystem-walk fallback (temp-dir fixtures, the `--root`
+ * stale-unit fixture, an un-versioned export).
+ */
+export function listInputClosure(repoRoot: string): string[] {
+  return isGitWorkTreeRoot(repoRoot) ? listInputClosureFromGit(repoRoot) : listInputClosureByWalk(repoRoot);
+}
+
+/** The lock's input leg: hash of every closure file (git-listed; walk fallback) — lock itself excluded. */
+export function computeInputClosureHash(repoRoot: string): string {
+  // The lock itself lives under canonical/ — excluded by the listers, or every refresh would
+  // invalidate the closure it just recorded.
+  return hashFileSet(repoRoot, listInputClosure(repoRoot));
 }
 
 /**
@@ -168,6 +249,10 @@ export function compareTrees(freshRoot: string, repoRoot: string, roots: readonl
 
 export interface GuardResult {
   verdict: 'no-op-green' | 'full-run-green' | 'FAIL';
+  /** The operative-set-freshness sweep's report (Spec 123 Task 13.6) — present on every run. */
+  freshness?: FreshnessReport;
+  /** Which part failed, when verdict is FAIL. */
+  failedBy?: 'operative-set-freshness' | 'tree-delta';
   /** Why a full run happened (absent for no-op-green). */
   fullRunReason?: 'no-lock' | 'input-closure-changed' | 'outputs-changed';
   delta?: TreeDelta;
@@ -178,12 +263,18 @@ export interface GuardResult {
  * subsequent unrelated runs no-op. NEVER refreshes on FAIL.
  */
 export async function runGuard(repoRoot: string, opts?: { refreshLock?: boolean }): Promise<GuardResult> {
+  // The freshness sweep runs FIRST and ALWAYS (the no-op path below would otherwise skip it).
+  const freshness = runFreshnessSweep(repoRoot);
+  if (freshness.findings.length > 0) {
+    return { verdict: 'FAIL', failedBy: 'operative-set-freshness', freshness };
+  }
+
   const lock = readLock(repoRoot);
   const inputHash = computeInputClosureHash(repoRoot);
   const outputsHash = computeOutputsHash(repoRoot);
 
   if (lock && lock.inputClosure === inputHash && lock.outputs === outputsHash) {
-    return { verdict: 'no-op-green' };
+    return { verdict: 'no-op-green', freshness };
   }
   const fullRunReason: GuardResult['fullRunReason'] = !lock
     ? 'no-lock'
@@ -194,28 +285,51 @@ export async function runGuard(repoRoot: string, opts?: { refreshLock?: boolean 
   // Full run: regenerate into a temp tree and compare bidirectionally.
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'dp-diff-guard-'));
   try {
+    const { generateAll, writeOutputs } = generation();
     const outputs = await generateAll(repoRoot);
     writeOutputs(temp, outputs);
     const delta = compareTrees(temp, repoRoot, guardedRoots(repoRoot));
     const clean = delta.changed.length === 0 && delta.missing.length === 0 && delta.extra.length === 0;
 
     if (!clean) {
-      return { verdict: 'FAIL', fullRunReason, delta };
+      return { verdict: 'FAIL', failedBy: 'tree-delta', fullRunReason, delta, freshness };
     }
     if (opts?.refreshLock !== false) {
       writeLock(repoRoot, { inputClosure: computeInputClosureHash(repoRoot), outputs: outputsHash });
     }
-    return { verdict: 'full-run-green', fullRunReason };
+    return { verdict: 'full-run-green', fullRunReason, freshness };
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
 }
 
 // CLI: exit 0 on green (either form), 1 on FAIL with per-file detail.
+/** `--root <dir>` → that dir (resolved against cwd); default the repo this file lives in. */
+export function cliRepoRoot(argv: readonly string[], cwd = process.cwd()): string {
+  const i = argv.indexOf('--root');
+  if (i === -1) return path.resolve(__dirname, '..', '..');
+  const dir = argv[i + 1];
+  if (!dir || dir.startsWith('--')) throw new Error('--root needs a directory');
+  return path.resolve(cwd, dir);
+}
+
 if (require.main === module) {
-  const repoRoot = path.resolve(__dirname, '..', '..');
+  let repoRoot: string;
+  try {
+    repoRoot = cliRepoRoot(process.argv.slice(2));
+  } catch (error) {
+    console.error(`diff-guard: ERROR — ${(error as Error).message}`);
+    process.exit(2);
+  }
   runGuard(repoRoot)
     .then((result) => {
+      const freshnessLines = result.freshness ? formatFreshness(result.freshness) : [];
+      if (result.failedBy === 'operative-set-freshness') {
+        console.error('diff-guard: FAIL (operative-set-freshness)');
+        for (const line of freshnessLines) console.error(line);
+        process.exit(1);
+      }
+      for (const line of freshnessLines) console.log(line);
       if (result.verdict === 'FAIL') {
         console.error(`diff-guard: FAIL (${result.fullRunReason})`);
         for (const f of result.delta?.changed ?? []) console.error(`  changed: ${f}`);

@@ -1,0 +1,85 @@
+{
+  "artifact": ".kiro/steering/DesignerPunk-Systems-Overview.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        13
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#designerpunk-systems-overview:preamble"
+    },
+    {
+      "lines": [
+        14,
+        27
+      ],
+      "op": "render",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#overview"
+    },
+    {
+      "lines": [
+        28,
+        33
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#pointer-1-module-resolution-contract-spec-118"
+    },
+    {
+      "lines": [
+        34,
+        83
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#high-level-designerpunk-three-system-architecture"
+    },
+    {
+      "lines": [
+        84,
+        112
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#rosetta-system-token-pipeline-and-layers"
+    },
+    {
+      "lines": [
+        113,
+        155
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#stemma-system-families-and-inheritance"
+    },
+    {
+      "lines": [
+        156,
+        197
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#civitas-system-governance-infrastructure"
+    },
+    {
+      "lines": [
+        198,
+        236
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#integration-tokens-components-platforms"
+    },
+    {
+      "lines": [
+        237,
+        284
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#combined-overview-single-diagram"
+    },
+    {
+      "lines": [
+        285,
+        312
+      ],
+      "op": "render",
+      "source": ".kiro/steering/DesignerPunk-Systems-Overview.md#related-documentation"
+    }
+  ]
+}

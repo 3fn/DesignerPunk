@@ -1,0 +1,85 @@
+{
+  "artifact": ".kiro/steering/designerpunk-civitas-system-overview.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        5
+      ],
+      "op": "render",
+      "source": "C19:identity-frontmatter"
+    },
+    {
+      "lines": [
+        6,
+        18
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/Civitas-System-Overview.md#civitas-system-overview:preamble"
+    },
+    {
+      "lines": [
+        19,
+        28
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Civitas-System-Overview.md#overview"
+    },
+    {
+      "lines": [
+        29,
+        50
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Civitas-System-Overview.md#what-civitas-contains"
+    },
+    {
+      "lines": [
+        51,
+        58
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/Civitas-System-Overview.md#what-civitas-does-not-contain"
+    },
+    {
+      "lines": [
+        59,
+        70
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/Civitas-System-Overview.md#relationship-to-rosetta-and-stemma"
+    },
+    {
+      "lines": [
+        71,
+        87
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Civitas-System-Overview.md#the-three-layer-boundary"
+    },
+    {
+      "lines": [
+        88,
+        100
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Civitas-System-Overview.md#governance-processes"
+    },
+    {
+      "lines": [
+        101,
+        112
+      ],
+      "op": "passthrough",
+      "source": ".kiro/steering/Civitas-System-Overview.md#external-representation"
+    },
+    {
+      "lines": [
+        113,
+        115
+      ],
+      "op": "render",
+      "source": ".kiro/steering/Civitas-System-Overview.md#document-access"
+    }
+  ]
+}

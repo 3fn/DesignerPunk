@@ -15,8 +15,18 @@
  *      locked always-set + file exists at its `.kiro/steering/` path), NEVER via
  *      an MCP round-trip — identity docs are not in the governance-only index
  *      (Req 8 AC5 / Req 2 AC4).
- *   3. every MUST-FIX coupling surface (coupling-sweep Bucket A) is repointed to
- *      `governance/` and functional (Req 8 AC7).
+ *   3. every MUST-FIX coupling surface that this gate still holds (coupling-sweep
+ *      Bucket A) is repointed to `governance/` and functional (Req 8 AC7). Five
+ *      surfaces stand: A1, A2, A3, A5, A6. Legs A4 and A7 were RETIRED on 2026-10-01 by
+ *      Peter's ruling (`.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md`
+ *      § "Peter's ruling — RETIRE"; the three residuals moved, per his 2026-10-02 answer
+ *      "Move all three, and remove the legs") and REMOVED outright, so the count is
+ *      5, not 7: a leg left in the array that always reported `remediated: true` would be
+ *      a vacuous green. They asserted 119-A's copy-the-corpus MECHANISM, then (after the
+ *      2026-10-01 rewrite) the Spec 123 install shape; the install shape is now held by
+ *      named standing checks, per sub-check — see the doc comment on
+ *      `assertMustFixCouplings`. The 119-A exit gate remains 119-A's exit check over the
+ *      five surviving must-fix surfaces. 119-A's own closed records ("7/7") stay as written.
  *   4. relocation introduced ZERO new family-guidance companion-path warnings
  *      (Req 8 AC6) — asserted over the 9 top-level companions the FamilyGuidanceIndexer
  *      parses (the 13 nested are gate-blind: green ≠ all 22 verified).
@@ -241,9 +251,61 @@ function exists(projectRoot: string, rel: string): boolean {
 }
 
 /**
- * Assert every coupling-sweep Bucket A surface is repointed to `governance/` and
- * functional. Each check is intentionally specific (Req 8 AC4: no generic health
- * check) and names the surface on failure (Req 8 AC7).
+ * id → on-disk filename in `.kiro/steering/`, resolved by the frontmatter `id:` line.
+ * The single source for the identity axis (no second hardcoded list of identity filenames).
+ */
+function identityIdToFile(projectRoot: string): Map<string, string> {
+  const steeringDir = path.join(projectRoot, '.kiro/steering');
+  const files = fs.existsSync(steeringDir) ? fs.readdirSync(steeringDir) : [];
+  const idToFile = new Map<string, string>();
+  for (const f of files) {
+    if (!f.endsWith('.md')) continue;
+    const content = fs.readFileSync(path.join(steeringDir, f), 'utf-8');
+    const m = content.match(/^id:\s*(.+)$/m);
+    if (m) idToFile.set(m[1].trim(), f);
+  }
+  return idToFile;
+}
+
+/**
+ * Assert every coupling-sweep Bucket A surface this gate still holds (A1, A2, A3, A5,
+ * A6) is repointed to `governance/` and functional. Each check is intentionally specific
+ * (Req 8 AC4: no generic health check) and names the surface on failure (Req 8 AC7).
+ *
+ * LEGS A4 AND A7 RETIRED 2026-10-01 (Peter's ruling, issue
+ * `2026-10-01-relocation-integrity-gate-vs-123-install-shape` § "Peter's ruling — RETIRE";
+ * residuals moved per his 2026-10-02 answer "Move all three, and remove the legs").
+ * They are removed, not left as always-green legs; the count is 5. Spec 123's install shape
+ * (U2b) made their source-shape assertions the wrong instrument; each sub-check is
+ * discharged by a named standing check, by output rather than by source shape:
+ *   A4.1 init copies no package corpus      -> src/cli/__tests__/init.test.ts "creates all
+ *        expected artifacts, and does NOT copy src/types or src/components/core" and "the
+ *        release-1 copy rows are gone: ..."; tests/consumer-integration.test.ts 16.6 "the
+ *        emitted agent-layer file set equals the guarded rendering ..." (exact set).
+ *   A4.2 init emits the agent layer         -> init.test.ts "init --target=%s emits exactly
+ *        the lane's file set for that target, ..."; the same 16.6 exact-set test.
+ *   A4.3 / A4.4 designerpunk.ts docs-MCP root (governance, never .kiro/steering)
+ *                                           -> tests/consumer-integration.test.ts "Docs MCP
+ *        returns documentation data" (driven through `designerpunk mcp:docs`; asserts the
+ *        CLI's and the server's data root = the installed package's `governance`, source
+ *        `env`, and a non-empty index)  [residual R1].
+ *   A7.1 / A7.2a files[] ships governance/ and each of the eight identity docs
+ *                                           -> the 16.6 block (exact-set / byte-equal vs the
+ *        guarded rendering; "Kiro: every agent resource resolves in the packed install ...").
+ *   A7.2b / A7.3 exactly eight identity docs, no steering glob, no personal note in files[]
+ *                                           -> tests/consumer-integration.test.ts describe
+ *        "Spec 123 R2 — the package ships exactly the eight identity docs and never the
+ *        personal note"  [residual R2].
+ *   A7.4a template MCP_STEERING_DIR = governance
+ *                                           -> init.test.ts, the Kiro and Claude Code
+ *        MCP-config cases (`MCP_STEERING_DIR` = './node_modules/@3fn/core/governance')
+ *        [residual R3].
+ *   A7.4b template has no dead tool         -> init.test.ts "Kiro: each server's autoApprove is
+ *        SET-EQUAL ..." and "Claude Code: .claude/settings.json permissions.allow is
+ *        SET-EQUAL ..."; 16.6 "the MCP config and approval keys are present ...".
+ *   A7.5 COPY_ROOTS holds the release-1 roots -> src/cli/__tests__/sync.cohort.test.ts
+ *        "COPY_ROOTS keeps the release-1 roots it recognizes (this test is the pin; the 119-A
+ *        gate leg A7 that also held it is retired)".
  */
 export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
   const checks: CouplingCheck[] = [];
@@ -340,21 +402,8 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
     });
   }
 
-  // A4: src/cli/init.ts (ADD governance copyDir, KEEP .kiro/steering) + designerpunk.ts (repoint)
-  {
-    const init = read(projectRoot, 'src/cli/init.ts');
-    const initGov = /copyDir\(\s*[^)]*['"`][^'"`]*governance['"`]/.test(init);
-    const initKeepsSteering = /\.kiro\/steering/.test(init);
-    const dp = read(projectRoot, 'src/cli/designerpunk.ts');
-    const dpGov = /path\.join\(\s*pkgRoot\s*,\s*['"`]governance['"`]\s*\)/.test(dp);
-    const dpNoSteering = !/path\.join\(\s*pkgRoot\s*,\s*['"`]\.kiro\/steering['"`]\s*\)/.test(dp);
-    const ok = initGov && initKeepsSteering && dpGov && dpNoSteering;
-    checks.push({
-      surface: 'src/cli/init.ts + src/cli/designerpunk.ts',
-      remediated: ok,
-      detail: `init governance copyDir=${initGov} & keeps .kiro/steering=${initKeepsSteering}; designerpunk governance=${dpGov} & no steering-spawn=${dpNoSteering}`,
-    });
-  }
+  // A4 and A7: RETIRED 2026-10-01 and removed — see the doc comment above for the
+  // standing checks that discharge each sub-check.
 
   // A5: src/figma/VariantAnalyzer.ts + DesignExtractor.ts construct governance/ paths
   {
@@ -385,40 +434,6 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
     });
   }
 
-  // A7: package.json files[] (ADD governance/, KEEP .kiro/steering/), init template,
-  // Manifest COPY_ROOTS (ADD governance, keep .kiro/steering).
-  //
-  // UPDATED 2026-09-27 (Spec 123 Task 5.4 gatefix, U1 CI change request): the third
-  // leg originally asserted `src/cli/sync/FileScanner.ts`'s fixed `MANAGED_DIRS`
-  // list. Spec 123 Task 5.4 deliberately RETIRED that list — FileScanner.ts no
-  // longer hard-codes managed roots at all; callers now pass roots derived from the
-  // manifest's C7 namespace rule (`managedCopyRoots`, src/cli/sync/Classifier.ts),
-  // itself built from `COPY_ROOTS` in `src/cli/sync/Manifest.ts`. The underlying
-  // invariant this leg exists to prove — governance/ is ADDED and .kiro/steering/
-  // is KEPT among what `sync` manages — still holds; it just lives at the new
-  // location. Re-pointed the assertion there rather than retiring the leg, since
-  // the invariant itself is still live and checkable (see src/cli/__tests__/
-  // FileScanner.test.ts for the companion proof that MANAGED_DIRS is gone).
-  {
-    const pkg = read(projectRoot, 'package.json');
-    const pkgGov = /"governance\/"/.test(pkg);
-    const pkgSteering = /"\.kiro\/steering\/"/.test(pkg);
-    const tmpl = read(projectRoot, 'src/cli/templates/mcp-config.json.template');
-    const tmplGov = /governance/.test(tmpl) && !/\.kiro\/steering/.test(tmpl);
-    const tmplNoDeadTool = !/get_documentation_map/.test(tmpl);
-    const manifestSrc = read(projectRoot, 'src/cli/sync/Manifest.ts');
-    const copyRootsMatch = manifestSrc.match(/COPY_ROOTS\s*=\s*\[([^\]]*)\]/);
-    const copyRootsList = copyRootsMatch ? copyRootsMatch[1] : '';
-    const crGov = /'governance'/.test(copyRootsList);
-    const crSteering = /'\.kiro\/steering'/.test(copyRootsList);
-    const ok = pkgGov && pkgSteering && tmplGov && tmplNoDeadTool && crGov && crSteering;
-    checks.push({
-      surface: 'package.json files[] + init template + Manifest COPY_ROOTS',
-      remediated: ok,
-      detail: `files[] governance=${pkgGov}/steering=${pkgSteering}; template governance=${tmplGov}/no-dead-tool=${tmplNoDeadTool}; COPY_ROOTS governance=${crGov}/steering=${crSteering}`,
-    });
-  }
-
   return checks;
 }
 
@@ -446,15 +461,7 @@ export function assertIdentityPresence(
   referencedIdentityIds: Set<string>,
 ): IdentityPresenceCheck[] {
   // Map id → on-disk filename in .kiro/steering/ (resolved by scanning).
-  const steeringDir = path.join(projectRoot, '.kiro/steering');
-  const files = fs.existsSync(steeringDir) ? fs.readdirSync(steeringDir) : [];
-  const idToFile = new Map<string, string>();
-  for (const f of files) {
-    if (!f.endsWith('.md')) continue;
-    const content = fs.readFileSync(path.join(steeringDir, f), 'utf-8');
-    const m = content.match(/^id:\s*(.+)$/m);
-    if (m) idToFile.set(m[1].trim(), f);
-  }
+  const idToFile = identityIdToFile(projectRoot);
 
   const allIds = new Set<string>([...LOCKED_IDENTITY_IDS, ...referencedIdentityIds]);
 

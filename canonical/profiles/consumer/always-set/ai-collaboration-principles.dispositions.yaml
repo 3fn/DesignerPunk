@@ -1,0 +1,15 @@
+# canonical/profiles/consumer/always-set/ai-collaboration-principles.dispositions.yaml — Spec 123 Task 15.4 (design C19; DD25)
+# An always-set member: body rows only; the shipped doc's own frontmatter is dropped, never carried (C19).
+# Re-pointed units re-ground the member at the consumer's repo (Req 12.1: the always-set re-grounds as a class).
+source: .kiro/steering/AI-Collaboration-Principles.md
+counterpart: .kiro/steering/AI-Collaboration-Principles.md
+body:
+  "#ai-collaboration-principles:preamble": {"disposition": "retained"}
+  "#the-ai-optimism-problem": {"disposition": "retained"}
+  "#candid-vs-brutal-communication": {"disposition": "retained"}
+  "#counter-argument-requirement": {"disposition": "re-pointed", "removals": [{"text": "*(Fold-back discipline ratified 2026-09-19 — `.kiro/docs/ballots/2026-09-19-counter-argument-fold-back.md`.)*", "cites": "subtraction-2"}], "destination": "#counter-argument-requirement", "signature": {"signer": "stacy", "canonicalHash": "sha256:286834df7af21da197261639de28759cbcb34d485b8c9a9554c11629da2d6eb9", "renderedHash": "sha256:8deb48d797557d7e89f362e0fa3b1401ee06a14971207820c0b91caaf7784a34", "assent": {"surviving": ["provide", "fold-1", "fold-2", "fold-3", "never-pitch", "never-manufacture"]}, "evidence": "canonical/profiles/consumer/signatures/ai-collaboration-principles.md#counter-argument-requirement"}}
+  "#exploratory-vs-directive-questions": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#when-human-and-ai-disagree": {"disposition": "re-pointed", "removals": [{"text": "`.kiro/docs/alternative-paths-log.md`", "cites": "subtraction-1"}], "destination": "#when-human-and-ai-disagree", "signature": {"signer": "stacy", "canonicalHash": "sha256:bb60ef44c4dc0e5409860788d7a2b97ae06fb6d5647c79bdc0bf1ddc34c9dfbf", "renderedHash": "sha256:3faae8edf197e522f0bab6f5e79ce0ea53203b69b44138306a9cf4f1057ddd7d", "assent": {"surviving": ["disagree-1", "disagree-2", "disagree-3", "disagree-4"]}, "evidence": "canonical/profiles/consumer/signatures/ai-collaboration-principles.md#when-human-and-ai-disagree"}}
+  "#certainty-calibration-finding-guidance-before-you-guess": {"disposition": "retained"}
+  "#mcp-query-for-full-framework": {"disposition": "retained"}

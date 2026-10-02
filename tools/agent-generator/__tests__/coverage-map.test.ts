@@ -22,6 +22,8 @@ import {
   type CoverageManifest,
   type CoverageRow,
 } from '../coverage-map';
+import { surfaceGlobs as operativeSetFreshnessSurfaceGlobs } from '../regrounding/freshness';
+import { surfaceGlobs as consumerProfileSurfaceGlobs } from '../consumer-profile';
 import { guardedRoots } from '../generate';
 
 describe('coverage-map — glob join', () => {
@@ -103,10 +105,15 @@ describe('coverage-map — buildCoverageManifest completeness', () => {
 });
 
 describe('coverage-map — S-D1 spot-check: 122-diff-guard derives from guardedRoots()', () => {
-  it('every diffGuardSurfaceGlobs() entry traces to a CURRENT guardedRoots() entry (not a frozen literal)', () => {
+  it('every diffGuardSurfaceGlobs() entry traces to a CURRENT guardedRoots() entry, the freshness sweep\'s own surfaceGlobs(), or the consumer profile\'s (not a frozen literal)', () => {
     const roots = guardedRoots();
     const globs = diffGuardSurfaceGlobs();
-    expect(globs).toHaveLength(roots.length);
+    // Spec 123 Task 13.6: the guard also runs operative-set-freshness, whose globs come from that sweep's module.
+    // Spec 123 Task 15.0: plus the consumer profile, a generation input, from its loader's module.
+    expect(globs).toHaveLength(roots.length + operativeSetFreshnessSurfaceGlobs().length + consumerProfileSurfaceGlobs().length);
+    expect(globs).toEqual(expect.arrayContaining(operativeSetFreshnessSurfaceGlobs()));
+    expect(globs).toEqual(expect.arrayContaining(consumerProfileSurfaceGlobs()));
+    expect(consumerProfileSurfaceGlobs()).toEqual(['canonical/consumer-profile.yaml']);
     for (const root of roots) {
       const expectedGlob = root.includes('.') && /\.[a-z0-9]+$/i.test(root) ? root : `${root}/**`;
       expect(globs).toContain(expectedGlob);

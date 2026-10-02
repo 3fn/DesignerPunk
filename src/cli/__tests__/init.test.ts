@@ -8,10 +8,13 @@
  * - Does NOT copy `src/types` or `src/components/core` (Req 19A.2/19A.3);
  *   creates the empty consumer `src/components/` dir instead (row 4′).
  * - Rewrites the copied token tree BY RESOLUTION (design.md C4), not by string.
- * - Emits BOTH targets' MCP configs unconditionally (Kiro + Claude Code — C8
- *   U1 emission; `--target` selection arrives at Task 16).
- * - Writes `designerpunk.manifest.json` LAST, with an `origin` per entry and
- *   ZERO `src/tokens/**` entries (Req 5.8).
+ * - Emits the agent layer + MCP config for ONE target through `attach`'s code
+ *   path (Task 16.3; C1's "(new) agent layer" row): bare `init` = the profile's
+ *   declared default, `--target=<t>` = `<t>`. The release-1 copies of
+ *   `.kiro/agents` / `.kiro/steering` / `governance` are REMOVED.
+ * - Writes `designerpunk.manifest.json` LAST, with an `origin` per entry (the
+ *   agent layer `generated`, the MCP keys `emitted-key`), `attachedTargets`
+ *   naming only the targets emitted, and ZERO `src/tokens/**` entries (Req 5.8).
  *
  * This is an integration test — uses a real temp directory and runs the
  * actual `runInit` function against real filesystem operations. No mocking
@@ -24,32 +27,38 @@
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
+import * as crypto from 'crypto';
 import { runInit, ManifestBuilder } from '../init';
+import { runAttach } from '../attach';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
+import { cloneHatchMessage, personalNoteNamingMessage, restartLineSequencedMessage } from '../shared/errorCatalog';
+import { classifyFiles } from '../sync/Classifier';
+import { loadIgnoreFilter } from '../sync/IgnoreFilter';
+import { COPY_ROOTS } from '../sync/Manifest';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-function countFilesRecursive(dir: string): number {
-  let count = 0;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    count += entry.isDirectory()
-      ? countFilesRecursive(path.join(dir, entry.name))
-      : entry.isFile()
-        ? 1
-        : 0;
-  }
-  return count;
-}
 
 // The package root `init` copies from is resolved by `resolvePackageRoot(<init's
 // dir>)` = two levels up from `src/cli/`. This test file lives one level deeper
 // (`src/cli/__tests__/`), so pass its parent (`src/cli/`) to resolve the SAME root.
 const PKG_ROOT = resolvePackageRoot(path.join(__dirname, '..'));
 
-// Expected governance-doc count, derived from source — NOT hard-coded.
-const GOVERNANCE_DOC_COUNT = countFilesRecursive(path.join(PKG_ROOT, 'governance'));
+// The declared target list and default, read through the SHIPPED bundle — never a literal list here (C12).
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const consumerEntry = require(path.join(PKG_ROOT, 'dist/generator/consumer-entry.js'));
+const PROFILE: { targets: string[]; defaultTarget: string } = consumerEntry.loadPackagedConsumerProfile(PKG_ROOT);
+
+const BASE_ARGS = ['--name', 'Test', '--abbreviation', 'T'];
+
+function readManifestFile(dir: string): { attachedTargets: string[]; entries: Record<string, { hash: string; grain: string; origin: string }> } {
+  return JSON.parse(fs.readFileSync(path.join(dir, 'designerpunk.manifest.json'), 'utf-8'));
+}
+
+function sha256(text: string): string {
+  return crypto.createHash('sha256').update(text).digest('hex');
+}
 
 /** Create a unique scratch directory under the OS temp dir, resolved through any symlinks (macOS /var -> /private/var) so it matches what `process.cwd()` reports after chdir. */
 function createScratchDir(): string {
@@ -187,8 +196,11 @@ describe('CLI init — first run against empty scratch repo (Task 2.2)', () => {
     expect(fs.existsSync(path.join(scratchDir, 'designerpunk.config.ts'))).toBe(true);
     expect(fs.existsSync(path.join(scratchDir, 'product/overview.yaml'))).toBe(true);
     expect(fs.existsSync(path.join(scratchDir, 'src/tokens'))).toBe(true);
-    expect(fs.existsSync(path.join(scratchDir, '.kiro/steering'))).toBe(true);
     expect(fs.existsSync(path.join(scratchDir, 'designerpunk.manifest.json'))).toBe(true);
+
+    // Task 16.3 — the release-1 copy rows (6/7/7b) are REMOVED: no `.kiro/steering` copy, no `governance/` copy.
+    expect(fs.existsSync(path.join(scratchDir, 'governance'))).toBe(false);
+    expect(fs.existsSync(path.join(scratchDir, '.kiro/steering'))).toBe(false);
 
     // Req 19A.2/19A.3 — REMOVED from init.
     expect(fs.existsSync(path.join(scratchDir, 'src/types'))).toBe(false);
@@ -247,7 +259,7 @@ describe('CLI init — THREE servers\' MCP config, approvals GENERATED from read
   });
 
   test('Kiro: .kiro/settings/mcp.json has all THREE DesignerPunk entries (Req 7.2\'s deliberate three-server update)', async () => {
-    await runInitIn(scratchDir);
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--target=kiro']);
 
     const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
     expect(Object.keys(config.mcpServers).sort()).toEqual([
@@ -262,10 +274,14 @@ describe('CLI init — THREE servers\' MCP config, approvals GENERATED from read
     expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
     // Req 7.1 — the third entry declares PRODUCT_DIR.
     expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
+    // The docs server is pointed at the package's governance/ corpus — never the package's
+    // .kiro/steering (which ships only the eight identity docs). Moved here from the retired
+    // 119-A relocation-gate leg A7 (.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md, residual R3).
+    expect(config.mcpServers['designerpunk-docs'].env.MCP_STEERING_DIR).toBe('./node_modules/@3fn/core/governance');
   });
 
   test('Kiro: each server\'s autoApprove is SET-EQUAL to the manifest\'s readOnlyHint:true set — rebuild_index absent, find_docs present, validate_component absent', async () => {
-    await runInitIn(scratchDir);
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--target=kiro']);
 
     const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.kiro/settings/mcp.json'), 'utf-8'));
     for (const serverKey of ['designerpunk-docs', 'designerpunk-application', 'designerpunk-product']) {
@@ -279,7 +295,7 @@ describe('CLI init — THREE servers\' MCP config, approvals GENERATED from read
   });
 
   test('Claude Code: .mcp.json has all THREE entries WITHOUT autoApprove/disabled fields', async () => {
-    await runInitIn(scratchDir);
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--target=cc']);
 
     expect(fs.existsSync(path.join(scratchDir, '.mcp.json'))).toBe(true);
     const config = JSON.parse(fs.readFileSync(path.join(scratchDir, '.mcp.json'), 'utf-8'));
@@ -293,10 +309,12 @@ describe('CLI init — THREE servers\' MCP config, approvals GENERATED from read
     expect(config.mcpServers['designerpunk-docs'].command).toBe('node');
     expect(config.mcpServers['designerpunk-application'].env.COMPONENTS_DIR).toBe('./src/components');
     expect(config.mcpServers['designerpunk-product'].env.PRODUCT_DIR).toBe('./product');
+    // Same docs-server data root as the Kiro config (R3 — see the Kiro case above).
+    expect(config.mcpServers['designerpunk-docs'].env.MCP_STEERING_DIR).toBe('./node_modules/@3fn/core/governance');
   });
 
   test('Claude Code: .claude/settings.json permissions.allow is SET-EQUAL (per server, mcp__<server>__<tool> grain) to the manifest\'s readOnlyHint:true set', async () => {
-    await runInitIn(scratchDir);
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--target=cc']);
 
     expect(fs.existsSync(path.join(scratchDir, '.claude/settings.json'))).toBe(true);
     const settings = JSON.parse(fs.readFileSync(path.join(scratchDir, '.claude/settings.json'), 'utf-8'));
@@ -355,19 +373,28 @@ describe('CLI init — manifest, written last (Task 2.4)', () => {
     fs.rmSync(scratchDir, { recursive: true, force: true });
   });
 
-  test('records origin on one copy entry and one emitted-key entry, and posture/installedVersion', async () => {
-    await runInitIn(scratchDir, ['--name', 'Test', '--abbreviation', 'T']); // agents included this time
+  test('records posture/installedVersion, the agent layer as origin "generated", the MCP keys as "emitted-key", and NO "copy" entry', async () => {
+    await runInitIn(scratchDir, BASE_ARGS); // agent layer emitted (the default target)
 
-    const manifest = JSON.parse(fs.readFileSync(path.join(scratchDir, 'designerpunk.manifest.json'), 'utf-8'));
-    expect(manifest.posture).toBe('born');
-    expect(typeof manifest.installedVersion).toBe('string');
-    expect(manifest.installedVersion).not.toBe('unknown');
-    expect(manifest.attachedTargets.sort()).toEqual(['cc', 'kiro']);
+    const manifest = readManifestFile(scratchDir);
+    expect((manifest as any).posture).toBe('born');
+    expect(typeof (manifest as any).installedVersion).toBe('string');
+    expect((manifest as any).installedVersion).not.toBe('unknown');
 
-    const entries = manifest.entries as Record<string, { origin: string; grain: string }>;
-    const copyEntry = Object.entries(entries).find(([, v]) => v.origin === 'copy');
-    expect(copyEntry).toBeDefined();
-    expect(copyEntry![0].startsWith('.kiro/steering/') || copyEntry![0].startsWith('.kiro/agents/') || copyEntry![0].startsWith('governance/')).toBe(true);
+    const entries = manifest.entries;
+    // Release-1's three copy rows are gone — no entry is a copy.
+    expect(Object.values(entries).filter((v) => v.origin === 'copy')).toEqual([]);
+    expect(Object.keys(entries).filter((k) => k.startsWith('governance/'))).toEqual([]);
+
+    // The agent layer: the default target's charters and identity members, recorded `generated` at file grain.
+    const agentEntries = Object.entries(entries).filter(([k]) => k.startsWith('.claude/agents/') || k.startsWith('.claude/identity/'));
+    expect(agentEntries.length).toBeGreaterThan(0);
+    for (const [, v] of agentEntries) {
+      expect(v.origin).toBe('generated');
+      expect(v.grain).toBe('file');
+    }
+    // The CLAUDE.md always-layer region is recorded at region grain, `generated`.
+    expect(entries['CLAUDE.md#managed']).toEqual(expect.objectContaining({ grain: 'region', origin: 'generated' }));
 
     const emittedKeyEntry = Object.entries(entries).find(([, v]) => v.origin === 'emitted-key');
     expect(emittedKeyEntry).toBeDefined();
@@ -436,7 +463,7 @@ describe('CLI init — next steps (Task 2.5; C27 erratum)', () => {
   });
 });
 
-describe('CLI init — first run with pre-seeded customization (merge, unchanged from pre-123)', () => {
+describe('CLI init — first run with pre-seeded customization (merge, Req 19.8)', () => {
   let scratchDir: string;
 
   beforeEach(() => {
@@ -448,28 +475,28 @@ describe('CLI init — first run with pre-seeded customization (merge, unchanged
     fs.rmSync(scratchDir, { recursive: true, force: true });
   });
 
-  test('merges package files alongside consumer customizations (Gap 3 scenario)', async () => {
+  test('Kiro: generated agent layer lands beside the consumer\'s own steering doc; a path she occupies is reported, never overwritten, never recorded', async () => {
     fs.mkdirSync(path.join(scratchDir, '.kiro/steering'), { recursive: true });
-    fs.writeFileSync(
-      path.join(scratchDir, '.kiro/steering/designerpunk.md'),
-      '# Custom product steering\n',
-      'utf-8',
-    );
+    fs.writeFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), '# Custom product steering\n', 'utf-8');
+    // A generated-agent path she already occupies with her own content.
+    fs.mkdirSync(path.join(scratchDir, '.kiro/agents'), { recursive: true });
+    fs.writeFileSync(path.join(scratchDir, '.kiro/agents/ada.json'), '{ "name": "my-ada" }\n', 'utf-8');
 
-    const { output } = await runInitIn(scratchDir);
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, '--target=kiro']);
 
-    expect(output).toContain('✓ steering docs: 9 new files');
-    expect(output).toContain(`✓ governance docs: ${GOVERNANCE_DOC_COUNT} new files`);
+    expect(output).toMatch(/✓ Agent layer \(kiro\): \d+ files written, 1 skipped/);
+    expect(output).toContain('⚠️  skipped: .kiro/agents/ada.json already exists and was not generated by DesignerPunk');
 
-    expect(
-      fs.readFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), 'utf-8'),
-    ).toBe('# Custom product steering\n');
+    expect(fs.readFileSync(path.join(scratchDir, '.kiro/steering/designerpunk.md'), 'utf-8')).toBe('# Custom product steering\n');
+    expect(fs.readFileSync(path.join(scratchDir, '.kiro/agents/ada.json'), 'utf-8')).toBe('{ "name": "my-ada" }\n');
 
-    const steeringFiles = fs.readdirSync(path.join(scratchDir, '.kiro/steering'));
-    expect(steeringFiles.length).toBe(10);
-
-    const governanceFiles = fs.readdirSync(path.join(scratchDir, 'governance'));
-    expect(governanceFiles.length).toBe(GOVERNANCE_DOC_COUNT);
+    // Her files were never claimed: no manifest entry for either.
+    const entries = readManifestFile(scratchDir).entries;
+    expect(entries['.kiro/agents/ada.json']).toBeUndefined();
+    expect(entries['.kiro/steering/designerpunk.md']).toBeUndefined();
+    // The generated identity members beside hers ARE recorded.
+    const identity = Object.keys(entries).filter((k) => k.startsWith('.kiro/steering/designerpunk-'));
+    expect(identity.length).toBeGreaterThan(0);
   });
 });
 
@@ -497,7 +524,7 @@ describe('CLI init — mcp.json scaffold — partial merge (Gap 5 Case 3, unchan
       'utf-8',
     );
 
-    const { output } = await runInitIn(scratchDir);
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--target=kiro']);
 
     expect(output).toContain('✓ .kiro/settings/mcp.json: added designerpunk-application');
     expect(output).toContain("⚠️  .kiro/settings/mcp.json already has 'designerpunk-docs' entry");
@@ -506,5 +533,236 @@ describe('CLI init — mcp.json scaffold — partial merge (Gap 5 Case 3, unchan
     expect(config.mcpServers['designerpunk-docs'].args[0]).toBe('/custom/experimental/docs-mcp.js');
     expect(config.mcpServers['designerpunk-application']).toBeDefined();
     expect(config.mcpServers['designerpunk-application'].command).toBe('node');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Task 16.3 — the agent layer (the `attach` code path), attachedTargets, row 10, restart row
+// ---------------------------------------------------------------------------
+
+describe('CLI init — the agent layer through the attach code path (Task 16.3; C1 "(new) agent layer"; instruments 2.6, 2.7, 3.8)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test.each(['cc', 'kiro'])('init --target=%s emits exactly the lane\'s file set for that target, every file recorded origin "generated" with its on-disk hash', async (target) => {
+    await runInitIn(scratchDir, [...BASE_ARGS, `--target=${target}`]);
+
+    // The expectation is the lane's own emission for the target (the guarded rendering's referent) — not a second hand-list.
+    const emitted = await consumerEntry.emitConsumer({ packageRoot: PKG_ROOT, consumerRoot: scratchDir, target, mode: 'birth' });
+    expect(emitted.files.length).toBeGreaterThan(0);
+    const entries = readManifestFile(scratchDir).entries;
+
+    for (const file of emitted.files as Array<{ path: string; grain: string }>) {
+      expect(fs.existsSync(path.join(scratchDir, file.path))).toBe(true);
+      if (file.grain === 'file') {
+        const entry = entries[file.path];
+        expect(entry).toEqual({ hash: sha256(fs.readFileSync(path.join(scratchDir, file.path), 'utf-8')), grain: 'file', origin: 'generated' });
+      } else {
+        expect(entries[`${file.path}#managed`]).toEqual(expect.objectContaining({ grain: 'region', origin: 'generated' }));
+      }
+    }
+    // One charter file per target's convention.
+    expect(fs.existsSync(path.join(scratchDir, target === 'kiro' ? '.kiro/agents/ada.json' : '.claude/agents/ada.md'))).toBe(true);
+  });
+
+  test('init --target=kiro writes the Kiro MCP config + approvals and NOT the Claude Code ones; --target=cc the reverse (one target per init)', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--target=kiro']);
+    expect(fs.existsSync(path.join(scratchDir, '.kiro/settings/mcp.json'))).toBe(true);
+    expect(fs.existsSync(path.join(scratchDir, '.mcp.json'))).toBe(false);
+    expect(fs.existsSync(path.join(scratchDir, '.claude'))).toBe(false);
+    expect(Object.keys(readManifestFile(scratchDir).entries).some((k) => k.startsWith('.kiro/settings/mcp.json#'))).toBe(true);
+  });
+
+  test('the release-1 copy rows are gone: no governance/ copy, no personal-note.md, no copy-origin entry — for either target', async () => {
+    for (const target of ['cc', 'kiro']) {
+      const dir = createScratchDir();
+      markGitBoundary(dir);
+      try {
+        await runInitIn(dir, [...BASE_ARGS, `--target=${target}`]);
+        expect(fs.existsSync(path.join(dir, 'governance'))).toBe(false);
+        expect(fs.existsSync(path.join(dir, '.kiro/steering/personal-note.md'))).toBe(false);
+        const entries = readManifestFile(dir).entries;
+        expect(Object.values(entries).filter((v) => v.origin === 'copy')).toEqual([]);
+        for (const root of COPY_ROOTS) {
+          expect(Object.entries(entries).filter(([k, v]) => (k === root || k.startsWith(`${root}/`)) && v.origin !== 'generated' && v.origin !== 'emitted-key')).toEqual([]);
+        }
+      } finally {
+        fs.rmSync(dir, { recursive: true, force: true });
+      }
+    }
+  });
+
+  test('--skip-agents omits the agent files and does NOT record the target as attached; the MCP config is still wired', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--target=cc']);
+    expect(fs.existsSync(path.join(scratchDir, '.claude/agents'))).toBe(false);
+    expect(fs.existsSync(path.join(scratchDir, 'CLAUDE.md'))).toBe(false);
+    expect(fs.existsSync(path.join(scratchDir, '.mcp.json'))).toBe(true);
+    expect(readManifestFile(scratchDir).attachedTargets).toEqual([]);
+  });
+
+  test('an undeclared --target refuses up front (exit 1, declared set named) and writes nothing', async () => {
+    const { output, exitCode } = await runInitIn(scratchDir, [...BASE_ARGS, '--target=bogus']);
+    expect(exitCode).toBe(1);
+    expect(output).toContain('init: target "bogus" is not declared by the installed package');
+    expect(output).toContain(PROFILE.targets.join(', '));
+    expect(fs.readdirSync(scratchDir)).toEqual(['.git']);
+  });
+
+  test('--re-scaffold lists a missing agent-layer file in its preview and re-adds it; an edited sibling is left byte-identical', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--target=cc']);
+    const edited = path.join(scratchDir, '.claude/agents/data.md');
+    fs.writeFileSync(edited, '# my edited data agent\n', 'utf-8');
+    fs.rmSync(path.join(scratchDir, '.claude/agents/ada.md'));
+
+    const { output, exitCode } = await runInitIn(scratchDir, [...BASE_ARGS, '--target=cc', '--re-scaffold', '--yes']);
+
+    expect(exitCode).toBeUndefined();
+    expect(output).toContain('the following files will be RE-ADDED');
+    expect(output).toContain('.claude/agents/ada.md');
+    // The preview lists only what is MISSING: the edited sibling is present on disk, so it is not in the list.
+    const previewList = /RE-ADDED[^\n]*\n((?:\s+- [^\n]*\n?)*)/.exec(output)![1];
+    expect(previewList).toContain('.claude/agents/ada.md');
+    expect(previewList).not.toContain('.claude/agents/data.md');
+    expect(fs.existsSync(path.join(scratchDir, '.claude/agents/ada.md'))).toBe(true);
+    expect(fs.readFileSync(edited, 'utf-8')).toBe('# my edited data agent\n');
+    // The untouched generated files were adopted (identical bytes), so the rebuilt manifest still names them.
+    expect(readManifestFile(scratchDir).entries['.claude/agents/ada.md']).toBeDefined();
+    expect(readManifestFile(scratchDir).entries['.claude/agents/data.md']).toBeUndefined();
+  });
+});
+
+describe('CLI init — attachedTargets names only the targets emitted (Task 16.3; C9; instruments 9.3, 9.4, 9.6)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('bare init records [defaultTarget], read through the packaged profile (no literal target list)', async () => {
+    await runInitIn(scratchDir, BASE_ARGS);
+    // BITE (recorded in the Task 16.3 completion doc): restoring `attachedTargets: ['cc', 'kiro']` in
+    // `ManifestBuilder.build` turns THIS assertion red ([cc, kiro] vs [defaultTarget]).
+    expect(readManifestFile(scratchDir).attachedTargets).toEqual([PROFILE.defaultTarget]);
+  });
+
+  test('init --target=kiro records [kiro] only', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--target=kiro']);
+    expect(readManifestFile(scratchDir).attachedTargets).toEqual(['kiro']);
+  });
+
+  test('init --target=cc records [cc] only', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--target=cc']);
+    expect(readManifestFile(scratchDir).attachedTargets).toEqual(['cc']);
+  });
+
+  test('the two-target case (moved from the old bare-init expectation): init --target=kiro, then attach --target=cc → both targets named', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--target=kiro']);
+
+    const originalCwd = process.cwd();
+    process.chdir(scratchDir);
+    const logSpy = jest.spyOn(console, 'log').mockImplementation();
+    try {
+      await runAttach(['--target=cc']);
+    } finally {
+      process.chdir(originalCwd);
+      logSpy.mockRestore();
+    }
+
+    expect(readManifestFile(scratchDir).attachedTargets.sort()).toEqual(['cc', 'kiro']);
+  });
+});
+
+describe('CLI init — row 10 .designerpunkignore comment (Task 16.3; Ada consult; instruments 3.9)', () => {
+  let scratchDir: string;
+
+  // Release-1's scaffold, verbatim (src/cli/init.ts @ d566b30f) — the bytes the cohort fixture's manifest hashes.
+  const RELEASE_1_IGNORE = `# DesignerPunk Sync Ignore
+# Files listed here are never touched by \`npx designerpunk sync\`.
+# Uses .gitignore syntax: globs, exact paths, # comments.
+
+# Example: keep a custom agent prompt
+# .kiro/agents/custom-agent.md
+`;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('the example names the generated agent files a consumer may keep edits to, and says own-authored agents need no entry; the first three header lines stay', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents']);
+    expect(fs.readFileSync(path.join(scratchDir, '.designerpunkignore'), 'utf-8')).toBe(`# DesignerPunk Sync Ignore
+# Files listed here are never touched by \`npx designerpunk sync\`.
+# Uses .gitignore syntax: globs, exact paths, # comments.
+
+# Example: keep your edits to a generated agent file (sync would otherwise offer to overwrite it)
+# .claude/agents/ada.md
+# .kiro/agents/ada.json
+# .kiro/agents/ada-prompt.md
+# Agents you write yourself are never managed and need no entry here.
+`);
+    expect(fs.readFileSync(path.join(scratchDir, '.designerpunkignore'), 'utf-8')).not.toContain('custom-agent.md');
+  });
+
+  test('an UNEDITED release-1 .designerpunkignore is not reclassified as a conflict by the template change (Ada)', () => {
+    const fixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/release-1-cohort/manifest.json'), 'utf-8'));
+    const baseline = fixture.entries['.designerpunkignore'];
+    // The literal above IS what release-1 wrote: its hash is the fixture manifest's baseline.
+    expect(sha256(RELEASE_1_IGNORE)).toBe(baseline.hash);
+
+    // Classify the unedited file against a package side that carries the NEW template under the same path — the strongest
+    // form of the question. The entry is `origin: 'generated'` and the path is under no managed copy root, so it is never judged.
+    const projectRoot = createScratchDir();
+    try {
+      const result = classifyFiles(
+        [{ relativePath: '.designerpunkignore', absolutePath: '/pkg/.designerpunkignore', hash: sha256('the new template') }],
+        [{ relativePath: '.designerpunkignore', absolutePath: path.join(projectRoot, '.designerpunkignore'), hash: sha256(RELEASE_1_IGNORE) }],
+        fixture.entries,
+        loadIgnoreFilter(projectRoot),
+        [...COPY_ROOTS],
+      );
+      const named = [...result.conflicts, ...result.updatedSafe, ...result.new, ...result.removed, ...result.deletedByYou].map((c) => c.relativePath);
+      expect(named).not.toContain('.designerpunkignore');
+    } finally {
+      fs.rmSync(projectRoot, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('CLI init — U2 output prints the sequenced restart row LAST (Task 16.3; Le-T5; instrument 4.7)', () => {
+  let scratchDir: string;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test.each(['cc', 'kiro'])('--target=%s: the output ENDS with clone hatch, personal-note naming, then the sequenced restart row — string-equal, in that order', async (target) => {
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${target}`]);
+    const expectedTail = `${cloneHatchMessage()}\n\n${personalNoteNamingMessage()}\n\n${restartLineSequencedMessage()}`;
+    expect(output.trimEnd().endsWith(expectedTail)).toBe(true);
+    // The agent-layer summary is printed before the next-steps block, never after the restart row.
+    expect(output.indexOf('✓ Agent layer (')).toBeLessThan(output.indexOf(expectedTail));
   });
 });

@@ -22,6 +22,7 @@ import { resolveTokens } from './resolveTokens';
 import { loadComponentTokens } from './loadComponentTokens';
 import { runValidate } from './validate';
 import { runInit } from './init';
+import { runAttach } from './attach';
 import { runValidateProductTokens } from './validateProductTokens';
 import { generateProductTokens } from './generateProductTokens';
 import { ComponentTokenRegistry } from '../registries/ComponentTokenRegistry';
@@ -30,8 +31,10 @@ import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import { partialCaseMessage } from './shared/errorCatalog';
+import { attachUsage } from './shared/vocabulary';
 
-async function main() {
+/** @internal Exported for testing — dispatch reachability (Spec 123 Task 16.2, instrument row 4.6). */
+export async function main() {
   const command = process.argv[2];
   const flags = process.argv.slice(3);
 
@@ -49,6 +52,9 @@ async function main() {
       break;
     case 'init':
       await runInit(process.argv.slice(3));
+      break;
+    case 'attach':
+      await runAttach(process.argv.slice(3));
       break;
     case 'mcp:app':
       await runMcpApp();
@@ -452,15 +458,19 @@ async function runSyncCommand() {
   await runSync({ ...parseSyncArgs(process.argv.slice(3)), projectRoot: process.cwd() });
 }
 
-function printHelp() {
+/** @internal Exported for testing — the "attach never appears without its object" check (vocabulary.ts, Task 16.2). */
+export function printHelp() {
   console.log(`
 DesignerPunk Pipeline CLI
 
 Usage:
   npx designerpunk init            Bootstrap a new product repo
+  npx designerpunk attach --target=<cc|kiro>              ${attachUsage()}
+  npx designerpunk attach --target=<cc|kiro> --reference  MCP config + approvals only (no agents) — read DesignerPunk without becoming it
   npx designerpunk sync            Detect and apply package updates
   npx designerpunk sync --dry-run  Preview what sync would do (no changes)
   npx designerpunk sync --apply   Apply updates without the confirmation prompt (off a terminal)
+  npx designerpunk sync --migrate-legacy  Remove an earlier init's copied agents/steering/governance, then ${attachUsage()} in the same run
   npx designerpunk generate        Generate token files from designerpunk.config.ts
   npx designerpunk generate --force              Regenerate all (skip staleness check)
   npx designerpunk generate --product-only       Skip system tokens, regenerate product only
@@ -478,7 +488,8 @@ Init options:
   --name <name>                    Product name (prompted if omitted)
   --abbreviation <abbr>            Short form (prompted if omitted)
   --skip-components                Don't copy starter components
-  --skip-agents                    Don't copy agent templates
+  --target=<cc|kiro>               Harness to set up (agents + MCP config); default: the package's declared default
+  --skip-agents                    Don't generate the agent layer
 
 Generate options:
   --force                          Skip staleness detection, always regenerate

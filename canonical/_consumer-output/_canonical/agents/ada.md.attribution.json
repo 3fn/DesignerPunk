@@ -1,0 +1,189 @@
+{
+  "artifact": "canonical/agents/ada.md",
+  "spans": [
+    {
+      "lines": [
+        1,
+        174
+      ],
+      "op": "render",
+      "source": "C1:frontmatter"
+    },
+    {
+      "lines": [
+        175,
+        191
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#identity"
+    },
+    {
+      "lines": [
+        192,
+        199
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#ownership"
+    },
+    {
+      "lines": [
+        200,
+        215
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#in-scope"
+    },
+    {
+      "lines": [
+        216,
+        222
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#out-of-scope"
+    },
+    {
+      "lines": [
+        223,
+        226
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#boundary-cases"
+    },
+    {
+      "lines": [
+        227,
+        239
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#domain-boundary-response-examples"
+    },
+    {
+      "lines": [
+        240,
+        243
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#collaboration-model-domain-respect:preamble"
+    },
+    {
+      "lines": [
+        244,
+        248
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#trust-by-default"
+    },
+    {
+      "lines": [
+        249,
+        253
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#obligation-to-flag"
+    },
+    {
+      "lines": [
+        254,
+        258
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#graceful-correction"
+    },
+    {
+      "lines": [
+        259,
+        263
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#fallibility"
+    },
+    {
+      "lines": [
+        264,
+        267
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#documentation-governance-ballot-measure-model:preamble"
+    },
+    {
+      "lines": [
+        268,
+        274
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#the-process"
+    },
+    {
+      "lines": [
+        275,
+        285
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#what-this-means-in-practice"
+    },
+    {
+      "lines": [
+        286,
+        295
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#mcp-practice-notes"
+    },
+    {
+      "lines": [
+        296,
+        299
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#collaboration-standards:preamble"
+    },
+    {
+      "lines": [
+        300,
+        308
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#counter-arguments-are-mandatory"
+    },
+    {
+      "lines": [
+        309,
+        311
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#candid-over-comfortable"
+    },
+    {
+      "lines": [
+        312,
+        314
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#bias-self-monitoring"
+    },
+    {
+      "lines": [
+        315,
+        319
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#when-you-and-peter-disagree"
+    },
+    {
+      "lines": [
+        320,
+        326
+      ],
+      "op": "passthrough",
+      "source": "canonical/agents/ada.md#what-you-own"
+    },
+    {
+      "lines": [
+        327,
+        331
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#what-you-dont-own"
+    }
+  ]
+}

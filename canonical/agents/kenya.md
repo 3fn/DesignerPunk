@@ -34,11 +34,13 @@ ambient:
           section: "System-First Value Selection"      # interim form: id + verbatim heading (Req 3 AC2)
           mustContain:
             - "If a system token (semantic or primitive) exists within perceptual tolerance of your intended value, use `ref:` instead."
-  # ground-truth-manifest: none-trim-stale-snapshots (CONSUMER pattern, AXA §5.3). The committed
-  # dist Swift snapshots are STALE (pre-Spec-094: flat Color.oklch literals, no {Name}Theme /
-  # EnvironmentKey) — and `dist/ios/DesignTokens.ios.swift` is ORPHANED (removed in 835e33d1,
-  # written by no current script) so it must NEVER be read, even though a newer-but-still-wrong
-  # `dist/*.ios.swift` may exist (K2). Each trim: `fires: unconditional` (K-D1 — fires whether or
+  # ground-truth-manifest: none-trim-stale-snapshots (CONSUMER pattern, AXA §5.3). The dist Swift
+  # snapshots are this repo's UN-THEMED BASE output (flat Color.oklch literals, no {Name}Theme /
+  # EnvironmentKey). `dist/ios/DesignTokens.ios.swift` IS written by the in-repo `npx designerpunk
+  # generate` (designerpunk.config.ts: output ./dist, no themes) and is slated to stop shipping; the
+  # root `dist/DesignTokens.ios.swift` / `dist/ComponentTokens.ios.swift` are DesignerPunk's base
+  # snapshot. Never read any of them for themed values — query the MCP; a consumer reads its own
+  # generate outputDir (K2). Each trim: `fires: unconditional` (K-D1 — fires whether or
   # not it is a baseline removal or current output) + a hard-negative-plus-positive cue naming the
   # broad `dist/*.swift` pattern + a `replaces:`. The DesignTokens trim carries `shape:
   # per-theme-set` (K2/K3 / Req 12 AC2(b) — a theme-varying token is a per-theme SET the tool
@@ -50,7 +52,7 @@ ambient:
       - artifact: dist/ios/DesignTokens.ios.swift
         fires: unconditional
         cue:
-          negative: "do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift — it is ORPHANED and stale (pre-Spec-094: flat Color.oklch literals, no theme surface); do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) — they are stale generated artifacts, not the source of truth"
+          negative: "do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift for themed values — it is this repo's un-themed base output (written by the in-repo generate: flat Color.oklch literals, no theme surface) and is due to stop shipping; do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) for themed values — they are un-themed base output, not the source of truth; a consumer reads its own generate outputDir"
           tool: get_token_details
           mcp: application
           shape: per-theme-set
@@ -454,7 +456,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 Your routing section names the query tools and when to reach for each. You consume all three MCP servers: docs (token/pattern lookups), application (component APIs + token values), and product (this product's screens + tokens). Operational notes that are yours specifically:
 
-**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is orphaned and stale. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
+**Ground truth is live, never a snapshot** — the `dist/*.ios.swift` build outputs are trimmed from your ambient set on purpose (see the Ground truth section) — and `dist/ios/DesignTokens.ios.swift` is this repo's un-themed base output (written by the in-repo generate, due to stop shipping), never read for themed values. Reach for the application MCP's token verbs for resolved values, not the flat Swift files — and remember a theme-varying token is a per-theme set, not one value.
 
 **Write-side rebuild protocol** — after modifying product screen implementations or product YAML, trigger the Product MCP's `rebuild_product_index` so data is immediately fresh. Health states: `healthy` | `degraded` | `failed`. Servers auto-detect staleness on a delay; rebuilding after writes ensures immediate freshness.
 

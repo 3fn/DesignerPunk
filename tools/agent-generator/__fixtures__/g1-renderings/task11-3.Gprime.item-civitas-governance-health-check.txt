@@ -1,0 +1,5 @@
+2. **Governance Health Check**
+   
+   Look up the date of the most recent entry in your repository's governance health-check record. IF more than 30 days have passed since that entry (or more than the interval your team has recorded for health checks), THEN raise this flag before doing anything else: "Governance health check overdue — your repository's governance steward should run the health check before work proceeds."
+   
+   *The health check is run only by your repository's designated governance steward. Every agent checks the date in the health-check record and raises the flag when the check is overdue.*

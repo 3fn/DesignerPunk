@@ -311,3 +311,20 @@ describe('partition() behaviors', () => {
     expect(anchors).toContain('#item-civitas-governance-health-check');
   });
 });
+
+describe('The root id is reserved — a heading titled "Doc" never collides with `#doc` (Spec 123 Task 14.1 finding)', () => {
+  it('heading tree: `# Doc` is allocated `#doc-2`, the root keeps no parent, and containment terminates', () => {
+    const t = partition('# Doc\n\n## Alpha\n\nA.\n\n## Alpha examples\n\nB.\n');
+    expect(t.get('#doc')).toMatchObject({ kind: 'doc', parent: null });
+    expect(t.get('#doc-2')).toMatchObject({ kind: 'heading', parent: '#doc' });
+    expect(t.isDescendantOrSelf('#alpha-examples', '#alpha')).toBe(false);
+    expect(t.isDescendantOrSelf('#alpha', '#doc')).toBe(true);
+  });
+
+  it('enumeration fallback: a `# Doc` title is allocated `#doc-2`', () => {
+    const t = partition('# Doc\n\n1. First item.\n2. Second item.\n');
+    expect(t.get('#doc')).toMatchObject({ kind: 'doc', parent: null });
+    expect(t.get('#doc-2')).toMatchObject({ kind: 'heading', parent: '#doc' });
+    expect(t.isDescendantOrSelf('#item-first-item', '#doc')).toBe(true);
+  });
+});

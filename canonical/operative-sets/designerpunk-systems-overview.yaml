@@ -1,0 +1,71 @@
+# canonical/operative-sets/designerpunk-systems-overview.yaml — operative-set record (design C16; Req 11.6.5d)
+#
+# Every body unit of .kiro/steering/DesignerPunk-Systems-Overview.md, an always-set member (Spec 123 Task 15.4). Under path (B) (Req 12.1a) the
+# shipped steering doc IS the canonical counterpart. Owner thurgood (a Civitas governance-layer doc) ==
+# the profile author, so the C1 confirmer is the counterpart seat, Stacy. Drafted by Thurgood.
+# canonicalHash = "sha256:" + hex SHA-256 over the unit's exact bytes (partition(splitFrontmatter(src).body)).
+# Item text is the COMPLETE operative text, a verbatim substring of its unit; label is never matched.
+source: .kiro/steering/DesignerPunk-Systems-Overview.md
+owner: thurgood
+confirmer: stacy
+units:
+  "#designerpunk-systems-overview:preamble":
+    canonicalHash: sha256:a81ba036a8683b7f30a77c88663f6998b785552410e420d0d33b162868a445a1
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#designerpunk-systems-overview:preamble
+  "#overview":
+    canonicalHash: sha256:4f50e69ed22fe9e8024e017d05ad08a6cf807613016abb64a5c12af3d8b741d2
+    items:
+      - id: overview-1
+        kind: obligation
+        label: "Rosetta System — Mathematical foundation for visual consiste"
+        text: "**Rosetta System** — Mathematical foundation for visual consistency (tokens, scales, relationships)"
+      - id: overview-2
+        kind: obligation
+        label: "Stemma System — Relational foundation for behavioral consist"
+        text: "**Stemma System** — Relational foundation for behavioral consistency (components, contracts, inheritance)"
+      - id: overview-3
+        kind: obligation
+        label: "Civitas System — Governance foundation for operational consi"
+        text: "**Civitas System** — Governance foundation for operational consistency (steering docs, MCP servers, agent coordination, processes)"
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#overview
+  "#pointer-1-module-resolution-contract-spec-118":
+    canonicalHash: sha256:cffe92ec071aeb070f4fee21c68bae47fcb88b79ed0b84e393e7cc28b227931e
+    items:
+      - id: module-resolution-pull
+        kind: obligation
+        label: "Pull the Module-Resolution Contract before touching those surfaces"
+        text: "Module resolution — runtime-TS loading, package exports, the bin, consumer `.ts`, and component tokens — is governed by the **Module-Resolution Contract**; pull it before touching those surfaces."
+      - id: module-resolution-route
+        kind: route
+        label: "Where the contract lives"
+        text: "See `rosetta-system-architecture` § \"Module-Resolution Contract\"."
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#pointer-1-module-resolution-contract-spec-118
+  "#high-level-designerpunk-three-system-architecture":
+    canonicalHash: sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#high-level-designerpunk-three-system-architecture
+  "#rosetta-system-token-pipeline-and-layers":
+    canonicalHash: sha256:9a42eba814e35b74f06ccbbb72df81e5cfdce8ee227cedd345078cb6c086c676
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#rosetta-system-token-pipeline-and-layers
+  "#stemma-system-families-and-inheritance":
+    canonicalHash: sha256:b898e08b85ef79769ab48747424402d9df08985b80987a1d93fbdd78ce52c454
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#stemma-system-families-and-inheritance
+  "#civitas-system-governance-infrastructure":
+    canonicalHash: sha256:05dfb306f63dc5eacf86ccaa02dd41897f8fef417b887f5c051dee41ee10ad06
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#civitas-system-governance-infrastructure
+  "#integration-tokens-components-platforms":
+    canonicalHash: sha256:6299782dc541681b506a0273ccbf89ebec37e67a02510da583540fab61e8d6b4
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#integration-tokens-components-platforms
+  "#combined-overview-single-diagram":
+    canonicalHash: sha256:52cbf96c06f39c3c4ae1b07b0a529528797072b11cd5c11cec2e03d3efeb5077
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#combined-overview-single-diagram
+  "#related-documentation":
+    canonicalHash: sha256:cdd4df7d51710aa622848052c914bc58765bb44f7ea9cd1309a089dd9bdf4dac
+    items: []
+    confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#related-documentation

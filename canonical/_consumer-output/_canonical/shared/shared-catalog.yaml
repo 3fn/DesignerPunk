@@ -1,0 +1,19 @@
+members:
+  - id: find-docs-discovery
+    kind: tool-cue
+    tool: find_docs
+    mcp: docs
+    cue: use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted
+    owner: thurgood
+  - id: record-first-ratification
+    kind: governance-rule
+    owner: thurgood
+    statement: |
+      Before applying a governance change your team ratified, verify the committed decision record says it was ratified — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so it can be committed.
+    source: your team's committed decision records
+    crossRef: node_modules/@3fn/core/governance/classification-map.md § "record-first-ratification"
+  - id: certainty-calibration-cue
+    kind: governance-rule
+    owner: thurgood
+    statement: WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
+    crossRef: governance/classification-map.md § "certainty-calibration"

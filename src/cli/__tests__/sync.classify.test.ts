@@ -8,6 +8,11 @@
  *
  * Three cases, each bitten (reds recorded in task-5-4-completion.md). The count
  * of cases is asserted so the suite cannot pass by losing one.
+ *
+ * Task 16.5: the file-grain vehicle of cases 1 and 3 moved from a release-1 COPY
+ * under `.kiro/steering` (no longer managed — C7, gate 4b; such an entry is now a
+ * legacy copy) to a GENERATED agent file, whose package side comes through
+ * `sync`'s agent-layer seam. The properties asserted are unchanged.
  */
 
 import * as fs from 'fs';
@@ -15,7 +20,7 @@ import { runSync } from '../sync';
 import { deletedByYouMessage, untrackedNewMessage } from '../sync/Reporter';
 import { prunedMessage, serializeManifest, LEGACY_MANIFEST_PATH } from '../sync/Manifest';
 import type { DesignerPunkManifest } from '../sync/Manifest';
-import { createScratch, setupPackage, writeFile, readText, captureConsole, sha, birthKeys } from './syncTestKit';
+import { createScratch, setupPackage, writeFile, readText, captureConsole, sha, birthKeys, stubAgentLayer } from './syncTestKit';
 
 const CASES = ['deleted-by-you', 'untracked-new', 'removed-only-under-managed'] as const;
 
@@ -35,28 +40,31 @@ describe('sync — classification (Task 5.4)', () => {
     expect(CASES).toHaveLength(3);
   });
 
-  test(`case 1/3 — ${CASES[0]}: a recorded copy the consumer deleted is reported and never re-added; --restore re-adds it`, async () => {
+  test(`case 1/3 — ${CASES[0]}: a recorded generated file the consumer deleted is reported and never re-added; --restore re-adds it`, async () => {
+    const IDENTITY = '.kiro/steering/designerpunk-identity.md';
+    const OTHER = '.kiro/steering/designerpunk-other.md';
     const doc = '# Identity doc v2\n';
-    setupPackage(scratch, { files: { '.kiro/steering/Identity.md': doc, '.kiro/steering/Other.md': 'other\n' } });
+    setupPackage(scratch);
+    const agentLayer = stubAgentLayer({ kiro: [{ path: IDENTITY, content: doc }, { path: OTHER, content: 'other\n' }] });
     const manifest: DesignerPunkManifest = {
-      version: '1', posture: 'born', installedVersion: '15.0.0', contractHash: '', attachedTargets: [],
+      version: '1', posture: 'born', installedVersion: '15.0.0', contractHash: '', attachedTargets: ['kiro'],
       entries: {
-        '.kiro/steering/Identity.md': { hash: sha('# Identity doc v1\n'), grain: 'file', origin: 'copy' },
-        '.kiro/steering/Other.md': { hash: sha('other\n'), grain: 'file', origin: 'copy' },
+        [IDENTITY]: { hash: sha('# Identity doc v1\n'), grain: 'file', origin: 'generated' },
+        [OTHER]: { hash: sha('other\n'), grain: 'file', origin: 'generated' },
       },
     };
     writeFile(scratch, 'designerpunk.manifest.json', serializeManifest(manifest));
-    writeFile(scratch, '.kiro/steering/Other.md', 'other\n');
-    // Identity.md: recorded, present in the package, deleted by her.
+    writeFile(scratch, OTHER, 'other\n');
+    // IDENTITY: recorded, emitted by the package, deleted by her.
 
-    const first = await runSync({ projectRoot: scratch, apply: true, isTTY: false });
-    expect(con.output()).toContain(deletedByYouMessage('.kiro/steering/Identity.md'));
-    expect(first.applied).not.toContain('.kiro/steering/Identity.md');
-    expect(fs.existsSync(`${scratch}/.kiro/steering/Identity.md`)).toBe(false);
+    const first = await runSync({ projectRoot: scratch, apply: true, isTTY: false, agentLayer });
+    expect(con.output()).toContain(deletedByYouMessage(IDENTITY));
+    expect(first.applied).not.toContain(IDENTITY);
+    expect(fs.existsSync(`${scratch}/${IDENTITY}`)).toBe(false);
 
-    const second = await runSync({ projectRoot: scratch, apply: true, isTTY: false, restore: ['.kiro/steering/Identity.md'] });
-    expect(second.applied).toEqual(['.kiro/steering/Identity.md']);
-    expect(readText(scratch, '.kiro/steering/Identity.md')).toBe(doc);
+    const second = await runSync({ projectRoot: scratch, apply: true, isTTY: false, agentLayer, restore: [IDENTITY] });
+    expect(second.applied).toEqual([IDENTITY]);
+    expect(readText(scratch, IDENTITY)).toBe(doc);
   });
 
   test(`case 2/3 — ${CASES[1]}: first sync with a never-recorded generated surface → reported, NOT applied`, async () => {
@@ -77,9 +85,40 @@ describe('sync — classification (Task 5.4)', () => {
   });
 
   test(`case 3/3 — ${CASES[2]}: de-managed entries are PRUNED (never "Removed from package"); removed still fires under a managed root`, async () => {
-    setupPackage(scratch, { files: { '.kiro/steering/Kept.md': 'kept\n' } });
-    // A pre-123 manifest: token-language + types + component entries (de-managed),
-    // plus two steering entries — one the package dropped (a genuine `removed`).
+    setupPackage(scratch);
+    const agentLayer = stubAgentLayer({ cc: [{ path: '.claude/agents/kept.md', content: 'kept\n' }] });
+    // A pre-123-shaped manifest (current format): token-language + types + component entries (de-managed),
+    // plus two generated agent entries — one the package no longer emits (a genuine `removed`).
+    const manifest: DesignerPunkManifest = {
+      version: '1', posture: 'born', installedVersion: '15.0.0', contractHash: '', attachedTargets: ['cc'],
+      entries: {
+        'src/tokens/semantic/ColorTokens.ts': { hash: 'a', grain: 'file', origin: 'copy' },
+        'src/tokens/SpacingTokens.ts': { hash: 'b', grain: 'file', origin: 'copy' },
+        'src/types/PrimitiveToken.ts': { hash: 'c', grain: 'file', origin: 'copy' },
+        'src/components/core/Icon-Base/index.ts': { hash: 'd', grain: 'file', origin: 'copy' },
+        '.claude/agents/kept.md': { hash: sha('kept\n'), grain: 'file', origin: 'generated' },
+        '.claude/agents/dropped.md': { hash: sha('dropped\n'), grain: 'file', origin: 'generated' },
+      },
+    };
+    writeFile(scratch, 'designerpunk.manifest.json', serializeManifest(manifest));
+    writeFile(scratch, '.claude/agents/kept.md', 'kept\n');
+    writeFile(scratch, '.claude/agents/dropped.md', 'dropped\n');
+    writeFile(scratch, 'src/tokens/SpacingTokens.ts', 'export const mine = 1;\n');
+
+    await runSync({ projectRoot: scratch, dryRun: true, agentLayer });
+    const out = con.output();
+    const removedBlock = out.split('Removed from package')[1]?.split('\n\n')[0] ?? '';
+
+    // `removed` first (its bite is the unscoped class), then the pruning report (its bite is no pruning).
+    expect(removedBlock).toContain('.claude/agents/dropped.md');
+    expect(removedBlock).not.toMatch(/src\/(tokens|types|components)/);
+    expect(out).toContain(prunedMessage(2, 'src/tokens'));
+    expect(out).toContain(prunedMessage(1, 'src/types'));
+    expect(out).toContain(prunedMessage(1, 'src/components/core'));
+  });
+
+  test('the legacy-manifest relocation still prunes de-managed entries (the Spec 111 path of case 3)', async () => {
+    setupPackage(scratch);
     writeFile(scratch, LEGACY_MANIFEST_PATH, JSON.stringify({
       version: '12.0.3',
       syncedAt: '2026-06-11T02:46:38.045Z',
@@ -87,24 +126,11 @@ describe('sync — classification (Task 5.4)', () => {
         'src/tokens/semantic/ColorTokens.ts': { hash: 'a', managed: false },
         'src/tokens/SpacingTokens.ts': { hash: 'b', managed: false },
         'src/types/PrimitiveToken.ts': { hash: 'c', managed: false },
-        'src/components/core/Icon-Base/index.ts': { hash: 'd', managed: false },
-        '.kiro/steering/Kept.md': { hash: sha('kept\n'), managed: true },
-        '.kiro/steering/Dropped.md': { hash: sha('dropped\n'), managed: true },
       },
     }));
-    writeFile(scratch, '.kiro/steering/Kept.md', 'kept\n');
-    writeFile(scratch, '.kiro/steering/Dropped.md', 'dropped\n');
-    writeFile(scratch, 'src/tokens/SpacingTokens.ts', 'export const mine = 1;\n');
-
     await runSync({ projectRoot: scratch, dryRun: true });
-    const out = con.output();
-    const removedBlock = out.split('Removed from package')[1]?.split('\n\n')[0] ?? '';
-
-    // `removed` first (its bite is the unscoped class), then the pruning report (its bite is no pruning).
-    expect(removedBlock).toContain('.kiro/steering/Dropped.md');
-    expect(removedBlock).not.toMatch(/src\/(tokens|types|components)/);
-    expect(out).toContain(prunedMessage(2, 'src/tokens'));
-    expect(out).toContain(prunedMessage(1, 'src/types'));
-    expect(out).toContain(prunedMessage(1, 'src/components/core'));
+    expect(con.output()).toContain(prunedMessage(2, 'src/tokens'));
+    expect(con.output()).toContain(prunedMessage(1, 'src/types'));
+    expect(con.output()).not.toContain('Removed from package');
   });
 });

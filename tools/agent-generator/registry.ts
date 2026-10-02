@@ -36,6 +36,11 @@ import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 import { canonicalStringify, type JsonValue } from './canonical-json';
 import { guardChild, noteChildPid, releaseChild } from './child-process-guard';
 
+// The manifest half (consumer lane) lives in ./registry-manifest, which carries no SDK import;
+// re-exported here so existing importers of `./registry` keep working.
+export { fromManifest, declaredToolNames } from './registry-manifest';
+export type { DeclaredTool, DeclaredServer, ManifestRegistry, ToolManifestLike } from './registry-manifest';
+
 // ============================================================================
 // The fixed server table — mirrors `.mcp.json`'s three servers, repo-relative
 // ============================================================================
@@ -268,7 +273,14 @@ async function main(): Promise<void> {
 // `require.main === module` pattern (see mcp-server/src/index.ts). Importing this
 // module as a library (e.g. from a test, or from another generator stage) must NOT
 // introspect anything as a side effect.
-if (require.main === module) {
+//
+// The `STEWARD_CLI` label (Spec 123 Task 16.1) is for the consumer bundle: `build:generator`
+// passes esbuild `--drop-labels=STEWARD_CLI`, which removes this block, so `main` and the live
+// introspection path below it are tree-shaken out of `dist/generator/consumer-entry.js` (the
+// lane reads `fromManifest` only). In a bundle, `require.main === module` would compare against
+// the BUNDLE's module and run this block (instruments note N5). Under tsx or node, a label
+// changes nothing.
+STEWARD_CLI: if (require.main === module) {
   main().catch((error) => {
     console.error('[registry] Fatal error:', error);
     process.exit(1);

@@ -1,0 +1,107 @@
+# canonical/profiles/consumer/data.dispositions.yaml — Spec 123 Task 15.4 (design C17; DD25, DD26)
+# Every body unit and frontmatter leaf carries an explicit row. Re-pointed rows re-ground the role at the
+# consumer's repo (R5); their text is data.overlay.md (## @unit prose, ## @entry YAML values, 15.0 (b) erratum).
+# The knowledge-fallback re-point (Kenya/Data R1): the Android sources ship at node_modules/@3fn/core/src/components/core/*/platforms/android/; test sources do not ship.
+source: canonical/agents/data.md
+body:
+  "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#identity", "signature": {"signer": "data", "canonicalHash": "sha256:3e79e0b228e2534acc10dede5f8c1a2276520d1b331d6d3077810b8bc8b392ac", "renderedHash": "sha256:1615381ee987702a25e61ecffc6d21a162ea0a4b0b476060c6f4f0b1e60c3c64", "assent": {"surviving": ["role", "precision-and-care", "domain", "leonardo-primary", "system-through-leonardo", "human-decides", "partner"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#identity"}}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "(referencing existing platforms/android/ implementations)", "cites": "subtraction-5"}], "destination": "#in-scope"}
+  "#android-theming-spec-094": {"disposition": "re-pointed", "removals": [{"text": "the built `dist/*.kt` snapshots (see the Ground truth section)", "cites": "subtraction-1"}], "destination": "#android-theming-spec-094", "signature": {"signer": "data", "canonicalHash": "sha256:7818e0ca9a1252c1baacf77ce2e9650bb50377b5c2e07cc07492b48f50ac9122", "renderedHash": "sha256:58222617691f7cc1c769468afd902b1b04fdc8441dbb11e381873861bd20af01", "assent": {"surviving": ["theming-1", "theming-2", "theming-3", "theming-4", "theming-5", "theming-6"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#android-theming-spec-094"}}
+  "#product-tokens-spec-108109": {"disposition": "retained"}
+  "#out-of-scope": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#out-of-scope", "signature": {"signer": "data", "canonicalHash": "sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c", "renderedHash": "sha256:e7b6eb783d2779b2304ebfc629d2a49793aab962f956efb8c4aac95c2d0a8999", "assent": {"surviving": ["out-1", "out-2", "out-3", "out-4", "out-5", "out-6", "out-7"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#out-of-scope"}}
+  "#blocking-exception-direct-escalation-to-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#blocking-exception-direct-escalation-to-peter", "signature": {"signer": "data", "canonicalHash": "sha256:c5cf701217d1de46ef107456928e2f87ca8cd4e4fa7a77bad68d25c84ab52875", "renderedHash": "sha256:28abdd05d95a5480541970e60bbb0f8fa8d2068380063ebe8ebb7aed33ec7d9c", "assent": {"surviving": ["blocking-direct", "blocking-exception", "blocking-when-in-doubt"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#blocking-exception-direct-escalation-to-peter"}}
+  "#the-implement-vs-direct-distinction": {"disposition": "retained"}
+  "#operational-mode-screen-implementation:preamble": {"disposition": "retained"}
+  "#step-1-review-the-specification": {"disposition": "retained"}
+  "#step-2-set-up-the-screen": {"disposition": "re-pointed", "removals": [{"text": "the stale `dist/*.kt` snapshots — see the Ground truth section", "cites": "subtraction-1"}], "destination": "#step-2-set-up-the-screen", "signature": {"signer": "data", "canonicalHash": "sha256:61029dcbeeee35dc3ba5b50c4baa20671d2a1208c38a037f5de9f2a2cd4a4dfe", "renderedHash": "sha256:588e8e32908234aaaf111a3ddd13df83ba8dac5b4aa3e8bef3812c514a6a6ff6", "assent": {"surviving": ["setup-1", "setup-2", "setup-3"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#step-2-set-up-the-screen"}}
+  "#step-3-implement": {"disposition": "retained"}
+  "#step-4-test": {"disposition": "retained"}
+  "#step-5-report-back": {"disposition": "retained"}
+  "#operational-mode-platform-expertise:preamble": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#operational-mode-platform-expertise:preamble"}
+  "#what-you-provide": {"disposition": "retained"}
+  "#how-you-provide-it": {"disposition": "retained"}
+  "#with-leonardo-primary": {"disposition": "retained"}
+  "#with-sibling-platform-agents": {"disposition": "retained"}
+  "#with-stacy-product-governance": {"disposition": "retained"}
+  "#with-peter": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "Recognize Peter's skillset largely lives in design and may require assistance with understanding technical nuances", "cites": "subtraction-2"}], "destination": "#with-peter", "signature": {"signer": "data", "canonicalHash": "sha256:af2055100e2c2f76d1222b5ac6b240afa08096dc1b7d193363f7d73477ed6921", "renderedHash": "sha256:56589321e4d7e8c0db96c51ddef89b699012561341548684b357a860d788578a", "assent": {"surviving": ["human-1", "human-2", "human-3"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#with-peter"}}
+  "#how-to-use-designerpunk-tokens-on-android": {"disposition": "re-pointed", "removals": [{"text": "the built `dist/*.kt` snapshots (see the Ground truth section)", "cites": "subtraction-1"}], "destination": "#how-to-use-designerpunk-tokens-on-android", "signature": {"signer": "data", "canonicalHash": "sha256:14fa4d5367f385a948746af6f26587002fc2b27522af0fb2588b09a1c901e22e", "renderedHash": "sha256:6979718fcf9114f8a29108b35f92ab6a54a417093b1fddfe7704680ddc3c6c8a", "assent": {"surviving": ["tokens-1", "tokens-2", "tokens-3", "tokens-4", "ground-truth-live", "per-theme-set"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#how-to-use-designerpunk-tokens-on-android"}}
+  "#token-reference-pattern": {"disposition": "retained"}
+  "#platform-currency-expectations": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#platform-currency-expectations", "signature": {"signer": "data", "canonicalHash": "sha256:325c789e1205fbac6f672a1a90b6823cbbf970638578aaa328b39800dc8c3db6", "renderedHash": "sha256:de1c003b42c406de6f37dd18f1b10c56096c1b3c30135cbb8c8534f91ae83364", "assent": {"surviving": ["currency-1", "currency-2", "currency-3", "currency-4", "currency-5"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#platform-currency-expectations"}}
+  "#platform-reference-pointers": {"disposition": "retained"}
+  "#android-specific-guidance:preamble": {"disposition": "re-pointed", "removals": [{"text": "the stale `dist/*.kt` snapshots", "cites": "subtraction-1"}], "destination": "#android-specific-guidance:preamble", "signature": {"signer": "data", "canonicalHash": "sha256:afaa161290815fb26ca8098c8f1a6ca2bb55dfafb4189e5d7fa76818f65054aa", "renderedHash": "sha256:3f919016144ba1011b04e12b762f2703fad26e5d37eace1583c278c4328a1429", "assent": {"surviving": ["native-1", "native-2", "native-3", "native-4", "native-5", "native-6", "native-7"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#android-specific-guidance:preamble"}}
+  "#android-skills-official-google-patterns": {"disposition": "retained"}
+  "#mcp-practice-notes": {"disposition": "re-pointed", "removals": [{"text": "**Ground truth is live, never a snapshot** — the two `dist/*.kt` build outputs are trimmed from your ambient set on purpose (see the Ground truth section). Reach for", "cites": "subtraction-3"}, {"text": "and `*Test.kt` files", "cites": "subtraction-5"}], "destination": "#mcp-practice-notes", "signature": {"signer": "data", "canonicalHash": "sha256:4e297f3aa7500dbce86a97abb77a54f907cbe25dfb3ec77492eeea5c4a29d27c", "renderedHash": "sha256:d06f1b75a94195a7438d3a6111d07a02e82e098fdcba120832e22d8ebb6826e4", "assent": {"surviving": ["ground-truth-live-mcp", "rebuild-product", "mcp-fallback"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#mcp-practice-notes"}}
+  "#collaboration-standards:preamble": {"disposition": "retained"}
+  "#counter-arguments-are-mandatory": {"disposition": "retained"}
+  "#candid-over-comfortable": {"disposition": "retained"}
+  "#bias-self-monitoring": {"disposition": "retained"}
+  "#ask-if-unsure": {"disposition": "retained"}
+  "#what-you-own": {"disposition": "retained"}
+  "#what-you-dont-own": {"disposition": "re-pointed", "removals": [{"text": "Your test commands (with their triggering cues) and named gaps are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.", "cites": "subtraction-1"}], "destination": "#what-you-dont-own", "signature": {"signer": "data", "canonicalHash": "sha256:ee7dd121bbf0cb283d8dbb38f87c8f4b67b7dc492f8ab2236170a0909ec0c288", "renderedHash": "sha256:19c95e554712d6fc50b6948d4d805ede3b63c44c3bce92a7abc9a679f9f0887e", "assent": {"surviving": ["not-own-1", "not-own-2", "not-own-3", "jest-not-vitest"]}, "evidence": "canonical/profiles/consumer/signatures/data.md#what-you-dont-own"}}
+frontmatter:
+  "agent": {"disposition": "retained"}
+  "agentType": {"disposition": "retained"}
+  "description": {"disposition": "retained"}
+  "ambient[platform-implementation-guidelines#android-implementation-patterns]": {"disposition": "retained"}
+  "ambient[platform-implementation-guidelines#3-token-usage-consistency]": {"disposition": "retained"}
+  "ambient[product-token-governance#system-first-value-selection]": {"disposition": "retained"}
+  "ambient.groundTruthManifest.verdict": {"disposition": "retained", "signature": {"signer": "data", "canonicalHash": "sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c", "renderedHash": "sha256:53f5c8db268663f979d72f4d1785f942cf8cdda57e0692e78527f9b98fc6c53e", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.verdict"}}
+  # Task 16.3 dependency: this entry's artifact leaves the package via 16.3's files[] negation of dist/{ios,android,web}/** (Ada's split packaging ruling, 2026-09-29); the disposition is true from that merge — until then the file still ships.
+  "ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]": {"disposition": "superseded-by", "destination": "#how-to-use-designerpunk-tokens-on-android", "cites": "subtraction-5", "signature": {"signer": "data", "canonicalHash": "sha256:dfb9ec31e155ed6b7b1d66b8e89f90b27f4bf94de8fd17d8031761f28303a51a", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]"}}
+  "ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]": {"disposition": "re-pointed", "removals": [{"text": "a stale generated artifact, not the source of truth", "cites": "subtraction-3"}], "destination": "frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]", "signature": {"signer": "data", "canonicalHash": "sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839", "renderedHash": "sha256:e644f5b5b9ceaf0076806967bce80608e466f9a0816893b39a593336e41171b0", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]"}}
+  "routes.docs[token-doc-map]": {"disposition": "retained"}
+  "routes.docs[product-token-naming]": {"disposition": "retained"}
+  "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "data", "canonicalHash": "sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:routes.docs[completion-doc-guidance]"}}
+  "routes.docs[contract-concept-names]": {"disposition": "retained"}
+  "routes.docs[stemma-principles]": {"disposition": "retained"}
+  "routes.docs[test-dev-standards]": {"disposition": "retained"}
+  "routes.docs[bcv-guidance]": {"disposition": "retained"}
+  "routes.docs[token-lookup-beyond]": {"disposition": "retained"}
+  "routes.docs[dev-workflow-detail]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "data", "canonicalHash": "sha256:d8dd2983f526c61544653aadb9ecf807db5d8fcdbf9411d7551285f519deaeb8", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:routes.docs[dev-workflow-detail]"}}
+  "routes.docs[file-organization]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "data", "canonicalHash": "sha256:140957b75ae4911267ee722e655262d2db2dc32849ce04117540426a051b7f20", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:routes.docs[file-organization]"}}
+  "routes.docs[android-implementation-patterns]": {"disposition": "retained"}
+  "routes.agents[leonardo]": {"disposition": "retained"}
+  "routes.cues[0]": {"disposition": "retained"}
+  "routes.cues[1]": {"disposition": "retained"}
+  "routes.cues[2]": {"disposition": "retained"}
+  "routes.cues[3]": {"disposition": "retained"}
+  "routes.cues[4]": {"disposition": "retained"}
+  "routes.cues[5]": {"disposition": "retained"}
+  "routes.cues[6]": {"disposition": "retained"}
+  "routes.cues[7]": {"disposition": "retained"}
+  "routes.cues[8]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "data", "canonicalHash": "sha256:81797f185efbf2c90b57996a49a096936552de787d44eea9ebecfb9bdd947925", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:routes.cues[8]"}}
+  "routes.cues[9]": {"disposition": "re-pointed", "removals": [{"text": "build tooling", "cites": "subtraction-1"}], "destination": "frontmatter:routes.cues[9]", "signature": {"signer": "data", "canonicalHash": "sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4", "renderedHash": "sha256:285e1817768abdc495edaff0352297a51576cbb5856c3430cf0aae9a6866361c", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:routes.cues[9]"}}
+  "commands[platform-tokens]": {"disposition": "re-pointed", "removals": [{"text": "npm run generate:platform-tokens", "cites": "subtraction-1"}], "destination": "frontmatter:commands[platform-tokens]", "signature": {"signer": "data", "canonicalHash": "sha256:d5688f941bb564bfc78a0918d1ac4cc8cdeda8c008329f8c75507e201c58933c", "renderedHash": "sha256:e08e5893ccedf081126b3267248756e733fc7537e0bdff7fc5d48c0f654a8cbf", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:commands[platform-tokens]"}}
+  "commands[functional-suite]": {"disposition": "superseded-by", "destination": "#what-you-dont-own", "cites": "subtraction-1", "signature": {"signer": "data", "canonicalHash": "sha256:fd9982e4fee933d0bee7ead493df4108c2f8865367e431ce138c0ed4b0824f67", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:commands[functional-suite]"}}
+  "commands[audit-tokens]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1", "signature": {"signer": "data", "canonicalHash": "sha256:9f9e4c40508ffed400f8e11515773dfb30670cfbc11d54657f6f937ef57e0b5f", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:commands[audit-tokens]"}}
+  "commands[android-build-test]": {"disposition": "re-pointed", "destination": "frontmatter:commands[android-build-test]"}
+  "commands[product-screen-commands]": {"disposition": "re-pointed", "destination": "frontmatter:commands[product-screen-commands]"}
+  "skills[theming-styles]": {"disposition": "retained"}
+  "skills[edge-to-edge]": {"disposition": "retained"}
+  "skills[adaptive]": {"disposition": "retained"}
+  "skills[navigation-3]": {"disposition": "retained"}
+  "knowledgeBases[android-components]": {"disposition": "re-pointed", "destination": "frontmatter:knowledgeBases[android-components]"}
+  "knowledgeBases[android-tests]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-5", "signature": {"signer": "data", "canonicalHash": "sha256:a24c7b658425d78b8945a775e630689b343056547a676e02f26feedc74bcc581", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:knowledgeBases[android-tests]"}}
+  "toolSubset.designerpunk-docs[find_docs]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_document_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_section]": {"disposition": "retained"}
+  "toolSubset.designerpunk-docs[get_index_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_catalog]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_summary]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_full]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[find_components]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_details]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_token_family]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[search_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-application[get_component_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_tokens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_screen_spec]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[find_screens]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_overview]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[get_product_health]": {"disposition": "retained"}
+  "toolSubset.designerpunk-product[rebuild_product_index]": {"disposition": "retained"}
+  "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
+  "writeScope[docs/specs/**]": {"disposition": "superseded-by", "destination": "frontmatter:writeScope[.kiro/specs/**]", "cites": "subtraction-4", "signature": {"signer": "data", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:writeScope[docs/specs/**]"}}
+  "kiro.keyboardShortcut": {"disposition": "retained"}
+  "kiro.welcomeMessage": {"disposition": "retained"}
+  "preflight[git status --porcelain]": {"disposition": "retained"}

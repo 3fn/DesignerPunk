@@ -144,3 +144,19 @@ export function captureConsole(): { output: () => string; restore: () => void } 
     },
   };
 }
+
+/**
+ * A stub of `sync`'s agent-layer seam (Task 16.5): the package side of the generated surfaces, per target,
+ * without the real `emitConsumer` bundle. Declares `cc` and `kiro`.
+ */
+export function stubAgentLayer(
+  byTarget: Record<string, Array<{ path: string; content: string; grain?: 'file' | 'region' }>>,
+): import('../sync').AgentLayerSource {
+  return {
+    declaredTargets: () => ['cc', 'kiro'],
+    emit: async (target: string) => ({
+      files: (byTarget[target] ?? []).map((f) => ({ path: f.path, content: f.content, grain: f.grain ?? 'file' })),
+      warnings: [],
+    }),
+  };
+}
