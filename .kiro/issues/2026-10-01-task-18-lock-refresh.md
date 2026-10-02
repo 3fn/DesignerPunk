@@ -101,9 +101,24 @@ Neither Stacy nor Lina was consulted before this record was filed.
 - **Stacy should be told before the first refresh under this grant**, on one question: does § "When it applies" item 3 (no refresh after 18.1 without her go) leave her witness as she needs it?
 - **Lina should be told before 18.x begins** that refresh commits may land on her branch, fast-forward, between her merges.
 
+*(Amendment 2026-10-02 — correction: both have now been consulted. **Stacy** read the grant as G2's witness and gave conditions W1, W3, W4 and W5, plus a round-2 addition on lock-move attribution (below); the consult the paragraph above says was owed has happened. **Lina** has been told that refresh commits may land on the unit branch, fast-forward only, between her merges. Peter ruled on the package on 2026-10-02: "Go with your recommendations on all four".)*
+
+## Amendments
+
+*(Amendment 2026-10-02 — dated, append-style; nothing above is rewritten. **The path list is unchanged: `canonical/generated.lock`.** The grant was activated by the merge recorded at A1; these amendments change conditions and records, not what the fixing PR is diffed against, so no re-activation is claimed. Peter merges the PR carrying them, and its body names this file and restates the list.)*
+
+- **A1 — the activating merge (Stacy W5).** The grant was activated by Peter's merge of **#253, `a75e442c`** (2026-10-01), whose body names this file and `canonical/generated.lock`. The wording of § "Grant", Rule 8 above ("the PR whose body names this file and this path list") is read as that merge, never as U2b's merge. U2b's unit PR is the **fixing** PR and the grant's expiry event.
+- **A2 — where Stacy's go is recorded (Stacy W3).** § "When it applies" item 3 says her dated go is "recorded in this file". It cannot be: `.kiro/issues/**` is outside her write scope. Her go is recorded by her in **`.kiro/specs/123-consumer-distribution/completion/g2-witness-log.md`**. Every refresh commit body under item 3 cites that path and the commit that carries her go, and so does the trigger-log entry.
+- **A3 — the confirming run's head (Stacy W1).** The confirming run before 18.1 names its SHA, **H0**, and the head the request is made on, **H**. Either H0 equals H, or `git diff --name-only H0 H` contains no path under the closure roots or the guarded roots (the roots as defined in `tools/agent-generator/diff-guard.ts` `INPUT_CLOSURE_ROOTS` and `INPUT_CLOSURE_FILES`, and `tools/agent-generator/generate.ts` `guardedRoots`). Commits that touch only `.kiro/specs/**` or `.kiro/issues/**`, such as the log's own commits, 18.0's, and the request record, move no part of the lock. The same test applies to any commit between H0 and H.
+- **A4 — what each log entry carries (Stacy W4 and her round-2 addition).** Every entry states: who ran the guard (or that no run was made), the SHA it ran at, the verdict string the guard printed, and the freshness finding count. For a merge that moves the lock, the entry also names **exactly one grant that owns the move**, including the form "deferred to <grant>" (for example a lock move that the residuals fix's merge causes and that VALVE-1's refresh will absorb). **No refresh by this grant in between.** An entry for a merge that moves nothing says so.
+- **A5 — the window (gap (b)).** Item 1's window runs **to U2b's merge**, not to the PR's opening, **subject to item 3** after the 18.1 request. An update-from-`main` after the PR opens that moves the lock is then reported, and refreshed only with Stacy's dated go (A2); while `outputs` is unmoved, a stale lock keeps the guard's full path green.
+- **A6 — where the trigger log lives (gap (a)).** `.kiro/issues/**` is outside Thurgood's charter write scope, so he cannot append to a log in this file. **The log lives at `.kiro/specs/123-consumer-distribution/lock-refresh-trigger-log.md`**, a path in his scope and not a Task 18 record. Entries there are committed on `task/123-u2b-profile`, authored `Agent: thurgood`. The `## Trigger log` section below stays empty by design and points there. The recusal is unchanged: that file records the guard's mechanical result, never a disposition, criterion or verdict.
+
 ## Trigger log
 
 *(Append-only, dated: each triggering merge, the guard's result, and the refresh commit SHA or "no diff".)*
+
+*(Amendment 2026-10-02 — the log lives at `.kiro/specs/123-consumer-distribution/lock-refresh-trigger-log.md`, A6 above. This section stays empty by design.)*
 
 ## Closing
 
