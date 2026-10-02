@@ -20,6 +20,8 @@ import {
   cloneHatchMessage,
   personalNoteNamingMessage,
   jestConfigCollisionMessage,
+  attachUnbornRepoMessage,
+  restartLineNowMessage,
 } from '../shared/errorCatalog';
 
 // Verbatim transcriptions from design.md's catalog table — the comparands.
@@ -129,5 +131,34 @@ describe('errorCatalog — string conformance (Task 2 additions)', () => {
 
   test('jest.config.js collision (C27 A13)', () => {
     expect(jestConfigCollisionMessage()).toBe(INIT_DESIGN_ROWS['jest.config.js collision (C27 A13)']());
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Task 16.2 additions — `attach`'s own catalog rows (design.md § "C20" / §
+// "Error Handling", the `attach` and restart-now rows). A SEPARATE describe
+// block, additive to the counts above.
+// ---------------------------------------------------------------------------
+
+const ATTACH_DESIGN_ROWS = {
+  'attach in an unborn repo': () =>
+    `no design system here. To create one: npx designerpunk init. Only reading DesignerPunk's docs and components? No init needed: npx designerpunk attach --target=<cc|kiro> --reference`,
+  'restart line — now': () =>
+    `restart your agent session now — DesignerPunk's MCP servers load when a session starts, so this session cannot see them yet (approve them if your tool asks)`,
+};
+
+describe('errorCatalog — string conformance (Task 16.2 additions)', () => {
+  test('exactly two covered rows', () => {
+    // BITE (recorded red in the Task 16.2 completion doc): removing a key
+    // from ATTACH_DESIGN_ROWS turns this red.
+    expect(Object.keys(ATTACH_DESIGN_ROWS).length).toBe(2);
+  });
+
+  test('attach in an unborn repo', () => {
+    expect(attachUnbornRepoMessage()).toBe(ATTACH_DESIGN_ROWS['attach in an unborn repo']());
+  });
+
+  test('restart line — now', () => {
+    expect(restartLineNowMessage()).toBe(ATTACH_DESIGN_ROWS['restart line — now']());
   });
 });
