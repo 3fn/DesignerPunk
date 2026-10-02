@@ -1,7 +1,7 @@
 # Issue: `.kiro/agents/*.attribution.json` sidecars ship in `files[]` for no consumer reader
 
 **Date**: 2026-09-27
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-02 (see § "Closed — 2026-10-02" at the end of this file)
 **Owner**: Ada (owner of `package.json` `files[]` since U1 Task 3's packaging diet)
 **Trigger**: at Ada's next `files[]` touch, or before release 2 at the latest — no deadline; low priority.
 **Source**: Spec 123 U2a Task 10 (Lina) regenerated the sidecars on `task/123-u2a-g1` (head `c6e5c42d`). The orchestrator confirmed the `files[]` intersection on 2026-09-27 and flagged it ahead of Task 12's G1 gate; Peter ruled on disposition the same day.
@@ -32,3 +32,14 @@ Peter also ruled: **F1 stands** — U2a still cuts no release. Task 12's "U2a ch
 ## Filed by
 
 Steward (Thurgood, main-loop), 2026-09-27, at Peter's direction, recording his ruling on the U2a G1 finding.
+
+## Closed — 2026-10-02
+
+*Recorded 2026-10-02 by Ada (owner), after Spec 123's U2b merged to `main` (PR #262, squash `669b51b0`). Nothing above is rewritten; the Status line is the only edit outside this section.*
+
+**Outcome**: both halves of § "Scope" are discharged by U2b. The fix was wider than the one-line negation this issue proposed: the whole `.kiro/agents/` entry left `files[]`, so the sidecars stop shipping along with the agent copies they described.
+- **Shipping half (install-only posture)**: Task 16.3's deferred `files[]` row (`tasks.md` Task 16 criteria, L775 at `669b51b0`: "REMOVE `.kiro/agents/` discharges the shipping half of `.kiro/issues/2026-09-27-attribution-sidecars-shipped.md`"). Checked on `main` at `669b51b0`: `package.json` `files[]` has no `.kiro/agents/` entry, and its only `.kiro` entries are the eight identity docs by name. `scripts/pack-assert.ts` asserts it twice: `deferred REMOVE absent: nothing under .kiro/agents/` (L249–250) and `attribution sidecars ABSENT: no packed *.attribution.json` (L260–262). The packed-install consumer lane asserts that nothing ships under `.kiro/agents/` in the installed package (`tests/consumer-integration.test.ts` L369 test, assertion at L388).
+- **BECOME half (born consumer repo)**: C20 emits the agent layer at `init`/`attach` instead of copying it, and emits no sidecar. Asserted in `tools/agent-generator/__tests__/consumer-entry.paths.test.ts` L98–105 (`no attribution sidecar`: the emitted set filtered on `.attribution.json` equals `[]`).
+- **Never reached a consumer**: the sidecars shipped in v14.1.0's `.kiro/agents/` entry, as did Task 10's regenerated copies on `main` from U2a's merge until U2b's. No release was cut in that window (newest tag `v14.1.0`), and Peter ruled 2026-10-02 that releases 1 and 2 ship together, so no package built from that window will be published. *Point-in-time caveat*: v14.1.0 itself shipped the pre-Task-10 sidecars to any consumer installing it. That is the status quo this issue's own § "Why it is low priority" ruled harmless, and release 15.0.0 removes them.
+- **Trigger**: fired as stated: Ada's next `files[]` touch (the 16.3 row, applied by Lina with Ada consulted), before release 2.
+- **Write-scope note**: `.kiro/issues/**` is outside Ada's charter write scope. This closing entry follows the practice recorded in `.kiro/issues/2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md` (owner closes on a `chore/` branch; Peter's merge is the authorization).
