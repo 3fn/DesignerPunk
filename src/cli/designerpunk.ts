@@ -470,6 +470,7 @@ Usage:
   npx designerpunk sync            Detect and apply package updates
   npx designerpunk sync --dry-run  Preview what sync would do (no changes)
   npx designerpunk sync --apply   Apply updates without the confirmation prompt (off a terminal)
+  npx designerpunk sync --migrate-legacy  Remove an earlier init's copied agents/steering/governance, then ${attachUsage()} in the same run
   npx designerpunk generate        Generate token files from designerpunk.config.ts
   npx designerpunk generate --force              Regenerate all (skip staleness check)
   npx designerpunk generate --product-only       Skip system tokens, regenerate product only

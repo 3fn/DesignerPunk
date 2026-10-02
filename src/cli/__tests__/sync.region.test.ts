@@ -18,6 +18,9 @@ import {
   CLAUDE_MD_COMMENT,
   GITIGNORE_COMMENT,
   type RegionMarkers,
+  normalizeRegionContent,
+  wrapRegion,
+  appendRegion,
 } from '../sync/RegionGrain';
 import { managedRegionMarkersMissingMessage } from '../shared/errorCatalog';
 
@@ -248,5 +251,39 @@ describe('RegionGrain — spliceRegion', () => {
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.text).toBe('node_modules/\n# designerpunk:managed:begin\n.designerpunk/personal-note.local.md\n# designerpunk:managed:end\ndist/\n');
+  });
+});
+
+// Task 16.5 — the region's comparand and the first write into a file with no region.
+describe('RegionGrain — normalizeRegionContent / wrapRegion / appendRegion (Task 16.5)', () => {
+  const M = regionMarkers(CLAUDE_MD_COMMENT);
+
+  test('normalizeRegionContent: LF-normalized, ONE trailing eol stripped — an extracted CRLF region and the emitted LF content agree', () => {
+    expect(normalizeRegionContent('a\nb\n')).toBe('a\nb');
+    expect(normalizeRegionContent('a\r\nb\r\n')).toBe('a\nb');
+    const crlf = `x\r\n${M.begin}\r\na\r\nb\r\n${M.end}\r\n`;
+    const r = extractRegion(crlf, M);
+    if (!r.found) throw new Error('no region');
+    expect(normalizeRegionContent(r.region)).toBe(normalizeRegionContent('a\nb\n'));
+  });
+
+  test('wrapRegion then extract round-trips the content; spliceRegion over it is a fixed point', () => {
+    const text = wrapRegion(M, 'line 1\nline 2\n');
+    expect(text).toBe(`${M.begin}\nline 1\nline 2\n${M.end}\n`);
+    const s = spliceRegion(text, M, 'line 1\nline 2\n', 'CLAUDE.md');
+    expect(s).toEqual({ ok: true, text });
+  });
+
+  test('appendRegion keeps every existing byte as the prefix, in the file\'s own eol style, separated by one blank line', () => {
+    const lf = '# mine\n';
+    expect(appendRegion(lf, M, '@x\n')).toBe(`# mine\n\n${M.begin}\n@x\n${M.end}\n`);
+    const noEol = '# mine';
+    expect(appendRegion(noEol, M, '@x\n')).toBe(`# mine\n\n${M.begin}\n@x\n${M.end}\n`);
+    const crlf = '# mine\r\n';
+    const out = appendRegion(crlf, M, '@x\n@y\n');
+    expect(out.startsWith(crlf)).toBe(true);
+    expect(out).toBe(`# mine\r\n\r\n${M.begin}\r\n@x\r\n@y\r\n${M.end}\r\n`);
+    // And the appended region is then an ordinary region: splice is a fixed point.
+    expect(spliceRegion(out, M, '@x\n@y\n', 'CLAUDE.md')).toEqual({ ok: true, text: out });
   });
 });

@@ -30,7 +30,10 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import { execFileSync } from 'child_process';
-import { hashBuffer } from './FileScanner';
+import { hashBuffer, hashFile } from './FileScanner';
+import { COPY_ROOTS, isUnder } from './Manifest';
+import type { ManifestEntry } from './Manifest';
+import { attachUsage } from '../shared/vocabulary';
 
 export const LEGACY_COMPONENT_ROOT = 'src/components/core';
 export const CONSUMER_COMPONENT_ROOT = 'src/components';
@@ -471,14 +474,6 @@ export function yoursUnderCoreMessage(n: number, names: string[]): string {
 }
 
 /**
- * T-L1, string-equal: U1 RETAINS the copied agents, steering and governance —
- * the report states it and offers no removal (their migration is offered only
- * alongside `attach`, next release).
- */
-export const LEGACY_AGENTS_RETAINED_MESSAGE =
-  'your copied DesignerPunk agents, steering and governance files (.kiro/agents, .kiro/steering, governance) are retained until the next release — nothing to do for them now.';
-
-/**
  * Lina A5 / C7 step 5. Authored at Task 5.5 (Ada). Each takes the file list
  * the assessment found (names are always printed with the line).
  *
@@ -665,4 +660,175 @@ export function repairTsconfigPins(projectRoot: string): boolean {
   if (Object.keys(doc.compilerOptions.paths).length === 0) delete doc.compilerOptions.paths;
   fs.writeFileSync(p, JSON.stringify(doc, null, 2) + '\n', 'utf-8');
   return true;
+}
+
+// ---------------------------------------------------------------------------
+// Legacy copies — C7 Migration item 4 (Task 16.5): "Copied governance /
+// steering / agents / skills → the imposter-surface report and
+// --migrate-legacy, THEN attach."
+// ---------------------------------------------------------------------------
+
+/**
+ * The legacy-copy entries: `origin: 'copy'`, file grain, under one of the
+ * release-1 copy roots (`COPY_ROOTS`). Keyed on ORIGIN, never on the manifest's
+ * version (Ada D-T-B2, design C7 erratum): release-1 `init` wrote a
+ * CURRENT-format manifest, so a version key would miss the whole cohort.
+ */
+export function legacyCopyEntries(entries: Record<string, ManifestEntry>): string[] {
+  return Object.entries(entries)
+    .filter(([key, e]) => e.origin === 'copy' && e.grain === 'file' && COPY_ROOTS.some((r) => isUnder(key, r)))
+    .map(([key]) => key)
+    .sort();
+}
+
+export interface LegacyCopyAssessment {
+  /** The release-1 copy roots holding at least one legacy entry, in `COPY_ROOTS` order. */
+  roots: string[];
+  /** On disk, bytes equal to the hash recorded when it was copied. */
+  unmodified: string[];
+  /** On disk, edited since it was copied — hers; never deleted. */
+  modified: string[];
+  /** Recorded, but gone from disk. */
+  missing: string[];
+}
+
+/** Judge each legacy copy against the hash recorded when it was copied. `null` when the manifest records none. */
+export function assessLegacyCopies(projectRoot: string, entries: Record<string, ManifestEntry>): LegacyCopyAssessment | null {
+  const keys = legacyCopyEntries(entries);
+  if (keys.length === 0) return null;
+  const a: LegacyCopyAssessment = {
+    roots: COPY_ROOTS.filter((r) => keys.some((k) => isUnder(k, r))),
+    unmodified: [],
+    modified: [],
+    missing: [],
+  };
+  for (const key of keys) {
+    const abs = path.join(projectRoot, key);
+    if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) a.missing.push(key);
+    else if (hashFile(abs) === entries[key].hash) a.unmodified.push(key);
+    else a.modified.push(key);
+  }
+  return a;
+}
+
+/**
+ * Whether `attach` can run here, decided by the caller (`sync/index.ts`) through
+ * `attach`'s own code path: the installed package ships the agent-layer bundle,
+ * the repo is one `attach` does not refuse, and the emission succeeds for each
+ * target. `--migrate-legacy` is offered ONLY when this is `available` — it never
+ * runs without the attach step.
+ */
+export type AttachAvailability =
+  | { available: true; targets: string[]; declared: readonly string[] }
+  | { available: false; reason: string };
+
+export function legacyCopiesMessage(count: number, roots: string[]): string {
+  return (
+    `${count} file${count === 1 ? '' : 's'} under ${roots.join(', ')} ${count === 1 ? 'is a copy' : 'are copies'} an earlier DesignerPunk init made. ` +
+    `DesignerPunk no longer copies these — it generates your agent layer instead — so sync no longer updates the copies, ` +
+    `and generated agents would sit beside them.`
+  );
+}
+
+export function legacyModifiedMessage(paths: string[]): string {
+  return (
+    `${paths.length} of them ${paths.length === 1 ? 'was' : 'were'} edited after ${paths.length === 1 ? 'it was' : 'they were'} copied ` +
+    `(${paths.join(', ')}) — --migrate-legacy leaves ${paths.length === 1 ? 'it' : 'those'} on disk as yours and stops tracking ${paths.length === 1 ? 'it' : 'them'}.`
+  );
+}
+
+export function legacyMissingMessage(count: number): string {
+  return `${count} of them ${count === 1 ? 'was' : 'were'} deleted since ${count === 1 ? 'it was' : 'they were'} copied — --migrate-legacy drops ${count === 1 ? 'its record' : 'their records'}.`;
+}
+
+/** The offer — printed ONLY when attach is available; it names the attach step it runs. */
+export function migrateLegacyOfferMessage(targets: string[], declared: readonly string[]): string {
+  const run = targets.length > 0 ? 'npx designerpunk sync --migrate-legacy' : `npx designerpunk sync --migrate-legacy --target=<${declared.join('|')}>`;
+  const forWhom = targets.length > 0 ? `for ${targets.join(' and ')}` : 'for the target you name';
+  return (
+    `to replace them with your generated agent layer in one step: ${run} — it removes the unmodified copies, then, in the same run, ` +
+    `does what 'npx designerpunk attach --target=<t>' does (${attachUsage()}) ${forWhom}.`
+  );
+}
+
+/** Printed INSTEAD of the offer when attach is not available. Nothing is offered for removal. */
+export function migrateLegacyUnavailableMessage(reason: string): string {
+  return (
+    `sync cannot ${attachUsage()} with the installed package here (${reason}), so it does not offer to remove the copies: ` +
+    `they stay on disk and in the manifest, and sync leaves them alone.`
+  );
+}
+
+/** `--migrate-legacy` was given, but there is no target to attach (the manifest records none and no --target was given). */
+export function migrateLegacyNeedsTargetMessage(declared: readonly string[]): string {
+  return `--migrate-legacy needs a target to attach — this manifest records none. Re-run with --target=<${declared.join('|')}>; nothing was removed.`;
+}
+
+/** `--migrate-legacy` was given while attach is unavailable — refused; nothing removed. */
+export function migrateLegacyRefusedMessage(reason: string): string {
+  return `--migrate-legacy runs only together with the attach step, and sync cannot ${attachUsage()} here (${reason}) — nothing was removed.`;
+}
+
+export function legacyCopyReportLines(a: LegacyCopyAssessment, availability: AttachAvailability): string[] {
+  const total = a.unmodified.length + a.modified.length + a.missing.length;
+  const lines = [legacyCopiesMessage(total, a.roots)];
+  if (a.modified.length > 0) lines.push(legacyModifiedMessage(a.modified));
+  if (a.missing.length > 0) lines.push(legacyMissingMessage(a.missing.length));
+  lines.push(
+    availability.available
+      ? migrateLegacyOfferMessage(availability.targets, availability.declared)
+      : migrateLegacyUnavailableMessage(availability.reason),
+  );
+  return lines;
+}
+
+export interface LegacyRemoval {
+  /** Unmodified copies deleted from disk; their entries dropped. */
+  removed: string[];
+  /** Edited copies left on disk as the consumer's own; their entries dropped. */
+  keptAsYours: string[];
+  /** Recorded copies already gone from disk; their entries dropped. */
+  dropped: string[];
+}
+
+/**
+ * The removal half of `--migrate-legacy` (the caller runs the attach half next,
+ * in the same flow). Every legacy entry leaves the manifest, so no `origin:
+ * 'copy'` entry remains under the release-1 copy roots; only files whose bytes
+ * still equal the recorded copy are deleted (re-checked here, not trusted from
+ * the report). Directories the deletions empty are removed, up to the copy root.
+ */
+export function removeLegacyCopies(projectRoot: string, entries: Record<string, ManifestEntry>): LegacyRemoval {
+  const r: LegacyRemoval = { removed: [], keptAsYours: [], dropped: [] };
+  const touchedDirs = new Set<string>();
+  for (const key of legacyCopyEntries(entries)) {
+    const abs = path.join(projectRoot, key);
+    if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) {
+      r.dropped.push(key);
+    } else if (hashFile(abs) === entries[key].hash) {
+      fs.rmSync(abs);
+      r.removed.push(key);
+      touchedDirs.add(path.dirname(abs));
+    } else {
+      r.keptAsYours.push(key);
+    }
+    delete entries[key];
+  }
+  const stopAt = new Set(COPY_ROOTS.map((root) => path.dirname(path.join(projectRoot, root))));
+  for (const dir of [...touchedDirs].sort((x, y) => y.length - x.length)) {
+    let d = dir;
+    while (!stopAt.has(d) && d.startsWith(projectRoot + path.sep) && fs.existsSync(d) && fs.readdirSync(d).length === 0) {
+      fs.rmdirSync(d);
+      d = path.dirname(d);
+    }
+  }
+  return r;
+}
+
+export function legacyRemovalSummary(r: LegacyRemoval): string {
+  return (
+    `  ✓ --migrate-legacy: removed ${r.removed.length} unmodified cop${r.removed.length === 1 ? 'y' : 'ies'}` +
+    (r.keptAsYours.length ? `; kept ${r.keptAsYours.length} edited cop${r.keptAsYours.length === 1 ? 'y' : 'ies'} on disk as yours (no longer tracked)` : '') +
+    (r.dropped.length ? `; dropped ${r.dropped.length} record${r.dropped.length === 1 ? '' : 's'} of copies already deleted` : '')
+  );
 }

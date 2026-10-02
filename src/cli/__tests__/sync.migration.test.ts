@@ -26,7 +26,8 @@ import {
   cannotTellMessage,
   unmodifiedCopiesMessage,
   yoursUnderCoreMessage,
-  LEGACY_AGENTS_RETAINED_MESSAGE,
+  legacyCopiesMessage,
+  migrateLegacyUnavailableMessage,
   TOKEN_SIDE_SLOTS,
   compareVersions,
   cannotTellRemedyMessage,
@@ -453,20 +454,23 @@ describe('sync — component-copy migration (Task 5.5)', () => {
     });
   });
 
-  test('U1 RETAINS copied agents, steering and governance — string-equal, and no removal is offered (T-L1)', async () => {
+  test('U2 (Task 16.5): the legacy manifest\'s copied agents/steering are REPORTED as legacy copies; with no attach step available, --migrate-legacy is NOT offered and nothing is removed (T-L1)', async () => {
+    // Was U1's "retained until the next release" (LEGACY_AGENTS_RETAINED_MESSAGE, retired at 16.5): the next
+    // release is here, and the offer is gated on attach. This fake package ships no agent-layer bundle.
     setupPackage(scratch, { version: '15.0.0' });
     writeFile(scratch, '.kiro/sync-manifest.json', JSON.stringify({ version: DP_LEGACY.version, syncedAt: DP_LEGACY.syncedAt, files: DP_LEGACY.files }));
     writeFile(scratch, '.kiro/steering/AI-Collaboration-Framework.md', '# copied\n');
     writeFile(scratch, '.kiro/agents/lina.json', '{}\n');
     const { fetcher } = snapshotFetcher(scratch);
 
-    await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+    const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
 
-    expect(LEGACY_AGENTS_RETAINED_MESSAGE).toBe(
-      'your copied DesignerPunk agents, steering and governance files (.kiro/agents, .kiro/steering, governance) are retained until the next release — nothing to do for them now.',
-    );
-    expect(con.output()).toContain(LEGACY_AGENTS_RETAINED_MESSAGE);
-    const migrationSection = con.output().split('Migrating from a pre-123 install:')[1] ?? '';
+    const legacyCount = Object.keys(DP_LEGACY.files).filter((k: string) => k.startsWith('.kiro/agents/') || k.startsWith('.kiro/steering/')).length;
+    expect(con.output()).toContain(legacyCopiesMessage(legacyCount, ['.kiro/agents', '.kiro/steering']));
+    expect(out.attach?.available).toBe(false);
+    expect(con.output()).toContain(migrateLegacyUnavailableMessage((out.attach as { reason: string }).reason));
+    expect(con.output()).not.toContain('sync --migrate-legacy');
+    const migrationSection = con.output().split('Migrating from a pre-123 install:')[1]?.split('\n\n')[0] ?? '';
     expect(migrationSection).not.toMatch(/--migrate-legacy|remove them|delete/i);
   });
 });

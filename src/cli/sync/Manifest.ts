@@ -65,10 +65,20 @@ export const MANIFEST_SCHEMA_VERSION = '1';
 export const DEMANAGED_ROOTS = ['src/tokens', 'src/types', 'src/components/core'] as const;
 
 /**
- * Package-copy roots still managed at FILE grain in U1 (tasks.md sequencing
- * decision 1: `.kiro/agents` etc. are still copied in U1; gate 4b's removal and
- * the legacy migration land in U2 alongside `attach`). `.kiro/skills` is here
- * for legacy (Spec 111) manifests only — U1 `init` never copies it.
+ * The release-1 (and pre-123) copy roots `sync` RECOGNIZES — the roots under
+ * which an earlier `init` (release 1, U1) or Spec 111 `sync` recorded package
+ * copies as `origin: 'copy'` entries. Since Task 16.5 they are NO LONGER
+ * MANAGED (C7's managed-set row "`.kiro/steering`, `governance`, `.kiro/agents`,
+ * `.kiro/skills` (package copies) — REMOVED", gate 4b): the package stops
+ * shipping them, and `sync` never classifies, updates or re-adds a copy. A
+ * `copy` entry under one of these roots is a LEGACY COPY (C7 Migration item 4):
+ * reported, and offered `--migrate-legacy` only together with `attach`
+ * (`Migration.ts` § "Legacy copies"). `.kiro/skills` is here for legacy
+ * (Spec 111) manifests only — release-1 `init` never copied it.
+ *
+ * The name and membership are pinned by Spec 119-A's relocation-integrity gate
+ * (leg A7, relabelled "the release-1 copy roots `sync` recognizes"): keep the
+ * literal on one line.
  */
 export const COPY_ROOTS = ['.kiro/agents', '.kiro/steering', 'governance', '.kiro/skills'] as const;
 

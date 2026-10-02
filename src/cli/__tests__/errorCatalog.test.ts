@@ -22,6 +22,7 @@ import {
   jestConfigCollisionMessage,
   attachUnbornRepoMessage,
   restartLineNowMessage,
+  managedRegionEditedInsideMessage,
 } from '../shared/errorCatalog';
 
 // Verbatim transcriptions from design.md's catalog table — the comparands.
@@ -160,5 +161,14 @@ describe('errorCatalog — string conformance (Task 16.2 additions)', () => {
 
   test('restart line — now', () => {
     expect(restartLineNowMessage()).toBe(ATTACH_DESIGN_ROWS['restart line — now']());
+  });
+});
+
+// Task 16.5 — the region grain's "edited inside" row, transcribed verbatim from design.md § "Error Handling".
+describe('errorCatalog — string conformance (Task 16.5 addition)', () => {
+  test('managed region — edited inside', () => {
+    expect(managedRegionEditedInsideMessage('CLAUDE.md')).toBe(
+      'you edited inside the DesignerPunk-managed region of CLAUDE.md — those edits will be replaced. Move them outside the region; not applying without --apply',
+    );
   });
 });

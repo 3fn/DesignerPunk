@@ -34,8 +34,9 @@
  * is unaddressed there. This module treats `package-mode` the same as `born`
  * for `attach`'s purposes: attach is about the agent harness, not the token
  * tier, and a `package-mode` repo already has a real `designerpunk.config.ts`,
- * which is what "a design system here" means for this command. Flagged for
- * confirmation rather than silently assumed.
+ * which is what "a design system here" means for this command. CONFIRMED by
+ * the PRIMARY at Task 16.5 (DD23 made `package-mode` a posture, not a partial;
+ * C20's Modes list predates that split).
  *
  * @see .kiro/specs/123-consumer-distribution/design.md § "C20. The consumer emission lane"
  * @see .kiro/specs/123-consumer-distribution/design.md § "C7. `sync` … Manifest"
@@ -62,7 +63,16 @@ import {
 } from './sync/Manifest';
 import type { DesignerPunkManifest, ManifestEntry, ManifestOrigin, HarnessTarget } from './sync/Manifest';
 import { readContractHash } from './sync/NameContract';
-import { regionMarkers, spliceRegion, CLAUDE_MD_COMMENT, GITIGNORE_COMMENT } from './sync/RegionGrain';
+import {
+  regionMarkers,
+  spliceRegion,
+  extractRegion,
+  appendRegion,
+  wrapRegion,
+  normalizeRegionContent,
+  CLAUDE_MD_COMMENT,
+  GITIGNORE_COMMENT,
+} from './sync/RegionGrain';
 import * as crypto from 'crypto';
 
 interface AttachOptions {
@@ -234,7 +244,12 @@ function applyFileGrain(
 ): ApplyOutcome {
   const abs = path.join(repoRoot, file.path);
   const manifestKey = toManifestPath(file.path);
-  const alreadyOurs = Object.prototype.hasOwnProperty.call(manifest.entries, manifestKey);
+  const recorded = Object.prototype.hasOwnProperty.call(manifest.entries, manifestKey) ? manifest.entries[manifestKey] : undefined;
+  // Task 16.5: a release-1 COPY on a generated path (Kiro's `.kiro/agents/<a>.json`) is ours to replace only
+  // while its bytes still equal the copy recorded — an edited copy is hers (19.8: reported, never overwritten).
+  const alreadyOurs =
+    recorded !== undefined &&
+    (recorded.origin !== 'copy' || (fs.existsSync(abs) && hashContent(fs.readFileSync(abs, 'utf-8')) === recorded.hash));
   // `adoptIdentical` (init's `--re-scaffold` over a born repo's own generated files): a path that already holds
   // EXACTLY the bytes about to be written is claimed, not reported — nothing is overwritten either way.
   const identical = adoptIdentical && fs.existsSync(abs) && fs.readFileSync(abs, 'utf-8') === file.content;
@@ -256,28 +271,44 @@ function applyFileGrain(
   return 'written';
 }
 
-/** Apply one `emitConsumer`-returned region-grain output (today: `CLAUDE.md`'s always-layer region — C19/C20). Creates the file WITH markers on first attach; splices the existing region on a re-run, leaving outside bytes untouched; reports (never writes) on a missing/unmatched marker pair. */
+/**
+ * Apply one `emitConsumer`-returned region-grain output (today: `CLAUDE.md`'s always-layer region — C19/C20).
+ * - the file is absent → created holding only the region (markers included);
+ * - the file exists with the marker pair → the region is spliced, outside bytes untouched;
+ * - the file exists WITHOUT markers and the manifest records NO region for it (the first attach into a
+ *   consumer's own `CLAUDE.md`) → the region is appended after her bytes, which stay in place (Task 16.5
+ *   correction: 16.2 reported this as "markers missing", so a consumer with an existing `CLAUDE.md` never
+ *   got the always-layer);
+ * - the file exists without markers but the manifest DOES record the region → the catalog's
+ *   "markers missing" string; nothing is written (she removed them — never re-appended over her choice).
+ * The region entry's hash is over `normalizeRegionContent` (the form `sync` compares).
+ */
 function applyRegionGrain(repoRoot: string, file: ConsumerEmittedFileLike, manifest: Pick<DesignerPunkManifest, 'entries'>): ApplyOutcome {
   const abs = path.join(repoRoot, file.path);
   const markers = regionMarkers(file.path.endsWith('.md') ? CLAUDE_MD_COMMENT : GITIGNORE_COMMENT);
   const manifestKey = `${toManifestPath(file.path)}#managed`;
+  const entry: ManifestEntry = { hash: hashContent(normalizeRegionContent(file.content)), grain: 'region', origin: 'generated' };
 
   if (!fs.existsSync(abs)) {
-    const body = file.content.replace(/\n+$/, '');
-    const text = body.length > 0 ? `${markers.begin}\n${body}\n${markers.end}\n` : `${markers.begin}\n${markers.end}\n`;
     fs.mkdirSync(path.dirname(abs), { recursive: true });
-    fs.writeFileSync(abs, text, 'utf-8');
-    recordEntry(manifest, manifestKey, { hash: hashContent(file.content), grain: 'region', origin: 'generated' });
+    fs.writeFileSync(abs, wrapRegion(markers, file.content), 'utf-8');
+    recordEntry(manifest, manifestKey, entry);
     return 'written';
   }
 
   const existing = fs.readFileSync(abs, 'utf-8');
+  const recorded = Object.prototype.hasOwnProperty.call(manifest.entries, manifestKey);
+  if (!recorded && !extractRegion(existing, markers).found) {
+    fs.writeFileSync(abs, appendRegion(existing, markers, file.content), 'utf-8');
+    recordEntry(manifest, manifestKey, entry);
+    return 'written';
+  }
   const result = spliceRegion(existing, markers, file.content, file.path);
   if (!result.ok) {
     console.log(`  ⚠️  ${result.message}`);
     return 'collision';
   }
-  recordEntry(manifest, manifestKey, { hash: hashContent(file.content), grain: 'region', origin: 'generated' });
+  recordEntry(manifest, manifestKey, entry);
   if (result.text === existing) return 'unchanged';
 
   fs.writeFileSync(abs, result.text, 'utf-8');
@@ -310,9 +341,12 @@ function readMcpTemplate(templatePath: string): McpConfigTemplate | null {
   }
 }
 
+/** `--reference`'s servers (C20): the docs and application servers only — never `designerpunk-product`. `sync` reads it too (a consume-posture manifest's package-side keys). */
+export const REFERENCE_SERVERS: readonly string[] = Object.freeze(['designerpunk-docs', 'designerpunk-application']);
+
 /** `--reference`'s scope (C20): the docs and application servers only — never `designerpunk-product`, and no agents. */
 function referenceOnlyTemplate(template: McpConfigTemplate): McpConfigTemplate {
-  const allow = new Set(['designerpunk-docs', 'designerpunk-application']);
+  const allow = new Set(REFERENCE_SERVERS);
   const mcpServers: Record<string, McpServerTemplateEntry> = {};
   for (const [key, value] of Object.entries(template.mcpServers)) {
     if (allow.has(key)) mcpServers[key] = value;
@@ -458,6 +492,20 @@ async function attachReference(pkgRoot: string, repoRoot: string, requestedTarge
 // Entry point
 // ---------------------------------------------------------------------------
 
+/**
+ * The refusal `attach` (no `--reference`) gives in `repoRoot`, or `null` when it would run (born or
+ * package-mode). One rule for `attach` itself and for `sync --migrate-legacy`'s attach step (Task 16.5),
+ * so `sync` never offers an attach that `attach` would refuse.
+ */
+export function attachRefusal(repoRoot: string): { message: string; root: string } | { message: null; root: string } {
+  const dsRoot = findDesignSystemRoot(repoRoot);
+  if (dsRoot.state === 'unborn') return { message: attachUnbornRepoMessage(), root: repoRoot };
+  if (dsRoot.state === 'partial' && dsRoot.partialCase) {
+    return { message: partialCaseMessage(dsRoot.root ?? repoRoot, dsRoot.partialCase, dsRoot.attemptedTokenSource), root: repoRoot };
+  }
+  return { message: null, root: dsRoot.root ?? repoRoot };
+}
+
 export async function runAttach(argv: string[]): Promise<void> {
   const opts = parseAttachArgs(argv);
   const dest = process.cwd();
@@ -471,21 +519,15 @@ export async function runAttach(argv: string[]): Promise<void> {
     return;
   }
 
-  const dsRoot = findDesignSystemRoot(dest);
-
-  if (dsRoot.state === 'unborn') {
-    console.error(`❌ ${attachUnbornRepoMessage()}`);
-    process.exit(1);
-    return;
-  }
-  if (dsRoot.state === 'partial' && dsRoot.partialCase) {
-    console.error(`❌ ${partialCaseMessage(dsRoot.root ?? dest, dsRoot.partialCase, dsRoot.attemptedTokenSource)}`);
+  const refusal = attachRefusal(dest);
+  if (refusal.message !== null) {
+    console.error(`❌ ${refusal.message}`);
     process.exit(1);
     return;
   }
 
   // born or package-mode (see this file's header note on the package-mode adaptation).
-  await attachBorn(pkgRoot, dsRoot.root ?? dest, opts.target);
+  await attachBorn(pkgRoot, refusal.root, opts.target);
 }
 
 // Re-exported for tests.

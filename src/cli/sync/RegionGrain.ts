@@ -153,3 +153,44 @@ export function spliceRegion(text: string, markers: RegionMarkers, newContents: 
 
   return { ok: true, text: `${before}${inner}${after}` };
 }
+
+// ---------------------------------------------------------------------------
+// Task 16.5 — the region's comparand, and the first write into a file that has
+// no region yet. Still pure: no I/O, no throws.
+// ---------------------------------------------------------------------------
+
+/**
+ * The region content in the ONE form `attach` records and `sync` compares (the
+ * manifest's region-entry hash is the sha256 of this string): line endings
+ * normalized to LF, then ONE trailing line ending stripped — exactly the body
+ * `spliceRegion` writes between the markers. So a region extracted from disk
+ * (`extractRegion(…).region`, which carries its own trailing eol, in the file's
+ * eol style) and the package's emitted contents normalize to the same string
+ * when they hold the same lines, on a CRLF file as on an LF one.
+ */
+export function normalizeRegionContent(contents: string): string {
+  return stripTrailingEol(normalizeEol(contents, '\n'));
+}
+
+/** The full text of a file that holds only the managed region (the create case). */
+export function wrapRegion(markers: RegionMarkers, newContents: string): string {
+  const body = normalizeRegionContent(newContents);
+  return body.length > 0 ? `${markers.begin}\n${body}\n${markers.end}\n` : `${markers.begin}\n\n${markers.end}\n`;
+}
+
+/**
+ * Append a managed region to a file that has NONE yet (the first `attach` into a
+ * consumer's existing `CLAUDE.md`). Every existing byte is kept, in place, as the
+ * prefix of the result; the region goes after it, separated by one blank line, in
+ * the file's own line-ending style. Callers use this only when the manifest
+ * records no region for the file — a recorded region whose markers are gone is
+ * the catalog's "markers missing" case, never re-appended.
+ */
+export function appendRegion(text: string, markers: RegionMarkers, newContents: string): string {
+  if (text.length === 0) return wrapRegion(markers, newContents);
+  const eol = detectEol(text);
+  const body = normalizeEol(normalizeRegionContent(newContents), eol);
+  const sep = text.endsWith(eol) ? eol : `${eol}${eol}`;
+  const inner = body.length > 0 ? `${eol}${body}${eol}` : `${eol}${eol}`;
+  return `${text}${sep}${markers.begin}${inner}${markers.end}${eol}`;
+}

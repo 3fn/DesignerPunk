@@ -177,6 +177,20 @@ export function managedRegionMarkersMissingMessage(file: string): string {
   );
 }
 
+/**
+ * design.md catalog row: **managed region — edited inside** (Task 16.5, C7 region
+ * grain). `sync` reports it for a recorded region whose contents differ from both
+ * the package's and the recorded baseline; the region is replaced only with
+ * `--apply` (or `--overwrite <file>#managed`), never on the terminal's batch
+ * confirmation alone.
+ */
+export function managedRegionEditedInsideMessage(file: string): string {
+  return (
+    `you edited inside the DesignerPunk-managed region of ${file} — those edits will be replaced. ` +
+    `Move them outside the region; not applying without --apply`
+  );
+}
+
 // ---------------------------------------------------------------------------
 // `attach`-specific catalog strings (Spec 123 Task 16.2 — design.md § "C20.
 // The consumer emission lane" / § "Error Handling", the `attach` and restart
