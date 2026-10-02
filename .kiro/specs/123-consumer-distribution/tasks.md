@@ -788,7 +788,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 16.2 `attach` (modes; refusals; restart line; vocabulary object; safe re-run)
   - [x] 16.3 `init` agent-layer rows + row 10; the deferred `files[]` rows (Ada consulted); manifest `origin: 'generated'`
   - [x] 16.4 Region extractor + splicer (**~1 day**, mechanical)
-  - [ ] 16.5 (Opus) Generated-surface `sync` + `attachedTargets` generation + legacy migration only-with-attach + the release-1 cohort case (**~1 day+**)
+  - [x] 16.5 (Opus) Generated-surface `sync` + `attachedTargets` generation + legacy migration only-with-attach + the release-1 cohort case (**~1 day+**)
   - [ ] 16.6 The `attach --reference` C6 case; the lane half of 3.9 *(amendment 2026-09-30 — criterion 2's packed-install check located; Lina Q-b/Q-e: a new describe block in `tests/consumer-integration.test.ts`, which already packs with lifecycle scripts, asserting per target that every Kiro `resources` `file://node_modules/@3fn/core/…` path exists in the install, that `.kiro/steering/designerpunk-*` exists after `init`, that the knowledge-base entries (`./src/tokens`, `./src/components`) exist in the born repo, and that `.designerpunk/personal-note.local.md` is ABSENT until U3 (Task 22; C19's degradation), asserted, never skipped. **Scope note**: the deny-list scan runs over every emitted file, not charters only — stricter than criterion 2's text; 0 hits over `canonical/_consumer-output/` today.)*
 
 - [ ] 17. Legacy-path deletion and the L686 edit under B-U2
