@@ -164,3 +164,106 @@ The sweep grepped `mcp-server/src`, `application-mcp-server/src`, `product-mcp-s
   - Carried by the Instruments block (Completion Documentation Guide § "The instruments line and block"; Start Up Tasks #8), where an unswept gate would be a `misfit` row found later.
 - **Evidence**: two collisions of this same gate with Spec 123 (Task 5.4, Task 16.3), plus Consumer Guard L198 in the same commit.
 - **Status**: a recommendation for Thurgood's authorship through the normal review round. No law text is drafted here.
+
+---
+
+## 2026-10-01 — Peter's ruling — RETIRE
+
+**The ruling, verbatim** (Peter, 2026-10-01, relayed by the orchestrator): **"Retire the relocation-gate checks; Thurgood refreshes the lock in Task 18."** This section records the first half. The second half is recorded in `.kiro/issues/2026-10-01-task-18-lock-refresh.md`.
+
+It settles the fork left above ("Fork left for Peter"): legs A4 and A7 are **retired**, not kept. The rewrite (#249) stays in place until the retiring PR merges.
+
+All reads below are read-only, on `task/123-u2b-profile` at `24a00821`. They were done on 2026-10-01.
+
+### (a) Has the retirement condition been met? Yes
+
+The condition was that 16.6's packed-install block asserts that every identity member is emitted, per target, from the packed install, and that the block runs in Consumer Guard. Both hold:
+
+- **The block exists.** `tests/consumer-integration.test.ts`, describe `Spec 123 Task 16.6 — the packed install emits a working agent layer (C2)`. Per target in the packed profile (`cc`, `kiro`), it packs, installs the tarball into a fresh consumer, and runs `init --target=<t>`. Then:
+  - `the emitted agent-layer file set equals the guarded rendering (sidecars and root stripped), byte-equal, with nothing from the other target` is an exact-set, byte-equal comparison against `canonical/_consumer-output/<t>/`. That rendering holds the eight identity members per target (`.claude/identity/designerpunk-*.md`, or `.kiro/steering/designerpunk-*.md`).
+  - `CC: the CLAUDE.md managed region imports each identity member, and every import resolves except the (absent) personal note` checks that the CC imports are set-equal to `.claude/identity/*`.
+  - `the personal note is ABSENT in both installs until U3 (Task 22; C19 degradation) — asserted, never skipped`.
+- **It has teeth for a missing identity doc.** `emitConsumer` reads each identity doc `packageRoot`-relative and **degrades** on a missing one, emitting no member file (`tools/agent-generator/consumer-entry.ts`, the identity-members step). A doc dropped from `files[]` therefore drops a file from the emitted set, and the exact-set comparison goes red.
+- **It runs in Consumer Guard, and was green there.** `consumer-guard.yml` → `npm run test:consumer`. The run is https://github.com/3fn/DesignerPunk/actions/runs/36952843725 (`Consumer Guard`, head `56c5cd7e`, `completed success`; read once with `gh run view`, and cited as the CI-provenance in `completion/task-16-completion.md`). 16.6's own evidence is `completion/task-16-6-completion.md`, items 2 and 4.
+
+### (b) What covers each retired sub-check now
+
+The lanes:
+
+- **root** means `npm test` (`jest.functional.config.js`, roots `src/` …). It is the required `Lane Timing / lane-functional-root`.
+- **CG** means Consumer Guard (`consumer-guard.yml` → `npm run test:consumer` or `test:smoke:mcp-boot`).
+
+| Leg | Sub-check (as the rewritten gate asserts it) | Standing check that covers it now | Lane | Verdict |
+|---|---|---|---|---|
+| A4.1 | `init` copies no package corpus (no `governance` / `.kiro/steering` / `.kiro/agents` literal in comment-stripped `init.ts`) | `src/cli/__tests__/init.test.ts`: "creates all expected artifacts, and does NOT copy src/types or src/components/core" (no `governance/`, no `.kiro/steering`); "the release-1 copy rows are gone: no governance/ copy, no personal-note.md, no copy-origin entry — for either target". `tests/consumer-integration.test.ts`: "init produces a working project" (packed: no `governance`, `.kiro/steering`, `.kiro/agents`); 16.6 "the emitted agent-layer file set equals the guarded rendering…" (an extra copied file under `.kiro/agents` / `.kiro/steering` breaks the exact set) | root + CG | **COVERED**, by output rather than by source shape. This is stronger: it catches a copy however it is spelled |
+| A4.2 | `init` calls `emitAgentLayer(` | `init.test.ts`: "init --target=%s emits exactly the lane's file set for that target, every file recorded origin "generated" with its on-disk hash"; CG 16.6 "the emitted agent-layer file set equals the guarded rendering…" | root + CG | **COVERED** by behavior. The literal call is not asserted; the delivered layer is |
+| A4.3 | `designerpunk.ts` spawns the docs MCP at `path.join(pkgRoot, 'governance')` | CG "Docs MCP returns documentation data" runs `npx designerpunk mcp:docs` in the packed install, but asserts only `expect(result).toBeDefined()` on `get_index_health`, which passes whatever directory is indexed. `tests/mcp-boot-smoke.test.ts` "docs-mcp serves a NON-EMPTY index from the package fallback" does assert `documentsIndexed > 0`, but it boots `dist/mcp/docs-mcp.js` directly with the env stripped (the `mcpDataRoots` fallback), so it **bypasses `designerpunk.ts`** | — | **NOT COVERED IN CI** (residual R1) |
+| A4.4 | `designerpunk.ts` has no `path.join(pkgRoot, '.kiro/steering')` spawn | Same as A4.3. A steering spawn would index the eight identity docs and still answer `get_index_health` | — | **NOT COVERED IN CI** (residual R1) |
+| A7.1 | `files[]` contains `governance/` | CG 16.6 "Kiro: every agent resource resolves in the packed install — node_modules/@3fn/core paths, …" (the Kiro resources under `node_modules/@3fn/core/governance/` must exist). `emitConsumer` also reads ambient embeds from `packageRoot/governance` and throws without it, so every 16.6 case goes red | CG | **COVERED** |
+| A7.2a | Each of the eight identity docs is in `files[]` by explicit path and exists on disk | CG 16.6 exact-set / byte-equal vs the guarded rendering, plus the CC import set (see (a): a missing doc degrades to a missing member file) | CG | **COVERED** |
+| A7.2b | …and **exactly** those eight: no other `.kiro/steering…` entry | Nothing in CI. Emission reads identity docs by id, so an extra shipped steering doc changes no emitted file. `scripts/pack-assert.ts` § 9 asserts it ("the packed set under .kiro/steering/ equals exactly the … identity docs"), but **no workflow, package script or test runs `pack-assert.ts`** (sweep (e) above) | — | **NOT COVERED IN CI** (residual R2) |
+| A7.3 | No `.kiro/steering` directory glob and no `.kiro/steering/personal-note.md` in `files[]` | Nothing in CI. `init.test.ts`'s `.kiro/steering/personal-note.md` check reads the **consumer** tree, not the package. CG 16.6's personal-note case reads `.designerpunk/personal-note.local.md`. `pack-assert.ts` L263 asserts it but runs nowhere | — | **NOT COVERED IN CI** (residual R2) |
+| A7.4a | The MCP config template points `MCP_STEERING_DIR` at `governance` and names no `.kiro/steering` | Nothing in CI. `init.test.ts`'s MCP-config cases assert `COMPONENTS_DIR` and `PRODUCT_DIR` from the same template, but not `MCP_STEERING_DIR`. `sync`'s `SteeringDirCheck` would warn on a stale value in a consumer config, but no test runs `init` → `sync` and asserts that the warning is absent | — | **NOT COVERED IN CI** (residual R3) |
+| A7.4b | The template has no dead tool (`get_documentation_map`) | `init.test.ts`: "Kiro: each server's autoApprove is SET-EQUAL to the manifest's readOnlyHint:true set…" and "Claude Code: .claude/settings.json permissions.allow is SET-EQUAL…". CG 16.6 "the MCP config and approval keys are present and recorded in the manifest". Approvals are computed from the tool manifest, not taken from the template | root + CG | **COVERED** |
+| A7.5 | `COPY_ROOTS` holds the release-1 roots (`governance`, `.kiro/steering`) | `src/cli/__tests__/sync.cohort.test.ts`: "COPY_ROOTS keeps the release-1 roots it recognizes (the 119-A gate pins this literal)", which pins the exact literal, plus the cohort behavior tests in the same file | root | **COVERED**. That test's name still cites the 119-A gate; after retirement it *is* the pin. A cosmetic relabel is Lina's call and is not required |
+
+**So retirement drops 6 of the 11 sub-checks with no loss.** It loses 5, which fall into three residuals: R1 (A4.3 and A4.4), R2 (A7.2b and A7.3) and R3 (A7.4a).
+
+### (c) What retirement means, and the residuals
+
+**How A2 was "retired", stated exactly** (my earlier wording above, "the way leg A2 was retired", was loose):
+
+- A2 was **not removed**. At Spec 122's first cutover (Ada, PR #55, commit `c995ffc9`), its per-config floor was rescoped to configs outside the cutover ledger. A dated in-code comment named the successor checks (`122-sweep-1-refs` + `122-canonical-vs-truth`) and the condition under which its duty is "fully handed" (the ledger covers every seat).
+- The leg stayed in the coupling array, the count stayed 7, and its stray-relocating scan stayed live.
+- **The record was the in-code comment plus the cutover PR.** No 119-A spec artifact was edited, and there was no issue or ballot.
+
+**What the retirement keeps from A2's form, and where it departs:**
+
+- **Kept**:
+  - The record is dated, in code, at the gate's header and at the former leg sites, and names the successor check for each sub-check (the table above).
+  - No closed 119-A artifact is edited. 119-A `tasks.md` L613 ("7/7 must-fix couplings") and `completion/task-11-parent-completion.md` ("7/7 remediated") are point-in-time records and stay as written, the same convention as README rule 3. **Req 8 AC7's own text names no count.** The "7" lives only in the gate's test (`expect(checks.length).toBe(7)`, `expect(result.summary.couplingsTotal).toBe(7)`, and the test name "remediates all 7 must-fix coupling surfaces (Req 8 AC7)").
+- **Departed**: A4 and A7 are **removed** from `assertMustFixCouplings`, and the count becomes **5**.
+  - A2 could stay in the count because it kept a live sub-check. A4 and A7 keep none under a "retire" ruling.
+  - Leaving them in the array as legs that always report `remediated: true` would be a vacuous green, the same defect #249 closed in `initKeepsSteering`.
+  - The surviving counter-argument is that 119-A's exit gate then no longer enumerates all of Bucket A in its own output, so a reader of the gate alone sees 5 surfaces where 119-A named 7. The header record is the mitigation. It is not a full answer.
+
+**Residuals.** The ruling stands either way. Each one is put to Peter as a decision:
+
+- **R1: `designerpunk mcp:docs` serves `governance/`, never `.kiro/steering`** (A4.3/A4.4).
+  - **Move**: strengthen CG's "Docs MCP returns documentation data" in `tests/consumer-integration.test.ts` to assert the server's `Data:` stderr line ends in `/governance` and that `get_index_health`'s `metrics.documentsIndexed` is greater than 0 (the same pair `mcp-boot-smoke` uses for the fallback path). **Owner: Lina.** The file is a Task 16 Primary Artifact (16.6), and Task 16 is done on the branch, so this needs her row or its own grant.
+  - **Accept**: record the loss. The exposure is one CLI launch path: the `init`-emitted MCP configs launch `dist/mcp/docs-mcp.js` with the template's env and do not go through `designerpunk.ts`.
+- **R2: the package ships exactly the eight identity docs, and never `personal-note.md`** (A7.2b/A7.3).
+  - **Move (preferred)**: one case in `tests/consumer-integration.test.ts` that lists the outer `tempDir`'s installed `node_modules/@3fn/core/.kiro/steering/` and asserts it is set-equal to the eight, with no `personal-note.md`. The tarball is already packed and installed in that file's `beforeAll`, so this costs seconds. **Owner: Lina**, with the same route as R1.
+  - **Move (alternative)**: wire `scripts/pack-assert.ts` into CI. **Owner: Ada** (Task 3 PRIMARY; Lina extended it at 16.3). It is not a `package.json` test script, so it falls outside my standing `lane-timing.yml` scope and would need a § 3 issue-row grant. It also brings every other C5 assertion into a required lane, which is wider than this residual and not vetted for that lane.
+  - **Accept**: I recommend against accepting this one, and I say so bluntly. A restored `.kiro/steering/` glob ships Peter's own personal note to every consumer on the next publish (the 119-A leak that Spec 123 closed by ruling, C5 / Req 12.1a), and every remaining CI check stays green while it does.
+- **R3: the MCP config template points `MCP_STEERING_DIR` at `governance`** (A7.4a).
+  - **Move**: add `expect(config.mcpServers['designerpunk-docs'].env.MCP_STEERING_DIR).toBe('./node_modules/@3fn/core/governance')` to the existing Kiro and CC MCP-config cases in `src/cli/__tests__/init.test.ts` (root lane). **Owner: Lina** (16.3's file).
+  - **Accept**: record the loss. `sync`'s `SteeringDirCheck` would warn consumers after the fact, but nothing would stop the shipping.
+
+**Sequencing.** For any residual Peter rules **move**, the moving PR merges into `task/123-u2b-profile` **before** the retiring PR, so there is no window with neither check. For any residual he rules **accept**, the retiring PR's body quotes that ruling. His answer is appended here (dated) before the retiring PR opens.
+
+### Grant extension (dated 2026-10-01)
+
+The grant above expired when #249 merged (README rule 8). This extension re-grants the same two paths, for the retirement only.
+
+**Grant paths**: `mcp-server/src/relocation-integrity-gate/relocation-integrity-gate.ts`, `mcp-server/src/relocation-integrity-gate/__tests__/relocation-integrity-gate.test.ts`
+
+- **Owner**: Thurgood.
+- **Rule 8**: the grant is on the fixing PR's branch only, until that PR merges. It is activated by Peter's merge of a PR whose body names this extension and this path list. The fixing PR is diffed against this list as it stood at that merge. It confers no ratification authority and touches no governance-law path. An out-of-list edit is a claims-pass finding.
+- **Fixing PR**: branch `chore/relocation-gate-retire-a4-a7`, cut from `task/123-u2b-profile`, **with base `task/123-u2b-profile`**, never `main` (the retirement is only true on U2b's shape). Its body cites this path list and quotes Peter's ruling on R1–R3.
+- **Trigger**: **before U2b's unit PR opens** (Task 18.3), and after any residual-moving PR (see Sequencing).
+- **Extent**:
+  - Remove legs A4 and A7 from `assertMustFixCouplings`, together with their dated comments.
+  - Remove `stripComments`, which nothing else uses once both legs are gone. `identityIdToFile` stays, because the identity axis uses it; its doc comment drops "AND leg A7".
+  - Rewrite the header's item 3 and the function's doc comment to say that legs A4/A7 were retired on 2026-10-01 by Peter's ruling, naming this issue, and that their surfaces are discharged by the checks in (b), named per sub-check, with any residual and Peter's ruling on it.
+  - Legs A1/A2/A3/A5/A6 and the reference, identity, family-guidance and scope axes are **untouched**.
+- **What the fixing PR must show**:
+  1. The mcp-server lane is green on the fixing branch: `Lane Timing / lane-mcp-server-suite`, plus a local `cd mcp-server && npx jest src/relocation-integrity-gate` with its suite and test counts.
+  2. The retired legs' tests are removed: the describe `assertMustFixCouplings — legs A4/A7 assert the Spec 123 install shape (fixture-tree bites)`, including its `stripComments` case. The two count assertions become 5 (`checks.length`, `summary.couplingsTotal`), and the live test is renamed to say 5 standing surfaces, with A4/A7 retired on 2026-10-01. **`git diff` shows no hunk inside the A1/A2/A3/A5/A6 blocks or the other axes, in either file.**
+  3. **The 119-A exit-gate statement is updated in the gate's header**, saying that the gate remains 119-A's exit check over the surviving must-fix surfaces and that A4/A7's duty is handed to the named checks.
+  4. `scripts/relocation-integrity-gate.ts` needs no edit (it prints `couplingsRemediated/couplingsTotal`, which does not depend on the count). This is checked and stated in the PR, not assumed.
+  5. **`canonical/generated.lock` is not in this PR.** `mcp-server/src` is a closure root of the diff-guard, so merging this PR moves the lock's `inputClosure` (outputs unchanged). #249 showed the same thing: its merge was followed by `4fab4ca9`, "generated.lock refresh after merging the gate fix (#249)". The refresh after this merge is made on the unit branch by whichever grant holds at that time:
+     - **17.3's single refresh** (Task 17's Primary Artifacts), if this PR merges before 17.3;
+     - **`.kiro/issues/2026-10-01-task-18-lock-refresh.md`**, if it merges after Task 17 closes.
+     - Between 17.3 and Task 17's close, the merge waits, because Task 17 requires that its close-time re-run produce no lock diff.
+- **Closing**: unchanged from § (d) above. When U2b's unit PR merges to `main`, the outcome is recorded here (dated) and the file moves to `archive/`.
