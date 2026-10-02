@@ -811,7 +811,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 17.3 Apply L686 under B-U2 *(amendment 2026-10-01 — the one lock refresh, and the cadence behind it: 17.3 is the last `governance/**`-touching commit, so one refresh yields the final value and one place for the outputs-moved stop. After the L686 edit and its history line are committed (clean tree), run `npm run check:122:diff-guard` and commit the lock diff alone; 17.2's commit carries a stale lock by declaration in its completion doc (the full path stays green while `outputs` is unmoved). At parent close a re-run of the guard produces no lock diff.)*
   - [x] 17.4 (Lina) The standing register-rule ↔ `SCAN_DIRS` parity test + two-sided bites, green from its first commit *(added 2026-09-28, B-U2 F-2 amendment; after 17.3 — the sets are equal only once the rule edit lands)*
 
-- [ ] 18. **G2 gate parent — pass four** (step 8; **U2b gating parent and U2's acceptance gate**)
+- [x] 18. **G2 gate parent — pass four** (step 8; **U2b gating parent and U2's acceptance gate**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Lina (Opus)** — executing agent; **Stacy authors the verdict record (outside the line); Thurgood recused**
   **Traces**: Reqs 11.8, 11.8.4, 24.3 · design § "Gates and sequencing" (G2)
@@ -835,7 +835,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 18.0 Commit the two pre-declared consequence texts
   - [x] 18.1 Request pass four from Stacy
   - [x] 18.2 Apply the verdict's artifact edit; the release-2 CHANGELOG entry
-  - [ ] 18.3 Full validation; open the U2b PR (tripwire line)
+  - [x] 18.3 Full validation; open the U2b PR (tripwire line)
 
 ### UNIT 3 — Onboarding
 
