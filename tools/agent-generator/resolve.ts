@@ -18,9 +18,9 @@
  * THIS MODULE HAS NO SDK IMPORT. The real stdio client (`StdioCorpusClient`,
  * `createStdioDocsClient`) lives in `./resolve-stdio`, so the consumer closure
  * (`consumer-entry.ts` -> `pipeline.ts` -> here) no longer reaches it through this module.
- * Steward callers import the stdio half from `./resolve-stdio` directly. (The SDK is still
- * reachable from the consumer bundle through `registry.ts` — see the residuals issue's
- * 2026-10-02 finding.)
+ * Steward callers import the stdio half from `./resolve-stdio` directly. (The other SDK
+ * importer, `registry.ts`, is likewise outside that closure: `consumer-entry.ts` reads
+ * `./registry-manifest`.)
  *
  * NOT-FOUND SEMANTICS (verified against mcp-server/src/tools/get-section.ts &
  * get-document-summary.ts): the docs MCP sets `isError: true` for FileNotFound /
