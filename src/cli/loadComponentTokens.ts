@@ -75,7 +75,7 @@ export function loadComponentTokens(
     for (const file of files) {
       const fullPath = path.join(componentSubdir, file);
       if (isTokenFileName(file)) scannedTokenFiles.add(fullPath);
-      const mod = loadModule(fullPath, __filename);
+      const mod = loadTokenModule(loadModule, fullPath);
       harvestModule(mod, harvested, seenNames, fullPath, brandedCountByFile);
     }
   }
@@ -106,6 +106,34 @@ export function loadComponentTokens(
   }
 
   return ComponentTokenRegistry.getAll();
+}
+
+/**
+ * A component-token module threw while it loaded — most often `defineComponentTokens`'s
+ * own guard (e.g. the family-mismatch guard, #127) rejecting a call at module scope.
+ * Carries the FILE, which the guard's message does not name (it names the component), so
+ * `generate` can report the file in a catalogued message instead of escaping to the CLI's
+ * "Unexpected error" stack trace (`.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md`).
+ * `name` is set explicitly so callers may recognise it without `instanceof`.
+ */
+export class ComponentTokenFileLoadError extends Error {
+  readonly file: string;
+  readonly reason: string;
+  constructor(file: string, reason: string) {
+    super(`component-token file ${file} failed to load: ${reason}`);
+    this.name = 'ComponentTokenFileLoadError';
+    this.file = file;
+    this.reason = reason;
+  }
+}
+
+/** Load one component-token module; a throw during load is rethrown as {@link ComponentTokenFileLoadError} naming the file. */
+function loadTokenModule(loadModule: TsModuleLoader, fullPath: string): unknown {
+  try {
+    return loadModule(fullPath, __filename);
+  } catch (err) {
+    throw new ComponentTokenFileLoadError(fullPath, err instanceof Error ? err.message : String(err));
+  }
 }
 
 /**
@@ -197,7 +225,7 @@ function scanForTokenFiles(
       scanForTokenFiles(fullPath, loadModule, harvested, seenNames, scannedTokenFiles, brandedCountByFile);
     } else if (entry.isFile() && (entry.name.endsWith('.tokens.ts') || entry.name === 'tokens.ts') && !entry.name.endsWith('.test.ts')) {
       scannedTokenFiles.add(fullPath);
-      const mod = loadModule(fullPath, __filename);
+      const mod = loadTokenModule(loadModule, fullPath);
       harvestModule(mod, harvested, seenNames, fullPath, brandedCountByFile);
     }
   }

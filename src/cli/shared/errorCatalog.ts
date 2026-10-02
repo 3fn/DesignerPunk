@@ -227,3 +227,74 @@ export function restartLineNowMessage(): string {
     `this session cannot see them yet (approve them if your tool asks)`
   );
 }
+
+// ---------------------------------------------------------------------------
+// Issue-row catalog strings (the 15.0.0 upgrade rehearsal, 2026-10-02). Their
+// source is the grant issue named on each, not a design.md row: design.md is
+// outside those grants. A design catalog row for each is owed at 123's next
+// design touch.
+// ---------------------------------------------------------------------------
+
+/**
+ * An MCP config already carries one of DesignerPunk's server keys, so `init`/`attach`
+ * leaves it unchanged. The remedy names `attach` — the verb that rewrites MCP wiring
+ * in a born or migrated repo; `init` is the once-ever birth event.
+ * Source: `.kiro/issues/2026-10-02-sync-steering-dir-suggestion-writes-broken-path.md`.
+ */
+export function existingMcpEntryMessage(configFile: string, key: string, target: 'cc' | 'kiro'): string {
+  return (
+    `${configFile} already has '${key}' entry; left unchanged. If it is outdated, delete the entry ` +
+    `and re-run: npx designerpunk attach --target=${target} — or update it by hand.`
+  );
+}
+
+/**
+ * `generate` stopped because a component-token file in the consumer's tree failed
+ * `defineComponentTokens`'s family-mismatch guard (#127) while it loaded. Names the FILE
+ * (the guard names only the component), carries the guard's own message verbatim, and
+ * names ONLY remedies that work for that file (the 15.0.0 upgrade rehearsal, run 2):
+ *
+ * - **always**: split the file's `defineComponentTokens()` into one call per family;
+ * - **a copied `src/tokens/**` file**: the package ships that file's source, but with the
+ *   package-internal import `'../../build/tokens'` that `init` rewrites on copy — so the
+ *   re-copy must take the same rewrite to `'@3fn/core/build'` (a verbatim copy fails to
+ *   load: `Cannot find module '../../build/tokens'`);
+ * - **an unedited `src/components/core/**` copy**: delete it. The package ships no source
+ *   for those token files (only `dist/`), so there is nothing to re-copy; deleting also
+ *   removes that component's tokens from the consumer's generated `ComponentTokens.*`.
+ *
+ * `file` is repo-relative with `/` separators. Pre-123 `init` copied two such files in the
+ * pre-fix single-family form (`src/tokens/component/progress.ts`,
+ * `src/components/core/Button-Icon/buttonIcon.tokens.ts`).
+ * Source: `.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md`.
+ */
+export function componentTokenFamilyMismatchMessage(file: string, guardMessage: string): string {
+  let alternative = '';
+  if (file.startsWith('src/tokens/')) {
+    alternative =
+      ` Or, if an earlier DesignerPunk init copied this file, replace it with the package's version at ` +
+      `node_modules/@3fn/core/${file} and change its '../../build/tokens' import to '@3fn/core/build'.`;
+  } else if (file.startsWith('src/components/core/')) {
+    alternative =
+      ` Or, if this is an unedited copy an earlier DesignerPunk init made, delete it — its component tokens ` +
+      `then leave your generated ComponentTokens.* files.`;
+  }
+  return (
+    `generate stopped — ${file} declares a component token in the wrong family's defineComponentTokens() call. ` +
+    `${guardMessage} ` +
+    `To fix it, split that file's defineComponentTokens() into one call per token family.` +
+    `${alternative} Nothing was written.`
+  );
+}
+
+/**
+ * `generate` stopped because a component-token file in the consumer's tree threw while it
+ * loaded, for any reason other than the family guard. Names the file and the FIRST line of
+ * the reason — Node's module-not-found message carries a multi-line `Require stack:` list of
+ * absolute paths that is noise here.
+ * Source: as {@link componentTokenFamilyMismatchMessage}.
+ */
+export function componentTokenFileLoadFailedMessage(file: string, reason: string): string {
+  const firstLine = reason.split(/\r?\n/, 1)[0].trim();
+  return `generate stopped — ${file} could not be loaded: ${firstLine} Fix the file and run generate again. Nothing was written.`;
+}

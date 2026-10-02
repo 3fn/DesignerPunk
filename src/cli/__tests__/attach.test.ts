@@ -20,7 +20,7 @@ import { main, printHelp } from '../designerpunk';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
 import { attachUnbornRepoMessage, restartLineSequencedMessage, restartLineNowMessage } from '../shared/errorCatalog';
 import { attachUsage, lifecycleVerb, LIFECYCLE_VERBS, ATTACH_OBJECT } from '../shared/vocabulary';
-import { initBornRepoMessage } from '../shared/errorCatalog';
+import { initBornRepoMessage, existingMcpEntryMessage } from '../shared/errorCatalog';
 
 const PKG_ROOT = resolvePackageRoot(path.join(__dirname, '..'));
 
@@ -325,6 +325,35 @@ describe('attach — collision rule (Req 19.8: report, never silently skip or ov
       fs.rmSync(scratchDir, { recursive: true, force: true });
     }
   });
+
+  // The 15.0.0 upgrade rehearsal (.kiro/issues/2026-10-02-sync-steering-dir-suggestion-writes-broken-path.md):
+  // a pre-123 repo's own MCP entries survive attach, and the advice for an outdated one names
+  // attach — the verb that rewrites MCP wiring in a born repo — never "re-run init".
+  test.each([
+    ['kiro', '.kiro/settings/mcp.json'],
+    ['cc', '.mcp.json'],
+  ] as const)(
+    'an existing DesignerPunk MCP entry (%s) is left unchanged, and the advice names attach, not init',
+    async (target, configFile) => {
+      const scratchDir = createScratchDir();
+      makeBornRepo(scratchDir);
+      try {
+        const ownEntry = { command: 'node', env: { MCP_STEERING_DIR: './.kiro/steering' } };
+        writeFile(scratchDir, configFile, JSON.stringify({ mcpServers: { 'designerpunk-docs': ownEntry } }, null, 2));
+
+        const run = await runAttachIn(scratchDir, [`--target=${target}`]);
+        expect(run.exitCode).toBeUndefined();
+        expect(run.output).toContain(existingMcpEntryMessage(configFile, 'designerpunk-docs', target));
+        expect(run.output).toContain(`npx designerpunk attach --target=${target}`);
+        expect(run.output).not.toContain('re-run init');
+
+        const onDisk = JSON.parse(fs.readFileSync(path.join(scratchDir, configFile), 'utf-8'));
+        expect(onDisk.mcpServers['designerpunk-docs']).toEqual(ownEntry);
+      } finally {
+        fs.rmSync(scratchDir, { recursive: true, force: true });
+      }
+    },
+  );
 });
 
 // ---------------------------------------------------------------------------

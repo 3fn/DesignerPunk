@@ -51,6 +51,7 @@ describe('resolveThemeTierRoot — precedence (meta.json → explicit → legacy
   test('meta.json tierDir wins over both the explicit tier and the legacy default', () => {
     const tokenIndexDir = path.join(scratch, 'token-index');
     const metaTier = path.join(scratch, 'from-meta');
+    fs.mkdirSync(metaTier, { recursive: true }); // rule 1 wins only for a tier that exists on disk
     writeMeta(tokenIndexDir, metaTier);
 
     const result = resolveThemeTierRoot(tokenIndexDir, '/from-explicit', '/from-legacy-project-root');
@@ -68,6 +69,37 @@ describe('resolveThemeTierRoot — precedence (meta.json → explicit → legacy
   test('legacy <projectRoot>/src/tokens is the last resort', () => {
     const result = resolveThemeTierRoot(undefined, undefined, '/from-legacy-project-root');
     expect(result).toBe(path.join('/from-legacy-project-root', 'src', 'tokens'));
+  });
+
+  // The 15.0.0 upgrade rehearsal, F2 (.kiro/issues/2026-10-02-token-index-meta-ships-absolute-path.md):
+  // a packed index carried the BUILD machine's absolute tierDir. On any other machine
+  // that path does not exist, and it must not win.
+  test('a meta.json carrying a nonexistent absolute path does not win — the explicit tier follows', () => {
+    const tokenIndexDir = path.join(scratch, 'token-index');
+    writeMeta(tokenIndexDir, path.join(scratch, 'build-machine', 'clone', 'src', 'tokens')); // never created
+    expect(resolveThemeTierRoot(tokenIndexDir, '/from-explicit', '/from-legacy-project-root')).toBe('/from-explicit');
+  });
+
+  test('...and with no explicit tier, the legacy default follows', () => {
+    const tokenIndexDir = path.join(scratch, 'token-index');
+    writeMeta(tokenIndexDir, path.join(scratch, 'build-machine', 'clone', 'src', 'tokens'));
+    expect(resolveThemeTierRoot(tokenIndexDir, undefined, '/from-legacy-project-root')).toBe(
+      path.join('/from-legacy-project-root', 'src', 'tokens'),
+    );
+  });
+
+  test('a RELATIVE tierDir resolves against the index directory (the packed form: ../src/tokens)', () => {
+    const tokenIndexDir = path.join(scratch, 'token-index');
+    const tier = path.join(scratch, 'src', 'tokens');
+    fs.mkdirSync(tier, { recursive: true });
+    writeMeta(tokenIndexDir, '../src/tokens');
+    expect(resolveThemeTierRoot(tokenIndexDir, '/from-explicit', '/from-legacy-project-root')).toBe(tier);
+  });
+
+  test('a relative tierDir that does not exist falls through like an absolute one', () => {
+    const tokenIndexDir = path.join(scratch, 'token-index');
+    writeMeta(tokenIndexDir, '../src/tokens'); // not created
+    expect(resolveThemeTierRoot(tokenIndexDir, '/from-explicit', '/from-legacy-project-root')).toBe('/from-explicit');
   });
 
   test('BITE target: a malformed meta.json falls through, never throws', () => {
@@ -107,6 +139,34 @@ describe('the package-mode regression: ModeClassifier follows meta.json, not <pr
 
     expect(classifier.getWarnings()).toEqual([]);
     expect(classifier.classify('color.structure.canvas')).toBe('level-2');
+  });
+
+  test('a relative tierDir in a relocated index still finds the package tier (the installed-package layout)', () => {
+    // The packed layout: <pkg>/token-index/meta.json → "../src/tokens" → <pkg>/src/tokens.
+    const pkgRoot = mkTmpDir('dp-installed-pkg-');
+    try {
+      // A key ONLY this fixture carries: a "../src/tokens" mis-resolved against the test's
+      // cwd would land on the repo's own tier, which has color.structure.canvas too.
+      const tier = path.join(pkgRoot, 'src', 'tokens');
+      fs.mkdirSync(path.join(tier, 'themes', 'dark'), { recursive: true });
+      fs.writeFileSync(
+        path.join(tier, 'themes', 'dark', 'SemanticOverrides.ts'),
+        "import type { SemanticOverrideMap } from '../types';\n" +
+          "export const darkOverrides: SemanticOverrideMap = {\n" +
+          "  'color.fixture.installedOnly': { primitiveReferences: { value: 'gray400' } },\n" +
+          '};\n'
+      );
+      const installedIndex = path.join(pkgRoot, 'token-index');
+      writeMeta(installedIndex, '../src/tokens');
+
+      const classifier = new ModeClassifier();
+      classifier.load(consumerRoot, installedIndex);
+
+      expect(classifier.getWarnings()).toEqual([]);
+      expect(classifier.classify('color.fixture.installedOnly')).toBe('level-2');
+    } finally {
+      fs.rmSync(pkgRoot, { recursive: true, force: true });
+    }
   });
 
   test('BITE (recorded red in the Task 1.5 completion doc): hardcoding <projectRoot>/src/tokens loses the override', () => {

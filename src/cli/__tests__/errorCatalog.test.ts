@@ -23,6 +23,9 @@ import {
   attachUnbornRepoMessage,
   restartLineNowMessage,
   managedRegionEditedInsideMessage,
+  existingMcpEntryMessage,
+  componentTokenFamilyMismatchMessage,
+  componentTokenFileLoadFailedMessage,
 } from '../shared/errorCatalog';
 
 // Verbatim transcriptions from design.md's catalog table — the comparands.
@@ -169,6 +172,56 @@ describe('errorCatalog — string conformance (Task 16.5 addition)', () => {
   test('managed region — edited inside', () => {
     expect(managedRegionEditedInsideMessage('CLAUDE.md')).toBe(
       'you edited inside the DesignerPunk-managed region of CLAUDE.md — those edits will be replaced. Move them outside the region; not applying without --apply',
+    );
+  });
+});
+
+// The 15.0.0 upgrade rehearsal — an issue-row string (source:
+// .kiro/issues/2026-10-02-sync-steering-dir-suggestion-writes-broken-path.md; no design.md row yet).
+describe('errorCatalog — string conformance (15.0.0 rehearsal issue rows)', () => {
+  test('existing MCP entry — the advice names attach, never init', () => {
+    expect(existingMcpEntryMessage('.kiro/settings/mcp.json', 'designerpunk-docs', 'kiro')).toBe(
+      ".kiro/settings/mcp.json already has 'designerpunk-docs' entry; left unchanged. If it is outdated, delete the entry and re-run: npx designerpunk attach --target=kiro — or update it by hand.",
+    );
+    expect(existingMcpEntryMessage('.mcp.json', 'designerpunk-application', 'cc')).toBe(
+      ".mcp.json already has 'designerpunk-application' entry; left unchanged. If it is outdated, delete the entry and re-run: npx designerpunk attach --target=cc — or update it by hand.",
+    );
+  });
+});
+
+// The 15.0.0 upgrade rehearsal — issue-row strings (source:
+// .kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md; no design.md row yet).
+describe('errorCatalog — string conformance (15.0.0 rehearsal: generate load failures)', () => {
+  // Rehearsal run 2: only remedies that WORK for the file's location are named.
+  test('family mismatch in a copied src/tokens/** file — split, or re-copy WITH the import rewrite', () => {
+    expect(componentTokenFamilyMismatchMessage('src/tokens/component/progress.ts', 'GUARD.')).toBe(
+      "generate stopped — src/tokens/component/progress.ts declares a component token in the wrong family's defineComponentTokens() call. GUARD. To fix it, split that file's defineComponentTokens() into one call per token family. Or, if an earlier DesignerPunk init copied this file, replace it with the package's version at node_modules/@3fn/core/src/tokens/component/progress.ts and change its '../../build/tokens' import to '@3fn/core/build'. Nothing was written.",
+    );
+  });
+
+  test('family mismatch in a src/components/core/** copy — split, or delete an unedited copy (no source ships to re-copy)', () => {
+    expect(componentTokenFamilyMismatchMessage('src/components/core/Button-Icon/buttonIcon.tokens.ts', 'GUARD.')).toBe(
+      "generate stopped — src/components/core/Button-Icon/buttonIcon.tokens.ts declares a component token in the wrong family's defineComponentTokens() call. GUARD. To fix it, split that file's defineComponentTokens() into one call per token family. Or, if this is an unedited copy an earlier DesignerPunk init made, delete it — its component tokens then leave your generated ComponentTokens.* files. Nothing was written.",
+    );
+  });
+
+  test('family mismatch in the consumer\'s own file — split only', () => {
+    expect(componentTokenFamilyMismatchMessage('src/components/Widget/widget.tokens.ts', 'GUARD.')).toBe(
+      "generate stopped — src/components/Widget/widget.tokens.ts declares a component token in the wrong family's defineComponentTokens() call. GUARD. To fix it, split that file's defineComponentTokens() into one call per token family. Nothing was written.",
+    );
+  });
+
+  test('component-token file load failed — names the file and the reason', () => {
+    expect(componentTokenFileLoadFailedMessage('src/tokens/component/broken.ts', 'Unexpected token.')).toBe(
+      'generate stopped — src/tokens/component/broken.ts could not be loaded: Unexpected token. Fix the file and run generate again. Nothing was written.',
+    );
+  });
+
+  test('component-token file load failed — only the reason\'s FIRST line (Node\'s "Require stack:" list is dropped)', () => {
+    const nodeReason =
+      "Cannot find module '../../build/tokens'\nRequire stack:\n- /abs/path/src/tokens/component/progress.ts\n- /abs/path/node_modules/tsx/dist/cjs/api/index.cjs";
+    expect(componentTokenFileLoadFailedMessage('src/tokens/component/progress.ts', nodeReason)).toBe(
+      "generate stopped — src/tokens/component/progress.ts could not be loaded: Cannot find module '../../build/tokens' Fix the file and run generate again. Nothing was written.",
     );
   });
 });

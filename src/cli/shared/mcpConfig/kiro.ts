@@ -15,6 +15,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { existingMcpEntryMessage } from '../errorCatalog';
 
 /** Structural — satisfied by `init.ts`'s `ManifestBuilder` without importing it (avoids a circular import). */
 export interface McpConfigManifestRecorder {
@@ -132,6 +133,6 @@ export function scaffoldKiroMcpConfig(
     console.log(`  skipped: .kiro/settings/mcp.json (all DesignerPunk entries already present)`);
   }
   for (const key of skipped) {
-    console.log(`  ⚠️  .kiro/settings/mcp.json already has '${key}' entry; left unchanged. If outdated, delete the entry and re-run init, or update manually.`);
+    console.log(`  ⚠️  ${existingMcpEntryMessage('.kiro/settings/mcp.json', key, 'kiro')}`);
   }
 }
