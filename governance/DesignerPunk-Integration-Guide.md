@@ -233,12 +233,19 @@ Once the agent session reconnects, it should show `designerpunk-docs` and `desig
 
 #### 4b. Set up agent prompts
 
-If using the product agent template:
+The agent prompts are generated for your harness, not copied by hand. `npx designerpunk init` emits them for the default target. To add another target, or to wire a repo that `init` did not create, run:
+
 ```bash
-cp -r node_modules/@3fn/core/product-template/agents/ .kiro/agents/
+npx designerpunk attach --target=<cc|kiro>
 ```
 
-Then customize `[CUSTOMIZE]` markers in each prompt file with your product name, human lead, and domain-specific context. See `product-template/agents/README.md` for details.
+`attach` will attach a harness (agents + MCP config + approvals), for one target. It is safe to re-run. To read DesignerPunk without becoming it (MCP config and approvals only, no agents), add `--reference`:
+
+```bash
+npx designerpunk attach --target=<cc|kiro> --reference
+```
+
+After `attach` finishes, restart your agent session so it picks up the MCP servers.
 
 ### 5. Verify — Explore the Component Catalog
 
