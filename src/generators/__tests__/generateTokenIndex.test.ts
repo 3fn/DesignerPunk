@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import * as yaml from 'js-yaml';
-import { generateTokenIndex } from '../generateTokenIndex';
+import { generateTokenIndex, relativeTierDir } from '../generateTokenIndex';
 import type { PrimitiveToken } from '../../types/PrimitiveToken';
 import type { SemanticToken } from '../../types/SemanticToken';
 import type { RegisteredComponentToken } from '../../registries/ComponentTokenRegistry';
@@ -205,18 +205,51 @@ describe('generateTokenIndex', () => {
   // Spec 123 Task 1.5 (DD24): meta.json's tierDir is what lets the application MCP's
   // theme readers follow the served index instead of guessing a project root.
   describe('meta.json (Spec 123 Task 1.5, DD24)', () => {
-    it('writes tierDir when provided', () => {
+    // F2 (.kiro/issues/2026-10-02-token-index-meta-ships-absolute-path.md): the value is
+    // written RELATIVE to the index dir, so the shipped file never carries the build
+    // machine's absolute path.
+    it('writes tierDir relative to the index directory, never the absolute path it was given', () => {
+      const tierDir = path.join(path.dirname(outputDir), 'consumer-repo', 'src', 'tokens');
       generateTokenIndex(outputDir, {
         primitiveTokens: [],
         semanticTokens: [],
         componentTokens: [],
         modeResolved: makeModeResolved(),
         componentSchemaDir: NO_SCHEMA_DIR,
-        tierDir: '/consumer/src/tokens',
+        tierDir,
       });
 
       const meta = JSON.parse(fs.readFileSync(path.join(outputDir, 'meta.json'), 'utf-8'));
-      expect(meta).toEqual({ tierDir: '/consumer/src/tokens' });
+      expect(meta).toEqual({ tierDir: '../consumer-repo/src/tokens' });
+      expect(path.isAbsolute(meta.tierDir)).toBe(false);
+      expect(fs.readFileSync(path.join(outputDir, 'meta.json'), 'utf-8')).not.toContain(path.dirname(outputDir));
+      // Round-trip: resolving against the index dir recovers the tier the writer was given.
+      expect(path.resolve(outputDir, meta.tierDir)).toBe(path.resolve(tierDir));
+    });
+
+    it('the package layout (<root>/token-index, <root>/src/tokens) records ../src/tokens', () => {
+      const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pkg-root-'));
+      const indexDir = path.join(root, 'token-index');
+      try {
+        generateTokenIndex(indexDir, {
+          primitiveTokens: [],
+          semanticTokens: [],
+          componentTokens: [],
+          modeResolved: makeModeResolved(),
+          componentSchemaDir: NO_SCHEMA_DIR,
+          tierDir: path.join(root, 'src', 'tokens'),
+        });
+
+        const meta = JSON.parse(fs.readFileSync(path.join(indexDir, 'meta.json'), 'utf-8'));
+        expect(meta).toEqual({ tierDir: '../src/tokens' });
+      } finally {
+        fs.rmSync(root, { recursive: true, force: true });
+      }
+    });
+
+    it('relativeTierDir: "." when the tier is the index dir; undefined stays undefined', () => {
+      expect(relativeTierDir('/a/b', '/a/b')).toBe('.');
+      expect(relativeTierDir('/a/token-index', undefined)).toBeUndefined();
     });
 
     it('omits tierDir (never writes it as null/undefined) when not provided', () => {

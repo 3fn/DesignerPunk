@@ -55,6 +55,17 @@ export interface TokenIndexInput {
   tierDir?: string;
 }
 
+/**
+ * `tierDir` as written into `meta.json`: relative to the index directory, `/`-separated
+ * (`'.'` when they coincide). `undefined` stays `undefined`, so the key is omitted.
+ * @internal Exported for testing.
+ */
+export function relativeTierDir(indexDir: string, tierDir: string | undefined): string | undefined {
+  if (tierDir === undefined) return undefined;
+  const rel = path.relative(path.resolve(indexDir), path.resolve(tierDir));
+  return rel === '' ? '.' : rel.split(path.sep).join('/');
+}
+
 /** Build the mode-nested OKLCH value + sibling channel metadata for a color primitive. */
 function buildOklchEntry(modes: PrimitiveOklchModes): {
   value: { light: { base: string; wcag: string }; dark: { base: string; wcag: string } };
@@ -256,9 +267,16 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   // Spec 123 Task 1.5 (DD24): record the live tier this index's data came from, so
   // the application MCP's theme readers can find `themes/dark/SemanticOverrides.ts`
   // relative to whichever index actually got served, not a guessed project root.
+  // Written RELATIVE to the index directory, with `/` separators, so the file is
+  // machine-independent: an absolute value shipped the publishing machine's path in
+  // the package (`.kiro/issues/2026-10-02-token-index-meta-ships-absolute-path.md`, F2).
+  // The package's own index records `../src/tokens`, which resolves inside the
+  // installed package because `src/tokens/**` ships. The resolver
+  // (`application-mcp-server/src/indexer/resolveThemeTierRoot.ts`) resolves it against
+  // the index directory. Key omitted when no tier is passed.
   fs.writeFileSync(
     path.join(outputDir, 'meta.json'),
-    JSON.stringify({ tierDir: input.tierDir }, null, 2) + '\n',
+    JSON.stringify({ tierDir: relativeTierDir(outputDir, input.tierDir) }, null, 2) + '\n',
     'utf-8'
   );
 
