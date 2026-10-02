@@ -351,12 +351,52 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     expect(output).toContain('✅');
   }, TIMEOUT);
 
+  /**
+   * The shipped steering folder is EXACTLY the eight identity docs — never Peter's personal note
+   * (Spec 123 C5 / Req 12.1a). Moved here from the retired 119-A relocation-gate leg A7
+   * (.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md, residual R2): before the move, no
+   * CI check read the PACKED package's steering folder (`scripts/pack-assert.ts` § 9 asserts it but runs in no
+   * workflow), so a restored `.kiro/steering/` glob in `files[]` would have shipped Peter's note to every consumer
+   * with every other check green.
+   *
+   * The package is read as INSTALLED (`node_modules/@3fn/core`), never from the repo. The expected eight are
+   * DERIVED from the installed package's own locked always-set (`dist/consumer-canonical/shared/always-set.yaml`)
+   * less the one template member (`personal-note`, which ships as `templates/personal-note.template.md` and a
+   * consumer-owned `.designerpunk/personal-note.local.md` — Task 22, U3 — never under `.kiro/steering/`). The count
+   * is pinned at 8 so an emptied or mis-parsed list cannot make the comparison vacuous.
+   */
+  describe('Spec 123 R2 — the package ships exactly the eight identity docs and never the personal note', () => {
+    it('the installed .kiro/steering/ holds exactly the eight identity docs; personal-note.md is absent; nothing ships under .kiro/agents/', () => {
+      const pkg = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core');
+      const alwaysSet = loadYaml(fs.readFileSync(path.join(pkg, 'dist', 'consumer-canonical', 'shared', 'always-set.yaml'), 'utf-8')) as {
+        alwaysSet: Array<{ id: string }>;
+      };
+      const expectedIds = alwaysSet.alwaysSet.map((m) => m.id).filter((id) => id !== 'personal-note').sort();
+      expect(expectedIds.length).toBe(8);
+
+      const steeringDir = path.join(pkg, '.kiro', 'steering');
+      expect(fs.existsSync(steeringDir)).toBe(true);
+      const shipped = fs.readdirSync(steeringDir);
+      // The personal note, by name — the leak this case exists to catch.
+      expect(shipped).not.toContain('personal-note.md');
+      // Exactly the eight: every shipped file is a `<id>.md` of an identity doc (id = lowercased basename, the
+      // docs-MCP / generator convention), with none missing and nothing extra.
+      expect(shipped.every((f) => f.endsWith('.md'))).toBe(true);
+      expect(shipped.map((f) => f.slice(0, -'.md'.length).toLowerCase()).sort()).toEqual(expectedIds);
+
+      // The agent copies no longer ship (C5): the agent layer is emitted at init time, not copied from the package.
+      expect(fs.existsSync(path.join(pkg, '.kiro', 'agents'))).toBe(false);
+    });
+  });
+
   describe('MCP smoke queries', () => {
-    function spawnMCPServer(command: string): ChildProcess {
+    function spawnMCPServer(command: string, dropEnv: string[] = []): ChildProcess {
+      const env: NodeJS.ProcessEnv = { ...process.env, NODE_ENV: 'test' };
+      for (const k of dropEnv) delete env[k];
       const child = spawn('npx', ['designerpunk', command], {
         cwd: tempDir,
         stdio: ['pipe', 'pipe', 'pipe'],
-        env: { ...process.env, NODE_ENV: 'test' },
+        env,
       });
       return child;
     }
@@ -423,7 +463,11 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     }, 30_000);
 
     it('Docs MCP returns documentation data', async () => {
-      const child = spawnMCPServer('mcp:docs');
+      // `MCP_STEERING_DIR` is dropped from the child env: the CLI spreads `process.env` AFTER its
+      // own defaults, so an ambient value would shadow the very default this case asserts.
+      const child = spawnMCPServer('mcp:docs', ['MCP_STEERING_DIR']);
+      let stderr = '';
+      child.stderr!.on('data', (d: Buffer) => { stderr += d.toString(); });
       try {
         await waitForReady(child);
         await sendJsonRpc(child, 'initialize', {
@@ -437,6 +481,28 @@ describe('Consumer Integration (Spec 106 R8)', () => {
           arguments: {},
         });
         expect(result).toBeDefined();
+
+        // `designerpunk mcp:docs` serves the package's `governance/` corpus and spawns nothing over
+        // `.kiro/steering` (which ships only the eight identity docs). Moved here from the retired
+        // 119-A relocation-gate leg A4 (.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md,
+        // residual R1) — the CLI launch path is exercised, not `dist/mcp/docs-mcp.js` directly.
+        const governanceDir = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'governance');
+        // (a) what the CLI says it launched the server on (`Data: <dir>` — its own console line) ...
+        const cliData = /^ {2}Data: (.+)$/m.exec(stderr);
+        expect(cliData).not.toBeNull();
+        expect(cliData![1]).toBe(governanceDir);
+        // (b) ... and what the SERVER reports it resolved from the env the CLI handed it.
+        const serverData = /\[MCP Server\] Data root steering: (.+) \(source: (\w+)\)/.exec(stderr);
+        expect(serverData).not.toBeNull();
+        expect(serverData![1]).toBe(governanceDir);
+        expect(serverData![2]).toBe('env');
+        // (c) ... and the index it serves is the governance corpus: non-empty, and larger than the
+        // eight-doc steering folder a mis-aimed spawn would index.
+        const health = JSON.parse((result as any).content[0].text);
+        const steeringDocs = fs
+          .readdirSync(path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', '.kiro', 'steering'))
+          .filter((f) => f.endsWith('.md')).length;
+        expect(health.metrics.documentsIndexed).toBeGreaterThan(steeringDocs);
       } finally {
         child.kill();
       }

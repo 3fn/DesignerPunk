@@ -215,7 +215,9 @@ describe('sync — --migrate-legacy is offered ONLY with the attach step (Task 1
     for (const l of lines) expect(l).toContain(attachUsage());
   });
 
-  test('COPY_ROOTS keeps the release-1 roots it recognizes (the 119-A gate pins this literal)', () => {
+  // This is the standing pin of the literal. The 119-A relocation-integrity gate's leg A7 also held it until that leg
+  // was retired (Peter, 2026-10-01; .kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md).
+  test('COPY_ROOTS keeps the release-1 roots it recognizes (this test is the pin; the 119-A gate leg A7 that also held it is retired)', () => {
     expect([...COPY_ROOTS]).toEqual(['.kiro/agents', '.kiro/steering', 'governance', '.kiro/skills']);
   });
 });
