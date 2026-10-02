@@ -2,7 +2,7 @@ name: Package Name Drift Detection
 
 # Runs the drift detection script against PRs targeting main and on pushes to main.
 # Catches any reference where scope doesn't match package.json "name" scope across:
-#   .kiro/steering/, src/, product-template/, .kiro/agents/, dist/
+#   the directories listed in SCAN_DIRS in scripts/check-package-name-drift.js (the authoritative list)
 #
 # Failure blocks merge until drift is reconciled.
 # See: scripts/check-package-name-drift.js
