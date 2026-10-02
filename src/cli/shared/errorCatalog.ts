@@ -176,3 +176,28 @@ export function managedRegionMarkersMissingMessage(file: string): string {
     `Restore the markers (see install doc § "Your agent layer") or re-run attach`
   );
 }
+
+// ---------------------------------------------------------------------------
+// `attach`-specific catalog strings (Spec 123 Task 16.2 — design.md § "C20.
+// The consumer emission lane" / § "Error Handling", the `attach` and restart
+// rows). Extends the catalog established at Tasks 1.6/2/16.1/16.4.
+// ---------------------------------------------------------------------------
+
+/** design.md catalog row: `attach` in an unborn repo (A8). */
+export function attachUnbornRepoMessage(): string {
+  return (
+    `no design system here. To create one: npx designerpunk init. Only reading DesignerPunk's docs ` +
+    `and components? No init needed: npx designerpunk attach --target=<cc|kiro> --reference`
+  );
+}
+
+/**
+ * design.md catalog row: **restart line — now** (erratum, Le-T5).
+ * `attach --reference` output only, where the restart IS the next step.
+ */
+export function restartLineNowMessage(): string {
+  return (
+    `restart your agent session now — DesignerPunk's MCP servers load when a session starts, so ` +
+    `this session cannot see them yet (approve them if your tool asks)`
+  );
+}
