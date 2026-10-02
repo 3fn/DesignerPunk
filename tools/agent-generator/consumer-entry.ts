@@ -77,7 +77,7 @@ import { entryTree, partition } from './partition';
 import { loadDispositions } from './regrounding/dispositions';
 import { parseOverlay, toSpanOverlay, type ParsedOverlay } from './regrounding/overlay';
 import type { Dispositions } from './spans';
-import { declaredToolNames, fromManifest, type ManifestRegistry, type ToolManifestLike } from './registry';
+import { declaredToolNames, fromManifest, type ManifestRegistry, type ToolManifestLike } from './registry-manifest';
 import { WORKFLOW_RULES } from '../../mcp-server/src/rules/workflow-rules';
 import { resolveSection } from '../../mcp-server/src/indexer/section-parser';
 import { extractFrontmatterInfo } from '../../mcp-server/src/indexer/frontmatter-parser';

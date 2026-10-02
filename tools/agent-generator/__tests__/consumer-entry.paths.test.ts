@@ -22,7 +22,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import * as registryModule from '../registry';
+import * as registryModule from '../registry-manifest';
 import * as entry from '../consumer-entry';
 import * as generate from '../generate';
 import { loadConsumerProfile } from '../consumer-profile';
@@ -182,9 +182,11 @@ describe('the BUILT bundle (build:generator)', () => {
     // CI fidelity (16.1 follow-up, run 36817484731): `lane-functional-root` runs `npm run build`
     // without ever building `mcp-server/dist` — this package's `build:generator` must bundle
     // cleanly with it ABSENT, not merely when a prior local build happens to have left it behind.
-    // `workflow-rules-guard.ts`'s `getWorkflowRules()` is the only reference to that path, and it
-    // is unreachable from `emitConsumer` (only `generate.ts`, which this bundle may not import,
-    // calls it) — so the literal `require(...)` must never survive tree-shaking into the bundle.
+    // The only literal `require` of that path lives in `workflow-rules-accessor.ts`'s
+    // `getWorkflowRules()`, a file outside `consumer-entry.ts`'s import closure (only
+    // `generate.ts`, which this bundle may not import, imports it) — so esbuild never reaches it
+    // and `build:generator` needs no `--external` for it. This build, with `mcp-server/dist`
+    // moved aside, fails if a `require` of it ever becomes reachable again.
     const distPath = path.join(REPO_ROOT, 'mcp-server', 'dist');
     const asidePath = path.join(tmp, 'mcp-server-dist-aside');
     const hadDist = fsReal.existsSync(distPath);
@@ -201,11 +203,16 @@ describe('the BUILT bundle (build:generator)', () => {
     expect(text.match(/introspectServer|generateRegistry|StdioCorpusClient|createStdioDocsClient|StdioClientTransport|generateAll/g) ?? []).toEqual([]);
   });
 
-  test('resolves or carries no `mcp-server/dist` require — only steward-only code reaches it', () => {
+  test('carries no MCP SDK — resolve-stdio.ts and registry.ts (the SDK halves) are outside the closure', () => {
     const text = fs.readFileSync(bundlePath, 'utf8');
-    // The literal require target from workflow-rules-guard.ts's getWorkflowRules() — unreachable
-    // from emitConsumer, so it must be tree-shaken out entirely, not merely left `--external` and
-    // unresolved (which would still surface this string as a live require in a consumer install).
+    expect(text.match(/@modelcontextprotocol/g) ?? []).toEqual([]);
+  });
+
+  test('carries no `mcp-server/dist` require — only steward-only code reaches it', () => {
+    const text = fs.readFileSync(bundlePath, 'utf8');
+    // The literal require target from workflow-rules-accessor.ts's getWorkflowRules() — outside
+    // emitConsumer's import closure, so it never enters the bundle (the file no longer exists in
+    // the closure; there is no `--external` holding it back).
     expect(text.match(/require\(["']\.\.\/\.\.\/mcp-server\/dist\/index["']\)/g) ?? []).toEqual([]);
   });
 

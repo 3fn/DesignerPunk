@@ -32,7 +32,8 @@
 
 import * as path from 'path';
 import type { CorpusClient } from '../resolve';
-import { CorpusResolver, describeUnresolved, createStdioDocsClient } from '../resolve';
+import { CorpusResolver, describeUnresolved } from '../resolve';
+import { createStdioDocsClient } from '../resolve-stdio';
 import type { CanonicalAgentDoc } from '../schema';
 import { parseCanonicalAgentSource } from '../source';
 import { parseSharedCatalog, type SharedCatalogMember } from '../adapters/index';

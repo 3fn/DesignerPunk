@@ -32,13 +32,14 @@
  * library — not spawning it as a process — started the MCP server (indexed the corpus,
  * started a file watcher, bound stdio) as a side effect. That top-level call is now wrapped
  * in `if (require.main === module)`, so importing the entry as a library is side-effect-free,
- * and both `getWorkflowRules()` here and the test file reach `WORKFLOW_RULES` through the
+ * and both `getWorkflowRules()` (in `./workflow-rules-accessor`) and the test file reach `WORKFLOW_RULES` through the
  * real package-entry re-export surface (per 121 Task 6, design C2.4) — not the internal
  * `rules/workflow-rules` module.
  *
- * The VALUE import stays LAZY nonetheless — now by DESIGN, not necessity: `getWorkflowRules()`
- * `require()`s the entry only when called, so importing THIS module (the lightweight
- * validate-stage guard) does not require `mcp-server/dist` to be built at all. The guard
+ * The VALUE import is NOT in this module: `getWorkflowRules()` lives in
+ * `./workflow-rules-accessor` (imported only by `generate.ts`), so importing THIS module (the
+ * lightweight validate-stage guard, reached by the consumer bundle through `pipeline.ts`)
+ * holds no `require` of `mcp-server/dist` and does not require it to be built at all. The guard
  * function only needs rule `id` STRINGS to scan canonical bodies, so it uses the hard-coded
  * `KNOWN_WORKFLOW_RULE_IDS` list below and never loads the entry; only a caller that actually
  * needs the live array (the pipeline's render step, Task 2/C3) pays the dist dependency.
@@ -49,8 +50,9 @@
  *
  * TYPE IMPORT PATH NOTE: the type import below targets `mcp-server/dist/index` (the
  * COMPILED package entry, a build artifact), not `mcp-server/src/...`. Importing any file
- * under `mcp-server/src/` fails this package's `tsconfig.json` `rootDir: "."` check (TS6059
- * — verified: `mcp-server/src/rules/workflow-rules.ts` is not under this package's rootDir).
+ * under `mcp-server/src/` was off-limits under this package's former `tsconfig.json`
+ * `rootDir: "."` (TS6059); `rootDir` is now `"../.."`, but this type import stays on the
+ * compiled entry to keep the `WorkflowRule` type single-sourced with the live export.
  * `mcp-server/dist/index.d.ts` is `.gitignore`d build output, present because the mcp-server
  * package's `build` has already run in this checkout — this package's typecheck implicitly
  * depends on `mcp-server/dist` being built first.
@@ -61,22 +63,10 @@ import type { WorkflowRule } from '../../mcp-server/dist/index';
 export type { WorkflowRule };
 
 /**
- * Lazily imports the real package-entry re-export (per 121 Task 6) and returns the live
- * `WORKFLOW_RULES` array. NOT called by the guard below (see file header) — this is the
- * accessor the pipeline's render step (C3/Task 2) uses when it actually needs to render
- * rule content into prompts.
- */
-export function getWorkflowRules(): readonly WorkflowRule[] {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const entry = require('../../mcp-server/dist/index') as { WORKFLOW_RULES: readonly WorkflowRule[] };
-  return entry.WORKFLOW_RULES;
-}
-
-/**
  * The known WORKFLOW_RULES `id`s, kept in sync with the real array by
  * `__tests__/workflow-rules-guard.test.ts` (which imports the live constant and asserts
  * this list matches it exactly). Used by the guard below so scanning canonical bodies for
- * hand-restated rule variants never has to pay the `getWorkflowRules()` side-effect cost.
+ * hand-restated rule variants never has to load the live entry (`getWorkflowRules()` in `./workflow-rules-accessor`).
  */
 export const KNOWN_WORKFLOW_RULE_IDS: readonly string[] = ['summary-first'];
 
