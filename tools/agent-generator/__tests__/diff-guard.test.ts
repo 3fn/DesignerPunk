@@ -7,6 +7,7 @@
  *          introspection is exercised by Task 6.2's recorded prove-it-bites runs, not jest.
  */
 
+import { spawnSync } from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -15,7 +16,11 @@ import {
   compareTrees,
   computeInputClosureHash,
   hashFileSet,
+  isGitWorkTreeRoot,
   listFilesUnder,
+  listInputClosure,
+  listInputClosureByWalk,
+  listInputClosureFromGit,
   readLock,
   writeLock,
   LOCK_PATH,
@@ -131,6 +136,128 @@ describe('lock roundtrip', () => {
     expect(readLock(repo)).toEqual({ inputClosure: 'aaa', outputs: 'bbb' });
     fs.writeFileSync(path.join(repo, LOCK_PATH), 'not json');
     expect(readLock(repo)).toBeUndefined();
+    fs.rmSync(repo, { recursive: true, force: true });
+  });
+});
+
+// ----------------------------------------------------------------------------
+// F1 — the input closure is listed from git (checkout-independent); walk fallback outside git
+// (2026-10-01 generated-lock-input-closure-differs-by-checkout)
+// ----------------------------------------------------------------------------
+
+function git(repo: string, ...args: string[]): string {
+  const r = spawnSync('git', args, { cwd: repo, encoding: 'utf8' });
+  if (r.status !== 0) throw new Error(`git ${args.join(' ')} failed: ${r.stderr}`);
+  return r.stdout;
+}
+
+/** A committed fixture repo with a `.gitignore` (logs/) — the shape of the real defect. */
+function gitRepo(): string {
+  const repo = fs.realpathSync(tempRepo());
+  git(repo, 'init', '-q');
+  git(repo, 'config', 'user.email', 't@example.com');
+  git(repo, 'config', 'user.name', 'T');
+  git(repo, 'config', 'commit.gpgsign', 'false');
+  put(repo, '.gitignore', 'logs/\n');
+  put(repo, 'canonical/shared/x.yaml', 'a: 1\n');
+  put(repo, 'governance/doc.md', 'doc\n');
+  put(repo, 'tools/agent-generator/gen.ts', 'export {};\n');
+  put(repo, 'package.json', '{}\n');
+  git(repo, 'add', '-A');
+  git(repo, 'commit', '-q', '-m', 'fixture');
+  return repo;
+}
+
+describe('F1 — closure listed from git (checkout-independent)', () => {
+  it('(1) a gitignored file planted under a closure root does NOT move the hash', () => {
+    const repo = gitRepo();
+    expect(isGitWorkTreeRoot(repo)).toBe(true);
+    const before = computeInputClosureHash(repo);
+    put(repo, 'tools/agent-generator/mcp-server/logs/index-state.log', 'stray\n');
+    put(repo, 'governance/logs/x.log', 'stray\n');
+    expect(fs.existsSync(path.join(repo, 'tools/agent-generator/mcp-server/logs/index-state.log'))).toBe(true);
+    expect(computeInputClosureHash(repo)).toBe(before);
+    // ...while the filesystem walk WOULD have moved (the defect F1 removes):
+    expect(listInputClosureByWalk(repo)).toContain('tools/agent-generator/mcp-server/logs/index-state.log');
+    fs.rmSync(repo, { recursive: true, force: true });
+  });
+
+  it('(2) an untracked, not-ignored file under a root DOES move the hash', () => {
+    const repo = gitRepo();
+    const before = computeInputClosureHash(repo);
+    put(repo, 'canonical/shared/new-input.yaml', 'b: 2\n');
+    expect(listInputClosure(repo)).toContain('canonical/shared/new-input.yaml');
+    expect(computeInputClosureHash(repo)).not.toBe(before);
+    fs.rmSync(repo, { recursive: true, force: true });
+  });
+
+  it('(3a) on a clean tree the git-listed closure EQUALS the walk (fixture), hash included', () => {
+    const repo = gitRepo();
+    expect(listInputClosureFromGit(repo)).toEqual(listInputClosureByWalk(repo));
+    expect(computeInputClosureHash(repo)).toBe(
+      hashFileSet(repo, listInputClosureByWalk(repo)),
+    );
+    fs.rmSync(repo, { recursive: true, force: true });
+  });
+
+  it('(3b) in THIS repo the git-listed closure equals the walk, except paths git ignores (and no git-only paths)', () => {
+    const repoRoot = path.resolve(__dirname, '..', '..', '..');
+    if (!isGitWorkTreeRoot(repoRoot)) return; // exported / non-git copy: nothing to compare
+    const viaGit = new Set(listInputClosureFromGit(repoRoot));
+    const viaWalk = listInputClosureByWalk(repoRoot);
+    const walkOnly = viaWalk.filter((rel) => !viaGit.has(rel));
+    const gitOnly = [...viaGit].filter((rel) => !viaWalk.includes(rel));
+    expect(gitOnly).toEqual([]);
+    // Every file the walk sees but git does not must be gitignored. On a clean checkout (CI) this
+    // is the empty set (walkOnly === []): the git list EQUALS the walk, so committed locks stay valid.
+    // A gitignored file the generator STARTS reading would be dropped silently by F1 — if one appears
+    // under a root in CI, this assertion names it (the check-ignore below is the allow-list).
+    if (walkOnly.length > 0) {
+      const ignored = spawnSync('git', ['check-ignore', '-z', '--stdin'], {
+        cwd: repoRoot,
+        input: walkOnly.join('\0'),
+        encoding: 'utf8',
+      })
+        .stdout.split('\0')
+        .filter(Boolean)
+        .sort();
+      expect(ignored).toEqual([...walkOnly].sort());
+    }
+    if (process.env.CI) expect(walkOnly).toEqual([]);
+  });
+
+  it('(4) the non-git fallback: a plain temp dir (and a subdir of a repo) uses the walk', () => {
+    const plain = tempRepo();
+    put(plain, 'canonical/shared/x.yaml', 'a: 1\n');
+    put(plain, 'governance/logs/x.log', 'counts here: no git, no ignore rules\n');
+    expect(isGitWorkTreeRoot(plain)).toBe(false);
+    expect(listInputClosure(plain)).toEqual(listInputClosureByWalk(plain));
+    expect(listInputClosure(plain)).toContain('governance/logs/x.log');
+
+    // the `--root` stale-unit fixture shape: a subdirectory INSIDE a repo is not a work-tree root
+    const repo = gitRepo();
+    put(repo, 'sub/canonical/shared/y.yaml', 'y\n');
+    expect(isGitWorkTreeRoot(path.join(repo, 'sub'))).toBe(false);
+    expect(listInputClosure(path.join(repo, 'sub'))).toEqual(['canonical/shared/y.yaml']);
+    fs.rmSync(plain, { recursive: true, force: true });
+    fs.rmSync(repo, { recursive: true, force: true });
+  });
+
+  it('(5) a tracked file deleted on disk is dropped, not a crash; a tracked symlink is skipped like the walk', () => {
+    const repo = gitRepo();
+    put(repo, 'canonical/shared/gone.yaml', 'g\n');
+    fs.symlinkSync('x.yaml', path.join(repo, 'canonical/shared/link.yaml'));
+    git(repo, 'add', '-A');
+    git(repo, 'commit', '-q', '-m', 'more');
+    fs.rmSync(path.join(repo, 'canonical/shared/gone.yaml'));
+    let list: string[] = [];
+    expect(() => {
+      list = listInputClosure(repo);
+    }).not.toThrow();
+    expect(list).not.toContain('canonical/shared/gone.yaml');
+    expect(list).not.toContain('canonical/shared/link.yaml');
+    expect(list).toEqual(listInputClosureByWalk(repo));
+    expect(() => computeInputClosureHash(repo)).not.toThrow();
     fs.rmSync(repo, { recursive: true, force: true });
   });
 });

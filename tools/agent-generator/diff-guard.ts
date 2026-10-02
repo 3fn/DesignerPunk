@@ -19,6 +19,12 @@
  * changed byte). Both match → early-exit green in seconds (no MCP boots, no generation);
  * either mismatch → full run.
  *
+ * CHECKOUT-INDEPENDENCE (the 2026-10-01 generated-lock issue, F1): the input closure is LISTED
+ * FROM GIT (tracked + untracked-not-ignored, regular files on disk), so a gitignored stray under a
+ * root (a log, a cache) cannot move the lock; a non-git `repoRoot` falls back to the filesystem
+ * walk. On a clean tree the two lists are identical (asserted in the tests), so locks written
+ * before F1 stay valid. Corollary: an input that is gitignored is NOT in the closure.
+ *
  * OPERATIVE-SET FRESHNESS (Spec 123 Task 13.6; design C16): {@link runGuard} runs the
  * `operative-set-freshness` sweep (regrounding/freshness.ts) FIRST, on every run — including the
  * fast no-op path, which would otherwise skip it — and FAILs on any finding without refreshing
@@ -33,6 +39,7 @@
  * Spec 123 Req 11.6.5d, design C16.
  */
 
+import { spawnSync } from 'child_process';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -94,15 +101,70 @@ export function hashFileSet(repoRoot: string, relPaths: readonly string[]): stri
   return sha256(pairs.join('\n'));
 }
 
-/** The lock's input leg: hash of every file under the closure roots + the named files. */
-export function computeInputClosureHash(repoRoot: string): string {
-  // The lock itself lives under canonical/ — exclude it, or every refresh would
-  // invalidate the closure it just recorded.
-  const files = [
+/**
+ * Is `repoRoot` ITSELF a git work-tree root? (Not merely somewhere inside one: the `--root`
+ * stale-unit fixture is a subdirectory of this repo, and must stay on the filesystem walk.)
+ */
+export function isGitWorkTreeRoot(repoRoot: string): boolean {
+  const r = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: repoRoot, encoding: 'utf8' });
+  if (r.status !== 0) return false;
+  try {
+    return fs.realpathSync(r.stdout.trim()) === fs.realpathSync(repoRoot);
+  } catch {
+    return false;
+  }
+}
+
+/** Regular file on disk (NOT a symlink: the walk skips them, `readFileSync` would follow). */
+function isRegularFile(repoRoot: string, rel: string): boolean {
+  try {
+    return fs.lstatSync(path.join(repoRoot, rel)).isFile();
+  } catch {
+    return false;
+  }
+}
+
+/** The input closure by FILESYSTEM WALK (the pre-F1 behavior; now the non-git fallback). Lock excluded. */
+export function listInputClosureByWalk(repoRoot: string): string[] {
+  return [
     ...INPUT_CLOSURE_ROOTS.flatMap((root) => listFilesUnder(repoRoot, root)),
     ...INPUT_CLOSURE_FILES.filter((f) => fs.existsSync(path.join(repoRoot, f))),
-  ].filter((rel) => rel !== LOCK_PATH);
-  return hashFileSet(repoRoot, files);
+  ]
+    .filter((rel) => rel !== LOCK_PATH)
+    .sort();
+}
+
+/**
+ * The input closure LISTED FROM GIT: tracked + untracked-not-ignored files under the roots and the
+ * named files, restricted to regular files present on disk (a tracked-then-deleted path and a
+ * tracked symlink/submodule drop out, as they do from the walk). Gitignored files (a stray log,
+ * a cache) are NOT inputs and cannot move the lock — the checkout-dependence the walk had.
+ */
+export function listInputClosureFromGit(repoRoot: string): string[] {
+  const r = spawnSync(
+    'git',
+    ['ls-files', '-z', '--cached', '--others', '--exclude-standard', '--', ...INPUT_CLOSURE_ROOTS, ...INPUT_CLOSURE_FILES],
+    { cwd: repoRoot, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 },
+  );
+  if (r.status !== 0) throw new Error(`git ls-files failed in ${repoRoot}: ${r.stderr}`);
+  const listed = new Set(r.stdout.split('\0').filter((rel) => rel !== ''));
+  return [...listed].filter((rel) => rel !== LOCK_PATH && isRegularFile(repoRoot, rel)).sort();
+}
+
+/**
+ * The closure list the lock hashes: from git when `repoRoot` is a git work tree (checkout-
+ * independent), else the explicit filesystem-walk fallback (temp-dir fixtures, the `--root`
+ * stale-unit fixture, an un-versioned export).
+ */
+export function listInputClosure(repoRoot: string): string[] {
+  return isGitWorkTreeRoot(repoRoot) ? listInputClosureFromGit(repoRoot) : listInputClosureByWalk(repoRoot);
+}
+
+/** The lock's input leg: hash of every closure file (git-listed; walk fallback) — lock itself excluded. */
+export function computeInputClosureHash(repoRoot: string): string {
+  // The lock itself lives under canonical/ — excluded by the listers, or every refresh would
+  // invalidate the closure it just recorded.
+  return hashFileSet(repoRoot, listInputClosure(repoRoot));
 }
 
 /**
