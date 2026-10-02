@@ -1,7 +1,7 @@
 # Issue: the 119-A relocation-integrity gate collides with Spec 123's install shape (A4 / A7 legs)
 
 **Date**: 2026-10-01
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-02 (see § "Closed — 2026-10-02" at the end of this file)
 **Owner**: Thurgood
 **Trigger**: now. The fixing PR goes into U2b's unit branch before the next unit-branch checkpoint dispatch (16.4), so `lane-mcp-server-suite` is green for 16.4–16.6. **Hard stop**: before U2b's unit PR opens.
 **Source**: the orchestrator verified this on 2026-10-01 at U2b unit-branch head `4b87fe7c` (16.3 merged). Run: https://github.com/3fn/DesignerPunk/actions/runs/36948483681
@@ -296,3 +296,17 @@ The grant above expired when #249 merged (README rule 8). This extension re-gran
 
 - **Task 22 does not touch what R2 asserts.** A consumer's own personal note is on the roadmap (Task 22, U3: `templates/personal-note.template.md`, and a local note in the consumer's repo). R2's moved check is written to hold after Task 22: it asserts the **package's** steering folder (`node_modules/@3fn/core/.kiro/steering/`), which that task does not touch. The consumer's local note lives in the consumer's repo, not in the package.
 - **The leak R2 guards is still shipped by the published package.** The orchestrator verified that the newest published tag, `v14.1.0`, shipped `.kiro/steering/` wholesale, with `personal-note.md` in the tree. R2 therefore guards against re-introducing a leak that the published package **still carries until release 2**. This is the reason the "Accept" form was recommended against in § (c).
+
+---
+
+## Closed — 2026-10-02
+
+*Recorded 2026-10-02 by Thurgood. Nothing above is rewritten; the Status line is the only edit outside this section.*
+
+**Outcome**: executed as ruled in § "2026-10-01 — Peter's ruling — RETIRE" and § "Peter's ruling on the residuals — 2026-10-02".
+- **Rulings recorded**: #253 (`a75e442c`, the RETIRE ruling and the lock grant) and #254 (the residuals ruling, appended to this file).
+- **R1–R3 moved** by Lina into the lanes that now own them (Consumer Guard's `tests/consumer-integration.test.ts`, and `src/cli/__tests__/init.test.ts`), commit `232319fd`, merged into the unit branch as `09a7aecd`.
+- **Legs A4 and A7 retired** and removed outright, count 7 to 5: #255 (`1a1c0901`), squash-merged into the unit branch. The gate file's header on `main` carries the dated retirement comment and the mapping of each sub-check to the check that now covers it (`relocation-integrity-gate.ts`, checked on `origin/main`).
+- **Standards implication**: the rule this file named (§ "Standards implication (rule named, not drafted)") travels in `.kiro/issues/2026-10-01-plan-blast-radius-and-carry-tracking.md`, which stays active.
+- **All of the above reached `main` inside #262** (`669b51b0`); `1a1c0901`, `232319fd` and `09a7aecd` are not ancestors of `main` themselves. `a75e442c` is on `main` directly.
+- **Moved to `archive/`** by `git mv`, per README rule 5.

@@ -1,7 +1,7 @@
 # Issue: `canonical/generated.lock`'s `inputClosure` differs by checkout — the closure hashes the filesystem, and one checkout holds a gitignored log inside a closure root
 
 **Date**: 2026-10-01
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-02 (see § "Closed — 2026-10-02" at the end of this file)
 **Owner**: Thurgood. Why him and not Lina: the diff-guard is the **instrument**, not the generator machinery. The register row `never-hand-edit-122-generated` (`governance/classification-map.md`) carries `verification.owner: thurgood`, `check_state: armed`, with `122-diff-guard` as its check, and the defect is in how the guard computes its own lock (`computeInputClosureHash`), not in what the generator emits. `outputs` never moved. The path is outside his charter write scope, so the fix PR needs the grant below. **Lina is consulted before the fix PR** on one question only: whether the generator reads any gitignored file under a closure root (it would change what "ignored files are not inputs" means; see option F1).
 **Trigger**: **before U2b's unit PR opens** (Spec 123, `task/123-u2b-profile`), and no later than the **next commit that refreshes `canonical/generated.lock`** on that branch (the out-of-grant residuals PR moves it: `.kiro/issues/2026-10-01-agent-generator-out-of-grant-residuals.md` item 2, which is to land before Task 18.1's G2 request). Why this event: the lock is in the pass-four tree Stacy reads at G2, and every refresh from the main checkout after it re-moves the hash.
 **Source**: Lina's note in `.kiro/specs/123-consumer-distribution/completion/task-16-completion.md` (Adaptations; Carries "for routing"), read on U2b's unit branch; the root-cause read below was done by Thurgood on 2026-10-01, read-only.
@@ -69,3 +69,14 @@ The seats' unstaged build noise is **not** in the closure (it sits under `docs/`
 ## Not in scope here
 
 Any code edit, the deletion of the stray log (a local, ignored file in the main checkout, outside this worktree), or a lock refresh. This issue is the tracked flag, the measured cause and the option set. The pick between F1 and F2 is Peter's; the instrument is Thurgood's.
+
+---
+
+## Closed — 2026-10-02
+
+*Recorded 2026-10-02 by Thurgood. Nothing above is rewritten; the Status line is the only edit outside this section.*
+
+**Outcome**: fixed by option F1. PR #251 (`08500f20`, "diff-guard: list the lock's input closure from git, not the filesystem walk") lists the closure with `git ls-files --cached --others --exclude-standard` over the roots, so a gitignored file under a closure root cannot move the hash. On `main`, `diff-guard.ts` carries `listInputClosureFromGit` (checked on `origin/main`), and `diff-guard.test.ts` has the F1 block, including "a gitignored file planted under a closure root does NOT move the hash". The fix PR's lock refresh ran from a clean checkout, as the Grant required.
+- **Option F3 (stop the writer) was NOT taken here** and is not closed by this entry. `mcp-server/src/index.ts` on `main` still sets `DEFAULT_LOGS_DIR = 'mcp-server/logs'`, a path relative to the working directory. It is filed separately as `.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md` so closing this file leaves no untracked carry.
+- **SHA note**: `08500f20` was squash-merged into the unit branch, reached `main` inside #262, and is not itself an ancestor of `main`.
+- **Moved to `archive/`** by `git mv`, per README rule 5.

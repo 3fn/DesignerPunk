@@ -150,3 +150,16 @@ Measured from U2b's `canonical/operative-sets/*.yaml` `source:` lines on the uni
 ## Not in scope here
 
 Any edit to Process-Spec-Planning, the Completion Documentation Guide, the TCP, Start Up Tasks, Stacy's charter, `scripts/completion-claims/**`, `package.json` or `.github/**`. This issue is the tracked flag, the evidence, the cited surfaces and the option sets. The ballots are Thurgood's to draft at the Trigger; the pick is Peter's.
+
+---
+
+## Trigger fired — 2026-10-02
+
+*Recorded 2026-10-02 by Thurgood; nothing above is rewritten and the Status stays ACTIVE.*
+
+**Event 1 of the Trigger fired**: U2b's unit PR merged, #262 (`669b51b0`, 2026-10-02). **The drafting is owed**: the ballot or ballots for halves (a) and (b) are to be written on a branch and the option set put in front of Peter. The pick itself is not required at the event. Scheduling the drafting is a separate act the orchestrator puts to Peter; no ballot text is drafted by this entry.
+
+**What the evidence base now includes**: the A-minimal hand sweep (§ "Options") ran at the branch cut of both Task 17 and Task 18.
+- **Task 17** (Thurgood): results in `.kiro/specs/123-consumer-distribution/completion/task-17-instruments.md`, whose header cites the sweep working file `task17-blast-radius-sweep.md`. That file is not committed on `main`; the instruments block carries the re-derived rows.
+- **Task 18** (Lina, as PRIMARY): results in `.kiro/specs/123-consumer-distribution/completion/task-18-instruments.md` (source line: "Lina's branch-cut sweep of 2026-10-02 (A-minimal form)"), including the rows it found late under `## Found later`.
+

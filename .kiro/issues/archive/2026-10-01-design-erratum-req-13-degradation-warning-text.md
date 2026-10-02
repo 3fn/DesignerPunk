@@ -1,7 +1,7 @@
 # Issue: Spec 123 design § Error Handling has no catalog text for the consumer-degradation warning, while Req 13.5 requires a test that asserts that text — a dated design erratum is owed
 
 **Date**: 2026-10-01
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-02 (see § "Closed — 2026-10-02" at the end of this file)
 **Owner**: Thurgood (spec standards; the erratum's author — `.kiro/specs/**` is in his write scope, and the design document is his artifact). **Consulted**: Lina (the string's author at Task 16.1; confirms the row's text and its placeholder names before the erratum is committed). **Decision**: none needed from Peter unless Lina contests the wording; this is a design-catches-up-to-code erratum on the established form, not a requirement change.
 **Trigger**: **before U2b's unit PR opens** (Spec 123, `task/123-u2b-profile`). Why this event and not a later one:
 - The unit PR is where the claims passes and the reviewers first read design and code together. An erratum landing after it means the unit merges with the design row still reading `(unchanged; warning, exit 0)` against a string the code and a test pin, which is the exact "design says X, code says Y, and the test asserts Y" shape Spec 123's earlier errata (the name-contract rows, the harvest-zero warning) were written to remove.
@@ -52,3 +52,16 @@ The Req 13.5 bite (delete a resolvable member from a packed install, observe the
 ## Not in scope here
 
 Any edit to `src/cli/shared/errorCatalog.ts` or the degradation test (Lina's, Task 16.1's), to `requirements.md` (Req 13.5 already requires the text; nothing to amend), or to the instruments block (a recorded `built here` row, never overwritten). This issue is the tracked flag; the erratum is Thurgood's to write once Lina has confirmed the text, and it lands on the unit branch before the PR opens.
+
+---
+
+## Closed — 2026-10-02
+
+*Recorded 2026-10-02 by Thurgood. Nothing above is rewritten; the Status line is the only edit outside this section.*
+
+**Outcome**: the erratum landed before U2b's unit PR opened, as the Trigger required.
+- **Design**: `8ebdae96` replaced the `(unchanged; warning, exit 0)` cell at `design.md` L918 with the dated in-row erratum and the final catalog text. On `main` today the row begins `consumer degradation *(Erratum 2026-10-02: new row …` (checked on `origin/main`).
+- **Code and test**: Lina's `fafae2b0` (Task 16 row, post-close) changed `consumerDegradationMessage` in `src/cli/shared/errorCatalog.ts`. The remedy clause ended up as "If a clean reinstall (remove node_modules, then npm install) does not restore it, the package you installed does not contain it." That is neither this file's original clause nor the first proposal; the issue's open fork (the remedy clause) was decided by the string's owner and the design quotes the committed text verbatim. On `main`, `errorCatalog.ts` L175 and the degradation test both carry it.
+- **Both reached `main` inside #262** (`669b51b0`) as part of its squash; `8ebdae96` and `fafae2b0` are not ancestors of `main` themselves.
+- **Stacy's conditions E1–E3** were met: the diff was confined to the § Error Handling row (`design.md` only), the commit carried `Agent: thurgood` and no Task 18 artifact, and it landed before 18.1.
+- **Moved to `archive/`** by `git mv`, per README rule 5.
