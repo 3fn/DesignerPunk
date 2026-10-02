@@ -267,3 +267,32 @@ The grant above expired when #249 merged (README rule 8). This extension re-gran
      - **`.kiro/issues/2026-10-01-task-18-lock-refresh.md`**, if it merges after Task 17 closes.
      - Between 17.3 and Task 17's close, the merge waits, because Task 17 requires that its close-time re-run produce no lock diff.
 - **Closing**: unchanged from § (d) above. When U2b's unit PR merges to `main`, the outcome is recorded here (dated) and the file moves to `archive/`.
+
+---
+
+## Peter's ruling on the residuals — 2026-10-02
+
+**The ruling, verbatim** (Peter, 2026-10-02, relayed by the orchestrator): **"Move all three, and remove the legs."** This is the answer that § (c) "Sequencing" required to be appended here, dated, before the retiring PR opens. It is recorded here before that PR opens.
+
+### The decisions
+
+- **R1 — MOVE.** `designerpunk mcp:docs` serves `governance/`, never `.kiro/steering` (A4.3/A4.4). The moved check lands in `tests/consumer-integration.test.ts`, in the lane that owns the packed-install surface (Consumer Guard).
+- **R2 — MOVE.** The package ships exactly the eight identity docs, and never `personal-note.md` (A7.2b/A7.3). The moved check lands in `tests/consumer-integration.test.ts`, as the "Move (preferred)" form in § (c): the installed `node_modules/@3fn/core/.kiro/steering/` listing is asserted set-equal to the eight, with no `personal-note.md`. Wiring `scripts/pack-assert.ts` into CI (the alternative form) is not taken.
+- **R3 — MOVE.** The MCP config template points `MCP_STEERING_DIR` at `governance` (A7.4a). The moved check lands in `src/cli/__tests__/init.test.ts` (root lane), in the existing Kiro and CC MCP-config cases.
+- **The legs are REMOVED outright**, not kept as tombstones. A4 and A7 leave `assertMustFixCouplings` with their dated comments, and the count goes from **7 to 5**. This is the "Departed" form in § (c), now ruled.
+
+### Owner and route for the moves
+
+- **Owner: Lina**, executing now on a sub-branch of `task/123-u2b-profile`, under her Task 16 row's write-scope grant, which runs until the unit merges (`tasks-row-write-scope-grant`). Both files are Task 16 Primary Artifacts (`tests/consumer-integration.test.ts` at 16.6, `src/cli/__tests__/init.test.ts` at 16.3).
+- **Whether a separate record is needed is Lina's call.** She states it in her report. If she says one is needed, it is appended here, dated.
+
+### The order that follows
+
+1. **The moves merge into `task/123-u2b-profile` first** (R1 and R2 in `tests/consumer-integration.test.ts`, R3 in `src/cli/__tests__/init.test.ts`). This is the § (c) sequencing rule: there is no window with neither check.
+2. **Then my retiring PR**, on `chore/relocation-gate-retire-a4-a7`, with base `task/123-u2b-profile`, under the grant extension that #253 activated. Its body quotes this ruling on R1–R3. Because all three residuals are **move**, no residual is left in the "accept" form for its body to quote.
+3. **Then the lock.** `mcp-server/src` is a closure root of the diff-guard, so the retirement's merge moves `canonical/generated.lock`'s `inputClosure` (outputs unchanged). Per item 5 of the extension, `canonical/generated.lock` is not in the retiring PR. The retirement **lands before Task 17 starts**, so **17.3's single refresh carries it**. This is the first branch of item 5, and the Task 18 refresh issue (`.kiro/issues/2026-10-01-task-18-lock-refresh.md`) is not needed for it.
+
+### Context for the R2 check (two facts)
+
+- **Task 22 does not touch what R2 asserts.** A consumer's own personal note is on the roadmap (Task 22, U3: `templates/personal-note.template.md`, and a local note in the consumer's repo). R2's moved check is written to hold after Task 22: it asserts the **package's** steering folder (`node_modules/@3fn/core/.kiro/steering/`), which that task does not touch. The consumer's local note lives in the consumer's repo, not in the package.
+- **The leak R2 guards is still shipped by the published package.** The orchestrator verified that the newest published tag, `v14.1.0`, shipped `.kiro/steering/` wholesale, with `personal-note.md` in the tree. R2 therefore guards against re-introducing a leak that the published package **still carries until release 2**. This is the reason the "Accept" form was recommended against in § (c).
