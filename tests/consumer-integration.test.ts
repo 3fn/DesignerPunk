@@ -22,6 +22,8 @@ import { execSync, spawn, ChildProcess } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
+import * as crypto from 'crypto';
+import { load as loadYaml } from 'js-yaml';
 
 const PKG_ROOT = path.resolve(__dirname, '..');
 const TIMEOUT = 120_000; // 2 minutes for the full flow
@@ -159,6 +161,73 @@ function runCliCapture(
   }
 }
 
+// ---------------------------------------------------------------------------
+// Spec 123 Task 16.6 helpers — the packed-install agent-layer block (C2).
+//
+// `tests/` does not import from `tools/` (the lane's own rootDir/tsconfig keep that boundary),
+// so the small pieces of `tools/agent-generator/__tests__/consumer-entry.helpers.ts`'s
+// `readTree` that this block needs (walk a tree; exclude `*.attribution.json` sidecars; report
+// root-relative POSIX paths — "sidecars and the root prefix stripped") are COPIED below, not
+// imported. Application-time adaptation, recorded in `completion/task-16-6-completion.md`.
+// ---------------------------------------------------------------------------
+
+/** Every file under `root` (optionally under `rel`), as `root`-relative POSIX paths. Sidecars (`*.attribution.json`) are excluded when `skipSidecars`. */
+function listFiles(root: string, rel = '', skipSidecars = false): string[] {
+  const out: string[] = [];
+  const walk = (sub: string): void => {
+    const abs = path.join(root, sub);
+    if (!fs.existsSync(abs)) return;
+    for (const entry of fs.readdirSync(abs, { withFileTypes: true })) {
+      const next = sub === '' ? entry.name : `${sub}/${entry.name}`;
+      if (entry.isDirectory()) walk(next);
+      else if (entry.isFile() || entry.isSymbolicLink()) {
+        if (skipSidecars && next.endsWith('.attribution.json')) continue;
+        out.push(next);
+      }
+    }
+  };
+  walk(rel);
+  return out.sort();
+}
+
+/** The guarded rendering for `target` (`canonical/_consumer-output/<target>/`, read from THIS repo): root-relative path → content, sidecars and the `<target>/` root prefix stripped. */
+function readGuardedRendering(target: string): Map<string, string> {
+  const root = path.join(PKG_ROOT, 'canonical', '_consumer-output', target);
+  return new Map(listFiles(root, '', true).map((p) => [p, fs.readFileSync(path.join(root, p), 'utf-8')]));
+}
+
+/** The installed package's consumer profile (`dist/consumer-canonical/consumer-profile.yaml`, what `init` reads through `loadConsumerProfile`). */
+function installedProfile(consumerRoot: string): { targets: string[]; defaultTarget: string } {
+  const p = path.join(realDir(consumerRoot), 'node_modules', '@3fn', 'core', 'dist', 'consumer-canonical', 'consumer-profile.yaml');
+  return loadYaml(fs.readFileSync(p, 'utf-8')) as { targets: string[]; defaultTarget: string };
+}
+
+function sha256(content: string): string {
+  return crypto.createHash('sha256').update(content).digest('hex');
+}
+
+/** Does `pattern` (a consumer-root-relative path, `*` / `**` globs, or a trailing-`/` directory) match at least one file under `consumerRoot`? */
+function globMatchesAnyFile(consumerRoot: string, pattern: string): boolean {
+  const glob = pattern.endsWith('/') ? `${pattern}**` : pattern;
+  const segments = glob.split('/');
+  const fixed: string[] = [];
+  for (const seg of segments) {
+    if (seg.includes('*')) break;
+    fixed.push(seg);
+  }
+  const walkRoot = fixed.join('/');
+  const regex = new RegExp(
+    '^' +
+      glob
+        .replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+        .replace(/\*\*/g, '\u0000')
+        .replace(/\*/g, '[^/]*')
+        .replace(/\u0000/g, '.*') +
+      '$',
+  );
+  return listFiles(consumerRoot, walkRoot).some((f) => regex.test(f));
+}
+
 describe('Consumer Integration (Spec 106 R8)', () => {
   let tempDir: string;
   let tarballPath: string;
@@ -195,7 +264,29 @@ describe('Consumer Integration (Spec 106 R8)', () => {
 
     // Verify key files exist
     expect(fs.existsSync(path.join(tempDir, 'designerpunk.config.ts'))).toBe(true);
-    expect(fs.existsSync(path.join(tempDir, '.kiro/steering'))).toBe(true);
+
+    // Spec 123 Task 16.6 — the shape bare `init` has since 16.3 (DD9): it emits the DEFAULT
+    // target's agent layer (read from the shipped profile, never a literal here), and nothing
+    // of the other target's, and no copy of `governance/` or `.kiro/steering` (the package
+    // serves those; Req 19.2). This replaces the pre-16.3 assertion that `.kiro/steering`
+    // exists after a bare `init` — false once bare `init` stopped copying it (Consumer Guard
+    // RED at run 36948454994).
+    const profile = installedProfile(tempDir);
+    expect(profile.defaultTarget).toBe('cc');
+    const agentsDir = path.join(tempDir, '.claude', 'agents');
+    expect(fs.readdirSync(agentsDir).filter((f) => f.endsWith('.md')).length).toBeGreaterThan(0);
+    const identityDir = path.join(tempDir, '.claude', 'identity');
+    const identity = fs.readdirSync(identityDir);
+    expect(identity.length).toBeGreaterThan(0);
+    for (const f of identity) expect(f).toMatch(/^designerpunk-.*\.md$/);
+    const claudeMd = fs.readFileSync(path.join(tempDir, 'CLAUDE.md'), 'utf-8');
+    expect(claudeMd).toContain('<!-- designerpunk:managed:begin -->');
+    expect(claudeMd).toContain('<!-- designerpunk:managed:end -->');
+    const manifest = JSON.parse(fs.readFileSync(path.join(tempDir, 'designerpunk.manifest.json'), 'utf-8'));
+    expect(manifest.attachedTargets).toEqual([profile.defaultTarget]);
+    expect(fs.existsSync(path.join(tempDir, 'governance'))).toBe(false);
+    expect(fs.existsSync(path.join(tempDir, '.kiro', 'steering'))).toBe(false);
+    expect(fs.existsSync(path.join(tempDir, '.kiro', 'agents'))).toBe(false);
   }, TIMEOUT);
 
   it('generate produces output files', () => {
@@ -742,7 +833,10 @@ describe('Consumer Integration (Spec 106 R8)', () => {
    * Every case below is one of the 19 U1-scheduled rows of design.md § "C6. Consumer-guard
    * extensions" (the two rows NOT scheduled for U1 — `attach --reference stays CONSUME` and
    * the lane half of `post-diet re-certification` — move to U2 per tasks.md's sequencing
-   * decision 4). Each case runs against the SAME packed install (never in-repo — Req 3.1
+   * decision 4).
+   * [Task 16.6 (U2b) has since landed both: `attach --reference stays CONSUME` at the end of
+   * the birth/posture block below, and the lane half of 3.9 as a recorded run of
+   * `npm run test:consumer` (`completion/task-16-6-completion.md`).] Each case runs against the SAME packed install (never in-repo — Req 3.1
    * AC1), reusing the outer `beforeAll`'s pack → install and, where noted, `tempDir` itself
    * (already born + generated by the tests above).
    *
@@ -955,6 +1049,67 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect(result.code).toBe(0);
       expect(fs.existsSync(path.join(dir, 'dist', 'DesignTokens.web.css'))).toBe(true);
       expect(fs.existsSync(path.join(dir, 'token-index', 'primitives.yaml'))).toBe(true);
+    }, TIMEOUT);
+
+    it('C6: attach --reference stays CONSUME', async () => {
+      // Spec 123 Task 16.6 (design.md C6 row; Task 16 criterion 4). The property: a `posture:
+      // 'consume'` manifest, which `attach --reference` writes, is NEVER a birth signal
+      // (`findDesignSystemRoot`, `src/cli/shared/bornRepo.ts`: `manifestSignal = manifestExists &&
+      // manifestPosture !== 'consume'`). Four steps, in the design's order, all against the PACKED
+      // install: (1) `attach --reference` → consume manifest; (2) the application MCP serves the
+      // LABELLED reference index (data-root source `package-consume`, `tokenOrigin:
+      // designerpunk-reference`, repo state `unborn`); (3) `attach --reference` again re-runs
+      // clean (no byte moves); (4) `init` afterwards still births (the consume manifest does not
+      // count as birth) and the repo is then `born`.
+      //
+      // BITE (recorded in `completion/task-16-6-completion.md`; a source mutation, not shipped
+      // negative test code — the project's pattern for such bites): make C2 count a consume
+      // manifest as birth (`manifestSignal = manifestExists`) → the repo classifies `partial
+      // (manifest-only)` → step (2)'s `Design-system root: unborn` assertion goes RED.
+      const dir = path.join(c6Root, 'attach-reference-consume');
+      gitBoundary(dir);
+      const pkgReal = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core');
+      const appBundle = path.join(pkgReal, 'dist', 'mcp', 'application-mcp.js');
+      const boot = (): Promise<string> =>
+        captureStderrUntil(
+          spawnNodeBundle(appBundle, { cwd: dir }),
+          (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'),
+          15_000,
+        );
+      const manifestPath = path.join(dir, 'designerpunk.manifest.json');
+      const mcpPath = path.join(dir, '.mcp.json');
+
+      // (1) attach --reference → a consume manifest, docs + application servers only, no agents, no birth
+      const first = runCliCapture(['attach', '--reference', '--target=cc'], { cwd: dir, timeoutMs: 60_000 });
+      expect(first.code).toBe(0);
+      const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+      expect(manifest.posture).toBe('consume');
+      expect(Object.keys(JSON.parse(fs.readFileSync(mcpPath, 'utf-8')).mcpServers).sort()).toEqual(['designerpunk-application', 'designerpunk-docs']);
+      expect(fs.existsSync(path.join(dir, '.claude', 'agents'))).toBe(false);
+      expect(fs.existsSync(path.join(dir, 'designerpunk.config.ts'))).toBe(false);
+
+      // (2) the application MCP serves the labelled reference index — this repo is NOT born
+      const referenceIndex = path.join(pkgReal, 'token-index');
+      expect(fs.readdirSync(referenceIndex).length).toBeGreaterThan(0);
+      const referenceBoot = await boot();
+      expect(referenceBoot).toContain('Design-system root: unborn');
+      expect(referenceBoot).toContain(`Data root token-index: ${referenceIndex} (source: package-consume) (tokenOrigin: designerpunk-reference)`);
+      expect(referenceBoot).not.toContain('found designerpunk.manifest.json');
+
+      // (3) attach --reference again re-runs clean: exit 0, nothing it wrote moves
+      const manifestBytes = fs.readFileSync(manifestPath, 'utf-8');
+      const mcpBytes = fs.readFileSync(mcpPath, 'utf-8');
+      const second = runCliCapture(['attach', '--reference', '--target=cc'], { cwd: dir, timeoutMs: 60_000 });
+      expect(second.code).toBe(0);
+      expect(fs.readFileSync(manifestPath, 'utf-8')).toBe(manifestBytes);
+      expect(fs.readFileSync(mcpPath, 'utf-8')).toBe(mcpBytes);
+
+      // (4) init afterwards still births: the consume manifest did not count as birth
+      const born = runCliCapture(['init', '--name', 'RefThenBirth', '--abbreviation', 'RB', '--target=cc'], { cwd: dir, timeoutMs: 60_000 });
+      expect({ code: born.code, stderr: born.stderr }).toEqual({ code: 0, stderr: '' });
+      expect(fs.existsSync(path.join(dir, 'designerpunk.config.ts'))).toBe(true);
+      expect(JSON.parse(fs.readFileSync(manifestPath, 'utf-8')).posture).toBe('born');
+      expect(await boot()).toContain('Design-system root: born');
     }, TIMEOUT);
   });
 
@@ -1491,5 +1646,266 @@ describe('Consumer Integration (Spec 106 R8)', () => {
         fs.writeFileSync(cssPath, css);
       }
     }, TIMEOUT);
+  });
+  /**
+   * Spec 123 Task 16.6 — Task 16 criterion 2 (as amended 2026-09-30): the PACKED install emits a
+   * working agent layer for both targets. Pack (this file's outer `beforeAll`, WITH lifecycle
+   * scripts — never `--ignore-scripts`, so prepack's build, `build:generator` and the derive run
+   * inside it) → a FRESH consumer per target (`npm install <tarball>`, so
+   * `node_modules/@3fn/core/…` exists at that consumer's own root, which a subdirectory of the
+   * outer `tempDir` could not give) → `init --target=<t>` → the expected file set and keys.
+   *
+   * THE REFERENT OF "expected": the guarded rendering `canonical/_consumer-output/<target>/`
+   * (read from THIS repo), attribution sidecars and the root prefix stripped — the same parity
+   * `tools/agent-generator/__tests__/consumer-entry.parity.test.ts` (16.1) shows for the lane
+   * run in-repo. Scope: that parity shows the packed install emits what was signed, not that
+   * the signed rendering is right (the signers' and G2's question).
+   *
+   * Scope note on the deny-list: the scan runs over EVERY emitted file (agent layer, skill
+   * trees, the `CLAUDE.md` region, the MCP config and approvals files) — stricter than criterion
+   * 2's "emitted charters".
+   */
+  describe('Spec 123 Task 16.6 — the packed install emits a working agent layer (C2)', () => {
+    const TARGETS: string[] = (loadYaml(fs.readFileSync(path.join(PKG_ROOT, 'canonical', 'consumer-profile.yaml'), 'utf-8')) as { targets: string[] }).targets;
+    const DENY_LIST = /complete-task\.sh|Peter merges|RATIFIED/;
+    const PERSONAL_NOTE = '.designerpunk/personal-note.local.md';
+    const SERVERS = ['designerpunk-docs', 'designerpunk-application', 'designerpunk-product'];
+
+    const consumers: Record<string, string> = {};
+    const initOutput: Record<string, string> = {};
+
+    const agentRoots = (t: string): string[] => (t === 'cc' ? ['.claude/agents', '.claude/identity'] : ['.kiro/agents', '.kiro/steering']);
+    const skillsRoot = (t: string): string => (t === 'cc' ? '.claude/skills' : '.kiro/skills');
+    const mcpFiles = (t: string): string[] => (t === 'cc' ? ['.mcp.json', '.claude/settings.json'] : ['.kiro/settings/mcp.json']);
+    const pkgIn = (dir: string): string => path.join(dir, 'node_modules', '@3fn', 'core');
+    const readText = (dir: string, rel: string): string => fs.readFileSync(path.join(dir, rel), 'utf-8');
+    const readManifest = (dir: string): { posture: string; attachedTargets: string[]; entries: Record<string, { hash: string; grain: string; origin: string }> } =>
+      JSON.parse(readText(dir, 'designerpunk.manifest.json'));
+
+    /** The steward's skill trees (`.claude/skills`, `.kiro/skills`, guarded outputs of Spec 122) — the skill half of the referent (16.1's parity test names it the same way). */
+    function stewardSkillFiles(t: string): Map<string, string[]> {
+      const root = path.join(PKG_ROOT, skillsRoot(t));
+      const byDir = new Map<string, string[]>();
+      for (const f of listFiles(root)) {
+        const top = f.split('/')[0];
+        byDir.set(top, [...(byDir.get(top) ?? []), f]);
+      }
+      return byDir;
+    }
+
+    /** The installed skill files, grouped by top-level skill dir. */
+    function installedSkillFiles(t: string, dir: string): Map<string, string[]> {
+      const byDir = new Map<string, string[]>();
+      for (const f of listFiles(path.join(dir, skillsRoot(t)))) {
+        const top = f.split('/')[0];
+        byDir.set(top, [...(byDir.get(top) ?? []), f]);
+      }
+      return byDir;
+    }
+
+    /** Every file the lane emitted for `t`, consumer-root-relative: the guarded rendering, the skill trees, and (CC) `CLAUDE.md`. */
+    function emittedAgentLayer(t: string, dir: string): string[] {
+      const files = agentRoots(t).flatMap((r) => listFiles(dir, r));
+      for (const f of listFiles(path.join(dir, skillsRoot(t)))) files.push(`${skillsRoot(t)}/${f}`);
+      if (t === 'cc') files.push('CLAUDE.md');
+      return files.sort();
+    }
+
+    beforeAll(() => {
+      for (const t of TARGETS) {
+        const dir = fs.mkdtempSync(path.join(os.tmpdir(), `consumer-16-6-${t}-`));
+        consumers[t] = realDir(dir);
+        execSync('npm init -y', { cwd: dir, stdio: 'pipe' });
+        execSync(`npm install ${tarballPath} --no-save`, { cwd: dir, stdio: 'pipe', timeout: 90_000 });
+        initOutput[t] = execSync(`npx designerpunk init --name Packed --abbreviation PK --target=${t}`, {
+          cwd: dir,
+          encoding: 'utf-8',
+          timeout: 60_000,
+        });
+      }
+    }, TIMEOUT * 2);
+
+    afterAll(() => {
+      for (const dir of Object.values(consumers)) fs.rmSync(dir, { recursive: true, force: true });
+    });
+
+    it('the packed profile declares exactly the targets this block exercises, and each init records [target]', () => {
+      const canonical = loadYaml(fs.readFileSync(path.join(PKG_ROOT, 'canonical', 'consumer-profile.yaml'), 'utf-8')) as { targets: string[]; defaultTarget: string };
+      expect(TARGETS.length).toBeGreaterThan(0);
+      for (const t of TARGETS) {
+        expect(installedProfile(consumers[t])).toEqual(canonical);
+        expect(initOutput[t]).toContain(`Agent layer (${t})`);
+        const manifest = readManifest(consumers[t]);
+        expect(manifest.posture).toBe('born');
+        expect(manifest.attachedTargets).toEqual([t]);
+      }
+    });
+
+    it('the emitted agent-layer file set equals the guarded rendering (sidecars and root stripped), byte-equal, with nothing from the other target', () => {
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        const guarded = readGuardedRendering(t);
+        expect(guarded.size).toBeGreaterThan(0);
+        // exact set over the guarded roots — no missing file, no extra file
+        const actual = agentRoots(t).flatMap((r) => listFiles(dir, r));
+        expect(actual.sort()).toEqual([...guarded.keys()].sort());
+        for (const [p, content] of guarded) expect({ t, p, content: readText(dir, p) }).toEqual({ t, p, content });
+        // no sidecar ever ships (C20)
+        expect(listFiles(dir).filter((f) => !f.startsWith('node_modules/') && f.endsWith('.attribution.json'))).toEqual([]);
+        // the other target's layer is absent
+        for (const other of TARGETS.filter((o) => o !== t)) {
+          for (const r of agentRoots(other)) expect({ t, other, r, exists: fs.existsSync(path.join(dir, r)) }).toEqual({ t, other, r, exists: false });
+          expect({ t, other, skills: fs.existsSync(path.join(dir, skillsRoot(other))) }).toEqual({ t, other, skills: false });
+        }
+      }
+    });
+
+    it('the skill trees are the steward trees (whole skill dirs, byte-equal), the fixture skill never ships', () => {
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        const steward = stewardSkillFiles(t);
+        const installed = installedSkillFiles(t, dir);
+        expect(installed.size).toBeGreaterThan(0);
+        expect(installed.has('_fixture-skill')).toBe(false);
+        for (const [top, files] of installed) {
+          expect({ t, top, known: steward.has(top) }).toEqual({ t, top, known: true });
+          expect({ t, top, files: [...files].sort() }).toEqual({ t, top, files: [...(steward.get(top) ?? [])].sort() });
+          for (const f of files) {
+            expect({ t, f, content: readText(dir, `${skillsRoot(t)}/${f}`) }).toEqual({ t, f, content: fs.readFileSync(path.join(PKG_ROOT, skillsRoot(t), f), 'utf-8') });
+          }
+        }
+      }
+    });
+
+    it('CC: the CLAUDE.md managed region imports each identity member, and every import resolves except the (absent) personal note', () => {
+      const dir = consumers['cc'];
+      expect(dir).toBeDefined();
+      const text = readText(dir, 'CLAUDE.md');
+      const begin = text.indexOf('<!-- designerpunk:managed:begin -->');
+      const end = text.indexOf('<!-- designerpunk:managed:end -->');
+      expect(begin).toBeGreaterThanOrEqual(0);
+      expect(end).toBeGreaterThan(begin);
+      const imports = text.slice(begin, end).split('\n').filter((l) => l.startsWith('@')).map((l) => l.slice(1));
+      expect(imports).toContain(PERSONAL_NOTE);
+      const identityImports = imports.filter((i) => i !== PERSONAL_NOTE);
+      expect(identityImports.length).toBeGreaterThan(0);
+      for (const i of identityImports) expect({ i, exists: fs.existsSync(path.join(dir, i)) }).toEqual({ i, exists: true });
+      // every shipped identity member is imported — none dropped
+      expect(identityImports.sort()).toEqual(listFiles(dir, '.claude/identity').sort());
+    });
+
+    it('every emitted file is recorded in the manifest as generated, with its content hash (the CLAUDE.md region at region grain)', () => {
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        const { entries } = readManifest(dir);
+        for (const f of emittedAgentLayer(t, dir).filter((p) => p !== 'CLAUDE.md')) {
+          expect({ t, f, entry: entries[f] }).toEqual({ t, f, entry: { hash: sha256(readText(dir, f)), grain: 'file', origin: 'generated' } });
+        }
+        if (t === 'cc') {
+          expect(entries['CLAUDE.md#managed']).toMatchObject({ grain: 'region', origin: 'generated' });
+        }
+      }
+    });
+
+    it('the MCP config and approval keys are present and recorded in the manifest', () => {
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        const toolManifest = JSON.parse(readText(dir, 'node_modules/@3fn/core/dist/mcp/tool-manifest.json')) as {
+          servers: Record<string, { name: string; readOnlyHint?: boolean }[]>;
+        };
+        const approved = (server: string): string[] => (toolManifest.servers[server] ?? []).filter((x) => x.readOnlyHint === true).map((x) => x.name);
+        for (const server of SERVERS) expect({ server, n: approved(server).length > 0 }).toEqual({ server, n: true });
+        const { entries } = readManifest(dir);
+        const keysOf = (prefix: string): string[] => Object.keys(entries).filter((k) => k.startsWith(`${prefix}#`)).map((k) => k.slice(prefix.length + 1)).sort();
+
+        if (t === 'cc') {
+          const mcp = JSON.parse(readText(dir, '.mcp.json')) as { mcpServers: Record<string, unknown> };
+          expect(Object.keys(mcp.mcpServers).sort()).toEqual([...SERVERS].sort());
+          expect(keysOf('.mcp.json')).toEqual([...SERVERS].sort());
+          const settings = JSON.parse(readText(dir, '.claude/settings.json')) as { permissions: { allow: string[] } };
+          const expectedAllow = SERVERS.flatMap((s) => approved(s).map((tool) => `mcp__${s}__${tool}`)).sort();
+          expect([...settings.permissions.allow].sort()).toEqual(expectedAllow);
+          expect(keysOf('.claude/settings.json')).toEqual(expectedAllow);
+        } else {
+          const mcp = JSON.parse(readText(dir, '.kiro/settings/mcp.json')) as { mcpServers: Record<string, { autoApprove: string[]; disabled: boolean }> };
+          expect(Object.keys(mcp.mcpServers).sort()).toEqual([...SERVERS].sort());
+          for (const s of SERVERS) {
+            expect({ s, autoApprove: [...mcp.mcpServers[s].autoApprove].sort() }).toEqual({ s, autoApprove: approved(s).sort() });
+            expect(mcp.mcpServers[s].disabled).toBe(false);
+          }
+          expect(keysOf('.kiro/settings/mcp.json')).toEqual([...SERVERS].sort());
+        }
+      }
+    });
+
+    it('Kiro: every agent resource resolves in the packed install — node_modules/@3fn/core paths, .kiro/steering/designerpunk-*, skills, prompts, knowledge bases — and the personal note is the one named-but-absent resource', () => {
+      const dir = consumers['kiro'];
+      expect(dir).toBeDefined();
+      expect(listFiles(dir, '.kiro/steering').filter((f) => /^\.kiro\/steering\/designerpunk-.*\.md$/.test(f)).length).toBeGreaterThan(0);
+
+      const jsonFiles = listFiles(dir, '.kiro/agents').filter((f) => f.endsWith('.json'));
+      expect(jsonFiles.length).toBeGreaterThan(0);
+      const pkgResources = new Set<string>();
+      const knowledgeSources = new Set<string>();
+      let personalNoteNamed = 0;
+      for (const f of jsonFiles) {
+        const agent = JSON.parse(readText(dir, f)) as { prompt: string; resources: (string | { type: string; source: string })[] };
+        // the prompt is relative to the agent file
+        expect({ f, prompt: fs.existsSync(path.join(dir, '.kiro/agents', agent.prompt.replace(/^file:\/\/\.?\/?/, ''))) }).toEqual({ f, prompt: true });
+        for (const r of agent.resources) {
+          const uri = typeof r === 'string' ? r : r.source;
+          const rel = uri.replace(/^(file|skill):\/\/(\.\/)?/, '');
+          if (rel === PERSONAL_NOTE) {
+            personalNoteNamed++;
+            continue;
+          }
+          expect({ f, uri, exists: fs.existsSync(path.join(dir, rel)) }).toEqual({ f, uri, exists: true });
+          if (typeof r === 'string' && rel.startsWith('node_modules/@3fn/core/')) pkgResources.add(rel);
+          if (typeof r !== 'string' && r.type === 'knowledgeBase') knowledgeSources.add(rel);
+        }
+      }
+      expect(pkgResources.size).toBeGreaterThan(0);
+      expect(personalNoteNamed).toBeGreaterThan(0);
+      // the knowledge-base entries exist in the born repo
+      expect([...knowledgeSources].sort()).toEqual(['src/components', 'src/tokens']);
+    });
+
+    it('the personal note is ABSENT in both installs until U3 (Task 22; C19 degradation) — asserted, never skipped', () => {
+      for (const t of TARGETS) {
+        expect({ t, exists: fs.existsSync(path.join(consumers[t], PERSONAL_NOTE)) }).toEqual({ t, exists: false });
+      }
+    });
+
+    it('zero complete-task.sh | Peter merges | RATIFIED in EVERY emitted file (agent layer, skills, CLAUDE.md region, MCP config + approvals)', () => {
+      // the scan has teeth: the steward's own Lina charter (a different, steward-grain rendering)
+      // trips it, so a zero over the consumer files is a measurement, not a dead regex.
+      expect(DENY_LIST.test(fs.readFileSync(path.join(PKG_ROOT, '.claude', 'agents', 'lina.md'), 'utf-8'))).toBe(true);
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        const files = [...emittedAgentLayer(t, dir), ...mcpFiles(t)];
+        expect(files.length).toBeGreaterThan(20);
+        const hits = files.filter((f) => DENY_LIST.test(readText(dir, f)));
+        expect({ t, hits }).toEqual({ t, hits: [] });
+      }
+    });
+
+    it("Kenya's and Data's re-pointed knowledge paths resolve in the packed install", () => {
+      const platformFile = (t: string, agent: string): string => (t === 'cc' ? `.claude/agents/${agent}.md` : `.kiro/agents/${agent}-prompt.md`);
+      const expectedPlatform: Record<string, string> = { kenya: 'ios', data: 'android' };
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        for (const agent of Object.keys(expectedPlatform)) {
+          const text = readText(dir, platformFile(t, agent));
+          const globs = [...new Set(text.match(/node_modules\/@3fn\/core\/[^\s`'",)]*/g) ?? [])].filter((g) => g.includes(`/platforms/${expectedPlatform[agent]}`));
+          expect({ t, agent, found: globs.length > 0 }).toEqual({ t, agent, found: true });
+          for (const g of globs) expect({ t, agent, g, matches: globMatchesAnyFile(dir, g) }).toEqual({ t, agent, g, matches: true });
+        }
+      }
+      // CC's charters carry the knowledge-base fallback line itself (the guarded rendering's form)
+      const kenya = readText(consumers['cc'], '.claude/agents/kenya.md');
+      expect(kenya).toMatch(/search these paths with Grep\/Glob: node_modules\/@3fn\/core\/src\/components\/core\/\*\/platforms\/ios\/\*\*/);
+      const data = readText(consumers['cc'], '.claude/agents/data.md');
+      expect(data).toMatch(/search these paths with Grep\/Glob: node_modules\/@3fn\/core\/src\/components\/core\/\*\/platforms\/android\/\*\*/);
+    });
   });
 });
