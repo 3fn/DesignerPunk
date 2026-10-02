@@ -15,13 +15,18 @@
  *      locked always-set + file exists at its `.kiro/steering/` path), NEVER via
  *      an MCP round-trip — identity docs are not in the governance-only index
  *      (Req 8 AC5 / Req 2 AC4).
- *   3. every MUST-FIX coupling surface (coupling-sweep Bucket A) is repointed to
- *      `governance/` and functional (Req 8 AC7). Legs A4/A7 assert the Spec 123
- *      install shape since 2026-10-01 (they asserted 119-A's copy-the-corpus
- *      MECHANISM before): `init` copies no package corpus and delivers identity through
- *      the generated agent layer; `files[]` ships `governance/` plus the identity docs
- *      by explicit path. Source is matched on comment-stripped text (a root name that
- *      survives only in a comment proved nothing — the vacuity the rewrite closed).
+ *   3. every MUST-FIX coupling surface that this gate still holds (coupling-sweep
+ *      Bucket A) is repointed to `governance/` and functional (Req 8 AC7). Five
+ *      surfaces stand: A1, A2, A3, A5, A6. Legs A4 and A7 were RETIRED on 2026-10-01 by
+ *      Peter's ruling (`.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md`
+ *      § "Peter's ruling — RETIRE"; the three residuals moved, per his 2026-10-02 answer
+ *      "Move all three, and remove the legs") and REMOVED outright, so the count is
+ *      5, not 7: a leg left in the array that always reported `remediated: true` would be
+ *      a vacuous green. They asserted 119-A's copy-the-corpus MECHANISM, then (after the
+ *      2026-10-01 rewrite) the Spec 123 install shape; the install shape is now held by
+ *      named standing checks, per sub-check — see the doc comment on
+ *      `assertMustFixCouplings`. The 119-A exit gate remains 119-A's exit check over the
+ *      five surviving must-fix surfaces. 119-A's own closed records ("7/7") stay as written.
  *   4. relocation introduced ZERO new family-guidance companion-path warnings
  *      (Req 8 AC6) — asserted over the 9 top-level companions the FamilyGuidanceIndexer
  *      parses (the 13 nested are gate-blind: green ≠ all 22 verified).
@@ -246,83 +251,8 @@ function exists(projectRoot: string, rel: string): boolean {
 }
 
 /**
- * Strip `//` line comments and `/* *\/` block comments from TS/JS source, leaving
- * string, template and regex literals intact (a `//` inside `'http://x'` is not a
- * comment). Newlines are preserved so positions stay roughly stable. Exported for
- * the unit tests; deliberately small — it is a matcher's pre-filter, not a parser.
- */
-export function stripComments(src: string): string {
-  let out = '';
-  let i = 0;
-  let lastSignificant = ''; // last non-space char emitted outside a literal/comment
-  const n = src.length;
-  while (i < n) {
-    const c = src[i];
-    const d = src[i + 1];
-    if (c === '/' && d === '/') {
-      while (i < n && src[i] !== '\n') i++;
-      continue;
-    }
-    if (c === '/' && d === '*') {
-      i += 2;
-      while (i < n && !(src[i] === '*' && src[i + 1] === '/')) {
-        if (src[i] === '\n') out += '\n';
-        i++;
-      }
-      i += 2;
-      out += ' ';
-      continue;
-    }
-    if (c === "'" || c === '"' || c === '`') {
-      const q = c;
-      out += c;
-      i++;
-      while (i < n && src[i] !== q) {
-        if (src[i] === '\\') {
-          out += src[i] + (src[i + 1] ?? '');
-          i += 2;
-          continue;
-        }
-        out += src[i];
-        i++;
-      }
-      out += q;
-      i++;
-      lastSignificant = q;
-      continue;
-    }
-    if (c === '/' && (lastSignificant === '' || '(,=:[!&|?{};'.includes(lastSignificant))) {
-      // regex literal: copy through the closing unescaped '/' (honouring [...] classes)
-      out += c;
-      i++;
-      let inClass = false;
-      while (i < n && src[i] !== '\n' && (inClass || src[i] !== '/')) {
-        if (src[i] === '\\') {
-          out += src[i] + (src[i + 1] ?? '');
-          i += 2;
-          continue;
-        }
-        if (src[i] === '[') inClass = true;
-        else if (src[i] === ']') inClass = false;
-        out += src[i];
-        i++;
-      }
-      out += src[i] ?? '';
-      i++;
-      lastSignificant = '/';
-      continue;
-    }
-    out += c;
-    if (!/\s/.test(c)) lastSignificant = c;
-    i++;
-  }
-  return out;
-}
-
-/**
  * id → on-disk filename in `.kiro/steering/`, resolved by the frontmatter `id:` line.
- * The single source for the identity axis AND leg A7's explicit-path check (no second
- * hardcoded list of identity filenames).
+ * The single source for the identity axis (no second hardcoded list of identity filenames).
  */
 function identityIdToFile(projectRoot: string): Map<string, string> {
   const steeringDir = path.join(projectRoot, '.kiro/steering');
@@ -338,9 +268,44 @@ function identityIdToFile(projectRoot: string): Map<string, string> {
 }
 
 /**
- * Assert every coupling-sweep Bucket A surface is repointed to `governance/` and
- * functional. Each check is intentionally specific (Req 8 AC4: no generic health
- * check) and names the surface on failure (Req 8 AC7).
+ * Assert every coupling-sweep Bucket A surface this gate still holds (A1, A2, A3, A5,
+ * A6) is repointed to `governance/` and functional. Each check is intentionally specific
+ * (Req 8 AC4: no generic health check) and names the surface on failure (Req 8 AC7).
+ *
+ * LEGS A4 AND A7 RETIRED 2026-10-01 (Peter's ruling, issue
+ * `2026-10-01-relocation-integrity-gate-vs-123-install-shape` § "Peter's ruling — RETIRE";
+ * residuals moved per his 2026-10-02 answer "Move all three, and remove the legs").
+ * They are removed, not left as always-green legs; the count is 5. Spec 123's install shape
+ * (U2b) made their source-shape assertions the wrong instrument; each sub-check is
+ * discharged by a named standing check, by output rather than by source shape:
+ *   A4.1 init copies no package corpus      -> src/cli/__tests__/init.test.ts "creates all
+ *        expected artifacts, and does NOT copy src/types or src/components/core" and "the
+ *        release-1 copy rows are gone: ..."; tests/consumer-integration.test.ts 16.6 "the
+ *        emitted agent-layer file set equals the guarded rendering ..." (exact set).
+ *   A4.2 init emits the agent layer         -> init.test.ts "init --target=%s emits exactly
+ *        the lane's file set for that target, ..."; the same 16.6 exact-set test.
+ *   A4.3 / A4.4 designerpunk.ts docs-MCP root (governance, never .kiro/steering)
+ *                                           -> tests/consumer-integration.test.ts "Docs MCP
+ *        returns documentation data" (driven through `designerpunk mcp:docs`; asserts the
+ *        CLI's and the server's data root = the installed package's `governance`, source
+ *        `env`, and a non-empty index)  [residual R1].
+ *   A7.1 / A7.2a files[] ships governance/ and each of the eight identity docs
+ *                                           -> the 16.6 block (exact-set / byte-equal vs the
+ *        guarded rendering; "Kiro: every agent resource resolves in the packed install ...").
+ *   A7.2b / A7.3 exactly eight identity docs, no steering glob, no personal note in files[]
+ *                                           -> tests/consumer-integration.test.ts describe
+ *        "Spec 123 R2 — the package ships exactly the eight identity docs and never the
+ *        personal note"  [residual R2].
+ *   A7.4a template MCP_STEERING_DIR = governance
+ *                                           -> init.test.ts, the Kiro and Claude Code
+ *        MCP-config cases (`MCP_STEERING_DIR` = './node_modules/@3fn/core/governance')
+ *        [residual R3].
+ *   A7.4b template has no dead tool         -> init.test.ts "Kiro: each server's autoApprove is
+ *        SET-EQUAL ..." and "Claude Code: .claude/settings.json permissions.allow is
+ *        SET-EQUAL ..."; 16.6 "the MCP config and approval keys are present ...".
+ *   A7.5 COPY_ROOTS holds the release-1 roots -> src/cli/__tests__/sync.cohort.test.ts
+ *        "COPY_ROOTS keeps the release-1 roots it recognizes (this test is the pin; the 119-A
+ *        gate leg A7 that also held it is retired)".
  */
 export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
   const checks: CouplingCheck[] = [];
@@ -437,32 +402,8 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
     });
   }
 
-  // A4: src/cli/init.ts + src/cli/designerpunk.ts — the Spec 123 install shape.
-  //
-  // REWRITTEN 2026-10-01 (issue 2026-10-01-relocation-integrity-gate-vs-123-install-shape,
-  // U2b gatefix): the leg used to assert 119-A's MECHANISM (ADD governance copyDir, KEEP
-  // .kiro/steering copy). Spec 123 C1 removed those copies (gate 4b: `init` copies no
-  // package corpus) and delivers identity through the generated agent layer
-  // (`emitAgentLayer`, C1/C19). The invariant — a consumer scaffold's agents still receive
-  // both corpora — is unchanged; only the mechanism moved. The designerpunk.ts half (docs
-  // MCP spawned over the relocated governance/ root, never over identity-only
-  // .kiro/steering) is unchanged. Source is matched on COMMENT-STRIPPED text: the old
-  // `initKeepsSteering` sub-check was already vacuous, passing on comments alone.
-  {
-    const init = stripComments(read(projectRoot, 'src/cli/init.ts'));
-    const corpusLiteral = /['"`](?:governance|\.kiro\/steering|\.kiro\/agents)\/?['"`]/.test(init);
-    const initNoCorpusCopy = !corpusLiteral;
-    const initEmitsLayer = /\bemitAgentLayer\s*\(/.test(init);
-    const dp = stripComments(read(projectRoot, 'src/cli/designerpunk.ts'));
-    const dpGov = /path\.join\(\s*pkgRoot\s*,\s*['"`]governance['"`]\s*\)/.test(dp);
-    const dpNoSteering = !/path\.join\(\s*pkgRoot\s*,\s*['"`]\.kiro\/steering['"`]\s*\)/.test(dp);
-    const ok = initNoCorpusCopy && initEmitsLayer && dpGov && dpNoSteering;
-    checks.push({
-      surface: 'src/cli/init.ts + src/cli/designerpunk.ts',
-      remediated: ok,
-      detail: `init copies no package corpus (governance/.kiro/steering/.kiro/agents)=${initNoCorpusCopy}; init emits agent layer=${initEmitsLayer}; designerpunk governance=${dpGov} & no steering-spawn=${dpNoSteering}`,
-    });
-  }
+  // A4 and A7: RETIRED 2026-10-01 and removed — see the doc comment above for the
+  // standing checks that discharge each sub-check.
 
   // A5: src/figma/VariantAnalyzer.ts + DesignExtractor.ts construct governance/ paths
   {
@@ -490,82 +431,6 @@ export function assertMustFixCouplings(projectRoot: string): CouplingCheck[] {
       surface: 'scripts/extract-component-meta.ts STEERING_DIR',
       remediated: ok,
       detail: `STEERING_DIR → ../governance: ${ok}`,
-    });
-  }
-
-  // A7: package.json files[] (governance/ + the identity docs BY EXPLICIT PATH), MCP config
-  // template, Manifest COPY_ROOTS (the release-1 copy roots `sync` recognizes).
-  //
-  // UPDATED 2026-09-27 (Spec 123 Task 5.4 gatefix, U1 CI change request): the third
-  // leg originally asserted `src/cli/sync/FileScanner.ts`'s fixed `MANAGED_DIRS`
-  // list. Spec 123 Task 5.4 deliberately RETIRED that list — callers now pass roots derived
-  // from the manifest's C7 namespace rule (`managedCopyRoots`, src/cli/sync/Classifier.ts),
-  // itself built from `COPY_ROOTS` in `src/cli/sync/Manifest.ts`. Re-pointed there.
-  //
-  // REWRITTEN 2026-10-01 (issue 2026-10-01-relocation-integrity-gate-vs-123-install-shape,
-  // U2b gatefix): Spec 123 C5 removed the `.kiro/steering/` directory glob from `files[]`
-  // and ships the eight identity docs by explicit path; `personal-note` never ships
-  // (Req 12.1a). `files[]` is read by parsing package.json as JSON, never by regex. The
-  // identity set is LOCKED_IDENTITY_IDS minus `personal-note`, resolved id → file through
-  // the identity axis's own frontmatter map (no second hardcoded list). The template
-  // sub-check is unchanged. `COPY_ROOTS` keeps the same regex with a new label: from 16.5
-  // those roots are the release-1 copy roots `sync` RECOGNIZES (the migration surface), not
-  // roots it reconciles; that `sync` no longer applies package content into them is
-  // 16.5's own test, not this gate's.
-  {
-    let files: string[] = [];
-    try {
-      const parsed = JSON.parse(read(projectRoot, 'package.json'));
-      files = Array.isArray(parsed.files) ? parsed.files.filter((f: unknown): f is string => typeof f === 'string') : [];
-    } catch {
-      files = [];
-    }
-    const pkgGov = files.includes('governance/');
-
-    const idToFile = identityIdToFile(projectRoot);
-    const expectedIds = [...LOCKED_IDENTITY_IDS].filter((id) => id !== 'personal-note').sort();
-    const expectedPaths = new Set<string>();
-    let identityByPath = 0;
-    for (const id of expectedIds) {
-      const file = idToFile.get(id);
-      if (!file) continue; // not on disk — counted as missing below
-      const rel = `.kiro/steering/${file}`;
-      expectedPaths.add(rel);
-      if (files.includes(rel) && exists(projectRoot, rel)) identityByPath++;
-    }
-    const steeringEntries = files.filter((f) => f.startsWith('.kiro/steering'));
-    const exactSet =
-      expectedPaths.size === expectedIds.length &&
-      steeringEntries.length === expectedPaths.size &&
-      steeringEntries.every((f) => expectedPaths.has(f));
-    const noSteeringGlob = !files.some((f) => /^\.kiro\/steering\/?(\*{1,2})?$/.test(f));
-    const personalFile = idToFile.get('personal-note');
-    const noPersonalNote = !files.some(
-      (f) => f === '.kiro/steering/personal-note.md' || (personalFile !== undefined && f === `.kiro/steering/${personalFile}`),
-    );
-
-    const tmpl = read(projectRoot, 'src/cli/templates/mcp-config.json.template');
-    const tmplGov = /governance/.test(tmpl) && !/\.kiro\/steering/.test(tmpl);
-    const tmplNoDeadTool = !/get_documentation_map/.test(tmpl);
-    const manifestSrc = stripComments(read(projectRoot, 'src/cli/sync/Manifest.ts'));
-    const copyRootsMatch = manifestSrc.match(/COPY_ROOTS\s*=\s*\[([^\]]*)\]/);
-    const copyRootsList = copyRootsMatch ? copyRootsMatch[1] : '';
-    const crGov = /'governance'/.test(copyRootsList);
-    const crSteering = /'\.kiro\/steering'/.test(copyRootsList);
-    const ok =
-      pkgGov &&
-      identityByPath === expectedIds.length &&
-      exactSet &&
-      noSteeringGlob &&
-      noPersonalNote &&
-      tmplGov &&
-      tmplNoDeadTool &&
-      crGov &&
-      crSteering;
-    checks.push({
-      surface: 'package.json files[] + init template + Manifest COPY_ROOTS',
-      remediated: ok,
-      detail: `files[] governance=${pkgGov}/identity-by-path=${identityByPath}/${expectedIds.length} exact=${exactSet}/no-steering-glob=${noSteeringGlob}/no-personal-note=${noPersonalNote}; template governance=${tmplGov}/no-dead-tool=${tmplNoDeadTool}; COPY_ROOTS (release-1 copy roots) governance=${crGov}/steering=${crSteering}`,
     });
   }
 
