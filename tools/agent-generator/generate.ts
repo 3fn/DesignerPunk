@@ -24,7 +24,8 @@ import { parseSkillsMap } from './skills';
 import { parseAlwaysSet, serializeAmbientManifest } from './compose';
 import { parseCanonicalAgentSource } from './source';
 import { resolveAgent, validate as validateAgentDoc } from './pipeline';
-import { CorpusResolver, createStdioDocsClient, type CorpusClient } from './resolve';
+import { CorpusResolver, type CorpusClient } from './resolve';
+import { createStdioDocsClient } from './resolve-stdio';
 import type { CanonicalAgentDoc } from './schema';
 import {
   adaptersFor,
@@ -43,7 +44,7 @@ import { derive, deriveSharedCatalog, type RowFile } from './derive';
 import { splitFrontmatter } from './frontmatter';
 import type { YamlDoc } from './frontmatter';
 import { PROFILE_DIR } from './regrounding/freshness';
-import { getWorkflowRules } from './workflow-rules-guard';
+import { getWorkflowRules } from './workflow-rules-accessor';
 import { generateRegistry, serializeRegistry, REGISTRY_OUTPUT_PATH } from './registry';
 import { serializeAttribution, type AttributionManifest } from './attribution';
 import { canonicalStringify, type JsonValue } from './canonical-json';

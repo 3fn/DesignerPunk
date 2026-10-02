@@ -12,7 +12,7 @@
  *
  * The checker is a PURE, INJECTABLE function ({@link runTruthCheck}) over injected shapes:
  * the parsed canonical docs, a {@link CorpusClient} (fake in tests, the real
- * {@link StdioCorpusClient} in production), a {@link ToolRegistry} (fake in tests), the
+ * `StdioCorpusClient` (`./resolve-stdio`) in production), a {@link ToolRegistry} (fake in tests), the
  * cutover ledger, the target runtimes' emitted grant surfaces, package.json scripts, a
  * filesystem facade, and an injectable glob resolver. No subprocess is spawned inside
  * `runTruthCheck` — the production wiring (the `require.main` CLI at the bottom) spawns the
@@ -45,7 +45,7 @@ import {
 import { renderRunContextAnnotation } from './render';
 import { parseCutoverLedger } from './generate';
 import { parseCanonicalAgentSource } from './source';
-import { createStdioDocsClient } from './resolve';
+import { createStdioDocsClient } from './resolve-stdio';
 
 // ============================================================================
 // Finding + report shapes (design § Error Handling: flagged entry + truth observed
