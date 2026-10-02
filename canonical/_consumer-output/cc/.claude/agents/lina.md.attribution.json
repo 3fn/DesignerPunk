@@ -511,10 +511,18 @@
     {
       "lines": [
         342,
-        345
+        343
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        344,
+        345
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:ambient.groundTruthManifest.verdict"
     },
     {
       "lines": [

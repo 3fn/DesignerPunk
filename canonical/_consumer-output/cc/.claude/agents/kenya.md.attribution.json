@@ -486,10 +486,26 @@
     {
       "lines": [
         343,
-        347
+        344
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:ambient.groundTruthManifest"
+    },
+    {
+      "lines": [
+        345,
+        345
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:ambient.groundTruthManifest.verdict"
+    },
+    {
+      "lines": [
+        346,
+        347
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]"
     },
     {
       "lines": [
