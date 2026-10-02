@@ -235,7 +235,10 @@ describe('sync — end to end (Task 5)', () => {
       const m = parseManifest(readText(scratch, MANIFEST_FILE));
       const keyEntries = Object.keys(m.entries).filter((k) => k.includes('#'));
       expect(keyEntries.some((k) => k.startsWith('.claude/settings.json#mcp__designerpunk-'))).toBe(true);
-      expect(Object.values(m.entries).filter((e) => e.origin === 'copy').length).toBeGreaterThan(0);
+      // Task 16.3: `init` no longer COPIES agents/steering/governance (C1 rows 6/7/7b REMOVED) — its agent layer is
+      // generated (`origin: 'generated'`). The no-op property below is unchanged; only the copy premise is retired.
+      expect(Object.values(m.entries).filter((e) => e.origin === 'copy')).toEqual([]);
+      expect(Object.values(m.entries).filter((e) => e.origin === 'generated').length).toBeGreaterThan(0);
       const before = dirHash(scratch);
 
       const out = await runSync({ projectRoot: scratch, apply: true, isTTY: false });

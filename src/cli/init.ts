@@ -2,10 +2,14 @@
  * `npx designerpunk init` — the birth event (Spec 123, design.md C1).
  *
  * Under Model B, `init` runs ONCE per design system, ever. It copies the
- * consumer's token tier (their language, wholesale) and scaffolds the
- * consumer-owned component directory, config, test tooling, and both
- * harnesses' MCP configs. It REFUSES in a born, partial, or package-mode
- * repo (`--re-scaffold` overrides, listing every file it would re-add first).
+ * consumer's token tier (their language, wholesale), scaffolds the
+ * consumer-owned component directory, config and test tooling, and emits the
+ * agent layer plus MCP config for ONE target (`--target=<cc|kiro>`; bare
+ * `init` emits the profile's declared default) through `attach`'s code path
+ * (`emitAgentLayer`, C1's "(new) agent layer" row — the release-1 copies of
+ * `.kiro/agents` / `.kiro/steering` / `governance` are REMOVED). It REFUSES in
+ * a born, partial, or package-mode repo (`--re-scaffold` overrides, listing
+ * every file it would re-add first).
  *
  * @see .kiro/specs/123-consumer-distribution/design.md § "C1. The birth event"
  * @see .kiro/specs/123-consumer-distribution/design.md § "C4. Rewrite-at-copy"
@@ -29,27 +33,19 @@ import {
   personalNoteNamingMessage,
   jestConfigCollisionMessage,
 } from './shared/errorCatalog';
-import { scaffoldKiroMcpConfig } from './shared/mcpConfig/kiro';
-import { scaffoldClaudeCodeMcpConfig } from './shared/mcpConfig/cc';
+import { emitAgentLayer, previewAgentLayerMissing, resolveAgentTarget } from './attach';
 import { serializeManifest } from './sync/Manifest';
-import type { DesignerPunkManifest } from './sync/Manifest';
+import type { DesignerPunkManifest, ManifestEntry, ManifestOrigin, HarnessTarget } from './sync/Manifest';
 
 interface InitOptions {
   name?: string;
   abbreviation?: string;
   skipComponents?: boolean;
   skipAgents?: boolean;
+  /** `--target=<cc|kiro>` — the harness to emit the agent layer + MCP config for; absent = the profile's declared default (DD9). */
+  target?: string;
   reScaffold?: boolean;
   yes?: boolean;
-}
-
-/** Manifest entry origin (design.md's Manifest data model — C7). */
-type ManifestOrigin = 'copy' | 'generated' | 'emitted-key';
-
-interface ManifestEntry {
-  hash: string;
-  grain: 'file' | 'key';
-  origin: ManifestOrigin;
 }
 
 /**
@@ -58,7 +54,16 @@ interface ManifestEntry {
  * NEVER gets an entry — no baseline applies to the consumer's own language.
  */
 export class ManifestBuilder {
-  private entries: Record<string, ManifestEntry> = {};
+  /**
+   * The mutable state `emitAgentLayer` records into (the same `attach` code path writes
+   * `entries` and `attachedTargets` here) — `build()` reads it back, so no generated file
+   * lacks an entry. `attachedTargets` starts EMPTY: a target is added only when its agent
+   * layer is emitted (C9; never a literal target list — C12).
+   */
+  readonly state: { entries: Record<string, ManifestEntry>; attachedTargets: HarnessTarget[] } = {
+    entries: {},
+    attachedTargets: [],
+  };
 
   recordFile(relPath: string, absPath: string, origin: ManifestOrigin): void {
     if (relPath.split(path.sep).join('/').startsWith('src/tokens/')) {
@@ -66,7 +71,7 @@ export class ManifestBuilder {
       return;
     }
     const content = fs.readFileSync(absPath, 'utf-8');
-    this.entries[relPath.split(path.sep).join('/')] = {
+    this.state.entries[relPath.split(path.sep).join('/')] = {
       hash: hashContent(content),
       grain: 'file',
       origin,
@@ -75,7 +80,7 @@ export class ManifestBuilder {
 
   recordKey(relPath: string, key: string, content: unknown): void {
     const keyPath = `${relPath.split(path.sep).join('/')}#${key}`;
-    this.entries[keyPath] = {
+    this.state.entries[keyPath] = {
       hash: hashContent(JSON.stringify(content)),
       grain: 'key',
       origin: 'emitted-key',
@@ -91,8 +96,8 @@ export class ManifestBuilder {
       // `typeContract.hash`, Spec 123 Task 6 / DD11) — '' only when the package
       // ships no contract, never a faked value.
       contractHash,
-      attachedTargets: ['cc', 'kiro'],
-      entries: this.entries,
+      attachedTargets: this.state.attachedTargets,
+      entries: this.state.entries,
     };
   }
 }
@@ -106,6 +111,18 @@ export async function runInit(argv: string[]): Promise<void> {
   const dest = process.cwd();
   const pkgRoot = resolvePackageRoot(__dirname);
   const dsRoot = findDesignSystemRoot(dest);
+
+  // --- The selected target — resolved UP FRONT, so an undeclared `--target` (or a package
+  // packed without its prepack build) fails before init writes anything. Read through the
+  // PACKAGED consumer profile (`loadConsumerProfile`'s packaged form, C12/C9): bare `init`
+  // = the declared default, `--target=<t>` = `<t>`; no literal target list here. ---------
+  try {
+    resolveAgentTarget(pkgRoot, opts.target, 'init');
+  } catch (err) {
+    console.error(`❌ ${err instanceof Error ? err.message : String(err)}`);
+    process.exit(1);
+    return;
+  }
 
   // --- Step 0: birth check (design.md C1 row 0; Req 15A.3) ---------------
   if (!opts.reScaffold) {
@@ -128,7 +145,7 @@ export async function runInit(argv: string[]): Promise<void> {
   } else {
     // --re-scaffold: list every file that would be RE-ADDED before writing
     // (Req 15A.3's flag: "resurrection is never silent even when chosen").
-    const wouldReadd = previewReScaffold(pkgRoot, dest);
+    const wouldReadd = await previewReScaffold(pkgRoot, dest, opts);
     if (wouldReadd.length > 0) {
       console.log(`--re-scaffold: the following files will be RE-ADDED (they do not exist in this repo today):`);
       for (const relPath of wouldReadd) {
@@ -219,55 +236,31 @@ export async function runInit(argv: string[]): Promise<void> {
   );
   if (overviewCreated) manifest.recordFile('product/overview.yaml', overviewPath, 'generated');
 
-  // --- Step 6: agent templates — UNCHANGED in U1 (moves to Task 16's C20 generation) ---
-  if (!opts.skipAgents) {
-    const agentsDestRoot = path.join(dest, '.kiro/agents');
-    const agentsResult = copyDir(
-      path.join(pkgRoot, '.kiro/agents'),
-      agentsDestRoot,
-    );
-    reportCopy('agent templates', agentsResult);
-    recordCopiedTree(manifest, agentsDestRoot, dest);
+  // --- Step 6 (new): the agent layer + MCP config for the selected target — `attach`'s code
+  // path (`emitAgentLayer`, C1's "(new) agent layer" row; C20). Replaces release-1's copy
+  // rows 6/7/7b (`.kiro/agents`, `.kiro/steering`, `governance`) and row 8's both-target MCP
+  // emission: ONE target's charters, identity member files, skill trees, `CLAUDE.md` region,
+  // MCP config and approvals. Every file and key it writes is recorded into the manifest
+  // (`origin: 'generated'` / `'emitted-key'`) and the target joins `attachedTargets` — only
+  // when the agent files were emitted (`--skip-agents` leaves it out). ----------------------
+  if (opts.skipAgents) {
+    console.log('  note: --skip-agents omits the agent layer (the target\'s MCP config is still wired; it is not recorded as attached — run `npx designerpunk attach --target=<cc|kiro>` to add it).');
   }
-
-  // --- Step 7: steering docs — UNCHANGED in U1 (identity docs, Spec 119-A) ---
-  const steeringDestRoot = path.join(dest, '.kiro/steering');
-  const steeringResult = copyDir(
-    path.join(pkgRoot, '.kiro/steering'),
-    steeringDestRoot,
-  );
-  reportCopy('steering docs', steeringResult);
-  recordCopiedTree(manifest, steeringDestRoot, dest);
-
-  // --- Step 7b: governance docs — UNCHANGED in U1 (gate 4b removes this in a later task) ---
-  const governanceDestRoot = path.join(dest, 'governance');
-  const governanceResult = copyDir(
-    path.join(pkgRoot, 'governance'),
-    governanceDestRoot,
-  );
-  reportCopy('governance docs', governanceResult);
-  recordCopiedTree(manifest, governanceDestRoot, dest);
-
-  // --- Step 8: MCP config — BOTH targets emitted in U1 (C8; --target arrives Task 16) ---
-  // Task 4: the template is read ONCE here (structural connection info — command/
-  // args/env — for all three servers, incl. designerpunk-product); each target's
-  // emitter (src/cli/shared/mcpConfig/{kiro,cc}.ts) generates its own approval
-  // list from dist/mcp/tool-manifest.json's readOnlyHint annotations.
-  const mcpTemplate = readMcpTemplate(path.join(pkgRoot, 'src/cli/templates/mcp-config.json.template'));
-  if (mcpTemplate) {
-    scaffoldKiroMcpConfig(
-      mcpTemplate,
-      path.join(dest, '.kiro/settings/mcp.json'),
-      manifest,
-      dest,
-      pkgRoot,
-    );
-    scaffoldClaudeCodeMcpConfig(
-      mcpTemplate,
-      dest,
-      manifest,
-      pkgRoot,
-    );
+  const layer = await emitAgentLayer({
+    pkgRoot,
+    repoRoot: dest,
+    requestedTarget: opts.target,
+    mode: 'birth',
+    manifest: manifest.state,
+    verb: 'init',
+    skipAgentFiles: opts.skipAgents ?? false,
+    adoptIdentical: true, // `--re-scaffold` over her own generated files: identical bytes are claimed, never reported as collisions
+  });
+  if (!opts.skipAgents) {
+    const parts = [`${layer.written} file${layer.written === 1 ? '' : 's'} written`];
+    if (layer.unchanged > 0) parts.push(`${layer.unchanged} unchanged`);
+    if (layer.collided > 0) parts.push(`${layer.collided} skipped (see warnings above)`);
+    console.log(`✓ Agent layer (${layer.target}): ${parts.join(', ')}`);
   }
 
   // --- Step 9: test configuration — KEPT, purpose stated (C27 A13) ---
@@ -314,7 +307,10 @@ export async function runInit(argv: string[]): Promise<void> {
   );
   if (tsconfigTestCreated) manifest.recordFile('tsconfig.test.json', tsconfigTestPath, 'generated');
 
-  // --- Step 10: .designerpunkignore — UNCHANGED in U1 (comment updated at Task 16) ---
+  // --- Step 10: .designerpunkignore — KEPT (C1 row 10); its example comment names the
+  // generated agent files a consumer may want to keep edits to (Task 16.3). The comment is
+  // text only: sync never reads a package copy of this file, so an unedited release-1
+  // `.designerpunkignore` is not reclassified by this change. ----------------------------
   const ignorePath = path.join(dest, '.designerpunkignore');
   const ignoreCreated = createFileIfNotExists(
     ignorePath,
@@ -322,14 +318,18 @@ export async function runInit(argv: string[]): Promise<void> {
 # Files listed here are never touched by \`npx designerpunk sync\`.
 # Uses .gitignore syntax: globs, exact paths, # comments.
 
-# Example: keep a custom agent prompt
-# .kiro/agents/custom-agent.md
+# Example: keep your edits to a generated agent file (sync would otherwise offer to overwrite it)
+# .claude/agents/ada.md
+# .kiro/agents/ada.json
+# .kiro/agents/ada-prompt.md
+# Agents you write yourself are never managed and need no entry here.
 `,
     '.designerpunkignore',
   );
   if (ignoreCreated) manifest.recordFile('.designerpunkignore', ignorePath, 'generated');
 
-  // --- Manifest — written LAST (design.md C1's manifest row) ---------------
+  // --- Manifest — written LAST (design.md C1's manifest row): every file and key above,
+  // including the generated agent layer and the MCP config keys ----------------------------
   const installedVersion = readPackageVersion(pkgRoot);
   const manifestPath = path.join(dest, 'designerpunk.manifest.json');
   // Serialized by sync's manifest writer (stable order, one entry per line — C7), so the first sync does not rewrite it.
@@ -371,6 +371,10 @@ ${restartLineSequencedMessage()}
 function parseInitArgs(argv: string[]): InitOptions {
   const opts: InitOptions = {};
   for (let i = 0; i < argv.length; i++) {
+    if (argv[i].startsWith('--target=')) {
+      opts.target = argv[i].slice('--target='.length);
+      continue;
+    }
     switch (argv[i]) {
       case '--name':
         opts.name = argv[++i];
@@ -386,6 +390,9 @@ function parseInitArgs(argv: string[]): InitOptions {
         break;
       case '--re-scaffold':
         opts.reScaffold = true;
+        break;
+      case '--target':
+        opts.target = argv[++i];
         break;
       case '--yes':
         opts.yes = true;
@@ -417,22 +424,20 @@ async function confirmReScaffold(yesFlag: boolean): Promise<boolean> {
   return /^y(es)?$/i.test(answer);
 }
 
-/** Every managed root `init` copies from, for the `--re-scaffold` preview (agents/steering/governance + the token tree). */
+/** Every root `init` still COPIES from, for the `--re-scaffold` preview: the token tree only. The agent layer is generated, not copied — its preview comes from the emission itself (`previewAgentLayerMissing`). */
 function copiedRoots(pkgRoot: string): Array<{ src: string; dest: string; exclude?: string[] }> {
-  return [
-    { src: path.join(pkgRoot, 'src/tokens'), dest: 'src/tokens', exclude: ['__tests__'] },
-    { src: path.join(pkgRoot, '.kiro/agents'), dest: '.kiro/agents' },
-    { src: path.join(pkgRoot, '.kiro/steering'), dest: '.kiro/steering' },
-    { src: path.join(pkgRoot, 'governance'), dest: 'governance' },
-  ];
+  return [{ src: path.join(pkgRoot, 'src/tokens'), dest: 'src/tokens', exclude: ['__tests__'] }];
 }
 
-/** List every file `init --re-scaffold` would (re-)add — i.e. every source file currently missing at its destination. Never mutates the filesystem. */
-function previewReScaffold(pkgRoot: string, dest: string): string[] {
+/** List every file `init --re-scaffold` would (re-)add — i.e. every source file currently missing at its destination, plus every agent-layer file the emission would create. Never mutates the filesystem. */
+async function previewReScaffold(pkgRoot: string, dest: string, opts: InitOptions): Promise<string[]> {
   const missing: string[] = [];
   for (const root of copiedRoots(pkgRoot)) {
     if (!fs.existsSync(root.src)) continue;
     walkMissing(root.src, path.join(dest, root.dest), root.exclude ?? [], missing, dest);
+  }
+  if (!opts.skipAgents) {
+    missing.push(...(await previewAgentLayerMissing(pkgRoot, dest, opts.target)));
   }
   const scaffoldFiles = [
     'designerpunk.config.ts',
@@ -461,19 +466,6 @@ function walkMissing(src: string, dest: string, exclude: string[], out: string[]
       if (!fs.existsSync(destPath)) {
         out.push(path.relative(destRoot, destPath));
       }
-    }
-  }
-}
-
-/** Record every file under a copied directory tree into the manifest with `origin: 'copy'`. */
-function recordCopiedTree(manifest: ManifestBuilder, destRoot: string, repoRoot: string): void {
-  if (!fs.existsSync(destRoot)) return;
-  for (const entry of fs.readdirSync(destRoot, { withFileTypes: true })) {
-    const full = path.join(destRoot, entry.name);
-    if (entry.isDirectory()) {
-      recordCopiedTree(manifest, full, repoRoot);
-    } else if (entry.isFile()) {
-      manifest.recordFile(path.relative(repoRoot, full), full, 'copy');
     }
   }
 }
@@ -628,19 +620,6 @@ function reportCopy(label: string, result: CopyResult): void {
     for (const file of result.skippedFiles) {
       console.log(`    preserved: ${file}`);
     }
-  }
-}
-
-function readMcpTemplate(templatePath: string): { mcpServers: Record<string, any> } | null {
-  if (!fs.existsSync(templatePath)) {
-    console.log(`  warning: MCP config template not found at ${templatePath}`);
-    return null;
-  }
-  try {
-    return JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
-  } catch {
-    console.log(`  warning: MCP config template at ${templatePath} is not valid JSON`);
-    return null;
   }
 }
 

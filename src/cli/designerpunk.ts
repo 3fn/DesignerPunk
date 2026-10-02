@@ -487,7 +487,8 @@ Init options:
   --name <name>                    Product name (prompted if omitted)
   --abbreviation <abbr>            Short form (prompted if omitted)
   --skip-components                Don't copy starter components
-  --skip-agents                    Don't copy agent templates
+  --target=<cc|kiro>               Harness to set up (agents + MCP config); default: the package's declared default
+  --skip-agents                    Don't generate the agent layer
 
 Generate options:
   --force                          Skip staleness detection, always regenerate
