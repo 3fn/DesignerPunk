@@ -23,6 +23,17 @@
  *   3. Legacy default: `<projectRoot>/src/tokens` — the ONLY shape supported before
  *      this change. Kept so callers that pass neither metadata nor an explicit tier
  *      (single-root tests, the live pre-regeneration corpus) see IDENTICAL behavior.
+ *
+ * RULE 1 IS PORTABLE AND VERIFIED (the 15.0.0 upgrade rehearsal, F2 —
+ * `.kiro/issues/2026-10-02-token-index-meta-ships-absolute-path.md`): the writer
+ * records `tierDir` RELATIVE to the token-index directory (`/` separators), so a
+ * packed index's `../src/tokens` resolves inside whichever install serves it. A
+ * relative value resolves against `tokenIndexDir`; an absolute one is taken as is
+ * (indexes written before the fix). Either way the value wins only if it EXISTS on
+ * disk — an index built on another machine records a path that does not exist here,
+ * and that value falls through to rule 2 rather than pointing the theme readers at
+ * nothing. The check is an existence check only; a directory without a dark
+ * `SemanticOverrides.ts` still wins (the readers report that themselves).
  */
 import * as fs from 'fs';
 import * as path from 'path';
@@ -37,7 +48,9 @@ export function resolveThemeTierRoot(
       const raw = fs.readFileSync(path.join(tokenIndexDir, 'meta.json'), 'utf8');
       const meta = JSON.parse(raw) as { tierDir?: unknown };
       if (typeof meta.tierDir === 'string' && meta.tierDir.length > 0) {
-        return meta.tierDir;
+        const recorded = path.isAbsolute(meta.tierDir) ? meta.tierDir : path.resolve(tokenIndexDir, meta.tierDir);
+        if (fs.existsSync(recorded)) return recorded;
+        // Recorded, but not on this machine — fall through to the next source.
       }
     } catch {
       // meta.json absent, unreadable, or malformed — fall through to the next source.
