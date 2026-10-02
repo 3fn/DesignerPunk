@@ -16,6 +16,13 @@
  * rebuild — a stale `dist/` is the caller's bug to fix, not this script's to
  * paper over.
  *
+ * Task 16.3 added section 9: the DEFERRED `files[]` rows (C5; tasks.md Task 16
+ * criterion 3, as amended 2026-09-30; Ada's consult, 2026-10-01) — every ADD
+ * present, every REMOVE and negated path absent, every `exports` `./dist/*`
+ * target present, `governance/` kept. The build must have run first:
+ * `dist/consumer-canonical/` and `dist/generator/` are `build:generator`'s
+ * outputs, and a stale `dist/` would false-green or false-red section 9.
+ *
  * Usage: npx tsx scripts/pack-assert.ts
  */
 
@@ -162,6 +169,9 @@ function main(): void {
   // incidental sweep.
   check(androidGitkeepSwept.length === 8, 'Android platforms/android/.gitkeep PRESENT = 8 (ruled INCLUDE)', `measured ${androidGitkeepSwept.length}`);
 
+  // --- 9. Task 16.3 — the deferred `files[]` rows (C5, tasks.md Task 16 criterion 3) ---
+  assertDeferredRows(packedPaths);
+
   // --- Report ---
   const failed = findings.filter((f) => !f.ok);
   for (const f of findings) {
@@ -174,6 +184,115 @@ function main(): void {
     console.error(`\nFAIL: ${failed.length} assertion(s) failed.`);
     process.exit(1);
   }
+}
+
+/** Every regular file under `dir` (repo-relative, forward slashes), skipping OS junk npm itself never packs. */
+function walkFiles(dir: string, rel = ''): string[] {
+  const out: string[] = [];
+  if (!fs.existsSync(dir)) return out;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === '.DS_Store') continue;
+    const childRel = rel ? `${rel}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) out.push(...walkFiles(path.join(dir, entry.name), childRel));
+    else if (entry.isFile()) out.push(childRel);
+  }
+  return out;
+}
+
+/** Every string leaf of `package.json` `exports` that targets `./dist/` (nested condition objects included), without the leading `./`. */
+function distExportTargets(exportsField: unknown): string[] {
+  const out = new Set<string>();
+  const visit = (node: unknown): void => {
+    if (typeof node === 'string') {
+      if (node.startsWith('./dist/')) out.add(node.slice(2));
+    } else if (node && typeof node === 'object') {
+      for (const v of Object.values(node as Record<string, unknown>)) visit(v);
+    }
+  };
+  visit(exportsField);
+  return [...out].sort();
+}
+
+/** The eight identity docs that ship by explicit path (C5; Ada's consult). `personal-note.md` is NOT among them: Peter's personal note never ships. */
+const SHIPPED_IDENTITY_DOCS = [
+  'Agent-Directory',
+  'AI-Collaboration-Principles',
+  'Civitas-System-Overview',
+  'core-goals',
+  'DesignerPunk-Systems-Overview',
+  'Spec-Feedback-Protocol',
+  'start-up-tasks',
+  'Task-Completion-Protocol',
+].map((n) => `.kiro/steering/${n}.md`);
+
+/** Negated `dist/` subtrees (Ada's split packaging ruling): duplicate platform-token copies the root files already carry. */
+const NEGATED_DIST_DIRS = ['dist/ios/', 'dist/android/', 'dist/web/'];
+
+function assertDeferredRows(packedPaths: Set<string>): void {
+  const packed = [...packedPaths];
+  const pkg = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'package.json'), 'utf8'));
+
+  // ADD present: the generator bundle and the derived canonical.
+  check(packedPaths.has('dist/generator/consumer-entry.js'), 'deferred ADD present: dist/generator/consumer-entry.js');
+  const canonical = packed.filter((p) => p.startsWith('dist/consumer-canonical/'));
+  for (const ext of ['.md', '.yaml', '.js']) {
+    const n = canonical.filter((p) => p.endsWith(ext)).length;
+    check(n > 0, `deferred ADD present: dist/consumer-canonical/ holds at least one ${ext} file`, `measured ${n} of ${canonical.length} packed there`);
+  }
+
+  // ADD present: the eight identity docs, by explicit path.
+  for (const doc of SHIPPED_IDENTITY_DOCS) {
+    check(packedPaths.has(doc), `deferred ADD present: ${doc}`);
+  }
+
+  // REMOVE absent: the agent copies, and every steering doc beyond the eight (incl. personal-note.md, named).
+  const agents = packed.filter((p) => p.startsWith('.kiro/agents/'));
+  check(agents.length === 0, 'deferred REMOVE absent: nothing under .kiro/agents/', agents.slice(0, 10).join(', '));
+  const steering = packed.filter((p) => p.startsWith('.kiro/steering/')).sort();
+  const expectedSteering = [...SHIPPED_IDENTITY_DOCS].sort();
+  const unexpected = steering.filter((p) => !expectedSteering.includes(p));
+  const missingSteering = expectedSteering.filter((p) => !steering.includes(p));
+  check(
+    unexpected.length === 0 && missingSteering.length === 0,
+    `deferred REMOVE absent: the packed set under .kiro/steering/ equals exactly the ${expectedSteering.length} identity docs`,
+    `unexpected: [${unexpected.join(', ')}] missing: [${missingSteering.join(', ')}]`
+  );
+  // The shipping half of `.kiro/issues/2026-09-27-attribution-sidecars-shipped.md`: the sidecars lived under `.kiro/agents/`.
+  const sidecars = packed.filter((p) => p.endsWith('.attribution.json'));
+  check(sidecars.length === 0, 'attribution sidecars ABSENT: no packed *.attribution.json', sidecars.slice(0, 10).join(', '));
+  check(!packedPaths.has('.kiro/steering/personal-note.md'), "deferred REMOVE absent: .kiro/steering/personal-note.md (Peter's personal note never ships)");
+
+  // Negated paths absent (trailing slash — `dist/web/` never matches `dist/web-something`).
+  for (const dir of NEGATED_DIST_DIRS) {
+    const hit = packed.filter((p) => p.startsWith(dir));
+    const onDisk = walkFiles(path.join(PROJECT_ROOT, dir)).length;
+    check(hit.length === 0, `negated absent: no packed path starts with ${dir}`, `${hit.length} packed; the build tree holds ${onDisk} file(s) there`);
+  }
+
+  // `governance/` STAYS (C5 never lists it as a removal; C20 reads ambient embeds from packageRoot/governance):
+  // the packed count equals the tree's count (derived, not copied), plus a sentinel.
+  const governanceInTree = walkFiles(path.join(PROJECT_ROOT, 'governance')).length;
+  const governancePacked = packed.filter((p) => p.startsWith('governance/')).length;
+  check(governancePacked === governanceInTree && governanceInTree > 0, 'governance/ kept: packed count equals the files under governance/ in the tree', `packed ${governancePacked}, tree ${governanceInTree}`);
+  check(packedPaths.has('governance/Token-Governance.md'), 'governance/ kept: sentinel governance/Token-Governance.md present');
+
+  // Every `exports` `./dist/*` target packs.
+  const distTargets = distExportTargets(pkg.exports);
+  check(distTargets.length > 0, 'exports: at least one ./dist/* target was found to check', `found ${distTargets.length}`);
+  for (const target of distTargets) {
+    check(packedPaths.has(target), `exports ./dist/* target packs: ${target}`);
+  }
+
+  // The `dist/` ROOT files stay KEPT. Enumerated from the built tree (the files the `dist/**/*.{js,d.ts,json,css,swift,kt}` glob
+  // selects at the root), never from a copied list: each must still pack after the three negations.
+  const rootGlob = /\.(js|d\.ts|json|css|swift|kt)$/;
+  const rootFiles = fs
+    .readdirSync(path.join(PROJECT_ROOT, 'dist'), { withFileTypes: true })
+    .filter((e) => e.isFile() && rootGlob.test(e.name))
+    .map((e) => `dist/${e.name}`)
+    .sort();
+  const rootMissing = rootFiles.filter((f) => !packedPaths.has(f));
+  check(rootFiles.length > 0 && rootMissing.length === 0, `dist/ root files KEPT: all ${rootFiles.length} the glob selects still pack`, rootMissing.length ? `missing: ${rootMissing.join(', ')}` : rootFiles.map((f) => f.slice(5)).join(' '));
 }
 
 if (require.main === module) {
