@@ -76,3 +76,41 @@ This repo's `designerpunk.config.ts` has `output: './dist'` (L26), so every in-r
 ## Not in scope here
 
 Any edit to `governance/DesignerPunk-Integration-Guide.md`, to the Kenya/Data overlays or their signed units, or to `package.json`. This issue is the tracked flag and the option set. The ballot draft, when written, is Ada's; the ratification and the pick are Peter's.
+
+---
+
+## 2026-10-02 — Peter's ruling: option A, sharpened ("the middle path"); no deprecation announced
+
+**The ruling**: Peter, 2026-10-02, after the orchestrator consult (six seats: Ada, Lina, Leonardo, Kenya, Data, Sparky) and a holistic read, relayed by the orchestrator with the words "verbatim-ish": *"Go with the middle path, ship 15 with the honest native scoping."*
+- It is option A above, with its wording sharpened.
+- **No deprecation of the root token files is announced in 15.0.0.**
+- The completeness spec is the next work: `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`, owner Ada with Lina.
+
+**What the ballot's guide text must say** (Ada drafts; these are the content points, not the final text):
+- **Native components.** DesignerPunk's iOS/Android components need a theme surface that nothing emits yet. They reference `theme.<token>`, and the Spec 094 emission is unwired (`2026-06-28-spec-094-platform-theme-emission-unwired.md`). **Copying the base snapshots does not yield a compiling target.**
+- **Themed values.** Themed values come from the consumer's own `generate`, not from the package.
+  - **Precision for native**: today the consumer's own `generate` emits no native theme surface either (same defect). So the guide states this as the model, and does not imply a working themed native path exists in 15.0.0.
+- **Web.** A themed web consumer's values come from their own generated CSS.
+  - The guide's step 7 (§ "7. Build Your Product" › "Web") pairs the package's `@3fn/core/tokens.css` with `<div data-theme="my-theme">`.
+  - A `[data-theme="my-theme"]` block exists only in the consumer's generated CSS. The package CSS carries only `:root` (with `light-dark()`) and `:root[data-theme="wcag"]`.
+  - So the guide's web pairing is also false for a themed consumer.
+- **No deprecation promise.** Under the consult, `ComponentTokens.*` keeps shipping (the component surface) and the web CSS exports stay. The native `DesignTokens.{ios.swift,android.kt}` root files retire only after the 094 wiring, which is the completeness spec's item (iii).
+
+**Corrections to this file's premises, dated 2026-10-02 (the text above is not edited):**
+1. **"Who is unaffected — the web CSS exports … No overlay contradicts the guide's web section" is wrong in its conclusion.** No overlay contradicts it, but the guide's web step is itself false for a themed consumer (the web point above). The web is affected.
+2. **"An un-themed consumer … the base snapshots are exactly its values, the M0a copy is correct for it" no longer holds.**
+   - The native base files omit every colour that any registered theme overrides. Stripping uses the registry-wide set (dark ∪ wcag ∪ dark-wcag): **14 semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`.
+   - **Ten were already absent at 14.1.0; four are new in 15.0.0**: `colorFeedbackSuccessText`, `colorTextDefault`, `colorTextMuted`, `colorTextSubtle`, made theme-varying by the #152/#153 WCAG fixes.
+   - **Measured**: the 14.1.0 registry tarball against a `main` build, 2026-10-02.
+   - Ada's same-day release-prep drafts first said "nine" (the base-scoped set the web and index use); fourteen is the native count.
+   - Peter's 3b ruling ("Go with A, disclose — and capture the follow-up") puts the four, and the 14 total, in 15.0.0's notes.
+3. **The "Before choosing, verify" premise is answered: it does not hold.** A themed consumer's own `generate` emits no themed Swift/Kotlin: `generateThemeOverrideBlocks` has no call site (read 2026-10-02). As this file predicted, the overlays' pointer at "your configured output directory" is unsound for themed native values. The fix is the completeness spec's item (i), not this issue.
+4. **The guide's line numbers have drifted by about 7** since this file was written. M0a iOS is now at L369, Android at L392, M0b at L524. The ballot cites headings.
+
+**Owed, and its deadline**: **the ballot draft is Ada's, owed before Stacy's phase-1 RELEASE record for 15.0.0.**
+- It is a record-first ballot under `.kiro/docs/ballots/`, Peter-merged. Thurgood is consulted, because Task 19.4 re-touches the same guide.
+- If ratified first, the applied guide edit may ride the release PR. If not, 15.0.0's notes carry the disclosure and the edit follows.
+
+**Status**: ACTIVE until the ballot ratifies and its edit is applied.
+
+**Pointer, not this issue's scope**: the guide's § "Upgrading" still teaches the 14.x `sync` model (`sync --accept-all`, `.kiro/sync-manifest.json`, `sync` updating tokens). It is disclosed in 15.0.0's notes as stale and routed to Task 19.4 (Thurgood, `2026-09-27-integration-guide-install-section-stale.md`).

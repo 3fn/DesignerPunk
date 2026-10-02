@@ -80,3 +80,31 @@ I am deliberately not stating a lean. Two of my own priors are in play: my split
 ## Not in scope here
 
 Any edit to `designerpunk.config.ts`, `package.json`, `scripts/generate-platform-tokens.ts`, `src/build/**`, `pack-assert.ts`, `inventory.ts`, the browser bundle script, or the Integration Guide. This issue is the tracked flag, the corrected measurement and the option set. The fixing change, when chosen, is Ada's (with Thurgood on the CI/test placement); the pick is Peter's.
+
+---
+
+## 2026-10-02 — Peter's ruling: DEFERRED past 15.0.0, behind three manual guards
+
+**The ruling**: Peter, 2026-10-02, at the 15.0.0 release-prep sitting, relayed by the orchestrator with the words "verbatim-ish": *"Go with B, defer with the manual guards — and again, we need to capture this issue."*
+- **Read as**: the structural options (A, C) are deferred past 15.0.0. The publish-time check (option B) and the test-write move (option D) are built right after the tag.
+- **Inputs**: Ada's decision package (release-prep scratch, 2026-10-02) and the orchestrator consult (six seats).
+
+**This release's procedure: three manual guards**, run at the 15.0.0 publish by the release's packaging seat (Ada) and cited in the release record:
+1. **Fresh-clone publish.** Publish from a fresh clone at the merged release SHA, never the working checkout, so no workspace leftovers in `dist/` can ship.
+2. **Packed-contents listing, with scripts on.** In that clone: `npm ci`, then `npm pack --dry-run --json` without `--ignore-scripts`, so `prepack` builds. The listing shows:
+   - no `dist/{ios,android,web}/**`;
+   - the eight root token files.
+
+   **Also checked at the same step**: `designerpunk.config.ts` still reads `themes: []`. This is the read that covers sub-risk (b) above, which none of the mechanical checks catch.
+3. **Native-member diff against the 14.1.0 tarball.** Compare the public member names of `dist/DesignTokens.{ios.swift,android.kt}` in the fresh-clone build with the 14.1.0 registry tarball.
+   - **Expected difference**: exactly the four colours disclosed in 15.0.0's notes (`colorFeedbackSuccessText`, `colorTextDefault`, `colorTextMuted`, `colorTextSubtle`, and their Kotlin forms).
+   - **Any other difference stops the publish** and comes back for a decision.
+
+**Trigger (supersedes the header's)**: **the `v15.0.0` tag.**
+- Right after it, Ada builds option B: a publish-time check of pack-with-scripts contents and base-config freshness, placed in CI by Thurgood.
+- Option D (`BuildOrchestrator.test.ts` writes to a temp directory, not the real `dist/`) is routed to Thurgood/Lina, whose seat it is, in the same window.
+- **B is blocking from the release after 15.0.0.** That release does not publish on manual guards.
+
+**Status**: ACTIVE. A and C remain open as the "prevent" branch of the fork above. Peter's ruling picks sequencing (detect now), not that fork.
+
+**What survives**: 15.0.0 is the second consecutive release whose base-snapshot guarantee is kept by a person following a list rather than by a check. The trigger above exists so that there is no third.

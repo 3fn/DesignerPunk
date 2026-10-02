@@ -63,3 +63,15 @@ Thread `themeOverrides` through the existing build: construct `ThemeOverrideSet[
 
 ## Decision needed
 Approve the fix with the three defaults (yes / resolved-contexts / iOS-Android-first), or adjust — then Ada wires it, Lina cross-checks, full suite + fixtures verified. Deferred until Spec 119 formalization is at a stopping point.
+
+---
+
+## 2026-10-02 — Note (Ada): queued behind 15.0.0, now in scope of the completeness spec
+
+- **Queued behind 15.0.0** as the **first deliverable, item (i), of the consumer-generation completeness spec**: `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` (owner Ada; Lina on the component cross-check). Its trigger is the next spec kickoff after 15.0.0 ships. **This file's status is not changed by this note.**
+- **The gap has grown since this file was written.** The removal half strips every colour any registered theme overrides (the registry-wide set: dark ∪ wcag ∪ dark-wcag) from the iOS/Android base files. That set is **14 semantic colours on `main` @ `b2cca6ca`**.
+  - **Ten were absent at 14.1.0.**
+  - **Four are new in 15.0.0**: `colorFeedbackSuccessText`, `colorTextDefault`, `colorTextMuted`, `colorTextSubtle`. The #152/#153 WCAG fixes made them theme-varying.
+  - **Measured**: member-name diff of the 14.1.0 registry tarball against a `main` build, 2026-10-02.
+- **A consumer's own `generate` has the same gap.** It runs the same generator, and `generateThemeOverrideBlocks` still has no call site (read 2026-10-02).
+- **Disclosed in 15.0.0's release notes** per Peter's 3b ruling (2026-10-02, relayed by the orchestrator: *"Go with A, disclose — and capture the follow-up"*). This note and the completeness charter are the follow-up's capture.
