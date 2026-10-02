@@ -315,14 +315,18 @@ This checks semantic reference integrity, required fields, mathematical relation
 
 Produces platform token files in your configured output directory:
 - `DesignTokens.web.css` — CSS custom properties
-- `DesignTokens.ios.swift` — Swift constants + theme protocol
-- `DesignTokens.android.kt` — Kotlin constants + theme data class
+- `DesignTokens.ios.swift` — Swift constants (no theme surface yet; see "iOS and Android" under step 7)
+- `DesignTokens.android.kt` — Kotlin constants (no theme surface yet; see "iOS and Android" under step 7)
 - `ComponentTokens.web.css` / `.ios.swift` / `.android.kt` — component tokens
 - `DesignTokens.dtcg.json` — DTCG standard format
 - `DesignTokens.figma.json` — Figma Variables format
 - `token-index/` — structured YAML index (primitives, semantics, components) loaded by the Application MCP for token queries
 
-If you registered a custom theme, the output includes themed values scoped by `data-theme` attribute (web) or as additional theme structs/instances (iOS/Android).
+**In 15.0.0, a custom theme you register does not yet change this output.**
+- Web: no `[data-theme="<name>"]` block is generated.
+- iOS/Android: no theme structs or instances are generated.
+
+The web output carries DesignerPunk's base light/dark values and the baked `data-theme="wcag"` block. Theme emission is delivered by the consumer-generation completeness spec (`.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`).
 
 ### Platform Dependencies for OKLCH Color Output
 
@@ -345,7 +349,7 @@ The color system uses OKLCH format. Platform-specific dependencies are needed fo
 import '@3fn/core';
 // or: import '@3fn/core/components';
 
-// Import design tokens
+// Import design tokens: DesignerPunk's base (see "What these two imports are" below)
 import '@3fn/core/tokens.css';
 import '@3fn/core/component-tokens.css';
 
@@ -357,60 +361,38 @@ import '@3fn/core/fonts/rajdhani.css';
 import { BlendCalculator } from '@3fn/core/blend';
 ```
 
-For theming, set the `data-theme` attribute on any HTML element:
-```html
-<div data-theme="my-theme">
-  <!-- All DesignerPunk components inside inherit themed values -->
-</div>
-```
+**What these two imports are.**
+- `@3fn/core/tokens.css` is **DesignerPunk's own base**. It is generated from DesignerPunk's configuration, not yours, and it is the **zero-config evaluation path**: the components render against it with nothing built.
+- `@3fn/core/component-tokens.css` is DesignerPunk's **component token tier**. Keep importing it on every path.
 
-Base theme applies at `:root` with no attribute. Dark-only themes automatically set `color-scheme: dark`.
+**Your own tokens.** After you run `npx designerpunk generate`, import your own `DesignTokens.web.css` from your configured `output` directory **in place of** `@3fn/core/tokens.css`. That file carries your token tier's values. Keep `@3fn/core/component-tokens.css`.
 
-#### iOS (M0a — Manual Copy)
+**Themes, in this version:**
+- **Dark mode** follows the user's preferred colour scheme, through CSS `light-dark()`. Set `color-scheme` on an element to force light or dark.
+- **One theme block is baked in**: `data-theme="wcag"`. It ships in DesignerPunk's base CSS and is generated into yours.
+  ```html
+  <div data-theme="wcag">
+    <!-- DesignerPunk components inside use the WCAG theme's values -->
+  </div>
+  ```
+- **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing in 15.0.0. Theme emission is delivered by the consumer-generation completeness spec (`.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`).
 
-1. Locate Swift files in the installed package:
-   - `node_modules/@3fn/core/dist/DesignTokens.ios.swift`
-   - `node_modules/@3fn/core/dist/ComponentTokens.ios.swift`
-   - Component platform files: `node_modules/@3fn/core/src/components/core/*/platforms/ios/`
-   - Blend utilities: `node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift`
+#### iOS and Android (not supported for onboarding in 15.0.0)
 
-2. Copy into your Xcode project's source tree
+**Native onboarding is not supported in 15.0.0.** The package ships DesignerPunk's native component sources and token files, but in this version they do not form a target that compiles in your app:
 
-3. Requirements:
-   - Minimum deployment target: **iOS 17.0+**
-   - Required frameworks: **SwiftUI**, **UIKit**
+- `node_modules/@3fn/core/dist/DesignTokens.ios.swift` and `node_modules/@3fn/core/dist/DesignTokens.android.kt` are DesignerPunk's **un-themed base snapshot**. They are generated from DesignerPunk's own configuration, not yours.
+- `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` and `node_modules/@3fn/core/dist/ComponentTokens.android.kt` are DesignerPunk's **component token tier**. The shipped components require them.
+- The shipped iOS and Android components (`node_modules/@3fn/core/src/components/core/*/platforms/ios/` and `.../platforms/android/`) also read a **theme surface**: `@Environment(\.dpTheme)` on iOS and `LocalDPTheme.current` on Android. **Neither the base files nor your own `npx designerpunk generate` emits that theme surface in this version.**
+- Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`. Four of them were present in 14.1.0's base files and are absent from 15.0.0's:
+  - Swift: `colorFeedbackSuccessText`, `colorTextDefault`, `colorTextMuted`, `colorTextSubtle`;
+  - Kotlin: `color_feedback_success_text`, `color_text_default`, `color_text_muted`, `color_text_subtle`.
 
-4. Theme consumption:
-   ```swift
-   @Environment(\.{abbreviation}Theme) var theme
-   // Use: theme.colorActionPrimary
-   // Static tokens: DesignTokens.spaceInset100
-   ```
+Copying these files into an Xcode project or an Android module therefore does not yield a compiling target.
 
-**Note**: `npx designerpunk sync:ios` is planned for M0b to automate this process.
+Native onboarding is delivered by the consumer-generation completeness spec (`.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`). It covers three things: the theme surface, DesignerPunk's component tier harvested by your own `generate`, and per-platform output paths.
 
-#### Android (M0a — Manual Copy)
-
-1. Locate Kotlin files in the installed package:
-   - `node_modules/@3fn/core/dist/DesignTokens.android.kt`
-   - `node_modules/@3fn/core/dist/ComponentTokens.android.kt`
-   - Component platform files: `node_modules/@3fn/core/src/components/core/*/platforms/android/`
-   - Blend utilities: `node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt`
-
-2. Copy into your Android module's source tree
-
-3. Requirements:
-   - Compose BOM version compatibility with component implementations
-   - If using R8/ProGuard: include synced Kotlin files in keep rules
-
-4. Theme consumption:
-   ```kotlin
-   val theme = Local{Abbreviation}Theme.current
-   // Use: theme.colorActionPrimary
-   // Static tokens: DesignTokens.space_inset_100
-   ```
-
-**Note**: `npx designerpunk sync:android` is planned for M0b to automate this process.
+Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). On Android, the Compose BOM must be compatible with the component implementations.
 
 ---
 
@@ -551,15 +533,14 @@ Runs automatically as part of `npx designerpunk generate` when platform paths ar
 |-------------|-------------|
 | `@3fn/core` | All 34 web components (ESM bundle) |
 | `@3fn/core/components` | Same (alias) |
-| `@3fn/core/tokens.css` | Design tokens as CSS custom properties |
-| `@3fn/core/component-tokens.css` | Component-level tokens as CSS custom properties |
+| `@3fn/core/tokens.css` | DesignerPunk's base design tokens as CSS custom properties: the zero-config evaluation path. After `generate`, use your own `DesignTokens.web.css` instead (see step 7, Build Your Product) |
+| `@3fn/core/component-tokens.css` | DesignerPunk's component-level tokens as CSS custom properties (required on every path) |
 | `@3fn/core/config` | `defineConfig` function with TypeScript types |
 | `@3fn/core/blend` | Blend calculation utilities |
 | `@3fn/core/grid.css` | Responsive grid CSS |
 | `@3fn/core/fonts/figtree.css` | Figtree font family (body/UI) |
 | `@3fn/core/fonts/commit-mono.css` | Commit Mono font family (code/mono) |
 | `@3fn/core/fonts/rajdhani.css` | Rajdhani font family (display) |
-| `@3fn/core/fonts/inter.css` | Inter font family (legacy, deprecated) |
 
 ---
 
@@ -951,6 +932,14 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 ---
 
 ## Upgrading
+
+> **Note (2026-10-02, ballot `2026-10-02-integration-guide-native-scoping`).** This section describes the `sync` flow from **before 15.0.0**: `--accept-all`, `.kiro/sync-manifest.json`, and `sync` updating tokens and components. 15.0.0 retired that flow.
+>
+> **For the current upgrade path, use 15.0.0's release notes:**
+> - `sync` prints its report before changing anything, and converts the manifest to `designerpunk.manifest.json`.
+> - `sync --migrate-legacy --target=<cc|kiro>` removes what an earlier `init` copied and attaches the generated agent layer, in the same run.
+>
+> Spec 123 Task 19.4 reconciles this section.
 
 After upgrading `@3fn/core` to a new version, run `sync` to detect and apply package changes:
 
