@@ -22,7 +22,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import * as registryModule from '../registry';
+import * as registryModule from '../registry-manifest';
 import * as entry from '../consumer-entry';
 import * as generate from '../generate';
 import { loadConsumerProfile } from '../consumer-profile';
@@ -201,6 +201,11 @@ describe('the BUILT bundle (build:generator)', () => {
   test('carries no live-introspection or stdio-transport code', () => {
     const text = fs.readFileSync(bundlePath, 'utf8');
     expect(text.match(/introspectServer|generateRegistry|StdioCorpusClient|createStdioDocsClient|StdioClientTransport|generateAll/g) ?? []).toEqual([]);
+  });
+
+  test('carries no MCP SDK — resolve-stdio.ts and registry.ts (the SDK halves) are outside the closure', () => {
+    const text = fs.readFileSync(bundlePath, 'utf8');
+    expect(text.match(/@modelcontextprotocol/g) ?? []).toEqual([]);
   });
 
   test('carries no `mcp-server/dist` require — only steward-only code reaches it', () => {
