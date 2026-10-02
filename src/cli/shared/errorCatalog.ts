@@ -247,3 +247,30 @@ export function existingMcpEntryMessage(configFile: string, key: string, target:
     `and re-run: npx designerpunk attach --target=${target} — or update it by hand.`
   );
 }
+
+/**
+ * `generate` stopped because a component-token file in the consumer's tree failed
+ * `defineComponentTokens`'s family-mismatch guard (#127) while it loaded. Names the FILE
+ * (the guard names only the component), carries the guard's own message verbatim, and
+ * gives both fixes — pre-123 `init` copied two such files in the pre-fix single-family
+ * form (`src/tokens/component/progress.ts`, `src/components/core/Button-Icon/buttonIcon.tokens.ts`).
+ * Source: `.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md`.
+ */
+export function componentTokenFamilyMismatchMessage(file: string, guardMessage: string): string {
+  return (
+    `generate stopped — ${file} declares a component token in the wrong family's defineComponentTokens() call. ` +
+    `${guardMessage} ` +
+    `To fix it, split that file's defineComponentTokens() into one call per token family; or, if an earlier ` +
+    `DesignerPunk init copied the file into your repo, replace it with the package's current version under ` +
+    `node_modules/@3fn/core/src/, which is already split. Nothing was written.`
+  );
+}
+
+/**
+ * `generate` stopped because a component-token file in the consumer's tree threw while it
+ * loaded, for any reason other than the family guard. Names the file and the reason.
+ * Source: as {@link componentTokenFamilyMismatchMessage}.
+ */
+export function componentTokenFileLoadFailedMessage(file: string, reason: string): string {
+  return `generate stopped — ${file} could not be loaded: ${reason} Fix the file and run generate again. Nothing was written.`;
+}

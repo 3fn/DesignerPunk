@@ -24,6 +24,8 @@ import {
   restartLineNowMessage,
   managedRegionEditedInsideMessage,
   existingMcpEntryMessage,
+  componentTokenFamilyMismatchMessage,
+  componentTokenFileLoadFailedMessage,
 } from '../shared/errorCatalog';
 
 // Verbatim transcriptions from design.md's catalog table — the comparands.
@@ -183,6 +185,22 @@ describe('errorCatalog — string conformance (15.0.0 rehearsal issue rows)', ()
     );
     expect(existingMcpEntryMessage('.mcp.json', 'designerpunk-application', 'cc')).toBe(
       ".mcp.json already has 'designerpunk-application' entry; left unchanged. If it is outdated, delete the entry and re-run: npx designerpunk attach --target=cc — or update it by hand.",
+    );
+  });
+});
+
+// The 15.0.0 upgrade rehearsal — issue-row strings (source:
+// .kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md; no design.md row yet).
+describe('errorCatalog — string conformance (15.0.0 rehearsal: generate load failures)', () => {
+  test('component-token family mismatch — names the file, keeps the guard message, gives both fixes', () => {
+    expect(componentTokenFamilyMismatchMessage('src/tokens/component/progress.ts', 'GUARD.')).toBe(
+      "generate stopped — src/tokens/component/progress.ts declares a component token in the wrong family's defineComponentTokens() call. GUARD. To fix it, split that file's defineComponentTokens() into one call per token family; or, if an earlier DesignerPunk init copied the file into your repo, replace it with the package's current version under node_modules/@3fn/core/src/, which is already split. Nothing was written.",
+    );
+  });
+
+  test('component-token file load failed — names the file and the reason', () => {
+    expect(componentTokenFileLoadFailedMessage('src/tokens/component/broken.ts', 'Unexpected token.')).toBe(
+      'generate stopped — src/tokens/component/broken.ts could not be loaded: Unexpected token. Fix the file and run generate again. Nothing was written.',
     );
   });
 });

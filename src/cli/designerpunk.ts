@@ -30,7 +30,11 @@ import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
 import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
-import { partialCaseMessage } from './shared/errorCatalog';
+import {
+  partialCaseMessage,
+  componentTokenFamilyMismatchMessage,
+  componentTokenFileLoadFailedMessage,
+} from './shared/errorCatalog';
 import { attachUsage } from './shared/vocabulary';
 
 /** @internal Exported for testing — dispatch reachability (Spec 123 Task 16.2, instrument row 4.6). */
@@ -165,6 +169,24 @@ export function resolveComponentSchemaDir(
   return flatRoot;
 }
 
+/**
+ * The catalogued line for a component-token load failure. A
+ * `ComponentTokenFileLoadError` (recognised by `name`, so it survives a mocked module)
+ * names its file; the family-mismatch guard's message selects that row. Anything else
+ * the harvest throws (e.g. a duplicate-name conflict) keeps the pipeline's existing
+ * "System token generation failed" form — still one line, no stack.
+ */
+function componentTokenLoadFailureMessage(err: unknown, root: string): string {
+  const e = err as { name?: unknown; file?: unknown; reason?: unknown; message?: unknown } | null;
+  if (e && e.name === 'ComponentTokenFileLoadError' && typeof e.file === 'string' && typeof e.reason === 'string') {
+    const rel = path.relative(root, e.file) || e.file;
+    return /^Token family mismatch/.test(e.reason)
+      ? componentTokenFamilyMismatchMessage(rel, e.reason)
+      : componentTokenFileLoadFailedMessage(rel, e.reason);
+  }
+  return `System token generation failed: ${err instanceof Error ? err.message : String(err)}`;
+}
+
 /** @internal Exported for testing */
 export async function runGenerate(force = false) {
   // Spec 123 Task 1.5 (C2 consumer #4): BOTH the read side (the config) and the
@@ -189,7 +211,18 @@ export async function runGenerate(force = false) {
   // wrong axis — componentTokenDirs resolve to real source files in BOTH modes, so
   // package-mode `generate` silently zeroed component tokens. Loading + the "none found"
   // warning are now driven by source presence, fired in all modes.
-  const componentTokens = loadComponentTokens(config);
+  // A component-token module that throws while it loads (e.g. defineComponentTokens's
+  // family-mismatch guard on a pre-123 copied file) stops generate with a catalogued
+  // message naming the file — never the CLI's "Unexpected error" stack trace
+  // (.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md).
+  let componentTokens: ReturnType<typeof loadComponentTokens>;
+  try {
+    componentTokens = loadComponentTokens(config);
+  } catch (err) {
+    console.error(`❌ ${componentTokenLoadFailureMessage(err, generateRoot)}`);
+    process.exit(1);
+    return;
+  }
   if (componentTokens.length === 0) {
     console.warn(
       `⚠️  No component token files found.\n` +

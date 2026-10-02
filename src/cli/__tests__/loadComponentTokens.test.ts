@@ -6,7 +6,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import { loadComponentTokens, harvestZeroWarning } from '../loadComponentTokens';
+import { loadComponentTokens, harvestZeroWarning, ComponentTokenFileLoadError } from '../loadComponentTokens';
 import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import { ComponentTokenRegistry } from '../../registries/ComponentTokenRegistry';
 import { defineComponentTokens, getTokenContract } from '../../build/tokens';
@@ -238,6 +238,70 @@ describe('loadComponentTokens', () => {
       // ...but the canonical registry is STILL empty — no self-registration side effect.
       // If defineComponentTokens ever registers as a side effect again, this fails loud.
       expect(ComponentTokenRegistry.getAll()).toHaveLength(0);
+    });
+  });
+
+  // The 15.0.0 upgrade rehearsal (.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md):
+  // a pre-123 copy of progress.ts in the SINGLE-family form fails defineComponentTokens's
+  // family-mismatch guard (#127) at load. The harvest rethrows it as a
+  // ComponentTokenFileLoadError naming the FILE (the guard names only the component).
+  // Synthetic fixture in a temp dir — no tracked token file is edited.
+  describe('a component-token file that throws at load is reported by file (15.0.0 rehearsal F1)', () => {
+    function writeSingleFamilyProgress(dir: string): string {
+      fs.mkdirSync(dir, { recursive: true });
+      const defineTokensPath = require.resolve('../../build/tokens').replace(/\\/g, '/');
+      const sizingPath = require.resolve('../../tokens/SizingTokens').replace(/\\/g, '/');
+      const file = path.join(dir, 'progress.ts');
+      fs.writeFileSync(
+        file,
+        [
+          // Block-scoped: ts-jest compiles these fixtures as scripts, so a top-level const
+          // would collide with another fixture's in the same run.
+          '{',
+          `const { defineComponentTokens } = require('${defineTokensPath}');`,
+          `const { sizingTokens } = require('${sizingPath}');`,
+          '// The pre-fix form: ONE spacing-family call that references a sizing primitive.',
+          'module.exports = { ProgressTokens: defineComponentTokens({',
+          "  component: 'Progress',",
+          "  family: 'spacing',",
+          "  tokens: { 'node.size.sm': { reference: sizingTokens.size150, reasoning: 'pre-fix copy' } },",
+          '}) };',
+          '}',
+        ].join('\n'),
+      );
+      return file;
+    }
+
+    function thrownBy(fn: () => unknown): unknown {
+      try {
+        fn();
+      } catch (err) {
+        return err;
+      }
+      throw new Error('expected a throw');
+    }
+
+    test('Source 1 ({tokenSource}/component/): the error names the file and carries the guard message', () => {
+      const file = writeSingleFamilyProgress(path.join(tmpDir, 'tokens', 'component'));
+      const err = thrownBy(() => loadComponentTokens(makeConfig(), jestTsModuleLoader));
+      expect(err).toBeInstanceOf(ComponentTokenFileLoadError);
+      const e = err as InstanceType<typeof ComponentTokenFileLoadError>;
+      expect(e.name).toBe('ComponentTokenFileLoadError');
+      expect(e.file).toBe(file);
+      expect(e.reason).toMatch(/^Token family mismatch in defineComponentTokens\(\) for component 'Progress'/);
+    });
+
+    test('Source 2 (componentTokens dirs): the same, for a *.tokens.ts', () => {
+      const compDir = path.join(tmpDir, 'components');
+      const dir = path.join(compDir, 'Progress');
+      writeSingleFamilyProgress(dir);
+      const tokensFile = path.join(dir, 'progress.tokens.ts');
+      fs.renameSync(path.join(dir, 'progress.ts'), tokensFile);
+      fs.mkdirSync(path.join(tmpDir, 'tokens'), { recursive: true });
+      const err = thrownBy(() => loadComponentTokens(makeConfig({ componentTokenDirs: [compDir] }), jestTsModuleLoader));
+      expect(err).toBeInstanceOf(ComponentTokenFileLoadError);
+      expect((err as InstanceType<typeof ComponentTokenFileLoadError>).file).toBe(tokensFile);
+      expect((err as InstanceType<typeof ComponentTokenFileLoadError>).reason).toMatch(/^Token family mismatch/);
     });
   });
 });

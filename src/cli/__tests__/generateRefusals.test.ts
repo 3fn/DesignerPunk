@@ -22,8 +22,14 @@ import * as os from 'os';
 import * as path from 'path';
 import { loadConfig } from '../../config/ConfigLoader';
 import { generateTokenIndex } from '../../generators/generateTokenIndex';
+import { generateTokenFiles } from '../../generators/generateTokenFiles';
+import { loadComponentTokens } from '../loadComponentTokens';
 import { runGenerate } from '../designerpunk';
-import { partialCaseMessage } from '../shared/errorCatalog';
+import {
+  partialCaseMessage,
+  componentTokenFamilyMismatchMessage,
+  componentTokenFileLoadFailedMessage,
+} from '../shared/errorCatalog';
 
 const mockLoadConfig = loadConfig as jest.Mock;
 const mockGenerateTokenIndex = generateTokenIndex as jest.Mock;
@@ -139,5 +145,93 @@ describe('runGenerate — partial-state refusals (Spec 123 Task 1.5)', () => {
     // BITE (recorded red in the Task 1.5 completion doc): refusing only when
     // `process.cwd()` textually equals `dsRoot.root` (instead of relying on the
     // walk's ascent) would miss this subdirectory case.
+  });
+});
+
+// The 15.0.0 upgrade rehearsal (.kiro/issues/2026-10-02-generate-stack-trace-on-component-token-family-mismatch.md):
+// a component-token module that throws while it loads stops generate with a catalogued
+// message naming the FILE — never main()'s "Unexpected error" stack trace.
+describe('runGenerate — a component-token file that fails to load', () => {
+  // The REAL error class (this module is automocked above).
+  const { ComponentTokenFileLoadError } = jest.requireActual('../loadComponentTokens') as typeof import('../loadComponentTokens');
+  const mockLoadComponentTokens = loadComponentTokens as jest.Mock;
+  const mockGenerateTokenFiles = generateTokenFiles as jest.Mock;
+
+  let tmpDir: string;
+  let originalCwd: string;
+  let mockExit: jest.SpyInstance;
+  let consoleError: jest.SpyInstance;
+
+  beforeEach(() => {
+    originalCwd = process.cwd();
+    tmpDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'dp-generate-load-fail-')));
+    fs.mkdirSync(path.join(tmpDir, '.git'));
+    // A BORN repo: config with tokenSource + a tier.
+    writeFile(
+      tmpDir,
+      'designerpunk.config.ts',
+      "import { defineConfig } from '@3fn/core';\nexport default defineConfig({ name: 'T', abbreviation: 'T', tokenSource: './src/tokens' });\n"
+    );
+    writeFile(tmpDir, 'src/tokens/index.ts', 'export function getAllPrimitiveTokens() { return []; }\n');
+    writeFile(tmpDir, 'src/tokens/semantic/index.ts', 'export function getAllSemanticTokens() { return []; }\n');
+    process.chdir(tmpDir);
+
+    mockLoadConfig.mockResolvedValue({
+      name: 'T',
+      abbreviation: 'T',
+      themes: [],
+      tokenSourceRoot: path.join(tmpDir, 'src/tokens'),
+      tokenSourceMode: 'local',
+      componentTokenDirs: [],
+      outputDir: path.join(tmpDir, 'dist/tokens'),
+      configDir: tmpDir,
+    });
+    mockExit = jest.spyOn(process, 'exit').mockImplementation((() => undefined) as never);
+    consoleError = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    process.chdir(originalCwd);
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+    mockLoadComponentTokens.mockReset();
+    mockLoadConfig.mockReset();
+    jest.restoreAllMocks();
+  });
+
+  const FAMILY_GUARD =
+    "Token family mismatch in defineComponentTokens() for component 'Progress': token 'node.size.sm' is declared in a 'spacing' family call but references primitive 'size150' from the 'sizing' family.";
+
+  test('the family-mismatch guard: the catalogued message names the file, exit 1, nothing written, no stack', async () => {
+    mockLoadComponentTokens.mockImplementation(() => {
+      throw new ComponentTokenFileLoadError(path.join(tmpDir, 'src/tokens/component/progress.ts'), FAMILY_GUARD);
+    });
+
+    await runGenerate();
+
+    expect(mockExit).toHaveBeenCalledWith(1);
+    expect(consoleError).toHaveBeenCalledWith(
+      `❌ ${componentTokenFamilyMismatchMessage('src/tokens/component/progress.ts', FAMILY_GUARD)}`
+    );
+    const printed = consoleError.mock.calls.map((c) => c.join(' ')).join('\n');
+    expect(printed).not.toContain('Unexpected error');
+    expect(printed).not.toMatch(/\n\s+at /); // no stack frames
+    expect(mockGenerateTokenFiles).not.toHaveBeenCalled();
+    expect(mockGenerateTokenIndex).not.toHaveBeenCalled();
+  });
+
+  test('any other load failure: the generic catalogued row, still naming the file', async () => {
+    mockLoadComponentTokens.mockImplementation(() => {
+      throw new ComponentTokenFileLoadError(path.join(tmpDir, 'src/tokens/component/broken.ts'), 'Unexpected token');
+    });
+
+    await runGenerate();
+
+    expect(mockExit).toHaveBeenCalledWith(1);
+    expect(consoleError).toHaveBeenCalledWith(
+      `❌ ${componentTokenFileLoadFailedMessage('src/tokens/component/broken.ts', 'Unexpected token')}`
+    );
+    expect(mockGenerateTokenFiles).not.toHaveBeenCalled();
   });
 });
