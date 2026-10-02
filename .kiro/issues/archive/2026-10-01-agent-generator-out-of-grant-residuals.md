@@ -1,7 +1,7 @@
 # Issue: agent-generator residuals Task 16 could not fix inside its grant — a rootDir error in `tsconfig.json`, an inert MCP SDK in the consumer bundle, and a dead `require` held back only by `--external`
 
 **Date**: 2026-10-01
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-02 (see § "Closed — 2026-10-02" at the end of this file)
 **Owner**: Lina (both items; Thurgood is consulted only if the PR touches a CI-scope surface, which neither item does)
 **Trigger**: **before Task 18.1 requests pass four from Stacy (the G2 request)**, and in any case **no later than the moment U2b's unit PR opens (18.3)**. Why this event, item by item (both are one `chore/` PR to `main`, merged into `task/123-u2b-profile`, as `2026-09-29-emit-skill-trees-dead-helper.md` does):
 - **Item 2 (the bundle) is the only item that reaches consumers.** `dist/generator/**` ships from release 2 (the 16.3 `files[]` row). After release 2's RELEASE record, the fix is a patch to installed packages, not a pre-release correction. So the merge into the unit branch must precede the unit PR.
@@ -105,3 +105,18 @@ Read against `origin/task/123-u2b-profile` on 2026-10-02 (the manifest half is a
 ### 5. Rulings and trigger
 
 Peter, 2026-10-02: "Go with your recommendations on all four" (the fix lands before the Task 18 gate request) and, after the measurement, "Go with A" (finish it before the gate under a widened grant). **Trigger unchanged**: before Task 18.1.
+
+---
+
+## Closed — 2026-10-02
+
+*Recorded 2026-10-02 by Lina, after Spec 123's U2b merged to `main` (PR #262, squash `669b51b0`). Nothing above is rewritten; the Status line is the only edit outside this section.*
+
+**Outcome**: items 1, 2a, 2b and 2c all landed.
+- **Fixing PR**: #259, squash `e00a5217` **on the unit branch** `task/123-u2b-profile` (the repo's merge button squashes, so the fix reached `main` inside U2b's squash, #262 `669b51b0`; `e00a5217` itself is not an ancestor of `main`). Its body records the content: the resolver split (`resolve-stdio.ts`), the registry split (`registry-manifest.ts`), `getWorkflowRules()` into `workflow-rules-accessor.ts`, the `--external` flag removed from `build:generator`, and `tsconfig.json`'s `rootDir` widened to `"../.."`. Checked on `main` at `669b51b0`: those three new files exist; `tsconfig.json` has `"rootDir": "../.."`; `consumer-entry.paths.test.ts` L208 asserts `expect(text.match(/@modelcontextprotocol/g) ?? []).toEqual([])`.
+- **Grant**: widened by #260 (`823806a2`) to the 14 paths, as the amendment above records. **The grant expired at #262's merge** (README rule 8).
+- **Measured** (recorded in #259's body): `dist/generator/consumer-entry.js` 917,515 bytes before; 917,372 after the resolver split alone; **254,539 after the registry split**; `@modelcontextprotocol` occurrences 0 (the no-SDK assertion in `consumer-entry.paths.test.ts`, which now passes). U2b's merge message records a later rebuild from source at 256,691 bytes, 0 `@modelcontextprotocol` hits.
+- **Dated correction**: the fix targeted the unit branch, not `main` as the Trigger paragraph and last Grant bullet said (#247 L31 had named the unit-branch target; the 2026-10-02 amendment above corrected the text).
+- **Lock move**: deferred by this issue's grant to the VALVE-1 refresh and absorbed by it (`823c583d`, on the unit branch; see `2026-09-30-valve-1-per-trim-spans.md`).
+- **Peter's rulings**: "Go with your recommendations on all four" (the fix lands before the Task 18 gate request) and "Go with A" (finish it before the gate under the widened grant).
+- **Trigger**: fired as stated (before Task 18.1); the fix merged into the unit branch before G2's request.

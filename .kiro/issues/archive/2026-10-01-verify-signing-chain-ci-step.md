@@ -1,7 +1,7 @@
 # Issue: build `verify-signing-chain` — the `--ci` step in `122-diff-guard`, the `--audit` mode, and their fixtures
 
 **Date**: 2026-10-01
-**Status**: ACTIVE (dormant until its ballot ratifies — see Trigger)
+**Status**: CLOSED 2026-10-02 (see § "Closed — 2026-10-02" at the end of this file)
 **Owner**: Thurgood (the instrument's owner; build delegated to one Sonnet session, verified in the owner's seat)
 **Trigger**: **before U2b's unit PR opens** (Spec 123). Precondition: ballot `.kiro/docs/ballots/2026-10-01-signing-act-chain.md` RATIFIED (its merge is `R`). The build cannot start before `R`; if U2b's unit PR is ready before the build lands, the PR waits, because the signing acts that U2b carries are the instrument's first population.
 **Source**: ballot `2026-10-01-signing-act-chain.md` §§ 4 and 6 (one-time acts 2 and 3); the issue-row grant mechanism, `.kiro/docs/ballots/2026-09-27-ci-regime-standing-scope.md` § 3 and `.kiro/issues/README.md` rule 8.
@@ -59,3 +59,16 @@ A `.github/**` grant: per the CI-regime ballot § 3 clause 6, the extent finding
 ## Filed by
 
 Thurgood, 2026-10-01, in the ballot PR for `2026-10-01-signing-act-chain.md` (one-time act 2).
+
+---
+
+## Closed — 2026-10-02
+
+*Recorded 2026-10-02 by Thurgood. Nothing above is rewritten; the Status line is the only edit outside this section. The Status line had read "ACTIVE (dormant until its ballot ratifies)" since the ballot ratified (`R` = `2da74864`, #243) and the step armed on 2026-10-01; it stayed stale until this entry.*
+
+**Outcome**: built, armed, and carried onto `main` by U2b.
+- **Fixing PR**: #245, squash-merged into the unit branch as `75aa8c22`. The ratification record PR #244 landed first, as the arming condition required (`dff78bcd`, on `main`).
+- **ARMING read**: Stacy, `.kiro/specs/123-consumer-distribution/completion/arming-signing-act-consistency.md`, verdict **ARMED**, no finding.
+- **On `main` today** (checked on `origin/main`): `tools/agent-generator/regrounding/verify-signing-chain.ts` exists; `.github/workflows/agent-generator.yml` runs `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --ci` inside `122-diff-guard` (L184); the register row `signing-act-consistency` reads `check_state: armed`.
+- **SHA note**: `75aa8c22` reached `main` inside #262's squash and is not an ancestor of `main`.
+- **Moved to `archive/`** by `git mv`, per README rule 5.

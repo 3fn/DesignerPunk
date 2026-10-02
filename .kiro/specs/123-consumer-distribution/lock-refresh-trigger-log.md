@@ -62,3 +62,14 @@
 - **Lock**: no diff; nothing written; `git status --porcelain` empty after the run. No refresh commit under this grant.
 - **Lock-move owner**: none (the lock did not move on this run).
 - **H0 (A3)**: `7071e39f`. This entry's own commit follows it and touches only `.kiro/specs/**`, so by A3 the lock is unaffected: the head the request is made on, H, equals H0 or differs from it by no closure or guarded path. Lina's own guard run at H is the confirming run for the request; this entry is cited by path and SHA only and is this grant's record, not the request's evidence.
+
+---
+
+## 2026-10-02 — closing entry (the grant's "Closing" clause)
+
+- **The grant expired** at U2b's merge, #262 (`669b51b0`), as § "Grant" provides.
+- **Refresh commits made under the grant: ZERO.** The last entry above is the item-2 confirming run at `7071e39f` (`no-op-green`, freshness 0). Lina's confirming run at the requested head `c1b67b8f` was also `no-op-green` (`completion/task-18-1-completion.md` § R2); Stacy accepted it as the run her W1 needs.
+- **The only lock refresh in the window**, `823c583d`, ran under the VALVE-1 grant, which owned all three moves it absorbed.
+- **`completion/g2-witness-log.md` was never created**: nothing was refreshed after 18.1's request, so no go was owed.
+- The grant issue closed with a dated entry and moved to `.kiro/issues/archive/2026-10-01-task-18-lock-refresh.md` (README rule 5). This log stays in the spec directory as the record.
+- **SHA note**: `7071e39f`, `823c583d` and `c1b67b8f` reached `main` inside #262's squash and are not ancestors of `main`.

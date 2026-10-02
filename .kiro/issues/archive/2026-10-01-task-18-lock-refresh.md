@@ -1,7 +1,7 @@
 # Issue + grant: Thurgood refreshes `canonical/generated.lock` on U2b's unit branch from Task 17's close to U2b's merge
 
 **Date**: 2026-10-01
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-02 (see § "Closed — 2026-10-02" at the end of this file)
 **Owner**: Thurgood.
 - Peter's ruling names him.
 - He also owns the instrument. The register row `never-hand-edit-122-generated` (`governance/classification-map.md`) carries `verification.owner: thurgood`, with `122-diff-guard` as its check, and the lock is that guard's own write.
@@ -123,3 +123,19 @@ Neither Stacy nor Lina was consulted before this record was filed.
 ## Closing
 
 When U2b's unit PR merges to `main`, the grant expires. The outcome (the trigger log's last entry, and the count of refresh commits) is recorded here, dated, and the file moves to `archive/` (README rule 5).
+
+---
+
+## Closed — 2026-10-02
+
+*Recorded 2026-10-02 by Thurgood. Nothing above is rewritten; the Status line is the only edit outside this section.*
+
+**Outcome**: the grant expired at U2b's merge, #262 (`669b51b0`, 2026-10-02), as § "Grant" provides (README rule 8). **Refresh commits made under this grant: ZERO.** Checked with `git log 7071e39f --grep='task-18-lock-refresh'`: only #253 (`a75e442c`) and #258 (`2e6fdbed`) mention the file, and no lock-touching commit carries a `Grant:` line naming it.
+
+- **The one lock refresh in the window** was `823c583d` (Lina, `canonical/generated.lock` only), under the VALVE-1 grant (`archive/2026-09-30-valve-1-per-trim-spans.md`). It absorbed three moves, VALVE-1's own (including `outputs`), `fafae2b0`'s, and #259's, so exactly one grant owned them. This grant made no refresh in between, as A4 requires.
+- **Confirming runs**: Thurgood's at `7071e39f`, `npm run check:122:diff-guard` → `no-op-green`, freshness findings 0, nothing written. Lina's at the requested head H = `c1b67b8f`, `no-op-green`, freshness 0 (`completion/task-18-1-completion.md` § R2). Stacy accepted Lina's run as the confirming run the request carried.
+- **A2 / W3**: `completion/g2-witness-log.md` was never created. No refresh was owed after 18.1's request, so no go was needed.
+- **Amendments**: #258 (`2e6fdbed`), A1–A6 above. The trigger log lives at `.kiro/specs/123-consumer-distribution/lock-refresh-trigger-log.md`, where its closing entry is recorded (this section's "Closing" clause).
+- **The recusal held**: Thurgood authored no line of Task 18's records.
+- **SHA note**: unit-branch SHAs cited above (`7071e39f`, `823c583d`, `c1b67b8f`, `fafae2b0`) exist as objects but are not ancestors of `main`; they reached `main` inside #262's squash. `a75e442c` and `2e6fdbed` are on `main` directly.
+- **Moved to `archive/`** by `git mv`, per README rule 5.
