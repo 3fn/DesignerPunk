@@ -61,7 +61,7 @@ describe('Req 13 — the warning TEXT', () => {
   test('the identity-doc warning, string-equal to the authored text', () => {
     expect(degraded.get('cc')!.warnings).toContain(
       "warning: identity doc 'core-goals' is missing from the installed @3fn/core (.kiro/steering/) — its identity member file and its always-layer entry were not emitted. " +
-        'Generation continued without it; reinstall the package (npm install) to restore it.'
+        'Generation continued without it. If a clean reinstall (remove node_modules, then npm install) does not restore it, the package you installed does not contain it.'
     );
   });
 
@@ -80,7 +80,7 @@ describe('Req 13 — the warning TEXT', () => {
     expect(embed.some((w) => w.includes(`${tail}lina's ambient embed of '${EMBEDDED}' was dropped. `))).toBe(true);
     const route = docWarnings.filter((w) => /^warning: (section '.+' of )?governance doc 'contract-system-reference' is missing from the installed @3fn\/core \(governance\/\) — [a-z]+'s route to it was dropped\. /.test(w));
     expect(embed.length + route.length).toBe(docWarnings.length); // every doc warning is one of the two forms
-    for (const w of docWarnings) expect(w.endsWith('Generation continued without it; reinstall the package (npm install) to restore it.')).toBe(true);
+    for (const w of docWarnings) expect(w.endsWith('Generation continued without it. If a clean reinstall (remove node_modules, then npm install) does not restore it, the package you installed does not contain it.')).toBe(true);
     expect([...degraded.get(target)!.warnings].sort()).toEqual([...expected].sort());
   });
 });

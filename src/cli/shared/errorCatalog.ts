@@ -156,11 +156,23 @@ export function jestConfigCollisionMessage(): string {
  * - `member`: what is missing, e.g. `governance doc 'contract-system-reference'`.
  * - `where`: where the lane looked, relative to the package root.
  * - `consequence`: what was emitted without it.
+ *
+ * THE REMEDY CLAUSE (corrected 2026-10-02): a correctly built package emits no warning (the
+ * parity test asserts `warnings` is empty over the built `dist/consumer-canonical`), so every
+ * warning is either a damaged install or a package that shipped without the member (a diet
+ * defect, a tool the shipped manifest does not declare, a missing prepack dispositions file).
+ * A reinstall repairs only the first, so the text says what a failed reinstall means instead of
+ * promising a repair. It asks for a CLEAN reinstall because `npm install` over an existing
+ * `node_modules` does not re-extract a package already present, so a damaged copy survives it;
+ * and it names no cause, because a linked or `file:` install fails the same way. The design
+ * catalog row for this text is owed under
+ * `.kiro/issues/2026-10-01-design-erratum-req-13-degradation-warning-text.md`.
  */
 export function consumerDegradationMessage(member: string, where: string, consequence: string): string {
   return (
     `warning: ${member} is missing from the installed @3fn/core (${where}) — ${consequence}. ` +
-    `Generation continued without it; reinstall the package (npm install) to restore it.`
+    `Generation continued without it. If a clean reinstall (remove node_modules, then npm install) ` +
+    `does not restore it, the package you installed does not contain it.`
   );
 }
 
