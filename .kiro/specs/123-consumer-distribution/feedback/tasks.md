@@ -1127,7 +1127,11 @@ All five land as I asked:
 | **PR-11** *(after R1)* | FK-5: the profile wording corrections land **before** the G2 cycle-2 unit, as their **own PR** | `Re: 1, agree with "before"` | `tasks.md` UNIT 3c (Task 31); § "How the units run" |
 | **PR-12** *(after R1)* | FK-6: fix `#ios-theming-spec-094` and `#android-theming-spec-094` in the same corrections round; the wording says the gap is being addressed | "Re: 2, agreed, but we might express that this is being addressed and should be resolved soon" | Task 31 (iv). The orchestrator's caution, not a ruling: point at Spec 129 without a date |
 | **PR-13** *(after R1)* | `generate` (and `attach`) warn when they create a note in a repo not ignoring `.designerpunk/` (Leonardo L-RC8) | "Re: 3, agreed" | Task 22; design catalog "personal note created in an unignored directory" |
-| *(still open)* | **Stacy B1's vehicle**: where the G2 hold's guard lives (a RELEASE-FLOW step-5 line) | — | § "Expected release count" (Enforcement); drafted in `[THURGOOD R2]` |
+| *(resolved R4 → PR-15)* | **Stacy B1's vehicle**: where the G2 hold's guard lives (a RELEASE-FLOW step-5 line) | — | § "Expected release count" (Enforcement); drafted in `[THURGOOD R2]` |
+| **PR-14** *(after R3)* | PR-12's wording: "plans to address", for both platforms, no date | "Re: 1, \"plans\" is fine" | Task 31 (iv) |
+| **PR-15** *(after R3)* | The hold's vehicle: Thurgood's record-first amendment to the hermetic-publish ballot (Stacy reviews; Peter ratifies and merges), then Ada's script check under its grant; **no publishing of any version from now until the amendment lands**; Stacy's A-7 item is that PR's first commit | "Re: 3, agree" | § "Expected release count", Enforcement |
+| **PR-16** *(after R3)* | The optional `v*` tag ruleset: **declined**, as the orchestrator recommended. Residual (Ada): a tag pushed outside the procedure is not blocked by anything | "Re: Github, as you recommend." | § "Expected release count", layer (3) |
+| *(after R3, (b))* | The block rule's consequence (no in-place fill): **the design stands as written**. Peter asked "Re: 2, tell me more, please", then "If it makes a difference, what do you think will mean most to the agents?", and directed "Please do". He did not say "accepted"; the orchestrator reads his direction as acceptance, and **his merge of this PR is the confirming act** | as quoted | Task 22; C26 |
 
 **Inputs this draft was built from** (session scratch, not citable records; each owner's own words are in their R1 entry below):
 - Ada's, Leonardo's, Stacy's and Lina's U3-kickoff reads (Lina's in three rounds);
@@ -2783,5 +2787,53 @@ Why bullet 3 keeps the future pattern: it preserves the function of the old item
 - **Totals: 31 parents, 151 subtasks.**
 
 **Can the round close?** Yes, once Peter answers (a)–(c). (d) is optional. No reviewer needs an R3 of their own, with one exception: **if Peter picks "plans to address" in (a), Kenya should confirm that he signs the reworded iOS text.** That is a one-line confirmation, which can ride 31.2's read rather than a round.
+
+---
+
+#### Input for 22.0 (orchestrator, at Peter's direction)
+
+*Input, not a ruling: Leonardo words the template, the offer line and the example. Its last section is a suggestion Peter has heard and not ruled; Task 22.0 carries it as PROPOSED.*
+
+> # Input for Task 22.0 (Leonardo): what makes a personal note useful to the agent that reads it
+>
+> **Source**: the orchestrator's answer to Peter, 2026-10-03. Peter asked: "If it makes a difference, what do you think will mean most to the agents?" After the answer below he directed: "Please do" (pass it to Leonardo as input for wording the template and walkthrough). It is INPUT, not a ruling; Leonardo words the template, the offer line and the example.
+>
+> ## The observation (from reading Peter's note at the start of every session)
+> What changes an agent's behaviour is specifics in the person's own voice. The lines of Peter's note that do the most are concrete:
+> - "prioritize honest, candid feedback … over … solutions you think will make me happy" — standing permission to disagree;
+> - "I might not always agree with you, but I will always listen." — what happens after the disagreement;
+> - "I need to understand the good, the bad, and the ugly" — how much to surface, not only whether to.
+> General statements of values ("I value quality and collaboration") change nothing an agent does; it would assume them anyway. So the form that means most is the one that draws out the specific and the personal: the conversation, not sentence stems, because stems pull everyone toward the same sentences.
+>
+> ## Suggested walkthrough questions (prompts inside Peter's three headings: who I am; what I or my organization value; how I like to communicate and collaborate)
+> - When we disagree, what do you want me to do?
+> - What does useful feedback look like to you, and what kind annoys you?
+> - What should I never do without asking?
+> - What do you want me to know about how you or your team work?
+> - Why do these matter to you? (the reason lets an agent apply a preference to a case the note did not cover)
+>
+> ## Two points from the reading side
+> - Short beats long: the note loads every session; a page in someone's own voice outweighs three pages of template. Once filled, the guidance block should be removable so it stops costing context.
+> - The example matters more than the template: it shows tone (warm, direct, even funny is fine). Keep the edited example close to Peter's real voice; do not sand it down.
+>
+> ## A suggestion Peter has heard but not ruled
+> Before the template ships, Peter runs the walkthrough himself on a scratch repo (about ten minutes), at the same sitting where he approves the edited example. Nobody has tried the walkthrough, and the plan otherwise tests it only at U5.
+
+#### [THURGOOD R4]
+
+**Closing edit, after Peter's answers.** Same rules as before: R4 appends only, checkbox state untouched, parity re-run.
+- **PR-14** (pending (a)): ruled — "Re: 1, \"plans\" is fine". The row is Task 31 (iv): "plans to address" for both platforms, with no date. Kenya signs off on the iOS text at 31.2.
+- **PR-15** (pending (c)): ruled — "Re: 3, agree". The row is § "Expected release count", Enforcement: the vehicle is my ballot amendment, then Ada's script check. **No publishing of any version from now until the amendment lands.** A-7 is that PR's first commit.
+- **PR-16** (pending (d)): **declined** — "Re: Github, as you recommend." The row is layer (3), with Ada's residual stated.
+- **(b)**: the design stands. It is recorded exactly as the orchestrator relayed it (Task 22; C26); Peter's merge of this PR confirms it.
+- **The 22.0 input** is quoted above. 22.0 points at it, and Peter's own walkthrough run is written as **PROPOSED**.
+- **Nothing in any row is pending Peter now.** The five `⟨PENDING PETER⟩` markers read `⟨RESOLVED in R4 — was PENDING PETER⟩`. What remains is deliberately deferred to execution:
+  - the 31.0 sweep and the `#product-tokens` check;
+  - Leonardo's final bytes at 22.0, including the "Themes:" row;
+  - Ada's fact-check at 31.2, and Kenya's sign-off;
+  - Lina's optional HTML-comment measurement, if Peter gives the go;
+  - the hold guard's ballot-amendment PR, which is outside this PR and owed before any publish.
+- **Counts**: U3 at `declared 16, now 18` (one slot left); U3g at 11; U3c at 6. **Totals: 31 parents, 151 subtasks.**
+- **Round closed.**
 
 ---
