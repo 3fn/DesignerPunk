@@ -4,7 +4,7 @@
 **Agent**: Thurgood (Opus) · PRIMARY, Task 19
 **Branch**: `task/123-u3-onboarding` @ `7e838ed10` + the uncommitted 19.4 assembly
 **State**: assembled, then **reviewed by all six owners**, and their corrections were applied verbatim before the commit (Peter's owner-review ruling, 2026-10-03). The lock refresh is at Task 19's close (after 19.5), not here.
-**CI-provenance**: local runs only (listed under § "Tests"). The orchestrator adds the branch-head dispatch after his checkpoint push.
+**CI-provenance**: branch-head dispatch @ `ad3fd588fb2f72297b9a3f30b3039b6a41b09862` (unit-branch feedback, not the gate): runs 37162050265, 37162053791, 37162057463, 37162060631, 37162063814 and 37162067044, all passed (reported by the orchestrator, 2026-10-03). The local runs are listed under § "Tests".
 
 **Owner reviews of the assembled text**, as received (each byte-equal to the copy the orchestrator relayed): `completion/task-19-4-owner-review/{sparky,kenya,data,lina,ada,leonardo}.md`.
 
