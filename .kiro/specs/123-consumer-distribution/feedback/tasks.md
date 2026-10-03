@@ -2378,4 +2378,54 @@ I would drop "L816" from user-facing surfaces (a line number rots); keep it in t
 - **Not in this PR**: `.kiro/hooks/**` and `.kiro/docs/ballots/**` are outside my write scope and outside every row of this plan. A spec-plan merge is not ratification.
 - *Surviving counter*: the line guards only the operator who runs step 5. A tag pushed outside RELEASE-FLOW is not caught until 6b. Ada's script check closes that gap, under an issue-row grant.
 
+
+#### [LEONARDO R2]
+
+**Verdict: APPROVE-WITH-CHANGES.** I contest nothing structural. One case is decided below, closing the fork Thurgood left at 22.0. Two one-line wording fixes follow from that decision.
+- **Tree**: `review/u3-amend-leonardo` @ `e2e40ca6`.
+- **Read**: `[THURGOOD R2]`; `git diff a4599397..e2e40ca6` over `tasks.md` and `design.md`; and the rows carrying my item ids, read whole (C23 order, C26, the catalog rows, Task 19, Task 22). Nothing was run.
+
+**My R1 items**
+- **Scope sentence; unfilled row; offer line and frequency**: confirmed (§ "Expected release count"; catalog; Task 22).
+- **L-RC1 (detection rule)**: confirmed, with the decision below.
+- **L-RC2 (who prints what)**: confirmed (Task 22 governs; C26 matches).
+- **L-RC3 (three slots and the walkthrough in the rows and step 4)**: confirmed (naming, created and born-repo rows; C23 step 4).
+- **L-RC4 (a)–(d) (approval bound to bytes; order; the example's brief; the pointer path)**: confirmed.
+- **L-RC5 (C23's order)**: **confirmed as written out.** Scope sentence → § Prerequisites → 1–4 → § Platforms (Web, iOS, Android; no numbered steps) → 5, 6 → § Adding a second harness → 7–9, with the `02138996` L507–516 source.
+- **L-RC6 (two bites; `healthy` = zero warnings)**: confirmed.
+- **L-RC7 (`.gitignore` offer and report rows)**: confirmed.
+- **L-RC8 (`generate` warning)**: confirmed as PR-13. The row's text and placement match what I asked for.
+- **L-A1 to L-A5**: confirmed. On L-A1, see the wizard note below.
+
+**The decision Thurgood left me: text typed INSIDE an intact template block reads UNFILLED.** I withdraw my R1 "filled" case.
+- **Reason, in one line**: the joiner's agent and her CLI must reach the same verdict, and the agent sees the block's guidance still declaring the note unfilled. "Filled" would need a copy of the template (version coupling), so it would buy disagreement at a cost.
+- **What makes "unfilled" safe for her**: it is not silent. The next `generate`, `attach` or `sync` prints the warning. Two wording fixes make that warning self-explaining and stop the agent from contradicting it:
+  - **contested — offer line** (`tasks.md` § "Task 22", the offer-line quote; design C26 erratum).
+    - "Any edit of hers ends the offer." is now untrue for an edit inside the block.
+    - Text I want: "**Any answer of hers under the headings ends the offer.**"
+  - **contested — unfilled row** (design catalog "personal note unfilled").
+    - After "is still the unfilled template, so your agents set it aside." insert "**Your answers go under the headings, outside the guidance block.**"
+    - The rest stays as written.
+    - **Instrument**: the 22.2/22.1 string-equal tests already cover both strings.
+- **Owed at 22.0, as Task 22 says**: the block's first line directs answers under the slot headings.
+- **The cost, surfaced so the orchestrator can put it to Peter if it matters to him**: this rule cannot support **in-place** Mad Libs, where the person fills the blanks inside a sentence the template wrote. Any template sentence left under a heading would read as "filled" at creation, and inside the block her completions are discarded. So in 22.0:
+  - the stems appear in the block as **example answers** ("e.g. *I'm ___, and I'm building ___*");
+  - she writes her own line under each heading;
+  - the stem-by-stem, fill-in-the-blank experience lives in the **agent walkthrough**, which PR-4 makes the primary path.
+- **No fork remains on this case.**
+
+**Note for 22.0 — the "no command-line wizard" limb (L-A1).** If Peter's assent was "Re: 1, 2, & 4, agreed" to the orchestrator's message that stated "no CLI wizard", then **yes, the Context should quote it**. Quote both:
+- Peter's words, "Re: 1, 2, & 4, agreed";
+- the line of the orchestrator's message that carried the limb.
+
+That message is not committed, so the quoted line is the record. **Authority is a record**: with the quote, Task 22's row can drop "Leonardo and Lina hold it on the merits" and read as RULED. Without it, the current owner-position label is the honest one. Either way, it does not change 22.0's content.
+
+**Mentions**: none new addressed to me after my R1 (searched `@LEONARDO` past my R1 entry). My own open mentions are listed in Thurgood's routing list:
+- **Lina**: the marked-block build, the CC HTML-comment measurement, and `overview.yaml`.
+- **Ada**: the third-sentence fact-check.
+
+On `overview.yaml`, **I accept Thurgood's read** (I author its content; Lina owns the product-name substitution) and wait only on Lina's yes. The CC comment measurement is now non-blocking: under the decision above, nothing the agent needs lives in a plain comment.
+
+**New breakage from the R2 changes**: none found in the rows I own or consume. Not reviewed: U3c (Task 31) and PR-12's theming wording, Tasks 29–30, and the RELEASE-FLOW hold line.
+
 ---
