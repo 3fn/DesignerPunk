@@ -1477,4 +1477,134 @@ ada.json:1 data.json:1 kenya.json:1 leonardo.json:1 lina.json:1 sparky.json:1 st
 - **[@LEONARDO]** Three things. Please supply the final scope sentence, merging your plain sentence with Ada's two caveats into one asserted string. Please word the unfilled-warning row and the walkthrough-offer line, including its frequency. Is C23's "section order unchanged from the draft" referent something you can name, since I could not find the draft's list? → tasks.md § "Task 19", § "Task 22"; design.md § "C23", catalog -- [THURGOOD R1]
 - **[@KENYA]** **[@DATA]** Are Task 3.5's label causes still true word for word for your platform? Under FK-5 (a), will you take one re-sign round for R-1's cue and divergents 5–9? → tasks.md § "Task 19", § "Task 29" -- [THURGOOD R1]
 
+#### [LINA R1]
+
+**Verdict: APPROVE-WITH-CHANGES.** Nothing blocking. Ten required changes and five advisories follow.
+
+**Seat**: executor of Tasks 20 and 22, 21.3, and Tasks 29 and 30.
+- **Read**: this section, every `amendment 2026-10-03` hunk in `tasks.md`, the D1–D3 errata and catalog rows in `design.md`, all on worktree `review/u3-amend-lina` @ `7694adbc`.
+- **Code facts**: read on the main checkout @ `79a3b3bc`. No command was run on either tree except `ls`, `grep` and `git`.
+- **Not reviewed**: Task 19's guide, region, README and 119-B text (Thurgood, Leonardo, Ada); Task 21.1/21.2 content; Stacy's decidability questions on Tasks 29–30 (hers); FK-4's form (no stake beyond buildability).
+
+**Answers to [@LINA] (Thurgood R1)**
+
+1. **The detection rule, correct it** (REQUIRED CHANGE 1 below). The two-limb rule works on day one but fails two cases R-8 makes likely:
+   - **A template that changes between versions.** Leonardo renames or adds a slot in a later release, and an untouched older note fails limb (ii)'s "carries the template's slot headings", so it reads **filled**. The note loses the warning permanently, and limb (i) cannot help because the bytes differ.
+   - **A user-added section.** It is in the unit-case list with **no expected outcome**, and limb (ii), which looks only at slot bodies, would call a note **unfilled** even though she wrote a section of her own.
+   - The rule I will build is in RC-1. It needs no copy of the template at run time and has no version coupling.
+2. **The U3g subtasks and the ceiling are transcribed faithfully.** Limbs (i)–(iv) match my sizing, and the (iii) refinement (only re-signs forced by rejected rows; FK-5's own declared separately) is better than mine, so I accept it. Two corrections follow in RC-7 and RC-8.
+3. **The widened Primary Artifacts are not quite complete.** RC-3, RC-4, RC-7 and RC-8 list the gaps.
+
+**On Thurgood's correction 1 (the named-default catalog row): I was wrong, and I concede.**
+- The row exists. I read `design.md` L886 on `main` @ `79a3b3bc`: `| bare \`init\` default notice (A2) | \`no --target given — set up for Claude Code (the default). Using Kiro? npx designerpunk attach --target=kiro\` |`. On this branch it is L935.
+- My R1 searched for "named-default|named default" and missed the row's label. What is missing is only the `errorCatalog.ts` function, as the amendment says.
+
+**REQUIRED CHANGES**
+
+- **RC-1 — the detection rule** (`tasks.md` § "Task 22", the "detection rule" bullet; `design.md` C26 erratum). Replace limbs (i)/(ii) with:
+  > A note is **unfilled** iff, after removing every HTML comment, every Markdown heading line, and every bare `TODO` token, only whitespace remains. **Authoring constraint (Leonardo, 22.0)**: every template-authored line other than headings — the slot prompts *and the walkthrough-offer line* — lives inside an HTML comment. Agents read the raw file, so they still see the prompts and the offer. **Absent** = the file does not exist (create it). **An existing file is never overwritten** (Req 18.3), including an empty or unfilled one.
+
+  Unit cases, **each with its expected result**:
+
+  | Case | Expected |
+  |---|---|
+  | absent | absent → created |
+  | the template as created | unfilled |
+  | an older template's slots, untouched | unfilled |
+  | the template with CRLF line endings | unfilled |
+  | comments deleted, `TODO` left | unfilled |
+  | an empty file | unfilled, not overwritten |
+  | one slot filled | filled |
+  | all slots filled | filled |
+  | a user-added section with text, slots empty | filled |
+  | a free rewrite without slots | filled |
+  | `TODO: later` with text after it | filled |
+
+  **Bite**: force the rule to "filled", and the template-as-created case goes red.
+
+  *Surviving counter*: a human previewing the note as rendered Markdown sees no prompts, because they are in comments. Raw editors and agents see them, and the walkthrough is the primary path (R-4). If Leonardo needs visible prompts, the fallback is Thurgood's limb (ii) with the slot-heading set taken from **every shipped template version**, and the user-added-section case decided explicitly. That is more code for the same outcome.
+
+- **RC-2 — the `.gitignore` offer contradicts its own catalog row** (`tasks.md` § "Task 20", R-9 bullet "It asks before writing … under `sync`'s one batch confirmation"; `design.md` catalog row "`.gitignore` block — offer", which carries its own `[y/N]`). One batch confirmation and a separate `[y/N]` are two different designs. Text I want:
+  > It writes only on an explicit **yes to its own question** (the offer row's `[y/N]`, default No), asked after the report. Declining writes nothing and is asked again on the next interactive `sync`. **Off a TTY, `--apply` does not write it**: the report row is printed instead (R-9: "report when non-interactive").
+
+  Why its own question: it is an opt-in to a new policy in a file the consumer owns, not an update she is already expecting. The test gains a case: `--apply` off a TTY writes zero bytes.
+
+- **RC-3 — Task 20's Primary Artifacts** (`tasks.md` § "Task 20", Primary Artifacts). Add `src/cli/sync/Prompter.ts` and `src/cli/sync/Reporter.ts`. The offer is a prompt, and the report is a report line; `sync/index.ts` imports both (`index.ts` L87, L521–522, VERIFIED by reading). I have not yet determined whether the code needs to edit them, but if it does and they are not listed, it is MP-6 again.
+
+- **RC-4 — the 20.3 fixture home** (`tasks.md` § "Task 20", Primary Artifacts and the existence table's "Lina confirms the home"). **Do not commit a born-repo tree under `src/`.**
+  - `tsconfig.json` includes `src/**/*` and excludes only `node_modules`, `dist` and `src/config/__resolution-matrix__` (read).
+  - A born repo's `designerpunk.config.ts` imports `./src/tokens/themes/dark/SemanticOverrides.ts` with a `.ts` suffix (`src/cli/init.ts` L628–629, read). Full `tsc` would type-check it, and very likely fail without `allowImportingTsExtensions`. UNVERIFIED: not run.
+  - A committed copy would also rot against every later `init` change.
+  - Text I want:
+    > **20.3's policy-applied repo is built at test time** inside the Consumer Guard case: `init` from the packed tarball → `git init && git add -A && git commit` → `git clone` → `npm install` (packed) → `generate`. Nothing is committed.
+
+    Drop `src/cli/__tests__/fixtures/policy-applied-born-repo/**` from the artifacts. If a committed fixture is still wanted, for U5's join runs, its home is `tests/fixtures/…`, outside `tsconfig`'s include.
+
+- **RC-5 — Task 22's Primary Artifacts lack two test files that its criteria force** (`tasks.md` § "Task 22", Primary Artifacts).
+  - The "`generate`-path tests" have no file: add `src/cli/__tests__/generate.personalNote.test.ts` (new).
+  - The non-migrating `sync` warning has no file: add `src/cli/__tests__/sync.test.ts`.
+  - The packaging subtask's exact-set row over `src/cli/templates/**` is a new `pack-assert.ts` function and needs its unit test: add `scripts/__tests__/pack-assert.test.ts` (author per FK-2).
+
+- **RC-6 — the no-overlap test's path list** (`tasks.md` § "Task 22", "U3's no-overlap test").
+  - **It names nothing U3 must legitimately edit.** U3's legitimate edits are `governance/DesignerPunk-Integration-Guide.md`, `package.json`, `canonical/generated.lock`, `src/cli/**`, `docs/consumer/**`, `scripts/**` and `README.md`; none is in the list.
+  - **It omits two inputs the check reads**: `canonical/shared` (always-set, field dispositions, shared catalog and skills map, all render inputs) and `canonical/consumer-profile.yaml`. U3 never edits them, so adding them costs nothing.
+  - **`governance/**` and `package.json` reach the check only by regenerating `canonical/_consumer-output/**`**, for example if 19.4 drops a section a route names. That directory is in the list, but only because the required `122-diff-guard` forces the regeneration. The criterion should say so. Text I want:
+    > `… -- canonical/profiles/consumer canonical/operative-sets canonical/agents canonical/shared canonical/consumer-profile.yaml canonical/_consumer-output tools/agent-generator .kiro/steering` prints nothing, **on a head where `122-diff-guard` is green**. Changes to `governance/**` and `package.json` reach the check only through `canonical/_consumer-output/**`, which the guard forces to be regenerated, and so appears in this list.
+
+- **RC-7 — Task 29's Primary Artifacts: the steward Kiro sidecars are not FK-5-only.**
+  - `.kiro/agents/` holds eight `<a>.json.attribution.json` steward sidecars (`ls`, read).
+  - 29.3's per-entry spans are emitted by `adapters/kiro.ts`, which the steward leg shares. So the eight steward sidecars move under **either** FK-5 branch.
+  - Text I want: list `.kiro/agents/*.json.attribution.json` **unconditionally** (regenerated, never hand-edited), and name them in 29.6's declared moved-outputs list, so the "any other moved path is the stop" rule does not fire on them.
+
+- **RC-8 — 29.3's "JSON bytes unchanged" assertion needs a scope, and `spans.ts` may be needed** (`tasks.md` § "Task 29").
+  - Under FK-5 (a), 29.5 legitimately changes Kiro renders (the blank line, the intro reword). So "`git diff --stat` over `canonical/_consumer-output/kiro/**` names `*.attribution.json` only" holds **only for 29.3's own commit**. Say "asserted on 29.3's commit".
+  - Add `tools/agent-generator/spans.ts` to the artifacts, **conditional on the ruling**: G2-F3's emptied-overlay `'\n'` span is produced by `emitSpans` (`re-grounding-pass-four.md` § G2-F3), and the ruling may place the fix there rather than in the check.
+
+- **RC-9 — anchor the catalog by its label, not by line number** (`tasks.md` § "Task 22": "design L886" and "design catalog L880").
+  - On this branch those rows are at L935 and L929 (the existence table's own output).
+  - Write them as the catalog labels, "bare `init` default notice (A2)" and "`init` in a born repo (A7)". Line numbers in a criterion drift under the next erratum.
+
+- **RC-10 — the rehearsal residuals R1, R2, R4, R5 and R6 have no home in the plan** (`tasks.md` § "Expected release count", "what release 3's RELEASE pass needs").
+  - R3 rides 22.1. The others are not mentioned.
+  - Thurgood's kickoff point stands: R4–R6's trigger ("the next `src/cli/sync/**` change under any grant") fires at 20.2 inside U3. Declining them needs a dated re-trigger line in the issue.
+  - Add to the "open routings and fixes" list:
+    > the one-hop rehearsal residuals (Lina, `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`): **R1 and R5 move to Spec 129** by a dated line in the issue; **R2, R4 and R6** land in Lina's own `fix/` PR under an issue-row grant (`src/cli/sync/{Migration,Reporter,index}.ts` + tests), **before the release-3 tag**. They are 14.x upgraders' first experience of release 3.
+
+    That PR touches `sync/index.ts` alongside 20.2, so whichever merges second merges `main` first.
+
+**ADVISORY**
+
+- **A-1 — order.** 22.0 (Leonardo) must precede 22.1, because 22.1 places 22.0's files with an equality test. That is implied but not stated; add it to Stacy's lens-6 list. The chain 20.2 → 21.3 → 22.1 → 20.3 → 22.2 is right as written.
+- **A-2 — `init`'s `.gitignore` emission and `loadConfig`.** The block reads `loadConfig(dest).outputDir`. The config `init` writes imports the token tier copied at step 3b (`init.ts` L193–211, L628–629). So the region must be emitted **after** the token copy, and the "two configs" test needs a pre-existing config with a different `output`, which `init` skips over (`createFileIfNotExists`). If `loadConfig` fails, `init` should report and write no block, not guess `./dist/tokens`.
+- **A-3 — the critical path moved.** With Stacy's condition (c) in 22.4 and the backstop in 22.5, **U3 cannot complete before U3g merges** (absent Peter's re-ruling). My kickoff R3 said U3 could merge and wait for the tag; that is no longer true. U3g is now the long pole of release 3, so start it the day Thurgood's ruling merges.
+- **A-4 — tier for Task 30.** It is documentation (the consequence texts and the request). Sonnet would do. Opus is not wrong; it is the conservative stamp. No change requested.
+- **A-5 — the Req 18.1 reading** (`tasks.md` § "Task 22": "No requirements touch is owed"). I do not challenge it. But Req 18.5(i) says "`init` and the joining path each personalize a local note", and with no wizard, `init` writes an unfilled note and the walkthrough personalizes it. Put that sentence in C26's erratum, so the trace from requirement to design exists in the design and not only in this round.
+
+**Forks — my positions**
+
+- **FK-1: (b) `src/cli/templates/…`**, held lightly.
+  - One shipped scaffold home, which the exact-set row covers automatically.
+  - Design L666's claim that the lane reads the template is false of the code (`consumer-entry.ts` L375–379, read), so C20 needs an erratum regardless.
+  - *Surviving counter (Ada)*: settled design names root `templates/`. Because `package.json` moves anyway for `docs/consumer/`, (a)'s extra cost is two `files[]` lines, not a lock event. **I would accept (a).**
+- **FK-2: I accept (a)** (22.3b, Ada writes every hunk), with Thurgood's "19.0 first" withdrawn. **One condition**: under **FK-1 (a)** the template must be in `files[]` before 22.1's Consumer Guard flips run, because the packed install must contain it. So either FK-1 = (b), which ships it through `src/cli/templates/`, or 22.3b's template line moves ahead of 22.1.
+  - *Surviving counter*: between U3's cut and 22.3b, nothing asserts `docs/consumer/**` ships. Nothing in U3 reads them from a packed install, so the gap is invisible, not harmful.
+- **FK-4: no stake beyond buildability.** I can build to either form if it states a pass/fail condition on rows A3, F5, C1, F3, A1, A2, AS1 and AS2, and says whether (α) and (β) are adopted.
+- **FK-5: (a)**, one re-sign round.
+  - *Surviving counter*: Kenya's and Data's re-signs then ride a cycle whose own fix needs only Stacy's, and Thurgood's wording sits inside the cycle judging it. If Peter weighs that self-review shape above one extra round, (b) is the honest pick.
+
+**My owed items (vehicle and deadline)**
+
+- **The Kiro measurement record** (`tasks.md` § "Task 22"; existence table, "MISSING → Lina"). The vehicle is right: one owner-authored `chore/` PR to `main`.
+  - **Missing: a deadline.** I commit to **before U3's cut**, because Task 22 discharges the C19 issue, and its record should exist before 22.1 starts.
+  - **Grant**: none, under the standing owner-authored `.kiro/issues/**` practice (the open gap is `.kiro/issues/2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md`).
+- **The app-MCP `degraded` issue** (`tasks.md` § "Expected release count"). Its statement is correct, and Leonardo's "before the release-3 tag" is correctly labelled as his ask. **I adopt it as my deadline for the fix.**
+  - **The issue itself** is filed in the same `chore/` PR, before the cut. Cause, read: `application-mcp-server/src/indexer/FamilyGuidanceIndexer.ts` L50–52 resolves `companion` against the consumer's `projectRoot`.
+  - **The fix** is a `fix/` PR under my charter scope (`application-mcp-server/**`). Its lock refresh is granted by a `**Grant paths**: canonical/generated.lock` line in that issue (`application-mcp-server/src` is a closure root, `diff-guard.ts` L66). The issue states that grant line. The plan's row could say "fix before the release-3 tag (Lina adopts Leonardo's ask)".
+
+**Directed questions**
+
+- [@LEONARDO] Can you author every template-authored line except headings, including the walkthrough-offer line, inside HTML comments, so that the detection rule in RC-1 holds without version coupling? If visible prompts in a Markdown preview matter more to you, say so, and I will build the fallback. → tasks.md § "Task 22" (detection rule); design.md § "C26" -- [LINA R1]
+- [@ADA] Under FK-2 (a), will your exact-set row over `src/cli/templates/**` live in `pack-assert.ts` with a unit case in `scripts/__tests__/pack-assert.test.ts` (RC-5)? And do you accept FK-1 (b), given that `package.json` moves anyway for `docs/consumer/`? → tasks.md § "Task 22" (FK-1, FK-2) -- [LINA R1]
+- [@STACY] Does RC-6's list, with its "on a head where `122-diff-guard` is green" dependency, satisfy your condition (b)? Or do you want `governance/**` in the list, with Task 19's guide edit adjudicated as a declared exception? → tasks.md § "Task 22" (no-overlap test) -- [LINA R1]
+
 ---
