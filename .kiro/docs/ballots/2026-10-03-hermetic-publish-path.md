@@ -29,7 +29,10 @@
 
 **Carries (law text, applied at ratification):**
 - RELEASE-FLOW: § "Deriving the delta" item 4, and steps 5 and 6 of § "The sequence" (§ 3.1–3.4).
-- `governance/release-management-system.md` § 5 (line 41) (§ 3.5).
+- `governance/release-management-system.md` § 5 (line 41) (§ 3.5) and line 31 (§ 3.6).
+- `.kiro/hooks/README.md` line 109 (§ 3.7).
+
+§§ 3.6 and 3.7 were added 2026-10-03 from the documentation sweep.
 - A `proposed` register row, `hermetic-publish-path` (§ 4).
 - The README entry, and one annotation in Spec 123's `tasks.md` (§ 5, application).
 
@@ -67,9 +70,11 @@
 > 4. Publish mechanics: the dual-registry playbook (public npm needs Peter's login/2FA; expect the ~30-day token expiry — an E404 on publish is a masked auth failure).
 
 **After:**
-> 4. Publish mechanics: § "The sequence" steps 5–6 — **one tarball, built by `scripts/release-publish.ts` in a fresh clone at the tag, published unchanged to both registries**. The dual-registry playbook still supplies the public-npm flags and its auth notes: public npm needs Peter's login/2FA, and the token expires in about 30 days, so an E404 on publish is a masked auth failure. **The release notes disclose any change in embedded dependency versions against the previous release's public artifact** (the first instance is § "Dependency disclosure" of ballot `2026-10-03-hermetic-publish-path`).
+> 4. Publish mechanics: § "The sequence" steps 5–6 — **one tarball, built by `scripts/release-publish.ts` in a fresh clone at the tag, published unchanged to both registries**. The public-npm flags are written out in step 5.4. They were previously only in "the dual-registry playbook", which is not in this repo, so a fresh session could not find it. Auth note: public npm needs Peter's login/2FA, and the token expires in about 30 days, so an E404 on publish is a masked auth failure. **The release notes disclose any change in embedded dependency versions against the previous release's public artifact** (the first instance is § "Dependency disclosure" of ballot `2026-10-03-hermetic-publish-path`).
 
 ### 3.2 `.kiro/hooks/RELEASE-FLOW.md` § "The sequence", step 5 (whole step replaced)
+
+*Numbering note*: substeps 5.1–5.4 belong to § "The sequence". § "Deriving the delta" has its own **Step 5**, with **5a** (the owed-set query) and **5b** (the arming question). Both charters and Stacy's command catalog cite that 5a/5b. They are unchanged by this ballot and are a different step.
 
 **Before** (lines 124–131 at `0a299f2d`):
 > 5. **Publish from merged `main`**: `git switch main && git pull`, then `npm publish`
@@ -141,6 +146,22 @@
 
 *Shipped-doc note*: this file ships in the package (`files[]` keeps `governance/`). The edit is therefore consumer-visible and rides the next release's notes as a 🔵 internal-process change.
 
+### 3.6 `governance/release-management-system.md`, line 31 (added 2026-10-03 from the documentation sweep)
+
+**Before:**
+> - Verification stays mechanized; judgment stays human. DesignerPunk's publish guard scripts (`check:drift`, `verify:token-index-clean`, the `prepublishOnly` chain — this repo's package scripts, not shipped to consumers) block a broken publish mechanically and are NOT part of the retired tool.
+
+**After:**
+> - Verification stays mechanized; judgment stays human. DesignerPunk's publish guard is its publish script (`scripts/release-publish.ts`, which runs `check:drift`, `verify:token-index-clean` and `pack-assert` itself, in a fresh clone at the tag). `prepublishOnly` is only a tripwire that refuses a folder publish. These are this repo's package scripts, not shipped to consumers. They block a broken publish mechanically and are NOT part of the retired tool.
+
+### 3.7 `.kiro/hooks/README.md`, line 109 (added 2026-10-03 from the documentation sweep)
+
+**Before:**
+> See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the `prepublishOnly` token-index gate, and the derive-classify-ratify notes recipe).
+
+**After:**
+> See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the derive-classify-ratify notes recipe, and the publish path: one tarball built by `scripts/release-publish.ts` in a fresh clone at the tag, which runs the token-index gate itself; `prepublishOnly` only refuses a folder publish).
+
 ## 4. The register row (verbatim; applied as `proposed`)
 
 ### hermetic-publish-path
@@ -167,12 +188,16 @@ history:
 
 ## 5. Application (at ratification, one PR, Peter-merged under the governance carve-out)
 
-1. The record-first Status flip in this file. Then §§ 3.1–3.5 and § 4, verbatim. Then the README "Ballots on record" entry.
-2. **Straggler sweep**: `grep -rn "Publish from merged\|publish from merged\|git switch main && git pull" .kiro/hooks governance .kiro/steering canonical`. Every hit is either brought in line or listed as intentionally historical.
+1. The record-first Status flip in this file. Then §§ 3.1–3.7 and § 4, verbatim. Then the README "Ballots on record" entry.
+2. **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
 3. **The tasks.md annotation owed by the absorbed issue (its owed act 2)**: a dated annotation on Spec 123 `tasks.md`'s line "RELEASE fires at the release tag, before publish", pointing here (phase 1 at S before the tag; phase 2 after the step-6 record PR).
 4. `rebuild_index` after merge: `governance/` is a served root.
 5. Close and archive `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (`git mv` to `archive/`).
-6. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
+6. **Charter follow-ups, by vehicle (b)**: a canonical-charter edit plus regeneration (Spec 122), in a separate PR after this one merges. Never hand-edit `.claude/agents/*` or `CLAUDE.md`.
+   - **Stacy's RELEASE row** (`canonical/agents/stacy.md` L393): its wording, Stacy's to author.
+   - **Thurgood's LIVENESS read 2** (`canonical/agents/thurgood.md` L448): a RELEASE record with phase 1 only, still reading `publish-rail liveness: owed`, is an event without a complete record.
+   - Both are listed in the sweep section named in item 2.
+7. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
 
 ## 6. Deferred — captured
 
