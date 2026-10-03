@@ -54,7 +54,7 @@ get_token_details({ name: "space150" })
 
 **What it solves:** Every component makes explicit behavioral promises. Machines validate contracts; humans define interaction intent.
 
-**Deliverables:** 34 production components with behavioral contracts. 10 contract categories, 137 concepts. True native implementations (Web Components, SwiftUI, Jetpack Compose). Formal inheritance with intentional exclusions.
+**Deliverables:** 34 production components with behavioral contracts. 10 contract categories, 137 concepts. Platform implementations: Web Components for the web; the SwiftUI and Jetpack Compose components ship as reference source, not a build input (Native onboarding is not supported yet). Formal inheritance with intentional exclusions.
 
 **How AI agents access it:**
 ```
@@ -126,21 +126,17 @@ Guiding agents to apply tokens and components to product design specs is the cur
 
 ## Getting Started
 
-**Status:** onboarding is still being built. 15.0.0 is for existing installs and early adopters: the web path and the generated agent layer (Claude Code and Kiro) are ready; native (iOS/Android) onboarding is not supported yet.
+This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
 
 **Use it in your project:**
-```bash
-npm install @3fn/core
-npx designerpunk init        # copies the token source into your repo; generates the agent layer (--target=cc or --target=kiro)
-npx designerpunk generate    # builds your own token output from your token source
-npx designerpunk sync        # after upgrades — reports first; on your go, updates DesignerPunk's MCP config and generated agent files
-npx designerpunk attach --target=kiro   # add another agent tool, or set up a repo init did not create
-```
-`sync` never touches your tokens: after `init`, they are yours. Not comfortable with terminal commands? Ask your AI agent to follow these steps. That's the point.
 
-Upgrading from 14.x? Follow the [15.0.0 release notes](docs/releases/release-15.0.0.md).
+1. `npm install @3fn/core`
+2. `npx designerpunk init --target=<cc|kiro>` — `init` is the birth event — runs once per design system, ever
+3. `npx designerpunk generate` — `generate` is the pipeline — run on every token change
+4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
+5. Restart your agent session (approve DesignerPunk's MCP servers if asked).
 
-[Full integration guide →](governance/DesignerPunk-Integration-Guide.md)
+[Install guide](docs/consumer/INSTALL.md)
 
 **Study the architecture:**
 - [DesignerPunk Systems Overview](.kiro/steering/DesignerPunk-Systems-Overview.md)
