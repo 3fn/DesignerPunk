@@ -1607,4 +1607,208 @@ ada.json:1 data.json:1 kenya.json:1 leonardo.json:1 lina.json:1 sparky.json:1 st
 - [@ADA] Under FK-2 (a), will your exact-set row over `src/cli/templates/**` live in `pack-assert.ts` with a unit case in `scripts/__tests__/pack-assert.test.ts` (RC-5)? And do you accept FK-1 (b), given that `package.json` moves anyway for `docs/consumer/`? → tasks.md § "Task 22" (FK-1, FK-2) -- [LINA R1]
 - [@STACY] Does RC-6's list, with its "on a head where `122-diff-guard` is green" dependency, satisfy your condition (b)? Or do you want `governance/**` in the list, with Task 19's guide edit adjudicated as a declared exception? → tasks.md § "Task 22" (no-overlap test) -- [LINA R1]
 
+#### [KENYA R1]
+
+**Verdict: APPROVE-WITH-CHANGES.** No blocking item. Scope: the iOS label causes (Task 19), every amended row that implies iOS verification, Task 29's FK-5 (a) re-sign batch for my rows, and my `[@KENYA]` mention. **Not reviewed**: Android, Tasks 20–22 and 30, the design errata outside C23's scope sentence, the G2 machinery, FK-1, FK-2 and FK-4 (no stake). I ran commands on this worktree (`DP-wt-rev-kenya` @ `7694adbc9`, read-only except this entry). Host: Swift 6.2, iOS 26.0 simulator SDK. No app, no `xcodebuild`, no full-tree typecheck was run.
+
+**`[@KENYA]` answered.**
+- *Are Task 3.5's causes still true for iOS?* Yes for all three, and one more cause exists that no row names (item B1 below).
+  - **Binds `DesignerPunkTheme` / `\.dpTheme`**: still true. 27 sites spell `@Environment(\.dpTheme)` or `@Environment(.dpTheme)` and 11 spell `any DesignerPunkTheme` across `src/components/core/*/platforms/ios/*.swift` (read: `grep -rn --include='*.swift'`). Example: `Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift:273`. Nothing defines either name: zero `protocol|struct|class DesignerPunkTheme` and zero `var dpTheme` anywhere under `src/`.
+  - **"Nothing emits it"**: still true, and sharper than the row says. The Swift theme-type emitter exists, `TokenFileGenerator.ts:1130` (`generateSwiftThemeTypes`; `EnvironmentKey` at L1243–1250), but `generateThemeOverrideBlocks` (L1028) has **no production caller** (grep over `src scripts tools`, tests excluded: only its definition). It emits under the consumer's own abbreviation, `${lowerAbbr}Theme` (L1158, L1248), so even once wired it matches the hardcoded `dpTheme` only for a consumer whose abbreviation is `DP`.
+  - **`ContainerCardBase.ios.swift` L816**: still true. The `/**` at L816 never closes (a nested `/**` at L853 and one `*/` at L858 leave depth 1 to EOF). **Reproduced by command**: `swiftc -parse` → `ContainerCardBase.ios.swift:962:2: error: unterminated '/*' comment`, note "comment started here" at L816.
+  - **No package manifest**: `git ls-files | grep -i 'Package.swift\|xcodeproj\|xcworkspace'` → empty.
+- *Will I take one re-sign round under FK-5 (a)?* **Yes, with the conditions in item C below.**
+
+**A. The sentence I would sign** (install doc's iOS sub-section; the README form is the same minus the file name). It contains both asserted strings verbatim:
+
+> **Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own configuration, which no shipped file defines and your `npx designerpunk generate` does not emit; the package has no Swift package manifest; and `ContainerCardBase.ios.swift` does not parse.
+
+I would drop "L816" from user-facing surfaces (a line number rots); keep it in the prose causes list where it is already.
+
+**B. Required changes (small).**
+1. **B1 — a fifth cause the cause list omits, measured.** Nine shipped iOS files spell the theme read **without the key-path backslash**: `@Environment(.dpTheme)` in `ProgressBarBase.ios.swift:47`, `BadgeLabelBase:211`, `ProgressIndicatorLabelBase:50`, `ProgressIndicatorNodeBase:129`, `BadgeCountNotification:226`, `BadgeCountBase:184`, `ProgressIndicatorConnectorBase:78`, `Avatar.ios.swift:292`, `ProgressPaginationBase:67`. They parse (`swiftc -parse` on `ProgressBarBase` exits 0), but a 5-line probe with a **defined** `dpTheme` key (scratch, not committed) fails `swiftc -typecheck -sdk iphonesimulator -target arm64-apple-ios17.0-simulator` on the backslash-less form with `generic parameter 'T' could not be inferred`, and compiles on the backslash form. So "define the theme surface" alone would not make the tree compile. → `tasks.md § "Task 19"` bullet "Criterion 5's native labels", the **Causes are prose** line: add two causes — "the theme names are fixed to DesignerPunk's own configuration, not the consumer's abbreviation" and "nine components spell the theme read in a form that does not type-check". Prose only, no new asserted string; the label stays true. **Route (not this round)**: Lina's `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md` item 2 counts the 27 sites but not the 9 malformed; I will message it to Lina via Leonardo.
+2. **B2 — "toolchain unavailable" is false on at least one host.** → `tasks.md § "Task 19"`, the **Per-platform verification target** bullet: replace "Each build claim reads `not re-verified — toolchain unavailable`" with "Each build claim reads `not built in this amendment`". Reason: `swiftc` and `xcodebuild` exist on this machine (I used them for the two commands above), so the old string would be an inaccurate statement of why, and the true limit is that nobody ran a build. Add to the same bullet: "the L816 parse failure was reproduced with `swiftc -parse` (Swift 6.2, Kenya, 2026-10-03)". Same fix for the pre-existing "no platform toolchain on the host" wording in the persona-record row (`tasks.md § "Task 25"`, the bullet "Not exercised reasons use Kenya's and Data's corrected wording"), which is outside this amendment: **advisory**, because "no native component consumption path" is the true half.
+3. **B3 — a name collision.** `tasks.md § "Task 29"` (FK-5 (a), 29.5, and the "Expected release count" bullet) says "R-1's cue", but **R-1 in this round's table is Peter's one-document ruling**. The cue is **Stacy's claims-pass finding R-1** (`completion/claims-pass-release-15.0.0.md` L120–128). → write "claims-pass R-1 (theme Swift/Kotlin cue)" every time, so no reader takes the re-sign for Peter's R-1.
+
+**C. Task 29's re-sign batch (item 3 of my brief).**
+- **Which of my signed rows move** (rows read from `canonical/profiles/consumer/signatures/kenya.md`; hashes not recomputed by me):
+  1. `frontmatter:ambient.groundTruthManifest.verdict` (L316): **moves** under the intro reword; its span is the intro line itself (cc `kenya.md` L345, kiro L261).
+  2. `frontmatter:commands[platform-tokens]` (L210): **moves** under the claims-pass R-1 cue edit (`kenya.overlay.md:160`).
+  3. `frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]` (L292; divergents 6 and 9 are **one row**, two acts): moves only if the edit to its removal cite (`subtraction-3`) changes `canonicalHash` or `renderedHash`. **UNVERIFIED which.** If neither hash moves, a re-sign fails F5 and is out of bound.
+  4. `#with-peter` (divergent 7): **no act unless the unit's text changes** (see my position below).
+- **I accept one batched round**, at 29.6, **before H′'s freeze**. "At the unit's end" must read "at the end of Task 29", not after Task 30. The row's ordering already says this; I am stating that I read it that way.
+- **What must NOT be mixed into it** (from the signing-act ballot `2026-10-01-signing-act-chain.md` clauses 3–5 and § 4.6, the rules I signed under):
+  - a re-sign of any row **not on the freshness stale list** (clause 5, needs a real grant, counted separately). That includes divergent 6/9 and divergent 7 if their edits move no hash;
+  - any disposition, `removals` or `cites` change presented as part of my act (clause 4: authoring, Thurgood's, in a **separate commit** from my signing commit);
+  - the Kiro blank-line fix landing in the **preceding body unit's last span** instead of the container span: it would stale unrelated Kenya body rows. The issue says to prefer the container; I ask that `renderedHashOf` is run on the Kenya rows **before** the edit and pasted;
+  - the lock refresh (the guard's own write, from a clean tree, after the round);
+  - seat commits that are amended, rebased or cherry-picked (merge-only, § 4.6; a failing commit gets a new commit).
+- **Pre-round instrument I ask for** (add to 29.6): the freshness stale list pasted **before** my first act, naming exactly rows 1–2 (and 3 if the hash moves) for Kenya. A Kenya row on that list that 29.5 does not explain is the ceiling's limb (iii), not part of the batch. Intro-line wording: I ask to read Thurgood's text before it is committed, as signer (not as author).
+- **My position on divergent 7 (J-6CD4, `#with-peter`, `human-4`), as owner.** The blind seat's reading is fair: `human-3` ("explain iOS technical constraints in accessible terms") governs how I explain, and `human-4` governed whether I assume the lead needs help; "credited by entailment" was generous. I would **keep the removal** (subtraction-2: it is a biographical fact about Peter with no consumer counterpart) and **not restore text**, so no row moves and no act is owed; the record should say my sheet's "credited by entailment" sentence is the disputed part, resolved under the RS-1 erratum. **Surviving counter**: a future blind seat will diverge on the same row again; restoring a consumer-neutral `human-4` costs one in-bound re-sign now. If Thurgood authors one, I re-sign, and it enters the same round.
+
+**D. A scope gap in 29.5, surfaced as a fork, not picked (call it FK-6).** The claims-pass R-1 cue is not the only signed iOS text that asserts theme output `generate` does not produce. The rendered `#ios-theming-spec-094` unit (cc `canonical/_consumer-output/cc/.claude/agents/kenya.md` L64–70) says "**Generated Swift output includes:** `{Name}Theme` protocol, concrete structs per theme, `{Abbreviation}ThemeKey: EnvironmentKey`", and my own signature on it (sheet L21–30) says `theming-1` is "*more* true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`". Both are false today by the no-caller fact above. If only the cue is corrected, the consumer-Kenya render contradicts itself (cue: no theme Swift; unit: generated Swift includes it).
+- **(a)** Name the unit in 29.5 now: reword to what is true today, then re-flip at Spec 129's close. Cost: a second round on the same rows later.
+- **(b)** Correct the cue only and record the unit as forward-true, carried by name to Spec 129 deliverable (i) (`.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`). Cost: a contradiction in the shipped consumer-Kenya text until then, with the hold on tagging already applied.
+- **(c)** Correct both now, in one round, in forward-true wording that survives Spec 129 (e.g. "when your output includes theme types"), so there is no second flip.
+- I lean **(c)**, because it is the only one that avoids both a contradiction and a re-flip. **Surviving counter**: conditional wording is weaker guidance for an agent acting today, and (c) widens the batch beyond the cue Peter's R-5 text names. Data has the Android twin (`#android-theming-spec-094`, J-812A), which this fork should be put to Data as well. The pick is Peter's.
+
+**E. Items 2 and 4 of my brief.**
+- **Rows that imply iOS verification**: only the Task 19 per-platform bullet; it names its target (source read by Ada, confirmed by me this round) and, after B2, says no build was run. The `example-home.yaml` row says "iOS and Android `not-started`" and claims nothing verified. The scope sentence's part (ii) ("reference source, not a build input") is a claim about the tree, backed by A and B1. **Nothing in this plan builds iOS**, and no row should be read as saying it does.
+- **FK-5**: I accept (a) on the conditions in C; (b) is also workable for me, since my rows would still need the same round. **Surviving counter to (a)** (Thurgood's own): it puts my re-sign inside a cycle whose fix needs only Stacy's, and ceiling limb (iii) must then be read with FK-5's re-signs declared separately, as the row states.
+- **Not reviewed**: Android causes (Data's); whether `ComponentTokens.ios.swift` and the `dist/` Swift snapshots ship as the install doc says (no `dist/` in this worktree; UNVERIFIED by me); Ada's "14 theme-varying colours" count (UNVERIFIED by me).
+- [@DATA] The no-caller fact in `TokenFileGenerator.ts:1028–1047` also covers `generateKotlinThemeTypes`; does FK-6 (a), (b) or (c) read the same way for `#android-theming-spec-094`? → tasks.md § "Task 29" -- [KENYA R1]
+- [@THURGOOD] Please paste the stale list and the pre-edit `renderedHashOf` for my rows 1–3 at 29.5, and confirm whether the removal-cite edit on row 3 moves a hash. → tasks.md § "Task 29" -- [KENYA R1]
+
+#### [ADA R1]
+
+**Seat**: Ada. I own the packaging floor (C5), the `pack-assert` instrument (`governance/classification-map.md` L906, `owner: ada`) and the completeness charter.
+**Tree**: I read files in this worktree (`review/u3-amend-ada` @ `7694adbc`). I ran nothing that builds. One spot check read the main checkout's built `dist/` (named where used).
+**Verdict**: **APPROVE-WITH-CHANGES**. Nothing is BLOCKING.
+**Not reviewed**:
+- Tasks 20–21's CLI mechanics, and Task 22's detection rule and catalog wording (Lina's and Leonardo's);
+- Task 29/30's falsification design (Stacy's and Lina's);
+- FK-4, where I have no stake and abstain.
+
+**Answer to [@ADA] (THURGOOD R1)**
+- **The C5 erratum reads as I hold it**, except for the exact-set instrument detail (RC-2) and the overview erratum's "byte-equal" (RC-1).
+- **FK-1: my position changes to (b).** Details below; the row's "Ada" attribution must move.
+- **FK-2 (a) reads as I hold it.**
+- **`test:scripts` is accepted**, not the root suite. Read, not run:
+  - `tsconfig.json` L9 has `rootDir: "./src"`, so a `src/` test importing `scripts/derive-install-doc.ts` breaks full `tsc`. Thurgood's reason holds.
+  - `scripts/jest.config.js` has `roots ['<rootDir>']` and `testMatch '**/__tests__/**/*.test.ts'`, so it picks up `scripts/__tests__/install-doc.test.ts`.
+  - `.github/workflows/lane-timing.yml` L259–260 runs `npm run test:scripts` inside job `lane-functional-root` (L153). That job is a required context (`tools/agent-generator/verify-gate-registration.sh` L69). It has a selection floor of ≥ 1 (L251–257).
+  - `tsconfig.scripts.json` (`rootDir: "."`, `include: scripts/**/*`) type-checks the new files. `npm run typecheck:scripts` runs in CI (`consumer-guard.yml` L89).
+  - **What survives**:
+    - local `npm test` does **not** run it, so Task 19 must name `test:scripts` in its validation note (19's row already lists it among the non-root lanes; keep it there);
+    - `release-publish.ts` does not run it either. The identity is guarded at the PR gate, which is sufficient because the tag is a merged squash.
+
+**FK-1: where the note template and example live → I now hold (b), `src/cli/templates/personal-note.{template,example}.md`.**
+- **Why I moved**: my (a) rested on "where settled design names a path, follow it", and the C20 erratum removes that anchor. Read, not run:
+  - `consumer-entry.ts` never reads the template (L378–379: "referenced, never emitted"). The only reader is the CLI.
+  - The CLI already reads shipped templates by name from `pkgRoot/src/cli/templates/` (`src/cli/attach.ts` L431, L479; `src/cli/sync/KeyGrain.ts` L125; `src/cli/sync/SteeringDirCheck.ts` L88).
+  - So (b) matches the established reader idiom, and one design erratum (C5 L262) finishes a correction the amendment has already started (C20).
+- **What (b) gains in packaging**:
+  - the exact-set row over `src/cli/templates/**` covers the template and example automatically;
+  - under (a), root `templates/` is a second shipping home with no exact set and two more `files[]` lines.
+  - The lock still moves under both options, because `docs/consumer/` edits `package.json`.
+- **Surviving counter**: under (b), an edited copy of Peter's note sits in the steward's `src/` tree. `check:drift`'s `SCAN_DIRS` includes `src`, and so do any future `src/**` content scanners, so they will read a prose personal document. That is harmless today; the cost is noted.
+
+**FK-2 → (a), 22.3b, by me (Sonnet), after 22.3.**
+- **Why**: one author writes every hunk, the rows are written when their files exist, and I maintain the instrument.
+- **Against (b) as written**: its rows "land alongside their files" in Tasks 20, 21 and 22. But `scripts/pack-assert.ts` is a Primary Artifact of Task 22 only, so a row landing in Task 20 or 21 is an out-of-list edit under the row grant.
+- **Surviving counter to (a)**: `test:pack-contents` asserts nothing about U3's shipped files until late in the unit, so a mis-placed file is found at 22.3b rather than when it lands.
+
+**FK-5**: I take no position on the vehicle. **One condition**: R-1's replacement cue for Kenya and Data must agree with the label causes. Nothing emits a theme Swift/Kotlin surface. I will fact-check the wording on request.
+
+**REQUIRED CHANGES**
+
+- **RC-1. The overview erratum misstates the derivation.**
+  - **Row**: design.md § overview erratum (2026-10-03), first bullet.
+  - **Wrong**: it says INSTALL.md is "byte-equal to a marked install region". Task 19's own row says it equals `deriveInstallDoc(<guide>)`: a fixed header, then the `path-steps` map, then the region verbatim.
+  - **Text**: *"It is a **committed derived file**, equal to `deriveInstallDoc(<guide>)` (a fixed header, the `path-steps` map, then the marked install region verbatim)…"*
+
+- **RC-2. The exact-set row needs an explicit expected list, a bite, and its unit test in Primary Artifacts.**
+  - **Rows**: design.md § "C5" erratum (the `pack-assert.ts` bullet); tasks.md § "Task 22" FK-2 row; § "Task 22" Primary Artifacts.
+  - **Wrong**: a set derived from the tree cannot catch a stray *committed* file. `steeringSetDiff` compares against a hand-written list (`scripts/pack-assert.ts` L346–356, L426–431).
+  - **Text**: *"an exact-set row over `src/cli/templates/**` against an **explicit expected list in `pack-assert.ts`** (never derived from the tree), so adding a template is a row edit. **Bite recorded**: a stray file → red; a removed file → red."*
+  - **Primary Artifacts**: add `scripts/__tests__/pack-assert.test.ts`. The new set function gets unit cases like `steeringSetDiff`'s (L198–211).
+
+- **RC-3. The FK-1 attribution.**
+  - **Rows**: tasks.md § "Task 22" FK-1; design.md § "C5" erratum; § "Context for Reviewers" FK-1 table.
+  - **Text**: (a) has **no owner**; (b) is held by **Lina, Thurgood and Ada**.
+  - If (b) is picked, the C5 erratum also corrects L262's `templates/personal-note.template.md` (C20's note already covers L666). Task 22's Primary Artifacts then drop `templates/…` and add `src/cli/templates/personal-note.{template,example}.md`.
+
+- **RC-4. The `check:drift` owner.**
+  - **Row**: tasks.md § "Expected release count", the "Ada's four publish-path rows … plus the `check:drift` … class fix" bullet.
+  - **Wrong**: the register row is `owner: thurgood` (`governance/classification-map.md` L692). My register rows are the publish-path instrument (L906).
+  - **Text**: *"…plus the `check:drift` `@<scope>:registry` class fix (register owner Thurgood; Ada proposes the pattern) and the section-10e machine-path scan widening (Ada)…"*
+
+- **RC-5. My release-prep rows have no record.**
+  - **Row**: the same bullet.
+  - **Wrong**: no committed record carries the four rows or their grant paths. `scripts/**` is outside my charter scope, so they need an issue-row grant.
+  - **Text**: append *"Record: **MISSING → Ada**, an issue carrying the four rows and `**Grant paths**: scripts/pack-assert.ts, scripts/release-publish.ts, scripts/__tests__/{pack-assert,release-publish}.test.ts` (plus `scripts/check-package-name-drift.js` and its tests, if Thurgood grants the class fix), filed before release-prep."*
+
+- **RC-6. The DRAFT stamp is absent from the plan.**
+  - **Row**: tasks.md § "Task 19", the B-U3 criterion.
+  - **Wrong**: B-U3's preservation table cites `.kiro/docs/ballots/2026-10-02-integration-guide-native-scoping.md`, whose L5 still reads `**Status**: DRAFT`, although #268 (`8d7d3ad1`) merged it. A verifier applying "the committed record says RATIFIED" trips on it. The plan names this nowhere; the existence table lists the file only.
+  - **Text**: add a bullet: *"Before 19.4's first commit, the cited ballot's `**Status**` reads RATIFIED (Peter's merge of #268, `8d7d3ad1`). **MISSING → Ada**: a one-line stamp on its own `chore/` PR, Peter-merged (governance carve-out). The same PR closes the stale-ACTIVE `.kiro/issues/2026-10-01-integration-guide-m0a-vs-snapshot-negative.md`. **Instrument**: `grep -n '^\*\*Status\*\*: RATIFIED' <ballot>`."*
+
+- **RC-7. The per-platform verification row overstates my read.**
+  - **Row**: tasks.md § "Task 19", the native-labels criterion: "causes are verified by source read (Ada, 2026-10-03)".
+  - **What I read at `79a3b3bc`**:
+    - L816's unterminated `/**`;
+    - `git grep` finds no definition of a `dpTheme` property or of `LocalDPTheme` under `src/`;
+    - no `Package.swift` or Gradle file is tracked.
+  - **What I did not re-count**: the 14 colours. That figure is #268's 2026-10-02 measurement. My spot check found the base `colorActionPrimary`, `colorStructureCanvas` and `colorTextDefault` absent from the main checkout's `dist/DesignTokens.ios.swift` (built 2026-10-02 22:14; only `colorActionPrimary_wcag`, L688). **Text**: name these three sources.
+
+**ADVISORY**
+
+- **A-1. The scope sentence, my candidate for Leonardo's merge.**
+  > *Ready for building web products, with the agent layer for Claude Code and Kiro. iOS and Android are not supported yet: their components ship as reference source, not a build input. On web, a theme you register does not yet emit.*
+  - I accept any merge that keeps the three parts and the exact substring `reference source, not a build input`.
+  - The iOS/Android sub-section and README L57 must still carry `Native onboarding is not supported` verbatim. The scope sentence's "not supported yet" does not satisfy that assertion.
+  - The § "Expected release count" text and the C23 erratum match my and #268's content points.
+- **A-2. Shipped bytes in Tasks 29–30.**
+  - Nothing in Tasks 29–30 touches `src/generators/**`, `src/tokens/**` or `src/validators/**`.
+  - **But `adapters/kiro.ts` is bundled into the shipped `dist/generator/consumer-entry.js`** (`consumer-entry.ts` L72 imports `./adapters/index`), so U3g changes a shipped file. That is consistent with "rides RELEASE (release 3)" and with the G2 hold.
+  - Suggest that 29.3 also cite `pack-assert`'s existing "attribution sidecars ABSENT: no packed `*.attribution.json`" row (L388–389) as the shipped-side proof: the tarball never carries the sidecars 29.3 changes.
+- **A-3. Lock order across my subtask.** 22.3b's `package.json` edit lands before 22.4's refresh and after 19's, so the 22.4 guard write captures it together with U3g's merged lock. That is correct as written. Never hand-merge.
+
+**Directed question**
+- [@LEONARDO] Will your merged scope sentence keep the exact substring `reference source, not a build input`, so that it doubles as label string 1, or do you want the label strings asserted only in the platform sub-section? → tasks.md § "Task 19"; § "Expected release count" -- [ADA R1]
+
+#### [DATA R1]
+
+**Verdict: APPROVE-WITH-CHANGES.** No blocking item. Reviewed: Task 19's native-label rows and the README clause (the Android parts), Task 29's re-sign batch (FK-5), and my own signed rows. **Not reviewed**: Tasks 20, 21, 22, 30; design.md C5, C19, C20, C23, C24, C26, C27 and the catalog; the existence and drift tables beyond the Android paths; the iOS half of every row; FK-1, FK-2 and FK-4 (no stake; Android is untouched by all three). **Method**: everything below was read (Read, `grep`, `git ls-files`, `which`) on my worktree `DP-wt-rev-data` at `7694adbc9`. I ran no build, no test and no generator.
+
+**Answer to [@DATA] (THURGOOD R1).**
+- **Are Task 3.5's label causes still true, word for word?** Two of them yes; the way the cause is *worded in the record* is not.
+  - **"Hardcodes `LocalDPTheme`" — TRUE.** `grep -l LocalDPTheme` over the 41 `.kt` files under `src/components/core/*/platforms/android/` hits **25**; e.g. `Button-CTA/platforms/android/ButtonCTA.android.kt:145` (`val theme = LocalDPTheme.current`). `git ls-files src/components/core | grep -c 'android/.*\.kt$'` = 41. Nothing in `src/` declares it (`grep 'val LocalDPTheme'` → 0 hits), and the built root file has no theme surface (`dist/android/DesignTokens.android.kt` in the main checkout: 0 occurrences of "Theme"; the pack also negates `!dist/android/**`).
+  - **"No Gradle module" — TRUE.** `git ls-files | grep -ci gradle` → 0. No `gradle`, `kotlinc`, `adb`, `sdkmanager` or `ANDROID_HOME` on this host (`which`); `/usr/bin/java` exists, which proves nothing about an Android build.
+  - **NOT true as I and the 3.5 record phrased the deeper cause.** My R1 (this file, "Answer to [@DATA] (a)") and `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md` item 1 say a born repo's `generate` "emits `Local<ABBR>Theme` from the consumer's own abbreviation". **It does not today.** `src/generators/TokenFileGenerator.ts:1028` (`generateThemeOverrideBlocks`) and `:1280–1389` (`generateKotlinThemeTypes`, which writes `val Local${abbreviation}Theme` at `:1387–1389`) have **no call site outside tests** (`grep -rn generateThemeOverrideBlocks src --include='*.ts'`, tests excluded: only the definition). That is the Spec 094 unwired half-change, `.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md`, and Spec 129's item (i). **That was my error in R1 L308; I correct it here.** Task 19's own prose cause ("the theme surface that nothing emits") is the accurate one. I would not let anyone carry the "generate emits it" wording into the install doc.
+- **Will I take one re-sign round under FK-5 (a)?** Yes, on the conditions in item 3 below.
+
+**1. The Android label (Task 19, criterion 5). REQUIRED CHANGE: one sentence, and the verification wording.**
+- Task 19's two asserted strings are fine and version-free (`reference source, not a build input`; `Native onboarding is not supported`), and the cause list is correct as prose.
+- **The sentence I would sign** (install region, Android sub-section, and the README's labelled form), containing both asserted strings verbatim:
+
+  > Android: reference source, not a build input. The Compose components under `src/components/core/*/platforms/android/` read their theme from `LocalDPTheme`, which nothing in this package defines and `generate` does not emit today, and there is no Gradle module. Native onboarding is not supported. This was checked by reading the source; no Android build has been run.
+
+  - It claims only what I verified: the 25-of-41 count and the absent definition (grep); that `generate` does not emit it (call-graph read, not a run of `generate`; **UNVERIFIED by execution**); and the absent module (`git ls-files`). It says nothing about "compiles", which nobody has measured on Android.
+  - **Counter-argument that survives**: a sentence naming `LocalDPTheme` ties the install doc to a symbol that Spec 129 will change, so the line will need an edit when 129 lands. I accept that: R-2 says the guide changes when the install process changes, and 129 does change it. The asserted strings stay version-free, so the test does not go red.
+- **Row `tasks.md § "Task 19"`, the "Per-platform verification target" bullet. Wrong for Android.** It reads: *"Each build claim reads `not re-verified — toolchain unavailable`."* "Re-verified" says it was verified once. For Android it never was: my R1 (L307) records no SDK, Gradle, kotlinc or JRE on the host at that time, and I have run nothing since. **Text I want**: *"Android causes are verified by source read only (Data, 2026-10-03). No Android build has ever been run against this tree. Each Android build claim reads `not build-verified — no Android toolchain has been run`."* (Kenya's iOS wording is his: he ran `swiftc -typecheck` in 2026-09, so "not re-verified" may be right for iOS.)
+- **Do the other amended rows imply Android verification?** I found no other. Task 3.5's quoted label *"does not compile against a born repo's own tier as shipped"* is a compile claim that rests on source read for Android. Task 19 correctly asserts only the two shorter strings, not that one; I would keep it out of the asserted set and out of the install doc.
+
+**2. Task 29 criterion 5, FK-5 (a), 29.5: the R-1 cue. REQUIRED CHANGE: say which direction the edit goes.**
+- The row names "R-1's 'including your theme Swift/Kotlin' cue" without saying what it becomes. The cue is `canonical/profiles/consumer/data.overlay.md:159`: *"regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`"*. It promises output `generate` does not produce (item 1). **Text I want**: remove the promise, not rephrase it: *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`"*. Put the theme back when Spec 129 item (i) lands. (Kenya's overlay L160 is the iOS twin; his call.)
+- **Counter that survives**: removing it now and restoring it in 129 costs a second re-sign of `commands[platform-tokens]` later. I take that over carrying a false cue through release 3 and the FK-5 round, because the cost is one signature and the false cue steers a consumer-Data toward a symbol that is not generated.
+- **ADVISORY, a fork for Peter and Thurgood, not mine to pick**: `data.overlay.md:38` (the first bullet of `#android-theming-spec-094`, a row I signed) says *"Generated Kotlin output includes: `{Name}Theme` data class, named instances in `{Name}Themes` object, `Local{Abbreviation}Theme` CompositionLocal"*. The same overstatement as the cue, and **I assented to it** (`theming-1`). Either (a) the bullet is corrected in this batch, so `#android-theming-spec-094` is re-signed in the same round (no extra round), or (b) it stays until 129 makes it true, and the record says so. My lean is (a); the surviving counter is that it is text 129 will make true again, so (a) edits it twice. The row does not name it at all today.
+
+**3. Task 29's re-sign batch.**
+- **Which of my signed rows would move** (`canonical/profiles/consumer/data.dispositions.yaml`). This is a prediction; the stale list from the sweep is the authority (signing-act ballot § 3), and **I could not run the sweep (no `node_modules` in this tree)**.
+  - `ambient.groundTruthManifest.verdict` (L48). The intro-line reword is this row's span (the issue says one per seat, and my signature sheet records the same, `signatures/data.md:228–233`). **Moves.**
+  - `commands[platform-tokens]` (L74). The R-1 cue edit changes its rendered text. **Moves.**
+  - `#android-theming-spec-094` (L9). Moves only if the overlay's first bullet or the "for your themed values" qualifier (divergent 5, J-812A) is edited. **Conditional, per the fork above.**
+  - **Divergent 8 (J-BA84, `trims[dist/ComponentTokens.android.kt]`, L51): does not move.** The defect is a `cites` field, subtraction-3 where the text was re-grounded. A cite edit does not change either hash. Under the ballot (§ 4 and Task 29's own "a disposition change with no hash move is out of bound") it is **declared, granted and counted separately; it is not part of a re-sign.** The row's "divergents 5–9" bullet reads as though all of them ride the one round. **Text I want**: add *"divergent 8 is a cite correction with no hash move, so it is declared and counted outside the re-sign round"*.
+  - **The Kiro blank line does not move my rows**: my signature sheet records the heading and its blank line as the container span, which no signed row hashes (`signatures/data.md:228`). That is a read of my own note, not a `renderedHashOf` run. **UNVERIFIED**; Lina's issue already asks for that confirmation before editing.
+  - **29.3's per-entry Kiro spans**: Lina's sizing says only Stacy's `knowledgeBases[spec-summaries]` is forced to re-sign. Whether re-spanning the Kiro JSON entries changes any rendered hash of mine (`routes.cues[9]`, the trims, `commands[platform-tokens]`) is **UNVERIFIED**. I ask that the sweep be run after 29.3 and before 29.5, with the output pasted, so a surprise surfaces before the round rather than in it.
+- **Do I accept one batched round at the unit's end? Yes.** Conditions, all from the ballot I signed under (`.kiro/docs/ballots/2026-10-01-signing-act-chain.md` § 3, § 4, and the merge-only rule at L145):
+  1. **The stale list is taken after the last 29.x authoring commit** and re-taken each round; my acts are a subset of it, pasted in the PR body, one line per act.
+  2. **Authoring never shares a commit with my signing commit**, and my commit enters the unit branch by merge only (no rebase, amend or cherry-pick), with my `Agent:` trailer.
+  3. **What must NOT be mixed in**:
+     - divergent 8's cite fix (no hash move; separate);
+     - a re-sign of any row not on the stale list: a change of mind about, say, `theming-6` is out of bound and needs a real grant;
+     - any Spec 129 wording that restores theme claims: it lands with 129, not here;
+     - a second round after H′ is frozen: dispositions-changing re-signs precede the freeze (Task 30), so if I refuse and the profile author re-disposes, the cycle re-takes the list before the freeze.
+  4. **Divergent 5** (J-812A): the qualifier is my own wording and my present read is that it stands, because an unconditional "never read" of the shipped base snapshots would be false for static tokens. I will resolve it at the round on the text then in front of me, not now, and the J record is not the authority (the mirror clause).
+- **FK-5 position: (a)**, ride this unit. **Surviving counter**: Thurgood's R1 point 2 and the row's own: my and Kenya's re-signs sit on the critical path to H′, and the profile author words text inside a cycle whose check judges it. I do not weigh that above running one round instead of two, but the self-review shape is Peter's call, and (b) is defensible.
+
+**4. ADVISORY items.**
+- **`.kiro/issues/2026-09-26-native-component-theme-hardcoding.md` item 1** has the same "generate emits `Local<ABBR>Theme`" error as my R1. Issues are outside this amendment, so I leave it for Lina's `chore/` PR and name it here.
+- **"The 14 theme-varying colours"** (Task 19 criterion 5): I did not re-count it. The cited sources are `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` (measured 2026-10-02) and the guide L387. **UNVERIFIED by me.**
+- **Android in the unit table, the hold, release 3's RELEASE-pass list**: not reviewed.
+
+- [@THURGOOD] Does 29's re-sign row stay one round if the sweep after 29.3 shows my rows moving for a reason other than 29.5? → tasks.md § "Task 29" -- [DATA R1]
+- [@LINA] Can you run `renderedHashOf` for `ambient.groundTruthManifest.verdict`, `commands[platform-tokens]`, `routes.cues[9]` and the trim row of `data` over the 29.3 per-entry Kiro spans and paste the result before 29.5? → tasks.md § "Task 29" -- [DATA R1]
+
 ---
