@@ -152,15 +152,50 @@ The two registries carry DIFFERENT 15.0.0 bytes. The version string and tag are 
     and CI lanes that run a nested `npm ci` first), and from root node_modules when they do not
     (a fresh clone after root `npm ci`). Embedded versions:
       public (nested locks):  zod 3.25.76, ajv 8.20.0, zod-to-json-schema 3.25.2,
-                              js-yaml 3.14.2 (docs) / 4.1.1 (application)
-      GH (root lock):         zod 4.3.6, ajv 8.18.0, zod-to-json-schema 3.25.1, js-yaml 4.2.0
-    All within the SDK's declared `zod ^3.25 || ^4.0`. Neither server's source imports zod, ajv or
-    js-yaml directly (SDK transitive deps); mcp-server/package.json declares only the SDK.
+                              js-yaml 4.1.1 (application bundle only)
+      GH (root lock):         zod 4.3.6, ajv 8.18.0, zod-to-json-schema 3.25.1,
+                              js-yaml 4.2.0 (application bundle only)
+    [CORRECTED 2026-10-03, see "Corrections (2026-10-03)" item 1: the original line read
+     "js-yaml 3.14.2 (docs) / 4.1.1 (application)" for public and "js-yaml 4.2.0" for GH. The docs
+     bundle embeds NO js-yaml on either registry.]
+    All within the SDK's declared `zod ^3.25 || ^4.0`. The docs server's source imports none of zod,
+    ajv or js-yaml directly (SDK transitive deps); mcp-server/package.json declares only the SDK.
+    The application server's source DOES import `js-yaml` directly
+    (application-mcp-server/src/indexer/*).
+    [CORRECTED 2026-10-03, see "Corrections (2026-10-03)" item 3: the original sentence said
+     "Neither server's source imports zod, ajv or js-yaml directly".]
 (d) 14.1.0 shipped the NESTED shape on both registries (docs-mcp.js 599,847 B). So the PUBLIC 15.0.0
     bundle shape is the historical norm and the GH 15.0.0 shape (root resolution) is the new one.
-(e) CI coverage: tool-boot-smoke and agent-generator run a nested `npm ci` before `build:mcp`
-    (the nested/public shape); consumer-guard runs root `npm ci` then `build:mcp` with no nested
-    install (the root/GH shape). Both shapes have some CI coverage (orchestrator's read).
+(e) CI coverage. [CORRECTED 2026-10-03, see "Corrections (2026-10-03)" item 2. The original text read:
+    "tool-boot-smoke and agent-generator run a nested `npm ci` before `build:mcp` (the nested/public
+    shape); consumer-guard runs root `npm ci` then `build:mcp` with no nested install (the root/GH
+    shape). Both shapes have some CI coverage (orchestrator's read)." That conclusion was wrong.]
+    As corrected: tool-boot-smoke and agent-generator run a nested `npm ci` before `build:mcp`, so
+    they BUILD the nested-shape bundles, but they boot the sub-package `tsc` dists and never
+    `dist/mcp/{docs,application}-mcp.js`. The only lanes that run the shipped bundles are
+    consumer-guard's (`test:smoke:mcp-boot`, `test:consumer`), in root shape. The nested shape that
+    public npm shipped therefore had no CI execution.
+
+
+CORRECTIONS (2026-10-03)   (Ada, under the re-activated grant in .kiro/issues/2026-10-02-release-15-files-grant.md)
+-----------------------------------------------------------------------------------------------------------------
+Three statements in section 6 were inherited from the orchestrator's divergence write-up and were
+wrong. Each is marked [CORRECTED 2026-10-03] where it stands in section 6; the original wording is
+quoted at the marker. Stacy's RELEASE claims pass (phase 2) records the same corrections. Section 6(c)
+and the PROVENANCE block above still say the embedded versions are "as reported"; the js-yaml point
+below was since checked by counting js-yaml module roots in both tarballs' bundles.
+  1. js-yaml. The docs bundle (dist/mcp/docs-mcp.js) embeds NO js-yaml on either registry (0 js-yaml
+     module roots in both tarballs). The "3.14.2 (docs)" figure came from mcp-server/package-lock.json,
+     not from the bundle. The application bundle (dist/mcp/application-mcp.js) embeds js-yaml: nested
+     4.1.1 (public) vs root 4.2.0 (GH), the same major. The consumer-visible dependency change at the
+     next release, relative to public 15.0.0, is zod 3.25.76 -> 4.3.6 and ajv 8.20.0 -> 8.18.0, in
+     both the docs and application bundles.
+  2. CI coverage of the two shapes. Wrong that "both shapes have some CI coverage", and wrong that
+     tool-boot-smoke / agent-generator test the nested shape: they build it, but boot the sub-package
+     `tsc` dists, never the bundles. Only consumer-guard's lanes run the shipped bundles, in root
+     shape. Public 15.0.0 shipped a bundle shape that no CI lane had ever run.
+  3. Direct imports. The application server imports `js-yaml` directly in its
+     application-mcp-server/src/indexer/* files. Only the docs server's "imports none directly" holds.
 
 
 7. COLD-INSTALL SMOKE, BOTH TARBALLS   (source: orchestrator report; READ, not re-run by Ada)

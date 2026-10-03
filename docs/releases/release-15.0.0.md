@@ -150,5 +150,19 @@ The Integration Guide's § "Upgrading" still describes the pre-15.0.0 flow and c
 
   Several of these change the text of the eight shipped identity documents.
 - Publish verification is now a committed step (`scripts/verify-publish-rail.sh`, RELEASE-FLOW step 6).
-- This release is published under three manual guards (fresh-clone publish; packed-contents listing with scripts on; native-member diff against 14.1.0), per Peter's 2026-10-02 ruling in `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md`. A mechanical publish-time check replaces them from the next release.
+- This release is published under three manual guards (fresh-clone publish; packed-contents listing with scripts on; native-member diff against 14.1.0), per Peter's 2026-10-02 ruling in `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md`. A mechanical publish-time check replaces them from the next release. *(Corrected by the Erratum below, 2026-10-03: the fresh-clone guard did not hold for the public npm publish.)*
 - Dead iOS/Web/Android build paths were swept.
+
+---
+
+## Erratum (2026-10-03)
+
+**What the notes claimed.** The bullet above says this release "is published under three manual guards (fresh-clone publish; packed-contents listing with scripts on; native-member diff against 14.1.0)". That sentence is kept as written and is corrected here.
+
+**What happened.** The first guard, fresh-clone publish, held for the GitHub Packages publish and did **not** hold for the public npm publish. The public publish ran from the main checkout, not a fresh clone. As a result the two registries carry **different bytes under one version**: GitHub Packages has 1,638 files; public npm has 1,700, including 62 inert stale `dist/` files, and the two MCP bundles (`dist/mcp/docs-mcp.js`, `dist/mcp/application-mcp.js`) differ in their embedded dependency versions. Peter ruled "Option 1" on 2026-10-03: accept 15.0.0 as published on both registries, record the divergence, and fix the class next. Guards 2 and 3 held in effect for both artifacts. Cold-install smoke showed identical tool lists and sampled outputs on both, which does not prove equivalence for every tool or input.
+
+**Where it is recorded.** `docs/releases/15.0.0/publish-verification.txt` (sections 3, 4 and 6, with its own dated corrections), the incident section dated 2026-10-03 in `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md`, and finding R-2 and R-3 in Stacy's RELEASE claims pass, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-15.0.0.md`, phase 2.
+
+**The publish path has since changed.** PR #279 builds one tarball in a fresh clone via `scripts/release-publish.ts`, so the manual fresh-clone guard no longer rests on a person following a list. The ballot for it, `2026-10-03-hermetic-publish-path`, is DRAFT at this writing.
+
+**The GitHub release body is not corrected here.** It carries the same sentence as the notes, published before either publish. Whether and how to edit it is Peter's decision; this erratum does not touch it.
