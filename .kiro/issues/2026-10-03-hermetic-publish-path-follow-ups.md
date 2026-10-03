@@ -1,7 +1,7 @@
 # Issue: hermetic publish path — the follow-ups owed after ratification (rail-script message, charter rows, two RELEASE-FLOW stragglers)
 
 **Date**: 2026-10-03
-**Status**: ACTIVE. Item 1 carries a grant, which does nothing until Peter's merge activates it. Item 2 is open. Item 3 is RESOLVED by erratum on #283.
+**Status**: ACTIVE. Item 1 carries a grant, which does nothing until Peter's merge activates it. Item 2 is applied on `chore/charter-hermetic-publish-follow-ups`, with Stacy's re-sign pending. Item 3 is RESOLVED by erratum on #283.
 **Owner**: Thurgood. Stacy authors the wording of her own charter row (item 2a).
 **Trigger**: **before the next `@3fn/core` publish (15.0.1 or 15.1.0) to either registry.** That release is the first run under ballot `2026-10-03-hermetic-publish-path`, and its arming event per F-4. Its operator must not meet the old "indexing lag" message, and its RELEASE pass must not run under charter rows that predate the two-phase form.
 **Source**: `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED Peter 2026-10-03): § 3.8's "Not drafted here" note, § 5 items 6 and 8, and the application PR's straggler sweep (§ 5 item 2).
@@ -35,6 +35,31 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
   - since F-2 is permitted, a phase 2 drafted against an open PR that has no merge-confirmation line.
 
   The exact sentence is drafted in the charter PR. **Vehicle for its authority is Peter's**: his carve-out merge of that PR, or a one-line record ballot. Check at that PR whether the row is rendered into the consumer profile; if so, the signing chain applies.
+
+**2026-10-03, 2a and 2b APPLIED on `chore/charter-hermetic-publish-follow-ups`; re-sign owed to Stacy (a seat follows on the same branch).**
+
+**What was applied:**
+- **2a**: `canonical/agents/stacy.md`, the RELEASE row, in her R1 item (7) wording, verbatim. The F-2 clause is included. There is one stated adaptation: the period after "arming line", because the existing scope text had no terminal punctuation for her appended sentence to follow.
+- **2b**: `canonical/agents/thurgood.md`, LIVENESS read 2. One sentence was appended after the existing parenthetical, kept to the ratified intent. **Authority**: Peter's carve-out merge of that PR, which is also stated in the PR body.
+
+**Regeneration consequences, authored by Thurgood as profile author (C1: `PROFILE_AUTHOR = thurgood`):**
+- **Overlay pins re-authored, text unchanged**:
+  - `thurgood.overlay.md` `#trigger-types` → `sha256:50cfe904…`;
+  - `stacy.overlay.md` `#the-trigger-set-…` → `sha256:eb7326f4…`.
+- **Consumer text unchanged by design.** It matches Stacy's stated intent, and a consumer has no step-6 record.
+- **Removals added (clause (iii), `subtraction-3`)** for the new canonical texts the consumer rendering drops:
+  - one on `thurgood.dispositions.yaml` `#trigger-types`;
+  - two on `stacy.dispositions.yaml` `#the-trigger-set-…`.
+- **The semguard fixture's RELEASE row** was re-copied byte-for-byte. The fixture README notes the blob, following the 2026-09-29 precedent.
+
+**Stale at this branch** (diff-guard's freshness sweep; 5 findings; all are Stacy's C1 acts):
+- **Operative-set re-confirmations**:
+  - `canonical/operative-sets/stacy.yaml` `#the-trigger-set-the-114-superset-table-names-never-numbers`: the hash, plus item `trigger-release`, whose text is no longer verbatim. Note: `confirmations/stacy.md` § `#the-trigger-set-…`.
+  - `canonical/operative-sets/thurgood.yaml` `#trigger-types`: the hash. Note: `confirmations/thurgood.md` § `#trigger-types`.
+- **Re-signs**:
+  - `stacy.dispositions.yaml` `#the-trigger-set-…`: evidence at `signatures/stacy.md` § `#the-trigger-set-…`;
+  - `thurgood.dispositions.yaml` `#trigger-types`: evidence at `signatures/thurgood.md` § `#trigger-types`.
+- **After those**: the diff-guard's full run is expected to go green and to write `canonical/generated.lock`. On `main` @ `54d35a2f` the lock was already input-closure-stale, with outputs unmoved.
 
 ## 3. Two RELEASE-FLOW stragglers the application sweep found (not ratified edit sites; not edited)
 
