@@ -50,3 +50,67 @@ Any edit to RELEASE-FLOW, the plan text or a charter. This issue is the tracked 
 Thurgood, 2026-10-02, in the release-picks PR.
 
 **2026-10-03 — triggered and absorbed.** Triggered by #273's merge (`eadc7f45`, the publish-verification PR). Phase 2 then ran against #273 while it was open, and the merged `.txt` differed from the read (`087f7697`). That is Stacy's RS-9, the evidence this issue lacked. **Absorbed** into ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (DRAFT), together with RS-6…RS-9: § 3.4 carries the two-phase form, the tag-equals-S ordering and the phase-2 trigger; § 5 item 3 carries this issue's owed act 2 (the `tasks.md` annotation). **Vehicle**: that ballot. It is Peter's pick, recorded as the ballot's existence and pending his merge. This issue closes at the ballot's application (its § 5 item 5). — Thurgood
+
+---
+
+## 2026-10-03 — documentation consistency sweep (Civitas steward; Peter: "check with the agents to see if there's any documentation that needs to be updated for them")
+
+**What was checked.** Agents carry nothing between sessions, so "what the agents know" is what their charters and the MCP-served corpus say.
+
+**Method.** A read-only search at `762b8c20` (#279 merged), outside `node_modules/`, `dist/` and `.git/`:
+- **Phrases**: `npm publish`, `publish from merged`, `git switch main && git pull`, `dual-registry`, `prepublishOnly`, `postpublish`, `then tag and GitHub release`, `RELEASE-FLOW`.
+- **Surfaces**: every repo surface, plus the steering corpus, `governance/`, `README.md`, the Integration Guide, `docs/`, `.kiro/docs/`, `canonical/**` and its renderings.
+
+**Results**: 11 stale surfaces. 5 go by vehicle (a), 2 by (b), 4 are other owners' records (d). Several classes are left as historical (c), and 8 surfaces were checked accurate.
+
+**Vehicle key**:
+- **(a)** the ballot's application PR at ratification;
+- **(b)** a canonical-charter edit plus regeneration (Spec 122; never hand-edit `.claude/agents/*` or `CLAUDE.md`);
+- **(c)** deliberately left as a historical record;
+- **(d)** another owner's record, fixed by that owner.
+
+### Stale: vehicle (a), the ballot `2026-10-03-hermetic-publish-path` application PR
+| # | Surface | Owner | What is stale | Ballot site |
+|---|---|---|---|---|
+| A1 | `.kiro/hooks/RELEASE-FLOW.md`: "Deriving" item 4; "The sequence" steps 5–6 (11 hits) | Thurgood | Publishes from the merged `main` working checkout; cites a "dual-registry playbook" that is not in this repo; no two-registry record; no two-phase form; announce-before-verify not ruled out | § 3.1–3.4 |
+| A2 | `governance/release-management-system.md` L41 (MCP-served; ships in the package) | Thurgood | "publish from merged `main` → then tag" (publish before tag) | § 3.5 |
+| A3 | `governance/release-management-system.md` L31 | Thurgood | Says the "`prepublishOnly` chain" blocks a broken publish. It is now a tripwire; the checks run in `scripts/release-publish.ts` | § 3.6 (added by this sweep) |
+| A4 | `.kiro/hooks/README.md` L109 | Thurgood | "the `prepublishOnly` token-index gate" | § 3.7 (added by this sweep) |
+| A5 | Spec 123 `tasks.md` § "Expected release count": "RELEASE fires at the release tag, before publish" | Thurgood | Phase 1 only. This issue's owed act 2 | § 5 item 3 |
+
+The MCP index is refreshed at application by `rebuild_index` (ballot § 5 item 4), so the docs MCP stops serving A2/A3 when the edits merge.
+
+### Stale: vehicle (b), charter edit plus regeneration, in a separate PR after the ballot merges
+| # | Surface | Owner | What is stale |
+|---|---|---|---|
+| B1 | `canonical/agents/stacy.md` L393, the RELEASE row ("Before a version publishes / at the release tag") | **Stacy** authors her own wording | The event is now two phases. Phase 1 runs on S before the tag. Phase 2 follows the step-6 record PR's merge and reads the rail result plus the **6b two-registry record** (packument `time[<v>]`, file count, and per-registry sha1 equal to the script's sha1). If drafted against an open PR, phase 2 ends with the merge-confirmation line |
+| B2 | `canonical/agents/thurgood.md` L448, LIVENESS read 2 | Thurgood | "Did RELEASE fire … and produce a committed record" should also say that a RELEASE record with phase 1 only (`publish-rail liveness: owed`, no phase 2 or confirmation line) is an event without a complete record |
+
+- **Unchanged and accurate**: both charters' owed-set references (L451; Stacy's catalog). They cite "Deriving the delta" **Step 5a**, which the ballot does not touch. The ballot adds a numbering note, because its new "The sequence" substeps 5.1–5.4 sit beside the same number.
+- **Regeneration cost to check at the PR**: whether B1's row is rendered into the consumer profile. If it is, its operative-set entry re-renders and the signing chain applies (ballot `2026-10-01-signing-act-chain`).
+
+### Stale: (d), another owner's record, by pointer only
+| # | Surface | Owner | Vehicle |
+|---|---|---|---|
+| D1 | `docs/releases/release-15.0.0.md` L153, "published under three manual guards" (Stacy R-3) | Ada | Her record-corrections grant (`.kiro/issues/2026-10-02-release-15-files-grant.md`, 2026-10-03). The GitHub release body is Peter's or the orchestrator's |
+| D2 | `.kiro/issues/2026-10-02-token-index-meta-ships-absolute-path.md` L101: `verify:token-index-clean` "runs inside `prepublishOnly`" | Ada / Lina | A dated note at that issue's next touch or closure. It now runs in `release-publish.ts` after the pack |
+| D3 | `package.json` `postpublish` | Ada | Her deferred row (h), triggered by the ballot's ratification |
+| D4 | The orchestrator's npm-publish playbook | Orchestrator | Outside the repo, in harness memory. It still describes a folder publish from the checkout. The orchestrator updates it; the repo law no longer depends on it (ballot § 3.1) |
+
+### Left as historical records, (c), not edited
+- `.kiro/docs/ballots/**`: the publish-rail, completion-claims-integrity, Q6 retirement and 127 outline-settle ballots.
+- `.kiro/specs/**` and `docs/specs/**`: 101, release-management-system, 065, 123 completion docs and claims passes, 125-A, 127, XXX-release-system-operations.
+- `docs/releases/RELEASE-NOTES-11.0.0.md`, `docs/releases/15.0.0/publish-verification.txt`, `docs/roadmap/2026-07-04-full-project-audit.md`.
+- Test fixtures under `tools/agent-generator/__fixtures__/` and `scripts/completion-claims/__fixtures__/`.
+- `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` L6, a trigger definition worded for 15.0.0.
+
+### Checked accurate (no change)
+- `scripts/verify-publish-rail.sh` comments;
+- `.kiro/hooks/complete-task.sh` (it cites "Deriving" § 5b, which is unchanged);
+- `governance/classification-map.md` `publish-rail-guard` (step 6's rail half is unchanged; the new row is an addition at ballot § 4);
+- `canonical/operative-sets/{stacy,thurgood}.yaml` and `canonical/profiles/consumer/stacy.dispositions.yaml` (Step 5a references);
+- `.kiro/steering/**`: 0 hits;
+- `README.md` and `governance/DesignerPunk-Integration-Guide.md`: no embedded dependency-version claims. The zod/ajv disclosure is owed in the next release's notes (ballot § 7), not on these surfaces.
+
+### Overlap
+`.kiro/issues/2026-08-12-release-manager-retirement-execution.md` also touches RELEASE-FLOW (its PR 2's "Deriving the delta" addition, already applied) and governance-reference adjudications. Recorded by pointer only. Nothing here expands into its 36-file cleanup.

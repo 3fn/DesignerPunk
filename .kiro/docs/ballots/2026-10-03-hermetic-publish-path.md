@@ -29,7 +29,10 @@
 
 **Carries (law text, applied at ratification):**
 - RELEASE-FLOW: § "Deriving the delta" item 4, and steps 5 and 6 of § "The sequence" (§ 3.1–3.4).
-- `governance/release-management-system.md` § 5 (line 41) (§ 3.5).
+- `governance/release-management-system.md` § 5 (line 41) (§ 3.5) and line 31 (§ 3.6).
+- `.kiro/hooks/README.md` line 109 (§ 3.7).
+
+§§ 3.6 and 3.7 were added 2026-10-03 from the documentation sweep.
 - A `proposed` register row, `hermetic-publish-path` (§ 4).
 - The README entry, and one annotation in Spec 123's `tasks.md` (§ 5, application).
 
@@ -38,7 +41,13 @@
 - **Any change to `verify-publish-rail.sh`.** Peter's B-U1 ruling keeps the rail guard npm-CLI-free and npmjs-only. The two-registry comparison is a separate step (6b) that deliberately uses the npm CLI with the project's registry config. The two rulings do not conflict: one is a hermetic liveness probe, the other an authenticated parity read.
 
 **Preconditions to ratification**, checked by the author before Peter rules. The mechanical fact for each is cited in the ratification commit.
-- **P1.** Ada's fix PR has merged. The script's path and its flags in § 3 match what landed; the script is `scripts/release-publish.ts`, tested by `scripts/__tests__/release-publish.test.ts` (the names in Ada's grant, PR #277). This ballot requires it to have two modes, a dry run at a SHA (written `--dry-run <S>` here) and a publish at `<version>`. Ada decides the flag's exact shape in the fix PR. Any difference is corrected in this text at ratification, not at application.
+- **P1. MET: Ada's fix PR #279 merged (`762b8c20`).**
+  - **Script**: `scripts/release-publish.ts` (also `npm run release:publish -- <args>`), tested by `scripts/__tests__/release-publish.test.ts`.
+  - **Modes**: `--dry-run <S>` and `<version>` with an optional `--expect-sha <S>`. § 3 has been corrected to what landed.
+  - **Three corrections from #279's body, folded into § 3.2 on 2026-10-03**:
+    1. `verify:token-index-clean` runs AFTER the pack, because the build inside `prepack` regenerates the index.
+    2. "Refuses unless the tag resolves to S" is three checks: the optional `--expect-sha <S>`, the tag commit being on `origin/main`, and the tagged `package.json` version matching.
+    3. The script runs from the MAIN checkout. GitHub Packages auth is that checkout's gitignored `.npmrc`, and the `npm whoami` preflight refuses from a worktree.
 - **P2. `npm publish <tarball>` runs NO lifecycle scripts: verified by reading the source.** Ada read the installed npm 10.9.3 CLI source in her R2 (`/Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/memory/release-15-handoff/consult-hermetic-publish/ada-r2.md`):
   - `lib/commands/publish.js` runs `prepublishOnly`, `publish` and `postpublish` only when `spec.type === 'directory' && !ignoreScripts`;
   - `libnpmpack/lib/index.js` gates `prepack`/`postpack` the same way.
@@ -48,8 +57,10 @@
   - the script must itself run `check:drift` and `verify:token-index-clean` before it packs (Ada confirms that it does);
   - **no `postpublish` runs on either registry, so the step-6 record is the only post-publish check.**
 
-  **Second leg, still required**: Ada's fix PR records one *observed* tarball publish (a scratch registry or an equivalent dry observation) confirming that no lifecycle script ran.
-- **P3.** The tripwire's bite was recorded: a folder `npm publish` in a scratch clone is refused with a message naming the script.
+  **Second leg: SATISFIED by pointer.** See `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md` § "P2, second leg: an observed tarball publish runs no lifecycle script":
+  - `npm publish <tgz> --dry-run`: exit 0, 0 lifecycle lines;
+  - npm's shasum equals the script's sha1.
+- **P3. SATISFIED by pointer.** See `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md` § "P3: the tripwire bites": a folder `npm publish --dry-run` exits 1 with the refusal naming the script, and no `prepack` runs.
 
 ## 3. Edit sites (verbatim; apply exactly as written)
 
@@ -59,9 +70,11 @@
 > 4. Publish mechanics: the dual-registry playbook (public npm needs Peter's login/2FA; expect the ~30-day token expiry — an E404 on publish is a masked auth failure).
 
 **After:**
-> 4. Publish mechanics: § "The sequence" steps 5–6 — **one tarball, built by `scripts/release-publish.ts` in a fresh clone at the tag, published unchanged to both registries**. The dual-registry playbook still supplies the public-npm flags and its auth notes: public npm needs Peter's login/2FA, and the token expires in about 30 days, so an E404 on publish is a masked auth failure. **The release notes disclose any change in embedded dependency versions against the previous release's public artifact** (the first instance is § "Dependency disclosure" of ballot `2026-10-03-hermetic-publish-path`).
+> 4. Publish mechanics: § "The sequence" steps 5–6 — **one tarball, built by `scripts/release-publish.ts` in a fresh clone at the tag, published unchanged to both registries**. The public-npm flags are written out in step 5.4. They were previously only in "the dual-registry playbook", which is not in this repo, so a fresh session could not find it. Auth note: public npm needs Peter's login/2FA, and the token expires in about 30 days, so an E404 on publish is a masked auth failure. **The release notes disclose any change in embedded dependency versions against the previous release's public artifact** (the first instance is § "Dependency disclosure" of ballot `2026-10-03-hermetic-publish-path`).
 
 ### 3.2 `.kiro/hooks/RELEASE-FLOW.md` § "The sequence", step 5 (whole step replaced)
+
+*Numbering note*: substeps 5.1–5.4 belong to § "The sequence". § "Deriving the delta" has its own **Step 5**, with **5a** (the owed-set query) and **5b** (the arming question). Both charters and Stacy's command catalog cite that 5a/5b. They are unchanged by this ballot and are a different step.
 
 **Before** (lines 124–131 at `0a299f2d`):
 > 5. **Publish from merged `main`**: `git switch main && git pull`, then `npm publish`
@@ -75,9 +88,18 @@
 
 **After:**
 > 5. **Tag, then publish ONE tarball from the tag.** The release commit is the release PR's squash commit **S**. A later record-only PR never changes what is tagged or published.
->    - **5.1 Dry run at S, before the tag is pushed**: `scripts/release-publish.ts --dry-run <S>`. It works in a fresh clone at S: `npm ci`, then `npm pack` with lifecycle scripts on, so `prepack` builds, and runs `pack-assert` on the tarball (no leftover `dist/` files, no `dist/{ios,android,web}/**`, the closure present). Before packing, it runs `check:drift` and `verify:token-index-clean` itself, because a tarball publish runs no lifecycle scripts (P2). **Nothing is published.** A red stops the release before any tag exists; fix it on a branch and re-merge (back to step 1).
+>    - **5.1 Dry run at S, before the tag is pushed**: `npx tsx scripts/release-publish.ts --dry-run <S>`, **run from the main checkout**.
+>      - It works in a fresh clone at S: `npm ci`, then `check:drift`, then `npm pack` with lifecycle scripts on, so `prepack` builds.
+>      - **After the pack** it runs `verify:token-index-clean`, because the build inside `prepack` regenerates the index.
+>      - It then runs `pack-assert` on the tarball: no leftover `dist/` files, the MCP bundle shape (root `node_modules` only), no `dist/{ios,android,web}/**`, the eight root token files, `themes: []`, the closure present.
+>      - It runs these checks itself because a tarball publish runs no lifecycle scripts (P2).
+>
+>      **Nothing is published.** A red stops the release before any tag exists; fix it on a branch and re-merge (back to step 1).
 >    - **5.2 Tag S** and push the tag: `git tag -a v<version> <S> && git push origin v<version>`. **The GitHub release is NOT created yet** (step 7).
->    - **5.3 Publish to GitHub Packages**: `scripts/release-publish.ts <version>`. It repeats 5.1 in a fresh clone **at the tag** (it refuses unless `v<version>` resolves to S), records the tarball's path, file count and sha1, publishes **that tarball** to GitHub Packages, and prints the public-npm command for 5.4 with the sha1 to check.
+>    - **5.3 Publish to GitHub Packages**: `npx tsx scripts/release-publish.ts <version> --expect-sha <S>`, **run from the main checkout**. GitHub Packages auth is that checkout's gitignored `.npmrc`; an `npm whoami` preflight refuses before any build if it fails, and it refuses from a worktree.
+>      - It repeats 5.1 in a fresh clone **at the tag**.
+>      - It refuses unless `v<version>` resolves to `--expect-sha <S>`, the tag commit is on `origin/main`, and the tagged `package.json` version equals `<version>`.
+>      - It then records the tarball's path, file count and sha1, publishes **that tarball** to GitHub Packages, and prints the public-npm command for 5.4 with the sha1 to check.
 >    - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): first check the printed sha1 against the file, then run `npm publish <tarball> --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`. **Never a folder publish, never `--ignore-scripts`, never a tarball the script did not produce.** A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
 >    - **Guards live in the command the operator runs, never in a list addressed to a seat** (RS-7). A release check that cannot be put in the script is written into this step's text, at the point where the operator meets it.
 >    - **A tarball publish runs no lifecycle scripts**: no `prepublishOnly`, no `postpublish` (npm 10.9.3 source; ballot `2026-10-03-hermetic-publish-path` P2). The script runs the pre-publish checks itself. **Step 6 is the only post-publish check.** `postpublish`'s `token-index/` warning fires only on a folder publish, which the tripwire refuses.
@@ -124,6 +146,22 @@
 
 *Shipped-doc note*: this file ships in the package (`files[]` keeps `governance/`). The edit is therefore consumer-visible and rides the next release's notes as a 🔵 internal-process change.
 
+### 3.6 `governance/release-management-system.md`, line 31 (added 2026-10-03 from the documentation sweep)
+
+**Before:**
+> - Verification stays mechanized; judgment stays human. DesignerPunk's publish guard scripts (`check:drift`, `verify:token-index-clean`, the `prepublishOnly` chain — this repo's package scripts, not shipped to consumers) block a broken publish mechanically and are NOT part of the retired tool.
+
+**After:**
+> - Verification stays mechanized; judgment stays human. DesignerPunk's publish guard is its publish script (`scripts/release-publish.ts`, which runs `check:drift`, `verify:token-index-clean` and `pack-assert` itself, in a fresh clone at the tag). `prepublishOnly` is only a tripwire that refuses a folder publish. These are this repo's package scripts, not shipped to consumers. They block a broken publish mechanically and are NOT part of the retired tool.
+
+### 3.7 `.kiro/hooks/README.md`, line 109 (added 2026-10-03 from the documentation sweep)
+
+**Before:**
+> See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the `prepublishOnly` token-index gate, and the derive-classify-ratify notes recipe).
+
+**After:**
+> See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the derive-classify-ratify notes recipe, and the publish path: one tarball built by `scripts/release-publish.ts` in a fresh clone at the tag, which runs the token-index gate itself; `prepublishOnly` only refuses a folder publish).
+
 ## 4. The register row (verbatim; applied as `proposed`)
 
 ### hermetic-publish-path
@@ -138,8 +176,9 @@ verification:
   owner: ada
   check_state: proposed
   checks: []
-  # Arms (tool-time) when: the ballot's P2 second leg (an observed tarball publish running no lifecycle script) and P3
-  # (a folder publish refused, naming the script) are recorded in Ada's fix PR, AND RELEASE-FLOW steps 5–7 land. ARMING read: Stacy.
+  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). Arms (tool-time) only when RELEASE-FLOW steps 5–7
+  # land; until then, proposed. The CI half (`test:pack-contents` in lane-functional-root, PR after #279) is
+  # build-time evidence, not this row's tool-time check. ARMING read: Stacy.
   # Owner is ada because she maintains the instrument (script, tripwire, pack-assert); the law text is Thurgood's.
 education:
   disposition: "AUTHOR: RELEASE-FLOW steps 5–7 (ballot 2026-10-03-hermetic-publish-path § 3) and governance/release-management-system.md § 5 are the education. PRUNED: the 2026-10-02 deferral's three manual guards are superseded by the script (Ada's issue records that). HONEST REACH: a publish run with --ignore-scripts, or of a tarball the script did not produce, is NOT detected before publish; 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced"
@@ -149,21 +188,36 @@ history:
 
 ## 5. Application (at ratification, one PR, Peter-merged under the governance carve-out)
 
-1. The record-first Status flip in this file. Then §§ 3.1–3.5 and § 4, verbatim. Then the README "Ballots on record" entry.
-2. **Straggler sweep**: `grep -rn "Publish from merged\|publish from merged\|git switch main && git pull" .kiro/hooks governance .kiro/steering canonical`. Every hit is either brought in line or listed as intentionally historical.
+1. The record-first Status flip in this file. Then §§ 3.1–3.7 and § 4, verbatim. Then the README "Ballots on record" entry.
+2. **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
 3. **The tasks.md annotation owed by the absorbed issue (its owed act 2)**: a dated annotation on Spec 123 `tasks.md`'s line "RELEASE fires at the release tag, before publish", pointing here (phase 1 at S before the tag; phase 2 after the step-6 record PR).
 4. `rebuild_index` after merge: `governance/` is a served root.
 5. Close and archive `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (`git mv` to `archive/`).
-6. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
+6. **Charter follow-ups, by vehicle (b)**: a canonical-charter edit plus regeneration (Spec 122), in a separate PR after this one merges. Never hand-edit `.claude/agents/*` or `CLAUDE.md`.
+   - **Stacy's RELEASE row** (`canonical/agents/stacy.md` L393): its wording, Stacy's to author.
+   - **Thurgood's LIVENESS read 2** (`canonical/agents/thurgood.md` L448): a RELEASE record with phase 1 only, still reading `publish-rail liveness: owed`, is an event without a complete record.
+   - Both are listed in the sweep section named in item 2.
+7. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
 
 ## 6. Deferred — captured
 
-**Build side: by pointer only.** Ada's section on `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md` (her 2026-10-03 rulings and deferred-items section, landing in her grant PR) lists:
-- the dropped esbuild root-resolution plugin and build-time assertion;
-- the dropped `dist/` wipe/prune;
-- option B (single dependency tree);
-- the open "prevent" fork (her options A/C);
-- option D's test fix and the base-config freshness check, if not in her fix PR.
+**Build side: by pointer only.** Two tables in `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md` hold these rows.
+
+In § "2026-10-03 -- after the Ada + Thurgood consult" ("Deferred — captured per Peter's instruction"):
+- **(a)** the esbuild root-resolution plugin and build-time assertion;
+- **(b)** the `dist/` wipe or prune;
+- **(c)** option B, a single dependency tree;
+- **(d)** tool-boot-smoke booting the shipped bundles. **Owner: Thurgood.** Its paths are outside his standing scope, so it needs its own grant;
+- **(e)** bypass prevention (publish from CI with provenance);
+- **(f)** the open A/C "prevent" fork.
+
+In § "2026-10-03 -- the fix" ("Deferred, discovered while building"):
+- **(g)** base-config freshness;
+- **(h)** retire `postpublish`, triggered by this ballot's ratification;
+- **(i)** limits of the leftover rule;
+- **(j)** `test:pack-contents` is red locally in any checkout with nested installs or stale `dist/`. The lane step is placed before the nested install for this reason.
+
+Option D's test fix shipped in #279 and is no longer deferred.
 
 They are not restated here, so the two lists cannot drift.
 
