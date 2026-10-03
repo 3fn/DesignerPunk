@@ -15,6 +15,10 @@
 
 - **[2026-09-20-consumer-distribution-roadmap-update.md](./2026-09-20-consumer-distribution-roadmap-update.md)** — the live view for the Spec 123 arc: spine status, decision gates, recorded conflicts, owed checks. Supersedes the *sequence* in the WordPress-thesis note.
 
+## Next arc (gated — read after the current view)
+
+- **[2026-10-03-react-react-native-platform-admission-roadmap-update.md](./2026-10-03-react-react-native-platform-admission-roadmap-update.md)** — the arc that follows 123: adoption direction (Peter, 2026-10-02), platform admission + registry, React as binding and React Native as target, adopter-shaped tokens and components; project split declined. Gated on the v15.0.0 tag + parity flip. Does not supersede the 123 view.
+
 ## Standing (read with the current view)
 
 - **[north-star-design-system-ecosystem.md](./north-star-design-system-ecosystem.md)** — the pre-Astryx "ships the capability, not just outputs" thesis. Standing.
