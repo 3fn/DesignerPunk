@@ -32,7 +32,11 @@ import {
   cloneHatchMessage,
   personalNoteNamingMessage,
   jestConfigCollisionMessage,
+  gitignoreBlockConfigUnreadableMessage,
+  gitignoreBlockAddedMessage,
 } from './shared/errorCatalog';
+import { computeGitignoreRegion, applyGitignoreRegion } from './shared/gitignoreRegion';
+import type { ConfigModuleLoader } from '../config/ConfigLoader';
 import { emitAgentLayer, previewAgentLayerMissing, resolveAgentTarget } from './attach';
 import { serializeManifest } from './sync/Manifest';
 import type { DesignerPunkManifest, ManifestEntry, ManifestOrigin, HarnessTarget } from './sync/Manifest';
@@ -106,7 +110,13 @@ function hashContent(content: string): string {
   return crypto.createHash('sha256').update(content).digest('hex');
 }
 
-export async function runInit(argv: string[]): Promise<void> {
+/** Test seam for `runInit`: in-process jest cannot run the production config loader (see `loadConfig`). */
+export interface InitDeps {
+  /** The config-module loader for the `.gitignore` block's `outputDir` read (default: `loadConfig`'s production loader). */
+  configLoader?: ConfigModuleLoader;
+}
+
+export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void> {
   const opts = parseInitArgs(argv);
   const dest = process.cwd();
   const pkgRoot = resolvePackageRoot(__dirname);
@@ -327,6 +337,21 @@ export async function runInit(argv: string[]): Promise<void> {
     '.designerpunkignore',
   );
   if (ignoreCreated) manifest.recordFile('.designerpunkignore', ignorePath, 'generated');
+
+  // --- Step 11: the `.gitignore` managed block (C24; Task 20.2). Emitted AFTER the token copy: the
+  // config `init` just wrote imports the copied tier, and the block's commented line carries the
+  // CONFIGURED `outputDir`, read through `loadConfig` (a pre-existing config with a different
+  // `output` is kept above, so its path is the one used). The content is computed once, in
+  // `shared/gitignoreRegion.ts`, and shared with `sync`. If the config will not load, report and
+  // write NO block — never guess `./dist/tokens`. ----------------------------------------------
+  const gitignoreBlock = await computeGitignoreRegion(dest, deps.configLoader);
+  if (!gitignoreBlock.ok) {
+    console.log(`  ⚠️  ${gitignoreBlockConfigUnreadableMessage(gitignoreBlock.reason)}`);
+  } else {
+    const applied = applyGitignoreRegion(dest, gitignoreBlock.content, manifest.state.entries);
+    if (applied.outcome === 'collision') console.log(`  ⚠️  ${applied.message}`);
+    else if (applied.outcome === 'written') console.log(`✓ ${gitignoreBlockAddedMessage()}`);
+  }
 
   // --- Manifest — written LAST (design.md C1's manifest row): every file and key above,
   // including the generated agent layer and the MCP config keys ----------------------------

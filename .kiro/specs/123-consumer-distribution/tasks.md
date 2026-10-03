@@ -1106,7 +1106,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `docs/consumer/COMMIT-POLICY.md`, `src/cli/init.ts`, tests *(amendment 2026-10-03 — widened to the paths the criteria force (Lina; Stacy's lens item 5):)* `src/cli/shared/gitignoreRegion.ts` (new), `src/cli/sync/index.ts`, `src/cli/sync/Classifier.ts`, `src/cli/shared/errorCatalog.ts` (PR-9's remedy row), `src/cli/__tests__/init.test.ts`, `src/cli/__tests__/sync.region.test.ts`, `tests/consumer-integration.test.ts` (20.3's packed fresh-clone case, built at test time; R2, Lina RC-4: the committed `src/cli/__tests__/fixtures/policy-applied-born-repo/**` fixture is dropped), `src/cli/sync/Prompter.ts` and `src/cli/sync/Reporter.ts` *(R2, Lina RC-3: the offer is a prompt and the report a report line; `sync/index.ts` imports both)*
 
   - [x] 20.1 `COMMIT-POLICY.md`
-  - [ ] 20.2 `.gitignore` region (configured path) + `sync` round-trip *(amendment 2026-10-03: `src/cli/shared/gitignoreRegion.ts`; the `sync` region source; PR-9's offer, report and corrected remedy)*
+  - [x] 20.2 `.gitignore` region (configured path) + `sync` round-trip *(amendment 2026-10-03: `src/cli/shared/gitignoreRegion.ts`; the `sync` region source; PR-9's offer, report and corrected remedy)*
   - [ ] 20.3 Fresh-clone fixture through step 4 *(amendment 2026-10-03: after 22.1; R2: built at test time, nothing committed)*
 
 - [ ] 21. The starter specs

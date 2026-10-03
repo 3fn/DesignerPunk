@@ -35,6 +35,15 @@ import { cloneHatchMessage, personalNoteNamingMessage, restartLineSequencedMessa
 import { classifyFiles } from '../sync/Classifier';
 import { loadIgnoreFilter } from '../sync/IgnoreFilter';
 import { COPY_ROOTS } from '../sync/Manifest';
+import {
+  GITIGNORE_MARKERS,
+  GITIGNORE_REGION_ID,
+  gitignoreRegionContent,
+  gitignoreRegionEntry,
+} from '../shared/gitignoreRegion';
+import { gitignoreBlockAddedMessage, gitignoreBlockConfigUnreadableMessage } from '../shared/errorCatalog';
+import { extractRegion, normalizeRegionContent, wrapRegion } from '../sync/RegionGrain';
+import type { ConfigModuleLoader } from '../../config/ConfigLoader';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -764,5 +773,100 @@ describe('CLI init — U2 output prints the sequenced restart row LAST (Task 16.
     expect(output.trimEnd().endsWith(expectedTail)).toBe(true);
     // The agent-layer summary is printed before the next-steps block, never after the restart row.
     expect(output.indexOf('✓ Agent layer (')).toBeLessThan(output.indexOf(expectedTail));
+  });
+});
+
+describe('CLI init — the .gitignore managed block (Task 20.2; design.md C24)', () => {
+  let scratchDir: string;
+  const ARGS = ['--name', 'Test', '--abbreviation', 'T', '--skip-agents'];
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  /** `runInit` with an injected config loader (the production loader cannot run in-process under jest). */
+  async function initWithLoader(args: string[], configLoader: ConfigModuleLoader): Promise<string> {
+    const originalCwd = process.cwd();
+    process.chdir(scratchDir);
+    const logSpy = jest.spyOn(console, 'log').mockImplementation();
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation();
+    const exitSpy = jest.spyOn(process, 'exit').mockImplementation(((() => undefined) as unknown) as () => never);
+    try {
+      await runInit(args, { configLoader });
+    } finally {
+      process.chdir(originalCwd);
+    }
+    const output = [...logSpy.mock.calls, ...errorSpy.mock.calls].map((call) => call.join(' ')).join('\n');
+    logSpy.mockRestore();
+    errorSpy.mockRestore();
+    exitSpy.mockRestore();
+    return output;
+  }
+
+  /** Reads `output: '<path>'` out of the config text `init` wrote, so the block's path provably comes from THAT file. */
+  const readOutputFromFile: ConfigModuleLoader = (configPath) => {
+    const m = /output:\s*'([^']+)'/.exec(fs.readFileSync(configPath, 'utf-8'));
+    if (!m) throw new Error('no output in config');
+    return { default: { output: m[1] } };
+  };
+
+  const gitignore = () => fs.readFileSync(path.join(scratchDir, '.gitignore'), 'utf-8');
+  const nonCommentLines = (text: string) => text.split('\n').filter((l) => l.trim() !== '' && !l.startsWith('#'));
+
+  test('the config init writes (output ./dist/tokens) → the block ignores exactly token-index/ and .designerpunk/, the commented line names dist/tokens/', async () => {
+    const output = await initWithLoader(ARGS, readOutputFromFile);
+    const content = gitignoreRegionContent('dist/tokens');
+    expect(gitignore()).toBe(wrapRegion(GITIGNORE_MARKERS, content));
+    expect(nonCommentLines(extractRegion(gitignore(), GITIGNORE_MARKERS).found ? (extractRegion(gitignore(), GITIGNORE_MARKERS) as { region: string }).region : '')).toEqual([
+      'token-index/',
+      '.designerpunk/',
+    ]);
+    expect(gitignore()).toContain('# dist/tokens/');
+    expect(output).toContain(`✓ ${gitignoreBlockAddedMessage()}`);
+  });
+
+  test('the entry is recorded: a generated region whose hash is over the normalized content', async () => {
+    await initWithLoader(ARGS, readOutputFromFile);
+    const entry = readManifestFile(scratchDir).entries[GITIGNORE_REGION_ID];
+    expect(entry).toEqual(gitignoreRegionEntry(gitignoreRegionContent('dist/tokens')));
+    expect(entry.hash).toBe(sha256(normalizeRegionContent(gitignoreRegionContent('dist/tokens'))));
+  });
+
+  test.each([
+    ['./build/tokens', 'build/tokens'],
+    ['out/design-tokens', 'out/design-tokens'],
+  ])('TWO CONFIGS: a pre-existing config with output %s is kept, and the commented line carries %s — never dist/tokens', async (configured, rel) => {
+    const configText = `module.exports = { output: '${configured}' };\n`;
+    fs.writeFileSync(path.join(scratchDir, 'designerpunk.config.ts'), configText);
+    // `--re-scaffold --yes`: a config with no token tier is `partial`, which bare `init` refuses.
+    await initWithLoader([...ARGS, '--re-scaffold', '--yes'], (p) => import(p));
+    expect(fs.readFileSync(path.join(scratchDir, 'designerpunk.config.ts'), 'utf-8')).toBe(configText); // kept (createFileIfNotExists)
+    expect(gitignore()).toContain(`# ${rel}/`);
+    expect(gitignore()).not.toContain('dist/tokens');
+    expect(gitignore()).toBe(wrapRegion(GITIGNORE_MARKERS, gitignoreRegionContent(rel)));
+  });
+
+  test('an existing .gitignore: her lines stay in place, byte for byte, and the block follows', async () => {
+    const mine = 'node_modules/\n.env\n';
+    fs.writeFileSync(path.join(scratchDir, '.gitignore'), mine);
+    await initWithLoader(ARGS, readOutputFromFile);
+    expect(gitignore().startsWith(mine)).toBe(true);
+    expect(extractRegion(gitignore(), GITIGNORE_MARKERS).found).toBe(true);
+  });
+
+  test('RED: a config that will not load → init reports, writes NO block, records no entry, guesses no path', async () => {
+    const throwing: ConfigModuleLoader = () => {
+      throw new Error('boom');
+    };
+    const output = await initWithLoader(ARGS, throwing);
+    const reason = `Failed to load ${path.join(scratchDir, 'designerpunk.config.ts')}: boom`;
+    expect(output).toContain(gitignoreBlockConfigUnreadableMessage(reason));
+    expect(fs.existsSync(path.join(scratchDir, '.gitignore'))).toBe(false);
+    expect(readManifestFile(scratchDir).entries[GITIGNORE_REGION_ID]).toBeUndefined();
   });
 });

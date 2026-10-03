@@ -298,3 +298,62 @@ export function componentTokenFileLoadFailedMessage(file: string, reason: string
   const firstLine = reason.split(/\r?\n/, 1)[0].trim();
   return `generate stopped — ${file} could not be loaded: ${firstLine} Fix the file and run generate again. Nothing was written.`;
 }
+
+// ---------------------------------------------------------------------------
+// The `.gitignore` managed block (Spec 123 Task 20.2; design.md C24's PR-9 erratum and § "Error
+// Handling — the loud-failure catalog (exact strings)" rows "`.gitignore` block — offer" and
+// "— report"). The block's content lives in `gitignoreRegion.ts`; its strings live here.
+// ---------------------------------------------------------------------------
+
+/**
+ * design.md catalog row **`.gitignore` block — offer** (PR-9; `sync`, interactive; only when
+ * `git check-ignore -q .designerpunk/` exits 1). Asked as its OWN question, after `sync`'s report,
+ * default No — the `[y/N]` is part of the row's text.
+ */
+export function gitignoreBlockOfferMessage(): string {
+  return (
+    `.designerpunk/ is not ignored by git here, so a personal note in it could be committed and shared with your team. ` +
+    `Add DesignerPunk's .gitignore block (it ignores .designerpunk/ and token-index/)? [y/N]`
+  );
+}
+
+/**
+ * design.md catalog row **`.gitignore` block — report** (PR-9; `sync`, non-interactive, including
+ * `--apply` off a TTY; writes nothing). Carries the remedy the `untracked-new` row's
+ * `attach --target` cannot give for a target-free region.
+ */
+export function gitignoreBlockReportMessage(): string {
+  return (
+    `.designerpunk/ is not ignored by git here, so a personal note in it could be committed and shared with your team. ` +
+    `To fix it: answer the prompt when running 'npx designerpunk sync' in a terminal, or add the line .designerpunk/ to .gitignore ` +
+    `(your agent can do this with your go). Nothing was changed.`
+  );
+}
+
+/**
+ * `init` or `sync` could not load `designerpunk.config.ts`, so the platform-output path for the
+ * block's commented line is unknown. The block is NOT written, and no path is guessed
+ * (tasks.md Task 20, R2 Lina A-2).
+ *
+ * AUTHORED AT 20.2, not copied: design.md § Error Handling carries no row for this case (the
+ * criterion says "init reports and writes no block" and names no text), so there is no catalog
+ * string to be equal to. `gitignoreRegion.test.ts` asserts THIS function's output. The design
+ * catalog row is owed (see `task-20-instruments.md` § "Found later").
+ */
+export function gitignoreBlockConfigUnreadableMessage(reason: string): string {
+  const firstLine = reason.split(/\r?\n/, 1)[0].trim();
+  return (
+    `DesignerPunk's .gitignore block was not written — designerpunk.config.ts could not be loaded (${firstLine}), ` +
+    `so the platform output path is unknown and none was guessed. Nothing was written to .gitignore. ` +
+    `Add the lines token-index/ and .designerpunk/ to it yourself, or fix the config and run 'npx designerpunk sync'.`
+  );
+}
+
+/**
+ * The confirmation after the block is written (by `init`, or by `sync` after a yes). AUTHORED AT
+ * 20.2: the design catalog has no row for it (the existing "✓ Created …" lines are literals in
+ * `init.ts`; the row is owed with the one above).
+ */
+export function gitignoreBlockAddedMessage(): string {
+  return `.gitignore: added DesignerPunk's block (it ignores token-index/ and .designerpunk/)`;
+}

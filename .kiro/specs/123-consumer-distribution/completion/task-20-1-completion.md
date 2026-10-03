@@ -82,3 +82,16 @@ Class guard (Peter, 2026-10-03). `VERIFIED-CODE` means the behaviour exists on t
 - Tests re-run after the cut: `commit-policy.test.ts` 6 passed; `npm run test:scripts` 17 suites, 364 passed.
 - Also corrected here: the instruments commit's SHA above. The two commits were re-written to fix the trailer block (`Agent: Lina` and `Co-Authored-By` adjacent in the final paragraph); the content and split are unchanged.
 
+## Addendum 2026-10-03 (after Task 20.2): the DESIGN-ONLY rows, re-checked
+
+Row numbers are the claims table's. `VERIFIED-CODE` now means the behaviour exists at the cited line on this branch after 20.2 (`src/cli/shared/gitignoreRegion.ts`, `src/cli/init.ts`, `src/cli/sync/index.ts`); detail in `task-20-2-completion.md`.
+
+| Row | Was | Now | Evidence |
+|---|---|---|---|
+| 17 (the `.gitignore` half: `sync` leaves outside lines byte for byte) | DESIGN-ONLY for the `.gitignore` region | **VERIFIED-CODE** | `src/cli/sync/index.ts:455-490` (the target-free region joins the report and apply rules); `src/cli/__tests__/sync.region.test.ts` § "the round-trip: outside lines byte-unchanged" (three cases, outside bytes asserted equal before and after, lines after the block included) |
+| 24 (`init` adds the block between markers, ignoring exactly `token-index/` and `.designerpunk/`, with the commented line and the configured output path; `sync` keeps it) | DESIGN-ONLY | **VERIFIED-CODE** | `src/cli/init.ts:341-356`; `src/cli/shared/gitignoreRegion.ts:47-62` (content), `:115-143` (apply); `init.test.ts` § "the .gitignore managed block" (default config; two pre-existing configs; her own `.gitignore` kept); real-node smoke: `init` from source under `tsx` with the production loader wrote the block and `git check-ignore -q .designerpunk/` then exited 0 |
+| 25 (`sync` offers the block to a repo born on 15.0.0 when git is not ignoring `.designerpunk/`; asks before writing, default No; reports and writes nothing when nobody can answer) | DESIGN-ONLY | **VERIFIED-CODE** | `src/cli/sync/index.ts:297-329` (`offerGitignoreBlock`), `:306` (by-effect detection), `:309` (off a TTY and `--dry-run`: report only), `:319` (its own question); `sync.region.test.ts` § "PR-9" (nine cases); real-node smoke: `sync` with stdin from `/dev/null` printed the report row and wrote nothing |
+| 8, 21 | DESIGN-ONLY | **still DESIGN-ONLY** | `specs/` scaffold (Task 21.3) and `generate` creating the note (Task 22.1) are not built by 20.2 |
+
+Not re-verified by me: the interactive prompt against a real terminal (the `[y/N]` is exercised through its test seam and `confirmGitignoreBlock` through a fake `readline`; no terminal was driven).
+

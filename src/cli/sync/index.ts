@@ -66,7 +66,21 @@ import {
   managedRegionMarkersMissingMessage,
   managedRegionEditedInsideMessage,
   restartLineSequencedMessage,
+  gitignoreBlockOfferMessage,
+  gitignoreBlockReportMessage,
+  gitignoreBlockConfigUnreadableMessage,
+  gitignoreBlockAddedMessage,
 } from '../shared/errorCatalog';
+import {
+  GITIGNORE_FILE,
+  GITIGNORE_REGION_ID,
+  GITIGNORE_MARKERS,
+  computeGitignoreRegion,
+  applyGitignoreRegion,
+  hasGitignoreBlock,
+  designerpunkDirIgnoreState,
+} from '../shared/gitignoreRegion';
+import { confirmGitignoreBlock } from './Prompter';
 import { emitAgentLayer, resolveAgentTarget, attachRefusal, REFERENCE_SERVERS } from '../attach';
 import {
   KEY_SURFACES,
@@ -135,6 +149,8 @@ export interface SyncOptions {
   isTTY?: boolean;
   /** Test seam — the terminal batch confirmation. */
   confirm?: (question: string) => Promise<boolean>;
+  /** Test seam — the `.gitignore` block offer's own `[y/N]` question (default No; PR-9). */
+  confirmGitignoreBlock?: (question: string) => Promise<boolean>;
   /** `--migrate-components`: relocate forks to src/components/<Name>/, remove unmodified copies. */
   migrateComponents?: boolean;
   /** Test seam — the migration's package fetcher (default: the consumer's own npm rail). */
@@ -208,6 +224,13 @@ export interface SyncOutcome {
   legacyRemoval?: LegacyRemoval;
   /** The generated-surface classification (file + region grain), when computed. */
   generated?: GeneratedSurfaces;
+  /**
+   * The `.gitignore` block's offer (PR-9), when the repo was born without one and git is not ignoring
+   * `.designerpunk/`: `added` (a yes), `declined` (No or Enter), `reported` (nobody could answer — off a
+   * terminal, `--apply` included, or `--dry-run`: the report row was printed and nothing was written).
+   * Absent when no offer applied.
+   */
+  gitignoreBlock?: 'added' | 'declined' | 'reported';
 }
 
 /** Parse `sync`'s CLI flags (everything after `sync`). */
@@ -247,7 +270,65 @@ async function terminalConfirm(question: string): Promise<boolean> {
   return answer.trim().toLowerCase() === 'y' || answer.trim().toLowerCase() === 'yes';
 }
 
+/**
+ * `sync`, then the `.gitignore` block's offer (PR-9). The offer is its OWN question, asked after
+ * `sync`'s report and its batch confirmation, so it runs after the main flow whichever way that
+ * ended (nothing to apply, applied, declined); it never runs for a steward repo or a corrupt manifest.
+ */
 export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
+  const outcome = await runSyncMain(options);
+  if (outcome.stopped === 'steward' || outcome.stopped === 'corrupt-manifest') return outcome;
+  const offered = await offerGitignoreBlock(options, outcome);
+  if (offered) outcome.gitignoreBlock = offered;
+  return outcome;
+}
+
+/**
+ * The `.gitignore` block's offer for a repo born on 15.0.0, which has none (design.md C24, PR-9 erratum).
+ *  - Only a born-posture manifest that records no block, with no markers in the file, and with the file
+ *    not listed in `.designerpunkignore`.
+ *  - **Detected by effect**: only when `git check-ignore -q .designerpunk/` exits 1. Exit 0 (already ignored),
+ *    exit 128 (not a git repository, or an error) and `git` off PATH print nothing and write nothing.
+ *  - Nobody can answer (off a terminal — `--apply` included — or `--dry-run`): the report row is printed,
+ *    nothing is written.
+ *  - Otherwise its own `[y/N]`, default No: only an explicit yes writes the block. A No writes nothing and
+ *    is asked again on the next interactive `sync`.
+ */
+async function offerGitignoreBlock(options: SyncOptions, outcome: SyncOutcome): Promise<SyncOutcome['gitignoreBlock'] | undefined> {
+  const { projectRoot } = options;
+  const loaded = loadManifest(projectRoot);
+  if (loaded.kind !== 'ok') return undefined;
+  const manifest = loaded.manifest;
+  if (manifest.posture !== 'born') return undefined;
+  if (Object.prototype.hasOwnProperty.call(manifest.entries, GITIGNORE_REGION_ID)) return undefined;
+  if (loadIgnoreFilter(projectRoot).isIgnored(GITIGNORE_FILE)) return undefined;
+  if (hasGitignoreBlock(projectRoot)) return undefined;
+  if (designerpunkDirIgnoreState(projectRoot) !== 'not-ignored') return undefined;
+
+  const isTTY = options.isTTY ?? Boolean(process.stdin.isTTY);
+  if (options.dryRun || !isTTY) {
+    console.log(`\n⚠️  ${gitignoreBlockReportMessage()}`);
+    return 'reported';
+  }
+  const computed = await computeGitignoreRegion(projectRoot, options.configLoader);
+  if (!computed.ok) {
+    console.log(`\n⚠️  ${gitignoreBlockConfigUnreadableMessage(computed.reason)}`);
+    return undefined;
+  }
+  const ask = options.confirmGitignoreBlock ?? ((q: string) => confirmGitignoreBlock(q));
+  if (!(await ask(gitignoreBlockOfferMessage()))) return 'declined';
+  const applied = applyGitignoreRegion(projectRoot, computed.content, manifest.entries);
+  if (applied.outcome === 'collision') {
+    console.log(`  ⚠️  ${applied.message}`);
+    return undefined;
+  }
+  if (saveManifest(projectRoot, manifest)) outcome.manifestWritten = true;
+  outcome.applied.push(GITIGNORE_REGION_ID);
+  console.log(`  ✓ ${gitignoreBlockAddedMessage()}`);
+  return 'added';
+}
+
+async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
   const { projectRoot } = options;
   const outcome: SyncOutcome = { applied: [], manifestWritten: false, report: [], trace: [] };
   const isTTY = options.isTTY ?? Boolean(process.stdin.isTTY);
@@ -367,6 +448,42 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
         const pkgSurfaceKeys = pkgKeys.keys.get(surface.file);
         if (!pkgSurfaceKeys) continue;
         keyResults.push(classifySurfaceKeys(surface, pkgSurfaceKeys, readProjectKeys(projectRoot, surface), entries));
+      }
+    }
+  }
+
+  // 4a. The `.gitignore` block (C24; Task 20.2) — TARGET-FREE. Classified from its own source
+  //     (`shared/gitignoreRegion.ts`, computed from `loadConfig(...).outputDir`), never from
+  //     `emitConsumer`'s per-target output, which sees per-target regions only (`classifyGenerated`). Only a
+  //     block the manifest already records is reconciled here; the first-time offer is `offerGitignoreBlock`.
+  //     The id `.gitignore#managed` then flows through the same report and apply rules as any region.
+  const gitignoreContents = new Map<string, string>();
+  const giEntry = entries[GITIGNORE_REGION_ID];
+  if (giEntry && giEntry.origin === 'generated' && giEntry.grain === 'region' && !ignore.isIgnored(GITIGNORE_FILE)) {
+    const computed = await computeGitignoreRegion(projectRoot, options.configLoader);
+    if (!computed.ok) {
+      sections.push({ title: '⚠️  .gitignore block:', lines: [gitignoreBlockConfigUnreadableMessage(computed.reason)] });
+    } else {
+      const abs = path.join(projectRoot, GITIGNORE_FILE);
+      const text = fs.existsSync(abs) ? fs.readFileSync(abs, 'utf-8') : undefined;
+      const c = classifyRegion(text, GITIGNORE_MARKERS, computed.content, giEntry, false);
+      const item = (classification: ClassifiedFile['classification'], reason?: string): ClassifiedFile => ({
+        relativePath: GITIGNORE_REGION_ID,
+        classification,
+        packageHash: hashBuffer(normalizeRegionContent(computed.content)),
+        manifestHash: giEntry.hash,
+        ...(reason ? { reason } : {}),
+      });
+      gitignoreContents.set(GITIGNORE_REGION_ID, computed.content);
+      switch (c.kind) {
+        case 'unchanged': files.unchanged.push(item('unchanged')); break;
+        case 'updated-safe': files.updatedSafe.push(item('updated-safe', 'unchanged by you — package updated')); break;
+        case 'conflict': files.conflicts.push(item('conflict', managedRegionEditedInsideMessage(GITIGNORE_FILE))); break;
+        case 'deleted-by-you': files.deletedByYou.push(item('deleted-by-you')); break;
+        case 'markers-missing':
+          sections.push({ title: '🧩 .gitignore block:', lines: [managedRegionMarkersMissingMessage(GITIGNORE_FILE)] });
+          break;
+        default: break; // new / untracked-new / adoptable cannot arise for a recorded entry
       }
     }
   }
@@ -529,7 +646,7 @@ export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
   }
 
   // 9. Apply — generated content from the package side computed above (never a package-file copy).
-  const contents = outcome.generated?.contents ?? new Map<string, string>();
+  const contents = new Map<string, string>([...(outcome.generated?.contents ?? new Map<string, string>()), ...gitignoreContents]);
   for (const rel of [...fileBatch, ...fileRestore, ...fileOverwrite]) {
     const content = contents.get(rel);
     if (content === undefined) continue;

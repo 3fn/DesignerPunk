@@ -171,3 +171,18 @@ function isBinary(content: string): boolean {
   // Check for null bytes (simple binary detection)
   return content.includes('\0');
 }
+
+/**
+ * Ask a question that carries its own `[y/N]` (the `.gitignore` block's offer, design.md catalog
+ * row "`.gitignore` block — offer"). Default No: only `y` or `yes` is a yes; Enter, `n` and anything
+ * else is a no, and nothing is written. The question is printed exactly as the catalog row states it.
+ */
+export async function confirmGitignoreBlock(question: string, rl?: readline.Interface): Promise<boolean> {
+  const ownRl = !rl;
+  if (!rl) {
+    rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  }
+  const answer = await ask(rl, `\n  ${question} `);
+  if (ownRl) rl.close();
+  return /^y(es)?$/i.test(answer.trim());
+}

@@ -22,7 +22,28 @@ import {
   wrapRegion,
   appendRegion,
 } from '../sync/RegionGrain';
-import { managedRegionMarkersMissingMessage } from '../shared/errorCatalog';
+import {
+  managedRegionMarkersMissingMessage,
+  managedRegionEditedInsideMessage,
+  gitignoreBlockOfferMessage,
+  gitignoreBlockReportMessage,
+  gitignoreBlockAddedMessage,
+} from '../shared/errorCatalog';
+import * as fs from 'fs';
+import * as path from 'path';
+import { execFileSync } from 'child_process';
+import { runSync } from '../sync';
+import { MANIFEST_FILE, parseManifest, serializeManifest } from '../sync/Manifest';
+import type { DesignerPunkManifest } from '../sync/Manifest';
+import {
+  GITIGNORE_MARKERS,
+  GITIGNORE_REGION_ID,
+  applyGitignoreRegion,
+  gitignoreRegionContent,
+  gitignoreRegionEntry,
+} from '../shared/gitignoreRegion';
+import { jestConfigModuleLoader } from '../../__tests__/helpers/configModuleLoader';
+import { captureConsole, createScratch, readText, setupPackage, writeFile } from './syncTestKit';
 
 const CLAUDE_MARKERS = regionMarkers(CLAUDE_MD_COMMENT);
 
@@ -285,5 +306,201 @@ describe('RegionGrain — normalizeRegionContent / wrapRegion / appendRegion (Ta
     expect(out).toBe(`# mine\r\n\r\n${M.begin}\r\n@x\r\n@y\r\n${M.end}\r\n`);
     // And the appended region is then an ordinary region: splice is a fixed point.
     expect(spliceRegion(out, M, '@x\n@y\n', 'CLAUDE.md')).toEqual({ ok: true, text: out });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Task 20.2 — the `.gitignore` block through `sync`: the target-free round-trip, and PR-9's offer
+// ---------------------------------------------------------------------------
+
+describe('sync — the .gitignore block (Task 20.2; design.md C24 and its PR-9 erratum)', () => {
+  let scratch: string;
+  let con: ReturnType<typeof captureConsole>;
+
+  /** A born repo as `init` leaves it, minus an agent layer: a manifest, a config, a fake installed package. */
+  function bornRepo(opts: { output?: string; git?: boolean; block?: boolean; mine?: string; posture?: 'born' | 'consume' } = {}): void {
+    setupPackage(scratch);
+    writeFile(scratch, 'designerpunk.config.ts', `module.exports = { output: '${opts.output ?? './dist/tokens'}' };\n`);
+    if (opts.git !== false) execFileSync('git', ['init', '-q'], { cwd: scratch });
+    const entries: DesignerPunkManifest['entries'] = {};
+    if (opts.mine !== undefined) writeFile(scratch, '.gitignore', opts.mine);
+    if (opts.block) applyGitignoreRegion(scratch, gitignoreRegionContent('dist/tokens'), entries);
+    const manifest: DesignerPunkManifest = {
+      version: '1',
+      posture: opts.posture ?? 'born',
+      installedVersion: '15.0.0',
+      contractHash: '',
+      attachedTargets: [],
+      entries,
+    };
+    writeFile(scratch, MANIFEST_FILE, serializeManifest(manifest));
+  }
+
+  const manifestOf = () => parseManifest(readText(scratch, MANIFEST_FILE));
+  const giPath = () => path.join(scratch, '.gitignore');
+  const gi = () => fs.readFileSync(giPath(), 'utf-8');
+
+  const run = (o: Partial<Parameters<typeof runSync>[0]> = {}) =>
+    runSync({ projectRoot: scratch, isTTY: true, configLoader: jestConfigModuleLoader, ...o });
+
+  beforeEach(() => {
+    scratch = createScratch('dp-sync-gitignore-');
+    con = captureConsole();
+  });
+  afterEach(() => {
+    con.restore();
+    fs.rmSync(scratch, { recursive: true, force: true });
+  });
+
+  describe('the round-trip: outside lines byte-unchanged', () => {
+    test('a recorded block that matches the config is unchanged: no write, the .gitignore bytes identical', async () => {
+      bornRepo({ block: true, mine: 'node_modules/\n.env\n' });
+      const before = gi();
+      const out = await run({ confirmGitignoreBlock: async () => { throw new Error('no offer expected'); } });
+      expect(gi()).toBe(before);
+      expect(out.applied).not.toContain(GITIGNORE_REGION_ID);
+      expect(out.gitignoreBlock).toBeUndefined();
+      expect(con.output()).toContain('managed item unchanged');
+    });
+
+    test('the config\'s output changes → `--apply` rewrites ONLY the region; every outside byte is unchanged; the entry follows', async () => {
+      bornRepo({ block: true, mine: 'node_modules/\n.env\n' });
+      const beforeText = gi();
+      const outsideBefore = beforeText.slice(0, beforeText.indexOf(GITIGNORE_MARKERS.begin));
+      writeFile(scratch, 'designerpunk.config.ts', `module.exports = { output: './build/tokens' };\n`);
+      const out = await run({ apply: true });
+      expect(out.applied).toContain(GITIGNORE_REGION_ID);
+      expect(gi()).toContain('# build/tokens/');
+      expect(gi()).not.toContain('# dist/tokens/');
+      expect(gi().startsWith(outsideBefore)).toBe(true);
+      // everything after the end marker is also untouched (here: nothing follows)
+      expect(gi().slice(gi().indexOf(GITIGNORE_MARKERS.end))).toBe(beforeText.slice(beforeText.indexOf(GITIGNORE_MARKERS.end)));
+      expect(manifestOf().entries[GITIGNORE_REGION_ID]).toEqual(gitignoreRegionEntry(gitignoreRegionContent('build/tokens')));
+    });
+
+    test('lines she adds AFTER the block survive an update, byte for byte', async () => {
+      bornRepo({ block: true, mine: 'node_modules/\n' });
+      fs.appendFileSync(giPath(), 'coverage/\n.cache/\n');
+      writeFile(scratch, 'designerpunk.config.ts', `module.exports = { output: './build/tokens' };\n`);
+      await run({ apply: true });
+      expect(gi().endsWith(`${GITIGNORE_MARKERS.end}\ncoverage/\n.cache/\n`)).toBe(true);
+      expect(gi().startsWith('node_modules/\n\n')).toBe(true);
+    });
+
+    test('RED (edited inside): reported with the catalog row; the terminal confirmation alone never replaces it; `--apply` does', async () => {
+      bornRepo({ block: true });
+      fs.writeFileSync(giPath(), gi().replace('token-index/', 'token-index/\nmy-extra/'));
+      const edited = gi();
+      await run({ confirm: async () => true });
+      expect(con.output()).toContain(managedRegionEditedInsideMessage('.gitignore'));
+      expect(gi()).toBe(edited);
+      await run({ apply: true });
+      expect(gi()).not.toContain('my-extra/');
+    });
+
+    test('RED (markers gone): the catalog row, nothing written', async () => {
+      bornRepo({ block: true });
+      fs.writeFileSync(giPath(), 'only mine\n');
+      await run({ apply: true });
+      expect(con.output()).toContain(managedRegionMarkersMissingMessage('.gitignore'));
+      expect(gi()).toBe('only mine\n');
+    });
+  });
+
+  describe('PR-9: the offer for a repo born without a block (its own [y/N], default No)', () => {
+    test('an unignored repo, interactive: the offer appears with the catalog text, and the block is written ONLY after a yes', async () => {
+      bornRepo({ mine: 'node_modules/\n' });
+      const questions: string[] = [];
+      let existedWhenAsked: boolean | undefined;
+      let bytesWhenAsked = '';
+      const out = await run({
+        confirmGitignoreBlock: async (q) => {
+          questions.push(q);
+          existedWhenAsked = fs.existsSync(giPath());
+          bytesWhenAsked = gi();
+          return true;
+        },
+      });
+      expect(questions).toEqual([gitignoreBlockOfferMessage()]);
+      expect(bytesWhenAsked).toBe('node_modules/\n'); // nothing written before the answer
+      expect(existedWhenAsked).toBe(true);
+      expect(out.gitignoreBlock).toBe('added');
+      expect(gi().startsWith('node_modules/\n')).toBe(true);
+      expect(gi()).toContain('token-index/');
+      expect(gi()).toContain('# dist/tokens/');
+      expect(manifestOf().entries[GITIGNORE_REGION_ID]).toEqual(gitignoreRegionEntry(gitignoreRegionContent('dist/tokens')));
+      expect(con.output()).toContain(gitignoreBlockAddedMessage());
+    });
+
+    test('an already-ignored repo (her own line): no offer, no write', async () => {
+      bornRepo({ mine: '.designerpunk/\n' });
+      const before = gi();
+      const out = await run({ confirmGitignoreBlock: async () => { throw new Error('asked'); } });
+      expect(out.gitignoreBlock).toBeUndefined();
+      expect(gi()).toBe(before);
+      expect(con.output()).not.toContain(gitignoreBlockReportMessage());
+      expect(manifestOf().entries[GITIGNORE_REGION_ID]).toBeUndefined();
+    });
+
+    test('non-interactive: the report and its corrected remedy are printed, zero bytes written, no question asked', async () => {
+      bornRepo();
+      const manifestBefore = readText(scratch, MANIFEST_FILE);
+      const out = await run({ isTTY: false, confirmGitignoreBlock: async () => { throw new Error('asked'); } });
+      expect(out.gitignoreBlock).toBe('reported');
+      expect(con.output()).toContain(gitignoreBlockReportMessage());
+      expect(con.output()).not.toContain('attach --target');
+      expect(fs.existsSync(giPath())).toBe(false);
+      expect(readText(scratch, MANIFEST_FILE)).toBe(manifestBefore);
+    });
+
+    test('`--apply` off a TTY: the report, and zero bytes written to .gitignore', async () => {
+      bornRepo({ mine: 'node_modules/\n' });
+      const out = await run({ isTTY: false, apply: true, confirmGitignoreBlock: async () => { throw new Error('asked'); } });
+      expect(out.gitignoreBlock).toBe('reported');
+      expect(con.output()).toContain(gitignoreBlockReportMessage());
+      expect(gi()).toBe('node_modules/\n');
+      expect(manifestOf().entries[GITIGNORE_REGION_ID]).toBeUndefined();
+    });
+
+    test('`--dry-run` never writes: the report row, nothing changed', async () => {
+      bornRepo();
+      const out = await run({ dryRun: true });
+      expect(out.gitignoreBlock).toBe('reported');
+      expect(fs.existsSync(giPath())).toBe(false);
+    });
+
+    test('answered No (or Enter): zero bytes written, and the offer recurs on the next interactive run', async () => {
+      bornRepo({ mine: 'node_modules/\n' });
+      let asked = 0;
+      const no = async () => { asked++; return false; };
+      const first = await run({ confirmGitignoreBlock: no });
+      expect(first.gitignoreBlock).toBe('declined');
+      expect(gi()).toBe('node_modules/\n');
+      expect(manifestOf().entries[GITIGNORE_REGION_ID]).toBeUndefined();
+      const second = await run({ confirmGitignoreBlock: no });
+      expect(second.gitignoreBlock).toBe('declined');
+      expect(asked).toBe(2);
+    });
+
+    test('a non-git directory (git exits 128): nothing printed, zero bytes, no question', async () => {
+      bornRepo({ git: false });
+      const out = await run({ confirmGitignoreBlock: async () => { throw new Error('asked'); } });
+      expect(out.gitignoreBlock).toBeUndefined();
+      expect(con.output()).not.toContain(gitignoreBlockOfferMessage());
+      expect(con.output()).not.toContain(gitignoreBlockReportMessage());
+      expect(fs.existsSync(giPath())).toBe(false);
+    });
+
+    test('a consume-posture repo is not offered a block', async () => {
+      bornRepo({ posture: 'consume' });
+      const out = await run({ confirmGitignoreBlock: async () => { throw new Error('asked'); } });
+      expect(out.gitignoreBlock).toBeUndefined();
+    });
+
+    test('a repo already carrying the markers (block in place, not recorded) is not offered a second one', async () => {
+      bornRepo({ mine: `# mine\n\n${GITIGNORE_MARKERS.begin}\ntoken-index/\n${GITIGNORE_MARKERS.end}\n` });
+      const out = await run({ confirmGitignoreBlock: async () => { throw new Error('asked'); } });
+      expect(out.gitignoreBlock).toBeUndefined();
+    });
   });
 });
