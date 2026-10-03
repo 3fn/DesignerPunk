@@ -1,3 +1,3 @@
-=== VERSION=99.99.99 -> exit 10, real 404, with the 404-after-publish note ===
-FAIL[version]: @3fn/core@99.99.99 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release. If you published in the last few minutes, the registry may not show it yet — wait a minute and re-run.
+=== VERSION=99.99.99 -> exit 10, real 404, with the packument-time pointer (re-recorded 2026-10-03; replaces the indexing-lag note, R-4 / ballot 2026-10-03-hermetic-publish-path § 3.8) ===
+FAIL[version]: @3fn/core@99.99.99 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release. Before re-running, read the registry's own record: if the packument (curl -s https://registry.npmjs.org/@3fn%2fcore) has no time["99.99.99"], the version is not published yet and this 404 is the correct answer, not indexing lag; only if time["99.99.99"] is present, re-run by hand within a few minutes of it.
 exit code: 10
