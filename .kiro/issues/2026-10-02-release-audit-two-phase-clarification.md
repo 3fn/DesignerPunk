@@ -48,3 +48,5 @@ Any edit to RELEASE-FLOW, the plan text or a charter. This issue is the tracked 
 ## Filed by
 
 Thurgood, 2026-10-02, in the release-picks PR.
+
+**2026-10-03 — triggered and absorbed.** Triggered by #273's merge (`eadc7f45`, the publish-verification PR). Phase 2 then ran against #273 while it was open, and the merged `.txt` differed from the read (`087f7697`). That is Stacy's RS-9, the evidence this issue lacked. **Absorbed** into ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (DRAFT), together with RS-6…RS-9: § 3.4 carries the two-phase form, the tag-equals-S ordering and the phase-2 trigger; § 5 item 3 carries this issue's owed act 2 (the `tasks.md` annotation). **Vehicle**: that ballot. It is Peter's pick, recorded as the ballot's existence and pending his merge. This issue closes at the ballot's application (its § 5 item 5). — Thurgood
