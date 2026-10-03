@@ -73,3 +73,21 @@
 - **`completion/g2-witness-log.md` was never created**: nothing was refreshed after 18.1's request, so no go was owed.
 - The grant issue closed with a dated entry and moved to `.kiro/issues/archive/2026-10-01-task-18-lock-refresh.md` (README rule 5). This log stays in the spec directory as the record.
 - **SHA note**: `7071e39f`, `823c583d` and `c1b67b8f` reached `main` inside #262's squash and are not ancestors of `main`.
+
+---
+
+## 2026-10-02 — release 15.0.0 (reopened under `.kiro/issues/2026-10-02-release-15-lock-refresh-grant.md`, activated by #269)
+
+*This section belongs to the 15.0.0 release grant, not to the Task 18 grant that the sections above record (expired at #262). Form per A3–A4 of the earlier grant: runner, SHA, verdict string, freshness finding count, and the owning grant for any lock move.*
+
+- **Event**: the 15.0.0 release PR's branch `chore/release-v15.0.0`, after Ada's version bump (`dbdad86d`), notes/CHANGELOG/README (`d3dd63f0`) and token-index (`02d79ea6`). The version bump edits `package.json`, a closure file, so the lock's `inputClosure` moved. The orchestrator reported the tree clean at `02d79ea6`.
+- **Runner**: Thurgood, from the main checkout at `02d79ea6` with `git status --porcelain` empty.
+- **Run 1**: `npm run check:122:diff-guard` → `operative-set-freshness: PASS — 17 record(s), 373 unit(s), 17 note(s), 17 dispositions file(s), 17 overlay(s)` and `diff-guard: full-run-green (input-closure-changed)`. Freshness findings: 0. `git status --porcelain` afterwards listed only `canonical/generated.lock`.
+- **Lock, before → after**:
+  - `inputClosure`: `b2ce4266df4f1adab461a27b9a279345640375dcf73b59fb6af1f9dc1f94e5e8` → `4bfda183cf6e7765100786063e7a806246d3e5199c49c1f1c358e9a6e91d64ef`
+  - `outputs`: `a3f214699e1acf80b0b0610b935e917e110f6d6005ded4371809706e63691911`, **unmoved**.
+- **Lock-move owner**: this grant (the release-15 lock-refresh grant), for the whole `inputClosure` move on this branch. It includes the `governance/classification-map.md` history line (#267) and any other closure-root change the branch carries; the guard computes one value and this entry does not apportion it.
+- **Refresh commit**: `3395892d4116aea5820a995aeb2727e7fccbb63e`, touching `canonical/generated.lock` only (verified with `git show --name-only`), body naming the grant, trailer `Agent: thurgood`.
+- **Run 2**, after the commit, tree clean: `operative-set-freshness: PASS` (same counts) and `diff-guard: no-op-green`. Nothing written.
+- **Stop conditions**: none hit (`outputs` unmoved; no re-sign or freshness failure; no file other than the lock changed).
+- **Refresh commits under this grant so far**: 1.
