@@ -107,23 +107,26 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | **U2a — Consumer generation profile: splitter, exemplars & G1** | `u2a-g1` · `task/123-u2a-g1` | 10–12 | **12 (G1 gate parent)** | `U2a consumer generation profile: splitter, exemplars & G1 (123)` | — (**no release**; its content rides release 2 — F1 RULED, Peter 2026-09-27) |
 | **U2b — Consumer generation profile: machinery, rendering & G2** | `u2b-profile` · `task/123-u2b-profile` | 13–18 | **18 (G2 gate parent)** | `U2b consumer generation profile: machinery, rendering & G2 (123)` | **MIDPOINT (declared carrier)** + **ARMING** + RELEASE (release 2) *(Amendment 2026-10-02: this is the combined release, planned releases 1 and 2 as one MAJOR, 15.0.0; MIDPOINT and ARMING unchanged)* |
 | **U3 — Onboarding** | `u3-onboarding` · `task/123-u3-onboarding` | 19–22 | **22** | `U3 onboarding (123)` | RELEASE (release 3) |
-| **U3g — G2 cycle 2: the corrected derivation check on the shipped profile** *(amendment 2026-10-03 — Peter's R-5, "The fix runs as its own unit BESIDE U3"; runs in parallel with U3, see "How the units run")* | `u3g-g2c2` · `task/123-u3g-g2c2` | 29–30 | **30 (G2 cycle-2 gate parent)** | `U3g G2 cycle 2: the corrected derivation check on the shipped profile (123)` | **ARMING** (a check newly applied on every PR touching its inputs, criterion 29 C6) · rides **RELEASE (release 3)** |
+| **U3g — G2 cycle 2: the corrected derivation check on the shipped profile** *(amendment 2026-10-03 — Peter's PR-5.2: the recommendation he agreed to ("I agree with all the recommendations") that the fix runs as its own unit beside U3; runs in parallel with U3, see "How the units run")* | `u3g-g2c2` · `task/123-u3g-g2c2` | 29–30 | **30 (G2 cycle-2 gate parent)** | `U3g G2 cycle 2: the corrected derivation check on the shipped profile (123)` | **ARMING** (a check newly applied on every PR touching its inputs, criterion 29 C6) · rides **RELEASE (release 3)** |
+| **U3c — Consumer-profile corrections** *(amendment 2026-10-03, R2 — Peter's PR-11, `Re: 1, agree with "before"`, and PR-12; runs beside U3 and merges before U3g is cut, see "How the units run")* | `u3c-profile-corrections` · `task/123-u3c-profile-corrections` | 31 | **31** | `U3c consumer-profile corrections (123)` | rides **RELEASE (release 3)**; its signing PR is in that release's signing-act walk |
 | **U4 — Content policy** | `u4-content` · `task/123-u4-content` | 23–24 | **24** | `U4 content policy (123)` | — (rides release 4) |
 | **U5 — Validation & closeout** | `u5-closeout` · `task/123-u5-closeout` | 25–28 | **28** | `U5 validation & closeout (123)` | RELEASE (release 4) + **CLOSEOUT** |
 
 **How the units run**:
 - Order is unconditional: U1 → U2a → U2b → U3 → U4 → U5 (Req 26.3's U1 → U2 → U3 → U4 → U5, with the U2 stage declared as two merge units in order — amendment 2026-09-27).
 - One branch per unit, each branched from `main` after the prior unit merges. **U2b's branch is cut only after U2a merges — no stacking** (F7 RULED, Peter 2026-09-27: strict wait; the `Stacked-on:` exception is not pre-authorized for U2b).
-- *(Amendment 2026-10-03 — U3g, Peter's R-5 (recorded in this round's feedback, `feedback/tasks.md` § "U3 amendment round (2026-10-03)"):)* **U3g runs BESIDE U3, not in the U1 → U5 chain.**
+- *(Amendment 2026-10-03 — U3g, Peter's PR-5 (recorded in this round's feedback, `feedback/tasks.md` § "U3 amendment round (2026-10-03)"):)* **U3g runs BESIDE U3, not in the U1 → U5 chain.**
   - It is neither U3's predecessor nor its successor, so **Limb 2 of the split tripwire does not apply between U3 and U3g**, in either direction.
   - It branches from `main` after Thurgood's G2 spec-text ruling (its own PR, not this amendment) merges.
   - It merges to `main` **before** Task 22.5 opens U3's PR (Task 22, criterion "G2 backstop").
   - U3 merges `main` after U3g lands and before Task 22.4 (Stacy's condition (c)).
   - Its coupling to U3 is exactly those two lines, plus U3's no-overlap test (Task 22).
   - U4's branch is still cut only after U3 merges.
+  - *(R2, Lina A-3)* **The critical path**: absent Peter's dated re-ruling (Task 22, "G2 backstop"), **U3 cannot complete before U3g merges**, so U3g is release 3's long pole. U3g's branch is cut the day the ruling's PR merges.
+  - *(R2 — **PR-11 RULED** (FK-5), Peter, 2026-10-03, verbatim: `Re: 1, agree with "before"`.)* **U3c** (Task 31), the consumer-profile corrections, is its own unit and PR. It runs beside U3 and **merges to `main` before U3g's branch is cut**, so U3g starts from a `main` that already carries it. U3g's branch is cut only after **both** Thurgood's ruling PR and U3c have merged. Like U3g, U3c is outside the U1 → U5 chain, so Limb 2 does not apply between it and U3 or U3g.
 - The gating parent's completion opens the unit PR; every other parent commits its docs on the branch.
 - Peter merges each unit. Agents never merge.
-- **Governance carve-out (Peter-merged, record-first)**: U1 (B-U1; the Integration Guide line fixes), U2a (`canonical/**` — Task 11's exemplar records and confirmations; no ballot, since no rendered text changes), U2b (B-U2; `canonical/**`), U3 (`governance/DesignerPunk-Integration-Guide.md` — Task 19.4), U4 (B-U4; banners). *(Amendment 2026-10-03: U3 carries **B-U3**, a light record-first ballot inside 19.4 (Peter's R-2). U3g carries `canonical/**`, with no ballot: its rendered changes are attribution sidecars, plus profile corrections only if fork FK-5 (a) is picked.)*
+- **Governance carve-out (Peter-merged, record-first)**: U1 (B-U1; the Integration Guide line fixes), U2a (`canonical/**` — Task 11's exemplar records and confirmations; no ballot, since no rendered text changes), U2b (B-U2; `canonical/**`), U3 (`governance/DesignerPunk-Integration-Guide.md` — Task 19.4), U4 (B-U4; banners). *(Amendment 2026-10-03: U3 carries **B-U3**, a light record-first ballot inside 19.4 (Peter's PR-2). U3g carries `canonical/**`, with no ballot: its rendered changes are attribution sidecars. *(R2: **U3c** carries `canonical/**`, `.claude/agents/**` and `.kiro/agents/**` (regenerated agent prompts and configs), with no ballot: its text changes are profile corrections under PR-11 and PR-12, not law.)*)*
 - The PR body carries `Spec:`, `Unit:`, `Task:`, `Agent:`, the completion-doc paths, the validation note, and **the tripwire line**.
 
 **MIDPOINT — carrier U2b** *(amendment 2026-09-27: was U2; moved with the split — the event is Stacy's, confirmed by Stacy, feedback/tasks.md [STACY R3], 2026-09-27, with conditions S3-1–S3-3)*.
@@ -176,37 +179,55 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 - **Cost**: four RELEASE passes (each with the owed-set paste and the rail log), plus MIDPOINT and CLOSEOUT, **= six claims passes**. *(Amendment 2026-10-02: three RELEASE passes, plus MIDPOINT and CLOSEOUT, **= five claims passes**.)*
 - RELEASE fires at the release tag, before publish. *(Annotation 2026-10-03, ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` § 3.4, RATIFIED Peter 2026-10-03. This discharges owed act 2 of `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md`. **RELEASE runs in two phases, recorded in one file.** Phase 1 runs on the release squash S, after the 5.1 dry run is green and before the tag. Phase 2 runs at the merge of the step-6 release-record PR and reads the rail result and the 6b two-registry record. Phase 2 may be drafted against that PR while it is open, and then ends with the merge-confirmation line. See `.kiro/hooks/RELEASE-FLOW.md` § "The sequence" step 6.)*
 - Release 1 is a coherent **substrate** release. **Release 3 is the first release a stranger should be pointed at** (Leonardo A5). **Under T2 (B), the README and install doc do not advertise onboarding before release 3.**
-  - *(Amendment 2026-10-03 — release 3's claim narrowed. Peter's R-3: "I *think* we said we'd say it's ready for building web only and then finish the iOS and Android work as a fast follow." This matches his 2026-10-02 "middle path" ruling in `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` § "Consequence recorded now".)*
+  - *(Amendment 2026-10-03 — release 3's claim narrowed. Peter's PR-3: "I *think* we said we'd say it's ready for building web only and then finish the iOS and Android work as a fast follow." This matches his 2026-10-02 "middle path" ruling in `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` § "Consequence recorded now".)*
     - **Release 3 is the first release a stranger should be pointed at for web products, with the agent layer for Claude Code and Kiro.**
     - **The scope sentence** (wording settled in this round; owners Leonardo and Ada) carries three things:
       - (i) web products, with the agent layer for Claude Code and Kiro;
       - (ii) iOS and Android are not supported yet: their components ship as reference source, not a build input (Ada's caveat 1);
       - (iii) on web, a theme the consumer registers does not yet emit (Ada's caveat 2).
-    - The sentence sits **before step 1** of the install doc, and the same string appears on three surfaces: the install doc, the README and the release-3 CHANGELOG entry (Tasks 19 and 22).
+    - *(R2 — Leonardo R1, merging Ada's three parts; Ada A-1 accepts any merge that keeps them and the exact substring.)* **The asserted string**, identical on all three surfaces:
+      > This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
+      - It contains **both label substrings verbatim** (`reference source, not a build input`; `Native onboarding is not supported`), so it doubles as both label strings on the README.
+      - **Owed before 19.1 commits it**: Ada's fact-check of the third sentence (Leonardo's `[@ADA]`; source `docs/releases/release-15.0.0.md` L128). A correction from her changes only that sentence; the substrings stay.
+    - The sentence **opens the install region (its first paragraph)**, before § Prerequisites and before step 1 (Leonardo L-RC5), and the same string appears on three surfaces: the install doc, the README and the release-3 CHANGELOG entry (Tasks 19 and 22).
     - **iOS and Android follow** as the completeness spec, Spec 129: its design-outline stub with carried notes is `.kiro/specs/129-consumer-generation-completeness/design-outline.md` (#295, `e25fd512`).
     - The T2 (B) sentence above is overtaken on `main`: README § "Getting Started" has advertised `init` since `a6481d71` (2026-05-15), and #271 narrowed it. Task 19 reconciles the README to the scope sentence; it does not remove the section.
-  - *(Amendment 2026-10-03 — **the G2 hold**. Peter's R-5.3, agreed: "nothing that carries the consumer profile is tagged or published until a HOLDS verdict, or Peter lifts it by a dated record.")*
-    - **Every `@3fn/core` version carries the consumer profile** (`dist/consumer-canonical/**` is in `files[]`). So, until U3g's cycle-2 verdict reads HOLDS (Task 30) or Peter commits a dated record lifting the hold, **no version is tagged or published**. That covers release 3 and any 15.0.x patch.
-    - **A written-down limit does not substitute for a fix** (Peter's R-5: "fix and hold; never ship with a written-down limit").
-    - **Enforcement**: Peter, at the tag and at publish, the same way G2 was a U2 acceptance gate. No claims pass holds or gates anything.
+  - *(Amendment 2026-10-03 — **the G2 hold**. Peter's PR-5.3: the recommendation he agreed to ("I agree with all the recommendations"), "nothing that carries the consumer profile is tagged or published until a HOLDS verdict, or Peter lifts it by a dated record.")*
+    - **Every `@3fn/core` version carries the consumer profile** (`dist/consumer-canonical/**` is in `files[]`). So, until U3g's cycle-2 verdict reads `HOLDS` (Task 30) or Peter commits a dated record lifting the hold, **no version is tagged or published**. That covers **any version: 15.0.x, 15.1.0 and release 3** (R2, Stacy R-17).
+    - **A written-down limit does not substitute for a fix**: the recommendation Peter agreed to, "fix and hold; never ship with a written-down limit" (his words: "Yes, and good idea.").
+    - **Enforcement** *(R2, Stacy B1. This replaces "Peter, at the tag and at publish", which `.kiro/hooks/RELEASE-FLOW.md` L140 forbids: "Guards live in the command the operator runs, never in a list addressed to a seat (RS-7)")*: **a guard where the operator meets it.**
+      - Until a script check lands, a line in RELEASE-FLOW step 5, before 5.2's tag, refuses the tag and the publish unless, **at S**, Stacy's cycle-2 verdict record reads `**Verdict**: HOLDS`, or Peter's dated lift record exists at `.kiro/issues/2026-10-02-g2-pass-four-findings.md` § "Hold lifted" (or that file's `archive/` path).
+      - It lands **before any publish of any version**, independent of U3's cut.
+      - **⟨PENDING PETER — the vehicle for the RELEASE-FLOW line.⟩** The line is drafted in `feedback/tasks.md` § "U3 amendment round (2026-10-03)", `[THURGOOD R2]`. It is not part of this amendment, and no U3 or U3g row grants it.
+      - The script form (`scripts/release-publish.ts`, Ada, under an issue-row grant) may replace it. The line retires once `HOLDS` is on `main`.
+      - No claims pass holds or gates anything.
   - *(Amendment 2026-10-03 — **what release 3's RELEASE pass needs, planned now** (Stacy's U3-kickoff read § 6). None of these is a U3 row. Each has its owner and home, and each is due before release 3's phase 1 unless it says otherwise.)*
     - **All nine J divergents** (`completion/claims-pass-release-15.0.0.md` L273–283), **divergent 7 (J-6CD4) included**: each is closed by a resolution act or carried by name.
-      - Resolution acts need Thurgood's RS-1 erratum to the signing-act ballot (owner Thurgood, not drafted).
-      - Divergents 5, 6, 8 and 9 (and 7, if its owner moves it) are U3g's, under fork FK-5.
-    - **Trigger (d)** (`.kiro/issues/2026-10-03-stacy-signed-sample-trigger-d.md`): **R-10 RULED, the hybrid (option 1+2)**. Peter: "Re: walkthrough 2, hybrid".
+      - Resolution acts need Thurgood's RS-1 erratum to the signing-act ballot (owner Thurgood, not drafted). *(R2, Stacy)* **It is also due before U3c's or U3g's re-sign round if any divergent is to *close* there**; until it lands, a re-sign is a new act, not a closed divergent.
+      - *(R2)* **Divergent 5** (the "for your themed values" qualifier, Data's own wording; he resolves it at the round on the text then in front of him) is in the profile corrections batch, U3c (Task 31; PR-11). **Divergents 6, 8 and 9** are subtraction-3 `cites` corrections (Kenya's row 3 carries 6 and 9; Data's trims row carries 8). A `cites` edit moves no hash: a removal's `cites` is in neither `canonicalHash` nor `renderedHash` (`tools/agent-generator/regrounding/freshness.ts` L363–369, read, not run). So they are **declared, granted and counted outside the re-sign round**, never folded into it.
+      - *(R2)* **Divergent 7** (`#with-peter`, `human-4`): the profile author (Thurgood) proposes **no text change**, following its signer's read (Kenya R1 § C). No row moves and no act is owed. It is **carried by name at release 3**, and the disputed sentence of Kenya's sheet ("credited by entailment") is closed under RS-1. "Its owner" names both the profile author, who proposes or declines a text change, and the signer.
+    - **Trigger (d)** (`.kiro/issues/2026-10-03-stacy-signed-sample-trigger-d.md`): **PR-10 RULED, the hybrid (option 1+2)**. Peter: "Re: walkthrough 2, hybrid".
       - A rotating non-Stacy, non-Thurgood seat runs the mechanical `--audit` under a written rule.
       - Peter keeps the blind re-judgment on at least one Stacy-signed act per release, recorded separately.
       - **Owed before release 3's RELEASE pass**: the pick recorded in the issue by its owner, and a § 5.3 amendment to the signing-act ballot, drafted by Thurgood and ratified by Peter. **Neither is part of this amendment.**
-    - **The hermetic-publish law**: release 3 is the first run under `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` and its F-4 arming event. Follow-up items 4 and 6 (`.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`, Thurgood) land before the publish.
-    - **Ada's four publish-path rows** (script floor, the 10d nested-roots hint, `floor-closure.json` regeneration, `--expect-sha` required), plus the `check:drift` `@<scope>:registry` class fix and the section-10e machine-path scan widening (Ada).
+    - **The hermetic-publish law**: the first run under `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md`, and its F-4 arming event, is **release 3, or a patch that precedes it** (R2, Stacy R-17). Follow-up items 4 and 6 (`.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`, Thurgood) land before that publish.
+    - **Ada's four publish-path rows** (script floor, the 10d nested-roots hint, `floor-closure.json` regeneration, `--expect-sha` required), plus the `check:drift` `@<scope>:registry` class fix (*R2, Ada RC-4*: register owner **Thurgood**, `governance/classification-map.md` § "package-name-scope-drift"; Ada proposes the pattern) and the section-10e machine-path scan widening (Ada).
       - These land in one release-prep PR **after U3 merges**, so that they do not overlap U3's `scripts/pack-assert.ts` edits, and after 19.4 and O-1 land.
+      - *(R2, Ada RC-5)* **Record: MISSING → Ada**: an issue carrying the four rows and `**Grant paths**: scripts/pack-assert.ts, scripts/release-publish.ts, scripts/__tests__/{pack-assert,release-publish}.test.ts` (plus `scripts/check-package-name-drift.js` and its tests, for Thurgood's class fix), filed before release-prep.
     - **U3g's verdict record**, the consequence applied byte-equal, and the release-3 CHANGELOG's treatment of 15.0.0's G2 limit disclosures, matched to the verdict.
+    - *(R2, Stacy R1 § "Release 3")* **Also carried into the pass:**
+      - (i) **the hold's state as a phase-1 read**: at S, the cycle-2 verdict reads `HOLDS`, or the lift record is present (Stacy reads it);
+      - (ii) **the RELEASE-FLOW hold line** (Stacy B1, above) is on `main` at S;
+      - (iii) **#268's ballot header** reads RATIFIED (Ada RC-6; Task 19);
+      - (iv) **the one-hop rehearsal residuals** (Lina RC-10, below);
+      - (v) **U3g's ARMING record**, committed before the pass.
     - **Open routings and fixes:**
       - the MP-1…MP-7 routing record (orchestrator);
       - the RS-3 owed-set ladder fork (Thurgood, Peter);
       - the RS-1/2/4 signing-act errata (Thurgood);
-      - the app-MCP `degraded` issue (Lina; Leonardo asks that its fix land **before the release-3 tag**, because the agent layer is half of release 3's claim);
-      - O-1 (`governance/Process-Cross-Reference-Standards.md:501`, Thurgood).
+      - the app-MCP `degraded` issue: **Lina; fix before the release-3 tag** (R2: Lina adopts Leonardo's ask as her deadline). The issue is filed in her pre-cut `chore/` PR, and the fix is a `fix/` PR under her charter scope, with its lock refresh granted by a `**Grant paths**: canonical/generated.lock` line in that issue;
+      - O-1 (`governance/Process-Cross-Reference-Standards.md:501`, Thurgood);
+      - *(R2, Lina RC-10)* **the one-hop rehearsal residuals** (Lina, `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`): **R1 and R5 move to Spec 129** by a dated line in the issue; **R2, R4 and R6** land in Lina's own `fix/` PR under an issue-row grant (`src/cli/sync/{Migration,Reporter,index}.ts` + tests), **before the release-3 tag**. That PR and 20.2 both touch `src/cli/sync/index.ts`: whichever merges second merges `main` first. (R3 rides 22.1.)
     - **The signing-act walk** of every signing PR in the release delta, U3g's included.
 - *Residual: four dual-registry publishes (the accepted dual-publish tax, 26.6). Hotfixes would add RELEASE passes.* *(Amendment 2026-10-02: three dual-registry publishes, not four.)*
 - **U2a cuts no release — the count stays FOUR** *(amendment 2026-09-27; F1 RULED, Peter 2026-09-27 — the proposal stands)*. U2a changes **no shipped file**: Tasks 10–12 touch `tools/agent-generator/**`, `canonical/**` and spec records, none of which is in `files[]` or compiles into `dist/`, and Task 10 expects the rendered agent text (shipped under `.kiro/agents/`) to stay unchanged (its diff-guard criterion). Task 12 checks this at U2a's merge; **if the check finds a shipped path, the release decision returns to Peter before U2a merges.** A release with no consumer delta would cost a RELEASE pass and a dual publish for nothing. *Residual: `main` carries U2a's merged-but-unreleased content for one unit's length; a hotfix cut in that window would carry it (harmless under the same check), and release 1, if tagged after U2a merges, would too.* *(Correction, 2026-09-27: the "none of which is in `files[]`" assumption was wrong for the eight `.kiro/agents/*.attribution.json` sidecars — Task 10 regenerates them by criterion, and they ARE in `files[]` via the `.kiro/agents/` entry. The release decision returned to Peter ahead of Task 12, per this section's own rule, and he **ruled F1 stands**: the sidecars are metadata-only, the rendered agent text they describe is unchanged, and no consumer reader exists for them. Task 12 cites the eight paths and this ruling as its disposition. Cleanup filed at `.kiro/issues/2026-09-27-attribution-sidecars-shipped.md`.)* *(Amendment 2026-10-02: "the count stays FOUR" is superseded by the combined release below. The bullet's own reasoning is unchanged: U2a changes no shipped file. Its sentence "release 1, if tagged after U2a merges, would [carry U2a's content] too" now reads: the combined release is tagged after U2b merges, and carries U1, U2a and U2b.)*
@@ -233,7 +254,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | U2a *(was U2 — amendment 2026-09-27)* | 11 | **+3** |
 | U2b *(was U2 — amendment 2026-09-27)* | 31 | **+4** |
 | U3 | 16 | **+3** |
-| U3g *(added 2026-10-03; beside U3)* | 12 *(11 under FK-5 (b))* | **+3** |
+| U3g *(added 2026-10-03; beside U3)* | 12 *(R2: **11** — PR-11 moved 29.5 to U3c)* | **+3** |
+| U3c *(added 2026-10-03, R2; beside U3, before U3g)* | **6** | **+2** |
 | U4 | 6 | **+2** |
 | U5 | 18 | **+3** |
 
@@ -253,20 +275,27 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(Amendment 2026-10-03, the U3 cut.)*
 - **U3 grows by two subtasks:**
-  - **22.0**, the personal-note template and example (Peter's R-4: "one added subtask (22.0)");
-  - **the packaging subtask**, one subtask whose placement is fork FK-2: **22.3b** under (a), or **19.0** under (b).
+  - **22.0**, the personal-note template and example (Peter's PR-4: "one added subtask (22.0)");
+  - **the packaging subtask**, **22.3b** (FK-2 (a), settled between owners in the round: Ada, Lina, Thurgood; there is no 19.0).
 - **Folded, with no count change**:
   - B-U3, as 19.4's first commit;
   - C19's callers, R3 and the 16.6 flips, into 22.1;
   - the 119-B lint, into 19.2;
   - the #268 preservation table and the remainder sweep, into 19.4.
 - **U3's line reads `declared 16, now 18`, within +3.** The threshold is **not re-baselined**.
-- **Peter's read of this tripwire, 2026-10-03**: "Re: unit size, keep it as one unit" (R-7). The work belongs together, and he rules on the record that it stays one unit at 18.
+- **Peter's read of this tripwire, 2026-10-03**: "Re: unit size, keep it as one unit" (PR-7). He rules on the record that it stays one unit at 18. *(R2, Stacy: the gloss "the work belongs together" was the author's, not Peter's, and is struck.)*
 - **Residual, stated**: one slot is left before the threshold fires (above 19). A finding in this round that adds a U3 subtask uses it.
+- *(R2)* **The round added no U3 subtask**: every R1 change folds into an existing subtask, and Leonardo's `generate` warning, if Peter adopts it, folds into 22.1. **U3 stays `declared 16, now 18`; one slot remains.**
 
-*(Amendment 2026-10-03, **U3g added** (Peter's R-5; a new unit, not growth of U3, so Limb 1 does not fire for U3):)*
+*(Amendment 2026-10-03, **U3g added** (Peter's PR-5; a new unit, not growth of U3, so Limb 1 does not fire for U3):)*
 - **Declared: 12 subtasks** (29.0–29.7, 30.0–30.3), or **11** if FK-5 (b) removes 29.5. **Threshold +3** (the small-unit allowance).
 - This adds two parents to the plan, by Peter's ruling. **Totals now: 30 parents, 146 subtasks** (or 145 under FK-5 (b)): 132 + 2 (U3) + 12 (U3g).
+
+*(Amendment 2026-10-03, R2 — **PR-11 and PR-12 RULED**; **U3c added**, a new unit, so Limb 1 fires for neither U3 nor U3g:)*
+- **U3g declares 11**: 29.0–29.4, 29.6, 29.7, 30.0–30.3 (29.5 left with PR-11; the numbers are kept). **Threshold +3.** Its ceiling is unchanged except limb (iii), which no longer carves out FK-5's re-signs: U3c's re-signs belong to U3c.
+- **U3c declares 6**: 31.0–31.5. **Threshold +2** (the floor). PR-12's two theming units ride it and add no subtask.
+- **U3 is unchanged at `declared 16, now 18`**: PR-13 (the unignored-directory warning) folds into 22.1. One slot remains.
+- **Totals now: 31 parents, 151 subtasks**: 132 + 2 (U3) + 11 (U3g) + 6 (U3c).
 
 ### Delegated-tier plan (one PRIMARY per parent = the fixed-form line's referent; secondaries carry tiers)
 
@@ -299,12 +328,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | 16 | Lina (Opus) — 16.1, 16.5 | Lina (Sonnet) — 16.2, 16.3, 16.4, 16.6; Ada (Sonnet) consulted on 16.3's pack script |
 | 17 | Lina (Sonnet) *(17.4 Lina (Sonnet) — added 2026-09-28)* | Thurgood (Sonnet) — 17.3 (applies L686 under B-U2) |
 | 18 | **Lina (Opus)** — G2 gate parent · U2b gating parent | — (Stacy's verdict record is outside the line) |
-| 19 | Thurgood (Opus) | — (Leonardo reviews on-branch) *(amendment 2026-10-03, under FK-2 (b) only: Lina (Sonnet) — 19.0, the `files[]` lines; Ada (Sonnet) — the `pack-assert` ADD rows as each file lands)* |
+| 19 | Thurgood (Opus) | — (Leonardo reviews on-branch) *(amendment 2026-10-03: no secondary — FK-2 settled (a) in the round, so there is no 19.0; U3's packaging is 22.3b under Task 22)* |
 | 20 | Lina (Sonnet) | — |
 | 21 | Thurgood (Opus) | — *(amendment 2026-10-03: Lina (Sonnet) — 21.3, the `init.ts` scaffolding and collision reporting; the structure test stays Thurgood's, in 21.1/21.2)* |
-| 22 | Lina (Sonnet) | Leonardo (Opus) — authors `example-home.yaml` at `.kiro/specs/123-consumer-distribution/design-inputs/` (Lina places it, 22.3) + DD9 confirmation (22.5) *(amendment 2026-10-03: Leonardo (Opus) — 22.0, the personal-note template and the edited example note in `design-inputs/` (Lina places them); and the content of every file `example-home.yaml` references (22.3). Under FK-2 (a): Ada (Sonnet) — 22.3b, every U3 `files[]` line and `pack-assert` row)* |
-| 29 *(added 2026-10-03, U3g)* | **Lina (Opus)** — the corrected check's machinery and its standing application | Thurgood (Opus) — the 29.5 profile and render wording, under FK-5 (a) only (he writes none of the cycle's test text, Peter's R-5.5). The signers' re-sign acts (29.6) are attestations, outside every line |
+| 22 | Lina (Sonnet) | Leonardo (Opus) — authors `example-home.yaml` at `.kiro/specs/123-consumer-distribution/design-inputs/` (Lina places it, 22.3) + DD9 confirmation (22.5) *(amendment 2026-10-03: Leonardo (Opus) — 22.0, the personal-note template and the edited example note in `design-inputs/` (Lina places them); and the content of every file `example-home.yaml` references (22.3). Ada (Sonnet) — 22.3b, every U3 `files[]` line and `pack-assert` row and the `src/cli/templates/**` exact set (FK-2 (a), settled in the round))* |
+| 29 *(added 2026-10-03, U3g)* | **Lina (Opus)** — the corrected check's machinery and its standing application | — *(R2: Thurgood's 29.5 seat left with PR-11; he authors nothing in U3g.)* The signers' re-sign acts (29.6) are attestations, outside every line |
 | 30 *(added 2026-10-03, U3g)* | **Lina (Opus)** — the G2 cycle-2 gate parent · U3g gating parent | — (Stacy's attack file and verdict record are outside the line. **Thurgood is recused**: he authors no line of 30's completion doc or of the consequence texts, the Task 18 recusal) |
+| 31 *(added 2026-10-03, R2, U3c)* | **Thurgood (Opus)** — the profile author: every text change, worded with Kenya and Data for the theme cue and the two theming units | Lina (Sonnet) — the `render.ts` and `adapters/kiro.ts` edits and the regeneration. The signers' re-sign acts (31.4) are attestations, outside every line |
 | 23 | Thurgood (Sonnet) | — (Ada owns the predicate text) |
 | 24 | Thurgood (Opus) | — |
 | 25 | **Leonardo (Opus)** — operator | — |
@@ -321,6 +351,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 **Post-unit obligations** (claims passes verify, not completion docs):
 - docs-MCP `rebuild_index` after U1, U2b, U3 and U4 (each edits a served doc under `governance/`, the docs MCP's served root);
+- *(amendment 2026-10-03, R2)* **U3c**: `rebuild_index` is not owed (Task 31 lists no `governance/**` artifact); no ARMING (it applies no new check). It rides release 3's RELEASE pass, and its signing PR is in that release's signing-act walk.
 - *(amendment 2026-10-03)* **U3g**:
   - `rebuild_index` is not owed, since Tasks 29–30 list no `governance/**` artifact.
   - **Stacy's ARMING read at U3g's merge**: the corrected derivation check newly applies on every PR touching its inputs.
@@ -385,6 +416,9 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | **Lessons item (amendment 2026-09-27)**: instrument-existence check for any "by the check, not inspection" criterion — three of the four Task 11 corrections were a criterion naming a check or premise that did not exist yet | **Next tasks round** — filed as a lessons item (Stacy/Thurgood); not fixed in 123. **The process rule it produced** (routing a counterexample to a normative claim to its owner, with Stacy's amended text) **and the completion guide's errata section** go to a record-first ballot: `.kiro/docs/ballots/2026-09-27-normative-counterexample-routing.md` (DRAFT, Stacy required reviewer; U2b-cut amendment 2026-09-27) |
 | **Req 11.6.5's C(c1) row superseded-in-execution** (amendment 2026-09-27, item 4: premise false, clause (a) exercised by F `#purpose` only) | **Next requirements touch** — the row is edited then; 123 executes under the tasks amendment. Also carried to that touch: the 11.6.5 table fold of G1 run 1's per-unit restatements, the F row as instantiated (three units), and G1 run 2 finding **R2-A1**. DR-2, DR-3, DR-4 and the stale "Against the exemplars" counts were folded as errata by the U2b-cut amendment |
 | Routed defects (out of scope; for Lina): `ContainerCardBase.ios.swift:816` unterminated comment; `LocalDPTheme` / `dpTheme` hardcoding; per-component `dist` `.css` requires (A7) | Filed by the steward: `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`. Task 3.5 cites it, and routes the A7 finding and the `:816` parse defect as messages |
+| *(amendment 2026-10-03, R2 — Leonardo L-A2)* **25.1: persona (c)'s frozen prompt names a web product.** Under release 3's scope, an "app" prompt would test the native label instead of the path | **Task 25.1**, owner Leonardo, due at U5's cut (Task 25's rows are outside the U3 amendment, so this is a carry line, not an edit) |
+| *(amendment 2026-10-03, R2 — Kenya B2, advisory)* **Task 25's "Not exercised" reasons**: "no platform toolchain on the host" is untrue for iOS on at least one host (Kenya ran `swiftc` there, 2026-10-03); the true reason is "no native component consumption path" | **Task 25**, owner Leonardo, at U5's cut, reworded with Kenya and Data |
+| *(amendment 2026-10-03, R2 — Kenya B1)* **Nine shipped iOS files read the theme without the key-path backslash** (`@Environment(.dpTheme)`; they parse but do not type-check against a defined key) | **Lina, a new issue of its own**, filed in her pre-cut `chore/` PR and cross-referenced from item 2 of `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`. **Not 123 work.** Task 19 names it as a cause (prose) |
 
 ---
 
@@ -940,47 +974,61 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     - No alias is added (119-B), every charter route stays valid, and `rebuild_index` runs post-merge.
     - A grep over the guide for `product-template|src/components/core/` returns only lines dispositioned in the completion doc.
   - Leonardo's on-branch review is recorded with every item dispositioned.
-  - *(amendment 2026-10-03 — the U3 cut. Rulings: Peter's R-1, R-2 and R-3. Reads: Ada, Leonardo, Lina, Stacy. Record: `feedback/tasks.md` § "U3 amendment round (2026-10-03)". Each row below names its instrument and what red looks like (Stacy's lens item 1).)* **The guide disposition, R-1 RULED: one document, with a marked install region.**
+  - *(amendment 2026-10-03 — the U3 cut. Rulings: Peter's PR-1, PR-2 and PR-3. Reads: Ada, Leonardo, Lina, Stacy. Record: `feedback/tasks.md` § "U3 amendment round (2026-10-03)". Each row below names its instrument and what red looks like (Stacy's lens item 1).)* **The guide disposition, PR-1 RULED: one document, with a marked install region.**
     · The install region opens `governance/DesignerPunk-Integration-Guide.md`, directly after its title and metadata, between two committed markers. It **replaces** the Setup Loop (guide L32–398 at `79a3b3bc`).
     · The rest of the guide sits under one top-level `## Reference` heading whose lead line says it is reference, not setup steps.
     · **No second step list exists outside the region**: no numbered setup heading, and no "Setup Loop" string, outside the markers (Leonardo's two conditions).
+    · *(R2, Stacy R-10)* **The guide's § "Prerequisites"** (L20–31 at `79a3b3bc`, between the metadata and the old Setup Loop) **moves into the region**, as its second block after the scope sentence (design C23 erratum, the stated order). So nothing sits between the metadata and the opening marker.
     · **Instrument**: `scripts/__tests__/install-doc.test.ts`, run by `npm run test:scripts`. It goes red if a marker is missing or duplicated, if the region does not open the doc, or if a numbered step heading appears outside the region.
-  - *(amendment 2026-10-03)* **The criterion 7 "derived from it at build" reads as a COMMITTED derived file** (R-1; Ada: a build-time write would ship unreviewed bytes through `scripts/release-publish.ts` and repeat the closed contamination class).
+  - *(amendment 2026-10-03)* **The criterion 7 "derived from it at build" reads as a COMMITTED derived file** (PR-1; Ada: a build-time write would ship unreviewed bytes through `scripts/release-publish.ts` and repeat the closed contamination class).
     · `docs/consumer/INSTALL.md` is committed, and equals `deriveInstallDoc(<guide>)` byte for byte: a fixed header citing its source by repo-relative path, the `path-steps` map carried from the guide's front matter, and then the region verbatim.
     · The derivation is `scripts/derive-install-doc.ts`, run with `npx tsx scripts/derive-install-doc.ts`. There is **no `package.json` script line** (Ada).
     · **Instrument**: the same test file imports the derive function and asserts equality.
     · **Bite recorded**: edit the region without re-deriving → red.
     · *Scope: it establishes that the two copies agree, not that either is right.*
     · "Body identity" in criterion 7 reads as **region identity**.
-  - *(amendment 2026-10-03)* **The reference remainder is cleaned in the same pass, and has an owner: Thurgood** (R-1). Every `##`/`###` section of the remainder gets a row in 19.4's completion doc, with the verb `kept` / `corrected` / `removed` and a one-line reason. The remainder must not contradict the region. Concretely (Leonardo's checklist):
+  - *(amendment 2026-10-03)* **The reference remainder is cleaned in the same pass, and has an owner: Thurgood** (PR-1). Every `##`/`###` section of the remainder gets a row in 19.4's completion doc, with the verb `kept` / `corrected` / `removed` and a one-line reason. The remainder must not contradict the region. Concretely (Leonardo's checklist):
     · § "Native Platform Sync — Target Model (M0b)" is removed, or rewritten to carry the native label;
     · § "Running Component Tests" describes testing the consumer's own components with `@3fn/core/testing`;
     · § "CLI Commands" uses `src/cli/shared/vocabulary.ts`'s forms (inside criterion 6's test, whose scope is the whole guide);
     · § "Upgrading" teaches 15.x's report-first `sync` (Req 15B.6);
     · § "Knowledge Base Setup" is harness-agnostic, or labelled per harness.
     · **Widened grep**: criterion 7's grep widens to `git grep -n -E "product-template|src/components/core/|npm\.pkg\.github\.com|@designerpunk:|sync:ios|sync:android|--accept-all|\.kiro/sync-manifest\.json" -- governance/DesignerPunk-Integration-Guide.md`, with every hit dispositioned.
-    · **Asserted zero**, in the guide, `docs/consumer/INSTALL.md` and `README.md`: `npm.pkg.github.com` as the install registry, and `@designerpunk:` (`check:drift`'s `SCOPE_PATTERN` cannot see the `@scope:registry` form).
+    · **Asserted zero**, in the guide, `docs/consumer/INSTALL.md` and `README.md`: `npm.pkg.github.com` as the install registry, and `@designerpunk:` (`check:drift`'s `SCOPE_PATTERN` cannot see the `@scope:registry` form). *(R2, Stacy A-6: "as the install registry" cannot be checked by a grep, so the assertion is a **plain zero count** of `npm.pkg.github.com` in the three files. A legitimate mention would need an allowed-context list, added with the mention.)*
     · **Leonardo checks at 19.5**: § "Writing Screen Specs" / "UI Tree Convention (Draft)" against his `example-home.yaml`.
-  - *(amendment 2026-10-03)* **B-U3, a light record-first ballot (R-2)**, is 19.4's first commit, at `.kiro/docs/ballots/<date>-123-b-u3-install-guide.md`. It is ratified by Peter's merge of U3's PR (the PR-atomic precedent of B-U1 and #268). It records:
+  - *(amendment 2026-10-03)* **B-U3, a light record-first ballot (PR-2)**, is 19.4's first commit, at `.kiro/docs/ballots/<date>-123-b-u3-install-guide.md`. It is ratified by Peter's merge of U3's PR (the PR-atomic precedent of B-U1 and #268). It records:
     · why the install process changes;
     · **a preservation table** mapping each content point that #268 ratified (`.kiro/docs/ballots/2026-10-02-integration-guide-native-scoping.md`) to its new location, or to its retirement with a reason;
     · Peter's standing discipline: the guide changes when the install process changes, with the why recorded, and **not** as a vote on every edit;
     · the remainder's owner.
     · **Instrument**: the ballot file exists, its commit is an ancestor of every 19.4 guide-content commit (`git merge-base --is-ancestor`), and the preservation table's row count equals the ballot's content-point count.
-  - *(amendment 2026-10-03)* **A new platform is a new section** (R-2). The region's platform-specific content sits under one heading, with one sibling sub-section per platform (web; iOS and Android), so that adding React and React Native (`.kiro/specs/128-react-react-native-platform-admission/`) means adding a sibling section, not rewriting the doc.
+    · *(R2, Stacy R-11)* **The count has an outside source**: one preservation row per edit site of `.kiro/docs/ballots/2026-10-02-integration-guide-native-scoping.md` (Sites 1–4, its L46/L125/L188/L211) and per after-text block within each. **Red**: a site or after-text block with no row.
+    · *(R2, Ada RC-6)* **Before 19.4's first commit, the cited ballot's `**Status**` reads RATIFIED** (Peter's merge of #268, `8d7d3ad1`). Today its L5 reads `**Status**: DRAFT`. **MISSING → Ada**: a one-line stamp in her own `chore/` PR, Peter-merged under the governance carve-out; the same PR closes the stale-ACTIVE `.kiro/issues/2026-10-01-integration-guide-m0a-vs-snapshot-negative.md`. **Instrument**: `grep -n '^\*\*Status\*\*: RATIFIED' <ballot>`. **Red**: no hit when 19.4 starts.
+  - *(amendment 2026-10-03)* **A new platform is a new section** (PR-2). The region's platform-specific content sits under one heading, with one sibling sub-section per platform (web; iOS and Android), so that adding React and React Native (`.kiro/specs/128-react-react-native-platform-admission/`) means adding a sibling section, not rewriting the doc.
     · **Instrument**: criterion 2's heading-order test asserts that shape. It goes red if a platform sub-section sits outside the platforms heading.
-  - *(amendment 2026-10-03)* **The release-3 scope sentence (R-3) sits before step 1** of the region. It is identical in `README.md` and in the release-3 CHANGELOG entry (Task 22.4), and asserted on all three surfaces. Its three required parts are in § "Expected release count" (the 2026-10-03 amendment); the final wording is settled in this round by Leonardo and Ada.
+    · *(R2, Leonardo L-RC5)* **Three sibling sub-sections, Web, iOS and Android**, under one `§ Platforms` heading, which sits after draft § 4 ("Your language vs our updating surface") in the order design C23's erratum states. Spec 129 may land one native platform first, and React and React Native arrive as two more siblings.
+    · **Platform sub-sections carry no numbered path steps**, so a new platform never changes `path-steps`. A platform that needs a step is an install-process change under PR-2, with its why recorded. **Red** (the heading-order test): a numbered step inside `§ Platforms`.
+  - *(amendment 2026-10-03)* **The release-3 scope sentence (PR-3) sits before step 1** of the region. It is identical in `README.md` and in the release-3 CHANGELOG entry (Task 22.4), and asserted on all three surfaces. Its three required parts are in § "Expected release count" (the 2026-10-03 amendment); the final wording is settled in this round by Leonardo and Ada.
     · **Red**: the sentence is absent from any surface, differs between surfaces, or follows step 1.
+    · *(R2)* **The string is Leonardo's merged sentence**, in § "Expected release count", with Ada's fact-check of its third sentence owed before 19.1 commits it. It is **the region's first paragraph** (Leonardo L-RC5: a native reader should stop before installing Node). **Red, added**: the sentence is not the region's first paragraph.
   - *(amendment 2026-10-03)* **Criterion 5's native labels, made decidable (Ada).**
     · **Two asserted strings, version-free**, in the install region and in `README.md`: `reference source, not a build input` (Task 3.5's core) and `Native onboarding is not supported` (#268's core).
     · **The causes are prose, not asserted**: the theme surface that nothing emits; the 14 theme-varying colours; no Swift package or Gradle module; `ContainerCardBase.ios.swift` L816's unterminated comment.
     · **Per-platform verification target (Stacy's lens item 4)**: iOS and Android causes are verified by source read (Ada, 2026-10-03), and Kenya and Data confirm them in this round. Each build claim reads `not re-verified — toolchain unavailable`.
+    · *(R2 — Kenya, Data and Ada; this bullet governs where it differs from the two above.)*
+      · **Two causes added (Kenya B1, measured)**: the theme names are fixed to DesignerPunk's own configuration (`dpTheme`, `LocalDPTheme`), not the consumer's abbreviation (`TokenFileGenerator.ts` L1158, L1248, L1387–1389); and **nine iOS components spell the theme read as `@Environment(.dpTheme)`**, without the key-path backslash, a form that does not type-check against a defined key (Kenya's probe, 2026-10-03; `git grep -l '@Environment(\.dpTheme)'` → 9 files). Prose only; no new asserted string.
+      · **What nothing emits**: `generateThemeOverrideBlocks` (`TokenFileGenerator.ts` L1028) and the Swift and Kotlin theme-type emitters have **no production caller** (Kenya, Data; read). The install doc never says `generate` emits a theme surface (Data's correction of his own R1 wording); Task 3.5's quoted compile label ("does not compile against a born repo's own tier as shipped") stays **out of the asserted set and out of the install doc**, because on Android it rests on a source read only.
+      · **The "14 theme-varying colours"** is #268's 2026-10-02 measurement, not re-counted in this round. Its sources are named: `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` (measured 2026-10-02), the guide's L387 at `79a3b3bc`, and Ada's spot check of the main checkout's `dist/DesignTokens.ios.swift` (base `colorActionPrimary`, `colorStructureCanvas` and `colorTextDefault` absent; only `colorActionPrimary_wcag`). *Scope: Ada read three of the fourteen.*
+      · **Per platform, the build claim reads**: iOS `not built in this amendment` (the L816 parse failure was reproduced with `swiftc -parse`, Swift 6.2, Kenya, 2026-10-03); Android `not build-verified — no Android toolchain has been run` (Data: no Android build has ever been run against this tree). The causes on both are source reads (Ada; Kenya and Data confirmed, 2026-10-03).
+      · **The sub-section sentences** are the platform owners' (prose, each containing both asserted strings): iOS, Kenya R1 § A; Android, Data R1 item 1. **No line number appears on a user-facing surface** (Kenya: "L816" rots); it stays in this causes list.
+      · **Red**: either asserted string absent from the iOS or Android sub-section or from the README; a sub-section claiming a build was run.
   - *(amendment 2026-10-03)* **The README clause, read after `main` moved** (drift class D; the T2 (B) sentence was already untrue at `a6481d71`, and #271 narrowed it). README § "Getting Started" is **reconciled, not removed**:
     · its status line becomes the scope sentence;
     · it carries the founder path's five steps in C23 order, using `vocabulary.ts`'s forms, and criterion 1's path-step test extends to `README.md` (Leonardo);
     · its link is labelled "Install guide" and targets `docs/consumer/INSTALL.md`;
     · the *"True native implementations (Web Components, SwiftUI, Jetpack Compose)"* sentence (anchored by content; L57 at `79a3b3bc`) is replaced by the labelled form.
     · All four are asserted.
+    · *(R2, Leonardo L-A4)* **What the README assertion counts**: the README's numbered list in § "Getting Started" has exactly `path-steps.founder` items (5), in C23 order (the README has no front matter of its own). The README carries **only** the scope sentence, the five steps, the "Install guide" link and the two label strings; the platform cause sentences stay in the guide's sub-sections. **Red**: a count other than 5, a step out of order, or a cause sentence on the README.
   - *(amendment 2026-10-03)* **Criterion 4's "119-B lint", defined.** No such instrument existed at `79a3b3bc`; it is built here (19.2) in `scripts/__tests__/install-doc.test.ts`, over the region. It covers Req 15.2's five constraints:
     · (i) route lines are section-less (`THEN consult <doc-id> (summary-first)`; no `§` inside a route) — checked;
     · (ii) the calibration cue cites `governance/classification-map.md § "certainty-calibration"` and names no emitting tool — checked, by the citation present and a denylist of tool names absent. *Scope: it catches a named emitter, not a paraphrased list*;
@@ -989,9 +1037,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     · (v) G1's misfit moves through the generator only — `none`: it is a constraint on agent text, not on the install doc.
     · **Red**: a violation of (i), (ii) or (iv), or a `check:section-citations` failure naming the guide.
   - *(amendment 2026-10-03)* **Req 3.2's re-entry guard**: no CONSUME-posture passage of the region instructs `generate` (asserted).
+    · *(R2, Stacy R-12)* **The passage is delimited by heading**: from the region's "2 CONSUME" heading to the next heading of the same level. **Red**: the string `generate` in an instruction (a code span or a numbered step) inside that span. *Scope: prose that names `generate` without instructing it is not caught.*
     · **Install-doc string assertions import their expected CLI strings** from `src/cli/shared/vocabulary.ts` and `src/cli/shared/errorCatalog.ts`, never as literals, so a later Task 22 string change goes red here instead of drifting.
     · `vocabulary.ts` is read, not reworded. A rewording reaches Lina's CLI tests and needs her consult first.
-  - *(amendment 2026-10-03)* **Cross-parent order (Stacy's lens item 6)**: 19.3's owed-AC rows are written after 20.1's `COMMIT-POLICY.md` exists (joining-path content agrees), and 19.5 runs after 22.2 (Leonardo reviews against the final CLI strings).
+  - *(amendment 2026-10-03)* **Cross-parent order (Stacy's lens item 6)**: 19.3's owed-AC rows are written after 20.1's `COMMIT-POLICY.md` exists (joining-path content agrees), and 19.5 runs after 22.2 (Leonardo reviews against the final CLI strings). *(R2, Leonardo L-A5)* **19.5 also runs after 22.3** ("`example-home.yaml` placed" is on his list). If his fold needs a CLI string changed, 22.2 reopens on the branch.
   - *(amendment 2026-10-03)* **The lock** (`canonical/generated.lock`; `governance` is a closure root, `tools/agent-generator/diff-guard.ts` L62–72).
     · It is refreshed **once at 19's close, by Thurgood**, by `npm run check:122:diff-guard`'s own full-run write, from a clean tree, and never hand-edited. **A refresh in which `outputs` moves is not a refresh: stop and report.**
     · Between refreshes a stale `inputClosure` runs `full-run-green`, not red (Lina, `diff-guard.ts` L276–301).
@@ -1000,7 +1049,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `docs/consumer/INSTALL.md`, `governance/DesignerPunk-Integration-Guide.md`, `README.md`, `src/cli/shared/vocabulary.ts`, tests, the build step deriving INSTALL.md *(amendment 2026-10-03: "the build step" reads as the committed derivation below; "tests" are named:)* `scripts/derive-install-doc.ts` (new, 19.4), `scripts/__tests__/install-doc.test.ts` (new, 19.2/19.4), `.kiro/docs/ballots/<date>-123-b-u3-install-guide.md` (new, 19.4: B-U3), `canonical/generated.lock` (refreshed once at 19's close, as in the criterion above)
 
-  - [ ] 19.1 `vocabulary.ts`; the doc in C23 order with prerequisites and native labels; the README L57 label + its string assertion *(amendment 2026-10-03: the region's scope sentence before step 1 and its per-platform section shape; the two asserted label strings; the README reconciled — status line, five steps, "Install guide" link, the labelled L57 sentence)*
+  - [ ] 19.1 `vocabulary.ts`; the doc in C23 order with prerequisites and native labels; the README L57 label + its string assertion *(amendment 2026-10-03: the region's scope sentence before step 1 (R2: as its first paragraph) and its per-platform section shape (R2: Web, iOS, Android siblings under § Platforms); the two asserted label strings; the README reconciled — status line, five steps, "Install guide" link, the labelled L57 sentence)*
   - [ ] 19.2 Path-step counting test; heading-order test; 119-B lint; residual string assertions *(amendment 2026-10-03: in `scripts/__tests__/install-doc.test.ts`; the 119-B lint as defined above; stale-scope zero assertions; the Req 3.2 guard; imported CLI strings; the README in the path-step test)*
   - [ ] 19.3 The ten owed-AC rows with quoted passages *(amendment 2026-10-03: after 20.1)*
   - [ ] 19.4 **Integration Guide → served source of INSTALL.md content** (same doc-id; derived INSTALL.md; body-identity test) *(amendment 2026-10-03: B-U3 is its first commit; the marked region; `scripts/derive-install-doc.ts` and the committed `docs/consumer/INSTALL.md`; region identity with its bite; the remainder sweep and its table; the #268 preservation table; the lock refresh at 19's close)*
@@ -1019,26 +1068,31 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - *(amendment 2026-10-03 — the U3 cut. Reads: Lina, Leonardo, Ada. Record: `feedback/tasks.md` § "U3 amendment round (2026-10-03)".)* **Cross-parent order (Stacy's lens item 6)**: **20.3 runs after 22.1.** Its note-creation clause is C26's `generate` behaviour, built at 22.1.
     · Lina's serial `src/cli/init.ts` chain is 20.2 → 21.3 → 22.1 → 20.3 → 22.2.
     · 20.1 and 20.2's `src/cli/shared/gitignoreRegion.ts` may run in parallel with Task 19.
+    · *(R2, Lina RC-4)* **20.3's policy-applied repo is built at test time**, inside the Consumer Guard case in `tests/consumer-integration.test.ts`: `init` from the packed tarball → `git init && git add -A && git commit` → `git clone` → `npm install` (packed) → `generate`. **Nothing is committed**: a born repo under `src/` would be type-checked by full `tsc` (`tsconfig.json` includes `src/**/*`; the born config imports `.ts`-suffixed paths) and would rot against every later `init` change. If U5's join runs later want a committed fixture, its home is `tests/fixtures/…`, outside `tsconfig`'s include.
+    · *(R2, Lina A-2)* **`init`'s region reads `loadConfig(dest).outputDir`, so it is emitted after the token copy** (the config `init` writes imports the copied tier). The two-config test uses a **pre-existing** config with a different `output`, which `init` keeps (`createFileIfNotExists`). If `loadConfig` fails, `init` reports and writes **no** block; it never guesses `./dist/tokens`. **Red**: a block written with a guessed path, or no report.
   - *(amendment 2026-10-03)* **The round-trip has a target-free region source.** The block's content is computed once, in `src/cli/shared/gitignoreRegion.ts`, from `loadConfig(...).outputDir`, and shared by `init` and `sync`. `sync` classifies it from that source, not from `emitConsumer`'s per-target output (`src/cli/sync/index.ts` L651–700 sees per-target regions only).
     · **Red**: outside lines change, or the region is missing after the `sync` round-trip (`src/cli/__tests__/sync.region.test.ts`, extended).
   - *(amendment 2026-10-03)* **`COMMIT-POLICY.md` ships** as an explicit `files[]` path, written by the packaging subtask (fork FK-2) with its `pack-assert` ADD-present row (Ada; design C5 erratum, 2026-10-03).
-  - *(amendment 2026-10-03)* **The `.gitignore` block for repos born on 15.0.0, which have no block — R-9 RULED: OFFER.** Peter: "Re: walkthrough 1, offer".
+  - *(amendment 2026-10-03)* **The `.gitignore` block for repos born on 15.0.0, which have no block — PR-9 RULED: OFFER.** Peter: "Re: walkthrough 1, offer".
     · **When the upgrade command offers**: `sync` offers the block only when git is not already ignoring `.designerpunk/`. This is detected by effect (`git check-ignore -q .designerpunk/`), not by whether a block is present, so a repo that ignores it in its own lines gets no offer.
-    · **It asks before writing.** It writes only on the consumer's go, under `sync`'s one batch confirmation.
-    · **When nobody can answer (non-interactive), it reports instead, and writes nothing.**
+    · **It asks before writing.** *(R2, Lina RC-2, Leonardo L-RC7 concurring; inside PR-9's "asks before writing" and "report when non-interactive"; this replaces "under `sync`'s one batch confirmation", which contradicted the offer row's own `[y/N]`)* It writes only on an explicit **yes to its own question** (the offer row's `[y/N]`, default No), asked after `sync`'s report. Declining writes nothing and is asked again on the next interactive `sync`. It is its own question because it opts into a new policy in a file the consumer owns.
+    · **When nobody can answer (non-interactive), it reports instead, and writes nothing.** *(R2, Lina RC-2)* **Off a TTY, `--apply` does not write it**: the report row is printed instead.
     · **The report carries a corrected remedy.** The `untracked-new` catalog row's remedy names `attach --target`, which is wrong for this target-free region. A new catalog row (design erratum, 2026-10-03) carries a remedy that is true for it.
     · **Instrument**: `src/cli/__tests__/sync.region.test.ts`, extended to three cases:
       · an unignored repo, interactive: the offer appears, and the region is written only after a yes;
       · an already-ignored repo: no offer;
-      · a non-interactive run: the report and the corrected remedy, and zero bytes written.
+      · a non-interactive run: the report and the corrected remedy, and zero bytes written;
+      · *(R2, Lina RC-2)* `--apply` off a TTY: the report, and zero bytes written to `.gitignore`;
+      · *(R2)* an interactive run answered No (or Enter): zero bytes written, and the offer recurs on the next interactive run.
+    · *(R2, Leonardo L-RC7)* The offer and report strings are string-equal to the catalog rows as corrected in design.md (2026-10-03).
     · **Red**: any case misbehaves.
-    · **Leonardo's position, NOT ruled (for this round)**: `generate` should also print a warning when it creates the note in a repo where `.designerpunk/` is not ignored, naming the risk (a routine `git add .` commits a personal note, the Req 18.5 defect) and the fix. Thurgood and Lina have no objection. If it is adopted, it folds into 22.1 with no subtask added.
+    · **Leonardo's position, NOT ruled (for this round)**: `generate` should also print a warning when it creates the note in a repo where `.designerpunk/` is not ignored, naming the risk (a routine `git add .` commits a personal note, the Req 18.5 defect) and the fix. Thurgood and Lina have no objection. If it is adopted, it folds into 22.1 with no subtask added. *(R2: **PR-13 RULED**, Peter: "Re: 3, agreed". Its criterion row, instrument and catalog row are in Task 22; it folds into 22.1.)*
 
-  **Primary Artifacts:** `docs/consumer/COMMIT-POLICY.md`, `src/cli/init.ts`, tests *(amendment 2026-10-03 — widened to the paths the criteria force (Lina; Stacy's lens item 5):)* `src/cli/shared/gitignoreRegion.ts` (new), `src/cli/sync/index.ts`, `src/cli/sync/Classifier.ts`, `src/cli/shared/errorCatalog.ts` (R-9's remedy row), `src/cli/__tests__/init.test.ts`, `src/cli/__tests__/sync.region.test.ts`, `tests/consumer-integration.test.ts` (20.3's packed fresh-clone case), `src/cli/__tests__/fixtures/policy-applied-born-repo/**` (new: 20.3's committed fixture; Lina confirms the home, shared with U5's join fixtures if they land first)
+  **Primary Artifacts:** `docs/consumer/COMMIT-POLICY.md`, `src/cli/init.ts`, tests *(amendment 2026-10-03 — widened to the paths the criteria force (Lina; Stacy's lens item 5):)* `src/cli/shared/gitignoreRegion.ts` (new), `src/cli/sync/index.ts`, `src/cli/sync/Classifier.ts`, `src/cli/shared/errorCatalog.ts` (PR-9's remedy row), `src/cli/__tests__/init.test.ts`, `src/cli/__tests__/sync.region.test.ts`, `tests/consumer-integration.test.ts` (20.3's packed fresh-clone case, built at test time; R2, Lina RC-4: the committed `src/cli/__tests__/fixtures/policy-applied-born-repo/**` fixture is dropped), `src/cli/sync/Prompter.ts` and `src/cli/sync/Reporter.ts` *(R2, Lina RC-3: the offer is a prompt and the report a report line; `sync/index.ts` imports both)*
 
   - [ ] 20.1 `COMMIT-POLICY.md`
-  - [ ] 20.2 `.gitignore` region (configured path) + `sync` round-trip *(amendment 2026-10-03: `src/cli/shared/gitignoreRegion.ts`; the `sync` region source; R-9's offer, report and corrected remedy)*
-  - [ ] 20.3 Fresh-clone fixture through step 4 *(amendment 2026-10-03: after 22.1)*
+  - [ ] 20.2 `.gitignore` region (configured path) + `sync` round-trip *(amendment 2026-10-03: `src/cli/shared/gitignoreRegion.ts`; the `sync` region source; PR-9's offer, report and corrected remedy)*
+  - [ ] 20.3 Fresh-clone fixture through step 4 *(amendment 2026-10-03: after 22.1; R2: built at test time, nothing committed)*
 
 - [ ] 21. The starter specs
 
@@ -1051,7 +1105,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - `init` scaffolds both into `specs/`, reporting on collision (`init.test.ts`).
   - *(amendment 2026-10-03 — the U3 cut. Reads: Ada, Lina, Thurgood. Record: `feedback/tasks.md` § "U3 amendment round (2026-10-03)".)* **The starter specs live at `src/cli/templates/starter-specs/**`.** They ship through the existing `src/cli/templates/` `files[]` entry, so no `files[]` edit is needed. This replaces `starter-specs/**`, which had no shipping path (Ada and Lina concur).
     · Each spec file gets a `pack-assert` ADD-present row, written by the packaging subtask (FK-2).
-  - *(amendment 2026-10-03)* **Req 15B.5 covers the starter specs.** `scripts/__tests__/install-doc.test.ts`'s vocabulary-consistency block also reads both starter specs, against `src/cli/shared/vocabulary.ts`.
+  - *(amendment 2026-10-03)* **Req 15B.5 covers the starter specs.** `scripts/__tests__/install-doc.test.ts`'s vocabulary-consistency block also reads both starter specs, against `src/cli/shared/vocabulary.ts`. *(R2, Stacy R-13: `install-doc.test.ts` is on Task 19's list, not Task 21's. **The starter-spec block lives in `scripts/__tests__/starter-specs.test.ts`**, Task 21's own file, importing the same `vocabulary.ts` forms; `install-doc.test.ts` keeps the guide and INSTALL.md.)*
     · **Red**: a lifecycle verb described in a starter spec differs from `vocabulary.ts`, or `attach` appears without its object.
   - *(amendment 2026-10-03)* **P3 tiering is explicit** (Req 17.3). The structure test asserts that every CI need carries a tier (minimal core or optional hardening), a bite recipe and a two-sided price line.
     · **Red**: a need missing any of the three. The test sits in `scripts/__tests__/starter-specs.test.ts` and is Thurgood's (21.1/21.2).
@@ -1076,66 +1130,89 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **The scaffolded `product/` tree indexes with zero errors and zero unresolved references.** Bite recorded. **Handoff recorded**: Leonardo authors `example-home.yaml` at `.kiro/specs/123-consumer-distribution/design-inputs/example-home.yaml` (commit `Agent: leonardo`, inside his write scope), and **Lina places it byte-identical** into the scaffold template path (a test asserts the two files are equal).
   - **DD9 confirmed or flipped by Leonardo, his words quoted.** The notice string matches the catalog, and the founder count is unchanged.
   - The U3 PR body carries the tripwire line, the release-3 CHANGELOG entry is committed, and `npm test` + full `tsc` are green.
-  - *(amendment 2026-10-03 — the U3 cut. Rulings: Peter's R-4, R-5 and R-8. Reads: Lina, Leonardo, Ada, Stacy. Record: `feedback/tasks.md` § "U3 amendment round (2026-10-03)". The C19 issue `.kiro/issues/2026-10-01-c19-personal-note-warning-unimplemented.md` is discharged here.)* **The personal-note mechanism, R-4 RULED: mechanism B.**
+  - *(amendment 2026-10-03 — the U3 cut. Rulings: Peter's PR-4, PR-5 and PR-8. Reads: Lina, Leonardo, Ada, Stacy. Record: `feedback/tasks.md` § "U3 amendment round (2026-10-03)". The C19 issue `.kiro/issues/2026-10-01-c19-personal-note-warning-unimplemented.md` is discharged here.)* **The personal-note mechanism, PR-4 RULED: mechanism B.**
     · **The reference is always emitted.** It already is at 15.0.0: `consumer-entry.ts` pushes the template member unconditionally, and all eight committed Kiro agent JSONs carry it (Lina, verified). So nothing rendered moves, and `tools/agent-generator/**` is untouched.
-    · `init`, `generate` (`runGenerate` in `src/cli/designerpunk.ts`; `src/cli/generate.ts` does not exist), `attach` (not `--reference`) and `sync` **create the note from the template when it is absent** (Lina R2: every command that touches the note creates it, so an absent note cannot outlast any DesignerPunk command). `init` prints the existing naming row, `generate` the existing "created" row, and `sync --migrate-legacy` the naming row (**R3**, `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`).
-    · `generate`, `attach` (not `--reference`) and `sync` print the **unfilled-note warning**, exit 0 (Req 13, Req 18.5(iii)). It is a new catalog row (design erratum, 2026-10-03), entered in design.md first and then in `errorCatalog.ts`.
+    · `init`, `generate` (`runGenerate` in `src/cli/designerpunk.ts`; `src/cli/generate.ts` does not exist), `attach` (not `--reference`) and `sync` **create the note from the template when it is absent** (Lina R2: every command that touches the note creates it, so an absent note cannot outlast any DesignerPunk command).
+    · *(R2, Leonardo L-RC2; this governs, and design C26's erratum is corrected to match)* **Who prints what.** Every command that **creates** the note prints a creation row: `init` the naming row; `generate`, `attach` and non-migrating `sync` the "created" row; `sync --migrate-legacy` the naming row (**R3**, `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`). A command that **finds** an existing unfilled note prints the **unfilled-note warning**, exit 0 (Req 13, Req 18.5(iii)); it is a new catalog row (design erratum, 2026-10-03), entered in design.md first and then in `errorCatalog.ts`. **No run prints both.** (As first drafted, `attach` and non-migrating `sync` created the note silently.)
+    · **An existing note is never overwritten** (Req 18.3), including an empty or unfilled one (R2, Lina RC-1).
     · **Posture gate**: the note is created only in a born (BECOME) repo, never in the steward checkout or in package mode. A test pins it.
-    · **Instrument**: `src/cli/__tests__/personalNote.test.ts` (new), plus the `init`, `attach`, `sync.migration` and `generate`-path tests, per target.
-    · **Red**: the note is not created where absent, created in the steward or package mode, or the warning is missing or wrong.
-    · **The Kiro measurement** (owed since the C19 issue): run by Peter on 2026-10-03 with `kiro-cli 2.12.1`. A `file://` resource whose target is absent passes `agent validate`, starts the session with no warning, and lists as `(no matches)`, exactly as Kiro's own default entries do. So mechanism B's residual is benign on Kiro. The result is quoted in this round's feedback; **Lina records it in the C19 issue in her `chore/` PR**.
+    · **Instrument**: `src/cli/__tests__/personalNote.test.ts` (new; the rule's unit cases), plus, per command and per target, "absent → creation row only" and "exists unfilled → warning only", in `init.test.ts`, `attach.test.ts`, `sync.migration.test.ts`, `sync.test.ts` (non-migrating `sync`; R2, Lina RC-5) and `generate.personalNote.test.ts` (new, the `generate` path; R2, Lina RC-5).
+    · **Red**: the note is not created where absent, is created in the steward or package mode, is overwritten when present, or a run prints both rows, neither, or a wrong string.
+    · **The Kiro measurement** (owed since the C19 issue): run by Peter on 2026-10-03 with `kiro-cli 2.12.1`. A `file://` resource whose target is absent passes `agent validate`, starts the session with no warning, and lists as `(no matches)`, exactly as Kiro's own default entries do. So mechanism B's residual is benign on Kiro. The result is quoted in this round's feedback; **Lina records it in the C19 issue in her `chore/` PR**, *(R2, Lina)* **before U3's cut**.
     · CC's `@`-import of a missing file stays unmeasured until U5 (C8(c)).
-  - *(amendment 2026-10-03)* **The note's content, R-4 RULED, with Peter's R-8 input.**
-    · **The note is its own template**: R-8, Peter: "the doc itself could be the template, and then it's just replaced/updated/overwritten with the user's response." The file created in the consumer's repo carries the prompts, and the user (or the agent's walkthrough) overwrites it with her answers.
-    · **A few prompted slots, as `## ` headings with the prompt text in an HTML comment under each**: who I am; what I or my organization value; how I like to communicate and collaborate.
-    · **One line tells the agent to offer the walkthrough**, conditional on the note being unfilled. Its frequency (once per session, or once ever) and its wording are Leonardo's. The line says "offer once, not once per agent".
-    · **No command-line wizard**: `init` and `generate` always write the template verbatim (design erratum to C26, 2026-10-03: "On a TTY, init prompts" is withdrawn).
+  - *(amendment 2026-10-03)* **The note's content, PR-4 RULED, with Peter's PR-8 input.**
+    · **The note is its own template**: PR-8, Peter: "the doc itself could be the template, and then it's just replaced/updated/overwritten with the user's response." The file created in the consumer's repo carries the prompts, and the user (or the agent's walkthrough) overwrites it with her answers.
+    · **A few prompted slots, as `## ` headings**: who I am; what I or my organization value; how I like to communicate and collaborate. *(R2, Leonardo L-RC1, settled with Lina)* **All template guidance — the slot questions, the walkthrough-offer line and the pointer to the example — sits in ONE VISIBLE block between two marker comments, `<!-- dp:template -->` … `<!-- /dp:template -->`**, not in HTML comments under each slot. The block is visible whether or not a harness shows the agent HTML comments from an `@`-imported file (unmeasured for CC), and it lets Peter's "Mad Libs" sentence stems show in a Markdown preview. **Authoring constraint (22.0)**: every template-authored line other than a heading sits inside the marked block.
+    · **The walkthrough-offer line** (Leonardo's words; it sits inside the block):
+      > **For agents**: while this note holds nothing but its template (headings, this guidance, `TODO`), it is unfilled; do not read it as instructions about the person. If you are talking directly with the person (never as a delegated subagent), offer once in this conversation to walk them through it, one section at a time, writing their answers here in their own words. If they decline, offer to replace the file with one line of their choosing. Any edit of theirs ends the offer.
+    · **Frequency: at most once per conversation, never as a delegated subagent, and ended for good by any edit of hers** (Leonardo). The file is the memory, so no agent state is needed. *Residual: a Kiro user who switches agents before deciding can be offered once per agent conversation until she edits the file.*
+    · **No command-line wizard**: `init` and `generate` always write the template verbatim (design erratum to C26, 2026-10-03: "On a TTY, init prompts" is withdrawn). *(R2, Leonardo L-A1: this limb is not in Peter's quoted words. It is part of the recommendation recorded as agreed under PR-4 in the orchestrator's record of the rulings, and **Leonardo and Lina hold it on the merits**: the founder's agent runs `init` off a TTY (A14), so a wizard serves the rare case.)*
     · **An edited version of Peter's note ships as the example.** It is never a resource or an import, and carries no résumé or CV reference (Req 18.2). **Peter approves the edited text by a dated committed record before it ships.**
-    · **Leonardo words** the template, the offer line and the example (22.0), in `.kiro/specs/123-consumer-distribution/design-inputs/`. Lina places them byte-identical, with an equality test.
-    · **No requirements touch is owed**: Req 18.1's "onboarding personalizes it per user on install" is met by the walkthrough (Thurgood's reading; challenge it in the round).
-  - *(amendment 2026-10-03)* **The detection rule** (R-8's consequence; **Lina and Leonardo confirm it in this round**). One function in `src/cli/shared/personalNote.ts`. A note is **unfilled** iff:
-    · (i) it is byte-identical to the shipped template; **or**
-    · (ii) it carries the template's slot headings, and every slot body is empty or exactly `TODO` once HTML comments are removed and whitespace is trimmed.
-    · **A note without the template's slot headings is filled.** That covers a freely rewritten note.
-    · **Unit cases**:
-      · absent;
-      · the template as created;
-      · one slot filled;
-      · all slots filled;
-      · comments deleted but `TODO` left;
-      · a user-added section;
-      · a free rewrite with no slots (→ filled).
-    · **Bite recorded**: force the rule to return "filled", and the template-as-created case goes red.
+    · *(R2, Leonardo L-RC4 (a), Stacy R-14)* **The approval is bound to bytes**: `.kiro/specs/123-consumer-distribution/design-inputs/personal-note.example.approval.md`, written by the orchestrator. It quotes Peter's words; names the example's `git hash-object`; lists each edit from his original note (kept / cut / reworded, with a reason), so he approves the edits and not only the result; and states that he knowingly re-ships an edited version of content D-live-4/A10 removed from the package. **Instrument**: `git hash-object` of the placed `src/cli/templates/personal-note.example.md` equals the recorded hash. **Red**: they differ.
+    · *(R2, Leonardo L-RC4 (c))* **What the example may contain** is Leonardo's editing brief (`feedback/tasks.md` `[LEONARDO R1]` L-RC4 (c)), for Peter to overrule. Its first line reads "This is Peter's note, edited, shown as an example. Write your own." It carries no file path, no DesignerPunk process or governance reference, and no instruction binding "you, the agent". The human-harms passage, the "largely a tool" aside and the sign-off's profanity are **flagged for Peter's call, not cut silently**. **Instrument**: `grep -r "personal-note.example"` over every emitted consumer output in the 16.6 packed install → 0. **Red**: a hit.
+    · *(R2, Leonardo L-RC4 (d))* **The template names the example's installed path**, `node_modules/@3fn/core/src/cli/templates/personal-note.example.md` (FK-1 (b)). **Instrument**: the 16.6 packed install asserts that the path exists. **Red**: it does not.
+    · **Leonardo words** the template, the offer line and the example (22.0), in `.kiro/specs/123-consumer-distribution/design-inputs/`. Lina places them byte-identical at `src/cli/templates/personal-note.{template,example}.md` (FK-1 (b)), with an equality test.
+    · *(R2, Lina A-1, Leonardo L-RC4 (b))* **Order**: 22.0's **template** lands before 22.1. The **example and its approval record** land before 22.3b.
+    · **No requirements touch is owed**: Req 18.1's "onboarding personalizes it per user on install" is met by the walkthrough (Thurgood's reading; challenge it in the round). *(R2: Leonardo accepts it, provided the walkthrough is named at path step 4 (design C23 erratum). Lina A-5's trace from Req 18.5(i) is written into C26's erratum. **Evidence boundary (Stacy R-15)**: the asserted offer line proves that the instruction exists, not that onboarding personalizes the note. The latter is evidenced at U5 by a persona run's record, or Req 18.1's row reads `not re-verified`.)*
+  - *(amendment 2026-10-03; R2 — **settled between owners**: Lina's replacement rule (RC-1) with Leonardo's change (L-RC1); both confirm PR-8's consequences)* **The detection rule.** One function in `src/cli/shared/personalNote.ts`, with no copy of the template at run time and no coupling to a template version. A note is **unfilled** iff, after removing **the marked template block** (`<!-- dp:template -->` through `<!-- /dp:template -->`, markers included), every other HTML comment, every Markdown heading line and every bare `TODO` token, **only whitespace remains**. **Absent** means the file does not exist (create it). **An existing file is never overwritten**, including an empty or unfilled one.
+    · **How the rule treats the visible block**: the whole block is removed, markers to markers, before the whitespace test. So nothing inside an intact block ever makes a note filled: not the template's guidance, and not text she types inside it (decided below). Deleting a marker ends the block, and its text then counts as hers.
+    · **Unit cases, each with its expected result** (Lina RC-1; Leonardo L-RC1):
+      · absent → absent, created;
+      · the template as created → unfilled;
+      · an older template's slots, untouched → unfilled;
+      · the template with CRLF line endings → unfilled;
+      · comments deleted, `TODO` left → unfilled;
+      · the template block deleted, slots `TODO` → unfilled;
+      · an empty file → unfilled, not overwritten;
+      · one slot filled → filled;
+      · all slots filled → filled;
+      · a user-added section with text, slots empty → filled;
+      · a free rewrite without slots → filled;
+      · `TODO: later` with text after it → filled;
+      · markers deleted, block text kept → filled (an edit of hers);
+      · **text written inside an intact block → unfilled** (*decided in R2; Leonardo's R1 case read "filled"*). The rule cannot tell her words from the template's inside the block without a copy of the template, which is the version coupling RC-1 removes; and an agent reading that note sees the guidance still declaring it unfilled, so "unfilled" agrees with what the agent reads. The warning then tells her. **Owed at 22.0**: Leonardo's block wording directs answers under the slot headings, outside the block, and he confirms this case.
+    · **Bites recorded, two-sided**: force the rule to "filled" → the template-as-created case goes red; force it to "unfilled" → the one-slot-filled case goes red.
   - *(amendment 2026-10-03)* **The 16.6 flips** in `tests/consumer-integration.test.ts`, three sites, anchored by test title:
     · "the personal note is ABSENT in both installs until U3" → present after `init`, with the template's content;
     · the CC case "every import resolves except the (absent) personal note" → every import resolves;
     · the Kiro case's named-but-absent exception → all resolve.
-    · The release-3 CHANGELOG (22.4) names one fix: `initBornRepoMessage`'s "(generate creates it)" (design catalog L880), false at 15.0.0 and made true here.
-  - *(amendment 2026-10-03)* **The named-default notice**: its catalog row **exists** (design L886, verbatim Leonardo A2: `no --target given — set up for Claude Code (the default). Using Kiro? npx designerpunk attach --target=kiro`). `src/cli/shared/errorCatalog.ts` has no function for it at `79a3b3bc`.
+    · The release-3 CHANGELOG (22.4) names one fix: `initBornRepoMessage`'s "(generate creates it)" (design catalog row "`init` in a born repo (A7)"; R2, Lina RC-9: anchored by label, not line), false at 15.0.0 and made true here.
+    · *(R2)* The same file's comment naming `templates/personal-note.template.md` (L364 at `f7aec0aa`) is corrected to the FK-1 (b) path in 22.1.
+  - *(amendment 2026-10-03)* **The named-default notice**: its catalog row **exists** (design catalog row "bare `init` default notice (A2)"; R2, Lina RC-9: anchored by label, not line), verbatim Leonardo A2: `no --target given — set up for Claude Code (the default). Using Kiro? npx designerpunk attach --target=kiro`. `src/cli/shared/errorCatalog.ts` has no function for it at `79a3b3bc`.
     · 22.2 adds the function and prints the notice **first** on bare `init`. The sequenced restart row stays **last**.
     · **Instrument**: `init.test.ts` string-equal, on the expected order.
+  - *(amendment 2026-10-03; R2, Leonardo L-RC3)* **The note's existing rows teach three slots and the walkthrough.** The catalog rows "personal-note naming", "**generate created the personal note**" and "`init` in a born repo (A7)" still teach the two-slot note with no walkthrough; their corrected strings are design.md errata (2026-10-03). C23's founder and joining step 4 gain "or, after the restart, ask your agent to walk you through it". `path-steps` is unchanged: step 4 is still one user action.
+    · **Instrument**: 22.2's string-equal tests (labels unchanged, strings moved) and 19.2's imported-string assertions. **Red**: an old string.
   - *(amendment 2026-10-03)* **The `product/` scaffold** lives at `src/cli/templates/product/**`, which ships through the existing `src/cli/templates/` entry.
-    · **Leonardo authors the content of every file `example-home.yaml` references** (in `design-inputs/`; same placement and equality pattern). Lina owns the mechanics.
-    · **The validity guard's state and classes**: the born repo immediately after `init`, from the packed install, before `generate` (so no `token-index/` exists). The product index status reads `healthy`, with zero `_componentGaps`, and every template and domain-object name the screen references exists in the scaffold.
-    · **Ui-tree token names are checked by Leonardo against the Application MCP and recorded as an inspection**, not a mechanical claim.
-    · Status fields are honest: web only; iOS and Android `not-started`.
-    · **Bite**: break a reference in `example-home.yaml` → red.
-  - *(amendment 2026-10-03)* **⟨FORK FK-1 — OPEN, owners Ada, Lina, Thurgood: where the note template and the example live in the package.⟩** (R-8 does not settle it.)
-    · **(a) `templates/personal-note.template.md` and `templates/personal-note.example.md`**: design C5 L262 and C20 L666, with explicit `files[]` paths and the lock (via `package.json`). **Ada**: where settled design names a path, follow it.
-    · **(b) `src/cli/templates/personal-note.template.md` and `src/cli/templates/personal-note.example.md`**: no `files[]` edit and no lock move; needs a design erratum to C5 L262 and C20 L666. L666's claim that `consumer-entry.ts` reads the template is not true of the code: template members are "referenced, never emitted" (Lina, verified). **Lina, Thurgood**: one shipped scaffold home beside the starter specs and the `product/` scaffold.
-    · Either way, each file gets a `pack-assert` ADD-present row.
-  - *(amendment 2026-10-03)* **⟨FORK FK-2 — OPEN, owners Ada, Lina, Thurgood: when the packaging subtask runs, and who writes it.⟩** It covers every U3 `files[]` line (explicit paths: `docs/consumer/INSTALL.md`, `docs/consumer/COMMIT-POLICY.md`, and FK-1 (a)'s two files) and every `scripts/pack-assert.ts` section-9 ADD-present row (`deferred ADD present: …`, outside the ≥ 14 publish-path floor). Ada adds **an exact-set row over `src/cli/templates/**`**, shaped like `steeringSetDiff`, so a stray or dropped scaffold file goes red instead of shipping silently.
-    · **(a) 22.3b, after 22.3 and before 22.4, by Ada (Sonnet)**, so that one author writes every hunk. **Ada; Thurgood concurs.** R1's "19.0 first" is withdrawn: ADD rows go red until their files exist.
-    · **(b) 19.0, the `files[]` lines only, early (Lina)**, with each ADD row landing alongside its file, Ada consulted. **Lina.**
-    · The count is the same either way (one subtask).
-  - *(amendment 2026-10-03)* **The G2 backstop, mechanical** (Peter's R-5; Stacy's lens item 7). 22.5 opens U3's PR only if one of these holds on the PR head:
-    · `git merge-base --is-ancestor <U3g's squash SHA> HEAD` succeeds (U3g merges only on a cycle-2 verdict that reads HOLDS, Task 30); **or**
-    · Peter's dated re-ruling is committed in `.kiro/issues/2026-10-02-g2-pass-four-findings.md`.
+    · **Leonardo authors the content of every file `example-home.yaml` references** (in `design-inputs/`; same placement and equality pattern). Lina owns the mechanics. *(R2: Leonardo expects that to be one template file and nothing else — no domain object, and no product token with a `ref`, since `token-index/` does not exist before `generate`.)*
+    · *(R2, Leonardo's question)* **`product/overview.yaml`** is not referenced by the screen, but 28.3's bar reads its product name. Thurgood's read: Leonardo authors its content and Lina owns the product-name substitution. **Lina's confirmation is outstanding.**
+    · **The validity guard's state and classes**: the born repo immediately after `init`, from the packed install, before `generate` (so no `token-index/` exists). The product index status reads `healthy`, with zero `_componentGaps`, and every template and domain-object name the screen references exists in the scaffold. *(R2, Leonardo L-RC6)* **`healthy` means zero warnings** (`product-mcp-server/src/indexer/ProductIndexer.ts` L158–161: any warning is `degraded`). The template and domain-object existence limb is **the guard test's own check**, because the indexer indexes those names without resolving them.
+    · **Ui-tree token names are checked by Leonardo against the Application MCP and recorded as an inspection**, not a mechanical claim. *(R2)* The inspection is a table in 22.3's completion doc: token → `get_token_details` result.
+    · Status fields are honest: web only; iOS and Android `not-started`. *(R2, Stacy A-6: asserted by the guard test.)*
+    · **Bite**: break a reference in `example-home.yaml` → red. *(R2, Leonardo L-RC6: that bite can pass with gap detection silently off — `GapDetector.ts` L64–70 disables itself with a console line when no component root exists. **Two bites**: (1) a misspelled component name in `example-home.yaml` → red, proving gap detection is live in the packed born repo; (2) a missing referenced template → red, from the guard's own existence check. **Red** (for the criterion): either bite stays green.)*
+  - *(amendment 2026-10-03; R2 — **FK-1 SETTLED between owners: (b)**. Ada moved to (b) in her R1; Lina and Thurgood held it; Stacy holds it on verifiability; Leonardo has no objection.)* **The note template and the example live at `src/cli/templates/personal-note.template.md` and `src/cli/templates/personal-note.example.md`.**
+    · They ship through the existing `src/cli/templates/` `files[]` entry, so **no `files[]` line** is added for them. The CLI already reads shipped templates by name from `pkgRoot/src/cli/templates/` (Ada: `src/cli/attach.ts` L431, L479; `src/cli/sync/KeyGrain.ts` L125).
+    · Design C5 L262 (`templates/personal-note.template.md`) and C20 L666 are corrected by erratum (2026-10-03). L666's claim that `consumer-entry.ts` reads the template is not true of the code: template members are "referenced, never emitted" (Lina, verified).
+    · Each file is covered by 22.3b's `src/cli/templates/**` exact set.
+    · *Surviving counter (Ada)*: an edited copy of Peter's note sits in the steward's `src/` tree, which `check:drift`'s `SCAN_DIRS` and any future `src/**` content scanner will read as prose. Harmless today. *(Leonardo)*: the installed path reads like code internals to a person following the pointer; an agent finds it either way.
+  - *(amendment 2026-10-03; R2 — **FK-2 SETTLED between owners: (a)**, with Lina's condition. Ada and Thurgood held (a); Lina accepted it on one condition; Stacy holds (a).)* **The packaging subtask is 22.3b, after 22.3 and before 22.4, by Ada (Sonnet)**, so that one author writes every hunk. It covers every U3 `files[]` line (explicit paths: `docs/consumer/INSTALL.md` and `docs/consumer/COMMIT-POLICY.md`) and every `scripts/pack-assert.ts` section-9 ADD-present row (`deferred ADD present: …`, outside the ≥ 14 publish-path floor). There is no 19.0.
+    · **Lina's condition is met by FK-1 (b)**: the template must be in the packed install before 22.1's Consumer Guard flips run. It ships through the existing `src/cli/templates/` entry (`package.json` L31 at `f7aec0aa`), so no `files[]` edit precedes 22.1.
+    · **No packed-install test is red between 22.1 and 22.3b** (Stacy's concern; checked by reading at `f7aec0aa`): `pack-assert`'s rows over the tarball name `src/cli/templates/` only as the declared-floor `mcp-config.json.template` (L120); its only personal-note row is `.kiro/steering/personal-note.md` ABSENT (L390), which the new paths do not match; `steeringSetDiff` reads `.kiro/steering/` only; and no test compares the tarball against an exact file list (`tarball-target.json` has no reader). The exact set over `src/cli/templates/**` arrives at 22.3b, written against the files then present.
+    · *(Ada RC-2)* **The exact-set row is checked against an explicit expected list in `pack-assert.ts`, never derived from the tree**, so adding a template is a row edit. Its function gets unit cases in `scripts/__tests__/pack-assert.test.ts`, like `steeringSetDiff`'s. **Bite recorded**: a stray file → red; a removed file → red.
+    · *Surviving counter (Lina)*: between U3's cut and 22.3b, nothing asserts that `docs/consumer/**` ships. Nothing in U3 reads those files from a packed install, so the gap is invisible, not harmful.
+  - *(amendment 2026-10-03; R2 — **PR-13 RULED**, Peter, 2026-10-03: "Re: 3, agreed" — Leonardo's L-RC8.)* **When `generate` or `attach` creates the note in a repo where `git check-ignore -q .designerpunk/` fails, it warns.** This is the case PR-9's offer cannot reach: the joining path never runs `sync`, so a teammate who clones a 15.0.0-born repo (no block) gets her note created by `generate` in an unignored directory.
+    · It prints the catalog row "**personal note created in an unignored directory**" (design erratum, 2026-10-03; Leonardo's text), immediately after the creation row. It folds into 22.1; **no subtask is added**.
+    · **Instrument**: `src/cli/__tests__/generate.personalNote.test.ts` and `src/cli/__tests__/attach.test.ts`, string-equal against the row: note created in an unignored repo → the row; note created in an ignored repo → no row; note already present → no row (nothing was created).
+    · **Red**: the row missing in the unignored case, printed in the ignored or already-present case, or a string that differs from the catalog.
+  - *(amendment 2026-10-03)* **The G2 backstop, mechanical** (Peter's PR-5; Stacy's lens item 7). 22.5 opens U3's PR only if one of these holds on the PR head:
+    · `git merge-base --is-ancestor <U3g's squash SHA> HEAD` succeeds (U3g merges only on a cycle-2 verdict that reads `HOLDS`, Task 30); **or**
+    · Peter's dated re-ruling is committed in `.kiro/issues/2026-10-02-g2-pass-four-findings.md` (R2: in a section that names 22.5; the hold's lift record, § "Hold lifted", is a separate act).
     · The PR body names which of the two it rests on.
-  - *(amendment 2026-10-03)* **U3's no-overlap test** (Stacy's condition (b), Peter's R-5.2). It runs at the cut (a row in U3's first instruments block) and again at 22.4:
-    · `git diff --name-only <cut SHA>..HEAD -- canonical/profiles/consumer canonical/operative-sets canonical/agents canonical/_consumer-output tools/agent-generator .kiro/steering` must print nothing.
-    · Widen the path set to U3g's declared trigger set (Task 29, criterion 6) once that is merged.
-    · **Red**: any path printed. The check is then re-run on U3's head after it merges `main`, and a red holds 22.5.
+  - *(amendment 2026-10-03)* **U3's no-overlap test** (Stacy's condition (b), Peter's PR-5.2). It runs at the cut (a row in U3's first instruments block) and again at 22.4. *(R2, Stacy B3 and Lina RC-6: the range and the path list are corrected; this governs the first draft's `<cut SHA>..HEAD` form, which would go red by construction at 22.4, because condition (c) has U3 merge `main` after U3g lands.)*
+    · `git diff --name-only $(git merge-base HEAD origin/main) HEAD -- canonical/profiles/consumer canonical/operative-sets canonical/agents canonical/shared canonical/consumer-profile.yaml canonical/_consumer-output tools/agent-generator .kiro/steering` prints nothing, **on a head where `122-diff-guard` is green**. That is U3's own net delta: at the cut and at 22.4 it prints nothing.
+    · Changes to `governance/**` and `package.json` reach the check only by regenerating `canonical/_consumer-output/**`, which the required `122-diff-guard` forces, and which is in the list. So `governance/**` stays out of the list (Stacy, answering Lina: Leonardo's only guide reference is a section-less route, `canonical/agents/leonardo.md` L109–111).
+    · Widen the path set to U3g's declared trigger set (Task 29, criterion G2-F2) once that is merged.
+    · **Red**: any path printed. A red holds 22.5. The 22.4 completion doc cites the green `122-diff-guard` run.
     · Under mechanism B U3 touches none of these paths (Lina's sizing note); the test is the mechanical proof.
     · **U3 merges `main` after U3g lands and before 22.4** (Stacy's condition (c)).
   - *(amendment 2026-10-03)* **22.4's CHANGELOG entry** carries:
@@ -1145,126 +1222,174 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     · **The lock** is refreshed once at 22.4 by Lina, by the guard's own write from a clean tree, with the "outputs moved → stop" rule.
     · Full validation names the non-root lanes run (`test:scripts`, `test:agent-generator`, `test:pack-contents`, `test:consumer`, the `mcp-server` and `application-mcp-server` suites) or says each was not run.
 
-  **Primary Artifacts:** `templates/personal-note.template.md`, `src/cli/{init,generate}.ts`, the `product/` scaffold incl. `experience-map/pages/example-home.yaml`, tests, `CHANGELOG.md` (release 3) *(amendment 2026-10-03 — widened to the paths the criteria force (Lina, Leonardo, Ada; Stacy's lens item 5); `src/cli/{init,generate}.ts` reads `src/cli/init.ts` and `src/cli/designerpunk.ts`; the template and example paths per FK-1; the `product/` scaffold reads `src/cli/templates/product/**`:)* `src/cli/designerpunk.ts`, `src/cli/shared/personalNote.ts` (new), `src/cli/shared/errorCatalog.ts`, `src/cli/attach.ts`, `src/cli/sync/index.ts`, `src/cli/templates/product/**` (new), `src/cli/__tests__/personalNote.test.ts` (new), `src/cli/__tests__/{init,attach,errorCatalog,sync.migration}.test.ts`, `tests/consumer-integration.test.ts`, `.kiro/specs/123-consumer-distribution/design-inputs/{personal-note.template.md,personal-note.example.md,example-home.yaml}` (Leonardo; with their companions), `package.json` (the `files[]` lines only; author per FK-2), `scripts/pack-assert.ts` (author per FK-2), `canonical/generated.lock` (once, at 22.4)
+  **Primary Artifacts:** `templates/personal-note.template.md`, `src/cli/{init,generate}.ts`, the `product/` scaffold incl. `experience-map/pages/example-home.yaml`, tests, `CHANGELOG.md` (release 3) *(amendment 2026-10-03 — widened to the paths the criteria force (Lina, Leonardo, Ada; Stacy's lens item 5); `src/cli/{init,generate}.ts` reads `src/cli/init.ts` and `src/cli/designerpunk.ts`; the template and example paths per FK-1; the `product/` scaffold reads `src/cli/templates/product/**`:)* `src/cli/designerpunk.ts`, `src/cli/shared/personalNote.ts` (new), `src/cli/shared/errorCatalog.ts`, `src/cli/attach.ts`, `src/cli/sync/index.ts`, `src/cli/templates/product/**` (new), `src/cli/__tests__/personalNote.test.ts` (new), `src/cli/__tests__/{init,attach,errorCatalog,sync.migration}.test.ts`, `tests/consumer-integration.test.ts`, `.kiro/specs/123-consumer-distribution/design-inputs/{personal-note.template.md,personal-note.example.md,example-home.yaml}` (Leonardo; with their companions), `package.json` (the `files[]` lines only; author per FK-2), `scripts/pack-assert.ts` (author per FK-2), `canonical/generated.lock` (once, at 22.4) *(R2: FK-1 settled (b), so `templates/personal-note.template.md` reads `src/cli/templates/personal-note.template.md`; FK-2 settled (a), so `package.json` and `scripts/pack-assert.ts` are Ada's, at 22.3b. Added, by Lina RC-5, Ada RC-2, Leonardo L-RC4 and Stacy R-14:)* `src/cli/templates/personal-note.template.md` (new), `src/cli/templates/personal-note.example.md` (new), `src/cli/__tests__/generate.personalNote.test.ts` (new), `src/cli/__tests__/sync.test.ts`, `scripts/__tests__/pack-assert.test.ts` (Ada, 22.3b), `.kiro/specs/123-consumer-distribution/design-inputs/personal-note.example.approval.md` (new; the orchestrator's record of Peter's approval, 22.0)
 
-  - [ ] 22.0 (Leonardo) The note template (prompted slots; the walkthrough-offer line) and the edited example of Peter's note, in `design-inputs/`; Peter's dated approval of the example *(added 2026-10-03, Peter's R-4)*
-  - [ ] 22.1 Personal note: template, personalization, create-if-absent, all-`TODO`-as-absent *(amendment 2026-10-03: mechanism B; `src/cli/shared/personalNote.ts` and the detection rule; placement of 22.0's files (equality test); create in `init`, `generate` and `sync --migrate-legacy` (R3); the unfilled warning in `generate`, `attach` and `sync`; the posture gate; the three 16.6 flips; Leonardo's `generate` warning if adopted in this round)*
-  - [ ] 22.2 C27 completion: restart line, hatch, note naming, next steps; collision strings *(amendment 2026-10-03: after 20.3; the named-default notice first; next steps list the `.gitignore` block and the `specs/` scaffold)*
+  - [ ] 22.0 (Leonardo) The note template (prompted slots; the walkthrough-offer line) and the edited example of Peter's note, in `design-inputs/`; Peter's dated approval of the example *(added 2026-10-03, Peter's PR-4; R2: the template before 22.1, the example and its approval record before 22.3b; the approval record at `design-inputs/personal-note.example.approval.md`)*
+  - [ ] 22.1 Personal note: template, personalization, create-if-absent, all-`TODO`-as-absent *(amendment 2026-10-03: mechanism B; `src/cli/shared/personalNote.ts` and the detection rule; placement of 22.0's files (equality test); create in `init`, `generate` and `sync --migrate-legacy` (R3); the unfilled warning in `generate`, `attach` and `sync`; the posture gate; the three 16.6 flips; Leonardo's `generate` warning if adopted in this round; R2: the marked-block detection rule, who prints what, and the unignored-directory warning (PR-13 RULED))*
+  - [ ] 22.2 C27 completion: restart line, hatch, note naming, next steps; collision strings *(amendment 2026-10-03: after 20.3; the named-default notice first; next steps list the `.gitignore` block and the `specs/` scaffold; R2: the corrected naming, created and born-repo rows)*
   - [ ] 22.3 (Leonardo) `example-home.yaml` in `design-inputs/`; (Lina) placement (equality test) + scaffold mechanics + validity guard *(amendment 2026-10-03: `src/cli/templates/product/**`; companions authored by Leonardo; the guard's state and classes as above)*
-  - [ ] 22.3b Packaging: every U3 `files[]` line and `pack-assert` row, plus the `src/cli/templates/**` exact set *(added 2026-10-03; ⟨FK-2⟩: under (a) here, by Ada (Sonnet); under (b) this line reads **19.0**, the `files[]` lines only, by Lina (Sonnet), before 19.1, with the rows landing alongside their files)*
+  - [ ] 22.3b Packaging: every U3 `files[]` line and `pack-assert` row, plus the `src/cli/templates/**` exact set *(added 2026-10-03; FK-2 settled (a) in the round: here, by Ada (Sonnet), against an explicit expected list with its unit cases)*
   - [ ] 22.4 Release-3 CHANGELOG entry; full validation *(amendment 2026-10-03: after U3 merges `main` carrying U3g; the no-overlap re-run; the lock refresh)*
   - [ ] 22.5 (Leonardo) DD9 confirmation; open the U3 PR *(amendment 2026-10-03: the mechanical G2 backstop)*
 
-### UNIT 3g — G2 cycle 2: the corrected derivation check on the shipped profile *(added 2026-10-03; Peter's R-5)*
+### UNIT 3c — Consumer-profile corrections *(added 2026-10-03, R2; Peter's PR-11 and PR-12)*
+
+**Why this unit exists.** Peter's PR-11 (FK-5), 2026-10-03, verbatim: `Re: 1, agree with "before"` — the profile wording corrections land **before** the G2 cycle-2 unit, **as their own PR** (Stacy's option: it keeps the profile author's edits out of the cycle that judges the profile). Peter's PR-12 (FK-6): "Re: 2, agreed, but we might express that this is being addressed and should be resolved soon" — the second false promise, in `#ios-theming-spec-094` and `#android-theming-spec-094`, is fixed in the same round.
+
+**Why a declared unit, not an issue-driven `chore/` PR** (Thurgood's choice of form, R2): it re-signs operative signed rows and moves consumer agent text that ships, so it rides release 3's RELEASE pass. That pass reads parent criteria rows and their completion docs, `completion-criteria-parity` evaluates the rows, and the tripwire counts the unit. A unit here gives all three a referent, and its row grants the seats write scope (T1-(B)) without a separate issue-row grant. *Surviving counter: a fourth record shape for six subtasks of mostly wording, and one more Peter-merged PR on release 3's critical path ahead of U3g.*
+
+**How it relates to the other units**: it runs beside U3 and **merges to `main` before U3g's branch is cut** (§ "How the units run"). It is outside the U1 → U5 chain, so tripwire Limb 2 does not apply between it and U3 or U3g.
+
+- [ ] 31. The consumer-profile corrections: the intro line, the Kiro blank line, the theme cue and the two theming units (**U3c gating parent**)
+
+  **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Thurgood (Opus)** — the profile author; Lina (Sonnet) — the `render.ts` and `adapters/kiro.ts` edits and the regeneration. The signers' re-sign acts are attestations, outside every line.
+  **Traces**: Reqs 11.1, 11.8, 12 · design C15, C19 · `completion/claims-pass-release-15.0.0.md` finding R-1 and J divergents 5–9 · `.kiro/issues/2026-10-02-ground-truth-intro-line-stale-generated.md`, `.kiro/issues/2026-10-02-kiro-ground-truth-heading-no-blank-line.md`
+
+  **Success Criteria:**
+  - **The batch is exactly these five things, and nothing else** (PR-11, PR-12):
+    · (i) the ground-truth intro line's reword (`.kiro/issues/2026-10-02-ground-truth-intro-line-stale-generated.md`): Thurgood words it, and Lina edits `tools/agent-generator/render.ts` as a shared-template reword, which moves the steward outputs too;
+    · (ii) the Kiro `## Ground truth` blank line (`.kiro/issues/2026-10-02-kiro-ground-truth-heading-no-blank-line.md`, `tools/agent-generator/adapters/kiro.ts`), placed in the **container span**, never in the preceding body unit's last span (Kenya);
+    · (iii) claims-pass finding R-1's cue, **removed, not reworded** (Data): `canonical/profiles/consumer/data.overlay.md` L159 becomes "regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`", and `kenya.overlay.md` L160 takes the same form. The theme returns when Spec 129's item (i) lands, never in this unit;
+    · (iv) **`#ios-theming-spec-094` and `#android-theming-spec-094`** (PR-12): each states what `generate` produces today (no theme types), says the gap is being addressed, and points at Spec 129 by name, **with no date** (Peter's input: "we might express that this is being addressed"; the orchestrator's caution, not a ruling: 15.0.0 announced no promise and the follow-on has no start date);
+    · (v) divergent 5's "for your themed values" qualifier, put to Data, who resolves it at the round on the text then in front of him.
+    · **Instrument**: `git diff --name-only $(git merge-base HEAD origin/main) HEAD` ⊆ this parent's Primary Artifacts; and `git grep -n -E "including your theme (Swift|Kotlin)|Generated (Swift|Kotlin) output includes" -- canonical/profiles/consumer canonical/_consumer-output` → 0. **Red**: a path outside the list, or a hit.
+  - **Who words what.** Thurgood authors and commits every text change. Kenya (iOS) and Data (Android) word (iii) and (iv) with him and read each before it is committed, as signers. Their signatures are separate acts in separate commits. **Ada fact-checks** (iii) and (iv) against Task 19's label causes (her FK-5 condition: nothing emits a theme Swift or Kotlin surface). The completion doc quotes each before/after pair. **Red**: a text committed without the owner's read recorded, or a new text that claims generated theme output.
+  - **Pre-edit instruments (31.0; Kenya, Data):**
+    · the freshness stale list, taken on the branch before any edit and pasted (expected empty);
+    · `renderedHashOf` for Kenya's and Data's rows the edits are expected to move, and for Data's `routes.cues[9]` and trims rows, taken before the Kiro blank-line edit and pasted.
+    · **Red**: a Kenya or Data body row that the batch does not explain appears on the post-edit stale list.
+  - **Cite-only corrections stay outside the round.** Divergents 6, 8 and 9 (subtraction-3 `cites`) move no hash (`tools/agent-generator/regrounding/freshness.ts` L363–369, read). They are made in **their own commit**, declared and counted separately (signing-act ballot clauses 4–5), and never folded into the re-sign batch. **Instrument**: the stale list after that commit equals the list before it. **Red**: a row moves.
+  - **Divergent 7** (`#with-peter`, `human-4`): no text change is proposed (profile author, following its signer, Kenya R1 § C), so no act is owed; it is carried by name at release 3 and closed under RS-1.
+  - **One re-sign round, within Stacy's batching limits** (her U3-kickoff read § 5; ballot `.kiro/docs/ballots/2026-10-01-signing-act-chain.md`):
+    · the freshness stale list is taken **after the last authoring commit**, re-taken each round, and pasted into the U3c PR body together with one line per act, `<dispositions file>#<row> — <seat> — <sha7>` (Stacy R-7; ballot clause 3, L41, and clause 6(iv), L44);
+    · only rows on that list are in bound; a re-sign of any other row is out of bound and needs its own grant;
+    · a disposition change with no hash move is out of bound: declared, granted and counted separately;
+    · profile-author edits never share a commit with a seat's signing commit, and seat commits enter by merge only, never amended, rebased or cherry-picked (§ 4.6);
+    · the expected signers are **Kenya and Data**; the intro reword may also move other seats' `ambient.groundTruthManifest.verdict` rows, and **the stale list names the set**. A Stacy-signed row it moves is disclosed and falls in Peter's sample (trigger (d));
+    · **until Thurgood's RS-1 erratum lands, a re-sign is a new act, not a closed divergent**; if any divergent is to *close* here, RS-1 lands first.
+  - **The lock**: one refresh after the round, by `npm run check:122:diff-guard`'s own write, from a clean tree. **`outputs` moves here by design**, so every moved output path is listed in the completion doc, and **any moved path outside `canonical/_consumer-output/**`, `.claude/agents/**` and `.kiro/agents/**` is the stop.**
+  - **Order**: U3c merges before U3g's branch is cut. **Instrument**: `git merge-base --is-ancestor <U3c squash SHA> <U3g branch base>` (cited in Task 29). **Red**: it is not.
+  - `npm test`, full `tsc`, `npm run test:agent-generator` (including `tools/agent-generator/__tests__/consumer-entry.parity.test.ts`) and `npm run check:122:diff-guard` are green on the branch. The U3c PR body carries the tripwire line.
+
+  **Primary Artifacts:** `canonical/profiles/consumer/**` (author edits and seat signatures in separate commits), `tools/agent-generator/render.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/**` (only tests that assert the reworded strings), `canonical/_consumer-output/**`, `.claude/agents/**` and `.kiro/agents/**` (regenerated, never hand-edited), `canonical/generated.lock`, this parent's completion doc
+
+  - [ ] 31.0 Pre-edit instruments: the stale list and the `renderedHashOf` baselines, pasted
+  - [ ] 31.1 The intro-line reword (`render.ts`) and the Kiro blank line (`adapters/kiro.ts`, container span)
+  - [ ] 31.2 The cue removals and the two theming units (PR-12), worded with Kenya and Data; divergent 5 put to Data
+  - [ ] 31.3 Regenerate; the cite-only corrections (divergents 6, 8, 9) in their own commit, declared outside the round
+  - [ ] 31.4 One re-sign round within Stacy's limits; the lock refresh
+  - [ ] 31.5 Full validation; open the U3c PR (tripwire line)
+
+### UNIT 3g — G2 cycle 2: the corrected derivation check on the shipped profile *(added 2026-10-03; Peter's PR-5)*
 
 **Why this unit exists.** G2 pass four's findings G2-F1, G2-F2 and G2-F3 (`completion/re-grounding-pass-four.md` § "Findings"; tracked in `.kiro/issues/2026-10-02-g2-pass-four-findings.md`) are fixed in a new falsification cycle, never by a patch inside U2 (Task 18, criterion 5).
 
-**Peter's R-5 governs it**: "I support whatever decision that need to be made to make sure this issue is solved optimally — not with a bunch of workarounds that create more work than necessary", and "I agree with all the recommendations" (the six points recorded in `feedback/tasks.md` § "U3 amendment round (2026-10-03)").
+**Peter's PR-5 governs it**: "I support whatever decision that need to be made to make sure this issue is solved optimally — not with a bunch of workarounds that create more work than necessary", and "I agree with all the recommendations" (the six points, PR-5.1–PR-5.6, recorded in `feedback/tasks.md` § "U3 amendment round (2026-10-03)").
 
 **How it relates to U3**: it runs beside U3 (§ "How the units run"). **Its consequence, if it does not hold, is the G2 hold** in § "Expected release count".
 
+*(R2 — PR-11 RULED: the profile corrections batch, first drafted here as 29.5, is **U3c** (Task 31), merged before this unit is cut. **U3g is the G2 cycle alone**, and Thurgood authors nothing in it.)*
+
 - [ ] 29. The corrected derivation check: the ruled clause 2, the generator's own emission, and its standing application to the shipped profile
 
-  **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY **Lina (Opus)**; Thurgood (Opus) — 29.5 wording, under FK-5 (a) only
+  **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY **Lina (Opus)**
   **Traces**: Reqs 11.4, 11.4.1, 11.8, 24.3 · design C15 (as corrected by Thurgood's ruling) · G2-F1, G2-F2, G2-F3; MIDPOINT MP-1
 
   **Success Criteria:**
-  - **The spec-text ruling comes first** (Peter's R-5.5).
-    · Thurgood's ruling on G2-F1/F2/F3 lands as **its own record in its own PR, merged by Peter, before any machinery commit**. It is not part of this amendment.
+  - **The spec-text ruling comes first** (Peter's PR-5.5).
+    · Thurgood's ruling on G2-F1/F2/F3 lands as **its own record in its own PR, merged by Peter, before U3g's branch is cut** (R2, Stacy R-9). It is not part of this amendment.
     · Stacy pre-reads it for verifiability only, and Lina confirms that she can build to it. Thurgood writes none of the cycle's test text.
-    · **Its form is fork FK-4, still open**: a design C15 erratum plus a recorded reading, or a `requirements.md` edit. The latter makes the four folds that § "Carried obligations" defers to "next requirements touch" owed in that PR.
-    · **R-5.4 is RULED**: "implemented" means the check ran on the shipped material, and the reading under which it need not is ruled out.
+    · *(R2 — **FK-4 SETTLED between owners**: Stacy and Thurgood hold it; Lina has no stake beyond buildability; Ada abstains.)* **Its form is a design C15 erratum plus a recorded reading**, with the erratum citing the reading. No `requirements.md` edit, so the four "next requirements touch" folds in § "Carried obligations" stay deferred. To be buildable (Lina), the ruling states a pass/fail condition on rows A3, F5, C1, F3, A1, A2, AS1 and AS2. *Surviving counter (Stacy): Req 11.4.1's text stays ambiguous on `main`, so CLOSEOUT audits against a requirement plus a side record.*
+    · **PR-5.4 is RULED**: "implemented" means the check ran on the shipped material, and the reading under which it need not is ruled out.
     · The ruling also states whether it adopts either of the provisional sizing's two named **non-readings**:
       · (α) re-rendered overlay (`render`) spans do not count as derivation — 141 rows fail;
       · (β) the check extends to `superseded-by` rows — 20 fail by construction, and need a different instrument.
     · Adopting either fires the ceiling below by construction.
-    · **Instrument**: `git merge-base --is-ancestor <ruling PR's squash SHA> <first 29.1 commit>`. **Red**: a machinery commit not descended from the ruling's merge.
+    · **Instrument**: `git merge-base --is-ancestor <ruling PR's squash SHA> <U3g branch base>` and `git merge-base --is-ancestor <U3c squash SHA> <U3g branch base>`. **Red**: either fails.
   - **A read-only sizing run is the unit's first act (29.0)**, re-running the provisional sizing on the ruled text.
     · *Provisional sizing, 2026-10-03, scratch (Lina); re-run here as the unit's first subtask on the ruled text*: 168 re-pointed rows, 162 pass and 6 fail under four clause-2 readings. All six are frontmatter entries that render into the Kiro agent JSON, whose sidecar has one combined attribution span. No disposition re-authoring; one re-sign (Stacy, `knowledgeBases[spec-summaries]`).
-    · It is recorded at `.kiro/specs/123-consumer-distribution/completion/u3g-sizing.md`.
-    · **ROW CEILING** (Lina's, proposed): **stop and re-plan with Peter if ANY of these holds**:
+    · It is recorded at `.kiro/specs/123-consumer-distribution/completion/u3g-sizing.md`, and it runs on a `main` that carries U3c.
+    · **ROW CEILING** (Lina's; **adopted at this amendment's merge** — R2, Stacy R-3): **stop and re-plan with Peter if ANY of these holds**:
       · (i) more than **12** failing rows;
       · (ii) more than **3** disposition re-authorings;
-      · (iii) a **second seat** has to re-sign, counting only re-signs forced by rows the corrected check rejects (FK-5's own re-signs are declared separately);
+      · (iii) a **second seat** has to re-sign (R2: U3c's re-signs are a different unit and are not counted here);
       · (iv) **any body or always-set row fails**.
     · **Red**: any limb exceeded. The cycle then stops; this is never a ship-with-limits exit.
-  - **Stacy's attacks and expected outcomes are committed before she sees the fix** (Peter's R-5.6).
+  - **Stacy's attacks and expected outcomes are committed before she sees the fix** (Peter's PR-5.6).
     · `.kiro/specs/123-consumer-distribution/completion/g2-cycle-2-attacks.md` is Stacy's audit artifact, outside the delegated-tier line. It includes attack (f), the one-token variant of attack (a), and F5's case, each with its expected outcome.
-    · **Instrument**: its commit is an ancestor of the first commit on `task/123-u3g-g2c2` that touches `tools/agent-generator/regrounding/**` or `tools/agent-generator/adapters/**`. **Red**: it is not.
+    · *(R2, Stacy R-4)* **It also states the HOLDS conditions**: G2-F1 (rows A3, F5), G2-F2 (C1, F3; a non-zero row count; runs on every PR touching the input set), G2-F3 (A1, A2, F3, AS1, AS2), and no High or Critical finding raised by the cycle still open. The consequence texts select on the verdict token only, as at 18.0.
+    · **Instrument** *(R2, Stacy R-2, widened)*: every commit in `<U3g branch base>..<H′>` that touches `tools/agent-generator/**` or `canonical/profiles/consumer/**` has the attack file's commit as an ancestor, and 29.0's `u3g-sizing.md` commit is also an ancestor of every such commit. **Red**: any such commit lacks either ancestor. *Scope: this proves the order of commits, not the order of knowledge. Stacy has seen the provisional sizing and its fix shape for the six Kiro rows; the attacks are fixed by the findings (f, the one-token variant, F5), not by the fix.*
   - **G2-F1**: clause 2 follows the ruling. Fixtures for attack (f) and for the one-token variant of attack (a) go red under the shipped direction and green under the corrected one; **two-sided bites recorded**, exact outputs.
   - **G2-F3**: the clause-1 rows are rebuilt on the generator's own emission of attack (a), not a test model, which closes MIDPOINT's MP-1 as well.
     · The corrected expectations are recorded in this parent's completion doc.
     · Task 14's ticked rows are **not** edited; their record is pass four's finding.
     · **Red**: attack (a) as the generator emits it is not rejected by clause 1.
-  - **G2-F2 — the check runs on the shipped material** (R-5.4).
+    · *(R2, Lina RC-8)* If the ruling places G2-F3's emptied-overlay `'\n'` span fix in `emitSpans`, the edit is in `tools/agent-generator/spans.ts` (listed below, conditional on the ruling).
+  - **G2-F2 — the check runs on the shipped material** (PR-5.4).
     · **Scope**: the committed consumer profile and every committed target rendering under `canonical/_consumer-output/{_canonical,cc,kiro}/**`, **including the Kiro agent JSON**, over a stated, non-zero row count.
-    · **The 16.1 parity test ties that rendering to what `dist/consumer-canonical` emits**, so these renderings are the shipped material.
+    · **The 16.1 parity test** (R2, Stacy R-8: `tools/agent-generator/__tests__/consumer-entry.parity.test.ts`, verified as Task 16.1's referent by its header) **ties that rendering to what `dist/consumer-canonical` emits**, so these renderings are the shipped material.
     · It runs **on every PR that touches its inputs** (Stacy's condition (a)).
       · **Lean**: a test under `tools/agent-generator/__tests__/`, run by `npm run test:agent-generator` (an existing `lane-timing.yml` step with a floor). No workflow edit and no new context.
       · A new CI context instead would be Peter's named act, with an `EXPECTED_CONTEXTS` change and Stacy's ARMING.
     · The check's declared **input (trigger) set** is written in the completion doc. It becomes U3's no-overlap path set.
+    · *(R2, Stacy R-8)* **The standing test cannot pass on zero rows**: it asserts that its evaluated row count equals the count derived from the committed dispositions (not a literal), and it goes red on zero.
     · **Bite**: plant one rejected row in a temp copy of the committed profile → the standing test goes red.
-  - **The six Kiro-JSON frontmatter rows** pass because `tools/agent-generator/adapters/kiro.ts` emits per-entry spans for the JSON fields their entries render into. **The JSON bytes are unchanged; only the attribution sidecars change** (asserted: `git diff --stat` over `canonical/_consumer-output/kiro/**` names `*.attribution.json` only).
-  - **⟨FORK FK-5 — the profile corrections batch: owners Lina and Thurgood agree on (a); not ruled.⟩**
-    · **(a) It rides this unit as 29.5**, so that the signers re-sign once:
-      · the ground-truth intro line's reword (`.kiro/issues/2026-10-02-ground-truth-intro-line-stale-generated.md`): Thurgood words it, and Lina edits `tools/agent-generator/render.ts` as a shared-template reword, which moves the steward outputs too;
-      · the Kiro `## Ground truth` blank line (`.kiro/issues/2026-10-02-kiro-ground-truth-heading-no-blank-line.md`, `adapters/kiro.ts`);
-      · R-1's "including your theme Swift/Kotlin" cue (`canonical/profiles/consumer/{kenya,data}.overlay.md`; Thurgood);
-      · the J content notes on divergents 5, 6, 8 and 9: the subtraction-3 cites and the "for your themed values" qualifier (`completion/claims-pass-release-15.0.0.md` L273–283), with **divergent 7 (J-6CD4, `#with-peter`, `human-4`) put to its owner**, since it was omitted from the first plan (Stacy).
-      · The J record is never the authority for what a row says (the mirror clause). The signers resolve.
-    · **(b) A separate PR to `main`**, before or after this unit, with its own re-sign round.
-    · **Surviving counter to (a)**: it adds Kenya's and Data's re-signs to a cycle whose own fix needs only Stacy's.
+  - **The six Kiro-JSON frontmatter rows** pass because `tools/agent-generator/adapters/kiro.ts` emits per-entry spans for the JSON fields their entries render into. **The JSON bytes are unchanged; only the attribution sidecars change** (asserted **on 29.3's commit** — R2, Lina RC-8: `git diff --stat` over `canonical/_consumer-output/kiro/**` names `*.attribution.json` only).
+    · *(R2, Lina RC-7)* `adapters/kiro.ts` is shared with the steward leg, so **the eight steward sidecars `.kiro/agents/*.json.attribution.json` move too**. They are regenerated, never hand-edited, and named in 29.6's declared moved-outputs list.
+    · *(R2, Ada A-2)* **Shipped-side proof**: `adapters/kiro.ts` is bundled into the shipped `dist/generator/consumer-entry.js`, so U3g changes a shipped file; but the tarball never carries the sidecars 29.3 changes, by `scripts/pack-assert.ts`'s existing row "attribution sidecars ABSENT: no packed `*.attribution.json`" (L389).
+    · *(R2, Data)* **The freshness stale list is taken after 29.3 and pasted before 29.6.** Any non-Stacy row on it is ceiling limb (iii) — the cycle stops and re-plans with Peter. It is never folded silently into 29.6.
   - **One re-sign round, within Stacy's batching limits** (her U3-kickoff read § 5; ballot `.kiro/docs/ballots/2026-10-01-signing-act-chain.md`):
     · only rows on the freshness stale list are in bound;
     · a disposition change with no hash move is out of bound: declared, granted and counted separately, never folded into the batch;
-    · profile-author edits never share a commit with a seat's signing commit, and seat commits enter by merge only;
+    · seat commits enter by merge only (§ 4.6);
     · re-signs that change dispositions precede H′'s freeze (Task 30);
     · a Stacy-signed row moved by the round (today: `knowledgeBases[spec-summaries]`) is disclosed, and falls in Peter's sample (trigger (d));
+    · *(R2, Stacy R-7)* the stale list is pasted into the U3g PR body together with one line per act, `<dispositions file>#<row> — <seat> — <sha7>`;
     · until Thurgood's RS-1 erratum lands, a re-sign is a new act, not a closed divergent.
     · **The lock**: one refresh after the round, by the guard's own write, from a clean tree. **`outputs` moves here by design**, so every moved output path is listed in the completion doc, and **any moved path other than the declared sidecars and renders is the stop.**
   - `npm test`, full `tsc` and `npm run test:agent-generator` are green on the branch.
 
-  **Primary Artifacts:** `tools/agent-generator/regrounding/derivation.ts`, `tools/agent-generator/regrounding/check-catalog.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/{derivation,derivation.frontmatter,semantics-guard,semantics-guard.fixture}.test.ts`, `tools/agent-generator/__fixtures__/semantics-guard/**`, `tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` (new: the standing application), `canonical/_consumer-output/**` (regenerated sidecars and renders), `canonical/profiles/consumer/**` (FK-5 (a) only; author edits and seat signatures in separate commits), `tools/agent-generator/render.ts` (FK-5 (a) only), `.claude/agents/**` and `.kiro/agents/**` (FK-5 (a) only, regenerated, never hand-edited), `canonical/generated.lock`, `.kiro/specs/123-consumer-distribution/completion/u3g-sizing.md`
+  **Primary Artifacts:** `tools/agent-generator/regrounding/derivation.ts`, `tools/agent-generator/regrounding/check-catalog.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/{derivation,derivation.frontmatter,semantics-guard,semantics-guard.fixture}.test.ts`, `tools/agent-generator/__fixtures__/semantics-guard/**`, `tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` (new: the standing application), `canonical/_consumer-output/**` (regenerated sidecars and renders), `canonical/profiles/consumer/**` (seat signatures only; R2: no author edits in U3g, PR-11), `.kiro/agents/*.json.attribution.json` (R2, Lina RC-7: regenerated, never hand-edited), `tools/agent-generator/spans.ts` (R2, Lina RC-8: only if the ruling places G2-F3's fix there), `canonical/generated.lock`, `.kiro/specs/123-consumer-distribution/completion/u3g-sizing.md`
 
   - [ ] 29.0 Read-only sizing re-run on the ruled text; the ceiling check (stop if any limb is exceeded)
   - [ ] 29.1 Clause 2 per the ruling; attack (f) and one-token-variant fixtures; two-sided bites
   - [ ] 29.2 Clause-1 rows rebuilt on the generator's emission of attack (a) (G2-F3, MP-1)
   - [ ] 29.3 Kiro-JSON per-entry attribution spans (the six rows)
   - [ ] 29.4 The standing application to the shipped profile on every PR touching its inputs (G2-F2; Stacy's condition (a)); the declared input set
-  - [ ] 29.5 ⟨FK-5 (a)⟩ The profile corrections batch: the intro reword, the Kiro blank line, R-1's cue, divergents 5–9
-  - [ ] 29.6 One re-sign round within Stacy's limits; the lock refresh
+  - [ ] 29.6 One re-sign round within Stacy's limits; the lock refresh *(R2: 29.5 moved to U3c as Task 31, PR-11; the numbers are kept so that references stay valid)*
   - [ ] 29.7 Full validation
 
 - [ ] 30. **G2 cycle-2 gate parent** (**U3g gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Lina (Opus)** — executing agent; **Stacy authors the attack file and the verdict record (outside the line); Thurgood recused**
-  **Traces**: Reqs 11.8, 11.8.4, 24.3 · design § "Gates and sequencing" (G2) · Peter's R-5
+  **Traces**: Reqs 11.8, 11.8.4, 24.3 · design § "Gates and sequencing" (G2) · Peter's PR-5
 
   **Success Criteria:**
+  - *(R2, Stacy R-1)* **Verdict tokens are closed**: `HOLDS` · `DOES-NOT-HOLD` · `NOT-RUNNABLE`, used everywhere in this unit. The selector reads the token that follows `**Verdict**: `, up to the first space (`completion/g2-consequence-texts.md` § 2).
   - **The consequence texts are PRE-DECLARED.** They are committed at `.kiro/specs/123-consumer-distribution/completion/g2-cycle-2-consequence-texts.md` at a commit C0′ that is an ancestor of the frozen head H′ (ancestry cited), and never edited after C0′.
-    · The DOES-NOT-HOLD text carries Peter's R-5.3 hold verbatim: "nothing that carries the consumer profile is tagged or published until a HOLDS verdict, or Peter lifts it by a dated record".
+    · The `DOES-NOT-HOLD` text carries the PR-5.3 hold verbatim — the recommendation Peter agreed to ("I agree with all the recommendations"): "nothing that carries the consumer profile is tagged or published until a HOLDS verdict, or Peter lifts it by a dated record".
     · **Thurgood authors no line of them** (Stacy's refusal condition (iii)).
   - **The request to Stacy names a frozen H′** and cites the attack file (Task 29).
     · **Nothing that touches the check's input set lands on `task/123-u3g-g2c2` or on `main` between the request and the verdict** (Stacy's condition (d)).
-    · **Instrument**: `git log --first-parent <request commit>..<verdict commit> -- <the declared input set>`, run on both refs, prints nothing.
-  - **Stacy's verdict record** exists at `.kiro/specs/123-consumer-distribution/completion/re-grounding-g2-cycle-2.md`, with exactly one verdict.
-    · Its first section discloses that she wrote the findings and writes the verdict, and that she pre-read Thurgood's ruling for verifiability only.
+    · **Instrument** *(R2, Stacy B2; this replaces `git log --first-parent <request commit>..<verdict commit>`, which means nothing on `main` because both commits are on the U3g branch)*: (i) at the request, H′ is named by its SHA; (ii) at PR open, `git diff --name-only <H′> <U3g PR head> -- <declared input set>` prints nothing; (iii) after the squash, `git diff --name-only <H′> <U3g squash SHA> -- <declared input set>` prints nothing.
+    · **Red**: any path printed. The cycle is then re-requested on a new H′. A merge of `main` carrying input-set changes counts as a change.
+  - **Stacy's verdict record** exists at `.kiro/specs/123-consumer-distribution/completion/re-grounding-g2-cycle-2.md`, with exactly one verdict token.
+    · Its first section discloses that she wrote the findings and writes the verdict, and that she pre-read Thurgood's ruling for verifiability only; *(R2, Stacy R-6)* and that she re-signed `knowledgeBases[spec-summaries]`, and any other Stacy-signed row the round moved.
     · It applies her refusal conditions (her U3-kickoff read § 2).
   - **This parent's completion doc CITES the record path and never paraphrases the verdict** (11.8.4). Thurgood authors no line of it, and the U3g PR body states the recusal.
-  - **On HOLDS**: the consequence is applied **byte-equal to its pre-declared text** in this PR, as this parent's completion-doc 24.3 table for the named domains, cited against its source line. Task 18's record is not edited.
-  - **On DOES NOT HOLD, or NOT-RUNNABLE**:
+  - **On `HOLDS`**: the consequence is applied **byte-equal to its pre-declared text** in this PR, as this parent's completion-doc 24.3 table for the named domains, cited against its source line. Task 18's record is not edited.
+  - **On `DOES-NOT-HOLD` or `NOT-RUNNABLE`**:
     · **the hold stands**, and this PR is not opened;
-    · the owner fixes on the branch and requests cycle 3 under the same texts;
-    · **after one fix-and-recheck loop, or a ceiling limb, the cycle stops and re-plans with Peter**;
-    · **never ship with a written-down limit** (Peter's R-5).
+    · the owner fixes on the branch; *(R2, Stacy R-5)* **at most one further request (cycle 3), on the same attack file and consequence texts**. A cycle 3 that does not HOLD stops and re-plans with Peter, as does any ceiling limb. A new attack class is a new finding, never added to a running cycle;
+    · **never ship with a written-down limit** — the recommendation Peter agreed to under PR-5 ("Yes, and good idea.").
   - The U3g PR body carries the tripwire line, and `npm test` and full `tsc` are green.
 
   **Primary Artifacts:** `.kiro/specs/123-consumer-distribution/completion/g2-cycle-2-consequence-texts.md`, Stacy's attack file and verdict record (cited), this parent's completion doc's 24.3 table
 
   - [ ] 30.0 Commit the pre-declared consequence texts (C0′)
   - [ ] 30.1 Freeze H′; request cycle 2 from Stacy; hold the input set until the verdict
-  - [ ] 30.2 Apply the verdict's consequence byte-equal (on HOLDS)
-  - [ ] 30.3 Full validation; open the U3g PR (on HOLDS only; tripwire line)
+  - [ ] 30.2 Apply the verdict's consequence byte-equal (on `HOLDS`)
+  - [ ] 30.3 Full validation; open the U3g PR (on `HOLDS` only; tripwire line)
 
 ### UNIT 4 — Content policy
 
