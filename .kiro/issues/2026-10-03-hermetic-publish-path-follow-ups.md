@@ -76,3 +76,22 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
 **Item 1 (the rail-script message, under the grant) stays open.**
 
 *Sweep note*: the ballot's straggler pattern `indexed` was too broad. It matched about 40 unrelated "MCP-indexed" hits. Only the rail script's lines (item 1) were relevant.
+
+---
+
+## 4. 2026-10-03: a standards gap in the signing-act ballot; #284 re-cut
+
+**The gap**:
+- **Where**: ballot 2026-10-01-signing-act-chain § 2, and `verify-signing-chain` link 1.
+- **What**: a seat's correct "hold until X" has no recorded act form.
+  - A C16 confirmation has no refuse counterpart.
+  - On a signature, a refuse at unchanged hashes turns the later assent into an F5.
+  - So the instrument reads a correct hold as an F5 sheet-only edit. Instance: #284, `b87a26ca` and `94ab3909`.
+- **Owner**: Thurgood.
+- **Trigger**: the next amendment to the signing-act ballot, or the second hold, whichever comes first.
+- **Interim rule**: record a hold outside the sheets (the PR thread or the claims-pass record), never as a sheet edit.
+
+**The re-cut**: #284 is closed and superseded by `chore/charter-hermetic-publish-follow-ups-v2`, cut from `main` @ `54d35a2f`.
+- **Cherry-picked**: `e54ad53c`→`59e2b7ff`, `0acbcc5f`→`db3b7454`, `47160df6`→`d10cb6a5` (the `liveness-release-complete` item; cite this SHA), `64d01080`→`d6dfcf05`.
+- **Redone fresh by a Stacy seat**: the four signing acts.
+- **Record**: the holds stay on record at `refs/pull/284/head`.
