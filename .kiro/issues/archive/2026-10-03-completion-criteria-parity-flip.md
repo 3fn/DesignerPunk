@@ -58,3 +58,14 @@ Nothing else from M1's excluded set is admitted: no step, floor or execution ass
 5. **Stacy's ARMING read**, at the flip PR's merge.
 
 **Framing, binding every reader** (from the row): a green `completion-criteria-parity` gate is **not** evidence of claim honesty. Arming removes nothing from the claims-pass audit duty.
+
+---
+
+**2026-10-03 — CLOSED: all four owed acts are done.**
+- **(1) The gate-bite**: fixture specification by Stacy (#291, `f41d4e0b`); built and run by Thurgood on throwaway PR #290. That PR is closed unmerged and still a draft, and its commits are at `refs/pull/290/head`. Six fixture runs were made (row 7 dropped by the orchestrator), and both controls were green.
+- **(2) `EXPECTED_CONTEXTS` +1**: 18 → 19, with the register row `check_state: proposed → armed`, in one recorded change, **#292 (`8bd4bb50`)**.
+- **(3) This grant**: activated by #289 (`cb28f011`), with the named-and-admitted acts. **It expired at #292's merge.** The diff was the three grant paths plus the register row under the carve-out, as named.
+- **(4) Peter's branch-protection act**, about 14:4xZ 2026-10-03: the live protection list is 19, and `verify-gate-registration.sh` PASSES at 19 on `main`. #292's own parity run and the push run on `main` at `8bd4bb50` were both green.
+- **Stacy's ARMING read**: pending, by pointer. Her seat is writing it under `.kiro/specs/127-completion-claims-integrity/completion/`.
+- **The known gap D-2 and the lows** moved to `.kiro/issues/2026-10-03-completion-criteria-parity-status-marks-gap.md`.
+- **Archived** per `.kiro/issues/README.md` rule 5. — Thurgood
