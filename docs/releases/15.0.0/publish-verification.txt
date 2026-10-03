@@ -1,0 +1,242 @@
+PUBLISH VERIFICATION RECORD -- @3fn/core 15.0.0
+=================================================
+
+Package:   @3fn/core
+Version:   15.0.0
+Tag:       v15.0.0 (annotated, pushed) = 9e1a3106a18c4a1554a3705e3559ae5797028a24 (release squash S)
+Dates:     2026-10-03 UTC (publishes and rail check); record authored by Ada, packaging seat
+Authority: RELEASE-FLOW step 6 (publish-rail record); ballot 2026-09-27-123-b-u1-publish-rail, section 3.
+           Written under the grant in .kiro/issues/2026-10-02-release-15-files-grant.md
+           (docs/releases/15.0.0/**).
+
+Who ran what
+  - GitHub Packages publish: the orchestrator, from a fresh shallow clone at the tag.
+  - Public npm publish:      Peter, in his terminal (web 2FA).
+  - Rail guard, cold-install smoke, artifact comparison: the orchestrator.
+  - This record: Ada. SOURCE OF EVERY CLAIM BELOW IS STATED PER SECTION.
+
+PROVENANCE OF CLAIMS (read this first)
+  Ada did not run any publish, rail check, install or smoke test for this record.
+  - READ FROM LOGS/EVIDENCE FILES written by the orchestrator (not re-run by Ada):
+    sections 1, 2, 3, 5 (GH pack guards), 6 (divergence causes and versions), 7 (smoke).
+  - RE-DERIVED BY ADA from the two tarball path listings
+    (GH 1638 paths, public 1700 paths; evidence files named in section 6):
+    the 62 public-only paths, zero GH-only paths, and the pack guards on the PUBLIC
+    listing (no dist/{ios,android,web}; no .kiro/agents; no personal-note; exactly
+    the 8 identity steering docs). These are path-set checks only, not byte checks.
+  - NOT RE-RUN BY ANYONE for this record: the byte-level comparison of the two
+    tarballs' contents, and the MCP-bundle embedded dependency versions, are as
+    reported in the orchestrator's artifact-divergence write-up.
+  No secrets appear in this record.
+
+
+1. RAIL GUARD -- VERSION=15.0.0 ./scripts/verify-publish-rail.sh   (source: rail-check.log, rail-check-bg.log)
+-------------------------------------------------------------------------------------------------------------
+Six attempts between 02:12Z and 02:17Z (per-attempt wall-clock times were not recorded in the
+log; the window is the orchestrator's). Each returned rc=10, the registry still indexing:
+
+attempt 1 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
+attempt 2 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
+attempt 3 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
+attempt 4 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
+attempt 5 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
+attempt 6 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
+
+Then (background re-check):
+02:21:20Z attempt 1 rc=0: PASS: @3fn/core@15.0.0 visible on npmjs; tarball host verified
+
+(The first six lines are the exact text of rail-check.log; the PASS line is the exact text of
+rail-check-bg.log with its own timestamp prefix. The guard targets registry.npmjs.org only; the
+GitHub Packages publish is verified separately in section 2.)
+
+
+2. PUBLISH 1 -- GitHub Packages (npm.pkg.github.com)   (source: publish-gh/publish-gh-packages.log, verification.md)
+--------------------------------------------------------------------------------------------------------------------
+Time:        2026-10-03T02:08:01Z (publish start; pre-check at 02:08:00Z showed 15.0.0 absent)
+By:          the orchestrator
+From:        a FRESH shallow clone at tag v15.0.0 (HEAD 9e1a3106), `npm ci` exit 0 (781 packages)
+Command:     npm publish (publishConfig -> https://npm.pkg.github.com);
+             prepublishOnly ran: npm run build && npm run check:drift && npm run verify:token-index-clean
+Result:      + @3fn/core@15.0.0 ; dist-tags {latest: 15.0.0}; postpublish tripwire silent (token-index unchanged)
+Tarball:     1638 files; 23,131,793 B unpacked; 6,372,471 B packed
+shasum:      sha1 65d2ec0b140192bc0f0adc17b9ac6526332a6594 (registry view = publish log = fetched-back tarball)
+Fetched-back path set vs Ada's pre-release pack listing (list-15.txt): IDENTICAL (0 diff lines).
+
+
+3. PUBLISH 2 -- public npm (registry.npmjs.org)   (source: orchestrator report; artifact-divergence.md)
+---------------------------------------------------------------------------------------------------------
+Time:        approx. 02:15Z per the orchestrator's brief. The exact publish time is not in the
+             evidence files Ada read, and the rail-check attempts are dated from 02:12Z, so the
+             approximation is not reconciled here; treat the time as approximate.
+By:          PETER, in his terminal
+Flags:       --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public ; web 2FA
+From:        the MAIN CHECKOUT (prompt `DesignerPunk-v2 %`), NOT a fresh clone
+Result:      + @3fn/core@15.0.0
+Tarball:     1700 files; 23,166,846 B unpacked
+shasum:      sha1 48dd8cddbb360ff63d2d87cf7d0ac678ff6cc138
+dist-tag:    latest (not separately recorded in the evidence read; npm default for a first publish
+             of the version with no --tag flag)
+
+DEVIATION: the deferral's manual guard #1 (publish from a fresh clone at the merged release SHA,
+never the working checkout; .kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md,
+section "2026-10-02 -- Peter's ruling") was not followed at this human step. RELEASE-FLOW step 5
+itself reads "git switch main && git pull && npm publish", which does not state the fresh-clone rule;
+the rule exists only in the deferral's manual-guard list. See section 8.
+
+
+4. MANUAL GUARDS FROM THE DEFERRAL -- what the evidence shows
+-------------------------------------------------------------
+Guard 1 (fresh-clone publish):  GH publish YES; public publish NO (section 3).
+Guard 2 (packed contents, scripts on; no dist/{ios,android,web}; eight root token files; themes: []):
+  - GH fetched artifact: dist/{ios,android,web} = 0 (section 5). Pack guards hold.
+  - Public artifact: Ada re-derived from the path listing: dist/{ios,android,web} = 0.
+  - The `designerpunk.config.ts` `themes: []` read at the publish step is NOT recorded in the
+    evidence files Ada read. Not claimed here.
+Guard 3 (native-member diff vs the 14.1.0 tarball; expected: exactly the four disclosed colours):
+  - Ada's pre-release run (her counts 407/410) is in the release-prep scratch, not repeated here.
+  - On the fetched GH artifact the orchestrator confirmed the four removed colours absent (0 hits).
+    The orchestrator did NOT compare native member counts (different count rule). The "nothing
+    added" half rests on the identical path set and the shasum, not on a member-level diff of the
+    published artifacts.
+  - NOT done for the public artifact: no native-member comparison was run on its bytes.
+
+
+5. PACK GUARDS on the fetched GitHub Packages artifact   (source: publish-gh/verification.md; READ, not re-run by Ada)
+----------------------------------------------------------------------------------------------------------------------
+  dist/{ios,android,web}                         0
+  .kiro/agents                                    0
+  personal-note                                   0
+  .kiro/steering                                  exactly the 8 identity docs
+  token-index/meta.json tierDir                   ../src/tokens
+  four removed native colours (colorFeedbackSuccessText, colorTextDefault, colorTextMuted,
+    colorTextSubtle; Swift and Kotlin forms) in dist/DesignTokens.ios.swift / .android.kt: absent (0 hits)
+  "/Users/" in browser bundles                    0
+Ada re-derived the first four from the PUBLIC listing as well (path listing only): all hold.
+
+
+6. ARTIFACT DIVERGENCE BETWEEN THE TWO REGISTRIES   (source: publish-public/artifact-divergence.md, extras.txt, public-tarball-list.txt)
+-------------------------------------------------------------------------------------------------------------------------------------------
+The two registries carry DIFFERENT 15.0.0 bytes. The version string and tag are the same.
+
+(a) 62 files only in the public artifact (listing below, section 9). All are `dist/` compiled residue
+    of sources no longer on main: dist/tools/release (24), dist/build/platforms (14),
+    dist/components/core/*/tokens.* and Button-CTA.tokens.* (14), dist/build/validation (6),
+    dist/tools/integrity (4) = 62; 466,503 B. Ada re-derived from the two listings: 62 public-only
+    paths, 0 GH-only paths (public 1700 = GH 1638 + 62).
+    Nothing in the fresh-clone artifact references them (0 require/import hits, per the orchestrator);
+    two do not load (missing @octokit/rest, js-yaml). Inert. 14.1.0 carried the same residue on BOTH
+    registries (dist/tools/release 24, dist/build/platforms 16) -- the stale residue is the historical
+    norm, not new in 15.0.0.
+(b) Common files that differ. The orchestrator's write-up counts 13: 11 differ only in a
+    `Generated:` / `generatedAt` timestamp line, and 2 are substantive:
+      dist/mcp/docs-mcp.js          GH 815,228 B   public 602,868 B
+      dist/mcp/application-mcp.js   GH 958,866 B   public 739,776 B
+    (The release-hand-off brief for this record said "11 common files"; the write-up's count is 13
+    with 11 timestamp-only. This record follows the write-up.)
+(c) Cause: `build:mcp` is NOT hermetic. esbuild resolves dependencies from the gitignored nested
+    mcp-server/node_modules and application-mcp-server/node_modules when they exist (main checkout,
+    and CI lanes that run a nested `npm ci` first), and from root node_modules when they do not
+    (a fresh clone after root `npm ci`). Embedded versions:
+      public (nested locks):  zod 3.25.76, ajv 8.20.0, zod-to-json-schema 3.25.2,
+                              js-yaml 3.14.2 (docs) / 4.1.1 (application)
+      GH (root lock):         zod 4.3.6, ajv 8.18.0, zod-to-json-schema 3.25.1, js-yaml 4.2.0
+    All within the SDK's declared `zod ^3.25 || ^4.0`. Neither server's source imports zod, ajv or
+    js-yaml directly (SDK transitive deps); mcp-server/package.json declares only the SDK.
+(d) 14.1.0 shipped the NESTED shape on both registries (docs-mcp.js 599,847 B). So the PUBLIC 15.0.0
+    bundle shape is the historical norm and the GH 15.0.0 shape (root resolution) is the new one.
+(e) CI coverage: tool-boot-smoke and agent-generator run a nested `npm ci` before `build:mcp`
+    (the nested/public shape); consumer-guard runs root `npm ci` then `build:mcp` with no nested
+    install (the root/GH shape). Both shapes have some CI coverage (orchestrator's read).
+
+
+7. COLD-INSTALL SMOKE, BOTH TARBALLS   (source: orchestrator report; READ, not re-run by Ada)
+------------------------------------------------------------------------------------------------
+Each tarball was downloaded and installed into an empty directory.
+  - `designerpunk --help`: OK on both.
+  - docs-mcp.js and application-mcp.js boot and index with zero env; data roots resolve inside
+    node_modules/@3fn/core.
+  - Driven over JSON-RPC (stdio): identical tool lists and schemas (docs 8 tools, application 21);
+    identical output for get_section, get_token_details, search_tokens, find_components.
+  - find_docs / get_index_health / get_component_summary differ only in responseTimeMs and
+    lastIndexTime.
+  Behavioural equivalence is therefore shown for the probed tools; it is not shown for every tool
+  or every input.
+
+
+8. RULING AND POINTERS
+----------------------
+Peter's ruling, 2026-10-03 (relayed by the orchestrator, verbatim: "Option 1"):
+  accept 15.0.0 as published on both registries; record the divergence; fix the class next.
+Option 2 (15.0.1 from a fresh clone to both registries; `npm deprecate` the public 15.0.0) was NOT taken.
+The class fix (make build:mcp hermetic -- install nested deps as part of the build, or remove the
+nested manifests and hoist the SDK dependency to root -- plus a prepublishOnly guard against stale
+dist/ files and non-fresh-clone publishes) is to be consulted with Ada and Thurgood before any brief.
+It is not part of the PR carrying this record.
+Incident section: .kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md,
+section "2026-10-03 -- 15.0.0 published from the working checkout".
+
+
+9. THE 62 PUBLIC-ONLY PATHS   (source: publish-public/extras.txt; prefix "package/" omitted)
+-----------------------------------------------------------------------------------------------
+  dist/build/platforms/AndroidBuilder.d.ts
+  dist/build/platforms/AndroidBuilder.js
+  dist/build/platforms/AndroidShadowGenerator.d.ts
+  dist/build/platforms/AndroidShadowGenerator.js
+  dist/build/platforms/IOSShadowGenerator.d.ts
+  dist/build/platforms/IOSShadowGenerator.js
+  dist/build/platforms/WebBuilder.d.ts
+  dist/build/platforms/WebBuilder.js
+  dist/build/platforms/WebShadowGenerator.d.ts
+  dist/build/platforms/WebShadowGenerator.js
+  dist/build/platforms/iOSBuilder.d.ts
+  dist/build/platforms/iOSBuilder.js
+  dist/build/platforms/index.d.ts
+  dist/build/platforms/index.js
+  dist/build/validation/AndroidBuildValidator.d.ts
+  dist/build/validation/AndroidBuildValidator.js
+  dist/build/validation/WebBuildValidator.d.ts
+  dist/build/validation/WebBuildValidator.js
+  dist/build/validation/iOSBuildValidator.d.ts
+  dist/build/validation/iOSBuildValidator.js
+  dist/components/core/Button-CTA/Button-CTA.tokens.d.ts
+  dist/components/core/Button-CTA/Button-CTA.tokens.js
+  dist/components/core/Container-Base/tokens.d.ts
+  dist/components/core/Container-Base/tokens.js
+  dist/components/core/Container-Card-Base/tokens.d.ts
+  dist/components/core/Container-Card-Base/tokens.js
+  dist/components/core/Input-Text-Base/tokens.d.ts
+  dist/components/core/Input-Text-Base/tokens.js
+  dist/components/core/Input-Text-Email/tokens.d.ts
+  dist/components/core/Input-Text-Email/tokens.js
+  dist/components/core/Input-Text-Password/tokens.d.ts
+  dist/components/core/Input-Text-Password/tokens.js
+  dist/components/core/Input-Text-PhoneNumber/tokens.d.ts
+  dist/components/core/Input-Text-PhoneNumber/tokens.js
+  dist/tools/integrity/ParityNormalizationRules.d.ts
+  dist/tools/integrity/ParityNormalizationRules.js
+  dist/tools/integrity/ParityOrchestrator.d.ts
+  dist/tools/integrity/ParityOrchestrator.js
+  dist/tools/release/cli/ReleasePipeline.d.ts
+  dist/tools/release/cli/ReleasePipeline.js
+  dist/tools/release/cli/release-tool.d.ts
+  dist/tools/release/cli/release-tool.js
+  dist/tools/release/pipeline/ChangeClassifier.d.ts
+  dist/tools/release/pipeline/ChangeClassifier.js
+  dist/tools/release/pipeline/ChangeExtractor.d.ts
+  dist/tools/release/pipeline/ChangeExtractor.js
+  dist/tools/release/pipeline/NotesRenderer.d.ts
+  dist/tools/release/pipeline/NotesRenderer.js
+  dist/tools/release/pipeline/SummaryScanner.d.ts
+  dist/tools/release/pipeline/SummaryScanner.js
+  dist/tools/release/pipeline/TagResolver.d.ts
+  dist/tools/release/pipeline/TagResolver.js
+  dist/tools/release/pipeline/VersionCalculator.d.ts
+  dist/tools/release/pipeline/VersionCalculator.js
+  dist/tools/release/publishers/GitHubPublisher.d.ts
+  dist/tools/release/publishers/GitHubPublisher.js
+  dist/tools/release/publishers/NpmPublisher.d.ts
+  dist/tools/release/publishers/NpmPublisher.js
+  dist/tools/release/types/index.d.ts
+  dist/tools/release/types/index.js
+  dist/tools/release/validators/SemanticVersionValidator.d.ts
+  dist/tools/release/validators/SemanticVersionValidator.js

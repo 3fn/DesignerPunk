@@ -108,3 +108,30 @@ Any edit to `designerpunk.config.ts`, `package.json`, `scripts/generate-platform
 **Status**: ACTIVE. A and C remain open as the "prevent" branch of the fork above. Peter's ruling picks sequencing (detect now), not that fork.
 
 **What survives**: 15.0.0 is the second consecutive release whose base-snapshot guarantee is kept by a person following a list rather than by a check. The trigger above exists so that there is no third.
+
+---
+
+## 2026-10-03 -- 15.0.0 published from the working checkout: the deferral's guard #1 was not followed, and the two registries carry different bytes
+
+**What happened.** The 2026-10-02 deferral above made **fresh-clone publish** the first of three manual guards. The GitHub Packages publish followed it (fresh shallow clone at `v15.0.0`, `npm ci`, scripted `npm publish`). The **public npm publish did not**: Peter ran it from the main checkout. RELEASE-FLOW step 5 itself says `git switch main && git pull && npm publish`; the fresh-clone rule lived only in this issue's guard list, so the human step followed the flow doc and the guard did not reach it. That is the same failure the deferral's closing line warned about, a base-snapshot guarantee kept by a person following a list.
+
+**Consequence.** `@3fn/core@15.0.0` on the two registries has different bytes: GH 1638 files, sha1 `65d2ec0b140192bc0f0adc17b9ac6526332a6594`; public 1700 files, sha1 `48dd8cddbb360ff63d2d87cf7d0ac678ff6cc138`. The full record is `docs/releases/15.0.0/publish-verification.txt` (written under the release-files grant, step 6); in short:
+- **62 inert stale `dist/` files only in the public artifact**: compiled residue of sources no longer on main (`dist/tools/release`, `dist/build/platforms`, `dist/build/validation`, `dist/tools/integrity`, and old `tokens.*` under `dist/components/core`). Nothing references them. 14.1.0 carried the same kind of residue on both registries, so this is the historical norm, not new.
+- **The two MCP bundles differ substantively** (`dist/mcp/docs-mcp.js`, `dist/mcp/application-mcp.js`), plus 11 files that differ only in a `Generated:` timestamp. Public embeds zod 3.25.76 / ajv 8.20.0; GH embeds zod 4.3.6 / ajv 8.18.0. All are within the SDK's declared `zod ^3.25 || ^4.0`.
+- Cold installs of both tarballs boot and answer identical tool lists, schemas and sampled outputs (docs 8 tools, application 21). No behavioural difference was found in the probed tools; that is not a proof for every tool.
+
+**A second writer class, named as such.** This issue lists three writers into `dist/` (the config-driven writer, the prebuild writer, the `BuildOrchestrator` test writer) and a shared-directory shape. The divergence adds a different kind of contamination that none of those three explain: **`build:mcp` resolves its dependencies from the gitignored nested `mcp-server/node_modules` and `application-mcp-server/node_modules` when they exist, and from root `node_modules` when they do not.** The shipped bundle therefore depends on whether the *publishing checkout* has nested installs, not on the commit. This is a writer-input problem (the build is not hermetic), where the three above are writer-destination problems. Separately, the stale-`dist/` residue is the plain "shared directory, no clean step" shape, and `tsc` does not remove outputs for deleted sources; I had not listed that as a writer, and it is the cause of the 62 files. Both are recorded here as additions to the issue's scope, not as a new issue, because the fix shape overlaps: one guarded publish path.
+
+**Peter's ruling, 2026-10-03** (relayed by the orchestrator, verbatim): **"Option 1"** -- accept 15.0.0 as published on both registries; record the divergence; fix the class next. Option 2 (15.0.1 from a fresh clone to both registries, `npm deprecate` the public 15.0.0) was **not taken**.
+
+**Class-fix candidates (not picked; they await an Ada + Thurgood consult before any brief):**
+1. **Hermetic `build:mcp`**: have the build install the nested dependencies first, so the shape no longer depends on the checkout.
+2. **Single-rooted resolution**: remove the nested package manifests and locks and hoist the SDK dependency to root.
+3. **A `prepublishOnly` guard** against stale `dist/` files (clean `dist/` before build, or assert the pack listing equals a fresh-clone listing) and against a non-fresh-clone publish.
+4. The deferral's option B (pack-with-scripts contents and base-config freshness check) and option D (the `BuildOrchestrator` test writes to a temp directory) are still owed under the 2026-10-02 section; the `v15.0.0` tag, their stated trigger, has now passed.
+
+*What would survive these:* (1)/(2) change which dependency versions ship (zod 3 vs 4 is the visible difference), so choosing the shape is a dependency-policy decision, not only a build tidy-up, and CI currently tests both shapes. (3) detects but a guard that only exists in `prepublishOnly` is bypassed by `--ignore-scripts` and does nothing for a publish that does not run it; a flow-doc fix (RELEASE-FLOW step 5 saying "fresh clone") is cheaper, and is a governance-adjacent doc this seat does not edit.
+
+**Status**: stays **ACTIVE**. The deferred work has not been done, and this section widens the scope. No change to the header's Owner or Decision lines.
+
+**Updated trigger (supersedes the 2026-10-02 trigger):** **the fix must merge before any 15.0.1 or 15.1.0 publish, to either registry.** Until it does, no publish may rest on manual guards alone, and guard #1 must be stated in RELEASE-FLOW step 5 (or the publish run from a script that enforces it) so the human step cannot skip it. The Ada + Thurgood consult is the next action, ahead of any brief.
