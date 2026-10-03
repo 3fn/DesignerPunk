@@ -1,10 +1,10 @@
 # DesignerPunk
 
-[![Version](https://img.shields.io/badge/Version-14.1.0-purple)](docs/releases/release-14.1.0.md)
+[![Version](https://img.shields.io/badge/Version-15.0.0-purple)](docs/releases/release-15.0.0.md)
 [![Repository](https://img.shields.io/badge/GitHub-DesignerPunk-blue)](https://github.com/3fn/DesignerPunk)
 [![License](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/Tests-8892%2B-brightgreen)](.)
+[![Tests](https://img.shields.io/badge/Tests-9377%2B-brightgreen)](.)
 
 ---
 
@@ -38,7 +38,7 @@ Its three foundational systems (Rosetta, Stemma, Civitas) are interdependent: to
 
 **What it solves:** Every value is mathematical, not arbitrary. Machines validate relationships; humans define intent.
 
-**Deliverables:** 437 tokens across spacing, sizing, color, typography, radius, shadow, glow, motion, opacity, blend, and blur. Cross-platform generation to CSS, Swift, Kotlin, and DTCG JSON. Three-tier architecture: Primitive → Semantic → Component.
+**Deliverables:** 443 tokens (217 primitive, 193 semantic, 33 component) across spacing, sizing, color, typography, radius, shadow, glow, motion, opacity, blend, and blur. Cross-platform generation to CSS, Swift, Kotlin, and DTCG JSON. Three-tier architecture: Primitive → Semantic → Component.
 
 **How AI agents access it:**
 ```
@@ -54,7 +54,7 @@ get_token_details({ name: "space150" })
 
 **What it solves:** Every component makes explicit behavioral promises. Machines validate contracts; humans define interaction intent.
 
-**Deliverables:** 34 production components with behavioral contracts. 10 contract categories, 136 concepts. True native implementations (Web Components, SwiftUI, Jetpack Compose). Formal inheritance with intentional exclusions.
+**Deliverables:** 34 production components with behavioral contracts. 10 contract categories, 137 concepts. True native implementations (Web Components, SwiftUI, Jetpack Compose). Formal inheritance with intentional exclusions.
 
 **How AI agents access it:**
 ```
@@ -70,7 +70,7 @@ find_components({ context: "login-forms" })
 
 **What it solves:** Institutional knowledge persists across sessions. Machines query what they need progressively; humans maintain the source of truth.
 
-**Deliverables:** 88 steering documents with progressive disclosure. 3 MCP servers (docs, application, product). 8 specialized AI agents with domain boundaries. 13 validation hooks. Automated release detection and completion documentation system. 109+ specs encoding institutional decisions.
+**Deliverables:** 83 governance documents served by MCP with progressive disclosure, plus 8 always-loaded identity documents. 3 MCP servers (docs, application, product). 8 specialized AI agents with domain boundaries. 13 validation hooks. A PR-gated workflow with required checks and a completion documentation system. 130+ specs encoding institutional decisions.
 
 **The agent system:**
 
@@ -89,7 +89,7 @@ Each agent knows what it owns, what it doesn't, and who to defer to. No agent op
 
 **How AI agents access it:**
 ```
-get_section({ path: "Token-Governance.md", heading: "Token Selection Matrix" })
+get_section({ path: "token-governance", heading: "Token Selection Matrix" })
 → Exactly the governance context needed for this decision, not the entire 2,000-line document
 ```
 
@@ -100,18 +100,18 @@ get_section({ path: "Token-Governance.md", heading: "Token Selection Matrix" })
 The architecture is the argument. The numbers are the evidence.
 
 **By the numbers:**
-- 8,936 tests passing across 369 test suites
+- 9,377 tests passing across 390 test suites
 - 34 production components with full cross-platform implementations
-- 437 design tokens with mathematical relationships
+- 443 design tokens with mathematical relationships
 - 3 MCP servers enabling progressive, context-efficient AI access
 - 8 AI agents with domain-scoped expertise operating within defined boundaries
-- 109+ specs documenting every architectural decision and its rationale
-- Published as `@3fn/core` on GitHub Packages with a working CLI (`npx designerpunk`)
+- 130+ specs documenting every architectural decision and its rationale
+- Published as `@3fn/core` on npm with a working CLI (`npx designerpunk`)
 
 **What this enables:**
 - An AI agent can select the right component for a login form, validate the assembly, and generate platform-native code without a human explaining the system from scratch every session
-- Products define their own tokens (`product/tokens/*.yaml`) with structured governance — the system generates platform-native output and makes them queryable via MCP alongside system tokens
-- The system self-documents its own evolution: every completed task produces completion documentation and triggers release analysis automatically
+- Products own their token tier: `init` copies DesignerPunk's token source into the product's repo, and `generate` builds the product's own platform output and token index from it
+- The system self-documents its own evolution: every completed task produces completion documentation, and every change reaches `main` through a pull request with required checks
 - A new agent (or a new human) can onboard by querying the MCP servers rather than reading thousands of lines of documentation linearly
 - Token changes propagate to all three platforms through a single generation pipeline with mathematical validation at every step
 - Design tokens export to DTCG JSON and Figma Variables, enabling canvas tools to sync with live code
@@ -126,21 +126,26 @@ Guiding agents to apply tokens and components to product design specs is the cur
 
 ## Getting Started
 
+**Status:** onboarding is still being built. 15.0.0 is for existing installs and early adopters: the web path and the generated agent layer (Claude Code and Kiro) are ready; native (iOS/Android) onboarding is not supported yet.
+
 **Use it in your project:**
 ```bash
 npm install @3fn/core
-npx designerpunk init
-npx designerpunk generate
-npx designerpunk sync        # after upgrades — detects and applies stale files
+npx designerpunk init        # copies the token source into your repo; generates the agent layer (--target=cc or --target=kiro)
+npx designerpunk generate    # builds your own token output from your token source
+npx designerpunk sync        # after upgrades — reports first; on your go, updates DesignerPunk's MCP config and generated agent files
+npx designerpunk attach --target=kiro   # add another agent tool, or set up a repo init did not create
 ```
-Not comfortable with terminal commands? Ask your AI agent to follow these steps. That's the point.
+`sync` never touches your tokens: after `init`, they are yours. Not comfortable with terminal commands? Ask your AI agent to follow these steps. That's the point.
 
-[Full integration guide →](docs/integration-guide.md)
+Upgrading from 14.x? Follow the [15.0.0 release notes](docs/releases/release-15.0.0.md).
+
+[Full integration guide →](governance/DesignerPunk-Integration-Guide.md)
 
 **Study the architecture:**
 - [DesignerPunk Systems Overview](.kiro/steering/DesignerPunk-Systems-Overview.md)
-- [Steering documentation](.kiro/steering/) (88 docs, the governance layer in practice)
-- [AI Collaboration Framework](.kiro/steering/AI-Collaboration-Framework.md)
+- [Governance documentation](governance/) (83 docs, the governance layer in practice)
+- [AI Collaboration Framework](governance/AI-Collaboration-Framework.md)
 
 ---
 
@@ -160,9 +165,9 @@ I provide architectural direction, design decisions, and quality standards. AI a
 
 The system is tool-agnostic by design. The architecture is the constant; which AI, IDE, CLI, or design tool you use is interchangeable. This isn't a workaround. It's the methodology the system was built to prove.
 
-Note: primarily developed on Kiro IDE and CLI. Broader tool support is in progress.
+Note: primarily developed on Kiro IDE and CLI. As of 15.0.0, the generated agent layer supports both Kiro and Claude Code.
 
-8,936 tests. 34 components across three platforms. A published package with a working CLI. All architected through this model.
+9,377 tests. 34 components across three platforms. A published package with a working CLI. All architected through this model.
 
 ---
 
