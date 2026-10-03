@@ -33,7 +33,10 @@ PROVENANCE OF CLAIMS (read this first)
 1. RAIL GUARD -- VERSION=15.0.0 ./scripts/verify-publish-rail.sh   (source: rail-check.log, rail-check-bg.log)
 -------------------------------------------------------------------------------------------------------------
 Six attempts between 02:12Z and 02:17Z (per-attempt wall-clock times were not recorded in the
-log; the window is the orchestrator's). Each returned rc=10, the registry still indexing:
+log; the window is the orchestrator's). Each returned rc=10 (HTTP 404). CORRECTION (see section 3):
+the registry's own record puts the public publish at 2026-10-03T02:19:49.286Z, AFTER all six of these
+attempts, so the 404s were correct answers (the version did not yet exist on registry.npmjs.org),
+not indexing lag. The script's message text "may not show it yet" is a generic hint, not a diagnosis:
 
 attempt 1 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
 attempt 2 rc=10: FAIL[version]: @3fn/core@15.0.0 is not visible on https://registry.npmjs.org (HTTP 404) -- do not announce this release. If you published in the last few minutes, the registry may not show it yet -- wait a minute and re-run.
@@ -65,17 +68,24 @@ Fetched-back path set vs Ada's pre-release pack listing (list-15.txt): IDENTICAL
 
 3. PUBLISH 2 -- public npm (registry.npmjs.org)   (source: orchestrator report; artifact-divergence.md)
 ---------------------------------------------------------------------------------------------------------
-Time:        approx. 02:15Z per the orchestrator's brief. The exact publish time is not in the
-             evidence files Ada read, and the rail-check attempts are dated from 02:12Z, so the
-             approximation is not reconciled here; treat the time as approximate.
+Time:        2026-10-03T02:19:49.286Z -- the registry packument's own record
+             (`curl https://registry.npmjs.org/@3fn%2fcore`, time["15.0.0"]; Ada re-read it for this
+             correction). This SUPERSEDES the earlier "approx. 02:15Z", which was an estimate from the
+             orchestrator's brief and was wrong.
+Built:       02:14:57Z -- the build time shown by the public artifact's own generated-file stamps
+             (Stacy's phase-2 read, finding R-4; not re-read by Ada). The publish therefore followed
+             its build by about five minutes (web 2FA step in between is the likely reason; not recorded).
+Order:       the six rc=10 rail attempts (orchestrator, roughly 02:12-02:17Z) PRECEDED the publish at
+             02:19:49Z. The 404s were not "the registry still indexing" -- the package was not on the
+             registry yet. The rail guard's first honest PASS is the 02:21:20Z line in section 1,
+             about 1.5 minutes after the registry-recorded publish time.
 By:          PETER, in his terminal
 Flags:       --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public ; web 2FA
 From:        the MAIN CHECKOUT (prompt `DesignerPunk-v2 %`), NOT a fresh clone
 Result:      + @3fn/core@15.0.0
 Tarball:     1700 files; 23,166,846 B unpacked
 shasum:      sha1 48dd8cddbb360ff63d2d87cf7d0ac678ff6cc138
-dist-tag:    latest (not separately recorded in the evidence read; npm default for a first publish
-             of the version with no --tag flag)
+dist-tag:    latest -- per the registry packument (dist-tags {latest: 15.0.0}, read by Ada 2026-10-03).
 
 DEVIATION: the deferral's manual guard #1 (publish from a fresh clone at the merged release SHA,
 never the working checkout; .kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md,
@@ -90,8 +100,12 @@ Guard 1 (fresh-clone publish):  GH publish YES; public publish NO (section 3).
 Guard 2 (packed contents, scripts on; no dist/{ios,android,web}; eight root token files; themes: []):
   - GH fetched artifact: dist/{ios,android,web} = 0 (section 5). Pack guards hold.
   - Public artifact: Ada re-derived from the path listing: dist/{ios,android,web} = 0.
-  - The `designerpunk.config.ts` `themes: []` read at the publish step is NOT recorded in the
-    evidence files Ada read. Not claimed here.
+  - `themes: []` HOLDS at the release SHA: `designerpunk.config.ts` at 9e1a3106 reads `themes: [],`
+    on line 21 (Ada read it with `git show 9e1a3106:designerpunk.config.ts`). This is a read of the
+    committed file at the tag, not a record of a check made at the moment of either publish; the GH
+    publish was a fresh clone at that SHA, so it carries it. The public publish ran from the working
+    checkout (section 3), whose config file was not separately read, so for the public artifact this
+    guard rests on the checkout having been at that SHA, which is not recorded.
 Guard 3 (native-member diff vs the 14.1.0 tarball; expected: exactly the four disclosed colours):
   - Ada's pre-release run (her counts 407/410) is in the release-prep scratch, not repeated here.
   - On the fetched GH artifact the orchestrator confirmed the four removed colours absent (0 hits).
