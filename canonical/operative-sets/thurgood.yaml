@@ -502,6 +502,10 @@ units:
         kind: step
         label: "Events without records"
         text: "**Did RELEASE / SYMPTOM fire in the window, and did each produce a committed record? Events without records = finding.**"
+      - id: liveness-release-complete
+        kind: obligation
+        label: "A RELEASE record needs both phases"
+        text: "**A RELEASE record is complete only with both phases** (ballot 2026-10-03-hermetic-publish-path § 3.4): a record holding phase 1 alone, still reading `publish-rail liveness: owed`, and a phase 2 drafted against an open step-6 PR that lacks its merge-confirmation line, are each an event without a complete record."
       - id: liveness-charter-walk
         kind: step
         label: "The active-charter walk"
