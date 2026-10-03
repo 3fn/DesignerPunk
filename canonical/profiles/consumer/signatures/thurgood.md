@@ -117,13 +117,28 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 ## `#trigger-types`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-03
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
-canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
+canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
 renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
-verdict: assent — surviving 11/20; not surviving: `instruments-named`, `event-post-doc`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+verdict: assent — surviving 11/21; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
 
-**Survive, re-grounded**: `instruments-computed` ("your repo's own checks"), `event-post-spec`, `event-post-prompt`, `cadence-health-check` (the team's cadence), `return-edge`, and `liveness-owed-set` (re-pointed to Stacy's owed-set query). `liveness-records-not-verdicts`, `liveness-records` and the three discovery steps survive verbatim. **Not surviving**: `instruments-named` (this repo's scripts); `event-post-doc` (the rendering drops "layer assignment", DesignerPunk's layering); the active-charter walk and the proposed-row register read (this repo's issue and register conventions); and the owed-set predicate, pipeline, classes, ladder and three-copies clause, which live in consumer-Stacy's owed-set unit and are reached here through "run Stacy's owed-set query".
+**Re-signed 2026-10-03** (prior signature: assent 11/20, 2026-09-29, against `sha256:563ec186…`). Stale because LIVENESS read 2 gained one sentence (ballot `2026-10-03-hermetic-publish-path` § 5 item 6 (2b) and A8, canonical commit `59e2b7ff`); the rendering did not change (renderedHash recomputed from `canonical/_consumer-output/` at this revision: unchanged).
+- **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 21 items (`9ebc06ba`), which carries the sentence as its own item, `liveness-release-complete`.
+- **`liveness-release-complete` is not credited, and its removal (`subtraction-3`) applies.** The sentence tests a RELEASE record for this repo's two-phase form: phase 1 on the release squash, the `publish-rail liveness: owed` state, a phase 2 drafted against the open step-6 PR and its merge-confirmation line. Those are this repo's release instruments as obligations. No consumer counterpart exists to re-point to, and consumer-Stacy's RELEASE row carries no two-phase form either (`signatures/stacy.md` `#the-trigger-set-…`), so re-pointing it here would test consumer records for a form their own claims seat never produces. No refusal follows.
+- **`liveness-records` still survives verbatim**: its text did not change, and "events without records = finding" holds for a consumer as written.
+- Unchanged from the 2026-09-29 signature, below: the ten other survivors and the nine other non-survivors, on the same grounds.
+- **History**: on PR #284 (closed, kept at `refs/pull/284/head`) an earlier seat held this re-sign (`94ab3909`) pending the operative-set correction, then signed assent 11/21 (`c526dd09`). The hold was a sheet edit, which the signing-chain instrument reads as a failed act; the branch was re-cut without it (follow-ups issue § 4). This act is taken afresh and stands on its own.
+
+**Prior signature record (superseded, 2026-09-29)**:
+
+> signer: stacy
+> date: 2026-09-29
+> canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
+> renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
+> verdict: assent — surviving 11/20
+
+**2026-09-29 grounds — survive, re-grounded**: `instruments-computed` ("your repo's own checks"), `event-post-spec`, `event-post-prompt`, `cadence-health-check` (the team's cadence), `return-edge`, and `liveness-owed-set` (re-pointed to Stacy's owed-set query). `liveness-records-not-verdicts`, `liveness-records` and the three discovery steps survive verbatim. **Not surviving**: `instruments-named` (this repo's scripts); `event-post-doc` (the rendering drops "layer assignment", DesignerPunk's layering); the active-charter walk and the proposed-row register read (this repo's issue and register conventions); and the owed-set predicate, pipeline, classes, ladder and three-copies clause, which live in consumer-Stacy's owed-set unit and are reached here through "run Stacy's owed-set query".
 
 ## `#steering-doc-lifecycle`
 
