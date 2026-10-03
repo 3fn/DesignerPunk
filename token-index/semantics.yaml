@@ -414,6 +414,7 @@ tokens:
       android: theme.color_structure_canvas
     consumers:
       - Button-VerticalList-Item
+      - Container-Base
       - Nav-Header-Base
       - Nav-SegmentedChoice-Base
       - Nav-TabBar-Base
@@ -430,6 +431,7 @@ tokens:
       - Chip-Base
       - Chip-Filter
       - Chip-Input
+      - Container-Base
       - Nav-SegmentedChoice-Base
   color.structure.surface.primary:
     category: color
@@ -478,6 +480,7 @@ tokens:
       - Chip-Base
       - Chip-Filter
       - Chip-Input
+      - Container-Base
       - Container-Card-Base
       - Nav-SegmentedChoice-Base
   color.structure.border.subtle:
@@ -2014,6 +2017,7 @@ tokens:
       ios: borderDefault
       android: border_default
     consumers:
+      - Container-Base
       - Nav-SegmentedChoice-Base
   border.emphasis:
     category: border
@@ -2024,7 +2028,8 @@ tokens:
       web: '--border-emphasis'
       ios: borderEmphasis
       android: border_emphasis
-    consumers: []
+    consumers:
+      - Container-Base
   border.heavy:
     category: border
     primitiveReferences:
@@ -2034,7 +2039,8 @@ tokens:
       web: '--border-heavy'
       ios: borderHeavy
       android: border_heavy
-    consumers: []
+    consumers:
+      - Container-Base
   radius.none:
     category: layout
     primitiveReferences:
