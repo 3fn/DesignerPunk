@@ -135,3 +135,71 @@ Any edit to `designerpunk.config.ts`, `package.json`, `scripts/generate-platform
 **Status**: stays **ACTIVE**. The deferred work has not been done, and this section widens the scope. No change to the header's Owner or Decision lines.
 
 **Updated trigger (supersedes the 2026-10-02 trigger):** **the fix must merge before any 15.0.1 or 15.1.0 publish, to either registry.** Until it does, no publish may rest on manual guards alone, and guard #1 must be stated in RELEASE-FLOW step 5 (or the publish run from a script that enforces it) so the human step cannot skip it. The Ada + Thurgood consult is the next action, ahead of any brief.
+
+---
+
+## 2026-10-03 -- after the Ada + Thurgood consult: Peter's picks, the fix grant, and what is deferred
+
+**Peter's ruling, 2026-10-03** (relayed by the orchestrator, verbatim): *"Let's go with your recommendations, but anything deferred I want captured."* The orchestrator relayed the five recommendations he accepted as follows:
+1. **Publish path**: ONE tarball, built in a scripted fresh clone at the tag and checked there. The script publishes it to GitHub Packages and hands the same file to Peter for the public-npm publish.
+2. **Drop** the esbuild root-resolution plugin and the build-time assertion. The tarball-level shape check in pack-assert is the guard.
+3. **Drop** the `dist/` wipe and the post-build prune. Leftover files are detected in pack-assert instead.
+4. **Yes** to RELEASE-FLOW step 6 comparing both registries.
+   - The project `.npmrc` token already authenticated `npm view` and `npm pack` against GitHub Packages on 2026-10-03, from the clone directory. A new read token may therefore be unnecessary.
+   - The script and the ballot use that route first, and ask Peter for a token only if it fails.
+5. **Yes** to a separate grant for Ada's 15.0.0 record corrections. It is recorded in `.kiro/issues/2026-10-02-release-15-files-grant.md`, section 2026-10-03.
+
+**Consult provenance**: Ada R1/R2 and Thurgood R1/R2, saved outside the repo at `/Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/memory/release-15-handoff/consult-hermetic-publish/`. The agreed kernel, so this issue stands alone:
+- **Root shape by construction.** A fresh clone with only root `npm ci` bundles every MCP server from root `node_modules`. `product-mcp.js` is the existence proof: it has no nested manifest and was byte-identical on both 15.0.0 registries.
+- **CI has never run the nested-shape docs and application bundles.** tool-boot-smoke and agent-generator build them, but they boot the nested servers' `tsc` builds. The only lanes that run the shipped `dist/mcp/{docs,application}-mcp.js` are consumer-guard's, and those run in root shape. The root shape is therefore the CI-proven one.
+- **The consumer-visible change at the next release**: docs and application go from zod 3.25 to 4.3 and ajv 8.20 to 8.18; application's js-yaml stays on the same major. The docs bundle embeds no js-yaml. This change must be disclosed in that release's notes.
+- **npm 10.9.3 runs no lifecycle scripts when publishing a tarball** (`npm publish <file>`), as verified in the CLI source.
+  - In `lib/commands/publish.js` and `libnpmpack`, every lifecycle script is gated on `spec.type === 'directory'`.
+  - So the script must run `check:drift` and `verify:token-index-clean` itself.
+  - `prepublishOnly` becomes a tripwire that refuses a folder publish and names the script.
+  - Command-line `--registry` flags override the tarball's `publishConfig.registry`, so one file serves both registries.
+- **The process half is governance law.** It covers RELEASE-FLOW steps 5–6 (tag, then publish from the tag via the script; the step-6 dual-registry record), the publish-then-tag order in `governance/release-management-system.md` L41, and RS-6…RS-9.
+  - Thurgood authors it as a ballot, and Peter ratifies.
+  - This grant cannot carry it: an issue never grants a governance-law path.
+
+**Grant paths**: `package.json`, `scripts/pack-assert.ts`, `scripts/__tests__/pack-assert.test.ts`, `scripts/release-publish.ts`, `scripts/__tests__/release-publish.test.ts`, `src/build/__tests__/BuildOrchestrator.test.ts`, `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md`
+
+- **Grantee**: Ada, this issue's named owner.
+- **Activation**: Peter's merge of the PR whose body names this section (`.kiro/issues/README.md` rule 8).
+- **Expiry**: the fixing PR's merge.
+- **What each path is for**:
+  - **`package.json`**: the `prepublishOnly` tripwire, a `test:*` script that runs pack-assert (so Thurgood's lane step has an existing script to wire), and a script entry for the release script.
+  - **`scripts/pack-assert.ts` and its new test**: option B's content checks on a with-scripts pack or a tarball:
+    - no `dist/{ios,android,web}/**`;
+    - the eight root token files, and `themes: []`;
+    - leftover detection (no shipped `dist/**/*.js` without a source);
+    - the bundle-shape check (no `*/node_modules/` module root other than root's);
+    - falsification fixtures that plant residue and plant a nested root.
+  - **`scripts/release-publish.ts` and its new test**:
+    - fresh clone at `v<version>`;
+    - `npm ci`, then `npm pack` with scripts on;
+    - pack-assert on the tarball, `check:drift`, `verify:token-index-clean`;
+    - record the sha1;
+    - `npm publish <tgz>` to GitHub Packages;
+    - print the exact public-npm command for the same file.
+  - **`src/build/__tests__/BuildOrchestrator.test.ts`**: option D. Each suite passes an explicit `outputDir` from `fs.mkdtemp`, removed in `afterAll`. The placement is Thurgood's. `BuildConfig.ts`'s `./dist` default is left alone.
+- **`.github/**` is NOT in this grant.**
+  - Wiring the pack-assert `test:*` script into `lane-functional-root` (`lane-timing.yml`) is Thurgood's step, under his standing CI scope (ballot `2026-09-27-ci-regime-standing-scope`). It follows this fix's merge.
+  - tool-boot-smoke changes are deferred; see row (d) below.
+- **No `governance/**`, `.kiro/hooks/RELEASE-FLOW.md` or register path is in this grant.** Those belong to the ballot above.
+- **An edit outside the list is a claims-pass finding.**
+
+**Deferred — captured per Peter's instruction**:
+
+| Row | Deferred item | Owner | Trigger |
+|---|---|---|---|
+| (a) | The esbuild root-resolution plugin and the build-time nested-root assertion in `build:mcp` | Ada | Any publish ever made outside `release-publish.ts`, or the in-repo agents starting to run the `dist/mcp/*.js` bundles rather than the nested `tsc` builds |
+| (b) | A `dist/` wipe, or a post-build prune of files the build did not produce (Thurgood's preferred form: prune after a *successful* build, so a failed build deletes nothing) | Ada | The first leftover-file detection by pack-assert on the publish path |
+| (c) | Option B: remove the nested server manifests and locks, giving one dependency tree. Lina joins as owner of `application-mcp-server/**`. **Until then**, the in-repo agents run zod 3 through the nested `tsc` builds while consumers get zod 4, so the bytes we dogfood are not the bytes we ship. | Ada + Lina (+ Thurgood for the lanes it breaks) | Peter's charter |
+| (d) | tool-boot-smoke boots the SHIPPED `dist/mcp/*.js` bundles, not only the nested `tsc` builds. `tool-boot-smoke.yml` and `tests/tool-boot-smoke.test.ts` are outside Thurgood's standing scope and outside this grant, so this needs its own grant or a sibling issue naming Thurgood. | Thurgood | The fixing PR's merge |
+| (e) | Bypass prevention. `--ignore-scripts`, or publishing a different tarball, cannot be detected before publish. Only step 6's cross-registry comparison catches it afterwards. Prevention means publishing from CI with provenance. | Peter (fork, later) | The first step-6 mismatch, or Peter's call |
+| (f) | This issue's original A/C "prevent" fork (move this repo's `output` off `dist/`; a base-only emit step). Unchanged. | Ada drafts; Peter decides | Unchanged, still open |
+
+**Status**: stays **ACTIVE**.
+
+**Updated trigger (unchanged from the 2026-10-03 incident section above)**: **the fix must merge before any 15.0.1 or 15.1.0 publish, to either registry.** Until it does, no publish may rest on manual guards alone.
