@@ -52,3 +52,4 @@
 - [x] 6. Fixture parent 6 (declared none)
 
   **Success Criteria:** none — a declared-none parent, present so the waiver path runs in every control
+  - Epsilon: a bullet under a declared-none block

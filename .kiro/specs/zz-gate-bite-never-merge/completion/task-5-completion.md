@@ -5,5 +5,3 @@
 | Gamma: the control run's SUMMARY line reports `reds 0` | ✅ | `npm run check:completion-criteria-parity` → `SUMMARY: … reds 0` |
 
 Unmet or partially met criteria: None
-
-Criteria fidelity: exempt - spec in flight at ratification (2026-09-19)
