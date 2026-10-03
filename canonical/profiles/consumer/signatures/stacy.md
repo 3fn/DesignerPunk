@@ -363,11 +363,27 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-03
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-10-03** (prior signature: assent, 2026-09-29, against `sha256:5055f134…`). Stale because the canonical RELEASE row changed (ballot `2026-10-03-hermetic-publish-path` § 5 item 6 (2a), canonical commit `59e2b7ff`); the rendering did not change (renderedHash recomputed from `canonical/_consumer-output/` at this revision: unchanged).
+- **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 13 items (`e8924318`).
+- **The two new removals, both `subtraction-3`, apply.** The two-phase event cell and the phase-2 scope sentence (with its F-2 clause) are keyed to this repo's release instruments: the release squash S and the tag, the step-6 release-record PR, the two-registry record and the publish script's recorded sha1, and the `publish-rail liveness: owed` record state. They are our release cadence and instruments as obligations. A consumer's release flow has no step-6 record to read, so there is no consumer counterpart to re-point to, and no refusal follows. The consumer RELEASE row keeps the release-delta claims pass and the owed-set paste, which is the repo-independent function.
+- **`trigger-release` is still not credited**: its canonical text now carries the two-phase form as well as the Q2 guard, and neither is stated or entailed by the rendered row.
+- **Consistency across the pair**: consumer-Thurgood's LIVENESS read carries no two-phase completeness test either (its new sentence is removed under `subtraction-3`; see `signatures/thurgood.md` `#trigger-types`), so the two renderings agree on what a consumer RELEASE record is.
+- Unchanged from the 2026-09-29 signature: LENS (its M4 and retire-to-emissions clauses), CLOSEOUT (rider (a)), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST are not credited; surviving `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing`, `merge-path-status` (each verbatim in the rendering).
+- **History**: an earlier seat signed the same verdict on PR #284 (`9a701b70`, closed, kept at `refs/pull/284/head`). This act is taken afresh and stands on its own.
+
+**Prior signature record (superseded, 2026-09-29)**:
+
+> signer: stacy
+> date: 2026-09-29
+> canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+> renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
+> verdict: assent — surviving 5/13
 
 **Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** The LENS row now carries the five verifiability questions inline, plus question 6.
 - **`trigger-lens` is still not credited** under the crediting rule (run-2 summary): its M4 plan-time clause and its retire-to-emissions clause are dropped with nothing in their place. Both are keyed to this repo's instruments parser, so there is no consumer counterpart to re-point to, and no refusal follows.

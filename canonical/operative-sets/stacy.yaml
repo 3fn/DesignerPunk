@@ -161,7 +161,7 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
-    canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+    canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
     items:
       - id: trigger-lens
         kind: member
@@ -170,7 +170,7 @@ units:
       - id: trigger-release
         kind: member
         label: RELEASE
-        text: "| **RELEASE** | Before a version publishes / at the release tag | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line | Stacy |"
+        text: "| **RELEASE** | **Two phases, one record**: phase 1 on the release squash S, before the tag; phase 2 at the merge of the step-6 release-record PR | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line. Phase 2 reads the committed step-6 record — the rail result and the two-registry record (each registry's time[<v>], file count and sha1, equal to the publish script's recorded sha1) — against the published bytes; until it does, the record reads publish-rail liveness: owed. Drafted against the open record PR, it ends with the merge-confirmation line. | Stacy |"
       - id: trigger-symptom
         kind: member
         label: SYMPTOM

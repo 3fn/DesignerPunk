@@ -460,7 +460,7 @@ units:
         text: "**Unowned** (involves infrastructure-level doc): Thurgood resolves directly. If domain expertise is needed, Thurgood flags → closest domain agent resolves."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#resolution-path-for-flagged-inconsistencies
   "#trigger-types":
-    canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
+    canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
     items:
       - id: instruments-named
         kind: member
@@ -502,6 +502,10 @@ units:
         kind: step
         label: "Events without records"
         text: "**Did RELEASE / SYMPTOM fire in the window, and did each produce a committed record? Events without records = finding.**"
+      - id: liveness-release-complete
+        kind: obligation
+        label: "A RELEASE record needs both phases"
+        text: "**A RELEASE record is complete only with both phases** (ballot 2026-10-03-hermetic-publish-path § 3.4): a record holding phase 1 alone, still reading `publish-rail liveness: owed`, and a phase 2 drafted against an open step-6 PR that lacks its merge-confirmation line, are each an event without a complete record."
       - id: liveness-charter-walk
         kind: step
         label: "The active-charter walk"

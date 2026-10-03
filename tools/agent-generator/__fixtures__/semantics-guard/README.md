@@ -2,7 +2,7 @@
 
 **What it carries**: exemplar **E** (body) and **E-fm** (frontmatter) through the adapters, for `semantics-guard.test.ts` (Task 14.3/14.4, design C15, DD7).
 
-- **`canonical/agents/semguard.md`**: a minimal agent frontmatter (`commands` ×2, `writeScope` ×2, one tool) and a body of **three units copied byte-for-byte from `canonical/agents/stacy.md`** (blob `46a0dcf8814456e36645ad1fad9d1a0ddc0d1609` at copy; the trigger-set unit re-copied at blob `60dbe42adcbf9c9ab428352fe30a81e935e9ebaa` (unit head `c34ee564`) on 2026-09-29, after #239 extended its LENS row — Task 15.2 doc):
+- **`canonical/agents/semguard.md`**: a minimal agent frontmatter (`commands` ×2, `writeScope` ×2, one tool) and a body of **three units copied byte-for-byte from `canonical/agents/stacy.md`** (blob `46a0dcf8814456e36645ad1fad9d1a0ddc0d1609` at copy; the trigger-set unit re-copied at blob `60dbe42adcbf9c9ab428352fe30a81e935e9ebaa` (unit head `c34ee564`) on 2026-09-29, after #239 extended its LENS row — Task 15.2 doc; its RELEASE row re-copied at blob `70388670cde9dba10d4a20cda40bed65ff151b9b` on 2026-10-03, after the hermetic-publish-path charter follow-up rewrote that row — ballot `2026-10-03-hermetic-publish-path` § 5 item 6):
   - the claims-audit parent's `:preamble`;
   - `#the-trigger-set-…` (S's sibling, attack (a)'s destination);
   - **S**, `#the-owed-set-pipeline-…`.

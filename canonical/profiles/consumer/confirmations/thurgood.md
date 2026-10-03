@@ -229,9 +229,17 @@ date: 2026-09-29
 ## `#trigger-types`
 
 confirmer: stacy
-canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
-items: instruments-named, instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-charter-walk, owed-set-three-copies, owed-set-predicate, owed-set-pipeline, owed-set-exclusion-classes, owed-set-promotion, register-read, discovery-spec, discovery-feedback, discovery-audit
-date: 2026-09-29
+canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
+items: instruments-named, instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-release-complete, liveness-charter-walk, owed-set-three-copies, owed-set-predicate, owed-set-pipeline, owed-set-exclusion-classes, owed-set-promotion, register-read, discovery-spec, discovery-feedback, discovery-audit
+date: 2026-10-03
+
+**Re-confirmed 2026-10-03 (Req 11.6.5d).**
+- **What changed**: LIVENESS read 2 gains one sentence. Ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED, Peter, 2026-10-03) § 5 item 6 (2b) and A8, canonical commit `59e2b7ff`: *"A RELEASE record is complete only with both phases … are each an event without a complete record."* No other text in the unit changed.
+- **The sentence is operative** under 5c: it fixes when a RELEASE record counts as a record, so a LIVENESS read that accepts a phase-1-only record, or a phase 2 drafted against an open step-6 PR with no merge-confirmation line, violates it. It is itemized as its own `obligation`, `liveness-release-complete`, added by Thurgood in authoring commit `d10cb6a5` (signing-act ballot § 2 clause 4: items are authoring). Its text is a verbatim substring of the unit (one occurrence). Adding rather than widening `liveness-records` is right: `liveness-records`' text did not change, so its obligation and its consumer-side survival stay as they were, and the repo-only sentence is accounted for by its own removal.
+- **What did not change**: the other 20 items; all 21 are verbatim substrings of the unit. The canonicalHash moves from `sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d` to the value above.
+- **History**: on PR #284 (closed, kept at `refs/pull/284/head`) an earlier seat held this re-confirmation (`b87a26ca`) because the sentence was unitemized, then confirmed at 21 (`ad92c0cd`) after the item was added. The hold was a sheet edit, which the signing-chain instrument reads as a failed act; the branch was re-cut without it (follow-ups issue § 4). This act is taken afresh and stands on its own.
+
+**Ruling: CONFIRMED at 21 items.**
 
 **Ruling: CORRECTED 13 → 20.**
 - Added `liveness-records-not-verdicts`, the bound on LIVENESS. The draft carried the three reads but not the bound on them.
