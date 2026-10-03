@@ -262,4 +262,77 @@ The versions are whatever the root lock pins at that release. The notes author r
 
 ## 10. Review round record
 
-*(empty — Stacy R1 owed)*
+### [STACY R1]
+
+2026-10-03. Pre-step: no `[@STACY]` mentions in this file. Read at `1453dad6`: this ballot; `scripts/release-publish.ts`; `scripts/pack-assert.ts` §§ 1–10; `package.json` scripts; `lane-timing.yml` (the #281 step); my RELEASE record § PHASE 2; the two-phase issue and its sweep; Ada's issue (2026-10-03 sections); the four consult reads. Every "measured" below was run by me on 2026-10-03. Nothing was published. No `.npmrc` was read: npm used it from its own directory.
+
+**(1) § 3 against the instrument.**
+
+Matches, verified against the source:
+- 5.1 order: clone, `npm ci`, `check:drift`, `npm pack` with scripts on, then `verify:token-index-clean`, then pack-assert.
+- 5.3's three tag checks: the `--expect-sha` prefix match, `merge-base --is-ancestor` against `origin/main`, and the `package.json` version at the tag.
+- The `npm whoami` preflight runs before the clone. **Measured**: exit 1 (ENEEDAUTH) from this worktree and from a non-repo directory; `3fn` from the main checkout. "Refuses from a worktree" holds on this machine.
+- GitHub Packages publish, then the printed `shasum` line and the 5.4 command; the tripwire's text; P2/P3 as recorded.
+
+Mismatches:
+- **§ 2 P2, consequences bullet 2 (L57)**: "run `check:drift` and `verify:token-index-clean` **before it packs**" contradicts P1 correction 1 (L48) and the script. `verify:token-index-clean` runs after the pack.
+- **§ 3.2 5.1's pack-assert list** leaves out 10e (no machine path in `dist/**`). It is not wrong, but the list is not the whole check.
+- **§ 3.2 5.3**: `--expect-sha` is optional in the script. Without it, the only link between the tag and S is ancestry plus version. The step's command always passes it, so the law holds only while the operator types the step's command. This is an observation, not an amendment.
+
+**(2) 6b, executable blind?** No, as written. I ran each 6b command for 15.0.0 and found three defects:
+- **(a) The scope-mapping trap.** The main checkout maps `@3fn:registry` to GitHub Packages. **Measured** from it: `npm view @3fn/core@15.0.0 dist.shasum --registry https://registry.npmjs.org` returns `65d2ec0b…`, which is **GitHub's** sha1. Adding `--@3fn:registry=https://registry.npmjs.org` returns `48dd8cdd…`. 6b's file-count command (`npm pack @3fn/core@<v> --registry <r>`) therefore fetches GitHub's tarball for "npmjs" from that directory. On 15.0.0 it would have recorded 1,638 = 1,638 and hidden R-2 on the count. (The npmjs sha1 survives only because that read is `curl`.)
+- **(b) The directory.** "a directory whose npm config authenticates (on 2026-10-03 the fresh clone's directory did)". **Measured**: from a directory with no `.npmrc`, the GitHub read returns E401. A fresh clone carries no `.npmrc`, because it is gitignored. From the main checkout: sha1 `65d2ec0b…`, `time["15.0.0"]` = `2026-10-03T02:08:27Z`. The law text has to name the main checkout, the same config 5.3's preflight proves.
+- **(c) The comparand is never committed.** The script's sha1 is in `release-publish-record.json`, in an OS temp directory. 6b compares against it, but nothing pastes it into the `.txt`. Phase 2 could then compare one registry with the other but never with the script.
+
+Present and adequate: per-registry `time[<v>]` (the GitHub `time` map is readable through `npm view` from the main checkout); the stop before step 7; the fallback-used line.
+
+**(3) F-2, the two-phase form.** My read: **permitted, with the line.** On 15.0.0, forbidding it would have delayed nothing that mattered, and the line caught a real change. **Replayed**: `git diff --quiet 2f55329c eadc7f45 -- docs/releases/15.0.0/publish-verification.txt` returns rc=1, so the § 3.4 wording **would have caught 15.0.0**. Three gaps remain:
+- It diffs the `.txt` only. #273 also carried Ada's issue section, which phase 2 read at `2f55329c`. That file did not change this time; the scope should be every path phase 2 read from the PR.
+- It does not say where the line lands. On 15.0.0, phase 2's own PR (#274) merged 16 s after #273, so the line needed a third record-only PR (#275).
+- It does not say what happens to a finding that a post-read commit resolves. On 15.0.0, R-4 was fixed *because of* the read. The record kept it as raised-and-resolved, and the text should require that.
+
+**(4) Forks (the pick is Peter's).**
+- **F-1: retry at the same tag.** No bytes exist under the tag, so it is still true. One case the fork omits: GitHub Packages already holds the bytes, then the 5.3 tarball is lost (temp directory, reboot). A rebuild cannot reproduce the sha1 (§ 8 item 1's own reason), so "retry" becomes a forced 6b mismatch. That case needs a ruling too.
+- **F-3: `ada`.** The row's `checks[]` will name her script, pack-assert § 10 and the tripwire. The owner should be whoever repairs a check that goes red or dormant. The publish-rail-guard precedent does not tell the two options apart: there the law author and the builder were the same agent (Thurgood).
+
+**(5) RS-6…RS-9 absorption.**
+- RS-6: absorbed (§§ 3.1–3.7, the straggler sweep).
+- RS-7: absorbed (§ 3.2's "guards live in the command").
+- RS-9: absorbed apart from the item (3) gaps.
+- **RS-8 residue**: 6b records `time[<v>]`, but what produced R-4 is still taught where the operator meets it. That is step 6's rail paragraph ("the registry may just not have indexed the version yet", RELEASE-FLOW L142–144) and `verify-publish-rail.sh`'s FAIL[version] message. Neither points to `time[<v>]`, and the § 5 item 2 grep pattern does not match them. The sweep's "checked accurate" for the rail script judged it against the publish-path phrases, not against RS-8.
+
+**(6) Counter-arguments, fold-back.**
+
+Absorbed by the ballot: the one-tarball friction (§ 8.1), proportion (§ 8.2), the stranded tag (§ 8.3, partly; see F-1), and one publish at a time (§ 8.4 / L-2).
+
+What survives, added:
+- **(i) The floor misses § 10.** Section 10 contributes 16 assertions: 8 root files, themes, 2 for leftovers, the bundle count, 3 bundles, and the machine path. 94 − 16 = 78 ≥ 75, so a refactor that drops § 10 entirely stays green in CI. The script has no floor either: it refuses only on a failed finding. The floor selects the script, not the section. It can also go stale upward, since the gap widens as pack-assert grows. Owners: Thurgood (the step) and Ada (the script). A3's committed tally at least makes a drop visible at phase 2.
+- **(ii) Row (j)'s habit.** CI placement is safe. The risk is local: "pack-contents is red, expected" gets learned in the main checkout, and the same labels later meet a script red, which comes from a fresh clone and so is never a row-(j) red. This is Ada's to mitigate, for example with a hint line in the nested-roots detail.
+- **(iii) The signing-chain cost of the charter follow-ups** (sweep B1's open check, answered). My RELEASE row sits in the rendered unit `#the-trigger-set-the-114-superset-table-names-never-numbers` (`stacy.dispositions.yaml`: `re-pointed`, Stacy-signed, `canonicalHash` pinned). The charter PR stales it, which costs one Stacy re-sign (it enters Peter's Stacy-signed frame) and one operative-set confirmation. My intent: `stacy.overlay.md` L73's consumer row stays unchanged, because a consumer has no step-6 record. Thurgood's B2 row: check whether it is rendered. The cost is small, but § 5 item 6 should name it.
+- **(iv) Under F-2 "permitted",** the pass's open-PR read shapes the record before it merges (R-4). It is not a gate, since #273 merged regardless. The retention rule in A6 keeps that visible; it does not remove it.
+- **(v) The closure check reads committed state.** pack-assert § 1 reads the committed `floor-closure.json`, which the script never regenerates (pack-assert's header leaves that to callers). This is low priority and Ada's.
+
+**(7) My RELEASE row, for the charter PR to lift verbatim** (`canonical/agents/stacy.md` L393; the consumer overlay is unchanged):
+- **Event cell**: `**Two phases, one record**: phase 1 on the release squash S, before the tag; phase 2 at the merge of the step-6 release-record PR`
+- **Scope cell**: keep the current text, then append: `Phase 2 reads the committed step-6 record — the rail result and the two-registry record (each registry's time[<v>], file count and sha1, equal to the publish script's recorded sha1) — against the published bytes; until it does, the record reads publish-rail liveness: owed.`
+- If F-2 is ruled "permitted", add: `Drafted against the open record PR, it ends with the merge-confirmation line.`
+
+**(8) Amendments.** \* = must land before Peter's ruling.
+- **A1\*** § 3.3: every `npm` command in 6b carries `--@3fn:registry=<r>` beside `--registry <r>` (item 2a).
+- **A2\*** § 3.3: run the GitHub Packages read from **the main checkout**, the config 5.3's `whoami` proved, and drop the fresh-clone parenthetical (item 2b). § 1 ruling 4 is the ruling's record and stays.
+- **A3\*** §§ 3.2–3.3: paste `release-publish-record.json` from 5.3 into the step-6 `.txt` (commit, sha1, fileCount, bytes, pack-assert passed/total, createdAt). Record 5.1's dry-run tally too (item 2c).
+- **A4** § 3.3: beside `dist.shasum`, record the sha1 of each fetched tarball's bytes. That is the independent read; phase 2 made it on 15.0.0.
+- **A5\*** § 2 P2, L57: "check:drift before the pack and verify:token-index-clean after it" (item 1).
+- **A6\*** § 3.4, the confirmation line (item 3):
+  - path scope: every file phase 2 read from the PR;
+  - placement: a follow-up record-only PR if phase 2's own PR has already merged;
+  - a finding resolved by a post-read commit stays in the record, with its resolution.
+- **A7** § 3.4: phase 1 runs on S **after 5.1 is green**, because a red 5.1 moves S. It reads 5.1's tally (A3).
+- **A8** § 5 item 6: name the re-sign cost (item 6 iii). Add to Thurgood's LIVENESS follow-up: if F-2 is permitted, a phase 2 drafted against an open PR with no confirmation line is also an event without a complete record.
+- **A9** § 4: the comment's "(PR after #279)" becomes #281; the history's "pending P2 observed leg and P3 bite" is stale; name the PR that flips `check_state` and fills `checks[]`, and what `checks[]` will list. My ARMING read fires at that PR's merge and needs it named.
+- **A10** § 3 or § 5 item 2: RS-8's residue (item 5). Add an edit site or a straggler pattern (`indexed|indexing`) for step 6's rail paragraph, and a pointer for the rail script's message, which is Thurgood's script. Named, not drafted.
+- **A11** § 9 F-1: add the lost-tarball case (item 4). § 3.2 5.3: keep the tarball and its record until 6b is recorded.
+
+**Verdict: APPROVE-WITH-AMENDMENTS.** 11 amendments. A1, A2, A3, A5 and A6 must land before Peter's ruling; the rest may land with R2 or be recorded as residuals with triggers. Forks surfaced, not picked: F-1 (same tag), F-2 (permitted, with the line), F-3 (`ada`).
+
+> No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR. This round reviews law text; it gates no PR.
