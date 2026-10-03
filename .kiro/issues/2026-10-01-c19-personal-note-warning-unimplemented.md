@@ -53,3 +53,49 @@ Task 22's Primary Artifacts (`tasks.md`) are `templates/personal-note.template.m
 ## Not in scope here
 
 Any edit to `consumer-entry.ts`, `errorCatalog.ts` or `design.md`. This issue is the tracked flag and the proposed shape.
+
+---
+
+## 2026-10-03: the Kiro missing-resource measurement (owed above; now made)
+
+**Owed and late, as owned.** The "verify-by" in this issue's Trigger section said I would record Kiro's behaviour with a missing `file://` resource "in this file before release 2's RELEASE record opens". The measurement was due before release 2's RELEASE record opened and was **not made then**; release 15.0.0 shipped with every Kiro consumer carrying the `.designerpunk/personal-note.local.md` entry unmeasured. I found it unrecorded at the Spec 123 U3 kickoff round (2026-10-03). The measurement below was run by Peter by hand that day because I had no Kiro session.
+
+**Evidence, copied verbatim** from the orchestrator's scratch record `u3-kickoff/kiro-measure-result.md` (scratch is not a citable record; this section is the record):
+
+> # Kiro missing-`file://`-resource measurement — RESULT (run by Peter, 2026-10-03)
+>
+> Run by Peter by hand in the Terminal panel, after his own `kiro-cli login`; read from the tab by the orchestrator.
+> `kiro-cli 2.12.1`, agent `probe` (`.kiro/agents/probe.json`, `resources: ["file://.designerpunk/personal-note.local.md"]`), model shown `claude-sonnet-4.5`.
+>
+> ## Non-interactive (`kiro-measure.log`)
+> - present: `validate exit=0`; chat answered `NONE` / `No resources failed to load.`; `chat exit=0`
+> - absent: `validate exit=0`; chat answered `NONE` / `No resources failed to load.`; `chat exit=0`
+> - todo: `validate exit=0`; chat run not captured in the log at the time of reading
+> - The model's `NONE` is not discriminating (it said NONE in the control too). The exit codes and the absence of any warning are the evidence here.
+>
+> ## Interactive `/context show` (verbatim, trimmed)
+>
+> present/:
+> ```
+> Active agent context: probe
+>   – .designerpunk/personal-note.local.md 0.0%
+>   – AGENTS.md 0.0% (no matches)
+>   – README.md 0.0% (no matches)
+> ```
+>
+> absent/:
+> ```
+> Active agent context: probe
+>   – .designerpunk/personal-note.local.md 0.0% (no matches)
+>   – AGENTS.md 0.0% (no matches)
+>   – README.md 0.0% (no matches)
+> ```
+>
+> ## Reading
+> - A `file://` resource whose target does not exist: `agent validate` passes, the session starts, no warning, no error, no prompt; `/context show` lists the path as `(no matches)`, the same way Kiro lists its own default `AGENTS.md` / `README.md` entries.
+> - Outcome row in `kiro-measure.md`: "Silent skip … the session continues" → mechanism B's residual is benign; no extra guard needed.
+> - Not measured: the all-TODO case interactively (expected: loaded as content); CC's `@`-import of a missing file (stays at U5 C8(c)).
+
+**What this settles.** The trigger condition I named for moving this issue up (Kiro erroring or prompting on a missing resource) did not occur: a missing target is skipped silently, so release 2's Kiro consumers were not harmed and this issue's trigger stays at Task 22's kickoff. **What it does not settle**: the all-`TODO` case interactively (not captured), and CC's `@`-import of a missing file (stays with U5 C8(c)).
+
+**Peter's ruling on the mechanism, as relayed by the orchestrator (one line):** the reference is always emitted and the note is created from a template that declares itself unfilled; the plan amendment in PR #296 carries the design. (That is the "default-emit" side of the fork named under "Counter-argument and what survives" above. This section records the relay; the ruling's record is the amendment.)
