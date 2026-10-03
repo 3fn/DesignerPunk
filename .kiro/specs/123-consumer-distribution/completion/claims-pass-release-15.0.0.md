@@ -547,10 +547,10 @@ No PR has merged since #272 (`origin/main` = `439f3e8e` at this writing), so the
 5. **MP-1 … MP-7**: routing still not evidenced in a committed record.
 6. **R-1** (theme Swift/Kotlin cue): now confirmed in shipped bytes.
 7. **ARMING**: my read at the flip PR's merge.
-8. **#273-merge confirmation line** in this record (replaces phase 1's item 8).
+8. **#273-merge confirmation line** in this record (replaces phase 1's item 8). — **CLOSED 2026-10-03**, § "2026-10-03 — #273-merge confirmation" below.
 9. **R-2**: the class fix (Ada + Thurgood consult, then a brief); deferral options B and D, now due before the next publish.
 10. **R-3**: notes erratum (Ada); GitHub release body (Peter or the orchestrator).
-11. **R-4**: `.txt` wording (Ada).
+11. **R-4**: `.txt` wording (Ada). — **CLOSED 2026-10-03**: resolved by `087f7697` before #273 merged.
 12. **O-1**: Thurgood.
 
 ### Phase 2 standards implications
@@ -564,6 +564,39 @@ No PR has merged since #272 (`origin/main` = `439f3e8e` at this writing), so the
 - **RS-7**: a manual guard was bound to a seat that does not perform the step. The deferral assigned all three guards to Ada; the public publish is Peter's terminal step. Nothing put guard #1 in front of the person at that step. The class question is where a release's manual guards must live so that the step's operator meets them. Thurgood owns it, with Peter.
 - **RS-8**: the step-6 record format does not require the registry's own publish time (`time[<v>]`). Without it, a 404 read as "indexing" and a 404 read as "not yet published" cannot be told apart from the record. R-4 is that case. Thurgood (RELEASE-FLOW step 6) owns it.
 - **RS-9**: the two-phase form names #273's merge as phase 2's trigger. It does not say whether phase 2 may be drafted against an open PR's commit, as this one was on Peter's instruction. If it may, the form also owes the confirmation-at-merge line this section carries as item 8. Fold into the two-phase issue (Thurgood).
+
+### 2026-10-03 — #273-merge confirmation (open item 8)
+
+**Merges**: #273 squash `eadc7f45` (02:49:13Z); this record's phase 2, #274, squash `42b83d23` (02:49:29Z).
+
+**The merged `.txt` is not the file phase 2 read.** Ada added a second commit to #273 after my read: `087f7697`, "Correct the 15.0.0 publish-verification timing: the 404s preceded the public publish". It touches only the `.txt` (+22/−8). Checks, run by me:
+- `git diff --quiet 087f7697 42b83d23 -- docs/releases/15.0.0/publish-verification.txt`: the merged file equals `087f7697`'s.
+- `git diff 2f55329c 42b83d23 -- …`: I re-read all three hunks.
+
+**What changed**:
+- § 1: "the registry still indexing" is gone. A CORRECTION paragraph says the 404s were correct answers and not indexing lag.
+- § 3:
+  - publish time `2026-10-03T02:19:49.286Z`, from the packument;
+  - build time 02:14:57Z, attributed to this record;
+  - an explicit order line: the six attempts preceded the publish;
+  - dist-tag `latest`, from the packument.
+- § 4 guard 2: `themes: [],` at `9e1a3106` line 21, with Ada's caveat that for the public artifact the guard "rests on the checkout having been at that SHA, which is not recorded".
+
+**Effect on phase-2 readings**:
+- **`publish-rail liveness: PASS`**: unchanged, and now **committed** (Req 6.7's record half is met at `eadc7f45`). The PASS line in § 1 is unchanged.
+- **R-4: resolved** by `087f7697`, before merge. The merged text matches the shipped facts R-4 cited.
+- **R-2, R-3, O-1**: unchanged. The hunks do not touch them.
+- **Guard 3, public artifact**: the merged `.txt` § 4 still reads "NOT done for the public artifact". That is accurate for the `.txt`'s own provenance. The comparison is in this record (§ "The dual-registry read", run by me on the public bytes). It is not a finding.
+
+**Closing "Peter's checkout HEAD at publish not recorded" (phase-2 method)**:
+- **Reflog, my own read**: `git reflog --date=iso-strict HEAD` in the main checkout. `merge origin/main: Fast-forward` to `439f3e8e` at 2026-10-02T22:03:11−04:00 (02:03:11Z). The next HEAD movement is my phase-2 branch cut at 02:36:17Z, from `439f3e8e`. So HEAD was `439f3e8e` throughout the public build (02:14:57Z) and publish (02:19:49Z).
+- **Commit diff**: `439f3e8e` differs from S `9e1a3106` only in this record, which is outside `files[]`.
+- **What the reflog does not show**: whether tracked files were modified in the working tree. That part rests on the byte comparison phase 2 already made: every shipped file outside `dist/mcp/*.js` and the 62 gitignored residue files is byte-equal to the fresh-clone build's, apart from one timestamp line. The root token files are among them, and they are what `themes: []` drives.
+- **Ada's guard-2 caveat is closed** on these two grounds. What differed in the checkout was gitignored state only: the `dist/` residue and the nested `*/node_modules` (R-2).
+
+**RS-9, evidenced**: the first use of drafting against an open PR produced a merged file different from the one read. This confirmation line is what caught it. Without it, phase 2 would have cited text that `main` does not carry.
+
+**Open items updated**: 8 closed (this block); 11 closed (R-4 resolved). The rest stand.
 
 ---
 
