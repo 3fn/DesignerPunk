@@ -2378,4 +2378,93 @@ I would drop "L816" from user-facing surfaces (a line number rots); keep it in t
 - **Not in this PR**: `.kiro/hooks/**` and `.kiro/docs/ballots/**` are outside my write scope and outside every row of this plan. A spec-plan merge is not ratification.
 - *Surviving counter*: the line guards only the operator who runs step 5. A tag pushed outside RELEASE-FLOW is not caught until 6b. Ada's script check closes that gap, under an issue-row grant.
 
+#### [LINA R2]
+
+**Verdict: APPROVE-WITH-CHANGES.** Nothing is blocking. There are four small required changes, two new and two that tighten my own R1 items.
+
+**What I checked, and how**:
+- Worktree `review/u3-amend-lina` at `e2e40ca6`.
+- Read: `git diff a4599397..e2e40ca6` over `tasks.md` and `design.md`, my item ids, Tasks 20, 22, 29, 30 and 31, and catalog rows L988–991.
+- Code facts were read on the main checkout @ `79a3b3bc`. Nothing was run except `git`, `grep`, `ls` and a read-only Python pass over the committed Kiro JSON files (`canonical/_consumer-output/kiro/.kiro/agents/*.json`).
+
+**My R1 items:**
+
+| Item | Status | Where it landed, and what is still owed |
+|---|---|---|
+| RC-1 | **confirmed**, with RC2-1 and RC2-2 below | Leonardo's marked visible block is the better form (a visible block works whether or not a harness shows HTML comments). Thurgood decides that text inside an intact block reads **unfilled**; as the implementer I agree. Without a copy of the template the rule cannot tell her words from the guidance, and an agent reading that note sees the guidance still calling it unfilled, so the warning and the agent agree. The case is only safe if the guidance itself tells her where to write. Today it does not (RC2-1) |
+| RC-2 | **confirmed** | Task 20 PR-9 bullet and tests; catalog L989/L990: own `[y/N]`, default No; `--apply` off a TTY writes nothing. Both tightenings are as I asked. One more precision applies to it and to PR-13 (RC2-3) |
+| RC-3 | confirmed | `Prompter.ts` and `Reporter.ts` are in Task 20's Primary Artifacts |
+| RC-4 | confirmed | 20.3 builds its fixture at test time; the committed fixture is dropped |
+| RC-5 | confirmed | `generate.personalNote.test.ts`, `sync.test.ts` and `pack-assert.test.ts` are all on their rows |
+| RC-6 | confirmed | `canonical/shared` and `canonical/consumer-profile.yaml` added; the merge-base range (Stacy B3) is better than my form; `governance/**` stays out with Stacy's reason |
+| RC-7 | confirmed | the eight steward `.kiro/agents/*.json.attribution.json`, unconditional |
+| RC-8 | confirmed | assertion scoped to 29.3's commit; `spans.ts` conditional |
+| RC-9 | confirmed | both rows anchored by label |
+| RC-10 | confirmed | § "Expected release count", routings, item (iv) |
+| A-1, A-2, A-3, A-5 | confirmed | — |
+| A-4 | no change, accepted | — |
+| Owed items | confirmed, with the Kiro record before U3's cut | PR #297 (open) carries the nine-file iOS issue, the app-MCP `degraded` issue (with its `canonical/generated.lock` grant line) and the Kiro measurement. I have not read #297's diff in this pass (UNVERIFIED) |
+
+**Answers to mentions:**
+
+- **Data → `[@LINA]`** (`renderedHashOf` over the 29.3 spans before the re-sign round): **yes.** 29.3's completion doc pastes `renderedHashOf` **before and after 29.3's commit** for Data's `ambient.groundTruthManifest.verdict`, `commands[platform-tokens]`, `routes.cues[9]` and his two trim rows, then the full post-29.3 stale list (Task 29's R2 line).
+  - **My expectation, by reading, not by run**: none of Data's rows moves at 29.3. The Kiro JSON is built from `name`, `description`, `prompt`, `toolSubset` → `allowedTools`, `writeScope` → `toolsSettings.write.allowedPaths`, `resources` and `hooks` (`tools/agent-generator/adapters/kiro.ts` L22–24, L267–288, read), and his rows render only into the prompt.
+  - **What does sit in those JSON field families**: the only signed rows there are Stacy's re-pointed `knowledgeBases[spec-summaries]`, plus rows that render nothing. The latter are the eight `writeScope[docs/specs/**]` rows (`superseded-by`, read in all eight dispositions files) and the `no-consumer-counterpart` `knowledgeBases[*]` rows (e.g. Kenya's `ios-tests`, read). So a per-entry JSON span adds a piece to no other signed row.
+  - If a non-Stacy row does move, Task 29's R2 line applies: limb (iii), stop and re-plan.
+  - This also corrects my own sizing statement's scope (RC2-4).
+- **Leonardo → `[@LINA]` ×2:**
+  - **(a) Will I build the marked-block rule? Yes.** Mechanics:
+    - markers are matched as whole trimmed lines, first pair wins (the `RegionGrain.ts` semantics `sync` already uses);
+    - an **unmatched** marker removes nothing (RC2-2);
+    - CRLF is normalized before matching.
+  - **(b) Who measures whether CC shows the agent HTML comments from an `@`-imported file?** Under the visible block it is **no longer load-bearing**: all guidance, the Mad Libs stems included, is outside comments. **I can measure it in scratch before 22.0's bytes freeze**, with one `claude -p` run in a throwaway directory whose `CLAUDE.md` `@`-imports a file holding a unique token inside a comment. That run uses Peter's account, so **it needs Peter's go**. Without it, the record reads "not measured; not load-bearing under the visible block".
+- **Leonardo → `[@LINA]` (`product/overview.yaml`): confirmed, Thurgood's read.**
+  - Leonardo authors its content in `design-inputs/overview.yaml`, with **one literal placeholder** for the product name.
+  - I own the substitution in `init` (it replaces today's `generateOverview()` in `src/cli/init.ts`).
+  - The equality test compares the placed template against Leonardo's file byte for byte, and the scaffolded file against it after substituting a fixed test name.
+  - **Gap**: `design-inputs/overview.yaml` is not on Task 22's Primary Artifacts list, which names only `{personal-note.template.md, personal-note.example.md, example-home.yaml}` "with their companions", and `overview.yaml` is not a companion of the screen. See RC2-4.
+
+**Confirmations requested by the orchestrator:**
+
+- **The detection rule as written**: confirmed, subject to RC2-1 and RC2-2.
+- **The two `.gitignore` tightenings** (own `[y/N]`; nothing written off a TTY under `--apply`): confirmed as written (Task 20; catalog L989–990).
+- **PR-13's `generate`/`attach` warning: buildable as written** (Task 22 row; catalog L991; instrument `generate.personalNote.test.ts` + `attach.test.ts`), subject to RC2-3.
+- **FK-2 (a) with my condition: confirmed met.** The template lives at `src/cli/templates/personal-note.template.md` and ships through the existing `src/cli/templates/` `files[]` entry, so no `files[]` line precedes 22.1. Thurgood's reading of `pack-assert` (no row is red between 22.1 and 22.3b) agrees with mine (`scripts/pack-assert.ts` L120 and the steering-only set diff, read in my R1). **Withdrawn: my FK-2 (b).**
+- **U3c (Task 31), my secondary seat (Sonnet): executable as written.**
+  - 31.1 needs Thurgood's intro wording first, and the blank line goes in the container span.
+  - The shared-template reword moves exactly the six steward renders that carry the line (`.claude/agents/{data,kenya,sparky}.md`, `.kiro/agents/{data,kenya,sparky}-prompt.md`) plus the four consumer renders (`git grep` for the intro string, run on main). All are in the row's artifacts.
+  - The two signature files quote the old line as evidence; they are historical, not regenerated.
+  - No golden fixture carries the line (same grep).
+- **Reduced U3g (Tasks 29–30, 11 subtasks), my PRIMARY seat: executable as written**, with RC2-4's 29.0 dry run.
+  - Opus for 29 is right.
+  - 30 stays Opus by the plan's choice; Sonnet would do (my R1 A-4; no change requested).
+
+**REQUIRED CHANGES (R2)**
+
+- **RC2-1 — the offer line tells the agent to write inside the guidance block** (`tasks.md` § "Task 22", the quoted "**For agents**" line: "…writing their answers here in their own words.").
+  - Under the ruled rule, text written inside an intact block reads **unfilled** forever. So "here" turns a completed walkthrough into a permanent false "unfilled", with a warning on every `generate` and the guidance telling every agent to ignore her answers.
+  - Text I want, in that sentence: "…writing their answers **under each heading, outside this guidance block**, in their own words."
+  - Leonardo owns the final wording at 22.0. The constraint is mine as the implementer, and the unit case "text inside an intact block → unfilled" depends on it.
+- **RC2-2 — the missing unit case: an unmatched marker** (`tasks.md` § "Task 22", detection-rule unit cases). Add:
+  > · only one marker present (the other deleted) → nothing is removed as a block; the guidance text counts as hers → **filled** (the same rule as "markers deleted, block text kept", and `RegionGrain.ts`'s "missing markers" outcome).
+
+  Without it, two implementations can disagree: one strips to end-of-file, the other strips nothing.
+- **RC2-3 — "`git check-ignore` fails" is ambiguous**, in Task 20's PR-9 bullet ("not already ignoring") and in Task 22's PR-13 row and catalog L991 ("only when … fails").
+  - `git check-ignore -q` exits **0** = ignored, **1** = not ignored, **128** = not a git repository or an error. A non-git directory (or no `git` on PATH) would otherwise trigger an offer or warning that is false there.
+  - Text I want, in both rows:
+    > "…only when `git check-ignore -q .designerpunk/` **exits 1**. On exit 128, or when `git` is not on PATH, no offer and no warning is printed and nothing is written."
+  - Each instrument gains one case: a non-git directory → nothing printed, zero bytes.
+- **RC2-4 — two small additions.**
+  - **(a)** Add `.kiro/specs/123-consumer-distribution/design-inputs/overview.yaml` (Leonardo) to Task 22's Primary Artifacts, with the overview equality test (answer above).
+  - **(b)** In Task 29, my sizing sentence ("one re-sign (Stacy, `knowledgeBases[spec-summaries]`)") is **true by reading, not by run**. Add to 29.0:
+    > "**29.0 includes a dry run of 29.3**: per-entry Kiro-JSON spans computed in a temp copy and the would-move signed rows listed, before any machinery commit. **Red**: a would-move row other than Stacy's. Ceiling limb (iii) then fires at 29.0, not after 29.3."
+
+    This moves the only re-sign surprise left in the cycle to its first, read-only act.
+
+**ADVISORY**
+
+- **A2-1 — U3c is now on release 3's critical path, ahead of U3g** (Task 31, "Order": merges before U3g's branch is cut). Chain: Thurgood's G2 ruling and U3c can run in parallel → U3g cut → U3g (ruling, sizing, machinery, Stacy) → U3's 22.4. U3c's six subtasks include a Kenya/Data round, so start it the day this amendment merges.
+
+**What I did not review**: Tasks 19 and 21's new text; the RELEASE-FLOW 5.1b vehicle (Thurgood and Stacy); Leonardo's catalog wording beyond its triggers; PR #297's content.
+
 ---
