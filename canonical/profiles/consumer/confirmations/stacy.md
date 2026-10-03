@@ -56,9 +56,17 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-09-29
+date: 2026-10-03
+
+**Re-confirmed 2026-10-03 (Req 11.6.5d).**
+- **What changed**: the RELEASE row. Ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED, Peter, 2026-10-03) § 5 item 6 replaced it with Stacy's § 10 [STACY R1] item (7) wording: the two-phase event cell, the appended phase-2 scope sentence, and the F-2 clause (F-2 ruled permitted, § 9). One period was added after "arming line" as the sentence separator. Canonical commit `59e2b7ff`.
+- **`trigger-release`'s text, verified verbatim**: it equals the canonical RELEASE line byte for byte, is a verbatim substring of the unit (one occurrence), and each appended cell matches § 10 item (7) exactly. That text edit is authoring, not this act (signing-act ballot § 2 clause 4): commit `db3b7454`, authorized for Peter's carve-out merge of this PR.
+- **What did not change**: the operative set, still 13 items. The row stays one `member` item, as LENS did on 2026-09-29 and ARMING on 2026-09-28; the phase-2 reads and the F-2 clause sit inside the row's cells and are not split out. No other item's text moved; all 13 remain verbatim substrings of the unit. The canonicalHash moves from `sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a` to the value above.
+- **History**: an earlier seat made this same re-confirmation on PR #284 (`8a8e97a2`, now closed, kept at `refs/pull/284/head`). This act is taken afresh on the re-cut branch and stands on its own.
+
+**Ruling: CONFIRMED at 13 items.**
 
 **Re-confirmed 2026-09-29 (Req 11.6.5d).**
 - **What changed**: `trigger-lens`'s text, which is the LENS row. Edit site 5b of the ratified ballot `.kiro/docs/ballots/2026-09-28-parent-instrument-existence-check.md` (RATIFIED, Peter, 2026-09-29) adds question 6 (existence at the review base, never fit) and its plan-time form for M4-bound specs, which reads each parent's declared `**Instruments:**` block.
