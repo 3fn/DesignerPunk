@@ -1129,8 +1129,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `starter-specs/**`, `src/cli/init.ts` *(amendment 2026-10-03: `starter-specs/**` reads `src/cli/templates/starter-specs/**`;)* `src/cli/__tests__/init.test.ts` (21.3), `scripts/__tests__/starter-specs.test.ts` (new, the structure test, 21.1/21.2)
 
-  - [ ] 21.1 CI-needs spec
-  - [ ] 21.2 Re-grounding spec
+  - [x] 21.1 CI-needs spec
+  - [x] 21.2 Re-grounding spec
   - [ ] 21.3 Scaffolding + structure test *(amendment 2026-10-03: the scaffolding is Lina's; the structure test is written with 21.1/21.2 by Thurgood)*
 
 - [ ] 22. Personal note, `init` UX completion, product scaffold, and DD9 (**U3 gating parent**)
