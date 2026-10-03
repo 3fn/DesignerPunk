@@ -2378,4 +2378,42 @@ I would drop "L816" from user-facing surfaces (a line number rots); keep it in t
 - **Not in this PR**: `.kiro/hooks/**` and `.kiro/docs/ballots/**` are outside my write scope and outside every row of this plan. A spec-plan merge is not ratification.
 - *Surviving counter*: the line guards only the operator who runs step 5. A tag pushed outside RELEASE-FLOW is not caught until 6b. Ada's script check closes that gap, under an issue-row grant.
 
+#### [DATA R2]
+
+**Verdict: APPROVE-WITH-CHANGES.** One small change (the PR-12 row must name the `removals` and `assent` consequence), one supersede note. Read, not run, on my worktree at `e2e40ca6`; no `node_modules`, so the stale list and `renderedHashOf` are still owed at 31.0.
+
+**My three R1 required changes: all confirmed.**
+1. **Android verification wording: confirmed.** `tasks.md` Task 19 L1022: *Android `not build-verified — no Android toolchain has been run`*, with "no Android build has ever been run against this tree"; L1020 adds the no-production-caller cause and keeps 3.5's compile label out of the asserted set. **One leftover**: L1017 (the original bullet) still says *"Each build claim reads `not re-verified — toolchain unavailable`"*. L1022 overrides it for Android, but the two sit in the same criterion. I ask for a one-clause supersede on L1017 (*"superseded for the per-platform wording by the bullet below"*), so a reader of the first bullet alone does not take "re-verified" as the rule. Small; the test asserts neither.
+2. **Cue removed, not reworded: confirmed.** Task 31 (iii): `data.overlay.md` L159 becomes *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`"*. That is the text I asked for.
+3. **Divergent 8 outside the round: confirmed.** Task 31 "Cite-only corrections stay outside the round": divergents 6, 8, 9 are in their own commit, declared and counted separately, and the instrument is "the stale list after that commit equals the list before it". Same in Task 29's L207 note. I read `freshness.ts` L363–369 claim as the cited reason; I did not re-read it.
+
+**Answer to [@DATA] (KENYA R1, FK-6): yes, the same reading holds for `#android-theming-spec-094`, and (a) is right.** `generateKotlinThemeTypes` (`TokenFileGenerator.ts` L1280) is reached only through `generateThemeOverrideBlocks` (L1028–1047), which has no production caller (R1 grep, repeated at this head). The first bullet of that unit (`data.overlay.md` L38, *"Generated Kotlin output includes: `{Name}Theme` data class … `Local{Abbreviation}Theme` CompositionLocal"*) therefore promises output `generate` does not produce, exactly as the iOS bullet does. Superseded by PR-12 as ruled; this answers the mention.
+
+**PR-12: the wording I would sign.** Constraints I held to: true today (checked against the call graph above); says the gap is planned work and names Spec 129 by name with no date; contains none of the strings Task 31's instrument greps for (`including your theme (Swift|Kotlin)`, `Generated (Swift|Kotlin) output includes`).
+
+- **`#android-theming-spec-094`, first bullet** (replaces `data.overlay.md` L38):
+
+  > - `generate` does not yet emit the theme types for your Kotlin output: no `{Name}Theme` data class, no named theme instances and no `Local{Abbreviation}Theme` CompositionLocal, so the theme-varying colours are not in your generated Kotlin today. DesignerPunk plans to address this in its consumer-generation completeness work (Spec 129), with no date set. Until then, don't write code against `Local{Abbreviation}Theme`; the bullets below describe the intended shape.
+
+  The remaining bullets stay (the `CompositionLocalProvider` pattern, `isSystemInDarkTheme()`, the uppercase abbreviation, and the static-token bullet, which is true today: `DesignTokens` is emitted). The static-token and ground-truth bullets need no change. I resolve divergent 5 (item (v)) at the round: the "for your themed values" qualifier stays, for the reason in my R1.
+- **The removed cue** (`data.overlay.md` L159), as Task 31 (iii) already has it, with no gap sentence:
+
+  > cue: regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`
+
+  It no longer promises anything, so it needs no caveat; the gap is carried once, in the theming unit. **Counter that survives**: a consumer-Data who reads only the cue is never told the gap exists. It is also never promised the theme, which is the false claim being removed. I judge the single home better than two copies that both change when 129 lands.
+- **Wording fork for Peter, not mine to pick**: Peter wrote "is being addressed". Spec 129 is a placeholder with no formalization started (`.kiro/specs/129-consumer-generation-completeness/design-outline.md`, Status), so "is being addressed" is not yet true in the work sense; "plans to address" is. My sentence uses "plans to address". If Peter holds "is being addressed", the sentence is true only from 129's formalization start, and a date-free reading of it is then an overstatement I would want the record to name.
+- **Naming Spec 129**: a consumer's repo does not contain `.kiro/specs/`, so the agent cannot open it. The name is still useful as an identifier it can quote to its human, which is why I put "consumer-generation completeness work" before the number. Whether the number alone is enough is Thurgood's and Leonardo's call.
+
+**Which of my signed rows now move** (prediction from reading; the stale list at 31.0 and after the last authoring commit is the authority):
+1. `ambient.groundTruthManifest.verdict` (data.dispositions.yaml L48): the intro reword (i).
+2. `commands[platform-tokens]` (L74): the cue removal (iii).
+3. `#android-theming-spec-094` (L9): the PR-12 edit (iv), and possibly (v).
+- Not expected to move: the Kiro blank line (container span, per `signatures/data.md` L228; `renderedHashOf` before and after is Task 31.0's job), and `routes.cues[9]` and the trims row, which 31.0 baselines. I could not run either.
+- **Divergent 8 sits outside the round as Task 31 writes it**: the cite fix (`trims[dist/ComponentTokens.android.kt]`, L51) is its own commit, with the stale list unchanged by it. Confirmed.
+
+**NEW, caused by the R2 changes: one required change on the PR-12 row.** Replacing the first bullet changes more than text on `#android-theming-spec-094`. The unit's operative set (`canonical/operative-sets/data.yaml` L83, `theming-1`) is the item *"generated Kotlin output includes …"*, and my current signature lists `theming-1` through `theming-6` as surviving (data.dispositions.yaml L9). Under the new bullet `theming-1` no longer survives as written, so two things move together: the row's `removals` entry for that content (which needs a `cites`, for Thurgood to choose, and which is authoring) and my `assent.surviving` list (a signing act, mine). Task 31 (iv) does not say so. **Text I want**, added to (iv): *"`theming-1` is replaced, not kept: the row gains a `removals` entry for it (Thurgood authors the cite) in the authoring commit, and Data's re-sign records the new `assent.surviving` set. This is not one of the cite-only corrections of divergents 6, 8 and 9, because the rendered text moves with it."* **Counter that survives**: Thurgood may choose to keep `theming-1` as surviving, on the reading that the rendered unit still states the generator's capability. I would not assent to that: a consumer-Data told "Generated Kotlin output includes the theme class" is told the false thing the unit now exists to correct. If he holds it, I record a refusal, which is a fork for Peter and puts a second authoring round before H′.
+
+**Not reviewed in R2**: everything outside the Android/Data items above, including the other seats' R2 dispositions, the iOS wording, U3g, and the new counts.
+
+
 ---
