@@ -2437,4 +2437,148 @@ I would drop "L816" from user-facing surfaces (a line number rots); keep it in t
   - a one-line honest suffix (for example "registered; not yet emitted — see the install guide") as a catalog row in 22.1 or 22.2, only if it costs no subtask (PR-7's one remaining slot is not spent on it);
   - or carry it as a Spec 129 inbound note.
 
+
+#### [LEONARDO R2]
+
+**Verdict: APPROVE-WITH-CHANGES.** I contest nothing structural. One case is decided below, closing the fork Thurgood left at 22.0. Two one-line wording fixes follow from that decision.
+- **Tree**: `review/u3-amend-leonardo` @ `e2e40ca6`.
+- **Read**: `[THURGOOD R2]`; `git diff a4599397..e2e40ca6` over `tasks.md` and `design.md`; and the rows carrying my item ids, read whole (C23 order, C26, the catalog rows, Task 19, Task 22). Nothing was run.
+
+**My R1 items**
+- **Scope sentence; unfilled row; offer line and frequency**: confirmed (§ "Expected release count"; catalog; Task 22).
+- **L-RC1 (detection rule)**: confirmed, with the decision below.
+- **L-RC2 (who prints what)**: confirmed (Task 22 governs; C26 matches).
+- **L-RC3 (three slots and the walkthrough in the rows and step 4)**: confirmed (naming, created and born-repo rows; C23 step 4).
+- **L-RC4 (a)–(d) (approval bound to bytes; order; the example's brief; the pointer path)**: confirmed.
+- **L-RC5 (C23's order)**: **confirmed as written out.** Scope sentence → § Prerequisites → 1–4 → § Platforms (Web, iOS, Android; no numbered steps) → 5, 6 → § Adding a second harness → 7–9, with the `02138996` L507–516 source.
+- **L-RC6 (two bites; `healthy` = zero warnings)**: confirmed.
+- **L-RC7 (`.gitignore` offer and report rows)**: confirmed.
+- **L-RC8 (`generate` warning)**: confirmed as PR-13. The row's text and placement match what I asked for.
+- **L-A1 to L-A5**: confirmed. On L-A1, see the wizard note below.
+
+**The decision Thurgood left me: text typed INSIDE an intact template block reads UNFILLED.** I withdraw my R1 "filled" case.
+- **Reason, in one line**: the joiner's agent and her CLI must reach the same verdict, and the agent sees the block's guidance still declaring the note unfilled. "Filled" would need a copy of the template (version coupling), so it would buy disagreement at a cost.
+- **What makes "unfilled" safe for her**: it is not silent. The next `generate`, `attach` or `sync` prints the warning. Two wording fixes make that warning self-explaining and stop the agent from contradicting it:
+  - **contested — offer line** (`tasks.md` § "Task 22", the offer-line quote; design C26 erratum).
+    - "Any edit of hers ends the offer." is now untrue for an edit inside the block.
+    - Text I want: "**Any answer of hers under the headings ends the offer.**"
+  - **contested — unfilled row** (design catalog "personal note unfilled").
+    - After "is still the unfilled template, so your agents set it aside." insert "**Your answers go under the headings, outside the guidance block.**"
+    - The rest stays as written.
+    - **Instrument**: the 22.2/22.1 string-equal tests already cover both strings.
+- **Owed at 22.0, as Task 22 says**: the block's first line directs answers under the slot headings.
+- **The cost, surfaced so the orchestrator can put it to Peter if it matters to him**: this rule cannot support **in-place** Mad Libs, where the person fills the blanks inside a sentence the template wrote. Any template sentence left under a heading would read as "filled" at creation, and inside the block her completions are discarded. So in 22.0:
+  - the stems appear in the block as **example answers** ("e.g. *I'm ___, and I'm building ___*");
+  - she writes her own line under each heading;
+  - the stem-by-stem, fill-in-the-blank experience lives in the **agent walkthrough**, which PR-4 makes the primary path.
+- **No fork remains on this case.**
+
+**Note for 22.0 — the "no command-line wizard" limb (L-A1).** If Peter's assent was "Re: 1, 2, & 4, agreed" to the orchestrator's message that stated "no CLI wizard", then **yes, the Context should quote it**. Quote both:
+- Peter's words, "Re: 1, 2, & 4, agreed";
+- the line of the orchestrator's message that carried the limb.
+
+That message is not committed, so the quoted line is the record. **Authority is a record**: with the quote, Task 22's row can drop "Leonardo and Lina hold it on the merits" and read as RULED. Without it, the current owner-position label is the honest one. Either way, it does not change 22.0's content.
+
+**Mentions**: none new addressed to me after my R1 (searched `@LEONARDO` past my R1 entry). My own open mentions are listed in Thurgood's routing list:
+- **Lina**: the marked-block build, the CC HTML-comment measurement, and `overview.yaml`.
+- **Ada**: the third-sentence fact-check.
+
+On `overview.yaml`, **I accept Thurgood's read** (I author its content; Lina owns the product-name substitution) and wait only on Lina's yes. The CC comment measurement is now non-blocking: under the decision above, nothing the agent needs lives in a plain comment.
+
+**New breakage from the R2 changes**: none found in the rows I own or consume. Not reviewed: U3c (Task 31) and PR-12's theming wording, Tasks 29–30, and the RELEASE-FLOW hold line.
+
+#### [DATA R2]
+
+**Verdict: APPROVE-WITH-CHANGES.** One small change (the PR-12 row must name the `removals` and `assent` consequence), one supersede note. Read, not run, on my worktree at `e2e40ca6`; no `node_modules`, so the stale list and `renderedHashOf` are still owed at 31.0.
+
+**My three R1 required changes: all confirmed.**
+1. **Android verification wording: confirmed.** `tasks.md` Task 19 L1022: *Android `not build-verified — no Android toolchain has been run`*, with "no Android build has ever been run against this tree"; L1020 adds the no-production-caller cause and keeps 3.5's compile label out of the asserted set. **One leftover**: L1017 (the original bullet) still says *"Each build claim reads `not re-verified — toolchain unavailable`"*. L1022 overrides it for Android, but the two sit in the same criterion. I ask for a one-clause supersede on L1017 (*"superseded for the per-platform wording by the bullet below"*), so a reader of the first bullet alone does not take "re-verified" as the rule. Small; the test asserts neither.
+2. **Cue removed, not reworded: confirmed.** Task 31 (iii): `data.overlay.md` L159 becomes *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`"*. That is the text I asked for.
+3. **Divergent 8 outside the round: confirmed.** Task 31 "Cite-only corrections stay outside the round": divergents 6, 8, 9 are in their own commit, declared and counted separately, and the instrument is "the stale list after that commit equals the list before it". Same in Task 29's L207 note. I read `freshness.ts` L363–369 claim as the cited reason; I did not re-read it.
+
+**Answer to [@DATA] (KENYA R1, FK-6): yes, the same reading holds for `#android-theming-spec-094`, and (a) is right.** `generateKotlinThemeTypes` (`TokenFileGenerator.ts` L1280) is reached only through `generateThemeOverrideBlocks` (L1028–1047), which has no production caller (R1 grep, repeated at this head). The first bullet of that unit (`data.overlay.md` L38, *"Generated Kotlin output includes: `{Name}Theme` data class … `Local{Abbreviation}Theme` CompositionLocal"*) therefore promises output `generate` does not produce, exactly as the iOS bullet does. Superseded by PR-12 as ruled; this answers the mention.
+
+**PR-12: the wording I would sign.** Constraints I held to: true today (checked against the call graph above); says the gap is planned work and names Spec 129 by name with no date; contains none of the strings Task 31's instrument greps for (`including your theme (Swift|Kotlin)`, `Generated (Swift|Kotlin) output includes`).
+
+- **`#android-theming-spec-094`, first bullet** (replaces `data.overlay.md` L38):
+
+  > - `generate` does not yet emit the theme types for your Kotlin output: no `{Name}Theme` data class, no named theme instances and no `Local{Abbreviation}Theme` CompositionLocal, so the theme-varying colours are not in your generated Kotlin today. DesignerPunk plans to address this in its consumer-generation completeness work (Spec 129), with no date set. Until then, don't write code against `Local{Abbreviation}Theme`; the bullets below describe the intended shape.
+
+  The remaining bullets stay (the `CompositionLocalProvider` pattern, `isSystemInDarkTheme()`, the uppercase abbreviation, and the static-token bullet, which is true today: `DesignTokens` is emitted). The static-token and ground-truth bullets need no change. I resolve divergent 5 (item (v)) at the round: the "for your themed values" qualifier stays, for the reason in my R1.
+- **The removed cue** (`data.overlay.md` L159), as Task 31 (iii) already has it, with no gap sentence:
+
+  > cue: regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`
+
+  It no longer promises anything, so it needs no caveat; the gap is carried once, in the theming unit. **Counter that survives**: a consumer-Data who reads only the cue is never told the gap exists. It is also never promised the theme, which is the false claim being removed. I judge the single home better than two copies that both change when 129 lands.
+- **Wording fork for Peter, not mine to pick**: Peter wrote "is being addressed". Spec 129 is a placeholder with no formalization started (`.kiro/specs/129-consumer-generation-completeness/design-outline.md`, Status), so "is being addressed" is not yet true in the work sense; "plans to address" is. My sentence uses "plans to address". If Peter holds "is being addressed", the sentence is true only from 129's formalization start, and a date-free reading of it is then an overstatement I would want the record to name.
+- **Naming Spec 129**: a consumer's repo does not contain `.kiro/specs/`, so the agent cannot open it. The name is still useful as an identifier it can quote to its human, which is why I put "consumer-generation completeness work" before the number. Whether the number alone is enough is Thurgood's and Leonardo's call.
+
+**Which of my signed rows now move** (prediction from reading; the stale list at 31.0 and after the last authoring commit is the authority):
+1. `ambient.groundTruthManifest.verdict` (data.dispositions.yaml L48): the intro reword (i).
+2. `commands[platform-tokens]` (L74): the cue removal (iii).
+3. `#android-theming-spec-094` (L9): the PR-12 edit (iv), and possibly (v).
+- Not expected to move: the Kiro blank line (container span, per `signatures/data.md` L228; `renderedHashOf` before and after is Task 31.0's job), and `routes.cues[9]` and the trims row, which 31.0 baselines. I could not run either.
+- **Divergent 8 sits outside the round as Task 31 writes it**: the cite fix (`trims[dist/ComponentTokens.android.kt]`, L51) is its own commit, with the stale list unchanged by it. Confirmed.
+
+**NEW, caused by the R2 changes: one required change on the PR-12 row.** Replacing the first bullet changes more than text on `#android-theming-spec-094`. The unit's operative set (`canonical/operative-sets/data.yaml` L83, `theming-1`) is the item *"generated Kotlin output includes …"*, and my current signature lists `theming-1` through `theming-6` as surviving (data.dispositions.yaml L9). Under the new bullet `theming-1` no longer survives as written, so two things move together: the row's `removals` entry for that content (which needs a `cites`, for Thurgood to choose, and which is authoring) and my `assent.surviving` list (a signing act, mine). Task 31 (iv) does not say so. **Text I want**, added to (iv): *"`theming-1` is replaced, not kept: the row gains a `removals` entry for it (Thurgood authors the cite) in the authoring commit, and Data's re-sign records the new `assent.surviving` set. This is not one of the cite-only corrections of divergents 6, 8 and 9, because the rendered text moves with it."* **Counter that survives**: Thurgood may choose to keep `theming-1` as surviving, on the reading that the rendered unit still states the generator's capability. I would not assent to that: a consumer-Data told "Generated Kotlin output includes the theme class" is told the false thing the unit now exists to correct. If he holds it, I record a refusal, which is a fork for Peter and puts a second authoring round before H′.
+
+**Not reviewed in R2**: everything outside the Android/Data items above, including the other seats' R2 dispositions, the iOS wording, U3g, and the new counts.
+
+
+---
+
+#### [STACY R2]
+
+**Verdict: BLOCKING lifted → APPROVE-WITH-CHANGES.** Three small changes remain (C-1 to C-3, below), plus one recommendation (A-7). None blocks #296.
+**Read** on `review/u3-amend-stacy` @ `e2e40ca6`: `[THURGOOD R2]`; the rows that changed for my items (§ "Expected release count" Enforcement, Tasks 19, 22, 29, 30 and 31, the tripwire); `freshness.ts` L363–369 as he cites it. No mentions to me are open.
+
+**R1 items**
+- **B2**: confirmed (Task 30). Condition (d) now compares H′ with the PR head and with the squash. I would run cycle 2 on it.
+- **B3**: confirmed (Task 22). The range is `merge-base HEAD origin/main`, with RC-6's roots.
+- **B1**: **discharged for #296**. Reasons under Q1 below.
+- **R-1 to R-17**: confirmed, one by one. In particular:
+  - the verdict tokens are closed;
+  - the attack-first and sizing ancestry cover `tools/agent-generator/**` and the profile, and the scope line on commit order versus knowledge order is in place;
+  - the HOLDS conditions are in my attack file;
+  - the ceiling is adopted;
+  - cycle 3 is bounded;
+  - my re-sign is disclosed;
+  - the zero-row guard is in, and the parity test is named;
+  - § "Prerequisites" moves into the region;
+  - the preservation count is keyed to Sites 1–4;
+  - the gloss is struck.
+- **Advisories**: A-1, A-2 and A-5 are routed as Thurgood states, and I accept that. A-3, A-4 and A-6 confirmed. Release-3 items (i)–(v) confirmed.
+
+**The coordinator's four questions**
+1. **B1 for this PR: discharged.**
+   - #296 publishes nothing and grants no publish. Holding it back would not lower the one risk B1 names, a publish before the guard exists; that risk is the same whether or not #296 merges.
+   - The plan row now names what B1 asked for: the line's condition, the lift record's path, "before any publish of any version", Ada's script as successor, and the vehicle marked `PENDING PETER`.
+   - A record-first amendment to the hermetic ballot is the right vehicle. I accept Thurgood's reasons for not using an erratum or a new ballot.
+   - **The test of B1 moves to my RELEASE phase 1.** That includes a 15.0.x publish, which is not on any U3 path. A publish whose release commit S lacks the step-5 line, or the script check, is a finding at that pass.
+2. **"Reads the HOLDS verdict at the release commit": yes, it can be checked by a command.**
+   - `git show <S>:<record> | grep -q …` and `git grep -q '^## Hold lifted' <S> -- …` are commands with exit statuses, and their output is pasted into the step-6 `.txt`. I adopt his fold-back: my ancestry check needs a SHA that does not exist yet.
+   - **But the inference "HOLDS at S implies the fix is merged" has two holes.** C-1 and C-2 close them.
+3. **Would I now run cycle 2? Yes**, once Thurgood's ruling merges and passes my pre-read for verifiability. C-1 to C-3 concern the hold guard and U3c, not the cycle.
+4. **U3c: yes, and my batching limits are intact.**
+   - U3g's ancestry instrument (Task 29) puts the profile author's wording before U3g's base, and Thurgood authors nothing in U3g. The cycle judges his text from my seat, which is the separation I asked for.
+   - Task 31 carries all six limits, plus R-7's stale-list paste, and takes the list after the last authoring commit.
+   - Ceiling limb (iii) no longer needs a carve-out.
+
+**Required changes (small)**
+- **C-1 — the verdict record reaches `main` only through U3g's squash** (§ "Task 30", the verdict-record criterion). Add:
+  > The record is committed on `task/123-u3g-g2c2` and reaches `main` only through U3g's squash. It is never committed to `main` by a record-only PR.
+
+  **Why**: if the record reached `main` first, the drafted step-5 line would read `HOLDS` at S while the fix was unmerged.
+  **Belt-and-braces, for the line's draft** (Thurgood, outside this PR): add `&& git cat-file -e <S>:tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` to the HOLDS limb.
+- **C-2 — the cycle-3 record path** (§ "Task 30", the cycle-3 bullet). Name it `completion/re-grounding-g2-cycle-3.md`. It carries one verdict token, and the cycle-2 record is never edited.
+  - **Why**: the drafted line reads only cycle 2's path. If cycle 3 holds after cycle 2 did not, the guard keeps refusing, and an operator facing a guard that is wrong by construction learns to override it.
+  - **The line's draft** should read the highest-numbered `re-grounding-g2-cycle-<n>.md` present at S, or both named paths.
+- **C-3 — the cite-only corrections need the signers' read, and "exactly five" is now six** (§ "Task 31").
+  - The cite edits to divergents 6, 8 and 9 move no hash (`freshness.ts` L363–369, per Thurgood). So no act follows them, and the old signatures stay in force over changed `cites`. That is my A-2 class gap, in this case.
+  - The ballot's clause 5 governs re-signing a row that is not on the stale list. These edits involve no re-sign at all, so the only record of the signers' assent is their read.
+  - **Text I want**: extend "Who words what" to the cite edits ("Kenya and Data read each cite change before it is committed; the completion doc quotes each before/after pair and their read"), and amend "the batch is exactly these five things" to "these five things, plus the declared cite-only commit (31.3)".
+
+**Recommendation, not required**
+- **A-7 — a record the next operator meets.** Until the hermetic-ballot amendment lands, the hold is enforced only by memory. Add an item to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`, whose trigger is already "before the next `@3fn/core` publish", naming the step-5 line as owed. That gives the next operator something to meet. It is Thurgood's issue, outside this PR.
+
 ---
