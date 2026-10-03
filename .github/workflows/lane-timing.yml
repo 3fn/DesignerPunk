@@ -199,6 +199,11 @@ jobs:
       # Did-it-really-run floor (in-step, the build-validate form above): the script's own summary
       # line `N/M assertions passed.` must be present with M >= 75 (derived from 94 on 2026-10-03,
       # #279); a non-zero exit or any FAIL already fails the step through pipefail.
+      # Section floor (Stacy R1 residual (i), ballot 2026-10-03-hermetic-publish-path § 10; added
+      # 2026-10-03): the total floor alone does not cover pack-assert's publish-path section (§ 10,
+      # 16 assertions: 10a 8 root token files + 10b 1 themes + 10c 2 leftovers + 10d 1 bundle count
+      # + 3 bundles + 10e 1 machine path; 94 - 16 = 78 >= 75). So the captured output must also
+      # carry >= 14 lines `PASS: publish path: ...` (16 today) — a refactor that drops § 10 reds here.
       - name: Pack contents (npm run test:pack-contents) — with execution assertion
         run: |
           set -o pipefail
@@ -206,6 +211,9 @@ jobs:
           TOTAL=$(grep -oE "^[0-9]+/[0-9]+ assertions passed" "$RUNNER_TEMP/pack-contents.out" | tail -1 | cut -d/ -f2 | cut -d' ' -f1)
           echo "pack-assert ran ${TOTAL:-0} assertions (floor: 75; derived from 94 on 2026-10-03)"
           [ "${TOTAL:-0}" -ge 75 ]
+          PUB=$(grep -c "^PASS: publish path:" "$RUNNER_TEMP/pack-contents.out" || true)
+          echo "pack-assert publish-path section: ${PUB:-0} PASS lines (floor: 14; derived from 16 on 2026-10-03)"
+          [ "${PUB:-0}" -ge 14 ]
 
       # Run #2 finding: two suites (mcp-queryability, mcp-component-integration) assert the
       # mcp-server SUB-PACKAGE is built (`fs.existsSync(mcp-server/dist/index.js)`), which
