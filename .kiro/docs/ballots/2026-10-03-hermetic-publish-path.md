@@ -228,18 +228,33 @@ history:
 
 ## 5. Application (at ratification, one PR, Peter-merged under the governance carve-out)
 
-1. The record-first Status flip in this file. Then §§ 3.1–3.8 and § 4, verbatim. Then the README "Ballots on record" entry.
-2. **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release|not have indexed|indexing lag|indexed" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md scripts/verify-publish-rail.sh`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
-3. **The tasks.md annotation owed by the absorbed issue (its owed act 2)**: a dated annotation on Spec 123 `tasks.md`'s line "RELEASE fires at the release tag, before publish", pointing here (phase 1 at S before the tag; phase 2 after the step-6 record PR).
-4. `rebuild_index` after merge: `governance/` is a served root.
-5. Close and archive `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (`git mv` to `archive/`).
-6. **Charter follow-ups, by vehicle (b)**: a canonical-charter edit plus regeneration (Spec 122), in a separate PR after this one merges. Never hand-edit `.claude/agents/*` or `CLAUDE.md`.
+1. ✅ **APPLIED.** The record-first Status flip in this file, then §§ 3.1–3.8 and § 4, verbatim, then the README "Ballots on record" entry. Two formatting adaptations are recorded in the application record below.
+2. ✅ **RUN** (results in the application record below). **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release|not have indexed|indexing lag|indexed" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md scripts/verify-publish-rail.sh`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
+3. ✅ **APPLIED.** **The tasks.md annotation owed by the absorbed issue (its owed act 2)**: a dated annotation on Spec 123 `tasks.md`'s line "RELEASE fires at the release tag, before publish", pointing here (phase 1 at S before the tag; phase 2 after the step-6 record PR).
+4. ⏳ **OWED AFTER MERGE.** `rebuild_index` after merge: `governance/` is a served root. The docs MCP indexes the main checkout, so a rebuild from the PR branch would index unmerged text. This follows the B-U1 and B-CI precedent of a post-merge rebuild.
+5. ✅ **APPLIED.** The outcome is recorded in the issue, which is moved to `archive/`. Its remaining items move to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`. Close and archive `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (`git mv` to `archive/`).
+6. ⏳ **NOT APPLIED HERE, by design.** These are tracked in `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md` § 2, with the signing cost. F-2 was ruled permitted, so Stacy's F-2 clause and the LIVENESS F-2 case both apply. **Charter follow-ups, by vehicle (b)**: a canonical-charter edit plus regeneration (Spec 122), in a separate PR after this one merges. Never hand-edit `.claude/agents/*` or `CLAUDE.md`.
    - **Stacy's RELEASE row** (`canonical/agents/stacy.md` L393): her wording, lifted verbatim from § 10 [STACY R1] item (7). It has an event cell, an appended scope sentence, and an F-2 clause if F-2 is permitted. Her consumer overlay row (`stacy.overlay.md` L73) stays unchanged.
    - **Thurgood's LIVENESS read 2** (`canonical/agents/thurgood.md` L448): two cases are events without a complete record. One is a RELEASE record with phase 1 only, still reading `publish-rail liveness: owed`. The other, if F-2 is permitted, is a phase 2 drafted against an open PR that has no merge-confirmation line (A8).
    - **Signing cost (A8)**: Stacy's row is in the Stacy-signed rendered unit `#the-trigger-set-the-114-superset-table-names-never-numbers`. The charter PR stales it, so one Stacy re-sign is owed (it enters Peter's Stacy-signed sample frame), plus one operative-set confirmation. Whether Thurgood's L448 row is rendered is checked at that PR.
    - Both are listed in the sweep section named in item 2.
-7. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
-8. **File the rail-script issue** named in § 3.8 (owner Thurgood; `**Grant paths**: scripts/verify-publish-rail.sh`).
+7. ⏳ **OWED AT MERGE**, by the orchestrator's message to Stacy naming the merge SHA. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
+8. ✅ **FILED**: `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md` § 1. Its grant paths are `scripts/verify-publish-rail.sh` and the bite file that carries the message, and the grant activates at this PR's merge. **File the rail-script issue** named in § 3.8 (owner Thurgood; `**Grant paths**: scripts/verify-publish-rail.sh`).
+
+### Application record (2026-10-03, `chore/ratify-hermetic-publish-path`)
+
+- **Before-text check**: every before-text in §§ 3.1, 3.2, 3.5, 3.6, 3.7 and 3.8 matched `main` @ `b934fa73` exactly once. Nothing stopped. The anchors for § 3.3 (before "**Land the result on `main`**") and § 3.4 (after "…without a committed record the pass has nothing to read.") were each found exactly once.
+- **Two formatting adaptations, stated here rather than made silently**:
+  - **(a) Indentation.** §§ 3.3 and 3.4 were indented three spaces so the new text sits inside RELEASE-FLOW step 6's list item. § 3.4's "7. **Announce last**" line stays at column 0 as a new list item. No words changed.
+  - **(b) A stray `**`.** One stray closing `**` at the end of § 3.8's after-text ("This step never retries automatically.**") was dropped. The bold opened and closed on that block's first line, so the trailing marker would have rendered as literal asterisks.
+- **Register row**: inserted as `### hermetic-publish-path` before `### issue-row-write-scope-grant`, verbatim from § 4. Its YAML parses (owner `ada`, `check_state: proposed`).
+- **Section-citation guard**: `check:section-citations` PASS, run locally on this branch: 191 citations, all resolved.
+- **Straggler sweep (§ 5 item 2)**:
+  - Every publish-path hit is either one of this ballot's new texts, the register's existing `publish-rail-guard` row (accurate), or one of three stragglers that are **not ratified edit sites and were not edited**. All three are filed in the follow-ups issue (§§ 1 and 3):
+    - `scripts/verify-publish-rail.sh` L45 and L77, the indexing-lag message;
+    - RELEASE-FLOW's "Deriving" Step 5 retirement note, which teaches tag and GitHub release as one act;
+    - RELEASE-FLOW's "What changed and why" `prepublishOnly` row.
+  - The pattern `indexed` was over-broad: about 40 unrelated "MCP-indexed" hits.
 
 ## 6. Deferred — captured
 

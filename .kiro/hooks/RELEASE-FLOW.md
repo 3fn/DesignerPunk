@@ -26,7 +26,7 @@ Before step 1 below, the release author derives-classifies-ratifies:
 1. **Derive**: `git log $(git describe --tags --abbrev=0)..main --oneline` (all changes — squash titles are the changelog spine) and the same log scoped to the SHIPPED surface — **authoritative list: `package.json` `files[]`** (`src/` alone misses served-content roots like `governance/`; v14's docs-corpus entry lived there). Issue-driven work appears ONLY here — never assume spec summaries cover the delta.
 2. **Classify** each change 🔴 breaking / 🟡 minor / 🔵 patch-internal, reading task summaries or PR bodies for substance.
 3. **Peter ratifies the bump**; notes are hand-authored at `docs/releases/release-X.Y.Z.md` (v14.0.0 = format precedent) and ride the release PR below.
-4. Publish mechanics: the dual-registry playbook (public npm needs Peter's login/2FA; expect the ~30-day token expiry — an E404 on publish is a masked auth failure).
+4. Publish mechanics: § "The sequence" steps 5–6 — **one tarball, built by `scripts/release-publish.ts` in a fresh clone at the tag, published unchanged to both registries**. The public-npm flags are written out in step 5.4. They were previously only in "the dual-registry playbook", which is not in this repo, so a fresh session could not find it. Auth note: public npm needs Peter's login/2FA, and the token expires in about 30 days, so an E404 on publish is a masked auth failure. **The release notes disclose any change in embedded dependency versions against the previous release's public artifact** (the first instance is § "Dependency disclosure" of ballot `2026-10-03-hermetic-publish-path`).
 5. **Claims-pass owed set + the arming question** — see the named step below. **Both lines produce artifacts, not reminders.**
 
 ### Step 5 — run the owed-set query, paste its output, and confront the arming question
@@ -121,14 +121,24 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
    or `gh pr create` for standalone chores). Required checks run on the PR.
 4. **Peter merges on green.** The version bump + notes + token-index land on `main`
    as one squash commit.
-5. **Publish from merged `main`**: `git switch main && git pull`, then `npm publish`
-   (per the dual-registry playbook where applicable).
-   - `prepublishOnly` runs `build` + `check:drift` + `verify:token-index-clean` —
-     if the freshly-built `token-index/` differs from what's committed, **publish
-     aborts loudly before anything ships** (the fix: go back to step 2's regeneration
-     on a branch; the release PR was incomplete).
-   - `postpublish` never pushes. If `token-index/` somehow changed during publish
-     anyway, it prints a warning telling you to route the diff through a PR.
+5. **Tag, then publish ONE tarball from the tag.** The release commit is the release PR's squash commit **S**. A later record-only PR never changes what is tagged or published.
+   - **5.1 Dry run at S, before the tag is pushed**: `npx tsx scripts/release-publish.ts --dry-run <S>`, **run from the main checkout**.
+     - It works in a fresh clone at S: `npm ci`, then `check:drift`, then `npm pack` with lifecycle scripts on, so `prepack` builds.
+     - **After the pack** it runs `verify:token-index-clean`, because the build inside `prepack` regenerates the index.
+     - It then runs `pack-assert` on the tarball: no leftover `dist/` files, the MCP bundle shape (root `node_modules` only), no machine path in `dist/**`, no `dist/{ios,android,web}/**`, the eight root token files, `themes: []`, the closure present.
+     - **Keep its output**: the dry run's `N/M assertions passed.` tally and its sha1 are pasted into the step-6 `.txt` (A3).
+     - It runs these checks itself because a tarball publish runs no lifecycle scripts (P2).
+
+     **Nothing is published.** A red stops the release before any tag exists; fix it on a branch and re-merge (back to step 1).
+   - **5.2 Tag S** and push the tag: `git tag -a v<version> <S> && git push origin v<version>`. **The GitHub release is NOT created yet** (step 7).
+   - **5.3 Publish to GitHub Packages**: `npx tsx scripts/release-publish.ts <version> --expect-sha <S>`, **run from the main checkout**. GitHub Packages auth is that checkout's gitignored `.npmrc`; an `npm whoami` preflight refuses before any build if it fails, and it refuses from a worktree.
+     - It repeats 5.1 in a fresh clone **at the tag**.
+     - It refuses unless `v<version>` resolves to `--expect-sha <S>`, the tag commit is on `origin/main`, and the tagged `package.json` version equals `<version>`.
+     - It then records the tarball's path, file count and sha1 in `release-publish-record.json` (in an OS temp dir; the script prints its path), publishes **that tarball** to GitHub Packages, and prints the public-npm command for 5.4 with the sha1 to check.
+     - **Keep the tarball and its record until 6b is recorded** (A11). The record's full contents (commit, sha1, fileCount, bytes, pack-assert passed/total, createdAt) are pasted into the step-6 `.txt` (A3), because the temp dir is never committed and 6b's comparand must be.
+   - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): first check the printed sha1 against the file, then run `npm publish <tarball> --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`. **Never a folder publish, never `--ignore-scripts`, never a tarball the script did not produce.** A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
+   - **Guards live in the command the operator runs, never in a list addressed to a seat** (RS-7). A release check that cannot be put in the script is written into this step's text, at the point where the operator meets it.
+   - **A tarball publish runs no lifecycle scripts**: no `prepublishOnly`, no `postpublish` (npm 10.9.3 source; ballot `2026-10-03-hermetic-publish-path` P2). The script runs the pre-publish checks itself. **Step 6 is the only post-publish check.** `postpublish`'s `token-index/` warning fires only on a folder publish, which the tripwire refuses.
 6. **Run the publish-rail guard and land its result via a release-record PR**
    (Req 6.4, 6.6, 6.7 — Spec 123 C9; `governance/classification-map.md` §
    "publish-rail-guard"):
@@ -139,9 +149,34 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
    `.npmrc` of any kind is read *(nor `~/.curlrc`; standard proxy environment
    variables such as `HTTPS_PROXY` are honoured)*. A non-zero exit means the release did not land
    where consumers install from: **do not announce it.** Fix and re-run before
-   proceeding. **If it fails within the first few minutes of publishing, the
-   registry may just not have indexed the version yet — wait a minute and
-   re-run by hand; this step never retries automatically.**
+   proceeding. **If it fails, read the registry's own record before re-running.**
+   - If the packument (`curl -s https://registry.npmjs.org/@3fn%2fcore`) has no `time["<version>"]`, the version is not published yet. A 404 is then the correct answer, not indexing lag (15.0.0's R-4).
+   - If `time["<version>"]` is present and the rail still fails within a few minutes of it, re-run by hand.
+   - This step never retries automatically.
+
+   **6b — the two-registry record.** In the same `.txt`, first paste the script's comparands:
+   - the 5.3 `release-publish-record.json` contents (commit, sha1, fileCount, bytes, pack-assert passed/total, createdAt);
+   - the 5.1 dry run's tally line.
+
+   Then record, for **each** registry:
+   - the version is present;
+   - the registry's own publish time, from the packument's `time["<version>"]`, never an operator estimate (RS-8);
+   - the tarball's file count;
+   - `dist.shasum`;
+   - the sha1 of the fetched tarball's own bytes (`shasum` of the file), an independent read beside the registry's claim (A4).
+
+   **All four sha1s (two `dist.shasum`, two fetched-bytes) must equal the sha1 pasted from the 5.3 record.** Any mismatch is a release incident: record it and stop before step 7. Published bytes cannot be replaced, so the remedy is Peter's ruling, not a re-publish.
+
+   **Run every 6b command from the MAIN checkout.** That is the npm config 5.3's `whoami` preflight proved (A2). A fresh clone or a worktree carries no `.npmrc` (it is gitignored), and the GitHub Packages read there fails with E401.
+
+   **Every `npm` command names the registry twice, `--registry <r> --@3fn:registry=<r>`** (A1). The main checkout's `.npmrc` maps the `@3fn` scope to GitHub Packages, and a scoped name follows that mapping over a bare `--registry`. Measured on 15.0.0 (Stacy R1): `npm view … --registry https://registry.npmjs.org` alone returned GitHub's sha1 `65d2ec0b…`; with the scope flag, npmjs's `48dd8cdd…`. Without it, 6b would have hidden the 15.0.0 divergence.
+
+   Commands, with `<r>` = `https://registry.npmjs.org` or `https://npm.pkg.github.com`:
+   - **npmjs, metadata**: `curl -s https://registry.npmjs.org/@3fn%2fcore` for `time` and `versions["<v>"].dist.shasum`.
+   - **GitHub Packages, metadata**: `npm view @3fn/core@<v> dist.shasum time --json --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com`.
+   - **Each tarball**: `npm pack @3fn/core@<v> --registry <r> --@3fn:registry=<r> --pack-destination <tmp>`, then `shasum <file>` and `tar -tzf <file> | wc -l`.
+
+   **Only if the GitHub Packages read fails on auth from the main checkout**, ask Peter for a `read:packages` token, and record that the fallback was used.
 
    **Land the result on `main`** — `main` is branch-protected, so a working-tree
    file is not enough. Paste the **full output, including the exit code**, to
@@ -162,6 +197,19 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
    committed `.txt` file to determine liveness (Req 6.7): a guard run is an
    event in the release *process*, not a diff in the release *delta*, so
    without a committed record the pass has nothing to read.
+
+   **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets only *when*):
+   - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the 5a owed-set paste, the 5b arming line and 5.1's tally. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
+   - **Phase 2** is a dated section appended to the same record. It reads the committed step-6 `.txt`: the rail result and the 6b two-registry record. **Its trigger is the merge of the step-6 release-record PR.**
+
+   **Phase 2 may be drafted against that PR while it is still open.** If it is, it MUST end with a **merge-confirmation line** written at the PR's merge:
+   - **Scope: every file phase 2 read from that PR**, not only the `.txt` (A6). It records `git diff --quiet <read-sha> <merge-sha> -- <each path read>`.
+   - If a merged file differs from the read, the line records every changed hunk re-read and every phase-2 reading it changes.
+   - **A finding resolved by a commit after the read stays in the record**, with its resolution and the resolving SHA. It is never deleted (A6; 15.0.0's R-4).
+   - **Where it lands**: in phase 2's own PR if that PR is still open at the step-6 PR's merge. Otherwise it goes in a follow-up record-only PR. On 15.0.0, phase 2's PR (#274) merged 16 s after #273, and the line needed #275.
+   - Until that line exists, the liveness reading is "read, not committed". (RS-9: on 15.0.0 the merged file differed from the one phase 2 read, and only the confirmation line caught it.)
+
+7. **Announce last**: create the GitHub release (`gh release create v<version> --notes-file docs/releases/release-<version>.md`) **only after** step 6's rail PASS and a matching 6b record. Notes must not state a guard as applied before the step that applies it has run (R-3).
 
 ## What changed and why (Req 4.4 justification)
 

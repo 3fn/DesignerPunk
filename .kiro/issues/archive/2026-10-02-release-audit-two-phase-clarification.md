@@ -114,3 +114,11 @@ The MCP index is refreshed at application by `rebuild_index` (ballot § 5 item 4
 
 ### Overlap
 `.kiro/issues/2026-08-12-release-manager-retirement-execution.md` also touches RELEASE-FLOW (its PR 2's "Deriving the delta" addition, already applied) and governance-reference adjudications. Recorded by pointer only. Nothing here expands into its 36-file cleanup.
+
+---
+
+**2026-10-03 — CLOSED: ratified and applied.** Ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` is **RATIFIED (Peter, 2026-10-03)** and applied in PR `chore/ratify-hermetic-publish-path`.
+- **What it carries**: this issue's owed act 1 (RELEASE-FLOW step 6's two-phase form, § 3.4) and owed act 2 (the Spec 123 `tasks.md` annotation, applied in the same PR).
+- **F-2 RULED**: phase 2 drafted against the open step-6 PR is **permitted**, with the mandatory merge-confirmation line in the A6 form.
+- **What remains** moves to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`, under its own owner and trigger: the charter rows (Stacy's RELEASE row, Thurgood's LIVENESS read 2), the rail-script message, and two RELEASE-FLOW stragglers.
+- **Archived** per the ballot's § 5 item 5 and `.kiro/issues/README.md` rule 5. — Thurgood

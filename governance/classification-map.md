@@ -880,6 +880,35 @@ history:
   - { date: 2026-09-27, change: "REWORKED a second time same day, after Stacy's re-check (completion/task-7-3-stacy-review.md, 'Re-check addendum,' commit 2d83f266) returned ACCEPT with five non-blocking fixes, applied here: (1) curl -q added as the script's first argument, so ~/.curlrc is never read either — the phrase 'hermetic-from-config' is corrected wherever it appeared (this history line included) to the precise claim: no npm CLI, no npm config, no curl config file is read, and standard proxy env vars are DELIBERATELY HONOURED, not overridden; (2) an unset VERSION now exits 2 (a named USAGE error) instead of bash's own unbound-variable exit 1, with a fourth bite recorded; (3) the FAIL[version] message and RELEASE-FLOW.md step 6's own text each carry one short, no-auto-retry note that a 404 in the first minutes after publish may be registry indexing lag; (4) checks no longer calls the live PASS a 'bite' — it is a committed measurement, distinct from the three recorded reds. STACY'S ARMED RULING (the fork her first review surfaced): check_state: armed STANDS — both her conditions are met (row + step 6 land in one commit; R1-1 fixed, evidenced by a real PASS) and, unlike completion-criteria-parity, no separate later gate exists here. BINDING CONDITION, hers, carried verbatim: if application is ever split, with the row committed without step 6, the row lands as proposed — only the same-commit case earns armed. Re-ran the real 14.1.0 PASS after the -q change; re-committed pass-real-version.txt", by: thurgood }
 ```
 
+### hermetic-publish-path
+
+```yaml
+rule: "Every @3fn/core version SHALL be published as ONE tarball, built by the committed publish script in a fresh clone at the version's tag with lifecycle scripts on and checked by pack-assert, and published unchanged to every registry; the registries' sha1s SHALL equal the script's recorded sha1, recorded in the step-6 release record"
+boundary_call:
+  class: functional
+  rationale: "Artifact half: mechanical — the script's fresh clone and tag check, pack-assert's listing checks, the prepublishOnly tripwire refusing a folder publish, and sha1 equality across registries. The ordering half (dry run before tag, announce last) is OPERATIONAL, carried by RELEASE-FLOW's step text and the RELEASE claims pass, by the publish-rail-guard precedent"
+verification:
+  disposition: barrier
+  owner: ada
+  check_state: proposed
+  checks: []
+  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). THE FLIP (A9; F-4 RULED by Peter 2026-10-03:
+  # arm at the first release run under the law, not in the application PR). This row lands `proposed` with the
+  # application PR. It flips to `armed`, `armed_at: tool-time` in the release-record PR of the FIRST release
+  # published under RELEASE-FLOW steps 5–7; that release's 6b record is the live evidence. At the flip, checks[] =
+  #   ["scripts/release-publish.ts (RELEASE-FLOW 5.1/5.3: fresh clone at the tag; three tag checks; check:drift;
+  #     verify:token-index-clean after the pack; pack-assert; sha1 record)",
+  #    "package.json prepublishOnly tripwire (folder publish refused; P3)",
+  #    "RELEASE-FLOW step 6b two-registry record (four sha1s equal the 5.3 record)"].
+  # The CI half (`test:pack-contents` in lane-functional-root, #281) is build-time evidence, not this row's
+  # tool-time check. ARMING read: Stacy, at the flip PR's merge.
+  # Owner is ada because she maintains the instrument (script, tripwire, pack-assert); the law text is Thurgood's.
+education:
+  disposition: "AUTHOR: RELEASE-FLOW steps 5–7 (ballot 2026-10-03-hermetic-publish-path § 3) and governance/release-management-system.md § 5 are the education. PRUNED: the 2026-10-02 deferral's three manual guards are superseded by the script (Ada's issue records that). HONEST REACH: a publish run with --ignore-scripts, or of a tarball the script did not produce, is NOT detected before publish; 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced"
+history:
+  - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed. P2 (source read, Ada R2; observed leg) and P3 recorded on Ada's issue 2026-10-03. The flip PR and checks[] are named in the verification comment (Stacy R1 A9). RATIFIED 2026-10-03 (Peter; F-3 owner ada; F-4: arms at the first release run under the law, the release-record PR of that release being the flip PR — not at this application)", by: thurgood }
+```
+
 ### issue-row-write-scope-grant
 
 ```yaml

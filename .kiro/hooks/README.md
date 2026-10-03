@@ -106,7 +106,7 @@ The following scripts implemented the retired direct-commit flow and are now **h
 
 ## Release Flow
 
-See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the `prepublishOnly` token-index gate, and the derive-classify-ratify notes recipe).
+See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the derive-classify-ratify notes recipe, and the publish path: one tarball built by `scripts/release-publish.ts` in a fresh clone at the tag, which runs the token-index gate itself; `prepublishOnly` only refuses a folder publish).
 
 ---
 
