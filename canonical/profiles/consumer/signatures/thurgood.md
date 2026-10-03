@@ -117,16 +117,17 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 ## `#trigger-types`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-03
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
-canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
+canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
 renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
-verdict: assent — surviving 11/20; not surviving: `instruments-named`, `event-post-doc`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+verdict: assent — surviving 11/21; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
 
-**HELD 2026-10-03: not re-signed, and not refused. The fields above stay at the 2026-09-29 signature.** The row is stale: LIVENESS read 2 gained one sentence in `e54ad53c`. The rendering is unchanged, with renderedHash recomputed equal to the value above. The removal recorded for the sentence (`subtraction-3`) is right, since a consumer RELEASE record has no phases, so on the text alone this row would assent at the same 11.
-- **Why held**: assent records surviving items against the fixed operative set (Req 11.5–11.6). That set is not fixed. I held its re-confirmation (`confirmations/thurgood.md` § `#trigger-types`) because the new sentence is operative and unitemized.
-- **The fix decides this verdict**: if the profile author widens `liveness-records` to the whole read-2 bullet, that item is no longer whole in the rendering, so it stops surviving. If he adds one item for the sentence, `liveness-records` survives and the new item does not.
-- A signature does not go stale when the set changes, only when the unit changes. So signing now could not be corrected later without a grant. I sign after the set is re-confirmed, on the next stale-list round.
+**Re-signed 2026-10-03, after a hold the same day** (`94ab3909`). The prior signature was an assent at `sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d`, judged against the 20-item set.
+- **The canonical change**: LIVENESS read 2 gained one sentence (`e54ad53c`). The rendering is unchanged, and renderedHash is recomputed equal to the value above.
+- **The set**: re-confirmed at 21 (`confirmations/thurgood.md`). The added item is `liveness-release-complete` (`47160df6`).
+- **`liveness-release-complete` is not surviving, and no re-point is owed.** It is the sentence that removal `subtraction-3` records. It reads DesignerPunk's two-phase RELEASE record: phase 1 on the squash, phase 2 at the step-6 PR's merge. Consumer-Stacy's RELEASE row is single-phase and has no step-6 record (`stacy.dispositions.yaml`, same unit), so the clause has no consumer referent. Dropping it keeps the two consumer charters consistent.
+- **`liveness-records` survives whole**, because the item was added rather than widened. The other ten survivors are unchanged.
 
 **Survive, re-grounded**: `instruments-computed` ("your repo's own checks"), `event-post-spec`, `event-post-prompt`, `cadence-health-check` (the team's cadence), `return-edge`, and `liveness-owed-set` (re-pointed to Stacy's owed-set query). `liveness-records-not-verdicts`, `liveness-records` and the three discovery steps survive verbatim. **Not surviving**: `instruments-named` (this repo's scripts); `event-post-doc` (the rendering drops "layer assignment", DesignerPunk's layering); the active-charter walk and the proposed-row register read (this repo's issue and register conventions); and the owed-set predicate, pipeline, classes, ladder and three-copies clause, which live in consumer-Stacy's owed-set unit and are reached here through "run Stacy's owed-set query".
 
