@@ -1811,4 +1811,184 @@ I would drop "L816" from user-facing surfaces (a line number rots); keep it in t
 - [@THURGOOD] Does 29's re-sign row stay one round if the sweep after 29.3 shows my rows moving for a reason other than 29.5? → tasks.md § "Task 29" -- [DATA R1]
 - [@LINA] Can you run `renderedHashOf` for `ambient.groundTruthManifest.verdict`, `commands[platform-tokens]`, `routes.cues[9]` and the trim row of `data` over the 29.3 per-entry Kiro spans and paste the result before 29.5? → tasks.md § "Task 29" -- [DATA R1]
 
+#### [LEONARDO R1]
+
+**Verdict: APPROVE-WITH-CHANGES.** Nothing blocking. Eight required changes and five advisories follow. **None of them adds a subtask**, so R-7's last slot stays free.
+
+**Seat**: experience owner. I am Task 19's on-branch reviewer, and I author 22.0, 22.3's content and 22.5's DD9 read.
+- **Tree**: worktree `review/u3-amend-leonardo`, fast-forwarded to `6c4ddfc4`. Line numbers are from that tree; `tasks.md` and `design.md` are unchanged since `7694adbc`.
+- **Commands**: I read files with `grep` and `sed`. I ran `git` on the main checkout read-only, including fetching `refs/pull/197/head` into `FETCH_HEAD` (no tracked file changed). No build or test was run.
+- **Not reviewed**: UNIT 3g (Tasks 29–30) in substance, Task 21, the packaging rows and lock mechanics (beyond FK-1's effect on my files), the delegated-tier table (beyond my rows), and Kenya's FK-6.
+
+**Rulings (R-1 … R-10)**: I re-read each row against Peter's quoted words. One limb is stated as ruled without appearing in the quote: see ADVISORY L-A1.
+
+---
+
+**Answers to the `[@LEONARDO]` mentions**
+
+**1. Thurgood: the scope sentence** (`tasks.md` L972; § "Expected release count" L181–185; design C23 erratum L759). This is the one asserted string, the same on all three surfaces:
+
+> **This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.**
+
+- It carries Ada's three parts. It also contains **both label substrings verbatim**: `reference source, not a build input` and `Native onboarding is not supported`. That answers Ada's question (yes, it doubles as label string 1, and as string 2 as well). The platform sub-sections still carry Kenya's and Data's own sentences.
+- **"light and dark mode work"** is there so that "a theme does not emit" is not read as "theming is broken". Source: `docs/releases/release-15.0.0.md` L128 ("What the web CSS does carry is DesignerPunk's base light/dark values … and the built-in `data-theme="wcag"` block").
+- **@Ada**: please fact-check the third sentence. I worded your caveat from L128, not from your text.
+
+**2. Thurgood: the unfilled-note warning, and the walkthrough-offer line and its frequency.**
+- **Unfilled warning** (design catalog row "personal note unfilled"):
+  > `your personal note (.designerpunk/personal-note.local.md) is still the unfilled template, so your agents set it aside. Fill it in yourself, or ask your agent to walk you through it: who you are, what you and your organization value, and how you like to work together. Rather not keep one? Replace it with a line of your own and this message stops. (It stays on your machine.)`
+  - **Why the "rather not" clause**: `generate` runs on every token change. Without a stated way out, a person who chooses not to write a note is nagged forever. Under the detection rule (L-RC1), any line of her own makes the note filled.
+- **Offer line** (it lives in the note itself, R-8):
+  > **For agents**: while this note holds nothing but its template (headings, this guidance, `TODO`), it is unfilled; do not read it as instructions about the person. If you are talking directly with the person (never as a delegated subagent), offer once in this conversation to walk them through it, one section at a time, writing their answers here in their own words. If they decline, offer to replace the file with one line of their choosing. Any edit of theirs ends the offer.
+- **Frequency: at most once per conversation, ended for good by any edit of hers.** The file is the memory, so no agent state is needed.
+  - "Once ever" is not implementable without state.
+  - "Not once per agent" (L1091) cannot be enforced either: Kiro agents and CC subagents share no memory.
+  - **"Never as a delegated subagent"** stops a CC subagent (which also loads `CLAUDE.md`'s imports) from interrupting a task to offer.
+  - **Surviving residual**: a Kiro user who switches agents before deciding can be offered once per agent conversation until she edits the file.
+
+**3. Thurgood: C23's "section order is unchanged from the draft". The referent exists, and here it is.**
+- **Source**: commit `02138996` ("Design phase: design.md draft + reviewer context (123)", 2026-09-26), `design.md` **L507–516**, § "C23", "**Section order is the sequencing requirement** (15B.7)", nine numbered sections:
+  1. Which posture? (CONSUME or BECOME)
+  2. CONSUME, the reference-corpus / no-init path
+  3. BECOME, birth (+ restart and why)
+  4. Your language vs our updating surface (`generate`; the update lifecycle)
+  5. When `sync` reports a missing token
+  6. Your agent layer
+  7. Joining an existing design system
+  8. CI needs
+  9. Ownership (forking by name, then the clone hatch)
+- **How I found it**: `git show 02138996:…/design.md`. It is **not on `main`**: #197 squash-merged the design branch (`5e98bd8f`). It **is** reachable from GitHub's `refs/pull/197/head`: I fetched that ref and ran `git merge-base --is-ancestor 02138996 FETCH_HEAD`, which succeeded. Every later design commit, including the R2 basis `ec32707a` I reviewed, already says "unchanged from the draft".
+- **Fix (L-RC5)**: a referent that lives only in a PR ref is fragile. C23 should state the order itself.
+
+**4. Lina: put every template line except headings inside HTML comments?** **Your rule's principle, yes**: strip-based and version-free. **Comments-only, no.** L-RC1 gives the variant I will author to, and why.
+
+**5. Ada: keep the exact substring?** Yes; see 1.
+
+---
+
+**REQUIRED CHANGES**
+
+- **L-RC1 — the detection rule** (`tasks.md` § "Task 22", detection-rule bullet L1096–1110; design C26 erratum). **I confirm R-8's consequences**: the file is its own template, and a free rewrite is filled. **I confirm Lina's RC-1 form, with one change.**
+  - **The change**: the template's guidance (the offer line, the slot questions, the pointer to the example) sits in **one visible block between two marker comments**, `<!-- dp:template -->` … `<!-- /dp:template -->`, instead of being spread across HTML comments.
+  - **Rule text I want**:
+    > A note is **unfilled** iff, after removing the marked template block, every other HTML comment, every Markdown heading line and every bare `TODO` token, only whitespace remains.
+  - **Why visible, not comments only:**
+    - (a) **UNVERIFIED and load-bearing**: whether Claude Code shows the agent HTML comments from an `@`-imported file. If it hides them, a comments-only offer line and comments-only questions are invisible to the CC agent, and the walkthrough (R-4's primary path) silently never happens. The marked block works either way: if comments are hidden, the markers disappear and the text stays visible.
+    - (b) **Peter's "Mad Libs format"** needs visible sentence stems in a Markdown preview. Under the block they sit there as examples of what to write.
+  - **Unit cases to add to Lina's table:**
+    - template block deleted, slots `TODO` → unfilled;
+    - text written inside the block → filled (her own words, wherever she put them);
+    - markers deleted, block text kept → filled (an edit of hers; stated so it is a decided case, not an accident).
+  - **Instrument / red**: Lina's, unchanged. The bite is: force "filled" → the template-as-created case goes red.
+  - The cost over Lina's form is one removal clause.
+
+- **L-RC2 — who prints what, and the design/tasks contradiction** (design C26 erratum L801 vs `tasks.md` § "Task 22" mechanism-B bullets).
+  - Design says "**Only** `sync --migrate-legacy` prints the naming row" and "**All four** print the unfilled warning". Tasks says `init` prints the naming row (as C27 and criterion 2 require), and that the warning comes from three commands, not `init`.
+  - Tasks is right. Text I want, in both places:
+    > Every command that **creates** the note prints a creation row (`init`: the naming row; `generate`, `attach`, `sync`: the "created" row; `sync --migrate-legacy`: the naming row). A command that **finds** an existing unfilled note prints the unfilled warning. **No run prints both.**
+  - **Gap this closes**: as written, `attach` and non-migrating `sync` create the note silently.
+  - **Instrument**: `personalNote.test.ts` per command: "absent → creation row only"; "exists unfilled → warning only". **Red**: both rows, or neither.
+
+- **L-RC3 — the existing rows still teach the old two-slot note and no walkthrough** (design catalog rows "personal-note naming", "**generate created the personal note**" and "`init` in a born repo (A7)", plus C23's step 4). Each says "who you are and how you want to be worked with". The note now has three slots, and the walkthrough is the low-burden path.
+  - Texts I want:
+    - **naming**: `fill in .designerpunk/personal-note.local.md — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine)`
+    - **created**: `created .designerpunk/personal-note.local.md from the template — fill it in, or ask your agent to walk you through it. Your agents read it every session (it stays on your machine)`
+    - **born-repo refusal**: its "fill in .designerpunk/personal-note.local.md (generate creates it)" step becomes "fill in your personal note (generate creates it; your agent can walk you through it)".
+  - **C23's founder and joining step 4** gain the same "or, after the restart, your agent walks you through it" clause.
+  - **Path-steps are unchanged**: step 4 is still one user action either way, and the sequenced restart row stays last. This also answers Thurgood's Req 18.1 reading (L1095). **I accept it**, provided the walkthrough is named at step 4. Without that, "personalizes … on install" is met only for people who read the note unprompted.
+  - **Instrument**: 22.2's string-equal tests (the row labels are unchanged; only the strings move) and 19.2's imported-string assertions. **Red**: the old string.
+
+- **L-RC4 — 22.0 is authorable once three things are written down** (`tasks.md` § "Task 22", L1093 and subtask 22.0):
+  - **(a) Peter's approval is bound to bytes.** Text I want:
+    > Peter's approval is a dated record at `.kiro/specs/123-consumer-distribution/design-inputs/personal-note.example.approval.md`, written by the orchestrator. It quotes Peter's words and names the example's `git hash-object`. It lists each edit from his original note (kept / cut / reworded, with a reason), so he approves the edits and not only the result. It also states that he knowingly re-ships an edited version of content D-live-4/A10 removed from the package.
+    - **Instrument**: `git hash-object` of the placed example equals the recorded hash. **Red**: they differ, meaning the text changed after approval.
+  - **(b) Order.** 22.0's **template** lands before 22.1 (Lina's A-1). The **example and its approval** land before 22.3b/22.4, not before 22.1.
+  - **(c) What the example may and may not contain** (my editing brief, for Peter to overrule):
+    - **May**: his own words in the three slots (who he is and what he is building; values such as respect, candour over comfort, and systematic, sustainable solutions; how he collaborates, e.g. "I might not always agree, but I will always listen" and "the good, the bad, and the ugly").
+    - **Must not**:
+      - the résumé/CV file reference, or any file path (Req 18.2);
+      - any DesignerPunk process or governance reference (it would read as the consumer's law);
+      - instructions that bind "you, the agent" in a way that would govern a reader's agents if copied whole.
+    - **First line**: "This is Peter's note, edited, shown as an example. Write your own."
+    - **Flagged for Peter's call, not cut silently**: the passage on human harms (racism, sexual violence, war) and the "largely a tool" aside, which shift the example from collaboration preferences toward a worldview statement in a public package; and the sign-off's profanity.
+    - **Never a resource or import**. **Instrument**: `grep -r "personal-note.example"` over every emitted consumer output in the 16.6 packed install → 0. **Red**: a hit.
+  - **(d) The template names the example's installed path** (e.g. `node_modules/@3fn/core/<FK-1 path>/personal-note.example.md`). Without that, the example ships but nobody finds it. **Instrument**: the 16.6 packed install asserts the path named in the template exists. **Red**: it does not. This makes 22.0's template wait for FK-1's pick.
+
+- **L-RC5 — C23 states the order and places the platforms heading** (design C23 L752 and the R-2 erratum L758; `tasks.md` L970).
+  - The heading-order test needs an order it can read. "Unchanged from the draft" points to a PR-only commit (answer 3), and R-2's platforms heading has no position at all.
+  - Text I want (C23 erratum):
+    > The region's order is: the **scope sentence** (the region's first paragraph); § Prerequisites; 1 Which posture?; 2 CONSUME; 3 BECOME (birth + restart); 4 Your language vs our updating surface; **§ Platforms, with sibling sub-sections Web, iOS and Android**; 5 When `sync` reports a missing token; 6 Your agent layer; § Adding a second harness; 7 Joining; 8 CI needs; 9 Ownership. *(Source of 1–9: `02138996` design.md L507–516, PR #197's head.)*
+  - **Three siblings, not "web; iOS and Android"** (L970 is ambiguous). Spec 129 may land one platform first, and React and React Native arrive as two more siblings.
+  - **Platform sub-sections carry no numbered path steps**, so a new platform never changes `path-steps`. If one ever needs a step, that is an install-process change under R-2, with its why recorded.
+  - **The scope sentence opens the region**, not merely "before step 1" (L972): a native reader should stop before installing Node, not after.
+  - **Instrument**: the heading-order test (criterion 2). **Red**: any heading out of order, a platform sub-section outside § Platforms, or the scope sentence not the region's first paragraph.
+  - The platforms position is my proposal; the doc is Thurgood's.
+
+- **L-RC6 — the validity guard's bite cannot fail as written** (`tasks.md` L1119–1122; design C27 erratum). "Break a reference → red" is satisfied by breaking a template name even when component-gap detection is **off**.
+  - `GapDetector` disables itself silently, with a console line, when no component root exists (`product-mcp-server/src/indexer/GapDetector.ts` L64–70, read). It then reports **zero gaps**.
+  - The product indexer also **indexes** template and domain-object names without **resolving** them (`ProductIndexer.ts` L96–100, L269–278, read in my kickoff), so the guard's "every template and domain-object name exists" limb is the guard test's own code, not the indexer's.
+  - Text I want:
+    > **Two bites**: (1) a misspelled component name in `example-home.yaml` → red, which proves gap detection is live in the packed born repo; (2) a missing referenced template → red, from the guard's own existence check. Status `healthy` means zero warnings (`ProductIndexer.ts` L158–161: any warning is `degraded`).
+  - **Red**: either bite stays green.
+
+- **L-RC7 — the `.gitignore` rows** (design catalog "`.gitignore` block — offer" / "— report"). **I accept Lina's RC-2**: its own `[y/N]`, default No, and no writing off a TTY even under `--apply`.
+  - The wording must still serve the common case, an agent running `sync` for a person (no TTY).
+  - Texts I want:
+    - **offer**: `.designerpunk/ is not ignored by git here, so a personal note in it could be committed and shared with your team. Add DesignerPunk's .gitignore block (it ignores .designerpunk/ and token-index/)? [y/N]`
+    - **report**: `.designerpunk/ is not ignored by git here, so a personal note in it could be committed and shared with your team. To fix it: answer the prompt when running 'npx designerpunk sync' in a terminal, or add the line .designerpunk/ to .gitignore (your agent can do this with your go). Nothing was changed.`
+  - "Would be committed" overstates: only a `git add` commits it. "A managed region" is jargon to persona (b). The report must give the agent a path it can take: asking the person, then editing `.gitignore`, needs no terminal.
+  - **Instrument**: Lina's `sync.region.test.ts` cases, string-equal against the rows.
+
+- **L-RC8 — restating my `generate` warning, now with the case R-9 cannot reach** (`tasks.md` L1035). **I restate it, and ask that it be adopted.**
+  - **The joining path never runs `sync`** (C23: clone → `npm install` → `generate` → note → restart). A teammate who clones a **15.0.0-born repo** (no block) gets her note created by `generate`, in an unignored directory, and R-9's offer never reaches her. The same holds for `attach` in the cross-harness join.
+  - Text I want (folds into 22.1, no subtask, one new catalog row placed by Thurgood):
+    > When `generate` or `attach` **creates** the note and `git check-ignore -q .designerpunk/` fails, it prints: `.designerpunk/ is not ignored by git in this repo, so the personal note just created could be committed and shared with your team. Add the line .designerpunk/ to .gitignore (or run 'npx designerpunk sync' in a terminal to add DesignerPunk's block).`
+  - **Instrument**: `personalNote.test.ts`: created in an unignored repo → the row; created in an ignored repo → nothing. **Red**: either case misbehaves.
+  - **Counter that survives**: one more message on a path that already prints a creation row. Two lines at the one moment a personal file lands somewhere it can leak seems the right trade. Thurgood and Lina recorded no objection.
+
+---
+
+**ADVISORY**
+
+- **L-A1 — R-4's "no CLI wizard" limb** (§ "Context for Reviewers" R-4; `tasks.md` L1092; design C26 erratum). Peter's quoted words do not contain it.
+  - If it came from an option he assented to, cite that option. Otherwise it is an owner position, mine and Lina's, and should be labelled so.
+  - **I hold it on the merits**: the founder's agent runs `init` off a TTY (A14), so a wizard serves the rare case.
+- **L-A2 — persona (c)'s frozen prompt must name a web product. It is not in the plan** (`grep -n -i "web product"` over `tasks.md` finds only § "Expected release count"; Task 25 is unchanged).
+  - Task 25 is outside this amendment, so I ask for one carry line in § "Carried obligations", owner Leonardo, due at U5's cut: *"25.1: persona (c)'s frozen prompt names a web product; under release 3's scope, an 'app' prompt would test the native label instead of the path."*
+- **L-A3 — the app-MCP fix deadline** (§ "Expected release count", the open-routings list).
+  - **Carried, and Lina adopts it** (her R1, L1600–1602). The row can now read "Lina; fix before the release-3 tag".
+  - **The issue file does not exist yet**: `ls .kiro/issues | grep -i -E "app-mcp|application-mcp|degraded|companion"` on this tree finds only an unrelated July file. Lina files it in her pre-cut `chore/` PR.
+- **L-A4 — README** (`tasks.md` L978–983).
+  - "The path-step test extends to `README.md`" should say *what* it asserts: the README's numbered list has exactly the `founder` value's count (5), in C23 order. The README has no front matter of its own.
+  - **Keep the README to** the scope sentence, the five steps and the two label strings. Kenya's and Data's cause sentences belong in the guide's sub-sections, not on the npm page.
+- **L-A5 — my 19.5 seat** (`tasks.md` L1007). **The timing is right** (after 22.2), and the list is what I asked for.
+  - One addition: 22.3 must also be before 19.5, since "example-home.yaml placed" is on the list. **Please state it in the lens-6 order line** (L994).
+  - My fold lands before 22.4. If it needs a CLI string changed, that reopens 22.2 on the branch, accepted.
+
+---
+
+**`example-home.yaml` and its companions (22.3)**
+- **I accept authoring every file it references.** I expect that to be **one template file and nothing else**: no domain object, and no product token with a `ref` (`token-index/` does not exist before `generate`; `TokenRefResolver.ts` resolves against it).
+- **Open question**: `product/overview.yaml` is not referenced by the screen, yet 28.3's bar (A7) reads its product name. Is its content mine too (with the product-name substitution as Lina's mechanics), or Lina's? See the directed question.
+- **The guard's state** (after `init`, packed, before `generate`) is recorded as I proposed. I accept it, with L-RC6.
+- **The token-name inspection** is recorded in 22.3's completion doc as a table: token → `get_token_details` result.
+- **Status fields**: web only; iOS and Android `not-started`.
+- **Authoring early**: yes, in the cut's first days, in parallel with Task 19. Template and companions are in my write scope (`design-inputs/`).
+
+**The named-default notice and DD9 (22.2, 22.5)**
+- Printed **first**; the sequenced restart row stays **last**. Both are as I asked (A2, Le-T5), and the row text is mine verbatim.
+- **DD9**: I have no new evidence on the majority harness. I expect to **confirm at 22.5**, with A1's residual unchanged (the notice makes a wrong guess cost one command).
+
+**Forks**
+- **FK-1: no objection to (b)**, now that Ada, Lina and Thurgood all hold it. My only stake is L-RC4 (d): the template names the example's installed path, and that path must exist in the packed install.
+  - *Surviving counter (mine)*: `node_modules/@3fn/core/src/cli/templates/personal-note.example.md` reads like code internals to a person following the pointer. An agent will find it either way.
+- **FK-2, FK-4, FK-5: no stake; abstain.** 22.0's files exist before whichever packaging step runs.
+
+**Directed questions**
+- [@LINA] Will you build L-RC1's variant (the marked visible template block removed by the rule) rather than comments-only? And can someone measure, before 22.0's bytes freeze, whether a CC session sees text inside an HTML comment in an `@`-imported file? The marked block makes the walkthrough independent of the answer, but the answer decides whether Peter's "Mad Libs" stems can live in comments. → tasks.md § "Task 22" (detection rule); design.md § "C26" -- [LEONARDO R1]
+- [@THURGOOD] Do you accept L-RC5's placement of § Platforms (after draft § 4) and the scope sentence as the region's first paragraph? And will C23's erratum state the order with the `02138996` L507–516 source, closing the existence table's MISSING row? → design.md § "C23"; tasks.md § "Task 19" -- [LEONARDO R1]
+- [@THURGOOD] Which text governs, the C26 erratum's "only `sync --migrate-legacy` prints the naming row / all four print the warning", or Task 22's? (L-RC2) → design.md § "C26"; tasks.md § "Task 22" -- [LEONARDO R1]
+- [@ADA] Does the scope sentence's third sentence state your caveat 2 truly ("does not change your generated output yet; light and dark mode work")? → tasks.md § "Expected release count" -- [LEONARDO R1]
+- [@LINA] [@THURGOOD] Is `product/overview.yaml`'s content mine under 22.3 (its product name substituted by `init`), or Lina's scaffold? → tasks.md § "Task 22" -- [LEONARDO R1]
+
 ---
