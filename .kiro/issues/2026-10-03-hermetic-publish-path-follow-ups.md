@@ -1,7 +1,7 @@
 # Issue: hermetic publish path — the follow-ups owed after ratification (rail-script message, charter rows, two RELEASE-FLOW stragglers)
 
 **Date**: 2026-10-03
-**Status**: ACTIVE. Item 1 carries a grant, which does nothing until Peter's merge activates it.
+**Status**: ACTIVE. Item 1 carries a grant, which does nothing until Peter's merge activates it. Item 2 is open. Item 3 is RESOLVED by erratum on #283.
 **Owner**: Thurgood. Stacy authors the wording of her own charter row (item 2a).
 **Trigger**: **before the next `@3fn/core` publish (15.0.1 or 15.1.0) to either registry.** That release is the first run under ballot `2026-10-03-hermetic-publish-path`, and its arming event per F-4. Its operator must not meet the old "indexing lag" message, and its RELEASE pass must not run under charter rows that predate the two-phase form.
 **Source**: `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED Peter 2026-10-03): § 3.8's "Not drafted here" note, § 5 items 6 and 8, and the application PR's straggler sweep (§ 5 item 2).
@@ -40,7 +40,14 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
 
 - **3a. RELEASE-FLOW § "Deriving the delta" Step 5's retirement note** (L15 area). It reads *"tag + GitHub release are manual: `git tag -a vX.Y.Z && git push origin vX.Y.Z && gh release create …`"*. That teaches tag and GitHub release as one act, which contradicts the new step 7 ("Announce last").
 - **3b. RELEASE-FLOW § "What changed and why"** (L218). The table's `prepublishOnly` row shows `build && check:drift && verify:token-index-clean` as the current "After". It is now the folder-publish tripwire.
-- **Fix for both**: a one-line annotation each, pointing to the ballot.
-- **Vehicle: Peter's pick.** Either a small follow-up ballot, or the orchestrator's `chore/` route if he rules errata to ratified text need none (the open question from the two-phase issue).
+- ~~**Fix for both**: a one-line annotation each, pointing to the ballot.~~
+- ~~**Vehicle: Peter's pick.** Either a small follow-up ballot, or the orchestrator's `chore/` route if he rules errata to ratified text need none (the open question from the two-phase issue).~~
+
+**RESOLVED 2026-10-03 by erratum on #283**, before its merge. Peter ruled, relayed verbatim: *"Erratum, go ahead"*, with no separate ballot.
+- **3a** is applied as ballot erratum **E-1** and **3b** as **E-2**, in the ballot's `## Errata` section.
+- Both land in **the third commit on `chore/ratify-hermetic-publish-path`**, the one that adds that section. This commit cannot cite its own SHA; the SHA is recorded in the #283 PR thread.
+- **The one open question** from the two-phase issue (whether errata to ratified text need a ballot) is now ruled **for this case**: no.
+
+**Item 1 (the rail-script message, under the grant) stays open.**
 
 *Sweep note*: the ballot's straggler pattern `indexed` was too broad. It matched about 40 unrelated "MCP-indexed" hits. Only the rail script's lines (item 1) were relevant.

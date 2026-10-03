@@ -106,7 +106,7 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
 
 **Successor release tooling inherits this step as a REQUIREMENT, not as a convention it may re-derive.** Any future release tooling that replaces this document carries step 5 forward in both halves — the run-and-paste owed-set query and the arming line. **There is to be no parallel second mechanism**: the ladder above is the only path from documented pipeline to automation.
 
-*(The automated analyze/notes/release CLI was retired 2026-08-12 — ballot `2026-08-12-q6-release-manager-retirement.md`; tag + GitHub release are manual: `git tag -a vX.Y.Z && git push origin vX.Y.Z && gh release create vX.Y.Z --notes-file docs/releases/release-X.Y.Z.md`.)*
+*(The automated analyze/notes/release CLI was retired 2026-08-12 — ballot `2026-08-12-q6-release-manager-retirement.md`. Tag and GitHub release are manual, and they are **two separate acts**. The tag is pushed at § "The sequence" step 5.2 (`git tag -a vX.Y.Z <S> && git push origin vX.Y.Z`). The GitHub release is created **last**, at step 7, only after step 6's rail PASS and a matching 6b record (`gh release create vX.Y.Z --notes-file docs/releases/release-X.Y.Z.md`). Erratum 2026-10-03, ballot `2026-10-03-hermetic-publish-path`.)*
 
 ## The sequence
 
@@ -215,7 +215,7 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
 
 | Lifecycle script | Before | After |
 |---|---|---|
-| `prepublishOnly` | `build && check:drift` | `build && check:drift && verify:token-index-clean` — blocks publish if `token-index/` wasn't committed on the release branch |
+| `prepublishOnly` | `build && check:drift` | `build && check:drift && verify:token-index-clean` — blocks publish if `token-index/` wasn't committed on the release branch. *Superseded 2026-10-03 (ballot `2026-10-03-hermetic-publish-path`): `prepublishOnly` is now only the tripwire that refuses a folder publish. `check:drift` and `verify:token-index-clean` run inside `scripts/release-publish.ts` (§ "The sequence" steps 5.1 and 5.3).* |
 | `postpublish` | `git add token-index/ && git commit … && git push origin main` | warn-only tripwire; **no git write, no push** |
 
 **Form chosen: pre-publish verification on the release branch** (Req 4.4 form (a),
