@@ -110,6 +110,12 @@ GATES (inside U2)
 
 **Unit order is unconditional: U1 → U2 → U3 → U4 → U5** (Req 26.3). **MIDPOINT — CONFIRMED at U2 by Stacy, with two conditions** (§ "Gates and sequencing"). Record: `.kiro/specs/123-consumer-distribution/completion/claims-pass-midpoint.md`.
 
+*(Erratum 2026-10-03 — the U3 cut; record `.kiro/specs/123-consumer-distribution/feedback/tasks.md` § "U3 amendment round (2026-10-03)". The U3 lines of the block above are read as follows.)*
+- **`docs/consumer/INSTALL.md (shipped)`** holds. It is a **committed derived file**: byte-equal to a marked install region at the top of `governance/DesignerPunk-Integration-Guide.md` (Peter's R-1). It ships by an explicit `files[]` path (C5, erratum below).
+- **"specs/ starter specs"** is where `init` scaffolds the specs **in the consumer's repo**. The package source is `src/cli/templates/starter-specs/**`.
+- **The personal-note template**'s package location is fork FK-1 (C5 erratum below).
+- **U3g** (G2 cycle 2) runs beside U3, not in the U1 → U5 chain (`tasks.md` § "How the units run", amendment 2026-10-03).
+
 **Record homes, pinned from the repo root** (Stacy S-D-A4):
 - **Spec-scoped** (one-time, closes with the spec): G1, G2, MIDPOINT, the U5 validation runs, and the U1b check → under `.kiro/specs/123-consumer-distribution/{completion,validation}/`.
 - **Perpetual** (rewritten on every canonical change and every release, forever): operative-set confirmations and signatures → **`canonical/profiles/consumer/confirmations/<source-id>.md`** and **`canonical/profiles/consumer/signatures/<source-id>.md`**. These survive the spec's closure.
@@ -264,6 +270,16 @@ function findDesignSystemRoot(startDir: string): DesignSystemRoot;
   - **NOT ADDED**: `product-mcp-server/src/` (DD14).
   - **EXCLUDED**: component `__tests__/`, `examples/`.
   - **KEPT pending Kenya/Data** (4.5): `*.swift`, `*.kt`.
+  - *(Erratum 2026-10-03 — U3's shipped artifacts; Ada's U3-kickoff read; record `.kiro/specs/123-consumer-distribution/feedback/tasks.md` § "U3 amendment round (2026-10-03)". This resolves the conflict between design L94, "docs/consumer/INSTALL.md (shipped)", and this ADD list, which omitted it. Req 15.1 requires the install doc to be "a shipped, versioned release artifact".)*
+    - **ADD by explicit path, never a directory glob**: `docs/consumer/INSTALL.md` and `docs/consumer/COMMIT-POLICY.md`.
+    - **The scaffold home is `src/cli/templates/**`**, which already ships through the existing `src/cli/templates/` entry. The starter specs (`src/cli/templates/starter-specs/**`) and the `product/` scaffold (`src/cli/templates/product/**`) need no `files[]` line.
+    - **The personal-note template and its example: fork FK-1, open.**
+      - **(a)** Keep `templates/personal-note.template.md`, as listed above, and add `templates/personal-note.example.md`. Both are explicit paths; Ada's position.
+      - **(b)** `src/cli/templates/personal-note.{template,example}.md`, with no `files[]` line; Lina's and Thurgood's position.
+    - **`scripts/pack-assert.ts`**:
+      - one section-9 ADD-present row per added path and per scaffold file;
+      - **an exact-set row over `src/cli/templates/**`**, shaped like the identity-doc `steeringSetDiff`, so a stray or dropped scaffold file goes red instead of shipping silently (Ada).
+      - These rows sit outside the ≥ 14 `publish path:` floor.
 - **Tarball target**: `tarball-target.json` from the post-diet `npm pack --json` (4.7).
 
 #### C6. Consumer-guard extensions (Req 3) — every case names its test and its bite
@@ -653,6 +669,12 @@ frontmatter:                                        # NEW (L-D4)
 
 - New adapter method **`emitIdentityMembers(members, ctx)`**, called under the consumer profile. **The steward profile keeps today's behavior** (CC imports repo paths; Kiro `[]`), because the steward repo has the files and the consumer does not.
 - **Personal note**: a template member. The always-layer references `.designerpunk/personal-note.local.md`. Absent, or **all slots still `TODO`**, → treated as absent, with Req 13's warning (Leonardo A14).
+  - *(Erratum 2026-10-03 — **mechanism B, RULED by Peter (R-4)**; record `.kiro/specs/123-consumer-distribution/feedback/tasks.md` § "U3 amendment round (2026-10-03)".)* "Treated as absent" no longer means that the reference is omitted.
+    - **The reference is always emitted.** It already is at 15.0.0: all eight committed Kiro agent configs carry it, and the CC region imports it.
+    - The CLI's callers create the note when it is absent, and warn when it is unfilled (C26 erratum).
+    - The note file itself declares when it is unfilled, so agents do not read an unfilled template as instructions. That is A14's intent, met without per-user state leaking into the committed region and configs (Leonardo).
+    - **Kiro, measured 2026-10-03** (Peter, `kiro-cli 2.12.1`): a `file://` resource whose target is absent passes `agent validate`, starts the session with no warning, and lists as `(no matches)`. B's residual (a deleted note) is benign on Kiro.
+    - CC's `@`-import of a missing file stays at U5 (C8(c)).
 
 #### C20. The consumer emission lane — shipped inputs only (Reqs 13, 14.1–14.3, 15A.1; Lina L-D5; Leonardo A1, A8)
 
@@ -669,6 +691,7 @@ frontmatter:                                        # NEW (L-D4)
 | outputs | `consumerRoot` |
 
 - **No attribution sidecars are emitted.** Degradation in the consumer profile = warn and exit 0 (13).
+- *(Erratum 2026-10-03 — Lina, verified at `79a3b3bc`.)* The "identity docs + overlays" row lists the template as a `packageRoot`-relative input, but `consumer-entry.ts` **never reads it**: template members are "referenced, never emitted" (L375–377). The emission lane always emits the note's reference; it does not read the template's location. The row names the package location, which is fork FK-1 (C5 erratum).
 - **The returned file and key list is what `init` and `attach` record in the manifest** (C7).
 - **Input ≠ output, asserted** (Lina R2): `consumer-entry.paths.test.ts` asserts that every resolved input path is under `packageRoot` and every output path is under `consumerRoot`, and that they differ even when the relative paths match (`.kiro/steering/…` on Kiro). *(Otherwise a root slip reads the consumer's own prior output as the counterpart.)*
 - **Compile lane**: `build:generator` (esbuild) → `dist/generator/consumer-entry.js`, run under plain `node` and included in `prepack`.
@@ -728,6 +751,12 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 - **Prerequisites live in their own section, before the posture choice, and are not steps** (Leonardo R2 advisory): Node (with the minimum version), npm, and one declared agent harness installed. *(Persona (b), a static site with no build tooling, may have no Node. Her run must record that as a missing prerequisite, not as a step-1 failure.)*
 - **Section order** is unchanged from the draft. It adds § "Prerequisites" first and § "Adding a second harness" (A1) after § 6.
 - **15B.3's "not read as each other" property is evidenced by persona (c)'s trio run** (harness-fluency axis), named in C30. **The `vocabulary.ts` test establishes consistency (15B.5) only** (A15, R26.8).
+- *(Erratum 2026-10-03 — Peter's R-1, R-2 and R-3; record `.kiro/specs/123-consumer-distribution/feedback/tasks.md` § "U3 amendment round (2026-10-03)".)*
+  - **Where the install doc lives (R-1).** The install doc is a **marked install region** that opens `governance/DesignerPunk-Integration-Guide.md`, served under the existing doc-id. It replaces the guide's old Setup Loop.
+    - The rest of the guide is kept as reference, under one `## Reference` heading, and must not contradict the region. Thurgood owns cleaning it.
+    - `docs/consumer/INSTALL.md` is the **committed** derivation of the region, guarded by an identity test, and is never written at build time.
+  - **How it changes (R-2).** It changes when the install process changes, with the why recorded. Its **platform content sits in one sibling section per platform**, so a new platform (React and React Native, Spec 128) is a new section, not a rewrite.
+  - **What it promises (R-3).** **A scope sentence sits before step 1**: web products plus the agent layer for Claude Code and Kiro; iOS and Android not supported yet (reference source, not a build input); a registered custom theme does not yet emit on web. The same sentence appears in the README and the release-3 CHANGELOG.
 
 #### C24. The joining path and the commit policy (Req 15A; Leonardo Le-D2, A5, A6, Le-D4)
 
@@ -744,6 +773,11 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
   > `# uncomment if your build/deploy runs 'npx designerpunk generate' — then platform output need not be committed`
   > `# <her configured outputDir>/`
 - **U5 join runs**: TWO (C8(b)), each from a committed born-repo fixture, cloned fresh, with the opposite target.
+- *(Erratum 2026-10-03 — Peter's R-9, "Re: walkthrough 1, offer"; record `.kiro/specs/123-consumer-distribution/feedback/tasks.md` § "U3 amendment round (2026-10-03)".)*
+  - `COMMIT-POLICY.md` ships (C5 erratum).
+  - **For repos born on 15.0.0, which have no block**: when git is not already ignoring `.designerpunk/` (detected by effect, `git check-ignore`), `sync` **offers** the managed block and **asks before writing**.
+  - When nobody can answer (non-interactive), it **reports** with a remedy true for this target-free region, and writes nothing (catalog rows below).
+  - The block's content is computed once (`src/cli/shared/gitignoreRegion.ts`) and is shared by `init` and `sync`.
 
 #### C25. Starter specs — unchanged (DD15)
 
@@ -755,6 +789,17 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 - **`init`'s output names the file and says what it is for**, by name.
 - **When the note is absent — a teammate's fresh clone — `generate` creates it from the template with `TODO` slots and prints its name, as `init` does** (Leonardo Le-R1). Creating it is harmless, because an all-`TODO` note is treated as absent.
 - **A note whose slots are all `TODO` is treated as absent** (C19), so agents never read an unfilled template as instructions.
+- *(Erratum 2026-10-03 — Peter's R-4 and R-8; record `.kiro/specs/123-consumer-distribution/feedback/tasks.md` § "U3 amendment round (2026-10-03)". Lina and Leonardo confirm the detection rule in the round.)*
+  - **There is no command-line wizard.** "On a TTY, init prompts" is withdrawn: `init` and `generate` always write the template verbatim.
+  - **The note is its own template** (R-8, Peter: "the doc itself could be the template, and then it's just replaced/updated/overwritten with the user's response").
+    - It carries a few prompted slots, as `## ` headings with the prompt in an HTML comment under each: who I am; what I or my organization value; how I like to communicate and collaborate.
+    - It carries one line telling the agent to offer to walk the user through it while it is unfilled. Leonardo words that line, including its frequency.
+  - **Unfilled** means either of these:
+    - the file is byte-identical to the shipped template;
+    - it keeps the template's slot headings, and every slot body is empty or `TODO` once comments are removed and whitespace is trimmed.
+  - A note without the template's slot headings (a free rewrite) is **filled**.
+  - **Who creates and who warns**: `init`, `generate`, `attach` (not `--reference`) and `sync` create the note when it is absent. Only `sync --migrate-legacy` prints the naming row (R3). All four print the unfilled warning (catalog row below). The note is created only in a born repo.
+  - **An edited version of Peter's note ships as an example.** It is never a resource or an import, and carries no résumé reference (Req 18.2). Peter approves its text by a dated record.
 
 #### C27. `init` UX (Req 19; Leonardo A2, A12, A13)
 
@@ -762,6 +807,10 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 - **The named-default notice** (A2) is printed on bare `init`.
 - **Erratum (tasks round, 2026-09-26 — Leonardo Le-T1; restores a line dropped in the R2 rewrite and demanded by Reqs 15.8, 15.9, 19.6)**: **`init`'s terminal output carries the session-restart line with its reason (the MCP loads at session start), the re-anchored clone hatch, the personal-note naming (C26), and next steps that list positively what this repo needs next.** **`attach`'s output carries the restart line too.** **Two rows, not one conditional string (Le-T5)**: `init` and born-repo `attach` print the *sequenced* row **last**, because on those paths the note and `generate` come before the restart; `attach --reference` prints the *now* row. Exact strings: catalog rows below.
 - **`product/` tree + worked example screen**, with a **validity guard** (A12): the scaffolded tree indexes under the product MCP with **zero errors and zero unresolved references**. Bite: break a reference in `example-home.yaml` → red.
+- *(Erratum 2026-10-03 — Leonardo's U3-kickoff read; record `.kiro/specs/123-consumer-distribution/feedback/tasks.md` § "U3 amendment round (2026-10-03)".)*
+  - The `product/` scaffold's package source is `src/cli/templates/product/**`.
+  - **The validity guard runs** in the born repo immediately after `init`, from the packed install, before `generate`. **It binds**: product index status `healthy`; zero `_componentGaps`; every template and domain-object name the screen references exists. The ui-tree token names are checked by Leonardo against the Application MCP, as a recorded inspection.
+  - **The named-default notice's catalog row exists** (the "bare `init` default notice (A2)" row). It prints **first** on bare `init`; the sequenced restart row stays **last**.
 
 ---
 
@@ -926,6 +975,9 @@ type G2Verdict = 'PASSES' | 'FAILS' | 'NOT-RUNNABLE';   // never NOT-RUNNABLE on
 | **restart line — now** (erratum, Le-T5; `attach --reference` output only, where the restart IS the next step) | `restart your agent session now — DesignerPunk's MCP servers load when a session starts, so this session cannot see them yet (approve them if your tool asks)` |
 | **clone hatch** (erratum, Le-T1; `init` output) | `want to own the engine too? Clone github.com/3fn/DesignerPunk — init already made the token language yours; the clone adds the engine and the components` |
 | **personal-note naming** (erratum, Le-T1; `init` output) | `fill in .designerpunk/personal-note.local.md — who you are and how you want to be worked with; your agents read it every session (it stays on your machine)` |
+| **personal note unfilled** *(Erratum 2026-10-03 — new row, mechanism B (R-4); a warning, exit 0 (Req 13, 18.5(iii)); printed by `generate`, `attach` and `sync`. Draft text from Lina R1, with the "run generate" tail dropped because the file exists (Leonardo); **final wording Leonardo's, in the U3 amendment round**)* | `your personal note (.designerpunk/personal-note.local.md) is still the unfilled template — your agents treat it as unfilled until you fill it in: who you are, what you value, and how you like to work together (it stays on your machine)` |
+| **`.gitignore` block — offer** *(Erratum 2026-10-03 — new row, R-9; `sync`, interactive; only when git is not already ignoring `.designerpunk/`; **wording settled in the round, Lina and Leonardo**)* | `.designerpunk/ is not ignored by git, so your personal note there would be committed. Add DesignerPunk's .gitignore block (a managed region)? [y/N]` |
+| **`.gitignore` block — report** *(Erratum 2026-10-03 — new row, R-9; `sync`, non-interactive; writes nothing; the remedy the `untracked-new` row's `attach --target` cannot give for a target-free region; **wording settled in the round**)* | `.designerpunk/ is not ignored by git, so your personal note there would be committed. Run 'npx designerpunk sync' in a terminal to add DesignerPunk's .gitignore block, or add .designerpunk/ to .gitignore yourself` |
 | unannotated tool (A3) | `tool '<name>' in <server> has no readOnlyHint — every registered tool must declare it (true or false)` |
 
 ## Testing Strategy
