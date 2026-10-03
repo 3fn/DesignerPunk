@@ -1,16 +1,16 @@
 # Completion Criteria Parity — parent success-criteria fidelity check.
 #
 # Sanctioned by register row `governance/classification-map.md § "completion-
-# criteria-parity"` (check_state: proposed). Law: the 2026-09-19 completion-
+# criteria-parity"` (check_state: armed). Law: the 2026-09-19 completion-
 # claims-integrity ballot (RATIFIED); build: Spec 127 U2.
 #
 # The check context is `completion-criteria-parity`, FIXED AT AUTHORING and
-# cited on the register row. This job lands NON-REQUIRED (Req 6.6): the
-# required flip + the EXPECTED_CONTEXTS count-assert in
-# tools/agent-generator/verify-gate-registration.sh land together in the same
-# recorded change AT ARMING — Q2's guarded decision (5.Z sitting or
-# release-prep start), with gate-bite proven on a throwaway PR at the flip.
-# Do NOT add this context to EXPECTED_CONTEXTS before that recorded change.
+# cited on the register row. REQUIRED from the 2026-10-03 flip: the register
+# row's 2026-10-03 history line records it, with the gate-bite runs (throwaway
+# PR #290) and EXPECTED_CONTEXTS +1 in
+# tools/agent-generator/verify-gate-registration.sh, in the same recorded
+# change. Branch protection lists the context by Peter's Settings act.
+# Changing this job's name, trigger or steps now changes a required gate.
 #
 # fetch-depth: 0 — the checker derives tasks.md authorship dates from history
 # (DD2) and evaluates legacy materiality against the merge base (Req 6.3).
