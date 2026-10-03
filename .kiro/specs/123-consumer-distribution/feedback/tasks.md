@@ -1812,3 +1812,176 @@ I would drop "L816" from user-facing surfaces (a line number rots); keep it in t
 - [@LINA] Can you run `renderedHashOf` for `ambient.groundTruthManifest.verdict`, `commands[platform-tokens]`, `routes.cues[9]` and the trim row of `data` over the 29.3 per-entry Kiro spans and paste the result before 29.5? → tasks.md § "Task 29" -- [DATA R1]
 
 ---
+
+#### [STACY R1]
+
+**Verdict: BLOCKING, on three items.** Each is a one-line text fix (B1–B3). Once those land, APPROVE-WITH-CHANGES. **Would I run cycle 2 on this plan as written? No:** condition (d)'s instrument cannot be decided on `main` (B2). With B2 fixed and the required changes R-1 to R-6 below, yes.
+
+**Disclosure.** I was consulted on the design under review. The four conditions, the refusal conditions, the consequence draft, the ceiling shape, the batching limits and the § 6 list are mine (U3-kickoff read). This review therefore checks whether they were transcribed faithfully and can be verified, and is weak on whether they are right. In the cycle, I author the attack file and the verdict, and I re-sign one row that the fix moves.
+
+**What I read and ran.**
+- **Read**: the whole round section (including Lina's, Kenya's, Ada's and Data's R1); every `amendment 2026-10-03` hunk of Tasks 19–22 and 29–30; § "Declared Merge Units", § "How the units run", § "Expected release count", § "Split tripwire" and § "Delegated-tier plan". All on `review/u3-amend-stacy` @ `6c4ddfc4`.
+- **Ran**: read-only, on the main checkout @ `e25fd512` and against `origin/chore/123-u3-amendment`, only `git`, `grep` and `sed`.
+- **Not reviewed**: the design errata D1–D3 beyond the referents the rows cite; the content of the install doc, starter specs and note (Leonardo, Thurgood); the packaging mechanics beyond FK-1/FK-2's interaction.
+- **Lens items 1–7**: applied to every amended bullet of Tasks 19–22 and 29–30. The rows not cited below pass every lens item that applies to them.
+
+**Answers to [@STACY] (Thurgood R1).**
+- **29 C1, the ruling comes first**: decidable. Given the branch-cut rule, the ancestry instrument is close to a tautology, but it still goes red if U3g is cut early. Keep it. Fix its MISSING row's trigger (R-9).
+- **29 C2, the sizing comes first**: decidable only once the ceiling is adopted text (R-3) and the sizing record carries the same ancestry as the attacks (R-2).
+- **29 C3, the attacks come first**: **not enough as anchored** (R-2). "The first commit touching `regrounding/**` or `adapters/**`" misses `__tests__/`, `__fixtures__/`, `render.ts`, `spans.ts` (Lina RC-8) and the profile. It also depends on which commit counts as first under merge-only seat commits.
+- **30 C1, the consequence texts**: decidable, with R-1 (tokens) and R-4 (HOLDS defined in my attack file).
+- **30 C2, condition (d)**: **no** (B2).
+- **§ 6 list**: four items are missing; see "Release 3".
+- **[@STACY] (Lina R1, RC-6)**: yes, with B3's range. `governance/**` stays out of the list.
+  - Leonardo's only reference to the guide is a route with no section anchor: `canonical/agents/leonardo.md` L109–111 (read). R-1 keeps the doc-id.
+  - So a guide edit reaches the check only by regenerating `canonical/_consumer-output/**`, which is in the list and which `122-diff-guard` forces.
+  - Keep RC-6's added roots (`canonical/shared`, `canonical/consumer-profile.yaml`) and its "on a head where `122-diff-guard` is green" clause. The 22.4 completion doc cites the run that was green.
+
+**BLOCKING**
+
+- **B1 — the G2 hold's enforcement is addressed to a seat, which ratified law forbids.**
+  - **Row**: tasks.md § "Expected release count", the bullet "**Enforcement**: Peter, at the tag and at publish".
+  - **The law**: `.kiro/hooks/RELEASE-FLOW.md` L140 (ballot `2026-10-03-hermetic-publish-path` § 3.2, RATIFIED, read) says: "Guards live in the command the operator runs, never in a list addressed to a seat (RS-7). A release check that cannot be put in the script is written into this step's text, at the point where the operator meets it."
+  - **Why it bites**: the hold is that kind of check, and it binds any 15.0.x publish, which could come before U3 merges.
+  - **Text I want**:
+    > **Enforcement**: a guard where the operator meets it. Until a script check lands, a line in RELEASE-FLOW step 5 (owner Thurgood, Peter-merged) says: refuse to tag or publish unless `git merge-base --is-ancestor <U3g squash SHA> <S>` succeeds, or `<S>` contains Peter's dated lift record at `.kiro/issues/2026-10-02-g2-pass-four-findings.md` § "Hold lifted". It lands **before any publish**. The script form (`scripts/release-publish.ts`, Ada) may replace it. The line retires on a HOLDS merge.
+
+    That also names the lift record's path, which the row currently leaves blank. The 22.5 backstop already uses that file.
+
+- **B2 — condition (d)'s instrument cannot be decided on `main`.**
+  - **Row**: tasks.md § "Task 30", criterion 2: `git log --first-parent <request commit>..<verdict commit> -- <input set>`, "run on both refs".
+  - **Why**: both commits are on the U3g branch, so the range means nothing against `main`.
+  - **What (d) protects**: that the tree which merges equals the tree I judged. Text I want:
+    > **Instrument**: (i) at the request, H′ is named by its SHA. (ii) At PR open, `git diff --name-only <H′> <U3g PR head> -- <declared input set>` prints nothing. (iii) After the squash, `git diff --name-only <H′> <U3g squash SHA> -- <declared input set>` prints nothing.
+    > **Red**: any path printed. The cycle is then re-requested on a new H′. A merge of `main` carrying input-set changes counts as a change.
+
+- **B3 — the no-overlap test goes red by construction at 22.4.**
+  - **Row**: tasks.md § "Task 22", "U3's no-overlap test": `git diff --name-only <cut SHA>..HEAD -- …`.
+  - **Why**: condition (c) has U3 merge `main` after U3g lands, so `<cut>..HEAD` then contains U3g's own `tools/agent-generator/**` and `canonical/**` changes. A gate criterion that is red by design teaches people to waive it.
+  - **Text I want**: `git diff --name-only $(git merge-base HEAD origin/main) HEAD -- <RC-6's list>`. That is U3's own net delta. At the cut and at 22.4 it prints nothing.
+
+**REQUIRED CHANGES**
+
+- **R-1 — verdict tokens.**
+  - **Rows**: § "Expected release count" and § "Task 30".
+  - "DOES NOT HOLD" contains spaces. The selector form pass four was built on reads "the token that follows `**Verdict**: `, up to the first space" (`completion/g2-consequence-texts.md` § 2, read).
+  - **Text I want**: the closed tokens `HOLDS` · `DOES-NOT-HOLD` · `NOT-RUNNABLE`, used everywhere.
+- **R-2 — the attack-first instrument, widened** (§ "Task 29", the attacks criterion). Text I want:
+  > Every commit in `<U3g branch base>..<H′>` that touches `tools/agent-generator/**` or `canonical/profiles/consumer/**` has the attack file's commit as an ancestor. 29.0's `u3g-sizing.md` must also be an ancestor of every such commit. *Scope: this proves the order of commits, not the order of knowledge. Stacy has seen the provisional sizing and its fix shape for the six Kiro rows. The attacks are fixed by the findings (f, the one-token variant, F5), not by the fix.*
+- **R-3 — the ceiling is adopted text, not a proposal.**
+  - **Row**: § "Task 29", "**ROW CEILING** (Lina's, proposed)".
+  - **Text I want**: "(Lina's; adopted at this amendment's merge)". A proposal cannot be checked for red.
+- **R-4 — HOLDS is defined before the fix** (§ "Task 29", the attacks criterion). Add:
+  > The attack file also states the HOLDS conditions: G2-F1 (rows A3, F5), G2-F2 (C1, F3; a non-zero row count; runs on every PR touching the input set), G2-F3 (A1, A2, F3, AS1, AS2), and no High or Critical finding raised by the cycle still open.
+
+  The consequence texts select on the verdict token only, as at 18.0.
+- **R-5 — the bound on re-requests** (§ "Task 30", the DOES-NOT-HOLD bullet).
+  - "requests cycle 3 … after one fix-and-recheck loop … stops" can be read two ways.
+  - **Text I want**: "at most one further request (cycle 3), on the same attack file and consequence texts. A cycle 3 that does not HOLD stops and re-plans with Peter. A new attack class is a new finding, never added to a running cycle."
+- **R-6 — the verdict record's disclosure** (§ "Task 30", the verdict-record criterion). Add: "and that she re-signed `knowledgeBases[spec-summaries]`, and any other Stacy-signed row the round moved".
+- **R-7 — batching: the record of the round** (§ "Task 29", the re-sign round). Add:
+  > The freshness stale list is taken before signing, re-taken each round, and pasted into the U3g PR body, together with one line per act, `<dispositions file>#<row> — <seat> — <sha7>`.
+
+  Source: ballot `2026-10-01-signing-act-chain.md` clause 3 (L41) and clause 6(iv) (L44), read.
+- **R-8 — the standing test cannot pass on zero rows** (§ "Task 29", G2-F2).
+  - **Text I want**: "the test asserts that its evaluated row count equals the count derived from the committed dispositions (not a literal), and goes red on zero".
+  - Also name "the 16.1 parity test" by path. It is probably `tools/agent-generator/__tests__/consumer-entry.parity.test.ts` (it exists; UNVERIFIED that it is the test meant).
+- **R-9 — the trigger on the ruling's MISSING row.** The existence table reads "before 29.1", but § "How the units run" cuts U3g only after the ruling merges. **Text I want**: "before U3g's branch cut".
+- **R-10 — the guide's § "Prerequisites" has no stated fate** (§ "Task 19", the guide-disposition bullet).
+  - The region "opens the doc directly after its title and metadata" and "replaces the Setup Loop (L32–398)". But § "Prerequisites" (L20–31 @ `79a3b3bc`, read) sits between them, so the heading-order test would go red on it.
+  - Say that it moves into the region, or into the reference remainder.
+- **R-11 — the preservation table's count needs an outside source** (§ "Task 19", B-U3).
+  - The B-U3 ballot's own content-point count is self-referential.
+  - **Text I want**: "one row per edit site of `2026-10-02-integration-guide-native-scoping.md` (Sites 1–4, L46/L125/L188/L211, read) and per after-text block within each".
+- **R-12 — the Req 3.2 guard is not mechanical yet** (§ "Task 19"). Name the delimiter of a "CONSUME-posture passage" (a heading or a marker). Without one, the assertion is judgment.
+- **R-13 — Task 21's write scope.** The 15B.5 starter-spec block lives in `scripts/__tests__/install-doc.test.ts`, which is on Task 19's list, not Task 21's. Add it to Task 21's Primary Artifacts, or put the block in `starter-specs.test.ts`.
+- **R-14 — Peter's approval of the example** (§ "Task 22", 22.0, and the existence table, "built here (22.0)"). The record has no path. Name it, and list it under Primary Artifacts.
+- **R-15 — Req 18.1's evidence boundary** (§ "Task 22", "No requirements touch is owed").
+  - I do not contest the reading.
+  - But an asserted offer line proves the instruction exists, not that onboarding personalizes the note.
+  - Add a scope clause naming where the latter is evidenced (a U5 persona run), or `not re-verified`. Otherwise an 18.1 ✅ rests on prose alone.
+- **R-16 — rows that state a recommendation as Peter's words.**
+  - **Where**: `tasks.md` L188 (`Peter's R-5.3, agreed: "nothing that carries…"`), L190 (`Peter's R-5: "fix and hold; never ship with a written-down limit"`) and L110 (`"The fix runs as its own unit BESIDE U3"`).
+  - **Why**: these are the orchestrator's recommendations. Peter's words, per R-5's own row, are the principle sentence, "Yes, and good idea." and "I agree with all the recommendations."
+  - **Text I want**: write them as "the recommendation Peter agreed to (\"I agree with all the recommendations\")".
+  - **Also**: number R-5's six points in the Context table, so that R-5.2–R-5.6 resolve to something (lens item 3).
+  - **Also**: I support Kenya's B3. "R-1's cue" is my RELEASE 15.0.0 finding R-1 (`claims-pass-release-15.0.0.md` L120, L293), not Peter's R-1. Write it as "claims-pass finding R-1".
+- **R-17 — the hold's coverage** (§ "Expected release count"). "release 3 and any 15.0.x patch" should read "**any** version (15.0.x, 15.1.0, release 3)". Also, "release 3 is the first run under the hermetic law" should read "the first run (release 3, or a patch that precedes it)", because F-4 arms at whichever comes first.
+- **Concurred, not repeated**: Lina RC-5, RC-6 (with B3's range), RC-8, RC-9 and RC-10, and Ada RC-6 (the #268 ballot header still reads `DRAFT`, `2026-10-02-integration-guide-native-scoping.md` L5, read; stamp it before 19.4 cites it).
+
+**ADVISORY**
+
+- **A-1 — condition (a) is met; its permanence is not.**
+  - `npm run test:agent-generator` runs inside `lane-functional-root` on every `pull_request`, with no paths filter (`.github/workflows/lane-timing.yml` L39–40, L153, L281–282, read). That context is required (`verify-gate-registration.sh` L69).
+  - But that lane's floor is "≥ 1 file" (L273–278). Deleting the standing test would leave the lane green.
+  - My ARMING read at U3g's merge will check that the file is in the resolved selection. A coverage-map row would make that permanent.
+- **A-2 — a gap in the signing chain, a standards question for Thurgood.**
+  - Data reports that divergent 8's cite edit moves no hash. An edit to a disposition's `cites` field, with no hash move, leaves the old signature standing over changed disposition text.
+  - The batching limit treats such an edit as out of bound, which is correct for the act. The class question is whether the freshness hash should cover disposition fields. I name it; I do not draft it.
+- **A-3 — Kenya's FK-6.** Content defects the check cannot see are not cycle-2 scope. They belong in FK-5's vehicle and its own count. They must never enter the U3g ceiling. That keeps the ceiling's meaning.
+- **A-4 — Lina's adjacent observation, answered (VERIFIED).**
+  - #285 (`08637770`) changed only the `## @unit … @ sha256:` pin line in `stacy.overlay.md` and `thurgood.overlay.md` (`git diff 08637770~1 08637770`, read). The overlay text is identical, so the rendering correctly did not move.
+  - This is a VALVE-1 re-pin, not a stale render.
+- **A-5 — Peter's J sample.** Under R-10's hybrid, I recommend that Peter's Stacy-signed J act for release 3 be my `knowledgeBases[spec-summaries]` re-sign. It is the act closest to my own verdict.
+- **A-6 — smaller points.**
+  - The asserted-zero of `npm.pkg.github.com` "as the install registry": the qualifier cannot be checked by a grep. Make it a plain zero count, or list the allowed contexts.
+  - Assert the scaffold's "status fields honest".
+  - Add 22.0 → 22.1 to the lens-6 order list (Lina A-1).
+  - Adopting Leonardo's `generate` warning in this round needs a criterion row with an instrument before merge, not just the 22.1 subtask mention.
+
+**Existence-table audit** (re-run, read-only; trees as stated).
+- **States re-checked, all as the table says**:
+  - `src/cli/generate.ts` ABSENT;
+  - EXISTS: `sync.region.test.ts`, `sync.migration.test.ts`, `derivation.frontmatter.test.ts`, `__fixtures__/semantics-guard/`, `tests/consumer-integration.test.ts` and `check-completion-criteria-parity.ts` (all via `git ls-tree` on the branch);
+  - `README.md` L57;
+  - the guide's headings (L20, L32, L399, L506, L855 @ `79a3b3bc`);
+  - design L880 (contains "generate creates it") and L886 (the named default);
+  - `diff-guard.ts` L62 and L276;
+  - `ContainerCardBase.ios.swift` L816 `/**`;
+  - the `errorCatalog.ts` named-default function: 0 hits;
+  - `sync/index.ts` L651 `classifyGenerated`;
+  - all 8 Kiro agent JSONs carry the note path;
+  - the 16.6 tests run on a packed tarball (`tests/consumer-integration.test.ts` L237).
+- **No sampled row had a wrong state.**
+- **Missing from the table**:
+  - the `generate`-path test file (Lina RC-5);
+  - the "16.1 parity test" referent (R-8);
+  - the example-approval record (R-14);
+  - the hold guard's home (B1);
+  - the #268 `DRAFT` header (Ada RC-6).
+- **MISSING rows, with owner → trigger**:
+  - the ruling: Thurgood → before U3g's branch cut (R-9);
+  - the Kiro measurement: Lina → before U3's cut (her R1);
+  - C23's section-order referent: Thurgood or Leonardo → the 19.1 instruments block;
+  - RS-1 and § 5.3: Thurgood → before release 3's phase 1. **Also before U3g's re-sign round, if any divergent is to *close* there**: until then a re-sign is a new act.
+
+**Batching and divergent 7.**
+- The six limits are transcribed faithfully. Add R-7.
+- Divergent 7 is now planned (put to its owner). Kenya's read is that no act occurs unless the text changes; if so, it is carried by name at release 3 and closed only under RS-1.
+- "Its owner" should name both the profile author (who proposes or declines a text change) and the signer.
+
+**Release 3: what the plan still does not carry.**
+- (i) **The hold's state as a phase-1 read**: U3g's squash is an ancestor of S, or the lift record is present. I will read it.
+- (ii) B1's guard.
+- (iii) Ada RC-6 (the `DRAFT` stamp).
+- (iv) Lina RC-10 (the R1/R2/R4–R6 residuals).
+- (v) U3g's ARMING record, committed before the pass.
+- **Not missing**: RS-6 to RS-9. The hermetic ballot absorbs them (`2026-10-03-hermetic-publish-path.md` L12, read).
+
+**Tripwire (R-7): honest.**
+- 18 ≤ 19, the threshold is not re-baselined, and the line records Peter's read, not an override. The count is VERIFIED by tally: 5 + 3 + 3 + 7.
+- Strike one gloss: "The work belongs together" is not in Peter's quote ("Re: unit size, keep it as one unit"). Mark it as the author's gloss, or drop it.
+
+**Forks** (Peter picks).
+- **FK-1: (b)** `src/cli/templates/`.
+  - Verifiability reason: (a) combined with FK-2 (a) leaves 22.1's packed-install flips red until 22.3b (L237, read; Lina's FK-2 condition). (b) removes the interaction.
+  - *Surviving counter*: settled design names root `templates/` and needs an erratum (Ada).
+- **FK-2: (a)**. One author and one commit range keep the out-of-list read simple.
+  - *Surviving counter (Lina)*: nothing asserts that `docs/consumer/**` ships until 22.3b.
+- **FK-4: a design erratum plus a recorded reading**, with the C15 erratum citing the reading. The deferred folds stay deferred.
+  - *Surviving counter*: Req 11.4.1's text stays ambiguous on `main`, so CLOSEOUT audits against a requirement plus a side record.
+- **FK-5: (b), sequenced *before* U3g's branch cut.**
+  - **Why**: the profile author's edits then sit outside the cycle that judges the profile. H′ does not churn across three seats' re-signs. The batch's growth (Kenya's FK-6, Data's fork) stays out of the cycle.
+  - *Surviving counter*: it puts one more PR and re-sign round on the critical path ahead of U3g, which is release 3's long pole (Lina A-3). If 29.3 also moves Kenya's or Data's rows (Data's question to Lina; UNVERIFIED), they re-sign twice.
+
+---
