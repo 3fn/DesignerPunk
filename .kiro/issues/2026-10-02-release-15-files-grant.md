@@ -67,6 +67,6 @@ This line supersedes the 2026-10-02 `**Grant paths**:` line above for any PR cit
     - Those lanes *build* the nested-shape `dist/mcp/{docs,application}-mcp.js`, but they boot the nested servers' `tsc` builds and never the bundles.
     - The only lanes that run the shipped bundles are consumer-guard's (`test:smoke:mcp-boot`, `test:consumer`), in root shape.
     - The shape public npm shipped therefore had no CI execution.
-- **(iii) Stacy's R-4, in the same file.** §§ 1 and 3 read the 02:12–02:17Z 404s as indexing lag, with publish "approx. 02:15Z". The packument gives `time["15.0.0"]` = 02:19:49.286Z, and 02:14:57Z is the build stamp. The 404s were pre-publish.
+- *Not a pending correction*: Stacy's R-4 (the 02:12–02:17Z 404s read as indexing lag) was already corrected before #273 merged, in `087f7697` (merged in `eadc7f45`). Stacy's #275 marks it resolved, so it needs no grant.
 
 **Not covered**: anything else in `docs/releases/**`, `CHANGELOG.md` and the GitHub release body. Whether the GitHub release body is edited is Peter's or the orchestrator's call (R-3's route). An edit outside the two paths is a claims-pass finding.
