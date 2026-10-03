@@ -2522,4 +2522,41 @@ On `overview.yaml`, **I accept Thurgood's read** (I author its content; Lina own
 **Recommendation, not required**
 - **A-7 — a record the next operator meets.** Until the hermetic-ballot amendment lands, the hold is enforced only by memory. Add an item to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`, whose trigger is already "before the next `@3fn/core` publish", naming the step-5 line as owed. That gives the next operator something to meet. It is Thurgood's issue, outside this PR.
 
+
+#### [KENYA R2]
+
+**Verdict: APPROVE-WITH-CHANGES.** No blocking item. Read at the head after `git pull` (Thurgood R2 `e2e40ca6` plus the later R2 entries). I ran `git grep` and `sed` over this worktree, and `swiftc` earlier in R1. Nothing here builds iOS. **Not reviewed**: Android wording, Task 30, the packaging rows.
+
+**Mentions.** I found **no unanswered `[@KENYA]`** written after my R1: the only `[@KENYA]` strings are my own R1 and Thurgood's R2 "answered" line (L2268). The remaining ones are older and answered: the original Task 3.5 question (L92) and Data's R1 theme-key question (L323, answered at L537 and in Task 3.5). If the coordinator means a different item, name it and I will answer it. Directed answers to me that I confirm: Data's R2 answer to my FK-6 question (L2440) and Thurgood's R2 answer to my `[@THURGOOD]` question (row 3 moves no hash). On row 3 I read `tools/agent-generator/regrounding/freshness.ts` L355–371: the freshness check compares `hash(current.get(key))`, the source entry, and `renderedHashOf` over rendered spans. A `cites` or `removals` edit in the dispositions file is in neither, which agrees with Thurgood's reading (read, not run).
+
+**My R1 items.**
+- **A (the iOS sentence)**: confirmed (Task 19 R2 bullet; no line number on user-facing surfaces).
+- **B1 (nine files, two causes)**: confirmed (`tasks.md` Task 19 R2 bullet, causes added). I re-ran `git grep -l '@Environment(\.dpTheme)' -- src` → **9** files. Lina's issue vehicle (PR #297) is right; the defect is not 123 work.
+- **B2**: **confirmed in substance, contested in form (small).** The R2 bullet gives the right strings (`not built in this amendment`; `swiftc -parse`, Swift 6.2). But `tasks.md` Task 19 still carries the superseded sentence *"Each build claim reads `not re-verified — toolchain unavailable`"* two bullets above it, with only a "this bullet governs where it differs" note. That is the shape that later gets asserted by mistake. **Text I want**: delete that sentence and keep the R2 form only.
+- **B3**: confirmed (PR-n rename; "claims-pass finding R-1").
+- **C (the batch conditions)**: confirmed in Task 31: 31.0 pre-edit stale list and `renderedHashOf` baselines; the Kiro blank line in the container span; I read each text before commit; seat commits merge-only.
+- **Row 3 / divergents 6, 9 outside the round**: confirmed, and I accept Stacy C-3: I will **read each cite change before it is committed** and the completion doc quotes the before/after pair. No act of mine follows (hash unmoved).
+- **Divergent 7**: confirmed (no text change; carried by name; closed under RS-1).
+
+**PR-12: the replacement texts I would sign** (true today; says the gap is being addressed; points at Spec 129 with no date; no promise of when). Thurgood authors; these are my words for him to adopt or change.
+
+`### iOS Theming (Spec 094)`, bullets 1–3 replaced (bullets 4 and 5, static tokens and the ground-truth line, stay **verbatim**, so `theming-4` and `theming-5` do not move):
+
+> - Your generated Swift does not include theme types yet. Today `npx designerpunk generate` writes your static tokens to `DesignTokens`, and does not emit the `{Name}Theme` protocol, per-theme structs or `{Abbreviation}ThemeKey: EnvironmentKey`. Emitting them is being addressed and should be resolved soon, as part of DesignerPunk's consumer-generation completeness work (Spec 129).
+> - Until then, do not write code against `\.{abbreviation}Theme` or a `{Name}Theme` type: neither exists in your project. If a screen needs a theme-varying color, ask your lead how to handle it, and query the application MCP for the per-theme set of values.
+> - When those types are emitted, the pattern is: wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming, and select the theme struct from `@Environment(\.colorScheme)` for dark mode.
+
+The removed cue (`kenya.overlay.md` L160, Task 31 (iii) form, removed not reworded):
+
+> regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)
+
+Why bullet 3 keeps the future pattern: it preserves the function of the old items `theming-2` and `theming-3`, so the Spec 129 flip later is a one-sentence deletion and not a re-author. **Surviving counter**: a consumer agent reading "when those types are emitted" may still be tempted to write against them, and "Spec 129" means nothing to a consumer who cannot read DesignerPunk's specs. I judged the second smaller than the cost of saying nothing about where the work is tracked; Thurgood or Leonardo may prefer "DesignerPunk's planned follow-on" with no spec number.
+
+**Required changes (small), because the Task 31 instrument is too narrow.**
+1. **A third occurrence of the same false claim, outside the grep.** `kenya.overlay.md` L147 (the `commands[product-screen-commands]` gap text, rendered at `canonical/_consumer-output/cc/.claude/agents/kenya.md` L378, kiro `kenya-prompt.md` L294) says *"theming Swift materializes here via `npx designerpunk generate`"*. Task 31's grep (`including your theme (Swift|Kotlin)|Generated (Swift|Kotlin) output includes`) returns 0 for it, so the instrument would go green with the claim still present. **Text I want**: add this row to the batch (its parenthetical is removed; the row is **unsigned** in `kenya.dispositions.yaml` L78, so it is authoring only, no act), and widen the grep to add `materializes here` (Data's twin likely has the same phrase; Data to check). Also change "exactly these five things" to include it (and Stacy's C-3 cite-only commit).
+2. **The `#in-scope` bullet and the product-tokens bullet.** `kenya.overlay.md` L27 ("theme-varying colors via `@Environment(\.{abbreviation}Theme)`") is a scope statement of what I do; today it describes something I cannot do. Suggested text: "...theme-varying colors via `@Environment(\.{abbreviation}Theme)` once your generated output includes it". The row (`#in-scope`, `kenya.dispositions.yaml` L8) is unsigned, so authoring only. Whether `#product-tokens-spec-108109` L76 ("Theme-varying tokens: protocol extension on `{Name}Theme`") is also affected depends on whether the Swift product-token emitter produces that extension without the theme protocol; I did not check it (UNVERIFIED), and the row is `retained`, unsigned. **Recommendation**: Thurgood or Lina checks it at 31.0 and, if affected, carries it by name to Spec 129 rather than widening this unit again.
+3. **Name my signed rows in 31.0.** `#ios-theming-spec-094` is now a re-sign for me (it is no longer cue-only), in addition to `ambient.groundTruthManifest.verdict` and `commands[platform-tokens]`. Task 31's 31.0 says "rows the edits are expected to move" without listing them. **Text I want**: list Kenya's expected set as exactly those three. Any other Kenya row on the post-edit stale list is the red limb already written.
+
+**New, from the R2 changes**: none that breaks; the unit ordering (U3c before U3g's cut) removes my R1 concern about the ceiling. One residual I hold: "should be resolved soon" in a **shipped** consumer text is a promise, even softened. I sign it because Peter chose the framing; if release 3 slips the other way, the sentence is stale and costs another round. That is the orchestrator's caution (no date) working as intended.
+
 ---
